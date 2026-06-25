@@ -95,9 +95,9 @@ export const ItwIssuanceCredentialLandingScreen = ({
     if (!isItwValid) {
       // ITW not active, redirect to discovery info screen
       navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
+        animationEnabled: false,
         level: isWhitelisted ? "l3" : "l2",
-        credentialType,
-        disableAnimation: true
+        credentialType
       });
       return;
     }
@@ -105,8 +105,8 @@ export const ItwIssuanceCredentialLandingScreen = ({
     if (isItwValid) {
       // ITW active, proceed to credential issuance
       navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
-        credentialType,
-        disableAnimation: true
+        animationEnabled: false,
+        credentialType
       });
       return;
     }
@@ -180,9 +180,16 @@ export const ItwIssuanceCredentialLandingScreen = ({
             `features.itWallet.issuance.credentialAlreadyUpdated.action`
           ),
           onPress: () =>
-            navigation.popTo(ROUTES.MAIN, {
-              screen: ROUTES.WALLET_HOME,
-              params: {}
+            navigation.reset({
+              index: 1,
+              routes: [
+                {
+                  name: ROUTES.MAIN,
+                  params: {
+                    screen: ROUTES.WALLET_HOME
+                  }
+                }
+              ]
             })
         }}
         secondaryAction={{

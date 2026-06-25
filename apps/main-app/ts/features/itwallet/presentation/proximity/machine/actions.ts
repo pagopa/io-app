@@ -1,4 +1,3 @@
-import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { ActionArgs, assign } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../../store/hooks";
@@ -6,7 +5,10 @@ import { assert } from "../../../../../utils/assert";
 import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
 import { itwGrantProximityConsent } from "../store/actions";
 import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors/credentials";
-import { getConsentDataFromProximityDetails } from "../store/utils";
+import {
+  generateConsentKey,
+  getConsentDataFromProximityDetails
+} from "../store/utils";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 
@@ -26,65 +28,56 @@ export const createProximityActionsImplementation = (
 
   navigateToBluetoothPermissionsScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS
     });
   },
 
   navigateToBluetoothActivationScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION
     });
   },
 
   navigateToNfcActivationScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.NFC_ACTIVATION
     });
   },
 
   navigateToNfcPresentmentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT
     });
   },
 
   navigateToPresentmentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
       screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
-      params: {},
-      pop: true
+      params: {}
     });
   },
 
   navigateToClaimsDisclosureScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE
     });
   },
 
   navigateToStoreconsentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.STORE_CONSENT,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.STORE_CONSENT
     });
   },
 
   navigateToSuccessScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.SUCCESS,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.SUCCESS
     });
   },
 
   navigateToFailureScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.FAILURE,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.FAILURE
     });
   },
 
@@ -92,11 +85,20 @@ export const createProximityActionsImplementation = (
     navigation.pop();
   },
 
-  attemptSessionTermination: () => {
-    ISO18013_5.sendErrorResponse(ISO18013_5.ErrorCode.SESSION_TERMINATED).catch(
-      () => null
-    );
-  },
+  grantConsent: assign<Context, ProximityEvents, unknown, ProximityEvents, any>(
+    ({ context }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
+      assert(
+        context.proximityDetails,
+        "ProximityDetails must be present in context to grant consent"
+      );
+
+      const consentData = getConsentDataFromProximityDetails(
+        context.proximityDetails
+      );
+
+      return { grantedConsentKey: generateConsentKey(consentData) };
+    }
+  ),
 
   storeConsent: ({
     context
@@ -107,7 +109,6 @@ export const createProximityActionsImplementation = (
     );
 
     const consentData = getConsentDataFromProximityDetails(
-      "IPZS", // TODO - use actual RP ID when available instead of hardcoding
       context.proximityDetails
     );
 

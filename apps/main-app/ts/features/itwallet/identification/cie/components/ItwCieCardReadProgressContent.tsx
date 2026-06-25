@@ -80,7 +80,7 @@ export const ItwCieCardReadProgressContent = (
           title={I18n.t(
             `features.itWallet.identification.cie.readingCard.${platform}.idle.title`
           )}
-          pictogram="nfcScanAndroid"
+          pictogram="nfcScanGreyAndroid"
           secondaryAction={cancelAction}
         />
       );

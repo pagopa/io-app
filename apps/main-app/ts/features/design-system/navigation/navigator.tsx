@@ -12,7 +12,7 @@ import { Platform } from "react-native";
 import {
   IONavigationDarkTheme,
   IONavigationLightTheme
-} from "../../../theme/navigations";
+} from "../../../navigation/theme";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
 import { DSAdvice } from "../core/DSAdvice";
@@ -137,7 +137,7 @@ export const DesignSystemNavigator = () => {
             color: IOColors[theme["textHeading-default"]]
           },
           headerTitleAlign: "center",
-          headerBackButtonDisplayMode: "minimal",
+          headerBackTitleVisible: false,
           headerShown: true,
           autoHideHomeIndicator: true
         }}

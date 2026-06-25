@@ -53,6 +53,9 @@ type Props = WithTestID<
     animatedRef?: AnimatedRef<Animated.ScrollView>;
     topElement?: ReactNode;
     alwaysBounceVertical?: boolean;
+    contentContainerStyle?: ComponentProps<
+      typeof IOScrollView
+    >["contentContainerStyle"];
   } & SupportRequestParams
 >;
 
@@ -82,7 +85,8 @@ export const IOScrollViewWithLargeHeader = ({
   ignoreAccessibilityCheck = false,
   animatedRef,
   topElement = undefined,
-  alwaysBounceVertical
+  alwaysBounceVertical,
+  contentContainerStyle
 }: Props) => {
   const [titleHeight, setTitleHeight] = useState(0);
 
@@ -136,6 +140,7 @@ export const IOScrollViewWithLargeHeader = ({
       testID={testID}
       topElement={topElement}
       alwaysBounceVertical={alwaysBounceVertical}
+      contentContainerStyle={contentContainerStyle}
     >
       <ContentWrapper onLayout={getTitleHeight}>
         <VStack space={8}>

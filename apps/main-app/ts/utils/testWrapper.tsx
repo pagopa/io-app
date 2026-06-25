@@ -1,7 +1,4 @@
-import {
-  createStackNavigator,
-  StackNavigationOptions
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { render, RenderOptions } from "@testing-library/react-native";
 
 import { ComponentType } from "react";
@@ -20,8 +17,6 @@ import * as linkingSubscription from "../navigation/linkingSubscription";
  * @param params
  * @param store
  * @param renderOptions
- * @param mockLinkingSubscription
- * @param screenOptions
  */
 export const renderScreenWithNavigationStoreContext = <S,>(
   screen: ComponentType<any>, // I need any to avoid passing navigation
@@ -29,8 +24,7 @@ export const renderScreenWithNavigationStoreContext = <S,>(
   params: Record<string, any>,
   store: Store<S>,
   renderOptions: RenderOptions = {},
-  mockLinkingSubscription = jest.fn(),
-  screenOptions?: StackNavigationOptions
+  mockLinkingSubscription = jest.fn()
 ) => {
   jest
     .spyOn(linkingSubscription, "linkingSubscription")
@@ -41,9 +35,7 @@ export const renderScreenWithNavigationStoreContext = <S,>(
     <Provider store={store}>
       <IOThemeContextProvider theme={"light"}>
         <TestInnerNavigationContainer>
-          <Stack.Navigator
-            screenOptions={{ ...screenOptions, animation: "none" }}
-          >
+          <Stack.Navigator>
             <Stack.Screen
               name={route}
               component={screen}

@@ -6,7 +6,6 @@ import { ItwSessionExpiredError } from "../../../api/client.ts";
 import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
 import { isItwEnabledSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils.ts";
-import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors/index.ts";
 import { ClientIdPrefix } from "../utils/itwRemotePresentationUtils";
@@ -26,12 +25,6 @@ export const createRemoteGuardsImplementation = (
     isItwEnabledSelector(store.getState()) &&
     itwIsL3EnabledSelector(store.getState()) &&
     itwLifecycleIsITWalletValidSelector(store.getState()),
-
-  isEidExpired: () => {
-    const eidStatus = itwCredentialsEidStatusSelector(store.getState());
-
-    return eidStatus === "jwtExpired";
-  },
 
   hasValidWalletInstanceAttestation: () => {
     const walletAttestation = itwWalletInstanceAttestationSelector(

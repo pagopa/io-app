@@ -49,7 +49,7 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
             "features.itWallet.reissuanceLandingScreen.notNecessary.primaryAction"
           ),
           onPress: () =>
-            navigation.popTo(ROUTES.MAIN, {
+            navigation.navigate(ROUTES.MAIN, {
               screen: ROUTES.WALLET_HOME,
               params: { newMethodAdded: false }
             })
@@ -116,11 +116,11 @@ const NavigateToEidIssuanceMachine = ({ eidReissuing }: Props) => {
     if (eidReissuing) {
       return navigation.replace(ITW_ROUTES.IDENTIFICATION.MODE_SELECTION, {
         eidReissuing: true,
-        disableAnimation: true
+        animationEnabled: false
       });
     }
     navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
-      disableAnimation: true
+      animationEnabled: false
     });
   }, [navigation, eidReissuing]);
 

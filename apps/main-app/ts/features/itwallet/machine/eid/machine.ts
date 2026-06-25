@@ -20,6 +20,7 @@ import { ItwTags } from "../tags";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
 import { isMrtdPoPChallengeRequired } from "../../common/utils/mrtdUrl";
 import {
+  CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
   RequestAccessTokenActorParams,
@@ -105,6 +106,24 @@ export const itwEidIssuanceMachine = setup({
         level: "L2"
       } as const
     })),
+
+    /**
+     * Updates the CieID identification level to L3 when IPZS confirms native L3
+     * authentication (i.e. challenge_info is absent in the callback URL,
+     * meaning no MRTD PoP is required because the CieID app already
+     * authenticated at L3).
+     */
+    updateCieIdIdentificationLevel: assign(({ context, event }) => {
+      assertEvent(event, "user-identification-completed");
+      if (
+        context.identification?.mode !== "cieId" ||
+        context.level !== "l3" ||
+        isMrtdPoPChallengeRequired(event.authRedirectUrl)
+      ) {
+        return {};
+      }
+      return { identification: { mode: "cieId", level: "L3" } as const };
+    }),
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     /**
      * Save the final redirect url in the machine context for later reuse. This
@@ -146,7 +165,9 @@ export const itwEidIssuanceMachine = setup({
 
     /** WI actors */
 
-    createWalletInstance: fromPromise<string>(notImplemented),
+    createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
+      notImplemented
+    ),
     revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<
       WalletInstanceAttestations,
@@ -309,9 +330,9 @@ export const itwEidIssuanceMachine = setup({
         src: "verifyTrustFederation",
         onDone: [
           {
-            // When no integrity hardware key exists,
+            // When no integrity hardware key exists or the user is upgrading to IT-Wallet
             // we need to create a new integrity key tag and a new wallet instance
-            guard: not("hasIntegrityKeyTag"),
+            guard: or([not("hasIntegrityKeyTag"), "isUpgrade"]),
             target: "WalletInstanceCreation"
           },
           {
@@ -357,6 +378,7 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "createWalletInstance",
+        input: ({ context }) => ({ isRenewal: context.mode === "upgrade" }),
         onDone: {
           actions: [
             assign(({ event }) => ({
@@ -594,7 +616,11 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  actions: ["completeUserIdentification", "storeAuthLevel"]
+                  actions: [
+                    "completeUserIdentification",
+                    "updateCieIdIdentificationLevel",
+                    "storeAuthLevel"
+                  ]
                 },
                 error: {
                   actions: "setFailure",
@@ -768,7 +794,7 @@ export const itwEidIssuanceMachine = setup({
                   target: "CieWarning.PreparationCie"
                 },
                 back: {
-                  target: "InsertingCardPin"
+                  target: "PreparationPin"
                 },
                 close: {
                   actions: "closeIssuance"
@@ -780,7 +806,6 @@ export const itwEidIssuanceMachine = setup({
                 "Start the preliminary phase of the CIE identification flow.",
               tags: [ItwTags.Loading],
               entry: "navigateToCieAuthenticationScreen",
-              actions: "navigateToCieAuthenticationScreen",
               invoke: {
                 src: "startAuthFlow",
                 input: ({ context }) => ({
@@ -1096,6 +1121,10 @@ export const itwEidIssuanceMachine = setup({
             onDone: {
               target: "RequestingEid",
               actions: assign(({ event }) => ({ accessToken: event.output }))
+            },
+            onError: {
+              actions: "setFailure",
+              target: "#itwEidIssuanceMachine.Failure"
             }
           }
         },

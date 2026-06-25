@@ -155,14 +155,32 @@ export const groupCredentialsByPurpose = (
   };
 };
 
-/** Return a list of credential types that have an invalid status. */
+/**
+ * Determines whether a requested credential cannot be presented REMOTELY.
+ *
+ * Realigned presentation rules (proximity is never inhibited): - A non-valid
+ * PID (expired/jwtExpired/revoked/unknown) cannot be presented remotely. It
+ * remains presentable in proximity, where the verifier decides. - For any other
+ * credential only revocation (`invalid`) blocks: expiry never does, as the
+ * Relying Party is responsible for verifying it.
+ */
+const isInvalidForRemotePresentation = (
+  credential: CredentialMetadata
+): boolean => {
+  const status = getCredentialStatus(credential);
+  return credential.credentialType === CredentialType.PID
+    ? !validCredentialStatuses.includes(status)
+    : status === "invalid";
+};
+
+/** Return a list of credential types that cannot be presented remotely. */
 export const getInvalidCredentials = (
   presentationDetails: PresentationDetails,
   credentialsByType: Record<string, CredentialMetadata | undefined>
 ) =>
   presentationDetails
     .filter(isPresentationDetailSdJwt) // TODO: [SIW-3998] Support MDOC remote presentation
-    // Retries the type from the VCT map
+    // Retrieve the type from the VCT map
     .map(({ vct }) => getCredentialTypeByVct(vct))
     // Removes undefined
     .filter(isDefined)
@@ -170,8 +188,8 @@ export const getInvalidCredentials = (
     .map(type => credentialsByType[type])
     // Removes undefined
     .filter(isDefined)
-    // Removes credential with valid statuses
-    .filter(c => !validCredentialStatuses.includes(getCredentialStatus(c)))
+    // Keeps only the credentials that cannot be presented remotely
+    .filter(isInvalidForRemotePresentation)
     // Gets the invalid credential's type
     .map(c => c.credentialType);
 

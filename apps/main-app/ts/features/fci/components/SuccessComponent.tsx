@@ -1,5 +1,6 @@
 import I18n from "i18next";
 import { useEffect, useMemo } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { fciEndRequest, fciStartRequest } from "../store/actions";
@@ -22,6 +23,8 @@ const SuccessComponent = (props: {
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const dispatch = useIODispatch();
 
+  const isFocused = useIsFocused();
+
   const now = new Date();
   const expires_at = useMemo(
     () => new Date(props.signatureRequest.expires_at),
@@ -35,6 +38,12 @@ const SuccessComponent = (props: {
     expires_at < now;
 
   useEffect(() => {
+    // As SuccessComponent is kept mounted during the L3 login ( the whole FCI flow),
+    // checking 'isFocused' prevents starting the flow again with double requests.
+    if (!isFocused) {
+      return;
+    }
+
     const nowEffect = new Date();
     const expires_at_effect = new Date(props.signatureRequest.expires_at);
 
@@ -64,6 +73,7 @@ const SuccessComponent = (props: {
     expires_at,
     fciDocuments.length,
     fciEnvironment,
+    isFocused,
     isExpiredDocument,
     props.signatureRequest.expires_at,
     status

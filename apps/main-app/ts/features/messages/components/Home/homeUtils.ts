@@ -1,37 +1,34 @@
-import { constTrue, constUndefined, pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 import { StyleSheet } from "react-native";
 import { ActionType } from "typesafe-actions";
-import I18n from "i18next";
-import { GlobalState } from "../../../../store/reducers/types";
-import {
-  loadNextPageMessages,
-  loadPreviousPageMessages,
-  reloadAllMessages
-} from "../../store/actions";
+import { TagEnum } from "../../../../../definitions/communication/MessageCategoryPN";
 import { maximumItemsFromAPI, pageSize } from "../../../../config";
-import { MessageListCategory } from "../../types/messageListCategory";
-import { UIMessage } from "../../types";
-import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
-import {
-  isPaymentMessageWithPaidNoticeSelector,
-  messagePagePotFromCategorySelector,
-  shownMessageCategorySelector
-} from "../../store/reducers/allPaginated";
+import NavigationService from "../../../../navigation/NavigationService";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   isLoadingOrUpdating,
   isSomeOrSomeError,
   isStrictNone,
   isStrictSomeError
 } from "../../../../utils/pot";
-import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
-import { TagEnum } from "../../../../../definitions/communication/MessageCategoryPN";
-import NavigationService from "../../../../navigation/NavigationService";
 import { trackMessageListEndReached, trackMessagesPage } from "../../analytics";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
+import {
+  loadNextPageMessages,
+  loadPreviousPageMessages,
+  reloadAllMessages
+} from "../../store/actions";
+import {
+  isPaymentMessageWithPaidNoticeSelector,
+  messagePagePotFromCategorySelector,
+  shownMessageCategorySelector
+} from "../../store/reducers/allPaginated";
+import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
 import { areMessageSagasRegisteredSelector } from "../../store/reducers/messageSectionStatus";
+import { UIMessage } from "../../types";
+import { MessageListCategory } from "../../types/messageListCategory";
+import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
 import {
   ListItemMessageEnhancedHeight,
   ListItemMessageStandardHeight
@@ -66,8 +63,10 @@ export const getInitialReloadAllMessagesActionIfNeeded = (
     : undefined;
 };
 
-export const getMessagesViewPagerInitialPageIndex = (state: GlobalState) =>
-  pipe(state, shownMessageCategorySelector, messageListCategoryToViewPageIndex);
+export const getMessagesViewPagerInitialPageIndex = (state: GlobalState) => {
+  const messageCategory = shownMessageCategorySelector(state);
+  return messageListCategoryToViewPageIndex(messageCategory);
+};
 
 export const messageListCategoryToViewPageIndex = (
   category: MessageListCategory
@@ -177,15 +176,13 @@ export const getLoadNextPageMessagesActionIfAllowed = (
 export const getReloadAllMessagesActionForRefreshIfAllowed = (
   state: GlobalState,
   category: MessageListCategory
-): ActionType<typeof reloadAllMessages.request> | undefined =>
-  pipe(
-    state,
-    isDoingAnAsyncOperationOnMessages,
-    B.fold(
-      () => initialReloadAllMessagesFromCategory(category, true),
-      constUndefined
-    )
-  );
+): ActionType<typeof reloadAllMessages.request> | undefined => {
+  const isDoingAsyncOperation = isDoingAnAsyncOperationOnMessages(state);
+  if (isDoingAsyncOperation) {
+    return undefined;
+  }
+  return initialReloadAllMessagesFromCategory(category, true);
+};
 
 const shouldBlockPreviousPageMessagesLoading = (state: GlobalState) =>
   isDoingAnAsyncOperationOnMessages(state) ||
@@ -193,45 +190,42 @@ const shouldBlockPreviousPageMessagesLoading = (state: GlobalState) =>
 
 export const getLoadPreviousPageMessagesActionIfAllowed = (
   state: GlobalState
-) =>
-  pipe(state.entities.messages.allPaginated, allPaginated =>
-    pipe(
-      allPaginated.shownCategory === "ARCHIVE"
-        ? allPaginated.archive
-        : allPaginated.inbox,
-      shownMessageCollection =>
-        pipe(
-          shownMessageCollection.lastUpdateTime.getTime() +
-            refreshIntervalMillisecondsGenerator() <
-            new Date().getTime(),
-          B.fold(constUndefined, () =>
-            pipe(
-              shownMessageCollection.data,
-              pot.toOption,
-              O.chainNullableK(a => a.previous),
-              O.fold(constUndefined, previousPageMessageId =>
-                pipe(
-                  state,
-                  shouldBlockPreviousPageMessagesLoading,
-                  B.fold(
-                    () =>
-                      loadPreviousPageMessages.request({
-                        pageSize: maximumItemsFromAPI,
-                        cursor: previousPageMessageId,
-                        filter: {
-                          getArchived: allPaginated.shownCategory === "ARCHIVE"
-                        },
-                        fromUserAction: false
-                      }),
-                    constUndefined
-                  )
-                )
-              )
-            )
-          )
-        )
-    )
-  );
+) => {
+  const allPaginated = state.entities.messages.allPaginated;
+  const isArchiving = allPaginated.shownCategory === "ARCHIVE";
+  const currentCollection = isArchiving
+    ? allPaginated.archive
+    : allPaginated.inbox;
+
+  const shouldMessagesRefresh =
+    currentCollection.lastUpdateTime.getTime() +
+      refreshIntervalMillisecondsGenerator() <
+    new Date().getTime();
+
+  const previousPageMessageId = pot.toUndefined(
+    currentCollection.data
+  )?.previous;
+
+  const shouldBlockLoading = shouldBlockPreviousPageMessagesLoading(state);
+
+  const isPreviousPageMessageLoadAllowed =
+    shouldMessagesRefresh &&
+    previousPageMessageId !== undefined &&
+    !shouldBlockLoading;
+
+  if (!isPreviousPageMessageLoadAllowed) {
+    return undefined;
+  }
+
+  return loadPreviousPageMessages.request({
+    pageSize: maximumItemsFromAPI,
+    cursor: previousPageMessageId,
+    filter: {
+      getArchived: isArchiving
+    },
+    fromUserAction: false
+  });
+};
 
 const initialReloadAllMessagesFromCategory = (
   category: MessageListCategory,
@@ -243,59 +237,47 @@ const initialReloadAllMessagesFromCategory = (
     fromUserAction
   });
 
-const isDoingAnAsyncOperationOnMessages = (state: GlobalState) =>
-  pipe(
-    state,
-    isArchivingInProcessingModeSelector, // No archiving/restoring running
-    B.fold(
-      () =>
-        pipe(
-          // No running message loading
-          state.entities.messages.allPaginated,
-          allPaginated =>
-            isLoadingOrUpdating(allPaginated.archive.data) ||
-            isLoadingOrUpdating(allPaginated.inbox.data)
-        ),
-      constTrue
-    )
+const isDoingAnAsyncOperationOnMessages = (state: GlobalState) => {
+  const isArchivingInProcessingMode =
+    isArchivingInProcessingModeSelector(state);
+  if (isArchivingInProcessingMode) {
+    return true;
+  }
+  const allPaginated = state.entities.messages.allPaginated;
+  return (
+    isLoadingOrUpdating(allPaginated.inbox.data) ||
+    isLoadingOrUpdating(allPaginated.archive.data)
   );
+};
 
 export const generateMessageListLayoutInfo = (
   loadingList: ReadonlyArray<number>,
   messageList: ReadonlyArray<UIMessage> | undefined,
   state: GlobalState
 ) => {
-  if (messageList) {
-    const messageListLayoutInfo: Array<LayoutInfo> = [];
-    // eslint-disable-next-line functional/no-let
-    for (let i = 0; i < messageList.length; i++) {
-      const message = messageList[i];
-      const messageHasBadge =
-        message.category.tag === TagEnum.PN ||
-        isPaymentMessageWithPaidNoticeSelector(state, message.category);
-      const itemLayoutInfo: LayoutInfo = {
-        index: i,
-        length: messageHasBadge
-          ? ListItemMessageEnhancedHeight
-          : ListItemMessageStandardHeight,
-        offset:
-          i > 0
-            ? messageListLayoutInfo[i - 1].offset +
-              messageListLayoutInfo[i - 1].length +
-              StyleSheet.hairlineWidth
-            : 0
-      };
-      // eslint-disable-next-line functional/immutable-data
-      messageListLayoutInfo.push(itemLayoutInfo);
-    }
-    return messageListLayoutInfo;
-  } else {
+  if (!messageList) {
     return loadingList.map((_, index) => ({
       index,
       length: SkeletonHeight,
       offset: index * SkeletonHeight
     }));
   }
+  return messageList.reduce<Array<LayoutInfo>>((acc, message, index) => {
+    const shouldShowBadge =
+      message.category.tag === TagEnum.PN ||
+      isPaymentMessageWithPaidNoticeSelector(state, message.category);
+
+    const listItemHeight = shouldShowBadge
+      ? ListItemMessageEnhancedHeight
+      : ListItemMessageStandardHeight;
+    const prev = acc[index - 1];
+
+    const verticalOffset = prev
+      ? prev.offset + prev.length + StyleSheet.hairlineWidth
+      : 0;
+
+    return [...acc, { index, length: listItemHeight, offset: verticalOffset }];
+  }, []);
 };
 
 export const trackMessagePageOnFocusEventIfAllowed = (state: GlobalState) => {

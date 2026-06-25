@@ -201,7 +201,7 @@ export const CgnAnimatedBackground = () => {
 
   return (
     <Canvas
-      style={[StyleSheet.absoluteFillObject, { backgroundColor }]}
+      style={[StyleSheet.absoluteFill, { backgroundColor }]}
       pointerEvents="none"
       onSize={canvasSize}
     >

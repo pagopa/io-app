@@ -55,6 +55,13 @@ const anprPid404Failure = z.object({
   })
 });
 
+const mrtdTaxIdCodeMismatchFailure = z.object({
+  statusCode: z.literal(400),
+  reason: z.object({
+    error: z.literal("tax_id_code_mismatch")
+  })
+});
+
 /**
  * Guard used to identify ANPR PID 404 issuance failures. It is identified by
  * the presence of reason.error with value "credential_not_found" inside an
@@ -86,3 +93,13 @@ export const enrichErrorWithMetadata =
     }
     throw err;
   };
+
+/**
+ * Guard used to identify MRTD PoP failures caused by a CIE belonging to a
+ * different fiscal code than the identity used during authentication.
+ */
+export const isMrtdTaxIdCodeMismatchFailure = (
+  e: unknown
+): e is Errors.IssuerResponseError =>
+  Errors.isIssuerResponseError(e) &&
+  mrtdTaxIdCodeMismatchFailure.safeParse(e).success;

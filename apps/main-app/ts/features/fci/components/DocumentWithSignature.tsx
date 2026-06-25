@@ -28,6 +28,7 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { fciDocumentSignatureFields } from "../store/actions";
 import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton.ts";
 import DocumentsNavigationBar from "./DocumentsNavigationBar";
 import LoadingComponent from "./LoadingComponent";
 
@@ -74,6 +75,11 @@ const DocumentWithSignature = (props: Props) => {
     onPress: onContinuePress,
     label: I18n.t("features.fci.documents.footer.backToSignFieldsList")
   };
+
+  useHardwareBackButton(() => {
+    props.onClose();
+    return true;
+  });
 
   /** Dispatches the request to draw the signature field on the pdf. */
   useOnFirstRender(() => {

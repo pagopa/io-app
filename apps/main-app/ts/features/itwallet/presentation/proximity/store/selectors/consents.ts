@@ -13,6 +13,12 @@ export const itwProximityConsentsSelector = createSelector(
   (consents): ReadonlyArray<ConsentData> => Object.values(consents)
 );
 
+/** Returns all proximity presentation consents with their generated keys. */
+export const itwProximityConsentsEntriesSelector = createSelector(
+  itwProximityConsentsRecordSelector,
+  consents => Object.entries(consents)
+);
+
 /** Returns all consents that involve the specified credential type. */
 export const itwProximityConsentsByCredentialTypeSelector = (
   credentialType: string

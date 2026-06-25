@@ -1,4 +1,5 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { BottomSheetProvider } from "@swmansion/react-native-bottom-sheet";
 import {
   IODSExperimentalContextProvider,
   IONewTypefaceContextProvider,
@@ -44,7 +45,14 @@ const App = (): JSX.Element => (
                           <LightModalProvider>
                             <AppFeedbackProvider>
                               <StatusMessages>
-                                <RootContainer store={store} />
+                                {/*
+                                  Software Mansion bottom-sheet portal host.
+                                  Mounted above the navigators so modal sheets
+                                  overlay the navigation header.
+                                */}
+                                <BottomSheetProvider>
+                                  <RootContainer store={store} />
+                                </BottomSheetProvider>
                               </StatusMessages>
                             </AppFeedbackProvider>
                           </LightModalProvider>

@@ -5,6 +5,7 @@ import { DesignSystemNavigator } from "../../../design-system/navigation/navigat
 import LollipopPlayground from "../../../lollipop/playgrounds/LollipopPlayground";
 import ProfileAboutApp from "../../aboutApp/screens/ProfileAboutApp";
 import { AppFeedbackPlayground } from "../../devMode/playgrounds/AppFeedbackPlayground";
+import { BottomSheetPlayground } from "../../devMode/playgrounds/BottomSheetPlayground";
 import CgnLandingPlayground from "../../devMode/playgrounds/CgnLandingPlayground";
 import { CiePlaygroundsNavigator } from "../../devMode/playgrounds/Cie/navigation/CiePlaygroundsNavigator";
 import { IdPayCodePlayGround } from "../../devMode/playgrounds/IdPayCodePlayground";
@@ -198,6 +199,10 @@ const SettingsStackNavigator = () => (
     <Stack.Screen
       name={SETTINGS_ROUTES.SEND_PLAYGROUND}
       component={SendPlaygroundScreen}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.BOTTOM_SHEET_PLAYGROUND}
+      component={BottomSheetPlayground}
     />
 
     <Stack.Screen

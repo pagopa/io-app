@@ -179,6 +179,6 @@ describe("handleGetEycaStatus", () => {
           );
         });
     }
-    fail("decode should fail");
+    throw new Error("decode should fail");
   });
 });

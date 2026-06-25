@@ -4,6 +4,7 @@ import {
   fromCallback,
   fromPromise,
   not,
+  or,
   setup,
   stateIn
 } from "xstate";
@@ -49,12 +50,8 @@ export const itwProximityMachine = setup({
 
     /** Consents */
 
-    grantConsent: assign({ hasGrantedConsent: true }),
-    storeConsent: notImplemented,
-
-    /** Flow */
-
-    attemptSessionTermination: notImplemented
+    grantConsent: notImplemented,
+    storeConsent: notImplemented
   },
   actors: {
     checkBluetoothPermissions: fromPromise<boolean>(notImplemented),
@@ -71,12 +68,12 @@ export const itwProximityMachine = setup({
       SendDocumentsActorOutput,
       SendDocumentsActorInput
     >(notImplemented),
-    terminateProximitySession:
-      fromPromise<SendErrorResponseActorOutput>(notImplemented)
+    terminateSession: fromPromise<SendErrorResponseActorOutput>(notImplemented)
   },
   guards: {
     hasFailure: ({ context }) => !!context.failure,
     isNfcRetrieval: ({ context }) => context.retrievalMethod === "nfc",
+    isNfcEngagement: ({ context }) => context.engagementMode === "nfc",
     hasGrantedConsent: notImplemented
   }
 }).createMachine({
@@ -262,9 +259,14 @@ export const itwProximityMachine = setup({
             target: "#itwProximityMachine.Success"
           },
           {
-            // Expected disconnect after intentional session termination for NFC retrieval.
+            // Expected disconnect after intentional session termination for NFC
+            // retrieval — both while tearing the session down (TerminatingForConsent)
+            // and while the user reviews the request (ClaimsDisclosure).
             guard: and([
-              stateIn("Presentment.ClaimsDisclosure"),
+              or([
+                stateIn("Presentment.TerminatingForConsent"),
+                stateIn("Presentment.ClaimsDisclosure")
+              ]),
               "isNfcRetrieval"
             ])
           },
@@ -275,6 +277,17 @@ export const itwProximityMachine = setup({
           }
         ],
         "device-error": [
+          {
+            // Expected error during intentional session termination for NFC
+            // retrieval — consumed without failure, matching device-disconnected.
+            guard: and([
+              or([
+                stateIn("Presentment.TerminatingForConsent"),
+                stateIn("Presentment.ClaimsDisclosure")
+              ]),
+              "isNfcRetrieval"
+            ])
+          },
           {
             guard: not(stateIn("Presentment.Terminating")),
             actions: "setFailure",
@@ -294,6 +307,10 @@ export const itwProximityMachine = setup({
         Starting: {
           description: "Start the native engagement session",
           tags: [ItwPresentationTags.Loading],
+          always: {
+            guard: "isNfcRetrieval",
+            actions: "navigateToNfcPresentmentScreen"
+          },
           invoke: {
             src: "startEngagement",
             input: ({ context }) => ({
@@ -302,13 +319,16 @@ export const itwProximityMachine = setup({
             onDone: {
               target: "AwaitingConnection"
             },
-            onError: {
-              actions: ["setFailure"]
-            }
-          },
-          always: {
-            guard: "isNfcRetrieval",
-            actions: "navigateToNfcPresentmentScreen"
+            onError: [
+              {
+                guard: "isNfcRetrieval",
+                actions: "setFailure",
+                target: "#itwProximityMachine.Failure"
+              },
+              {
+                actions: "setFailure"
+              }
+            ]
           },
           on: {
             retry: {
@@ -340,13 +360,25 @@ export const itwProximityMachine = setup({
           description: "Verifier is initiating the connection",
           tags: [ItwPresentationTags.Loading],
           always: {
-            guard: not("isNfcRetrieval"),
+            // Pre-navigate to the (loading) claims screen for QR engagement only.
+            guard: not("isNfcEngagement"),
             actions: "navigateToClaimsDisclosureScreen"
+          },
+          on: {
+            // NFC session has ended (HCE modal closed)
+            "nfc-stopped": "Terminating"
           }
         },
         Connected: {
           description: "Verifier connected, waiting for the document request",
-          tags: [ItwPresentationTags.Loading]
+          tags: [ItwPresentationTags.Loading],
+          on: {
+            // In case of connection timeout, allows the user to exit the flow
+            close: {
+              actions: "closeProximity",
+              target: "#itwProximityMachine.Idle"
+            }
+          }
         },
         EvaluatingConsent: {
           description:
@@ -358,6 +390,13 @@ export const itwProximityMachine = setup({
               target: "#itwProximityMachine.Presentment.SendingDocuments"
             },
             {
+              // NFC retrieval, consent not yet granted: the NFC link cannot be held
+              // open while the user reviews the request, so tear the session down
+              // (and release the SDK) before asking for consent.
+              guard: "isNfcRetrieval",
+              target: "#itwProximityMachine.Presentment.TerminatingForConsent"
+            },
+            {
               target: "#itwProximityMachine.Presentment.ClaimsDisclosure"
             }
           ]
@@ -365,10 +404,6 @@ export const itwProximityMachine = setup({
         ClaimsDisclosure: {
           description: "Display the requested claims for review",
           entry: "navigateToClaimsDisclosureScreen",
-          always: {
-            guard: "isNfcRetrieval",
-            actions: "attemptSessionTermination"
-          },
           on: {
             "holder-consent": [
               {
@@ -379,12 +414,28 @@ export const itwProximityMachine = setup({
                 target: "#itwProximityMachine.Presentment.StoreConsent"
               },
               {
-                actions: "grantConsent",
                 target: "#itwProximityMachine.Presentment.SendingDocuments"
               }
             ],
             close: {
               target: "#itwProximityMachine.Presentment.Terminating"
+            }
+          }
+        },
+        TerminatingForConsent: {
+          description:
+            "NFC retrieval: terminate the live session and release the SDK before asking for consent, without leaving the proximity flow",
+          tags: [ItwPresentationTags.Loading],
+          invoke: {
+            id: "terminateSession",
+            src: "terminateSession",
+            onDone: {
+              target: "#itwProximityMachine.Presentment.ClaimsDisclosure"
+            },
+            onError: {
+              // Ignore termination failures: proceed to consent and rely on the
+              // restart's startEngagement to reset the native session.
+              target: "#itwProximityMachine.Presentment.ClaimsDisclosure"
             }
           }
         },
@@ -422,10 +473,11 @@ export const itwProximityMachine = setup({
           }
         },
         Terminating: {
+          tags: [ItwPresentationTags.Loading],
           description: "Send the session-termination signal to the verifier",
           invoke: {
-            id: "terminateProximitySession",
-            src: "terminateProximitySession",
+            id: "terminateSession",
+            src: "terminateSession",
             onDone: {
               actions: "closeProximity"
             },
@@ -439,8 +491,6 @@ export const itwProximityMachine = setup({
     },
     Success: {
       description: "Documents successfully sent to the verifier",
-      // The loading tag prevents glitches while navigating to the success screen
-      tags: [ItwPresentationTags.Loading],
       always: {
         // NFC retrieval renders success inline on its own screen, no navigation needed
         guard: not("isNfcRetrieval"),
@@ -456,6 +506,16 @@ export const itwProximityMachine = setup({
     Failure: {
       description: "An error occurred, captured in context.failure",
       entry: "navigateToFailureScreen",
+      invoke: {
+        id: "terminateSession",
+        src: "terminateSession",
+        onDone: {
+          // Attempt termination ignoring result
+        },
+        onError: {
+          // Attempt termination ignoring any failure
+        }
+      },
       on: {
         close: {
           actions: "closeProximity",

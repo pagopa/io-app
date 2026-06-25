@@ -70,7 +70,21 @@ export type CredentialStatusAssertionFailure = {
   reason?: unknown;
 };
 
-export type ItwIdMethod = IdentificationContext["mode"];
+export type ItwIdMethod =
+  | IdentificationContext["mode"]
+  | "cieid_L2"
+  | "cieid_L3";
+
+/**
+ * Maps an IdentificationContext to the corresponding ItwIdMethod value,
+ * distinguishing between CieID L2 and CieID L3 authentication levels.
+ */
+export const toItwIdMethod = (ctx: IdentificationContext): ItwIdMethod => {
+  if (ctx.mode === "cieId") {
+    return ctx.level === "L3" ? "cieid_L3" : "cieid_L2";
+  }
+  return ctx.mode;
+};
 
 export type TrackItwBannerProperties = {
   banner_id: string;

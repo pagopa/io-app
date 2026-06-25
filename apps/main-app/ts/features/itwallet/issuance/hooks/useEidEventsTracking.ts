@@ -11,8 +11,8 @@ import { ItwFlow } from "../../analytics/utils/types";
 import {
   trackIdNotMatch,
   trackItwCieIdCieNotRegistered,
-  trackItwIdRequestFederationFailed,
   trackItwIdRequestFailure,
+  trackItwIdRequestFederationFailed,
   trackItwIdRequestUnexpectedFailure,
   trackItwUnsupportedDevice,
   trackMrtdPoPChallengeInfoFailed
@@ -59,7 +59,9 @@ export const useEidEventsTracking = ({
 
   useEffect(() => {
     if (
-      failure.type === IssuanceFailureType.NOT_MATCHING_IDENTITY &&
+      (failure.type === IssuanceFailureType.NOT_MATCHING_IDENTITY ||
+        failure.type ===
+          IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY) &&
       identification
     ) {
       return trackIdNotMatch(identification.mode, itwFlow);
