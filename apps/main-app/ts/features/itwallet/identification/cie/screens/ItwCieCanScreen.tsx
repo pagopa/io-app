@@ -103,6 +103,12 @@ export const ItwCieCanScreen = () => {
                 ref={canPadViewRef}
                 secret
                 value={can}
+                accessibilityValueText={({ valueLength, length }) =>
+                  I18n.t("global.accessibility.inputDigitCounter", {
+                    valueLength,
+                    length
+                  })
+                }
                 accessibilityLabel={I18n.t(
                   "authentication.cie.pin.accessibility.label"
                 )}
