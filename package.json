@@ -17,7 +17,6 @@
     "@react-native/babel-preset": "0.83.6",
     "@react-native/metro-config": "0.83.6",
     "@expo/metro-config": "55.0.23",
-    "@nx/eslint": "catalog:",
     "@nx/jest": "catalog:",
     "@nx/js": "catalog:",
     "@swc-node/register": "~1.11.1",

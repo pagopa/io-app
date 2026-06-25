@@ -5,7 +5,6 @@ packages:
 catalog:
   # --- Nx ---
   nx: "22.7.2"
-  "@nx/eslint": "22.7.2"
   "@nx/jest": "22.7.2"
   "@nx/js": "22.7.2"
   # --- TypeScript ---
@@ -17,7 +16,6 @@ catalog:
 
   # --- React Native ---
   "@react-native/typescript-config": "0.83.6"
-  "@react-native/eslint-config": "0.85.0-rc.7"
   react: "19.2.0"
   react-native: "0.83.6"
   react-native-reanimated: "4.3.1"
