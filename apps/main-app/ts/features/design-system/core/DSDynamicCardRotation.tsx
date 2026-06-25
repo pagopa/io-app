@@ -291,7 +291,6 @@ export const DSDynamicCardRotation = () => {
 
     return (
       <Mask mask={<CardInnerMask />}>
-        {/* eslint-disable react-native-a11y/has-valid-accessibility-ignores-invert-colors */}
         <Image
           x={0}
           y={0}

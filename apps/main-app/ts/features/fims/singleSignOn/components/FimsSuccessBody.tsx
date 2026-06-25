@@ -108,10 +108,9 @@ export const FimsFlowSuccessBody = ({
               const state = store.getState();
               computeAndTrackDataShareAccepted(serviceId, state);
               dispatch(
-                fimsAcceptConsentsAction(
-                  // eslint-disable-next-line no-underscore-dangle
-                  { acceptUrl: consents._links.consent.href }
-                )
+                fimsAcceptConsentsAction({
+                  acceptUrl: consents._links.consent.href
+                })
               );
             }
           },

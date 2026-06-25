@@ -19,7 +19,6 @@ export function* handleGetWhitelistedStatus(
     const response = yield* call(client.isFiscalCodeWhitelisted, {
       Bearer: sessionToken
     });
-    // eslint-disable-next-line no-underscore-dangle
     if (response._tag === "Right" && response.right.status === 200) {
       const { whitelisted } = response.right.value;
       yield* put(itwSetFiscalCodeWhitelisted(whitelisted));

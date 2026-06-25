@@ -227,15 +227,10 @@ describe("fetchQrCodeSaga", () => {
       it(`should dispatch KO state on a response of ${JSON.stringify(
         res
       )} with isTest='${isSendUATEnvironment}'`, () => {
-        // eslint-disable-next-line no-underscore-dangle
         const error = res._tag === "Right" ? res.right.value : undefined;
         const reason = `HTTP request failed (${
-          // eslint-disable-next-line no-underscore-dangle
           res._tag === "Right" ? res.right.status : ""
-        } ${
-          // eslint-disable-next-line no-underscore-dangle
-          res._tag === "Right" ? res.right.value.status : ""
-        } A detail)`;
+        } ${res._tag === "Right" ? res.right.value.status : ""} A detail)`;
         testSaga(
           fetchAarQrCodeSaga,
           mockFetchQrCode,
