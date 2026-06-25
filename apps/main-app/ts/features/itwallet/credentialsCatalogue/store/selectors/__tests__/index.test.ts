@@ -193,26 +193,22 @@ describe("itwAvailableCredentialsListSelector", () => {
       { name: "Patente di guida", type: "mDL" },
       {
         name: "Carta Europea della Disabilità",
-        type: "EuropeanDisabilityCard",
-        isNew: false
+        type: "EuropeanDisabilityCard"
       },
       {
         name: "Tessera Sanitaria - Tessera europea di assicurazione malattia",
-        type: "EuropeanHealthInsuranceCard",
-        isNew: false
+        type: "EuropeanHealthInsuranceCard"
       },
       { name: "Titoli accademici", type: "education_degree" },
       {
         name: "Iscrizioni accademiche",
-        type: "education_enrollment",
-        isNew: false
+        type: "education_enrollment"
       },
       { name: "Attestato di residenza", type: "residency" },
       { name: "Diplomi", type: "education_diploma" },
       {
         name: "Frequenza scolastica",
-        type: "education_attendance",
-        isNew: false
+        type: "education_attendance"
       }
     ]);
   });
