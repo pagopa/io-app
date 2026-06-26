@@ -1,14 +1,25 @@
+import { getCredentialStatus } from "../../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
-import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
+import {
+  CredentialMetadata,
+  ItwCredentialStatus
+} from "../../../../common/utils/itwTypesUtils";
 import {
   enrichPresentationDetails,
   getCredentialTypeByVct,
+  getInvalidCredentials,
   groupCredentialsByPurpose
 } from "../itwRemotePresentationUtils";
 import {
   PresentationDetails,
   type EnrichedPresentationDetails
 } from "../itwRemoteTypeUtils";
+
+jest.mock("../../../../common/utils/itwCredentialStatusUtils");
+
+const mockGetCredentialStatus = getCredentialStatus as jest.MockedFunction<
+  typeof getCredentialStatus
+>;
 
 type Expected = ReturnType<typeof groupCredentialsByPurpose>;
 
@@ -335,5 +346,137 @@ describe("getCredentialTypeByVct - urn format", () => {
     [undefined, "urn:wrong"]
   ])("extracts %s from %s", (expected, vct) => {
     expect(getCredentialTypeByVct(vct)).toEqual(expected);
+  });
+});
+
+describe("getInvalidCredentials", () => {
+  const PID_VCT = "urn:it-wallet:pid:1";
+  const MDL_VCT = "urn:it-wallet:mDL:1";
+
+  // Builds a presentation detail for the given vct (only format and vct are used)
+  const detail = (vct: string): PresentationDetails[number] =>
+    ({ format: "dc+sd-jwt", vct }) as unknown as PresentationDetails[number];
+
+  // Builds a stored credential whose status is resolved by the mocked getCredentialStatus
+  const credential = (
+    credentialType: string,
+    status: ItwCredentialStatus
+  ): CredentialMetadata =>
+    ({ credentialType, status }) as unknown as CredentialMetadata;
+
+  beforeEach(() => {
+    mockGetCredentialStatus.mockImplementation(
+      c => (c as unknown as { status: ItwCredentialStatus }).status
+    );
+  });
+
+  type Scenario = {
+    name: string;
+    details: PresentationDetails;
+    credentialsByType: Record<string, CredentialMetadata | undefined>;
+    expected: Array<string>;
+  };
+
+  const scenarios: Array<Scenario> = [
+    {
+      name: "allows a valid PID and a valid EAA",
+      details: [detail(PID_VCT), detail(MDL_VCT)],
+      credentialsByType: {
+        [CredentialType.PID]: credential(CredentialType.PID, "valid"),
+        [CredentialType.DRIVING_LICENSE]: credential(
+          CredentialType.DRIVING_LICENSE,
+          "valid"
+        )
+      },
+      expected: []
+    },
+    {
+      name: "allows an expired EAA presented alone",
+      details: [detail(MDL_VCT)],
+      credentialsByType: {
+        [CredentialType.DRIVING_LICENSE]: credential(
+          CredentialType.DRIVING_LICENSE,
+          "expired"
+        )
+      },
+      expected: []
+    },
+    {
+      name: "allows a jwtExpired EAA presented alone",
+      details: [detail(MDL_VCT)],
+      credentialsByType: {
+        [CredentialType.DRIVING_LICENSE]: credential(
+          CredentialType.DRIVING_LICENSE,
+          "jwtExpired"
+        )
+      },
+      expected: []
+    },
+    {
+      name: "allows an EAA with unknown status presented alone",
+      details: [detail(MDL_VCT)],
+      credentialsByType: {
+        [CredentialType.DRIVING_LICENSE]: credential(
+          CredentialType.DRIVING_LICENSE,
+          "unknown"
+        )
+      },
+      expected: []
+    },
+    {
+      name: "blocks a revoked EAA",
+      details: [detail(MDL_VCT)],
+      credentialsByType: {
+        [CredentialType.DRIVING_LICENSE]: credential(
+          CredentialType.DRIVING_LICENSE,
+          "invalid"
+        )
+      },
+      expected: [CredentialType.DRIVING_LICENSE]
+    },
+    {
+      name: "blocks a jwtExpired PID requested with a valid EAA",
+      details: [detail(PID_VCT), detail(MDL_VCT)],
+      credentialsByType: {
+        [CredentialType.PID]: credential(CredentialType.PID, "jwtExpired"),
+        [CredentialType.DRIVING_LICENSE]: credential(
+          CredentialType.DRIVING_LICENSE,
+          "valid"
+        )
+      },
+      expected: [CredentialType.PID]
+    },
+    {
+      name: "blocks an expired PID",
+      details: [detail(PID_VCT)],
+      credentialsByType: {
+        [CredentialType.PID]: credential(CredentialType.PID, "expired")
+      },
+      expected: [CredentialType.PID]
+    },
+    {
+      name: "blocks a PID with unknown status",
+      details: [detail(PID_VCT)],
+      credentialsByType: {
+        [CredentialType.PID]: credential(CredentialType.PID, "unknown")
+      },
+      expected: [CredentialType.PID]
+    },
+    {
+      name: "blocks both a non-valid PID and a revoked EAA",
+      details: [detail(PID_VCT), detail(MDL_VCT)],
+      credentialsByType: {
+        [CredentialType.PID]: credential(CredentialType.PID, "jwtExpired"),
+        [CredentialType.DRIVING_LICENSE]: credential(
+          CredentialType.DRIVING_LICENSE,
+          "invalid"
+        )
+      },
+      expected: [CredentialType.PID, CredentialType.DRIVING_LICENSE]
+    }
+  ];
+
+  test.each(scenarios)("$name", ({ details, credentialsByType, expected }) => {
+    expect(getInvalidCredentials(details, credentialsByType)).toEqual(expected);
   });
 });

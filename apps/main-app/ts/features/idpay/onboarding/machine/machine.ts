@@ -195,10 +195,12 @@ export const idPayOnboardingMachine = setup({
     },
 
     DisplayingInitiativeInfo: {
-      entry: "navigateToInitiativeDetailsScreen",
-      actions: assign(() => ({
-        currentStep: 1
-      })),
+      entry: [
+        "navigateToInitiativeDetailsScreen",
+        assign({
+          currentStep: 1
+        })
+      ],
       on: {
         next: [
           {
