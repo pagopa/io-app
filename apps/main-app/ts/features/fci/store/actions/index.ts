@@ -36,6 +36,15 @@ export const fciSignatureRequestRetryFromId = createStandardAction(
 )<string>();
 
 /**
+ * resets FCI flow state and sets a fresh signature request.
+ * this action was created because in FciSignatureRequestRetrySaga clearing state
+ * and setting fresh signature data was triggering double events.
+ */
+export const fciSignatureRequestRetrySuccess = createStandardAction(
+  "FCI_SIGNATURE_DETAIL_RETRY_SUCCESS"
+)<SignatureRequestDetailView>();
+
+/**
  * get and handle the QTSP clauses
  */
 export const fciLoadQtspClauses = createAsyncAction(
@@ -158,6 +167,7 @@ export const fciL3LocalFlag =
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciSignatureRequestRetryFromId>
+  | ActionType<typeof fciSignatureRequestRetrySuccess>
   | ActionType<typeof fciLoadQtspClauses>
   | ActionType<typeof fciLoadQtspFilledDocument>
   | ActionType<typeof fciSigningRequest>

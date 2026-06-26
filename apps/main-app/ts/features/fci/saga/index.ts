@@ -27,6 +27,7 @@ import { CreateSignatureBody } from "../../../../definitions/fci/CreateSignature
 import {
   fciSignatureRequestFromId,
   fciSignatureRequestRetryFromId,
+  fciSignatureRequestRetrySuccess,
   fciClearStateRequest,
   fciStartRequest,
   fciLoadQtspClauses,
@@ -251,17 +252,8 @@ function* watchFciSignatureRequestRetrySaga(
 
     if (isActionOf(fciSignatureRequestFromId.success, result)) {
       if (result.payload.id === action.payload) {
-        /**
-         * when restarting the flow from 'DocumentUnavailableScreen',
-         * FciDocumentsScreen will still get pot error if not reset
-         */
-        yield* put(fciDownloadPreview.cancel());
-        /**
-         * when restarting the flow after polling failure, this is needed to
-         * reset 'fciHasDocumentPreparationErrorSelector'
-         */
-        yield* put(fciPollFilledDocument.cancel());
-        // start a new signing flow
+        // reset FCI state and sets the fresh signature
+        yield* put(fciSignatureRequestRetrySuccess(result.payload));
         yield* put(fciStartRequest());
         return;
       }

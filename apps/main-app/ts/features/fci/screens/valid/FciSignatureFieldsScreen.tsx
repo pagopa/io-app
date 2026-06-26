@@ -119,6 +119,14 @@ const FciSignatureFieldsScreen = () => {
     }
   }, [hasDocumentPreparationError, isPreviewModalVisible, dismissModal]);
 
+  // Dismiss the modal on unmount. (needed for StackActions.replace on errors)
+  useEffect(
+    () => () => {
+      hideModal();
+    },
+    [hideModal]
+  );
+
   // get signatureFields for the current document
   const docSignatures = useMemo(
     () =>
