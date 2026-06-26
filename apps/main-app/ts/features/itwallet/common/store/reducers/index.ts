@@ -185,9 +185,9 @@ export const migrations: MigrationManifest = {
   // Removed isItwSimplifiedActivationRequired from preferences
   "15": (state: PersistedState): PersistedState =>
     _.omit(state, "preferences.isItwSimplifiedActivationRequired"),
-  // Removed itWalletSpecsVersion from preferences
+  // Removed itWalletSpecsVersion from environment
   "16": (state: PersistedState): PersistedState =>
-    _.omit(state, "preferences.itWalletSpecsVersion")
+    _.omit(state, "environment.itWalletSpecsVersion")
 };
 
 const itwPersistConfig: PersistConfig = {
