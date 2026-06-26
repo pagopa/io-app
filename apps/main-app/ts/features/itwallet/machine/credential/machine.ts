@@ -279,6 +279,7 @@ export const itwCredentialIssuanceMachine = setup({
             src: "obtainAccessToken",
             input: ({ context }) => ({
               requestedCredential: context.requestedCredential,
+              evaluatedDcqlQuery: context.evaluatedDcqlQuery,
               codeVerifier: context.codeVerifier,
               issuerConf: context.issuerConf,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
