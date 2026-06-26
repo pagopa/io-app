@@ -15,7 +15,6 @@ import {
   handleFimsBackNavigation,
   handleFimsResourcesDeallocation
 } from "../sagaUtils";
-import { fimsEphemeralSessionOniOSSelector } from "../../store/selectors";
 
 describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
   describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
@@ -49,13 +48,11 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
-        .select(fimsEphemeralSessionOniOSSelector)
-        .next(false)
         .call(
           LoginUtils.openAuthenticationSession,
           "https://relyingParty.url/inAppBrowserLandingPage",
           "iossoapi",
-          true
+          false
         )
         .next()
         .call(handleFimsBackNavigation)
@@ -92,8 +89,6 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
-        .select(fimsEphemeralSessionOniOSSelector)
-        .next(true)
         .call(
           LoginUtils.openAuthenticationSession,
           "https://relyingParty.url/inAppBrowserLandingPage",
@@ -234,13 +229,11 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
-        .select(fimsEphemeralSessionOniOSSelector)
-        .next(false)
         .call(
           LoginUtils.openAuthenticationSession,
           "https://relyingParty.url/inAppBrowserLandingPage",
           "iossoapi",
-          true
+          false
         )
         .throw(inAppBrowserOpeningError)
         .call(handleInAppBrowserErrorIfNeeded, inAppBrowserOpeningError)
