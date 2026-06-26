@@ -36,24 +36,15 @@ export const remarkProcessor = remark()
   .use(rehypeStringify)
   .use(remarkDirective);
 
-// Strips HTML tags, repeating until the string stops changing. A single pass
-// is unsafe because removing a tag can splice the surrounding characters into a
-// new one (e.g. `<scr<script>ipt>` -> `<script>`); looping guarantees no tag
-// survives the sanitization.
-const stripHtmlTags = (input: string): string => {
-  const stripped = input.replace(/<[^>]+>/g, "");
-  return stripped === input ? stripped : stripHtmlTags(stripped);
-};
-
 export const markdownToPlainText = (md: string): string =>
-  stripHtmlTags(
-    md
-      .replace(/```[\s\S]*?```|`([^`]*)`/g, "$1") // remove code blocks + inline code
-      .replace(/!\[.*?\]\(.*?\)|\[(.*?)\]\(.*?\)/g, "$1") // images & links
-  )
-    // Remove HTML tags before stripping markdown symbols, which also removes the
-    // `>` that closing tags rely on to be matched.
-    .replace(/[*_~>#-]+/gm, "") // remove markdown symbols
+  md
+    .replace(/```[\s\S]*?```|`([^`]*)`/g, "$1") // remove code blocks + inline code
+    .replace(/!\[.*?\]\(.*?\)|\[(.*?)\]\(.*?\)/g, "$1") // images & links
+    .replace(/[*_~#-]+/gm, "") // remove markdown symbols
+    // Drop the angle brackets themselves rather than matching whole tags.
+    // Removing single characters cannot leave residual characters that re-form a
+    // tag (e.g. `<scr<script>ipt>`), so no HTML element can survive.
+    .replace(/[<>]/g, "")
     .replace(/\s{2,}/g, " ") // collapse spaces
     .replace(/\n{2,}/g, "\n") // collapse blank lines
     .trim();
