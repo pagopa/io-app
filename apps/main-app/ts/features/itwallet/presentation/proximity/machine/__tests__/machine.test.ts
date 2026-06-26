@@ -496,6 +496,18 @@ describe("itwProximityMachine", () => {
     expect(closeProximity).toHaveBeenCalledTimes(1);
   });
 
+  it("close from Presentment.Connected closes the flow and returns to Idle", () => {
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot({ Presentment: "Connected" })
+    });
+
+    actor.start();
+    actor.send({ type: "close" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(closeProximity).toHaveBeenCalledTimes(1);
+  });
+
   it("holder-consent from ClaimsDisclosure moves to SendingDocuments", () => {
     sendDocuments.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
@@ -599,6 +611,7 @@ describe("itwProximityMachine", () => {
       ProximityFailureType.RELYING_PARTY_GENERIC
     );
     expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
+    expect(terminateSession).toHaveBeenCalledTimes(1);
   });
 
   it("close from ClaimsDisclosure terminates the session and closes the flow", async () => {
@@ -749,6 +762,27 @@ describe("itwProximityMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       Presentment: "TerminatingForConsent"
+    });
+    expect(actor.getSnapshot().context.failure).toBeUndefined();
+    expect(navigateToFailureScreen).not.toHaveBeenCalled();
+  });
+
+  it("device-error in ClaimsDisclosure with NFC retrieval is consumed without failure", () => {
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot(
+        { Presentment: "ClaimsDisclosure" },
+        { retrievalMethod: "nfc" }
+      )
+    });
+
+    actor.start();
+    actor.send({
+      type: "device-error",
+      error: new Error("expected NFC teardown error")
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "ClaimsDisclosure"
     });
     expect(actor.getSnapshot().context.failure).toBeUndefined();
     expect(navigateToFailureScreen).not.toHaveBeenCalled();

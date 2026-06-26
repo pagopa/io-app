@@ -47,6 +47,8 @@
       "minusSymbol": "meno",
       "reload": "Ricarica",
       "search": "Cerca",
+      "expanded": "Espanso",
+      "collapsed": "Compresso",
       "cieReadingProgress": "Lettura {{percentage}}% completata",
       "dateFormat": "DD MMMM YYYY",
       "alert": "Avviso",
@@ -1704,6 +1706,10 @@
     "banner": {
       "content": "Questo è un messaggio dinamico: il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate.",
       "action": "Scopri di più"
+    },
+    "surveyBanner": {
+      "content": "Raccontaci la tua esperienza con questo messaggio e aiutaci a migliorare.",
+      "action": "Vai al sondaggio"
     },
     "bottomSheet": {
       "title": "Cos'è un messaggio dinamico?",
@@ -3713,6 +3719,10 @@
           "primaryAction": "Ripeti l'accesso",
           "secondaryAction": "Chiudi"
         },
+        "cieNotMatchingAuthenticationIdentityError": {
+          "title": "La CIE non corrisponde",
+          "body": "La Carta di Identità Elettronica che hai usato non è quella della persona che sta attivando questo portafoglio IT-Wallet."
+        },
         "genericError": {
           "title": "Si è verificato un errore imprevisto",
           "body": "L’ente che emette le versioni digitali dei documenti sta riscontrando dei problemi ed è già al lavoro per risolverli: riprova più tardi.",
@@ -4056,9 +4066,9 @@
             "secondaryAction": "Chiudi"
           },
           "eidExpiredScreen": {
-            "title": "Verifica la tua identità",
-            "subtitle": "È un passaggio di verifica necessario per continuare ad usare IT-Wallet e per autenticarti.",
-            "primaryAction": "Inizia",
+            "title": "È necessaria una conferma della tua identità",
+            "subtitle": "Dopo aver confermato l'identità associata al tuo IT-Wallet ID potrai ripetere l'operazione.",
+            "primaryAction": "Conferma identità",
             "secondaryAction": "Annulla"
           },
           "unexpectedErrorScreen": {
