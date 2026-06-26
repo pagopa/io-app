@@ -43,6 +43,7 @@ import {
 } from "../../pn/analytics";
 import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBanner";
 import { MessageDetailsBody } from "../components/MessageDetail/MessageDetailsBody";
+import { StandardMessageSurveyBanner } from "../components/MessageSurveyBanner";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -204,6 +205,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
               sendUserType={"not_set"}
             />
             {hasRemoteContent && <RemoteContentBanner />}
+            <StandardMessageSurveyBanner message={message} />
           </ContentWrapper>
         </View>
         <VSpacer size={24} />

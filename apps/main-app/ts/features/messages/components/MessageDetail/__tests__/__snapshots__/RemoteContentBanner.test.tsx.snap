@@ -407,7 +407,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                 "padding": 16,
                               },
                               {
-                                "backgroundColor": "#F4F5F8",
+                                "backgroundColor": "#DBF9FA",
                               },
                             ]
                           }
@@ -422,7 +422,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                 "padding": 16,
                               },
                               {
-                                "backgroundColor": "#F4F5F8",
+                                "backgroundColor": "#DBF9FA",
                               },
                               {
                                 "transform": [
