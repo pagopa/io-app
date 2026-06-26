@@ -60,7 +60,8 @@ export const l2Credentials = [
 
 // New credentials that can be actively requested and obtained by the user
 export const newCredentials = [
-  CredentialType.PROOF_OF_AGE,
+  // TODO: temporarily removed from obtainable credentials, restore when ready
+  // CredentialType.PROOF_OF_AGE,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
   CredentialType.RESIDENCY,
