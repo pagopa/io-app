@@ -1,6 +1,7 @@
 import { generate } from "@pagopa/io-react-native-crypto";
 import {
   createCryptoContextFor,
+  RemotePresentation,
   type ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { v4 as uuidv4 } from "uuid";
@@ -16,7 +17,6 @@ import {
   CredentialAccessToken,
   CredentialBundle,
   CredentialFormat,
-  DcqlQuery,
   EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject
@@ -104,7 +104,7 @@ export const requestCredential: RequestCredential = async ({
 
   const evaluatedDcqlQuery =
     await ioWallet.RemotePresentation.evaluateDcqlQuery(
-      requestObject.dcql_query as DcqlQuery,
+      requestObject.dcql_query as RemotePresentation.DcqlQuery,
       [[pid.metadata.keyTag, pid.credential]]
     );
   return {

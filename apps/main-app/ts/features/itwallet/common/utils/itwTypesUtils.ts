@@ -20,11 +20,6 @@ export type EvaluatedDcqlQueryResult = Awaited<
 >;
 
 /**
- * Alias for a DCQL query accepted by the wallet SDK.
- */
-export type DcqlQuery = RemotePresentation.DcqlQuery;
-
-/**
  * Alias type for the relying party entity configuration.
  */
 export type RpEntityConfiguration = RemotePresentation.RelyingPartyConfig;
