@@ -32,10 +32,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
-import {
-  CredentialMetadata,
-  EvaluatedDcqlQueryResult
-} from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
@@ -43,9 +40,9 @@ import type { CredentialIssuanceMode } from "../../machine/credential/context";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
-  selectEvaluatedDcqlQueryOption,
   selectIsIssuing,
-  selectIsLoading
+  selectIsLoading,
+  selectRequiredClaimsOption
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -78,10 +75,9 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const evaluatedDcqlQueryOption =
-    ItwCredentialIssuanceMachineContext.useSelector(
-      selectEvaluatedDcqlQueryOption
-    );
+  const requiredClaimsOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectRequiredClaimsOption
+  );
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
@@ -112,7 +108,7 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   return pipe(
     sequenceS(O.Monad)({
       credentialType: credentialTypeOption,
-      evaluatedDcqlQuery: evaluatedDcqlQueryOption,
+      requiredClaimNames: requiredClaimsOption,
       eid: eidOption
     }),
     O.fold(
@@ -124,7 +120,7 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
 
 type ContentViewProps = {
   credentialType: string;
-  evaluatedDcqlQuery: EvaluatedDcqlQueryResult;
+  requiredClaimNames: ReadonlyArray<string>;
   eid: CredentialMetadata;
 };
 
@@ -133,7 +129,7 @@ type ContentViewProps = {
  */
 const ContentView = ({
   credentialType,
-  evaluatedDcqlQuery,
+  requiredClaimNames,
   eid
 }: ContentViewProps) => {
   const route = useRoute();
@@ -179,12 +175,10 @@ const ContentView = ({
   const claims = parseClaims(eid.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
   });
-  const requiredClaims = evaluatedDcqlQuery.flatMap(({ requiredDisclosures }) =>
-    requiredDisclosures.flatMap(({ name }) => {
-      const claim = claims.find(({ id }) => id === name);
-      return claim ? [{ claim, source: eidCredentialName }] : [];
-    })
-  );
+  const requiredClaims = requiredClaimNames.flatMap(name => {
+    const claim = claims.find(({ id }) => id === name);
+    return claim ? [{ claim, source: eidCredentialName }] : [];
+  });
 
   // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens
   const trackScrollToBottom = (crossed: boolean) => {
