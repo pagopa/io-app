@@ -46,6 +46,13 @@ export const trackItWalletIntroScreen = (itw_flow: ItwFlow) => {
   );
 };
 
+export const trackItwPrivacyScreen = (itw_flow: ItwFlow) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_PRIVACY,
+    buildEventProperties("UX", "screen_view", { itw_flow })
+  );
+};
+
 export const trackOpenWalletScreen = (
   credential_details: ItwCredentialDetails
 ) => {
@@ -343,7 +350,7 @@ export const trackItwRequest = (method?: ItwIdMethod, itw_flow?: ItwFlow) => {
 };
 
 export const trackItwIdAuthenticationCompleted = (
-  ITW_ID_method: Exclude<ItwIdMethod, "ciePin">
+  ITW_ID_method: ItwIdMethod
 ) => {
   void mixpanelTrack(
     ITW_TECH_EVENTS.ITW_ID_AUTHENTICATION_COMPLETED,
@@ -351,9 +358,7 @@ export const trackItwIdAuthenticationCompleted = (
   );
 };
 
-export const trackItwIdVerifiedDocument = (
-  ITW_ID_method: Exclude<ItwIdMethod, "ciePin">
-) => {
+export const trackItwIdVerifiedDocument = (ITW_ID_method: ItwIdMethod) => {
   void mixpanelTrack(
     ITW_TECH_EVENTS.ITW_ID_VERIFIED_DOCUMENT,
     buildEventProperties("TECH", undefined, { ITW_ID_method })

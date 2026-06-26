@@ -28,65 +28,56 @@ export const createProximityActionsImplementation = (
 
   navigateToBluetoothPermissionsScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS
     });
   },
 
   navigateToBluetoothActivationScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION
     });
   },
 
   navigateToNfcActivationScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.NFC_ACTIVATION,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.NFC_ACTIVATION
     });
   },
 
   navigateToNfcPresentmentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT
     });
   },
 
   navigateToPresentmentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
       screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
-      params: {},
-      pop: true
+      params: {}
     });
   },
 
   navigateToClaimsDisclosureScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE
     });
   },
 
   navigateToStoreconsentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.STORE_CONSENT,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.STORE_CONSENT
     });
   },
 
   navigateToSuccessScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.SUCCESS,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.SUCCESS
     });
   },
 
   navigateToFailureScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.FAILURE,
-      pop: true
+      screen: ITW_PROXIMITY_ROUTES.FAILURE
     });
   },
 
