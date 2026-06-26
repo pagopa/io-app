@@ -5,7 +5,7 @@ import {
   IOColors,
   IOVisualCostants,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { View } from "react-native";
 
 const CUSTOM_SLOT_HEIGHT = 150;

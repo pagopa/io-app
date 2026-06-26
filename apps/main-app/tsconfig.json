@@ -8,7 +8,7 @@
   "exclude": ["android", "ios", "**/node_modules", "**/Pods", "dist"],
   "references": [
     {
-      "path": "../../libs/io-app-design-system"
+      "path": "../../libs/design-system"
     }
   ]
 }

@@ -13,7 +13,7 @@ import {
   useIOThemeContext,
   useListItemAnimation,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ComponentProps } from "react";
 import {
   ColorValue,

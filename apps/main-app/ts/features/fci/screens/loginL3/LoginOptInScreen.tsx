@@ -1,11 +1,6 @@
 import i18n from "i18next";
 import { View } from "react-native";
-import {
-  Body,
-  FeatureInfo,
-  VSpacer,
-  IOToast
-} from "@pagopa/io-app-design-system";
+import { Body, FeatureInfo, VSpacer, IOToast } from "@io-app/design-system";
 import { WhatsNewScreenContent } from "../../../../components/screens/WhatsNewScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";

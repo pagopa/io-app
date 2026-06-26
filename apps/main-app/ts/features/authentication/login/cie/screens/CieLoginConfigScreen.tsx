@@ -1,5 +1,5 @@
 import i18n from "i18next";
-import { OTPInput } from "@pagopa/io-app-design-system";
+import { OTPInput } from "@io-app/design-system";
 import { useEffect, useState } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import CieLoginConfigScreenContent from "../components/CieLoginConfigScreenContent";

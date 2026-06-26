@@ -1,8 +1,4 @@
-import {
-  HeaderSecondLevel,
-  IOColors,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+import { HeaderSecondLevel, IOColors, useIOTheme } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import { constNull, pipe } from "fp-ts/lib/function";

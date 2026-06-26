@@ -1,4 +1,4 @@
-import { H3, VStack, useIOTheme } from "@pagopa/io-app-design-system";
+import { H3, VStack, useIOTheme } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 
 import { View } from "react-native";

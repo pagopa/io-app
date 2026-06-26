@@ -2,7 +2,7 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
 import { RouteProp, useLinkTo, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";

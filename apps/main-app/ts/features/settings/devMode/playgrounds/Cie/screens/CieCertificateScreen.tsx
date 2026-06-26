@@ -4,7 +4,7 @@ import {
   ListItemHeader,
   OTPInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useState } from "react";

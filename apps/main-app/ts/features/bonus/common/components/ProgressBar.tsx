@@ -1,4 +1,4 @@
-import { IOColors, useIOThemeContext } from "@pagopa/io-app-design-system";
+import { IOColors, useIOThemeContext } from "@io-app/design-system";
 import { FunctionComponent } from "react";
 
 import { View, StyleSheet, DimensionValue } from "react-native";

@@ -23,7 +23,7 @@ import {
   IOVisualCostants,
   Pictogram,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { IdpData } from "../../../../../../definitions/content/IdpData";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";

@@ -5,7 +5,7 @@ import {
   TextInputValidation,
   VStack,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 import { ComponentProps, useState } from "react";
 import { View } from "react-native";

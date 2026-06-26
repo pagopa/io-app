@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { FeatureInfo, H4, VSpacer } from "@pagopa/io-app-design-system";
+import { FeatureInfo, H4, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import {
   IOBottomSheetModal,

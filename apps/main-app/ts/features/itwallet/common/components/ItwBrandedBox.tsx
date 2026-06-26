@@ -1,5 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { useIOThemeContext } from "@io-app/design-system";
 import {
   Canvas,
   Circle as SkiaCircle,

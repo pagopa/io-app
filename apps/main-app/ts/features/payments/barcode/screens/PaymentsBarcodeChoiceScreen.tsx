@@ -1,4 +1,4 @@
-import { Divider } from "@pagopa/io-app-design-system";
+import { Divider } from "@io-app/design-system";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";

@@ -7,7 +7,7 @@ import {
   useIOTheme,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";

@@ -4,7 +4,7 @@ import {
   IOVisualCostants,
   hexToRgba,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 import { ComponentProps, ReactElement, useState } from "react";
 

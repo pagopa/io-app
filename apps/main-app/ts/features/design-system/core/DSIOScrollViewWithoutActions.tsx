@@ -1,4 +1,4 @@
-import { Body, H2, VSpacer, useIOTheme } from "@pagopa/io-app-design-system";
+import { Body, H2, VSpacer, useIOTheme } from "@io-app/design-system";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 
 export const DSIOScrollViewWithoutActions = () => {

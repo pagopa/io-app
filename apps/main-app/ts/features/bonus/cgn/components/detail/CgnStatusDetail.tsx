@@ -1,8 +1,4 @@
-import {
-  Divider,
-  ListItemHeader,
-  ListItemInfo
-} from "@pagopa/io-app-design-system";
+import { Divider, ListItemHeader, ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
 import { FunctionComponent } from "react";
 import { View } from "react-native";

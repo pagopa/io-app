@@ -3,7 +3,7 @@ import {
   FeatureInfo,
   IOMarkdownLite,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { View } from "react-native";

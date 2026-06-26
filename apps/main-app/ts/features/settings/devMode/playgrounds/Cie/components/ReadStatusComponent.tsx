@@ -3,7 +3,7 @@ import {
   IOPictograms,
   IOText,
   Pictogram
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Platform, StyleSheet } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { CircularProgress } from "../../../../../../components/ui/CircularProgress";

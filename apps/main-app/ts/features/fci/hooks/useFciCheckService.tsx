@@ -1,4 +1,4 @@
-import { Body, FooterActionsInline } from "@pagopa/io-app-design-system";
+import { Body, FooterActionsInline } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ComponentProps } from "react";
 import I18n from "i18next";

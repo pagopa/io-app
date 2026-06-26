@@ -1,4 +1,4 @@
-import { IOColors, Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
+import { IOColors, Tag, useScaleAnimation } from "@io-app/design-system";
 import { ReactNode, useMemo } from "react";
 
 import { Canvas } from "@shopify/react-native-skia";

@@ -3,7 +3,7 @@ import {
   TabItem,
   TabNavigation,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { ReactNode, useCallback, useState } from "react";
 import { ScrollView } from "react-native";

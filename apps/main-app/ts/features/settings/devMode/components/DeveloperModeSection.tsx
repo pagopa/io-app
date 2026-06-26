@@ -12,7 +12,7 @@ import {
   ListItemSwitch,
   VSpacer,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import I18n from "i18next";
 import { ComponentProps, useContext } from "react";

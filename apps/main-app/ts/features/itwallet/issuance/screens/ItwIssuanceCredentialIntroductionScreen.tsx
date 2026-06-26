@@ -1,9 +1,4 @@
-import {
-  ContentWrapper,
-  H2,
-  IOColors,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ContentWrapper, H2, IOColors, VSpacer } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { pipe } from "fp-ts/lib/function";

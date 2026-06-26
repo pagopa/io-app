@@ -13,7 +13,7 @@ import {
   RadioItem,
   VStack,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
 
 import { RefObject, useCallback, useMemo, useRef, useState } from "react";

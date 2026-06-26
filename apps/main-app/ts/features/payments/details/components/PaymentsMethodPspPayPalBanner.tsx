@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { VSpacer, Banner } from "@pagopa/io-app-design-system";
+import { VSpacer, Banner } from "@io-app/design-system";
 
 import Animated, { FadeOut } from "react-native-reanimated";
 import { View } from "react-native";

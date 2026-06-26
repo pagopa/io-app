@@ -19,7 +19,7 @@ import {
   VStack,
   hexToRgba,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { LogoPaymentExtended } from "../../../components/ui/LogoPaymentExtended";
 import { AvatarDouble } from "../../messages/components/Home/DS/AvatarDouble";

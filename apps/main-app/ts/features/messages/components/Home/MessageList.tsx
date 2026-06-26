@@ -1,4 +1,4 @@
-import { Divider } from "@pagopa/io-app-design-system";
+import { Divider } from "@io-app/design-system";
 import { useCallback, useMemo, Ref } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
 import {

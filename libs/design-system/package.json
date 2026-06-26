@@ -49,7 +49,7 @@
   "bugs": {
     "url": "https://github.com/pagopa/io-app/issues"
   },
-  "homepage": "https://github.com/pagopa/io-app/tree/master/libs/io-app-design-system#readme",
+  "homepage": "https://github.com/pagopa/io-app/tree/master/libs/esign-system#readme",
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
     "@release-it/conventional-changelog": "^5.0.0",

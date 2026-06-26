@@ -5,7 +5,7 @@ import {
   IOButton,
   IOMarkdownLite,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import i18n from "i18next";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useRef } from "react";

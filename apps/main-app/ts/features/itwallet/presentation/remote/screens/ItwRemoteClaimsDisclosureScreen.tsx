@@ -4,7 +4,7 @@ import {
   H2,
   IOMarkdownLite,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIODispatch } from "../../../../../store/hooks.ts";
