@@ -14,6 +14,7 @@ import {
   fciLoadQtspFilledDocument,
   fciSignatureRequestFromId,
   fciSignatureRequestRetryFromId,
+  fciSignatureRequestRetrySuccess,
   fciDownloadPreview,
   fciDownloadPreviewClear,
   fciClearAllFiles,
@@ -162,7 +163,7 @@ describe("FCI Saga Tests", () => {
     const signatureRequestId = "test-signature-id" as NonEmptyString;
     const action = fciSignatureRequestRetryFromId(signatureRequestId);
 
-    it("should cancel download preview and dispatch fciStartRequest on success", () =>
+    it("should dispatch fciSignatureRequestRetrySuccess and fciStartRequest on success", () =>
       expectSaga(watchFciSignatureRequestRetrySaga, action)
         .put(fciSignatureRequestFromId.request(signatureRequestId))
         .dispatch(
@@ -171,8 +172,14 @@ describe("FCI Saga Tests", () => {
             id: signatureRequestId
           })
         )
-        .put(fciDownloadPreview.cancel())
+        .put(
+          fciSignatureRequestRetrySuccess({
+            ...mockSignatureRequestDetailView,
+            id: signatureRequestId
+          })
+        )
         .put(fciStartRequest())
+        .not.put(fciDownloadPreview.cancel())
         .run());
 
     it("should not start flow when signature request fails", () =>
