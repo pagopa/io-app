@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-canary.8226](https://github.com/pagopa/io-app/compare/3.35.0-rc.10...3.35.0-canary.8226) (2026-06-26)
+
+
+### Chores
+
+* enable ephemeralSessionOniOS by default ([21d67ed](https://github.com/pagopa/io-app/commit/21d67edde0671fc7ea11be8617bc15ee411a8e6a))
+* **IT-Wallet:** [[SIW-4411](https://pagopa.atlassian.net/browse/SIW-4411)] expose evaluated DCQL query results in credential issuance flow ([#8200](https://github.com/pagopa/io-app/issues/8200)) ([9eae32b](https://github.com/pagopa/io-app/commit/9eae32b5ce842014f45348841e4c005c4ddee874))
+
 ## [3.35.0-rc.10](https://github.com/pagopa/io-app/compare/3.35.0-rc.9...3.35.0-rc.10) (2026-06-25)
 
 
