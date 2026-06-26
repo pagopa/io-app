@@ -40,8 +40,12 @@ export const markdownToPlainText = (md: string): string =>
   md
     .replace(/```[\s\S]*?```|`([^`]*)`/g, "$1") // remove code blocks + inline code
     .replace(/!\[.*?\]\(.*?\)|\[(.*?)\]\(.*?\)/g, "$1") // images & links
+    // Remove HTML tags before stripping markdown symbols (which also removes
+    // `>`). `[^>]*` swallows any nested `<` and `>?` makes the closing bracket
+    // optional, so a single pass consumes every `<` and cannot leave residual
+    // characters that re-form a tag (e.g. `<scr<script>ipt>`).
+    .replace(/<[^>]*>?/g, "")
     .replace(/[*_~>#-]+/gm, "") // remove markdown symbols
-    .replace(/<\/?[^>]+>/g, "") // remove HTML tags
     .replace(/\s{2,}/g, " ") // collapse spaces
     .replace(/\n{2,}/g, "\n") // collapse blank lines
     .trim();
