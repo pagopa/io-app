@@ -150,29 +150,7 @@ describe("ItwDiscoveryBanner", () => {
   });
 
   describe("navigation", () => {
-    const catalogueScenarios = allScenarios.filter(
-      s => !s.isRemotelyActive && s.isWalletActive && s.isWalletEmpty
-    );
-    const discoveryScenarios = allScenarios.filter(
-      s => !s.isRemotelyActive && !(s.isWalletActive && s.isWalletEmpty)
-    );
-
-    test.each(catalogueScenarios)(
-      "should navigate to the credential catalogue when action button is pressed ($name)",
-      scenario => {
-        setupMocks(scenario);
-        const { getByTestId } = renderComponent();
-        const actionButton = getByTestId(
-          "itwEngagementBannerActionButtonTestID"
-        );
-
-        fireEvent.press(actionButton);
-
-        expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.L3_ONBOARDING
-        });
-      }
-    );
+    const discoveryScenarios = allScenarios.filter(s => !s.isRemotelyActive);
 
     test.each(discoveryScenarios)(
       "should navigate to the discovery landing when action button is pressed ($name)",

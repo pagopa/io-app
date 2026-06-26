@@ -4335,7 +4335,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for empty wallet ban
                       <View
                         accessibilityLabel="Il tuo Portafoglio è ora parte di IT-Wallet
 Scopri le funzionalità evolute dei documenti digitali su IO.
-Aggiungi documento"
+Inizia"
                         accessibilityRole="button"
                         accessible={true}
                         onAccessibilityTap={[Function]}
@@ -4797,7 +4797,7 @@ Aggiungi documento"
                             }
                           />
                           <View
-                            accessibilityLabel="Aggiungi documento"
+                            accessibilityLabel="Inizia"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -5009,7 +5009,7 @@ Aggiungi documento"
                                     ]
                                   }
                                 >
-                                  Aggiungi documento
+                                  Inizia
                                 </Text>
                               </View>
                             </View>

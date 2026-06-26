@@ -68,11 +68,11 @@ export const ItwDiscoveryBanner = ({
   }, [isWalletActive, isWalletEmpty, hasMdl, isRemotelyActive]);
 
   const bannerLanding = useMemo(() => {
-    if (isRemotelyActive || (isWalletActive && isWalletEmpty)) {
+    if (isRemotelyActive) {
       return ITW_SCREENVIEW_EVENTS.WALLET_ADD_LIST_ITEM;
     }
     return ITW_SCREENVIEW_EVENTS.ITW_INTRO;
-  }, [isWalletActive, isWalletEmpty, isRemotelyActive]);
+  }, [isRemotelyActive]);
 
   const trackBannerProperties = useMemo(
     () => ({
@@ -162,7 +162,7 @@ export const ItwDiscoveryBanner = ({
         action={I18n.t(
           "features.itWallet.engagementBanner.upgrade_empty.action"
         )}
-        onPress={navigateToDocumentOnboardingScreen}
+        onPress={navigateToDiscoveryScreen}
         onDismiss={handleOnDismiss}
         style={style}
       />
