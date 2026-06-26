@@ -394,6 +394,13 @@ const PlaygroundsSection = () => {
         })
     },
     {
+      value: "Bottom Sheet (SWM)",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.BOTTOM_SHEET_PLAYGROUND
+        })
+    },
+    {
       value: I18n.t(
         "profile.main.loginEnvironment.activeSession.playground.title"
       ),
