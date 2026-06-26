@@ -138,8 +138,16 @@ const encodeQualtricsParameters = (
   qualtricsUrl: string,
   params: QualtricsParameters
 ): string => {
+  // Serialize with an explicit, stable key order so the encoded payload does
+  // not depend on the caller's prop/object key insertion order.
+  const orderedParams = {
+    organizationFiscalCode: params.organizationFiscalCode,
+    serviceId: params.serviceId,
+    sendingDate: params.sendingDate,
+    messageType: params.messageType
+  };
   const parametersBase64Url = Buffer.from(
-    JSON.stringify(params),
+    JSON.stringify(orderedParams),
     "utf8"
   ).toString("base64url");
 

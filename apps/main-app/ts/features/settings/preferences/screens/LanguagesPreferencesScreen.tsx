@@ -111,8 +111,9 @@ const LanguagesPreferencesScreen = () => {
     () =>
       [
         ...new Set<Locales>([
-          "en",
           "it",
+          // eslint-disable-next-line perfectionist/sort-sets -- IT, EN order is intentional (pinned first)
+          "en",
           ...[...availableTranslations].sort((a, b) => a.localeCompare(b))
         ])
       ].map(locale => ({
