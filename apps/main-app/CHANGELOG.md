@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-rc.10](https://github.com/pagopa/io-app/compare/3.35.0-rc.9...3.35.0-rc.10) (2026-06-25)
+
+
+### Features
+
+* [[IOCOM-3171](https://pagopa.atlassian.net/browse/IOCOM-3171)] messages' details survey banner ([#8201](https://github.com/pagopa/io-app/issues/8201)) ([62eb12c](https://github.com/pagopa/io-app/commit/62eb12cfcf79e24eeace6e7852460407a0e1af8f))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Catch error when canceling user authentication for eID issuance ([#8208](https://github.com/pagopa/io-app/issues/8208)) ([9ea51bd](https://github.com/pagopa/io-app/commit/9ea51bdbae65380174214b5db6675fd0a9b27aaf))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4481](https://pagopa.atlassian.net/browse/SIW-4481)] Add tracking for ITW privacy screen view ([#8204](https://github.com/pagopa/io-app/issues/8204)) ([7caabd4](https://github.com/pagopa/io-app/commit/7caabd4417adf12392f1e17168fef95dbc965aaa))
+
+## [3.35.0-rc.9](https://github.com/pagopa/io-app/compare/3.35.0-rc.8...3.35.0-rc.9) (2026-06-25)
+
+
+### Chores
+
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] Downgrade React Navigation to version 6 ([#8198](https://github.com/pagopa/io-app/issues/8198)) ([c983253](https://github.com/pagopa/io-app/commit/c983253923eb606e6fd98ce77bea9f5c15fbd0f8))
+
+## [3.35.0-rc.8](https://github.com/pagopa/io-app/compare/3.35.0-rc.7...3.35.0-rc.8) (2026-06-24)
+
+
+### Chores
+
+* [[IOPLT-1901](https://pagopa.atlassian.net/browse/IOPLT-1901)] Remove deprecated Jasmine `fail()` global method from `jest` tests ([#8199](https://github.com/pagopa/io-app/issues/8199)) ([cfbdb3e](https://github.com/pagopa/io-app/commit/cfbdb3e7dc66e0e24c30aa3f0e1942c716a513cf))
+* [[IOPLT-1907](https://pagopa.atlassian.net/browse/IOPLT-1907)] Bump version of actions still using Node 20 ([#8203](https://github.com/pagopa/io-app/issues/8203)) ([ae2f19c](https://github.com/pagopa/io-app/commit/ae2f19c14c7bca86fb547a4d48e0a421a4f52cc0))
+
 ## [3.35.0-rc.7](https://github.com/pagopa/io-app/compare/3.35.0-rc.6...3.35.0-rc.7) (2026-06-23)
 
 
