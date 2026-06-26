@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.36.0-rc.0](https://github.com/pagopa/io-app/compare/3.35.0-rc.10...3.36.0-rc.0) (2026-06-26)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4411](https://pagopa.atlassian.net/browse/SIW-4411)] expose evaluated DCQL query results in credential issuance flow ([#8200](https://github.com/pagopa/io-app/issues/8200)) ([9eae32b](https://github.com/pagopa/io-app/commit/9eae32b5ce842014f45348841e4c005c4ddee874))
+
 ## [3.35.0-rc.10](https://github.com/pagopa/io-app/compare/3.35.0-rc.9...3.35.0-rc.10) (2026-06-25)
 
 
