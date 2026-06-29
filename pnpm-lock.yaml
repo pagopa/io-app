@@ -238,8 +238,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-wallet':
-        specifier: 3.5.0
-        version: 3.5.0(f8c00da11ecd768df625893adf6351ec)
+        specifier: 3.5.1
+        version: 3.5.1(f8c00da11ecd768df625893adf6351ec)
       '@pagopa/io-react-native-zendesk':
         specifier: ^0.3.30
         version: 0.3.30(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
@@ -2453,8 +2453,8 @@ packages:
       react: '*'
       react-native: '*'
 
-  '@pagopa/io-react-native-wallet@3.5.0':
-    resolution: {integrity: sha512-xi9GHn5xwWnVnHBIt9rO5sYc8RzM6R/FMJPvaqvNe3UrEzOrw+1kTiwDH1fVEhHwf2+6HOXr9UBSTYu18Cx1rA==}
+  '@pagopa/io-react-native-wallet@3.5.1':
+    resolution: {integrity: sha512-LWsSzLV5/kaIGRANxhH+Qys9NcLTBFcGMATFzL7dLMnTJJBq64j3s4H2BZJvb/UlQYQ/3kz/kHqVBbRVYWHAsQ==}
     engines: {node: '>= 16.0.0'}
     peerDependencies:
       '@pagopa/io-react-native-crypto': '*'
@@ -12358,7 +12358,7 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
 
-  '@pagopa/io-react-native-wallet@3.5.0(f8c00da11ecd768df625893adf6351ec)':
+  '@pagopa/io-react-native-wallet@3.5.1(f8c00da11ecd768df625893adf6351ec)':
     dependencies:
       '@pagopa/io-react-native-crypto': 1.2.3(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-iso18013': 0.8.4(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
