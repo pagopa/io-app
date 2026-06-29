@@ -105,6 +105,7 @@ export const createCredentialUpgradeActorsImplementation = (
       issuerConf,
       clientId,
       codeVerifier,
+      evaluatedDcqlQuery,
       responseMode
     } = await credentialIssuanceUtils.requestCredential({
       env,
@@ -112,7 +113,8 @@ export const createCredentialUpgradeActorsImplementation = (
       credentialType: credential.credentialType,
       walletInstanceAttestation,
       // TODO [SIW-3091]: Update when the L3 PID reissuance flow is ready
-      skipMdocIssuance: !isUpgrade
+      skipMdocIssuance: !isUpgrade,
+      pid
     });
 
     const { accessToken } = await credentialIssuanceUtils.completeAuthFlow({
@@ -123,7 +125,7 @@ export const createCredentialUpgradeActorsImplementation = (
       issuerConf,
       walletInstanceAttestation,
       requestedCredential,
-      pid
+      evaluatedDcqlQuery
     });
 
     return { accessToken, issuerConf, clientId };
