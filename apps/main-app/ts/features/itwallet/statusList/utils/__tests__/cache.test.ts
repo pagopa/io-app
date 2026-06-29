@@ -1,8 +1,8 @@
+import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { StatusListRepository } from "../repository";
+import { refreshStaleEntries, startupCoherence } from "../cache";
 import * as refresh from "../refresh";
-import { startupCoherence, refreshStaleEntries } from "../cache";
-import { type StatusListPayload } from "../schemas";
+import { StatusListRepository } from "../repository";
 import { type StatusListContext } from "../types";
 
 jest.mock("@react-native-async-storage/async-storage", () =>
@@ -17,8 +17,8 @@ const makeSub = (id: number) => `https://issuer.example/status/${id}`;
 
 const makePayload = (
   id: number,
-  overrides: Partial<StatusListPayload> = {}
-): StatusListPayload => ({
+  overrides: Partial<CredentialStatus.StatusList> = {}
+): CredentialStatus.StatusList => ({
   sub: makeSub(id),
   iat: 1690000000,
   exp: 1700000000,

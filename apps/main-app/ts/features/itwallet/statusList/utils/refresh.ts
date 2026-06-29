@@ -1,3 +1,5 @@
+import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
+import { CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { StatusListRepository } from "./repository";
@@ -21,13 +23,9 @@ export const refreshStatusListToken = async (
       `Status List is not supported by IT-Wallet v${context.itwVersion}`
     );
 
-    const rawStatusList =
-      await ioWallet.CredentialStatus.statusList.getByUri(uri);
-    const statusList =
-      await ioWallet.CredentialStatus.statusList.verifyAndParse(
-        [], // TODO add actual JWKs for signature verification
-        rawStatusList
-      );
+    const raw = await ioWallet.CredentialStatus.statusList.getByUri(uri);
+    const payload = decodeJwt(raw).payload;
+    const statusList = CredentialStatus.StatusList.parse(payload);
 
     await StatusListRepository.upsert(uri, statusList);
     return true;

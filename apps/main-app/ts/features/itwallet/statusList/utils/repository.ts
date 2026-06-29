@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { StatusListPayloadSchema, type StatusListPayload } from "./schemas";
+import { CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { STORAGE_PREFIX } from "./consts";
 
 export const STORAGE_ENTRY_PREFIX = `${STORAGE_PREFIX}:entry:`;
@@ -23,14 +23,14 @@ const readEntryKeys = async (): Promise<Array<string>> => {
 /**
  * Lists all cached Status List Token payloads.
  */
-const list = async (): Promise<Array<StatusListPayload>> => {
+const list = async (): Promise<Array<CredentialStatus.StatusList>> => {
   const keys = await readEntryKeys();
   if (keys.length === 0) {
     return [];
   }
   const pairs = await AsyncStorage.multiGet(keys);
   return pairs.flatMap(([, raw]) =>
-    raw ? [StatusListPayloadSchema.parse(JSON.parse(raw))] : []
+    raw ? [CredentialStatus.StatusList.parse(JSON.parse(raw))] : []
   );
 };
 
@@ -38,13 +38,15 @@ const list = async (): Promise<Array<StatusListPayload>> => {
  * Retrieves a single cached Status List Token payload by its URI.
  * Returns `undefined` if not found or if validation fails.
  */
-const get = async (uri: string): Promise<StatusListPayload | undefined> => {
+const get = async (
+  uri: string
+): Promise<CredentialStatus.StatusList | undefined> => {
   try {
     const raw = await AsyncStorage.getItem(entryKey(uri));
     if (!raw) {
       return undefined;
     }
-    return StatusListPayloadSchema.parse(JSON.parse(raw));
+    return CredentialStatus.StatusList.parse(JSON.parse(raw));
   } catch {
     return undefined;
   }
@@ -55,9 +57,9 @@ const get = async (uri: string): Promise<StatusListPayload | undefined> => {
  */
 const upsert = async (
   uri: string,
-  payload: StatusListPayload
+  payload: CredentialStatus.StatusList
 ): Promise<void> => {
-  StatusListPayloadSchema.parse(payload);
+  CredentialStatus.StatusList.parse(payload);
   await AsyncStorage.setItem(entryKey(uri), JSON.stringify(payload));
 };
 
