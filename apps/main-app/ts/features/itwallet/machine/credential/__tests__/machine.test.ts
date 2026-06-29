@@ -15,6 +15,7 @@ import {
 import {
   CredentialAccessToken,
   CredentialBundle,
+  EvaluatedDcqlQueryResult,
   CredentialMetadata,
   IssuerConfiguration,
   RequestObject
@@ -64,6 +65,18 @@ const T_REQUESTED_CREDENTIAL: RequestObject = {
   response_uri: "",
   state: ""
 };
+const T_EVALUATED_DCQL_QUERY: EvaluatedDcqlQueryResult = [
+  {
+    id: "pid",
+    format: "dc+sd-jwt",
+    keyTag: "pid-key-tag",
+    credential: "pid-credential",
+    requiredDisclosures: [{ name: "name", value: "John" }],
+    presentationFrame: {},
+    purposes: [{ required: true }],
+    vct: "pid"
+  }
+];
 const T_STORED_STATUS_ASSERTION: CredentialMetadata["storedStatusAssertion"] = {
   credentialStatus: "valid",
   statusAssertion: "abcdefghijklmnopqrstuvwxyz",
@@ -171,6 +184,7 @@ describe("itwCredentialIssuanceMachine", () => {
         clientId: T_CLIENT_ID,
         codeVerifier: T_CODE_VERIFIER,
         requestedCredential: T_REQUESTED_CREDENTIAL,
+        evaluatedDcqlQuery: T_EVALUATED_DCQL_QUERY,
         issuerConf: T_ISSUER_CONFIG
       })
     );
@@ -219,6 +233,7 @@ describe("itwCredentialIssuanceMachine", () => {
       clientId: T_CLIENT_ID,
       codeVerifier: T_CODE_VERIFIER,
       requestedCredential: T_REQUESTED_CREDENTIAL,
+      evaluatedDcqlQuery: T_EVALUATED_DCQL_QUERY,
       issuerConf: T_ISSUER_CONFIG
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
@@ -333,6 +348,7 @@ describe("itwCredentialIssuanceMachine", () => {
         clientId: T_CLIENT_ID,
         codeVerifier: T_CODE_VERIFIER,
         requestedCredential: T_REQUESTED_CREDENTIAL,
+        evaluatedDcqlQuery: T_EVALUATED_DCQL_QUERY,
         issuerConf: T_ISSUER_CONFIG
       })
     );
@@ -648,6 +664,7 @@ describe("itwCredentialIssuanceMachine", () => {
                 clientId: T_CLIENT_ID,
                 codeVerifier: T_CODE_VERIFIER,
                 requestedCredential: T_REQUESTED_CREDENTIAL,
+                evaluatedDcqlQuery: T_EVALUATED_DCQL_QUERY,
                 issuerConf: T_ISSUER_CONFIG
               }),
             10
@@ -685,6 +702,7 @@ describe("itwCredentialIssuanceMachine", () => {
                 clientId: T_CLIENT_ID,
                 codeVerifier: T_CODE_VERIFIER,
                 requestedCredential: T_REQUESTED_CREDENTIAL,
+                evaluatedDcqlQuery: T_EVALUATED_DCQL_QUERY,
                 issuerConf: T_ISSUER_CONFIG
               }),
             10
@@ -720,6 +738,7 @@ describe("itwCredentialIssuanceMachine", () => {
                 clientId: T_CLIENT_ID,
                 codeVerifier: T_CODE_VERIFIER,
                 requestedCredential: T_REQUESTED_CREDENTIAL,
+                evaluatedDcqlQuery: T_EVALUATED_DCQL_QUERY,
                 issuerConf: T_ISSUER_CONFIG
               }),
             10
