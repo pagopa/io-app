@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.36.0-rc.1](https://github.com/pagopa/io-app/compare/3.36.0-rc.0...3.36.0-rc.1) (2026-06-26)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Update IO Wallet SDK overrides ([#8212](https://github.com/pagopa/io-app/issues/8212)) ([dbc37de](https://github.com/pagopa/io-app/commit/dbc37de9bac6f0e45ba8b3cc47e42677150e2082))
+
+## [3.36.0-rc.0](https://github.com/pagopa/io-app/compare/3.35.0-rc.10...3.36.0-rc.0) (2026-06-26)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4411](https://pagopa.atlassian.net/browse/SIW-4411)] expose evaluated DCQL query results in credential issuance flow ([#8200](https://github.com/pagopa/io-app/issues/8200)) ([9eae32b](https://github.com/pagopa/io-app/commit/9eae32b5ce842014f45348841e4c005c4ddee874))
+
+## [3.35.0-rc.10](https://github.com/pagopa/io-app/compare/3.35.0-rc.9...3.35.0-rc.10) (2026-06-25)
+
+
+### Features
+
+* [[IOCOM-3171](https://pagopa.atlassian.net/browse/IOCOM-3171)] messages' details survey banner ([#8201](https://github.com/pagopa/io-app/issues/8201)) ([62eb12c](https://github.com/pagopa/io-app/commit/62eb12cfcf79e24eeace6e7852460407a0e1af8f))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Catch error when canceling user authentication for eID issuance ([#8208](https://github.com/pagopa/io-app/issues/8208)) ([9ea51bd](https://github.com/pagopa/io-app/commit/9ea51bdbae65380174214b5db6675fd0a9b27aaf))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4481](https://pagopa.atlassian.net/browse/SIW-4481)] Add tracking for ITW privacy screen view ([#8204](https://github.com/pagopa/io-app/issues/8204)) ([7caabd4](https://github.com/pagopa/io-app/commit/7caabd4417adf12392f1e17168fef95dbc965aaa))
+
 ## [3.35.0-rc.9](https://github.com/pagopa/io-app/compare/3.35.0-rc.8...3.35.0-rc.9) (2026-06-25)
 
 
