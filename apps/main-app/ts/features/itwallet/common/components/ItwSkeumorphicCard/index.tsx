@@ -234,18 +234,10 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 8,
     overflow: "hidden",
-    boxShadow: [
-      {
-        offsetX: 0,
-        offsetY: 4,
-        blurRadius: 24,
-        color: hexToRgba(IOColors.black, 0.1)
-      }
-    ]
+    boxShadow: `0px 4px 24px ${hexToRgba(IOColors.black, 0.1)}`
   },
   card: {
     aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO
-    // offsetY: 4 avoids the shadow being clipped by the header
   },
   tag: {
     position: "absolute",

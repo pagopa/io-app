@@ -191,13 +191,6 @@ const styles = StyleSheet.create({
     marginBottom: 24
   },
   qrCodeShadow: {
-    boxShadow: [
-      {
-        offsetX: 0,
-        offsetY: 4,
-        blurRadius: 32,
-        color: hexToRgba(IOColors.black, 0.1)
-      }
-    ]
+    boxShadow: `0px 4px 32px ${hexToRgba(IOColors.black, 0.1)}`
   }
 });

@@ -20,14 +20,7 @@ const styles = StyleSheet.create({
     paddingBottom: 14,
     borderBottomWidth: 0,
     position: "relative",
-    boxShadow: [
-      {
-        offsetX: 0,
-        offsetY: 4,
-        blurRadius: 8,
-        color: hexToRgba(IOColors.black, 0.1)
-      }
-    ],
+    boxShadow: `0px 4px 8px ${hexToRgba(IOColors.black, 0.1)}`,
     zIndex: 999
   }
 });
