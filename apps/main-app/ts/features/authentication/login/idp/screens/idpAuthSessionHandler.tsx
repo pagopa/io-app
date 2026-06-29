@@ -1,5 +1,6 @@
 /* eslint-disable import/order */
 import {
+  isLoginUtilsError,
   LoginUtilsError,
   Error as LoginUtilsErrorType,
   openAuthenticationSession
@@ -63,6 +64,7 @@ import {
   isActiveSessionLoginSelector,
   remoteApiLoginUrlPrefixSelector
 } from "../../../activeSessionLogin/store/selectors";
+import { isUndefined } from "lodash";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -288,6 +290,26 @@ export const AuthSessionPage = () => {
     [dispatch, idp, requestInfo.nativeAttempts, setRequestInfo]
   );
 
+  const handleLogin = useCallback(
+    async (url: string) => {
+      try {
+        const response = await idpAuthSession(url);
+        const loginResult = extractLoginResult(response);
+
+        if (!loginResult || !loginResult.success) {
+          handleLoginFailure(loginResult?.errorCode, loginResult?.errorMessage);
+          return;
+        }
+        handleLoginSuccess(loginResult.token);
+      } catch (error) {
+        if (isUndefined(error) || isLoginUtilsError(error)) {
+          handleLoadingError(error);
+        }
+      }
+    },
+    [handleLoadingError, handleLoginFailure, handleLoginSuccess]
+  );
+
   useEffect(() => {
     // Memoized values/func --end--
     if (loginUri && requestInfo.requestState === "LOADING") {
@@ -298,22 +320,7 @@ export const AuthSessionPage = () => {
         isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
         dispatch
       )
-        .then(url => {
-          idpAuthSession(url)
-            .then(response => {
-              const loginResult = extractLoginResult(response);
-
-              if (!loginResult || !loginResult.success) {
-                handleLoginFailure(
-                  loginResult?.errorCode,
-                  loginResult?.errorMessage
-                );
-                return;
-              }
-              handleLoginSuccess(loginResult.token);
-            })
-            .catch(handleLoadingError);
-        })
+        .then(handleLogin)
         .catch(() => {
           setRequestInfo({
             requestState: "ERROR",
@@ -328,8 +335,7 @@ export const AuthSessionPage = () => {
     dispatch,
     ephemeralKeyTag,
     handleLoadingError,
-    handleLoginFailure,
-    handleLoginSuccess,
+    handleLogin,
     isActiveSessionFastLogin,
     isActiveSessionLogin,
     isFastLogin,

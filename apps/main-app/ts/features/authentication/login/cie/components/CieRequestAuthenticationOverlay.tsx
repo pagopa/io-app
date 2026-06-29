@@ -1,5 +1,8 @@
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
-import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
+import {
+  isLoginUtilsError,
+  LoginUtilsError
+} from "@pagopa/io-react-native-login-utils";
 import CookieManager from "@react-native-cookies/cookies";
 import {
   createRef,
@@ -239,39 +242,36 @@ const CieWebView = (props: Props) => {
     }
   };
 
-  useEffect(() => {
-    if (requestInfo.requestState === "LOADING") {
-      void Platform.select({
-        android: () =>
-          CookieManager.removeSessionCookies().catch(() => {
-            throw new Error("Error clearing cookies");
-          }),
-        default: () => Promise.resolve(true)
-      })()
-        .then(() =>
-          regenerateKeyGetRedirectsAndVerifySaml(
-            loginUri,
-            ephemeralKeyTag,
-            mixpanelEnabled,
-            isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-            dispatch,
-            idp?.id,
-            isActiveSessionLogin ? hashedFiscalCode : undefined
-          )
-        )
-        .then(url => {
-          setRequestInfo({
-            requestState: "AUTHORIZED",
-            nativeAttempts: requestInfo.nativeAttempts,
-            url
-          });
-        })
-        .catch(handleOnError);
+  const handleLogin = useCallback(async () => {
+    try {
+      if (Platform.OS === "android") {
+        await CookieManager.removeSessionCookies().catch(() => {
+          throw new Error("Error clearing cookies");
+        });
+      }
+      const url = await regenerateKeyGetRedirectsAndVerifySaml(
+        loginUri,
+        ephemeralKeyTag,
+        mixpanelEnabled,
+        isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
+        dispatch,
+        idp?.id,
+        isActiveSessionLogin ? hashedFiscalCode : undefined
+      );
+      setRequestInfo({
+        requestState: "AUTHORIZED",
+        nativeAttempts: requestInfo.nativeAttempts,
+        url
+      });
+    } catch (error) {
+      if (error instanceof Error || isLoginUtilsError(error)) {
+        handleOnError(error);
+      }
     }
   }, [
     dispatch,
-    ephemeralKeyTag,
     handleOnError,
+    ephemeralKeyTag,
     hashedFiscalCode,
     idp?.id,
     isActiveSessionFastLogin,
@@ -279,9 +279,14 @@ const CieWebView = (props: Props) => {
     isFastLogin,
     loginUri,
     mixpanelEnabled,
-    requestInfo.nativeAttempts,
-    requestInfo.requestState
+    requestInfo.nativeAttempts
   ]);
+
+  useEffect(() => {
+    if (requestInfo.requestState === "LOADING") {
+      void handleLogin();
+    }
+  }, [handleLogin, requestInfo.requestState]);
 
   if (internalState.error) {
     return (
