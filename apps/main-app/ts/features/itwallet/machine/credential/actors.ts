@@ -7,7 +7,6 @@ import { sessionTokenSelector } from "../../../authentication/common/store/selec
 import { Env } from "../../common/utils/environment";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
-import { getRepresentativeVaultId } from "../../common/utils/itwCredentialUtils";
 import { getCredentialStatusAssertion } from "../../common/utils/itwCredentialStatusAssertionUtils";
 import {
   enrichErrorWithMetadata,
@@ -236,25 +235,12 @@ export const createCredentialIssuanceActorsImplementation = (
       evaluatedDcqlQuery,
       responseMode
     } = input;
-    const eid = itwCredentialsEidSelector(store.getState());
 
     assert(codeVerifier, "codeVerifier is undefined");
     assert(issuerConf, "issuerConf is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
     assert(requestedCredential, "requestedCredential is undefined");
     assert(evaluatedDcqlQuery, "evaluatedDcqlQuery is undefined");
-    assert(O.isSome(eid), "eID is undefined");
-
-    // Retrieve the PID credential from the vault
-    const pidCredential = await CredentialsVault.get(
-      getRepresentativeVaultId(eid.value)
-    );
-    assert(pidCredential, "PID credential not found in secure storage");
-
-    const pid: CredentialBundle = {
-      metadata: eid.value,
-      credential: pidCredential
-    };
 
     const { accessToken } = await credentialIssuanceUtils.completeAuthFlow({
       env,
