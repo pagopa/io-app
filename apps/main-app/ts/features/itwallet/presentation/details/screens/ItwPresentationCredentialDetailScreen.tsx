@@ -42,7 +42,7 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
-import { isItwProximityMinAppVersionSupportedSelector } from "../../../common/store/selectors/remoteConfig";
+import { isItwProximityEnabledSelector } from "../../../common/store/selectors/preferences";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
@@ -193,11 +193,7 @@ export const ItwPresentationCredentialDetail = ({
 
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isProximityMinAppVersionSupported = useIOSelector(
-    isItwProximityMinAppVersionSupportedSelector
-  );
-  const isProximityEnabled =
-    itwFeaturesEnabled && isProximityMinAppVersionSupported;
+  const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
