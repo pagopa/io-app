@@ -27,6 +27,11 @@ export const refreshStatusListToken = async (
     const payload = decodeJwt(raw).payload;
     const statusList = CredentialStatus.StatusList.parse(payload);
 
+    assert(
+      statusList.sub === uri,
+      `Status List Token sub does not match URI ${uri}`
+    );
+
     await StatusListRepository.upsert(uri, statusList);
     return true;
   } catch {
