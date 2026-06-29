@@ -3,6 +3,7 @@ import {
   BodySmall,
   H6,
   HeaderSecondLevel,
+  hexToRgba,
   IOButton,
   IOColors,
   VSpacer,
@@ -132,7 +133,7 @@ export const ItwProximityPresentmentScreen = ({
         </Animated.View>
       )}
 
-      <View style={styles.boxShadow}>
+      <View style={styles.qrCodeShadow}>
         <ItwBrandedBox
           variant={isFailure ? "error" : "default"}
           backgroundVariant={"gradient"}
@@ -189,11 +190,14 @@ const styles = StyleSheet.create({
   expiredBanner: {
     marginBottom: 24
   },
-  boxShadow: {
-    shadowRadius: 8,
-    shadowColor: IOColors.black,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    elevation: 8
+  qrCodeShadow: {
+    boxShadow: [
+      {
+        offsetX: 0,
+        offsetY: 4,
+        blurRadius: 32,
+        color: hexToRgba(IOColors.black, 0.1)
+      }
+    ]
   }
 });

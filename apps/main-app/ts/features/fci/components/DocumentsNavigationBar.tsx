@@ -1,6 +1,7 @@
 import {
   ContentWrapper,
   H6,
+  hexToRgba,
   HSpacer,
   HStack,
   IconButton,
@@ -16,22 +17,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingTop: 12,
-    paddingBottom: 14
-  },
-  shadow: {
-    // iOS
-    shadowColor: IOColors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    zIndex: 999,
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    // Android
-    elevation: 8,
+    paddingBottom: 14,
     borderBottomWidth: 0,
-    position: "relative"
+    position: "relative",
+    boxShadow: [
+      {
+        offsetX: 0,
+        offsetY: 4,
+        blurRadius: 8,
+        color: hexToRgba(IOColors.black, 0.1)
+      }
+    ],
+    zIndex: 999
   }
 });
 
@@ -87,13 +84,7 @@ const DocumentsNavigationBar = (props: Props) => {
   const borderColor = IOColors[theme["divider-default"]];
 
   return (
-    <View
-      style={[
-        styles.shadow,
-        styles.container,
-        { backgroundColor, borderColor }
-      ]}
-    >
+    <View style={[styles.container, { backgroundColor, borderColor }]}>
       {props.indicatorPosition === "left" && (
         <>
           {renderNavigationComponent(props, props.titleLeft)}
