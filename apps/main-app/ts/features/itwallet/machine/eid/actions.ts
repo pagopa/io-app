@@ -255,7 +255,8 @@ export const createEidIssuanceActionsImplementation = (
       store.getState()
     );
     const isReissuance = context.mode === "reissuance";
-    const surveyStep = event.type === "close" ? event.surveyStep : undefined;
+    assertEvent(event, "close");
+    const { surveyStep } = event;
 
     navigation.reset({
       index: 1,

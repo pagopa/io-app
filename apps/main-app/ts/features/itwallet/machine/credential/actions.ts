@@ -1,5 +1,5 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs, assign } from "xstate";
+import { ActionArgs, assertEvent, assign } from "xstate";
 import I18n from "i18next";
 import { isRouteInNavigationState } from "../../../../utils/navigation";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -126,9 +126,8 @@ export const createCredentialIssuanceActionsImplementation = (
       return;
     }
 
-    const surveyStep = event.type === "close" ? event.surveyStep : undefined;
-    const surveyCredential =
-      event.type === "close" ? event.surveyCredential : undefined;
+    assertEvent(event, "close");
+    const { surveyStep, surveyCredential } = event;
 
     navigation.reset({
       index: 1,
