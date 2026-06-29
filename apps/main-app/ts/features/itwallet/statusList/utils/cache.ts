@@ -1,5 +1,5 @@
-import { StatusListRepository } from "./repository";
 import { refreshStatusListToken } from "./refresh";
+import { StatusListRepository } from "./repository";
 import { isStale } from "./validity";
 import { StatusListContext } from "./types";
 

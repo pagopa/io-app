@@ -1,16 +1,7 @@
-import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { StatusListRepository } from "./repository";
-import {
-  StatusListPayloadSchema,
-  validatePayloadSub,
-  type StatusListPayload
-} from "./schemas";
 import { StatusListContext } from "./types";
-
-/** Timeout for individual Status List Token fetches (ms). */
-const FETCH_TIMEOUT_MS = 15_000;
 
 /**
  * Fetches, decodes, validates, and persists a Status List Token for the given URI.
@@ -30,32 +21,15 @@ export const refreshStatusListToken = async (
       `Status List is not supported by IT-Wallet v${context.itwVersion}`
     );
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    const rawStatusList =
+      await ioWallet.CredentialStatus.statusList.getByUri(uri);
+    const statusList =
+      await ioWallet.CredentialStatus.statusList.verifyAndParse(
+        [], // TODO add actual JWKs for signature verification
+        rawStatusList
+      );
 
-    const response = await fetch(uri, { signal: controller.signal }).finally(
-      () => clearTimeout(timeout)
-    );
-
-    if (!response.ok) {
-      return false;
-    }
-
-    const jwtText = await response.text();
-    const { payload: rawPayload } = decodeJwt(jwtText);
-
-    const parseResult = StatusListPayloadSchema.safeParse(rawPayload);
-    if (!parseResult.success) {
-      return false;
-    }
-
-    const payload: StatusListPayload = parseResult.data;
-
-    if (!validatePayloadSub(payload, uri)) {
-      return false;
-    }
-
-    await StatusListRepository.upsert(uri, payload);
+    await StatusListRepository.upsert(uri, statusList);
     return true;
   } catch {
     return false;

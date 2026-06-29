@@ -1,4 +1,4 @@
-import { type StatusListPayload } from "./schemas";
+import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 
 const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
 const SECONDS_TO_MS = 1000;
@@ -16,7 +16,10 @@ const SECONDS_TO_MS = 1000;
  * @param payload - The cached Status List Token payload
  * @param now - Current time in milliseconds since epoch (injected for testability)
  */
-export const isStale = (payload: StatusListPayload, now: number): boolean => {
+export const isStale = (
+  payload: CredentialStatus.StatusList,
+  now: number
+): boolean => {
   if (payload.ttl !== undefined) {
     return payload.iat * SECONDS_TO_MS + payload.ttl * SECONDS_TO_MS < now;
   }

@@ -1,9 +1,9 @@
+import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { isStale } from "../validity";
-import { type StatusListPayload } from "../schemas";
 
 const makePayload = (
-  overrides: Partial<StatusListPayload> = {}
-): StatusListPayload => ({
+  overrides: Partial<CredentialStatus.StatusList> = {}
+): CredentialStatus.StatusList => ({
   sub: "https://issuer.example/status/1",
   iat: 1000,
   status_list: { bits: 2, lst: "eNrbuRgAAhcBXQ" },
