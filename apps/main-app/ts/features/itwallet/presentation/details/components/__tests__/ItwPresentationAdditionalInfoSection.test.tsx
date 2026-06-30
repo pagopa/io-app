@@ -25,9 +25,9 @@ describe("ItwPresentationAdditionalInfoSection", () => {
     jest.clearAllMocks();
   });
 
-  // proof_of_age renders its own usage banner instead of the generic validity alert. It is
-  // currently excluded from newCredentials, so it is covered by the dedicated tests below.
-  test.each(newCredentials)(
+  // proof_of_age renders its own usage banner instead of the generic validity alert, so it
+  // is excluded from this loop and covered by the dedicated tests below.
+  test.each(newCredentials.filter(c => c !== CredentialType.PROOF_OF_AGE))(
     "renders new credential alert for %s",
     (credentialType: NewCredential) => {
       const { queryByTestId } = renderComponent(credentialType);
