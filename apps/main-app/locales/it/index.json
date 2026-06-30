@@ -832,7 +832,8 @@
         "accessibility": {
           "label": "Campo di inserimento per pin della Carta di Identità elettronica",
           "hint": "Inserire in questo campo il pin a 8 cifre della propria Carta di Identità Elettronica",
-          "deleteLabel": "Hai eliminato {{number}}"
+          "deleteLabel": "Hai eliminato {{number}}",
+          "valueText": "Hai inserito {{valueLength}} di {{length}} cifre"
         },
         "pinCardTitle": "Inserisci il PIN della CIE",
         "incorrectCiePinTitle1": "Il PIN non è corretto",
