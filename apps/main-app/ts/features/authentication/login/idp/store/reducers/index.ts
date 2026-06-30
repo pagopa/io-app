@@ -1,7 +1,7 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "../../../../../../store/actions/types";
-import { StandardLoginRequestInfo } from "../types";
+import { SpidLoginRequestInfo } from "../types";
 import {
   setSpidLoginRequestState,
   setSpidLoginInLoadingState,
@@ -9,7 +9,7 @@ import {
 } from "../actions";
 
 export type SpidLoginState = {
-  requestInfo: StandardLoginRequestInfo;
+  requestInfo: SpidLoginRequestInfo;
 };
 
 const spidLoginInitialState: SpidLoginState = {

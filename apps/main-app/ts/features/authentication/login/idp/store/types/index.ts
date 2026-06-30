@@ -5,6 +5,6 @@ export enum ErrorType {
   "LOGIN_ERROR" = "LOGIN_ERROR"
 }
 
-export type StandardLoginRequestInfo = {
+export type SpidLoginRequestInfo = {
   requestState: pot.Pot<true, ErrorType>;
 };
