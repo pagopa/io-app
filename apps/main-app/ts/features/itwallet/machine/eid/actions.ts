@@ -255,19 +255,9 @@ export const createEidIssuanceActionsImplementation = (
     );
     const isReissuance = context.mode === "reissuance";
 
-    navigation.reset({
-      index: 1,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME,
-            params: {
-              requiredEidFeedback: isReissuance && !isSurveyHidden
-            }
-          }
-        }
-      ]
+    navigation.navigate(ROUTES.MAIN, {
+      screen: ROUTES.WALLET_HOME,
+      params: { requiredEidFeedback: isReissuance && !isSurveyHidden }
     });
   },
 
