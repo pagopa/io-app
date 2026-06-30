@@ -129,22 +129,14 @@ export const createCredentialIssuanceActionsImplementation = (
     assertEvent(event, "close");
     const { surveyStep, surveyCredential } = event;
 
-    navigation.reset({
-      index: 1,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME,
-            params: {
-              credentialExitSurvey:
-                surveyStep && surveyCredential
-                  ? { step: surveyStep, credential: surveyCredential }
-                  : undefined
-            }
-          }
-        }
-      ]
+    navigation.navigate(ROUTES.MAIN, {
+      screen: ROUTES.WALLET_HOME,
+      params: {
+        credentialExitSurvey:
+          surveyStep && surveyCredential
+            ? { step: surveyStep, credential: surveyCredential }
+            : undefined
+      }
     });
   },
 
