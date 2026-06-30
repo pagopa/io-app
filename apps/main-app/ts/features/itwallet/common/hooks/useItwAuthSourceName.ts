@@ -3,7 +3,10 @@ import {
   itwCatalogueTranslationsByLocaleSelector,
   itwCredentialsCatalogueByTypesSelector
 } from "../../credentialsCatalogue/store/selectors";
-import { getItwAuthSource } from "../utils/itwMetadataUtils";
+import {
+  getForcedItwAuthSource,
+  getItwAuthSource
+} from "../utils/itwMetadataUtils";
 
 /**
  * Custom hook to retrieve the display name of the authentication source for a
@@ -18,6 +21,11 @@ export const useItwAuthSourceName = (
   const translationsByLocale = useIOSelector(
     itwCatalogueTranslationsByLocaleSelector
   );
+  const forcedAuthSource = getForcedItwAuthSource(credentialType);
+  if (forcedAuthSource) {
+    return forcedAuthSource;
+  }
+
   const catalogueMeta = credentialsCatalogue?.[credentialType];
   const authSource = catalogueMeta
     ? getItwAuthSource(catalogueMeta, translationsByLocale)
