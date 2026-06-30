@@ -1945,7 +1945,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for activation banne
                       <View
                         accessibilityLabel="Porta su IO i tuoi documenti digitali
 Con piena validità ufficiale, digitali e sempre a portata di mano!
-Aggiungi un documento"
+Inizia"
                         accessibilityRole="button"
                         accessible={true}
                         onAccessibilityTap={[Function]}
@@ -2565,7 +2565,7 @@ Aggiungi un documento"
                             }
                           />
                           <View
-                            accessibilityLabel="Aggiungi un documento"
+                            accessibilityLabel="Inizia"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -2777,7 +2777,7 @@ Aggiungi un documento"
                                     ]
                                   }
                                 >
-                                  Aggiungi un documento
+                                  Inizia
                                 </Text>
                               </View>
                             </View>
@@ -4335,7 +4335,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for empty wallet ban
                       <View
                         accessibilityLabel="Il tuo Portafoglio è ora parte di IT-Wallet
 Scopri le funzionalità evolute dei documenti digitali su IO.
-Aggiungi documento"
+Inizia"
                         accessibilityRole="button"
                         accessible={true}
                         onAccessibilityTap={[Function]}
@@ -4797,7 +4797,7 @@ Aggiungi documento"
                             }
                           />
                           <View
-                            accessibilityLabel="Aggiungi documento"
+                            accessibilityLabel="Inizia"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -5009,7 +5009,7 @@ Aggiungi documento"
                                     ]
                                   }
                                 >
-                                  Aggiungi documento
+                                  Inizia
                                 </Text>
                               </View>
                             </View>
