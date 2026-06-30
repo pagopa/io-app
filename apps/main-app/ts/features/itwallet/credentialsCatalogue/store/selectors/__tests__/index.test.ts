@@ -197,6 +197,7 @@ describe("itwAvailableCredentialsListSelector", () => {
         name: "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         type: "EuropeanHealthInsuranceCard"
       },
+      { name: "Età certificata", type: "proof_of_age" },
       { name: "Titoli accademici", type: "education_degree" },
       { name: "Iscrizioni accademiche", type: "education_enrollment" },
       { name: "Attestato di residenza", type: "residency" },
