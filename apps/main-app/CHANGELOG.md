@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.36.0-rc.2](https://github.com/pagopa/io-app/compare/3.36.0-rc.1...3.36.0-rc.2) (2026-06-29)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Fix banners rendering in ITW home screen ([#8215](https://github.com/pagopa/io-app/issues/8215)) ([5fd4b22](https://github.com/pagopa/io-app/commit/5fd4b224bbf4106752f00c9ab7e1500d87ee6d92))
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Replace reset with navigate in `closeIssuance` ([#8214](https://github.com/pagopa/io-app/issues/8214)) ([7386b79](https://github.com/pagopa/io-app/commit/7386b79f062a6ab89a3435d6a80f730bc8867314))
+
 ## [3.36.0-rc.1](https://github.com/pagopa/io-app/compare/3.36.0-rc.0...3.36.0-rc.1) (2026-06-26)
 
 
