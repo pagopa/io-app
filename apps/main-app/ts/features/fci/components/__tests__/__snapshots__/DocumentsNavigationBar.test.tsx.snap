@@ -5,23 +5,14 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
   style={
     [
       {
-        "borderBottomWidth": 0,
-        "elevation": 8,
-        "position": "relative",
-        "shadowColor": "#0E0F13",
-        "shadowOffset": {
-          "height": 2,
-          "width": 0,
-        },
-        "shadowOpacity": 0.2,
-        "shadowRadius": 3,
-        "zIndex": 999,
-      },
-      {
         "alignItems": "center",
+        "borderBottomWidth": 0,
+        "boxShadow": "0px 4px 8px rgba(14,15,19,0.1)",
         "flexDirection": "row",
         "paddingBottom": 14,
         "paddingTop": 12,
+        "position": "relative",
+        "zIndex": 999,
       },
       {
         "backgroundColor": "#FFFFFF",

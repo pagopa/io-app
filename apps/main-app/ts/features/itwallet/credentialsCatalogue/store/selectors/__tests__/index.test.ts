@@ -200,10 +200,16 @@ describe("itwAvailableCredentialsListSelector", () => {
         type: "EuropeanHealthInsuranceCard"
       },
       { name: "Titoli accademici", type: "education_degree" },
-      { name: "Iscrizioni accademiche", type: "education_enrollment" },
+      {
+        name: "Iscrizioni accademiche",
+        type: "education_enrollment"
+      },
       { name: "Attestato di residenza", type: "residency" },
       { name: "Diplomi", type: "education_diploma" },
-      { name: "Frequenza scolastica", type: "education_attendance" }
+      {
+        name: "Frequenza scolastica",
+        type: "education_attendance"
+      }
     ]);
   });
 });
