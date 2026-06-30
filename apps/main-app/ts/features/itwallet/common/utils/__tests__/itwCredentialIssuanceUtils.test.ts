@@ -3,7 +3,11 @@ import {
   generateKeysWithWalletUnitAttestation,
   requestCredential
 } from "../itwCredentialIssuanceUtils";
-import { CredentialAccessToken, CredentialFormat } from "../itwTypesUtils";
+import {
+  CredentialAccessToken,
+  CredentialBundle,
+  CredentialFormat
+} from "../itwTypesUtils";
 import { Env } from "../environment";
 import { getWalletUnitAttestation } from "../itwAttestationUtils";
 import { getIoWallet } from "../itwIoWallet";
@@ -99,9 +103,19 @@ describe("requestCredential", () => {
   const evaluateIssuerTrust = jest.fn();
   const startUserAuthorization = jest.fn();
   const getRequestedCredentialToBePresented = jest.fn();
+  const evaluateDcqlQuery = jest.fn();
   const offerCredentialIssuer = "https://issuer.example.com";
   const offerCredentialConfigurationId = "EducationDegreeCredential";
   const defaultIssuer = "https://default-issuer.example.com";
+  const requestObject = {
+    client_id: "client-id",
+    dcql_query: { credentials: [] }
+  };
+  const evaluatedDcqlQueryResult = { credential_matches: {} };
+  const pid: CredentialBundle = {
+    credential: "pid-credential",
+    metadata: { keyTag: "pid-key-tag" } as CredentialBundle["metadata"]
+  };
 
   const env = {
     WALLET_EAA_PROVIDER_BASE_URL: {
@@ -129,25 +143,28 @@ describe("requestCredential", () => {
       codeVerifier: "code-verifier",
       responseMode: "query"
     });
-    getRequestedCredentialToBePresented.mockResolvedValue({
-      client_id: "client-id"
-    });
+    getRequestedCredentialToBePresented.mockResolvedValue(requestObject);
+    evaluateDcqlQuery.mockResolvedValue(evaluatedDcqlQueryResult);
     (getIoWallet as jest.Mock).mockReturnValue({
       CredentialIssuance: {
         evaluateIssuerTrust,
         startUserAuthorization,
         getRequestedCredentialToBePresented
+      },
+      RemotePresentation: {
+        evaluateDcqlQuery
       }
     });
   });
 
   it("uses the resolved credential offer issuer and configuration IDs", async () => {
-    await requestCredential({
+    const result = await requestCredential({
       env,
       itwVersion: "1.3.3",
       credentialType: "education_degree",
       walletInstanceAttestation: "wia",
       skipMdocIssuance: true,
+      pid,
       resolvedCredentialOffer: {
         offer: {
           credential_issuer: offerCredentialIssuer,
@@ -181,6 +198,10 @@ describe("requestCredential", () => {
         walletInstanceAttestation: "wia"
       })
     );
+    expect(evaluateDcqlQuery).toHaveBeenCalledWith(requestObject.dcql_query, [
+      [pid.metadata.keyTag, pid.credential]
+    ]);
+    expect(result.evaluatedDcqlQuery).toBe(evaluatedDcqlQueryResult);
   });
 
   it("rejects resolved credential offers without supported configuration IDs", async () => {
@@ -207,6 +228,7 @@ describe("requestCredential", () => {
         credentialType: "education_degree",
         walletInstanceAttestation: "wia",
         skipMdocIssuance: true,
+        pid,
         resolvedCredentialOffer: {
           offer: {
             credential_issuer: offerCredentialIssuer,

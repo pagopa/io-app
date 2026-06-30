@@ -3,7 +3,7 @@ import * as fs from "fs-extra";
 import { slackPostMessage } from "../common/slack/postMessage";
 
 const destinationChannel = "#prod_io";
-const packagePath = "package.json";
+const packagePath = "apps/main-app/package.json";
 
 /**
  * Send a Slack message to notify the release of a new app version in beta

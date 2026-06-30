@@ -19,6 +19,7 @@ import FocusAwareStatusBar from "../components/ui/FocusAwareStatusBar";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
+import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import {
   ITW_CREDENTIAL_OFFER_LINKING_PREFIXES,
@@ -46,7 +47,6 @@ import {
 } from "../utils/navigation";
 import { IONavigationDarkTheme, IONavigationLightTheme } from "./theme";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
-import IngressStackNavigator from "./IngressStackNavigator";
 import NavigationService, {
   navigationRef,
   setMainNavigatorReady
@@ -80,16 +80,16 @@ export const AppStackNavigator = (): ReactElement => {
     dispatch(startApplicationInitialization());
   }, [dispatch]);
 
-  if (startupStatus === StartupStatusEnum.INITIAL) {
-    return <IngressStackNavigator />;
-  }
-
   if (startupStatus === StartupStatusEnum.OFFLINE) {
     return <OfflineStackNavigator />;
   }
 
   if (startupStatus === StartupStatusEnum.NOT_AUTHENTICATED) {
     return <NotAuthenticatedStackNavigator />;
+  }
+
+  if (startupStatus === StartupStatusEnum.INITIAL) {
+    return <IngressScreen />;
   }
 
   return <AuthenticatedStackNavigator />;

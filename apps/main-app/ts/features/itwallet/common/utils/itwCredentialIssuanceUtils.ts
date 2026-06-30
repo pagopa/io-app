@@ -1,6 +1,7 @@
 import { generate } from "@pagopa/io-react-native-crypto";
 import {
   createCryptoContextFor,
+  RemotePresentation,
   type ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { v4 as uuidv4 } from "uuid";
@@ -17,6 +18,7 @@ import {
   CredentialBundle,
   CredentialFormat,
   CredentialOfferResolved,
+  EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject
 } from "./itwTypesUtils";
@@ -41,11 +43,13 @@ export type RequestCredential = (args: {
   walletInstanceAttestation: string;
   skipMdocIssuance: boolean;
   resolvedCredentialOffer?: CredentialOfferResolved;
+  pid: CredentialBundle;
 }) => Promise<{
   clientId: string;
   codeVerifier: string;
   requestedCredential: RequestObject;
   issuerConf: IssuerConfiguration;
+  evaluatedDcqlQuery: EvaluatedDcqlQueryResult;
   responseMode?: string;
 }>;
 
@@ -55,6 +59,7 @@ export type RequestCredential = (args: {
  * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
  * @param walletInstanceAttestation - The wallet instance attestation
+ * @param pid - The PID credential to evaluate the issuer DCQL query before showing the trust issuer screen
  * @returns The credential request object
  */
 export const requestCredential: RequestCredential = async ({
@@ -63,7 +68,8 @@ export const requestCredential: RequestCredential = async ({
   credentialType,
   walletInstanceAttestation,
   skipMdocIssuance,
-  resolvedCredentialOffer
+  resolvedCredentialOffer,
+  pid
 }) => {
   const ioWallet = getIoWallet(itwVersion);
 
@@ -117,12 +123,18 @@ export const requestCredential: RequestCredential = async ({
       issuerConf
     );
 
+  const evaluatedDcqlQuery =
+    await ioWallet.RemotePresentation.evaluateDcqlQuery(
+      requestObject.dcql_query as RemotePresentation.DcqlQuery,
+      [[pid.metadata.keyTag, pid.credential]]
+    );
   return {
     clientId,
     codeVerifier,
     responseMode,
     requestedCredential: requestObject,
-    issuerConf
+    issuerConf,
+    evaluatedDcqlQuery
   };
 };
 
@@ -131,7 +143,7 @@ export type CompleteAuthFlow = (args: {
   itwVersion: ItwVersion;
   walletInstanceAttestation: string;
   requestedCredential: RequestObject;
-  pid: CredentialBundle;
+  evaluatedDcqlQuery: EvaluatedDcqlQueryResult;
   codeVerifier: string;
   issuerConf: IssuerConfiguration;
   responseMode?: string;
@@ -150,7 +162,7 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
   itwVersion,
   requestedCredential: requestObject,
   issuerConf,
-  pid,
+  evaluatedDcqlQuery,
   codeVerifier,
   responseMode,
   walletInstanceAttestation
@@ -172,16 +184,17 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
         await ioWallet.CredentialIssuance.completeUserAuthorizationWithFormPostJwtMode(
           requestObject,
           issuerConf,
-          [pid.metadata.keyTag, pid.credential],
+          evaluatedDcqlQuery,
           { wiaCryptoContext }
         )
       ).code;
     }
+
     return (
       await ioWallet.CredentialIssuance.completeEaaUserAuthorizationWithQueryMode(
         requestObject,
         issuerConf,
-        [pid.metadata.keyTag, pid.credential],
+        evaluatedDcqlQuery,
         env.ISSUANCE_REDIRECT_URI, // The redirect uri must be a valid HTTP url that can be followed
         {
           // Workaround for a known bug affecting React Native 0.82-0.83 (https://github.com/facebook/react-native/issues/55248)

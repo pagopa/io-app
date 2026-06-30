@@ -3,6 +3,7 @@ import {
   CredentialOfferResolved,
   CredentialAccessToken,
   CredentialBundle,
+  EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject,
   WalletInstanceAttestations
@@ -53,6 +54,11 @@ export type Context = {
   clientId: string | undefined;
   codeVerifier: string | undefined;
   requestedCredential: RequestObject | undefined;
+  /**
+   * Result of evaluating the issuer DCQL query against the PID before the trust issuer screen.
+   * It is reused to show the requested claims and complete the authorization without recalculating.
+   */
+  evaluatedDcqlQuery: EvaluatedDcqlQueryResult | undefined;
   responseMode: string | undefined;
   /**
    * Obtained credentials from the issuer.
@@ -92,6 +98,7 @@ export const InitialContext: Context = {
   clientId: undefined,
   codeVerifier: undefined,
   requestedCredential: undefined,
+  evaluatedDcqlQuery: undefined,
   responseMode: undefined,
   credentials: undefined,
   failure: undefined,

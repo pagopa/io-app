@@ -110,7 +110,7 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <Stack.Navigator screenOptions={{ animation: "none" }}>
+      <Stack.Navigator screenOptions={{ animationEnabled: false }}>
         <Stack.Screen
           name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO}
           component={ItwIssuanceCredentialOfferIntroScreen}
