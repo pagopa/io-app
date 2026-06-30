@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { type GlobalState } from "../../../../../../store/reducers/types";
 import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
@@ -59,7 +60,8 @@ const buildState = (
         overrides.preferredLanguage !== undefined
           ? overrides.preferredLanguage
           : "it"
-    }
+    },
+    remoteConfig: O.none
   }) as unknown as GlobalState;
 
 describe("itwCredentialsCatalogueSelector", () => {
@@ -198,10 +200,16 @@ describe("itwAvailableCredentialsListSelector", () => {
         type: "EuropeanHealthInsuranceCard"
       },
       { name: "Titoli accademici", type: "education_degree" },
-      { name: "Iscrizioni accademiche", type: "education_enrollment" },
+      {
+        name: "Iscrizioni accademiche",
+        type: "education_enrollment"
+      },
       { name: "Attestato di residenza", type: "residency" },
       { name: "Diplomi", type: "education_diploma" },
-      { name: "Frequenza scolastica", type: "education_attendance" }
+      {
+        name: "Frequenza scolastica",
+        type: "education_attendance"
+      }
     ]);
   });
 });
