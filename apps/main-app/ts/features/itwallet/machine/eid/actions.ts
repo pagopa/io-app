@@ -260,11 +260,10 @@ export const createEidIssuanceActionsImplementation = (
 
     navigation.navigate(ROUTES.MAIN, {
       screen: ROUTES.WALLET_HOME,
-      params: { requiredEidFeedback: isReissuance && !isSurveyHidden,
-              activationExitSurvey: surveyStep
-                ? { step: surveyStep }
-                : undefined
-              }
+      params: {
+        requiredEidFeedback: isReissuance && !isSurveyHidden,
+        activationExitSurvey: surveyStep ? { step: surveyStep } : undefined
+      }
     });
   },
 
