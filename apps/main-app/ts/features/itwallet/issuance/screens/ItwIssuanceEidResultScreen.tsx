@@ -165,6 +165,8 @@ const ItwEidSuccessResultContent = ({
   onAddDocument: () => void;
   onGoToWallet: () => void;
 }) => {
+  const route = useRoute();
+
   if (isWalletEmpty) {
     return (
       <OperationResultScreenContent
@@ -185,9 +187,9 @@ const ItwEidSuccessResultContent = ({
 
   return (
     <ItwIssuanceEidIssuanceResultContent
-      onAddCredential={handleAddCredential}
+      onAddCredential={onAddDocument}
       onBackToWallet={() => {
-        handleBackToWallet();
+        onGoToWallet();
         trackBackToWallet({ exit_page: route.name, credential: "ITW_ID_V2" });
       }}
     />
@@ -221,7 +223,7 @@ const ItwIssuanceEidIssuanceResultContent = ({
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.itw.withDocuments.primaryAction"
         ),
-        onPress: onAddDocument,
+        onPress: onAddCredential,
         icon: "addSmall",
         iconPosition: "end"
       }}
@@ -229,7 +231,7 @@ const ItwIssuanceEidIssuanceResultContent = ({
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.secondaryAction"
         ),
-        onPress: onGoToWallet
+        onPress: onBackToWallet
       }}
     >
       <ItwActivationSuccessFeedbackBanner
@@ -298,7 +300,12 @@ const ItwIssuanceEidUpgradeResultContent = ({
           ),
           onPress: handleBackToWallet
         }}
-      />
+      >
+        <ItwActivationSuccessFeedbackBanner
+          docStatus="active"
+          authMethod={toSurveyAuthMethod(identification)}
+        />
+      </OperationResultScreenContent>
     );
   }
 
