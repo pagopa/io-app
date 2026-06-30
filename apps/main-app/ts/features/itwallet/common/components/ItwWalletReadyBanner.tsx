@@ -1,5 +1,6 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -24,24 +25,28 @@ export const ItwWalletReadyBanner = () => {
   };
 
   return (
-    <Banner
-      testID="itwWalletReadyBannerTestID"
-      title={
-        isNewItwRenderable
-          ? undefined
-          : I18n.t("features.itWallet.issuance.emptyWallet.readyBannerL2.title")
-      }
-      content={I18n.t(
-        isNewItwRenderable
-          ? "features.itWallet.issuance.emptyWallet.readyBanner.content"
-          : "features.itWallet.issuance.emptyWallet.readyBannerL2.content"
-      )}
-      action={I18n.t(
-        "features.itWallet.issuance.emptyWallet.readyBanner.action"
-      )}
-      color="turquoise"
-      onPress={handleOnPress}
-      pictogramName="itWallet"
-    />
+    <View style={{ marginHorizontal: -8 }}>
+      <Banner
+        testID="itwWalletReadyBannerTestID"
+        title={
+          isNewItwRenderable
+            ? undefined
+            : I18n.t(
+                "features.itWallet.issuance.emptyWallet.readyBannerL2.title"
+              )
+        }
+        content={I18n.t(
+          isNewItwRenderable
+            ? "features.itWallet.issuance.emptyWallet.readyBanner.content"
+            : "features.itWallet.issuance.emptyWallet.readyBannerL2.content"
+        )}
+        action={I18n.t(
+          "features.itWallet.issuance.emptyWallet.readyBanner.action"
+        )}
+        color="turquoise"
+        onPress={handleOnPress}
+        pictogramName="itWallet"
+      />
+    </View>
   );
 };
