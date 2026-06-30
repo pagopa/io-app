@@ -142,7 +142,7 @@ export const itwCredentialIssuanceMachine = setup({
       invoke: {
         src: "processCredentialOffer",
         input: ({ context }) => ({
-          credentialOfferUri: context.credentialOfferUri!
+          credentialOfferUri: context.credentialOfferUri
         }),
         onDone: [
           {

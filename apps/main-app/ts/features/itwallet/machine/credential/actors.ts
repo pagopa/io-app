@@ -71,7 +71,7 @@ export type VerifyTrustFederationActorInput = Pick<
 >;
 
 export type ProcessCredentialOfferActorInput = {
-  credentialOfferUri: string;
+  credentialOfferUri: Context["credentialOfferUri"];
 };
 
 export type ProcessCredentialOfferActorOutput = {
