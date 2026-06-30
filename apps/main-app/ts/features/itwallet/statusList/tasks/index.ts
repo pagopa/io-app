@@ -77,10 +77,12 @@ export const unregisterItwStatusListFetchTask = async (): Promise<void> => {
  */
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
-    const now = Date.now();
     const itwVersion = await getPersistedItwVersion();
+    const now = Date.now();
+
     await refreshStaleEntries({ itwVersion }, now);
     await storeLastStatusListCheckTimestamp(now);
+
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch {
     return BackgroundTask.BackgroundTaskResult.Failed;

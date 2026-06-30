@@ -13,19 +13,22 @@ import { StatusListContext } from "./types";
  * A failed refresh never evicts an existing cached entry.
  */
 export const refreshStatusListToken = async (
-  context: StatusListContext,
+  { itwVersion }: StatusListContext,
   uri: string
 ): Promise<boolean> => {
   try {
-    const ioWallet = getIoWallet(context.itwVersion);
+    const ioWallet = getIoWallet(itwVersion);
     assert(
       ioWallet.CredentialStatus.statusList.isSupported,
-      `Status List is not supported by IT-Wallet v${context.itwVersion}`
+      `Status List is not supported by IT-Wallet v${itwVersion}`
     );
 
     const raw = await ioWallet.CredentialStatus.statusList.getByUri(uri);
     const payload = decodeJwt(raw).payload;
     const statusList = CredentialStatus.StatusList.parse(payload);
+
+    // TODO [SIW-4542] add JWT verification
+    // const statusList = await ioWallet.CredentialStatus.statusList.verifyAndParse(jwks, raw);
 
     assert(
       statusList.sub === uri,
