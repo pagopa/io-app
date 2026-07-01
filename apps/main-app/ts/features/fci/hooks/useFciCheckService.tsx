@@ -63,13 +63,13 @@ export const useFciCheckService = () => {
     snapPoint: [320],
     footer: (
       <ContentWrapper>
+        <VSpacer size={16} />
         <IOButton
           fullWidth
           variant="solid"
           label={I18n.t("features.fci.checkService.confirm")}
           onPress={onConfirm}
         />
-        <VSpacer size={32} />
       </ContentWrapper>
     )
   });
