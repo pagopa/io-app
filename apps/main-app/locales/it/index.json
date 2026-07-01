@@ -604,13 +604,6 @@
   "cie": {
     "title": "Appoggia la carta"
   },
-  "spid": {
-    "pending_login": {
-      "title": "Accesso in corso",
-      "details": "Se hai aperto la sessione nel browser, continua da lì. Altrimenti torna indietro e avvia un nuovo login!",
-      "button": "Torna alla lista"
-    }
-  },
   "authentication": {
     "landing": {
       "accessibility": {
@@ -2925,7 +2918,7 @@
             "cta": "Aggiungi al Portafoglio"
           },
           "emptyMessage": "La tua Patente di guida, la tua Tessera Sanitaria e altri documenti digitali appariranno qui!",
-          "cta": "Aggiungi un documento"
+          "cta": "Inizia"
         },
         "toast": {
           "newMethod": "Metodo aggiunto!"
@@ -3670,11 +3663,6 @@
             "title": "Stiamo aggiornando i tuoi documenti",
             "subtitle": "Attendi qualche secondo"
           },
-          "success": {
-            "title": "Il tuo IT-Wallet è pronto!",
-            "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
-            "primaryAction": "Esplora IT-Wallet"
-          },
           "failure": {
             "title": "Non è stato possibile aggiornare {{credentialName}}",
             "titleMany": "Non è stato possibile aggiornare i documenti",
@@ -3688,6 +3676,17 @@
             "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
             "primaryAction": "Aggiungi primo documento",
             "secondaryAction": "Continua più tardi",
+            "itw": {
+              "title": "Il tuo portafoglio IT-Wallet è pronto!",
+              "withDocuments": {
+                "subtitle": "Scopri i nuovi documenti e aggiungili al tuo Portafoglio.",
+                "primaryAction": "Aggiungi documento"
+              },
+              "withoutDocuments": {
+                "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale.",
+                "primaryAction": "Esplora IT-Wallet"
+              }
+            },
             "reissuance": {
               "title": "Hai verificato la tua identità",
               "subtitle": "Ora puoi continuare a usare Documenti su IO.",
@@ -4475,12 +4474,12 @@
         "activation": {
           "title": "Porta su IO i tuoi documenti digitali",
           "description": "Con piena validità ufficiale, digitali e sempre a portata di mano!",
-          "action": "Aggiungi un documento"
+          "action": "Inizia"
         },
         "upgrade_empty": {
           "title": "Il tuo Portafoglio è ora parte di IT-Wallet",
           "description": "Scopri le funzionalità evolute dei documenti digitali su IO.",
-          "action": "Aggiungi documento"
+          "action": "Inizia"
         },
         "upgrade": {
           "title": "IO dà il benvenuto a IT-Wallet",
