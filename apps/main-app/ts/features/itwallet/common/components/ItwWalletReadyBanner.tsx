@@ -25,7 +25,7 @@ export const ItwWalletReadyBanner = () => {
   };
 
   return (
-    <View style={{ marginHorizontal: -8 }}>
+    <View style={{ marginHorizontal: 8 }}>
       <Banner
         testID="itwWalletReadyBannerTestID"
         title={

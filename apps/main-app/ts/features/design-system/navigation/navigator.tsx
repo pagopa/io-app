@@ -68,6 +68,7 @@ import { DSScreenEndMargin } from "../core/DSScreenEndMargin";
 import { DSScreenOperationResult } from "../core/DSScreenOperationResult";
 import { DSScreenOperationResultAnimated } from "../core/DSScreenOperationResultAnimated";
 import { DSSelection } from "../core/DSSelection";
+import { DSServicePreferences } from "../core/DSServicePreferences";
 import { DSStepper } from "../core/DSStepper";
 import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
@@ -411,6 +412,15 @@ export const DesignSystemNavigator = () => {
             headerTitle:
               DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITW_BRAND_EXPLORATION.title,
             headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.SERVICE_PREFERENCES.route}
+          component={DSServicePreferences}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.SERVICE_PREFERENCES.title
           }}
         />
 

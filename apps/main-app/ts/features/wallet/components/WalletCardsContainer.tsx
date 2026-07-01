@@ -146,11 +146,12 @@ export {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    paddingVertical: 8
   },
   walletContent: {
     flex: 1,
-    gap: 8
+    gap: 16
   },
   cardsWrapper: {
     marginHorizontal: -8

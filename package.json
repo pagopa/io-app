@@ -39,11 +39,11 @@
       "@babel/plugin-transform-typescript": "^7.23.6",
       "@babel/plugin-syntax-typescript": "^7.23.3",
       "@babel/types": "^7.23.6",
-      "@pagopa/io-wallet-oauth2": "1.4.2",
-      "@pagopa/io-wallet-oid-federation": "1.4.2",
-      "@pagopa/io-wallet-oid4vci": "1.4.2",
-      "@pagopa/io-wallet-oid4vp": "1.4.2",
-      "@pagopa/io-wallet-utils": "1.4.2"
+      "@pagopa/io-wallet-oauth2": "1.5.2",
+      "@pagopa/io-wallet-oid-federation": "1.5.2",
+      "@pagopa/io-wallet-oid4vci": "1.5.2",
+      "@pagopa/io-wallet-oid4vp": "1.5.2",
+      "@pagopa/io-wallet-utils": "1.5.2"
     },
     "patchedDependencies": {
       "react-native-barcode-builder@2.0.0": "patches/react-native-barcode-builder@2.0.0.patch",

@@ -10,11 +10,11 @@ import { View } from "react-native";
 import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { SpidIdp } from "../../../../../utils/idps";
-import { StandardLoginRequestInfo } from "../store/types";
+import { SpidLoginRequestInfo } from "../store/types";
 
 type Props = {
   selectedIdp?: SpidIdp;
-  requestState: StandardLoginRequestInfo["requestState"];
+  requestState: SpidLoginRequestInfo["requestState"];
 };
 
 export const usePosteIDApp2AppEducational = ({

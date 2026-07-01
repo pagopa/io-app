@@ -78,7 +78,9 @@ export const LoginOptInScreen = () => {
 
   useHeaderSecondLevel({
     title: "",
-    supportRequest: true
+    supportRequest: true,
+    transparent: true,
+    backgroundColor: "transparent"
   });
 
   useOnFirstRender(() => {
