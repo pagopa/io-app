@@ -2,13 +2,12 @@ import _ from "lodash";
 import MockDate from "mockdate";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../store/reducers/types";
+import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 import {
   itwAuthLevelSelector,
   itwIdentificationModeSelector,
   itwIsPidReissuingSurveyHiddenSelector
 } from "../preferences";
-import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 
 describe("itwAuthLevelSelector", () => {
   afterEach(() => {
