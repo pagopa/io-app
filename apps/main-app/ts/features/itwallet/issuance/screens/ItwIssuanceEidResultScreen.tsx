@@ -159,13 +159,18 @@ export const ItwIssuanceEidResultScreen = () => {
 const ItwEidSuccessResultContent = ({
   isWalletEmpty,
   onAddDocument,
-  onGoToWallet
+  onGoToWallet,
+  docStatus = "not_active"
 }: {
   isWalletEmpty: boolean;
   onAddDocument: () => void;
   onGoToWallet: () => void;
+  docStatus?: "active" | "not_active";
 }) => {
   const route = useRoute();
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const authMethod = toSurveyAuthMethod(identification);
 
   if (isWalletEmpty) {
     return (
@@ -181,12 +186,18 @@ const ItwEidSuccessResultContent = ({
           ),
           onPress: onGoToWallet
         }}
-      />
+      >
+        <ItwActivationSuccessFeedbackBanner
+          docStatus={docStatus}
+          authMethod={authMethod}
+        />
+      </OperationResultScreenContent>
     );
   }
 
   return (
     <ItwIssuanceEidIssuanceResultContent
+      docStatus={docStatus}
       onAddCredential={onAddDocument}
       onBackToWallet={() => {
         onGoToWallet();
@@ -197,19 +208,19 @@ const ItwEidSuccessResultContent = ({
 };
 
 type ItwIssuanceEidIssuanceResultContentProps = {
+  docStatus: "active" | "not_active";
   onAddCredential: () => void;
   onBackToWallet: () => void;
 };
 
 const ItwIssuanceEidIssuanceResultContent = ({
+  docStatus,
   onAddCredential,
   onBackToWallet
 }: ItwIssuanceEidIssuanceResultContentProps) => {
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
 
-  // This component is only rendered for the "issuance" mode (first activation),
-  // so the user had no active DocIO before — docStatus is always "not_active".
   const authMethod = toSurveyAuthMethod(identification);
 
   return (
@@ -235,7 +246,7 @@ const ItwIssuanceEidIssuanceResultContent = ({
       }}
     >
       <ItwActivationSuccessFeedbackBanner
-        docStatus="not_active"
+        docStatus={docStatus}
         authMethod={authMethod}
       />
     </OperationResultScreenContent>
@@ -309,11 +320,13 @@ const ItwIssuanceEidUpgradeResultContent = ({
     );
   }
 
+  // The upgrade flow means the user already had DocIO (L2) active, so docStatus is "active".
   return (
     <ItwEidSuccessResultContent
       isWalletEmpty={isWalletEmpty}
       onAddDocument={handleAddCredential}
       onGoToWallet={handleGoToWalletWithTracking}
+      docStatus="active"
     />
   );
 };

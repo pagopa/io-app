@@ -255,8 +255,8 @@ export const createEidIssuanceActionsImplementation = (
       store.getState()
     );
     const isReissuance = context.mode === "reissuance";
-    assertEvent(event, "close");
-    const { surveyStep } = event;
+
+    const surveyStep = event.type === "close" ? event.surveyStep : undefined;
 
     navigation.navigate(ROUTES.MAIN, {
       screen: ROUTES.WALLET_HOME,

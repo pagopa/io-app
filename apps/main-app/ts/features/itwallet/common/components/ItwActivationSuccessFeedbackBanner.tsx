@@ -1,7 +1,7 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { View } from "react-native";
 import {
   trackItwSurveyRequest,
@@ -22,6 +22,7 @@ const ItwActivationSuccessFeedbackBanner = ({
   docStatus,
   authMethod
 }: Props) => {
+  const [isVisible, setIsVisible] = useState(true);
   const { name: routeName } = useRoute();
 
   const trackingProps: TrackQualtricsSurvey = useMemo(
@@ -45,6 +46,10 @@ const ItwActivationSuccessFeedbackBanner = ({
     openWebUrl(surveyUrl);
   }, [trackingProps, surveyUrl]);
 
+  if (!isVisible) {
+    return null;
+  }
+
   return (
     <View style={{ marginTop: 24 }}>
       <Banner
@@ -61,6 +66,7 @@ const ItwActivationSuccessFeedbackBanner = ({
         pictogramName="feedback"
         color="neutral"
         onPress={handleOnPress}
+        onClose={() => setIsVisible(false)}
         labelClose={I18n.t("global.buttons.close")}
       />
     </View>
