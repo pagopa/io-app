@@ -8,7 +8,6 @@ import {
   H4,
   HStack,
   Icon,
-  IOMarkdownLite,
   IOColors,
   IOIcons,
   useIOTheme,
@@ -32,6 +31,7 @@ import { useIOSelector } from "../../../../store/hooks.ts";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import { generateAccessibleLinkRule } from "../../../common/components/IOMarkdown/customRules.tsx";
 import { trackOpenItwTos } from "../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
@@ -262,12 +262,14 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
               />
             </VStack>
             <VSpacer size={32} />
-            <IOMarkdownLite
+            <IOMarkdown
               content={I18n.t("features.itWallet.discovery.screen.itw.tos", {
                 privacyUrl: "itw-privacy-and-terms"
               })}
-              small
-              onLinkPress={handlePrivacyAndTermsPress}
+              rules={generateAccessibleLinkRule({
+                onLinkPress: handlePrivacyAndTermsPress,
+                paragraphSize: "small"
+              })}
             />
           </ContentWrapper>
         </ForceScrollDownView>
