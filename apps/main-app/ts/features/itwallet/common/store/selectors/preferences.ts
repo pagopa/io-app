@@ -60,3 +60,29 @@ export const itwIdentificationModeSelector = (state: GlobalState) =>
  */
 export const itwIsActivationDisabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isItwActivationDisabled ?? false;
+
+const NOT_EMPTY_WALLET_SUCCESS_BANNER_VALIDITY_DAYS = 7;
+
+/**
+ * Returns the data stored when a non-empty wallet is first unlocked by an IT Wallet eID activation.
+ */
+export const itwNotEmptyWalletSuccessBannerDataSelector = (
+  state: GlobalState
+) => state.features.itWallet.preferences.notEmptyWalletSuccessBannerData;
+
+/**
+ * Returns true if the not-empty-wallet success banner should be shown in WALLET_HOME,
+ * i.e. a credential was added with an IT Wallet eID within the last 7 days.
+ */
+export const itwShouldShowNotEmptyWalletSuccessBannerSelector = (
+  state: GlobalState
+): boolean => {
+  const data = itwNotEmptyWalletSuccessBannerDataSelector(state);
+  if (!data) {
+    return false;
+  }
+  const addedAtMs = new Date(data.date).getTime();
+  const validityMs =
+    NOT_EMPTY_WALLET_SUCCESS_BANNER_VALIDITY_DAYS * 24 * 60 * 60 * 1000;
+  return Date.now() - addedAtMs <= validityMs;
+};

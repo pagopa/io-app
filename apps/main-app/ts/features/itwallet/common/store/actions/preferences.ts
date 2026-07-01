@@ -46,6 +46,20 @@ export const itwSetIdentificationMode = createStandardAction(
   "ITW_SET_IDENTIFICATION_MODE"
 )<IdentificationContext["mode"] | undefined>();
 
+export type ItwNotEmptyWalletSuccessBannerData = {
+  date: string;
+  docStatus: "active" | "not_active";
+  authMethod: string;
+};
+
+export const itwSetNotEmptyWalletSuccessBannerData = createStandardAction(
+  "ITW_SET_NOT_EMPTY_WALLET_SUCCESS_BANNER_DATA"
+)<ItwNotEmptyWalletSuccessBannerData>();
+
+export const itwClearNotEmptyWalletSuccessBannerData = createStandardAction(
+  "ITW_CLEAR_NOT_EMPTY_WALLET_SUCCESS_BANNER_DATA"
+)<void>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwSetReviewPending>
   | ActionType<typeof itwSetAuthLevel>
@@ -57,4 +71,6 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetCredentialUpgradeFailed>
   | ActionType<typeof itwClearCredentialUpgradeFailed>
   | ActionType<typeof itwDisableItwActivation>
-  | ActionType<typeof itwSetIdentificationMode>;
+  | ActionType<typeof itwSetIdentificationMode>
+  | ActionType<typeof itwSetNotEmptyWalletSuccessBannerData>
+  | ActionType<typeof itwClearNotEmptyWalletSuccessBannerData>;

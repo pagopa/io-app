@@ -1,9 +1,12 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
+  ItwNotEmptyWalletSuccessBannerData,
+  itwClearNotEmptyWalletSuccessBannerData,
+  itwClearCredentialUpgradeFailed,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
+  itwSetNotEmptyWalletSuccessBannerData,
   itwSetCredentialUpgradeFailed,
-  itwClearCredentialUpgradeFailed,
   itwSetIdentificationMode
 } from "../../actions/preferences";
 import reducer, {
@@ -122,6 +125,72 @@ describe("IT Wallet preferences reducer", () => {
       ...itwPreferencesInitialState,
       claimValuesHidden: true,
       isItwActivationDisabled: true
+    });
+  });
+
+  describe("itwSetNotEmptyWalletSuccessBannerData / itwClearNotEmptyWalletSuccessBannerData", () => {
+    const SAMPLE_DATA: ItwNotEmptyWalletSuccessBannerData = {
+      date: "2026-06-30T10:00:00.000Z",
+      docStatus: "not_active",
+      authMethod: "ciepin"
+    };
+
+    it("should store banner data", () => {
+      const newState = reducer(
+        INITIAL_STATE,
+        itwSetNotEmptyWalletSuccessBannerData(SAMPLE_DATA)
+      );
+      expect(newState.notEmptyWalletSuccessBannerData).toEqual(SAMPLE_DATA);
+    });
+
+    it("should overwrite previously stored banner data", () => {
+      const updated: ItwNotEmptyWalletSuccessBannerData = {
+        ...SAMPLE_DATA,
+        authMethod: "spid"
+      };
+      const stateWithData = reducer(
+        INITIAL_STATE,
+        itwSetNotEmptyWalletSuccessBannerData(SAMPLE_DATA)
+      );
+      const stateAfterUpdate = reducer(
+        stateWithData,
+        itwSetNotEmptyWalletSuccessBannerData(updated)
+      );
+      expect(stateAfterUpdate.notEmptyWalletSuccessBannerData).toEqual(updated);
+    });
+
+    it("should remove banner data", () => {
+      const stateWithData = reducer(
+        INITIAL_STATE,
+        itwSetNotEmptyWalletSuccessBannerData(SAMPLE_DATA)
+      );
+      const stateAfterClear = reducer(
+        stateWithData,
+        itwClearNotEmptyWalletSuccessBannerData()
+      );
+      expect(stateAfterClear.notEmptyWalletSuccessBannerData).toBeUndefined();
+    });
+
+    it("should preserve other fields when clearing banner data", () => {
+      const stateWithData = reducer(
+        { ...INITIAL_STATE, authLevel: "L2" },
+        itwSetNotEmptyWalletSuccessBannerData(SAMPLE_DATA)
+      );
+      const stateAfterClear = reducer(
+        stateWithData,
+        itwClearNotEmptyWalletSuccessBannerData()
+      );
+      expect(stateAfterClear.authLevel).toBe("L2");
+      expect(stateAfterClear.notEmptyWalletSuccessBannerData).toBeUndefined();
+    });
+
+    it("should clear banner data on itwLifecycleStoresReset", () => {
+      const stateWithData = reducer(
+        INITIAL_STATE,
+        itwSetNotEmptyWalletSuccessBannerData(SAMPLE_DATA)
+      );
+      const stateAfterReset = reducer(stateWithData, itwLifecycleStoresReset());
+      expect(stateAfterReset.notEmptyWalletSuccessBannerData).toBeUndefined();
     });
   });
 });

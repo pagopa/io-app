@@ -51,7 +51,7 @@ const ItwActivationSuccessFeedbackBanner = ({
   }
 
   return (
-    <View style={{ marginTop: 24 }}>
+    <View style={{ marginTop: 8 }}>
       <Banner
         testID="itwActivationSuccessFeedbackBannerTestID"
         title={I18n.t(
@@ -66,7 +66,9 @@ const ItwActivationSuccessFeedbackBanner = ({
         pictogramName="feedback"
         color="neutral"
         onPress={handleOnPress}
-        onClose={() => setIsVisible(false)}
+        onClose={() => {
+          setIsVisible(false);
+        }}
         labelClose={I18n.t("global.buttons.close")}
       />
     </View>

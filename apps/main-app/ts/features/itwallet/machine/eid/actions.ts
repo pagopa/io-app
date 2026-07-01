@@ -21,10 +21,15 @@ import {
   itwClearSimplifiedActivationRequirements,
   itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
+  itwSetNotEmptyWalletSuccessBannerData,
   itwSetCredentialUpgradeFailed,
   itwSetIdentificationMode
 } from "../../common/store/actions/preferences";
-import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
+import { toSurveyAuthMethod } from "../../analytics/utils";
+import {
+  itwIdentificationModeSelector,
+  itwIsPidReissuingSurveyHiddenSelector
+} from "../../common/store/selectors/preferences";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
 import {
   itwRemoveIntegrityKeyTag,
@@ -36,7 +41,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { Context } from "./context";
+import { Context, IdentificationContext } from "./context";
 import { EidIssuanceEvents } from "./events";
 
 export const createEidIssuanceActionsImplementation = (
@@ -307,6 +312,33 @@ export const createEidIssuanceActionsImplementation = (
     // Save the auth level in the preferences
     store.dispatch(itwSetAuthLevel(context.identification?.level));
     store.dispatch(itwSetIdentificationMode(context.identification?.mode));
+  },
+
+  storeNotEmptyWalletSuccessBannerData: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    // Store banner data only for:
+    // - credential-triggered activation (credentialType set): user skips success page
+    // - upgrade flow (mode === "upgrade")
+    // Regular issuance with "Add document" CTA keeps the banner on the success page directly.
+    if (!context.credentialType && context.mode !== "upgrade") {
+      return;
+    }
+    const docStatus = context.mode === "upgrade" ? "active" : "not_active";
+    const storedMode = itwIdentificationModeSelector(store.getState());
+    const authMethod = toSurveyAuthMethod(
+      context.identification ??
+        (storedMode
+          ? ({ mode: storedMode, level: "L2" } as IdentificationContext)
+          : undefined)
+    );
+    store.dispatch(
+      itwSetNotEmptyWalletSuccessBannerData({
+        date: new Date().toISOString(),
+        docStatus,
+        authMethod
+      })
+    );
   },
 
   freezeSimplifiedActivationRequirements: () => {
