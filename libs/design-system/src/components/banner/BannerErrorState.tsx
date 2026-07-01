@@ -55,9 +55,6 @@ type BannerErrorStateActionProps =
 export type BannerErrorStateProps = BaseBannerErrorStateProps &
   BannerErrorStateActionProps;
 
-/**
- ** TODO: Move it to the `io-app-design-system` package
- */
 export const BannerErrorState = ({
   viewRef,
   icon = "warningFilled",
