@@ -12,6 +12,45 @@ import {
   StoredVerification
 } from "./itwTypesUtils";
 
+/**
+ * A credential is a batch when it tracks its copies through the `keyTags` array (e.g. one-time-use
+ * credentials obtained in batch). A batch credential stays a batch even when down to a single
+ * remaining copy, so any non-empty `keyTags` array marks it as such.
+ */
+export const isBatchCredential = (
+  credential: Pick<CredentialMetadata, "keyTags">
+): boolean => Boolean(credential.keyTags?.length);
+
+/**
+ * Returns every cryptographic key tag owned by a credential: the whole batch for a batch
+ * credential, or the single `keyTag` for a non-batch one. Used to delete the device crypto keys.
+ */
+export const getCredentialKeyTags = (
+  credential: Pick<CredentialMetadata, "keyTag" | "keyTags">
+): ReadonlyArray<string> => credential.keyTags ?? [credential.keyTag];
+
+/**
+ * Returns the vault ids of every copy of a credential. A non-batch credential maps to a single
+ * vault id (its `credentialId`); a batch credential maps to one vault id per copy (each copy's
+ * `keyTag`). See {@link CredentialsVault} for the vault id namespacing.
+ */
+export const getCredentialVaultIds = (
+  credential: Pick<CredentialMetadata, "credentialId" | "keyTags">
+): ReadonlyArray<string> =>
+  isBatchCredential(credential)
+    ? (credential.keyTags ?? [])
+    : [credential.credentialId];
+
+/**
+ * Returns the vault id of the representative copy of a credential, i.e. the one exposed for
+ * display and presentation. For a batch credential it is the first copy (`keyTags[0]`), for a
+ * non-batch credential it is the `credentialId`. Falls back to `credentialId` if the batch array
+ * is unexpectedly empty (e.g. corrupted state) to avoid returning an invalid vault id.
+ */
+export const getRepresentativeVaultId = (
+  credential: Pick<CredentialMetadata, "credentialId" | "keyTags">
+): string => credential.keyTags?.[0] ?? credential.credentialId;
+
 // Credentials that can be obtained with valid a Documenti su IO instance
 export const l2Credentials = [
   CredentialType.DRIVING_LICENSE,
@@ -21,6 +60,7 @@ export const l2Credentials = [
 
 // New credentials that can be actively requested and obtained by the user
 export const newCredentials = [
+  CredentialType.PROOF_OF_AGE,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
   CredentialType.RESIDENCY,
@@ -62,9 +102,7 @@ const getCredentialNameByType = (
       ? "features.itWallet.credentialName.pid"
       : "features.itWallet.credentialName.eid"
   ),
-  [CredentialType.AGE_VERIFICATION]: I18n.t(
-    "features.itWallet.credentialName.av"
-  ),
+  [CredentialType.PROOF_OF_AGE]: I18n.t("features.itWallet.credentialName.av"),
   [CredentialType.EDUCATION_DEGREE]: I18n.t(
     "features.itWallet.credentialName.ed"
   ),

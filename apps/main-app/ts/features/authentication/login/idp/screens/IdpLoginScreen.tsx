@@ -48,8 +48,8 @@ import {
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
 import { getUrlBasepath } from "../../../../../utils/url";
-import { standardLoginRequestInfoSelector } from "../store/selectors";
-import { setStandardLoginRequestState } from "../store/actions";
+import { spidLoginRequestInfoSelector } from "../store/selectors";
+import { setSpidLoginRequestState } from "../store/actions";
 import { ErrorType as SpidLoginErrorType } from "../store/types";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { usePosteIDApp2AppEducational } from "../hooks/usePosteIDApp2AppEducational";
@@ -95,7 +95,7 @@ const IdpLoginScreen = () => {
     _isEqual
   );
 
-  const { requestState } = useIOSelector(standardLoginRequestInfoSelector);
+  const { requestState } = useIOSelector(spidLoginRequestInfoSelector);
   const [errorCodeOrMessage, setErrorCodeOrMessage] = useState<
     string | undefined
   >(undefined);
@@ -107,7 +107,7 @@ const IdpLoginScreen = () => {
 
   const setRequestState = useCallback(
     (req: pot.Pot<true, SpidLoginErrorType>) => {
-      dispatch(setStandardLoginRequestState(req));
+      dispatch(setSpidLoginRequestState(req));
     },
     [dispatch]
   );

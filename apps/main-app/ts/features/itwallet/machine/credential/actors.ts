@@ -38,7 +38,7 @@ export type GetWalletAttestationActorOutput = Awaited<
 export type ObtainAccessTokenActorInput = Partial<
   Omit<
     Parameters<credentialIssuanceUtils.CompleteAuthFlow>[0],
-    "env" | "itwVersion"
+    "env" | "itwVersion" | "pid"
   >
 >;
 
@@ -60,6 +60,25 @@ export type ObtainCredentialActorOutput = {
 };
 
 export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
+
+/**
+ * Builds the dictionary of Wallet Unit Attestations generated during issuance, keyed by their
+ * `walletUnitAttestationId`. Works for both single and batch issuance, where a batch shares a
+ * single WUA across all its keys.
+ */
+const extractWalletUnitAttestations = (
+  authorizedCredentials: ReadonlyArray<{
+    walletUnitAttestation?: string;
+    walletUnitAttestationId?: string;
+  }>
+): Record<string, string> =>
+  authorizedCredentials.reduce(
+    (acc, c) =>
+      c.walletUnitAttestationId && c.walletUnitAttestation
+        ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
+        : acc,
+    {} as Record<string, string>
+  );
 
 /**
  * Creates the actors for the eid issuance machine
@@ -260,15 +279,51 @@ export const createCredentialIssuanceActorsImplementation = (
       await ensureIntegrityServiceIsStoreReadyOrThrow(store);
     }
 
+    // Decide whether to obtain the credential in batch (multiple copies) based on the app-side
+    // configuration and the issuer's advertised batch size. One-time-use credentials are obtained
+    // in batch so the wallet holds several copies, each consumed on a single presentation.
+    const batchSize = credentialIssuanceUtils.getEffectiveBatchSize(
+      credentialType,
+      issuerConf.credential_issuance_batch_size
+    );
+
+    const keyGenParams = {
+      env,
+      itwVersion,
+      hardwareKeyTag: integrityKeyTag.value,
+      sessionToken
+    };
+
+    if (batchSize > 1) {
+      const authorizedCredentials =
+        await credentialIssuanceUtils.generateBatchKeysWithWalletUnitAttestation(
+          accessToken,
+          batchSize,
+          keyGenParams
+        );
+
+      const credentials = await credentialIssuanceUtils.obtainCredentialsBatch({
+        authorizedCredentials,
+        env,
+        itwVersion,
+        accessToken,
+        credentialType,
+        issuerConf,
+        clientId
+      });
+
+      return {
+        credentials,
+        walletUnitAttestations: extractWalletUnitAttestations(
+          authorizedCredentials
+        )
+      };
+    }
+
     const authorizedCredentials =
       await credentialIssuanceUtils.generateKeysWithWalletUnitAttestation(
         accessToken,
-        {
-          env,
-          itwVersion,
-          hardwareKeyTag: integrityKeyTag.value,
-          sessionToken
-        }
+        keyGenParams
       );
 
     const credentials = await credentialIssuanceUtils.obtainCredential({
@@ -283,12 +338,8 @@ export const createCredentialIssuanceActorsImplementation = (
 
     return {
       credentials,
-      walletUnitAttestations: authorizedCredentials.reduce(
-        (acc, c) =>
-          c.walletUnitAttestationId && c.walletUnitAttestation
-            ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
-            : acc,
-        {} as Record<string, string>
+      walletUnitAttestations: extractWalletUnitAttestations(
+        authorizedCredentials
       )
     };
   });

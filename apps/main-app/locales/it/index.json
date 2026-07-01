@@ -604,13 +604,6 @@
   "cie": {
     "title": "Appoggia la carta"
   },
-  "spid": {
-    "pending_login": {
-      "title": "Accesso in corso",
-      "details": "Se hai aperto la sessione nel browser, continua da lì. Altrimenti torna indietro e avvia un nuovo login!",
-      "button": "Torna alla lista"
-    }
-  },
   "authentication": {
     "landing": {
       "accessibility": {
