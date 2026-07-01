@@ -31,7 +31,6 @@ import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/stor
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import { createCommonActorsImplementation } from "../utils/actors";
 import { Context } from "./context";
-
 export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getWalletInstanceAttestation>
 >;
@@ -61,6 +60,25 @@ export type ObtainCredentialActorOutput = {
 };
 
 export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
+
+/**
+ * Builds the dictionary of Wallet Unit Attestations generated during issuance, keyed by their
+ * `walletUnitAttestationId`. Works for both single and batch issuance, where a batch shares a
+ * single WUA across all its keys.
+ */
+const extractWalletUnitAttestations = (
+  authorizedCredentials: ReadonlyArray<{
+    walletUnitAttestation?: string;
+    walletUnitAttestationId?: string;
+  }>
+): Record<string, string> =>
+  authorizedCredentials.reduce(
+    (acc, c) =>
+      c.walletUnitAttestationId && c.walletUnitAttestation
+        ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
+        : acc,
+    {} as Record<string, string>
+  );
 
 /**
  * Creates the actors for the eid issuance machine
@@ -180,13 +198,29 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
 
-    return await credentialIssuanceUtils.requestCredential({
+    const eidOption = itwCredentialsEidSelector(store.getState());
+    assert("value" in eidOption, "eID is undefined");
+    const eid = eidOption.value;
+
+    // Retrieve the PID credential before showing the trust issuer screen so the
+    // requested DCQL claims can be evaluated and displayed to the user.
+    const pidCredential = await CredentialsVault.get(eid.credentialId);
+    assert(pidCredential, "PID credential not found in secure storage");
+
+    const pid: CredentialBundle = {
+      metadata: eid,
+      credential: pidCredential
+    };
+
+    const result = await credentialIssuanceUtils.requestCredential({
       env,
       itwVersion,
       credentialType,
       walletInstanceAttestation,
-      skipMdocIssuance
+      skipMdocIssuance,
+      pid
     });
+    return result;
   });
 
   const obtainAccessToken = fromPromise<
@@ -198,24 +232,15 @@ export const createCredentialIssuanceActorsImplementation = (
       issuerConf,
       walletInstanceAttestation,
       requestedCredential,
+      evaluatedDcqlQuery,
       responseMode
     } = input;
-    const eid = itwCredentialsEidSelector(store.getState());
 
     assert(codeVerifier, "codeVerifier is undefined");
     assert(issuerConf, "issuerConf is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
     assert(requestedCredential, "requestedCredential is undefined");
-    assert(O.isSome(eid), "eID is undefined");
-
-    // Retrieve the PID credential from the vault
-    const pidCredential = await CredentialsVault.get(eid.value.credentialId);
-    assert(pidCredential, "PID credential not found in secure storage");
-
-    const pid: CredentialBundle = {
-      metadata: eid.value,
-      credential: pidCredential
-    };
+    assert(evaluatedDcqlQuery, "evaluatedDcqlQuery is undefined");
 
     const { accessToken } = await credentialIssuanceUtils.completeAuthFlow({
       env,
@@ -225,7 +250,7 @@ export const createCredentialIssuanceActorsImplementation = (
       walletInstanceAttestation,
       requestedCredential,
       responseMode,
-      pid
+      evaluatedDcqlQuery
     });
     return accessToken;
   });
@@ -254,15 +279,51 @@ export const createCredentialIssuanceActorsImplementation = (
       await ensureIntegrityServiceIsStoreReadyOrThrow(store);
     }
 
+    // Decide whether to obtain the credential in batch (multiple copies) based on the app-side
+    // configuration and the issuer's advertised batch size. One-time-use credentials are obtained
+    // in batch so the wallet holds several copies, each consumed on a single presentation.
+    const batchSize = credentialIssuanceUtils.getEffectiveBatchSize(
+      credentialType,
+      issuerConf.credential_issuance_batch_size
+    );
+
+    const keyGenParams = {
+      env,
+      itwVersion,
+      hardwareKeyTag: integrityKeyTag.value,
+      sessionToken
+    };
+
+    if (batchSize > 1) {
+      const authorizedCredentials =
+        await credentialIssuanceUtils.generateBatchKeysWithWalletUnitAttestation(
+          accessToken,
+          batchSize,
+          keyGenParams
+        );
+
+      const credentials = await credentialIssuanceUtils.obtainCredentialsBatch({
+        authorizedCredentials,
+        env,
+        itwVersion,
+        accessToken,
+        credentialType,
+        issuerConf,
+        clientId
+      });
+
+      return {
+        credentials,
+        walletUnitAttestations: extractWalletUnitAttestations(
+          authorizedCredentials
+        )
+      };
+    }
+
     const authorizedCredentials =
       await credentialIssuanceUtils.generateKeysWithWalletUnitAttestation(
         accessToken,
-        {
-          env,
-          itwVersion,
-          hardwareKeyTag: integrityKeyTag.value,
-          sessionToken
-        }
+        keyGenParams
       );
 
     const credentials = await credentialIssuanceUtils.obtainCredential({
@@ -277,12 +338,8 @@ export const createCredentialIssuanceActorsImplementation = (
 
     return {
       credentials,
-      walletUnitAttestations: authorizedCredentials.reduce(
-        (acc, c) =>
-          c.walletUnitAttestationId && c.walletUnitAttestation
-            ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
-            : acc,
-        {} as Record<string, string>
+      walletUnitAttestations: extractWalletUnitAttestations(
+        authorizedCredentials
       )
     };
   });

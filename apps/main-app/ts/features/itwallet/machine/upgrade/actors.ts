@@ -5,6 +5,7 @@ import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { Env } from "../../common/utils/environment";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
+import { getRepresentativeVaultId } from "../../common/utils/itwCredentialUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
@@ -74,7 +75,9 @@ export const createCredentialUpgradeActorsImplementation = (
     const pidOption = itwCredentialsEidSelector(state);
     assert(O.isSome(pidOption), "PID credential is not present in the store");
 
-    const pid = await CredentialsVault.get(pidOption.value.credentialId);
+    const pid = await CredentialsVault.get(
+      getRepresentativeVaultId(pidOption.value)
+    );
     assert(pid, "PID credential not found in secure storage");
 
     return {
@@ -102,6 +105,7 @@ export const createCredentialUpgradeActorsImplementation = (
       issuerConf,
       clientId,
       codeVerifier,
+      evaluatedDcqlQuery,
       responseMode
     } = await credentialIssuanceUtils.requestCredential({
       env,
@@ -109,7 +113,8 @@ export const createCredentialUpgradeActorsImplementation = (
       credentialType: credential.credentialType,
       walletInstanceAttestation,
       // TODO [SIW-3091]: Update when the L3 PID reissuance flow is ready
-      skipMdocIssuance: !isUpgrade
+      skipMdocIssuance: !isUpgrade,
+      pid
     });
 
     const { accessToken } = await credentialIssuanceUtils.completeAuthFlow({
@@ -120,7 +125,7 @@ export const createCredentialUpgradeActorsImplementation = (
       issuerConf,
       walletInstanceAttestation,
       requestedCredential,
-      pid
+      evaluatedDcqlQuery
     });
 
     return { accessToken, issuerConf, clientId };

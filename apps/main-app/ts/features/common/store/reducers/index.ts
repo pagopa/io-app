@@ -20,10 +20,6 @@ import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
 import itWalletReducer, {
   PersistedItWalletState
 } from "../../../itwallet/common/store/reducers";
-import {
-  NativeLoginState,
-  nativeLoginReducer
-} from "../../../authentication/nativeLogin/store/reducers";
 import walletReducer, { WalletState } from "../../../wallet/store/reducers";
 import paymentsReducer, {
   PaymentsState
@@ -85,7 +81,6 @@ import tourReducer, { TourState } from "../../../tour/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
-  nativeLogin: NativeLoginState;
   fastLogin: FastLoginState;
   cieLogin: CieLoginState & PersistPartial;
   loginInfo: LoginInfoState;
@@ -128,7 +123,6 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   whatsNew: whatsNewPersistor,
   loginFeatures: combineReducers<LoginFeaturesState, Action>({
     testLogin: testLoginReducer,
-    nativeLogin: nativeLoginReducer,
     fastLogin: fastLoginReducer,
     cieLogin: cieLoginPersistor,
     loginInfo: loginInfoReducer,
