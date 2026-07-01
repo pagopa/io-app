@@ -7,7 +7,6 @@ import RNFS from "react-native-fs";
 import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import I18n from "i18next";
-import { FciQtspErrorKind } from "../types/FciQtspErrorKind";
 import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
 import ROUTES from "../../../navigation/routes";
@@ -397,6 +396,11 @@ const isQtspFailureAction = (action: Action): action is QtspFailureAction =>
     ],
     action
   );
+
+export type FciQtspErrorKind =
+  | "qtsp_clauses"
+  | "filled_document"
+  | "poll_filled_document";
 
 const qtspErrorKindFromAction = (
   action: QtspFailureAction

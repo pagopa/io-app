@@ -9,7 +9,7 @@ import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureR
 import { fciSignatureRequestFromId } from "../../store/actions";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FciQtspErrorScreenNavigationParams } from "../../navigation/params";
-import { FciQtspErrorKind } from "../../types/FciQtspErrorKind";
+import { FciQtspErrorKind } from "../../saga";
 
 const createTestStore = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
