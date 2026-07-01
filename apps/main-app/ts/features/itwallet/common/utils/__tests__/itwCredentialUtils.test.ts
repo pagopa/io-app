@@ -24,7 +24,7 @@ describe("getCredentialNameFromType", () => {
         expectedTranslation: I18n.t("features.itWallet.credentialName.dc")
       },
       {
-        type: CredentialType.AGE_VERIFICATION,
+        type: CredentialType.PROOF_OF_AGE,
         isItwCredential: false,
         expectedTranslation: I18n.t("features.itWallet.credentialName.av")
       },
