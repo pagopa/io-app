@@ -268,7 +268,6 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -292,7 +291,6 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -486,7 +484,6 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -510,7 +507,6 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",

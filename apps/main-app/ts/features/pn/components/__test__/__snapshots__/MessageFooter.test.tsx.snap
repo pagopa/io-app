@@ -1102,15 +1102,16 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -1122,15 +1123,16 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -1211,7 +1213,6 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1235,7 +1236,6 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1778,15 +1778,16 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -1798,15 +1799,16 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -1880,7 +1882,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1908,7 +1909,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",

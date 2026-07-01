@@ -589,7 +589,6 @@ exports[`TourTooltip snapshot matches snapshot for first step 1`] = `
                   {
                     "alignItems": "center",
                     "borderCurve": "continuous",
-                    "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -613,7 +612,6 @@ exports[`TourTooltip snapshot matches snapshot for first step 1`] = `
                   {
                     "alignItems": "center",
                     "borderCurve": "continuous",
-                    "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -1500,7 +1498,6 @@ exports[`TourTooltip snapshot matches snapshot for last step 1`] = `
                   {
                     "alignItems": "center",
                     "borderCurve": "continuous",
-                    "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -1524,7 +1521,6 @@ exports[`TourTooltip snapshot matches snapshot for last step 1`] = `
                   {
                     "alignItems": "center",
                     "borderCurve": "continuous",
-                    "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "overflow": "hidden",

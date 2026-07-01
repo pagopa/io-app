@@ -897,7 +897,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -921,7 +920,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -2466,7 +2464,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -2490,7 +2487,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",

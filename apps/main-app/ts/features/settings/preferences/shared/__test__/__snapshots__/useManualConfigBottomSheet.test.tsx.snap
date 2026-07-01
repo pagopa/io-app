@@ -370,17 +370,15 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                             {
                               "backgroundColor": "#FFFFFF",
                               "bottom": 0,
+                              "boxShadow": [
+                                {
+                                  "blurRadius": 32,
+                                  "color": "rgba(14,15,19,0.1)",
+                                  "offsetX": 0,
+                                  "offsetY": 0,
+                                },
+                              ],
                               "position": "absolute",
-                            },
-                            {
-                              "elevation": 10,
-                              "shadowColor": "#0E0F13",
-                              "shadowOffset": {
-                                "height": -4,
-                                "width": 0,
-                              },
-                              "shadowOpacity": 0.1,
-                              "shadowRadius": 32,
                             },
                             false,
                           ]
@@ -481,7 +479,6 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -505,7 +502,6 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -707,7 +703,6 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -731,7 +726,6 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
