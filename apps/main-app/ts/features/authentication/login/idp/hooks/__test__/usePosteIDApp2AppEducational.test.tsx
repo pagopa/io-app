@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { render } from "@testing-library/react-native";
 import { SpidIdp } from "../../../../../../utils/idps";
 import { usePosteIDApp2AppEducational } from "../../hooks/usePosteIDApp2AppEducational";
-import { ErrorType, StandardLoginRequestInfo } from "../../store/types";
+import { ErrorType, SpidLoginRequestInfo } from "../../store/types";
 
 jest.mock("../../../../../../utils/hooks/bottomSheet", () => ({
   useIOBottomSheetModal: jest.fn(() => ({
@@ -15,7 +15,7 @@ const mockPresent = jest.fn();
 
 const renderComponent = (props: {
   selectedIdp?: SpidIdp;
-  requestState: StandardLoginRequestInfo["requestState"];
+  requestState: SpidLoginRequestInfo["requestState"];
 }) => {
   const WrapperComponent = () => {
     const bottomSheet = usePosteIDApp2AppEducational(props);

@@ -18,7 +18,7 @@ import {
   setActiveSessionLoginFlow
 } from "../actions";
 import { SpidIdp } from "../../../../../utils/idps";
-import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
+import { SpidLoginRequestInfo } from "../../../login/idp/store/types";
 import { SpidLevel } from "../../../login/cie/utils";
 import { isTestEnv } from "../../../../../utils/environment";
 import {
@@ -35,7 +35,7 @@ export type ActiveSessionLoginState = {
     idp?: SpidIdp;
     token?: string;
     fastLoginOptIn?: boolean;
-    spidLoginInfo?: StandardLoginRequestInfo;
+    spidLoginInfo?: SpidLoginRequestInfo;
     cieIDSelectedSecurityLevel?: SpidLevel;
   };
   engagement: {
