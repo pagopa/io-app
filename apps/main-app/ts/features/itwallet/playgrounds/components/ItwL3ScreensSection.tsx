@@ -49,9 +49,9 @@ export const ItwL3ScreensSection = () => {
         onPress={() => handleCredentialPress("dc")}
       />
       <ListItemNav
-        value="Age Verification"
-        description="Navigate to the Age Verification detail screen"
-        onPress={() => handleCredentialPress("age_verification")}
+        value="Proof of Age"
+        description="Navigate to the Proof of Age detail screen"
+        onPress={() => handleCredentialPress("proofOfAge")}
       />
       <ListItemNav
         value="Education Degree L3"

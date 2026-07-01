@@ -24,29 +24,51 @@ type CredentialsByType = {
 };
 
 /**
- * The Wallet might contain older credentials in `vc+sd-jwt` format.
- * We must ensure credentials selectors still work with the older format.
+ * Resolves the credential to display for a given format.
+ *
+ * When the requested format is SD-JWT (the default for display), it resolves in order:
+ * 1. `dc+sd-jwt` (current SD-JWT format)
+ * 2. `vc+sd-jwt` (older SD-JWT format still present in some wallets)
+ * 3. `mso_mdoc` (fallback for credentials issued only in mDoc format, e.g. proof of age)
+ *
+ * For any other requested format the exact format is returned, with no fallback.
  */
-const withLegacyFallback = (
+const withDisplayFormatFallback = (
   credential: CredentialsByType[string] | undefined,
   format: CredentialFormat
 ) => {
   if (format === CredentialFormat.SD_JWT) {
-    return credential?.[format] ?? credential?.[CredentialFormat.LEGACY_SD_JWT];
+    return (
+      credential?.[format] ??
+      credential?.[CredentialFormat.LEGACY_SD_JWT] ??
+      credential?.[CredentialFormat.MDOC]
+    );
   }
   return credential?.[format];
 };
 
 /**
- * Aggregate credentials by type to get the same credential with all its formats
+ * Returns all stored credentials as a flat list. A batch credential is a single entry that lists
+ * all its copies' keyTags in `keyTags` (see {@link CredentialMetadata}).
+ *
+ * @param state - The global state.
+ * @returns The flat list of all stored credentials
+ */
+export const itwAllStoredCredentialsSelector = createSelector(
+  (state: GlobalState) => state.features.itWallet.credentials.credentials,
+  (credentials): ReadonlyArray<CredentialMetadata> => Object.values(credentials)
+);
+
+/**
+ * Aggregate credentials by type to get the same credential with all its formats.
  *
  * @param state - The global state.
  * @returns The credentials object grouped by type
  */
 export const itwCredentialsByTypeSelector = createSelector(
-  (state: GlobalState) => state.features.itWallet.credentials.credentials,
+  itwAllStoredCredentialsSelector,
   credentials =>
-    Object.values(credentials).reduce<CredentialsByType>(
+    credentials.reduce<CredentialsByType>(
       (acc, c) => ({
         ...acc,
         [c.credentialType]: { ...acc[c.credentialType], [c.format]: c }
@@ -64,7 +86,7 @@ export const itwCredentialsByTypeSelector = createSelector(
 export const makeSelectAllCredentials = (format: CredentialFormat) =>
   createSelector(itwCredentialsByTypeSelector, credentials =>
     Object.values(credentials)
-      .map(c => withLegacyFallback(c, format))
+      .map(c => withDisplayFormatFallback(c, format))
       .reduce<Record<string, CredentialMetadata>>(
         (acc, c) => (c ? { ...acc, [c.credentialType]: c } : acc),
         {}
@@ -73,7 +95,7 @@ export const makeSelectAllCredentials = (format: CredentialFormat) =>
 
 /**
  * Returns the credentials object from the itw credentials state, including the PID credential.
- * Only SD-JWT credentials are returned.
+ * SD-JWT credentials are preferred; credentials available only as mDoc fall back to that format.
  *
  * @param state - The global state.
  * @returns The credentials object.
@@ -84,7 +106,7 @@ export const itwCredentialsAllSelector = makeSelectAllCredentials(
 
 /**
  * Returns the credentials object from the itw credentials state, excluding the PID credential.
- * Only SD-JWT credentials are returned.
+ * SD-JWT credentials are preferred; credentials available only as mDoc fall back to that format.
  *
  * @param state - The global state.
  * @returns The credentials object.
@@ -103,7 +125,7 @@ export const itwCredentialsSelector = createSelector(
 export const itwCredentialsEidSelector = createSelector(
   itwCredentialsByTypeSelector,
   ({ [CredentialType.PID]: pid }) =>
-    O.fromNullable(withLegacyFallback(pid, CredentialFormat.SD_JWT))
+    O.fromNullable(withDisplayFormatFallback(pid, CredentialFormat.SD_JWT))
 );
 
 /**
@@ -118,7 +140,7 @@ export const itwCredentialSelector = (
   format = CredentialFormat.SD_JWT
 ) =>
   createSelector(itwCredentialsByTypeSelector, credentials =>
-    O.fromNullable(withLegacyFallback(credentials[key], format))
+    O.fromNullable(withDisplayFormatFallback(credentials[key], format))
   );
 
 /**
@@ -286,17 +308,18 @@ export const itwCredentialsEidIssuedAtSelector = createSelector(
 );
 
 /**
- * Return a list of all credentials of the same type, mainly used for clean up operations.
+ * Returns all stored credential instances of the given type, in every format. Unlike the
+ * representative-based selectors, this reads the raw store so it includes every copy of a
+ * credential obtained in batch. Used for clean up operations and batch consumption.
+ *
  * @param key The type of credential
  * @returns A list of CredentialMetadata
  */
 export const itwCredentialsListByTypeSelector = (key: string) =>
-  createSelector(itwCredentialsByTypeSelector, credentials =>
-    pipe(
-      O.fromNullable(credentials[key]),
-      O.map(Object.values),
-      O.getOrElse<ReadonlyArray<CredentialMetadata>>(() => [])
-    )
+  createSelector(
+    itwAllStoredCredentialsSelector,
+    (credentials): ReadonlyArray<CredentialMetadata> =>
+      credentials.filter(c => c.credentialType === key)
   );
 
 /**
