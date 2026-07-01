@@ -1,5 +1,6 @@
 import {
   isItwDiscoveryBannerRenderableSelector,
+  isItwProximityEnabledSelector,
   itwOfflineAccessAvailableSelector,
   itwShouldRenderDiscoveryBannerSelector,
   itwShouldRenderInboxDiscoveryBannerSelector,
@@ -473,6 +474,38 @@ describe("itwShouldRenderL2EngagementBannerSelector", () => {
         .mockReturnValue(isActivationDisabled);
 
       expect(itwShouldRenderL2EngagementBannerSelector(state)).toBe(expected);
+    }
+  );
+});
+
+describe("isItwProximityEnabledSelector", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it.each`
+    isWalletValid | isProximityVersionSupported | expected
+    ${true}       | ${true}                     | ${true}
+    ${true}       | ${false}                    | ${false}
+    ${false}      | ${true}                     | ${false}
+    ${false}      | ${false}                    | ${false}
+  `(
+    "returns $expected when isWalletValid=$isWalletValid and isProximityVersionSupported=$isProximityVersionSupported",
+    ({ isWalletValid, isProximityVersionSupported, expected }) => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(isWalletValid);
+      jest
+        .spyOn(
+          remoteConfigSelectors,
+          "isItwProximityMinAppVersionSupportedSelector"
+        )
+        .mockReturnValue(isProximityVersionSupported);
+
+      expect(isItwProximityEnabledSelector({} as unknown as GlobalState)).toBe(
+        expected
+      );
     }
   );
 });

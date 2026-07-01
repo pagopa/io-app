@@ -42,7 +42,7 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
-import { isItwProximityEnabledSelector } from "../../../common/store/selectors/preferences";
+import { isItwProximityEnabledSelector } from "../../../common/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";

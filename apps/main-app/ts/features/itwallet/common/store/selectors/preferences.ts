@@ -1,9 +1,5 @@
 import { GlobalState } from "../../../../../store/reducers/types";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import {
-  isItwMinAppVersionSupportedSelector,
-  isItwProximityMinAppVersionSupportedSelector
-} from "./remoteConfig";
+import { isItwMinAppVersionSupportedSelector } from "./remoteConfig";
 
 export const itwPreferencesSelector = (state: GlobalState) =>
   state.features.itWallet.preferences;
@@ -66,11 +62,3 @@ export const itwIdentificationModeSelector = (state: GlobalState) =>
  */
 export const itwIsActivationDisabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isItwActivationDisabled ?? false;
-
-/**
- * Returns whether the IT Wallet proximity presentation feature is enabled:
- * the wallet must be valid and the app version must meet the proximity minimum.
- */
-export const isItwProximityEnabledSelector = (state: GlobalState) =>
-  itwLifecycleIsITWalletValidSelector(state) &&
-  isItwProximityMinAppVersionSupportedSelector(state);

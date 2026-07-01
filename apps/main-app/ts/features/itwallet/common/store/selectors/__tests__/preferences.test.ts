@@ -6,11 +6,8 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   itwAuthLevelSelector,
   itwIdentificationModeSelector,
-  isItwProximityEnabledSelector,
   itwIsPidReissuingSurveyHiddenSelector
 } from "../preferences";
-import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
-import * as remoteConfigSelectors from "../remoteConfig";
 import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 
 describe("itwAuthLevelSelector", () => {
@@ -117,36 +114,4 @@ describe("itwIsPidReissuingSurveyHiddenSelector", () => {
 
     expect(itwIsPidReissuingSurveyHiddenSelector(updatedState)).toBe(true);
   });
-});
-
-describe("isItwProximityEnabledSelector", () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-    jest.clearAllMocks();
-  });
-
-  it.each`
-    isWalletValid | isProximityVersionSupported | expected
-    ${true}       | ${true}                     | ${true}
-    ${true}       | ${false}                    | ${false}
-    ${false}      | ${true}                     | ${false}
-    ${false}      | ${false}                    | ${false}
-  `(
-    "returns $expected when isWalletValid=$isWalletValid and isProximityVersionSupported=$isProximityVersionSupported",
-    ({ isWalletValid, isProximityVersionSupported, expected }) => {
-      jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-        .mockReturnValue(isWalletValid);
-      jest
-        .spyOn(
-          remoteConfigSelectors,
-          "isItwProximityMinAppVersionSupportedSelector"
-        )
-        .mockReturnValue(isProximityVersionSupported);
-
-      expect(isItwProximityEnabledSelector({} as unknown as GlobalState)).toBe(
-        expected
-      );
-    }
-  );
 });
