@@ -99,7 +99,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const sectionHeader = useMemo((): React.ReactElement => {
     const eidInfoEndElement = !isItWalletValid
       ? {
-          type: "buttonLink" as const,
+          type: "buttonLink",
           componentProps: {
             accessibilityLabel: I18n.t(
               "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
