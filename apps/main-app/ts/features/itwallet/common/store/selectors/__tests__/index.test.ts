@@ -17,6 +17,7 @@ import * as ingressSelectors from "../../../../../ingress/store/selectors";
 import * as credentialsSelectors from "../../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import * as walletInstanceSelectors from "../../../../walletInstance/store/selectors";
+import * as proximityCredentialsSelectors from "../../../../presentation/proximity/store/selectors/credentials";
 import * as preferencesSelectors from "../preferences";
 import * as bannersSelectors from "../banners";
 import * as remoteConfigSelectors from "../remoteConfig";
@@ -485,14 +486,20 @@ describe("isItwProximityEnabledSelector", () => {
   });
 
   it.each`
-    isWalletValid | isProximityVersionSupported | expected
-    ${true}       | ${true}                     | ${true}
-    ${true}       | ${false}                    | ${false}
-    ${false}      | ${true}                     | ${false}
-    ${false}      | ${false}                    | ${false}
+    isWalletValid | isProximityVersionSupported | hasPresentableCredentials | expected
+    ${true}       | ${true}                     | ${true}                   | ${true}
+    ${true}       | ${true}                     | ${false}                  | ${false}
+    ${true}       | ${false}                    | ${true}                   | ${false}
+    ${false}      | ${true}                     | ${true}                   | ${false}
+    ${false}      | ${false}                    | ${false}                  | ${false}
   `(
-    "returns $expected when isWalletValid=$isWalletValid and isProximityVersionSupported=$isProximityVersionSupported",
-    ({ isWalletValid, isProximityVersionSupported, expected }) => {
+    "returns $expected when isWalletValid=$isWalletValid, isProximityVersionSupported=$isProximityVersionSupported and hasPresentableCredentials=$hasPresentableCredentials",
+    ({
+      isWalletValid,
+      isProximityVersionSupported,
+      hasPresentableCredentials,
+      expected
+    }) => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
         .mockReturnValue(isWalletValid);
@@ -502,6 +509,12 @@ describe("isItwProximityEnabledSelector", () => {
           "isItwProximityMinAppVersionSupportedSelector"
         )
         .mockReturnValue(isProximityVersionSupported);
+      jest
+        .spyOn(
+          proximityCredentialsSelectors,
+          "hasPresentableCredentialsSelector"
+        )
+        .mockReturnValue(hasPresentableCredentials);
 
       expect(isItwProximityEnabledSelector({} as unknown as GlobalState)).toBe(
         expected
