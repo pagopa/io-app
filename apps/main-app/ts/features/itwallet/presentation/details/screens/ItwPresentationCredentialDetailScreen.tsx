@@ -343,7 +343,7 @@ export const ItwPresentationCredentialDetail = ({
         screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
         params: { attachmentClaim: contentClaim }
       });
-    } else if (hasSkeumorphicCard) {
+    } else {
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
         params: {
