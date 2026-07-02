@@ -3,7 +3,7 @@ import { fixupConfigRules } from "@eslint/compat";
 import { FlatCompat } from "@eslint/eslintrc";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
-import pagopaConfig from "@pagopa/eslint-config";
+import pagopaConfig from "@pagopa/eslint-config/jest";
 import tseslint from "typescript-eslint";
 import reactNativeConfig from "@react-native/eslint-config/flat";
 import importPlugin from "eslint-plugin-import";
@@ -22,14 +22,25 @@ const compat = new FlatCompat({
   allConfig: js.configs.all
 });
 
-// @typescript-eslint is already registered by pagopaConfig (via typescript-eslint).
-// Strip it from @react-native/eslint-config/flat to avoid "Cannot redefine plugin" errors.
+// @typescript-eslint and jest are already registered by pagopaConfig (via
+// typescript-eslint and @pagopa/eslint-config/jest, the latter scoping jest to
+// test files). Strip the plugins — and jest's now-orphaned rules, which the RN
+// config applies globally — to avoid "Cannot redefine plugin" errors.
 const reactNativeConfigWithoutTsPlugin = reactNativeConfig.map(config => {
-  if (config.plugins?.["@typescript-eslint"]) {
-    const { "@typescript-eslint": _removed, ...rest } = config.plugins;
-    return { ...config, plugins: rest };
+  if (!config.plugins?.["@typescript-eslint"] && !config.plugins?.jest) {
+    return config;
   }
-  return config;
+  const {
+    "@typescript-eslint": _tsRemoved,
+    jest: _jestRemoved,
+    ...plugins
+  } = config.plugins;
+  const rules = Object.fromEntries(
+    Object.entries(config.rules ?? {}).filter(
+      ([rule]) => !rule.startsWith("jest/")
+    )
+  );
+  return { ...config, plugins, rules };
 });
 
 export default defineConfig([
@@ -47,9 +58,7 @@ export default defineConfig([
   // eslint-plugin-prettier, perfectionist.
   // Vitest block is excluded — project uses Jest.
   // Perfectionist block is excluded — sorting rules are deferred to a follow-up PR.
-  ...pagopaConfig.filter(
-    config => !config.plugins?.vitest && !config.plugins?.perfectionist
-  ),
+  ...pagopaConfig.filter(config => !config.plugins?.perfectionist),
 
   {
     files: ["**/*.ts", "**/*.tsx"],
