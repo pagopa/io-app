@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-rc.11](https://github.com/pagopa/io-app/compare/3.35.0-rc.10...3.35.0-rc.11) (2026-07-02)
+
+
+### Bug Fixes
+
+* Update versionCode to 100155209 for release 3.35.0.10 ([72f43d5](https://github.com/pagopa/io-app/commit/72f43d509252c2b8bc50fa3d7e555f3c7ba65049))
+
 ## [3.35.0-rc.10](https://github.com/pagopa/io-app/compare/3.35.0-rc.9...3.35.0-rc.10) (2026-06-25)
 
 
