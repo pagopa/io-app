@@ -72,7 +72,8 @@ const collectSourceLiterals = () => {
     );
 
     const visit = node => {
-      // ponytail: exact literals only; add explicit dynamic-prefix handling if needed.
+      // Exact literals only; interpolated keys are intentionally left unmatched
+      // so they surface as warnings (we don't want dynamic i18n keys).
       if (
         ts.isStringLiteral(node) ||
         ts.isNoSubstitutionTemplateLiteral(node)
@@ -132,12 +133,18 @@ const collectLocaleKeys = () => {
   return keys;
 };
 
+// i18n-js appends a count suffix at runtime, so `foo_one` is reached via the
+// base key `foo`. Strip it before comparing against source references.
+const PLURAL_SUFFIX = /_(zero|one|two|few|many|other)$/;
+
 const findUnusedKeys = () => {
   if (!cachedResult) {
-    const usedLiterals = collectSourceLiterals();
-    cachedResult = collectLocaleKeys().filter(
-      ({ key }) => !usedLiterals.has(key)
-    );
+    const literals = collectSourceLiterals();
+
+    const isUsed = key =>
+      literals.has(key) || literals.has(key.replace(PLURAL_SUFFIX, ""));
+
+    cachedResult = collectLocaleKeys().filter(({ key }) => !isUsed(key));
   }
 
   return cachedResult;
