@@ -27,7 +27,8 @@ jobs:
       - name: Publish package on NPM 📦
         working-directory: libs/design-system
         run: |
-            VERSION=$(node -p "require('./package.json').version")
+          VERSION=$(node -p "require('./package.json').version")
+          if [[[ "$VERSION" == *-* ]]; then
             npm publish --tag next
           else
             npm publish
