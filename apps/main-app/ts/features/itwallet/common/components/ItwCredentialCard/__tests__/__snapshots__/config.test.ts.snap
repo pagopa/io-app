@@ -354,38 +354,6 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [dark] should match snapshot for type [age_verification] 1`] = `
-{
-  "background": {
-    "angle": 249,
-    "colors": [
-      "#0B2A4A",
-      "#1E3A5F",
-      "#0B2A4A",
-      "#1E3A5F",
-    ],
-    "positions": [
-      0.0031,
-      0.3686,
-      0.6772,
-      0.9905,
-    ],
-    "type": "linear",
-  },
-  "borderColor": "#767399",
-  "color": "#2E2647",
-  "overlay": {
-    "card": {
-      "testUri": "../../../apps/main-app/img/features/itWallet/cards/overlay/av_card_dark.png",
-    },
-    "header": {
-      "testUri": "../../../apps/main-app/img/features/itWallet/cards/overlay/av_header.png",
-    },
-  },
-  "titleColor": "#D9CDED",
-}
-`;
-
 exports[`getCredentialCardConfig when color scheme is [dark] should match snapshot for type [education_attendance] 1`] = `
 {
   "background": {
@@ -602,6 +570,38 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
 }
 `;
 
+exports[`getCredentialCardConfig when color scheme is [dark] should match snapshot for type [proof_of_age] 1`] = `
+{
+  "background": {
+    "angle": 249,
+    "colors": [
+      "#0B2A4A",
+      "#1E3A5F",
+      "#0B2A4A",
+      "#1E3A5F",
+    ],
+    "positions": [
+      0.0031,
+      0.3686,
+      0.6772,
+      0.9905,
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#767399",
+  "color": "#2E2647",
+  "overlay": {
+    "card": {
+      "testUri": "../../../apps/main-app/img/features/itWallet/cards/overlay/av_card_dark.png",
+    },
+    "header": {
+      "testUri": "../../../apps/main-app/img/features/itWallet/cards/overlay/av_header.png",
+    },
+  },
+  "titleColor": "#D9CDED",
+}
+`;
+
 exports[`getCredentialCardConfig when color scheme is [dark] should match snapshot for type [residency] 1`] = `
 {
   "background": {
@@ -777,30 +777,6 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
     "showCornerOverlay": true,
   },
   "titleColor": "#33302B",
-}
-`;
-
-exports[`getCredentialCardConfig when color scheme is [light] should match snapshot for type [age_verification] 1`] = `
-{
-  "background": {
-    "angle": 69,
-    "colors": [
-      "#CECFF2",
-      "#ECECEC",
-    ],
-    "type": "linear",
-  },
-  "borderColor": "#9490BE",
-  "color": "#CECFF2",
-  "overlay": {
-    "card": {
-      "testUri": "../../../apps/main-app/img/features/itWallet/cards/overlay/av_card.png",
-    },
-    "header": {
-      "testUri": "../../../apps/main-app/img/features/itWallet/cards/overlay/av_header.png",
-    },
-  },
-  "titleColor": "#363740",
 }
 `;
 
@@ -1024,6 +1000,30 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
 }
 `;
 
+exports[`getCredentialCardConfig when color scheme is [light] should match snapshot for type [proof_of_age] 1`] = `
+{
+  "background": {
+    "angle": 69,
+    "colors": [
+      "#CECFF2",
+      "#ECECEC",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#9490BE",
+  "color": "#CECFF2",
+  "overlay": {
+    "card": {
+      "testUri": "../../../apps/main-app/img/features/itWallet/cards/overlay/av_card.png",
+    },
+    "header": {
+      "testUri": "../../../apps/main-app/img/features/itWallet/cards/overlay/av_header.png",
+    },
+  },
+  "titleColor": "#363740",
+}
+`;
+
 exports[`getCredentialCardConfig when color scheme is [light] should match snapshot for type [residency] 1`] = `
 {
   "background": {
@@ -1199,30 +1199,6 @@ exports[`getCredentialCardConfig when color scheme is [unspecified] should match
     "showCornerOverlay": true,
   },
   "titleColor": "#33302B",
-}
-`;
-
-exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [age_verification] 1`] = `
-{
-  "background": {
-    "angle": 69,
-    "colors": [
-      "#CECFF2",
-      "#ECECEC",
-    ],
-    "type": "linear",
-  },
-  "borderColor": "#9490BE",
-  "color": "#CECFF2",
-  "overlay": {
-    "card": {
-      "testUri": "../../../apps/main-app/img/features/itWallet/cards/overlay/av_card.png",
-    },
-    "header": {
-      "testUri": "../../../apps/main-app/img/features/itWallet/cards/overlay/av_header.png",
-    },
-  },
-  "titleColor": "#363740",
 }
 `;
 
@@ -1443,6 +1419,30 @@ exports[`getCredentialCardConfig when color scheme is [unspecified] should match
     },
   },
   "titleColor": "#115486",
+}
+`;
+
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [proof_of_age] 1`] = `
+{
+  "background": {
+    "angle": 69,
+    "colors": [
+      "#CECFF2",
+      "#ECECEC",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#9490BE",
+  "color": "#CECFF2",
+  "overlay": {
+    "card": {
+      "testUri": "../../../apps/main-app/img/features/itWallet/cards/overlay/av_card.png",
+    },
+    "header": {
+      "testUri": "../../../apps/main-app/img/features/itWallet/cards/overlay/av_header.png",
+    },
+  },
+  "titleColor": "#363740",
 }
 `;
 
