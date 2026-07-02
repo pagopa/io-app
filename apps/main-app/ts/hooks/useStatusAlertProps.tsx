@@ -1,4 +1,9 @@
-import { AlertEdgeToEdgeProps, IOMarkdown } from "@pagopa/io-app-design-system";
+import {
+  AlertEdgeToEdgeProps,
+  IOButton,
+  IOMarkdown,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -153,10 +158,19 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
   const itwOfflineModal = useOfflineAlertDetailModal(
     offlineAccessReason ?? OfflineAccessReasonEnum.DEVICE_OFFLINE
   );
+  const handleBannerAppRestart = useAppRestartAction("bottom_sheet");
   const commonOfflineModal = useIOBottomSheetModal({
     title: I18n.t("global.offline.bottomSheet.title"),
     component: (
-      <IOMarkdown content={I18n.t("global.offline.bottomSheet.content")} />
+      <VStack space={24}>
+        <IOMarkdown content={I18n.t("global.offline.bottomSheet.content")} />
+        <IOButton
+          variant="solid"
+          label={I18n.t("global.offline.bottomSheet.footerAction")}
+          accessibilityLabel={I18n.t("global.offline.bottomSheet.footerAction")}
+          onPress={handleBannerAppRestart}
+        />
+      </VStack>
     )
   });
 
