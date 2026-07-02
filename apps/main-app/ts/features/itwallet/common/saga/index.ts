@@ -27,7 +27,6 @@ import {
 import { watchItwTasksSaga } from "../../statusList/saga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
 import {
-  itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetFiscalCodeWhitelisted
 } from "../store/actions/preferences";
@@ -101,8 +100,7 @@ export function* watchItwOfflineSaga(): SagaIterator {
  * Sanitizes the authentication level to fix an inconsistency introduced by a regression in app version 3.21.
  *
  * This saga ensures that users with an L3 PID credential (assurance_level = high) have their
- * `auth_level` correctly set to 'L3'. It also freezes the simplified activation requirements
- * to maintain consistency.
+ * `auth_level` correctly set to 'L3'.
  *
  * The sanitization is skipped for whitelisted users (when `action.payload` is `true`).
  *
@@ -131,5 +129,4 @@ const handleAuthLevelSanitizationSaga = function* (
   }
 
   yield* put(itwSetAuthLevel("L3"));
-  yield* put(itwFreezeSimplifiedActivationRequirements());
 };
