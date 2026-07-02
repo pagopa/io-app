@@ -123,6 +123,15 @@ export default defineConfig([
       // plain index signatures (`[key: string]: V`) which should use Record<K,V>
       "@typescript-eslint/consistent-indexed-object-style": "off",
 
+      // Widespread, deliberate test patterns from pagopa's jest config that
+      // would require refactoring the whole test suite to satisfy:
+      // - narrowing fp-ts Either/Option before asserting inside the guard
+      "jest/no-conditional-expect": "off",
+      // - importing shared fixtures directly from __mocks__ directories
+      "jest/no-mocks-import": "off",
+      // - asserting a mock was called without pinning its exact arguments
+      "jest/prefer-called-with": "off",
+
       // END: OVERWRITTEN RULES FROM PAGOPA/ESLINT-CONFIG
 
       // CODE STYLE
@@ -323,6 +332,24 @@ export default defineConfig([
       "@typescript-eslint/no-require-imports": "off",
       "i18next/no-literal-string": "off",
       "no-restricted-imports": "off"
+    }
+  },
+  {
+    // Data-driven tests here derive titles dynamically (loop variables,
+    // `fn.name`, ternaries). Allow non-string titles while keeping the
+    // empty/whitespace/duplicate-prefix checks active. Scoped to `.ts` test
+    // files only: `jest/valid-title` is an active rule and pagopa's config
+    // only registers the jest plugin for `.{js,ts}` test files, not `.tsx`.
+    files: ["**/*.test.ts", "**/__tests__/**/*.ts"],
+
+    rules: {
+      "jest/valid-title": [
+        "error",
+        {
+          ignoreTypeOfDescribeName: true,
+          ignoreTypeOfTestName: true
+        }
+      ]
     }
   },
   {
