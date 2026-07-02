@@ -22,6 +22,7 @@ import { CredentialMetadata } from "../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import { selectHasResolvedCredentialOffer } from "../../machine/credential/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
@@ -37,6 +38,10 @@ export const ItwIssuanceEidResultScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
+  const hasResolvedCredentialOffer =
+    ItwCredentialIssuanceMachineContext.useSelector(
+      selectHasResolvedCredentialOffer
+    );
   const issuanceMode =
     ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const failedCredentials = ItwEidIssuanceMachineContext.useSelector(
@@ -92,13 +97,23 @@ export const ItwIssuanceEidResultScreen = () => {
     // When the EID issuance was triggered by a credential request, the credential
     // issuance must not start prematurely while the EID machine is still loading.
     if (credentialType && !isEidMachineLoading) {
+      if (hasResolvedCredentialOffer) {
+        credentialMachineRef.send({ type: "confirm-credential-offer" });
+        return;
+      }
+
       credentialMachineRef.send({
         type: "select-credential",
         mode: "issuance",
         credentialType
       });
     }
-  }, [credentialType, credentialMachineRef, isEidMachineLoading]);
+  }, [
+    credentialType,
+    credentialMachineRef,
+    hasResolvedCredentialOffer,
+    isEidMachineLoading
+  ]);
 
   if (credentialType) {
     return <ItwIssuanceEidCredentialTriggerContent />;

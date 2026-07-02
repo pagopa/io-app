@@ -18,13 +18,17 @@ import { getMixPanelCredential } from "../../analytics/utils";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
   itwWalletInstanceAttestationStore,
   itwWalletUnitAttestationsStore
 } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -45,6 +49,7 @@ export const createCredentialIssuanceActionsImplementation = (
 
     return {
       isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
+      isWalletValid: itwLifecycleIsValidSelector(state),
       walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
       credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state)
     };
@@ -109,35 +114,28 @@ export const createCredentialIssuanceActionsImplementation = (
     });
   },
 
-  closeIssuance: ({
-    event
+  navigateToCredentialOfferDiscoveryScreen: ({
+    context
   }: ActionArgs<
     Context,
     CredentialIssuanceEvents,
     CredentialIssuanceEvents
   >) => {
-    const isWalletInNavigationState = isRouteInNavigationState(
-      navigation.getState(),
-      ROUTES.WALLET_HOME
-    );
+    assert(context.credentialType, "credentialType is undefined");
 
-    if (!isWalletInNavigationState && navigation.canGoBack()) {
-      navigation.goBack();
-      return;
-    }
-
-    assertEvent(event, "close");
-    const { surveyStep, surveyCredential } = event;
-
-    navigation.navigate(ROUTES.MAIN, {
-      screen: ROUTES.WALLET_HOME,
+    const isL3Enabled = itwIsL3EnabledSelector(store.getState());
+    navigation.replace(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.INFO,
       params: {
-        credentialExitSurvey:
-          surveyStep && surveyCredential
-            ? { step: surveyStep, credential: surveyCredential }
-            : undefined
+        credentialType: context.credentialType,
+        animationEnabled: false,
+        level: isL3Enabled ? "l3" : "l2"
       }
     });
+  },
+
+  closeIssuance: () => {
+    navigation.popToTop();
   },
 
   storeWalletInstanceAttestation: ({
