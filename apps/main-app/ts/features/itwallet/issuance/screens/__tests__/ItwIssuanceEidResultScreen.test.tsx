@@ -1,7 +1,7 @@
-import { fireEvent } from "@testing-library/react-native";
+import { fireEvent, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
-import { createActor } from "xstate";
 import { createStore } from "redux";
+import { createActor } from "xstate";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -15,6 +15,12 @@ import { ItwIssuanceEidResultScreen } from "../ItwIssuanceEidResultScreen";
 
 const mockSend = jest.fn();
 const mockCredentialSend = jest.fn();
+const mockHasResolvedCredentialOffer = jest.fn();
+
+jest.mock("../../../../../components/screens/LoadingScreenContent", () => ({
+  __esModule: true,
+  default: () => null
+}));
 
 jest.mock("../../../machine/eid/provider", () => {
   const actual = jest.requireActual("../../../machine/eid/provider");
@@ -33,7 +39,8 @@ jest.mock("../../../machine/credential/provider", () => {
     ...actual,
     ItwCredentialIssuanceMachineContext: {
       ...actual.ItwCredentialIssuanceMachineContext,
-      useActorRef: () => ({ send: mockCredentialSend })
+      useActorRef: () => ({ send: mockCredentialSend }),
+      useSelector: () => mockHasResolvedCredentialOffer()
     }
   };
 });
@@ -41,6 +48,7 @@ jest.mock("../../../machine/credential/provider", () => {
 describe("ItwIssuanceEidResultScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockHasResolvedCredentialOffer.mockReturnValue(false);
   });
 
   describe("IT-Wallet (L3) flow", () => {
@@ -248,6 +256,28 @@ describe("ItwIssuanceEidResultScreen", () => {
           I18n.t("features.itWallet.issuance.eidResult.success.itw.title")
         )
       ).toBeNull();
+    });
+  });
+
+  describe("credential offer flow", () => {
+    it("resumes the resolved credential offer after eID issuance completes", async () => {
+      mockHasResolvedCredentialOffer.mockReturnValue(true);
+      jest
+        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
+        .mockReturnValue(false);
+
+      renderComponent("l3", { credentialType: "education_degree" });
+
+      await waitFor(() =>
+        expect(mockCredentialSend).toHaveBeenCalledWith({
+          type: "confirm-credential-offer"
+        })
+      );
+      expect(mockCredentialSend).not.toHaveBeenCalledWith({
+        type: "select-credential",
+        mode: "issuance",
+        credentialType: "education_degree"
+      });
     });
   });
 });
