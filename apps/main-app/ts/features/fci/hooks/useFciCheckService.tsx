@@ -1,6 +1,5 @@
-import { Body, FooterActionsInline } from "@io-app/design-system";
+import { Body, ContentWrapper, VSpacer, IOButton } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { ComponentProps } from "react";
 import I18n from "i18next";
 import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -29,48 +28,39 @@ export const useFciCheckService = () => {
   );
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);
-  const cancelButtonProps: ComponentProps<
-    typeof FooterActionsInline
-  >["startAction"] = {
-    color: "primary",
-    onPress: () => {
-      trackFciBottomsheetMessagePermissionDeclined();
-      dispatch(fciStartSigningRequest());
-      dismiss();
-    },
-    label: I18n.t("features.fci.checkService.cancel")
+
+  const handleDismiss = () => {
+    trackFciBottomsheetMessagePermissionDeclined();
+    dispatch(fciStartSigningRequest());
+    dismiss();
   };
 
-  const confirmButtonProps: ComponentProps<
-    typeof FooterActionsInline
-  >["endAction"] = {
-    color: "primary",
-    onPress: () => {
-      trackFciBottomsheetMessagePermissionAccepted();
-      if (
-        fciServiceId &&
-        servicePreferenceValue &&
-        isServicePreferenceResponseSuccess(servicePreferenceValue)
-      ) {
-        const sp = { ...servicePreferenceValue.value, inbox: true };
-        dispatch(
-          upsertServicePreference.request({
-            id: fciServiceId as ServiceId,
-            ...sp
-          })
-        );
-      }
-      trackFciUxConversion(fciEnvironment);
-      dispatch(fciStartSigningRequest());
-      dismiss();
-    },
-    label: I18n.t("features.fci.checkService.confirm")
+  const handleConfirm = () => {
+    trackFciBottomsheetMessagePermissionAccepted();
+    if (
+      fciServiceId &&
+      servicePreferenceValue &&
+      isServicePreferenceResponseSuccess(servicePreferenceValue)
+    ) {
+      const sp = { ...servicePreferenceValue.value, inbox: true };
+      dispatch(
+        upsertServicePreference.request({
+          id: fciServiceId as ServiceId,
+          ...sp
+        })
+      );
+    }
+    trackFciUxConversion(fciEnvironment);
+    dispatch(fciStartSigningRequest());
+    dismiss();
   };
+
   const {
     present: presentBottomSheet,
     bottomSheet,
     dismiss
   } = useIOBottomSheetModal({
+    onDismiss: handleDismiss,
     component: (
       <Body weight={"Regular"}>
         {I18n.t("features.fci.checkService.content")}
@@ -79,10 +69,15 @@ export const useFciCheckService = () => {
     title: I18n.t("features.fci.checkService.title"),
     snapPoint: [320],
     footer: (
-      <FooterActionsInline
-        startAction={cancelButtonProps}
-        endAction={confirmButtonProps}
-      />
+      <ContentWrapper>
+        <VSpacer size={16} />
+        <IOButton
+          fullWidth
+          variant="solid"
+          label={I18n.t("features.fci.checkService.confirm")}
+          onPress={handleConfirm}
+        />
+      </ContentWrapper>
     )
   });
 
