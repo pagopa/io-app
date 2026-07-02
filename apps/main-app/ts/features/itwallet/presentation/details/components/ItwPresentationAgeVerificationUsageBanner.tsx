@@ -16,12 +16,6 @@ export const ItwPresentationAgeVerificationUsageBanner = () => {
   const shouldRender = useIOSelector(
     itwShouldRenderAgeVerificationUsageDetailsBannerSelector
   );
-  const title = I18n.t(
-    "features.itWallet.presentation.credentialDetails.ageVerification.usageBanner.title"
-  );
-  const content = I18n.t(
-    "features.itWallet.presentation.credentialDetails.ageVerification.usageBanner.content"
-  );
 
   const handleOnPress = () =>
     openWebUrl(AGE_VERIFICATION_HELP_CENTER_URL, () =>
@@ -35,8 +29,12 @@ export const ItwPresentationAgeVerificationUsageBanner = () => {
   return (
     <Banner
       testID="ageVerificationUsageBannerTestID"
-      title={title}
-      content={content}
+      title={I18n.t(
+        "features.itWallet.presentation.credentialDetails.ageVerification.usageBanner.title"
+      )}
+      content={I18n.t(
+        "features.itWallet.presentation.credentialDetails.ageVerification.usageBanner.content"
+      )}
       action={I18n.t("global.buttons.findOutMore")}
       pictogramName="help"
       color="neutral"
