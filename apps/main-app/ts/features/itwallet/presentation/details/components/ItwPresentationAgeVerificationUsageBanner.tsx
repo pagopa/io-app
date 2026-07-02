@@ -5,9 +5,6 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { itwCloseBanner } from "../../../common/store/actions/banners";
 import { itwShouldRenderAgeVerificationUsageDetailsBannerSelector } from "../../../common/store/selectors";
 
-const i18nNs =
-  "features.itWallet.presentation.credentialDetails.ageVerification.usageBanner";
-
 // TODO: [SIW-4242] replace with the Age Verification Help Center article URL once published.
 const AGE_VERIFICATION_HELP_CENTER_URL = "https://assistenza.ioapp.it/hc/it";
 
@@ -19,8 +16,12 @@ export const ItwPresentationAgeVerificationUsageBanner = () => {
   const shouldRender = useIOSelector(
     itwShouldRenderAgeVerificationUsageDetailsBannerSelector
   );
-  const title = I18n.t(`${i18nNs}.title`);
-  const content = I18n.t(`${i18nNs}.content`);
+  const title = I18n.t(
+    "features.itWallet.presentation.credentialDetails.ageVerification.usageBanner.title"
+  );
+  const content = I18n.t(
+    "features.itWallet.presentation.credentialDetails.ageVerification.usageBanner.content"
+  );
 
   const handleOnPress = () =>
     openWebUrl(AGE_VERIFICATION_HELP_CENTER_URL, () =>

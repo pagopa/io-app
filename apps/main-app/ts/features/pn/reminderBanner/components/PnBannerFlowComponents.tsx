@@ -112,8 +112,6 @@ const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
   );
 };
 
-const ctaScreenBaseI18nKey =
-  "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT" as const;
 const CtaScreen = ({
   scrollViewAction
 }: {
@@ -140,23 +138,49 @@ const CtaScreen = ({
       <VSpacer size={24} />
       <ContentWrapper>
         <H2 accessibilityRole="header">
-          {I18n.t(`${ctaScreenBaseI18nKey}.title`)}
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.title"
+          )}
         </H2>
         <VSpacer size={24} />
 
-        <H6>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph1.title`)}</H6>
+        <H6>
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph1.title"
+          )}
+        </H6>
         <VSpacer size={8} />
-        <Body>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph1.body`)}</Body>
+        <Body>
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph1.body"
+          )}
+        </Body>
 
         <VSpacer size={24} />
-        <H6>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph2.title`)}</H6>
+        <H6>
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph2.title"
+          )}
+        </H6>
         <VSpacer size={8} />
-        <Body>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph2.body`)}</Body>
+        <Body>
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph2.body"
+          )}
+        </Body>
 
         <VSpacer size={24} />
-        <H6>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph3.title`)}</H6>
+        <H6>
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph3.title"
+          )}
+        </H6>
         <VSpacer size={8} />
-        <Body>{I18n.t(`${ctaScreenBaseI18nKey}.paragraph3.body`)}</Body>
+        <Body>
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph3.body"
+          )}
+        </Body>
 
         <VSpacer size={24} />
         <Paragraph4 />
@@ -172,21 +196,33 @@ const Paragraph4 = () => {
   return (
     <View>
       <Body>
-        {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.pressing`)}
+        {I18n.t(
+          "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph4.pressing"
+        )}
         <Body weight="Semibold">
-          {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.activate`)}
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph4.activate"
+          )}
         </Body>
-        {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.readAndUnderstood`)}
+        {I18n.t(
+          "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph4.readAndUnderstood"
+        )}
         <Body
           testID="privacy-url"
           asLink={true}
           onPress={() => openWebUrl(privacyUrl)}
         >
-          {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.privacyInfo`)}
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph4.privacyInfo"
+          )}
         </Body>
-        {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.andThe`)}
+        {I18n.t(
+          "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph4.andThe"
+        )}
         <Body testID="tos-url" asLink={true} onPress={() => openWebUrl(tosUrl)}>
-          {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.TOS`)}
+          {I18n.t(
+            "features.pn.reminderBanner.activationFlow.WAITING_USER_INPUT.paragraph4.TOS"
+          )}
         </Body>
       </Body>
     </View>

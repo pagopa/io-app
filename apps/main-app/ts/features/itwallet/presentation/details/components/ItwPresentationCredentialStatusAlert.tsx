@@ -56,6 +56,32 @@ const excludedCredentialTypes = [
 
 type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];
 
+// Expiring bottom sheet locale keys per credential type. Kept as explicit
+// literals (instead of a dynamically composed key) so they remain statically
+// analysable and discoverable. `satisfies` enforces one entry per non-excluded
+// credential type.
+const expiringBottomSheetKeys = {
+  [CredentialType.DRIVING_LICENSE]: {
+    title: "features.itWallet.presentation.bottomSheets.mDL.expiring.title",
+    content: "features.itWallet.presentation.bottomSheets.mDL.expiring.content"
+  },
+  [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: {
+    title:
+      "features.itWallet.presentation.bottomSheets.EuropeanHealthInsuranceCard.expiring.title",
+    content:
+      "features.itWallet.presentation.bottomSheets.EuropeanHealthInsuranceCard.expiring.content"
+  },
+  [CredentialType.EUROPEAN_DISABILITY_CARD]: {
+    title:
+      "features.itWallet.presentation.bottomSheets.EuropeanDisabilityCard.expiring.title",
+    content:
+      "features.itWallet.presentation.bottomSheets.EuropeanDisabilityCard.expiring.content"
+  }
+} as const satisfies Record<
+  Exclude<CredentialType, ExcludedCredentialTypes>,
+  { title: string; content: string }
+>;
+
 const LICENSE_RENEWAL_URL = "https://www.mit.gov.it/rinnovo-patente";
 
 type CredentialAlertEvents = "tap_banner" | "open_bottom_sheet" | "press_cta";
@@ -332,12 +358,13 @@ const DocumentExpiringAlert = ({
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
   const showCta = credential.credentialType === CredentialType.DRIVING_LICENSE;
 
-  const bottomSheetNs = `features.itWallet.presentation.bottomSheets.${
-    credential.credentialType as Exclude<
-      CredentialType,
-      ExcludedCredentialTypes
-    >
-  }.expiring` as const;
+  const bottomSheetKeys =
+    expiringBottomSheetKeys[
+      credential.credentialType as Exclude<
+        CredentialType,
+        ExcludedCredentialTypes
+      >
+    ];
 
   const handleCtaPress = useCallback(() => {
     onTrack("press_cta");
@@ -347,10 +374,10 @@ const DocumentExpiringAlert = ({
   }, [onTrack]);
 
   const bottomSheet = useIOBottomSheetModal({
-    title: I18n.t(`${bottomSheetNs}.title`),
+    title: I18n.t(bottomSheetKeys.title),
     component: (
       <VStack space={24}>
-        <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
+        <IOMarkdown content={I18n.t(bottomSheetKeys.content)} />
         {showCta && (
           <View style={{ marginBottom: 16 }}>
             <IOButton

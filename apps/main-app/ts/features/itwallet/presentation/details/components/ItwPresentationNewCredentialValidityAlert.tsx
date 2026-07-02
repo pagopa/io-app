@@ -16,8 +16,21 @@ type Props = {
   credentialType: ValidityAlertCredential;
 };
 
-const i18nNs =
-  "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content";
+// Validity alert content locale key per credential type. Kept as explicit
+// literals (instead of a dynamically composed key) so they remain statically
+// analysable; `satisfies` enforces one entry per credential type.
+const validityAlertContentKeys = {
+  [CredentialType.EDUCATION_DEGREE]:
+    "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content.education_degree",
+  [CredentialType.EDUCATION_ENROLLMENT]:
+    "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content.education_enrollment",
+  [CredentialType.RESIDENCY]:
+    "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content.residency",
+  [CredentialType.EDUCATION_DIPLOMA]:
+    "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content.education_diploma",
+  [CredentialType.EDUCATION_ATTENDANCE]:
+    "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content.education_attendance"
+} as const satisfies Record<ValidityAlertCredential, string>;
 
 /**
  * Alert showing information about the validity of new IT Wallet credentials.
@@ -25,7 +38,7 @@ const i18nNs =
 export const ItwPresentationNewCredentialValidityAlert = ({
   credentialType
 }: Props) => {
-  const content = I18n.t(`${i18nNs}.${credentialType}`);
+  const content = I18n.t(validityAlertContentKeys[credentialType]);
 
   return (
     <Alert testID="newCredentialAlertTestID" variant="info" content={content} />

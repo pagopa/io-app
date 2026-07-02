@@ -186,24 +186,38 @@ const DateClaimItem = ({
     if (hidden) {
       return undefined;
     }
-    const ns = "features.itWallet.presentation.credentialDetails.status";
     switch (status) {
       case "valid":
       case "expiring":
       case "jwtExpiring":
         return {
           type: "badge",
-          componentProps: { variant: "success", text: I18n.t(`${ns}.valid`) }
+          componentProps: {
+            variant: "success",
+            text: I18n.t(
+              "features.itWallet.presentation.credentialDetails.status.valid"
+            )
+          }
         };
       case "expired":
         return {
           type: "badge",
-          componentProps: { variant: "error", text: I18n.t(`${ns}.expired`) }
+          componentProps: {
+            variant: "error",
+            text: I18n.t(
+              "features.itWallet.presentation.credentialDetails.status.expired"
+            )
+          }
         };
       case "invalid":
         return {
           type: "badge",
-          componentProps: { variant: "error", text: I18n.t(`${ns}.invalid`) }
+          componentProps: {
+            variant: "error",
+            text: I18n.t(
+              "features.itWallet.presentation.credentialDetails.status.invalid"
+            )
+          }
         };
       default:
         return undefined;
