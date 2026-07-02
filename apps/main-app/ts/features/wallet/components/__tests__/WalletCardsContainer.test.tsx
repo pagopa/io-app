@@ -268,6 +268,41 @@ describe("ItwWalletCardsContainer", () => {
     expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
   });
 
+  it("should render the eID info CTA for Documenti su IO", () => {
+    const itWalletValidSpy = jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+      .mockReturnValue(false);
+    const newItWalletSpy = jest
+      .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
+      .mockReturnValue(false);
+
+    const { queryByTestId } = renderComponent(<ItwWalletCardsContainer />);
+
+    expect(
+      queryByTestId("walletCardsCategoryItwActiveBadgeTestID")
+    ).not.toBeNull();
+
+    itWalletValidSpy.mockRestore();
+    newItWalletSpy.mockRestore();
+  });
+
+  it("should hide the eID info CTA for the IT-Wallet L3 flow", () => {
+    const itWalletValidSpy = jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+      .mockReturnValue(true);
+    const newItWalletSpy = jest
+      .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
+      .mockReturnValue(false);
+
+    const { queryByTestId } = renderComponent(<ItwWalletCardsContainer />);
+
+    expect(queryByTestId("walletCardsCategoryItwHeaderTestID")).not.toBeNull();
+    expect(queryByTestId("walletCardsCategoryItwActiveBadgeTestID")).toBeNull();
+
+    itWalletValidSpy.mockRestore();
+    newItWalletSpy.mockRestore();
+  });
+
   it("should render the new ITW id card header when new wallet is renderable", () => {
     jest
       .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")

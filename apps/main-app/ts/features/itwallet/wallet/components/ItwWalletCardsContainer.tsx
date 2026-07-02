@@ -31,6 +31,7 @@ import {
   itwCredentialsEidExpirationSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
 import { useItwGuidedTour } from "../../tour/hooks/useItwGuidedTour.ts";
 import {
@@ -55,6 +56,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const shouldRenderL2EngagementBanner = useIOSelector(
     itwShouldRenderL2EngagementBannerSelector
   );
+  const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const cards = useIOSelector(state =>
     selectWalletCardsByCategory(state, "itw")
@@ -95,6 +97,22 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   );
 
   const sectionHeader = useMemo((): React.ReactElement => {
+    const eidInfoEndElement = !isItWalletValid
+      ? {
+          type: "buttonLink" as const,
+          componentProps: {
+            accessibilityLabel: I18n.t(
+              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+            ),
+            label: I18n.t(
+              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+            ),
+            onPress: eidInfoBottomSheet.present,
+            testID: "walletCardsCategoryItwActiveBadgeTestID"
+          }
+        }
+      : undefined;
+
     if (isNewItwRenderable) {
       return (
         <>
@@ -115,22 +133,16 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         iconName={"legalValue"}
         iconColor={iconColor}
         label={I18n.t("features.wallet.cards.categories.itw")}
-        endElement={{
-          type: "buttonLink",
-          componentProps: {
-            accessibilityLabel: I18n.t(
-              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-            ),
-            label: I18n.t(
-              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-            ),
-            onPress: eidInfoBottomSheet.present,
-            testID: "walletCardsCategoryItwActiveBadgeTestID"
-          }
-        }}
+        endElement={eidInfoEndElement}
       />
     );
-  }, [iconColor, isNewItwRenderable, cards, eidInfoBottomSheet.present]);
+  }, [
+    cards,
+    eidInfoBottomSheet.present,
+    iconColor,
+    isItWalletValid,
+    isNewItwRenderable
+  ]);
 
   return (
     <View>
