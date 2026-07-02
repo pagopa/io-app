@@ -13,6 +13,8 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import reactNativeConfig from '@react-native/eslint-config/flat';
 import tseslint from 'typescript-eslint';
 import delegateEffectsRule from './scripts/eslint/delegate-effects.js';
+import jsonParser from './scripts/eslint/json-parser.js';
+import noUnusedI18nKeysRule from './scripts/eslint/no-unused-i18n-keys.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -300,6 +302,18 @@ export default defineConfig([
 
 		rules: {
 			'i18next/no-literal-string': 'off'
+		}
+	},
+	{
+		files: ['**/locales/it/index.json'],
+		languageOptions: {
+			parser: jsonParser
+		},
+		plugins: {
+			'io-i18n': { rules: { 'no-unused-keys': noUnusedI18nKeysRule } }
+		},
+		rules: {
+			'io-i18n/no-unused-keys': 'warn'
 		}
 	}
 ]);
