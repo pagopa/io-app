@@ -17,6 +17,7 @@ import {
   CredentialAccessToken,
   CredentialBundle,
   CredentialFormat,
+  CredentialOfferResolved,
   EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject
@@ -33,6 +34,8 @@ import { getWalletUnitAttestation } from "./itwAttestationUtils";
  * Currently only the mDL must be requested sequentially because of locking issues.
  */
 const SEQUENTIAL_ISSUANCE_CREDENTIALS = ["mDL"];
+const NO_SUPPORTED_CREDENTIAL_CONFIGURATION_IDS_ERROR =
+  "No supported credential configuration IDs found for the resolved credential offer";
 
 /**
  * Credentials that must be obtained in batch (multiple copies in a single issuance), keyed by
@@ -77,6 +80,7 @@ export type RequestCredential = (args: {
   credentialType: string;
   walletInstanceAttestation: string;
   skipMdocIssuance: boolean;
+  resolvedCredentialOffer?: CredentialOfferResolved;
   pid: CredentialBundle;
 }) => Promise<{
   clientId: string;
@@ -102,6 +106,7 @@ export const requestCredential: RequestCredential = async ({
   credentialType,
   walletInstanceAttestation,
   skipMdocIssuance,
+  resolvedCredentialOffer,
   pid
 }) => {
   const ioWallet = getIoWallet(itwVersion);
@@ -110,15 +115,31 @@ export const requestCredential: RequestCredential = async ({
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   // Evaluate issuer trust
-  const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
-    env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion)
-  );
+  const credentialIssuer =
+    resolvedCredentialOffer?.offer.credential_issuer ??
+    env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion);
+  const { issuerConf } =
+    await ioWallet.CredentialIssuance.evaluateIssuerTrust(credentialIssuer);
 
-  const credentialIds = getCredentialConfigurationIds(
-    issuerConf,
-    credentialType,
-    skipMdocIssuance
-  );
+  const credentialIds = resolvedCredentialOffer?.offer
+    .credential_configuration_ids
+    ? resolvedCredentialOffer.offer.credential_configuration_ids.filter(id => {
+        const config = issuerConf.credential_configurations_supported[id];
+        return (
+          config !== undefined &&
+          config.scope === credentialType &&
+          (!skipMdocIssuance || config.format !== CredentialFormat.MDOC)
+        );
+      })
+    : getCredentialConfigurationIds(
+        issuerConf,
+        credentialType,
+        skipMdocIssuance
+      );
+
+  if (resolvedCredentialOffer && credentialIds.length === 0) {
+    throw new Error(NO_SUPPORTED_CREDENTIAL_CONFIGURATION_IDS_ERROR);
+  }
 
   // Start user authorization
   const { issuerRequestUri, clientId, codeVerifier, responseMode } =

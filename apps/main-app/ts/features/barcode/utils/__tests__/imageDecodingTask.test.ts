@@ -1,18 +1,24 @@
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as E from "fp-ts/lib/Either";
-
-jest.mock("./../barcodeDetectionTask", () => ({
-  barcodeDetectionTask: jest.fn()
-}));
-
 import { QRCodeScanResult } from "rn-qr-generator";
 import { BarcodeFailure } from "../../types/failure";
 import { imageDecodingTask } from "../imageDecodingTask";
 import { barcodeDetectionTask } from "../barcodeDetectionTask";
 import { GlobalState } from "../../../../store/reducers/types";
 
+jest.mock("./../barcodeDetectionTask", () => ({
+  barcodeDetectionTask: jest.fn()
+}));
+
 const mockGlobalState = {
+  features: {
+    itWallet: {
+      environment: {
+        itWalletSpecsVersion: "1.0.0"
+      }
+    }
+  },
   remoteConfig: O.some({
     pn: {
       aarQRCodeRegex:
