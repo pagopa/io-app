@@ -351,11 +351,6 @@ export const ItwPresentationCredentialDetail = ({
           status: displayStatus
         }
       });
-    } else {
-      navigation.navigate(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_SCREEN,
-        params: { credentialType: credential.credentialType }
-      });
     }
   };
 
