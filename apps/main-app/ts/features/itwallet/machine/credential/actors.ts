@@ -16,7 +16,8 @@ import { getIoWallet } from "../../common/utils/itwIoWallet";
 import {
   CredentialAccessToken,
   CredentialBundle,
-  CredentialFormat
+  CredentialFormat,
+  IssuerConfiguration
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { CredentialsVault } from "../../credentials/utils/vault";
@@ -59,7 +60,10 @@ export type ObtainCredentialActorOutput = {
   walletUnitAttestations: Record<string, string>;
 };
 
-export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
+export type ObtainCredentialStatusActorInput = Pick<
+  Context,
+  "credentials" | "issuerConf"
+>;
 
 /**
  * Builds the dictionary of Wallet Unit Attestations generated during issuance, keyed by their
@@ -344,48 +348,90 @@ export const createCredentialIssuanceActorsImplementation = (
     };
   });
 
-  const obtainStatusAssertion = fromPromise<
+  const obtainCredentialStatus = fromPromise<
     ReadonlyArray<CredentialBundle>,
-    ObtainStatusAssertionActorInput
+    ObtainCredentialStatusActorInput
   >(async ({ input }) => {
     assert(input.credentials, "credentials are undefined");
 
-    const requestStatusAssertionOrSkip = async (
-      credential: CredentialBundle
-    ): Promise<CredentialBundle> => {
-      // Status assertions for mDoc or v1.3+ credentials are not supported
-      // TODO: [SIW-3963] Handle status list integration
-      if (
-        credential.metadata.format === CredentialFormat.MDOC ||
-        !getIoWallet(itwVersion).CredentialStatus.statusAssertion.isSupported
-      ) {
-        return credential;
-      }
-
-      const { statusAssertion, parsedStatusAssertion } =
-        await getCredentialStatusAssertion(credential, env, itwVersion).catch(
-          enrichErrorWithMetadata({
-            credentialId: credential.metadata.credentialId
-          })
-        );
-
-      return {
-        ...credential,
-        metadata: {
-          ...credential.metadata,
-          storedStatusAssertion: {
-            credentialStatus: "valid",
-            statusAssertion,
-            parsedStatusAssertion
-          }
-        }
-      };
-    };
+    const ioWallet = getIoWallet(itwVersion);
 
     return await Promise.all(
-      input.credentials.map(requestStatusAssertionOrSkip)
+      input.credentials.map(async credential => {
+        if (ioWallet.CredentialStatus.statusAssertion.isSupported) {
+          return getStatusWithStatusAssertion(credential);
+        }
+        if (ioWallet.CredentialStatus.statusList.isSupported) {
+          assert(input.issuerConf, "issuerConf is undefined");
+          return getStatusWithStatusList(credential, input.issuerConf);
+        }
+        return credential;
+      })
     );
   });
+
+  const getStatusWithStatusList = async (
+    credential: CredentialBundle,
+    issuerConf: IssuerConfiguration
+  ): Promise<CredentialBundle> => {
+    const ioWallet = getIoWallet(itwVersion);
+    assert(
+      ioWallet.CredentialStatus.statusList.isSupported,
+      `Status List is not supported by API ${itwVersion}`
+    );
+    const { uri, idx, statusList } =
+      await ioWallet.CredentialStatus.statusList.get(
+        credential.credential,
+        CredentialFormat.SD_JWT
+      );
+    const parsed = await ioWallet.CredentialStatus.statusList.verifyAndParse(
+      issuerConf.keys,
+      statusList
+    );
+    const { status, rawStatus } =
+      ioWallet.CredentialStatus.statusList.getStatus(parsed.status_list, idx);
+    return {
+      ...credential,
+      metadata: {
+        ...credential.metadata,
+        validity: {
+          type: "status_list",
+          status,
+          rawStatus,
+          statusList: { uri, idx }
+        }
+      }
+    };
+  };
+
+  const getStatusWithStatusAssertion = async (
+    credential: CredentialBundle
+  ): Promise<CredentialBundle> => {
+    if (credential.metadata.format === CredentialFormat.MDOC) {
+      return credential;
+    }
+    const { parsedStatusAssertion } = await getCredentialStatusAssertion(
+      credential,
+      env,
+      itwVersion
+    ).catch(
+      enrichErrorWithMetadata({
+        credentialId: credential.metadata.credentialId
+      })
+    );
+
+    return {
+      ...credential,
+      metadata: {
+        ...credential.metadata,
+        validity: {
+          type: "status_assertion",
+          status: "valid",
+          statusAssertion: parsedStatusAssertion
+        }
+      }
+    };
+  };
 
   return {
     verifyTrustFederation,
@@ -393,7 +439,7 @@ export const createCredentialIssuanceActorsImplementation = (
     obtainAccessToken,
     requestCredential,
     obtainCredential,
-    obtainStatusAssertion,
+    obtainCredentialStatus,
     ...createCommonActorsImplementation(store)
   };
 };

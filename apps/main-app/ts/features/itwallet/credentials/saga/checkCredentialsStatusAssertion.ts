@@ -61,7 +61,7 @@ export function* updateCredentialStatusAssertionSaga(
       );
     }
 
-    const { parsedStatusAssertion, statusAssertion } = yield* call(
+    const { parsedStatusAssertion } = yield* call(
       getCredentialStatusAssertion,
       { metadata, credential },
       getEnv(env),
@@ -69,10 +69,10 @@ export function* updateCredentialStatusAssertionSaga(
     );
     return {
       ...metadata,
-      storedStatusAssertion: {
-        credentialStatus: "valid",
-        statusAssertion,
-        parsedStatusAssertion
+      validity: {
+        type: "status_assertion",
+        status: "valid",
+        statusAssertion: parsedStatusAssertion
       }
     };
   } catch (e) {
@@ -91,7 +91,7 @@ export function* updateCredentialStatusAssertionSaga(
 
       return {
         ...metadata,
-        storedStatusAssertion: { credentialStatus: "invalid", errorCode }
+        validity: { type: "status_assertion", status: "invalid", errorCode }
       };
     }
     // We do not have enough information on the status, the error was unexpected
@@ -103,7 +103,7 @@ export function* updateCredentialStatusAssertionSaga(
 
     return {
       ...metadata,
-      storedStatusAssertion: { credentialStatus: "unknown" }
+      validity: { type: "status_assertion", status: "unknown" }
     };
   }
 }
@@ -140,11 +140,11 @@ export function* checkCredentialsStatusAssertion() {
   );
 
   const failedCredentials = updatedCredentials.filter(
-    c => c.storedStatusAssertion?.credentialStatus === "unknown"
+    c => c.validity?.status === "unknown"
   );
 
   const successfulCredentials = updatedCredentials.filter(
-    c => c.storedStatusAssertion?.credentialStatus !== "unknown"
+    c => c.validity?.status !== "unknown"
   );
 
   const hasFailures = failedCredentials.length > 0;

@@ -81,17 +81,31 @@ export type StoredVerification = Pick<
   "trust_framework" | "assurance_level"
 >;
 
-export type StoredStatusAssertion =
+/**
+ * Validity information for legacy credentials that support status assertion.
+ */
+type LegacyCredentialValidity =
   | {
-      credentialStatus: "valid";
-      statusAssertion: string;
-      parsedStatusAssertion: ParsedStatusAssertion;
+      type: "status_assertion";
+      status: "valid";
+      statusAssertion: ParsedStatusAssertion;
     }
   | {
-      credentialStatus: "invalid" | "unknown";
+      type: "status_assertion";
+      status: "invalid" | "unknown";
       // Error code that might contain more details on the invalid status, provided by the issuer
       errorCode?: string;
     };
+
+/**
+ * Validity information for v1.3+ credentials that support status list.
+ */
+type CredentialValidity = {
+  type: "status_list";
+  statusList: { idx: number; uri: string };
+  rawStatus: string;
+  status: string;
+};
 
 /**
  * Credential's metadata for UI rendering and management.
@@ -113,7 +127,7 @@ export type CredentialMetadata = {
   credentialType: string;
   credentialId: string;
   issuerConf: IssuerConfiguration;
-  storedStatusAssertion?: StoredStatusAssertion;
+  validity?: CredentialValidity | LegacyCredentialValidity;
   /**
    * The SD-JWT issuance and expiration dates in ISO format.
    * These might be different from the underlying document's dates.

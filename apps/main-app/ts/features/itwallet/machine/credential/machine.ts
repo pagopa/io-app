@@ -9,7 +9,7 @@ import {
   ObtainAccessTokenActorInput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
-  ObtainStatusAssertionActorInput,
+  ObtainCredentialStatusActorInput,
   RequestCredentialActorInput,
   RequestCredentialActorOutput
 } from "./actors";
@@ -82,9 +82,9 @@ export const itwCredentialIssuanceMachine = setup({
       ObtainCredentialActorOutput,
       ObtainCredentialActorInput
     >(notImplemented),
-    obtainStatusAssertion: fromPromise<
+    obtainCredentialStatus: fromPromise<
       ReadonlyArray<CredentialBundle>,
-      ObtainStatusAssertionActorInput
+      ObtainCredentialStatusActorInput
     >(notImplemented),
     waitForSessionRefresh: fromCallback(notImplemented)
   },
@@ -310,7 +310,7 @@ export const itwCredentialIssuanceMachine = setup({
               accessToken: context.accessToken
             }),
             onDone: {
-              target: "ObtainingStatusAssertion",
+              target: "ObtainingCredentialStatus",
               actions: assign(({ event }) => event.output)
             },
             onError: [
@@ -326,11 +326,12 @@ export const itwCredentialIssuanceMachine = setup({
             ]
           }
         },
-        ObtainingStatusAssertion: {
+        ObtainingCredentialStatus: {
           invoke: {
-            src: "obtainStatusAssertion",
+            src: "obtainCredentialStatus",
             input: ({ context }) => ({
-              credentials: context.credentials
+              credentials: context.credentials,
+              issuerConf: context.issuerConf
             }),
             onDone: {
               target: "Completed",
