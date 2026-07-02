@@ -1,4 +1,3 @@
-import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
@@ -36,18 +35,15 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
-  it("should be succeded", async () => {
-    const result = await regenerateKeyGetRedirectsAndVerifySaml(
-      "loginUri",
-      "keyTag",
-      false,
-      false,
-      dispatch
-    );
-    expect(E.isLeft(result)).toBeTruthy();
-    if (E.isLeft(result)) {
-      const e = result.left as LoginUtilsError;
-      expect(e.code).toEqual("409");
-    }
+  it('should reject with code "409"', async () => {
+    await expect(
+      regenerateKeyGetRedirectsAndVerifySaml(
+        "loginUri",
+        "keyTag",
+        false,
+        false,
+        dispatch
+      )
+    ).rejects.toEqual(expect.objectContaining({ code: "409" }));
   });
 });
