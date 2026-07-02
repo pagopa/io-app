@@ -25,13 +25,12 @@ import {
 import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
-import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences.ts";
 import { isItwProximityEnabledSelector } from "../../itwallet/common/store/selectors";
+import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
-import { hasPresentableCredentialsSelector } from "../../itwallet/presentation/proximity/store/selectors/credentials";
 import {
   ITW_TOUR_GROUP_ID,
   ITW_TOUR_STEP_QR_BUTTON
@@ -64,9 +63,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
-  const hasPresentableCredentials = useIOSelector(
-    hasPresentableCredentialsSelector
-  );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
@@ -176,7 +172,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   }, [dispatch]);
 
   const proximityActionProps: IOScrollViewActions["primary"] | undefined =
-    itwFeaturesEnabled && hasPresentableCredentials && isProximityEnabled
+    itwFeaturesEnabled && isProximityEnabled
       ? {
           label: I18n.t("features.itWallet.presentation.ctas.present"),
           icon: "productITWallet",

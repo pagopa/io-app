@@ -16,6 +16,7 @@ import {
   itwIsRemotelyActiveSelector,
   itwIsWalletInstanceStatusFailureSelector
 } from "../../../walletInstance/store/selectors";
+import { hasPresentableCredentialsSelector } from "../../../presentation/proximity/store/selectors/credentials";
 import {
   itwIsBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector,
@@ -253,7 +254,9 @@ export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
 /**
  * Returns whether the IT Wallet proximity presentation feature is enabled:
  * the wallet must be valid and the app version must meet the proximity minimum.
+ * The wallet must have at least one presentable credential.
  */
 export const isItwProximityEnabledSelector = (state: GlobalState) =>
   itwLifecycleIsITWalletValidSelector(state) &&
-  isItwProximityMinAppVersionSupportedSelector(state);
+  isItwProximityMinAppVersionSupportedSelector(state) &&
+  hasPresentableCredentialsSelector(state);
