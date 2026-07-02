@@ -1,10 +1,3 @@
-import {
-  constFalse,
-  constTrue,
-  constUndefined,
-  pipe
-} from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
 import { getType } from "typesafe-actions";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/communication/ThirdPartyMessagePrecondition";
 import { Action } from "../../../../store/actions/types";
@@ -22,52 +15,63 @@ import { isPnAppVersionSupportedSelector } from "../../../../store/reducers/back
 import { TagEnum as SENDTagEnum } from "../../../../../definitions/communication/MessageCategoryPN";
 import { MessageCategory } from "../../../../../definitions/communication/MessageCategory";
 
-// MPS stands for Message Precondition Status
-type MPSError = {
-  state: "error";
+type MessagePreconditionData = {
   messageId: string;
   categoryTag: MessageCategory["tag"];
+};
+
+type ErrorPreconditionStatus = MessagePreconditionData & {
+  state: "error";
   reason: string;
 };
-type MPSIdle = {
+type IdlePreconditionStatus = {
   state: "idle";
 };
-type MPSLoadingContent = {
+type LoadingContentPreconditionStatus = MessagePreconditionData & {
   state: "loadingContent";
-  messageId: string;
-  categoryTag: MessageCategory["tag"];
   content: ThirdPartyMessagePrecondition;
 };
-type MPSRetrievingData = {
+type RetrievingDataPreconditionStatus = MessagePreconditionData & {
   state: "retrievingData";
-  messageId: string;
-  categoryTag: MessageCategory["tag"];
 };
-type MPSScheduled = {
+type ScheduledPreconditionStatus = MessagePreconditionData & {
   state: "scheduled";
-  messageId: string;
-  categoryTag: MessageCategory["tag"];
 };
-type MPSShown = {
+type ShownPreconditionStatus = MessagePreconditionData & {
   state: "shown";
-  messageId: string;
-  categoryTag: MessageCategory["tag"];
   content: ThirdPartyMessagePrecondition;
 };
-type MPSUpdateRequired = {
+type UpdateRequiredPreconditionStatus = {
   state: "updateRequired";
 };
 
 export type MessagePreconditionStatus =
-  | MPSError
-  | MPSIdle
-  | MPSLoadingContent
-  | MPSRetrievingData
-  | MPSScheduled
-  | MPSShown
-  | MPSUpdateRequired;
+  | ErrorPreconditionStatus
+  | IdlePreconditionStatus
+  | LoadingContentPreconditionStatus
+  | RetrievingDataPreconditionStatus
+  | ScheduledPreconditionStatus
+  | ShownPreconditionStatus
+  | UpdateRequiredPreconditionStatus;
 
-const INITIAL_STATE: MPSIdle = {
+type MessagePreconditionState = MessagePreconditionStatus["state"];
+type ContentPreconditionStatus =
+  | LoadingContentPreconditionStatus
+  | ShownPreconditionStatus;
+type MessagePreconditionStatusWithData = Exclude<
+  MessagePreconditionStatus,
+  IdlePreconditionStatus | UpdateRequiredPreconditionStatus
+>;
+type PreconditionTitleContent = "empty" | "header" | "loading";
+type PreconditionContent = "content" | "error" | "loading" | "update";
+type PreconditionFooter = "content" | "update" | "view";
+type PreconditionContentLayout = {
+  title: PreconditionTitleContent;
+  content: PreconditionContent;
+  footer: PreconditionFooter;
+};
+
+const INITIAL_STATE: IdlePreconditionStatus = {
   state: "idle"
 };
 
@@ -77,322 +81,178 @@ export const preconditionReducer = (
 ): MessagePreconditionStatus => {
   switch (action.type) {
     case getType(errorPreconditionStatusAction):
-      return foldPreconditionStatus(
-        () => state,
-        () => state,
-        loadingContentStatus =>
-          toErrorMPS(
-            loadingContentStatus.messageId,
-            loadingContentStatus.categoryTag,
-            action.payload.reason
-          ), // From Loading Content to Error
-        retrievingDataStatus =>
-          toErrorMPS(
-            retrievingDataStatus.messageId,
-            retrievingDataStatus.categoryTag,
-            action.payload.reason
-          ), // From Retrieving Data to Error
-        () => state,
-        shownStatus =>
-          toErrorMPS(
-            shownStatus.messageId,
-            shownStatus.categoryTag,
-            action.payload.reason
-          ), // From Retrieving Data to Error,
-        () => state
-      )(state);
+      if (
+        state.state === "loadingContent" ||
+        state.state === "retrievingData" ||
+        state.state === "shown"
+      ) {
+        return {
+          state: "error",
+          messageId: state.messageId,
+          categoryTag: state.categoryTag,
+          reason: action.payload.reason
+        };
+      }
+      break;
     case getType(idlePreconditionStatusAction):
-      return foldPreconditionStatus(
-        () => toIdleMPS(), // From Error to Idle
-        () => state,
-        () => toIdleMPS(), // From Loading Content to Idle,
-        () => toIdleMPS(), // From Retrieving Data to Idle,
-        () => state,
-        () => toIdleMPS(), // From Shown to Idle
-        () => toIdleMPS() // From Update Required to Idle
-      )(state);
+      if (state.state !== "scheduled") {
+        return { state: "idle" };
+      }
+      break;
+
     case getType(loadingContentPreconditionStatusAction):
-      return foldPreconditionStatus(
-        () => state,
-        () => state,
-        () => state,
-        retrievingDataStatus => {
-          if (action.payload.skipLoading) {
-            return toShownMPS(
-              retrievingDataStatus.messageId,
-              retrievingDataStatus.categoryTag,
-              action.payload.content
-            ); // From Retrieving Data to Shown
-          } else {
-            return toLoadingContentMPS(
-              retrievingDataStatus.messageId,
-              retrievingDataStatus.categoryTag,
-              action.payload.content
-            ); // From Retrieving Data to Loading Content
-          }
-        },
-        () => state,
-        () => state,
-        () => state
-      )(state);
+      if (state.state === "retrievingData") {
+        return {
+          state: action.payload.skipLoading ? "shown" : "loadingContent",
+          messageId: state.messageId,
+          categoryTag: state.categoryTag,
+          content: action.payload.content
+        };
+      }
+      break;
+
     case getType(retrievingDataPreconditionStatusAction):
-      return foldPreconditionStatus(
-        errorStatus =>
-          toRetrievingDataMPS(errorStatus.messageId, errorStatus.categoryTag), // From Error to Retrieving Data
-        () => state,
-        () => state,
-        () => state,
-        scheduledStatus =>
-          toRetrievingDataMPS(
-            scheduledStatus.messageId,
-            scheduledStatus.categoryTag
-          ), // From Scheduled to Retrieving Data
-        () => state,
-        () => state
-      )(state);
+      if (state.state === "error" || state.state === "scheduled") {
+        return {
+          state: "retrievingData",
+          messageId: state.messageId,
+          categoryTag: state.categoryTag
+        };
+      }
+      break;
+
     case getType(scheduledPreconditionStatusAction):
-      return foldPreconditionStatus(
-        () => state,
-        () =>
-          toScheduledMPS(action.payload.messageId, action.payload.categoryTag), // From Idle to Scheduled
-        () => state,
-        () => state,
-        () => state,
-        () => state,
-        () => state
-      )(state);
+      if (state.state === "idle") {
+        return {
+          state: "scheduled",
+          messageId: action.payload.messageId,
+          categoryTag: action.payload.categoryTag
+        };
+      }
+      break;
+
     case getType(shownPreconditionStatusAction):
-      return foldPreconditionStatus(
-        () => state,
-        () => state,
-        loadingContentStatus =>
-          toShownMPS(
-            loadingContentStatus.messageId,
-            loadingContentStatus.categoryTag,
-            loadingContentStatus.content
-          ), // From Loading Content to Shown
-        () => state,
-        () => state,
-        () => state,
-        () => state
-      )(state);
+      if (state.state === "loadingContent") {
+        return {
+          state: "shown",
+          messageId: state.messageId,
+          categoryTag: state.categoryTag,
+          content: state.content
+        };
+      }
+      break;
+
     case getType(updateRequiredPreconditionStatusAction):
-      return foldPreconditionStatus(
-        () => state,
-        () => state,
-        () => state,
-        () => state,
-        () => toUpdateRequiredMPS(), // From Scheduled to Update Required,
-        () => state,
-        () => state
-      )(state);
+      if (state.state === "scheduled") {
+        return { state: "updateRequired" };
+      }
+
+      break;
   }
   return state;
 };
 
-export const toErrorMPS = (
-  messageId: string,
-  categoryTag: MessageCategory["tag"],
-  reason: string
-): MPSError => ({
-  state: "error",
-  messageId,
-  categoryTag,
-  reason
-});
-export const toIdleMPS = (): MPSIdle => ({
-  state: "idle"
-});
-export const toLoadingContentMPS = (
-  messageId: string,
-  categoryTag: MessageCategory["tag"],
-  content: ThirdPartyMessagePrecondition
-): MPSLoadingContent => ({
-  state: "loadingContent",
-  messageId,
-  categoryTag,
-  content
-});
-export const toRetrievingDataMPS = (
-  messageId: string,
-  categoryTag: MessageCategory["tag"]
-): MPSRetrievingData => ({
-  state: "retrievingData",
-  messageId,
-  categoryTag
-});
-export const toScheduledMPS = (
-  messageId: string,
-  categoryTag: MessageCategory["tag"]
-): MPSScheduled => ({
-  state: "scheduled",
-  messageId,
-  categoryTag
-});
-export const toShownMPS = (
-  messageId: string,
-  categoryTag: MessageCategory["tag"],
-  content: ThirdPartyMessagePrecondition
-): MPSShown => ({
-  state: "shown",
-  messageId,
-  categoryTag,
-  content
-});
-export const toUpdateRequiredMPS = (): MPSUpdateRequired => ({
-  state: "updateRequired"
-});
+const hasPreconditionContent = (
+  precondition: MessagePreconditionStatus
+): precondition is ContentPreconditionStatus =>
+  precondition.state === "loadingContent" || precondition.state === "shown";
 
-export const foldPreconditionStatus =
-  <A>(
-    onError: (status: MPSError) => A,
-    onIdle: (status: MPSIdle) => A,
-    onLoadingContent: (status: MPSLoadingContent) => A,
-    onRetrievingData: (status: MPSRetrievingData) => A,
-    onScheduled: (status: MPSScheduled) => A,
-    onShown: (status: MPSShown) => A,
-    onUpdateRequired: (status: MPSUpdateRequired) => A
-  ) =>
-  (status: MessagePreconditionStatus) => {
-    switch (status.state) {
-      case "error":
-        return onError(status);
-      case "loadingContent":
-        return onLoadingContent(status);
-      case "retrievingData":
-        return onRetrievingData(status);
-      case "scheduled":
-        return onScheduled(status);
-      case "shown":
-        return onShown(status);
-      case "updateRequired":
-        return onUpdateRequired(status);
-    }
-    return onIdle(status);
-  };
+const hasPreconditionMessage = (
+  precondition: MessagePreconditionStatus
+): precondition is MessagePreconditionStatusWithData =>
+  precondition.state !== "idle" && precondition.state !== "updateRequired";
+
+const getMessagePrecondition = (state: GlobalState) =>
+  state.entities.messages.precondition;
 
 export const shouldPresentPreconditionsBottomSheetSelector = (
   state: GlobalState
-) => state.entities.messages.precondition.state === "scheduled";
+) => getMessagePrecondition(state).state === "scheduled";
 
-export const preconditionsRequireAppUpdateSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.precondition,
-    foldPreconditionStatus(
-      constFalse,
-      constFalse,
-      constFalse,
-      constFalse,
-      scheduled =>
-        pipe(
-          scheduled.categoryTag === SENDTagEnum.PN,
-          B.fold(constFalse, () =>
-            pipe(
-              state,
-              isPnAppVersionSupportedSelector,
-              appVersionSupported => !appVersionSupported
-            )
-          )
-        ),
-      constFalse,
-      constTrue
-    )
+export const preconditionsRequireAppUpdateSelector = (state: GlobalState) => {
+  const precondition = getMessagePrecondition(state);
+
+  if (precondition.state === "updateRequired") {
+    return true;
+  }
+
+  return (
+    precondition.state === "scheduled" &&
+    precondition.categoryTag === SENDTagEnum.PN &&
+    !isPnAppVersionSupportedSelector(state)
   );
+};
 
+export const preconditionsTitleSelector = (state: GlobalState) => {
+  const precondition = getMessagePrecondition(state);
+
+  return hasPreconditionContent(precondition)
+    ? precondition.content.title
+    : undefined;
+};
+
+export const preconditionsContentMarkdownSelector = (state: GlobalState) => {
+  const precondition = getMessagePrecondition(state);
+
+  return hasPreconditionContent(precondition)
+    ? precondition.content.markdown
+    : undefined;
+};
+
+export const preconditionsCategoryTagSelector = (state: GlobalState) => {
+  const precondition = getMessagePrecondition(state);
+
+  return hasPreconditionMessage(precondition)
+    ? precondition.categoryTag
+    : undefined;
+};
+
+export const preconditionsMessageIdSelector = (state: GlobalState) => {
+  const precondition = getMessagePrecondition(state);
+
+  return hasPreconditionMessage(precondition)
+    ? precondition.messageId
+    : undefined;
+};
+
+const PRECONDITION_CONTENT_LAYOUT_BY_STATE: Record<
+  MessagePreconditionState,
+  PreconditionContentLayout | undefined
+> = {
+  error: {
+    title: "empty",
+    content: "error",
+    footer: "view"
+  },
+  idle: undefined,
+  loadingContent: {
+    title: "header",
+    content: "content",
+    footer: "view"
+  },
+  retrievingData: {
+    title: "loading",
+    content: "loading",
+    footer: "view"
+  },
+  scheduled: undefined,
+  shown: {
+    title: "header",
+    content: "content",
+    footer: "content"
+  },
+  updateRequired: {
+    title: "empty",
+    content: "update",
+    footer: "update"
+  }
+};
+
+const getPreconditionContentByState = (state: GlobalState) =>
+  PRECONDITION_CONTENT_LAYOUT_BY_STATE[getMessagePrecondition(state).state];
 export const preconditionsTitleContentSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.precondition,
-    foldPreconditionStatus(
-      () => "empty" as const,
-      constUndefined,
-      () => "header" as const,
-      () => "loading" as const,
-      constUndefined,
-      () => "header" as const,
-      () => "empty" as const
-    )
-  );
-
-export const preconditionsTitleSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.precondition,
-    foldPreconditionStatus(
-      constUndefined,
-      constUndefined,
-      loadingContentStatus => loadingContentStatus.content.title,
-      constUndefined,
-      constUndefined,
-      shownStatus => shownStatus.content.title,
-      constUndefined
-    )
-  );
-
+  getPreconditionContentByState(state)?.title;
 export const preconditionsContentSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.precondition,
-    foldPreconditionStatus(
-      _ => "error" as const,
-      constUndefined,
-      _ => "content" as const,
-      _ => "loading" as const,
-      constUndefined,
-      _ => "content" as const,
-      _ => "update" as const
-    )
-  );
-
-export const preconditionsContentMarkdownSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.precondition,
-    foldPreconditionStatus(
-      constUndefined,
-      constUndefined,
-      loadingContentStatus => loadingContentStatus.content.markdown,
-      constUndefined,
-      constUndefined,
-      shownStatus => shownStatus.content.markdown,
-      constUndefined
-    )
-  );
-
+  getPreconditionContentByState(state)?.content;
 export const preconditionsFooterSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.precondition,
-    foldPreconditionStatus(
-      _ => "view" as const,
-      constUndefined,
-      _ => "view" as const,
-      _ => "view" as const,
-      constUndefined,
-      _ => "content" as const,
-      _ => "update" as const
-    )
-  );
-
-export const preconditionsCategoryTagSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.precondition,
-    foldPreconditionStatus(
-      errorStatus => errorStatus.categoryTag,
-      constUndefined,
-      loadingContentStatus => loadingContentStatus.categoryTag,
-      retrievingDataStatus => retrievingDataStatus.categoryTag,
-      scheduledStatus => scheduledStatus.categoryTag,
-      shownStatus => shownStatus.categoryTag,
-      constUndefined
-    )
-  );
-
-export const preconditionsMessageIdSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.precondition,
-    foldPreconditionStatus(
-      errorStatus => errorStatus.messageId,
-      constUndefined,
-      loadingContentStatus => loadingContentStatus.messageId,
-      retrievingDataStatus => retrievingDataStatus.messageId,
-      scheduledStatus => scheduledStatus.messageId,
-      shownStatus => shownStatus.messageId,
-      constUndefined
-    )
-  );
+  getPreconditionContentByState(state)?.footer;

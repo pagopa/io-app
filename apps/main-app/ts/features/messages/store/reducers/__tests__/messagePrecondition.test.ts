@@ -20,7 +20,6 @@ import {
 } from "../../actions/preconditions";
 import {
   MessagePreconditionStatus,
-  foldPreconditionStatus,
   preconditionReducer,
   preconditionsCategoryTagSelector,
   preconditionsContentMarkdownSelector,
@@ -30,14 +29,7 @@ import {
   preconditionsRequireAppUpdateSelector,
   preconditionsTitleContentSelector,
   preconditionsTitleSelector,
-  shouldPresentPreconditionsBottomSheetSelector,
-  toErrorMPS,
-  toIdleMPS,
-  toLoadingContentMPS,
-  toRetrievingDataMPS,
-  toScheduledMPS,
-  toShownMPS,
-  toUpdateRequiredMPS
+  shouldPresentPreconditionsBottomSheetSelector
 } from "../messagePrecondition";
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
@@ -50,6 +42,71 @@ const content = {
   title: "A title",
   markdown: "A markdown"
 };
+
+type PreconditionContent = Extract<
+  MessagePreconditionStatus,
+  { state: "loadingContent" }
+>["content"];
+
+const toErrorMPS = (
+  inputMessageId: string,
+  inputCategoryTag: MessageCategory["tag"],
+  reason: string
+): MessagePreconditionStatus => ({
+  state: "error",
+  messageId: inputMessageId,
+  categoryTag: inputCategoryTag,
+  reason
+});
+
+const toIdleMPS = (): MessagePreconditionStatus => ({
+  state: "idle"
+});
+
+const toLoadingContentMPS = (
+  inputMessageId: string,
+  inputCategoryTag: MessageCategory["tag"],
+  inputContent: PreconditionContent
+): MessagePreconditionStatus => ({
+  state: "loadingContent",
+  messageId: inputMessageId,
+  categoryTag: inputCategoryTag,
+  content: inputContent
+});
+
+const toRetrievingDataMPS = (
+  inputMessageId: string,
+  inputCategoryTag: MessageCategory["tag"]
+): MessagePreconditionStatus => ({
+  state: "retrievingData",
+  messageId: inputMessageId,
+  categoryTag: inputCategoryTag
+});
+
+const toScheduledMPS = (
+  inputMessageId: string,
+  inputCategoryTag: MessageCategory["tag"]
+): MessagePreconditionStatus => ({
+  state: "scheduled",
+  messageId: inputMessageId,
+  categoryTag: inputCategoryTag
+});
+
+const toShownMPS = (
+  inputMessageId: string,
+  inputCategoryTag: MessageCategory["tag"],
+  inputContent: PreconditionContent
+): MessagePreconditionStatus => ({
+  state: "shown",
+  messageId: inputMessageId,
+  categoryTag: inputCategoryTag,
+  content: inputContent
+});
+
+const toUpdateRequiredMPS = (): MessagePreconditionStatus => ({
+  state: "updateRequired"
+});
+
 const messagePreconditionStatusesGenerator = (
   inputCategoryTag: MessageCategory["tag"]
 ) => [
@@ -125,6 +182,13 @@ const computeExpectedOutput = (
             withAction.payload.reason
           );
         case "TO_LOADING_CONTENT_PRECONDITION_STATUS":
+          if (withAction.payload.skipLoading) {
+            return toShownMPS(
+              fromStatus.messageId,
+              fromStatus.categoryTag,
+              withAction.payload.content
+            );
+          }
           return toLoadingContentMPS(
             fromStatus.messageId,
             fromStatus.categoryTag,
@@ -172,6 +236,9 @@ describe("messagePrecondition reducer", () => {
     loadingContentPreconditionStatusAction(
       toLoadingContentPayload(content, false)
     ),
+    loadingContentPreconditionStatusAction(
+      toLoadingContentPayload(content, true)
+    ),
     retrievingDataPreconditionStatusAction(toRetrievingDataPayload()),
     scheduledPreconditionStatusAction(
       toScheduledPayload(messageId, categoryTag)
@@ -193,129 +260,6 @@ describe("messagePrecondition reducer", () => {
         expect(preconditionStatus).toStrictEqual(expectedStatus);
       });
     })
-  );
-});
-
-describe("Message precondition status generators", () => {
-  it("should return proper istance for 'toErrorMPS'", () => {
-    const expectedMPS = {
-      state: "error",
-      messageId,
-      categoryTag,
-      reason: "An error reason"
-    };
-    const mps = toErrorMPS(
-      expectedMPS.messageId,
-      expectedMPS.categoryTag,
-      expectedMPS.reason
-    );
-    expect(mps).toStrictEqual(expectedMPS);
-  });
-  it("should return proper istance for 'toIdleMPS'", () => {
-    const expectedMPS = {
-      state: "idle"
-    };
-    const mps = toIdleMPS();
-    expect(mps).toStrictEqual(expectedMPS);
-  });
-  it("should return proper istance for 'toLoadingContentMPS'", () => {
-    const expectedMPS = {
-      state: "loadingContent",
-      messageId,
-      categoryTag,
-      content: {
-        title: "A title",
-        markdown: "A markdown content"
-      }
-    };
-    const mps = toLoadingContentMPS(
-      expectedMPS.messageId,
-      expectedMPS.categoryTag,
-      expectedMPS.content
-    );
-    expect(mps).toStrictEqual(expectedMPS);
-  });
-  it("should return proper istance for 'toRetrievingDataMPS'", () => {
-    const expectedMPS = {
-      state: "retrievingData",
-      messageId,
-      categoryTag
-    };
-    const mps = toRetrievingDataMPS(
-      expectedMPS.messageId,
-      expectedMPS.categoryTag
-    );
-    expect(mps).toStrictEqual(expectedMPS);
-  });
-  it("should return proper istance for 'toScheduledMPS'", () => {
-    const expectedMPS = {
-      state: "scheduled",
-      messageId,
-      categoryTag
-    };
-    const mps = toScheduledMPS(expectedMPS.messageId, expectedMPS.categoryTag);
-    expect(mps).toStrictEqual(expectedMPS);
-  });
-  it("should return proper istance for 'toShownMPS'", () => {
-    const expectedMPS = {
-      state: "shown",
-      messageId,
-      categoryTag,
-      content
-    };
-    const mps = toShownMPS(
-      expectedMPS.messageId,
-      expectedMPS.categoryTag,
-      expectedMPS.content
-    );
-    expect(mps).toStrictEqual(expectedMPS);
-  });
-  it("should return proper istance for 'toUpdateRequiredMPS'", () => {
-    const expectedMPS = {
-      state: "updateRequired"
-    };
-    const mps = toUpdateRequiredMPS();
-    expect(mps).toStrictEqual(expectedMPS);
-  });
-});
-
-describe("foldPreconditionStatus", () => {
-  const mocks = [
-    jest.fn(),
-    jest.fn(),
-    jest.fn(),
-    jest.fn(),
-    jest.fn(),
-    jest.fn(),
-    jest.fn()
-  ];
-
-  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
-    (status, statusIndex) => {
-      afterEach(() => {
-        jest.resetAllMocks();
-        jest.clearAllMocks();
-      });
-      it(`should call function argument at index '${statusIndex}' for status '${status.state}'`, () => {
-        foldPreconditionStatus(
-          mocks[0],
-          mocks[1],
-          mocks[2],
-          mocks[3],
-          mocks[4],
-          mocks[5],
-          mocks[6]
-        )(status);
-        mocks.forEach((mock, mockIndex) => {
-          if (statusIndex === mockIndex) {
-            expect(mock.mock.calls.length).toBe(1);
-            expect(mock.mock.calls[0][0]).toStrictEqual(status);
-          } else {
-            expect(mock.mock.calls.length).toBe(0);
-          }
-        });
-      });
-    }
   );
 });
 
