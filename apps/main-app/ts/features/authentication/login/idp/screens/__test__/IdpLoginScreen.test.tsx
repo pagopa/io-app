@@ -58,11 +58,9 @@ describe("IdpLoginScreen", () => {
   });
 
   it("should render correctly the webview", () => {
-    jest
-      .spyOn(requestinfo, "standardLoginRequestInfoSelector")
-      .mockReturnValue({
-        requestState: pot.some(true)
-      });
+    jest.spyOn(requestinfo, "spidLoginRequestInfoSelector").mockReturnValue({
+      requestState: pot.some(true)
+    });
 
     const { getByTestId } = renderComponent();
 
@@ -70,11 +68,9 @@ describe("IdpLoginScreen", () => {
   });
 
   it("should render correctly the loader", () => {
-    jest
-      .spyOn(requestinfo, "standardLoginRequestInfoSelector")
-      .mockReturnValue({
-        requestState: pot.toLoading(pot.none)
-      });
+    jest.spyOn(requestinfo, "spidLoginRequestInfoSelector").mockReturnValue({
+      requestState: pot.toLoading(pot.none)
+    });
 
     const { getByTestId } = renderComponent();
 
@@ -97,11 +93,9 @@ describe("IdpLoginScreen", () => {
       }
     });
 
-    jest
-      .spyOn(requestinfo, "standardLoginRequestInfoSelector")
-      .mockReturnValue({
-        requestState: pot.some(true)
-      });
+    jest.spyOn(requestinfo, "spidLoginRequestInfoSelector").mockReturnValue({
+      requestState: pot.some(true)
+    });
 
     const { getByTestId } = renderComponent();
 
