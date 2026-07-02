@@ -91,10 +91,8 @@
       "previous": "Previous",
       "exit": "Exit",
       "edit": "Edit",
-      "activate": "Enable",
       "activate2": "Enable",
       "show": "Show",
-      "update": "Update",
       "updateIO": "Update IO",
       "findOutMore": "Find out more",
       "whatCanYouDo": "What can you do?"
@@ -301,9 +299,7 @@
           "updated": "We updated our Terms and conditions",
           "infobox": "It is necessary to read and accept the Terms and Conditions",
           "contextualHelpTitlePolicy": "What is the information on the processing of personal data",
-          "contextualHelpContentPolicy": "According to what established by the art. 13 of the EU Regulation n. 2016/679 (commonly known as GDPR), here you can find the complete description of how the IO app handles personal data.\n",
-          "contextualHelpTitle": "Your privacy settings",
-          "contextualHelpContent": "**Here you can find all the information related to your privacy profile:** details on the treatment of personal data, possibility to delete your account and to export all the personal data associated with your profile.\n"
+          "contextualHelpContentPolicy": "According to what established by the art. 13 of the EU Regulation n. 2016/679 (commonly known as GDPR), here you can find the complete description of how the IO app handles personal data.\n"
         },
         "shareData": {
           "listItem": {
@@ -479,9 +475,6 @@
             "success": {
               "title": "Done!"
             }
-          },
-          "banner": {
-            "button": "Learn more"
           }
         },
         "notifications": {
@@ -875,7 +868,6 @@
       }
     },
     "insert": {
-      "alert": "You are already using this email",
       "help": {
         "content": "This page is used to insert or edit your **email** address. The entered email must be validated.\n"
       },
@@ -906,7 +898,6 @@
       "title": "We have sent you an email",
       "subtitle": "To confirm your address, follow the instructions we have sent to",
       "link": "Change email address",
-      "buttonlabelsent": "Email sent!",
       "countdowntext": "Request new email in",
       "buttonlabelsentagain": "Send email again",
       "toast": "Done! Check your mailbox."
@@ -1080,8 +1071,7 @@
       },
       "outcome": {
         "SUCCESS": {
-          "title": "Payment method added successfully!",
-          "secondaryAction": "Continue"
+          "title": "Payment method added successfully!"
         },
         "AUTH_ERROR": {
           "secondaryAction": "What can you do?"
@@ -1760,7 +1750,6 @@
           "a11y": "Filter {{label}}, {{index}} of {{total}}"
         },
         "categoriesList": {
-          "a11y": "{{name}}, {{count}} new opportunities found",
           "bottomSheet": {
             "cta": "How are categories ordered by?",
             "title": "How are categories ordered by?",
@@ -2218,8 +2207,7 @@
           "status": {
             "valid": "Valid",
             "invalid": "Not valid",
-            "expired": "Expired",
-            "expiring": "Expiring"
+            "expired": "Expired"
           },
           "actions": {
             "removeFromWallet": "Remove from Wallet",
