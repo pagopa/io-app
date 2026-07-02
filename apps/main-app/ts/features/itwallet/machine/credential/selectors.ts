@@ -63,3 +63,10 @@ export const selectCredentialIntroContentOption = ({
       metadata => metadata.authentic_sources[0]?.user_information
     )
   );
+
+export const selectResolvedCredentialOfferOption = (
+  snapshot: MachineSnapshot
+) => O.fromNullable(snapshot.context.resolvedCredentialOffer);
+
+export const selectHasResolvedCredentialOffer = (snapshot: MachineSnapshot) =>
+  snapshot.context.resolvedCredentialOffer !== undefined;
