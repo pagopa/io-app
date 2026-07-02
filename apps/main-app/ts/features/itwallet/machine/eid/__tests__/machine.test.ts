@@ -25,7 +25,8 @@ import {
   RequestEidActorParams,
   StartAuthFlowActorParams,
   StoreEidCredentialActorParams,
-  ValidateMrtdPoPChallengeActorParams
+  ValidateMrtdPoPChallengeActorParams,
+  WithItwVersion
 } from "../actors";
 import {
   AuthenticationContext,
@@ -95,6 +96,7 @@ const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 const trackItwIdAuthenticationCompleted = jest.fn();
 const trackItwIdVerifiedDocument = jest.fn();
+const refreshCredentialsCatalogue = jest.fn();
 
 /**
  * Actors
@@ -159,15 +161,20 @@ describe("itwEidIssuanceMachine", () => {
       trackIdentificationMethodSelected,
       storeAuthLevel,
       trackItwIdAuthenticationCompleted,
-      trackItwIdVerifiedDocument
+      trackItwIdVerifiedDocument,
+      refreshCredentialsCatalogue
     },
     actors: {
-      verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
+      verifyTrustFederation: fromPromise<void, WithItwVersion>(
+        verifyTrustFederation
+      ),
       createWalletInstance: fromPromise<
         string,
         CreateWalletInstanceActorParams
       >(createWalletInstance),
-      revokeWalletInstance: fromPromise<void>(revokeWalletInstance),
+      revokeWalletInstance: fromPromise<void, WithItwVersion>(
+        revokeWalletInstance
+      ),
       getWalletAttestation: fromPromise<
         WalletInstanceAttestations,
         GetWalletAttestationActorParams
@@ -316,12 +323,9 @@ describe("itwEidIssuanceMachine", () => {
     );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    await waitFor(() =>
-      expect(createWalletInstance).toHaveBeenNthCalledWith(
-        1,
-        expect.objectContaining({ input: { isRenewal: false } })
-      )
-    );
+    expect(createWalletInstance).toHaveBeenCalledTimes(1);
+    expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(false);
+
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
     await waitFor(() =>
       expect(storeIntegrityKeyTag).toHaveBeenCalledWith(
@@ -1840,12 +1844,9 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    await waitFor(() =>
-      expect(createWalletInstance).toHaveBeenNthCalledWith(
-        1,
-        expect.objectContaining({ input: { isRenewal: false } })
-      )
-    );
+    expect(createWalletInstance).toHaveBeenCalledTimes(1);
+    expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(false);
+
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
@@ -2615,10 +2616,8 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "accept-tos" });
 
     await waitForActor(actor, s => s.matches("WalletInstanceCreation"));
-    expect(createWalletInstance).toHaveBeenNthCalledWith(
-      1,
-      expect.objectContaining({ input: { isRenewal: true } })
-    );
+    expect(createWalletInstance).toHaveBeenCalledTimes(1);
+    expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(true);
   });
 
   it("Should NOT re-create the Wallet Instance in the regular flow (no upgrade)", async () => {
@@ -2638,4 +2637,48 @@ describe("itwEidIssuanceMachine", () => {
     );
     expect(createWalletInstance).not.toHaveBeenCalled();
   });
+});
+
+describe("itwEidIssuanceMachine itwVersion routing", () => {
+  const mockedMachine = itwEidIssuanceMachine.provide({
+    actions: {
+      onInit: assign(onInit),
+      storeIntegrityKeyTag,
+      storeWalletInstanceAttestation,
+      navigateToIdentificationScreen,
+      navigateToTosScreen
+    },
+    actors: {
+      getCieStatus: fromPromise(getCieStatus),
+      getWalletAttestation: fromPromise(getWalletAttestation),
+      createWalletInstance: fromPromise(createWalletInstance),
+      verifyTrustFederation: fromPromise(verifyTrustFederation)
+    },
+    guards: {
+      hasValidWalletInstanceAttestation
+    }
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test.each`
+    mode            | level            | expected
+    ${"issuance"}   | ${"l2"}          | ${"1.0.0"}
+    ${"issuance"}   | ${"l2-fallback"} | ${"1.0.0"}
+    ${"issuance"}   | ${"l3"}          | ${"1.3.3"}
+    ${"upgrade"}    | ${"l3"}          | ${"1.3.3"}
+    ${"reissuance"} | ${"l2"}          | ${"1.0.0"}
+    ${"reissuance"} | ${"l3"}          | ${"1.3.3"}
+  `(
+    "Mode: $mode, level: $level -> ITW: $expected",
+    ({ mode, level, expected }) => {
+      createWalletInstance.mockResolvedValue(T_INTEGRITY_KEY);
+      const actor = createActor(mockedMachine);
+      actor.start();
+      actor.send({ type: "start", mode, level });
+      expect(actor.getSnapshot().context.itwVersion).toBe(expected);
+    }
+  );
 });

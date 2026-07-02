@@ -71,7 +71,7 @@ const itwReducer = combineReducers({
   debug: itwDebugReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 15;
+const CURRENT_REDUX_ITW_STORE_VERSION = 16;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -184,7 +184,10 @@ export const migrations: MigrationManifest = {
     _.omit(state, "preferences.itwSetWalletInstanceRemotelyActive"),
   // Removed isItwSimplifiedActivationRequired from preferences
   "15": (state: PersistedState): PersistedState =>
-    _.omit(state, "preferences.isItwSimplifiedActivationRequired")
+    _.omit(state, "preferences.isItwSimplifiedActivationRequired"),
+  // Removed itWalletSpecsVersion from environment
+  "16": (state: PersistedState): PersistedState =>
+    _.omit(state, "environment.itWalletSpecsVersion")
 };
 
 const itwPersistConfig: PersistConfig = {
