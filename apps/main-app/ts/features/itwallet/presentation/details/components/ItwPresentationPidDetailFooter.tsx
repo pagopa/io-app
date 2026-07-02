@@ -51,6 +51,7 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
       ]
     );
   };
+  const guardedHandleRevokePress = useOfflineToastGuard(handleRevokePress);
 
   return (
     <View>
@@ -72,7 +73,7 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
         variant="danger"
         icon="trashcan"
         label={I18n.t("features.itWallet.presentation.itWalletId.cta.revoke")}
-        onPress={handleRevokePress}
+        onPress={guardedHandleRevokePress}
       />
     </View>
   );

@@ -30,6 +30,9 @@ const ItwPresentationDetailsFooter = ({
     credential,
     "screen"
   );
+  const guardedConfirmAndRemoveCredential = useOfflineToastGuard(
+    confirmAndRemoveCredential
+  );
   const credentialActions = useMemo(
     () => getCredentialActions(credential),
     [credential]
@@ -60,7 +63,7 @@ const ItwPresentationDetailsFooter = ({
         accessibilityLabel={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
         )}
-        onPress={confirmAndRemoveCredential}
+        onPress={guardedConfirmAndRemoveCredential}
       />
     </View>
   );
