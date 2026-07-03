@@ -32,7 +32,7 @@ const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
           credentialType={credential.credentialType}
         />
       );
-    case CredentialType.AGE_VERIFICATION:
+    case CredentialType.PROOF_OF_AGE:
       return <ItwPresentationAgeVerificationUsageBanner />;
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
       return <ItwPresentationFiscalCode />;

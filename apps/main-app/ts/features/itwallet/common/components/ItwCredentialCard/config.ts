@@ -271,7 +271,7 @@ export const credentialCardConfigs: Partial<
       }
     }
   },
-  [CredentialType.AGE_VERIFICATION]: {
+  [CredentialType.PROOF_OF_AGE]: {
     light: {
       color: "#CECFF2",
       titleColor: "#363740",

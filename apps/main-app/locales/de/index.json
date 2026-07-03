@@ -443,13 +443,6 @@
   "cie": {
     "title": "Karte berühren"
   },
-  "spid": {
-    "pending_login": {
-      "title": "Anmeldung in Arbeit",
-      "details": "Wenn du die Sitzung im Browser geöffnet hast, fahre von dort aus fort. Andernfalls gehe zurück und starte eine neue Anmeldung!",
-      "button": "Zurück zur Liste"
-    }
-  },
   "authentication": {
     "landing": {
       "accessibility": {

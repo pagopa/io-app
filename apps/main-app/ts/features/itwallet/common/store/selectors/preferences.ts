@@ -27,14 +27,6 @@ export const itwIsL3EnabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isFiscalCodeWhitelisted ?? false;
 
 /**
- * Returns whether the user has the requirements for IT-Wallet simplified
- * activation.
- */
-export const itwIsSimplifiedActivationRequired = (state: GlobalState) =>
-  state.features.itWallet.preferences.isItwSimplifiedActivationRequired ??
-  false;
-
-/**
  * Selects the state that indicates whether the bottom sheet of survey is
  * visible. Returns `true` if the bottom sheet is visible, `false` if the user
  * has already checked the survey, with the state being persisted through

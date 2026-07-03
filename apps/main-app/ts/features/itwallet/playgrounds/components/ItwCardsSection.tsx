@@ -34,7 +34,7 @@ const LEGACY_CREDENTIAL_TYPES: ReadonlyArray<string> = [
 const ALL_CREDENTIAL_TYPES: ReadonlyArray<string> = [
   CredentialType.PID,
   ...LEGACY_CREDENTIAL_TYPES,
-  CredentialType.AGE_VERIFICATION,
+  CredentialType.PROOF_OF_AGE,
   CredentialType.EDUCATION_ATTENDANCE,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_DIPLOMA,

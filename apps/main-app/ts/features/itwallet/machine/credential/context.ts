@@ -1,7 +1,9 @@
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
+  CredentialOfferResolved,
   CredentialAccessToken,
   CredentialBundle,
+  EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject,
   WalletInstanceAttestations
@@ -26,6 +28,11 @@ export type Context = {
   mode: CredentialIssuanceMode;
   /** Flag to indicate if the user has access to the L3 features. */
   isItWalletValid: boolean;
+  /**
+   * Flag to indicate if the wallet lifecycle is valid and can issue
+   * credentials.
+   */
+  isWalletValid: boolean;
   /** The type of the credential being issued. */
   credentialType: string | undefined;
   /**
@@ -43,6 +50,12 @@ export type Context = {
   clientId: string | undefined;
   codeVerifier: string | undefined;
   requestedCredential: RequestObject | undefined;
+  /**
+   * Result of evaluating the issuer DCQL query against the PID before the trust
+   * issuer screen. It is reused to show the requested claims and complete the
+   * authorization without recalculating.
+   */
+  evaluatedDcqlQuery: EvaluatedDcqlQueryResult | undefined;
   responseMode: string | undefined;
   /** Obtained credentials from the issuer. */
   credentials: ReadonlyArray<CredentialBundle> | undefined;
@@ -53,6 +66,10 @@ export type Context = {
    * credential type.
    */
   credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
+
+  credentialOfferUri: string | undefined;
+  resolvedCredentialOffer: CredentialOfferResolved | undefined;
+
   /**
    * The access token obtained from the Issuer. If the session with the Wallet
    * Provider expires before requesting the credential, this token is used to
@@ -69,6 +86,7 @@ export type Context = {
 export const InitialContext: Context = {
   mode: "issuance",
   isItWalletValid: false,
+  isWalletValid: false,
   credentialType: undefined,
   wiaCryptoContext: undefined,
   walletInstanceAttestation: undefined,
@@ -76,9 +94,12 @@ export const InitialContext: Context = {
   clientId: undefined,
   codeVerifier: undefined,
   requestedCredential: undefined,
+  evaluatedDcqlQuery: undefined,
   responseMode: undefined,
   credentials: undefined,
   failure: undefined,
   credentialsCatalogue: undefined,
+  credentialOfferUri: undefined,
+  resolvedCredentialOffer: undefined,
   accessToken: undefined
 };

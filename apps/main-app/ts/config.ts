@@ -120,9 +120,6 @@ export const fastLoginOptIn = Config.FAST_LOGIN_OPTIN === "YES";
 export const cieLoginFlowWithDevServerEnabled =
   Config.CIE_LOGIN_WITH_DEV_SERVER_ENABLED === "YES";
 
-// Native Login Feature Flag
-export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
-
 // #region Help Center URLs
 
 /**
