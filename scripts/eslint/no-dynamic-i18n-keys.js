@@ -26,6 +26,12 @@ const isStaticString = node =>
   (node?.type === "Literal" && typeof node.value === "string") ||
   (node?.type === "TemplateLiteral" && node.expressions.length === 0);
 
+const isStaticKey = node =>
+  isStaticString(node) ||
+  (node?.type === "ConditionalExpression" &&
+    isStaticKey(node.consequent) &&
+    isStaticKey(node.alternate));
+
 /** @type {import("eslint").Rule.RuleModule} */
 module.exports = {
   meta: {
@@ -54,7 +60,7 @@ module.exports = {
 
         const key = node.arguments[0];
 
-        if (!isStaticString(key)) {
+        if (!isStaticKey(key)) {
           context.report({
             node: key ?? node,
             messageId: "dynamicKey"
