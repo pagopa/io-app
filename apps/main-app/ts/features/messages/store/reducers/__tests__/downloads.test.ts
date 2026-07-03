@@ -234,6 +234,92 @@ describe("downloadedMessageAttachmentSelector", () => {
     expect(downloadedAttachment?.attachment.id).toBe(attachmentId);
     expect(downloadedAttachment?.path).toBe(downloadPath);
   });
+
+  it("Should return cached data for a matching downloaded attachment that is loading again", () => {
+    const messageId = "01HMXFE7192J01KNK02BJAPMBR";
+    const attachmentId = "1";
+    const attachment = {
+      id: attachmentId
+    } as ThirdPartyAttachment;
+    const downloadPath = "randomPath";
+    const downloadedState = downloadsReducer(
+      INITIAL_STATE,
+      downloadAttachment.success({
+        attachment,
+        messageId,
+        path: downloadPath
+      })
+    );
+    const loadingState = downloadsReducer(
+      downloadedState,
+      downloadAttachment.request({
+        attachment,
+        messageId,
+        skipMixpanelTrackingOnFailure: true
+      } as DownloadAttachmentRequest)
+    );
+    const globalState = {
+      entities: {
+        messages: {
+          downloads: loadingState
+        }
+      }
+    } as GlobalState;
+
+    const downloadedAttachment = downloadedMessageAttachmentSelector(
+      globalState,
+      messageId,
+      attachmentId
+    );
+
+    expect(downloadedAttachment).toStrictEqual({
+      attachment,
+      path: downloadPath
+    });
+  });
+
+  it("Should return cached data for a matching downloaded attachment that later got an error", () => {
+    const messageId = "01HMXFE7192J01KNK02BJAPMBR";
+    const attachmentId = "1";
+    const attachment = {
+      id: attachmentId
+    } as ThirdPartyAttachment;
+    const downloadPath = "randomPath";
+    const downloadedState = downloadsReducer(
+      INITIAL_STATE,
+      downloadAttachment.success({
+        attachment,
+        messageId,
+        path: downloadPath
+      })
+    );
+    const errorState = downloadsReducer(
+      downloadedState,
+      downloadAttachment.failure({
+        attachment,
+        error: new Error("An error"),
+        messageId
+      })
+    );
+    const globalState = {
+      entities: {
+        messages: {
+          downloads: errorState
+        }
+      }
+    } as GlobalState;
+
+    const downloadedAttachment = downloadedMessageAttachmentSelector(
+      globalState,
+      messageId,
+      attachmentId
+    );
+
+    expect(downloadedAttachment).toStrictEqual({
+      attachment,
+      path: downloadPath
+    });
+  });
 });
 
 describe("downloadsReducer", () => {
@@ -473,6 +559,33 @@ describe("downloadsReducer", () => {
       );
       expect(isDownloadingMessage).toBeFalsy();
     });
+    it("should return true on a cached downloaded attachment that is loading again", () => {
+      const downloadedState = appReducer(
+        undefined,
+        downloadAttachment.success({
+          attachment: mockPdfAttachment,
+          messageId,
+          path: `file:///${mockPdfAttachment.id}.pdf`
+        })
+      );
+      const loadingState = appReducer(
+        downloadedState,
+        downloadAttachment.request({
+          attachment: mockPdfAttachment,
+          messageId,
+          skipMixpanelTrackingOnFailure: false,
+          serviceId
+        })
+      );
+
+      const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
+        loadingState,
+        messageId,
+        mockPdfAttachment.id
+      );
+
+      expect(isDownloadingMessage).toBeTruthy();
+    });
     it("should return false on a failed downloaded attachment", () => {
       const initialState = appReducer(
         undefined,
@@ -496,6 +609,32 @@ describe("downloadsReducer", () => {
         messageId,
         mockPdfAttachment.id
       );
+      expect(isDownloadingMessage).toBeFalsy();
+    });
+    it("should return false on a cached downloaded attachment that later got an error", () => {
+      const downloadedState = appReducer(
+        undefined,
+        downloadAttachment.success({
+          attachment: mockPdfAttachment,
+          messageId,
+          path: `file:///${mockPdfAttachment.id}.pdf`
+        })
+      );
+      const failureState = appReducer(
+        downloadedState,
+        downloadAttachment.failure({
+          attachment: mockPdfAttachment,
+          messageId,
+          error: new Error("")
+        })
+      );
+
+      const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
+        failureState,
+        messageId,
+        mockPdfAttachment.id
+      );
+
       expect(isDownloadingMessage).toBeFalsy();
     });
     it("should return false on a cancelled downloaded attachment", () => {

@@ -1,6 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
 import _ from "lodash";
@@ -98,10 +96,8 @@ export const messageDetailsByIdSelector = (
 ): pot.Pot<UIMessageDetails, string> =>
   state.entities.messages.detailsById[id] ?? pot.none;
 
-export const messagePaymentDataSelector = (state: GlobalState, id: string) =>
-  pipe(
-    messageDetailsByIdSelector(state, id),
-    pot.toOption,
-    O.chainNullableK(message => message.paymentData),
-    O.toUndefined
-  );
+export const messagePaymentDataSelector = (state: GlobalState, id: string) => {
+  const detailsPot = messageDetailsByIdSelector(state, id);
+  const paymentData = pot.toUndefined(detailsPot)?.paymentData;
+  return paymentData;
+};

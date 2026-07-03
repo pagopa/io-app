@@ -1,4 +1,4 @@
-import { ThirdPartyMessageWithContent } from "../../../../definitions/communication/ThirdPartyMessageWithContent";
+import type { ThirdPartyMessageWithContent } from "../../../../definitions/communication/ThirdPartyMessageWithContent";
 
 type ThirdPartyKind = typeof thirdPartyKind;
 type StandardThirdPartyMessage = {

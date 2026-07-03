@@ -1,4 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import {
@@ -42,21 +41,15 @@ export const archivingReducer = (
       if (state.status === "processing") {
         return state;
       }
-      if (action.payload.fromInboxToArchive) {
-        return {
-          ...state,
-          status: "enabled",
-          fromInboxToArchive: duplicateSetAndToggle(
-            state.fromInboxToArchive,
-            action.payload.messageId
-          )
-        };
-      }
+
+      const stateDirection = action.payload.fromInboxToArchive
+        ? "fromInboxToArchive"
+        : "fromArchiveToInbox";
       return {
         ...state,
         status: "enabled",
-        fromArchiveToInbox: duplicateSetAndToggle(
-          state.fromArchiveToInbox,
+        [stateDirection]: duplicateSetAndToggle(
+          state[stateDirection],
           action.payload.messageId
         )
       };
@@ -72,19 +65,13 @@ export const archivingReducer = (
       };
     }
     case getType(removeScheduledMessageArchivingAction): {
-      if (action.payload.fromInboxToArchive) {
-        return {
-          ...state,
-          fromInboxToArchive: duplicateSetAndRemove(
-            state.fromInboxToArchive,
-            action.payload.messageId
-          )
-        };
-      }
+      const stateDirection = action.payload.fromInboxToArchive
+        ? "fromInboxToArchive"
+        : "fromArchiveToInbox";
       return {
         ...state,
-        fromArchiveToInbox: duplicateSetAndRemove(
-          state.fromArchiveToInbox,
+        [stateDirection]: duplicateSetAndRemove(
+          state[stateDirection],
           action.payload.messageId
         )
       };
@@ -99,8 +86,10 @@ export const archivingReducer = (
       }
       return state;
     }
+    default: {
+      return state;
+    }
   }
-  return state;
 };
 
 export const isArchivingDisabledSelector = (state: GlobalState) =>
@@ -112,26 +101,30 @@ export const isArchivingInProcessingModeSelector = (state: GlobalState) =>
 export const isMessageScheduledForArchivingSelector = (
   state: GlobalState,
   messageId: string
-) =>
-  pipe(
-    state.entities.messages.archiving,
-    archiving =>
-      archiving.status !== "disabled" &&
-      (archiving.fromArchiveToInbox.has(messageId) ||
-        archiving.fromInboxToArchive.has(messageId))
-  );
+) => {
+  const archiving = state.entities.messages.archiving;
+  if (archiving.status === "disabled") {
+    return false;
+  }
+
+  const isScheduledForArchiving =
+    archiving.fromInboxToArchive.has(messageId) ||
+    archiving.fromArchiveToInbox.has(messageId);
+
+  return isScheduledForArchiving;
+};
 export const areThereEntriesForShownMessageListCategorySelector = (
   state: GlobalState,
   category: MessageListCategory
-) =>
-  pipe(
-    state.entities.messages.archiving,
-    archiving =>
-      category === "ARCHIVE"
-        ? archiving.fromArchiveToInbox
-        : archiving.fromInboxToArchive,
-    scheduledMessageSet => scheduledMessageSet.size > 0
-  );
+) => {
+  const archiving = state.entities.messages.archiving;
+  const scheduledMessageSet =
+    category === "ARCHIVE"
+      ? archiving.fromArchiveToInbox
+      : archiving.fromInboxToArchive;
+
+  return scheduledMessageSet.size > 0;
+};
 export const nextQueuedMessageDataUncachedSelector = (state: GlobalState) => {
   const archiving = state.entities.messages.archiving;
 

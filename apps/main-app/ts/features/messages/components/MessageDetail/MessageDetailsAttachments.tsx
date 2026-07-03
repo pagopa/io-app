@@ -3,7 +3,7 @@ import { ListItemHeader } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
-import { thirdPartyMessageAttachments } from "../../store/reducers/thirdPartyById";
+import { thirdPartyMessageAttachmentsSelector } from "../../store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import {
   SendOpeningSource,
@@ -29,7 +29,7 @@ export const MessageDetailsAttachments = ({
   sendUserType
 }: MessageDetailsAttachmentsProps) => {
   const originalAttachments = useIOSelector(state =>
-    thirdPartyMessageAttachments(state, messageId)
+    thirdPartyMessageAttachmentsSelector(state, messageId)
   );
   const isSend = sendOpeningSource !== "not_set";
   const attachments = isSend

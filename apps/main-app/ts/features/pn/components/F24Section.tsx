@@ -1,7 +1,7 @@
 import { Body, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useIOSelector } from "../../../store/hooks";
-import { thirdPartyMessageAttachments } from "../../messages/store/reducers/thirdPartyById";
+import { thirdPartyMessageAttachmentsSelector } from "../../messages/store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
 import { ServiceId } from "../../../../definitions/services/ServiceId";
@@ -27,7 +27,7 @@ export const F24Section = ({
   sendUserType
 }: F24SectionProps) => {
   const attachments = useIOSelector(state =>
-    thirdPartyMessageAttachments(state, messageId)
+    thirdPartyMessageAttachmentsSelector(state, messageId)
   );
   const f24s = attachments.filter(
     attachment => attachment.category === ATTACHMENT_CATEGORY.F24

@@ -1,13 +1,9 @@
-import { pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
-import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { isTestEnv } from "../../../../utils/environment";
 import { Action } from "../../../../store/actions/types";
 import { UIMessageDetails } from "../../types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  foldK,
   isError,
   isLoading,
   isReady,
@@ -156,16 +152,16 @@ export const shouldRetrievePaymentDataSelector = (
   state: GlobalState,
   messageId: string,
   paymentId: string
-) => pipe(paymentStateSelector(state, messageId, paymentId), isUndefined);
+) => isUndefined(paymentStateSelector(state, messageId, paymentId));
 
 export const paymentStatusForUISelector = (
   state: GlobalState,
   messageId: string,
   paymentId: string
-): RemoteValue<PaymentInfoResponse, MessagePaymentError> =>
-  pipe(paymentStateSelector(state, messageId, paymentId), remoteValue =>
-    isLoading(remoteValue) ? remoteUndefined : remoteValue
-  );
+): RemoteValue<PaymentInfoResponse, MessagePaymentError> => {
+  const remoteValue = paymentStateSelector(state, messageId, paymentId);
+  return isLoading(remoteValue) ? remoteUndefined : remoteValue;
+};
 
 export const isUserSelectedPaymentSelector = (
   state: GlobalState,
@@ -175,71 +171,54 @@ export const isUserSelectedPaymentSelector = (
 export const userSelectedPaymentRptIdSelector = (
   state: GlobalState,
   messageOrUndefined: UIMessageDetails | undefined
-) =>
-  pipe(
-    messageOrUndefined,
-    O.fromNullable,
-    O.chainNullableK(message => message.paymentData),
-    O.map(getRptIdStringFromPaymentData),
-    O.filter(rptId => isUserSelectedPaymentSelector(state, rptId)),
-    O.toUndefined
-  );
+) => {
+  const paymentData = messageOrUndefined?.paymentData;
+  if (paymentData == null) {
+    return undefined;
+  }
+
+  const rptId = getRptIdStringFromPaymentData(paymentData);
+  return isUserSelectedPaymentSelector(state, rptId) ? rptId : undefined;
+};
 
 export const canNavigateToPaymentFromMessageSelector = (state: GlobalState) =>
-  pipe(
-    state,
-    isProfileEmailValidatedSelector,
-    B.fold(
-      () => false,
-      () => pipe(state, isPagoPaSupportedSelector)
-    )
-  );
+  isProfileEmailValidatedSelector(state) && isPagoPaSupportedSelector(state);
 
 export const paymentsButtonStateSelector = (
   state: GlobalState,
   messageId: string
-) =>
-  pipe(
-    messagePaymentDataSelector(state, messageId),
-    O.fromNullable,
-    O.map(getRptIdStringFromPaymentData),
-    O.map(paymentId => paymentStateSelector(state, messageId, paymentId)),
-    O.map(paymentStatus =>
-      pipe(
-        paymentStatus,
-        foldK(
-          () => "loading" as const,
-          () => "loading" as const,
-          _ => "enabled" as const,
-          _ => "hidden" as const
-        )
-      )
-    ),
-    O.getOrElseW(() => "hidden" as const)
-  );
+) => {
+  const paymentData = messagePaymentDataSelector(state, messageId);
+  if (paymentData == null) {
+    return "hidden";
+  }
+
+  const paymentId = getRptIdStringFromPaymentData(paymentData);
+  const paymentStatus = paymentStateSelector(state, messageId, paymentId);
+  switch (paymentStatus.kind) {
+    case "undefined":
+    case "loading":
+      return "loading";
+    case "ready":
+      return "enabled";
+    case "error":
+      return "hidden";
+  }
+};
 
 export const isPaymentsButtonVisibleSelector = (
   state: GlobalState,
   messageId: string
-) =>
-  pipe(
-    paymentsButtonStateSelector(state, messageId),
-    status => status !== "hidden"
-  );
+) => paymentsButtonStateSelector(state, messageId) !== "hidden";
 
 const paymentStateSelector = (
   state: GlobalState,
   messageId: string,
   paymentId: string
 ) =>
-  pipe(
-    state.entities.messages.payments.paymentStatusListById[messageId],
-    O.fromNullable,
-    O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
-    O.getOrElse<RemoteValue<PaymentInfoResponse, MessagePaymentError>>(
-      () => remoteUndefined
-    )
-  );
+  state.entities.messages.payments.paymentStatusListById[messageId]?.[
+    paymentId
+  ] ?? remoteUndefined;
 
 const purgePaymentsWithIncompleteData = (state: SinglePaymentState) =>
   Object.entries(state).reduce((acc, [key, value]) => {

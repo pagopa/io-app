@@ -107,7 +107,7 @@ describe("F24Section", () => {
               " "
             )}], cancelled ${isCancelled}, opening source ${sendOpeningSource}, user type ${sendUserType})`, () => {
             jest
-              .spyOn(thirdPartyById, "thirdPartyMessageAttachments")
+              .spyOn(thirdPartyById, "thirdPartyMessageAttachmentsSelector")
               .mockImplementation(
                 (_state, _messageId) => thirdPartyAttachmentList
               );
