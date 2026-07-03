@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import type {
   CredentialOffer,
+  CredentialIssuance,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
@@ -416,6 +417,9 @@ export const createCredentialIssuanceActorsImplementation = (
     credential: CredentialBundle,
     issuerConf: IssuerConfiguration
   ): Promise<CredentialBundle> => {
+    if (credential.metadata.format === CredentialFormat.MDOC) {
+      return credential;
+    }
     const ioWallet = getIoWallet(itwVersion);
     assert(
       ioWallet.CredentialStatus.statusList.isSupported,
@@ -424,7 +428,7 @@ export const createCredentialIssuanceActorsImplementation = (
     const { uri, idx, statusList } =
       await ioWallet.CredentialStatus.statusList.get(
         credential.credential,
-        CredentialFormat.SD_JWT
+        credential.metadata.format as CredentialIssuance.CredentialFormat
       );
     const parsed = await ioWallet.CredentialStatus.statusList.verifyAndParse(
       issuerConf.keys,
