@@ -4,7 +4,30 @@ import {
   CatalogueTranslations,
   DigitalCredentialMetadata
 } from "./itwCredentialsCatalogueUtils.ts";
+import { CredentialType } from "./itwMocksUtils.ts";
 import { CredentialMetadata } from "./itwTypesUtils.ts";
+
+/**
+ * Some credentials do not receive the data source ("Origine dei dati") from the
+ * catalogue and must always display a fixed value. This maps those credential
+ * types to the value that should be shown wherever the auth source is rendered
+ * (credential card header and issuance metadata list).
+ */
+const FORCED_AUTH_SOURCE_BY_TYPE: Partial<Record<CredentialType, string>> = {
+  [CredentialType.PROOF_OF_AGE]: "IT-Wallet ID"
+};
+
+/**
+ * Returns the forced data source value for credentials whose authentic source
+ * is not provided by the catalogue, or `undefined` when the standard catalogue
+ * resolution should be used.
+ *
+ * @param credentialType - The credential type to resolve the override for.
+ */
+export const getForcedItwAuthSource = (
+  credentialType: string
+): string | undefined =>
+  FORCED_AUTH_SOURCE_BY_TYPE[credentialType as CredentialType];
 
 /**
  * Get the localized auth source organization name for a catalogue credential.

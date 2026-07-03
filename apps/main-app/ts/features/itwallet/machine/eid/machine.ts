@@ -28,7 +28,8 @@ import {
   type RequestEidActorParams,
   StartAuthFlowActorParams,
   StoreEidCredentialActorParams,
-  ValidateMrtdPoPChallengeActorParams
+  ValidateMrtdPoPChallengeActorParams,
+  WithItwVersion
 } from "./actors";
 import {
   AuthenticationContext,
@@ -88,8 +89,7 @@ export const itwEidIssuanceMachine = setup({
     storeCredentialUpgradeFailures: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
-    freezeSimplifiedActivationRequirements: notImplemented,
-    clearSimplifiedActivationRequirements: notImplemented,
+    refreshCredentialsCatalogue: notImplemented,
 
     /** Analytics */
 
@@ -161,14 +161,14 @@ export const itwEidIssuanceMachine = setup({
   },
   actors: {
     getCieStatus: fromPromise<CieContext>(notImplemented),
-    verifyTrustFederation: fromPromise<void>(notImplemented),
+    verifyTrustFederation: fromPromise<void, WithItwVersion>(notImplemented),
 
     /** WI actors */
 
     createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
       notImplemented
     ),
-    revokeWalletInstance: fromPromise<void>(notImplemented),
+    revokeWalletInstance: fromPromise<void, WithItwVersion>(notImplemented),
     getWalletAttestation: fromPromise<
       WalletInstanceAttestations,
       GetWalletAttestationActorParams
@@ -222,7 +222,6 @@ export const itwEidIssuanceMachine = setup({
     isUpgrade: ({ context }) => context.mode === "upgrade",
     isL2Fallback: ({ context }) => context.level === "l2-fallback",
     isL3FeaturesEnabled: ({ context }) => context.level === "l3",
-    isEligibleForItwSimplifiedActivation: notImplemented,
     requiresMrtdVerification: ({ context }) =>
       // MRTD PoP verification is required for SPID and CieID identification modes
       // when issuing an L3 PID and the PID Provider signals a challenge via `challenge_info`.
@@ -282,7 +281,15 @@ export const itwEidIssuanceMachine = setup({
           actions: assign(({ event }) => ({
             mode: event.mode,
             level: event.level,
-            credentialType: event.credentialType
+            credentialType: event.credentialType,
+            // Override the IT-Wallet version from the global store set on machine init.
+            // This is necessary because a user might use a different IT-Wallet version outside this machine:
+            // - User has 1.0 PID and is upgrading (1.0 -> 1.3)
+            // - User is whitelisted but falls back to L2 (1.3 -> 1.0)
+            itwVersion:
+              event.mode === "upgrade" || event.level === "l3"
+                ? "1.3.3"
+                : "1.0.0"
           })),
           target: "EvaluatingIssuanceMode"
         },
@@ -328,6 +335,7 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "verifyTrustFederation",
+        input: ({ context }) => ({ itwVersion: context.itwVersion }),
         onDone: [
           {
             // When no integrity hardware key exists or the user is upgrading to IT-Wallet
@@ -378,7 +386,10 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "createWalletInstance",
-        input: ({ context }) => ({ isRenewal: context.mode === "upgrade" }),
+        input: ({ context }) => ({
+          itwVersion: context.itwVersion,
+          isRenewal: context.mode === "upgrade"
+        }),
         onDone: {
           actions: [
             assign(({ event }) => ({
@@ -406,10 +417,12 @@ export const itwEidIssuanceMachine = setup({
       entry: "navigateToWalletRevocationScreen",
       invoke: {
         src: "revokeWalletInstance",
+        input: ({ context }) => ({ itwVersion: context.itwVersion }),
         onDone: {
           actions: [
             "trackWalletInstanceRevocation",
             "resetWalletInstance",
+            "refreshCredentialsCatalogue",
             "closeIssuance"
           ]
         },
@@ -438,7 +451,8 @@ export const itwEidIssuanceMachine = setup({
       invoke: {
         src: "getWalletAttestation",
         input: ({ context }) => ({
-          integrityKeyTag: context.integrityKeyTag
+          integrityKeyTag: context.integrityKeyTag,
+          itwVersion: context.itwVersion
         }),
         onDone: [
           {
@@ -489,35 +503,13 @@ export const itwEidIssuanceMachine = setup({
         "This state handles the acceptance of the IPZS privacy policy",
       entry: "navigateToIpzsPrivacyScreen",
       on: {
-        "accept-ipzs-privacy": [
-          {
-            guard: and(["isUpgrade", "isEligibleForItwSimplifiedActivation"]),
-            target: "EvaluatingSimplifiedActivationFlow"
-          },
-          { target: "UserIdentification" }
-        ],
+        "accept-ipzs-privacy": { target: "UserIdentification" },
         error: {
           actions: "setFailure",
           target: "#itwEidIssuanceMachine.Failure"
         },
         back: "#itwEidIssuanceMachine.TosAcceptance"
       }
-    },
-    EvaluatingSimplifiedActivationFlow: {
-      description: "State that manages the wallet's simplified activation flow",
-      entry: [
-        "clearSimplifiedActivationRequirements",
-        "trackWalletInstanceCreation"
-      ],
-      always: [
-        {
-          guard: "hasCredentialsToUpgrade",
-          target: "#itwEidIssuanceMachine.CredentialsUpgrade"
-        },
-        {
-          target: "#itwEidIssuanceMachine.Success"
-        }
-      ]
     },
     UserIdentification: {
       description:
@@ -550,11 +542,6 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.UserIdentification.CieID"
               }
             ],
-            "go-to-l2-identification": {
-              target:
-                "#itwEidIssuanceMachine.UserIdentification.Identification",
-              actions: assign({ level: "l2-fallback" })
-            },
             "go-to-cie-warning": {
               target:
                 "#itwEidIssuanceMachine.UserIdentification.CiePin.CieWarning.Identification"
@@ -593,6 +580,7 @@ export const itwEidIssuanceMachine = setup({
               invoke: {
                 src: "startAuthFlow",
                 input: ({ context }) => ({
+                  itwVersion: context.itwVersion,
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
                   identification: context.identification,
@@ -674,6 +662,7 @@ export const itwEidIssuanceMachine = setup({
                 src: "startAuthFlow",
 
                 input: ({ context }) => ({
+                  itwVersion: context.itwVersion,
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
                   identification: context.identification,
@@ -809,6 +798,7 @@ export const itwEidIssuanceMachine = setup({
               invoke: {
                 src: "startAuthFlow",
                 input: ({ context }) => ({
+                  itwVersion: context.itwVersion,
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
                   identification: context.identification,
@@ -873,11 +863,6 @@ export const itwEidIssuanceMachine = setup({
                 }
               },
               on: {
-                "go-to-l2-identification": {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.Identification",
-                  actions: assign({ level: "l2-fallback" })
-                },
                 close: {
                   actions: "closeIssuance"
                 }
@@ -930,6 +915,7 @@ export const itwEidIssuanceMachine = setup({
           invoke: {
             src: "initMrtdPoPChallenge",
             input: ({ context }) => ({
+              itwVersion: context.itwVersion,
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt
             }),
@@ -1053,6 +1039,7 @@ export const itwEidIssuanceMachine = setup({
             id: "validateMrtdPoPChallenge",
             src: "validateMrtdPoPChallenge",
             input: ({ context }) => ({
+              itwVersion: context.itwVersion,
               authenticationContext: context.authenticationContext,
               mrtdContext: context.mrtdContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt
@@ -1115,12 +1102,17 @@ export const itwEidIssuanceMachine = setup({
           invoke: {
             src: "requestAccessToken",
             input: ({ context }) => ({
+              itwVersion: context.itwVersion,
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt
             }),
             onDone: {
               target: "RequestingEid",
               actions: assign(({ event }) => ({ accessToken: event.output }))
+            },
+            onError: {
+              actions: "setFailure",
+              target: "#itwEidIssuanceMachine.Failure"
             }
           }
         },
@@ -1131,6 +1123,7 @@ export const itwEidIssuanceMachine = setup({
           invoke: {
             src: "requestEid",
             input: ({ context }) => ({
+              itwVersion: context.itwVersion,
               identification: context.identification,
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
@@ -1200,10 +1193,7 @@ export const itwEidIssuanceMachine = setup({
             }),
             onDone: {
               target: "Completed",
-              actions: [
-                "trackWalletInstanceCreation",
-                "freezeSimplifiedActivationRequirements"
-              ]
+              actions: ["trackWalletInstanceCreation"]
             },
             onError: {
               target: "#itwEidIssuanceMachine.Failure",
@@ -1251,6 +1241,7 @@ export const itwEidIssuanceMachine = setup({
               assert(context.mode, "Issuance mode must be defined");
 
               return {
+                itwVersion: context.itwVersion,
                 credentials: context.credentialsToUpgrade,
                 issuanceMode: context.mode
               };
@@ -1276,7 +1267,7 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     Success: {
-      entry: "navigateToSuccessScreen",
+      entry: ["refreshCredentialsCatalogue", "navigateToSuccessScreen"],
       on: {
         "add-new-credential": {
           actions: "navigateToCredentialCatalog"

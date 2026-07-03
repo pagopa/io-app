@@ -25,7 +25,8 @@ import {
   RequestEidActorParams,
   StartAuthFlowActorParams,
   StoreEidCredentialActorParams,
-  ValidateMrtdPoPChallengeActorParams
+  ValidateMrtdPoPChallengeActorParams,
+  WithItwVersion
 } from "../actors";
 import {
   AuthenticationContext,
@@ -89,12 +90,11 @@ const trackWalletInstanceCreation = jest.fn();
 const trackWalletInstanceRevocation = jest.fn();
 const trackIdentificationMethodSelected = jest.fn();
 const storeAuthLevel = jest.fn();
-const freezeSimplifiedActivationRequirements = jest.fn();
-const clearSimplifiedActivationRequirements = jest.fn();
 const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 const trackItwIdAuthenticationCompleted = jest.fn();
 const trackItwIdVerifiedDocument = jest.fn();
+const refreshCredentialsCatalogue = jest.fn();
 
 /** Actors */
 const verifyTrustFederation = jest.fn();
@@ -114,7 +114,6 @@ const issuedEidMatchesAuthenticatedUser = jest.fn();
 const isSessionExpired = jest.fn();
 const isOperationAborted = jest.fn();
 const hasValidWalletInstanceAttestation = jest.fn();
-const isEligibleForItwSimplifiedActivation = jest.fn();
 const revokeWalletInstance = jest.fn();
 const isWalletValid = jest.fn();
 
@@ -155,18 +154,21 @@ describe("itwEidIssuanceMachine", () => {
       trackWalletInstanceRevocation,
       trackIdentificationMethodSelected,
       storeAuthLevel,
-      freezeSimplifiedActivationRequirements,
-      clearSimplifiedActivationRequirements,
       trackItwIdAuthenticationCompleted,
-      trackItwIdVerifiedDocument
+      trackItwIdVerifiedDocument,
+      refreshCredentialsCatalogue
     },
     actors: {
-      verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
+      verifyTrustFederation: fromPromise<void, WithItwVersion>(
+        verifyTrustFederation
+      ),
       createWalletInstance: fromPromise<
         string,
         CreateWalletInstanceActorParams
       >(createWalletInstance),
-      revokeWalletInstance: fromPromise<void>(revokeWalletInstance),
+      revokeWalletInstance: fromPromise<void, WithItwVersion>(
+        revokeWalletInstance
+      ),
       getWalletAttestation: fromPromise<
         WalletInstanceAttestations,
         GetWalletAttestationActorParams
@@ -201,7 +203,6 @@ describe("itwEidIssuanceMachine", () => {
       issuedEidMatchesAuthenticatedUser,
       isSessionExpired,
       isOperationAborted,
-      isEligibleForItwSimplifiedActivation,
       hasValidWalletInstanceAttestation,
       isWalletValid
     }
@@ -306,12 +307,9 @@ describe("itwEidIssuanceMachine", () => {
     );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    await waitFor(() =>
-      expect(createWalletInstance).toHaveBeenNthCalledWith(
-        1,
-        expect.objectContaining({ input: { isRenewal: false } })
-      )
-    );
+    expect(createWalletInstance).toHaveBeenCalledTimes(1);
+    expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(false);
+
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
     await waitFor(() =>
       expect(storeIntegrityKeyTag).toHaveBeenCalledWith(
@@ -1779,12 +1777,9 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    await waitFor(() =>
-      expect(createWalletInstance).toHaveBeenNthCalledWith(
-        1,
-        expect.objectContaining({ input: { isRenewal: false } })
-      )
-    );
+    expect(createWalletInstance).toHaveBeenCalledTimes(1);
+    expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(false);
+
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
@@ -2192,110 +2187,6 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("Should start the simplified activation flow without credentials", async () => {
-    hasValidWalletInstanceAttestation.mockImplementation(() => true);
-    isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
-
-    const actor = createActor(mockedMachine);
-    actor.start();
-
-    // Start
-    actor.send({ type: "start", level: "l3", mode: "upgrade" });
-    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
-
-    // Accept Wallet Provider TOS
-    actor.send({ type: "accept-tos" });
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "TrustFederationVerification"
-    );
-    await waitFor(() => {
-      expect(verifyTrustFederation).toHaveBeenCalledTimes(1);
-    });
-    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
-
-    // Accept Credential Issuer privacy policy
-    actor.send({ type: "accept-ipzs-privacy" });
-    expect(actor.getSnapshot().value).toStrictEqual("Success");
-    expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
-  });
-
-  it("Should start the simplified activation flow with credentials upgrade only", async () => {
-    isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
-
-    const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine
-    ).getSnapshot();
-
-    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: "IpzsPrivacyAcceptance",
-      context: {
-        mode: "upgrade",
-        integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: { jwt: T_WIA },
-        level: "l3",
-        credentialsToUpgrade: [
-          ItwStoredCredentialsMocks.mdl
-        ] as ReadonlyArray<CredentialMetadata>
-      }
-    });
-
-    const actor = createActor(mockedMachine, { snapshot });
-    actor.start();
-
-    actor.send({ type: "accept-ipzs-privacy" });
-
-    await waitFor(() =>
-      expect(actor.getSnapshot().value).toStrictEqual({
-        CredentialsUpgrade: "Intro"
-      })
-    );
-
-    expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
-    expect(navigateToUpgradeCredentialsScreen).toHaveBeenCalledTimes(1);
-  });
-
-  it("Should reach CredentialsUpgrade.Upgrading in simplified flow without eid in context (regression)", done => {
-    isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
-
-    const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine
-    ).getSnapshot();
-
-    // No `eid` in context — mirrors the simplified activation scenario where
-    // no fresh PID is issued. The upgrade machine loads the PID from storage.
-    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: "IpzsPrivacyAcceptance",
-      context: {
-        mode: "upgrade",
-        integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: { jwt: T_WIA },
-        level: "l3",
-        credentialsToUpgrade: [
-          ItwStoredCredentialsMocks.mdl
-        ] as ReadonlyArray<CredentialMetadata>
-      }
-    });
-
-    const actor = createActor(mockedMachine, { snapshot });
-    actor.start();
-
-    const subIntro = actor.subscribe(snap => {
-      if (_.isEqual(snap.value, { CredentialsUpgrade: "Intro" })) {
-        subIntro.unsubscribe();
-        actor.send({ type: "next" });
-      }
-    });
-
-    const subUpgrading = actor.subscribe(snap => {
-      if (_.isEqual(snap.value, { CredentialsUpgrade: "Upgrading" })) {
-        subUpgrading.unsubscribe();
-        done();
-      }
-    });
-
-    actor.send({ type: "accept-ipzs-privacy" });
-  });
-
   it("Should start the MRTD PoP flow", async () => {
     /** Initial part - setup with L3 and existing WIA */
     const initialSnapshot: MachineSnapshot = createActor(
@@ -2632,10 +2523,8 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "accept-tos" });
 
     await waitForActor(actor, s => s.matches("WalletInstanceCreation"));
-    expect(createWalletInstance).toHaveBeenNthCalledWith(
-      1,
-      expect.objectContaining({ input: { isRenewal: true } })
-    );
+    expect(createWalletInstance).toHaveBeenCalledTimes(1);
+    expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(true);
   });
 
   it("Should NOT re-create the Wallet Instance in the regular flow (no upgrade)", async () => {
@@ -2655,4 +2544,48 @@ describe("itwEidIssuanceMachine", () => {
     );
     expect(createWalletInstance).not.toHaveBeenCalled();
   });
+});
+
+describe("itwEidIssuanceMachine itwVersion routing", () => {
+  const mockedMachine = itwEidIssuanceMachine.provide({
+    actions: {
+      onInit: assign(onInit),
+      storeIntegrityKeyTag,
+      storeWalletInstanceAttestation,
+      navigateToIdentificationScreen,
+      navigateToTosScreen
+    },
+    actors: {
+      getCieStatus: fromPromise(getCieStatus),
+      getWalletAttestation: fromPromise(getWalletAttestation),
+      createWalletInstance: fromPromise(createWalletInstance),
+      verifyTrustFederation: fromPromise(verifyTrustFederation)
+    },
+    guards: {
+      hasValidWalletInstanceAttestation
+    }
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test.each`
+    mode            | level            | expected
+    ${"issuance"}   | ${"l2"}          | ${"1.0.0"}
+    ${"issuance"}   | ${"l2-fallback"} | ${"1.0.0"}
+    ${"issuance"}   | ${"l3"}          | ${"1.3.3"}
+    ${"upgrade"}    | ${"l3"}          | ${"1.3.3"}
+    ${"reissuance"} | ${"l2"}          | ${"1.0.0"}
+    ${"reissuance"} | ${"l3"}          | ${"1.3.3"}
+  `(
+    "Mode: $mode, level: $level -> ITW: $expected",
+    ({ mode, level, expected }) => {
+      createWalletInstance.mockResolvedValue(T_INTEGRITY_KEY);
+      const actor = createActor(mockedMachine);
+      actor.start();
+      actor.send({ type: "start", mode, level });
+      expect(actor.getSnapshot().context.itwVersion).toBe(expected);
+    }
+  );
 });

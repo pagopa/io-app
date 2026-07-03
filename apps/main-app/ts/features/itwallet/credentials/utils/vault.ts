@@ -3,29 +3,30 @@ import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
 const PREFIX = "itw:credential:";
 
 /**
- * Generates the storage key for a given credential ID.
+ * Generates the full storage key for a given vault id.
  *
- * Example:for credentialId "dc_sd_jwt_PersonalIdentificationData", the
- * generated storage key will be
- * "itw:credential:dc_sd_jwt_PersonalIdentificationData"
+ * The vault id is a single opaque string chosen by the caller:
  *
- * @param credentialId The credential ID
+ * - A `credentialId` for a non-batch credential (unchanged from before batch
+ *   support, so existing installs need no migration);
+ * - A `keyTag` (a UUID, globally unique) for a single copy of a batch credential.
+ *
+ * The two namespaces never collide: a `credentialId` is a `_`-delimited
+ * identifier (e.g. `dc_sd_jwt_mDL`) while a `keyTag` is a UUID.
+ *
+ * @param vaultId The vault id
  * @returns The storage key
  */
-const getStorageKeyFromCredentialId = (credentialId: string): string =>
-  `${PREFIX}${credentialId}`;
+const getStorageKeyFromVaultId = (vaultId: string): string =>
+  `${PREFIX}${vaultId}`;
 
 /**
- * Extracts the credential ID from a given storage key.
- *
- * Example: for storage key
- * "itw:credential:dc_sd_jwt_PersonalIdentificationData", the extracted
- * credential ID will be "dc_sd_jwt_PersonalIdentificationData"
+ * Extracts the vault id from a given storage key.
  *
  * @param key The storage key
- * @returns The credential ID
+ * @returns The vault id
  */
-const getCredentialIdFromStorageKey = (key: string): string => {
+const getVaultIdFromStorageKey = (key: string): string => {
   if (key.startsWith(PREFIX)) {
     return key.slice(PREFIX.length);
   }
@@ -43,61 +44,57 @@ const isValueNotFoundError = (e: unknown): e is Error =>
   e instanceof Error && e.message === "VALUE_NOT_FOUND";
 
 /**
- * Lists all the credential IDs stored in the Secure Storage.
+ * Lists all the credential vault ids stored in the Secure Storage.
  *
- * @returns A promise that resolves to an array of credential IDs
+ * @returns A promise that resolves to an array of vault ids
  * @throws If the Secure Storage operation fails
  */
 const list = async (): Promise<ReadonlyArray<string>> => {
   const storageKeys = await SecureStorage.keys();
   return storageKeys
     .filter(key => key.startsWith(PREFIX))
-    .map(getCredentialIdFromStorageKey);
+    .map(getVaultIdFromStorageKey);
 };
 
 /**
  * Stores a credential's SD-JWT/MDOC in the Secure Storage.
  *
- * @param credentialId The credential ID (e.g.,
- *   "dc_sd_jwt_PersonalIdentificationData")
+ * @param vaultId The credential vault id (see {@link getStorageKeyFromVaultId})
  * @param credential The credential's SD-JWT/MDOC as a string
  * @throws If the Secure Storage operation fails
  */
-const store = async (
-  credentialId: string,
-  credential: string
-): Promise<void> => {
-  const key = getStorageKeyFromCredentialId(credentialId);
+const store = async (vaultId: string, credential: string): Promise<void> => {
+  const key = getStorageKeyFromVaultId(vaultId);
   await SecureStorage.put(key, credential);
 };
 
 /**
  * Store multiple credentials' SD-JWT/MDOC in the Secure Storage.
  *
- * @param credentials An array of objects containing credentialId and credential
+ * @param credentials An array of objects containing vaultId and credential
  *   string
  * @throws If any Secure Storage operation fails
  */
 const storeAll = async (
-  credentials: ReadonlyArray<{ credentialId: string; credential: string }>
+  credentials: ReadonlyArray<{ vaultId: string; credential: string }>
 ) => {
   await Promise.all(
-    credentials.map(data => store(data.credentialId, data.credential))
+    credentials.map(data => store(data.vaultId, data.credential))
   );
 };
 
 /**
- * Retrieves a credential's SD-JWT/MDOC from the Secure Storage using its type.
+ * Retrieves a credential's SD-JWT/MDOC from the Secure Storage using its vault
+ * id.
  *
- * @param credentialId The credential ID (e.g.,
- *   "dc_sd_jwt_PersonalIdentificationData")
+ * @param vaultId The credential vault id (see {@link getStorageKeyFromVaultId})
  * @returns A promise that resolves to the credential's SD-JWT/MDOC as a string,
  *   or undefined if not found
  * @throws If the Secure Storage operation fails for reasons other than a
  *   missing value
  */
-const get = async (credentialId: string): Promise<string | undefined> => {
-  const key = getStorageKeyFromCredentialId(credentialId);
+const get = async (vaultId: string): Promise<string | undefined> => {
+  const key = getStorageKeyFromVaultId(vaultId);
   try {
     return await SecureStorage.get(key);
   } catch (e) {
@@ -111,26 +108,26 @@ const get = async (credentialId: string): Promise<string | undefined> => {
 };
 
 /**
- * Removes a credential's SD-JWT/MDOC from the Secure Storage using its type.
+ * Removes a credential's SD-JWT/MDOC from the Secure Storage using its vault
+ * id.
  *
- * @param credentialId The credential ID (e.g.,
- *   "dc_sd_jwt_PersonalIdentificationData")
+ * @param vaultId The credential vault id (see {@link getStorageKeyFromVaultId})
  * @throws If the Secure Storage operation fails
  */
-const remove = async (credentialId: string): Promise<void> => {
-  const key = getStorageKeyFromCredentialId(credentialId);
+const remove = async (vaultId: string): Promise<void> => {
+  const key = getStorageKeyFromVaultId(vaultId);
   await SecureStorage.remove(key);
 };
 
 /**
  * Removes all credentials' SD-JWT/MDOCs from the Secure Storage with the given
- * IDs.
+ * vault ids.
  *
- * @param credentialIds An array of credential IDs
+ * @param vaultIds An array of credential vault ids
  * @throws If any Secure Storage operation fails
  */
-const removeAll = async (credentialIds: ReadonlyArray<string>) => {
-  await Promise.all(credentialIds.map(remove));
+const removeAll = async (vaultIds: ReadonlyArray<string>) => {
+  await Promise.all(vaultIds.map(remove));
 };
 
 /**
@@ -139,8 +136,8 @@ const removeAll = async (credentialIds: ReadonlyArray<string>) => {
  * @throws If the Secure Storage operation fails
  */
 const clear = async () => {
-  const credentialIds = await list();
-  await removeAll(credentialIds);
+  const vaultIds = await list();
+  await removeAll(vaultIds);
 };
 
 export const CredentialsVault = {

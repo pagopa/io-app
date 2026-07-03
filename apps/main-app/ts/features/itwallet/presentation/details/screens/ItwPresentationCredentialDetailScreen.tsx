@@ -66,6 +66,7 @@ import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase.tsx";
+import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus.tsx";
 import { shouldShowMdlUpdateDigitalCredential } from "../utils";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
@@ -191,6 +192,7 @@ export const ItwPresentationCredentialDetail = ({
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  const displayStatus = useItwDisplayCredentialStatus(status);
   const contentClaim = credential.parsedCredential[WellKnownClaim.content];
   const hasSkeumorphicCard = credentialsWithSkeumorphicCard.includes(
     credential.credentialType
@@ -337,8 +339,11 @@ export const ItwPresentationCredentialDetail = ({
       });
     } else {
       navigation.navigate(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_SCREEN,
-        params: { credentialType: credential.credentialType }
+        screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
+        params: {
+          credential,
+          status: displayStatus
+        }
       });
     }
   };
