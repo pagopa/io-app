@@ -8,6 +8,7 @@ import {
   IOScrollViewActions
 } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
+import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import {
   IOStackNavigationRouteProps,
@@ -98,6 +99,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         : ITW_ROUTES.ONBOARDING
     });
   }, [navigation, isItWalletEnabled]);
+  const guardedHandleAddToWalletButtonPress = useOfflineToastGuard(
+    handleAddToWalletButtonPress
+  );
 
   useHeaderFirstLevel({
     currentRoute: ROUTES.WALLET_HOME,
@@ -109,7 +113,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         {
           accessibilityLabel: I18n.t("features.wallet.home.screen.legacy.cta"),
           icon: "add",
-          onPress: handleAddToWalletButtonPress
+          onPress: guardedHandleAddToWalletButtonPress
         }
       ],
       variant: "primary"
