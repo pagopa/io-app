@@ -1,5 +1,5 @@
 """
-Detect (and optionally remove) unused i18n keys from the locale files.
+Detect and remove unused i18n keys from the locale files.
 
 The reference locale (locales/it/index.json) is flattened to its leaf key
 paths, and each path is looked up across the app source (ts/). A key is
