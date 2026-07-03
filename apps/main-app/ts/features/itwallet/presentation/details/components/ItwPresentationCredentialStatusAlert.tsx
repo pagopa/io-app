@@ -266,12 +266,14 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
         />
       );
     case CredentialAlertType.DOCUMENT_EXPIRING:
-      return (
+      // Only render when the credential type has a dedicated expiring bottom
+      // sheet, so the static-key lookup inside the alert is always defined.
+      return credential.credentialType in expiringBottomSheetKeys ? (
         <DocumentExpiringAlert
           credential={credential}
           onTrack={trackCredentialAlertEvent}
         />
-      );
+      ) : null;
     case CredentialAlertType.ISSUER_DYNAMIC_ERROR:
       return message ? (
         <IssuerDynamicErrorAlert

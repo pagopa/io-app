@@ -49,6 +49,11 @@ _PLURAL_RE = re.compile(r"_(?:%s)$" % "|".join(PLURAL_SUFFIXES))
 
 # One key segment. Locale segments may contain hyphens (`card0-content`) and be
 # purely numeric (`details.1.title`), so the class is deliberately permissive.
+# A template interpolation (`${...}`) is treated as exactly one such segment on
+# purpose: every dynamic key in this codebase interpolates a single-segment
+# value (an enum/variant name), so matching a single segment keeps the dynamic
+# match precise. Allowing dots here would let a `fullmatch` span unlimited depth
+# (e.g. `${a}.${b}` -> `[\w$-]+\.[\w$-]+`) and mark nearly every key as used.
 _SEGMENT = r"[\w$-]+"
 # A dotted key chain as it appears in source, e.g. `a.b.c` or `a.card0-content`.
 _DOTTED_TOKEN_RE = re.compile(r"%s(?:\.%s)+" % (_SEGMENT, _SEGMENT))
@@ -93,7 +98,8 @@ def build_source_index(blob):
     dotted_tokens  — set of every literal dotted chain found in the source,
                      used for exact key matches and ancestor detection.
     dynamic_regexes — compiled full-match regexes derived from template
-                      literals, where each `${...}` becomes a wildcard segment.
+                      literals, where each `${...}` becomes a single-segment
+                      wildcard (see `_SEGMENT`).
     """
     dotted_tokens = set(_DOTTED_TOKEN_RE.findall(blob))
 
@@ -103,7 +109,7 @@ def build_source_index(blob):
         if "." not in tpl:
             continue
         # Split on interpolations, escape the literal parts, and replace each
-        # `${...}` with a wildcard that spans one-or-more path segments.
+        # `${...}` with a single-segment wildcard (see `_SEGMENT`).
         literals = re.split(r"\$\{[^}]*\}", tpl)
         pattern = _SEGMENT.join(re.escape(part) for part in literals)
         try:
