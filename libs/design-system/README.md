@@ -1,31 +1,45 @@
-<div style="display: flex; flex-direction: column; align-items: center">
-
-<img alt="IO App Design System" src="repo-assets/io-app-design-system-github-cover.png" width="100%" style="max-width: 768px" align="center" /><br />
-<h3 align="center" style="width: 100%">A comprehensive library of components specifically designed for <a href="https://github.com/pagopa/io-app">IO App</a></h3>
-<!-- NPM Badge -->
 <div align="center">
-<a href="https://www.npmjs.com/package/@pagopa/io-app-design-system"><img alt="npm latest package" src="https://img.shields.io/npm/v/@pagopa/io-app-design-system/latest.svg"></a>
+
+<img alt="IO App Design System" src="repo-assets/io-app-design-system-github-cover.png" width="100%" style="max-width: 768px" /><br />
+
+<h3 align="center">A comprehensive component library for <a href="https://github.com/pagopa/io-app">IO App</a></h3>
+
+<a href="https://www.npmjs.com/package/@pagopa/io-app-design-system">
+  <img alt="npm latest" src="https://img.shields.io/npm/v/@pagopa/io-app-design-system/latest.svg" />
+</a>
+
 </div>
 
-<br />
+---
 
-</div>
+# @pagopa/io-app-design-system
 
+The IO App Design System library provides the complete set of design tokens, primitives, and UI components used by the [IO mobile app](../../apps/main-app/README.md). It lives inside the `pagopa/io-app` monorepo as the `libs/design-system` workspace package.
 
-# Getting started
+---
 
-## Prerequisites
-To contribute to the library development, you will need to install `nodejs` and `pnpm`. We recommend using [`nodenv`](https://github.com/nvm-sh/nvm) to properly handle the supported nodejs version (see [`.node-version`](../../.node-version)).
-#### [Learn more about the `io-app` prerequisites →](https://github.com/pagopa/io-app#prerequisites)
-## Installing the component library
-To add the component library to the main app run:
+## Table of contents
+
+- [Getting started](#getting-started)
+- [Usage](#usage)
+- [Architecture](#architecture)
+- [Development workflow](#development-workflow)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Getting started
+
+### Install (external consumers)
 
 ```bash
 pnpm add @pagopa/io-app-design-system
 ```
 
-Remember to encapsulate the app container with the `SafeAreaProvider` from [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context?tab=readme-ov-file#safeareaprovider) in your `App.tsx` file. Also, remember to apply this wrapper in other relevant places such as the root components of modals and routes when utilizing [`react-native-screens`](https://github.com/software-mansion/react-native-screens):
-```js
+Wrap the root of your app with `SafeAreaProvider` from [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context). Apply the same wrapper to root components of modals and routes when using [`react-native-screens`](https://github.com/software-mansion/react-native-screens):
+
+```tsx
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 function App() {
@@ -33,177 +47,175 @@ function App() {
 }
 ```
 
-## Launch the example app
-For development purposes, it is possible to test on main-app under DS Development Section. To launch it:
+### Peer dependencies
 
-```bash
-# Install dependencies 
-pnpm install
+The library requires the following peer dependencies to be installed by the consuming app:
 
-# Install podfiles when targeting iOS (ignore this step for Android)
-# Run this only during the first setup and when Pods dependencies change
-pnpm nx run main-app:dev-pod-install
+| Package | Notes |
+|---------|-------|
+| `react-native-reanimated` `>=4.0.0` | Animations |
+| `react-native-svg` | Vector asset rendering |
+| `react-native-haptic-feedback` | Haptic feedback |
+| `react-native-safe-area-context` | Safe area spacing |
+| `react-native-linear-gradient` | Gradient components |
+| `react-native-easing-gradient` | Easing gradient utilities |
+| `react-native-gesture-handler` | Gesture handling |
+| `react-native-worklets` | Reanimated worklets |
 
-# Launch the app locally (simulator flag is optional)
-pnpm nx run main-app:run-ios
-```
+---
 
-### Playground
-Consider the example app your playground when developing and testing current or new components. If you need to build new components, ensure that you test them in the same environment as our users, without making any technical trade-offs (like testing them in a browser)
+## Usage
 
-> [!important]
-> The sample application consists of several pages with some components for testing purposes. To view the [continuously updated Design System section](https://github.com/pagopa/io-app/tree/master/apps/main-app/ts/features/design-system), please refer to the [main app](https://github.com/pagopa/io-app).
-
-
-# Usage
-To try a component, just import it:
+Import any exported component directly:
 
 ```tsx
 import { IOButton } from '@pagopa/io-app-design-system';
 
-// [...]
-
-const MainScreen = () => (
-  <View>
-    <IOButton
-      variant="solid"
-      accessibilityLabel="Tap to trigger test alert"
-      label="Hello world"
-      onPress={() => Alert.alert("Alert", "Action triggered")}
-    />
-  </View>
+const MyScreen = () => (
+  <IOButton
+    variant="solid"
+    accessibilityLabel="Confirm payment"
+    label="Confirm"
+    onPress={() => handleConfirm()}
+  />
 );
 ```
 
-# Architecture
-The library is made up of several parts:
+---
 
-## Core
-Essential core visual attributes of the design language. It includes:
+## Architecture
 
-- **`IOColors`**: Defines the main color palette, themes (light/dark) and other color-related utilities
-- **`IOSpacing`**: Defines the main spacing scale and various component spacing attributes
-- **`IOStyles`**: Defines common styles shared across components
-- **`IOShapes`**: Defines visual shape-related attributes, such as radius 
-- **`IOAnimations`**: Defines common animation attributes used for interactive elements (used by the [`reanimated`](https://docs.swmansion.com/react-native-reanimated/) library)
-- **`IOTransitions`**: Defines reusable custom enter/exit transitions (used by the [`reanimated`](https://docs.swmansion.com/react-native-reanimated/) library)
+### Core
 
-#### [Explore the `core` folder →](./src/core)
+Essential design-language primitives shared across all components:
 
-## Foundation
-Essential atomic components:
-* [**Typography**](./src/components/typography/) · [📖 Docs](./src/components/typography/README.md)
-* [**Layout**](./src/components/layout/) · [📖 Docs](./src/components/layout/README.md)
-  * [`ContentWrapper`](./src/components/layout/ContentWrapper.tsx)
-  * [Stack (`VStack`, `HStack`)](./src/components/layout/Stack.tsx)
-  * [Spacer (`VSpacer`,`HSpacing`)](./src/components/layout/Spacer.tsx)
-  * [`Divider`](./src/components/layout/Divider.tsx)
-  * [**[HowTo]** *Should I use `Stack` or `Spacer`?*  and other FAQs →](./src/components/layout/README.md#frequently-asked-questions)
-* [**Icons**](./src/components/icons/) · [📖 Docs](./src/components/icons/README.md)
-  * Assets with an intended size between `12px` and `56px`
-  * [**[HowTo]** Add a new icon →](./src/components/icons/#add-a-new-icon)
-* [**Pictograms**](./src/components/pictograms/) · [📖 Docs](./src/components/pictograms/README.md)
-  * Assets with an intended size greather than `56px`
-  * [**[HowTo]** Add a new pictogram →](./src/components/pictograms/README.md#add-a-new-pictogram)
-* [**Logos**](./src/components/logos/) · [📖 Docs](./src/components/logos/README.md)
-  * [Payment Logos](./src/components/logos/)
-  * [Avatar](./src/components/avatar/)
-* **Loaders**
-  * [`LoadingSpinner`](./src/components/loadingSpinner/)
+| Export | Description |
+|--------|-------------|
+| `IOColors` | Full colour palette, light/dark themes, colour utilities |
+| `IOSpacing` | Spacing scale and component-level spacing values |
+| `IOStyles` | Common reusable StyleSheet fragments |
+| `IOShapes` | Shape attributes (border radii) |
+| `IOAnimations` | Animation constants for interactive elements |
+| `IOTransitions` | Reusable enter/exit transitions for Reanimated |
 
-## Components
+→ [Explore `src/core`](./src/core)
 
-* [**Buttons**](./src/components/buttons/)
-  * [`IOButton`](./src/components/buttons/IOButton)
-  * [`IconButton`](./src/components/buttons/IconButton.tsx)
-  * [`IconButtonSolid`](./src/components/buttons/IconButtonSolid.tsx)
-* [**TextInput**](./src/components/textInput/)
-* [**List Items**](./src/components/listitems/)
-  * [`ListItemAction`](./src/components/listitems/ListItemAction.tsx)
-  * [`ListItemAmount`](./src/components/listitems/ListItemAmount.tsx)
-  * [`ListItemHeader`](./src/components/listitems/ListItemHeader.tsx)
-  * [`ListItemInfo`](./src/components/listitems/ListItemInfo.tsx)
-  * [`ListItemInfoCopy`](./src/components/listitems/ListItemInfoCopy.tsx)
-  * [`ListItemNav`](./src/components/listitems/ListItemNav.tsx)
-  * [`ListItemNavAlert`](./src/components/listitems/ListItemNavAlert.tsx)
-  * [`ListItemTransaction`](./src/components/listitems/ListItemTransaction.tsx)
-* [**Modules**](./src/components/modules/)
-  * [`ModuleAttachment`](./src/components/modules/ModuleAttachment.tsx)
-  * [`ModuleCheckout`](./src/components/modules/ModuleCheckout.tsx)
-  * [`ModuleCredential`](./src/components/modules/ModuleCredential.tsx)
-  * [`ModuleIDP`](./src/components/modules/ModuleIDP.tsx)
-  * [`ModuleNavigation`](./src/components/modules/ModuleNavigation.tsx)
-  * [`ModuleNavigationAlt`](./src/components/modules/ModuleNavigationAlt.tsx)
-  * [`ModulePaymentNotice`](./src/components/modules/ModulePaymentNotice.tsx)
-  * [`ModuleSummary`](./src/components/modules/ModuleSummary.tsx)
-* [**Badges**](./src/components/badge/) & [**Tags**](./src/components/tag/)
-  * [`Badge`](./src/components/badge/Badge.tsx)
-  * [`Tag`](./src/components/tag/Tag.tsx)
-* **Selection**
-  * [Checkbox](./src/components/checkbox/)
-    * [`ListItemCheckbox`](./src/components/listitems/ListItemCheckbox.tsx)
-    * [`CheckBoxLabel`](./src/components/checkbox/CheckboxLabel.tsx)
-  * [Radio](./src/components/radio/)
-    * [`ListItemRadio`](./src/components/listitems/ListItemRadio.tsx)
-    * [`ListItemRadioWithAmount`](./src/components/listitems/ListItemRadioWithAmount.tsx)
-    * [`RadioGroup`](./src/components/radio/RadioGroup.tsx)
-  * [Switch](./src/components/switch/)
-    * [`ListItemSwitch`](./src/components/listitems/ListItemSwitch.tsx)
-    * [`NativeSwitch`](./src/components/switch/NativeSwitch.tsx)
-* [**Accordion**](./src/components/accordion/)
-  * [`AccordionItem`](./src/components/accordion/AccordionItem.tsx)
-* [**Alert**](./src/components/alert/)
-  * [`Alert`](./src/components//alert/Alert.tsx)
-  * [`AlertEdgeToEdge`](./src/components/alert/AlertEdgeToEdge.tsx)
-* **Advice & Banners**
-  * [`FeatureInfo`](./src/components/featureInfo/)
-  * [`Banner`](./src/components/banner/)
-* [**Headers**](./src/components/headers/) · [📖 Docs](./src/components/headers/README.md)
-  * [`HeaderFirstLevel`](./src/components/headers/HeaderFirstLevel.tsx)
-  * [`HeaderSecondLevel`](./src/components/headers/HeaderSecondLevel.tsx)
-  * [`ModalBSHeader`](./src/components/headers/ModalBSHeader.tsx)
-* [**Templates**](./src/components/templates/) · [📖 Docs](./src/components/templates/README.md)
-  * [`Dismissable`](./src/components/templates/Dismissable.tsx)
-  * [`ForceScrollDownView`](./src/components/templates/ForceScrollDownView.tsx)
+### Foundation
 
+Atomic building blocks:
 
-> [!important]
-> If you want to test the above components in a real environment, please refer to the  [**Design System**](https://github.com/pagopa/io-app/tree/master/ts/features/design-system) section in the [main IO app](https://github.com/pagopa/io-app). Please be aware that certain components displayed in that section are exclusively accessible in the `io-app` repository.
+- [**Typography**](./src/components/typography/README.md) — all text variants
+- [**Layout**](./src/components/layout/README.md) — `ContentWrapper`, `VStack`, `HStack`, `VSpacer`, `HSpacing`, `Divider`
+- [**Icons**](./src/components/icons/README.md) — vector icons sized 12–56 px
+- [**Pictograms**](./src/components/pictograms/README.md) — large vector illustrations (> 56 px)
+- [**Logos**](./src/components/logos/README.md) — payment network logos, `Avatar`
+- **Loaders** — `LoadingSpinner`
 
-#### [Explore the `components` folder →](./src/components)
+### Components
 
+Higher-level interactive and informational components:
 
+- **Buttons** — `IOButton`, `IconButton`, `IconButtonSolid`
+- **TextInput**
+- **List items** — `ListItemAction`, `ListItemAmount`, `ListItemHeader`, `ListItemInfo`, `ListItemInfoCopy`, `ListItemNav`, `ListItemNavAlert`, `ListItemTransaction`
+- **Modules** — `ModuleAttachment`, `ModuleCheckout`, `ModuleCredential`, `ModuleIDP`, `ModuleNavigation`, `ModulePaymentNotice`, `ModuleSummary`
+- **Badges & Tags** — `Badge`, `Tag`
+- **Selection** — `CheckboxLabel`, `ListItemCheckbox`, `ListItemRadio`, `ListItemRadioWithAmount`, `RadioGroup`, `ListItemSwitch`, `NativeSwitch`
+- **Accordion** — `AccordionItem`
+- **Alert** — `Alert`, `AlertEdgeToEdge`
+- **Advice & Banners** — `FeatureInfo`, `Banner`
+- [**Headers**](./src/components/headers/README.md) — `HeaderFirstLevel`, `HeaderSecondLevel`, `ModalBSHeader`
+- [**Templates**](./src/components/templates/README.md) — `Dismissable`, `ForceScrollDownView`
 
-## Functions
-Common functions used to wrap up external libraries and utilities
+→ [Explore `src/components`](./src/components)
 
-#### [Explore the `functions` folder →](./src/functions)
+### Functions
 
-## Contexts
+Utility wrappers around external libraries.
 
-The contexts used in and exported from the library.
+→ [Explore `src/functions`](./src/functions)
 
-#### [Explore the `context` folder →](./src/context)
+### Contexts
 
-## Dependencies
-* [`react-native-reanimated`](https://github.com/software-mansion/react-native-reanimated): Handles all the component animations
-* [`react-native-svg`](https://github.com/software-mansion/react-native-svg): Handles all the vector asset components (icons, pictograms and logos)
-* [`react-native-haptic-feedback`](https://github.com/mkuczera/react-native-haptic-feedback): Handles all the haptic feedbacks
-* [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context): Handles all safe area spacing attributes
-* [`react-native-linear-gradient`](https://github.com/react-native-linear-gradient/react-native-linear-gradient)
-* [`react-native-easing-gradient`](https://github.com/phamfoo/react-native-easing-gradient): Generates easing gradients
-* [`react-native-gesture-handler`](https://github.com/software-mansion/react-native-gesture-handler)
+React contexts exported by the library.
+
+→ [Explore `src/context`](./src/context)
+
+---
+
+## Development workflow
+
+The design system is developed and tested inside the IO main app, which acts as the playground environment. There is no standalone example app.
+
+### Setup
+
+```bash
+# From the repository root
+corepack enable
+corepack prepare --activate
+pnpm install
+
+# Install iOS pods (macOS only)
+pnpm nx run main-app:dev-pod-install
+```
+
+### Preview changes in the app
+
+```bash
+# iOS
+pnpm nx run main-app:run-ios
+
+# Android
+pnpm nx run main-app:dev-run-android
+```
+
+Navigate to the **Design System** section inside the app (visible in developer mode) to inspect and test components in a real native environment.
+
+> [!IMPORTANT]
+> Always test new components in the actual native environment. Browser-based rendering introduces technical trade-offs that do not reflect real usage conditions.
+
+### Build the library
+
+The library is built automatically as part of `pnpm install` via the `postinstall` hook (`nx prepack io-app-design-system`). To trigger a manual build:
+
+```bash
+pnpm nx run io-app-design-system:prepack
+```
+
+### Add a new icon
+
+See [src/components/icons/README.md](./src/components/icons/README.md#add-a-new-icon).
+
+### Add a new pictogram
+
+See [src/components/pictograms/README.md](./src/components/pictograms/README.md#add-a-new-pictogram).
+
+### Quality checks
+
+```bash
+# Type-check
+pnpm nx tsc-noemit io-app-design-system
+
+# Lint
+pnpm nx lint io-app-design-system
+
+# Tests
+pnpm nx test io-app-design-system
+
+# Format
+pnpm prettify
+```
 
 ---
 
 ## Contributing
 
-See the [contributing guide](../../CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+See [`CONTRIBUTING.md`](../../CONTRIBUTING.md) for the full workflow.
 
-## License
-
-MIT
+If you want to suggest new components or improvements, open an issue first to align with the design team before investing in implementation.
 
 ---
 
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+## License
+
+[MIT](../../LICENSE)
