@@ -455,10 +455,7 @@ const verifyAndBuildCredentialBundle = async ({
       issuerConf,
       credential,
       credentialConfigurationId,
-      {
-        credentialCryptoContext,
-        ignoreMissingAttributes: format === CredentialFormat.SD_JWT
-      },
+      { credentialCryptoContext, ignoreMissingAttributes: true },
       env.X509_CERT_ROOT
     );
 
