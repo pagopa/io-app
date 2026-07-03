@@ -918,4 +918,96 @@ describe("ITW credentials reducer migrations", () => {
 
     expect(nextState).toStrictEqual(persistedStateAt10);
   });
+
+  it("should migrate from 10 to 11 (status assertion to validity)", () => {
+    const inputCredentials = {
+      dc_sd_jwt_mDL: {
+        credentialId: "dc_sd_jwt_mDL",
+        credentialType: "mDL",
+        format: "dc+sd-jwt",
+        credential: "sd-jwt-credential-string",
+        parsedCredential: {},
+        spec_version: "1.0.0",
+        storedStatusAssertion: {
+          credentialStatus: "valid",
+          statusAssertion: "status-assertion-string",
+          parsedStatusAssertion: { iss: "https://issuer.example.com" }
+        }
+      },
+      dc_sd_jwt_EuropeanDisabilityCard: {
+        credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+        credentialType: "EuropeanDisabilityCard",
+        format: "dc+sd-jwt",
+        credential: "sd-jwt-credential-string",
+        parsedCredential: {},
+        spec_version: "1.0.0",
+        storedStatusAssertion: {
+          credentialStatus: "invalid",
+          errorCode: "error-code-string"
+        }
+      },
+      dc_sd_jwt_residency: {
+        credentialId: "dc_sd_jwt_residency",
+        credentialType: "residency",
+        format: "dc+sd-jwt",
+        credential: "sd-jwt-credential-string",
+        parsedCredential: {},
+        spec_version: "1.0.0"
+      }
+    };
+
+    const basePersistedStateAt10 = {
+      credentials: inputCredentials,
+      legacyCredentials: {},
+      _persist: {
+        version: 10,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt10 = {
+      credentials: {
+        dc_sd_jwt_mDL: {
+          credentialId: "dc_sd_jwt_mDL",
+          credentialType: "mDL",
+          format: "dc+sd-jwt",
+          credential: "sd-jwt-credential-string",
+          parsedCredential: {},
+          spec_version: "1.0.0",
+          validity: {
+            type: "status_assertion",
+            status: "valid",
+            statusAssertion: { iss: "https://issuer.example.com" },
+            errorCode: undefined
+          }
+        },
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard",
+          format: "dc+sd-jwt",
+          credential: "sd-jwt-credential-string",
+          parsedCredential: {},
+          spec_version: "1.0.0",
+          validity: {
+            type: "status_assertion",
+            status: "invalid",
+            errorCode: "error-code-string",
+            statusAssertion: undefined
+          }
+        },
+        dc_sd_jwt_residency: inputCredentials.dc_sd_jwt_residency
+      },
+      legacyCredentials: {},
+      _persist: {
+        version: 10,
+        rehydrated: false
+      }
+    };
+
+    const from10To11Migration = itwCredentialsStateMigrations[11];
+    expect(from10To11Migration).toBeDefined();
+    const nextState = from10To11Migration(basePersistedStateAt10);
+
+    expect(nextState).toStrictEqual(persistedStateAt10);
+  });
 });
