@@ -18,8 +18,6 @@ import {
 import { toItwIdMethod } from "../../analytics/utils/types";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
-  itwClearSimplifiedActivationRequirements,
-  itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetNotEmptyWalletSuccessBannerData,
   itwSetCredentialUpgradeFailed,
@@ -41,6 +39,8 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
+import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import { Context, IdentificationContext } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -58,6 +58,8 @@ export const createEidIssuanceActionsImplementation = (
       const credentials = itwCredentialsSelector(state);
 
       return {
+        // Get the IT-Wallet version from the global store; this can be overriden during the issuance flow.
+        itwVersion: selectItwSpecsVersion(state),
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
         walletInstanceAttestation,
         credentialsToUpgrade: Object.values(credentials)
@@ -365,16 +367,9 @@ export const createEidIssuanceActionsImplementation = (
   trackWalletInstanceCreation: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    const identificationMethod =
-      (context.identification
-        ? toItwIdMethod(context.identification)
-        : undefined) ??
-      // Simplified PID activation skips identification but still requires ITW_ID_method for analytics.
-      (context.level === "l3" ? "ciePin" : undefined);
-
     trackSaveCredentialSuccess({
       credential: context.level === "l3" ? "ITW_PID" : "ITW_ID_V2",
-      ITW_ID_method: identificationMethod,
+      ITW_ID_method: context.identification?.mode,
       credential_details: itwMixPanelCredentialDetailsSelector(store.getState())
     });
   },
@@ -423,5 +418,9 @@ export const createEidIssuanceActionsImplementation = (
     );
 
     trackItwIdVerifiedDocument(toItwIdMethod(context.identification));
+  },
+
+  refreshCredentialsCatalogue: () => {
+    store.dispatch(itwFetchCredentialsCatalogue.request());
   }
 });
