@@ -13,7 +13,7 @@ const isIgnoredFilename = filename =>
   (ignoredFilePattern.test(filename) ||
     filename.split(/[\\/]/).some(segment => ignoredPathSegments.has(segment)));
 
-// ponytail: direct I18n.t only; track aliases if the codebase starts using them.
+// Note: only checks direct I18n.t(...) calls; track aliases if the codebase starts using them.
 const isI18nTCall = node =>
   node.callee.type === "MemberExpression" &&
   node.callee.object.type === "Identifier" &&
