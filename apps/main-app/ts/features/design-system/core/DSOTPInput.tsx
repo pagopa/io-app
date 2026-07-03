@@ -84,37 +84,41 @@ const OTPWrapper = ({
     [validation, otpCompare]
   );
 
-  return useMemo(
-    () => (
+  return useMemo(() => {
+    const commonProps = {
+      value,
+      accessibilityLabel: "OTP Input",
+      onValueChange,
+      length: otpLength,
+      onValidate,
+      errorMessage: "Wrong OTP",
+      autoFocus
+    };
+
+    return (
       <VStack space={16}>
-        <OTPInput
-          value={value}
-          accessibilityLabel={"OTP Input"}
-          accessibilityValueText={
+        {secret ? (
+          <OTPInput
+            {...commonProps}
             secret
-              ? ({ valueLength, length }) =>
-                  I18n.t("global.accessibility.otpInput.valueText", {
-                    valueLength,
-                    length
-                  })
-              : undefined
-          }
-          onValueChange={onValueChange}
-          length={otpLength}
-          secret={secret}
-          onValidate={onValidate}
-          errorMessage={"Wrong OTP"}
-          autoFocus={autoFocus}
-        />
+            accessibilityValueText={({ valueLength, length }) =>
+              I18n.t("global.accessibility.otpInput.valueText", {
+                valueLength,
+                length
+              })
+            }
+          />
+        ) : (
+          <OTPInput {...commonProps} />
+        )}
         <IOButton
           variant="solid"
           onPress={() => setValue("")}
           label={"Pulisci valore"}
         />
       </VStack>
-    ),
-    [value, onValueChange, secret, onValidate, autoFocus, otpLength]
-  );
+    );
+  }, [value, onValueChange, secret, onValidate, autoFocus, otpLength]);
 };
 
 const scrollVerticallyToView = (
