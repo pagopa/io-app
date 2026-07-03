@@ -1,10 +1,13 @@
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as connectivitySelectors from "../../../../connectivity/store/selectors";
+import * as ingressSelectors from "../../../../ingress/store/selectors";
 import { itwCloseBanner } from "../../../common/store/actions/banners";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
@@ -13,6 +16,9 @@ import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
 import * as itwWalletInstanceSelectors from "../../../walletInstance/store/selectors";
 
 const mockNavigate = jest.fn();
+const mockToastError = jest.fn();
+const mockToastInfo = jest.fn();
+const mockToastSuccess = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -23,6 +29,17 @@ jest.mock("@react-navigation/native", () => {
     })
   };
 });
+
+jest.mock("@pagopa/io-app-design-system", () => ({
+  ...jest.requireActual<typeof import("@pagopa/io-app-design-system")>(
+    "@pagopa/io-app-design-system"
+  ),
+  useIOToast: () => ({
+    error: mockToastError,
+    info: mockToastInfo,
+    success: mockToastSuccess
+  })
+}));
 
 type BannerScenario = {
   name: string;
@@ -101,6 +118,12 @@ const setupMocks = (scenario: BannerScenario) => {
 describe("ItwDiscoveryBanner", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest
+      .spyOn(connectivitySelectors, "isConnectedSelector")
+      .mockReturnValue(true);
+    jest
+      .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+      .mockReturnValue(undefined);
   });
 
   afterEach(() => {
@@ -187,6 +210,30 @@ describe("ItwDiscoveryBanner", () => {
       expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.L3_ONBOARDING
       });
+    });
+
+    it("should show an offline toast and block navigation when the empty wallet banner action is pressed offline", () => {
+      setupMocks({
+        name: "empty wallet banner",
+        isWalletActive: true,
+        hasItwInstance: true,
+        isRemotelyActive: false,
+        isWalletEmpty: true,
+        hasMdl: false
+      });
+      jest
+        .spyOn(connectivitySelectors, "isConnectedSelector")
+        .mockReturnValue(false);
+
+      const { getByTestId } = renderComponent();
+      const actionButton = getByTestId("itwEngagementBannerActionButtonTestID");
+
+      fireEvent.press(actionButton);
+
+      expect(mockToastError).toHaveBeenCalledWith(
+        I18n.t("global.offline.toast")
+      );
+      expect(mockNavigate).not.toHaveBeenCalled();
     });
   });
 

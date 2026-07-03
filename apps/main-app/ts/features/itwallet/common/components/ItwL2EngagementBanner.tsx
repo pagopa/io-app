@@ -1,6 +1,7 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { View } from "react-native";
+import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
@@ -15,10 +16,6 @@ export const ItwL2EngagementBanner = () => {
     itwIsActivationDisabledSelector
   );
 
-  if (!shouldRender) {
-    return null;
-  }
-
   const handleOnPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: isItWalletActivationDisabled
@@ -26,7 +23,11 @@ export const ItwL2EngagementBanner = () => {
         : ITW_ROUTES.L2_ONBOARDING
     });
   };
+  const guardedHandleOnPress = useOfflineToastGuard(handleOnPress);
 
+  if (!shouldRender) {
+    return null;
+  }
   return (
     <View style={{ marginHorizontal: -8 }}>
       <Banner
@@ -37,7 +38,7 @@ export const ItwL2EngagementBanner = () => {
         )}
         action={I18n.t("features.itWallet.engagementBanner.l2_banner.cta")}
         color="neutral"
-        onPress={handleOnPress}
+        onPress={guardedHandleOnPress}
         pictogramName="cardAdd"
       />
     </View>
