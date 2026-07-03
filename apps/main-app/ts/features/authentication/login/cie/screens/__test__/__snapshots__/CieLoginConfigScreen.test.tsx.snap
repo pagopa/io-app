@@ -362,7 +362,7 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                 <TextInput
                                   accessibilityValue={
                                     {
-                                      "text": "",
+                                      "text": "Hai inserito 0 di 6 cifre",
                                     }
                                   }
                                   accessible={true}
