@@ -104,7 +104,8 @@ export const itwCredentialUpgradeMachine = setup({
           pid: context.pid,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           credential: context.credentials[context.credentialIndex],
-          issuanceMode: context.issuanceMode
+          issuanceMode: context.issuanceMode,
+          itwVersion: context.itwVersion
         }),
         onDone: {
           target: "UpgradeCredential",
@@ -129,7 +130,8 @@ export const itwCredentialUpgradeMachine = setup({
           issuerConf: context.issuerConf,
           clientId: context.clientId,
           integrityKeyTag: context.integrityKeyTag,
-          issuanceMode: context.issuanceMode
+          issuanceMode: context.issuanceMode,
+          itwVersion: context.itwVersion
         }),
         onDone: {
           actions: ["storeCredential"],
