@@ -1,7 +1,7 @@
 {
-  "name": "eslint-plugin-oxlint-compat",
+  "name": "eslint-plugin-delegate-effects",
   "version": "0.0.1",
-  "description": "Local ESLint plugin bridging rules not yet natively implemented in oxlint",
-  "main": "oxlint-compat-plugin.js",
+  "description": "Local ESLint plugin exposing the custom delegate-effects rule for oxlint jsPlugins",
+  "main": "delegate-effects-plugin.js",
   "private": true
 }

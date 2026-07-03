@@ -163,7 +163,6 @@
         "no-use-before-define": "off",
         // eslint-plugin-eslint-comments is replaced by oxlint's native reportUnusedDisableDirectives (see options above)
         // eslint-comments/no-aggregating-enable and no-unlimited-disable are not supported natively; the plugin crashes in oxlint's JS runner
-        "oxlint-compat/one-var": ["error", "never"],
         "object-shorthand": "error",
         "no-underscore-dangle": [
           "error",
@@ -177,7 +176,7 @@
             ]
           }
         ],
-        "oxlint-compat/delegate-effects": "error",
+        "delegate-effects/delegate-effects": "error",
         "func-names": "off",
         "func-style": "off",
         "new-cap": "off",
@@ -366,9 +365,9 @@
         "eslint-plugin-react-native-a11y",
         "eslint-plugin-functional",
         "eslint-plugin-sonarjs",
-        // Local compat plugin: wraps ESLint rules not yet natively in oxlint + custom delegate-effects rule
-        // Source: scripts/eslint/oxlint-compat-plugin.js (installed as a local package)
-        "eslint-plugin-oxlint-compat",
+        // Local plugin exposing the custom delegate-effects rule (no native oxlint equivalent)
+        // Source: scripts/eslint/delegate-effects-plugin.js (installed as a local package)
+        "eslint-plugin-delegate-effects",
         "eslint-plugin-i18next"
       ],
       "env": {
