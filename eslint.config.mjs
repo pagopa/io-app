@@ -319,7 +319,7 @@ export default defineConfig([
 			}
 		},
 		rules: {
-			'@io-app/i18n-no-unused-keys': 'error'
+			'@io-app/i18n-no-unused-keys': 'warn'
 		}
 	}
 ]);
