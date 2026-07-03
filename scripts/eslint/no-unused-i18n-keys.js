@@ -138,15 +138,12 @@ const collectLocaleKeys = () => {
 const PLURAL_SUFFIX = /_(zero|one|two|few|many|other)$/;
 
 const findUnusedKeys = () => {
-  if (!cachedResult) {
-    const literals = collectSourceLiterals();
+  const literals = collectSourceLiterals();
 
-    const isUsed = key =>
-      literals.has(key) || literals.has(key.replace(PLURAL_SUFFIX, ""));
+  const isUsed = key =>
+    literals.has(key) || literals.has(key.replace(PLURAL_SUFFIX, ""));
 
-    cachedResult = collectLocaleKeys().filter(({ key }) => !isUsed(key));
-  }
-
+  cachedResult = collectLocaleKeys().filter(({ key }) => !isUsed(key));
   return cachedResult;
 };
 
