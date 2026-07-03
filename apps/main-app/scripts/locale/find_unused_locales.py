@@ -31,10 +31,14 @@ Afterwards, format and type-check to confirm nothing broke:
 No third-party dependencies — standard library only (Python 3.8+).
 """
 
+from __future__ import annotations
+
 import json
 import re
 import sys
+from collections import defaultdict
 from pathlib import Path
+from typing import Dict, Iterator, List, Optional, Pattern, Set, Tuple
 
 # scripts/locale/ -> apps/main-app
 APP_ROOT = Path(__file__).resolve().parents[2]
@@ -45,7 +49,7 @@ SOURCE_EXTS = (".ts", ".tsx")
 
 # i18next plural suffixes: `foo_one`/`foo_other`/... are all reached via `foo`.
 PLURAL_SUFFIXES = ("zero", "one", "two", "few", "many", "other")
-_PLURAL_RE = re.compile(r"_(?:%s)$" % "|".join(PLURAL_SUFFIXES))
+_PLURAL_RE = re.compile(rf"_(?:{'|'.join(PLURAL_SUFFIXES)})$")
 
 # One key segment. Locale segments may contain hyphens (`card0-content`) and be
 # purely numeric (`details.1.title`), so the class is deliberately permissive.
@@ -56,17 +60,21 @@ _PLURAL_RE = re.compile(r"_(?:%s)$" % "|".join(PLURAL_SUFFIXES))
 # (e.g. `${a}.${b}` -> `[\w$-]+\.[\w$-]+`) and mark nearly every key as used.
 _SEGMENT = r"[\w$-]+"
 # A dotted key chain as it appears in source, e.g. `a.b.c` or `a.card0-content`.
-_DOTTED_TOKEN_RE = re.compile(r"%s(?:\.%s)+" % (_SEGMENT, _SEGMENT))
+_DOTTED_TOKEN_RE = re.compile(rf"{_SEGMENT}(?:\.{_SEGMENT})+")
 # A template literal that contains an interpolation, e.g. `a.${x}.c`.
 _DYNAMIC_TEMPLATE_RE = re.compile(r"`([^`]*\$\{[^`]*)`")
+# The interpolation placeholder itself, e.g. `${faultCodeCategory}`.
+_INTERPOLATION_RE = re.compile(r"\$\{[^}]*\}")
+
+JsonTree = Dict[str, object]
 
 
-def load_json(path):
+def load_json(path: Path) -> JsonTree:
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 
-def flatten(node, prefix=""):
+def flatten(node: object, prefix: str = "") -> Iterator[Tuple[str, object]]:
     """Yield (dotted_path, leaf_value) for every leaf string in the tree."""
     if isinstance(node, dict):
         for k, v in node.items():
@@ -75,62 +83,81 @@ def flatten(node, prefix=""):
         yield prefix, node
 
 
-def lookup_key(path):
+def lookup_key(path: str) -> str:
     """Collapse an i18next plural leaf to the base key the app references."""
     head, _, last = path.rpartition(".")
     base = _PLURAL_RE.sub("", last)
     return f"{head}.{base}" if head else base
 
 
-def read_source_blob():
-    """Concatenate every source file into a single string for scanning."""
-    parts = []
-    for path in SOURCE_DIR.rglob("*"):
+def iter_source_texts() -> Iterator[str]:
+    """Yield the text of every app source file under `SOURCE_DIR`."""
+    for path in sorted(SOURCE_DIR.rglob("*")):
         if path.suffix in SOURCE_EXTS and path.is_file():
-            parts.append(path.read_text(encoding="utf-8", errors="ignore"))
-    return "\n".join(parts)
+            yield path.read_text(encoding="utf-8", errors="ignore")
 
 
-def build_source_index(blob):
+def template_to_pattern(tpl: str) -> Optional[str]:
     """
-    Return (dotted_tokens, dynamic_regexes).
-
-    dotted_tokens  — set of every literal dotted chain found in the source,
-                     used for exact key matches and ancestor detection.
-    dynamic_regexes — compiled full-match regexes derived from template
-                      literals, where each `${...}` becomes a single-segment
-                      wildcard (see `_SEGMENT`).
+    Turn a dynamic template literal into a key-matching regex pattern, or None
+    when the template cannot be a key path or yields an invalid pattern.
     """
-    dotted_tokens = set(_DOTTED_TOKEN_RE.findall(blob))
-
-    dynamic_regexes = []
-    for tpl in set(_DYNAMIC_TEMPLATE_RE.findall(blob)):
-        # Keep only templates that look like key paths (contain a dot).
-        if "." not in tpl:
-            continue
-        # Split on interpolations, escape the literal parts, and replace each
-        # `${...}` with a single-segment wildcard (see `_SEGMENT`).
-        literals = re.split(r"\$\{[^}]*\}", tpl)
-        pattern = _SEGMENT.join(re.escape(part) for part in literals)
-        try:
-            dynamic_regexes.append(re.compile(pattern))
-        except re.error:
-            continue
-    return dotted_tokens, dynamic_regexes
+    # Keep only templates that look like key paths (contain a dot).
+    if "." not in tpl:
+        return None
+    # Split on interpolations, escape the literal parts, and replace each
+    # `${...}` with a single-segment wildcard (see `_SEGMENT`).
+    literals = _INTERPOLATION_RE.split(tpl)
+    pattern = _SEGMENT.join(re.escape(part) for part in literals)
+    try:
+        re.compile(pattern)
+    except re.error:
+        return None
+    return pattern
 
 
-def ancestor_paths(key):
+def build_source_index() -> Tuple[Set[str], Optional[Pattern[str]]]:
+    """
+    Scan the source tree and return (dotted_tokens, dynamic_matcher).
+
+    dotted_tokens   — set of every literal dotted chain found in the source,
+                      used for exact key matches and ancestor detection.
+    dynamic_matcher — a single compiled regex (an alternation of the patterns
+                      derived from template literals, where each `${...}`
+                      becomes a single-segment wildcard — see `_SEGMENT`), or
+                      None when the source contains no dynamic key templates.
+    """
+    dotted_tokens: Set[str] = set()
+    templates: Set[str] = set()
+    for text in iter_source_texts():
+        dotted_tokens.update(_DOTTED_TOKEN_RE.findall(text))
+        templates.update(_DYNAMIC_TEMPLATE_RE.findall(text))
+
+    patterns = sorted(
+        p for p in (template_to_pattern(tpl) for tpl in templates) if p
+    )
+    matcher = re.compile("|".join(f"(?:{p})" for p in patterns)) if patterns else None
+    return dotted_tokens, matcher
+
+
+def ancestor_paths(key: str) -> Iterator[str]:
     """Yield every ancestor dotted path of `key` (excluding the key itself)."""
     parts = key.split(".")
     for i in range(1, len(parts)):
         yield ".".join(parts[:i])
 
 
-def classify(lookup_keys, dotted_tokens, dynamic_regexes):
+def classify(
+    lookup_keys: List[str],
+    dotted_tokens: Set[str],
+    dynamic_matcher: Optional[Pattern[str]],
+) -> Tuple[List[str], List[str], List[str]]:
     """Split lookup keys into (used, uncertain, unused)."""
-    used, uncertain, unused = [], [], []
+    used: List[str] = []
+    uncertain: List[str] = []
+    unused: List[str] = []
     for key in lookup_keys:
-        if key in dotted_tokens or any(rx.fullmatch(key) for rx in dynamic_regexes):
+        if key in dotted_tokens or (dynamic_matcher and dynamic_matcher.fullmatch(key)):
             used.append(key)
         elif any(anc in dotted_tokens for anc in ancestor_paths(key)):
             uncertain.append(key)
@@ -139,11 +166,11 @@ def classify(lookup_keys, dotted_tokens, dynamic_regexes):
     return used, uncertain, unused
 
 
-def delete_path(tree, path):
+def delete_path(tree: JsonTree, path: str) -> bool:
     """Delete a dotted leaf path from `tree`, pruning emptied parents. Return True if removed."""
     parts = path.split(".")
-    stack = []
-    node = tree
+    stack: List[Tuple[JsonTree, str]] = []
+    node: object = tree
     for part in parts[:-1]:
         if not isinstance(node, dict) or part not in node:
             return False
@@ -158,28 +185,26 @@ def delete_path(tree, path):
     return True
 
 
-def write_locale(path, tree):
+def write_locale(path: Path, tree: JsonTree) -> None:
     with open(path, "w", encoding="utf-8") as f:
         json.dump(tree, f, ensure_ascii=False, indent=2)
         f.write("\n")
 
 
-def main():
+def main() -> None:
     reference = load_json(LOCALES_DIR / REFERENCE_LOCALE / "index.json")
-    leaves = [path for path, _ in flatten(reference)]
 
     # Map each unique lookup key back to the concrete leaf paths it covers
     # (a single base key may cover several plural leaves).
-    lookup_to_leaves = {}
-    for leaf in leaves:
-        lookup_to_leaves.setdefault(lookup_key(leaf), []).append(leaf)
+    lookup_to_leaves: Dict[str, List[str]] = defaultdict(list)
+    for leaf, _ in flatten(reference):
+        lookup_to_leaves[lookup_key(leaf)].append(leaf)
 
     print(f"Scanning {SOURCE_DIR.relative_to(APP_ROOT)} ...")
-    blob = read_source_blob()
-    dotted_tokens, dynamic_regexes = build_source_index(blob)
+    dotted_tokens, dynamic_matcher = build_source_index()
 
     used, uncertain, unused = classify(
-        sorted(lookup_to_leaves), dotted_tokens, dynamic_regexes
+        sorted(lookup_to_leaves), dotted_tokens, dynamic_matcher
     )
 
     total = len(lookup_to_leaves)
