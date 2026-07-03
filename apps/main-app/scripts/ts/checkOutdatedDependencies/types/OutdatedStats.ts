@@ -11,9 +11,10 @@ export type OutdatedPackage = {
 };
 
 /**
- * The stats representing all the outdated library groupByType: all the outdated
- * dependencies, grouped by type and by severity mostOutdated: a list of the
- * most outdated libraries
+ * The stats representing all the outdated library
+ *
+ * - `groupByType`: all the outdated dependencies, grouped by type and by severity
+ * - `mostOutdated`: a list of the most outdated libraries
  */
 export type OutdatedStats = {
   groupByType: GroupByType;
