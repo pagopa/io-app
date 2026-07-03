@@ -162,7 +162,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "environment": {
       "env": "prod",
-      "itWalletSpecsVersion": "1.0.0",
     },
     "identification": {
       "hasNfcFeature": {

@@ -50,8 +50,7 @@ const buildState = (
         issuance: { integrityKeyTag: { _tag: "None" } },
         credentials: { credentials: {} },
         preferences: {
-          isFiscalCodeWhitelisted: false,
-          isItwSimplifiedActivationRequired: false
+          isFiscalCodeWhitelisted: false
         }
       }
     },

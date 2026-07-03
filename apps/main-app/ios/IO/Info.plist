@@ -34,11 +34,13 @@
           <string>ioit</string>
           <string>iowalletcie</string>
           <string>iologincie</string>
+          <string>openid-credential-offer</string>
+          <string>haip-vci</string>
         </array>
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>3</string>
+    <string>6</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -134,13 +136,7 @@
     </array>
     <key>UIBackgroundModes</key>
     <array>
-      <string>processing</string>
-      <string>fetch</string>
       <string>remote-notification</string>
-    </array>
-    <key>BGTaskSchedulerPermittedIdentifiers</key>
-    <array>
-      <string>com.expo.modules.backgroundtask.processing</string>
     </array>
     <key>UIFileSharingEnabled</key>
     <true/>
