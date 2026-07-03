@@ -239,7 +239,7 @@ export const extractVerification: ExtractVerification = ({
  * `trust_framework` field is equal to `"it_l2+document_proof"`,
  * and returns `true` only if one of these conditions is met.
  *
- * Currently the assurance level can either be `"high"` or `"https://ta.wallet.ipzs.it/loa/high"`.
+ * v1.0 credentials DO NOT belong to IT-Wallet, even when their assurance level is high/L2+.
  *
  * `"it_l2+document_proof"` indicates that the credential has been issued with
  * a substantial authentication (SPID, CieID) plus an MRTD PoP verification.
@@ -247,8 +247,13 @@ export const extractVerification: ExtractVerification = ({
  * @param metadata - The metadata of the credential to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
  */
-export const isItwCredential = (metadata: CredentialMetadata): boolean => {
-  const verification = metadata.verification;
+export const isItwCredential = ({
+  verification,
+  spec_version
+}: CredentialMetadata): boolean => {
+  if (spec_version === "1.0.0") {
+    return false;
+  }
   return (
     verification?.assurance_level.includes("high") ||
     verification?.trust_framework === "it_l2+document_proof"

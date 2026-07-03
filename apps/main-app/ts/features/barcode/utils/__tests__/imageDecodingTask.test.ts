@@ -12,13 +12,6 @@ jest.mock("./../barcodeDetectionTask", () => ({
 }));
 
 const mockGlobalState = {
-  features: {
-    itWallet: {
-      environment: {
-        itWalletSpecsVersion: "1.0.0"
-      }
-    }
-  },
   remoteConfig: O.some({
     pn: {
       aarQRCodeRegex:
