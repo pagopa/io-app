@@ -1,3 +1,11 @@
+/**
+ * ESLint rule that warns when `I18n.t` receives a dynamic translation key.
+ *
+ * Static keys keep translations discoverable by locale tooling and make missing
+ * translations reviewable. Ternaries are allowed when both branches are static
+ * keys; interpolated, concatenated, or variable-built keys are not.
+ */
+
 "use strict";
 
 const ignoredPathSegments = new Set([

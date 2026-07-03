@@ -1,3 +1,11 @@
+/**
+ * ESLint rule that reports Italian locale keys unused by production code.
+ *
+ * The Italian locale is the canonical source for app copy. Reporting dead keys
+ * directly on `locales/it/index.json` keeps translation cleanup incremental and
+ * exposes places where dynamic i18n keys hide real usage from static analysis.
+ */
+
 "use strict";
 
 const fs = require("node:fs");
@@ -98,7 +106,10 @@ const collectLocaleKeys = () => {
   const sourceFile = ts.parseJsonText(localePath, sourceText);
   if (sourceFile.parseDiagnostics.length > 0) {
     throw new Error(
-      ts.flattenDiagnosticMessageText(sourceFile.parseDiagnostics[0].messageText, "\n")
+      ts.flattenDiagnosticMessageText(
+        sourceFile.parseDiagnostics[0].messageText,
+        "\n"
+      )
     );
   }
   const rootExpression = sourceFile.statements[0]?.expression;
