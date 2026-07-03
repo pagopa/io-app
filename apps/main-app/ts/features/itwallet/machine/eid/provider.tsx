@@ -4,10 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import { PropsWithChildren } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
-import {
-  selectItwEnv,
-  selectItwSpecsVersion
-} from "../../common/store/selectors/environment";
+import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
 import { createEidIssuanceActionsImplementation } from "./../eid/actions";
 import { createEidIssuanceActorsImplementation } from "./../eid/actors";
@@ -22,16 +19,15 @@ export const ItwEidIssuanceMachineProvider = (props: PropsWithChildren) => {
   const store = useIOStore();
   const navigation = useIONavigation();
   const toast = useIOToast();
-  const itwVersion = useIOSelector(selectItwSpecsVersion);
 
   const env = pipe(useIOSelector(selectItwEnv), getEnv);
 
   const eidIssuanceMachine = itwEidIssuanceMachine.provide({
-    guards: createEidIssuanceGuardsImplementation(store, itwVersion, {
+    guards: createEidIssuanceGuardsImplementation(store, {
       bypassIdentityMatch: env.BYPASS_IDENTITY_MATCH
     }),
     actions: createEidIssuanceActionsImplementation(navigation, store, toast),
-    actors: createEidIssuanceActorsImplementation(env, itwVersion, store)
+    actors: createEidIssuanceActorsImplementation(env, store)
   });
 
   return (
