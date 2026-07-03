@@ -13,6 +13,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import reactNativeConfig from '@react-native/eslint-config/flat';
 import tseslint from 'typescript-eslint';
 import delegateEffectsRule from './scripts/eslint/delegate-effects.js';
+import noDynamicI18nKeysRule from './scripts/eslint/no-dynamic-i18n-keys.js';
 import jsonParser from './scripts/eslint/json-parser.js';
 import noUnusedI18nKeysRule from './scripts/eslint/no-unused-i18n-keys.js';
 
@@ -67,6 +68,7 @@ export default defineConfig([
 			sonarjs,
 			'@stylistic/js': stylisticEslintPluginJs,
 			i18next: i18Next,
+			'@io-app': { rules: { 'i18n-no-dynamic-keys': noDynamicI18nKeysRule } },
 			'typed-redux-saga': { rules: { 'delegate-effects': delegateEffectsRule } }
 		},
 
@@ -250,7 +252,9 @@ export default defineConfig([
 						}
 					]
 				}
-			]
+			],
+
+			'@io-app/i18n-no-dynamic-keys': 'warn',
 		},
 
 		settings: {
@@ -310,10 +314,12 @@ export default defineConfig([
 			parser: jsonParser
 		},
 		plugins: {
-			'io-i18n': { rules: { 'no-unused-keys': noUnusedI18nKeysRule } }
+			'@io-app': {
+				rules: { 'i18n-no-unused-keys': noUnusedI18nKeysRule }
+			}
 		},
 		rules: {
-			'io-i18n/no-unused-keys': 'warn'
+			'@io-app/i18n-no-unused-keys': 'error'
 		}
 	}
 ]);
