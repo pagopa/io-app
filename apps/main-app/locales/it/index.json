@@ -2841,10 +2841,9 @@
         }
       },
       "checkService": {
-        "title": "Attiva i messaggi",
-        "content": "Per ricevere i documenti firmati devi attivare l’opzione che consente al servizio di inviarti messaggi. Se non la attivi, puoi completare la firma ma non riceverai i documenti firmati.",
-        "cancel": "Non ora",
-        "confirm": "Attiva"
+        "title": "Ricevi i documenti firmati",
+        "content": "Per ricevere su IO i documenti firmati, attiva l’opzione che consente al servizio di inviarti messaggi.\nSe chiudi, completerai la firma ma non riceverai il messaggio con i documenti firmati.",
+        "confirm": "Ok, attiva"
       },
       "noFields": {
         "title": "Firma tutto il documento",
@@ -2880,7 +2879,7 @@
       },
       "thankYouPage": {
         "title": "Fatto!",
-        "content": "Riceverai un messaggio su IO con l’esito della tua richiesta.",
+        "content": "Se hai attivato i messaggi del servizio, riceverai su IO l’esito della tua richiesta.",
         "cta": "Chiudi"
       },
       "documentUnavailablePage": {
@@ -3640,6 +3639,11 @@
         },
         "credentialIntro": {
           "subtitle": "Leggi con attenzione cosa troverai."
+        },
+        "credentialOffer": {
+          "intro": {
+            "fallbackTitle": "Aggiungi un documento al tuo Portafoglio"
+          }
         },
         "credentialPreview": {
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",

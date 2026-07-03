@@ -1,5 +1,6 @@
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
+  CredentialOfferResolved,
   CredentialAccessToken,
   CredentialBundle,
   EvaluatedDcqlQueryResult,
@@ -30,6 +31,10 @@ export type Context = {
    * Flag to indicate if the user has access to the L3 features.
    */
   isItWalletValid: boolean;
+  /**
+   * Flag to indicate if the wallet lifecycle is valid and can issue credentials.
+   */
+  isWalletValid: boolean;
   /**
    * The type of the credential being issued.
    */
@@ -67,6 +72,10 @@ export type Context = {
    * The credentials catalogue as a dictionary, with an entry for each credential type.
    */
   credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
+
+  credentialOfferUri: string | undefined;
+  resolvedCredentialOffer: CredentialOfferResolved | undefined;
+
   /**
    * The access token obtained from the Issuer. If the session with the Wallet Provider expires
    * before requesting the credential, this token is used to retry the request.
@@ -81,6 +90,7 @@ export type Context = {
 export const InitialContext: Context = {
   mode: "issuance",
   isItWalletValid: false,
+  isWalletValid: false,
   credentialType: undefined,
   wiaCryptoContext: undefined,
   walletInstanceAttestation: undefined,
@@ -93,5 +103,7 @@ export const InitialContext: Context = {
   credentials: undefined,
   failure: undefined,
   credentialsCatalogue: undefined,
+  credentialOfferUri: undefined,
+  resolvedCredentialOffer: undefined,
   accessToken: undefined
 };
