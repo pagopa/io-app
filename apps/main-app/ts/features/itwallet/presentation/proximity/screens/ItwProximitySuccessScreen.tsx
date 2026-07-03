@@ -6,15 +6,24 @@ import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwar
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
 import { trackItwProximityPresentationCompleted } from "../analytics";
 import { ItwProximityMachineContext } from "../machine/provider";
+import { selectProximityFlow } from "../machine/selectors";
 
 export const ItwProximitySuccessScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
+  const proximityFlow =
+    ItwProximityMachineContext.useSelector(selectProximityFlow);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
   useFocusEffect(
-    useCallback(() => trackItwProximityPresentationCompleted(), [])
+    useCallback(
+      () =>
+        trackItwProximityPresentationCompleted({
+          proximity_flow: proximityFlow
+        }),
+      [proximityFlow]
+    )
   );
 
   const closeMachine = () => machineRef.send({ type: "close" });

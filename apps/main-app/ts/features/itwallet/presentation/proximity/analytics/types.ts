@@ -1,9 +1,15 @@
 import { MixPanelCredential } from "../../../analytics/utils/types";
 
+export type ProximityFlow = "qr_code" | "nfc";
+
 export type ItwProximityFailure = {
   reason: unknown;
   origin?: string;
   type: string;
+};
+
+export type ItwProximityFlowProperties = {
+  proximity_flow: ProximityFlow;
 };
 
 export type ItwProximityGenericFailure = ItwProximityFailure & {

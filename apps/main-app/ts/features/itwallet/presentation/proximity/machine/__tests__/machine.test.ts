@@ -60,6 +60,8 @@ describe("itwProximityMachine", () => {
   const closeProximity = jest.fn();
 
   const storeConsent = jest.fn();
+  const trackProximityStart = jest.fn();
+  const trackQrCodeLoadingFailure = jest.fn();
 
   const checkBluetoothPermissions = jest.fn();
   const checkBluetoothActivation = jest.fn();
@@ -88,6 +90,8 @@ describe("itwProximityMachine", () => {
       navigateToStoreconsentScreen,
       navigateToSuccessScreen,
       closeProximity,
+      trackProximityStart,
+      trackQrCodeLoadingFailure,
       grantConsent: assign(({ context }) => {
         if (!context.proximityDetails) {
           throw new Error(
@@ -259,6 +263,8 @@ describe("itwProximityMachine", () => {
     await waitFor(actor, snapshot =>
       snapshot.matches({ Presentment: "Starting" })
     );
+    expect(trackProximityStart).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().context.engagementMode).toEqual("qrcode");
   });
 
   it("inactive bluetooth moves to Bluetooth.RequireActivation", async () => {
@@ -391,6 +397,7 @@ describe("itwProximityMachine", () => {
     );
     expect(actor.getSnapshot().context.engagementMode).toEqual("nfc");
     expect(navigateToNfcPresentmentScreen).toHaveBeenCalledTimes(1);
+    expect(trackProximityStart).toHaveBeenCalledTimes(1);
   });
 
   it("handles the happy path in Presentment", async () => {
@@ -892,6 +899,7 @@ describe("itwProximityMachine", () => {
     expect(actor.getSnapshot().context.failure?.type).toEqual(
       ProximityFailureType.RELYING_PARTY_GENERIC
     );
+    expect(trackQrCodeLoadingFailure).toHaveBeenCalledTimes(1);
 
     actor.send({ type: "retry" });
 

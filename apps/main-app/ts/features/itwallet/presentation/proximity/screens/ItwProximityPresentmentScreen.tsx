@@ -24,7 +24,10 @@ import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
 import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
-import { trackItwStartReissuingPID } from "../analytics";
+import {
+  trackItwProximityNfcStart,
+  trackItwStartReissuingPID
+} from "../analytics";
 import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/types.ts";
 import { ItwProximityQrCodeImage } from "../components/ItwProximityQrCodeImage.tsx";
 import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner.tsx";
@@ -96,6 +99,7 @@ export const ItwProximityPresentmentScreen = ({
   }, [navigation, machineRef]);
 
   const handleContactlessPress = () => {
+    trackItwProximityNfcStart();
     machineRef.send({ type: "start-nfc-presentment" });
   };
 
