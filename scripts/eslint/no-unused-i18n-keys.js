@@ -96,6 +96,11 @@ const getPropertyName = name =>
 const collectLocaleKeys = () => {
   const sourceText = fs.readFileSync(localePath, "utf8");
   const sourceFile = ts.parseJsonText(localePath, sourceText);
+  if (sourceFile.parseDiagnostics.length > 0) {
+    throw new Error(
+      ts.flattenDiagnosticMessageText(sourceFile.parseDiagnostics[0].messageText, "\n")
+    );
+  }
   const rootExpression = sourceFile.statements[0]?.expression;
   const keys = [];
 
