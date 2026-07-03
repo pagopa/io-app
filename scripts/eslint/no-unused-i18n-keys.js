@@ -167,7 +167,7 @@ module.exports = {
   create(context) {
     return {
       Program(node) {
-        const filename = context.filename ?? context.getFilename();
+        const filename = context.filename;
 
         if (path.resolve(filename) !== localePath) {
           return;
