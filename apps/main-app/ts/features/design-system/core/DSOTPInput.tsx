@@ -14,6 +14,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
+import I18n from "i18next";
 
 import { RefObject, useCallback, useMemo, useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
@@ -89,6 +90,15 @@ const OTPWrapper = ({
         <OTPInput
           value={value}
           accessibilityLabel={"OTP Input"}
+          accessibilityValueText={
+            secret
+              ? ({ valueLength, length }) =>
+                  I18n.t("global.accessibility.otpInput.valueText", {
+                    valueLength,
+                    length
+                  })
+              : undefined
+          }
           onValueChange={onValueChange}
           length={otpLength}
           secret={secret}

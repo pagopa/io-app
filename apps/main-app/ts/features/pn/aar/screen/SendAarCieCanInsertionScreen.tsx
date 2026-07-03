@@ -189,6 +189,12 @@ export const SendAarCieCanInsertionScreen = ({
         >
           <VSpacer size={8} />
           <OTPInput
+            accessibilityValueText={({ valueLength, length }) =>
+              i18n.t("global.accessibility.otpInput.valueText", {
+                valueLength,
+                length
+              })
+            }
             ref={canPadViewRef}
             secret
             length={CIE_CAN_LENGTH}

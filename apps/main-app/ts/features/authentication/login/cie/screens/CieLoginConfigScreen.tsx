@@ -1,4 +1,5 @@
 import { OTPInput } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import CieLoginConfigScreenContent from "../components/CieLoginConfigScreenContent";
@@ -11,6 +12,12 @@ type PinViewProps = {
 };
 const PinView = (props: PinViewProps) => (
   <OTPInput
+    accessibilityValueText={({ valueLength, length }) =>
+      I18n.t("global.accessibility.otpInput.valueText", {
+        valueLength,
+        length
+      })
+    }
     secret
     value={props.pin}
     length={PIN_LENGTH}

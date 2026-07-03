@@ -3,7 +3,6 @@ import {
   H2,
   IOButton,
   OTPInput,
-  OTPInputAccessibilityValueText,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -87,14 +86,6 @@ export const ItwCiePinScreen = () => {
       machineRef.send({ type: "cie-pin-entered", pin: value });
     }
   };
-  const secretAccessibilityValueText: OTPInputAccessibilityValueText = ({
-    valueLength,
-    length
-  }) =>
-    I18n.t("authentication.cie.pin.accessibility.valueText", {
-      valueLength,
-      length
-    });
   return (
     <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
       <KeyboardAvoidingView
@@ -127,7 +118,12 @@ export const ItwCiePinScreen = () => {
             <VSpacer size={24} />
             <View style={{ flex: 1 }}>
               <OTPInput
-                accessibilityValueText={secretAccessibilityValueText}
+                accessibilityValueText={({ valueLength, length }) =>
+                  I18n.t("global.accessibility.otpInput.valueText", {
+                    valueLength,
+                    length
+                  })
+                }
                 ref={pinPadViewRef}
                 secret
                 value={pin}

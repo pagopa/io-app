@@ -260,6 +260,12 @@ const CiePinScreen = () => {
             <VSpacer size={24} />
             <View style={{ flex: 1 }}>
               <OTPInput
+                accessibilityValueText={({ valueLength, length }) =>
+                  I18n.t("global.accessibility.otpInput.valueText", {
+                    valueLength,
+                    length
+                  })
+                }
                 ref={pinPadViewRef}
                 secret
                 value={pin}
