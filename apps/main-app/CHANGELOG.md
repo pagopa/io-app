@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.36.0-rc.6](https://github.com/pagopa/io-app/compare/3.36.0-rc.5...3.36.0-rc.6) (2026-07-03)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4545](https://pagopa.atlassian.net/browse/SIW-4545)] Handle navigation for skeumorphic credentials ([#8222](https://github.com/pagopa/io-app/issues/8222)) ([590562f](https://github.com/pagopa/io-app/commit/590562fa954f1bdee6675936483ad67467a3c1a3))
+
 ## [3.36.0-rc.5](https://github.com/pagopa/io-app/compare/3.36.0-rc.4...3.36.0-rc.5) (2026-07-02)
 
 
