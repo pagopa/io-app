@@ -343,14 +343,6 @@ export const createEidIssuanceActionsImplementation = (
     );
   },
 
-  freezeSimplifiedActivationRequirements: () => {
-    store.dispatch(itwFreezeSimplifiedActivationRequirements());
-  },
-
-  clearSimplifiedActivationRequirements: () => {
-    store.dispatch(itwClearSimplifiedActivationRequirements());
-  },
-
   storeCredentialUpgradeFailures: ({
     event
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
