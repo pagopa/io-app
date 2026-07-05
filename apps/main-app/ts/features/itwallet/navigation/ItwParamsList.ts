@@ -9,7 +9,6 @@ import { ItwCardOnboardingL3NavigationParams } from "../onboarding/screens/ItwCa
 import { ItwPlaygroundParamsList } from "../playgrounds/navigation/ItwPlaygroundParamsList.ts";
 import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModalNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
-import { ItwPresentationCredentialCardScreenNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardScreen";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ITW_ROUTES } from "./routes";
@@ -74,8 +73,6 @@ export type ItwParamsList = {
     .CREDENTIAL_ATTACHMENT]: ItwPresentationCredentialAttachmentNavigationParams;
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_TRUSTMARK]: ItwCredentialTrustmarkScreenNavigationParams;
-  [ITW_ROUTES.PRESENTATION
-    .CREDENTIAL_CARD_SCREEN]: ItwPresentationCredentialCardScreenNavigationParams;
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_CARD_MODAL]: ItwPresentationCredentialCardModalNavigationParams;
   [ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL]: undefined;
