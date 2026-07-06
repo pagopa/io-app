@@ -114,7 +114,6 @@ export const shouldShowExpiredProximityCredentialsBannerSelector =
  * Selector to determine whether a specific credential type is presentable.
  * @param credentialType - The type of the credential to check.
  * @param state - The global state.
- *
  * @returns Boolean indicating whether the specified credential type is presentable.
  */
 export const isPresentableCredentialSelector =
