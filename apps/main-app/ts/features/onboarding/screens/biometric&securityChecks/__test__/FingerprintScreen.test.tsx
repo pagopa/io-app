@@ -16,33 +16,33 @@ jest.mock("../../../../../store/hooks", () => {
 
   return {
     ...original,
-    useIODispatch: jest.fn()
+    useIODispatch: jest.fn(),
   };
 });
 
 jest.mock("../../../../../utils/analytics", () => ({
   getFlowType: jest.fn(() => "test-flow"),
-  buildEventProperties: jest.fn(() => ({}))
+  buildEventProperties: jest.fn(() => ({})),
 }));
 
 jest.mock("../../../../../utils/biometrics", () => ({
-  mayUserActivateBiometric: jest.fn()
+  mayUserActivateBiometric: jest.fn(),
 }));
 
 jest.mock("../../../../settings/security/shared/analytics", () => ({
   trackBiometricActivationAccepted: jest.fn(),
   trackBiometricActivationDeclined: jest.fn(),
-  trackBiometricActivationEducationalScreen: jest.fn()
+  trackBiometricActivationEducationalScreen: jest.fn(),
 }));
 
 jest.mock("../../../../../hooks/useHeaderSecondLevel", () => ({
-  useHeaderSecondLevel: jest.fn()
+  useHeaderSecondLevel: jest.fn(),
 }));
 
 jest.mock("../../../hooks/useOnboardingAbortAlert", () => ({
   useOnboardingAbortAlert: () => ({
-    showAlert: jest.fn()
-  })
+    showAlert: jest.fn(),
+  }),
 }));
 
 describe("FingerprintScreen", () => {
@@ -56,10 +56,10 @@ describe("FingerprintScreen", () => {
   it("renders correctly with title and body", () => {
     const { getByText } = renderComponent();
     expect(
-      getByText(I18n.t("onboarding.biometric.available.title"))
+      getByText(I18n.t("onboarding.biometric.available.title")),
     ).toBeTruthy();
     expect(
-      getByText(I18n.t("onboarding.biometric.available.body.text"))
+      getByText(I18n.t("onboarding.biometric.available.body.text")),
     ).toBeTruthy();
   });
 
@@ -74,19 +74,19 @@ describe("FingerprintScreen", () => {
     await waitFor(() => {
       expect(biometrics.mayUserActivateBiometric).toHaveBeenCalled();
       expect(analytics.trackBiometricActivationAccepted).toHaveBeenCalledWith(
-        "test-flow"
+        "test-flow",
       );
       expect(dispatchMock).toHaveBeenCalledWith(
         preferenceFingerprintIsEnabledSaveSuccess({
-          isFingerprintEnabled: true
-        })
+          isFingerprintEnabled: true,
+        }),
       );
     });
   });
 
   it("handles biometric activation permission denied", async () => {
     (biometrics.mayUserActivateBiometric as jest.Mock).mockRejectedValue(
-      "PERMISSION_DENIED"
+      "PERMISSION_DENIED",
     );
 
     const { getByLabelText } = renderComponent();
@@ -97,12 +97,12 @@ describe("FingerprintScreen", () => {
     await waitFor(() => {
       expect(biometrics.mayUserActivateBiometric).toHaveBeenCalled();
       expect(analytics.trackBiometricActivationDeclined).toHaveBeenCalledWith(
-        "test-flow"
+        "test-flow",
       );
       expect(dispatchMock).toHaveBeenCalledWith(
         preferenceFingerprintIsEnabledSaveSuccess({
-          isFingerprintEnabled: false
-        })
+          isFingerprintEnabled: false,
+        }),
       );
     });
   });
@@ -114,10 +114,12 @@ describe("FingerprintScreen", () => {
     fireEvent.press(notNowButton);
 
     expect(analytics.trackBiometricActivationDeclined).toHaveBeenCalledWith(
-      "test-flow"
+      "test-flow",
     );
     expect(dispatchMock).toHaveBeenCalledWith(
-      preferenceFingerprintIsEnabledSaveSuccess({ isFingerprintEnabled: false })
+      preferenceFingerprintIsEnabledSaveSuccess({
+        isFingerprintEnabled: false,
+      }),
     );
   });
 });
@@ -129,6 +131,6 @@ const renderComponent = () => {
     FingerprintScreen,
     ROUTES.ONBOARDING_FINGERPRINT,
     {},
-    store
+    store,
   );
 };

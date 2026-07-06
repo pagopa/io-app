@@ -19,7 +19,7 @@ import {
   handleCtaAction,
   localizedCTAsFromFrontMatter,
   removeCTAsFromMarkdown,
-  testable
+  testable,
 } from "../ctas";
 
 const messageBody = `### this is a message
@@ -59,15 +59,18 @@ const messageWithContentWithoutDueDate = {
       amount: 406,
       invalid_after_due_date: false,
       payee: {
-        fiscal_code: "00000000001" as OrganizationFiscalCode
-      }
-    }
-  } as NewMessageContent
+        fiscal_code: "00000000001" as OrganizationFiscalCode,
+      },
+    },
+  } as NewMessageContent,
 } as CreatedMessageWithContent;
 
 const messageWithContent = {
   ...messageWithContentWithoutDueDate,
-  content: { ...messageWithContentWithoutDueDate.content, due_date: new Date() }
+  content: {
+    ...messageWithContentWithoutDueDate.content,
+    due_date: new Date(),
+  },
 };
 
 const mockAnalytics = jest.fn();
@@ -78,7 +81,7 @@ beforeEach(() => {
   jest
     .spyOn(ANALYTICS, "trackCTAFrontMatterDecodingError")
     .mockImplementation((_reason, _serviceId) =>
-      mockAnalytics(_reason, _serviceId)
+      mockAnalytics(_reason, _serviceId),
     );
 });
 afterEach(() => {
@@ -115,7 +118,7 @@ describe("getMessageCTAs", () => {
     text1: string,
     action1: string,
     text2: string,
-    action2: string
+    action2: string,
   ) => {
     expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(maybeCTAS).toBeTruthy();
@@ -133,26 +136,26 @@ describe("getMessageCTAs", () => {
   it("should have 2 valid CTA", () => {
     const maybeCTAs = getMessageCTAs(
       messageWithContent.content.markdown,
-      serviceId
+      serviceId,
     );
     test2CTA(
       maybeCTAs,
       "premi",
       "ioit://PROFILE_MAIN",
       "premi2",
-      "ioit://PROFILE_MAIN2"
+      "ioit://PROFILE_MAIN2",
     );
     setLocale("en" as Locales);
     const maybeCTAsEn = getMessageCTAs(
       messageWithContent.content.markdown,
-      serviceId
+      serviceId,
     );
     test2CTA(
       maybeCTAsEn,
       "go1",
       "ioit://PROFILE_MAIN",
       "go2",
-      "ioit://PROFILE_MAIN2"
+      "ioit://PROFILE_MAIN2",
     );
   });
 
@@ -160,14 +163,14 @@ describe("getMessageCTAs", () => {
     setLocale("fr" as Locales);
     const maybeCTAs = getMessageCTAs(
       messageWithContent.content.markdown,
-      serviceId
+      serviceId,
     );
     test2CTA(
       maybeCTAs,
       "premi",
       "ioit://PROFILE_MAIN",
       "premi2",
-      "ioit://PROFILE_MAIN2"
+      "ioit://PROFILE_MAIN2",
     );
     setLocale("it" as Locales); // restore default
   });
@@ -185,7 +188,7 @@ some noise`;
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
     expect(mockAnalytics.mock.calls[0][0]).toBe(
-      "The first CTA does not contain a supported action"
+      "The first CTA does not contain a supported action",
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(maybeCTA).toBeUndefined();
@@ -209,7 +212,7 @@ some noise`;
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
     expect(mockAnalytics.mock.calls[0][0]).toBe(
-      "A failure occoured while decoding from Localized CTAS to specific CTAs"
+      "A failure occoured while decoding from Localized CTAS to specific CTAs",
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(maybeCTA).toBeUndefined();
@@ -222,7 +225,7 @@ describe("removeCTAsFromMarkdown", () => {
     const markdown = "simple text";
     const cleaned = removeCTAsFromMarkdown(
       markdown as MessageBodyMarkdown,
-      serviceId
+      serviceId,
     );
     expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(cleaned).toEqual(markdown);
@@ -267,7 +270,7 @@ some noise`;
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
     expect(mockAnalytics.mock.calls[0][0]).toBe(
-      "A failure occourred while parsing or extracting front matter"
+      "A failure occourred while parsing or extracting front matter",
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(markdown).toEqual(undefined);
@@ -282,7 +285,7 @@ const ioHandledLinks = [
   "iohandledlink://sms://whateverHere",
   "iohandledlink://tel://whateverHere",
   "iohandledlink://mailto://whateverHere",
-  "iohandledlink://copy://whateverHere"
+  "iohandledlink://copy://whateverHere",
 ];
 
 describe("getCTAsIfValid", () => {
@@ -306,19 +309,19 @@ en:
 ---`;
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       validCTAs,
-      serviceId
+      serviceId,
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(verifiedCTAOrUndefined).toEqual({
       cta_1: {
         text: "Testo CTA1",
-        action: "ioit://messages"
+        action: "ioit://messages",
       },
       cta_2: {
         text: "Testo CTA2",
-        action: "ioit://services"
-      }
+        action: "ioit://services",
+      },
     });
   });
   it("should return CTAS from valid input string with only CTA 1", () => {
@@ -335,15 +338,15 @@ en:
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       validCTA1,
-      serviceId
+      serviceId,
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(verifiedCTAOrUndefined).toEqual({
       cta_1: {
         text: "Testo CTA1",
-        action: "ioit://messages"
-      }
+        action: "ioit://messages",
+      },
     });
   });
   it("should return undefined from input string with only CTA 2", () => {
@@ -360,13 +363,13 @@ en:
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       validCTAs,
-      serviceId
+      serviceId,
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
     expect(mockAnalytics.mock.calls[0][0]).toBe(
-      "A failure occoured while decoding from Localized CTAS to specific CTAs"
+      "A failure occoured while decoding from Localized CTAS to specific CTAs",
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(verifiedCTAOrUndefined).toBeUndefined();
@@ -391,25 +394,25 @@ en:
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       validCTAs,
-      serviceId
+      serviceId,
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
     expect(mockAnalytics.mock.calls[0][0]).toBe(
-      "The first CTA does not contain a supported action"
+      "The first CTA does not contain a supported action",
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
 
     expect(verifiedCTAOrUndefined).toEqual({
       cta_1: {
         action: "thisIsNotValid",
-        text: "Testo CTA1"
+        text: "Testo CTA1",
       },
       cta_2: {
         action: "ioit://services",
-        text: "Testo CTA2"
-      }
+        text: "Testo CTA2",
+      },
     });
   });
   it("should return undefined from input string with valid CTA1 action and invalid CTA2 action", () => {
@@ -432,24 +435,24 @@ en:
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       validCTAs,
-      serviceId
+      serviceId,
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
     expect(mockAnalytics.mock.calls[0][0]).toBe(
-      "The second CTA does not contain a supported action"
+      "The second CTA does not contain a supported action",
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(verifiedCTAOrUndefined).toEqual({
       cta_1: { action: "ioit://messages", text: "Testo CTA1" },
-      cta_2: { action: "thisIsNotValid", text: "Testo CTA2" }
+      cta_2: { action: "thisIsNotValid", text: "Testo CTA2" },
     });
   });
   it("should return undefined from invalid input string", () => {
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       "invalidInputString",
-      serviceId
+      serviceId,
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
@@ -458,13 +461,13 @@ en:
   it("should return undefined from undefined input string", () => {
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       undefined,
-      serviceId
+      serviceId,
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(verifiedCTAOrUndefined).toBeUndefined();
   });
-  ioHandledLinks.forEach(action => {
+  ioHandledLinks.forEach((action) => {
     it(`should return CTAS from valid input string with only CTA 1 and action (${action})`, () => {
       const validCTA1 = `---
 it:
@@ -479,15 +482,15 @@ en:
 
       const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
         validCTA1,
-        serviceId
+        serviceId,
       );
 
       expect(mockAnalytics.mock.calls.length).toBe(0);
       expect(verifiedCTAOrUndefined).toEqual({
         cta_1: {
           text: "Testo CTA1",
-          action
-        }
+          action,
+        },
       });
     });
   });
@@ -505,13 +508,13 @@ cta_1:
 
     const verifiedCTAOrUndefined = testable!.getCTAsIfValid(
       validCTA1,
-      serviceId
+      serviceId,
     );
 
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
     expect(mockAnalytics.mock.calls[0][0]).toBe(
-      "A failure occourred while parsing or extracting front matter"
+      "A failure occourred while parsing or extracting front matter",
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(verifiedCTAOrUndefined).toBeUndefined();
@@ -524,8 +527,8 @@ describe("areCTAsActionsValid", () => {
     const ctas: CTAS = {
       cta_1: {
         action: "ioit://messages",
-        text: "CTA1 text"
-      }
+        text: "CTA1 text",
+      },
     };
 
     const hasValidActions = testable!.areCTAsActionsValid(ctas, serviceId);
@@ -537,12 +540,12 @@ describe("areCTAsActionsValid", () => {
     const ctas: CTAS = {
       cta_1: {
         action: "ioit://messages",
-        text: "CTA1 text"
+        text: "CTA1 text",
       },
       cta_2: {
         action: "thisIsInvalid",
-        text: "CTA2 text"
-      }
+        text: "CTA2 text",
+      },
     };
 
     const hasValidActions = testable!.areCTAsActionsValid(ctas, serviceId);
@@ -550,7 +553,7 @@ describe("areCTAsActionsValid", () => {
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
     expect(mockAnalytics.mock.calls[0][0]).toBe(
-      "The second CTA does not contain a supported action"
+      "The second CTA does not contain a supported action",
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(hasValidActions).toBe(true);
@@ -559,12 +562,12 @@ describe("areCTAsActionsValid", () => {
     const ctas: CTAS = {
       cta_1: {
         action: "thisIsInvalid",
-        text: "CTA1 text"
+        text: "CTA1 text",
       },
       cta_2: {
         action: "ioit://messages",
-        text: "CTA2 text"
-      }
+        text: "CTA2 text",
+      },
     };
 
     const hasValidActions = testable!.areCTAsActionsValid(ctas, serviceId);
@@ -572,7 +575,7 @@ describe("areCTAsActionsValid", () => {
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
     expect(mockAnalytics.mock.calls[0][0]).toBe(
-      "The first CTA does not contain a supported action"
+      "The first CTA does not contain a supported action",
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(hasValidActions).toBe(true);
@@ -581,12 +584,12 @@ describe("areCTAsActionsValid", () => {
     const ctas: CTAS = {
       cta_1: {
         action: "thisIsInvalid",
-        text: "CTA1 text"
+        text: "CTA1 text",
       },
       cta_2: {
         action: "thisIsInvalid",
-        text: "CTA2 text"
-      }
+        text: "CTA2 text",
+      },
     };
 
     const hasValidActions = testable!.areCTAsActionsValid(ctas, serviceId);
@@ -594,12 +597,12 @@ describe("areCTAsActionsValid", () => {
     expect(mockAnalytics.mock.calls.length).toBe(2);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
     expect(mockAnalytics.mock.calls[0][0]).toBe(
-      "The first CTA does not contain a supported action"
+      "The first CTA does not contain a supported action",
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(mockAnalytics.mock.calls[1].length).toBe(2);
     expect(mockAnalytics.mock.calls[1][0]).toBe(
-      "The second CTA does not contain a supported action"
+      "The second CTA does not contain a supported action",
     );
     expect(mockAnalytics.mock.calls[1][1]).toBe(serviceId);
     expect(hasValidActions).toBe(false);
@@ -628,14 +631,14 @@ describe("isCtaActionValid", () => {
     ["https://google.com", false],
     ["http://www.google.com", false],
     ["http://google.com", false],
-    ["invalid", false]
+    ["invalid", false],
   ];
-  inputData.forEach(tuple => {
+  inputData.forEach((tuple) => {
     const [action, validity] = tuple;
     it(`should return '${validity}' for '${action}'`, () => {
       const cta: CTA = {
         action,
-        text: "CTA text"
+        text: "CTA text",
       };
       const isValid = testable!.isCtaActionValid(cta);
 
@@ -649,7 +652,7 @@ describe("localizedCTAsFromFrontMatter", () => {
   it("should return undefined if input is undefined", () => {
     const messageCTAOrUndefined = localizedCTAsFromFrontMatter(
       undefined,
-      serviceId
+      serviceId,
     );
     expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(messageCTAOrUndefined).toBeUndefined();
@@ -658,7 +661,7 @@ describe("localizedCTAsFromFrontMatter", () => {
     const input = "This is not a front matter";
     const messageCTAOrUndefined = localizedCTAsFromFrontMatter(
       input,
-      serviceId
+      serviceId,
     );
     expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(messageCTAOrUndefined).toBeUndefined();
@@ -667,7 +670,7 @@ describe("localizedCTAsFromFrontMatter", () => {
     const input = `---it: cta_1: text: "The text" action: "ioit://messages"---`;
     const messageCTAOrUndefined = localizedCTAsFromFrontMatter(
       input,
-      serviceId
+      serviceId,
     );
     expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(messageCTAOrUndefined).toBeUndefined();
@@ -676,12 +679,12 @@ describe("localizedCTAsFromFrontMatter", () => {
     const input = `---\nit:\n cta_1:\n  text: "The text"\n  action: "ioit://messages\n---`;
     const messageCTAOrUndefined = localizedCTAsFromFrontMatter(
       input,
-      serviceId
+      serviceId,
     );
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
     expect(mockAnalytics.mock.calls[0][0]).toBe(
-      "A failure occourred while parsing or extracting front matter"
+      "A failure occourred while parsing or extracting front matter",
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(messageCTAOrUndefined).toBeUndefined();
@@ -690,16 +693,16 @@ describe("localizedCTAsFromFrontMatter", () => {
     const input = `---\nit:\n cta_1:\n  text: "The text"\n  action: "ioit://messages"\n---`;
     const messageCTAOrUndefined = localizedCTAsFromFrontMatter(
       input,
-      serviceId
+      serviceId,
     );
     expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(messageCTAOrUndefined).toEqual({
       it: {
         cta_1: {
           text: "The text",
-          action: "ioit://messages"
-        }
-      }
+          action: "ioit://messages",
+        },
+      },
     });
   });
 });
@@ -748,7 +751,7 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: {} }, en: { cta_1: { text: "" }, cta_2: { text: "" } } },
     {
       it: { cta_1: {} },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: {} }, en: { cta_1: { action: "" } } },
     { it: { cta_1: {} }, en: { cta_1: { action: "" }, cta_2: {} } },
@@ -756,7 +759,7 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: {} }, en: { cta_1: { action: "" }, cta_2: { text: "" } } },
     {
       it: { cta_1: {} },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: {} }, en: { cta_2: {} } },
     { it: { cta_1: {} }, en: { cta_2: { text: "" } } },
@@ -771,35 +774,35 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: { action: "" } }, en: { cta_1: {}, cta_2: { text: "" } } },
     {
       it: { cta_1: { action: "" } },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     { it: { cta_1: { action: "" } }, en: { cta_1: { text: "" } } },
     { it: { cta_1: { action: "" } }, en: { cta_1: { text: "" }, cta_2: {} } },
     {
       it: { cta_1: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: { action: "" } }, en: { cta_1: { action: "" } } },
     { it: { cta_1: { action: "" } }, en: { cta_1: { action: "" }, cta_2: {} } },
     {
       it: { cta_1: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: { action: "" } }, en: { cta_2: {} } },
     { it: { cta_1: { action: "" } }, en: { cta_2: { text: "" } } },
@@ -814,35 +817,35 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: { text: "" } }, en: { cta_1: {}, cta_2: { text: "" } } },
     {
       it: { cta_1: { text: "" } },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     { it: { cta_1: { text: "" } }, en: { cta_1: { text: "" } } },
     { it: { cta_1: { text: "" } }, en: { cta_1: { text: "" }, cta_2: {} } },
     {
       it: { cta_1: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: { text: "" } }, en: { cta_1: { action: "" } } },
     { it: { cta_1: { text: "" } }, en: { cta_1: { action: "" }, cta_2: {} } },
     {
       it: { cta_1: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: { text: "" } }, en: { cta_2: {} } },
     { it: { cta_1: { text: "" } }, en: { cta_2: { text: "" } } },
@@ -857,35 +860,35 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: {}, cta_2: {} }, en: { cta_1: {}, cta_2: { text: "" } } },
     {
       it: { cta_1: {}, cta_2: {} },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     { it: { cta_1: {}, cta_2: {} }, en: { cta_1: { text: "" } } },
     { it: { cta_1: {}, cta_2: {} }, en: { cta_1: { text: "" }, cta_2: {} } },
     {
       it: { cta_1: {}, cta_2: {} },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: {} },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: {} },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: {}, cta_2: {} }, en: { cta_1: { action: "" } } },
     { it: { cta_1: {}, cta_2: {} }, en: { cta_1: { action: "" }, cta_2: {} } },
     {
       it: { cta_1: {}, cta_2: {} },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: {} },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: {} },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: {}, cta_2: {} }, en: { cta_2: {} } },
     { it: { cta_1: {}, cta_2: {} }, en: { cta_2: { text: "" } } },
@@ -898,56 +901,56 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_1: {}, cta_2: {} } },
     {
       it: { cta_1: { action: "" }, cta_2: {} },
-      en: { cta_1: {}, cta_2: { action: "" } }
+      en: { cta_1: {}, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: {} },
-      en: { cta_1: {}, cta_2: { text: "" } }
+      en: { cta_1: {}, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: {} },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_1: { text: "" } } },
     {
       it: { cta_1: { action: "" }, cta_2: {} },
-      en: { cta_1: { text: "" }, cta_2: {} }
+      en: { cta_1: { text: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: {} },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: {} },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: {} },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_1: { action: "" } } },
     {
       it: { cta_1: { action: "" }, cta_2: {} },
-      en: { cta_1: { action: "" }, cta_2: {} }
+      en: { cta_1: { action: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: {} },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: {} },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: {} },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_2: {} } },
     { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_2: { text: "" } } },
     { it: { cta_1: { action: "" }, cta_2: {} }, en: { cta_2: { action: "" } } },
     {
       it: { cta_1: { action: "" }, cta_2: {} },
-      en: { cta_2: { action: "", text: "" } }
+      en: { cta_2: { action: "", text: "" } },
     },
 
     { it: { cta_1: { text: "" }, cta_2: {} } },
@@ -956,56 +959,56 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_1: {}, cta_2: {} } },
     {
       it: { cta_1: { text: "" }, cta_2: {} },
-      en: { cta_1: {}, cta_2: { action: "" } }
+      en: { cta_1: {}, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: {} },
-      en: { cta_1: {}, cta_2: { text: "" } }
+      en: { cta_1: {}, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: {} },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_1: { text: "" } } },
     {
       it: { cta_1: { text: "" }, cta_2: {} },
-      en: { cta_1: { text: "" }, cta_2: {} }
+      en: { cta_1: { text: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: {} },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: {} },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: {} },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_1: { action: "" } } },
     {
       it: { cta_1: { text: "" }, cta_2: {} },
-      en: { cta_1: { action: "" }, cta_2: {} }
+      en: { cta_1: { action: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: {} },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: {} },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: {} },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_2: {} } },
     { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_2: { text: "" } } },
     { it: { cta_1: { text: "" }, cta_2: {} }, en: { cta_2: { action: "" } } },
     {
       it: { cta_1: { text: "" }, cta_2: {} },
-      en: { cta_2: { action: "", text: "" } }
+      en: { cta_2: { action: "", text: "" } },
     },
 
     { it: { cta_1: {}, cta_2: { action: "" } } },
@@ -1014,56 +1017,56 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_1: {}, cta_2: {} } },
     {
       it: { cta_1: {}, cta_2: { action: "" } },
-      en: { cta_1: {}, cta_2: { action: "" } }
+      en: { cta_1: {}, cta_2: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "" } },
-      en: { cta_1: {}, cta_2: { text: "" } }
+      en: { cta_1: {}, cta_2: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "" } },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_1: { text: "" } } },
     {
       it: { cta_1: {}, cta_2: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: {} }
+      en: { cta_1: { text: "" }, cta_2: {} },
     },
     {
       it: { cta_1: {}, cta_2: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_1: { action: "" } } },
     {
       it: { cta_1: {}, cta_2: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: {} }
+      en: { cta_1: { action: "" }, cta_2: {} },
     },
     {
       it: { cta_1: {}, cta_2: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_2: {} } },
     { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_2: { text: "" } } },
     { it: { cta_1: {}, cta_2: { action: "" } }, en: { cta_2: { action: "" } } },
     {
       it: { cta_1: {}, cta_2: { action: "" } },
-      en: { cta_2: { action: "", text: "" } }
+      en: { cta_2: { action: "", text: "" } },
     },
 
     { it: { cta_1: { action: "" }, cta_2: { action: "" } } },
@@ -1071,72 +1074,72 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: { action: "" }, cta_2: { action: "" } }, en: { cta_1: {} } },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: {}, cta_2: {} }
+      en: { cta_1: {}, cta_2: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: {}, cta_2: { action: "" } }
+      en: { cta_1: {}, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: {}, cta_2: { text: "" } }
+      en: { cta_1: {}, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: { text: "" } }
+      en: { cta_1: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: {} }
+      en: { cta_1: { text: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: { action: "" } }
+      en: { cta_1: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: {} }
+      en: { cta_1: { action: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: { action: "" }, cta_2: { action: "" } }, en: { cta_2: {} } },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_2: { text: "" } }
+      en: { cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_2: { action: "" } }
+      en: { cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "" } },
-      en: { cta_2: { action: "", text: "" } }
+      en: { cta_2: { action: "", text: "" } },
     },
 
     { it: { cta_1: { text: "" }, cta_2: { action: "" } } },
@@ -1144,72 +1147,72 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: { text: "" }, cta_2: { action: "" } }, en: { cta_1: {} } },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: {}, cta_2: {} }
+      en: { cta_1: {}, cta_2: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: {}, cta_2: { action: "" } }
+      en: { cta_1: {}, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: {}, cta_2: { text: "" } }
+      en: { cta_1: {}, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: { text: "" } }
+      en: { cta_1: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: {} }
+      en: { cta_1: { text: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: { action: "" } }
+      en: { cta_1: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: {} }
+      en: { cta_1: { action: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: { text: "" }, cta_2: { action: "" } }, en: { cta_2: {} } },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_2: { text: "" } }
+      en: { cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_2: { action: "" } }
+      en: { cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "" } },
-      en: { cta_2: { action: "", text: "" } }
+      en: { cta_2: { action: "", text: "" } },
     },
 
     { it: { cta_1: {}, cta_2: { text: "" } } },
@@ -1218,56 +1221,56 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_1: {}, cta_2: {} } },
     {
       it: { cta_1: {}, cta_2: { text: "" } },
-      en: { cta_1: {}, cta_2: { action: "" } }
+      en: { cta_1: {}, cta_2: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { text: "" } },
-      en: { cta_1: {}, cta_2: { text: "" } }
+      en: { cta_1: {}, cta_2: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { text: "" } },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_1: { text: "" } } },
     {
       it: { cta_1: {}, cta_2: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: {} }
+      en: { cta_1: { text: "" }, cta_2: {} },
     },
     {
       it: { cta_1: {}, cta_2: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_1: { action: "" } } },
     {
       it: { cta_1: {}, cta_2: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: {} }
+      en: { cta_1: { action: "" }, cta_2: {} },
     },
     {
       it: { cta_1: {}, cta_2: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_2: {} } },
     { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_2: { text: "" } } },
     { it: { cta_1: {}, cta_2: { text: "" } }, en: { cta_2: { action: "" } } },
     {
       it: { cta_1: {}, cta_2: { text: "" } },
-      en: { cta_2: { action: "", text: "" } }
+      en: { cta_2: { action: "", text: "" } },
     },
 
     { it: { cta_1: { action: "" }, cta_2: { text: "" } } },
@@ -1275,72 +1278,72 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: { action: "" }, cta_2: { text: "" } }, en: { cta_1: {} } },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: {}, cta_2: {} }
+      en: { cta_1: {}, cta_2: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: {}, cta_2: { action: "" } }
+      en: { cta_1: {}, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: {}, cta_2: { text: "" } }
+      en: { cta_1: {}, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: { text: "" } }
+      en: { cta_1: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: {} }
+      en: { cta_1: { text: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: { action: "" } }
+      en: { cta_1: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: {} }
+      en: { cta_1: { action: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: { action: "" }, cta_2: { text: "" } }, en: { cta_2: {} } },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_2: { text: "" } }
+      en: { cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_2: { action: "" } }
+      en: { cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { text: "" } },
-      en: { cta_2: { action: "", text: "" } }
+      en: { cta_2: { action: "", text: "" } },
     },
 
     { it: { cta_1: { text: "" }, cta_2: { text: "" } } },
@@ -1348,72 +1351,72 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: { text: "" }, cta_2: { text: "" } }, en: { cta_1: {} } },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: {}, cta_2: {} }
+      en: { cta_1: {}, cta_2: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: {}, cta_2: { action: "" } }
+      en: { cta_1: {}, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: {}, cta_2: { text: "" } }
+      en: { cta_1: {}, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: { text: "" } }
+      en: { cta_1: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: {} }
+      en: { cta_1: { text: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: { action: "" } }
+      en: { cta_1: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: {} }
+      en: { cta_1: { action: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: { text: "" }, cta_2: { text: "" } }, en: { cta_2: {} } },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_2: { text: "" } }
+      en: { cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_2: { action: "" } }
+      en: { cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { text: "" } },
-      en: { cta_2: { action: "", text: "" } }
+      en: { cta_2: { action: "", text: "" } },
     },
 
     { it: { cta_1: {}, cta_2: { action: "", text: "" } } },
@@ -1421,241 +1424,241 @@ describe("ctasFromLocalizedCTAs", () => {
     { it: { cta_1: {}, cta_2: { action: "", text: "" } }, en: { cta_1: {} } },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: {}, cta_2: {} }
+      en: { cta_1: {}, cta_2: {} },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: {}, cta_2: { action: "" } }
+      en: { cta_1: {}, cta_2: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: {}, cta_2: { text: "" } }
+      en: { cta_1: {}, cta_2: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" } }
+      en: { cta_1: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" }, cta_2: {} }
+      en: { cta_1: { text: "" }, cta_2: {} },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" } }
+      en: { cta_1: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" }, cta_2: {} }
+      en: { cta_1: { action: "" }, cta_2: {} },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     { it: { cta_1: {}, cta_2: { action: "", text: "" } }, en: { cta_2: {} } },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_2: { text: "" } }
+      en: { cta_2: { text: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_2: { action: "" } }
+      en: { cta_2: { action: "" } },
     },
     {
       it: { cta_1: {}, cta_2: { action: "", text: "" } },
-      en: { cta_2: { action: "", text: "" } }
+      en: { cta_2: { action: "", text: "" } },
     },
 
     { it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } } },
     { it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }, en: {} },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: {} }
+      en: { cta_1: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: {}, cta_2: {} }
+      en: { cta_1: {}, cta_2: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: {}, cta_2: { action: "" } }
+      en: { cta_1: {}, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: {}, cta_2: { text: "" } }
+      en: { cta_1: {}, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" } }
+      en: { cta_1: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" }, cta_2: {} }
+      en: { cta_1: { text: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" } }
+      en: { cta_1: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" }, cta_2: {} }
+      en: { cta_1: { action: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_2: {} }
+      en: { cta_2: {} },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_2: { text: "" } }
+      en: { cta_2: { text: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_2: { action: "" } }
+      en: { cta_2: { action: "" } },
     },
     {
       it: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_2: { action: "", text: "" } }
+      en: { cta_2: { action: "", text: "" } },
     },
 
     { it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } } },
     { it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }, en: {} },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: {} }
+      en: { cta_1: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: {}, cta_2: {} }
+      en: { cta_1: {}, cta_2: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: {}, cta_2: { action: "" } }
+      en: { cta_1: {}, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: {}, cta_2: { text: "" } }
+      en: { cta_1: {}, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: {}, cta_2: { text: "", action: "" } }
+      en: { cta_1: {}, cta_2: { text: "", action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" } }
+      en: { cta_1: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" }, cta_2: {} }
+      en: { cta_1: { text: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" } }
+      en: { cta_1: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" }, cta_2: {} }
+      en: { cta_1: { action: "" }, cta_2: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } }
+      en: { cta_1: { action: "" }, cta_2: { action: "", text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_2: {} }
+      en: { cta_2: {} },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_2: { text: "" } }
+      en: { cta_2: { text: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_2: { action: "" } }
+      en: { cta_2: { action: "" } },
     },
     {
       it: { cta_1: { text: "" }, cta_2: { action: "", text: "" } },
-      en: { cta_2: { action: "", text: "" } }
-    }
-  ].forEach(invalidMessageCTA => {
+      en: { cta_2: { action: "", text: "" } },
+    },
+  ].forEach((invalidMessageCTA) => {
     it(`should return undefined if input does not have the CTA (${JSON.stringify(
-      invalidMessageCTA
+      invalidMessageCTA,
     )})`, () => {
       const messageCTA = invalidMessageCTA as LocalizedCTAs;
       const ctas = ctasFromLocalizedCTAs(messageCTA, serviceId);
       expect(mockAnalytics.mock.calls.length).toBe(1);
       expect(mockAnalytics.mock.calls[0].length).toBe(2);
       expect(mockAnalytics.mock.calls[0][0]).toBe(
-        "A failure occoured while decoding from Localized CTAS to specific CTAs"
+        "A failure occoured while decoding from Localized CTAS to specific CTAs",
       );
       expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
       expect(ctas).toBeUndefined();
@@ -1666,17 +1669,17 @@ describe("ctasFromLocalizedCTAs", () => {
       it: {
         cta_1: {
           text: "The text",
-          action: "ioit://messages"
-        }
-      }
+          action: "ioit://messages",
+        },
+      },
     };
     const ctas = ctasFromLocalizedCTAs(messageCTA, serviceId);
     expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(ctas).toEqual({
       cta_1: {
         text: "The text",
-        action: "ioit://messages"
-      }
+        action: "ioit://messages",
+      },
     });
   });
 });
@@ -1699,7 +1702,7 @@ describe("getServiceCTAs", () => {
   });
   it("should return the CTA if input service has a properly formatted cta", () => {
     const serviceMetadata = {
-      cta: `---\nit:\n cta_1:\n  action: "ioit://messages"\n  text: "CTA's text"\n---`
+      cta: `---\nit:\n cta_1:\n  action: "ioit://messages"\n  text: "CTA's text"\n---`,
     } as ServiceMetadata;
 
     const serviceCTA = getServiceCTAs(serviceId, serviceMetadata);
@@ -1708,8 +1711,8 @@ describe("getServiceCTAs", () => {
     expect(serviceCTA).toEqual({
       cta_1: {
         action: "ioit://messages",
-        text: "CTA's text"
-      }
+        text: "CTA's text",
+      },
     });
   });
 });
@@ -1749,7 +1752,7 @@ describe("handleCtaAction", () => {
     "mailto://johnsmith@gmail.com",
     "mailto:johnsmith@gmail.com",
     "copy://aValue",
-    "copy:aValue"
+    "copy:aValue",
   ].forEach((anUri, index) => {
     const linkToCalled = index < 3;
     const fimsCalled = index > 2 && index < 6;
@@ -1766,11 +1769,11 @@ describe("handleCtaAction", () => {
       const spiedOnMockedOpenURL = jest
         .spyOn(Linking, "openURL")
         .mockImplementation(
-          _anUrl => new Promise(resolve => resolve(undefined))
+          (_anUrl) => new Promise((resolve) => resolve(undefined)),
         );
       const cta: CTA = {
         action: anUri,
-        text: "A text"
+        text: "A text",
       };
 
       handleCtaAction(cta, mockedLinkTo, mockedFimsCallback);
@@ -1803,40 +1806,40 @@ describe("parseFrontMatter", () => {
     { name: "empty string", input: "" },
     {
       name: "non front matter string",
-      input: "it:\n cta_1:\n  text: The text"
+      input: "it:\n cta_1:\n  text: The text",
     },
     {
       name: "non opening front matter",
-      input: "it:\n cta_1:\n  text: The text\n---"
+      input: "it:\n cta_1:\n  text: The text\n---",
     },
     {
       name: "non closing front matter",
-      input: "---\nit:\n cta_1:\n  text: The text"
+      input: "---\nit:\n cta_1:\n  text: The text",
     },
     {
       name: "opening without newline",
-      input: "---it:\n cta_1:\n  text: The text\n---"
+      input: "---it:\n cta_1:\n  text: The text\n---",
     },
     {
       name: "closing without newline",
-      input: "---\nit:\n cta_1:\n  text: The text---"
+      input: "---\nit:\n cta_1:\n  text: The text---",
     },
     {
       name: "extra characters after closing",
-      input: "---\nit:\n cta_1:\n  text: The text\n---Something else"
+      input: "---\nit:\n cta_1:\n  text: The text\n---Something else",
     },
     {
       name: "extra space before opening",
-      input: " ---\nit:\n cta_1:\n  text: The text\n---"
+      input: " ---\nit:\n cta_1:\n  text: The text\n---",
     },
     {
       name: "extra space before closing",
-      input: "---\nit:\n cta_1:\n  text: The text\n ---"
+      input: "---\nit:\n cta_1:\n  text: The text\n ---",
     },
     {
       name: "wrong opening delimiter",
-      input: "...\nit:\n cta_1:\n  text: The text\n---"
-    }
+      input: "...\nit:\n cta_1:\n  text: The text\n---",
+    },
   ])("should return no-header for $name", ({ input }) => {
     const result = testable!.parseFrontMatter(input, serviceId);
 
@@ -1845,7 +1848,7 @@ describe("parseFrontMatter", () => {
   });
 
   it("should return failure and track error if FM.test throws", () => {
-    jest.spyOn(FM, "test").mockImplementation(_input => {
+    jest.spyOn(FM, "test").mockImplementation((_input) => {
       throw Error("An error");
     });
     const input = "---\nit:\n cta_1:\n  text: The text\n---";
@@ -1855,7 +1858,7 @@ describe("parseFrontMatter", () => {
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
     expect(mockAnalytics.mock.calls[0][0]).toBe(
-      "A failure occoured while testing for front matter"
+      "A failure occoured while testing for front matter",
     );
     expect(mockAnalytics.mock.calls[0][1]).toBe(serviceId);
     expect(result.status).toBe("failure");

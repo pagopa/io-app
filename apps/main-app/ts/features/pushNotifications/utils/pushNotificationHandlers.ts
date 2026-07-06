@@ -9,7 +9,7 @@ import { isLoadingOrUpdating } from "../../../utils/pot";
 import { trackMessageNotificationTap } from "../../messages/analytics";
 import {
   loadPreviousPageMessages,
-  reloadAllMessages
+  reloadAllMessages,
 } from "../../messages/store/actions";
 import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
 import { updateNotificationsPendingMessage } from "../store/actions/pendingMessage";
@@ -23,10 +23,10 @@ export const handleMessageNotificationInteraction = (
   response: Notifications.NotificationResponse,
   receivedInForeground: boolean,
   store: Store,
-  isAnalyticsOptedIn: boolean
+  isAnalyticsOptedIn: boolean,
 ) => {
   const messageId = messageIdFromNotificationRequest(
-    response.notification.request
+    response.notification.request,
   );
   if (messageId != null) {
     // tracks the event directly or enqueues it for later processing
@@ -42,8 +42,8 @@ export const handleMessageNotificationInteraction = (
       store.dispatch(
         updateNotificationsPendingMessage({
           id: messageId,
-          foreground: false
-        })
+          foreground: false,
+        }),
       );
     }
   }
@@ -74,7 +74,11 @@ const handleForegroundMessageReload = (store: Store) => {
   if (pot.isNone(inboxIndexes)) {
     // collection is empty, refresh
     store.dispatch(
-      reloadAllMessages.request({ pageSize, filter: {}, fromUserAction: false })
+      reloadAllMessages.request({
+        pageSize,
+        filter: {},
+        fromUserAction: false,
+      }),
     );
   } else if (pot.isSome(inboxIndexes)) {
     // current collection exists, fetch the maximum number of new
@@ -85,8 +89,8 @@ const handleForegroundMessageReload = (store: Store) => {
         cursor: inboxIndexes.value.previous,
         pageSize: maximumItemsFromAPI,
         filter: {},
-        fromUserAction: false
-      })
+        fromUserAction: false,
+      }),
     );
   }
 };
@@ -94,14 +98,14 @@ const handleForegroundMessageReload = (store: Store) => {
 // ----------------------------------------------------------- UTILS -------------------------------------------------------------
 
 const messageIdFromNotificationRequest = (
-  notificationRequest: Notifications.NotificationRequest
+  notificationRequest: Notifications.NotificationRequest,
 ): string | undefined =>
   _.get(notificationRequest, ["content", "data", "message_id"]) ?? // expo standard path
   _.get(notificationRequest, [
     "trigger",
     "remoteMessage",
     "data",
-    "message_id"
+    "message_id",
   ]) ?? // android path
   _.get(notificationRequest, ["trigger", "payload", "message_id"]); // ios path
 
@@ -110,9 +114,9 @@ const getArchiveAndInboxNextAndPreviousPageIndexes = (state: GlobalState) => {
   return {
     archive: pot.map(archive.data, ({ previous, next }) => ({
       previous,
-      next
+      next,
     })),
-    inbox: pot.map(inbox.data, ({ previous, next }) => ({ previous, next }))
+    inbox: pot.map(inbox.data, ({ previous, next }) => ({ previous, next })),
   };
 };
 
@@ -120,6 +124,6 @@ export const testable = isTestEnv
   ? {
       messageIdFromNotificationRequest,
       getArchiveAndInboxNextAndPreviousPageIndexes,
-      handleForegroundMessageReload
+      handleForegroundMessageReload,
     }
   : undefined;

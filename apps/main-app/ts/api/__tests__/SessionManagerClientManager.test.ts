@@ -1,11 +1,14 @@
 import { TestSessionManagerClientManager } from "../SessionManagerClientManager";
 
 jest.mock("../../../definitions/session_manager/client", () => ({
-  createClient: jest.fn(() => ({ _type: "session_manager", id: Math.random() }))
+  createClient: jest.fn(() => ({
+    _type: "session_manager",
+    id: Math.random(),
+  })),
 }));
 
 jest.mock("../../utils/fetch", () => ({
-  defaultRetryingFetch: jest.fn(() => jest.fn())
+  defaultRetryingFetch: jest.fn(() => jest.fn()),
 }));
 
 const BASE_URL = "http://example.com";

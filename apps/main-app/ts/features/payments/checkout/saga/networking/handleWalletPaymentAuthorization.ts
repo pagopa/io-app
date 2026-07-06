@@ -20,20 +20,20 @@ type WalletAuthorizationAction = ActionType<
 >;
 
 const buildAuthorizationDetailsBody = (
-  payload: WalletAuthorizationAction["payload"]
+  payload: WalletAuthorizationAction["payload"],
 ): AuthorizationDetails => {
   if (payload.orderId !== undefined) {
     return {
       detailType: CardsDetailTypeEnum.cards,
       orderId: payload.orderId,
-      paymentMethodId: payload.paymentMethodId
+      paymentMethodId: payload.paymentMethodId,
     };
   }
 
   if (payload.walletId !== undefined) {
     return {
       detailType: WalletDetailTypeEnum.wallet,
-      walletId: payload.walletId
+      walletId: payload.walletId,
     };
   }
 
@@ -43,13 +43,13 @@ const buildAuthorizationDetailsBody = (
       PaymentMethodManagementTypeEnum.REDIRECT
         ? RedirectDetailTypeEnum.redirect
         : ApmDetailTypeEnum.apm,
-    paymentMethodId: payload.paymentMethodId
+    paymentMethodId: payload.paymentMethodId,
   };
 };
 
 export function* handleWalletPaymentAuthorization(
   requestTransactionAuthorization: PaymentClient["requestTransactionAuthorizationForIO"],
-  action: WalletAuthorizationAction
+  action: WalletAuthorizationAction,
 ) {
   try {
     const details = buildAuthorizationDetailsBody(action.payload);
@@ -61,7 +61,7 @@ export function* handleWalletPaymentAuthorization(
       isAllCCP: action.payload.isAllCCP,
       language,
       pspId: action.payload.pspId,
-      details
+      details,
     };
 
     const requestTransactionAuthorizationResult =
@@ -70,9 +70,9 @@ export function* handleWalletPaymentAuthorization(
         action,
         {
           transactionId: action.payload.transactionId,
-          body: requestBody
+          body: requestBody,
         },
-        "pagoPAPlatformSessionToken"
+        "pagoPAPlatformSessionToken",
       );
 
     if (E.isLeft(requestTransactionAuthorizationResult)) {
@@ -80,10 +80,10 @@ export function* handleWalletPaymentAuthorization(
         paymentsStartPaymentAuthorizationAction.failure({
           ...getGenericError(
             new Error(
-              readablePrivacyReport(requestTransactionAuthorizationResult.left)
-            )
-          )
-        })
+              readablePrivacyReport(requestTransactionAuthorizationResult.left),
+            ),
+          ),
+        }),
       );
       return;
     }
@@ -91,8 +91,8 @@ export function* handleWalletPaymentAuthorization(
     if (requestTransactionAuthorizationResult.right.status === 200) {
       yield* put(
         paymentsStartPaymentAuthorizationAction.success(
-          requestTransactionAuthorizationResult.right.value
-        )
+          requestTransactionAuthorizationResult.right.value,
+        ),
       );
     } else if (requestTransactionAuthorizationResult.right.status !== 401) {
       // The 401 status is handled by the withPaymentsSessionToken
@@ -100,15 +100,17 @@ export function* handleWalletPaymentAuthorization(
         paymentsStartPaymentAuthorizationAction.failure({
           ...getGenericError(
             new Error(
-              `Error: ${requestTransactionAuthorizationResult.right.status}`
-            )
-          )
-        })
+              `Error: ${requestTransactionAuthorizationResult.right.status}`,
+            ),
+          ),
+        }),
       );
     }
   } catch (e) {
     yield* put(
-      paymentsStartPaymentAuthorizationAction.failure({ ...getNetworkError(e) })
+      paymentsStartPaymentAuthorizationAction.failure({
+        ...getNetworkError(e),
+      }),
     );
   }
 }

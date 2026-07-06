@@ -3,7 +3,7 @@ import {
   IOColors,
   IOText,
   Tag,
-  useIOThemeContext
+  useIOThemeContext,
 } from "@pagopa/io-app-design-system";
 import Color from "color";
 import I18n from "i18next";
@@ -17,7 +17,7 @@ import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
 import {
   useBorderColorByStatus,
   useTagPropsByStatus,
-  validCredentialStatuses
+  validCredentialStatuses,
 } from "../../utils/itwCredentialUtils";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
@@ -56,11 +56,11 @@ export const ItwCredentialCard = memo(
   ({
     credentialType,
     credentialStatus = "valid",
-    issuedAt
+    issuedAt,
   }: ItwCredentialCard) => {
     const typefacePreference = useIOSelector(fontPreferenceSelector);
     const needsItwUpgrade = useIOSelector(
-      itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
+      itwShouldUpgradeCredentialSelector(credentialType, issuedAt),
     );
     const { themeType, theme } = useIOThemeContext();
     const status = useItwDisplayCredentialStatus(credentialStatus);
@@ -74,7 +74,7 @@ export const ItwCredentialCard = memo(
       if (needsItwUpgrade) {
         return {
           variant: "info",
-          text: I18n.t("features.itWallet.card.status.upgradePending")
+          text: I18n.t("features.itWallet.card.status.upgradePending"),
         };
       }
 
@@ -87,7 +87,9 @@ export const ItwCredentialCard = memo(
       <View
         style={[
           styles.cardWrapper,
-          status === "valid" && { boxShadow: `0 0 0 2px ${appBackgroundColor}` }
+          status === "valid" && {
+            boxShadow: `0 0 0 2px ${appBackgroundColor}`,
+          },
         ]}
       >
         <View style={styles.cardContainer}>
@@ -113,7 +115,7 @@ export const ItwCredentialCard = memo(
                     letterSpacing: 0.25,
                     color: cardConfig.titleColor,
                     flex: 1,
-                    flexShrink: 1
+                    flexShrink: 1,
                   }}
                 >
                   {credentialName.toUpperCase()}
@@ -134,8 +136,8 @@ export const ItwCredentialCard = memo(
                 styles.statusOverlay,
                 {
                   backgroundColor:
-                    themeType === "light" ? IOColors.white : IOColors.black
-                }
+                    themeType === "light" ? IOColors.white : IOColors.black,
+                },
               ]}
             />
           )}
@@ -144,13 +146,13 @@ export const ItwCredentialCard = memo(
               styles.border,
               status === "valid"
                 ? { borderColor: cardConfig.borderColor, borderWidth: 1 }
-                : { borderColor: borderColorMap[status], borderWidth: 2 }
+                : { borderColor: borderColorMap[status], borderWidth: 2 },
             ]}
           />
         </View>
       </View>
     );
-  }
+  },
 );
 
 /**
@@ -160,11 +162,11 @@ export const ItwCredentialCard = memo(
 export const ItwCredentialCardLegacy = ({
   credentialType,
   credentialStatus = "valid",
-  issuedAt
+  issuedAt,
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const needsItwUpgrade = useIOSelector(
-    itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
+    itwShouldUpgradeCredentialSelector(credentialType, issuedAt),
   );
   const status = useItwDisplayCredentialStatus(credentialStatus);
   const theme = useThemeColorByCredentialType(credentialType);
@@ -176,7 +178,7 @@ export const ItwCredentialCardLegacy = ({
     if (needsItwUpgrade) {
       return {
         variant: "info",
-        text: I18n.t("features.itWallet.card.status.upgradePending")
+        text: I18n.t("features.itWallet.card.status.upgradePending"),
       };
     }
 
@@ -195,7 +197,7 @@ export const ItwCredentialCardLegacy = ({
       return {
         titleColor: baseColor,
         titleOpacity: 0.5,
-        colorScheme: "faded"
+        colorScheme: "faded",
       };
     }
 
@@ -203,7 +205,7 @@ export const ItwCredentialCardLegacy = ({
       return {
         titleColor: Color(baseColor).grayscale().hex(),
         titleOpacity: 0.5,
-        colorScheme: "greyscale"
+        colorScheme: "greyscale",
       };
     }
 
@@ -211,14 +213,14 @@ export const ItwCredentialCardLegacy = ({
       return {
         titleColor: baseColor,
         titleOpacity: 1,
-        colorScheme: "default"
+        colorScheme: "default",
       };
     }
 
     return {
       titleColor: baseColor,
       titleOpacity: 0.5,
-      colorScheme: "faded"
+      colorScheme: "faded",
     };
   }, [theme, status, needsItwUpgrade]);
 
@@ -246,7 +248,7 @@ export const ItwCredentialCardLegacy = ({
                 color: titleColor,
                 opacity: titleOpacity,
                 flex: 1,
-                flexShrink: 1
+                flexShrink: 1,
               }}
             >
               {credentialName.toUpperCase()}
@@ -262,8 +264,8 @@ export const ItwCredentialCardLegacy = ({
           style={[
             styles.border,
             {
-              borderColor: borderColorMap[status]
-            }
+              borderColor: borderColorMap[status],
+            },
           ]}
         />
       </View>
@@ -274,12 +276,12 @@ export const ItwCredentialCardLegacy = ({
 const styles = StyleSheet.create({
   cardWrapper: {
     aspectRatio: 16 / 10,
-    borderRadius: 8
+    borderRadius: 8,
   },
   cardContainer: {
     flex: 1,
     borderRadius: 8,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   border: {
     position: "absolute",
@@ -290,7 +292,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderCurve: "continuous",
     borderWidth: 1,
-    zIndex: 11
+    zIndex: 11,
   },
   header: {
     display: "flex",
@@ -298,15 +300,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingTop: 12
+    paddingTop: 12,
   },
   statusTag: {
     position: "absolute",
     right: 16,
     top: 10,
-    zIndex: 20
+    zIndex: 20,
   },
   statusOverlay: {
-    opacity: 0.7
-  }
+    opacity: 0.7,
+  },
 });

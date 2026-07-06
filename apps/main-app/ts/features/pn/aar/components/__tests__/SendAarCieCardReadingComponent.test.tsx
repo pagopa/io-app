@@ -12,7 +12,7 @@ import * as analytics from "../../analytics";
 import {
   isErrorState,
   ReadStatus,
-  useCieInternalAuthAndMrtdReading
+  useCieInternalAuthAndMrtdReading,
 } from "../../hooks/useCieInternalAuthAndMrtdReading";
 import { useTrackCieReadingEvents } from "../../hooks/useTrackCieReadingEvents";
 import { setAarFlowState } from "../../store/actions";
@@ -20,7 +20,7 @@ import { sendAarFlowStates } from "../../utils/stateUtils";
 import { useAarGenericErrorBottomSheet } from "../errors/hooks/useAarGenericErrorBottomSheet";
 import {
   SendAarCieCardReadingComponent,
-  SendAarCieCardReadingComponentProps
+  SendAarCieCardReadingComponentProps,
 } from "../SendAarCieCardReadingComponent";
 import { SendAarZendeskSecondLevelTag } from "../errors/hooks/useAarStartSendZendeskSupport";
 type ReadState = ReturnType<
@@ -36,13 +36,13 @@ const mockPresentBottomSheet = jest.fn();
 
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
-  useDispatch: () => mockDispatch
+  useDispatch: () => mockDispatch,
 }));
 
 jest.mock("../errors/hooks/useAarGenericErrorBottomSheet");
 
 const testRestartHandlerCalled = (
-  restartType: "canAdvisory" | "scanningAdvisory"
+  restartType: "canAdvisory" | "scanningAdvisory",
 ) => {
   const { iun, recipientInfo, mandateId, can, verificationCode } =
     cieCardReadingComponentProps;
@@ -55,8 +55,8 @@ const testRestartHandlerCalled = (
           iun,
           recipientInfo,
           mandateId,
-          verificationCode
-        })
+          verificationCode,
+        }),
       );
       break;
     case "scanningAdvisory":
@@ -67,8 +67,8 @@ const testRestartHandlerCalled = (
           recipientInfo,
           mandateId,
           can,
-          verificationCode
-        })
+          verificationCode,
+        }),
       );
       break;
   }
@@ -78,31 +78,31 @@ const mockUseAarCieErrorBottomSheet =
   useAarGenericErrorBottomSheet as jest.Mock;
 mockUseAarCieErrorBottomSheet.mockImplementation(({ bottomSheet }) => ({
   present: mockPresentBottomSheet,
-  bottomSheet
+  bottomSheet,
 }));
 
 jest.mock("../../hooks/useSendAarFlowManager", () => ({
   useSendAarFlowManager: () => ({
-    terminateFlow: mockTerminateFlow
-  })
+    terminateFlow: mockTerminateFlow,
+  }),
 }));
 jest.mock("../../hooks/useCieInternalAuthAndMrtdReading", () => {
   const actualImplementation = jest.requireActual(
-    "../../hooks/useCieInternalAuthAndMrtdReading"
+    "../../hooks/useCieInternalAuthAndMrtdReading",
   );
 
   return {
     ...actualImplementation,
-    useCieInternalAuthAndMrtdReading: jest.fn()
+    useCieInternalAuthAndMrtdReading: jest.fn(),
   };
 });
 
 jest.mock("../../hooks/useTrackCieReadingEvents", () => ({
-  useTrackCieReadingEvents: jest.fn()
+  useTrackCieReadingEvents: jest.fn(),
 }));
 
 jest.mock("../../hooks/useIsNfcFeatureAvailable", () => ({
-  useIsNfcFeatureAvailable: jest.fn().mockReturnValue(true)
+  useIsNfcFeatureAvailable: jest.fn().mockReturnValue(true),
 }));
 
 jest.mock("../../analytics");
@@ -115,8 +115,8 @@ const cieCardReadingComponentProps: SendAarCieCardReadingComponentProps = {
   verificationCode: "verification_code",
   recipientInfo: {
     denomination: "",
-    taxId: "AAAAAA00A00A000A"
-  }
+    taxId: "AAAAAA00A00A000A",
+  },
 };
 const successDataMock: Extract<
   ReadState,
@@ -125,21 +125,21 @@ const successDataMock: Extract<
   mrtd_data: {
     dg1: "",
     dg11: "",
-    sod: ""
+    sod: "",
   },
   nis_data: {
     nis: "",
     publicKey: "",
     signedChallenge: "",
-    sod: ""
-  }
+    sod: "",
+  },
 };
 
 const errorsMock: Array<ErrorState["error"]> = [
   { name: "TAG_LOST" },
   { name: "APDU_ERROR" },
   { name: "NOT_A_CIE" },
-  { name: "CANCELLED_BY_USER" }
+  { name: "CANCELLED_BY_USER" },
 ];
 
 const mockUseCieInternalAuthAndMrtdReading =
@@ -153,7 +153,10 @@ const mockReadStates: ReadonlyArray<ReadState> = [
   { status: ReadStatus.READING, progress: 0.5 },
   { status: ReadStatus.READING, progress: 1 },
   { status: ReadStatus.SUCCESS, data: successDataMock },
-  ...errorsMock.map<ReadState>(error => ({ status: ReadStatus.ERROR, error }))
+  ...errorsMock.map<ReadState>((error) => ({
+    status: ReadStatus.ERROR,
+    error,
+  })),
 ];
 
 describe("SendAarCieCardReadingComponent", () => {
@@ -161,29 +164,29 @@ describe("SendAarCieCardReadingComponent", () => {
 
   it.each<ReadState>(mockReadStates)(
     "should match the snapshot for readState: %o",
-    readState => {
+    (readState) => {
       mockReadState(readState);
 
       const component = renderComponent();
 
       expect(component).toMatchSnapshot();
-    }
+    },
   );
 
   it.each<ReadState>(mockReadStates)(
     'should invoke "useTrackCieReadingEvents" for readState: %o',
-    readState => {
+    (readState) => {
       mockReadState(readState);
 
       renderComponent();
 
       expect(useTrackCieReadingEvents).toHaveBeenCalledTimes(1);
-    }
+    },
   );
 
   it.each<ReadState>(mockReadStates)(
     'should invoke "useAarCieErrorBottomSheet" with correct props and tracking callbacks for readState: %o',
-    readState => {
+    (readState) => {
       mockReadState(readState);
 
       renderComponent();
@@ -196,10 +199,10 @@ describe("SendAarCieCardReadingComponent", () => {
         : "GENERIC_ERROR";
 
       expect(hookConfig.zendeskSecondLevelTag).toBe(
-        SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA
+        SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA,
       );
       expect(hookConfig.errorName).toBe(
-        isErrorState(readState) ? readState.error.name : undefined
+        isErrorState(readState) ? readState.error.name : undefined,
       );
       expect(typeof hookConfig.onStartAssistance).toBe("function");
       expect(typeof hookConfig.onCopyToClipboard).toBe("function");
@@ -207,26 +210,26 @@ describe("SendAarCieCardReadingComponent", () => {
       // test ErrorDetailHelp
 
       expect(
-        mockedAnalytics.trackSendAarMandateCieErrorDetailHelp
+        mockedAnalytics.trackSendAarMandateCieErrorDetailHelp,
       ).toHaveBeenCalledTimes(0);
 
       act(() => {
         hookConfig.onStartAssistance();
       });
       expect(
-        mockedAnalytics.trackSendAarMandateCieErrorDetailCode
+        mockedAnalytics.trackSendAarMandateCieErrorDetailCode,
       ).toHaveBeenCalledTimes(0);
       expect(
-        mockedAnalytics.trackSendAarMandateCieErrorDetailHelp
+        mockedAnalytics.trackSendAarMandateCieErrorDetailHelp,
       ).toHaveBeenCalledTimes(1);
       expect(
-        mockedAnalytics.trackSendAarMandateCieErrorDetailHelp
+        mockedAnalytics.trackSendAarMandateCieErrorDetailHelp,
       ).toHaveBeenCalledWith(expectedTrackedError);
 
       mockedAnalytics.trackSendAarMandateCieErrorDetailHelp.mockClear();
 
       expect(
-        mockedAnalytics.trackSendAarMandateCieErrorDetailHelp
+        mockedAnalytics.trackSendAarMandateCieErrorDetailHelp,
       ).toHaveBeenCalledTimes(0);
 
       act(() => {
@@ -236,16 +239,16 @@ describe("SendAarCieCardReadingComponent", () => {
       // test ErrorDetailCode
 
       expect(
-        mockedAnalytics.trackSendAarMandateCieErrorDetailHelp
+        mockedAnalytics.trackSendAarMandateCieErrorDetailHelp,
       ).toHaveBeenCalledTimes(0);
       expect(
-        mockedAnalytics.trackSendAarMandateCieErrorDetailCode
+        mockedAnalytics.trackSendAarMandateCieErrorDetailCode,
       ).toHaveBeenCalledTimes(1);
 
       expect(
-        mockedAnalytics.trackSendAarMandateCieErrorDetailCode
+        mockedAnalytics.trackSendAarMandateCieErrorDetailCode,
       ).toHaveBeenCalledWith(expectedTrackedError);
-    }
+    },
   );
 
   describe("SendAarCieCardReadingComponent: ReadState is IDLE", () => {
@@ -257,7 +260,7 @@ describe("SendAarCieCardReadingComponent", () => {
       expect(mockStartReading).toHaveBeenCalledTimes(0);
       const { rerender } = renderComponentWithStoreAndNavigationContextForFocus(
         Component,
-        true
+        true,
       );
       expect(mockStartReading).toHaveBeenCalledTimes(1);
 
@@ -272,14 +275,14 @@ describe("SendAarCieCardReadingComponent", () => {
       expect(mockStartReading).toHaveBeenCalledWith(
         cieCardReadingComponentProps.can,
         cieCardReadingComponentProps.verificationCode,
-        "base64url"
+        "base64url",
       );
     });
     it("should output the right title", () => {
       const { queryByText } = renderComponent();
 
       expect(
-        queryByText(I18n.t("features.pn.aar.flow.cieScanning.idle.title"))
+        queryByText(I18n.t("features.pn.aar.flow.cieScanning.idle.title")),
       ).toBeTruthy();
     });
     it("should navigate to scanningAdvisory when the cancelAction is triggered", () => {
@@ -296,7 +299,7 @@ describe("SendAarCieCardReadingComponent", () => {
     it('should invoke "startReading" only once despite transition from IDLE state to READING state', () => {
       const { rerender } = renderComponentWithStoreAndNavigationContextForFocus(
         Component,
-        true
+        true,
       );
 
       mockReadState({ status: ReadStatus.READING, progress: 0.2 });
@@ -314,10 +317,12 @@ describe("SendAarCieCardReadingComponent", () => {
       const { queryByText } = renderComponent();
 
       expect(
-        queryByText(I18n.t("features.pn.aar.flow.cieScanning.reading.title"))
+        queryByText(I18n.t("features.pn.aar.flow.cieScanning.reading.title")),
       ).toBeTruthy();
       expect(
-        queryByText(I18n.t("features.pn.aar.flow.cieScanning.reading.subtitle"))
+        queryByText(
+          I18n.t("features.pn.aar.flow.cieScanning.reading.subtitle"),
+        ),
       ).toBeTruthy();
     });
     it('should change the state to "scanningAdvisory" when the cancelAction is triggered', () => {
@@ -335,7 +340,7 @@ describe("SendAarCieCardReadingComponent", () => {
       expect(mockStartReading).toHaveBeenCalledTimes(0);
       const { rerender } = renderComponentWithStoreAndNavigationContextForFocus(
         Component,
-        true
+        true,
       );
       expect(mockStartReading).toHaveBeenCalledTimes(1);
 
@@ -350,7 +355,7 @@ describe("SendAarCieCardReadingComponent", () => {
       expect(mockStartReading).toHaveBeenCalledTimes(0);
       const { rerender } = renderComponentWithStoreAndNavigationContextForFocus(
         Component,
-        true
+        true,
       );
       expect(mockStartReading).toHaveBeenCalledTimes(1);
 
@@ -371,7 +376,7 @@ describe("SendAarCieCardReadingComponent", () => {
       const { queryByText } = renderComponent();
 
       const title = queryByText(
-        I18n.t("features.pn.aar.flow.cieScanning.success.title")
+        I18n.t("features.pn.aar.flow.cieScanning.success.title"),
       );
       expect(title).toBeTruthy();
     });
@@ -390,8 +395,8 @@ describe("SendAarCieCardReadingComponent", () => {
           mrtdData: successDataMock.mrtd_data,
           signedVerificationCode: successDataMock.nis_data.signedChallenge,
           unsignedVerificationCode:
-            cieCardReadingComponentProps.verificationCode
-        })
+            cieCardReadingComponentProps.verificationCode,
+        }),
       );
     });
   });
@@ -401,7 +406,7 @@ describe("SendAarCieCardReadingComponent", () => {
       { name: "GENERIC_ERROR" },
       { name: "NOT_A_CIE" },
       { name: "AUTHENTICATION_ERROR" },
-      { name: "WRONG_PIN", attemptsLeft: 1 }
+      { name: "WRONG_PIN", attemptsLeft: 1 },
     ];
     const mockErrorState = (error: ErrorState["error"]) =>
       mockReadState({ status: ReadStatus.ERROR, error });
@@ -415,13 +420,13 @@ describe("SendAarCieCardReadingComponent", () => {
 
         expect(
           queryByText(
-            I18n.t("features.pn.aar.flow.cieScanning.error.TAG_LOST.title")
-          )
+            I18n.t("features.pn.aar.flow.cieScanning.error.TAG_LOST.title"),
+          ),
         ).toBeTruthy();
         expect(
           queryByText(
-            I18n.t("features.pn.aar.flow.cieScanning.error.TAG_LOST.subtitle")
-          )
+            I18n.t("features.pn.aar.flow.cieScanning.error.TAG_LOST.subtitle"),
+          ),
         ).toBeTruthy();
       });
       it('should invoke "startReading" on retry CTA press', () => {
@@ -434,7 +439,7 @@ describe("SendAarCieCardReadingComponent", () => {
 
         expect(retryAction).toBeTruthy();
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorRetry
+          mockedAnalytics.trackSendAarMandateCieErrorRetry,
         ).toHaveBeenCalledTimes(0);
 
         act(() => {
@@ -444,10 +449,10 @@ describe("SendAarCieCardReadingComponent", () => {
 
         expect(mockStartReading).toHaveBeenCalledTimes(1);
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorRetry
+          mockedAnalytics.trackSendAarMandateCieErrorRetry,
         ).toHaveBeenCalledTimes(1);
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorRetry
+          mockedAnalytics.trackSendAarMandateCieErrorRetry,
         ).toHaveBeenCalledWith("TAG_LOST");
         expect(mockPresentBottomSheet).not.toHaveBeenCalled();
       });
@@ -457,17 +462,17 @@ describe("SendAarCieCardReadingComponent", () => {
         const retryButton = getByTestId("tagLostCloseButton");
         expect(retryButton).toBeTruthy();
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorClosure
+          mockedAnalytics.trackSendAarMandateCieErrorClosure,
         ).toHaveBeenCalledTimes(0);
 
         fireEvent.press(retryButton);
 
         testRestartHandlerCalled("scanningAdvisory");
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorClosure
+          mockedAnalytics.trackSendAarMandateCieErrorClosure,
         ).toHaveBeenCalledTimes(1);
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorClosure
+          mockedAnalytics.trackSendAarMandateCieErrorClosure,
         ).toHaveBeenCalledWith("TAG_LOST");
         expect(mockPresentBottomSheet).not.toHaveBeenCalled();
       });
@@ -478,7 +483,7 @@ describe("SendAarCieCardReadingComponent", () => {
       });
       it(
         "should terminate the current flow when the cancel action is triggered",
-        testCancelErrorAction
+        testCancelErrorAction,
       );
       it("should navigate back to the CAN advisory state on retry CTA press", () => {
         const { getByTestId } = renderComponent();
@@ -486,29 +491,29 @@ describe("SendAarCieCardReadingComponent", () => {
         const retryButton = getByTestId("wrongCanRetryButton");
         expect(retryButton).toBeTruthy();
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorRetry
+          mockedAnalytics.trackSendAarMandateCieErrorRetry,
         ).toHaveBeenCalledTimes(0);
 
         fireEvent.press(retryButton);
 
         testRestartHandlerCalled("canAdvisory");
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorRetry
+          mockedAnalytics.trackSendAarMandateCieErrorRetry,
         ).toHaveBeenCalledTimes(1);
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorRetry
+          mockedAnalytics.trackSendAarMandateCieErrorRetry,
         ).toHaveBeenCalledWith("WRONG_CAN");
         expect(mockPresentBottomSheet).not.toHaveBeenCalled();
       });
       test.each(["ios", "android"] as const)(
         "should output the right subtitle for platform %s",
-        platform => {
+        (platform) => {
           jest
             .spyOn(RN.Platform, "select")
             .mockImplementation(
-              options =>
+              (options) =>
                 options[platform] ??
-                options["default" as unknown as keyof typeof options]
+                options["default" as unknown as keyof typeof options],
             );
 
           const { queryByText } = renderComponent();
@@ -516,17 +521,17 @@ describe("SendAarCieCardReadingComponent", () => {
           const platformizedSubtitleKey =
             platform === "ios"
               ? I18n.t(
-                  "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleIos"
+                  "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleIos",
                 )
               : I18n.t(
-                  "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleAndroid"
+                  "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleAndroid",
                 );
 
           expect(queryByText(platformizedSubtitleKey)).toBeTruthy();
-        }
+        },
       );
     });
-    describe.each(unmappedErrors)("$name error", error => {
+    describe.each(unmappedErrors)("$name error", (error) => {
       beforeAll(() => {
         mockErrorState(error);
       });
@@ -535,8 +540,8 @@ describe("SendAarCieCardReadingComponent", () => {
 
         expect(
           queryByText(
-            I18n.t("features.pn.aar.flow.cieScanning.error.GENERIC.title")
-          )
+            I18n.t("features.pn.aar.flow.cieScanning.error.GENERIC.title"),
+          ),
         ).toBeTruthy();
       });
       it("should restart to CAN advisory when the primary action is triggered", () => {
@@ -545,7 +550,7 @@ describe("SendAarCieCardReadingComponent", () => {
 
         expect(closeButton).toBeTruthy();
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorRetry
+          mockedAnalytics.trackSendAarMandateCieErrorRetry,
         ).toHaveBeenCalledTimes(0);
 
         act(() => {
@@ -554,24 +559,24 @@ describe("SendAarCieCardReadingComponent", () => {
 
         testRestartHandlerCalled("canAdvisory");
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorRetry
+          mockedAnalytics.trackSendAarMandateCieErrorRetry,
         ).toHaveBeenCalledTimes(1);
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorRetry
+          mockedAnalytics.trackSendAarMandateCieErrorRetry,
         ).toHaveBeenCalledWith(error.name);
         expect(mockPresentBottomSheet).not.toHaveBeenCalled();
       });
       it("should present the bottom sheet when the secondary action is triggered", () => {
         const { getByTestId } = renderComponent();
         const secondaryActionButton = getByTestId(
-          "genericErrorSecondaryAction"
+          "genericErrorSecondaryAction",
         );
 
         expect(secondaryActionButton).toBeTruthy();
         expect(mockPresentBottomSheet).not.toHaveBeenCalled();
 
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorDetail
+          mockedAnalytics.trackSendAarMandateCieErrorDetail,
         ).toHaveBeenCalledTimes(0);
         act(() => {
           fireEvent.press(secondaryActionButton);
@@ -579,10 +584,10 @@ describe("SendAarCieCardReadingComponent", () => {
 
         expect(mockPresentBottomSheet).toHaveBeenCalledTimes(1);
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorDetail
+          mockedAnalytics.trackSendAarMandateCieErrorDetail,
         ).toHaveBeenCalledTimes(1);
         expect(
-          mockedAnalytics.trackSendAarMandateCieErrorDetail
+          mockedAnalytics.trackSendAarMandateCieErrorDetail,
         ).toHaveBeenCalledWith(error.name);
       });
     });
@@ -593,7 +598,7 @@ function mockReadState(readState: ReadState) {
   mockUseCieInternalAuthAndMrtdReading.mockReturnValue({
     startReading: mockStartReading,
     stopReading: mockStopReading,
-    readState
+    readState,
   });
 }
 
@@ -607,7 +612,7 @@ function testCancelErrorAction() {
   expect(cancelAction).toBeTruthy();
   expect(mockTerminateFlow).not.toHaveBeenCalled();
   expect(
-    mockedAnalytics.trackSendAarMandateCieErrorClosure
+    mockedAnalytics.trackSendAarMandateCieErrorClosure,
   ).toHaveBeenCalledTimes(0);
 
   mockStartReading.mockClear();
@@ -617,29 +622,29 @@ function testCancelErrorAction() {
   expect(mockStartReading).not.toHaveBeenCalled();
   expect(mockPresentBottomSheet).not.toHaveBeenCalled();
   expect(
-    mockedAnalytics.trackSendAarMandateCieErrorClosure
+    mockedAnalytics.trackSendAarMandateCieErrorClosure,
   ).toHaveBeenCalledTimes(1);
   expect(
-    mockedAnalytics.trackSendAarMandateCieErrorClosure
+    mockedAnalytics.trackSendAarMandateCieErrorClosure,
   ).toHaveBeenCalledWith("WRONG_CAN");
   expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
 }
 
 const expectNoErrorTrackingCalls = () => {
   expect(
-    mockedAnalytics.trackSendAarMandateCieErrorRetry
+    mockedAnalytics.trackSendAarMandateCieErrorRetry,
   ).toHaveBeenCalledTimes(0);
   expect(
-    mockedAnalytics.trackSendAarMandateCieErrorClosure
+    mockedAnalytics.trackSendAarMandateCieErrorClosure,
   ).toHaveBeenCalledTimes(0);
   expect(
-    mockedAnalytics.trackSendAarMandateCieErrorDetail
+    mockedAnalytics.trackSendAarMandateCieErrorDetail,
   ).toHaveBeenCalledTimes(0);
   expect(
-    mockedAnalytics.trackSendAarMandateCieErrorDetailHelp
+    mockedAnalytics.trackSendAarMandateCieErrorDetailHelp,
   ).toHaveBeenCalledTimes(0);
   expect(
-    mockedAnalytics.trackSendAarMandateCieErrorDetailCode
+    mockedAnalytics.trackSendAarMandateCieErrorDetailCode,
   ).toHaveBeenCalledTimes(0);
 };
 
@@ -655,6 +660,6 @@ function renderComponent() {
     () => Component,
     PN_ROUTES.SEND_AAR_CIE_CARD_READING,
     {},
-    store
+    store,
   );
 }
