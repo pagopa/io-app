@@ -455,7 +455,10 @@ const verifyAndBuildCredentialBundle = async ({
       issuerConf,
       credential,
       credentialConfigurationId,
-      { credentialCryptoContext, ignoreMissingAttributes: true },
+      {
+        credentialCryptoContext,
+        ignoreMissingAttributes: true
+      },
       env.X509_CERT_ROOT
     );
 
