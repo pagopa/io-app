@@ -161,7 +161,7 @@ describe("utils saga", () => {
     expect(result).toEqual({ type: "MOCK" });
   });
 
-  it(" waitForTheTokenRefreshToBeStartedshould throw error if timeout wins", () => {
+  it("waitForTheTokenRefreshToBeStartedshould throw error if timeout wins", () => {
     const gen =
       utilsExportNotUndefined.waitForTheTokenRefreshToBeStarted(
         "timeout error"

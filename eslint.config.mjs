@@ -1,22 +1,20 @@
+import { defineConfig, globalIgnores } from "eslint/config";
 import { fixupConfigRules } from "@eslint/compat";
 import { FlatCompat } from "@eslint/eslintrc";
-import js from "@eslint/js";
-import pagopaConfig from "@pagopa/eslint-config";
-import reactNativeConfig from "@react-native/eslint-config/flat";
-import functional from "eslint-plugin-functional";
-import i18Next from "eslint-plugin-i18next";
-import importPlugin from "eslint-plugin-import";
-import sonarjs from "eslint-plugin-sonarjs";
-import { defineConfig, globalIgnores } from "eslint/config";
-import { createRequire } from "module";
-import { dirname } from "path";
-import tseslint from "typescript-eslint";
 import { fileURLToPath } from "url";
+import { dirname } from "path";
+import pagopaConfig from "@pagopa/eslint-config/jest";
+import tseslint from "typescript-eslint";
+import reactNativeConfig from "@react-native/eslint-config/flat";
+import importPlugin from "eslint-plugin-import";
+import functional from "eslint-plugin-functional";
+import sonarjs from "eslint-plugin-sonarjs";
+import i18Next from "eslint-plugin-i18next";
+import js from "@eslint/js";
+import delegateEffectsRule from "./scripts/eslint/delegate-effects.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const require = createRequire(import.meta.url);
-const delegateEffectsRule = require("./scripts/eslint/delegate-effects.js");
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
@@ -24,14 +22,25 @@ const compat = new FlatCompat({
   allConfig: js.configs.all
 });
 
-// @typescript-eslint is already registered by pagopaConfig (via typescript-eslint).
-// Strip it from @react-native/eslint-config/flat to avoid "Cannot redefine plugin" errors.
-const reactNativeConfigWithoutTsPlugin = reactNativeConfig.map(config => {
-  if (config.plugins?.["@typescript-eslint"]) {
-    const { "@typescript-eslint": _removed, ...rest } = config.plugins;
-    return { ...config, plugins: rest };
+// @typescript-eslint and jest are already registered by pagopaConfig (via
+// typescript-eslint and @pagopa/eslint-config/jest, the latter scoping jest to
+// test files). Strip the plugins — and jest's now-orphaned rules, which the RN
+// config applies globally — to avoid "Cannot redefine plugin" errors.
+const reactNativeSanitizedConfig = reactNativeConfig.map(config => {
+  if (!config.plugins?.["@typescript-eslint"] && !config.plugins?.jest) {
+    return config;
   }
-  return config;
+  const {
+    "@typescript-eslint": _tsRemoved,
+    jest: _jestRemoved,
+    ...plugins
+  } = config.plugins;
+  const rules = Object.fromEntries(
+    Object.entries(config.rules ?? {}).filter(
+      ([rule]) => !rule.startsWith("jest/")
+    )
+  );
+  return { ...config, plugins, rules };
 });
 
 export default defineConfig([
@@ -47,11 +56,8 @@ export default defineConfig([
 
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
   // eslint-plugin-prettier, perfectionist.
-  // Vitest block is excluded — project uses Jest.
   // Perfectionist block is excluded — sorting rules are deferred to a follow-up PR.
-  ...pagopaConfig.filter(
-    config => !config.plugins?.vitest && !config.plugins?.perfectionist
-  ),
+  ...pagopaConfig.filter(config => !config.plugins?.perfectionist),
 
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -60,7 +66,7 @@ export default defineConfig([
       // Only include rules from tseslint, not the plugin registration,
       // because @react-native/eslint-config/flat already registers @typescript-eslint
       ...tseslint.configs.recommended.filter(c => !c.plugins),
-      ...reactNativeConfig,
+      ...reactNativeSanitizedConfig,
       ...fixupConfigRules(compat.extends("plugin:react-native-a11y/all"))
     ],
 
@@ -69,10 +75,6 @@ export default defineConfig([
       sourceType: "module",
 
       parserOptions: {
-        // `projectService` lets typescript-eslint auto-discover the nearest
-        // tsconfig per file (e.g. apps/main-app/tsconfig.json), which is
-        // required for the nx monorepo layout where this base config lives at
-        // the repository root.
         projectService: true,
         tsconfigRootDir: __dirname,
 
@@ -119,6 +121,15 @@ export default defineConfig([
       // Incorrectly fires on mapped types (`[P in ...]`) — only meant for
       // plain index signatures (`[key: string]: V`) which should use Record<K,V>
       "@typescript-eslint/consistent-indexed-object-style": "off",
+
+      // Widespread, deliberate test patterns from pagopa's jest config that
+      // would require refactoring the whole test suite to satisfy:
+      // - narrowing fp-ts Either/Option before asserting inside the guard
+      "jest/no-conditional-expect": "off",
+      // - importing shared fixtures directly from __mocks__ directories
+      "jest/no-mocks-import": "off",
+      // - asserting a mock was called without pinning its exact arguments
+      "jest/prefer-called-with": "off",
 
       // END: OVERWRITTEN RULES FROM PAGOPA/ESLINT-CONFIG
 
@@ -196,12 +207,7 @@ export default defineConfig([
       ],
       // It could highlight performance issues,
       // with some noise on trivial cases
-      "react/no-unstable-nested-components": [
-        "off",
-        {
-          allowAsProps: true
-        }
-      ],
+      "react/no-unstable-nested-components": "off",
       // TODO: Remove these two properties once the migration
       // from class components is completed
       "react/no-direct-mutation-state": "off",
@@ -269,7 +275,6 @@ export default defineConfig([
       // REDUX SAGA
       "typed-redux-saga/delegate-effects": "error",
 
-      // IMPORTS
       "import/no-extraneous-dependencies": [
         "error",
         {
@@ -325,6 +330,24 @@ export default defineConfig([
       "i18next/no-literal-string": "off",
       "no-restricted-imports": "off",
       "react/jsx-no-constructed-context-values": "off"
+    }
+  },
+  {
+    // Data-driven tests here derive titles dynamically (loop variables,
+    // `fn.name`, ternaries). Allow non-string titles while keeping the
+    // empty/whitespace/duplicate-prefix checks active. Scoped to `.ts` test
+    // files only: `jest/valid-title` is an active rule and pagopa's config
+    // only registers the jest plugin for `.{js,ts}` test files, not `.tsx`.
+    files: ["**/*.test.ts", "**/__tests__/**/*.ts"],
+
+    rules: {
+      "jest/valid-title": [
+        "error",
+        {
+          ignoreTypeOfDescribeName: true,
+          ignoreTypeOfTestName: true
+        }
+      ]
     }
   },
   {

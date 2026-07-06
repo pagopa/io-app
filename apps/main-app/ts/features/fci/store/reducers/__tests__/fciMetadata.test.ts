@@ -9,11 +9,11 @@ import { mockFciMetadata } from "../../../types/__mocks__/Metadata.mock";
 const genericError = getTimeoutError();
 
 describe("FciMetadataRequestReducer", () => {
-  it("it should have an initialState equal to remoteUndefined", () => {
+  it("should have an initialState equal to remoteUndefined", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.fci.metadata).toStrictEqual(pot.none);
   });
-  it("it should be remoteLoading if the fciMetadataRequest.request is dispatched", () => {
+  it("should be remoteLoading if the fciMetadataRequest.request is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciMetadataRequest.request());
@@ -21,7 +21,7 @@ describe("FciMetadataRequestReducer", () => {
       pot.noneLoading
     );
   });
-  it("it should be remoteReady with action payload as value if the fciMetadataRequest.success is dispatched", () => {
+  it("should be remoteReady with action payload as value if the fciMetadataRequest.success is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciMetadataRequest.success(mockFciMetadata));
@@ -29,7 +29,7 @@ describe("FciMetadataRequestReducer", () => {
       pot.some(mockFciMetadata)
     );
   });
-  it("it should be pot.noneError if the fciMetadataRequest.failure is dispatched", () => {
+  it("should be pot.noneError if the fciMetadataRequest.failure is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciMetadataRequest.failure(genericError));
@@ -37,7 +37,7 @@ describe("FciMetadataRequestReducer", () => {
       pot.noneError(genericError)
     );
   });
-  it("it should be pot.none if the fciClearStateRequest is dispatched", () => {
+  it("should be pot.none if the fciClearStateRequest is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciClearStateRequest());

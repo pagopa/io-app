@@ -30,7 +30,7 @@ function runTest(store: GlobalState, test: (tosConfig: TosConfig) => void) {
     expect(tosConfig).not.toBeUndefined();
     test(tosConfig);
   } else {
-    fail("unexpected none");
+    throw new Error("unexpected none");
   }
 }
 

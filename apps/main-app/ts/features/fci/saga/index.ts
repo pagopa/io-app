@@ -48,7 +48,7 @@ import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSign
 import { KeyInfo } from "../../lollipop/utils/crypto";
 import { createFciClient } from "../api/backendFci";
 import { spidLevelFromSessionInfoSelector } from "../../authentication/common/store/selectors";
-import { isFciSecurityLevelCheckEnabledSelector } from "../store/reducers/fciSecurityLevelReducer";
+import { isFciSecurityLevelCheckRemoteFFEnabledSelector } from "../store/selectors/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
 import { activeSessionLoginFlowSelector } from "../../authentication/activeSessionLogin/store/selectors";
 import { setActiveSessionLoginFlow } from "../../authentication/activeSessionLogin/store/actions";
@@ -208,7 +208,7 @@ function* standardFciFlowStartSaga(): SagaIterator {
 function* watchFciStartSaga(): SagaIterator {
   const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
   const isFciSecurityLevelCheckEnabled = yield* select(
-    isFciSecurityLevelCheckEnabledSelector
+    isFciSecurityLevelCheckRemoteFFEnabledSelector
   );
 
   if (!isFciSecurityLevelCheckEnabled) {
@@ -360,7 +360,7 @@ function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));
   yield* call(
     NavigationService.dispatchNavigationAction,
-    CommonActions.navigate(ROUTES.MAIN, undefined, { pop: true })
+    CommonActions.navigate(ROUTES.MAIN)
   );
 }
 

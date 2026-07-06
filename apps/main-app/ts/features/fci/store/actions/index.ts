@@ -149,12 +149,6 @@ export const fciEnvironmentSet = createStandardAction("FCI_ENVIRONMENT_SET")<
   O.Option<EnvironmentEnum>
 >();
 
-/**
- * Action used to set a local flag to test the L3 level active session login in the FCI flow.
- */
-export const fciL3LocalFlag =
-  createStandardAction("FCI_L3_LOCAL_FLAG")<boolean>();
-
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciSignatureRequestRetryFromId>
@@ -173,5 +167,4 @@ export type FciActions =
   | ActionType<typeof fciMetadataRequest>
   | ActionType<typeof fciSignaturesListRequest>
   | ActionType<typeof fciDocumentSignatureFields>
-  | ActionType<typeof fciEnvironmentSet>
-  | ActionType<typeof fciL3LocalFlag>;
+  | ActionType<typeof fciEnvironmentSet>;
