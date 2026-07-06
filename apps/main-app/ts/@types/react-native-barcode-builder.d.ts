@@ -3,9 +3,6 @@ declare module "react-native-barcode-builder" {
   import { api } from "jsbarcode/jsbarcode";
   import { PureComponent } from "react";
 
-  // For not included barcode format, if required,
-  // review rules on value to encode as barcode
-  type barcodeTypes = "CODE39" | "CODE128" | "CODE128A" | "CODE128B";
   export interface BarcodeProps {
     background?: string;
     format?: barcodeTypes;
@@ -16,6 +13,9 @@ declare module "react-native-barcode-builder" {
     value: string;
     width?: number;
   }
+  // For not included barcode format, if required,
+  // review rules on value to encode as barcode
+  type barcodeTypes = "CODE39" | "CODE128" | "CODE128A" | "CODE128B";
 
   export default class Barcode extends React.PureComponent<BarcodeProps> {
     constructor(props);

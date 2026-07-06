@@ -11,11 +11,7 @@ import {
   StatusEnum
 } from "../../../../../definitions/idpay/InstrumentDTO";
 
-type PaymentMethodSwitchProps = {
-  isLoading?: boolean;
-  onPressAction?: () => void;
-  status?: StatusEnum;
-} & (
+type PaymentMethodSwitchProps = (
   | {
       instrumentType: InstrumentTypeEnum.APP_IO_PAYMENT;
       onValueChange?: never;
@@ -26,7 +22,11 @@ type PaymentMethodSwitchProps = {
       onValueChange: (value: boolean) => void;
       value: boolean;
     }
-);
+) & {
+  isLoading?: boolean;
+  onPressAction?: () => void;
+  status?: StatusEnum;
+};
 
 type ValidInstrumentType =
   | InstrumentTypeEnum.APP_IO_PAYMENT

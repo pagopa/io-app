@@ -37,11 +37,11 @@ type BaseProps = {
 type CounterType = "Value" | "ValueWithProgress";
 
 type LoadingProps =
-  | { isLoading: true; label?: string; skeletonColor: ColorValue }
-  | ({ isLoading?: false; label: string } & (
-      | AmountProps
-      | AmountWithProgressProps
-    ));
+  | ((AmountProps | AmountWithProgressProps) & {
+      isLoading?: false;
+      label: string;
+    })
+  | { isLoading: true; label?: string; skeletonColor: ColorValue };
 
 const BonusCardCounter = (props: BonusCardCounter) => {
   const isDark = useIOThemeContext().themeType === "dark";
