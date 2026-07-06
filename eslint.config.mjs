@@ -26,7 +26,7 @@ const compat = new FlatCompat({
 // typescript-eslint and @pagopa/eslint-config/jest, the latter scoping jest to
 // test files). Strip the plugins — and jest's now-orphaned rules, which the RN
 // config applies globally — to avoid "Cannot redefine plugin" errors.
-const reactNativeConfigWithoutTsPlugin = reactNativeConfig.map(config => {
+const reactNativeSanitizedConfig = reactNativeConfig.map(config => {
   if (!config.plugins?.["@typescript-eslint"] && !config.plugins?.jest) {
     return config;
   }
