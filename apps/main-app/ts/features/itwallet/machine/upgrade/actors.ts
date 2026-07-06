@@ -23,12 +23,16 @@ import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/it
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 
-export type RequestAccessTokenParams = {
+export type WithItwVersion<T = { [K: string]: any }> = T & {
+  itwVersion: ItwVersion;
+};
+
+export type RequestAccessTokenParams = WithItwVersion<{
   pid: CredentialBundle | undefined;
   walletInstanceAttestation: string | undefined;
   credential: CredentialMetadata;
   issuanceMode: EidIssuanceMode;
-};
+}>;
 
 export type RequestAccessTokenOutput = {
   accessToken: CredentialAccessToken;
@@ -36,10 +40,12 @@ export type RequestAccessTokenOutput = {
   clientId: string;
 };
 
-export type UpgradeCredentialParams = {
-  credential: CredentialMetadata;
-  integrityKeyTag: string | undefined;
-} & Partial<RequestAccessTokenOutput>;
+export type UpgradeCredentialParams = WithItwVersion<
+  {
+    credential: CredentialMetadata;
+    integrityKeyTag: string | undefined;
+  } & Partial<RequestAccessTokenOutput>
+>;
 
 export type UpgradeCredentialOutput = {
   credentialType: string;
@@ -55,7 +61,6 @@ export type LoadContextOutput = {
 
 export const createCredentialUpgradeActorsImplementation = (
   env: Env,
-  itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => ({
   loadContext: fromPromise<LoadContextOutput>(async () => {
@@ -109,7 +114,7 @@ export const createCredentialUpgradeActorsImplementation = (
       responseMode
     } = await credentialIssuanceUtils.requestCredential({
       env,
-      itwVersion,
+      itwVersion: input.itwVersion,
       credentialType: credential.credentialType,
       walletInstanceAttestation,
       // TODO [SIW-3091]: Update when the L3 PID reissuance flow is ready
@@ -119,7 +124,7 @@ export const createCredentialUpgradeActorsImplementation = (
 
     const { accessToken } = await credentialIssuanceUtils.completeAuthFlow({
       env,
-      itwVersion,
+      itwVersion: input.itwVersion,
       codeVerifier,
       responseMode,
       issuerConf,
@@ -155,7 +160,7 @@ export const createCredentialUpgradeActorsImplementation = (
     );
 
     // The Wallet Unit Attestation makes use of the integrity service
-    if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
+    if (getIoWallet(input.itwVersion).WalletUnitAttestation.isSupported) {
       await ensureIntegrityServiceIsStoreReadyOrThrow(store);
     }
 
@@ -164,7 +169,7 @@ export const createCredentialUpgradeActorsImplementation = (
         accessToken,
         {
           env,
-          itwVersion,
+          itwVersion: input.itwVersion,
           hardwareKeyTag: integrityKeyTag,
           sessionToken
         }
@@ -172,7 +177,7 @@ export const createCredentialUpgradeActorsImplementation = (
 
     const credentials = await credentialIssuanceUtils.obtainCredential({
       env,
-      itwVersion,
+      itwVersion: input.itwVersion,
       credentialType: credential.credentialType,
       issuerConf,
       clientId,
