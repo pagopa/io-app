@@ -66,7 +66,7 @@ export default defineConfig([
       // Only include rules from tseslint, not the plugin registration,
       // because @react-native/eslint-config/flat already registers @typescript-eslint
       ...tseslint.configs.recommended.filter(c => !c.plugins),
-      ...reactNativeConfigWithoutTsPlugin,
+      ...reactNativeSanitizedConfig,
       ...fixupConfigRules(compat.extends("plugin:react-native-a11y/all"))
     ],
 
@@ -204,7 +204,7 @@ export default defineConfig([
       ],
       // It could highlight performance issues,
       // with some noise on trivial cases
-     "react/no-unstable-nested-components": "off"
+      "react/no-unstable-nested-components": "off",
       // TODO: Remove these two properties once the migration
       // from class components is completed
       "react/no-direct-mutation-state": "off",
