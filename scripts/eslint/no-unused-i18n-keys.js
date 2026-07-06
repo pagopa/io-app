@@ -25,8 +25,6 @@ const ignoredPathSegments = new Set([
 ]);
 const ignoredFilePattern = /\.(spec|test)\.tsx?$/;
 
-let cachedResult;
-
 const isInside = (child, parent) => {
   const relative = path.relative(parent, child);
   return (
@@ -159,8 +157,7 @@ const findUnusedKeys = () => {
   const isUsed = key =>
     literals.has(key) || literals.has(key.replace(PLURAL_SUFFIX, ""));
 
-  cachedResult = collectLocaleKeys().filter(({ key }) => !isUsed(key));
-  return cachedResult;
+  return collectLocaleKeys().filter(({ key }) => !isUsed(key));
 };
 
 /** @type {import("eslint").Rule.RuleModule} */
