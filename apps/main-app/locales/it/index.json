@@ -2843,10 +2843,9 @@
         }
       },
       "checkService": {
-        "title": "Attiva i messaggi",
-        "content": "Per ricevere i documenti firmati devi attivare l’opzione che consente al servizio di inviarti messaggi. Se non la attivi, puoi completare la firma ma non riceverai i documenti firmati.",
-        "cancel": "Non ora",
-        "confirm": "Attiva"
+        "title": "Ricevi i documenti firmati",
+        "content": "Per ricevere su IO i documenti firmati, attiva l’opzione che consente al servizio di inviarti messaggi.\nSe chiudi, completerai la firma ma non riceverai il messaggio con i documenti firmati.",
+        "confirm": "Ok, attiva"
       },
       "noFields": {
         "title": "Firma tutto il documento",
@@ -2882,7 +2881,7 @@
       },
       "thankYouPage": {
         "title": "Fatto!",
-        "content": "Riceverai un messaggio su IO con l’esito della tua richiesta.",
+        "content": "Se hai attivato i messaggi del servizio, riceverai su IO l’esito della tua richiesta.",
         "cta": "Chiudi"
       },
       "documentUnavailablePage": {
@@ -3307,10 +3306,14 @@
                 "content": "IT-Wallet si integrerà al Portafoglio Digitale Europeo: potrai usare i tuoi documenti con pieno valore legale in tutta Europa."
               }
             },
-            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
+            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso.]({{privacyUrl}})",
             "actions": {
               "primary": "Continua",
-              "anchor": "Scopri tutti i vantaggi"
+              "secondary": "Scopri di più su IT-Wallet"
+            },
+            "detailsBottomSheet": {
+              "title": "IT-Wallet su IO: il nuovo portafoglio digitale pubblico",
+              "action": "Ho capito"
             },
             "dismissalDialog": {
               "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
@@ -3642,6 +3645,11 @@
         },
         "credentialIntro": {
           "subtitle": "Leggi con attenzione cosa troverai."
+        },
+        "credentialOffer": {
+          "intro": {
+            "fallbackTitle": "Aggiungi un documento al tuo Portafoglio"
+          }
         },
         "credentialPreview": {
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",

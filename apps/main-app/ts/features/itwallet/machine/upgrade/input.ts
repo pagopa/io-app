@@ -1,7 +1,12 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
 
 export type Input = {
+  /**
+   * IT-Wallet technical specifications version to upgrade credentials, for routing to the correct issuer API.
+   */
+  itwVersion: ItwVersion;
   /**
    * Array of credentials that must be upgraded to L3
    */
