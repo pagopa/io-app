@@ -183,7 +183,7 @@ cp .env.local .env
 pnpm nx run main-app:run-ios
 
 # Target a specific simulator
-pnpm nx run main-app:run-ios "--simulator=iPhone 15"
+pnpm nx run main-app:run-ios "--simulator='iPhone 15'"
 ```
 
 ### Android emulator
