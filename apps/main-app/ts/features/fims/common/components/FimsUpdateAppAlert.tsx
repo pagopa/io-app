@@ -1,7 +1,4 @@
-import {
-  HeaderActionProps,
-  HeaderSecondLevel
-} from "@pagopa/io-app-design-system";
+import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
 import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -43,7 +40,7 @@ const useOnlySupportRequestHeader = () => {
           title=""
           type="singleAction"
           firstAction={{
-            icon: "help" as HeaderActionProps["icon"],
+            icon: "help",
             onPress: startSupportRequest,
             accessibilityLabel: I18n.t(
               "global.accessibility.contextualHelp.open.label"

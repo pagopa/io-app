@@ -76,7 +76,6 @@ export type CieCardReaderNavigationProps = IOStackNavigationRouteProps<
 type Props = CieCardReaderNavigationProps &
   ReduxProps &
   ReturnType<typeof mapStateToProps> & {
-    headerHeight: number;
     blueColorName: string;
   };
 

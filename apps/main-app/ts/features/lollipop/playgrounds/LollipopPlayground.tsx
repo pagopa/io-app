@@ -4,7 +4,6 @@ import * as O from "fp-ts/lib/Option";
 import { useCallback, useState } from "react";
 import { ScrollView } from "react-native";
 import { ProblemJson } from "../../../../definitions/identity/ProblemJson";
-import { SignMessageResponse } from "../../../../definitions/identity/SignMessageResponse";
 import { apiUrlPrefix } from "../../../config";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../store/hooks";
@@ -80,7 +79,7 @@ const LollipopPlayground = () => {
                   verificationResult: `${status} - ${response.title}\n${response.detail}`
                 }));
               } else {
-                const response = res.value as SignMessageResponse;
+                const response = res.value;
                 setState(s => ({
                   ...s,
                   isVerificationSuccess: true,

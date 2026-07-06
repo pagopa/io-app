@@ -82,7 +82,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
           url: uri,
           failOnCancel: false
         });
-      } catch (err) {
+      } catch {
         toast.show(I18n.t("messagePDFPreview.errors.sharing"));
       }
     };

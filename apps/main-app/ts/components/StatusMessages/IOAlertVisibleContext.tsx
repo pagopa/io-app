@@ -17,13 +17,9 @@ export const IOAlertVisibleContext = React.createContext<IOAlertVisibleContext>(
 
 export const useIOAlertVisible = () => React.useContext(IOAlertVisibleContext);
 
-type IOAlertVisibleContextProviderProps = {
-  isNewTypefaceEnabled?: boolean;
-};
-
 export const IOAlertVisibleContextProvider = ({
   children
-}: PropsWithChildren<IOAlertVisibleContextProviderProps>) => {
+}: PropsWithChildren) => {
   const [isAlertVisible, setAlertVisible] = useState(false);
   const contextValue = useMemo(
     () => ({ isAlertVisible, setAlertVisible }),

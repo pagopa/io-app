@@ -28,7 +28,7 @@ const WalletPaymentFeebackBanner = () => {
     if (!feedbackBannerConfig?.action) {
       return;
     }
-    void mixpanelTrack("VOC_USER_EXIT", {
+    mixpanelTrack("VOC_USER_EXIT", {
       screen_name: "PAYMENT_OUTCOMECODE_MESSAGE"
     });
     return openAuthenticationSession(feedbackBannerConfig.action.url, "");

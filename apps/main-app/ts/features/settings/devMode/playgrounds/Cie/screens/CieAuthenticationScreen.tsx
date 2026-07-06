@@ -74,7 +74,7 @@ const AuthenticationUrlWebView = ({
         }
 
         // Once the returned url contains the "OpenApp" string, then the authorization has been given
-        if (url && url.indexOf("OpenApp") !== -1) {
+        if (url && url.includes("OpenApp")) {
           setAuthUrl(url);
           return false;
         }

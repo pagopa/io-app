@@ -47,7 +47,7 @@ export const CiePlaygrounds = () => {
           title: "Logs",
           data: logs
         });
-      } catch (e) {
+      } catch {
         toast.error("Perform a test first to generate some logs");
       }
     }

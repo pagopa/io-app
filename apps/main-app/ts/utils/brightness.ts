@@ -4,7 +4,7 @@ import { AppState, AppStateStatus, Platform } from "react-native";
 import ScreenBrightness from "react-native-screen-brightness";
 
 // The maximum brightness
-const HIGH_BRIGHTNESS = 1.0;
+const HIGH_BRIGHTNESS = 1;
 
 // The maximum brightness for Android
 // Read more: https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS

@@ -38,7 +38,7 @@ export function CieResultScreen({ route }: Props) {
           dialogTitle: `Share ${title} "Result"`
         }
       );
-    } catch (error) {
+    } catch {
       Alert.alert("Error", "Could not share the result");
     }
   };

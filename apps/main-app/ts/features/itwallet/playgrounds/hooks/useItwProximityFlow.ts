@@ -291,7 +291,7 @@ export const useItwProximityFlow = () => {
     async (payload: ISO18013_5.EventsPayload["onDocumentRequestReceived"]) => {
       ISO18013_5.setHceModalMessage("onDocumentRequestReceived");
       try {
-        if (!payload || !payload.data) {
+        if (!payload?.data) {
           return;
         }
         // String -> JSON
@@ -334,7 +334,7 @@ export const useItwProximityFlow = () => {
     async (data: ISO18013_5.EventsPayload["onError"]) => {
       ISO18013_5.setHceModalMessage("onError");
       try {
-        if (!data || !data.error) {
+        if (!data?.error) {
           throw new Error("No error data received");
         }
         parseAndPrintError(

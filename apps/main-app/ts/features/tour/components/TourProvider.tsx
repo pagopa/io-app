@@ -7,7 +7,6 @@ import {
   useMemo,
   useRef
 } from "react";
-import { View } from "react-native";
 import Animated, {
   AnimatedRef,
   SharedValue,
@@ -196,7 +195,7 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       const result: { value: TourItemMeasurement | undefined } = {
         value: undefined
       };
-      (node as unknown as View).measureInWindow((x, y, width, height) => {
+      node.measureInWindow((x, y, width, height) => {
         if (width !== 0 || height !== 0) {
           result.value = { x, y, width, height };
         }

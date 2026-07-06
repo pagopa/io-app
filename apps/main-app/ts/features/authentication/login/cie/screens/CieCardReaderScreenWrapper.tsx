@@ -26,7 +26,6 @@ export const CieCardReaderScreenWrapper = () => {
       blueColorName={IOColors[theme["interactiveElem-default"]]}
       navigation={navigation}
       route={route}
-      headerHeight={0}
     />
   );
 };

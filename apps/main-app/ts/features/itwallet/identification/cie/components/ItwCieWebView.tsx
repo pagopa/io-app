@@ -165,7 +165,7 @@ export const ItwCieAuthenticationWebview = ({
           onWebViewError={onWebViewError}
         />
       )}
-      <View style={StyleSheet.absoluteFillObject}>
+      <View style={StyleSheet.absoluteFill}>
         <LoadingScreenContent title={I18n.t("global.genericWaiting")} />
       </View>
     </>

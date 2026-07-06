@@ -88,7 +88,6 @@ export const ItwProximityPlaygroundScreen = () => {
     if (skipConsent && request) {
       // If NFC retrieval mode we send documents immediately after receiving the request, without waiting for user interaction
       void sendDocument(request, MDL_BASE64);
-      return;
     }
   }, [skipConsent, request, sendDocument]);
 
@@ -108,12 +107,10 @@ export const ItwProximityPlaygroundScreen = () => {
             <QrCodeImage value={qrCode} size={"80%"} />
           )}
           {status === PROXIMITY_STATUS.ENGAGEMENT && isNfcEnabled && (
-            <>
-              <Body>
-                NFC engagement active, tap the back of both devices toward each
-                other and hold them together
-              </Body>
-            </>
+            <Body>
+              NFC engagement active, tap the back of both devices toward each
+              other and hold them together
+            </Body>
           )}
         </View>
 

@@ -12,7 +12,6 @@ import { apiUrlPrefix } from "../../../../config";
 import { loginFailure, loginSuccess, testLoginRequest } from "../store/actions";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
-import { IdpData } from "../../../../../definitions/content/IdpData";
 import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 import { ephemeralPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../../../lollipop/utils/login";
@@ -81,7 +80,7 @@ export function* handleTestLogin({
         yield* put(
           loginSuccess({
             token: testLoginResponse.right.value.token,
-            idp: "test" as keyof IdpData
+            idp: "test"
           })
         );
         return;
@@ -89,7 +88,7 @@ export function* handleTestLogin({
       yield* put(
         loginFailure({
           error: new Error(`response status ${testLoginResponse.right.status}`),
-          idp: "test" as keyof IdpData
+          idp: "test"
         })
       );
       return;
@@ -101,14 +100,14 @@ export function* handleTestLogin({
             "unknown error"
           ])[0]
         ),
-        idp: "test" as keyof IdpData
+        idp: "test"
       })
     );
   } catch (e) {
     yield* put(
       loginFailure({
         error: convertUnknownToError(e),
-        idp: "test" as keyof IdpData
+        idp: "test"
       })
     );
   }
