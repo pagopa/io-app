@@ -1,34 +1,30 @@
 import { combineReducers } from "redux";
 import { Action } from "../../../../store/actions/types";
 import fciDocumentSignaturesReducer, {
-  FciDocumentSignaturesState
+  FciDocumentSignaturesState,
 } from "./fciDocumentSignatures";
 import fciQtspClausesReducer, { FciQtspClausesState } from "./fciQtspClauses";
 import fciLoadQtspFilledDocumentReducer, {
-  FciQtspFilledDocumentState
+  FciQtspFilledDocumentState,
 } from "./fciQtspFilledDocument";
 import fciSignatureReducer, { FciSignatureState } from "./fciSignature";
 import fciSignatureRequestReducer, {
-  FciSignatureRequestState
+  FciSignatureRequestState,
 } from "./fciSignatureRequest";
 import fciDownloadPreviewReducer, {
-  FciDownloadPreviewState
+  FciDownloadPreviewState,
 } from "./fciDownloadPreview";
 import fciPollFilledDocumentReducer, {
-  FciPollFilledDocumentState
+  FciPollFilledDocumentState,
 } from "./fciPollFilledDocument";
 import fciMetadataReducer, { FciMetadataRequestState } from "./fciMetadata";
 import fciSignaturesListRequestReducer, {
-  FciSignaturesListRequestState
+  FciSignaturesListRequestState,
 } from "./fciSignaturesList";
 import fciSignatureFieldDrawingReducer, {
-  FciSignatureFieldDrawingState
+  FciSignatureFieldDrawingState,
 } from "./fciSignatureFieldDrawing";
 import fciEnvironmentReducer, { FciEnvironmentState } from "./fciEnvironment";
-import {
-  fciSecurityLevelReducer,
-  FciSecurityLevelStateType
-} from "./fciSecurityLevelReducer";
 
 export type FciState = {
   signatureRequest: FciSignatureRequestState;
@@ -42,7 +38,6 @@ export type FciState = {
   metadata: FciMetadataRequestState;
   signaturesList: FciSignaturesListRequestState;
   environment: FciEnvironmentState;
-  securityLevel: FciSecurityLevelStateType;
 };
 
 const fciReducer = combineReducers<FciState, Action>({
@@ -57,7 +52,6 @@ const fciReducer = combineReducers<FciState, Action>({
   metadata: fciMetadataReducer,
   signaturesList: fciSignaturesListRequestReducer,
   environment: fciEnvironmentReducer,
-  securityLevel: fciSecurityLevelReducer
 });
 
 export default fciReducer;

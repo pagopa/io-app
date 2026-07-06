@@ -1,11 +1,11 @@
 import {
   IO_INTERNAL_LINK_PREFIX,
-  IO_UNIVERSAL_LINK_PREFIX
+  IO_UNIVERSAL_LINK_PREFIX,
 } from "../navigation";
 import {
   extractPathFromURL,
   getResourceNameFromUrl,
-  getUrlBasepath
+  getUrlBasepath,
 } from "../url";
 
 describe("getResourceNameFromUrl", () => {
@@ -19,11 +19,11 @@ describe("getResourceNameFromUrl", () => {
 
   it("should return the resource name with extension too", () => {
     expect(getResourceNameFromUrl(remoteResource, true)).toEqual(
-      resource + extension
+      resource + extension,
     );
   });
 
-  it("should return the resource name without extension", () => {
+  it("should return the resource name without extension for a local file url", () => {
     const localHost = "file://somefolder/somefolder2/";
     const localResource = localHost + resource + extension;
     expect(getResourceNameFromUrl(localResource)).toEqual(resource);
@@ -49,18 +49,18 @@ describe("getUrlBasepath", () => {
       "#fragment=1",
       "?param1=1#fragment=1",
       "?param1=1&param2=2#fragment=1",
-      "#fragment=1?param1=1&param2=2"
+      "#fragment=1?param1=1&param2=2",
     ];
-    suffixesToRemove.forEach(s => {
+    suffixesToRemove.forEach((s) => {
       expect(getUrlBasepath(base + s)).toEqual(base);
     });
     const suffixesToNotRemove: ReadonlyArray<string> = [
       "&param1=1?param2=2",
       "&param1=1?param2=2#fragment=3",
       "%3Fparam1%3D1%26param2%3D2%23fragment%3D1",
-      "%3Fparam1%3D1%26param2%3D2"
+      "%3Fparam1%3D1%26param2%3D2",
     ];
-    suffixesToNotRemove.forEach(s => {
+    suffixesToNotRemove.forEach((s) => {
       expect(getUrlBasepath(base + s)).toEqual(base + s);
     });
   });
@@ -72,8 +72,8 @@ describe("extractPathFromURL", () => {
     expect(
       extractPathFromURL(
         [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
-        url
-      )
+        url,
+      ),
     ).toBeUndefined();
   });
 
@@ -83,8 +83,8 @@ describe("extractPathFromURL", () => {
     expect(
       extractPathFromURL(
         [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
-        url
-      )
+        url,
+      ),
     ).toEqual(path);
   });
 
@@ -94,8 +94,8 @@ describe("extractPathFromURL", () => {
     expect(
       extractPathFromURL(
         [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
-        url
-      )
+        url,
+      ),
     ).toEqual(path);
   });
 });

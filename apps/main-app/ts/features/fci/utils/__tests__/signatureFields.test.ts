@@ -12,7 +12,7 @@ import {
   getSectionListData,
   getSignatureFieldsLength,
   orderSignatureFields,
-  parsePdfAsBase64
+  parsePdfAsBase64,
 } from "../signatureFields";
 import { mockCreateSignatureBody } from "../../types/__mocks__/CreateSignatureBody.mock";
 
@@ -22,193 +22,193 @@ const signatureFields: ReadonlyArray<SignatureField> = [
   {
     clause: {
       title: "clause title 1",
-      type: ClausesTypeEnum.REQUIRED
+      type: ClausesTypeEnum.REQUIRED,
     },
-    attrs: emptyAttrs
+    attrs: emptyAttrs,
   },
   {
     clause: {
       title: "clause title 2",
-      type: ClausesTypeEnum.UNFAIR
+      type: ClausesTypeEnum.UNFAIR,
     },
-    attrs: emptyAttrs
+    attrs: emptyAttrs,
   },
   {
     clause: {
       title: "clause title 3",
-      type: ClausesTypeEnum.OPTIONAL
+      type: ClausesTypeEnum.OPTIONAL,
     },
-    attrs: emptyAttrs
+    attrs: emptyAttrs,
   },
   {
     clause: {
       title: "clause title 4",
-      type: ClausesTypeEnum.OPTIONAL
+      type: ClausesTypeEnum.OPTIONAL,
     },
-    attrs: emptyAttrs
-  }
+    attrs: emptyAttrs,
+  },
 ];
 
 const requiredSignatureFields = [
   {
     clause: {
       title: "clause title 1",
-      type: ClausesTypeEnum.REQUIRED
+      type: ClausesTypeEnum.REQUIRED,
     },
-    attrs: emptyAttrs
+    attrs: emptyAttrs,
   },
   {
     clause: {
       title: "clause title 2",
-      type: ClausesTypeEnum.UNFAIR
+      type: ClausesTypeEnum.UNFAIR,
     },
-    attrs: emptyAttrs
-  }
+    attrs: emptyAttrs,
+  },
 ];
 
 const optionalSignatureFields = [
   {
     clause: {
       title: "clause title 3",
-      type: ClausesTypeEnum.OPTIONAL
+      type: ClausesTypeEnum.OPTIONAL,
     },
-    attrs: emptyAttrs
+    attrs: emptyAttrs,
   },
   {
     clause: {
       title: "clause title 4",
-      type: ClausesTypeEnum.OPTIONAL
+      type: ClausesTypeEnum.OPTIONAL,
     },
-    attrs: emptyAttrs
-  }
+    attrs: emptyAttrs,
+  },
 ];
 
 const reqAndOptSignatureFields = [
   {
     clause: {
       title: "clause title 3",
-      type: ClausesTypeEnum.OPTIONAL
+      type: ClausesTypeEnum.OPTIONAL,
     },
-    attrs: emptyAttrs
+    attrs: emptyAttrs,
   },
   {
     clause: {
       title: "clause title 1",
-      type: ClausesTypeEnum.REQUIRED
+      type: ClausesTypeEnum.REQUIRED,
     },
-    attrs: emptyAttrs
-  }
+    attrs: emptyAttrs,
+  },
 ];
 
 jest.mock("react-native-blob-util", () => ({
   fs: {
     readFile: jest
       .fn()
-      .mockImplementation(() => Promise.resolve("base64-encoded-pdf-bytes"))
-  }
+      .mockImplementation(() => Promise.resolve("base64-encoded-pdf-bytes")),
+  },
 }));
 
 describe("Test signatureFields utils", () => {
   describe("Test clausesByType", () => {
-    it("it should returns an empty array with an empty signatureFields as input", () => {
+    it("should returns an empty array with an empty signatureFields as input", () => {
       expect(clausesByType([], [ClausesTypeEnum.REQUIRED])).toStrictEqual([]);
     });
-    it("it should returns an empty array with an invalid clause type", () => {
+    it("should returns an empty array with an invalid clause type", () => {
       expect(clausesByType([], ["INVALID_TYPE"])).toStrictEqual([]);
     });
-    it("it should returns an array with one item if clause type equal to REQUIRED", () => {
+    it("should returns an array with one item if clause type equal to REQUIRED", () => {
       expect(
-        clausesByType(signatureFields, [ClausesTypeEnum.REQUIRED]).length
+        clausesByType(signatureFields, [ClausesTypeEnum.REQUIRED]).length,
       ).toBe(1);
       expect(
-        clausesByType(signatureFields, [ClausesTypeEnum.REQUIRED])
+        clausesByType(signatureFields, [ClausesTypeEnum.REQUIRED]),
       ).toStrictEqual([signatureFields[0]]);
     });
-    it("it should returns an array with two items if clause type is equal to OPTIONAL", () => {
+    it("should returns an array with two items if clause type is equal to OPTIONAL", () => {
       expect(
-        clausesByType(signatureFields, [ClausesTypeEnum.OPTIONAL]).length
+        clausesByType(signatureFields, [ClausesTypeEnum.OPTIONAL]).length,
       ).toBe(2);
       expect(
-        clausesByType(signatureFields, [ClausesTypeEnum.OPTIONAL])
+        clausesByType(signatureFields, [ClausesTypeEnum.OPTIONAL]),
       ).toStrictEqual([signatureFields[2], signatureFields[3]]);
     });
-    it("it should returns an array with three items if clause type is equal to OPTIONAL and REQUIRED", () => {
+    it("should returns an array with three items if clause type is equal to OPTIONAL and REQUIRED", () => {
       expect(
         clausesByType(signatureFields, [
           ClausesTypeEnum.OPTIONAL,
-          ClausesTypeEnum.REQUIRED
-        ]).length
+          ClausesTypeEnum.REQUIRED,
+        ]).length,
       ).toBe(3);
       expect(
         clausesByType(signatureFields, [
           ClausesTypeEnum.OPTIONAL,
-          ClausesTypeEnum.REQUIRED
-        ])
+          ClausesTypeEnum.REQUIRED,
+        ]),
       ).toStrictEqual([
         signatureFields[0],
         signatureFields[2],
-        signatureFields[3]
+        signatureFields[3],
       ]);
     });
   });
 
   describe("Test getAllTypes", () => {
-    it("it should returns an empty array with an empty signatureFields as input", () => {
+    it("should returns an empty array with an empty signatureFields as input", () => {
       expect(getAllTypes([])).toStrictEqual([]);
     });
-    it("it should returns an array with three items", () => {
+    it("should returns an array with three items", () => {
       expect(getAllTypes(signatureFields).length).toBe(3);
       expect(getAllTypes(signatureFields)).toStrictEqual([
         "REQUIRED",
         "UNFAIR",
-        "OPTIONAL"
+        "OPTIONAL",
       ]);
     });
   });
 
   describe("Test getSectionListData", () => {
-    it("it should returns an empty array with an empty signatureFields as input", () => {
+    it("should returns an empty array with an empty signatureFields as input", () => {
       expect(getSectionListData([])).toStrictEqual([]);
     });
-    it("it should returns an array with three items", () => {
+    it("should returns an array with three items", () => {
       expect(getSectionListData(signatureFields).length).toBe(3);
     });
-    it("it should returns an array with three items and two signature field OPTIONAL", () => {
+    it("should returns an array with three items and two signature field OPTIONAL", () => {
       expect(getSectionListData(signatureFields).length).toBe(3);
       expect(getSectionListData(signatureFields)[2].data.length).toBe(2);
     });
   });
 
   describe("Test getClauseLabel", () => {
-    it("it should returns the right text for REQUIRED type", () => {
+    it("should returns the right text for REQUIRED type", () => {
       expect(getClauseLabel(ClausesTypeEnum.REQUIRED)).toStrictEqual(
-        I18n.t("features.fci.signatureFields.required")
+        I18n.t("features.fci.signatureFields.required"),
       );
     });
-    it("it should returns the right text for OPTIONAL type", () => {
+    it("should returns the right text for OPTIONAL type", () => {
       expect(getClauseLabel(ClausesTypeEnum.OPTIONAL)).toStrictEqual(
-        I18n.t("features.fci.signatureFields.optional")
+        I18n.t("features.fci.signatureFields.optional"),
       );
     });
-    it("it should returns the right text for UNFAIR type", () => {
+    it("should returns the right text for UNFAIR type", () => {
       expect(getClauseLabel(ClausesTypeEnum.UNFAIR)).toStrictEqual(
-        I18n.t("features.fci.signatureFields.unfair")
+        I18n.t("features.fci.signatureFields.unfair"),
       );
     });
   });
 
   describe("Test getRequiredSignatureFields", () => {
-    it("it should returns an array of UNFAIR and REQUIRED signature fields", () => {
+    it("should returns an array of UNFAIR and REQUIRED signature fields", () => {
       expect(getRequiredSignatureFields(signatureFields)).toStrictEqual(
-        requiredSignatureFields
+        requiredSignatureFields,
       );
     });
   });
 
   describe("Test getOptionalSignatureFields", () => {
-    it("it should returns an array of OPTIONAL signature fields", () => {
+    it("should returns an array of OPTIONAL signature fields", () => {
       expect(getOptionalSignatureFields(signatureFields)).toStrictEqual(
-        optionalSignatureFields
+        optionalSignatureFields,
       );
     });
   });
@@ -219,7 +219,7 @@ describe("Test signatureFields utils", () => {
         signatureFields[1], // UNFAIR
         signatureFields[0], // REQUIRED
         signatureFields[2], // OPTIONAL
-        signatureFields[3] // OPTIONAL
+        signatureFields[3], // OPTIONAL
       ];
       expect(orderSignatureFields(signatureFields)).toStrictEqual(ordered);
     });
@@ -227,20 +227,20 @@ describe("Test signatureFields utils", () => {
     it("should return a sorted array when only UNFAIR and REQUIRED types are present in the following order: UNFAIR, REQUIRED", () => {
       const ordered = [
         requiredSignatureFields[1], // UNFAIR
-        requiredSignatureFields[0] // REQUIRED
+        requiredSignatureFields[0], // REQUIRED
       ];
       expect(orderSignatureFields(requiredSignatureFields)).toStrictEqual(
-        ordered
+        ordered,
       );
     });
 
     it("should return a sorted array when only REQUIRED and OPTIONAL types are present in the following order: REQUIRED, OPTION", () => {
       const ordered = [
         reqAndOptSignatureFields[1], // REQUIRED
-        reqAndOptSignatureFields[0] // OPTIONAL
+        reqAndOptSignatureFields[0], // OPTIONAL
       ];
       expect(orderSignatureFields(reqAndOptSignatureFields)).toStrictEqual(
-        ordered
+        ordered,
       );
     });
 
@@ -248,77 +248,77 @@ describe("Test signatureFields utils", () => {
       const unknownField = {
         clause: {
           title: "clause title 8",
-          type: "Unknown"
+          type: "Unknown",
         },
-        attrs: emptyAttrs
+        attrs: emptyAttrs,
       };
       const ordered = [
         signatureFields[1], // UNFAIR
         signatureFields[0], // REQUIRED
         signatureFields[2], // OPTIONAL
         signatureFields[3], // OPTIONAL
-        unknownField // UNKNOWN
+        unknownField, // UNKNOWN
       ];
       expect(
         orderSignatureFields([
           unknownField as SignatureField,
-          ...signatureFields
-        ])
+          ...signatureFields,
+        ]),
       ).toStrictEqual(ordered);
     });
   });
 
   describe("Test getClausesCountByTypes", () => {
-    it("it should return 4 if the clauses array contains REQUIRED", () => {
-      expect(
-        getClausesCountByTypes(mockCreateSignatureBody.documents_to_sign, [
-          ClausesTypeEnum.REQUIRED
-        ])
-      ).toStrictEqual(4);
-    });
-    it("it should return 6 if the clauses array contains REQUIRED and UNFAIR", () => {
+    it("should return 4 if the clauses array contains REQUIRED", () => {
       expect(
         getClausesCountByTypes(mockCreateSignatureBody.documents_to_sign, [
           ClausesTypeEnum.REQUIRED,
-          ClausesTypeEnum.UNFAIR
-        ])
-      ).toStrictEqual(6);
+        ]),
+      ).toStrictEqual(4);
     });
-    it("it should return 3 if the clauses array contains OPTIONAL", () => {
+    it("should return 6 if the clauses array contains REQUIRED and UNFAIR", () => {
       expect(
         getClausesCountByTypes(mockCreateSignatureBody.documents_to_sign, [
-          ClausesTypeEnum.OPTIONAL
-        ])
-      ).toStrictEqual(3);
+          ClausesTypeEnum.REQUIRED,
+          ClausesTypeEnum.UNFAIR,
+        ]),
+      ).toStrictEqual(6);
     });
-    it("it should return 7 if the clauses array contains REQUIRED and OPTIONAL", () => {
+    it("should return 3 if the clauses array contains OPTIONAL", () => {
       expect(
         getClausesCountByTypes(mockCreateSignatureBody.documents_to_sign, [
           ClausesTypeEnum.OPTIONAL,
-          ClausesTypeEnum.REQUIRED
-        ])
-      ).toStrictEqual(7);
+        ]),
+      ).toStrictEqual(3);
     });
-    it("it should return 2 if the clauses array contains UNFAIR", () => {
+    it("should return 7 if the clauses array contains REQUIRED and OPTIONAL", () => {
       expect(
         getClausesCountByTypes(mockCreateSignatureBody.documents_to_sign, [
-          ClausesTypeEnum.UNFAIR
-        ])
+          ClausesTypeEnum.OPTIONAL,
+          ClausesTypeEnum.REQUIRED,
+        ]),
+      ).toStrictEqual(7);
+    });
+    it("should return 2 if the clauses array contains UNFAIR", () => {
+      expect(
+        getClausesCountByTypes(mockCreateSignatureBody.documents_to_sign, [
+          ClausesTypeEnum.UNFAIR,
+        ]),
       ).toStrictEqual(2);
     });
   });
 
   describe("Test getSignatureFieldsLength", () => {
-    it("it should returns 3 if document has a signatureFields of length 3", () => {
+    it("should returns 3 if document has a signatureFields of length 3", () => {
       expect(getSignatureFieldsLength(mockDocuments[0])).toStrictEqual(3);
     });
-    it("it should returns 0 if document has and empty signatureFields array", () => {
+    it("should returns 0 if document has and empty signatureFields array", () => {
       const doc = {
         ...mockDocuments[0],
         metadata: {
           ...mockDocuments[0].metadata,
-          signature_fields: []
-        }
+          signature_fields: [],
+        },
       };
       expect(getSignatureFieldsLength(doc)).toStrictEqual(0);
     });
@@ -330,7 +330,7 @@ describe("Test signatureFields utils", () => {
     it("should parse a pdf file as base64", async () => {
       const result = await parsePdfAsBase64(uri);
       expect(result).toBe(
-        "data:application/pdf;base64,base64-encoded-pdf-bytes"
+        "data:application/pdf;base64,base64-encoded-pdf-bytes",
       );
     });
   });

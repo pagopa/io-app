@@ -12,16 +12,16 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import {
   UpdatePaymentForMessageSuccess,
   cancelQueuedPaymentUpdates,
-  updatePaymentForMessage
+  updatePaymentForMessage,
 } from "../../store/actions";
 import {
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,
-  toTimeoutMessagePaymentError
+  toTimeoutMessagePaymentError,
 } from "../../types/paymentErrors";
 import {
   handlePaymentUpdateRequests,
-  testable
+  testable,
 } from "../handlePaymentUpdateRequests";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { Action } from "../../../../store/actions/types";
@@ -51,7 +51,7 @@ describe("handlePaymentUpdateRequests", () => {
           fork(testable!.paymentUpdateRequestWorker as any, mockActionChannel),
           fork(testable!.paymentUpdateRequestWorker as any, mockActionChannel),
           fork(testable!.paymentUpdateRequestWorker as any, mockActionChannel),
-          fork(testable!.paymentUpdateRequestWorker as any, mockActionChannel)
+          fork(testable!.paymentUpdateRequestWorker as any, mockActionChannel),
         ])
         .next()
         .take(cancelQueuedPaymentUpdates)
@@ -63,14 +63,14 @@ describe("handlePaymentUpdateRequests", () => {
   });
 
   describe("paymentUpdateRequestWorker", () => {
-    it("should follow proper flow when using paymentDataRequest API (isTest true), and only terminate the worker if the dispatched cancel action has the same messageId as the worker as payload ", () => {
+    it("should follow proper flow when using paymentDataRequest API (isTest true), and only terminate the worker if the dispatched cancel action has the same messageId as the worker as payload", () => {
       const mockChannel = channel() as Channel<
         ActionType<typeof updatePaymentForMessage.request>
       >;
       const paymentActionRequest = updatePaymentForMessage.request({
         messageId,
         paymentId,
-        serviceId
+        serviceId,
       });
 
       testSaga(testable!.paymentUpdateRequestWorker, mockChannel)
@@ -107,18 +107,18 @@ describe("handlePaymentUpdateRequests", () => {
             // cancel case
             const cancelEffectPattern = wasCancelled.payload.pattern;
             const sameMsgIdResult = cancelEffectPattern(
-              cancelQueuedPaymentUpdates({ messageId })
+              cancelQueuedPaymentUpdates({ messageId }),
             );
             const differentMsgIdResult = cancelEffectPattern(
-              cancelQueuedPaymentUpdates({ messageId: "differentMessageId" })
+              cancelQueuedPaymentUpdates({ messageId: "differentMessageId" }),
             );
             const wrongActionResult = cancelEffectPattern(
-              applicationChangeState("active")
+              applicationChangeState("active"),
             );
             expect(sameMsgIdResult).toBe(true);
             expect(differentMsgIdResult).toBe(false);
             expect(wrongActionResult).toBe(false);
-          }
+          },
         );
     });
     it("should properly handle a thrown Error", () => {
@@ -128,11 +128,11 @@ describe("handlePaymentUpdateRequests", () => {
       const paymentActionRequest = updatePaymentForMessage.request({
         messageId,
         paymentId,
-        serviceId
+        serviceId,
       });
       const error = Error(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO);
       const paymentError = toSpecificMessagePaymentError(
-        PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
+        PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO,
       );
 
       testSaga(testable!.paymentUpdateRequestWorker, mockChannel)
@@ -151,8 +151,8 @@ describe("handlePaymentUpdateRequests", () => {
             messageId,
             paymentId,
             reason: paymentError,
-            serviceId
-          })
+            serviceId,
+          }),
         )
         .next()
         .take(mockChannel);
@@ -165,7 +165,7 @@ describe("handlePaymentUpdateRequests", () => {
       const paymentActionRequest = updatePaymentForMessage.request({
         messageId,
         paymentId,
-        serviceId
+        serviceId,
       });
 
       const output = tryCatchErrorOrUndefined(() => {
@@ -178,18 +178,18 @@ describe("handlePaymentUpdateRequests", () => {
           .call(
             withRefreshApiCall,
             mockGetPaymentInfoV2({ rptId: paymentId, test: true }),
-            paymentActionRequest
+            paymentActionRequest,
           )
           .next(E.left([]));
       });
       expect(output).toEqual(Error());
     });
-    [404, 409, 502, 503].forEach(statusCode =>
+    [404, 409, 502, 503].forEach((statusCode) =>
       it(`should return an error if API result is ${statusCode}`, () => {
         const paymentActionRequest = updatePaymentForMessage.request({
           messageId,
           paymentId,
-          serviceId
+          serviceId,
         });
         const output = tryCatchErrorOrUndefined(() => {
           testSaga(testable!.updatePaymentInfo, paymentActionRequest, true)
@@ -202,29 +202,29 @@ describe("handlePaymentUpdateRequests", () => {
               withRefreshApiCall,
               mockGetPaymentInfoV2({
                 rptId: paymentId,
-                test: true
+                test: true,
               }),
-              paymentActionRequest
+              paymentActionRequest,
             )
             .next(
               E.right({
                 status: statusCode,
                 value: {
-                  faultCodeDetail: PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
-                }
-              })
+                  faultCodeDetail: PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO,
+                },
+              }),
             );
         });
         expect(output).toEqual(
-          Error(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO)
+          Error(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO),
         );
-      })
+      }),
     );
     it(`should return an error if API result is 500`, () => {
       const paymentActionRequest = updatePaymentForMessage.request({
         messageId,
         paymentId,
-        serviceId
+        serviceId,
       });
       const output = tryCatchErrorOrUndefined(() => {
         testSaga(testable!.updatePaymentInfo, paymentActionRequest, true)
@@ -237,9 +237,9 @@ describe("handlePaymentUpdateRequests", () => {
             withRefreshApiCall,
             mockGetPaymentInfoV2({
               rptId: paymentId,
-              test: true
+              test: true,
             }),
-            paymentActionRequest
+            paymentActionRequest,
           )
           .next(
             E.right({
@@ -249,20 +249,20 @@ describe("handlePaymentUpdateRequests", () => {
                 title: "titl",
                 detail: "detai",
                 type: "typ",
-                instance: "instanc"
-              }
-            })
+                instance: "instanc",
+              },
+            }),
           );
       });
       expect(output).toEqual(
-        Error("HTTP Status 500 (500) (titl) (detai) (typ) (instanc)")
+        Error("HTTP Status 500 (500) (titl) (detai) (typ) (instanc)"),
       );
     });
     it(`should do nothing if API result is 401`, () => {
       const paymentActionRequest = updatePaymentForMessage.request({
         messageId,
         paymentId,
-        serviceId
+        serviceId,
       });
       const output = tryCatchErrorOrUndefined(() => {
         testSaga(testable!.updatePaymentInfo, paymentActionRequest, true)
@@ -275,14 +275,14 @@ describe("handlePaymentUpdateRequests", () => {
             withRefreshApiCall,
             mockGetPaymentInfoV2({
               rptId: paymentId,
-              test: true
+              test: true,
             }),
-            paymentActionRequest
+            paymentActionRequest,
           )
           .next(
             E.right({
-              status: 401
-            })
+              status: 401,
+            }),
           );
       });
       expect(output).toBeUndefined();
@@ -291,7 +291,7 @@ describe("handlePaymentUpdateRequests", () => {
       const paymentActionRequest = updatePaymentForMessage.request({
         messageId,
         paymentId,
-        serviceId
+        serviceId,
       });
 
       testSaga(testable!.updatePaymentInfo, paymentActionRequest, true)
@@ -304,27 +304,27 @@ describe("handlePaymentUpdateRequests", () => {
           withRefreshApiCall,
           mockGetPaymentInfoV2({
             rptId: paymentId,
-            test: true
+            test: true,
           }),
-          paymentActionRequest
+          paymentActionRequest,
         )
         .next(
           E.right({
             status: 200,
             value: {
-              amount: 100
-            }
-          })
+              amount: 100,
+            },
+          }),
         )
         .put(
           updatePaymentForMessage.success({
             messageId,
             paymentId,
             paymentData: {
-              amount: 100
+              amount: 100,
             },
-            serviceId
-          } as UpdatePaymentForMessageSuccess)
+            serviceId,
+          } as UpdatePaymentForMessageSuccess),
         )
         .next()
         .isDone();
@@ -350,30 +350,30 @@ describe("handlePaymentUpdateRequests", () => {
     });
     it("should return a specifc error for PaymentFaultV2Enum code Error", () => {
       const output = testable!.unknownErrorToPaymentError(
-        Error(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO)
+        Error(PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO),
       );
       expect(output).toEqual(
         toSpecificMessagePaymentError(
-          PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
-        )
+          PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO,
+        ),
       );
     });
     it("should return a specifc error for PaymentFaultV2Enum code", () => {
       const output = testable!.unknownErrorToPaymentError(
-        PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
+        PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO,
       );
       expect(output).toEqual(
         toSpecificMessagePaymentError(
-          PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
-        )
+          PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO,
+        ),
       );
     });
     it("should return a generic error for a generic error", () => {
       const output = testable!.unknownErrorToPaymentError(
-        Error("Some generic error")
+        Error("Some generic error"),
       );
       expect(output).toEqual(
-        toGenericMessagePaymentError("Some generic error")
+        toGenericMessagePaymentError("Some generic error"),
       );
     });
   });
@@ -404,19 +404,19 @@ describe("handlePaymentUpdateRequests", () => {
         .mockImplementation((_event, _properties) => undefined);
 
       testable!.trackPaymentErrorIfNeeded(
-        toGenericMessagePaymentError("An error")
+        toGenericMessagePaymentError("An error"),
       );
 
       expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
       expect(spyOnMixpanelTrack.mock.calls[0].length).toBe(2);
       expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe(
-        "MESSAGE_PAYMENT_FAILURE"
+        "MESSAGE_PAYMENT_FAILURE",
       );
       expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
         event_category: "KO",
         event_type: undefined,
         flow: undefined,
-        reason: "An error"
+        reason: "An error",
       });
     });
     it("should not track an anlytics event for a specific error", () => {
@@ -426,8 +426,8 @@ describe("handlePaymentUpdateRequests", () => {
 
       testable!.trackPaymentErrorIfNeeded(
         toSpecificMessagePaymentError(
-          PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO
-        )
+          PaymentFaultV2Enum.PPT_PAGAMENTO_DUPLICATO,
+        ),
       );
 
       expect(spyOnMixpanelTrack.mock.calls.length).toBe(0);

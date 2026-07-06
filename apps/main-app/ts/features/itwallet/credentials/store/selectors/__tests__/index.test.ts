@@ -14,12 +14,12 @@ import {
   itwCredentialsByTypeSelector,
   itwCredentialsListByTypeSelector,
   itwHasExpiringCredentialsSelector,
-  itwIsMdlPresentSelector
+  itwIsMdlPresentSelector,
 } from "../index";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
   ParsedCredential,
-  CredentialMetadata
+  CredentialMetadata,
 } from "../../../../common/utils/itwTypesUtils";
 
 const getStateWithCredentials = (credentials: {
@@ -30,10 +30,10 @@ const getStateWithCredentials = (credentials: {
     features: {
       itWallet: {
         credentials: {
-          credentials
-        }
-      }
-    }
+          credentials,
+        },
+      },
+    },
   });
 };
 
@@ -45,18 +45,18 @@ const mockedEid: CredentialMetadata = {
       value: "AAAAAA00A00A000A",
       name: {
         "it-IT": "Codice Fiscale",
-        "en-US": "Tax ID Number"
-      }
-    }
+        "en-US": "Tax ID Number",
+      },
+    },
   },
   format: "dc+sd-jwt",
   keyTag: "9020c6f8-01be-4236-9b6f-834af9dcbc63",
   issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
-    expiration: "2025-09-30T07:32:50.000Z"
+    expiration: "2025-09-30T07:32:50.000Z",
   },
-  spec_version: "1.0.0"
+  spec_version: "1.0.0",
 };
 
 const mockedDrivingLicense: CredentialMetadata = {
@@ -68,9 +68,9 @@ const mockedDrivingLicense: CredentialMetadata = {
   issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
-    expiration: "2025-09-30T07:32:50.000Z"
+    expiration: "2025-09-30T07:32:50.000Z",
   },
-  spec_version: "1.0.0"
+  spec_version: "1.0.0",
 };
 
 const mockedMdocDrivingLicense: CredentialMetadata = {
@@ -82,9 +82,9 @@ const mockedMdocDrivingLicense: CredentialMetadata = {
   issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
-    expiration: "2025-09-30T07:32:50.000Z"
+    expiration: "2025-09-30T07:32:50.000Z",
   },
-  spec_version: "1.0.0"
+  spec_version: "1.0.0",
 };
 
 const mockedDisabilityCard: CredentialMetadata = {
@@ -96,9 +96,9 @@ const mockedDisabilityCard: CredentialMetadata = {
   issuerConf: {} as CredentialMetadata["issuerConf"],
   jwt: {
     issuedAt: "2024-09-30T07:32:49.000Z",
-    expiration: "2025-09-30T07:32:50.000Z"
+    expiration: "2025-09-30T07:32:50.000Z",
   },
-  spec_version: "1.0.0"
+  spec_version: "1.0.0",
 };
 
 describe("itwCredentialsByTypeSelector", () => {
@@ -107,33 +107,33 @@ describe("itwCredentialsByTypeSelector", () => {
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
       [mockedMdocDrivingLicense.credentialId]: mockedMdocDrivingLicense,
-      [mockedDisabilityCard.credentialId]: mockedDisabilityCard
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
     });
     expect(itwCredentialsByTypeSelector(state)).toEqual({
       [mockedEid.credentialType]: { "dc+sd-jwt": mockedEid },
       [mockedDrivingLicense.credentialType]: {
         "dc+sd-jwt": mockedDrivingLicense,
-        mso_mdoc: mockedMdocDrivingLicense
+        mso_mdoc: mockedMdocDrivingLicense,
       },
       [mockedDisabilityCard.credentialType]: {
-        "dc+sd-jwt": mockedDisabilityCard
-      }
+        "dc+sd-jwt": mockedDisabilityCard,
+      },
     });
   });
 });
 
 describe("itwCredentialsEidSelector", () => {
-  it("returns O.some with the eid ", () => {
+  it("returns O.some with the eid", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
-      [mockedDrivingLicense.credentialId]: mockedDrivingLicense
+      [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
     });
     expect(itwCredentialsEidSelector(state)).toEqual(O.some(mockedEid));
   });
 
   it("returns O.none if the eid is not present", () => {
     const state = getStateWithCredentials({
-      [mockedDrivingLicense.credentialId]: mockedDrivingLicense
+      [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
     });
     expect(itwCredentialsEidSelector(state)).toEqual(O.none);
   });
@@ -144,11 +144,11 @@ describe("itwCredentialsSelector", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
-      [mockedDisabilityCard.credentialId]: mockedDisabilityCard
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
     });
     expect(itwCredentialsSelector(state)).toEqual({
       [CredentialType.DRIVING_LICENSE]: mockedDrivingLicense,
-      [CredentialType.EUROPEAN_DISABILITY_CARD]: mockedDisabilityCard
+      [CredentialType.EUROPEAN_DISABILITY_CARD]: mockedDisabilityCard,
     });
   });
 });
@@ -158,22 +158,22 @@ describe("itwCredentialSelector", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
-      [mockedDisabilityCard.credentialId]: mockedDisabilityCard
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
     });
     expect(
-      itwCredentialSelector(CredentialType.DRIVING_LICENSE)(state)
+      itwCredentialSelector(CredentialType.DRIVING_LICENSE)(state),
     ).toEqual(O.some(mockedDrivingLicense));
   });
   it("returns the O.none if the credential does not exist", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
-      [mockedDisabilityCard.credentialId]: mockedDisabilityCard
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
     });
     expect(
       itwCredentialSelector(CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD)(
-        state
-      )
+        state,
+      ),
     ).toEqual(O.none);
   });
 });
@@ -184,11 +184,11 @@ describe("itwCredentialsTypesSelector", () => {
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
       [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
-      ["other"]: mockedDisabilityCard
+      ["other"]: mockedDisabilityCard,
     });
     expect(itwCredentialsTypesSelector(state)).toEqual([
       CredentialType.DRIVING_LICENSE,
-      CredentialType.EUROPEAN_DISABILITY_CARD
+      CredentialType.EUROPEAN_DISABILITY_CARD,
     ]);
   });
 });
@@ -198,7 +198,7 @@ describe("selectFiscalCodeFromEid", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
-      [mockedDisabilityCard.credentialId]: mockedDisabilityCard
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
     });
     expect(selectFiscalCodeFromEid(state)).toEqual("AAAAAA00A00A000A");
   });
@@ -206,7 +206,7 @@ describe("selectFiscalCodeFromEid", () => {
   it("returns an empty string if the eid is not present", () => {
     const state = getStateWithCredentials({
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
-      [mockedDisabilityCard.credentialId]: mockedDisabilityCard
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
     });
     expect(selectFiscalCodeFromEid(state)).toEqual("");
   });
@@ -218,44 +218,44 @@ describe("selectNameSurnameFromEid", () => {
       "John Doe",
       {
         given_name: {
-          value: "John"
+          value: "John",
         },
         family_name: {
-          value: "Doe"
-        }
-      }
+          value: "Doe",
+        },
+      },
     ],
     [
       "John",
       {
         given_name: {
-          value: "John"
-        }
-      }
+          value: "John",
+        },
+      },
     ],
     [
       "Doe",
       {
         family_name: {
-          value: "Doe"
-        }
-      }
+          value: "Doe",
+        },
+      },
     ],
-    ["", {}]
+    ["", {}],
   ])(
     "returns %s when the parsed credential is %s",
     (expected, parsedCredential) => {
       const state = getStateWithCredentials({
         [mockedEid.credentialId]: {
           ...mockedEid,
-          parsedCredential: { ...parsedCredential } as ParsedCredential
+          parsedCredential: { ...parsedCredential } as ParsedCredential,
         },
         [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
-        [mockedDisabilityCard.credentialId]: mockedDisabilityCard
+        [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
       });
 
       expect(selectNameSurnameFromEid(state)).toEqual(expected);
-    }
+    },
   );
 });
 
@@ -265,22 +265,22 @@ describe("itwIsWalletEmptySelector", () => {
     [
       true,
       {
-        [mockedEid.credentialId]: mockedEid
-      }
+        [mockedEid.credentialId]: mockedEid,
+      },
     ],
     [
       false,
       {
-        [mockedDrivingLicense.credentialId]: mockedDrivingLicense
-      }
+        [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
+      },
     ],
     [
       false,
       {
         [mockedEid.credentialId]: mockedEid,
-        [mockedDrivingLicense.credentialId]: mockedDrivingLicense
-      }
-    ]
+        [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
+      },
+    ],
   ])("returns %s when the credentials are %s", (expected, credentials) => {
     const state = getStateWithCredentials(credentials);
     expect(itwIsWalletEmptySelector(state)).toEqual(expected);
@@ -293,24 +293,24 @@ describe("itwHasWalletAtLeastTwoCredentialsSelector", () => {
     [
       false,
       {
-        [mockedEid.credentialId]: mockedEid
-      }
+        [mockedEid.credentialId]: mockedEid,
+      },
     ],
     [
       false,
       {
         [mockedEid.credentialId]: mockedEid,
-        [mockedDrivingLicense.credentialId]: mockedDrivingLicense
-      }
+        [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
+      },
     ],
     [
       true,
       {
         [mockedEid.credentialId]: mockedEid,
         [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
-        [mockedDisabilityCard.credentialId]: mockedDisabilityCard
-      }
-    ]
+        [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
+      },
+    ],
   ])("returns %s when the credentials are %s", (expected, credentials) => {
     const state = getStateWithCredentials(credentials);
     expect(itwHasWalletAtLeastTwoCredentialsSelector(state)).toEqual(expected);
@@ -318,10 +318,10 @@ describe("itwHasWalletAtLeastTwoCredentialsSelector", () => {
 });
 
 describe("test legacy credentials", () => {
-  it("itwCredentialsEidSelector returns O.some with the eid ", () => {
+  it("itwCredentialsEidSelector returns O.some with the eid", () => {
     const legacyEid = { ...mockedEid, format: "vc+sd-jwt" };
     const state = getStateWithCredentials({
-      [legacyEid.credentialId]: legacyEid
+      [legacyEid.credentialId]: legacyEid,
     });
     expect(itwCredentialsEidSelector(state)).toEqual(O.some(legacyEid));
   });
@@ -333,11 +333,11 @@ describe("test legacy credentials", () => {
     const state = getStateWithCredentials({
       [legacyEid.credentialId]: legacyEid,
       [legacyMdl.credentialId]: legacyMdl,
-      [legacyDc.credentialId]: legacyDc
+      [legacyDc.credentialId]: legacyDc,
     });
     expect(itwCredentialsSelector(state)).toEqual({
       [CredentialType.DRIVING_LICENSE]: legacyMdl,
-      [CredentialType.EUROPEAN_DISABILITY_CARD]: legacyDc
+      [CredentialType.EUROPEAN_DISABILITY_CARD]: legacyDc,
     });
   });
 });
@@ -347,19 +347,19 @@ describe("itwCredentialsListByTypeSelector", () => {
     const state = getStateWithCredentials({
       [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
-      [mockedMdocDrivingLicense.credentialId]: mockedMdocDrivingLicense
+      [mockedMdocDrivingLicense.credentialId]: mockedMdocDrivingLicense,
     });
     expect(
-      itwCredentialsListByTypeSelector(CredentialType.DRIVING_LICENSE)(state)
+      itwCredentialsListByTypeSelector(CredentialType.DRIVING_LICENSE)(state),
     ).toEqual([mockedDrivingLicense, mockedMdocDrivingLicense]);
   });
 
   it("should return an empty list when no credentials are found", () => {
     const state = getStateWithCredentials({
-      [mockedDisabilityCard.credentialId]: mockedDisabilityCard
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
     });
     expect(
-      itwCredentialsListByTypeSelector(CredentialType.DRIVING_LICENSE)(state)
+      itwCredentialsListByTypeSelector(CredentialType.DRIVING_LICENSE)(state),
     ).toEqual([]);
   });
 });
@@ -369,7 +369,7 @@ describe("itwHasExpiringCredentialsSelector", () => {
     const state = getStateWithCredentials({
       [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
-      [mockedMdocDrivingLicense.credentialId]: mockedMdocDrivingLicense
+      [mockedMdocDrivingLicense.credentialId]: mockedMdocDrivingLicense,
     });
     expect(itwHasExpiringCredentialsSelector(state)).toEqual(true);
   });
@@ -381,28 +381,28 @@ describe("itwHasExpiringCredentialsSelector", () => {
         jwt: {
           issuedAt: "2024-09-30T07:32:49.000Z",
           expiration: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 1)
-          ).toISOString()
-        }
+            new Date().setFullYear(new Date().getFullYear() + 1),
+          ).toISOString(),
+        },
       },
       [mockedDrivingLicense.credentialId]: {
         ...mockedDrivingLicense,
         jwt: {
           issuedAt: "2024-09-30T07:32:49.000Z",
           expiration: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 1)
-          ).toISOString()
-        }
+            new Date().setFullYear(new Date().getFullYear() + 1),
+          ).toISOString(),
+        },
       },
       [mockedMdocDrivingLicense.credentialId]: {
         ...mockedMdocDrivingLicense,
         jwt: {
           issuedAt: "2024-09-30T07:32:49.000Z",
           expiration: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 1)
-          ).toISOString()
-        }
-      }
+            new Date().setFullYear(new Date().getFullYear() + 1),
+          ).toISOString(),
+        },
+      },
     });
     expect(itwHasExpiringCredentialsSelector(state)).toEqual(false);
   });
@@ -413,14 +413,14 @@ describe("itwIsMdlPresentSelector", () => {
     const state = getStateWithCredentials({
       [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
-      [mockedMdocDrivingLicense.credentialId]: mockedMdocDrivingLicense
+      [mockedMdocDrivingLicense.credentialId]: mockedMdocDrivingLicense,
     });
     expect(itwIsMdlPresentSelector(state)).toEqual(true);
   });
 
   it("should return false if there is not mDL stored", () => {
     const state = getStateWithCredentials({
-      [mockedDisabilityCard.credentialId]: mockedDisabilityCard
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
     });
     expect(itwIsMdlPresentSelector(state)).toEqual(false);
   });

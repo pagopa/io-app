@@ -10,7 +10,7 @@ import { fciEnvironmentSelector } from "../../features/fci/store/reducers/fciEnv
 import trackZendesk from "../../features/zendesk/analytics/index";
 import {
   analyticsAuthenticationCompleted,
-  analyticsAuthenticationStarted
+  analyticsAuthenticationStarted,
 } from "../actions/analytics";
 import { applicationChangeState } from "../actions/application";
 import {
@@ -25,7 +25,7 @@ import {
   sessionExpired,
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess,
-  sessionInvalid
+  sessionInvalid,
 } from "../../features/authentication/common/store/actions";
 import { cieAuthenticationError } from "../../features/authentication/login/cie/store/actions";
 import { contentMunicipalityLoad } from "../actions/content";
@@ -34,14 +34,14 @@ import {
   profileLoadFailure,
   profileLoadRequest,
   profileUpsert,
-  removeAccountMotivation
+  removeAccountMotivation,
 } from "../../features/settings/common/store/actions";
 import { profileEmailValidationChanged } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
 import { searchMessagesEnabled } from "../actions/search";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   deleteUserDataProcessing,
-  upsertUserDataProcessing
+  upsertUserDataProcessing,
 } from "../../features/settings/common/store/actions/userDataProcessing";
 import { buildEventProperties } from "../../utils/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
@@ -51,129 +51,127 @@ import { updateOfflineAccessReason } from "../../features/itwallet/analytics/pro
 import {
   trackLoginFailure,
   trackLogoutFailure,
-  trackLogoutSuccess
+  trackLogoutSuccess,
 } from "../../features/authentication/common/analytics";
 import { trackSessionCorrupted } from "../../features/authentication/activeSessionLogin/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
-const trackAction =
-  // eslint-disable-next-line complexity
-  (action: Action): void | ReadonlyArray<null> => {
-    switch (action.type) {
-      //
-      // Application state actions
-      //
-      case getType(applicationChangeState):
-        return mixpanelTrack("APP_STATE_CHANGE", {
-          APPLICATION_STATE_NAME: action.payload
-        });
-      //
-      // Authentication actions (with properties)
-      //
-      case getType(idpSelected):
-        return mixpanelTrack(action.type, {
-          SPID_IDP_ID: action.payload.id,
-          SPID_IDP_NAME: action.payload.name
-        });
+const trackAction = (action: Action): void | ReadonlyArray<null> => {
+  switch (action.type) {
+    //
+    // Application state actions
+    //
+    case getType(applicationChangeState):
+      return mixpanelTrack("APP_STATE_CHANGE", {
+        APPLICATION_STATE_NAME: action.payload,
+      });
+    //
+    // Authentication actions (with properties)
+    //
+    case getType(idpSelected):
+      return mixpanelTrack(action.type, {
+        SPID_IDP_ID: action.payload.id,
+        SPID_IDP_NAME: action.payload.name,
+      });
 
-      case getType(idpLoginUrlChanged):
-        return mixpanelTrack(action.type, {
-          SPID_URL: action.payload.url
-        });
+    case getType(idpLoginUrlChanged):
+      return mixpanelTrack(action.type, {
+        SPID_URL: action.payload.url,
+      });
 
-      // dispatch to mixpanel when the email is validated
-      case getType(profileEmailValidationChanged):
-        return mixpanelTrack(action.type, { isEmailValidated: action.payload });
-      case getType(logoutFailure):
-        return trackLogoutFailure(action.payload.error.message);
-      case getType(upsertUserDataProcessing.failure):
-        return mixpanelTrack(action.type, {
-          reason: action.payload.error.message
-        });
-      // Failures with reason as Error and optional description
-      case getType(cieAuthenticationError):
-        return mixpanelTrack(
-          action.type,
-          buildEventProperties("KO", undefined, action.payload)
-        );
-      // Failures with reason as Error
-      case getType(sessionInformationLoadFailure):
-      case getType(profileLoadFailure):
-      case getType(profileUpsert.failure):
-      //  Bonus vacanze
-      case getType(loadAvailableBonuses.failure):
-        return mixpanelTrack(action.type, {
-          reason: action.payload.message
-        });
-      // track when a missing municipality is detected
-      case getType(contentMunicipalityLoad.failure):
-        return mixpanelTrack(action.type, {
-          reason: action.payload.error.message,
-          codice_catastale: action.payload.codiceCatastale
-        });
-      // download / delete profile
-      case getType(upsertUserDataProcessing.success):
-        return mixpanelTrack(action.type, action.payload);
-      //
-      // Actions (without properties)
-      //
-      // authentication
-      case getType(loginFailure):
-        return trackLoginFailure({
-          idp: action.payload.idp,
-          reason: action.payload.error.message,
-          flow: "auth"
-        });
+    // dispatch to mixpanel when the email is validated
+    case getType(profileEmailValidationChanged):
+      return mixpanelTrack(action.type, { isEmailValidated: action.payload });
+    case getType(logoutFailure):
+      return trackLogoutFailure(action.payload.error.message);
+    case getType(upsertUserDataProcessing.failure):
+      return mixpanelTrack(action.type, {
+        reason: action.payload.error.message,
+      });
+    // Failures with reason as Error and optional description
+    case getType(cieAuthenticationError):
+      return mixpanelTrack(
+        action.type,
+        buildEventProperties("KO", undefined, action.payload),
+      );
+    // Failures with reason as Error
+    case getType(sessionInformationLoadFailure):
+    case getType(profileLoadFailure):
+    case getType(profileUpsert.failure):
+    //  Bonus vacanze
+    case getType(loadAvailableBonuses.failure):
+      return mixpanelTrack(action.type, {
+        reason: action.payload.message,
+      });
+    // track when a missing municipality is detected
+    case getType(contentMunicipalityLoad.failure):
+      return mixpanelTrack(action.type, {
+        reason: action.payload.error.message,
+        codice_catastale: action.payload.codiceCatastale,
+      });
+    // download / delete profile
+    case getType(upsertUserDataProcessing.success):
+      return mixpanelTrack(action.type, action.payload);
+    //
+    // Actions (without properties)
+    //
+    // authentication
+    case getType(loginFailure):
+      return trackLoginFailure({
+        idp: action.payload.idp,
+        reason: action.payload.error.message,
+        flow: "auth",
+      });
 
-      case getType(loginSuccess):
-        return mixpanelTrack(action.type, {
-          idp: action.payload.idp
-        });
-      case getType(clearCurrentSession):
-        return mixpanelTrack(
-          action.type,
-          buildEventProperties("TECH", undefined)
-        );
-      case getType(analyticsAuthenticationStarted):
-      case getType(analyticsAuthenticationCompleted):
-        return mixpanelTrack(
-          action.type,
-          buildEventProperties("TECH", undefined, {
-            flow: action.payload
-          })
-        );
-      case getType(logoutSuccess):
-        return trackLogoutSuccess();
-      case getType(sessionCorrupted):
-        return trackSessionCorrupted();
-      case getType(sessionInformationLoadSuccess):
-      case getType(sessionExpired):
-      case getType(sessionInvalid):
+    case getType(loginSuccess):
+      return mixpanelTrack(action.type, {
+        idp: action.payload.idp,
+      });
+    case getType(clearCurrentSession):
+      return mixpanelTrack(
+        action.type,
+        buildEventProperties("TECH", undefined),
+      );
+    case getType(analyticsAuthenticationStarted):
+    case getType(analyticsAuthenticationCompleted):
+      return mixpanelTrack(
+        action.type,
+        buildEventProperties("TECH", undefined, {
+          flow: action.payload,
+        }),
+      );
+    case getType(logoutSuccess):
+      return trackLogoutSuccess();
+    case getType(sessionCorrupted):
+      return trackSessionCorrupted();
+    case getType(sessionInformationLoadSuccess):
+    case getType(sessionExpired):
+    case getType(sessionInvalid):
 
-      // profile
-      case getType(profileUpsert.success):
-      case getType(profileLoadRequest):
-      // messages
-      case getType(searchMessagesEnabled):
-      //  profile First time Login
-      case getType(profileFirstLogin):
-      // other
-      case getType(loadAvailableBonuses.success):
-      case getType(loadAvailableBonuses.request):
-        return mixpanelTrack(action.type);
+    // profile
+    case getType(profileUpsert.success):
+    case getType(profileLoadRequest):
+    // messages
+    case getType(searchMessagesEnabled):
+    //  profile First time Login
+    case getType(profileFirstLogin):
+    // other
+    case getType(loadAvailableBonuses.success):
+    case getType(loadAvailableBonuses.request):
+      return mixpanelTrack(action.type);
 
-      case getType(deleteUserDataProcessing.request):
-        return mixpanelTrack(action.type, { choice: action.payload });
-      case getType(removeAccountMotivation):
-      case getType(deleteUserDataProcessing.success):
-        return mixpanelTrack(action.type, action.payload);
-      case getType(deleteUserDataProcessing.failure):
-        return mixpanelTrack(action.type, {
-          choice: action.payload.choice,
-          reason: action.payload.error.message
-        });
-    }
-  };
+    case getType(deleteUserDataProcessing.request):
+      return mixpanelTrack(action.type, { choice: action.payload });
+    case getType(removeAccountMotivation):
+    case getType(deleteUserDataProcessing.success):
+      return mixpanelTrack(action.type, action.payload);
+    case getType(deleteUserDataProcessing.failure):
+      return mixpanelTrack(action.type, {
+        choice: action.payload.choice,
+        reason: action.payload.error.message,
+      });
+  }
+};
 
 /*
  * The middleware acts as a general hook in order to track any meaningful action

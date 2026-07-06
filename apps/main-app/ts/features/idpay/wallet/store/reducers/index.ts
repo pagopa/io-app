@@ -16,7 +16,7 @@ import {
   idPayWalletGet,
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll,
-  setIdPayOnboardingSucceeded
+  setIdPayOnboardingSucceeded,
 } from "../actions";
 import { ListUsersOnboardingStatusDTO } from "../../../../../../definitions/idpay/ListUsersOnboardingStatusDTO";
 
@@ -39,13 +39,12 @@ const INITIAL_STATE: IdPayWalletState = {
   initiativesWithInstrument: pot.none,
   initiativesAwaitingStatusUpdate: {},
   onboardingSucceeded: false,
-  initiativeWaitingList: pot.none
+  initiativeWaitingList: pot.none,
 };
 
 const reducer = (
   state: IdPayWalletState = INITIAL_STATE,
-  action: Action
-  // eslint-disable-next-line complexity
+  action: Action,
 ): IdPayWalletState => {
   switch (action.type) {
     case getType(idPayWalletGet.request):
@@ -55,7 +54,7 @@ const reducer = (
     case getType(idPayWalletGet.failure):
       return {
         ...state,
-        initiatives: pot.toError(state.initiatives, action.payload)
+        initiatives: pot.toError(state.initiatives, action.payload),
       };
     // Initiatives with instrument
     case getType(idPayInitiativesFromInstrumentGet.request):
@@ -63,7 +62,7 @@ const reducer = (
         return {
           ...state,
           initiativesWithInstrument: pot.noneLoading,
-          initiativesAwaitingStatusUpdate: {}
+          initiativesAwaitingStatusUpdate: {},
         };
       }
 
@@ -72,8 +71,8 @@ const reducer = (
           ...state,
           initiativesWithInstrument: pot.toUpdating(
             state.initiativesWithInstrument,
-            state.initiativesWithInstrument.value
-          )
+            state.initiativesWithInstrument.value,
+          ),
         };
       }
 
@@ -81,35 +80,35 @@ const reducer = (
         return {
           ...state,
           initiativesWithInstrument: pot.toLoading(
-            state.initiativesWithInstrument
-          )
+            state.initiativesWithInstrument,
+          ),
         };
       }
       return {
         ...state,
-        initiativesWithInstrument: state.initiativesWithInstrument
+        initiativesWithInstrument: state.initiativesWithInstrument,
       };
     case getType(idPayInitiativesFromInstrumentGet.success):
       const initiativesToKeepInLoadingState = pipe(
         state.initiativesAwaitingStatusUpdate,
         Object.entries,
         // remove all entries that have completed their request
-        entries => entries.filter(([_, value]) => value),
-        Object.fromEntries
+        (entries) => entries.filter(([_, value]) => value),
+        Object.fromEntries,
       );
 
       return {
         ...state,
         initiativesWithInstrument: pot.some(action.payload),
-        initiativesAwaitingStatusUpdate: initiativesToKeepInLoadingState
+        initiativesAwaitingStatusUpdate: initiativesToKeepInLoadingState,
       };
     case getType(idPayInitiativesFromInstrumentGet.failure):
       return {
         ...state,
         initiativesWithInstrument: pot.toError(
           state.initiativesWithInstrument,
-          action.payload
-        )
+          action.payload,
+        ),
       };
     // initiative pairing
     case getType(idpayInitiativesInstrumentDelete.request):
@@ -118,8 +117,8 @@ const reducer = (
         ...state,
         initiativesAwaitingStatusUpdate: {
           ...state.initiativesAwaitingStatusUpdate,
-          [action.payload.initiativeId]: true
-        }
+          [action.payload.initiativeId]: true,
+        },
       };
     case getType(idpayInitiativesInstrumentDelete.success):
     case getType(idpayInitiativesInstrumentEnroll.success):
@@ -129,18 +128,18 @@ const reducer = (
         ...state,
         initiativesAwaitingStatusUpdate: {
           ...state.initiativesAwaitingStatusUpdate,
-          [action.payload.initiativeId]: false
-        }
+          [action.payload.initiativeId]: false,
+        },
       };
     case getType(setIdPayOnboardingSucceeded):
       return {
         ...state,
-        onboardingSucceeded: action.payload
+        onboardingSucceeded: action.payload,
       };
     case getType(idPayInitiativeWaitingListGet.request):
       return {
         ...state,
-        initiativeWaitingList: pot.toLoading(state.initiativeWaitingList)
+        initiativeWaitingList: pot.toLoading(state.initiativeWaitingList),
       };
     case getType(idPayInitiativeWaitingListGet.success):
       return { ...state, initiativeWaitingList: pot.some(action.payload) };
@@ -149,8 +148,8 @@ const reducer = (
         ...state,
         initiativeWaitingList: pot.toError(
           state.initiativeWaitingList,
-          action.payload
-        )
+          action.payload,
+        ),
       };
   }
   return state;
@@ -161,60 +160,60 @@ const selectIdPayWallet = (state: GlobalState) => state.features.idPay.wallet;
 export const idPayWalletInitiativeListSelector = createSelector(
   selectIdPayWallet,
   ({ initiatives }) =>
-    pot.map(initiatives, ({ initiativeList }) => initiativeList)
+    pot.map(initiatives, ({ initiativeList }) => initiativeList),
 );
 
 export const idPayWalletSubscribedInitiativeListSelector = createSelector(
   idPayWalletInitiativeListSelector,
-  initiativeListPot =>
-    pot.map(initiativeListPot, list =>
-      list.filter(({ status }) => status !== InitiativeStatus.UNSUBSCRIBED)
-    )
+  (initiativeListPot) =>
+    pot.map(initiativeListPot, (list) =>
+      list.filter(({ status }) => status !== InitiativeStatus.UNSUBSCRIBED),
+    ),
 );
 
 export const idPayInitiativesFromInstrumentSelector = createSelector(
   selectIdPayWallet,
-  ({ initiativesWithInstrument }) => initiativesWithInstrument
+  ({ initiativesWithInstrument }) => initiativesWithInstrument,
 );
 
 export const idPayWalletInitiativesListWithInstrumentSelector = createSelector(
   [idPayInitiativesFromInstrumentSelector],
-  initiatives => pot.map(initiatives, ({ initiativeList }) => initiativeList)
+  (initiatives) => pot.map(initiatives, ({ initiativeList }) => initiativeList),
 );
 
 export const idPayEnabledInitiativesFromInstrumentSelector = createSelector(
   [isIdPayEnabledSelector, idPayWalletInitiativesListWithInstrumentSelector],
   (isIdpayEnabled, initiatives) =>
-    isIdpayEnabled ? pot.getOrElse(initiatives, []) : []
+    isIdpayEnabled ? pot.getOrElse(initiatives, []) : [],
 );
 
 export const idPayAreInitiativesFromInstrumentLoadingSelector = createSelector(
   [isIdPayEnabledSelector, idPayInitiativesFromInstrumentSelector],
   (isIDPayEnabled, initiativesPot) =>
-    isIDPayEnabled && pot.isLoading(initiativesPot)
+    isIDPayEnabled && pot.isLoading(initiativesPot),
 );
 
 export const idPayAreInitiativesFromInstrumentErrorSelector = createSelector(
   selectIdPayWallet,
-  wallet => pot.isError(wallet.initiativesWithInstrument)
+  (wallet) => pot.isError(wallet.initiativesWithInstrument),
 );
 
 export const idPayInitiativesAwaitingUpdateSelector = createSelector(
   selectIdPayWallet,
-  wallet => wallet.initiativesAwaitingStatusUpdate
+  (wallet) => wallet.initiativesAwaitingStatusUpdate,
 );
 
 export const idPayInitiativeFromInstrumentPotSelector = (
-  initiativeId: string
+  initiativeId: string,
 ) =>
   createSelector(
     [
       idPayEnabledInitiativesFromInstrumentSelector,
-      idPayInitiativesAwaitingUpdateSelector
+      idPayInitiativesAwaitingUpdateSelector,
     ],
     (initiativesByInstrument, initiativesAwaitingUpdate) => {
       const initiative = initiativesByInstrument.find(
-        i => i.initiativeId === initiativeId
+        (i) => i.initiativeId === initiativeId,
       );
       const isItemActive =
         initiative?.status === InstrumentInitiativeStatus.ACTIVE;
@@ -230,17 +229,17 @@ export const idPayInitiativeFromInstrumentPotSelector = (
         default:
           return pot.none;
       }
-    }
+    },
   );
 
 export const isIdPayOnboardingSucceededSelector = createSelector(
   selectIdPayWallet,
-  wallet => wallet.onboardingSucceeded
+  (wallet) => wallet.onboardingSucceeded,
 );
 
 export const idPayInitiativeWaitingListSelector = createSelector(
   selectIdPayWallet,
-  wallet => wallet.initiativeWaitingList
+  (wallet) => wallet.initiativeWaitingList,
 );
 
 export default reducer;

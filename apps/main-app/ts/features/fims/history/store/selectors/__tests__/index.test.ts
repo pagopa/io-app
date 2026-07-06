@@ -7,33 +7,34 @@ import {
   fimsHistoryToUndefinedSelector,
   fimsIsHistoryEnabledSelector,
   isFimsHistoryExportingSelector,
-  isFimsHistoryLoadingSelector
+  isFimsHistoryLoadingSelector,
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   remoteError,
   remoteLoading,
   remoteReady,
-  remoteUndefined
+  remoteUndefined,
 } from "../../../../../../common/model/RemoteValue";
 
-describe("fimsHistoryPotSelector", () =>
+describe("fimsHistoryPotSelector", () => {
   it("should return the 'features.fims.history.consentsList' instance", () => {
     const consentsData = pot.someError({}, "An error");
     const globalState = {
       features: {
         fims: {
           history: {
-            consentsList: consentsData
-          }
-        }
-      }
+            consentsList: consentsData,
+          },
+        },
+      },
     } as GlobalState;
     const historyPot = fimsHistoryPotSelector(globalState);
     expect(historyPot).toBe(consentsData);
-  }));
+  });
+});
 
-describe("isFimsHistoryLoadingSelector", () =>
+describe("isFimsHistoryLoadingSelector", () => {
   [
     pot.none,
     pot.noneLoading,
@@ -42,8 +43,8 @@ describe("isFimsHistoryLoadingSelector", () =>
     pot.some({}),
     pot.someLoading({}),
     pot.someUpdating({}, {}),
-    pot.someError({}, "An error")
-  ].forEach(consentsDataPot => {
+    pot.someError({}, "An error"),
+  ].forEach((consentsDataPot) => {
     const expectedOutput =
       consentsDataPot.kind === "PotNoneLoading" ||
       consentsDataPot.kind === "PotSomeLoading";
@@ -52,15 +53,16 @@ describe("isFimsHistoryLoadingSelector", () =>
         features: {
           fims: {
             history: {
-              consentsList: consentsDataPot
-            }
-          }
-        }
+              consentsList: consentsDataPot,
+            },
+          },
+        },
       } as GlobalState;
       const historyPot = isFimsHistoryLoadingSelector(globalState);
       expect(historyPot).toBe(expectedOutput);
     });
-  }));
+  });
+});
 
 describe("fimsHistoryToUndefinedSelector", () => {
   const consentsData = {
@@ -68,10 +70,10 @@ describe("fimsHistoryToUndefinedSelector", () => {
       {
         id: "01JBY12W3V8QQTTYCC2QGD85EX",
         service_id: "01JBY130VBSH6GH4V703S8BJ8P",
-        timestamp: new Date()
-      }
+        timestamp: new Date(),
+      },
     ],
-    continuationToken: "01JBY12NM42JQ22G4NYKXC2Y8H"
+    continuationToken: "01JBY12NM42JQ22G4NYKXC2Y8H",
   };
   [
     pot.none,
@@ -81,8 +83,8 @@ describe("fimsHistoryToUndefinedSelector", () => {
     pot.some(consentsData),
     pot.someLoading(consentsData),
     pot.someUpdating(consentsData, consentsData),
-    pot.someError(consentsData, "An error")
-  ].forEach(consentsDataPot => {
+    pot.someError(consentsData, "An error"),
+  ].forEach((consentsDataPot) => {
     const expectedOutput = pot.isSome(consentsDataPot)
       ? consentsData
       : undefined;
@@ -95,10 +97,10 @@ describe("fimsHistoryToUndefinedSelector", () => {
         features: {
           fims: {
             history: {
-              consentsList: consentsDataPot
-            }
-          }
-        }
+              consentsList: consentsDataPot,
+            },
+          },
+        },
       } as GlobalState;
       const historyOrUndefined = fimsHistoryToUndefinedSelector(globalState);
       expect(historyOrUndefined).toBe(expectedOutput);
@@ -115,8 +117,8 @@ describe("fimsHistoryErrorSelector", () => {
     pot.some({}),
     pot.someLoading({}),
     pot.someUpdating({}, {}),
-    pot.someError({}, "An error")
-  ].forEach(consentsDataPot => {
+    pot.someError({}, "An error"),
+  ].forEach((consentsDataPot) => {
     const expectedOutput =
       consentsDataPot.kind === "PotNoneError"
         ? "FULL_KO"
@@ -128,10 +130,10 @@ describe("fimsHistoryErrorSelector", () => {
         features: {
           fims: {
             history: {
-              consentsList: consentsDataPot
-            }
-          }
-        }
+              consentsList: consentsDataPot,
+            },
+          },
+        },
       } as GlobalState;
       const historyErrorOrUndefined = fimsHistoryErrorSelector(globalState);
       expect(historyErrorOrUndefined).toBe(expectedOutput);
@@ -142,20 +144,20 @@ describe("fimsHistoryErrorSelector", () => {
 describe("fimsIsHistoryEnabledSelector", () => {
   it("should return 'false' if 'backendStatus' is 'O.none'", () => {
     const globalState = {
-      remoteConfig: O.none
+      remoteConfig: O.none,
     } as GlobalState;
     const fimsHistoryEnabled = fimsIsHistoryEnabledSelector(globalState);
     expect(fimsHistoryEnabled).toBe(false);
   });
-  [undefined, false, true].forEach(historyEnabled => {
+  [undefined, false, true].forEach((historyEnabled) => {
     const expectedOutput = historyEnabled !== false;
     it(`should return '${expectedOutput}' if 'remoteConfig' is 'O.some(${historyEnabled})'`, () => {
       const globalState = {
         remoteConfig: O.some({
           fims: {
-            historyEnabled
-          }
-        })
+            historyEnabled,
+          },
+        }),
       } as GlobalState;
       const fimsHistoryEnabled = fimsIsHistoryEnabledSelector(globalState);
       expect(fimsHistoryEnabled).toBe(expectedOutput);
@@ -163,42 +165,44 @@ describe("fimsIsHistoryEnabledSelector", () => {
   });
 });
 
-describe("fimsHistoryExportStateSelector", () =>
+describe("fimsHistoryExportStateSelector", () => {
   it("should return the 'features.fims.history.historyExportState' instance", () => {
     const exportState = remoteReady("SUCCESS");
     const globalState = {
       features: {
         fims: {
           history: {
-            historyExportState: exportState
-          }
-        }
-      }
+            historyExportState: exportState,
+          },
+        },
+      },
     } as GlobalState;
     const exportStateRemoteValue = fimsHistoryExportStateSelector(globalState);
     expect(exportStateRemoteValue).toBe(exportState);
-  }));
+  });
+});
 
-describe("isFimsHistoryExportingSelector", () =>
+describe("isFimsHistoryExportingSelector", () => {
   [
     remoteUndefined,
     remoteLoading,
     remoteReady("SUCCESS"),
     remoteReady("ALREADY_EXPORTING"),
-    remoteError(null)
-  ].forEach(exportState => {
+    remoteError(null),
+  ].forEach((exportState) => {
     const expectedOutput = exportState.kind === "loading";
     it(`When 'features.fims.history.historyExportState' is of type '${exportState.kind}', it should return '${expectedOutput}'`, () => {
       const globalState = {
         features: {
           fims: {
             history: {
-              historyExportState: exportState
-            }
-          }
-        }
+              historyExportState: exportState,
+            },
+          },
+        },
       } as GlobalState;
       const isExportingHistory = isFimsHistoryExportingSelector(globalState);
       expect(isExportingHistory).toBe(expectedOutput);
     });
-  }));
+  });
+});

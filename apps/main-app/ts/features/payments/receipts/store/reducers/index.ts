@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
@@ -13,11 +12,11 @@ import {
   getPaymentsLatestReceiptAction,
   hidePaymentsReceiptAction,
   setNeedsHomeListRefreshAction,
-  PaymentsTransactionReceiptInfoPayload
+  PaymentsTransactionReceiptInfoPayload,
 } from "../actions";
 import {
   filterTransactionsByIdAndGetIndex,
-  restoreTransactionsToOriginalOrder
+  restoreTransactionsToOriginalOrder,
 } from "../../utils";
 import { ReceiptDownloadFailure } from "../../types";
 
@@ -47,38 +46,38 @@ const INITIAL_STATE: ReceiptTransactionState = {
   details: pot.noneLoading,
   receiptDocument: pot.none,
   cancelTransactionRecord: pot.none,
-  needsHomeListRefresh: false
+  needsHomeListRefresh: false,
 };
 
 const reducer = (
   state: ReceiptTransactionState = INITIAL_STATE,
-  action: Action
+  action: Action,
 ): ReceiptTransactionState => {
   switch (action.type) {
     // GET LATEST TRANSACTIONS LIST
     case getType(getPaymentsLatestReceiptAction.request):
       return {
         ...state,
-        latestTransactions: pot.toLoading(state.latestTransactions)
+        latestTransactions: pot.toLoading(state.latestTransactions),
       };
     case getType(getPaymentsLatestReceiptAction.success):
       return {
         ...state,
         latestTransactions: pot.some(action.payload.data || []),
-        latestTransactionsContinuationToken: action.payload.continuationToken
+        latestTransactionsContinuationToken: action.payload.continuationToken,
       };
     case getType(getPaymentsLatestReceiptAction.failure):
       return {
         ...state,
         latestTransactions: pot.toError(
           state.latestTransactions,
-          action.payload
-        )
+          action.payload,
+        ),
       };
     case getType(getPaymentsLatestReceiptAction.cancel):
       return {
         ...state,
-        latestTransactions: pot.none
+        latestTransactions: pot.none,
       };
     // GET TRANSACTIONS LIST
     case getType(getPaymentsReceiptAction.request):
@@ -87,7 +86,7 @@ const reducer = (
         : pot.toLoading(state.transactions);
       return {
         ...state,
-        transactions
+        transactions,
       };
     case getType(getPaymentsReceiptAction.success):
       const previousTransactions = pot.getOrElse(state.transactions, []);
@@ -97,73 +96,73 @@ const reducer = (
         transactions: !action.payload.appendElements
           ? pot.some([...previousTransactions, ...maybeTransactions])
           : pot.some(maybeTransactions),
-        needsHomeListRefresh: false
+        needsHomeListRefresh: false,
       };
     case getType(getPaymentsReceiptAction.failure):
       return {
         ...state,
-        transactions: pot.toError(state.transactions, action.payload)
+        transactions: pot.toError(state.transactions, action.payload),
       };
     case getType(getPaymentsReceiptAction.cancel):
       return {
         ...state,
-        transactions: pot.none
+        transactions: pot.none,
       };
     // GET BIZ-EVENTS TRANSACTION DETAILS
     case getType(getPaymentsReceiptDetailsAction.request):
       return {
         ...state,
-        details: pot.toLoading(state.details)
+        details: pot.toLoading(state.details),
       };
     case getType(getPaymentsReceiptDetailsAction.success):
       return {
         ...state,
-        details: pot.some(action.payload)
+        details: pot.some(action.payload),
       };
     case getType(getPaymentsReceiptDetailsAction.failure):
       return {
         ...state,
-        details: pot.toError(state.details, action.payload)
+        details: pot.toError(state.details, action.payload),
       };
     case getType(getPaymentsReceiptDetailsAction.cancel):
       return {
         ...state,
-        details: pot.none
+        details: pot.none,
       };
     // GET BIZ-EVENTS TRANSACTION RECEIPT PDF
     case getType(getPaymentsReceiptDownloadAction.request):
       return {
         ...state,
-        receiptDocument: pot.noneLoading
+        receiptDocument: pot.noneLoading,
       };
     case getType(getPaymentsReceiptDownloadAction.success):
       return {
         ...state,
-        receiptDocument: pot.some(action.payload)
+        receiptDocument: pot.some(action.payload),
       };
     case getType(getPaymentsReceiptDownloadAction.failure):
       return {
         ...state,
-        receiptDocument: pot.toError(state.receiptDocument, action.payload)
+        receiptDocument: pot.toError(state.receiptDocument, action.payload),
       };
     case getType(getPaymentsReceiptDownloadAction.cancel):
       return {
         ...state,
-        receiptDocument: pot.none
+        receiptDocument: pot.none,
       };
     case getType(hidePaymentsReceiptAction.request): {
       const { filteredTransactions, removedIndices: transactionIndices } =
         filterTransactionsByIdAndGetIndex(
           state.transactions,
-          action.payload.transactionId
+          action.payload.transactionId,
         );
 
       const {
         filteredTransactions: filteredLatestTransactions,
-        removedIndices: latestTransactionIndices
+        removedIndices: latestTransactionIndices,
       } = filterTransactionsByIdAndGetIndex(
         state.latestTransactions,
-        action.payload.transactionId
+        action.payload.transactionId,
       );
 
       const hasTransactionRemovals = transactionIndices.length > 0;
@@ -174,10 +173,10 @@ const reducer = (
         : latestTransactionIndices;
       const removedItems = hasTransactionRemovals
         ? removedIndices.map(
-            index => pot.getOrElse(state.transactions, [])[index]
+            (index) => pot.getOrElse(state.transactions, [])[index],
           )
         : removedIndices.map(
-            index => pot.getOrElse(state.latestTransactions, [])[index]
+            (index) => pot.getOrElse(state.latestTransactions, [])[index],
           );
 
       return {
@@ -185,10 +184,10 @@ const reducer = (
         cancelTransactionRecord: pot.some({
           removedItems,
           removedIndices,
-          cancelType
+          cancelType,
         }),
         transactions: pot.some(filteredTransactions),
-        latestTransactions: pot.some(filteredLatestTransactions)
+        latestTransactions: pot.some(filteredLatestTransactions),
       };
     }
     case getType(hidePaymentsReceiptAction.failure): {
@@ -201,7 +200,7 @@ const reducer = (
       const currentTransactions = pot.getOrElse(state.transactions, []);
       const currentLatestTransactions = pot.getOrElse(
         state.latestTransactions,
-        []
+        [],
       );
 
       const restoredTransactions =
@@ -209,7 +208,7 @@ const reducer = (
           ? restoreTransactionsToOriginalOrder(
               currentTransactions,
               removedIndices,
-              removedItems
+              removedItems,
             )
           : currentTransactions;
 
@@ -218,7 +217,7 @@ const reducer = (
           ? restoreTransactionsToOriginalOrder(
               currentLatestTransactions,
               removedIndices,
-              removedItems
+              removedItems,
             )
           : currentLatestTransactions;
 
@@ -226,13 +225,13 @@ const reducer = (
         ...state,
         transactions: pot.some(restoredTransactions),
         latestTransactions: pot.some(restoredLatestTransactions),
-        cancelTransactionRecord: pot.none
+        cancelTransactionRecord: pot.none,
       };
     }
     case getType(setNeedsHomeListRefreshAction): {
       return {
         ...state,
-        needsHomeListRefresh: action.payload
+        needsHomeListRefresh: action.payload,
       };
     }
   }

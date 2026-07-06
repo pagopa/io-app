@@ -5,7 +5,7 @@ import {
   isStringNullyOrEmpty,
   maybeNotNullyString,
   formatBytesWithUnit,
-  capitalizeTextName
+  capitalizeTextName,
 } from "../strings";
 
 describe("capitalize", () => {
@@ -31,45 +31,45 @@ describe("capitalize", () => {
 });
 
 describe("isStringNullyOrEmpty", () => {
-  it("should return true", () => {
+  it("should return true for undefined", () => {
     expect(isStringNullyOrEmpty(undefined)).toBeTruthy();
   });
 
-  it("should return false", () => {
+  it("should return false for a non-empty string", () => {
     expect(isStringNullyOrEmpty("hello")).toBeFalsy();
   });
 
-  it("should return true", () => {
+  it("should return true for a blank string", () => {
     expect(isStringNullyOrEmpty("    ")).toBeTruthy();
   });
 
-  it("should return true", () => {
+  it("should return true for an empty string", () => {
     expect(isStringNullyOrEmpty("")).toBeTruthy();
   });
 
-  it("should return true", () => {
+  it("should return true for null", () => {
     expect(isStringNullyOrEmpty(null)).toBeTruthy();
   });
 });
 
 describe("maybeNotNullyString", () => {
-  it("should return none", () => {
+  it("should return none for undefined", () => {
     expect(maybeNotNullyString(undefined)).toEqual(O.none);
   });
 
-  it("should return some", () => {
+  it("should return some for a non-empty string", () => {
     expect(maybeNotNullyString("hello")).toEqual(O.some("hello"));
   });
 
-  it("should return none", () => {
+  it("should return none for a blank string", () => {
     expect(maybeNotNullyString("    ")).toEqual(O.none);
   });
 
-  it("should return none", () => {
+  it("should return none for an empty string", () => {
     expect(maybeNotNullyString("")).toEqual(O.none);
   });
 
-  it("should return none", () => {
+  it("should return none for null", () => {
     expect(maybeNotNullyString(null)).toEqual(O.none);
   });
 });
@@ -105,7 +105,7 @@ describe("formatBytesWithUnit", () => {
     expect(formatBytesWithUnit(1345001000200123)).toEqual("1.3 TB");
   });
 
-  it("should format bytes with the correct unit (B)", () => {
+  it("should format bytes with the correct unit (B) for zero", () => {
     expect(formatBytesWithUnit(0)).toEqual("0 B");
   });
 

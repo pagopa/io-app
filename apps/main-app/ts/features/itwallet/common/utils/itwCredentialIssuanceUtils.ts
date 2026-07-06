@@ -2,7 +2,7 @@ import { generate } from "@pagopa/io-react-native-crypto";
 import {
   createCryptoContextFor,
   RemotePresentation,
-  type ItwVersion
+  type ItwVersion,
 } from "@pagopa/io-react-native-wallet";
 import { v4 as uuidv4 } from "uuid";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
@@ -11,7 +11,7 @@ import last from "lodash/last";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
-  WIA_KEYTAG
+  WIA_KEYTAG,
 } from "./itwCryptoContextUtils";
 import {
   CredentialAccessToken,
@@ -20,7 +20,7 @@ import {
   CredentialOfferResolved,
   EvaluatedDcqlQueryResult,
   IssuerConfiguration,
-  RequestObject
+  RequestObject,
 } from "./itwTypesUtils";
 import { extractVerification } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
@@ -52,7 +52,7 @@ export const BATCH_ISSUANCE_CREDENTIALS: Record<
   string,
   { desiredCount: number }
 > = {
-  [CredentialType.PROOF_OF_AGE]: { desiredCount: 5 }
+  [CredentialType.PROOF_OF_AGE]: { desiredCount: 5 },
 };
 
 /**
@@ -69,7 +69,7 @@ export const BATCH_ISSUANCE_CREDENTIALS: Record<
  */
 export const getEffectiveBatchSize = (
   credentialType: string,
-  issuerBatchSize: number | undefined
+  issuerBatchSize: number | undefined,
 ): number => {
   const config = BATCH_ISSUANCE_CREDENTIALS[credentialType];
   if (!config || !issuerBatchSize || issuerBatchSize <= 1) {
@@ -113,7 +113,7 @@ export const requestCredential: RequestCredential = async ({
   walletInstanceAttestation,
   skipMdocIssuance,
   resolvedCredentialOffer,
-  pid
+  pid,
 }) => {
   const ioWallet = getIoWallet(itwVersion);
 
@@ -129,18 +129,20 @@ export const requestCredential: RequestCredential = async ({
 
   const credentialIds = resolvedCredentialOffer?.offer
     .credential_configuration_ids
-    ? resolvedCredentialOffer.offer.credential_configuration_ids.filter(id => {
-        const config = issuerConf.credential_configurations_supported[id];
-        return (
-          config !== undefined &&
-          config.scope === credentialType &&
-          (!skipMdocIssuance || config.format !== CredentialFormat.MDOC)
-        );
-      })
+    ? resolvedCredentialOffer.offer.credential_configuration_ids.filter(
+        (id) => {
+          const config = issuerConf.credential_configurations_supported[id];
+          return (
+            config !== undefined &&
+            config.scope === credentialType &&
+            (!skipMdocIssuance || config.format !== CredentialFormat.MDOC)
+          );
+        },
+      )
     : getCredentialConfigurationIds(
         issuerConf,
         credentialType,
-        skipMdocIssuance
+        skipMdocIssuance,
       );
 
   if (resolvedCredentialOffer && credentialIds.length === 0) {
@@ -156,21 +158,21 @@ export const requestCredential: RequestCredential = async ({
       {
         walletInstanceAttestation,
         redirectUri: env.ISSUANCE_REDIRECT_URI,
-        wiaCryptoContext
-      }
+        wiaCryptoContext,
+      },
     );
 
   const requestObject =
     await ioWallet.CredentialIssuance.getRequestedCredentialToBePresented(
       issuerRequestUri,
       clientId,
-      issuerConf
+      issuerConf,
     );
 
   const evaluatedDcqlQuery =
     await ioWallet.RemotePresentation.evaluateDcqlQuery(
       requestObject.dcql_query as RemotePresentation.DcqlQuery,
-      [[pid.metadata.keyTag, pid.credential]]
+      [[pid.metadata.keyTag, pid.credential]],
     );
   return {
     clientId,
@@ -178,7 +180,7 @@ export const requestCredential: RequestCredential = async ({
     responseMode,
     requestedCredential: requestObject,
     issuerConf,
-    evaluatedDcqlQuery
+    evaluatedDcqlQuery,
   };
 };
 
@@ -210,7 +212,7 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
   evaluatedDcqlQuery,
   codeVerifier,
   responseMode,
-  walletInstanceAttestation
+  walletInstanceAttestation,
 }) => {
   const ioWallet = getIoWallet(itwVersion);
 
@@ -230,7 +232,7 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
           requestObject,
           issuerConf,
           evaluatedDcqlQuery,
-          { wiaCryptoContext }
+          { wiaCryptoContext },
         )
       ).code;
     }
@@ -244,8 +246,9 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
         {
           // Workaround for a known bug affecting React Native 0.82-0.83 (https://github.com/facebook/react-native/issues/55248)
           // TODO: it can be removed after upgrading to RN 0.84+
-          fetchFinalRedirectUri: url => getRedirects(url, {}, "code").then(last)
-        }
+          fetchFinalRedirectUri: (url) =>
+            getRedirects(url, {}, "code").then(last),
+        },
       )
     ).code;
   };
@@ -258,8 +261,8 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
     {
       walletInstanceAttestation,
       dPopCryptoContext,
-      wiaCryptoContext
-    }
+      wiaCryptoContext,
+    },
   );
 };
 
@@ -292,7 +295,7 @@ export const obtainCredential: ObtainCredential = async ({
   credentialType,
   accessToken,
   clientId,
-  issuerConf
+  issuerConf,
 }) => {
   const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
@@ -303,7 +306,7 @@ export const obtainCredential: ObtainCredential = async ({
     env,
     dPopCryptoContext,
     issuerConf,
-    itwVersion
+    itwVersion,
   };
 
   if (SEQUENTIAL_ISSUANCE_CREDENTIALS.includes(credentialType)) {
@@ -311,7 +314,7 @@ export const obtainCredential: ObtainCredential = async ({
     for (const credentialParams of authorizedCredentials) {
       const credential = await requestAndParseCredential({
         ...commonParams,
-        ...credentialParams
+        ...credentialParams,
       });
       // eslint-disable-next-line functional/immutable-data
       credentials.push(credential);
@@ -320,32 +323,32 @@ export const obtainCredential: ObtainCredential = async ({
   }
 
   return await Promise.all(
-    authorizedCredentials.map(credentialParams =>
-      requestAndParseCredential({ ...commonParams, ...credentialParams })
-    )
+    authorizedCredentials.map((credentialParams) =>
+      requestAndParseCredential({ ...commonParams, ...credentialParams }),
+    ),
   );
 };
 
 const getCredentialConfigurationIds = (
   issuerConfig: IssuerConfiguration,
   credentialType: string,
-  skipMdocIssuance: boolean
+  skipMdocIssuance: boolean,
 ) => {
   const { credential_configurations_supported } = issuerConfig;
 
   const supportedConfigurationsByScope = Object.entries(
-    credential_configurations_supported
+    credential_configurations_supported,
   )
     .filter(
       ([, config]) =>
-        !skipMdocIssuance || config.format !== CredentialFormat.MDOC
+        !skipMdocIssuance || config.format !== CredentialFormat.MDOC,
     )
     .reduce<Record<string, Array<string>>>(
       (acc, [configId, config]) => ({
         ...acc,
-        [config.scope]: [...(acc[config.scope] || []), configId]
+        [config.scope]: [...(acc[config.scope] || []), configId],
       }),
-      {}
+      {},
     );
 
   return supportedConfigurationsByScope[credentialType] || [];
@@ -362,7 +365,7 @@ type RequestAndParseCredentialParams = {
 };
 
 type RequestAndParseCredential = (
-  args: RequestAndParseCredentialParams & AuthorizedCredentialMetadata
+  args: RequestAndParseCredentialParams & AuthorizedCredentialMetadata,
 ) => Promise<CredentialBundle>;
 
 /**
@@ -384,7 +387,7 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
   itwVersion,
   keyTag,
   walletUnitAttestationId,
-  walletUnitAttestation
+  walletUnitAttestation,
 }) => {
   const ioWallet = getIoWallet(itwVersion);
   const { credential_configuration_id, credential_identifiers } = authDetails;
@@ -398,17 +401,17 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
       clientId,
       {
         credential_configuration_id,
-        credential_identifier: credential_identifiers[0]
+        credential_identifier: credential_identifiers[0],
       },
       {
         dPopCryptoContext,
         credentialCryptoContext,
-        walletUnitAttestation
-      }
+        walletUnitAttestation,
+      },
     ).catch(
       enrichErrorWithMetadata({
-        credentialId: credential_configuration_id
-      })
+        credentialId: credential_configuration_id,
+      }),
     );
 
   return verifyAndBuildCredentialBundle({
@@ -421,7 +424,7 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
     keyTag,
     credentialType,
     walletUnitAttestationId,
-    env
+    env,
   });
 };
 
@@ -459,7 +462,7 @@ const verifyAndBuildCredentialBundle = async ({
   keyTag,
   credentialType,
   walletUnitAttestationId,
-  env
+  env,
 }: VerifyAndBuildCredentialBundleParams): Promise<CredentialBundle> => {
   const { parsedCredential, issuedAt, expiration } =
     await ioWallet.CredentialIssuance.verifyAndParseCredential(
@@ -468,9 +471,9 @@ const verifyAndBuildCredentialBundle = async ({
       credentialConfigurationId,
       {
         credentialCryptoContext,
-        ignoreMissingAttributes: format === CredentialFormat.SD_JWT
+        ignoreMissingAttributes: true,
       },
-      env.X509_CERT_ROOT
+      env.X509_CERT_ROOT,
     );
 
   return {
@@ -484,16 +487,16 @@ const verifyAndBuildCredentialBundle = async ({
       keyTag,
       jwt: {
         expiration: expiration.toISOString(),
-        issuedAt: issuedAt?.toISOString()
+        issuedAt: issuedAt?.toISOString(),
       },
       spec_version: ioWallet.version,
       verification: extractVerification({
         format,
         credential,
-        parsedCredential
+        parsedCredential,
       }),
-      walletUnitAttestationId
-    }
+      walletUnitAttestationId,
+    },
   };
 };
 
@@ -511,7 +514,7 @@ type GenerateKeysWithWalletUnitAttestation = (
     itwVersion: ItwVersion;
     hardwareKeyTag: string;
     sessionToken: string;
-  }
+  },
 ) => Promise<ReadonlyArray<AuthorizedCredentialMetadata>>;
 
 /**
@@ -540,7 +543,7 @@ export const generateKeysWithWalletUnitAttestation: GenerateKeysWithWalletUnitAt
     const ioWallet = getIoWallet(itwVersion);
 
     return Promise.all(
-      accessToken.authorization_details.map(async authDetails => {
+      accessToken.authorization_details.map(async (authDetails) => {
         const keyTag = uuidv4().toString();
 
         // If the WUA is supported, keys are generated via the KeyAttestationCryptoContext
@@ -551,7 +554,7 @@ export const generateKeysWithWalletUnitAttestation: GenerateKeysWithWalletUnitAt
             itwVersion,
             [keyTag],
             hardwareKeyTag,
-            sessionToken
+            sessionToken,
           );
           // Unique ID to correlate multiple keys to the same WUA (ex. batch issuance)
           const walletUnitAttestationId = uuidv4().toString();
@@ -559,14 +562,14 @@ export const generateKeysWithWalletUnitAttestation: GenerateKeysWithWalletUnitAt
             keyTag,
             authDetails,
             walletUnitAttestation,
-            walletUnitAttestationId
+            walletUnitAttestationId,
           };
         }
 
         // If the WUA is not supported, only generate the cryptographic key
         await generate(keyTag);
         return { keyTag, authDetails };
-      })
+      }),
     );
   };
 
@@ -589,7 +592,7 @@ type GenerateBatchKeysWithWalletUnitAttestation = (
     itwVersion: ItwVersion;
     hardwareKeyTag: string;
     sessionToken: string;
-  }
+  },
 ) => Promise<ReadonlyArray<AuthorizedBatchCredentialMetadata>>;
 
 /**
@@ -612,14 +615,14 @@ export const generateBatchKeysWithWalletUnitAttestation: GenerateBatchKeysWithWa
   async (
     accessToken,
     batchSize,
-    { env, itwVersion, hardwareKeyTag, sessionToken }
+    { env, itwVersion, hardwareKeyTag, sessionToken },
   ) => {
     const ioWallet = getIoWallet(itwVersion);
 
     return Promise.all(
-      accessToken.authorization_details.map(async authDetails => {
+      accessToken.authorization_details.map(async (authDetails) => {
         const keyTags = Array.from({ length: batchSize }, () =>
-          uuidv4().toString()
+          uuidv4().toString(),
         );
 
         // If the WUA is supported, all keys are attested by a single Wallet Unit Attestation
@@ -629,21 +632,21 @@ export const generateBatchKeysWithWalletUnitAttestation: GenerateBatchKeysWithWa
             itwVersion,
             keyTags,
             hardwareKeyTag,
-            sessionToken
+            sessionToken,
           );
           const walletUnitAttestationId = uuidv4().toString();
           return {
             keyTags,
             authDetails,
             walletUnitAttestation,
-            walletUnitAttestationId
+            walletUnitAttestationId,
           };
         }
 
         // If the WUA is not supported, only generate the cryptographic keys
         await Promise.all(keyTags.map(generate));
         return { keyTags, authDetails };
-      })
+      }),
     );
   };
 
@@ -678,7 +681,7 @@ export const obtainCredentialsBatch: ObtainCredentialsBatch = async ({
   credentialType,
   accessToken,
   clientId,
-  issuerConf
+  issuerConf,
 }) => {
   const ioWallet = getIoWallet(itwVersion);
   const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
@@ -689,7 +692,7 @@ export const obtainCredentialsBatch: ObtainCredentialsBatch = async ({
         keyTags,
         authDetails,
         walletUnitAttestation,
-        walletUnitAttestationId
+        walletUnitAttestationId,
       }): Promise<ReadonlyArray<CredentialBundle>> => {
         const { credential_configuration_id, credential_identifiers } =
           authDetails;
@@ -702,17 +705,17 @@ export const obtainCredentialsBatch: ObtainCredentialsBatch = async ({
             clientId,
             {
               credential_configuration_id,
-              credential_identifier: credential_identifiers[0]
+              credential_identifier: credential_identifiers[0],
             },
             {
               dPopCryptoContext,
               credentialCryptoContexts,
-              walletUnitAttestation
-            }
+              walletUnitAttestation,
+            },
           ).catch(
             enrichErrorWithMetadata({
-              credentialId: credential_configuration_id
-            })
+              credentialId: credential_configuration_id,
+            }),
           );
 
         return Promise.all(
@@ -727,12 +730,12 @@ export const obtainCredentialsBatch: ObtainCredentialsBatch = async ({
               keyTag: keyTags[index],
               credentialType,
               walletUnitAttestationId,
-              env
-            })
-          )
+              env,
+            }),
+          ),
         );
-      }
-    )
+      },
+    ),
   );
 
   return bundlesByAuthDetail.flat();

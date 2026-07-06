@@ -3,7 +3,7 @@ import {
   IOSpacingScale,
   IOVisualCostants,
   hexToRgba,
-  useIOTheme
+  useIOTheme,
 } from "@pagopa/io-app-design-system";
 
 import { ComponentProps, ReactElement, useState } from "react";
@@ -15,7 +15,7 @@ import {
   ListRenderItemInfo,
   RefreshControl,
   StyleSheet,
-  View
+  View,
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, { AnimatedRef } from "react-native-reanimated";
@@ -25,7 +25,7 @@ import { useScrollHeaderAnimation } from "../../hooks/useScrollHeaderAnimation";
 import {
   IOScrollView,
   IOScrollViewActions,
-  renderActionButtons
+  renderActionButtons,
 } from "./IOScrollView";
 
 export type IOListViewActions = IOScrollViewActions;
@@ -53,22 +53,22 @@ const styles = StyleSheet.create({
     width: "100%",
     position: "absolute",
     bottom: 0,
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   gradientContainer: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFillObject,
   },
   buttonContainer: {
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     width: "100%",
-    flexShrink: 0
+    flexShrink: 0,
   },
   centerContentWrapper: {
     flexGrow: 1,
     alignItems: "stretch",
     justifyContent: "center",
-    alignContent: "center"
-  }
+    alignContent: "center",
+  },
 });
 
 /**
@@ -116,8 +116,7 @@ export const IOListView = <T,>({
   skeleton,
   ItemSeparatorComponent,
   testID,
-  loading
-  // eslint-disable-next-line complexity
+  loading,
 }: IOListView<T>) => {
   const theme = useIOTheme();
 
@@ -130,7 +129,7 @@ export const IOListView = <T,>({
   };
 
   const { bottomMargin, needSafeAreaMargin } = useFooterActionsMargin(
-    excludeSafeAreaMargins
+    excludeSafeAreaMargins,
   );
 
   /* GENERATE EASING GRADIENT
@@ -170,7 +169,7 @@ export const IOListView = <T,>({
       ref={animatedRef}
       keyExtractor={keyExtractor}
       data={data}
-      renderItem={item =>
+      renderItem={(item) =>
         // If the refresh control is active, show the skeleton (if present) instead of the content
         loading || refreshControlProps?.refreshing
           ? (skeleton ?? null)
@@ -203,8 +202,8 @@ export const IOListView = <T,>({
                 styles.gradientBottomActions,
                 {
                   height: gradientAreaHeight,
-                  paddingBottom: bottomMargin
-                }
+                  paddingBottom: bottomMargin,
+                },
               ]}
               pointerEvents="box-none"
               {...(testID && { testID: `${testID}-actions` })}
@@ -213,8 +212,8 @@ export const IOListView = <T,>({
                 style={[
                   styles.gradientContainer,
                   debugMode && {
-                    backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
-                  }
+                    backgroundColor: hexToRgba(IOColors["error-500"], 0.15),
+                  },
                 ]}
                 pointerEvents="none"
               >
@@ -224,13 +223,13 @@ export const IOListView = <T,>({
                     debugMode && {
                       borderTopColor: IOColors["error-500"],
                       borderTopWidth: 1,
-                      backgroundColor: hexToRgba(IOColors["error-500"], 0.4)
-                    }
+                      backgroundColor: hexToRgba(IOColors["error-500"], 0.4),
+                    },
                   ]}
                 >
                   <LinearGradient
                     style={{
-                      height: gradientAreaHeight - safeBackgroundBlockHeight
+                      height: gradientAreaHeight - safeBackgroundBlockHeight,
                     }}
                     locations={locations}
                     colors={colors}
@@ -244,7 +243,7 @@ export const IOListView = <T,>({
                   style={{
                     bottom: 0,
                     height: safeBackgroundBlockHeight,
-                    backgroundColor: HEADER_BG_COLOR
+                    backgroundColor: HEADER_BG_COLOR,
                   }}
                 />
               </Animated.View>
@@ -269,9 +268,9 @@ export const IOListView = <T,>({
           paddingHorizontal: includeContentMargins
             ? IOVisualCostants.appMarginDefault
             : 0,
-          ...(contentContainerStyle || {})
+          ...(contentContainerStyle || {}),
         },
-        centerContent ? styles.centerContentWrapper : {}
+        centerContent ? styles.centerContentWrapper : {},
       ]}
     />
   );

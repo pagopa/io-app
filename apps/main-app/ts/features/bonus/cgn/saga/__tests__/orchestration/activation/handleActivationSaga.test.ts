@@ -3,7 +3,7 @@ import NavigationService from "../../../../../../../navigation/NavigationService
 import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationLoading,
-  navigateToCgnActivationTimeout
+  navigateToCgnActivationTimeout,
 } from "../../../orchestration/navigation/actions";
 import CGN_ROUTES from "../../../../navigation/routes";
 import { cgnActivationStatus } from "../../../../store/actions/activation";
@@ -11,7 +11,7 @@ import { CgnActivationProgressEnum } from "../../../../store/reducers/activation
 import { cgnActivationWorker } from "../../../orchestration/activation/handleActivationSaga";
 
 jest.mock("react-native-share", () => ({
-  open: jest.fn()
+  open: jest.fn(),
 }));
 
 describe("cgnActivationWorker", () => {
@@ -19,7 +19,7 @@ describe("cgnActivationWorker", () => {
 
   it("should activate user's CGN", () => {
     const returnedAction = cgnActivationStatus.success({
-      status: CgnActivationProgressEnum.SUCCESS
+      status: CgnActivationProgressEnum.SUCCESS,
     });
 
     testSaga(cgnActivationWorker, cgnActivationSaga)
@@ -36,9 +36,9 @@ describe("cgnActivationWorker", () => {
       .next();
   });
 
-  it("should activate user's CGN already on loading screen ", () => {
+  it("should activate user's CGN already on loading screen", () => {
     const returnedAction = cgnActivationStatus.success({
-      status: CgnActivationProgressEnum.SUCCESS
+      status: CgnActivationProgressEnum.SUCCESS,
     });
 
     testSaga(cgnActivationWorker, cgnActivationSaga)
@@ -55,7 +55,7 @@ describe("cgnActivationWorker", () => {
 
   it("should navigate to TIMEOUT SCREEN on user's CGN activation", () => {
     const returnedAction = cgnActivationStatus.success({
-      status: CgnActivationProgressEnum.TIMEOUT
+      status: CgnActivationProgressEnum.TIMEOUT,
     });
 
     testSaga(cgnActivationWorker, cgnActivationSaga)

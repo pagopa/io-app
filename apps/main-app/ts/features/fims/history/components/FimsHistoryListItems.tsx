@@ -6,7 +6,7 @@ import {
   Icon,
   IOListItemStyles,
   useIOTheme,
-  VSpacer
+  VSpacer,
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import I18n from "i18next";
@@ -29,7 +29,7 @@ export type FimsHistoryBaseListItemProps = {
 
 export const FimsHistorySuccessListItem = ({
   serviceData,
-  consent
+  consent,
 }: FimsHistorySuccessListItemProps) => {
   const theme = useIOTheme();
 
@@ -41,7 +41,8 @@ export const FimsHistorySuccessListItem = ({
         <Caption color={theme["textBody-tertiary"]}>
           {dateToAccessibilityReadableFormat(
             consent.timestamp,
-            "DD/MM/YYYY, HH:mm"
+            // eslint-disable-next-line i18next/no-literal-string -- date format token, not user-facing copy
+            "DD/MM/YYYY, HH:mm",
           )}
         </Caption>
       </View>
@@ -58,7 +59,7 @@ export const FimsHistorySuccessListItem = ({
 };
 
 export const FimsHistoryFailureListItem = ({
-  item
+  item,
 }: FimsHistoryBaseListItemProps) => {
   const theme = useIOTheme();
 
@@ -69,25 +70,26 @@ export const FimsHistoryFailureListItem = ({
         {
           flexDirection: "row",
           justifyContent: "space-between",
-          alignItems: "center"
-        }
+          alignItems: "center",
+        },
       ]}
     >
       <View
         style={{
-          paddingVertical: 15
+          paddingVertical: 15,
         }}
       >
         <View
           style={{
             alignSelf: "flex-start",
-            flexDirection: "row"
+            flexDirection: "row",
           }}
         >
           <Icon name="calendar" size={16} color="grey-300" />
           <HSpacer size={4} />
           <Caption color={theme["textBody-tertiary"]}>
             {}
+            {/* eslint-disable-next-line i18next/no-literal-string -- date format token, not user-facing copy */}
             {dateToAccessibilityReadableFormat(item.timestamp, "DD,MM,YYYY")}
           </Caption>
         </View>
@@ -107,5 +109,5 @@ export const FimsHistoryFailureListItem = ({
 
 const defaultListItemStyles = [
   IOListItemStyles.listItem,
-  FimsHistorySharedStyles.fixedHeightListItem
+  FimsHistorySharedStyles.fixedHeightListItem,
 ];

@@ -7,7 +7,7 @@ import { differentProfileLoggedIn } from "../../../../../store/actions/crossSess
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   loginSuccess,
-  logoutSuccess
+  logoutSuccess,
 } from "../../../../authentication/common/store/actions";
 import { dismissPnActivationReminderBanner } from "../../../store/actions";
 import * as bannerDismiss from "../bannerDismiss";
@@ -20,8 +20,8 @@ const nonDismissedState: PnBannerDismissState = {
   dismissed: false,
   _persist: {
     version: -1,
-    rehydrated: false
-  }
+    rehydrated: false,
+  },
 };
 
 const { persistedPnBannerDismissReducer, testable } = bannerDismiss;
@@ -41,8 +41,8 @@ describe("persistedPnBannerDismissReducer", () => {
         dismissed: true,
         _persist: {
           version: -1,
-          rehydrated: false
-        }
+          rehydrated: false,
+        },
       } as PersistedState;
 
       const firstMigration = testable!.migrations[0];
@@ -50,7 +50,7 @@ describe("persistedPnBannerDismissReducer", () => {
       const migratedState = firstMigration(state);
       expect(migratedState).toEqual({
         ...state,
-        dismissed: false
+        dismissed: false,
       });
     });
   });
@@ -58,7 +58,7 @@ describe("persistedPnBannerDismissReducer", () => {
   it("should match snapshot [if this test fails, remember to add a migration to the store before updating the snapshot]", () => {
     const state = persistedPnBannerDismissReducer(
       undefined,
-      applicationChangeState("active")
+      applicationChangeState("active"),
     );
     expect(state).toMatchSnapshot();
   });
@@ -76,12 +76,12 @@ describe("persistedPnBannerDismissReducer", () => {
     expect(state).toEqual(nonDismissedState);
   });
   const testCases = [true, false]
-    .map(isSameUser =>
-      [true, false].map(hasBeenDismissed => ({
+    .map((isSameUser) =>
+      [true, false].map((hasBeenDismissed) => ({
         isSameUser,
         hasBeenDismissed,
-        result: isSameUser ? hasBeenDismissed : false
-      }))
+        result: isSameUser ? hasBeenDismissed : false,
+      })),
     )
     .flat();
 
@@ -102,8 +102,8 @@ describe("persistedPnBannerDismissReducer", () => {
       store.dispatch(
         loginSuccess({
           token: "mock-token",
-          idp: "test"
-        })
+          idp: "test",
+        }),
       );
 
       if (!isSameUser) {
@@ -126,14 +126,14 @@ describe("isPnServiceEnabled", () => {
               [pnServiceId]: pot.some({
                 kind: "success",
                 value: {
-                  inbox: true
-                }
-              })
-            }
-          }
-        } as unknown as ServicesState
+                  inbox: true,
+                },
+              }),
+            },
+          },
+        } as unknown as ServicesState,
       },
-      remoteConfig: O.none
+      remoteConfig: O.none,
     } as GlobalState;
     const output = bannerDismiss.isPnServiceEnabled(state);
     expect(output).toBeUndefined();
@@ -148,16 +148,16 @@ describe("isPnServiceEnabled", () => {
               [pnServiceId]: pot.some({
                 kind: "success",
                 value: {
-                  inbox: true
-                }
-              })
-            }
-          }
-        } as unknown as ServicesState
+                  inbox: true,
+                },
+              }),
+            },
+          },
+        } as unknown as ServicesState,
       },
       remoteConfig: O.some({
-        pn: {}
-      })
+        pn: {},
+      }),
     } as GlobalState;
     const output = bannerDismiss.isPnServiceEnabled(state);
     expect(output).toBeUndefined();
@@ -168,15 +168,15 @@ describe("isPnServiceEnabled", () => {
       features: {
         services: {
           details: {
-            preferencesById: {}
-          }
-        }
+            preferencesById: {},
+          },
+        },
       },
       remoteConfig: O.some({
         pn: {
-          notificationServiceId: pnServiceId
-        }
-      })
+          notificationServiceId: pnServiceId,
+        },
+      }),
     } as GlobalState;
     const output = bannerDismiss.isPnServiceEnabled(state);
     expect(output).toBeUndefined();
@@ -184,13 +184,13 @@ describe("isPnServiceEnabled", () => {
   const servicePreferencesError = {
     id: pnServiceId,
     kind: "generic",
-    value: Error("An error")
+    value: Error("An error"),
   };
   const servicePreferencesGenerator = (inbox: boolean) => ({
     kind: "success",
     value: {
-      inbox
-    }
+      inbox,
+    },
   });
   (
     [
@@ -208,49 +208,49 @@ describe("isPnServiceEnabled", () => {
       [
         pot.someUpdating(
           servicePreferencesGenerator(false),
-          servicePreferencesGenerator(false)
+          servicePreferencesGenerator(false),
         ),
-        false
+        false,
       ],
       [
         pot.someUpdating(
           servicePreferencesGenerator(false),
-          servicePreferencesGenerator(true)
+          servicePreferencesGenerator(true),
         ),
-        false
+        false,
       ],
       [
         pot.someUpdating(
           servicePreferencesGenerator(true),
-          servicePreferencesGenerator(false)
+          servicePreferencesGenerator(false),
         ),
-        true
+        true,
       ],
       [
         pot.someUpdating(
           servicePreferencesGenerator(true),
-          servicePreferencesGenerator(true)
+          servicePreferencesGenerator(true),
         ),
-        true
+        true,
       ],
       [
         pot.someError(
           servicePreferencesGenerator(false),
-          servicePreferencesError
+          servicePreferencesError,
         ),
-        false
+        false,
       ],
       [
         pot.someError(
           servicePreferencesGenerator(true),
-          servicePreferencesError
+          servicePreferencesError,
         ),
-        true
-      ]
+        true,
+      ],
     ] as const
   ).forEach(([servicePreference, expectedOutput]) => {
     it(`should return '${expectedOutput}' when remoteConfig is configured and the service preference is '${JSON.stringify(
-      servicePreference
+      servicePreference,
     )}'`, () => {
       jest.resetAllMocks();
       const state = {
@@ -258,16 +258,16 @@ describe("isPnServiceEnabled", () => {
           services: {
             details: {
               preferencesById: {
-                [pnServiceId]: servicePreference
-              }
-            }
-          } as unknown as ServicesState
+                [pnServiceId]: servicePreference,
+              },
+            },
+          } as unknown as ServicesState,
         },
         remoteConfig: O.some({
           pn: {
-            notificationServiceId: pnServiceId
-          }
-        })
+            notificationServiceId: pnServiceId,
+          },
+        }),
       } as GlobalState;
       const output = bannerDismiss.isPnServiceEnabled(state);
       expect(output).toBe(expectedOutput);
@@ -281,15 +281,15 @@ describe("isPnActivationReminderBannerRenderableSelector", () => {
   });
 
   const testCases = [true, false]
-    .map(hasBeenDismissed =>
-      [true, false].map(isRemoteEnabled =>
-        [true, false].map(isInboxEnabled => ({
+    .map((hasBeenDismissed) =>
+      [true, false].map((isRemoteEnabled) =>
+        [true, false].map((isInboxEnabled) => ({
           hasBeenDismissed,
           isRemoteEnabled,
           isInboxEnabled,
-          result: isRemoteEnabled && !hasBeenDismissed && !isInboxEnabled
-        }))
-      )
+          result: isRemoteEnabled && !hasBeenDismissed && !isInboxEnabled,
+        })),
+      ),
     )
     .flat()
     .flat();
@@ -302,8 +302,8 @@ describe("isPnActivationReminderBannerRenderableSelector", () => {
           pn: {
             bannerDismiss: {
               ...nonDismissedState,
-              dismissed: hasBeenDismissed
-            }
+              dismissed: hasBeenDismissed,
+            },
           },
           services: {
             details: {
@@ -311,35 +311,35 @@ describe("isPnActivationReminderBannerRenderableSelector", () => {
                 [pnServiceId]: pot.some({
                   kind: "success",
                   value: {
-                    inbox: isInboxEnabled
-                  }
-                })
-              }
-            }
-          } as unknown as ServicesState
+                    inbox: isInboxEnabled,
+                  },
+                }),
+              },
+            },
+          } as unknown as ServicesState,
         },
         remoteConfig: O.some({
           pn: {
             enabled: isRemoteEnabled,
-            notificationServiceId: pnServiceId
-          }
-        })
+            notificationServiceId: pnServiceId,
+          },
+        }),
       } as GlobalState;
 
       expect(
-        bannerDismiss.isPnActivationReminderBannerRenderableSelector(state)
+        bannerDismiss.isPnActivationReminderBannerRenderableSelector(state),
       ).toBe(result);
-    }
+    },
   );
 
-  it("should handle an error state for isPnInboxEnabled, treating it as 'true' ", () => {
+  it("should handle an error state for isPnInboxEnabled, treating it as 'true'", () => {
     // this is to avoid "uncertain" renders
     const state = {
       features: {
         pn: {
           bannerDismiss: {
-            ...nonDismissedState
-          }
+            ...nonDismissedState,
+          },
         },
         services: {
           details: {
@@ -347,21 +347,21 @@ describe("isPnActivationReminderBannerRenderableSelector", () => {
               [pnServiceId]: pot.noneError({
                 id: pnServiceId,
                 kind: "generic",
-                value: Error("An error")
-              })
-            }
-          }
-        } as unknown as ServicesState
+                value: Error("An error"),
+              }),
+            },
+          },
+        } as unknown as ServicesState,
       },
       remoteConfig: O.some({
         pn: {
-          enabled: true
-        }
-      })
+          enabled: true,
+        },
+      }),
     } as GlobalState;
 
     expect(
-      bannerDismiss.isPnActivationReminderBannerRenderableSelector(state)
+      bannerDismiss.isPnActivationReminderBannerRenderableSelector(state),
     ).toBe(false);
   });
 });

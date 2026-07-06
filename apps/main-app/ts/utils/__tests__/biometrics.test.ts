@@ -5,7 +5,7 @@ import {
   biometricAuthenticationRequest,
   getBiometricsType,
   isBiometricsValidType,
-  mayUserActivateBiometric
+  mayUserActivateBiometric,
 } from "../biometrics";
 import * as Biometric from "../biometrics";
 
@@ -48,7 +48,7 @@ describe("getBiometricsType function", () => {
       sensorSpy.mockRejectedValue(new Error("it exploded"));
       await getBiometricsType();
       expect(mixpanelSpy).toHaveBeenCalledWith("BIOMETRIC_ERROR", {
-        error: "it exploded"
+        error: "it exploded",
       });
     });
 
@@ -114,12 +114,12 @@ describe("mayUserActivateBiometric function", () => {
     expect(result).toMatch(expected);
   });
 
-  it("returns SENSOR_ERROR when getBiometricsType promise cannot be resolved ", async () => {
+  it("returns SENSOR_ERROR when getBiometricsType promise cannot be resolved", async () => {
     const getBiometricsTypeRejectedMock = Promise.reject();
 
     try {
       await Biometric.biometricFunctionForTests.mayUserActivateBiometricWithDependency(
-        getBiometricsTypeRejectedMock
+        getBiometricsTypeRejectedMock,
       );
     } catch (error) {
       expect(error).toBe("SENSOR_ERROR");
@@ -128,14 +128,14 @@ describe("mayUserActivateBiometric function", () => {
 
   it("returns ACTIVATED when getBiometricsType promise resolves FACE_ID and the authentication is successful", async () => {
     const getBiometricsTypeFaceIDMock = Promise.resolve(
-      "FACE_ID" as Biometric.BiometricsType
+      "FACE_ID" as Biometric.BiometricsType,
     );
     const spy = jest.spyOn(FingerprintScanner, "authenticate");
 
     spy.mockResolvedValue(Promise.resolve());
     const result =
       await Biometric.biometricFunctionForTests.mayUserActivateBiometricWithDependency(
-        getBiometricsTypeFaceIDMock
+        getBiometricsTypeFaceIDMock,
       );
 
     expect(result).toMatch("ACTIVATED");
@@ -143,20 +143,20 @@ describe("mayUserActivateBiometric function", () => {
 
   it("returns PERMISSION_DENIED when getBiometricsType promise resolves FACE_ID and the user refuses permission to use the biometric", async () => {
     const getBiometricsTypeFaceIDMock = Promise.resolve(
-      "FACE_ID" as Biometric.BiometricsType
+      "FACE_ID" as Biometric.BiometricsType,
     );
     const spy = jest.spyOn(FingerprintScanner, "authenticate");
 
     const error: Errors = {
       name: "FingerprintScannerNotAvailable",
       message:
-        "\tAuthentication could not start because Fingerprint Scanner is not available on the device"
+        "\tAuthentication could not start because Fingerprint Scanner is not available on the device",
     };
 
     spy.mockResolvedValue(Promise.reject(error));
     try {
       await Biometric.biometricFunctionForTests.mayUserActivateBiometricWithDependency(
-        getBiometricsTypeFaceIDMock
+        getBiometricsTypeFaceIDMock,
       );
     } catch (error) {
       expect(error).toBe("PERMISSION_DENIED");
@@ -165,7 +165,7 @@ describe("mayUserActivateBiometric function", () => {
 
   it("returns AUTH_FAILED when getBiometricsType promise resolves FACE_ID and the authentication fails", async () => {
     const getBiometricsTypeFaceIDMock = Promise.resolve(
-      "FACE_ID" as Biometric.BiometricsType
+      "FACE_ID" as Biometric.BiometricsType,
     );
     const spy = jest.spyOn(FingerprintScanner, "authenticate");
 
@@ -173,74 +173,74 @@ describe("mayUserActivateBiometric function", () => {
       {
         name: "AuthenticationFailed",
         message:
-          "Authentication was not successful because the user failed to provide valid credentials"
+          "Authentication was not successful because the user failed to provide valid credentials",
       },
       { name: "AuthenticationNotMatch", message: "No match" },
       {
         name: "AuthenticationProcessFailed",
-        message: "Sensor was unable to process the image. Please try again."
+        message: "Sensor was unable to process the image. Please try again.",
       },
       {
         name: "AuthenticationTimeout",
         message:
-          "Authentication was not successful because the operation timed out."
+          "Authentication was not successful because the operation timed out.",
       },
       {
         name: "DeviceLocked",
         message:
-          "Authentication was not successful, the device currently in a lockout of 30 seconds"
+          "Authentication was not successful, the device currently in a lockout of 30 seconds",
       },
       {
         name: "DeviceLockedPermanent",
         message:
-          "Authentication was not successful, device must be unlocked via password."
+          "Authentication was not successful, device must be unlocked via password.",
       },
       {
         name: "DeviceOutOfMemory",
         message:
-          "Authentication could not proceed because there is not enough free memory on the device."
+          "Authentication could not proceed because there is not enough free memory on the device.",
       },
       {
         name: "FingerprintScannerNotEnrolled",
         message:
-          "\tAuthentication could not start because Fingerprint Scanner has no enrolled fingers"
+          "\tAuthentication could not start because Fingerprint Scanner has no enrolled fingers",
       },
       {
         name: "FingerprintScannerNotSupported",
-        message: "Device does not support Fingerprint Scanner"
+        message: "Device does not support Fingerprint Scanner",
       },
       {
         name: "FingerprintScannerUnknownError",
-        message: "Could not authenticate for an unknown reason"
+        message: "Could not authenticate for an unknown reason",
       },
       { name: "HardwareError", message: "A hardware error occurred." },
       {
         name: "PasscodeNotSet",
         message:
-          "Authentication could not start because the passcode is not set on the device"
+          "Authentication could not start because the passcode is not set on the device",
       },
       {
         name: "SystemCancel",
         message:
-          "Authentication was canceled by system - e.g. if another application came to foreground while the authentication dialog was up"
+          "Authentication was canceled by system - e.g. if another application came to foreground while the authentication dialog was up",
       },
       {
         name: "UserCancel",
         message:
-          "Authentication was canceled by the user - e.g. the user tapped Cancel in the dialog"
+          "Authentication was canceled by the user - e.g. the user tapped Cancel in the dialog",
       },
       {
         name: "UserFallback",
         message:
-          "Authentication was canceled because the user tapped the fallback button (Enter Password)"
-      }
+          "Authentication was canceled because the user tapped the fallback button (Enter Password)",
+      },
     ];
 
     for (const error of errorsArray) {
       spy.mockResolvedValue(Promise.reject(error));
       try {
         await Biometric.biometricFunctionForTests.mayUserActivateBiometricWithDependency(
-          getBiometricsTypeFaceIDMock
+          getBiometricsTypeFaceIDMock,
         );
       } catch (error) {
         expect(error).toBe("AUTH_FAILED");

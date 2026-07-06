@@ -7,7 +7,7 @@ import {
   DownloadAttachmentSuccess,
   clearRequestedAttachmentDownload,
   downloadAttachment,
-  removeCachedAttachment
+  removeCachedAttachment,
 } from "../../actions";
 import {
   Downloads,
@@ -16,7 +16,7 @@ import {
   downloadsReducer,
   requestedDownloadErrorSelector,
   isDownloadingMessageAttachmentSelector,
-  isRequestedAttachmentDownloadSelector
+  isRequestedAttachmentDownloadSelector,
 } from "../downloads";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { appReducer } from "../../../../../store/reducers";
@@ -31,28 +31,28 @@ describe("downloadedMessageAttachmentSelector", () => {
     const attachmentId = "1";
     const successDownload = {
       attachment: {
-        id: attachmentId
+        id: attachmentId,
       } as ThirdPartyAttachment,
       messageId: "01HMXFQ803Q8JGQECKQF0EX6KX",
-      path: "randomPath"
+      path: "randomPath",
     } as DownloadAttachmentSuccess;
     const downloadSuccessAction = downloadAttachment.success(successDownload);
     const downloadsState = downloadsReducer(
       INITIAL_STATE,
-      downloadSuccessAction
+      downloadSuccessAction,
     );
     const globalState = {
       entities: {
         messages: {
-          downloads: downloadsState
-        }
-      }
+          downloads: downloadsState,
+        },
+      },
     } as GlobalState;
     const messageId = "01HMXFE7192J01KNK02BJAPMBR";
     const downloadedAttachment = downloadedMessageAttachmentSelector(
       globalState,
       messageId,
-      attachmentId
+      attachmentId,
     );
     expect(downloadedAttachment).toBeUndefined();
   });
@@ -61,28 +61,28 @@ describe("downloadedMessageAttachmentSelector", () => {
     const unrelatedAttachmentId = "2";
     const successDownload = {
       attachment: {
-        id: unrelatedAttachmentId
+        id: unrelatedAttachmentId,
       } as ThirdPartyAttachment,
       messageId,
-      path: "randomPath"
+      path: "randomPath",
     } as DownloadAttachmentSuccess;
     const downloadSuccessAction = downloadAttachment.success(successDownload);
     const downloadsState = downloadsReducer(
       INITIAL_STATE,
-      downloadSuccessAction
+      downloadSuccessAction,
     );
     const globalState = {
       entities: {
         messages: {
-          downloads: downloadsState
-        }
-      }
+          downloads: downloadsState,
+        },
+      },
     } as GlobalState;
     const attachmentId = "1";
     const downloadedAttachment = downloadedMessageAttachmentSelector(
       globalState,
       messageId,
-      attachmentId
+      attachmentId,
     );
     expect(downloadedAttachment).toBeUndefined();
   });
@@ -92,25 +92,25 @@ describe("downloadedMessageAttachmentSelector", () => {
     const uiAttachmentRequest = {
       messageId,
       attachment: { id: attachmentId } as ThirdPartyAttachment,
-      skipMixpanelTrackingOnFailure: true
+      skipMixpanelTrackingOnFailure: true,
     } as DownloadAttachmentRequest;
     const downloadRequestAction =
       downloadAttachment.request(uiAttachmentRequest);
     const downloadsState = downloadsReducer(
       INITIAL_STATE,
-      downloadRequestAction
+      downloadRequestAction,
     );
     const globalState = {
       entities: {
         messages: {
-          downloads: downloadsState
-        }
-      }
+          downloads: downloadsState,
+        },
+      },
     } as GlobalState;
     const downloadedAttachment = downloadedMessageAttachmentSelector(
       globalState,
       messageId,
-      attachmentId
+      attachmentId,
     );
     expect(downloadedAttachment).toBeUndefined();
   });
@@ -119,27 +119,27 @@ describe("downloadedMessageAttachmentSelector", () => {
     const attachmentId = "1";
     const failedDownload = {
       attachment: {
-        id: attachmentId
+        id: attachmentId,
       } as ThirdPartyAttachment,
       messageId,
-      error: new Error("An error")
+      error: new Error("An error"),
     } as DownloadAttachmentError;
     const downloadFailureAction = downloadAttachment.failure(failedDownload);
     const downloadsState = downloadsReducer(
       INITIAL_STATE,
-      downloadFailureAction
+      downloadFailureAction,
     );
     const globalState = {
       entities: {
         messages: {
-          downloads: downloadsState
-        }
-      }
+          downloads: downloadsState,
+        },
+      },
     } as GlobalState;
     const downloadedAttachment = downloadedMessageAttachmentSelector(
       globalState,
       messageId,
-      attachmentId
+      attachmentId,
     );
     expect(downloadedAttachment).toBeUndefined();
   });
@@ -148,26 +148,26 @@ describe("downloadedMessageAttachmentSelector", () => {
     const attachmentId = "1";
     const uiAttachmentCancelled = {
       messageId,
-      attachment: { id: attachmentId } as ThirdPartyAttachment
+      attachment: { id: attachmentId } as ThirdPartyAttachment,
     } as DownloadAttachmentCancel;
     const downloadCancelAction = downloadAttachment.cancel(
-      uiAttachmentCancelled
+      uiAttachmentCancelled,
     );
     const downloadsState = downloadsReducer(
       INITIAL_STATE,
-      downloadCancelAction
+      downloadCancelAction,
     );
     const globalState = {
       entities: {
         messages: {
-          downloads: downloadsState
-        }
-      }
+          downloads: downloadsState,
+        },
+      },
     } as GlobalState;
     const downloadedAttachment = downloadedMessageAttachmentSelector(
       globalState,
       messageId,
-      attachmentId
+      attachmentId,
     );
     expect(downloadedAttachment).toBeUndefined();
   });
@@ -176,28 +176,28 @@ describe("downloadedMessageAttachmentSelector", () => {
     const attachmentId = "1";
     const successDownload = {
       attachment: {
-        id: attachmentId
+        id: attachmentId,
       } as ThirdPartyAttachment,
       messageId,
-      path: "randomPath"
+      path: "randomPath",
     } as DownloadAttachmentSuccess;
     const removedCachedAttachmentAction =
       removeCachedAttachment(successDownload);
     const downloadsState = downloadsReducer(
       INITIAL_STATE,
-      removedCachedAttachmentAction
+      removedCachedAttachmentAction,
     );
     const globalState = {
       entities: {
         messages: {
-          downloads: downloadsState
-        }
-      }
+          downloads: downloadsState,
+        },
+      },
     } as GlobalState;
     const downloadedAttachment = downloadedMessageAttachmentSelector(
       globalState,
       messageId,
-      attachmentId
+      attachmentId,
     );
     expect(downloadedAttachment).toBeUndefined();
   });
@@ -207,27 +207,27 @@ describe("downloadedMessageAttachmentSelector", () => {
     const downloadPath = "randomPath";
     const successDownload = {
       attachment: {
-        id: attachmentId
+        id: attachmentId,
       } as ThirdPartyAttachment,
       messageId,
-      path: downloadPath
+      path: downloadPath,
     } as DownloadAttachmentSuccess;
     const downloadSuccessAction = downloadAttachment.success(successDownload);
     const downloadsState = downloadsReducer(
       INITIAL_STATE,
-      downloadSuccessAction
+      downloadSuccessAction,
     );
     const globalState = {
       entities: {
         messages: {
-          downloads: downloadsState
-        }
-      }
+          downloads: downloadsState,
+        },
+      },
     } as GlobalState;
     const downloadedAttachment = downloadedMessageAttachmentSelector(
       globalState,
       messageId,
-      attachmentId
+      attachmentId,
     );
     expect(downloadedAttachment).toBeDefined();
     expect(downloadedAttachment?.attachment).toBeDefined();
@@ -242,7 +242,7 @@ describe("downloadsReducer", () => {
 
   describe("given no download", () => {
     const initialState: Downloads = {
-      statusById: {}
+      statusById: {},
     };
 
     describe("when requesting an attachment", () => {
@@ -254,20 +254,21 @@ describe("downloadsReducer", () => {
           attachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
 
       it("then it returns pot.loading", () => {
         expect(
           pot.isLoading(
-            afterRequestState.statusById[messageId]?.[attachment.id] ?? pot.none
-          )
+            afterRequestState.statusById[messageId]?.[attachment.id] ??
+              pot.none,
+          ),
         ).toBeTruthy();
         expect(afterRequestState.requestedDownload).toBeDefined();
         expect(afterRequestState.requestedDownload?.messageId).toBe(messageId);
         expect(afterRequestState.requestedDownload?.attachmentId).toBe(
-          attachment.id
+          attachment.id,
         );
       });
 
@@ -280,17 +281,17 @@ describe("downloadsReducer", () => {
                 downloadAttachment.success({
                   attachment,
                   messageId,
-                  path
-                })
-              ).statusById[messageId]?.[attachment.id] ?? pot.none
-            )
+                  path,
+                }),
+              ).statusById[messageId]?.[attachment.id] ?? pot.none,
+            ),
           ).toBeTruthy();
           expect(afterRequestState.requestedDownload).toBeDefined();
           expect(afterRequestState.requestedDownload?.messageId).toBe(
-            messageId
+            messageId,
           );
           expect(afterRequestState.requestedDownload?.attachmentId).toBe(
-            attachment.id
+            attachment.id,
           );
         });
       });
@@ -304,17 +305,17 @@ describe("downloadsReducer", () => {
                 downloadAttachment.failure({
                   attachment,
                   messageId,
-                  error: new Error()
-                })
-              ).statusById[messageId]?.[attachment.id] ?? pot.none
-            )
+                  error: new Error(),
+                }),
+              ).statusById[messageId]?.[attachment.id] ?? pot.none,
+            ),
           ).toBeTruthy();
           expect(afterRequestState.requestedDownload).toBeDefined();
           expect(afterRequestState.requestedDownload?.messageId).toBe(
-            messageId
+            messageId,
           );
           expect(afterRequestState.requestedDownload?.attachmentId).toBe(
-            attachment.id
+            attachment.id,
           );
         });
       });
@@ -326,9 +327,9 @@ describe("downloadsReducer", () => {
     const initialState: Downloads = {
       statusById: {
         [messageId]: {
-          [attachment.id]: pot.some({ attachment, path })
-        }
-      }
+          [attachment.id]: pot.some({ attachment, path }),
+        },
+      },
     };
 
     describe("when clearing the attachment", () => {
@@ -337,9 +338,9 @@ describe("downloadsReducer", () => {
           pot.isNone(
             downloadsReducer(
               initialState,
-              removeCachedAttachment({ attachment, messageId, path })
-            ).statusById[messageId]?.[attachment.id] ?? pot.none
-          )
+              removeCachedAttachment({ attachment, messageId, path }),
+            ).statusById[messageId]?.[attachment.id] ?? pot.none,
+          ),
         ).toBeTruthy();
         expect(initialState.requestedDownload).toBeUndefined();
       });
@@ -354,21 +355,23 @@ describe("downloadsReducer", () => {
         attachment,
         messageId,
         skipMixpanelTrackingOnFailure: false,
-        serviceId
-      })
+        serviceId,
+      }),
     );
 
-    expect(initialState.requestedDownload).toBeDefined();
-    expect(initialState.requestedDownload?.messageId).toBe(messageId);
-    expect(initialState.requestedDownload?.attachmentId).toBe(attachment.id);
+    it("should set the requestedDownload after a downloadAttachment.request action", () => {
+      expect(initialState.requestedDownload).toBeDefined();
+      expect(initialState.requestedDownload?.messageId).toBe(messageId);
+      expect(initialState.requestedDownload?.attachmentId).toBe(attachment.id);
+    });
 
     it("Should return pot.none and clear the requestedDownload after a downloadAttachment.cancel action", () => {
       const cancelState = downloadsReducer(
         initialState,
         downloadAttachment.cancel({
           attachment,
-          messageId
-        })
+          messageId,
+        }),
       );
       const potNone = cancelState.statusById[messageId]?.[attachment.id];
       expect(potNone).toBeDefined();
@@ -378,7 +381,7 @@ describe("downloadsReducer", () => {
     it("Should clear the requestedDownload after a clearRequestedAttachmentDownload action", () => {
       const cancelState = downloadsReducer(
         initialState,
-        clearRequestedAttachmentDownload()
+        clearRequestedAttachmentDownload(),
       );
       expect(cancelState.requestedDownload).toBeUndefined();
     });
@@ -388,12 +391,12 @@ describe("downloadsReducer", () => {
     it("should return false on initial state", () => {
       const initialState = appReducer(
         undefined,
-        applicationChangeState("active")
+        applicationChangeState("active"),
       );
       const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
         initialState,
         messageId,
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(isDownloadingMessage).toBeFalsy();
     });
@@ -404,13 +407,13 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
         initialState,
         messageId,
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(isDownloadingMessage).toBeTruthy();
     });
@@ -421,13 +424,13 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
         initialState,
         "01HNWPGF3TY9WQYGX5JYAW816W",
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(isDownloadingMessage).toBeFalsy();
     });
@@ -438,13 +441,13 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
         initialState,
         messageId,
-        "potato"
+        "potato",
       );
       expect(isDownloadingMessage).toBeFalsy();
     });
@@ -455,21 +458,21 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const successState = appReducer(
         initialState,
         downloadAttachment.success({
           attachment: mockPdfAttachment,
           messageId,
-          path: `file:///${mockPdfAttachment.id}.pdf`
-        })
+          path: `file:///${mockPdfAttachment.id}.pdf`,
+        }),
       );
       const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
         successState,
         messageId,
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(isDownloadingMessage).toBeFalsy();
     });
@@ -480,21 +483,21 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const failureState = appReducer(
         initialState,
         downloadAttachment.failure({
           attachment: mockPdfAttachment,
           messageId,
-          error: new Error("")
-        })
+          error: new Error(""),
+        }),
       );
       const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
         failureState,
         messageId,
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(isDownloadingMessage).toBeFalsy();
     });
@@ -505,20 +508,20 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const cancelledState = appReducer(
         initialState,
         downloadAttachment.cancel({
           attachment: mockPdfAttachment,
-          messageId
-        })
+          messageId,
+        }),
       );
       const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
         cancelledState,
         messageId,
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(isDownloadingMessage).toBeFalsy();
     });
@@ -529,17 +532,17 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const clearedState = appReducer(
         initialState,
-        clearRequestedAttachmentDownload()
+        clearRequestedAttachmentDownload(),
       );
       const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
         clearedState,
         messageId,
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(isDownloadingMessage).toBeTruthy();
     });
@@ -553,13 +556,13 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const error = requestedDownloadErrorSelector(
         initialState,
         messageId,
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(error).toBeUndefined();
     });
@@ -570,21 +573,21 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const failureState = appReducer(
         initialState,
         downloadAttachment.failure({
           attachment: mockPdfAttachment,
           messageId,
-          error: new Error("download failed")
-        })
+          error: new Error("download failed"),
+        }),
       );
       const error = requestedDownloadErrorSelector(
         failureState,
         "01HNWQ5YDG02JFGFH9523AC04Z",
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(error).toBeUndefined();
     });
@@ -595,21 +598,21 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const failureState = appReducer(
         initialState,
         downloadAttachment.failure({
           attachment: mockPdfAttachment,
           messageId,
-          error: new Error("download failed")
-        })
+          error: new Error("download failed"),
+        }),
       );
       const error = requestedDownloadErrorSelector(
         failureState,
         messageId,
-        "potato"
+        "potato",
       );
       expect(error).toBeUndefined();
     });
@@ -621,21 +624,21 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const failureState = appReducer(
         initialState,
         downloadAttachment.failure({
           attachment: mockPdfAttachment,
           messageId,
-          error: downloadError
-        })
+          error: downloadError,
+        }),
       );
       const error = requestedDownloadErrorSelector(
         failureState,
         messageId,
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(error).toBeDefined();
       expect(error).toBe(downloadError);
@@ -647,21 +650,21 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const successState = appReducer(
         initialState,
         downloadAttachment.success({
           attachment: mockPdfAttachment,
           messageId,
-          path: `file:///${mockPdfAttachment.id}.pdf`
-        })
+          path: `file:///${mockPdfAttachment.id}.pdf`,
+        }),
       );
       const error = requestedDownloadErrorSelector(
         successState,
         messageId,
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(error).toBeUndefined();
     });
@@ -672,20 +675,20 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const cancelledState = appReducer(
         initialState,
         downloadAttachment.cancel({
           attachment: mockPdfAttachment,
-          messageId
-        })
+          messageId,
+        }),
       );
       const error = requestedDownloadErrorSelector(
         cancelledState,
         messageId,
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(error).toBeUndefined();
     });
@@ -696,25 +699,25 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const failureState = appReducer(
         initialState,
         downloadAttachment.failure({
           attachment: mockPdfAttachment,
           messageId,
-          error: new Error("download failed")
-        })
+          error: new Error("download failed"),
+        }),
       );
       const clearState = appReducer(
         failureState,
-        clearRequestedAttachmentDownload()
+        clearRequestedAttachmentDownload(),
       );
       const error = requestedDownloadErrorSelector(
         clearState,
         messageId,
-        mockPdfAttachment.id
+        mockPdfAttachment.id,
       );
       expect(error).toBeUndefined();
     });
@@ -724,13 +727,13 @@ describe("downloadsReducer", () => {
     it("should return false on initial state", () => {
       const initialState = appReducer(
         undefined,
-        applicationChangeState("active")
+        applicationChangeState("active"),
       );
       const isRequestedAttachmentDownload =
         isRequestedAttachmentDownloadSelector(
           initialState,
           messageId,
-          mockPdfAttachment.id
+          mockPdfAttachment.id,
         );
       expect(isRequestedAttachmentDownload).toBeFalsy();
     });
@@ -741,14 +744,14 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const isRequestedAttachmentDownload =
         isRequestedAttachmentDownloadSelector(
           downloadingAttachmentState,
           messageId,
-          mockPdfAttachment.id
+          mockPdfAttachment.id,
         );
       expect(isRequestedAttachmentDownload).toBeTruthy();
     });
@@ -759,14 +762,14 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const isRequestedAttachmentDownload =
         isRequestedAttachmentDownloadSelector(
           downloadingAttachmentState,
           "01HNWNXS6G2Y86HEFQ3AYSQA1Q",
-          mockPdfAttachment.id
+          mockPdfAttachment.id,
         );
       expect(isRequestedAttachmentDownload).toBeFalsy();
     });
@@ -777,14 +780,14 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const isRequestedAttachmentDownload =
         isRequestedAttachmentDownloadSelector(
           downloadingAttachmentState,
           messageId,
-          "potato"
+          "potato",
         );
       expect(isRequestedAttachmentDownload).toBeFalsy();
     });
@@ -795,22 +798,22 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const successfulDownloadState = appReducer(
         downloadingAttachmentState,
         downloadAttachment.success({
           attachment: mockPdfAttachment,
           messageId,
-          path: `file:///${mockPdfAttachment.id}.pdf`
-        })
+          path: `file:///${mockPdfAttachment.id}.pdf`,
+        }),
       );
       const isRequestedAttachmentDownload =
         isRequestedAttachmentDownloadSelector(
           successfulDownloadState,
           messageId,
-          mockPdfAttachment.id
+          mockPdfAttachment.id,
         );
       expect(isRequestedAttachmentDownload).toBeTruthy();
     });
@@ -821,22 +824,22 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const failedDownloadState = appReducer(
         downloadingAttachmentState,
         downloadAttachment.failure({
           attachment: mockPdfAttachment,
           messageId,
-          error: new Error("")
-        })
+          error: new Error(""),
+        }),
       );
       const isRequestedAttachmentDownload =
         isRequestedAttachmentDownloadSelector(
           failedDownloadState,
           messageId,
-          mockPdfAttachment.id
+          mockPdfAttachment.id,
         );
       expect(isRequestedAttachmentDownload).toBeTruthy();
     });
@@ -847,21 +850,21 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const cancelledDownloadState = appReducer(
         downloadingAttachmentState,
         downloadAttachment.cancel({
           attachment: mockPdfAttachment,
-          messageId
-        })
+          messageId,
+        }),
       );
       const isRequestedAttachmentDownload =
         isRequestedAttachmentDownloadSelector(
           cancelledDownloadState,
           messageId,
-          mockPdfAttachment.id
+          mockPdfAttachment.id,
         );
       expect(isRequestedAttachmentDownload).toBeFalsy();
     });
@@ -872,18 +875,18 @@ describe("downloadsReducer", () => {
           attachment: mockPdfAttachment,
           messageId,
           skipMixpanelTrackingOnFailure: false,
-          serviceId
-        })
+          serviceId,
+        }),
       );
       const clearRequestedDownloadState = appReducer(
         downloadingAttachmentState,
-        clearRequestedAttachmentDownload()
+        clearRequestedAttachmentDownload(),
       );
       const isRequestedAttachmentDownload =
         isRequestedAttachmentDownloadSelector(
           clearRequestedDownloadState,
           messageId,
-          mockPdfAttachment.id
+          mockPdfAttachment.id,
         );
       expect(isRequestedAttachmentDownload).toBeFalsy();
     });

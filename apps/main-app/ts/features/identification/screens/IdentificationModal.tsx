@@ -9,7 +9,7 @@ import {
   ToastNotification,
   VSpacer,
   useIOFontDynamicScale,
-  useIOTheme
+  useIOTheme,
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
@@ -24,7 +24,7 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  View
+  View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
@@ -39,7 +39,7 @@ import { areTwoMinElapsedFromLastActivity } from "../../authentication/fastLogin
 import { refreshSessionToken } from "../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   hasTwoMinutesElapsedSinceLastActivitySelector,
-  isFastLoginEnabledSelector
+  isFastLoginEnabledSelector,
 } from "../../authentication/fastLogin/store/selectors";
 import { profileNameSelector } from "../../settings/common/store/selectors";
 import { IdentificationNumberPad } from "../components/IdentificationNumberPad";
@@ -47,25 +47,24 @@ import {
   identificationCancel,
   identificationFailure,
   identificationPinReset,
-  identificationSuccess
+  identificationSuccess,
 } from "../store/actions";
 import { IdentificationCancelData, maxAttempts } from "../store/reducers";
 import {
   identificationFailSelector,
-  progressSelector
+  progressSelector,
 } from "../store/selectors";
 import {
   FAIL_ATTEMPTS_TO_SHOW_ALERT,
   IdentificationInstructionsComponent,
   getBiometryIconName,
-  handleAndroidBackNavigation
+  handleAndroidBackNavigation,
 } from "../utils";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
 const VERTICAL_PADDING = 16;
 const A11Y_FOCUS_DELAY = 1000 as Millisecond;
 
-// eslint-disable-next-line complexity
 export const IdentificationModal = () => {
   const [isBiometricLocked, setIsBiometricLocked] = useState(false);
   const showRetryText = useRef(false);
@@ -80,13 +79,13 @@ export const IdentificationModal = () => {
   const previousAppState = usePrevious(appState);
   const identificationProgressState = useIOSelector(progressSelector);
   const hasTwoMinutesElapsedSinceLastActivity = useIOSelector(
-    hasTwoMinutesElapsedSinceLastActivitySelector
+    hasTwoMinutesElapsedSinceLastActivitySelector,
   );
 
   const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
 
   const previousIdentificationProgressState = usePrevious(
-    identificationProgressState
+    identificationProgressState,
   );
   const identificationFailState = useIOSelector(
     identificationFailSelector,
@@ -94,7 +93,7 @@ export const IdentificationModal = () => {
     // we need to performs a deep comparison between
     // two values to determine if they are equivalent
     // to avoid unnecessary re-renders.
-    (l, r) => _.isEqual(l, r)
+    (l, r) => _.isEqual(l, r),
   );
   const name = useIOSelector(profileNameSelector);
   const { biometricType, isFingerprintEnabled } = useBiometricType();
@@ -113,7 +112,7 @@ export const IdentificationModal = () => {
   }
 
   const forgotCodeLabel = `${I18n.t(
-    "identification.unlockCode.reset.button"
+    "identification.unlockCode.reset.button",
   )} ${I18n.t("identification.unlockCode.reset.code")}?`;
   const closeButtonLabel = cancelData?.label ?? I18n.t("global.buttons.close");
   const textTryAgain = I18n.t("global.genericRetry");
@@ -126,7 +125,7 @@ export const IdentificationModal = () => {
     (isBiometric: boolean) => {
       dispatch(identificationSuccess({ isBiometric }));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const onPinResetHandler = useCallback(() => {
@@ -142,8 +141,8 @@ export const IdentificationModal = () => {
       refreshSessionToken.request({
         withUserInteraction: false,
         showIdentificationModalAtStartup: false,
-        showLoader: true
-      })
+        showLoader: true,
+      }),
     );
     dispatch(areTwoMinElapsedFromLastActivity({ hasTwoMinPassed: false }));
   }, [dispatch]);
@@ -151,8 +150,8 @@ export const IdentificationModal = () => {
   const onIdentificationFailureHandler = useCallback(() => {
     const forceLogout = pipe(
       identificationFailState,
-      O.map(failState => failState.remainingAttempts === 1),
-      O.getOrElse(() => false)
+      O.map((failState) => failState.remainingAttempts === 1),
+      O.getOrElse(() => false),
     );
     if (forceLogout) {
       // eslint-disable-next-line functional/immutable-data
@@ -190,8 +189,8 @@ export const IdentificationModal = () => {
       identificationProgressState,
       isFastLoginEnabled,
       onIdentificationSuccess,
-      onSuccessDispatchTokenRefresh
-    ]
+      onSuccessDispatchTokenRefresh,
+    ],
   );
 
   const onIdentificationCancelHandler = useCallback(() => {
@@ -211,13 +210,13 @@ export const IdentificationModal = () => {
         () => {
           onIdentificationSuccessHandler(true);
         },
-        e => {
+        (e) => {
           if (e.name === "DeviceLocked" || e.name === "DeviceLockedPermanent") {
             setIsBiometricLocked(true);
           }
-        }
+        },
       ),
-    [onIdentificationSuccessHandler, setIsBiometricLocked]
+    [onIdentificationSuccessHandler, setIsBiometricLocked],
   );
 
   const biometricsConfig = useMemo(
@@ -226,10 +225,10 @@ export const IdentificationModal = () => {
         ? {
             biometricType,
             biometricAccessibilityLabel: getBiometryIconName(biometricType),
-            onBiometricPress: () => onFingerprintRequest()
+            onBiometricPress: () => onFingerprintRequest(),
           }
         : {},
-    [biometricType, onFingerprintRequest]
+    [biometricType, onFingerprintRequest],
   );
 
   const confirmResetAlert = useCallback(
@@ -239,22 +238,22 @@ export const IdentificationModal = () => {
         I18n.t(
           isValidatingTask
             ? "identification.forgetCode.confirmMsgWithTask"
-            : "identification.forgetCode.confirmMsg"
+            : "identification.forgetCode.confirmMsg",
         ),
         [
           {
             text: I18n.t("global.buttons.confirm"),
             style: "default",
-            onPress: onPinResetHandler
+            onPress: onPinResetHandler,
           },
           {
             text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
-          }
+            style: "cancel",
+          },
         ],
-        { cancelable: false }
+        { cancelable: false },
       ),
-    [isValidatingTask, onPinResetHandler]
+    [isValidatingTask, onPinResetHandler],
   );
 
   const titleLabel = isValidatingTask
@@ -275,7 +274,7 @@ export const IdentificationModal = () => {
         onIdentificationFailureHandler();
       }
     },
-    [onIdentificationFailureHandler, onIdentificationSuccessHandler]
+    [onIdentificationFailureHandler, onIdentificationSuccessHandler],
   );
 
   const NumberPad = memo(() => (
@@ -330,8 +329,8 @@ export const IdentificationModal = () => {
       ? "identification.fail.remainingAttempts"
       : "identification.fail.remainingAttemptSingle",
     {
-      attempts: remainingAttempts
-    }
+      attempts: remainingAttempts,
+    },
   );
 
   // If the authentication process is not started, we don't show the modal.
@@ -380,7 +379,7 @@ export const IdentificationModal = () => {
       onRequestClose={() =>
         handleAndroidBackNavigation(
           identificationContext,
-          onIdentificationCancelHandler
+          onIdentificationCancelHandler,
         )
       }
     >
@@ -392,7 +391,7 @@ export const IdentificationModal = () => {
       <View
         style={[
           styles.contentWrapper,
-          { backgroundColor: IOColors[theme["appBackground-accent"]] }
+          { backgroundColor: IOColors[theme["appBackground-accent"]] },
         ]}
       >
         {isValidatingTask && (
@@ -419,8 +418,8 @@ export const IdentificationModal = () => {
           contentContainerStyle={[
             styles.scrollViewContentContainer,
             {
-              justifyContent: isValidatingTask ? undefined : "center"
-            }
+              justifyContent: isValidatingTask ? undefined : "center",
+            },
           ]}
         >
           <ContentWrapper>
@@ -495,18 +494,18 @@ const styles = StyleSheet.create({
   closeButton: {
     zIndex: 100,
     flexGrow: 1,
-    alignItems: "flex-end"
+    alignItems: "flex-end",
   },
   scrollViewContentContainer: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   alertContainer: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   smallPinLabel: {
     position: "absolute",
     alignItems: "center",
     opacity: 0.5,
-    bottom: -32
-  }
+    bottom: -32,
+  },
 });

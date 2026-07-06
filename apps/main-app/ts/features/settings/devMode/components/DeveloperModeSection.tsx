@@ -11,7 +11,7 @@ import {
   ListItemNav,
   ListItemSwitch,
   VSpacer,
-  useIOTheme
+  useIOTheme,
 } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import I18n from "i18next";
@@ -24,27 +24,27 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
-  preferencesPagoPaTestEnvironmentSetEnabled
+  preferencesPagoPaTestEnvironmentSetEnabled,
 } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
   isIdPayLocallyEnabledSelector,
-  isPagoPATestEnabledSelector
+  isPagoPATestEnabledSelector,
 } from "../../../../store/reducers/persistedPreferences";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { getDeviceId } from "../../../../utils/device";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import {
   setActiveSessionLoginLocalFlag,
-  setStartActiveSessionLogin
+  setStartActiveSessionLogin,
 } from "../../../authentication/activeSessionLogin/store/actions/index.ts";
 import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/activeSessionLogin/store/selectors/index.ts";
 import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes.ts";
 import { sessionExpired } from "../../../authentication/common/store/actions";
 import {
   sessionTokenSelector,
-  walletTokenSelector
+  walletTokenSelector,
 } from "../../../authentication/common/store/selectors";
 import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes.ts";
@@ -54,8 +54,6 @@ import { notificationsInstallationSelector } from "../../../pushNotifications/st
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { clearCache } from "../../common/store/actions";
 import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig.ts";
-import { fciL3LocalFlag } from "../../../fci/store/actions/index.ts";
-import { fciSecurityLevelLocalFFSelector } from "../../../fci/store/reducers/fciSecurityLevelReducer.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -98,7 +96,7 @@ const DeveloperActionsSection = () => {
       [
         {
           text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
+          style: "cancel",
         },
         {
           text: I18n.t("global.buttons.confirm"),
@@ -106,10 +104,10 @@ const DeveloperActionsSection = () => {
           onPress: () => {
             dispatch(clearCache());
             IOToast.show(I18n.t("profile.main.cache.cleared"));
-          }
-        }
+          },
+        },
       ],
-      { cancelable: false }
+      { cancelable: false },
     );
   };
 
@@ -117,18 +115,18 @@ const DeveloperActionsSection = () => {
     /* eslint-disable no-console */
     console.log("[DUMP START]");
     AsyncStorage.getAllKeys()
-      .then(keys => {
+      .then((keys) => {
         console.log(`\tAvailable keys: ${keys.join(", ")}`);
         return Promise.all(
-          keys.map(key =>
-            AsyncStorage.getItem(key).then(value => {
+          keys.map((key) =>
+            AsyncStorage.getItem(key).then((value) => {
               console.log(`\tValue for ${key}\n\t\t`, value);
-            })
-          )
+            }),
+          ),
         );
       })
       .then(() => console.log("[DUMP END]"))
-      .catch(e => console.error(e));
+      .catch((e) => console.error(e));
     /* eslint-enable no-console */
   };
 
@@ -136,35 +134,35 @@ const DeveloperActionsSection = () => {
     {
       condition: true,
       label: I18n.t("profile.main.cache.clear"),
-      onPress: handleClearCachePress
+      onPress: handleClearCachePress,
     },
     {
       condition: isDevEnv,
       label: I18n.t("profile.main.forgetCurrentSession"),
-      onPress: () => dispatch(sessionExpired())
+      onPress: () => dispatch(sessionExpired()),
     },
     {
       condition: isDevEnv,
       label: I18n.t("profile.main.clearAsyncStorage"),
       onPress: () => {
         void AsyncStorage.clear();
-      }
+      },
     },
     {
       condition: isDevEnv,
       color: "primary",
       label: I18n.t("profile.main.dumpAsyncStorage"),
-      onPress: dumpAsyncStorage
-    }
+      onPress: dumpAsyncStorage,
+    },
   ];
 
   // Don't render the separator, even if the item is null
   const filteredDevActionButtons = devActionButtons.filter(
-    item => item.condition !== false
+    (item) => item.condition !== false,
   );
 
   const renderDevActionButton = ({
-    item: { color = "danger", label, onPress }
+    item: { color = "danger", label, onPress },
   }: ListRenderItemInfo<DevActionButton>) => (
     <IOButton
       fullWidth
@@ -185,7 +183,7 @@ const DeveloperActionsSection = () => {
           `${item.label}-${index}`
         }
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IOVisualCostants.appMarginDefault,
         }}
         data={filteredDevActionButtons}
         renderItem={renderDevActionButton}
@@ -200,7 +198,7 @@ const DeveloperDataSection = () => {
   const sessionToken = useIOSelector(sessionTokenSelector);
   const walletToken = useIOSelector(walletTokenSelector);
   const { id: notificationId, token: notificationToken } = useIOSelector(
-    notificationsInstallationSelector
+    notificationsInstallationSelector,
   );
   const publicKey = useIOSelector(lollipopPublicKeySelector);
   const deviceUniqueId = getDeviceId();
@@ -211,52 +209,52 @@ const DeveloperDataSection = () => {
       condition: isFastLoginEnabled,
       label: "Fast Login",
       value: `${isFastLoginEnabled}`,
-      onPress: () => clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
+      onPress: () => clipboardSetStringWithFeedback(`${isFastLoginEnabled}`),
     },
     {
       condition: isDevEnv && !!sessionToken,
       label: "Session token",
       value: `${sessionToken}`,
-      onPress: () => clipboardSetStringWithFeedback(`${sessionToken}`)
+      onPress: () => clipboardSetStringWithFeedback(`${sessionToken}`),
     },
     {
       condition: isDevEnv && !!walletToken,
       label: "Wallet token",
       value: `${walletToken}`,
-      onPress: () => clipboardSetStringWithFeedback(`${walletToken}`)
+      onPress: () => clipboardSetStringWithFeedback(`${walletToken}`),
     },
     {
       condition: isDevEnv,
       label: "Notification ID",
       value: `${notificationId}`,
-      onPress: () => clipboardSetStringWithFeedback(`${notificationId}`)
+      onPress: () => clipboardSetStringWithFeedback(`${notificationId}`),
     },
     {
       condition: !!notificationToken,
       label: "Notification token",
       value: `${notificationToken}`,
-      onPress: () => clipboardSetStringWithFeedback(`${notificationToken}`)
+      onPress: () => clipboardSetStringWithFeedback(`${notificationToken}`),
     },
     {
       label: "Device unique ID",
       value: `${deviceUniqueId}`,
-      onPress: () => clipboardSetStringWithFeedback(`${deviceUniqueId}`)
+      onPress: () => clipboardSetStringWithFeedback(`${deviceUniqueId}`),
     },
     {
       condition: !!thumbprint,
       label: "Thumbprint",
       value: `${thumbprint}`,
-      onPress: () => clipboardSetStringWithFeedback(`${thumbprint}`)
-    }
+      onPress: () => clipboardSetStringWithFeedback(`${thumbprint}`),
+    },
   ];
 
   // Don't render the separator, even if the item is null
   const filteredDevDataCopyListItems = devDataCopyListItems.filter(
-    item => item.condition !== false
+    (item) => item.condition !== false,
   );
 
   const renderDevDataCopyItem = ({
-    item: { label, value, onPress, testID, condition }
+    item: { label, value, onPress, testID, condition },
   }: ListRenderItemInfo<DevDataCopyListItem>) => {
     // If condition is either true or undefined, render the item
     if (condition !== false) {
@@ -283,7 +281,7 @@ const DeveloperDataSection = () => {
         `${item.value}-${index}`
       }
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IOVisualCostants.appMarginDefault,
       }}
       data={filteredDevDataCopyListItems}
       renderItem={renderDevDataCopyItem}
@@ -304,7 +302,7 @@ const DesignSystemSection = () => {
         accessibilityLabel={I18n.t("profile.main.designSystem")}
         onPress={() =>
           navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-            screen: SETTINGS_ROUTES.DESIGN_SYSTEM
+            screen: SETTINGS_ROUTES.DESIGN_SYSTEM,
           })
         }
       />
@@ -325,109 +323,109 @@ const PlaygroundsSection = () => {
       value: "Lollipop",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.LOLLIPOP_PLAYGROUND
-        })
+          screen: SETTINGS_ROUTES.LOLLIPOP_PLAYGROUND,
+        }),
     },
     {
       value: "IO Markdown",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.IO_MARKDOWN_PLAYGROUND
-        })
+          screen: SETTINGS_ROUTES.IO_MARKDOWN_PLAYGROUND,
+        }),
     },
     {
       value: "CGN Landing Page",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.CGN_LANDING_PLAYGROUND
-        })
+          screen: SETTINGS_ROUTES.CGN_LANDING_PLAYGROUND,
+        }),
     },
     {
       condition: isIdPayTestEnabled,
       value: "IDPay Onboarding",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.IDPAY_ONBOARDING_PLAYGROUND
-        })
+          screen: SETTINGS_ROUTES.IDPAY_ONBOARDING_PLAYGROUND,
+        }),
     },
     {
       condition: isIdPayTestEnabled,
       value: "IDPay Code",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.IDPAY_CODE_PLAYGROUND
-        })
+          screen: SETTINGS_ROUTES.IDPAY_CODE_PLAYGROUND,
+        }),
     },
     {
       value: "Documenti su IO",
       onPress: () =>
         navigation.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.PLAYGROUNDS.LANDING
-        })
+          screen: ITW_ROUTES.PLAYGROUNDS.LANDING,
+        }),
     },
     {
       value: "App Feedback",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.APP_FEEDBACK_PLAYGROUND
-        })
+          screen: SETTINGS_ROUTES.APP_FEEDBACK_PLAYGROUND,
+        }),
     },
     {
       value: "CIE SDK",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.CIE_PLAYGROUND
-        })
+          screen: SETTINGS_ROUTES.CIE_PLAYGROUND,
+        }),
     },
     {
       value: "NFC",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.NFC_PLAYGROUND
-        })
+          screen: SETTINGS_ROUTES.NFC_PLAYGROUND,
+        }),
     },
     {
       value: "Guided Tour",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.GUIDED_TOUR_PLAYGROUND
-        })
+          screen: SETTINGS_ROUTES.GUIDED_TOUR_PLAYGROUND,
+        }),
     },
     {
       value: "Bottom Sheet (SWM)",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.BOTTOM_SHEET_PLAYGROUND
-        })
+          screen: SETTINGS_ROUTES.BOTTOM_SHEET_PLAYGROUND,
+        }),
     },
     {
       value: I18n.t(
-        "profile.main.loginEnvironment.activeSession.playground.title"
+        "profile.main.loginEnvironment.activeSession.playground.title",
       ),
       onPress: () => {
         dispatch(setStartActiveSessionLogin());
         navigation.navigate(SETTINGS_ROUTES.AUTHENTICATION, {
-          screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+          screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN,
         });
-      }
+      },
     },
     {
       condition: isSendEnabled,
       value: "SEND",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.SEND_PLAYGROUND
-        })
-    }
+          screen: SETTINGS_ROUTES.SEND_PLAYGROUND,
+        }),
+    },
   ];
 
   // Don't render the separator, even if the item is null
   const filteredPlaygroundsNavListItems = playgroundsNavListItems.filter(
-    item => item.condition !== false
+    (item) => item.condition !== false,
   );
 
   const renderPlaygroundsNavItem = ({
-    item: { value, onPress, testID, condition }
+    item: { value, onPress, testID, condition },
   }: ListRenderItemInfo<PlaygroundsNavListItem>) => {
     // If condition is either true or undefined, render the item
     if (condition !== false) {
@@ -452,7 +450,7 @@ const PlaygroundsSection = () => {
         `${item.value}-${index}`
       }
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IOVisualCostants.appMarginDefault,
       }}
       data={filteredPlaygroundsNavListItems}
       renderItem={renderPlaygroundsNavItem}
@@ -462,7 +460,7 @@ const PlaygroundsSection = () => {
 };
 
 const DeveloperTestEnvironmentSection = ({
-  handleShowModal
+  handleShowModal,
 }: {
   handleShowModal: () => void;
 }) => {
@@ -470,9 +468,8 @@ const DeveloperTestEnvironmentSection = ({
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
   const isActiveSessionLoginLocallyEnabled = useIOSelector(
-    isActiveSessionLoginLocallyEnabledSelector
+    isActiveSessionLoginLocallyEnabledSelector,
   );
-  const fciL3LocalFeatureFlag = useIOSelector(fciSecurityLevelLocalFFSelector);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -482,7 +479,7 @@ const DeveloperTestEnvironmentSection = ({
         [
           {
             text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
+            style: "cancel",
           },
           {
             text: I18n.t("global.buttons.confirm"),
@@ -490,20 +487,20 @@ const DeveloperTestEnvironmentSection = ({
             onPress: () => {
               dispatch(
                 preferencesPagoPaTestEnvironmentSetEnabled({
-                  isPagoPATestEnabled: enabled
-                })
+                  isPagoPATestEnabled: enabled,
+                }),
               );
               handleShowModal();
-            }
-          }
+            },
+          },
         ],
-        { cancelable: false }
+        { cancelable: false },
       );
     } else {
       dispatch(
         preferencesPagoPaTestEnvironmentSetEnabled({
-          isPagoPATestEnabled: enabled
-        })
+          isPagoPATestEnabled: enabled,
+        }),
       );
       handleShowModal();
     }
@@ -518,32 +515,28 @@ const DeveloperTestEnvironmentSection = ({
     if (enabled) {
       Alert.alert(
         I18n.t(
-          "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertTitle"
+          "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertTitle",
         ),
         I18n.t(
-          "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertMessage"
+          "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertMessage",
         ),
         [
           {
             text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
+            style: "cancel",
           },
           {
             text: I18n.t(
-              "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertConfirmButton"
+              "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertConfirmButton",
             ),
-            onPress: () => dispatch(setActiveSessionLoginLocalFlag(enabled))
-          }
+            onPress: () => dispatch(setActiveSessionLoginLocalFlag(enabled)),
+          },
         ],
-        { cancelable: true }
+        { cancelable: true },
       );
     } else {
       dispatch(setActiveSessionLoginLocalFlag(enabled));
     }
-  };
-
-  const onFciSecurityLevelLocalFlagToggleChange = (enabled: boolean) => {
-    dispatch(fciL3LocalFlag(enabled));
   };
 
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
@@ -554,30 +547,24 @@ const DeveloperTestEnvironmentSection = ({
         : I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert"),
       value: isPagoPATestEnabled,
       onSwitchValueChange: onPagoPAEnvironmentToggle,
-      disabled: isLocalEnv
+      disabled: isLocalEnv,
     },
     {
       label: I18n.t("profile.main.idpay.idpayTest"),
       description: I18n.t("profile.main.idpay.idpayTestAlert"),
       value: isIdPayTestEnabled,
-      onSwitchValueChange: onIdPayTestToggle
+      onSwitchValueChange: onIdPayTestToggle,
     },
     {
       label: I18n.t(
-        "profile.main.loginEnvironment.activeSession.localFeatureFlag.switchTitle"
+        "profile.main.loginEnvironment.activeSession.localFeatureFlag.switchTitle",
       ),
       description: I18n.t(
-        "profile.main.loginEnvironment.activeSession.localFeatureFlag.switchDescription"
+        "profile.main.loginEnvironment.activeSession.localFeatureFlag.switchDescription",
       ),
       value: isActiveSessionLoginLocallyEnabled,
-      onSwitchValueChange: onActiveSessionLoginToggle
+      onSwitchValueChange: onActiveSessionLoginToggle,
     },
-    {
-      label: I18n.t("features.fci.requestL3.localFlag.title"),
-      description: I18n.t("features.fci.requestL3.localFlag.description"),
-      value: fciL3LocalFeatureFlag,
-      onSwitchValueChange: onFciSecurityLevelLocalFlagToggleChange
-    }
   ];
 
   return (
@@ -592,7 +579,7 @@ const DeveloperTestEnvironmentSection = ({
         `${item.label}-${index}`
       }
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IOVisualCostants.appMarginDefault,
       }}
       data={testEnvironmentsListItems}
       renderItem={({ item }) => (
@@ -620,7 +607,7 @@ const DeveloperModeSection = () => {
     showModal(
       <AlertModal
         message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-      />
+      />,
     );
   };
 
@@ -638,7 +625,7 @@ const DeveloperModeSection = () => {
           testID="debugModeSwitch"
           label={I18n.t("profile.main.debugMode")}
           value={isDebugModeEnabled}
-          onSwitchValueChange={enabled =>
+          onSwitchValueChange={(enabled) =>
             dispatch(setDebugModeEnabled(enabled))
           }
         />

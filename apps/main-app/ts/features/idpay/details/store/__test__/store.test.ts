@@ -6,16 +6,16 @@ import {
   idpayOperationListSelector,
   idpayTimelineCurrentPageSelector,
   idpayTimelineIsLastPageSelector,
-  idpayTimelineLastUpdateSelector
+  idpayTimelineLastUpdateSelector,
 } from "..";
 import {
   InitiativeDTO,
-  StatusEnum as InitativeStatusEnum
+  StatusEnum as InitativeStatusEnum,
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import {
   StatusEnum,
-  OperationTypeEnum as TransactionOperationType
+  OperationTypeEnum as TransactionOperationType,
 } from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -28,19 +28,19 @@ const mockResponseSuccess = {
   initiativeId: "123",
   status: InitativeStatusEnum.REFUNDABLE,
   voucherEndDate: new Date(),
-  nInstr: 123
+  nInstr: 123,
 } as InitiativeDTO;
 
 const mockFailure: NetworkError = {
   kind: "generic",
-  value: new Error("401")
+  value: new Error("401"),
 };
 
 describe("Test IDPay initiative details reducers and selectors", () => {
   it("should be pot.none before the first loading action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.idPay.initiative.details).toStrictEqual(
-      pot.none
+      pot.none,
     );
     expect(idpayInitiativeDetailsSelector(globalState)).toStrictEqual(pot.none);
   });
@@ -49,29 +49,29 @@ describe("Test IDPay initiative details reducers and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayInitiativeGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayInitiativeGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" }),
     );
 
     expect(store.getState().features.idPay.initiative.details).toStrictEqual(
-      pot.noneLoading
+      pot.noneLoading,
     );
     expect(idpayInitiativeDetailsSelector(store.getState())).toStrictEqual(
-      pot.noneLoading
+      pot.noneLoading,
     );
   });
   it("should be pot.some with the response, after the success action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayInitiativeGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayInitiativeGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" }),
     );
     store.dispatch(idpayInitiativeGet.success(mockResponseSuccess));
 
     expect(store.getState().features.idPay.initiative.details).toStrictEqual(
-      pot.some(mockResponseSuccess)
+      pot.some(mockResponseSuccess),
     );
     expect(idpayInitiativeDetailsSelector(store.getState())).toStrictEqual(
-      pot.some(mockResponseSuccess)
+      pot.some(mockResponseSuccess),
     );
   });
 
@@ -79,15 +79,15 @@ describe("Test IDPay initiative details reducers and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayInitiativeGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayInitiativeGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" }),
     );
     store.dispatch(idpayInitiativeGet.failure(mockFailure));
 
     expect(store.getState().features.idPay.initiative.details).toStrictEqual(
-      pot.noneError(mockFailure)
+      pot.noneError(mockFailure),
     );
     expect(idpayInitiativeDetailsSelector(store.getState())).toStrictEqual(
-      pot.noneError(mockFailure)
+      pot.noneError(mockFailure),
     );
   });
 });
@@ -106,13 +106,13 @@ const mockTimelineResponseSuccess: TimelineDTO = {
       brandLogo: "https://www.google.com",
       maskedPan: "1234567890",
       circuitType: "CREDIT_CARD",
-      status: StatusEnum.AUTHORIZED
-    } as OperationDTO
+      status: StatusEnum.AUTHORIZED,
+    } as OperationDTO,
   ] as ReadonlyArray<OperationDTO>,
   pageNo: 1,
   pageSize: 10,
   totalPages: 1,
-  totalElements: 1
+  totalElements: 1,
 } as TimelineDTO;
 describe("test idpay timeline reducer and selectors", () => {
   it("should be pot.noneLoading after the first loading action dispatched, the selector will also return empty array on pot.none states", () => {
@@ -122,12 +122,12 @@ describe("test idpay timeline reducer and selectors", () => {
       idpayTimelinePageGet.request({
         initiativeId: "6364fd4570fc881452fdaa2d",
         page: 0,
-        pageSize: 10
-      })
+        pageSize: 10,
+      }),
     );
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
-      pot.noneLoading
+      pot.noneLoading,
     );
     expect(idpayOperationListSelector(store.getState())).toStrictEqual([]);
   });
@@ -138,10 +138,10 @@ describe("test idpay timeline reducer and selectors", () => {
       pageNo: 1,
       pageSize: 10,
       totalElements: 100,
-      totalPages: 10
+      totalPages: 10,
     } as TimelineDTO;
     const paginatedTimeline: { [page: number]: TimelineDTO } = {
-      0: timeline
+      0: timeline,
     };
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const state: GlobalState = {
@@ -152,41 +152,43 @@ describe("test idpay timeline reducer and selectors", () => {
           ...globalState.features.idPay,
           initiative: {
             ...globalState.features.idPay.initiative,
-            timeline: pot.some(paginatedTimeline)
-          }
-        }
-      }
+            timeline: pot.some(paginatedTimeline),
+          },
+        },
+      },
     };
     const store = createStore(appReducer, state as any);
     store.dispatch(
       idpayTimelinePageGet.request({
         initiativeId: "6364fd4570fc881452fdaa2d",
         page: 1,
-        pageSize: 10
-      })
+        pageSize: 10,
+      }),
     );
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
-      pot.someUpdating(paginatedTimeline, paginatedTimeline)
+      pot.someUpdating(paginatedTimeline, paginatedTimeline),
     );
   });
   it("should be pot.some with the response, after the success action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayTimelinePageGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayTimelinePageGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d",
+      }),
     );
     store.dispatch(
       idpayTimelinePageGet.success({
         timeline: mockTimelineResponseSuccess,
-        page: 0
-      })
+        page: 0,
+      }),
     );
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
-      pot.some({ 0: mockTimelineResponseSuccess })
+      pot.some({ 0: mockTimelineResponseSuccess }),
     );
     expect(idpayOperationListSelector(store.getState())).toStrictEqual(
-      mockTimelineResponseSuccess.operationList
+      mockTimelineResponseSuccess.operationList,
     );
   });
 
@@ -194,12 +196,14 @@ describe("test idpay timeline reducer and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayTimelinePageGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayTimelinePageGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d",
+      }),
     );
     store.dispatch(idpayTimelinePageGet.failure(mockFailure));
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
-      pot.noneError(mockFailure)
+      pot.noneError(mockFailure),
     );
   });
 });
@@ -211,58 +215,58 @@ describe("test idpay timeline pagination reducer and selectors", () => {
     store.dispatch(
       idpayTimelinePageGet.success({
         timeline: mockTimelineResponseSuccess,
-        page: 0
-      })
+        page: 0,
+      }),
     );
     store.dispatch(
       idpayTimelinePageGet.request({
         initiativeId: "6364fd4570fc881452fdaa2d",
-        page: 2
-      })
+        page: 2,
+      }),
     );
     store.dispatch(
       idpayTimelinePageGet.success({
         timeline: mockTimelineResponseSuccess,
-        page: 1
-      })
+        page: 1,
+      }),
     );
     const expectedResult = {
       0: mockTimelineResponseSuccess,
-      1: mockTimelineResponseSuccess
+      1: mockTimelineResponseSuccess,
     };
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
-      pot.some(expectedResult)
+      pot.some(expectedResult),
     );
     expect(idpayOperationListSelector(store.getState())).toStrictEqual([
       ...mockTimelineResponseSuccess.operationList,
-      ...mockTimelineResponseSuccess.operationList
+      ...mockTimelineResponseSuccess.operationList,
     ]);
   });
-  it("should reset the timeline after the idpayTimelineGet.request action for page 0 ", () => {
+  it("should reset the timeline after the idpayTimelineGet.request action for page 0", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
     store.dispatch(
       idpayTimelinePageGet.request({
         initiativeId: "6364fd4570fc881452fdaa2d",
-        page: 2
-      })
+        page: 2,
+      }),
     );
     store.dispatch(
       idpayTimelinePageGet.success({
         timeline: mockTimelineResponseSuccess,
-        page: 1
-      })
+        page: 1,
+      }),
     );
     store.dispatch(
       idpayTimelinePageGet.request({
         initiativeId: "6364fd4570fc881452fdaa2d",
-        page: 0
-      })
+        page: 0,
+      }),
     );
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
-      pot.noneLoading
+      pot.noneLoading,
     );
   });
 
@@ -272,13 +276,13 @@ describe("test idpay timeline pagination reducer and selectors", () => {
     store.dispatch(
       idpayTimelinePageGet.request({
         initiativeId: "6364fd4570fc881452fdaa2d",
-        page: 2
-      })
+        page: 2,
+      }),
     );
     store.dispatch(idpayTimelinePageGet.failure(mockFailure));
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
-      pot.noneError(mockFailure)
+      pot.noneError(mockFailure),
     );
   });
 
@@ -288,20 +292,20 @@ describe("test idpay timeline pagination reducer and selectors", () => {
     store.dispatch(
       idpayTimelinePageGet.success({
         page: 0,
-        timeline: mockTimelineResponseSuccess
-      })
+        timeline: mockTimelineResponseSuccess,
+      }),
     );
     store.dispatch(
       idpayTimelinePageGet.success({
         page: 1,
-        timeline: { ...mockTimelineResponseSuccess, operationList: [] }
-      })
+        timeline: { ...mockTimelineResponseSuccess, operationList: [] },
+      }),
     );
     // last call to API returns an empty operationList,
     // but increases the currentPage
 
     expect(idpayTimelineIsLastPageSelector(store.getState())).toStrictEqual(
-      true
+      true,
     );
   });
 
@@ -312,20 +316,20 @@ describe("test idpay timeline pagination reducer and selectors", () => {
     store.dispatch(
       idpayTimelinePageGet.success({
         timeline: mockTimelineResponseSuccess,
-        page: 0
-      })
+        page: 0,
+      }),
     );
     store.dispatch(
       idpayTimelinePageGet.success({
         timeline: mockTimelineResponseSuccess,
-        page: 1
-      })
+        page: 1,
+      }),
     );
     store.dispatch(
       idpayTimelinePageGet.success({
         timeline: mockTimelineResponseSuccess,
-        page: 2
-      })
+        page: 2,
+      }),
     );
 
     expect(idpayTimelineCurrentPageSelector(store.getState())).toStrictEqual(2);
@@ -336,17 +340,17 @@ describe("test idpay timeline pagination reducer and selectors", () => {
     store.dispatch(
       idpayTimelinePageGet.success({
         timeline: mockTimelineResponseSuccess,
-        page: 0
-      })
+        page: 0,
+      }),
     );
     store.dispatch(
       idpayTimelinePageGet.success({
         timeline: mockTimelineResponseSuccess,
-        page: 1
-      })
+        page: 1,
+      }),
     );
     expect(idpayTimelineLastUpdateSelector(store.getState())).toStrictEqual(
-      mockTimelineResponseSuccess.lastUpdate
+      mockTimelineResponseSuccess.lastUpdate,
     );
   });
 });
@@ -355,10 +359,10 @@ describe("IDPay beneficiary redcuers and selectors", () => {
   it("should be pot.none before first loading request", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(
-      globalState.features.idPay.initiative.beneficiaryDetails
+      globalState.features.idPay.initiative.beneficiaryDetails,
     ).toStrictEqual(pot.none);
     expect(idPayBeneficiaryDetailsSelector(globalState)).toStrictEqual(
-      pot.none
+      pot.none,
     );
   });
 });

@@ -3,7 +3,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import {
   ReduxSagaEffect,
-  SagaCallReturnType
+  SagaCallReturnType,
 } from "../../../../../../../types/utils";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { startTimer } from "../../../../../../../utils/timer";
@@ -11,7 +11,7 @@ import { readablePrivacyReport } from "../../../../../../../utils/reporters";
 import {
   getGenericError,
   getNetworkError,
-  NetworkError
+  NetworkError,
 } from "../../../../../../../utils/errors";
 import { StatusEnum } from "../../../../../../../../definitions/cgn/EycaActivationDetail";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
@@ -23,11 +23,11 @@ const cgnResultPolling = 1000 as Millisecond;
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
 type StartEycaStatus = "INELIGIBLE" | "ALREADY_ACTIVE" | "PROCESSING";
-const mapStatus: Map<number, StartEycaStatus> = new Map([
+const mapStatus = new Map<number, StartEycaStatus>([
   [201, "PROCESSING"],
   [202, "PROCESSING"],
   [403, "INELIGIBLE"],
-  [409, "ALREADY_ACTIVE"]
+  [409, "ALREADY_ACTIVE"],
 ]);
 
 /**
@@ -36,14 +36,14 @@ const mapStatus: Map<number, StartEycaStatus> = new Map([
  * @param startEycaActivation
  */
 export function* handleStartActivation(
-  startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
+  startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"],
 ): Generator<ReduxSagaEffect, E.Either<NetworkError, StartEycaStatus>, any> {
   try {
     const startEycaActivationRequest = startEycaActivation({});
     const startEycaActivationResult = (yield* call(
       withRefreshApiCall,
       startEycaActivationRequest,
-      cgnEycaActivation.request()
+      cgnEycaActivation.request(),
     )) as unknown as SagaCallReturnType<typeof startEycaActivation>;
     if (E.isRight(startEycaActivationResult)) {
       const status = startEycaActivationResult.right.status;
@@ -69,14 +69,14 @@ type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
  * @param getEycaActivation
  */
 export function* getActivation(
-  getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
+  getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
 ): Generator<ReduxSagaEffect, E.Either<NetworkError, GetEycaStatus>, any> {
   try {
     const getEycaActivationRequest = getEycaActivation({});
     const getEycaActivationResult = (yield* call(
       withRefreshApiCall,
       getEycaActivationRequest,
-      cgnEycaActivation.request()
+      cgnEycaActivation.request(),
     )) as unknown as SagaCallReturnType<typeof getEycaActivation>;
     if (E.isRight(getEycaActivationResult)) {
       if (getEycaActivationResult.right.status === 200) {
@@ -99,16 +99,18 @@ export function* getActivation(
       } else {
         return E.left(
           getGenericError(
-            new Error(`response status ${getEycaActivationResult.right.status}`)
-          )
+            new Error(
+              `response status ${getEycaActivationResult.right.status}`,
+            ),
+          ),
         );
       }
     } else {
       // decoding failure
       return E.left(
         getGenericError(
-          new Error(readablePrivacyReport(getEycaActivationResult.left))
-        )
+          new Error(readablePrivacyReport(getEycaActivationResult.left)),
+        ),
       );
     }
   } catch (e) {
@@ -125,7 +127,7 @@ export function* getActivation(
  * @param getEycaActivation Asks for the status of EYCA card activation
  */
 export function* handleEycaActivationSaga(
-  getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
+  getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
 ) {
   const startPollingTime = new Date().getTime();
   while (true) {

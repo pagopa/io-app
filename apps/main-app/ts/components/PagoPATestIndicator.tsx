@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 6,
     borderRadius: 8,
-    backgroundColor: debugItemBgColor
-  }
+    backgroundColor: debugItemBgColor,
+  },
 });
 
 const PagoPATestIndicator = () => (
@@ -26,10 +26,11 @@ const PagoPATestIndicator = () => (
         fontSize: 8,
         color: IOColors["grey-850"],
         marginLeft: 4,
-        textTransform: "uppercase"
+        textTransform: "uppercase",
       }}
     >
-      Test
+      {/* eslint-disable-next-line i18next/no-literal-string -- test-environment badge label, not localized */}
+      {"Test"}
     </Text>
   </View>
 );

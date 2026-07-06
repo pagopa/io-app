@@ -28,7 +28,7 @@ import {
   paymentsGetPaymentTransactionInfoAction,
   paymentsGetPaymentUserMethodsAction,
   paymentsGetRecentPaymentMethodUsedAction,
-  paymentsStartPaymentAuthorizationAction
+  paymentsStartPaymentAuthorizationAction,
 } from "../actions/networking";
 import {
   OnPaymentSuccessAction,
@@ -39,11 +39,11 @@ import {
   selectPaymentMethodAction,
   selectPaymentPspAction,
   walletPaymentSetCurrentStep,
-  paymentClearWebViewFlow
+  paymentClearWebViewFlow,
 } from "../actions/orchestration";
 import {
   contextualOnboardingStartWebViewFlow,
-  ContextualOnboardingWebViewPayload
+  ContextualOnboardingWebViewPayload,
 } from "../../../onboarding/store/actions";
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
@@ -94,32 +94,31 @@ const INITIAL_STATE: PaymentsCheckoutState = {
     onboardingUrl: pot.none,
     onboardedWalletId: undefined,
     orderId: undefined,
-    webViewPayload: undefined
-  }
+    webViewPayload: undefined,
+  },
 };
 
 const reducer = (
   state: PaymentsCheckoutState = INITIAL_STATE,
-  action: Action
-  // eslint-disable-next-line complexity
+  action: Action,
 ): PaymentsCheckoutState => {
   switch (action.type) {
     case getType(initPaymentStateAction):
       return {
         ...INITIAL_STATE,
-        onSuccess: action.payload.onSuccess
+        onSuccess: action.payload.onSuccess,
       };
 
     case getType(walletPaymentSetCurrentStep):
       return {
         ...state,
-        currentStep: _.clamp(action.payload, 1, WALLET_PAYMENT_STEP_MAX)
+        currentStep: _.clamp(action.payload, 1, WALLET_PAYMENT_STEP_MAX),
       };
 
     case getType(paymentMethodPspBannerClose):
       return {
         ...state,
-        pspBannerClosed: new Set([...state.pspBannerClosed, action.payload])
+        pspBannerClosed: new Set([...state.pspBannerClosed, action.payload]),
       };
 
     // Payment verification and details
@@ -130,71 +129,71 @@ const reducer = (
         recentUsedPaymentMethod: pot.none,
         selectedPaymentMethod: O.none,
         selectedWallet: O.none,
-        paymentDetails: pot.toLoading(state.paymentDetails)
+        paymentDetails: pot.toLoading(state.paymentDetails),
       };
     case getType(paymentsGetPaymentDetailsAction.success):
       return {
         ...state,
-        paymentDetails: pot.some(action.payload)
+        paymentDetails: pot.some(action.payload),
       };
     case getType(paymentsGetPaymentDetailsAction.failure):
       return {
         ...state,
-        paymentDetails: pot.toError(state.paymentDetails, action.payload)
+        paymentDetails: pot.toError(state.paymentDetails, action.payload),
       };
 
     // User payment methods
     case getType(paymentsGetPaymentUserMethodsAction.request):
       return {
         ...state,
-        userWallets: pot.toLoading(state.userWallets)
+        userWallets: pot.toLoading(state.userWallets),
       };
     case getType(paymentsGetPaymentUserMethodsAction.success):
       return {
         ...state,
-        userWallets: pot.some(action.payload)
+        userWallets: pot.some(action.payload),
       };
     case getType(paymentsGetPaymentUserMethodsAction.failure):
       return {
         ...state,
-        userWallets: pot.toError(state.userWallets, action.payload)
+        userWallets: pot.toError(state.userWallets, action.payload),
       };
 
     // Available payment method
     case getType(paymentsGetPaymentMethodsAction.request):
       return {
         ...state,
-        allPaymentMethods: pot.toLoading(state.allPaymentMethods)
+        allPaymentMethods: pot.toLoading(state.allPaymentMethods),
       };
     case getType(paymentsGetPaymentMethodsAction.success):
       return {
         ...state,
-        allPaymentMethods: pot.some(action.payload)
+        allPaymentMethods: pot.some(action.payload),
       };
     case getType(paymentsGetPaymentMethodsAction.failure):
       return {
         ...state,
-        allPaymentMethods: pot.toError(state.allPaymentMethods, action.payload)
+        allPaymentMethods: pot.toError(state.allPaymentMethods, action.payload),
       };
 
     // Recent payment method
     case getType(paymentsGetRecentPaymentMethodUsedAction.request):
       return {
         ...state,
-        recentUsedPaymentMethod: pot.toLoading(state.recentUsedPaymentMethod)
+        recentUsedPaymentMethod: pot.toLoading(state.recentUsedPaymentMethod),
       };
     case getType(paymentsGetRecentPaymentMethodUsedAction.success):
       return {
         ...state,
-        recentUsedPaymentMethod: pot.some(action.payload)
+        recentUsedPaymentMethod: pot.some(action.payload),
       };
     case getType(paymentsGetRecentPaymentMethodUsedAction.failure):
       return {
         ...state,
         recentUsedPaymentMethod: pot.toError(
           state.recentUsedPaymentMethod,
-          action.payload
-        )
+          action.payload,
+        ),
       };
 
     case getType(selectPaymentMethodAction):
@@ -208,15 +207,15 @@ const reducer = (
         contextualPayment: {
           ...state.contextualPayment,
           orderId: undefined,
-          onboardedWalletId: undefined
-        }
+          onboardedWalletId: undefined,
+        },
       };
 
     // PSP list
     case getType(paymentsCalculatePaymentFeesAction.request):
       return {
         ...state,
-        pspList: pot.toLoading(state.pspList)
+        pspList: pot.toLoading(state.pspList),
       };
     case getType(paymentsCalculatePaymentFeesAction.success):
       const bundles = action.payload.bundles;
@@ -239,7 +238,7 @@ const reducer = (
       // Use the preselected PSP only if there isn't any already selected PSP
       const selectedPsp = pipe(
         state.selectedPsp,
-        O.alt(() => preselectedPsp)
+        O.alt(() => preselectedPsp),
       );
 
       return {
@@ -248,9 +247,9 @@ const reducer = (
         currentStep,
         contextualPayment: {
           ...state.contextualPayment,
-          orderId: action.payload.orderId
+          orderId: action.payload.orderId,
         },
-        selectedPsp
+        selectedPsp,
       };
     case getType(paymentsCalculatePaymentFeesAction.cancel):
       return {
@@ -259,7 +258,7 @@ const reducer = (
         selectedPaymentMethod: O.none,
         currentStep: WalletPaymentStepEnum.PICK_PAYMENT_METHOD,
         selectedPsp: O.none,
-        selectedWallet: O.none
+        selectedWallet: O.none,
       };
     case getType(paymentsCalculatePaymentFeesAction.failure):
       return {
@@ -270,16 +269,16 @@ const reducer = (
             ? {
                 faultCodeCategory:
                   PaymentMethodNotAvailableEnum.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR,
-                faultCodeDetail: ""
+                faultCodeDetail: "",
               }
-            : action.payload
-        )
+            : action.payload,
+        ),
       };
 
     case getType(selectPaymentPspAction):
       return {
         ...state,
-        selectedPsp: O.some(action.payload)
+        selectedPsp: O.some(action.payload),
       };
 
     // Transaction
@@ -288,14 +287,14 @@ const reducer = (
         ...state,
         contextualPayment: {
           ...state.contextualPayment,
-          orderId: action.payload.orderId
-        }
+          orderId: action.payload.orderId,
+        },
       };
     case getType(paymentsGetPaymentTransactionInfoAction.request):
     case getType(paymentsDeleteTransactionAction.request):
       const onboardedWalletId = isActionOf(
         paymentsGetPaymentTransactionInfoAction.request,
-        action
+        action,
       )
         ? action.payload.walletId
         : undefined;
@@ -305,47 +304,47 @@ const reducer = (
         contextualPayment: {
           ...state.contextualPayment,
           orderId: undefined,
-          onboardedWalletId
-        }
+          onboardedWalletId,
+        },
       };
     case getType(paymentsCreateTransactionAction.success):
     case getType(paymentsGetPaymentTransactionInfoAction.success):
       return {
         ...state,
-        transaction: pot.some(action.payload)
+        transaction: pot.some(action.payload),
       };
     case getType(paymentsDeleteTransactionAction.success):
       return {
         ...state,
-        transaction: pot.none
+        transaction: pot.none,
       };
     case getType(paymentsCreateTransactionAction.failure):
     case getType(paymentsGetPaymentTransactionInfoAction.failure):
       return {
         ...state,
-        transaction: pot.toError(state.transaction, action.payload)
+        transaction: pot.toError(state.transaction, action.payload),
       };
 
     // Authorization url
     case getType(paymentsStartPaymentAuthorizationAction.request):
       return {
         ...state,
-        authorizationUrl: pot.toLoading(state.authorizationUrl)
+        authorizationUrl: pot.toLoading(state.authorizationUrl),
       };
     case getType(paymentsStartPaymentAuthorizationAction.success):
       return {
         ...state,
-        authorizationUrl: pot.some(action.payload.authorizationUrl)
+        authorizationUrl: pot.some(action.payload.authorizationUrl),
       };
     case getType(paymentsStartPaymentAuthorizationAction.failure):
       return {
         ...state,
-        authorizationUrl: pot.toError(state.authorizationUrl, action.payload)
+        authorizationUrl: pot.toError(state.authorizationUrl, action.payload),
       };
     case getType(paymentsStartPaymentAuthorizationAction.cancel):
       return {
         ...state,
-        authorizationUrl: pot.none
+        authorizationUrl: pot.none,
       };
     // Contextual onboarding
     case getType(paymentsGetContextualOnboardingUrlAction.request):
@@ -353,8 +352,8 @@ const reducer = (
         ...state,
         contextualPayment: {
           ...state.contextualPayment,
-          onboardingUrl: pot.toLoading(state.contextualPayment?.onboardingUrl)
-        }
+          onboardingUrl: pot.toLoading(state.contextualPayment?.onboardingUrl),
+        },
       };
     case getType(paymentsGetContextualOnboardingUrlAction.success):
       return {
@@ -363,8 +362,8 @@ const reducer = (
           ...state.contextualPayment,
           onboardingUrl: action.payload.redirectUrl
             ? pot.some(action.payload.redirectUrl)
-            : pot.none
-        }
+            : pot.none,
+        },
       };
     case getType(paymentsGetContextualOnboardingUrlAction.failure):
       return {
@@ -373,14 +372,14 @@ const reducer = (
           ...state.contextualPayment,
           onboardingUrl: pot.toError(
             state.contextualPayment?.onboardingUrl,
-            action.payload
-          )
-        }
+            action.payload,
+          ),
+        },
       };
     case getType(paymentStartWebViewFlow):
       return {
         ...state,
-        webViewPayload: action.payload
+        webViewPayload: action.payload,
       };
 
     case getType(paymentClearWebViewFlow):
@@ -389,8 +388,8 @@ const reducer = (
         webViewPayload: undefined,
         contextualPayment: {
           ...state.contextualPayment,
-          webViewPayload: undefined
-        }
+          webViewPayload: undefined,
+        },
       };
 
     // Contextual onboarding Webview on Android
@@ -399,8 +398,8 @@ const reducer = (
         ...state,
         contextualPayment: {
           ...state.contextualPayment,
-          webViewPayload: action.payload
-        }
+          webViewPayload: action.payload,
+        },
       };
   }
   return state;

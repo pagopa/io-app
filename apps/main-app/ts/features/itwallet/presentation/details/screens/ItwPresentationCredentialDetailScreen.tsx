@@ -2,7 +2,7 @@ import {
   ContentWrapper,
   IOButton,
   Optional,
-  VStack
+  VStack,
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
@@ -13,7 +13,7 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
   IOStackNavigationRouteProps,
-  useIONavigation
+  useIONavigation,
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
@@ -26,31 +26,32 @@ import { PoweredByItWalletText } from "../../../common/components/PoweredByItWal
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
 import {
   itwIsL3EnabledSelector,
-  itwIsPendingReviewSelector
+  itwIsPendingReviewSelector,
 } from "../../../common/store/selectors/preferences.ts";
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
   CredentialMetadata,
-  isMultiLevelCredential
+  isMultiLevelCredential,
 } from "../../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialSelector,
-  itwCredentialStatusSelector
+  itwCredentialStatusSelector,
 } from "../../../credentials/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
+  itwLifecycleIsValidSelector,
 } from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
 import { trackItwProximityShowQrCode } from "../../proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../proximity/navigation/routes";
+import { isPresentableCredentialSelector } from "../../proximity/store/selectors/credentials";
 import {
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE,
-  trackWalletCredentialShowTrustmark
+  trackWalletCredentialShowTrustmark,
 } from "../analytics";
 import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection.tsx";
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection.tsx";
@@ -60,11 +61,11 @@ import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresent
 import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter.tsx";
 import {
   ItwPresentationDetailsHeader,
-  ItwPresentationDetailsHeaderLegacy
+  ItwPresentationDetailsHeaderLegacy,
 } from "../components/ItwPresentationDetailsHeader.tsx";
 import {
   CredentialCtaProps,
-  ItwPresentationDetailsScreenBase
+  ItwPresentationDetailsScreenBase,
 } from "../components/ItwPresentationDetailsScreenBase.tsx";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus.tsx";
 import { shouldShowMdlUpdateDigitalCredential } from "../utils";
@@ -93,11 +94,11 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
    */
   const normalizedCredentialType = credentialType.replace(
     /^mdl$/i,
-    CredentialType.DRIVING_LICENSE
+    CredentialType.DRIVING_LICENSE,
   );
 
   const credentialOption = useIOSelector(
-    itwCredentialSelector(normalizedCredentialType)
+    itwCredentialSelector(normalizedCredentialType),
   );
   const isPendingReview = useIOSelector(itwIsPendingReviewSelector);
 
@@ -115,7 +116,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
       ) {
         dispatch(itwSetReviewPending(true));
       }
-    }, [normalizedCredentialType, isPendingReview, dispatch])
+    }, [normalizedCredentialType, isPendingReview, dispatch]),
   );
 
   if (!isWalletValid) {
@@ -124,39 +125,39 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
         title={
           isL3
             ? I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.itWallet.title"
+                "features.itWallet.issuance.walletInstanceNotActive.itWallet.title",
               )
             : I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.title"
+                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.title",
               )
         }
         subtitle={
           isL3
             ? I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.itWallet.subtitle"
+                "features.itWallet.issuance.walletInstanceNotActive.itWallet.subtitle",
               )
             : I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.subtitle"
+                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.subtitle",
               )
         }
         pictogram="itWallet"
         action={{
           label: I18n.t(
-            "features.itWallet.issuance.walletInstanceNotActive.primaryAction"
+            "features.itWallet.issuance.walletInstanceNotActive.primaryAction",
           ),
           onPress: () =>
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO,
               params: {
-                level: isL3 ? "l3" : "l2"
-              }
-            })
+                level: isL3 ? "l3" : "l2",
+              },
+            }),
         }}
         secondaryAction={{
           label: I18n.t(
-            "features.itWallet.issuance.walletInstanceNotActive.secondaryAction"
+            "features.itWallet.issuance.walletInstanceNotActive.secondaryAction",
           ),
-          onPress: () => navigation.popToTop()
+          onPress: () => navigation.popToTop(),
         }}
       />
     );
@@ -173,7 +174,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
 
 const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
   CredentialType.DRIVING_LICENSE,
-  CredentialType.EUROPEAN_DISABILITY_CARD
+  CredentialType.EUROPEAN_DISABILITY_CARD,
 ];
 
 type ItwPresentationCredentialDetailProps = {
@@ -182,31 +183,34 @@ type ItwPresentationCredentialDetailProps = {
 
 /** Component that renders the credential detail content. */
 export const ItwPresentationCredentialDetail = ({
-  credential
+  credential,
 }: ItwPresentationCredentialDetailProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const { status = "valid" } = useIOSelector(state =>
-    itwCredentialStatusSelector(state, credential.credentialType)
+  const { status = "valid" } = useIOSelector((state) =>
+    itwCredentialStatusSelector(state, credential.credentialType),
+  );
+  const isPresentableCredential = useIOSelector(
+    isPresentableCredentialSelector(credential.credentialType),
   );
   const displayStatus = useItwDisplayCredentialStatus(status);
   const contentClaim = credential.parsedCredential[WellKnownClaim.content];
   const hasSkeumorphicCard = credentialsWithSkeumorphicCard.includes(
-    credential.credentialType
+    credential.credentialType,
   );
   const showInlineCta =
     isL3Credential && (hasSkeumorphicCard || !!contentClaim);
 
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credential.credentialType, isL3Credential),
-    [credential.credentialType, isL3Credential]
+    [credential.credentialType, isL3Credential],
   );
   const shouldShowMdlUpdateCta = shouldShowMdlUpdateDigitalCredential(
     credential,
-    status
+    status,
   );
 
   useDebugInfo(credential);
@@ -218,9 +222,9 @@ export const ItwPresentationCredentialDetail = ({
       trackCredentialDetail({
         credential: mixPanelCredential,
         credential_status: CREDENTIAL_STATUS_MAP[status],
-        credential_type: isMultilevel ? "multiple" : "unique"
+        credential_type: isMultilevel ? "multiple" : "unique",
       });
-    }, [status, credential, mixPanelCredential])
+    }, [status, credential, mixPanelCredential]),
   );
 
   /** Show the credential trustmark screen after user identification */
@@ -233,19 +237,19 @@ export const ItwPresentationCredentialDetail = ({
         undefined,
         {
           label: I18n.t("global.buttons.cancel"),
-          onCancel: () => undefined
+          onCancel: () => undefined,
         },
         {
           onSuccess: () => {
             navigation.navigate(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_TRUSTMARK,
               params: {
-                credentialType: credential.credentialType
-              }
+                credentialType: credential.credentialType,
+              },
             });
-          }
-        }
-      )
+          },
+        },
+      ),
     );
   };
 
@@ -255,28 +259,25 @@ export const ItwPresentationCredentialDetail = ({
     if (shouldShowMdlUpdateCta) {
       return {
         label: I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.updateDigitalCredential"
+          "features.itWallet.presentation.credentialDetails.actions.updateDigitalCredential",
         ),
         onPress: () => {
           trackCredentialRenewStart(mixPanelCredential, {
             credential_status: CREDENTIAL_STATUS_MAP[status],
-            position: "screen"
+            position: "screen",
           });
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
             params: {
               credentialType,
-              mode: "reissuance"
-            }
+              mode: "reissuance",
+            },
           });
-        }
+        },
       };
     }
 
-    if (
-      credentialType === CredentialType.DRIVING_LICENSE &&
-      itwFeaturesEnabled
-    ) {
+    if (itwFeaturesEnabled && isPresentableCredential) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.present"),
         icon: "productITWallet",
@@ -284,15 +285,15 @@ export const ItwPresentationCredentialDetail = ({
         onPress: () => {
           trackItwProximityShowQrCode({
             credential: mixPanelCredential,
-            position: "ITW_CREDENTIAL_DETAIL"
+            position: "ITW_CREDENTIAL_DETAIL",
           });
           navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
             screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
             params: {
-              source: "ITW_CREDENTIAL_DETAIL"
-            }
+              source: "ITW_CREDENTIAL_DETAIL",
+            },
           });
-        }
+        },
       };
     }
 
@@ -306,9 +307,9 @@ export const ItwPresentationCredentialDetail = ({
           }
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
-            params: { attachmentClaim: contentClaim }
+            params: { attachmentClaim: contentClaim },
           });
-        }
+        },
       };
     }
 
@@ -318,10 +319,11 @@ export const ItwPresentationCredentialDetail = ({
     shouldShowMdlUpdateCta,
     itwFeaturesEnabled,
     isL3Credential,
+    isPresentableCredential,
     contentClaim,
     navigation,
     mixPanelCredential,
-    status
+    status,
   ]);
 
   if (status === "unknown") {
@@ -335,15 +337,15 @@ export const ItwPresentationCredentialDetail = ({
       }
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
-        params: { attachmentClaim: contentClaim }
+        params: { attachmentClaim: contentClaim },
       });
     } else {
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
         params: {
           credential,
-          status: displayStatus
-        }
+          status: displayStatus,
+        },
       });
     }
   };
@@ -365,7 +367,7 @@ export const ItwPresentationCredentialDetail = ({
             <IOButton
               variant="link"
               label={I18n.t(
-                "features.itWallet.presentation.credentialDetails.openCardDocument"
+                "features.itWallet.presentation.credentialDetails.openCardDocument",
               )}
               icon="creditCard"
               iconPosition="start"

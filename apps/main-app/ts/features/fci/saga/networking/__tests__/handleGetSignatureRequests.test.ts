@@ -10,28 +10,28 @@ import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/ut
 
 const successResponse = {
   status: 200,
-  value: mockedRandomSignatureRequestList as SignatureRequestList
+  value: mockedRandomSignatureRequestList as SignatureRequestList,
 };
 
 const failureResponse = {
-  status: 401
+  status: 401,
 };
 
 describe("handleGetSignatureRequests", () => {
   const mockBackendFciClient = jest.fn();
   const loadAction: ActionType<typeof fciSignaturesListRequest.request> = {
     type: "FCI_SIGNATURES_LIST_REQUEST",
-    payload: undefined
+    payload: undefined,
   };
   const getSignatureRequestsCall = mockBackendFciClient({
-    Bearer: "mock-token"
+    Bearer: "mock-token",
   });
-  it("it should dispatch fciSignaturesListRequest.success with the response payload if the response is right and the status code is 200", () => {
+  it("should dispatch fciSignaturesListRequest.success with the response payload if the response is right and the status code is 200", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
       "mock-token",
-      loadAction
+      loadAction,
     )
       .next()
       .call(withRefreshApiCall, getSignatureRequestsCall, loadAction)
@@ -40,30 +40,30 @@ describe("handleGetSignatureRequests", () => {
       .next()
       .isDone();
   });
-  it("it should dispatch fciSignaturesListRequest.failure with the response status code as payload if the response is right and the status code is different from 200", () => {
+  it("should dispatch fciSignaturesListRequest.failure with the response status code as payload if the response is right and the status code is different from 200", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
       "mock-token",
-      loadAction
+      loadAction,
     )
       .next()
       .call(withRefreshApiCall, getSignatureRequestsCall, loadAction)
       .next(right(failureResponse))
       .next(
         fciSignaturesListRequest.failure(
-          getNetworkError(new Error(failureResponse.status.toString()))
-        )
+          getNetworkError(new Error(failureResponse.status.toString())),
+        ),
       )
       .next()
       .isDone();
   });
-  it("it should dispatch fciSignaturesListRequest.failure with a fixed message as payload if the response left", () => {
+  it("should dispatch fciSignaturesListRequest.failure with a fixed message as payload if the response left", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
       "mock-token",
-      loadAction
+      loadAction,
     )
       .next()
       .call(withRefreshApiCall, getSignatureRequestsCall, loadAction)
@@ -71,20 +71,20 @@ describe("handleGetSignatureRequests", () => {
       .next(
         fciSignaturesListRequest.failure(
           getNetworkError(
-            new Error("Invalid payload from fciSignaturesListRequest")
-          )
-        )
+            new Error("Invalid payload from fciSignaturesListRequest"),
+          ),
+        ),
       )
       .next()
       .isDone();
   });
-  it("it should dispatch fciSignaturesListRequest.failure with the error message as payload if an exception is raised", () => {
+  it("should dispatch fciSignaturesListRequest.failure with the error message as payload if an exception is raised", () => {
     const mockedError = new Error("mockedErrorMessage");
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
       "mock-token",
-      loadAction
+      loadAction,
     )
       .next()
       .call(withRefreshApiCall, getSignatureRequestsCall, loadAction)

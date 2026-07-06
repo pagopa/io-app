@@ -14,9 +14,7 @@ describe("handleFimsGetConsentsList", () => {
 
     // This test will only run in test environment where testable is defined
     if (!safeParseFailureResponseBody) {
-      it.skip("testable is not available (not in test environment)", () => {
-        // Skipped when not in test env
-      });
+      it.todo("testable is not available (not in test environment)");
       return;
     }
 
@@ -30,7 +28,7 @@ describe("handleFimsGetConsentsList", () => {
 
       expect(result).toEqual({
         error: "invalid_grant",
-        error_description: "Invalid credentials"
+        error_description: "Invalid credentials",
       });
       expect(mockTrackAppCaughtError).not.toHaveBeenCalled();
     });
@@ -46,7 +44,7 @@ describe("handleFimsGetConsentsList", () => {
       expect(mockTrackAppCaughtError).toHaveBeenCalledWith(
         "safeParseFailureResponseBody",
         `JSON.parse threw an exception on a ${invalidJson.length}-character long input string`,
-        expect.any(String)
+        expect.any(String),
       );
     });
   });

@@ -7,7 +7,7 @@ import {
   isStrictNone,
   isStrictSome,
   isStrictSomeError,
-  toUndefinedOptional
+  toUndefinedOptional,
 } from "../pot";
 
 const potInstances = [
@@ -18,11 +18,11 @@ const potInstances = [
   pot.some({}),
   pot.someLoading({}),
   pot.someUpdating({}, {}),
-  pot.someError({}, "")
+  pot.someError({}, ""),
 ];
 
 describe("isStrictNone", () => {
-  potInstances.forEach(potInstance => {
+  potInstances.forEach((potInstance) => {
     const expectedOutput = potInstance.kind === "PotNone";
     it(`should return '${expectedOutput}' for ${potInstance.kind}`, () => {
       const output = isStrictNone(potInstance);
@@ -32,7 +32,7 @@ describe("isStrictNone", () => {
 });
 
 describe("isStrictSome", () => {
-  potInstances.forEach(potInstance => {
+  potInstances.forEach((potInstance) => {
     const expectedOutput = potInstance.kind === "PotSome";
     it(`should return '${expectedOutput}' for ${potInstance.kind}`, () => {
       const output = isStrictSome(potInstance);
@@ -52,7 +52,7 @@ describe("foldK", () => {
       mockFoldInstance.foldSome,
       mockFoldInstance.foldSomeLoading,
       mockFoldInstance.foldSomeUpdating,
-      mockFoldInstance.foldSomeError
+      mockFoldInstance.foldSomeError,
     )(pot.none);
     expect(mockFoldInstance.foldNone).toHaveBeenCalled();
     verifyZeroCallMock(mockFoldInstance, "foldNone");
@@ -67,7 +67,7 @@ describe("foldK", () => {
       mockFoldInstance.foldSome,
       mockFoldInstance.foldSomeLoading,
       mockFoldInstance.foldSomeUpdating,
-      mockFoldInstance.foldSomeError
+      mockFoldInstance.foldSomeError,
     )(pot.noneLoading);
     expect(mockFoldInstance.foldNoneLoading).toHaveBeenCalled();
     verifyZeroCallMock(mockFoldInstance, "foldNoneLoading");
@@ -83,11 +83,11 @@ describe("foldK", () => {
       mockFoldInstance.foldSome,
       mockFoldInstance.foldSomeLoading,
       mockFoldInstance.foldSomeUpdating,
-      mockFoldInstance.foldSomeError
+      mockFoldInstance.foldSomeError,
     )(pot.noneUpdating(inputObject));
     expect(mockFoldInstance.foldNoneUpdating).toHaveBeenCalled();
     expect(mockFoldInstance.foldNoneUpdating.mock.calls[0][0]).toBe(
-      inputObject
+      inputObject,
     );
     verifyZeroCallMock(mockFoldInstance, "foldNoneUpdating");
   });
@@ -102,7 +102,7 @@ describe("foldK", () => {
       mockFoldInstance.foldSome,
       mockFoldInstance.foldSomeLoading,
       mockFoldInstance.foldSomeUpdating,
-      mockFoldInstance.foldSomeError
+      mockFoldInstance.foldSomeError,
     )(pot.noneError(inputError));
     expect(mockFoldInstance.foldNoneError).toHaveBeenCalled();
     expect(mockFoldInstance.foldNoneError.mock.calls[0][0]).toBe(inputError);
@@ -119,7 +119,7 @@ describe("foldK", () => {
       mockFoldInstance.foldSome,
       mockFoldInstance.foldSomeLoading,
       mockFoldInstance.foldSomeUpdating,
-      mockFoldInstance.foldSomeError
+      mockFoldInstance.foldSomeError,
     )(pot.some(inputObject));
     expect(mockFoldInstance.foldSome).toHaveBeenCalled();
     expect(mockFoldInstance.foldSome.mock.calls[0][0]).toBe(inputObject);
@@ -136,7 +136,7 @@ describe("foldK", () => {
       mockFoldInstance.foldSome,
       mockFoldInstance.foldSomeLoading,
       mockFoldInstance.foldSomeUpdating,
-      mockFoldInstance.foldSomeError
+      mockFoldInstance.foldSomeError,
     )(pot.someLoading(inputObject));
     expect(mockFoldInstance.foldSomeLoading).toHaveBeenCalled();
     expect(mockFoldInstance.foldSomeLoading.mock.calls[0][0]).toBe(inputObject);
@@ -154,14 +154,14 @@ describe("foldK", () => {
       mockFoldInstance.foldSome,
       mockFoldInstance.foldSomeLoading,
       mockFoldInstance.foldSomeUpdating,
-      mockFoldInstance.foldSomeError
+      mockFoldInstance.foldSomeError,
     )(pot.someUpdating(inputObject, updatingObject));
     expect(mockFoldInstance.foldSomeUpdating).toHaveBeenCalled();
     expect(mockFoldInstance.foldSomeUpdating.mock.calls[0][0]).toBe(
-      inputObject
+      inputObject,
     );
     expect(mockFoldInstance.foldSomeUpdating.mock.calls[0][1]).toBe(
-      updatingObject
+      updatingObject,
     );
     verifyZeroCallMock(mockFoldInstance, "foldSomeUpdating");
   });
@@ -177,7 +177,7 @@ describe("foldK", () => {
       mockFoldInstance.foldSome,
       mockFoldInstance.foldSomeLoading,
       mockFoldInstance.foldSomeUpdating,
-      mockFoldInstance.foldSomeError
+      mockFoldInstance.foldSomeError,
     )(pot.someError(inputObject, inputError));
     expect(mockFoldInstance.foldSomeError).toHaveBeenCalled();
     expect(mockFoldInstance.foldSomeError.mock.calls[0][0]).toBe(inputObject);
@@ -187,7 +187,7 @@ describe("foldK", () => {
 });
 
 describe("isStrictSomeError", () => {
-  potInstances.forEach(potInstance => {
+  potInstances.forEach((potInstance) => {
     const expectedOutput = potInstance.kind === "PotSomeError";
     it(`should return '${expectedOutput}' for ${potInstance.kind}`, () => {
       const output = isStrictSomeError(potInstance);
@@ -197,7 +197,7 @@ describe("isStrictSomeError", () => {
 });
 
 describe("isSomeLoadingOrSomeUpdating", () => {
-  potInstances.forEach(potInstance => {
+  potInstances.forEach((potInstance) => {
     const expectedOutput =
       potInstance.kind === "PotSomeLoading" ||
       potInstance.kind === "PotSomeUpdating";
@@ -209,7 +209,7 @@ describe("isSomeLoadingOrSomeUpdating", () => {
 });
 
 describe("isSomeOrSomeError", () => {
-  potInstances.forEach(potInstance => {
+  potInstances.forEach((potInstance) => {
     const expectedOutput =
       potInstance.kind === "PotSome" || potInstance.kind === "PotSomeError";
     it(`should return '${expectedOutput}' for ${potInstance.kind}`, () => {
@@ -220,7 +220,7 @@ describe("isSomeOrSomeError", () => {
 });
 
 describe("isLoadingOrUpdating", () => {
-  potInstances.forEach(potInstance => {
+  potInstances.forEach((potInstance) => {
     const expectedOutput =
       potInstance.kind === "PotNoneLoading" ||
       potInstance.kind === "PotNoneUpdating" ||
@@ -241,12 +241,12 @@ const generateMockFoldInstance = () => ({
   foldSome: jest.fn(),
   foldSomeLoading: jest.fn(),
   foldSomeUpdating: jest.fn(),
-  foldSomeError: jest.fn()
+  foldSomeError: jest.fn(),
 });
 
 const verifyZeroCallMock = (
   zeroCallMock: any,
-  propertyToRemove: keyof typeof zeroCallMock
+  propertyToRemove: keyof typeof zeroCallMock,
 ) => {
   // eslint-disable-next-line functional/immutable-data
   zeroCallMock[propertyToRemove] = undefined;
@@ -254,7 +254,7 @@ const verifyZeroCallMock = (
   delete zeroCallMock[propertyToRemove];
   // eslint-disable-next-line functional/no-let
   let key: keyof typeof zeroCallMock;
-  // eslint-disable-next-line guard-for-in
+
   for (key in zeroCallMock) {
     const value = zeroCallMock[key];
     expect(value).not.toHaveBeenCalled();
@@ -262,7 +262,7 @@ const verifyZeroCallMock = (
 };
 
 describe("toUndefinedOptional", () => {
-  [undefined, ...potInstances].forEach(aPot => {
+  [undefined, ...potInstances].forEach((aPot) => {
     const expectedOutput =
       aPot?.kind === "PotSome" ||
       aPot?.kind === "PotSomeError" ||

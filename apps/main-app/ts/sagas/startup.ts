@@ -12,7 +12,7 @@ import {
   select,
   take,
   takeEvery,
-  takeLatest
+  takeLatest,
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { UserDataProcessingChoiceEnum } from "../../definitions/identity/UserDataProcessingChoice";
@@ -20,24 +20,24 @@ import { UserDataProcessingStatusEnum } from "../../definitions/identity/UserDat
 import { apiUrlPrefix, zendeskEnabled } from "../config";
 import {
   handleNavigateAfterFinishedStandardActiveSessionLoginFlow,
-  watchActiveSessionLoginSaga
+  watchActiveSessionLoginSaga,
 } from "../features/authentication/activeSessionLogin/saga";
 import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
 import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
 import {
   checkSession,
-  watchCheckSessionSaga
+  watchCheckSessionSaga,
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
 import { watchForceLogoutSaga } from "../features/authentication/common/saga/watchForceLogoutSaga";
 import { sessionExpired } from "../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
-  sessionTokenSelector
+  sessionTokenSelector,
 } from "../features/authentication/common/store/selectors";
 import { refreshSessionToken } from "../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   isFastLoginEnabledSelector,
-  tokenRefreshSelector
+  tokenRefreshSelector,
 } from "../features/authentication/fastLogin/store/selectors";
 import { shouldTrackLevelSecurityMismatchSaga } from "../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
 import { userFromSuccessLoginSelector } from "../features/authentication/loginInfo/store/selectors";
@@ -47,29 +47,29 @@ import { isCgnDiscoveryBannerClosedSelector } from "../features/bonus/cgn/store/
 import { isCgnEligibleByAgeSelector } from "../features/bonus/cgn/store/selectors/banners";
 import {
   navigateAfterFinishedFciActiveSessionLoginFlowSaga,
-  watchFciSaga
+  watchFciSaga,
 } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { startAndReturnIdentificationResult } from "../features/identification/sagas";
 import {
   IdentificationBackActionType,
-  IdentificationResult
+  IdentificationResult,
 } from "../features/identification/store/reducers";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
   shouldExitForOfflineAccess,
-  watchSessionRefreshInOfflineSaga
+  watchSessionRefreshInOfflineSaga,
 } from "../features/ingress/saga";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import {
   watchItwOfflineSaga,
-  watchItwSaga
+  watchItwSaga,
 } from "../features/itwallet/common/saga";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
   generateLollipopKeySaga,
-  getKeyInfo
+  getKeyInfo,
 } from "../features/lollipop/saga";
 import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
@@ -93,7 +93,7 @@ import {
   loadProfile,
   watchProfile,
   watchProfileRefreshRequestsSaga,
-  watchProfileUpsertRequestsSaga
+  watchProfileUpsertRequestsSaga,
 } from "../features/settings/common/sagas/profile";
 import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
 import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
@@ -101,12 +101,12 @@ import { isProfileFirstOnBoarding } from "../features/settings/common/store/util
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import {
   watchGetZendeskTokenSaga,
-  watchZendeskGetSessionSaga
+  watchZendeskGetSessionSaga,
 } from "../features/zendesk/saga";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import {
   applicationInitialized,
-  startApplicationInitialization
+  startApplicationInitialization,
 } from "../store/actions/application";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { differentProfileLoggedIn } from "../store/actions/crossSessions";
@@ -114,17 +114,17 @@ import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
 import {
   startupLoadSuccess,
-  startupTransientError
+  startupTransientError,
 } from "../store/actions/startup";
 import {
   isAarRemoteEnabled,
   isIdPayEnabledSelector,
   isPnRemoteEnabledSelector,
-  remoteConfigSelector
+  remoteConfigSelector,
 } from "../store/reducers/backendStatus/remoteConfig";
 import {
   StartupStatusEnum,
-  startupTransientErrorInitialState
+  startupTransientErrorInitialState,
 } from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
@@ -135,7 +135,7 @@ import { identityClientManager } from "../api/IdentityClientManager";
 import { sessionManagerClientManager } from "../api/SessionManagerClientManager";
 import {
   waitForMainNavigator,
-  waitForNavigatorServiceInitialization
+  waitForNavigatorServiceInitialization,
 } from "../navigation/saga/navigation";
 import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
 import { navigateToActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/navigateToActiveSessionLogin";
@@ -146,7 +146,7 @@ import { watchWalletSaga } from "../features/wallet/saga";
 import { watchSendLollipopLambda } from "../features/pn/lollipopLambda/saga";
 import {
   isAppSupportedSelector,
-  versionInfoDataSelector
+  versionInfoDataSelector,
 } from "../common/versionInfo/store/reducers/versionInfo";
 import { versionInfoLoadSuccess } from "../common/versionInfo/store/actions/versionInfo";
 import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
@@ -155,7 +155,7 @@ import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
   initMixpanel,
-  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
+  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel,
 } from "./mixpanel";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
@@ -175,9 +175,9 @@ export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
  * - On FL session refresh
  * - When accessing the Wallet mini app in offline mode
  */
-// eslint-disable-next-line complexity
+
 export function* initializeApplicationSaga(
-  startupAction?: ActionType<typeof startApplicationInitialization>
+  startupAction?: ActionType<typeof startApplicationInitialization>,
 ): Generator<ReduxSagaEffect, void, any> {
   // LV
   const handleSessionExpiration = !!(
@@ -243,7 +243,7 @@ export function* initializeApplicationSaga(
   // In that case (offline wallet or timeout), we skip the saga to prevent triggering
   // network-dependent logic unnecessarily.
   const shouldExitFromStartupForOfflineAccess = yield* call(
-    shouldExitForOfflineAccess
+    shouldExitForOfflineAccess,
   );
 
   if (shouldExitFromStartupForOfflineAccess) {
@@ -308,7 +308,7 @@ export function* initializeApplicationSaga(
 
   yield* call(
     handleNavigateAfterFinishedStandardActiveSessionLoginFlow,
-    isActiveLoginSuccessProp
+    isActiveLoginSuccessProp,
   );
 
   // BE CAREFUL where you get lollipop keyInfo.
@@ -326,18 +326,18 @@ export function* initializeApplicationSaga(
     apiUrlPrefix,
     {
       token: sessionToken,
-      keyInfo
-    }
+      keyInfo,
+    },
   );
   const identityClient = identityClientManager.getClient(apiUrlPrefix, {
     token: sessionToken,
-    keyInfo
+    keyInfo,
   });
   const sessionManagerClient = sessionManagerClientManager.getClient(
     apiUrlPrefix,
     {
-      token: sessionToken
-    }
+      token: sessionToken,
+    },
   );
 
   // The following functions all rely on the backend clients
@@ -345,7 +345,7 @@ export function* initializeApplicationSaga(
   if (zendeskEnabled) {
     yield* fork(
       watchZendeskGetSessionSaga,
-      sessionManagerClient.getSessionState
+      sessionManagerClient.getSessionState,
     );
   }
 
@@ -354,7 +354,7 @@ export function* initializeApplicationSaga(
     yield* call(
       checkSession,
       sessionManagerClient.getSessionState,
-      formatRequestedTokenString()
+      formatRequestedTokenString(),
     );
 
   if (checkSessionResponse === 401) {
@@ -369,8 +369,8 @@ export function* initializeApplicationSaga(
         refreshSessionToken.request({
           withUserInteraction: false,
           showIdentificationModalAtStartup: true,
-          showLoader: false
-        })
+          showLoader: false,
+        }),
       );
     }
     return;
@@ -385,7 +385,7 @@ export function* initializeApplicationSaga(
     watchUserDataProcessingSaga,
     identityClient.getUserDataProcessing,
     identityClient.upsertUserDataProcessing,
-    identityClient.abortUserDataProcessing
+    identityClient.abortUserDataProcessing,
   );
 
   // The logic below relies on the current active session
@@ -405,7 +405,7 @@ export function* initializeApplicationSaga(
 
   yield* call(
     navigateAfterFinishedFciActiveSessionLoginFlowSaga,
-    isActiveLoginSuccessProp
+    isActiveLoginSuccessProp,
   );
 
   // whether we asked the user to login again
@@ -439,7 +439,7 @@ export function* initializeApplicationSaga(
 
     maybeSessionInformation = yield* call(
       loadSessionInformationSaga,
-      sessionManagerClient.getSessionState
+      sessionManagerClient.getSessionState,
     );
 
     if (
@@ -459,7 +459,7 @@ export function* initializeApplicationSaga(
     yield* call(
       shouldTrackLevelSecurityMismatchSaga,
       maybeSessionInformation,
-      isActiveLoginSuccessProp
+      isActiveLoginSuccessProp,
     );
   }
 
@@ -469,7 +469,7 @@ export function* initializeApplicationSaga(
   const isAssertionRefValid = yield* call(
     checkLollipopSessionAssertionAndInvalidateIfNeeded,
     publicKey,
-    maybeSessionInformation
+    maybeSessionInformation,
   );
   if (!isAssertionRefValid) {
     return;
@@ -489,7 +489,7 @@ export function* initializeApplicationSaga(
   // Load the profile info
   const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield* call(
     loadProfile,
-    identityClient.getUserProfile
+    identityClient.getUserProfile,
   );
 
   if (O.isNone(maybeUserProfile)) {
@@ -516,7 +516,7 @@ export function* initializeApplicationSaga(
   yield* fork(
     watchCheckSessionSaga,
     sessionManagerClient.getSessionState,
-    formatRequestedTokenString()
+    formatRequestedTokenString(),
   );
   // Start watching for requests of abort the onboarding
 
@@ -547,7 +547,7 @@ export function* initializeApplicationSaga(
       undefined,
       undefined,
       undefined,
-      IdentificationBackActionType.CLOSE_APP
+      IdentificationBackActionType.CLOSE_APP,
     );
 
     if (identificationResult === IdentificationResult.pinreset) {
@@ -568,8 +568,8 @@ export function* initializeApplicationSaga(
           refreshSessionToken.request({
             withUserInteraction: false,
             showIdentificationModalAtStartup: false,
-            showLoader: true
-          })
+            showLoader: true,
+          }),
         );
         return;
       }
@@ -627,7 +627,7 @@ export function* initializeApplicationSaga(
   // a blocking call, since the saga will just hang, waiting for the token
   yield* fork(
     pushNotificationTokenUpload,
-    communicationClient.createOrUpdateInstallation
+    communicationClient.createOrUpdateInstallation,
   );
 
   // This saga is called before the startup status is set to authenticated to avoid flashing
@@ -651,7 +651,7 @@ export function* initializeApplicationSaga(
 
   // Fetch CGN status early so banner selectors have data
   const isCgnBannerClosed: boolean = yield* select(
-    isCgnDiscoveryBannerClosedSelector
+    isCgnDiscoveryBannerClosedSelector,
   );
   // over 35 should not see the banner
   const isCgnEligibleByAge: boolean = yield* select(isCgnEligibleByAgeSelector);
@@ -660,7 +660,7 @@ export function* initializeApplicationSaga(
   }
 
   const pnEnabled: ReturnType<typeof isPnRemoteEnabledSelector> = yield* select(
-    isPnRemoteEnabledSelector
+    isPnRemoteEnabledSelector,
   );
 
   if (pnEnabled) {
@@ -676,7 +676,7 @@ export function* initializeApplicationSaga(
   }
 
   const idPayEnabled: ReturnType<typeof isIdPayEnabledSelector> = yield* select(
-    isIdPayEnabledSelector
+    isIdPayEnabledSelector,
   );
 
   if (idPayEnabled) {
@@ -706,16 +706,16 @@ export function* initializeApplicationSaga(
       function* (
         loadUserDataProcessingSuccess: ActionType<
           typeof loadUserDataProcessing.success
-        >
+        >,
       ) {
         const maybeDeletePending = pipe(
           loadUserDataProcessingSuccess.payload.value,
           O.fromNullable,
           O.filter(
-            uc =>
+            (uc) =>
               uc.choice === UserDataProcessingChoiceEnum.DELETE &&
-              uc.status === UserDataProcessingStatusEnum.PENDING
-          )
+              uc.status === UserDataProcessingStatusEnum.PENDING,
+          ),
         );
         type leftOrRight = "left" | "right";
         const alertChoiceChannel = channel<leftOrRight>();
@@ -730,17 +730,17 @@ export function* initializeApplicationSaga(
                 style: "cancel",
                 onPress: () => {
                   alertChoiceChannel.put("left");
-                }
+                },
               },
               {
                 text: I18n.t("startup.userDeletePendingAlert.cta_2"),
                 style: "default",
                 onPress: () => {
                   alertChoiceChannel.put("right");
-                }
-              }
+                },
+              },
             ],
-            { cancelable: false }
+            { cancelable: false },
           );
           const action: leftOrRight = yield* take(alertChoiceChannel);
           if (action === "left") {
@@ -748,11 +748,11 @@ export function* initializeApplicationSaga(
           }
           yield* cancel(checkUserDeletePendingTask);
         }
-      }
+      },
     );
 
     yield* put(
-      loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
+      loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE),
     );
   }
 
@@ -762,11 +762,11 @@ export function* initializeApplicationSaga(
   // Check if we have any pending background action to be handled
   const isHandlingBackgroundActions = yield* call(
     maybeHandlePendingBackgroundActions,
-    true
+    true,
   );
 
   const showSessionExpirationBlockingScreen = yield* select(
-    showSessionExpirationBlockingScreenSelector
+    showSessionExpirationBlockingScreenSelector,
   );
 
   if (!isHandlingBackgroundActions && showSessionExpirationBlockingScreen) {
@@ -778,8 +778,8 @@ export function* initializeApplicationSaga(
 
   yield* put(
     applicationInitialized({
-      actionsToWaitFor: []
-    })
+      actionsToWaitFor: [],
+    }),
   );
 }
 
@@ -787,7 +787,7 @@ export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
   // Wait until the IngressScreen gets mounted
   yield* takeLatest(
     getType(startApplicationInitialization),
-    initializeApplicationSaga
+    initializeApplicationSaga,
   );
 }
 

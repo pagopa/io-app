@@ -3,7 +3,7 @@ import { appReducer } from "../index";
 import preferencesReducer, {
   initialPreferencesState,
   isExperimentalDesignEnabledSelector,
-  isMixpanelEnabled
+  isMixpanelEnabled,
 } from "../persistedPreferences";
 import { applicationChangeState } from "../../actions/application";
 import { setMixpanelEnabled } from "../../actions/mixpanel";
@@ -11,7 +11,7 @@ import {
   logoutRequest,
   logoutSuccess,
   sessionExpired,
-  sessionInvalid
+  sessionInvalid,
 } from "../../../features/authentication/common/store/actions";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
 import { clearCache } from "../../../features/settings/common/store/actions";
@@ -19,36 +19,36 @@ import { preferencesExperimentalDesignEnabled } from "../../actions/persistedPre
 
 describe("persistedPreferences", () => {
   describe("isExperimentalDesignEnabledSelector", () => {
-    [false, true].forEach(value =>
+    [false, true].forEach((value) =>
       it(`should return '${value}' when 'persistedPreferences.isExperimentalDesignEnabled' is '${value}'`, () => {
         const state = {
           persistedPreferences: {
-            isExperimentalDesignEnabled: value
-          }
+            isExperimentalDesignEnabled: value,
+          },
         } as GlobalState;
         const isExperimentalDesignEnabled =
           isExperimentalDesignEnabledSelector(state);
         expect(isExperimentalDesignEnabled).toBe(value);
-      })
+      }),
     );
   });
   describe("isMixpanelEnabled", () => {
-    it("should be reset mixpanel preference only on differentProfileLoggedIn action ", () => {
+    it("should be reset mixpanel preference only on differentProfileLoggedIn action", () => {
       const initialState: GlobalState = appReducer(
         undefined,
-        applicationChangeState("active")
+        applicationChangeState("active"),
       );
       expect(isMixpanelEnabled(initialState)).toBeNull();
 
       const enabledState: GlobalState = appReducer(
         initialState,
-        setMixpanelEnabled(true)
+        setMixpanelEnabled(true),
       );
       expect(isMixpanelEnabled(enabledState)).toBeTruthy();
 
       const notEnabledState: GlobalState = appReducer(
         enabledState,
-        setMixpanelEnabled(false)
+        setMixpanelEnabled(false),
       );
       expect(isMixpanelEnabled(notEnabledState)).toBeFalsy();
 
@@ -60,8 +60,8 @@ describe("persistedPreferences", () => {
         logoutSuccess(),
         sessionExpired(),
         sessionInvalid(),
-        clearCache()
-      ].forEach(action => {
+        clearCache(),
+      ].forEach((action) => {
         noChangesState = appReducer(noChangesState, action);
         // it has to match the last set value
         expect(isMixpanelEnabled(notEnabledState)).toBeFalsy();
@@ -69,7 +69,7 @@ describe("persistedPreferences", () => {
 
       const resetState: GlobalState = appReducer(
         noChangesState,
-        differentProfileLoggedIn()
+        differentProfileLoggedIn(),
       );
       expect(isMixpanelEnabled(resetState)).toBeNull();
     });
@@ -78,20 +78,20 @@ describe("persistedPreferences", () => {
     it("should return the initial state", () => {
       const initialState = preferencesReducer(
         undefined,
-        applicationChangeState("active")
+        applicationChangeState("active"),
       );
       expect(initialState).toEqual(initialPreferencesState);
     });
-    [false, true].forEach(value =>
+    [false, true].forEach((value) =>
       it(`should set 'isExperimentalDesignEnabled' to '${value}' upon receiving action 'preferencesExperimentalDesignEnabled' set to '${value}'`, () => {
         const state = preferencesReducer(
           undefined,
           preferencesExperimentalDesignEnabled({
-            isExperimentalDesignEnabled: value
-          })
+            isExperimentalDesignEnabled: value,
+          }),
         );
         expect(state.isExperimentalDesignEnabled).toBe(value);
-      })
+      }),
     );
   });
 });

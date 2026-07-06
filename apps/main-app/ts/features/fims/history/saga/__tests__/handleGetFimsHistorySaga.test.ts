@@ -13,7 +13,7 @@ import { FimsHistoryClient } from "../../api/client";
 import { fimsHistoryGet } from "../../store/actions";
 import {
   extractFimsHistoryResponseAction,
-  handleGetFimsHistorySaga
+  handleGetFimsHistorySaga,
 } from "../handleGetFimsHistorySaga";
 
 type ResponseType = Awaited<ReturnType<FimsHistoryClient["getAccessHistory"]>>;
@@ -26,14 +26,14 @@ const decodedSuccessResponse = {
         id: "id",
         redirect: {
           display_name: "An Url",
-          uri: "https://www.anUrl.com"
+          uri: "https://www.anUrl.com",
         },
         service_id: "sid",
-        timestamp: new Date()
-      }
-    ]
+        timestamp: new Date(),
+      },
+    ],
   },
-  headers: {}
+  headers: {},
 };
 
 const action = fimsHistoryGet.request({});
@@ -69,7 +69,7 @@ describe("handleGetFimsHistorySaga", () => {
     expect(mockSuccessClient).toHaveBeenCalledWith({
       Bearer: "Bearer MOCK_BEARER",
       "Accept-Language": "it",
-      page: action.payload.continuationToken
+      page: action.payload.continuationToken,
     });
     expect(mockTrackFailure).not.toHaveBeenCalled();
   });
@@ -98,7 +98,7 @@ describe("handleGetFimsHistorySaga", () => {
 
     expect(mockTrackFailure).toHaveBeenCalledWith("GENERIC_NON_200: 404");
   });
-  it("Should dispatch fimsHistoryGet.failure if the response's decode has failed ( its status is [left] ) ", () => {
+  it("Should dispatch fimsHistoryGet.failure if the response's decode has failed ( its status is [left] )", () => {
     const mockTrackFailure = jest.fn();
     jest
       .spyOn(TRACK_FAILURE, "trackHistoryFailure")
@@ -108,8 +108,8 @@ describe("handleGetFimsHistorySaga", () => {
       {
         context: [],
         value: "",
-        message: "error message"
-      }
+        message: "error message",
+      },
     ];
     const errorMessage = readableReportSimplified(errorContent);
     const failureResponse = E.left(errorContent) as ResponseType;
@@ -141,18 +141,18 @@ describe("handleGetFimsHistorySaga", () => {
     const mockFailureClient = () => resultPromiseFailure;
 
     const errorMessage = `${failureResponse} ${JSON.stringify(
-      failureResponse
+      failureResponse,
     )}`;
 
     const result = await expectSaga(
       handleGetFimsHistorySaga,
       mockFailureClient,
       "MOCK_BEARER",
-      action
+      action,
     )
       .provide([
         [select(PERSISTED_SELECTORS.preferredLanguageSelector), O.some("it")],
-        [call.fn(preferredLanguageToString), "it"]
+        [call.fn(preferredLanguageToString), "it"],
       ])
       .put(fimsHistoryGet.failure(errorMessage))
       .run();
@@ -165,13 +165,13 @@ describe("extractFimsHistoryResponseAction", () => {
   it("Should return fimsHistoryGet.success if the response is [right], with a 200 status", () => {
     const successResponse = E.right(decodedSuccessResponse) as ResponseType;
     expect(extractFimsHistoryResponseAction(successResponse)).toEqual(
-      fimsHistoryGet.success(decodedSuccessResponse.value)
+      fimsHistoryGet.success(decodedSuccessResponse.value),
     );
   });
   it("Should return fimsHistoryGet.failure if the response is [right], with a different status", () => {
     const failureResponse = E.right({ status: 404 }) as ResponseType;
     expect(extractFimsHistoryResponseAction(failureResponse)).toEqual(
-      fimsHistoryGet.failure("GENERIC_NON_200: 404")
+      fimsHistoryGet.failure("GENERIC_NON_200: 404"),
     );
   });
   it("Should return fimsHistoryGet.failure if the response is [left]", () => {
@@ -179,13 +179,13 @@ describe("extractFimsHistoryResponseAction", () => {
       {
         context: [],
         value: "",
-        message: "error message"
-      }
+        message: "error message",
+      },
     ];
     const errorMessage = readableReportSimplified(errorContent);
     const failureResponse = E.left(errorContent) as ResponseType;
     expect(extractFimsHistoryResponseAction(failureResponse)).toEqual(
-      fimsHistoryGet.failure(errorMessage)
+      fimsHistoryGet.failure(errorMessage),
     );
   });
 });

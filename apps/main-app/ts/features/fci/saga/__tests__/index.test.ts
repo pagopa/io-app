@@ -17,26 +17,26 @@ import {
   fciDownloadPreview,
   fciDownloadPreviewClear,
   fciClearAllFiles,
-  fciMetadataRequest
+  fciMetadataRequest,
 } from "../../store/actions";
 import {
   fciQtspClausesMetadataSelector,
-  fciQtspNonceSelector
+  fciQtspNonceSelector,
 } from "../../store/reducers/fciQtspClauses";
 import {
   fciSignatureRequestSelector,
-  fciSignatureRequestIdSelector
+  fciSignatureRequestIdSelector,
 } from "../../store/reducers/fciSignatureRequest";
 import { fciQtspFilledDocumentUrlSelector } from "../../store/reducers/fciQtspFilledDocument";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { spidLevelFromSessionInfoSelector } from "../../../authentication/common/store/selectors";
-import { isFciSecurityLevelCheckEnabledSelector } from "../../store/reducers/fciSecurityLevelReducer";
+import { isFciSecurityLevelCheckRemoteFFEnabledSelector } from "../../store/selectors/remoteConfig";
 import { FciDownloadPreviewDirectoryPath } from "../networking/handleDownloadDocument";
 import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import {
   testable,
-  navigateAfterFinishedFciActiveSessionLoginFlowSaga
+  navigateAfterFinishedFciActiveSessionLoginFlowSaga,
 } from "../index";
 import { activeSessionLoginFlowSelector } from "../../../authentication/activeSessionLogin/store/selectors";
 import { setActiveSessionLoginFlow } from "../../../authentication/activeSessionLogin/store/actions";
@@ -44,7 +44,7 @@ import { setActiveSessionLoginFlow } from "../../../authentication/activeSession
 // Mock react-native-fs
 jest.mock("react-native-fs", () => ({
   exists: jest.fn(() => Promise.resolve(true)),
-  unlink: jest.fn(() => Promise.resolve())
+  unlink: jest.fn(() => Promise.resolve()),
 }));
 
 // Ensure testable is defined in test environment
@@ -61,7 +61,7 @@ const {
   clearFciDownloadPreview,
   watchFciSigningRequestSaga,
   clearAllFciFiles,
-  watchFciEndSaga
+  watchFciEndSaga,
 } = testable;
 
 describe("FCI Saga Tests", () => {
@@ -81,15 +81,15 @@ describe("FCI Saga Tests", () => {
         .provide([
           [
             matchers.select(fciQtspClausesMetadataSelector),
-            pot.some(mockQtspClausesMetadata)
-          ]
+            pot.some(mockQtspClausesMetadata),
+          ],
         ])
         .put(
           fciLoadQtspFilledDocument.request({
             document_url: Buffer.from(
-              `${mockQtspClausesMetadata.document_url}`
-            ).toString("base64") as NonEmptyString
-          })
+              `${mockQtspClausesMetadata.document_url}`,
+            ).toString("base64") as NonEmptyString,
+          }),
         )
         .run());
 
@@ -99,8 +99,8 @@ describe("FCI Saga Tests", () => {
         .call(
           NavigationService.dispatchNavigationAction,
           CommonActions.navigate(ROUTES.MAIN, {
-            screen: ROUTES.WORKUNIT_GENERIC_FAILURE
-          })
+            screen: ROUTES.WORKUNIT_GENERIC_FAILURE,
+          }),
         )
         .run());
   });
@@ -113,9 +113,9 @@ describe("FCI Saga Tests", () => {
           StackActions.replace(FCI_ROUTES.MAIN, {
             screen: FCI_ROUTES.DOCUMENTS,
             params: {
-              attrs: undefined
-            }
-          })
+              attrs: undefined,
+            },
+          }),
         )
         .put(fciLoadQtspClauses.request())
         .put(fciMetadataRequest.request())
@@ -127,8 +127,11 @@ describe("FCI Saga Tests", () => {
       expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
-          [matchers.select(isFciSecurityLevelCheckEnabledSelector), false],
-          [matchers.call.fn(standardFciFlowStartSaga), undefined]
+          [
+            matchers.select(isFciSecurityLevelCheckRemoteFFEnabledSelector),
+            false,
+          ],
+          [matchers.call.fn(standardFciFlowStartSaga), undefined],
         ])
         .call(standardFciFlowStartSaga)
         .run());
@@ -137,8 +140,11 @@ describe("FCI Saga Tests", () => {
       expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L3"],
-          [matchers.select(isFciSecurityLevelCheckEnabledSelector), true],
-          [matchers.call.fn(standardFciFlowStartSaga), undefined]
+          [
+            matchers.select(isFciSecurityLevelCheckRemoteFFEnabledSelector),
+            true,
+          ],
+          [matchers.call.fn(standardFciFlowStartSaga), undefined],
         ])
         .call(standardFciFlowStartSaga)
         .run());
@@ -147,13 +153,16 @@ describe("FCI Saga Tests", () => {
       expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
-          [matchers.select(isFciSecurityLevelCheckEnabledSelector), true]
+          [
+            matchers.select(isFciSecurityLevelCheckRemoteFFEnabledSelector),
+            true,
+          ],
         ])
         .call(
           NavigationService.dispatchNavigationAction,
           StackActions.push(FCI_ROUTES.MAIN, {
-            screen: FCI_ROUTES.FCI_LOGIN_L3
-          })
+            screen: FCI_ROUTES.FCI_LOGIN_L3,
+          }),
         )
         .run());
   });
@@ -168,8 +177,8 @@ describe("FCI Saga Tests", () => {
         .dispatch(
           fciSignatureRequestFromId.success({
             ...mockSignatureRequestDetailView,
-            id: signatureRequestId
-          })
+            id: signatureRequestId,
+          }),
         )
         .put(fciDownloadPreview.cancel())
         .put(fciStartRequest())
@@ -180,8 +189,8 @@ describe("FCI Saga Tests", () => {
         .put(fciSignatureRequestFromId.request(signatureRequestId))
         .dispatch(
           fciSignatureRequestFromId.failure({
-            kind: "timeout"
-          })
+            kind: "timeout",
+          }),
         )
         .not.put(fciStartRequest())
         .run());
@@ -197,7 +206,7 @@ describe("FCI Saga Tests", () => {
         .put(fciDownloadPreview.cancel())
         .call(
           NavigationService.dispatchNavigationAction,
-          CommonActions.goBack()
+          CommonActions.goBack(),
         )
         .run();
     });
@@ -209,7 +218,7 @@ describe("FCI Saga Tests", () => {
         .put(fciDownloadPreview.cancel())
         .call(
           NavigationService.dispatchNavigationAction,
-          CommonActions.goBack()
+          CommonActions.goBack(),
         )
         .run();
     });
@@ -227,32 +236,32 @@ describe("FCI Saga Tests", () => {
         .provide([
           [
             matchers.select(fciQtspClausesMetadataSelector),
-            pot.some(mockQtspClauses)
+            pot.some(mockQtspClauses),
           ],
           [
             matchers.select(fciSignatureRequestSelector),
-            pot.some(mockSignatureRequest)
+            pot.some(mockSignatureRequest),
           ],
           [
             matchers.select(fciQtspFilledDocumentUrlSelector),
-            mockFilledDocumentUrl
+            mockFilledDocumentUrl,
           ],
           [matchers.select(fciQtspNonceSelector), mockNonce],
           [
             matchers.select(fciDocumentSignaturesSelector),
-            mockDocumentSignatures
-          ]
+            mockDocumentSignatures,
+          ],
         ])
         .put.like({
           action: {
-            type: "IDENTIFICATION_REQUEST"
-          }
+            type: "IDENTIFICATION_REQUEST",
+          },
         })
         .dispatch(identificationSuccess({ isBiometric: false }))
         .put.like({
           action: {
-            type: "FCI_SIGNING_REQUEST"
-          }
+            type: "FCI_SIGNING_REQUEST",
+          },
         })
         .run());
   });
@@ -274,7 +283,7 @@ describe("FCI Saga Tests", () => {
         .put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }))
         .call(
           NavigationService.dispatchNavigationAction,
-          CommonActions.navigate(ROUTES.MAIN)
+          CommonActions.navigate(ROUTES.MAIN),
         )
         .run());
   });
@@ -301,14 +310,14 @@ describe("FCI Saga Tests", () => {
 
       return expectSaga(
         navigateAfterFinishedFciActiveSessionLoginFlowSaga,
-        false
+        false,
       )
         .provide([
           [
             matchers.select(fciSignatureRequestIdSelector),
-            mockSignatureRequestId
+            mockSignatureRequestId,
           ],
-          [matchers.select(activeSessionLoginFlowSelector), "FCI"]
+          [matchers.select(activeSessionLoginFlowSelector), "FCI"],
         ])
         .put(setActiveSessionLoginFlow(undefined))
         .not.put(fciSignatureRequestRetryFromId(mockSignatureRequestId))
@@ -319,7 +328,7 @@ describe("FCI Saga Tests", () => {
       expectSaga(navigateAfterFinishedFciActiveSessionLoginFlowSaga, true)
         .provide([
           [matchers.select(fciSignatureRequestIdSelector), undefined],
-          [matchers.select(activeSessionLoginFlowSelector), "FCI"]
+          [matchers.select(activeSessionLoginFlowSelector), "FCI"],
         ])
         .put(setActiveSessionLoginFlow(undefined))
         .not.put.actionType("FCI_SIGNATURE_REQUEST_RETRY_FROM_ID")
@@ -330,14 +339,14 @@ describe("FCI Saga Tests", () => {
 
       return expectSaga(
         navigateAfterFinishedFciActiveSessionLoginFlowSaga,
-        true
+        true,
       )
         .provide([
           [
             matchers.select(fciSignatureRequestIdSelector),
-            mockSignatureRequestId
+            mockSignatureRequestId,
           ],
-          [matchers.select(activeSessionLoginFlowSelector), undefined]
+          [matchers.select(activeSessionLoginFlowSelector), undefined],
         ])
         .put(setActiveSessionLoginFlow(undefined))
         .not.put(fciSignatureRequestRetryFromId(mockSignatureRequestId))

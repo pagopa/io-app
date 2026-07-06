@@ -35,6 +35,7 @@ const CieLoginConfigScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      // eslint-disable-next-line i18next/no-literal-string -- hidden developer-only screen, label not localized
       title={{ label: "CIE Login Settings" }}
       testID="CieLoginConfigScreen"
       includeContentMargins

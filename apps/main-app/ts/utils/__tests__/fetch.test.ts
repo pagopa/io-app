@@ -3,7 +3,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
 import {
   CallbackResponseMessageResult,
-  CallbackResponseResult
+  CallbackResponseResult,
 } from "mockttp/dist/rules/requests/request-handlers";
 import * as Mockttp from "mockttp";
 import { CompletedRequest, MaybePromise } from "mockttp";
@@ -26,7 +26,7 @@ describe("defaultRetryingFetch function", () => {
     it(`should send exactly ${fetchMaxRetries} requests`, async () => {
       const endpointMock = await mockServer.get(TEST_PATH).thenReply(429, "{}");
       const fetchApi = defaultRetryingFetch();
-      await fetchApi(mockServer.urlFor(TEST_PATH)).catch(_ => void 0);
+      await fetchApi(mockServer.urlFor(TEST_PATH)).catch((_) => void 0);
       const seenRequests = await endpointMock.getSeenRequests();
       expect(seenRequests.length).toEqual(fetchMaxRetries);
     });
@@ -39,7 +39,7 @@ describe("defaultRetryingFetch function", () => {
       const endpointMock = await mockServer.get(TEST_PATH).thenReply(403, "{}");
       const fetchApi = defaultRetryingFetch();
       await expect(
-        fetchApi(mockServer.urlFor(TEST_PATH))
+        fetchApi(mockServer.urlFor(TEST_PATH)),
       ).resolves.toBeDefined();
       const seenRequests = await endpointMock.getSeenRequests();
       expect(seenRequests.length).toEqual(1);
@@ -86,10 +86,10 @@ describe("constantPollingFetch function", () => {
         shouldAbort,
         MAX_POLLING_RETRIES,
         RETRY_DELAY,
-        FETCH_TIMEOUT
+        FETCH_TIMEOUT,
       );
       await expect(fetchPolling(mockServer.urlFor(TEST_PATH))).rejects.toEqual(
-        MaxRetries
+        MaxRetries,
       );
     });
 
@@ -102,18 +102,18 @@ describe("constantPollingFetch function", () => {
           shouldAbort,
           MAX_POLLING_RETRIES,
           RETRY_DELAY,
-          FETCH_TIMEOUT
+          FETCH_TIMEOUT,
         );
         setTimeout(() => shouldAbortPaymentIdPollingRequest.e2(true), 10);
         await expect(
-          fetchPolling(mockServer.urlFor(TEST_PATH))
+          fetchPolling(mockServer.urlFor(TEST_PATH)),
         ).rejects.toEqual(RetryAborted);
       });
     });
 
     describe("and the timeout is shorter than the response time", () => {
       // it never aborts
-      const DEFAULT_SHOULD_ABORT: Promise<boolean> = new Promise(_ => void 0);
+      const DEFAULT_SHOULD_ABORT = new Promise<boolean>((_) => void 0);
 
       // need to use different values to avoid going above the 5000ms timeout in Jest
       const REQUEST_TIMEOUT = 10;
@@ -122,9 +122,9 @@ describe("constantPollingFetch function", () => {
       const MAX_DURATION_NO_TIMEOUT = RETRIES * (REQUEST_TIMEOUT * 2 + DELAY);
 
       const delayedResponse = (
-        _: CompletedRequest
+        _: CompletedRequest,
       ): MaybePromise<CallbackResponseResult> =>
-        new Promise(resolve => {
+        new Promise((resolve) => {
           setTimeout(() => {
             const response: CallbackResponseMessageResult = { status: 404 };
             resolve(response);
@@ -137,10 +137,10 @@ describe("constantPollingFetch function", () => {
           DEFAULT_SHOULD_ABORT,
           RETRIES,
           DELAY,
-          REQUEST_TIMEOUT as Millisecond
+          REQUEST_TIMEOUT as Millisecond,
         );
         await expect(
-          fetchPolling(mockServer.urlFor(TEST_PATH))
+          fetchPolling(mockServer.urlFor(TEST_PATH)),
         ).rejects.toEqual(MaxRetries);
       });
       // FIXME https://pagopa.atlassian.net/browse/IAC-123
@@ -172,10 +172,10 @@ describe("constantPollingFetch function", () => {
           DEFAULT_SHOULD_ABORT,
           RETRIES,
           DELAY,
-          REQUEST_TIMEOUT as Millisecond
+          REQUEST_TIMEOUT as Millisecond,
         );
         const startedAt = Date.now();
-        await fetchPolling(mockServer.urlFor(TEST_PATH)).catch(_ => void 0);
+        await fetchPolling(mockServer.urlFor(TEST_PATH)).catch((_) => void 0);
         expect(Date.now() - startedAt).toBeLessThan(MAX_DURATION_NO_TIMEOUT);
       });
     });
@@ -190,9 +190,9 @@ describe("constantPollingFetch function", () => {
         shouldAbort,
         MAX_POLLING_RETRIES,
         RETRY_DELAY,
-        FETCH_TIMEOUT
+        FETCH_TIMEOUT,
       );
-      await fetchPolling(mockServer.urlFor(TEST_PATH)).catch(_ => void 0);
+      await fetchPolling(mockServer.urlFor(TEST_PATH)).catch((_) => void 0);
       const seenRequests = await endpointMock.getSeenRequests();
       expect(seenRequests.length).toEqual(1);
     });
@@ -207,10 +207,10 @@ describe("constantPollingFetch function", () => {
         shouldAbort,
         MAX_POLLING_RETRIES,
         RETRY_DELAY,
-        FETCH_TIMEOUT
+        FETCH_TIMEOUT,
       );
       await expect(
-        fetchPolling(mockServer.urlFor(TEST_PATH))
+        fetchPolling(mockServer.urlFor(TEST_PATH)),
       ).resolves.toBeDefined();
     });
   });

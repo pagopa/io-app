@@ -1,7 +1,7 @@
 import {
   ActionType,
   createAsyncAction,
-  createStandardAction
+  createStandardAction,
 } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import { CreateFilledDocument } from "../../../../../definitions/fci/CreateFilledDocument";
@@ -23,33 +23,33 @@ import { FciNetworkError } from "../../utils/errors.ts";
 export const fciSignatureRequestFromId = createAsyncAction(
   "FCI_SIGNATURE_DETAIL_REQUEST",
   "FCI_SIGNATURE_DETAIL_SUCCESS",
-  "FCI_SIGNATURE_DETAIL_FAILURE"
+  "FCI_SIGNATURE_DETAIL_FAILURE",
 )<string, SignatureRequestDetailView, NetworkError>();
 
 /** Retry flow for signatureRequest by id */
 export const fciSignatureRequestRetryFromId = createStandardAction(
-  "FCI_SIGNATURE_DETAIL_RETRY_REQUEST"
+  "FCI_SIGNATURE_DETAIL_RETRY_REQUEST",
 )<string>();
 
 /** Get and handle the QTSP clauses */
 export const fciLoadQtspClauses = createAsyncAction(
   "FCI_QTSP_CLAUSES_REQUEST",
   "FCI_QTSP_CLAUSES_SUCCESS",
-  "FCI_QTSP_CLAUSES_FAILURE"
+  "FCI_QTSP_CLAUSES_FAILURE",
 )<void, QtspClausesMetadataDetailView, NetworkError>();
 
 /** Get and handle the QTSP filled document */
 export const fciLoadQtspFilledDocument = createAsyncAction(
   "FCI_QTSP_FILLED_DOC_REQUEST",
   "FCI_QTSP_FILLED_DOC_SUCCESS",
-  "FCI_QTSP_FILLED_DOC_FAILURE"
+  "FCI_QTSP_FILLED_DOC_FAILURE",
 )<CreateFilledDocument, FilledDocumentDetailView, NetworkError>();
 
 /** Post the signature passing a signatureBody */
 export const fciSigningRequest = createAsyncAction(
   "FCI_SIGNING_REQUEST",
   "FCI_SIGNING_SUCCESS",
-  "FCI_SIGNING_FAILURE"
+  "FCI_SIGNING_FAILURE",
 )<CreateSignatureBody, SignatureDetailView, NetworkError>();
 
 /** Asycn action to download file */
@@ -57,21 +57,21 @@ export const fciDownloadPreview = createAsyncAction(
   "FCI_DOWNLOAD_PREVIEW_REQUEST",
   "FCI_DOWNLOAD_PREVIEW_SUCCESS",
   "FCI_DOWNLOAD_PREVIEW_FAILURE",
-  "FCI_DOWNLOAD_PREVIEW_CANCEL"
+  "FCI_DOWNLOAD_PREVIEW_CANCEL",
 )<{ url: string }, { path: string }, FciNetworkError, void>();
 
 export const fciDownloadPreviewClear = createStandardAction(
-  "FCI_DOWNLOAD_PREVIEW_CLEAR"
+  "FCI_DOWNLOAD_PREVIEW_CLEAR",
 )<{ path: string }>();
 
 /** Update documentSignatures */
 export const fciUpdateDocumentSignaturesRequest = createStandardAction(
-  "FCI_UPDATE_DOCUMENT_SIGNATURE"
+  "FCI_UPDATE_DOCUMENT_SIGNATURE",
 )<DocumentToSign>();
 
 /** Clear the FCI store */
 export const fciClearStateRequest = createStandardAction(
-  "FCI_CLEAR_STATE_REQUEST"
+  "FCI_CLEAR_STATE_REQUEST",
 )<void>();
 
 /** Start the FCI action */
@@ -80,7 +80,7 @@ export const fciStartRequest =
 
 /** Start the FCI signing action */
 export const fciStartSigningRequest = createStandardAction(
-  "FCI_START_SIGNING_REQUEST"
+  "FCI_START_SIGNING_REQUEST",
 )<void>();
 
 /** Clear the FCI store */
@@ -91,7 +91,7 @@ export const fciPollFilledDocument = createAsyncAction(
   "FCI_POLL_FILLED_DOCUMENT_REQUEST",
   "FCI_POLL_FILLED_DOCUMENT_SUCCESS",
   "FCI_POLL_FILLED_DOCUMENT_FAILURE",
-  "FCI_POLL_FILLED_DOCUMENT_CANCEL"
+  "FCI_POLL_FILLED_DOCUMENT_CANCEL",
 )<void, { isReady: boolean }, NetworkError, void>();
 
 export const fciClearAllFiles = createStandardAction("CLEAR_ALL_FILES")<{
@@ -101,32 +101,25 @@ export const fciClearAllFiles = createStandardAction("CLEAR_ALL_FILES")<{
 export const fciMetadataRequest = createAsyncAction(
   "FCI_METADATA_REQUEST",
   "FCI_METADATA_SUCCESS",
-  "FCI_METADATA_FAILURE"
+  "FCI_METADATA_FAILURE",
 )<void, Metadata, NetworkError>();
 
 export const fciSignaturesListRequest = createAsyncAction(
   "FCI_SIGNATURES_LIST_REQUEST",
   "FCI_SIGNATURES_LIST_SUCCESS",
-  "FCI_SIGNATURES_LIST_FAILURE"
+  "FCI_SIGNATURES_LIST_FAILURE",
 )<void, SignatureRequestList, NetworkError>();
 
 export const fciDocumentSignatureFields = createAsyncAction(
   "FCI_DOCUMENT_SIGNATURE_FIELDS_REQUEST",
   "FCI_DOCUMENT_SIGNATURE_FIELDS_SUCCESS",
-  "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE"
+  "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE",
 )<{ uri: string; attrs: SignatureFieldAttrType }, Document, Error>();
 
 /** Action to interact with the environment reducer. */
 export const fciEnvironmentSet = createStandardAction("FCI_ENVIRONMENT_SET")<
   O.Option<EnvironmentEnum>
 >();
-
-/**
- * Action used to set a local flag to test the L3 level active session login in
- * the FCI flow.
- */
-export const fciL3LocalFlag =
-  createStandardAction("FCI_L3_LOCAL_FLAG")<boolean>();
 
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
@@ -146,5 +139,4 @@ export type FciActions =
   | ActionType<typeof fciMetadataRequest>
   | ActionType<typeof fciSignaturesListRequest>
   | ActionType<typeof fciDocumentSignatureFields>
-  | ActionType<typeof fciEnvironmentSet>
-  | ActionType<typeof fciL3LocalFlag>;
+  | ActionType<typeof fciEnvironmentSet>;

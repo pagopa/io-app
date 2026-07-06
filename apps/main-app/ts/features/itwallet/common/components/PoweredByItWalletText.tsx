@@ -8,7 +8,11 @@ export const PoweredByItWalletText = () => (
     <BodySmall>
       {I18n.t("features.itWallet.presentation.credentialDetails.partOf")}
     </BodySmall>
-    <ItWalletLogo width={80} height={16} accessibilityLabel="IT Wallet" />
+    <ItWalletLogo
+      width={80}
+      height={16}
+      accessibilityLabel={I18n.t("features.itWallet.title")}
+    />
   </View>
 );
 
@@ -16,6 +20,6 @@ const styles = StyleSheet.create({
   poweredBy: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8
-  }
+    gap: 8,
+  },
 });

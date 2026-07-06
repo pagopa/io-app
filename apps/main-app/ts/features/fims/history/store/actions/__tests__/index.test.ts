@@ -2,46 +2,46 @@ import {
   fimsHistoryExport,
   fimsHistoryGet,
   resetFimsHistoryExportState,
-  resetFimsHistoryState
+  resetFimsHistoryState,
 } from "..";
 import { Access } from "../../../../../../../definitions/fims_history/Access";
 import { FimsExportSuccessStates } from "../../reducer";
 
 describe("fimsHistoryGet.request", () => {
-  [undefined, "01JBVCKDNW4Y2YMACBP56H9E2Z"].forEach(continuationToken =>
-    [undefined, false, true].forEach(shouldReloadFromScratch => {
+  [undefined, "01JBVCKDNW4Y2YMACBP56H9E2Z"].forEach((continuationToken) =>
+    [undefined, false, true].forEach((shouldReloadFromScratch) => {
       it("Should have a type of 'FIMS_GET_HISTORY_REQUEST' and match expected 'continuationToken' and 'shouldReloadFromScratch' payload", () => {
         const fimsHistoryGetRequest = fimsHistoryGet.request({
           continuationToken,
-          shouldReloadFromScratch
+          shouldReloadFromScratch,
         });
         expect(fimsHistoryGetRequest.type).toBe("FIMS_GET_HISTORY_REQUEST");
         expect(fimsHistoryGetRequest.payload).toEqual({
           continuationToken,
-          shouldReloadFromScratch
+          shouldReloadFromScratch,
         });
       });
-    })
+    }),
   );
 });
 
 describe("fimsHistoryGet.success", () => {
   (
     [[], [{}, {}, {}]] as unknown as ReadonlyArray<ReadonlyArray<Access>>
-  ).forEach(data =>
-    [undefined, "01JBVCKDNW4Y2YMACBP56H9E2Z"].forEach(next => {
+  ).forEach((data) =>
+    [undefined, "01JBVCKDNW4Y2YMACBP56H9E2Z"].forEach((next) => {
       it("Should have a type of 'FIMS_GET_HISTORY_SUCCESS' and match expected 'items' and 'continuationToken' payload", () => {
         const fimsHistoryGetSuccess = fimsHistoryGet.success({
           data,
-          next
+          next,
         });
         expect(fimsHistoryGetSuccess.type).toBe("FIMS_GET_HISTORY_SUCCESS");
         expect(fimsHistoryGetSuccess.payload).toEqual({
           data,
-          next
+          next,
         });
       });
-    })
+    }),
   );
 });
 
@@ -62,19 +62,20 @@ describe("fimsHistoryExport.request", () => {
   });
 });
 
-describe("fimsHistoryExport.success", () =>
+describe("fimsHistoryExport.success", () => {
   (
     [
       "SUCCESS",
-      "ALREADY_EXPORTING"
+      "ALREADY_EXPORTING",
     ] as unknown as ReadonlyArray<FimsExportSuccessStates>
-  ).forEach(successState => {
+  ).forEach((successState) => {
     it("Should have a type of 'FIMS_HISTORY_EXPORT_SUCCESS' and expected value for input 'FimsExportSuccessStates' payload", () => {
       const fimsHistoryExportSuccess = fimsHistoryExport.success(successState);
       expect(fimsHistoryExportSuccess.type).toBe("FIMS_HISTORY_EXPORT_SUCCESS");
       expect(fimsHistoryExportSuccess.payload).toBe(successState);
     });
-  }));
+  });
+});
 
 describe("fimsHistoryExport.failure", () => {
   it("Should have a type of 'FIMS_HISTORY_EXPORT_FAILURE' and no payload", () => {

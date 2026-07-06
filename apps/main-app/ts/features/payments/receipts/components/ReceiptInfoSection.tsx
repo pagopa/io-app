@@ -11,7 +11,7 @@ import {
   ListItemInfo,
   ListItemInfoCopy,
   useIOTheme,
-  VSpacer
+  VSpacer,
 } from "@pagopa/io-app-design-system";
 import { capitalize } from "lodash";
 import { View } from "react-native";
@@ -36,8 +36,7 @@ type Props = {
 const ReceiptInfoSection = ({
   transaction,
   loading,
-  showUnavailableReceiptBanner
-  // eslint-disable-next-line complexity
+  showUnavailableReceiptBanner,
 }: Props) => {
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-primary"]];
@@ -52,7 +51,7 @@ const ReceiptInfoSection = ({
           style={{
             borderRadius: IORadiusScale["1"],
             marginVertical: IOVisualCostants.appMarginDefault,
-            backgroundColor
+            backgroundColor,
           }}
         >
           <ListItemHeader
@@ -98,7 +97,7 @@ const ReceiptInfoSection = ({
                     value={
                       transactionInfo.walletInfo?.maskedEmail ??
                       capitalizeTextName(
-                        transactionInfo.walletInfo?.accountHolder ?? ""
+                        transactionInfo.walletInfo?.accountHolder ?? "",
                       )
                     }
                   />
@@ -121,7 +120,7 @@ const ReceiptInfoSection = ({
                     label={I18n.t("transaction.details.info.dateAndHour")}
                     value={format(
                       new Date(transactionInfo.noticeDate),
-                      "DD MMMM YYYY, HH:mm:ss"
+                      "DD MMMM YYYY, HH:mm:ss",
                     )}
                   />
                   <Divider />
@@ -134,7 +133,7 @@ const ReceiptInfoSection = ({
                       clipboardSetStringWithFeedback(transactionInfo.rrn ?? "")
                     }
                     accessibilityLabel={`${I18n.t(
-                      "transaction.details.info.rrn"
+                      "transaction.details.info.rrn",
                     )}: ${transactionInfo.rrn}`}
                     label={I18n.t("transaction.details.info.rrn")}
                     value={transactionInfo.rrn}
@@ -147,11 +146,11 @@ const ReceiptInfoSection = ({
                   <ListItemInfoCopy
                     onPress={() =>
                       clipboardSetStringWithFeedback(
-                        transactionInfo.authCode ?? ""
+                        transactionInfo.authCode ?? "",
                       )
                     }
                     accessibilityLabel={`${I18n.t(
-                      "transaction.details.info.authCode"
+                      "transaction.details.info.authCode",
                     )}: ${transactionInfo.authCode}`}
                     label={I18n.t("transaction.details.info.authCode")}
                     value={transactionInfo.authCode}
@@ -163,11 +162,11 @@ const ReceiptInfoSection = ({
                 <ListItemInfoCopy
                   onPress={() =>
                     clipboardSetStringWithFeedback(
-                      transactionInfo.eventId ?? ""
+                      transactionInfo.eventId ?? "",
                     )
                   }
                   accessibilityLabel={`${I18n.t(
-                    "transaction.details.info.transactionId"
+                    "transaction.details.info.transactionId",
                   )}: ${transactionInfo.eventId}`}
                   label={I18n.t("transaction.details.info.transactionId")}
                   value={transactionInfo.eventId}
@@ -196,14 +195,14 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
       <PaymentListItemInfo
         label={I18n.t("transaction.details.info.paymentMethod")}
         value={`${capitalize(walletInfo.brand)} •••• ${removeAsterisks(
-          walletInfo.blurredNumber
+          walletInfo.blurredNumber,
         )}`}
         accessibilityLabel={I18n.t("wallet.methodDetails.a11y.credit.hpan", {
           circuit: walletInfo.brand,
           // we space the hpan to make the screen reader read it digit by digit
           spacedHpan: removeAsterisks(walletInfo.blurredNumber)
             .split("")
-            .join(" ")
+            .join(" "),
         })}
         paymentLogoIcon={walletInfo.brand as IOLogoPaymentType}
       />
