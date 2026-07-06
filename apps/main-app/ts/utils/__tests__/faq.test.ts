@@ -46,7 +46,7 @@ describe("getFAQsFromCategories", () => {
     expect(getFAQsFromCategories(categories)).toStrictEqual(faqs);
   });
 
-  it("should return the FAQType array from an array of FAQsCategoriesType", () => {
+  it("should deduplicate FAQs when categories are repeated", () => {
     expect(getFAQsFromCategories([...categories, ...categories])).toStrictEqual(
       faqs
     );
@@ -56,7 +56,7 @@ describe("getFAQsFromCategories", () => {
     expect(getFAQsFromCategories([])).toStrictEqual([]);
   });
 
-  it("Should return an empty array", () => {
+  it("Should return an empty array for an unmapped category key", () => {
     expect(
       getFAQsFromCategories(["not mapped key" as FAQsCategoriesType])
     ).toStrictEqual([]);

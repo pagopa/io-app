@@ -1159,7 +1159,7 @@ describe("itwEidIssuanceMachine", () => {
     );
   });
 
-  it("Should return to TOS acceptance if session expires when obtaining a Wallet Instance Attestation ", async () => {
+  it("Should return to TOS acceptance if session expires when obtaining a Wallet Instance Attestation", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -2153,7 +2153,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("Should handle credentials upgrade", (done: jest.DoneCallback) => {
+  it("Should handle credentials upgrade", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -2182,14 +2182,16 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    const subUpgrading = actor.subscribe(snap => {
-      if (_.isEqual(snap.value, { CredentialsUpgrade: "Upgrading" })) {
-        subUpgrading.unsubscribe();
-        done();
-      }
-    });
+    await new Promise<void>(resolve => {
+      const subUpgrading = actor.subscribe(snap => {
+        if (_.isEqual(snap.value, { CredentialsUpgrade: "Upgrading" })) {
+          subUpgrading.unsubscribe();
+          resolve();
+        }
+      });
 
-    actor.send({ type: "add-to-wallet" });
+      actor.send({ type: "add-to-wallet" });
+    });
   });
 
   it("Should skip credentials upgrade if no credentials are present", async () => {

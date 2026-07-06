@@ -149,7 +149,6 @@ const testRootModal = (
   );
   expect(testComponent).not.toBeNull();
 
-  // eslint-disable-next-line jest/valid-expect
   const searchUpdateText = expect(
     testComponent.queryByText(I18n.t("titleUpdateApp"))
   );
