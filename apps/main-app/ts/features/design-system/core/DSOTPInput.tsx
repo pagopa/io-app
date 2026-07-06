@@ -8,6 +8,7 @@ import {
   IOVisualCostants,
   IconButton,
   OTPInput,
+  OTPInputProps,
   RadioGroup,
   RadioItem,
   VStack,
