@@ -85,7 +85,7 @@ const OTPWrapper = ({
   );
 
   return useMemo(() => {
-    const commonProps = {
+    const commonProps: OTPInputProps = {
       value,
       accessibilityLabel: "OTP Input",
       onValueChange,
