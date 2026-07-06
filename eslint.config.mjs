@@ -204,12 +204,7 @@ export default defineConfig([
       ],
       // It could highlight performance issues,
       // with some noise on trivial cases
-      "react/no-unstable-nested-components": [
-        "off",
-        {
-          allowAsProps: true
-        }
-      ],
+     "react/no-unstable-nested-components": "off"
       // TODO: Remove these two properties once the migration
       // from class components is completed
       "react/no-direct-mutation-state": "off",
