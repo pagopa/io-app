@@ -20,6 +20,8 @@ import { initializePushNotifications } from "./ts/features/pushNotifications/uti
 // Registers the TaskManager.defineTask handler required by Expo headless runs.
 import "./ts/features/itwallet/statusList/tasks";
 
+void initializePushNotifications();
+
 const errorHandler = (e, isFatal) => {
   if (isFatal) {
     if (isMixpanelInstanceInitialized()) {
@@ -61,9 +63,4 @@ setNativeExceptionHandler(exceptionString => {
  * importing App eagerly would create the Redux store, start sagas and rehydrate
  * persisted state, which may read secure storage while the app is backgrounded.
  */
-const getApp = () => {
-  void initializePushNotifications();
-  return require("./ts/App").default;
-};
-
-AppRegistry.registerComponent(appName, getApp);
+AppRegistry.registerComponent(appName, () => require("./ts/App").default);
