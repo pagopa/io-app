@@ -1995,10 +1995,6 @@
         }
       },
       "requestL3": {
-        "localFlag": {
-          "title": "Enable L3 check for the signature flow",
-          "description": "By enabling this toggle, you activate the L3 check for the signature flow, which requires a new L3 login for users who do not have the L3 authentication level (CIE + PIN)"
-        },
         "landingPage": {
           "title": "Please have your electronic ID card and PIN to hand",
           "subtitle": "Before signing, we need to verify your identity. This step protects your signature and ensures its validity."
