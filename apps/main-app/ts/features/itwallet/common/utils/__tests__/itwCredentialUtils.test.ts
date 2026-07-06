@@ -1,7 +1,11 @@
 import I18n from "i18next";
 
-import { getCredentialNameFromType } from "../itwCredentialUtils";
+import {
+  getCredentialNameFromType,
+  isItwCredential
+} from "../itwCredentialUtils";
 import { CredentialType } from "../itwMocksUtils";
+import { CredentialMetadata } from "../itwTypesUtils";
 
 describe("getCredentialNameFromType", () => {
   describe("with valid credential types", () => {
@@ -21,7 +25,7 @@ describe("getCredentialNameFromType", () => {
         expectedTranslation: I18n.t("features.itWallet.credentialName.dc")
       },
       {
-        type: CredentialType.AGE_VERIFICATION,
+        type: CredentialType.PROOF_OF_AGE,
         isItwCredential: false,
         expectedTranslation: I18n.t("features.itWallet.credentialName.av")
       },
@@ -135,5 +139,58 @@ describe("getCredentialNameFromType", () => {
       const result = getCredentialNameFromType(null);
       expect(result).toBe("");
     });
+  });
+});
+
+describe("isItwCredential", () => {
+  test.each<[Partial<CredentialMetadata>, boolean]>([
+    [
+      {
+        spec_version: "1.0.0",
+        verification: {
+          assurance_level: "substantial",
+          trust_framework: "it_spid"
+        }
+      },
+      false
+    ],
+    [
+      {
+        spec_version: "1.0.0",
+        verification: {
+          assurance_level: "substantial",
+          trust_framework: "it_l2+document_proof"
+        }
+      },
+      false
+    ],
+    [
+      {
+        spec_version: "1.0.0",
+        verification: { assurance_level: "high", trust_framework: "it_cie" }
+      },
+      false
+    ],
+    [
+      {
+        spec_version: "1.3.3",
+        verification: { assurance_level: "high", trust_framework: "it_cie" }
+      },
+      true
+    ],
+    [
+      {
+        spec_version: "1.3.3",
+        verification: {
+          assurance_level: "substantial",
+          trust_framework: "it_l2+document_proof"
+        }
+      },
+      true
+    ]
+  ])("when %j should return %p", (credentialMetadata, expected) => {
+    expect(isItwCredential(credentialMetadata as CredentialMetadata)).toEqual(
+      expected
+    );
   });
 });

@@ -60,7 +60,8 @@ describe("itwCredentialUpgradeMachine", () => {
     const actor = createActor(machine, {
       input: {
         credentials: [],
-        issuanceMode: "upgrade"
+        issuanceMode: "upgrade",
+        itwVersion: "1.3.3"
       }
     });
     actor.start();
@@ -104,7 +105,8 @@ describe("itwCredentialUpgradeMachine", () => {
     const actor = createActor(machine, {
       input: {
         credentials,
-        issuanceMode: "upgrade"
+        issuanceMode: "upgrade",
+        itwVersion: "1.3.3"
       }
     });
     actor.start();
@@ -150,7 +152,8 @@ describe("itwCredentialUpgradeMachine", () => {
     const actor = createActor(machine, {
       input: {
         credentials,
-        issuanceMode: "upgrade"
+        issuanceMode: "upgrade",
+        itwVersion: "1.3.3"
       }
     });
     actor.start();
@@ -202,7 +205,8 @@ describe("itwCredentialUpgradeMachine", () => {
     const actor = createActor(machine, {
       input: {
         credentials,
-        issuanceMode: "upgrade"
+        issuanceMode: "upgrade",
+        itwVersion: "1.3.3"
       }
     });
     actor.start();

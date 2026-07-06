@@ -21,7 +21,6 @@ export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
  * Credential types mocks.
  */
 export enum CredentialType {
-  AGE_VERIFICATION = "age_verification",
   DRIVING_LICENSE = "mDL",
   EDUCATION_ATTENDANCE = "education_attendance",
   EDUCATION_DEGREE = "education_degree",
@@ -30,6 +29,7 @@ export enum CredentialType {
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
   EUROPEAN_HEALTH_INSURANCE_CARD = "EuropeanHealthInsuranceCard",
   PID = "pid",
+  PROOF_OF_AGE = "proof_of_age",
   RESIDENCY = "residency"
 }
 
@@ -44,7 +44,7 @@ export const ItwStoredCredentialsMocks = {
     mdl: mdlL3 as unknown as CredentialMetadata,
     ts: tsL3 as unknown as CredentialMetadata,
     dc: dcL3 as unknown as CredentialMetadata,
-    age_verification: avL3 as unknown as CredentialMetadata,
+    proofOfAge: avL3 as unknown as CredentialMetadata,
     ed: edL3 as unknown as CredentialMetadata,
     ee: eeL3 as unknown as CredentialMetadata,
     res: resL3 as unknown as CredentialMetadata,

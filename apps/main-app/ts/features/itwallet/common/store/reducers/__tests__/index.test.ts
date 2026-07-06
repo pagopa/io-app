@@ -217,4 +217,32 @@ describe("itWalletReducer migrations", () => {
       }
     });
   });
+
+  it("should migrate the store to version 14: remove itwSetWalletInstanceRemotelyActive from preferences", async () => {
+    const previousState = {
+      _persist: { version: 13, rehydrated: false },
+      preferences: { itwSetWalletInstanceRemotelyActive: true }
+    };
+
+    const newState = await migrate(previousState, 14);
+
+    expect(newState).toEqual({
+      _persist: { version: 13, rehydrated: false },
+      preferences: {}
+    });
+  });
+
+  it("should migrate the store to version 15: remove isItwSimplifiedActivationRequired from preferences", async () => {
+    const previousState = {
+      _persist: { version: 14, rehydrated: false },
+      preferences: { isItwSimplifiedActivationRequired: true }
+    };
+
+    const newState = await migrate(previousState, 15);
+
+    expect(newState).toEqual({
+      _persist: { version: 14, rehydrated: false },
+      preferences: {}
+    });
+  });
 });

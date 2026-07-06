@@ -62,7 +62,9 @@ const makeState = (
   features: {
     itWallet: {
       credentials: {
-        credentials,
+        credentials: Object.values(credentials).reduce<
+          Record<string, CredentialMetadata>
+        >((acc, c) => ({ ...acc, [c.credentialId]: c }), {}),
         legacyCredentials
       }
     }

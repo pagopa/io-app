@@ -60,7 +60,6 @@ export type EidIssuanceEvents =
   | ErrorActorEvent
   | ExternalErrorEvent
   | GoToCieWarning
-  | GoToL2IdentificationMode
   | GoToWallet
   | MrtdChallengedSigned
   | MrtdPoPVerificationCompleted
@@ -92,10 +91,6 @@ export type GoToCieWarning = {
   routeName: string;
   type: "go-to-cie-warning";
   warning: CieWarningType;
-};
-
-export type GoToL2IdentificationMode = {
-  type: "go-to-l2-identification";
 };
 
 export type GoToWallet = {

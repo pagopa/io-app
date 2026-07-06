@@ -4,10 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  itwIsL3EnabledSelector,
-  itwIsSimplifiedActivationRequired
-} from "../../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences";
 import { isItwCredential } from "../../../common/utils/itwCredentialUtils";
 import { itwCredentialsEidSelector } from "../../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
@@ -46,23 +43,15 @@ export const itwLifecycleIsOperationalOrValid = (state: GlobalState) =>
  * The wallet instance is a **valid IT-Wallet instance**. The following requirements must be met:
  * - The user is allowed to use IT-Wallet (whitelisted)
  * - The PID is an L3 credential
- * - It is NOT necessary to activate IT-Wallet with the simplified flow
  */
 export const itwLifecycleIsITWalletValidSelector = createSelector(
   [
     itwIntegrityKeyTagSelector,
     itwCredentialsEidSelector,
-    itwIsL3EnabledSelector,
-    itwIsSimplifiedActivationRequired
+    itwIsL3EnabledSelector
   ],
-  (
-    integrityKeyTagOption,
-    eidOption,
-    isWhitelisted,
-    isSimplifiedActivationRequired
-  ) =>
+  (integrityKeyTagOption, eidOption, isWhitelisted) =>
     isWhitelisted &&
-    !isSimplifiedActivationRequired &&
     pipe(
       sequenceS(O.Monad)({
         eid: eidOption,

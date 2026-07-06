@@ -3,6 +3,7 @@ import { Action, Dispatch, Store } from "redux";
 
 import { isLoggedIn } from "../features/authentication/common/store/utils/guards";
 import { IO_LOGIN_CIE_URL_SCHEME } from "../features/authentication/login/cie/utils/cie";
+import { parseCredentialOfferLink } from "../features/itwallet/offer/utils";
 import { storeLinkingUrl } from "../features/linking/actions";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 import { resetMessageArchivingAction } from "../features/messages/store/actions/archiving";
@@ -70,6 +71,11 @@ export const linkingSubscription =
       // We don't enter this point if the app is opened from scratch with a deep link,
       // but we track it in the `useOnFirstRender` hook on the AppStackNavigator
       processUtmLink(url, dispatch);
+      const credentialOfferLink = parseCredentialOfferLink(url);
+      if (credentialOfferLink !== undefined) {
+        listener(credentialOfferLink.internalRoute);
+        return;
+      }
       listener(url);
     });
     return () => {

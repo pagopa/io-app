@@ -10,6 +10,7 @@ import {
   parseClaims,
   WellKnownClaim
 } from "../../../common/utils/itwClaimsUtils";
+import { getRepresentativeVaultId } from "../../../common/utils/itwCredentialUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { TimeoutError, UntrustedRpError } from "./errors";
 
@@ -141,7 +142,7 @@ export const getProximityDetails: GetProximityDetails = ({
 export const getDocuments = async (
   request: VerifierRequest["request"],
   credentials: Record<string, CredentialMetadata>,
-  getCredential: (credentialId: string) => Promise<string | undefined>
+  getCredential: (vaultId: string) => Promise<string | undefined>
 ): Promise<Array<RequestedDocument>> => {
   const documents = await Promise.all(
     Object.entries(request).map(async ([docType]) => {
@@ -149,10 +150,12 @@ export const getDocuments = async (
       // This should be guaranteed by getProximityDetails having already validated credentials
       assert(credential, `Credential not found for docType: ${docType}`);
 
-      const signedContent = await getCredential(credential.credentialId);
+      // Present the representative copy (the only one for a non-batch credential).
+      const vaultId = getRepresentativeVaultId(credential);
+      const signedContent = await getCredential(vaultId);
       assert(
         signedContent,
-        `Credential not found in secure store for id: ${credential.credentialId}`
+        `Credential not found in secure store for vaultId: ${vaultId}`
       );
 
       return {

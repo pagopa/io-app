@@ -46,6 +46,7 @@ import {
   ItwEidIssuanceMachineContext,
   ItwEidIssuanceMachineProvider
 } from "../machine/eid/provider";
+import { ItwIssuanceCredentialOfferIntroScreen } from "../offer/screens/ItwIssuanceCredentialOfferIntro.tsx";
 import { ItwCardOnboardingL2Screen } from "../onboarding/screens/ItwCardOnboardingL2Screen.tsx";
 import { ItwCardOnboardingL3Screen } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
@@ -54,7 +55,6 @@ import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
 import { ItwProximityPlaygroundScreen } from "../playgrounds/screens/ItwProximityPlaygroundScreen.tsx";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModal } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
-import { ItwPresentationCredentialCardScreen } from "../presentation/details/screens/ItwPresentationCredentialCardScreen";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/details/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
@@ -270,6 +270,11 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS}
         options={hiddenHeader}
       />
+      <Stack.Screen
+        component={ItwIssuanceCredentialOfferIntroScreen}
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO}
+        options={hiddenHeader}
+      />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
         component={ItwPresentationCredentialDetailScreen}
@@ -279,10 +284,6 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         component={ItwPresentationCredentialAttachmentScreen}
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT}
-      />
-      <Stack.Screen
-        component={ItwPresentationCredentialCardScreen}
-        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_SCREEN}
       />
       <Stack.Screen
         component={ItwPresentationCredentialCardModal}

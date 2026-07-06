@@ -359,9 +359,11 @@ describe("downloadsReducer", () => {
       })
     );
 
-    expect(initialState.requestedDownload).toBeDefined();
-    expect(initialState.requestedDownload?.messageId).toBe(messageId);
-    expect(initialState.requestedDownload?.attachmentId).toBe(attachment.id);
+    it("should set the requestedDownload after a downloadAttachment.request action", () => {
+      expect(initialState.requestedDownload).toBeDefined();
+      expect(initialState.requestedDownload?.messageId).toBe(messageId);
+      expect(initialState.requestedDownload?.attachmentId).toBe(attachment.id);
+    });
 
     it("Should return pot.none and clear the requestedDownload after a downloadAttachment.cancel action", () => {
       const cancelState = downloadsReducer(

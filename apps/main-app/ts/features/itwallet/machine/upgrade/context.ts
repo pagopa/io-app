@@ -1,3 +1,5 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
+
 import {
   CredentialAccessToken,
   CredentialBundle,
@@ -42,6 +44,11 @@ export type Context = {
    */
   issuerConf: IssuerConfiguration | undefined;
   /**
+   * IT-Wallet technical specifications version to upgrade credentials, for routing to the correct issuer API.
+   * The version is inherited from the eID issuance machine via input.
+   */
+  itwVersion: ItwVersion;
+  /**
    * The upgrade PID credential
    */
   pid: CredentialBundle | undefined;
@@ -52,6 +59,7 @@ export type Context = {
 };
 
 export const getInitialContext = (input: Input): Context => ({
+  itwVersion: input.itwVersion,
   walletInstanceAttestation: undefined,
   pid: undefined,
   credentials: input.credentials,

@@ -17,9 +17,13 @@ import {
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
   itwWalletInstanceAttestationStore,
@@ -45,6 +49,7 @@ export const createCredentialIssuanceActionsImplementation = (
 
     return {
       isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
+      isWalletValid: itwLifecycleIsValidSelector(state),
       walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
       credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state)
     };
@@ -106,6 +111,26 @@ export const createCredentialIssuanceActionsImplementation = (
       screen: context.isItWalletValid
         ? ITW_ROUTES.L3_ONBOARDING
         : ITW_ROUTES.ONBOARDING
+    });
+  },
+
+  navigateToCredentialOfferDiscoveryScreen: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    assert(context.credentialType, "credentialType is undefined");
+
+    const isL3Enabled = itwIsL3EnabledSelector(store.getState());
+    navigation.replace(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: {
+        credentialType: context.credentialType,
+        animationEnabled: false,
+        level: isL3Enabled ? "l3" : "l2"
+      }
     });
   },
 

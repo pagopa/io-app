@@ -1,5 +1,4 @@
 import { fireEvent } from "@testing-library/react-native";
-import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import React from "react";
@@ -75,7 +74,7 @@ jest.mock("../../../../../../store/hooks", () => ({
 
 jest
   .spyOn(LollipopLoginUtils, "regenerateKeyGetRedirectsAndVerifySaml")
-  .mockReturnValue(Promise.resolve(E.right("https://mock-url.com")));
+  .mockReturnValue(Promise.resolve("https://mock-url.com"));
 
 describe("CieRequestAuthenticationOverlay", () => {
   const onCloseMock = jest.fn();

@@ -3,7 +3,7 @@ import { render } from "@testing-library/react-native";
 
 import { SpidIdp } from "../../../../../../utils/idps";
 import { usePosteIDApp2AppEducational } from "../../hooks/usePosteIDApp2AppEducational";
-import { ErrorType, StandardLoginRequestInfo } from "../../store/types";
+import { ErrorType, SpidLoginRequestInfo } from "../../store/types";
 
 jest.mock("../../../../../../utils/hooks/bottomSheet", () => ({
   useIOBottomSheetModal: jest.fn(() => ({
@@ -15,7 +15,7 @@ jest.mock("../../../../../../utils/hooks/bottomSheet", () => ({
 const mockPresent = jest.fn();
 
 const renderComponent = (props: {
-  requestState: StandardLoginRequestInfo["requestState"];
+  requestState: SpidLoginRequestInfo["requestState"];
   selectedIdp?: SpidIdp;
 }) => {
   const WrapperComponent = () => {

@@ -23,8 +23,6 @@ const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
   );
 
   switch (credential.credentialType) {
-    case CredentialType.AGE_VERIFICATION:
-      return <ItwPresentationAgeVerificationUsageBanner />;
     case CredentialType.DRIVING_LICENSE:
       return (
         shouldRenderWalletUpgradeMdlBanner && (
@@ -43,6 +41,8 @@ const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
       );
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
       return <ItwPresentationFiscalCode />;
+    case CredentialType.PROOF_OF_AGE:
+      return <ItwPresentationAgeVerificationUsageBanner />;
     default:
       return null;
   }

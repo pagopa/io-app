@@ -343,7 +343,7 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
                       <View
                         style={
                           {
-                            "marginHorizontal": -8,
+                            "marginHorizontal": 8,
                           }
                         }
                       >
@@ -1104,7 +1104,7 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
                       <View
                         style={
                           {
-                            "marginHorizontal": -8,
+                            "marginHorizontal": 8,
                           }
                         }
                       >

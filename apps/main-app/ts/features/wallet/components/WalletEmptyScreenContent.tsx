@@ -21,10 +21,15 @@ const WalletEmptyScreenContent = () => {
 
   const handleAddToWalletButtonPress = () => {
     trackWalletAdd();
+    if (isItWalletEnabled) {
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.DISCOVERY.INFO,
+        params: { level: "l3" }
+      });
+      return;
+    }
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: isItWalletEnabled
-        ? ITW_ROUTES.L3_ONBOARDING
-        : ITW_ROUTES.ONBOARDING
+      screen: ITW_ROUTES.ONBOARDING
     });
   };
 

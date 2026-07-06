@@ -47,12 +47,12 @@ import {
   fciQtspNonceSelector
 } from "../store/reducers/fciQtspClauses";
 import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
-import { isFciSecurityLevelCheckEnabledSelector } from "../store/reducers/fciSecurityLevelReducer";
 import {
   fciSignatureRequestIdSelector,
   fciSignatureRequestSelector,
   FciSignatureRequestState
 } from "../store/reducers/fciSignatureRequest";
+import { isFciSecurityLevelCheckRemoteFFEnabledSelector } from "../store/selectors/remoteConfig";
 import { handleDrawSignatureBox } from "./handleDrawSignatureBox";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
 import { handleCreateSignature } from "./networking/handleCreateSignature";
@@ -354,7 +354,7 @@ function* watchFciSigningRequestSaga(): SagaIterator {
 function* watchFciStartSaga(): SagaIterator {
   const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
   const isFciSecurityLevelCheckEnabled = yield* select(
-    isFciSecurityLevelCheckEnabledSelector
+    isFciSecurityLevelCheckRemoteFFEnabledSelector
   );
 
   if (!isFciSecurityLevelCheckEnabled) {

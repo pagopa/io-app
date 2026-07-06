@@ -1,6 +1,7 @@
 import type {
   AuthorizationDetail,
-  CredentialIssuance
+  CredentialIssuance,
+  ItwVersion
 } from "@pagopa/io-react-native-wallet";
 
 import type {
@@ -84,6 +85,12 @@ export type Context = {
    */
   integrityKeyTag: string | undefined;
   /**
+   * IT-Wallet technical specifications version. Dependending on the particular user configuration,
+   * the issuance machine must be able to use different versions.
+   * This is a local value used only during the issuance flow.
+   */
+  itwVersion: ItwVersion;
+  /**
    * The level of eID issuance, which determines the authentication methods allowed and
    * the eID level that will be issued: Documenti su IO (L2) or IT Wallet (L2+, L3)
    */
@@ -159,6 +166,7 @@ export type MrtdPoPContext = {
 };
 
 export const InitialContext: Context = {
+  itwVersion: "1.0.0", // Initial value to satisfy type constraints. It is assigned in the `onInit` action.
   mode: undefined,
   level: undefined,
   integrityKeyTag: undefined,

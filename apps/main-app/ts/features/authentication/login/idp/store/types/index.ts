@@ -5,22 +5,6 @@ export enum ErrorType {
   "LOGIN_ERROR" = "LOGIN_ERROR"
 }
 
-export type NativeLoginRequestInfo =
-  | RequestInfoError
-  | RequestInfoPositiveStates;
-
-export type RequestInfoError = {
-  errorCodeOrMessage?: string;
-  errorType: ErrorType;
-  nativeAttempts: number;
-  requestState: "ERROR";
-};
-
-export type RequestInfoPositiveStates = {
-  nativeAttempts: number;
-  requestState: "AUTHORIZED" | "AUTHORIZING" | "LOADING";
-};
-
-export type StandardLoginRequestInfo = {
+export type SpidLoginRequestInfo = {
   requestState: pot.Pot<true, ErrorType>;
 };

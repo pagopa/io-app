@@ -13,7 +13,6 @@ import { AUTHENTICATION_ROUTES } from "../routes";
 
 export type AuthenticationParamsList = {
   [AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN]: AuthErrorScreenProps;
-  [AUTHENTICATION_ROUTES.AUTH_SESSION]: undefined;
   [AUTHENTICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN]: CieCardReaderScreenNavigationParams;
   [AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN]: CieCardReaderScreenNavigationParams;
   [AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN_ACTIVE_SESSION_LOGIN]: ActiveSessionCieCardReaderScreenNavigationParams;

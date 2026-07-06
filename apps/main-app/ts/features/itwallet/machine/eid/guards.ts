@@ -1,19 +1,11 @@
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
 import { useIOStore } from "../../../../store/hooks";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { ItwSessionExpiredError } from "../../api/client";
-import {
-  itwIsL3EnabledSelector,
-  itwIsSimplifiedActivationRequired
-} from "../../common/store/selectors/preferences";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { getFiscalCodeFromCredential } from "../../common/utils/itwClaimsUtils";
-import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import { isItwCredential } from "../../common/utils/itwCredentialUtils";
-import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -24,7 +16,6 @@ type GuardsImplementationOptions = Partial<{
 
 export const createEidIssuanceGuardsImplementation = (
   store: ReturnType<typeof useIOStore>,
-  itwVersion: ItwVersion,
   options?: GuardsImplementationOptions
 ) => ({
   /**
@@ -52,26 +43,10 @@ export const createEidIssuanceGuardsImplementation = (
     pipe(
       O.fromNullable(context.walletInstanceAttestation?.jwt),
       O.map(attestation =>
-        isWalletInstanceAttestationValid(itwVersion, attestation)
+        isWalletInstanceAttestationValid(context.itwVersion, attestation)
       ),
       O.getOrElse(() => false)
     ),
-
-  /**
-   * Check whether the user already has a valid L3 PID obtained from a previous issuance
-   * while not being whitelisted, to activate IT-Wallet without re-authenticating.
-   */
-  isEligibleForItwSimplifiedActivation: () => {
-    const state = store.getState();
-    const pid = O.toUndefined(itwCredentialsEidSelector(state));
-    return (
-      !!pid &&
-      itwIsSimplifiedActivationRequired(state) && // The flag for simplified activation is enabled
-      itwIsL3EnabledSelector(state) && // The user has been whitelisted to officially activate IT-Wallet
-      isItwCredential(pid) && // Extra check to ensure the PID is a valid L3 credential
-      getCredentialStatus(pid) === "valid"
-    );
-  },
 
   isWalletValid: () => itwLifecycleIsValidSelector(store.getState())
 });

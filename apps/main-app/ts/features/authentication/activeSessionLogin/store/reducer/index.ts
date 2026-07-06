@@ -11,7 +11,7 @@ import {
   sessionCorrupted
 } from "../../../common/store/actions";
 import { SpidLevel } from "../../../login/cie/utils";
-import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
+import { SpidLoginRequestInfo } from "../../../login/idp/store/types";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
@@ -41,7 +41,7 @@ export type ActiveSessionLoginState = {
     cieIDSelectedSecurityLevel?: SpidLevel;
     fastLoginOptIn?: boolean;
     idp?: SpidIdp;
-    spidLoginInfo?: StandardLoginRequestInfo;
+    spidLoginInfo?: SpidLoginRequestInfo;
     token?: string;
   };
 };

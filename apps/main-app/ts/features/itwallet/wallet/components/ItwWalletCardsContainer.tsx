@@ -98,10 +98,16 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const sectionHeader = useMemo((): React.ReactElement => {
     if (isNewItwRenderable) {
       return (
-        <ListItemHeader
-          label={I18n.t("features.wallet.cards.categories.itw")}
-          testID={"walletCardsCategoryItwIdCardHeaderTestID"}
-        />
+        <>
+          <ListItemHeader
+            label={I18n.t("features.wallet.cards.categories.itw")}
+            testID={"walletCardsCategoryItwIdCardHeaderTestID"}
+          />
+          {/* IT-Wallet renders the PID card below the header */}
+          <View style={styles.cardsWrapper}>
+            <ItwWalletIdCard isStacked={cards.length > 0} />
+          </View>
+        </>
       );
     }
     return (
@@ -125,14 +131,12 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         testID={"walletCardsCategoryItwHeaderTestID"}
       />
     );
-  }, [iconColor, isNewItwRenderable, eidInfoBottomSheet.present]);
+  }, [iconColor, isNewItwRenderable, cards, eidInfoBottomSheet.present]);
 
   return (
     <View>
       <VStack space={16}>
-        {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
         {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
-        <ItwWalletReadyBanner />
         {!shouldHideEidAlert && (
           <ItwEidLifecycleAlert
             currentScreenName={currentScreenName}
@@ -143,8 +147,13 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       </VStack>
 
       {sectionHeader}
-      <View style={styles.cardsWrapper}>
-        {isNewItwRenderable && <ItwWalletIdCard isStacked={cards.length > 0} />}
+
+      <View style={[styles.cardsWrapper, { gap: 16 }]}>
+        {shouldRenderUpgradeBanner && (
+          <ItwDiscoveryBanner flow="wallet" style={{ marginHorizontal: 8 }} />
+        )}
+        <ItwWalletReadyBanner />
+
         {cards.length > 0 && (
           <GuidedTour
             description={I18n.t(
@@ -170,5 +179,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 const styles = StyleSheet.create({
   cardsWrapper: {
     marginHorizontal: -8
+  },
+  bannersWrapper: {
+    marginHorizontal: 8
   }
 });

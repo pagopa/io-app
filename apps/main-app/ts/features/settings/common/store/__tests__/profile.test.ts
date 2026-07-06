@@ -35,7 +35,7 @@ describe("email profile selector", () => {
     ...mockedProfile,
     email: undefined
   });
-  it("should return the user's email address", () => {
+  it("should return O.none when the profile has no email address", () => {
     expect(
       profileEmailSelector.resultFunc(potProfileWithNoEmail)
     ).toStrictEqual(O.none);

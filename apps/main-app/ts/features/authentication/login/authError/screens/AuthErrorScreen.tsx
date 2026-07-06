@@ -20,9 +20,8 @@ import { AuthenticationParamsList } from "../../../common/navigation/params/Auth
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { CieIdLoginProps } from "../../cie/shared/utils";
 import {
-  incrementNativeLoginNativeAttempts,
   resetSpidLoginState,
-  setStandardLoginInLoadingState
+  setSpidLoginInLoadingState
 } from "../../idp/store/actions";
 import { UnlockAccessProps } from "../../unlockAccess/components/UnlockAccessComponent";
 
@@ -44,7 +43,6 @@ type CommonAuthErrorScreenProps = UnlockAccessProps & {
 
 type SpidProps = {
   authMethod: "SPID";
-  isNativeLogin?: boolean;
 };
 
 const AuthErrorScreen = () => {
@@ -89,11 +87,7 @@ const AuthErrorScreen = () => {
 
   const onRetry = useCallback(() => {
     if (authMethod === "SPID") {
-      dispatch(
-        route.params.isNativeLogin
-          ? incrementNativeLoginNativeAttempts()
-          : setStandardLoginInLoadingState()
-      );
+      dispatch(setSpidLoginInLoadingState());
     }
 
     if (isActiveSessionLogin) {
@@ -106,7 +100,6 @@ const AuthErrorScreen = () => {
     authMethod,
     isActiveSessionLogin,
     dispatch,
-    route.params,
     navigation,
     getNavigationParams
   ]);

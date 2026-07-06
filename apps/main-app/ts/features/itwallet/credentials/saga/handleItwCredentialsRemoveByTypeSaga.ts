@@ -2,6 +2,10 @@ import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { all, call, put, select } from "typed-redux-saga/macro";
 
 import { walletRemoveCards } from "../../../wallet/store/actions/cards";
+import {
+  getCredentialKeyTags,
+  getCredentialVaultIds
+} from "../../common/utils/itwCredentialUtils";
 import { trackItwVaultCredentialRemoveFailed } from "../analytics";
 import {
   itwCredentialsRemove,
@@ -30,16 +34,18 @@ export function* handleItwCredentialsRemoveByTypeSaga(
     );
 
     if (sameTypeCredentials.length > 0) {
-      const credentialIds = sameTypeCredentials.map(c => c.credentialId);
+      // A batch credential owns several vault entries and crypto keys (one per copy).
+      const vaultIds = sameTypeCredentials.flatMap(getCredentialVaultIds);
+      const keyTags = sameTypeCredentials.flatMap(getCredentialKeyTags);
 
       try {
         // Remove from vault first; only proceed with Redux/key cleanup on success
-        yield* call(CredentialsVault.removeAll, credentialIds);
+        yield* call(CredentialsVault.removeAll, vaultIds);
       } catch (e) {
         const error = e instanceof Error ? e : new Error("Unknown error");
 
         trackItwVaultCredentialRemoveFailed({
-          credential_ids: credentialIds,
+          credential_ids: sameTypeCredentials.map(c => c.credentialId),
           reason: error.message
         });
 
@@ -48,7 +54,7 @@ export function* handleItwCredentialsRemoveByTypeSaga(
 
       yield* put(itwCredentialsRemove(sameTypeCredentials));
       yield* put(walletRemoveCards([`ITW_${credentialType}`]));
-      yield* all(sameTypeCredentials.map(c => call(deleteKey, c.keyTag)));
+      yield* all(keyTags.map(keyTag => call(deleteKey, keyTag)));
     }
     onComplete?.();
   } catch (e) {

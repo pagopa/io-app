@@ -54,62 +54,66 @@ import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
 import { createCommonActorsImplementation } from "../utils/actors";
 
-export type CreateWalletInstanceActorParams = { isRenewal: boolean };
+export type CreateWalletInstanceActorParams = WithItwVersion<{
+  isRenewal: boolean;
+}>;
 
-export type GetWalletAttestationActorParams = {
+export type GetWalletAttestationActorParams = WithItwVersion<{
   integrityKeyTag: string | undefined;
-};
+}>;
 
-export type InitMrtdPoPChallengeActorParams = {
+export type InitMrtdPoPChallengeActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
   walletInstanceAttestation: string | undefined;
-};
+}>;
 
-export type RequestAccessTokenActorParams = {
+export type RequestAccessTokenActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
   walletInstanceAttestation: string | undefined;
-};
+}>;
 
 export type RequestEidActorOutput = {
   credential: CredentialBundle;
   walletUnitAttestations: Record<string, string>;
 };
 
-export type RequestEidActorParams = {
+export type RequestEidActorParams = WithItwVersion<{
   accessToken: CredentialAccessToken | undefined;
   authenticationContext: AuthenticationContext | undefined;
   identification: IdentificationContext | undefined;
   integrityKeyTag: string | undefined;
   level: EidIssuanceLevel | undefined;
-};
+}>;
 
-export type StartAuthFlowActorParams = {
+export type StartAuthFlowActorParams = WithItwVersion<{
   identification: IdentificationContext | undefined;
   walletInstanceAttestation: string | undefined;
   withMRTDPoP: boolean;
-};
+}>;
 
 export type StoreEidCredentialActorParams = {
   eid: CredentialBundle | undefined;
   walletUnitAttestations?: Record<string, string>;
 };
 
-export type ValidateMrtdPoPChallengeActorParams = {
+export type ValidateMrtdPoPChallengeActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
   mrtdContext: MrtdPoPContext | undefined;
   walletInstanceAttestation: string | undefined;
+}>;
+
+export type WithItwVersion<T = { [K: string]: any }> = T & {
+  itwVersion: ItwVersion;
 };
 
 /**
  * Creates the actors for the eid issuance machine
  * @param env - The environment to use for the IT Wallet API calls
- * @param itwVersion - IT-Wallet technical specs version
  * @param store the IOStore
  * @returns the actors
  */
 export const createEidIssuanceActorsImplementation = (
   env: Env,
-  itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => ({
   getCieStatus: fromPromise<CieContext>(async () => {
@@ -123,31 +127,33 @@ export const createEidIssuanceActorsImplementation = (
     };
   }),
 
-  verifyTrustFederation: fromPromise(async () => {
-    const ioWallet = getIoWallet(itwVersion);
-    // Evaluate the issuer trust
-    const trustAnchorEntityConfig =
-      await ioWallet.Trust.getTrustAnchorEntityConfiguration(
-        env.WALLET_TA_BASE_URL
+  verifyTrustFederation: fromPromise<void, WithItwVersion>(
+    async ({ input }) => {
+      const ioWallet = getIoWallet(input.itwVersion);
+      // Evaluate the issuer trust
+      const trustAnchorEntityConfig =
+        await ioWallet.Trust.getTrustAnchorEntityConfiguration(
+          env.WALLET_TA_BASE_URL
+        );
+
+      // Create the trust chain for the PID provider
+      const builtChainJwts = await ioWallet.Trust.buildTrustChain(
+        env.WALLET_PID_PROVIDER_BASE_URL.value(input.itwVersion),
+        trustAnchorEntityConfig
       );
 
-    // Create the trust chain for the PID provider
-    const builtChainJwts = await ioWallet.Trust.buildTrustChain(
-      env.WALLET_PID_PROVIDER_BASE_URL.value(itwVersion),
-      trustAnchorEntityConfig
-    );
-
-    // Perform full validation on the built chain
-    await ioWallet.Trust.verifyTrustChain(
-      trustAnchorEntityConfig,
-      builtChainJwts,
-      {
-        connectTimeout: 10000,
-        readTimeout: 10000,
-        requireCrl: true
-      }
-    );
-  }),
+      // Perform full validation on the built chain
+      await ioWallet.Trust.verifyTrustChain(
+        trustAnchorEntityConfig,
+        builtChainJwts,
+        {
+          connectTimeout: 10000,
+          readTimeout: 10000,
+          requireCrl: true
+        }
+      );
+    }
+  ),
 
   createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
     async ({ input }) => {
@@ -166,7 +172,7 @@ export const createEidIssuanceActorsImplementation = (
       const hardwareKeyTag = await getIntegrityHardwareKeyTag();
       await registerWalletInstance(
         env,
-        itwVersion,
+        input.itwVersion,
         hardwareKeyTag,
         sessionToken,
         { isRenewal: input.isRenewal }
@@ -187,7 +193,7 @@ export const createEidIssuanceActorsImplementation = (
     try {
       return await getWalletInstanceAttestation(
         env,
-        itwVersion,
+        input.itwVersion,
         input.integrityKeyTag,
         sessionToken
       );
@@ -212,7 +218,7 @@ export const createEidIssuanceActorsImplementation = (
       store.dispatch(itwStoreIntegrityKeyTag(newHardwareKeyTag));
       await registerWalletInstance(
         env,
-        itwVersion,
+        input.itwVersion,
         newHardwareKeyTag,
         sessionToken,
         { isRenewal: true }
@@ -220,7 +226,7 @@ export const createEidIssuanceActorsImplementation = (
 
       return await getWalletInstanceAttestation(
         env,
-        itwVersion,
+        input.itwVersion,
         newHardwareKeyTag,
         sessionToken
       )
@@ -240,7 +246,7 @@ export const createEidIssuanceActorsImplementation = (
     }
   }),
 
-  revokeWalletInstance: fromPromise(async () => {
+  revokeWalletInstance: fromPromise<void, WithItwVersion>(async ({ input }) => {
     const state = store.getState();
     const sessionToken = sessionTokenSelector(state);
     const integrityKeyTag = itwIntegrityKeyTagSelector(state);
@@ -252,7 +258,7 @@ export const createEidIssuanceActorsImplementation = (
 
     await revokeCurrentWalletInstance(
       env,
-      itwVersion,
+      input.itwVersion,
       sessionToken,
       integrityKeyTag.value
     );
@@ -272,7 +278,7 @@ export const createEidIssuanceActorsImplementation = (
 
       const authenticationContext = await issuanceUtils.startAuthFlow({
         env,
-        itwVersion,
+        itwVersion: input.itwVersion,
         walletAttestation: input.walletInstanceAttestation,
         identification: input.identification,
         withMRTDPoP: input.withMRTDPoP
@@ -296,7 +302,7 @@ export const createEidIssuanceActorsImplementation = (
     );
 
     return mrtdUtils.initMrtdPoPChallenge({
-      itwVersion,
+      itwVersion: input.itwVersion,
       issuerConf: input.authenticationContext.issuerConf,
       walletInstanceAttestation: input.walletInstanceAttestation,
       authRedirectUrl: input.authenticationContext.callbackUrl
@@ -317,7 +323,7 @@ export const createEidIssuanceActorsImplementation = (
     assert(input.mrtdContext.mrtd, "MRTD is undefined");
 
     const { callbackUrl } = await mrtdUtils.validateMrtdPoPChallenge({
-      itwVersion,
+      itwVersion: input.itwVersion,
       issuerConf: input.authenticationContext.issuerConf,
       walletInstanceAttestation: input.walletInstanceAttestation,
       mrtd_auth_session: input.mrtdContext.mrtd_auth_session,
@@ -345,7 +351,7 @@ export const createEidIssuanceActorsImplementation = (
 
     const { accessToken } = await issuanceUtils.completeAuthFlow({
       ...input.authenticationContext,
-      itwVersion,
+      itwVersion: input.itwVersion,
       walletAttestation: input.walletInstanceAttestation
     });
     return accessToken;
@@ -365,7 +371,7 @@ export const createEidIssuanceActorsImplementation = (
       assert(sessionToken, "sessionToken is undefined");
 
       // The Wallet Unit Attestation makes use of the integrity service
-      if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
+      if (getIoWallet(input.itwVersion).WalletUnitAttestation.isSupported) {
         await ensureIntegrityServiceIsStoreReadyOrThrow(store);
       }
 
@@ -373,7 +379,7 @@ export const createEidIssuanceActorsImplementation = (
       const [authorizedCredential] =
         await generateKeysWithWalletUnitAttestation(input.accessToken, {
           env,
-          itwVersion,
+          itwVersion: input.itwVersion,
           hardwareKeyTag: input.integrityKeyTag,
           sessionToken
         });
@@ -385,7 +391,7 @@ export const createEidIssuanceActorsImplementation = (
 
       const credential = await issuanceUtils.getPid({
         authorizedCredential,
-        itwVersion,
+        itwVersion: input.itwVersion,
         env,
         accessToken: input.accessToken,
         ...input.authenticationContext
@@ -426,7 +432,7 @@ export const createEidIssuanceActorsImplementation = (
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
     actions: createCredentialUpgradeActionsImplementation(store),
-    actors: createCredentialUpgradeActorsImplementation(env, itwVersion, store)
+    actors: createCredentialUpgradeActorsImplementation(env, store)
   }),
 
   ...createCommonActorsImplementation(store)

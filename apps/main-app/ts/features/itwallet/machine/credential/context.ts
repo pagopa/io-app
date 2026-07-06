@@ -4,6 +4,8 @@ import { DigitalCredentialMetadata } from "../../common/utils/itwCredentialsCata
 import {
   CredentialAccessToken,
   CredentialBundle,
+  CredentialOfferResolved,
+  EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject,
   WalletInstanceAttestations
@@ -18,6 +20,7 @@ export type Context = {
   accessToken: CredentialAccessToken | undefined;
   clientId: string | undefined;
   codeVerifier: string | undefined;
+  credentialOfferUri: string | undefined;
   /**
    * Obtained credentials from the issuer.
    */
@@ -31,6 +34,11 @@ export type Context = {
    */
   credentialType: string | undefined;
   /**
+   * Result of evaluating the issuer DCQL query against the PID before the trust issuer screen.
+   * It is reused to show the requested claims and complete the authorization without recalculating.
+   */
+  evaluatedDcqlQuery: EvaluatedDcqlQueryResult | undefined;
+  /**
    * The failure that occurred during the credential issuance process, if any.
    */
   failure: CredentialIssuanceFailure | undefined;
@@ -43,16 +51,23 @@ export type Context = {
    */
   issuerConf: IssuerConfiguration | undefined;
   /**
+   * Flag to indicate if the wallet lifecycle is valid and can issue credentials.
+   */
+  isWalletValid: boolean;
+  /**
    * The mode for the credential issuance process. It does not change how the credentials are requested,
    * but it is needed to determine how the machine should behave.
    */
   mode: CredentialIssuanceMode;
   requestedCredential: RequestObject | undefined;
+  resolvedCredentialOffer: CredentialOfferResolved | undefined;
+
   responseMode: string | undefined;
   /**
    * The wallet instance attestation of the wallet. If expired, it will be requested a new one.
    */
   walletInstanceAttestation: undefined | WalletInstanceAttestations;
+
   /**
    * An optional dictionary of Wallet Unit Attestations generated for the issuance.
    */
@@ -76,6 +91,7 @@ export type CredentialIssuanceMode = "issuance" | "reissuance" | "upgrade";
 export const InitialContext: Context = {
   mode: "issuance",
   isItWalletValid: false,
+  isWalletValid: false,
   credentialType: undefined,
   wiaCryptoContext: undefined,
   walletInstanceAttestation: undefined,
@@ -83,9 +99,12 @@ export const InitialContext: Context = {
   clientId: undefined,
   codeVerifier: undefined,
   requestedCredential: undefined,
+  evaluatedDcqlQuery: undefined,
   responseMode: undefined,
   credentials: undefined,
   failure: undefined,
   credentialsCatalogue: undefined,
+  credentialOfferUri: undefined,
+  resolvedCredentialOffer: undefined,
   accessToken: undefined
 };

@@ -58,7 +58,7 @@ const valuesIT2 = {
   "1.001": 1000.5
 };
 
-describe("amountBuilder", () => {
+describe("amountBuilder for IT locale", () => {
   it("should render amounts correctly for IT language", async () => {
     setLocale("it" as Locales);
     entries(valuesIT).forEach(([k, v]) =>

@@ -50,7 +50,7 @@ describe("loadUserDataProcessingSaga", () => {
       .isDone();
   });
 
-  it("if response is 200, the user previously submitted the kind of request specified as the payload choice ", () => {
+  it("if response is 200, the user previously submitted the kind of request specified as the payload choice", () => {
     const mokedStatus: UserDataProcessing = {
       choice: UserDataProcessingChoiceEnum.DOWNLOAD,
       status: UserDataProcessingStatusEnum.PENDING,

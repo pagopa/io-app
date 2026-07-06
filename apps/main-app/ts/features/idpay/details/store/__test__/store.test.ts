@@ -239,7 +239,7 @@ describe("test idpay timeline pagination reducer and selectors", () => {
       ...mockTimelineResponseSuccess.operationList
     ]);
   });
-  it("should reset the timeline after the idpayTimelineGet.request action for page 0 ", () => {
+  it("should reset the timeline after the idpayTimelineGet.request action for page 0", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 

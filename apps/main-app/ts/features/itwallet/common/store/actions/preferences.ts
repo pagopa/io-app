@@ -19,14 +19,6 @@ export const itwSetFiscalCodeWhitelisted = createStandardAction(
   "ITW_SET_FISCAL_CODE_WHITELISTED"
 )<boolean>();
 
-export const itwFreezeSimplifiedActivationRequirements = createStandardAction(
-  "ITW_FREEZE_SIMPLIFIED_ACTIVATION_REQUIREMENTS"
-)<void>();
-
-export const itwClearSimplifiedActivationRequirements = createStandardAction(
-  "ITW_CLEAR_SIMPLIFIED_ACTIVATION_REQUIREMENTS"
-)<void>();
-
 export const itwSetPidReissuingSurveyHidden = createStandardAction(
   "ITW_SET_PID_REISSUING_SURVEY_HIDDEN"
 )<boolean>();
@@ -49,9 +41,7 @@ export const itwSetIdentificationMode = createStandardAction(
 
 export type ItwPreferencesActions =
   | ActionType<typeof itwClearCredentialUpgradeFailed>
-  | ActionType<typeof itwClearSimplifiedActivationRequirements>
   | ActionType<typeof itwDisableItwActivation>
-  | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
   | ActionType<typeof itwSetCredentialUpgradeFailed>

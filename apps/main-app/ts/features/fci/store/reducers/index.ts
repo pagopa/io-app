@@ -16,10 +16,6 @@ import fciQtspClausesReducer, { FciQtspClausesState } from "./fciQtspClauses";
 import fciLoadQtspFilledDocumentReducer, {
   FciQtspFilledDocumentState
 } from "./fciQtspFilledDocument";
-import {
-  fciSecurityLevelReducer,
-  FciSecurityLevelStateType
-} from "./fciSecurityLevelReducer";
 import fciSignatureReducer, { FciSignatureState } from "./fciSignature";
 import fciSignatureFieldDrawingReducer, {
   FciSignatureFieldDrawingState
@@ -39,7 +35,6 @@ export type FciState = {
   pollFilledDocument: FciPollFilledDocumentState;
   qstpFilledDocument: FciQtspFilledDocumentState;
   qtspClauses: FciQtspClausesState;
-  securityLevel: FciSecurityLevelStateType;
   signature: FciSignatureState;
   signatureFieldDrawing: FciSignatureFieldDrawingState;
   signatureRequest: FciSignatureRequestState;
@@ -57,8 +52,7 @@ const fciReducer = combineReducers<FciState, Action>({
   pollFilledDocument: fciPollFilledDocumentReducer,
   metadata: fciMetadataReducer,
   signaturesList: fciSignaturesListRequestReducer,
-  environment: fciEnvironmentReducer,
-  securityLevel: fciSecurityLevelReducer
+  environment: fciEnvironmentReducer
 });
 
 export default fciReducer;

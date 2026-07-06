@@ -604,13 +604,6 @@
   "cie": {
     "title": "Appoggia la carta"
   },
-  "spid": {
-    "pending_login": {
-      "title": "Accesso in corso",
-      "details": "Se hai aperto la sessione nel browser, continua da lì. Altrimenti torna indietro e avvia un nuovo login!",
-      "button": "Torna alla lista"
-    }
-  },
   "authentication": {
     "landing": {
       "accessibility": {
@@ -2763,7 +2756,7 @@
           "assistance": "Invia una segnalazione"
         },
         "expired": {
-          "title": "La richiesta di firma è scaduta",
+          "title": "La richiesta firma è scaduta",
           "subTitle": "Se hai bisogno di assistenza, contatta l'ente"
         },
         "waitForQtsp": {
@@ -2812,7 +2805,7 @@
         },
         "optinLogin": {
           "title": "Vuoi attivare l’accesso rapido?",
-          "description": "Con l’accesso rapido chiederemo la tua l'identità digitale una sola volta all'anno invece che ogni 30 giorni. Poi ti basterà usare il volto, l’impronta o il codice.",
+          "description": "Con l’accesso rapido chiederemo la tua identità digitale una sola volta all'anno invece che ogni 30 giorni. Poi ti basterà usare il volto, l’impronta o il codice.",
           "descriptionButton": "Come proteggere il tuo accesso",
           "primaryAction": "Continua con l’accesso rapido",
           "secondaryAction": "Rinnova l’accesso ogni 30 giorni",
@@ -2847,10 +2840,9 @@
         }
       },
       "checkService": {
-        "title": "Attiva i messaggi",
-        "content": "Per ricevere i documenti firmati devi attivare l’opzione che consente al servizio di inviarti messaggi. Se non la attivi, puoi completare la firma ma non riceverai i documenti firmati.",
-        "cancel": "Non ora",
-        "confirm": "Attiva"
+        "title": "Ricevi i documenti firmati",
+        "content": "Per ricevere su IO i documenti firmati, attiva l’opzione che consente al servizio di inviarti messaggi.\nSe chiudi, completerai la firma ma non riceverai il messaggio con i documenti firmati.",
+        "confirm": "Ok, attiva"
       },
       "noFields": {
         "title": "Firma tutto il documento",
@@ -2886,7 +2878,7 @@
       },
       "thankYouPage": {
         "title": "Fatto!",
-        "content": "Riceverai un messaggio su IO con l’esito della tua richiesta.",
+        "content": "Se hai attivato i messaggi del servizio, riceverai su IO l’esito della tua richiesta.",
         "cta": "Chiudi"
       },
       "documentUnavailablePage": {
@@ -2925,7 +2917,7 @@
             "cta": "Aggiungi al Portafoglio"
           },
           "emptyMessage": "La tua Patente di guida, la tua Tessera Sanitaria e altri documenti digitali appariranno qui!",
-          "cta": "Aggiungi un documento"
+          "cta": "Inizia"
         },
         "toast": {
           "newMethod": "Metodo aggiunto!"
@@ -3647,6 +3639,11 @@
         "credentialIntro": {
           "subtitle": "Leggi con attenzione cosa troverai."
         },
+        "credentialOffer": {
+          "intro": {
+            "fallbackTitle": "Aggiungi un documento al tuo Portafoglio"
+          }
+        },
         "credentialPreview": {
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",
           "title": "{{credential}}: ecco l'anteprima dei tuoi dati",
@@ -3670,11 +3667,6 @@
             "title": "Stiamo aggiornando i tuoi documenti",
             "subtitle": "Attendi qualche secondo"
           },
-          "success": {
-            "title": "Il tuo IT-Wallet è pronto!",
-            "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
-            "primaryAction": "Esplora IT-Wallet"
-          },
           "failure": {
             "title": "Non è stato possibile aggiornare {{credentialName}}",
             "titleMany": "Non è stato possibile aggiornare i documenti",
@@ -3688,6 +3680,17 @@
             "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
             "primaryAction": "Aggiungi primo documento",
             "secondaryAction": "Continua più tardi",
+            "itw": {
+              "title": "Il tuo portafoglio IT-Wallet è pronto!",
+              "withDocuments": {
+                "subtitle": "Scopri i nuovi documenti e aggiungili al tuo Portafoglio.",
+                "primaryAction": "Aggiungi documento"
+              },
+              "withoutDocuments": {
+                "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale.",
+                "primaryAction": "Esplora IT-Wallet"
+              }
+            },
             "reissuance": {
               "title": "Hai verificato la tua identità",
               "subtitle": "Ora puoi continuare a usare Documenti su IO.",
@@ -3996,7 +3999,7 @@
           "trustmark": "Mostra certificato di autenticità",
           "openPdf": "Mostra documento",
           "shareButton": "Salva o condividi",
-          "present": "Avvia verifica"
+          "present": "Mostra codice QR"
         },
         "eid": {
           "verificationExpired": {
@@ -4475,12 +4478,12 @@
         "activation": {
           "title": "Porta su IO i tuoi documenti digitali",
           "description": "Con piena validità ufficiale, digitali e sempre a portata di mano!",
-          "action": "Aggiungi un documento"
+          "action": "Inizia"
         },
         "upgrade_empty": {
           "title": "Il tuo Portafoglio è ora parte di IT-Wallet",
           "description": "Scopri le funzionalità evolute dei documenti digitali su IO.",
-          "action": "Aggiungi documento"
+          "action": "Inizia"
         },
         "upgrade": {
           "title": "IO dà il benvenuto a IT-Wallet",

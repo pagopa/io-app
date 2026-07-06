@@ -3,7 +3,7 @@ import { formatFiscalCodeBirthdayAsShortFormat } from "../dates";
 
 // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 describe("Check fiscal code date", () => {
-  it("IT", () => {
+  it("Italy", () => {
     const timeZone = "Europe/Rome";
     testFiscalCodeByLocale("it", timeZone);
     testFiscalCodeByLocale("en", timeZone);

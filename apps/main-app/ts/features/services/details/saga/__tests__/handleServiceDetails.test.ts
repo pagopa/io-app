@@ -18,7 +18,7 @@ jest.mock("../../../../../api/ServicesClientManager");
 
 const mockedServiceId = "A01" as ServiceId;
 
-export const mockedService: ServiceDetails = {
+const mockedService: ServiceDetails = {
   id: mockedServiceId,
   description: "description",
   metadata: {

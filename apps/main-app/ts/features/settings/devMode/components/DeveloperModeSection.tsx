@@ -49,8 +49,6 @@ import {
   walletTokenSelector
 } from "../../../authentication/common/store/selectors";
 import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
-import { fciL3LocalFlag } from "../../../fci/store/actions/index.ts";
-import { fciSecurityLevelLocalFFSelector } from "../../../fci/store/reducers/fciSecurityLevelReducer.ts";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes.ts";
 import { lollipopPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
 import { toThumbprint } from "../../../lollipop/utils/crypto";
@@ -476,7 +474,6 @@ const DeveloperTestEnvironmentSection = ({
   const isActiveSessionLoginLocallyEnabled = useIOSelector(
     isActiveSessionLoginLocallyEnabledSelector
   );
-  const fciL3LocalFeatureFlag = useIOSelector(fciSecurityLevelLocalFFSelector);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -546,10 +543,6 @@ const DeveloperTestEnvironmentSection = ({
     }
   };
 
-  const onFciSecurityLevelLocalFlagToggleChange = (enabled: boolean) => {
-    dispatch(fciL3LocalFlag(enabled));
-  };
-
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
       label: I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
@@ -575,12 +568,6 @@ const DeveloperTestEnvironmentSection = ({
       ),
       value: isActiveSessionLoginLocallyEnabled,
       onSwitchValueChange: onActiveSessionLoginToggle
-    },
-    {
-      label: I18n.t("features.fci.requestL3.localFlag.title"),
-      description: I18n.t("features.fci.requestL3.localFlag.description"),
-      value: fciL3LocalFeatureFlag,
-      onSwitchValueChange: onFciSecurityLevelLocalFlagToggleChange
     }
   ];
 

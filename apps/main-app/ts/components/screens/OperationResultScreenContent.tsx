@@ -27,7 +27,12 @@ import {
 
 type ButtonProps = Pick<
   IOButtonProps,
-  "accessibilityLabel" | "icon" | "label" | "onPress" | "testID"
+  | "accessibilityLabel"
+  | "icon"
+  | "iconPosition"
+  | "label"
+  | "onPress"
+  | "testID"
 >;
 
 type OperationResultScreenContentProps = WithTestID<{

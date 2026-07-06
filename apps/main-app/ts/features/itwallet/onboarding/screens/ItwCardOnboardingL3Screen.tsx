@@ -150,7 +150,7 @@ const ItwCredentialOnboardingSection = () => {
     return catalogueCredentials.filter(c => !isUpcomingCredential(c.type));
   }, [catalogueCredentials, shouldShowUpcoming, isItWalletActivationDisabled]);
 
-  const { obtained, notObtained } = useIOSelector(
+  const { notObtained } = useIOSelector(
     makeItwCredentialsByPresenceSelector(credentialsToDisplay)
   );
 
@@ -178,20 +178,6 @@ const ItwCredentialOnboardingSection = () => {
             onPress={() => openWebUrl(NFC_NOT_SUPPORTED_FAQ_URL)}
             variant="info"
           />
-        )}
-
-        {/* Obtained credentials  */}
-        {obtained.length > 0 && (
-          <VStack space={8}>
-            <View style={styles.header}>
-              <H6 color={theme["textBody-tertiary"]} role="heading">
-                {I18n.t("features.wallet.onboarding.l3-sections.added")}
-              </H6>
-            </View>
-            <ItwOnboardingModuleCredentialsList
-              credentialsToDisplay={obtained}
-            />
-          </VStack>
         )}
 
         {/* Documenti su IO fallback action */}

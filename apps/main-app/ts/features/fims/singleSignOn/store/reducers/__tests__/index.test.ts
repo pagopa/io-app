@@ -290,7 +290,7 @@ describe("singleSignOn reducer", () => {
     );
   });
 
-  describe(` receiving 'fimsGetConsentsListAction.failure' or 'fimsAcceptConsentsFailureAction' or 'fimsSignAndRetrieveInAppBrowserUrlAction.failure'`, () => {
+  describe(`receiving 'fimsGetConsentsListAction.failure' or 'fimsAcceptConsentsFailureAction' or 'fimsSignAndRetrieveInAppBrowserUrlAction.failure'`, () => {
     const failureActions: ReadonlyArray<
       [string, (payload: FimsErrorStateType) => Action]
     > = [

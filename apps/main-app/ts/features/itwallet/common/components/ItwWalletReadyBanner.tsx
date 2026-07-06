@@ -26,7 +26,7 @@ export const ItwWalletReadyBanner = () => {
   };
 
   return (
-    <View style={{ marginHorizontal: -8 }}>
+    <View style={{ marginHorizontal: 8 }}>
       <Banner
         action={I18n.t(
           "features.itWallet.issuance.emptyWallet.readyBanner.action"

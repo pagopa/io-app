@@ -8,9 +8,11 @@ import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
 import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { Env } from "../../../common/utils/environment";
 import { getWalletInstanceAttestation } from "../../../common/utils/itwAttestationUtils";
+import { getRepresentativeVaultId } from "../../../common/utils/itwCredentialUtils";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../../common/utils/itwStoreUtils";
 import {
+  CredentialFormat,
   CredentialMetadata,
   RequestObject,
   WalletInstanceAttestations
@@ -37,6 +39,7 @@ export type EvaluateRelyingPartyTrustInput = Partial<{
 export type EvaluateRelyingPartyTrustOutput = {
   rpConf: RelyingPartyConfiguration;
 };
+
 export type GetPresentationDetailsInput = Partial<{
   credentials: Record<string, CredentialMetadata>;
   qrCodePayload: ItwRemoteRequestPayload;
@@ -51,7 +54,6 @@ export type GetPresentationDetailsOutput = {
 export type GetRequestObjectInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
 }>;
-
 export type GetRequestObjectOutput = string;
 
 export type SendAuthorizationResponseInput = {
@@ -64,7 +66,14 @@ export type SendAuthorizationResponseInput = {
 export type SendAuthorizationResponseOutput = {
   redirectUri?: string; // Optional in cross-device presentation
 };
-type CredentialsSdJwt = Array<RemotePresentation.Credential4Dcql>;
+
+// Credentials split by format, as required by the DCQL evaluation that parses SD-JWT and mDoc
+// credentials with different decoders.
+type CredentialsByFormat = {
+  mdoc: CredentialsForDcql;
+  sdJwt: CredentialsForDcql;
+};
+type CredentialsForDcql = Array<RemotePresentation.Credential4Dcql>;
 
 export const createRemoteActorsImplementation = (
   env: Env,
@@ -189,26 +198,31 @@ export const createRemoteActorsImplementation = (
     // The evaluation will require the full credential.
     const credentialsData = await Promise.all(
       Object.values(credentials).map(async c => {
-        const credential = await CredentialsVault.get(c.credentialId);
+        // Present the representative copy (the only one for a non-batch credential).
+        const vaultId = getRepresentativeVaultId(c);
+        const credential = await CredentialsVault.get(vaultId);
         assert(
           credential,
-          `Credential with id ${c.credentialId} not found in secure storage`
+          `Credential with vaultId ${vaultId} not found in secure storage`
         );
         return {
           keyTag: c.keyTag,
+          format: c.format,
           credential
         };
       })
     );
 
-    // Prepare credentials to evaluate the Relying Party request
-    const credentialsSdJwt =
+    // Prepare credentials to evaluate the Relying Party request, split by format since the DCQL
+    // evaluation decodes SD-JWT and mDoc credentials (e.g. proof of age) with different parsers.
+    const { sdJwt, mdoc } =
       prepareCredentialsForDcqlEvaluation(credentialsData);
 
     // Evaluate the DCQL query against the credentials contained in the Wallet
     const result = await ioWallet.RemotePresentation.evaluateDcqlQuery(
       requestObject.dcql_query as DcqlQuery,
-      credentialsSdJwt
+      sdJwt,
+      mdoc
     );
 
     // Check whether any of the requested credentials cannot be presented remotely:
@@ -301,5 +315,16 @@ export const createRemoteActorsImplementation = (
 };
 
 const prepareCredentialsForDcqlEvaluation = (
-  credentials: Array<{ credential: string; keyTag: string }>
-): CredentialsSdJwt => credentials.map(c => [c.keyTag, c.credential]);
+  credentials: Array<{ credential: string; format: string; keyTag: string }>
+): CredentialsByFormat => {
+  const isMdoc = (c: { format: string }) => c.format === CredentialFormat.MDOC;
+  const toEntry = (c: {
+    credential: string;
+    keyTag: string;
+  }): RemotePresentation.Credential4Dcql => [c.keyTag, c.credential];
+
+  return {
+    sdJwt: credentials.filter(c => !isMdoc(c)).map(toEntry),
+    mdoc: credentials.filter(isMdoc).map(toEntry)
+  };
+};

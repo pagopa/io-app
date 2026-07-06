@@ -29,11 +29,11 @@ import {
   fciQtspNonceSelector
 } from "../../store/reducers/fciQtspClauses";
 import { fciQtspFilledDocumentUrlSelector } from "../../store/reducers/fciQtspFilledDocument";
-import { isFciSecurityLevelCheckEnabledSelector } from "../../store/reducers/fciSecurityLevelReducer";
 import {
   fciSignatureRequestIdSelector,
   fciSignatureRequestSelector
 } from "../../store/reducers/fciSignatureRequest";
+import { isFciSecurityLevelCheckRemoteFFEnabledSelector } from "../../store/selectors/remoteConfig";
 import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import {
@@ -128,7 +128,10 @@ describe("FCI Saga Tests", () => {
       expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
-          [matchers.select(isFciSecurityLevelCheckEnabledSelector), false],
+          [
+            matchers.select(isFciSecurityLevelCheckRemoteFFEnabledSelector),
+            false
+          ],
           [matchers.call.fn(standardFciFlowStartSaga), undefined]
         ])
         .call(standardFciFlowStartSaga)
@@ -138,7 +141,10 @@ describe("FCI Saga Tests", () => {
       expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L3"],
-          [matchers.select(isFciSecurityLevelCheckEnabledSelector), true],
+          [
+            matchers.select(isFciSecurityLevelCheckRemoteFFEnabledSelector),
+            true
+          ],
           [matchers.call.fn(standardFciFlowStartSaga), undefined]
         ])
         .call(standardFciFlowStartSaga)
@@ -148,7 +154,10 @@ describe("FCI Saga Tests", () => {
       expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
-          [matchers.select(isFciSecurityLevelCheckEnabledSelector), true]
+          [
+            matchers.select(isFciSecurityLevelCheckRemoteFFEnabledSelector),
+            true
+          ]
         ])
         .call(
           NavigationService.dispatchNavigationAction,

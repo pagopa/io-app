@@ -23,6 +23,7 @@ import {
   shouldRequestStatusAssertion,
   StatusAssertionError
 } from "../../common/utils/itwCredentialStatusAssertionUtils";
+import { getRepresentativeVaultId } from "../../common/utils/itwCredentialUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
@@ -134,7 +135,7 @@ export function* updateCredentialStatusAssertionSaga(
   );
   try {
     const credential = yield* call(() =>
-      CredentialsVault.get(metadata.credentialId)
+      CredentialsVault.get(getRepresentativeVaultId(metadata))
     );
     if (!credential) {
       throw new Error(

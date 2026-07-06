@@ -32,7 +32,6 @@ import CieIdWizard from "../../login/cie/screens/wizards/CieIdWizard";
 import CiePinWizard from "../../login/cie/screens/wizards/CiePinWizard";
 import IDActivationWizard from "../../login/cie/screens/wizards/IDActivationWizard";
 import SpidWizard from "../../login/cie/screens/wizards/SpidWizard";
-import { AuthSessionPage } from "../../login/idp/screens/idpAuthSessionHandler";
 import IdpLoginScreen from "../../login/idp/screens/IdpLoginScreen";
 import IdpSelectionScreen from "../../login/idp/screens/IdpSelectionScreen";
 import { LandingScreen } from "../../login/landing/screens/LandingScreen";
@@ -117,11 +116,6 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       component={ActiveSessionIdpLoginScreen}
       name={AUTHENTICATION_ROUTES.IDP_LOGIN_ACTIVE_SESSION_LOGIN}
-    />
-
-    <Stack.Screen
-      component={AuthSessionPage}
-      name={AUTHENTICATION_ROUTES.AUTH_SESSION}
     />
 
     <Stack.Screen

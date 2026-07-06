@@ -11,10 +11,10 @@ import { View } from "react-native";
 
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { SpidIdp } from "../../../../../utils/idps";
-import { StandardLoginRequestInfo } from "../store/types";
+import { SpidLoginRequestInfo } from "../store/types";
 
 type Props = {
-  requestState: StandardLoginRequestInfo["requestState"];
+  requestState: SpidLoginRequestInfo["requestState"];
   selectedIdp?: SpidIdp;
 };
 

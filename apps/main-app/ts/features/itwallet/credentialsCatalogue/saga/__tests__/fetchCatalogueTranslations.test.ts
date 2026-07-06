@@ -37,8 +37,13 @@ describe("fetchCatalogueTranslationsSaga", () => {
           isEnabledForCredentialsList: false
         },
         environment: {
-          env: "pre",
-          itWalletSpecsVersion: "1.3.3"
+          env: "pre"
+        },
+        preferences: {
+          isFiscalCodeWhitelisted: true
+        },
+        credentials: {
+          credentials: {}
         }
       }
     },
@@ -78,8 +83,13 @@ describe("fetchCatalogueTranslationsSaga", () => {
             isEnabledForCredentialsList: false
           },
           environment: {
-            env: "prod",
-            itWalletSpecsVersion: "1.0.0"
+            env: "prod"
+          },
+          preferences: {
+            isFiscalCodeWhitelisted: false
+          },
+          credentials: {
+            credentials: {}
           }
         }
       },
@@ -103,8 +113,13 @@ describe("fetchCatalogueTranslationsSaga", () => {
             isEnabledForCredentialsList: false
           },
           environment: {
-            env: "pre",
-            itWalletSpecsVersion: "1.3.3"
+            env: "pre"
+          },
+          preferences: {
+            isFiscalCodeWhitelisted: true
+          },
+          credentials: {
+            credentials: {}
           }
         }
       },

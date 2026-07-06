@@ -35,10 +35,6 @@ import {
   loginInfoReducer,
   LoginInfoState
 } from "../../../authentication/loginInfo/store/reducers";
-import {
-  nativeLoginReducer,
-  NativeLoginState
-} from "../../../authentication/nativeLogin/store/reducers";
 import cdcReducer, { CdcState } from "../../../bonus/cdc/common/store/reducers";
 import connectivityStateReducer, {
   ConnectivityState
@@ -115,7 +111,6 @@ type LoginFeaturesState = {
   cieLogin: CieLoginState & PersistPartial;
   fastLogin: FastLoginState;
   loginInfo: LoginInfoState;
-  nativeLogin: NativeLoginState;
   spidLogin: SpidLoginState;
   testLogin: TestLoginState;
 };
@@ -129,7 +124,6 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   whatsNew: whatsNewPersistor,
   loginFeatures: combineReducers<LoginFeaturesState, Action>({
     testLogin: testLoginReducer,
-    nativeLogin: nativeLoginReducer,
     fastLogin: fastLoginReducer,
     cieLogin: cieLoginPersistor,
     loginInfo: loginInfoReducer,

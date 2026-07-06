@@ -1,5 +1,6 @@
 import {
   CredentialIssuance,
+  CredentialOffer,
   CredentialStatus,
   RemotePresentation,
   SdJwt,
@@ -58,6 +59,14 @@ export type CredentialMetadata = {
     issuedAt?: string;
   };
   keyTag: string;
+  /**
+   * Key tags of every copy of a batch credential (e.g. one-time-use credentials obtained in
+   * batch). Present only for batch credentials; non-batch credentials omit it. The array is the
+   * source of truth for the batch and `keyTags[0]` is the representative copy, mirrored by
+   * `keyTag` so existing single-credential consumers keep working. The raw bytes of each copy are
+   * stored in {@link CredentialsVault} under that copy's `keyTag` as vault id.
+   */
+  keyTags?: ReadonlyArray<string>;
   parsedCredential: ParsedCredential;
   spec_version: string;
   storedStatusAssertion?: StoredStatusAssertion;
@@ -70,13 +79,24 @@ export type CredentialMetadata = {
   walletUnitAttestationId?: string;
 };
 
+export type CredentialOfferResolved = {
+  grantDetails: CredentialOffer.ExtractGrantDetailsResult;
+  offer: CredentialOffer.CredentialOffer;
+};
+
+/**
+ * Alias for the result of evaluating a DCQL query against local credentials.
+ */
+export type EvaluatedDcqlQueryResult = Awaited<
+  ReturnType<RemotePresentation.RemotePresentationApi["evaluateDcqlQuery"]>
+>;
+
 /**
  * Alias for the IssuerConfiguration type
  */
 export type IssuerConfiguration = CredentialIssuance.IssuerConfig;
 
 export type ItwAuthLevel = "L2" | "L3";
-
 // Combined status of a credential, that includes both the physical and the digital version
 export type ItwCredentialStatus =
   | "expired"
@@ -85,6 +105,7 @@ export type ItwCredentialStatus =
   | "unknown"
   | "valid"
   | ItwJwtCredentialStatus;
+
 // Digital credential status
 export type ItwJwtCredentialStatus = "jwtExpired" | "jwtExpiring" | "valid";
 
@@ -127,7 +148,6 @@ export type StoredStatusAssertion =
       parsedStatusAssertion: ParsedStatusAssertion;
       statusAssertion: string;
     };
-
 /**
  * Slim version of Verification for storage.
  * Only persists the fields actually used by the app.
@@ -137,6 +157,7 @@ export type StoredVerification = Pick<
   Verification,
   "assurance_level" | "trust_framework"
 >;
+
 /**
  * Alias for the Verification type
  */

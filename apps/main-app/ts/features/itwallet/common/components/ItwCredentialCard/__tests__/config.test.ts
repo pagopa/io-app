@@ -16,7 +16,7 @@ describe("getCredentialCardConfig", () => {
         CredentialType.DRIVING_LICENSE,
         CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
         CredentialType.EUROPEAN_DISABILITY_CARD,
-        CredentialType.AGE_VERIFICATION,
+        CredentialType.PROOF_OF_AGE,
         // Known credential types without static config (use random generation)
         CredentialType.EDUCATION_ATTENDANCE,
         CredentialType.EDUCATION_DEGREE,

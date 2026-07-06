@@ -70,7 +70,7 @@ describe("availableBonusesTypes with FF enabled", () => {
     ).toBe(2);
   });
 
-  it("should return 2 bonuses available if an experimental bonus with no FF is available", () => {
+  it("should return 2 bonuses available if a visible bonus is available", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
       () =>
         new Map<number, boolean>([

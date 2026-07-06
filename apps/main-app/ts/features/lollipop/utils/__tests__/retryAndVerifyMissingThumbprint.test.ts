@@ -1,5 +1,3 @@
-import * as E from "fp-ts/lib/Either";
-
 import { AppDispatch } from "../../../../App";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
 
@@ -20,16 +18,14 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
   it("should fail because public key is missing", async () => {
-    const result = await regenerateKeyGetRedirectsAndVerifySaml(
-      "loginUri",
-      "keyTag",
-      false,
-      false,
-      dispatch
-    );
-    expect(E.isLeft(result)).toBeTruthy();
-    if (E.isLeft(result)) {
-      expect(result.left).toEqual(new Error("Missing publicKey"));
-    }
+    await expect(
+      regenerateKeyGetRedirectsAndVerifySaml(
+        "loginUri",
+        "keyTag",
+        false,
+        false,
+        dispatch
+      )
+    ).rejects.toThrow("Missing publicKey");
   });
 });

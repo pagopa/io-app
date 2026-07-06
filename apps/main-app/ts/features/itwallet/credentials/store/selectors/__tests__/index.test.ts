@@ -124,7 +124,7 @@ describe("itwCredentialsByTypeSelector", () => {
 });
 
 describe("itwCredentialsEidSelector", () => {
-  it("returns O.some with the eid ", () => {
+  it("returns O.some with the eid", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense
@@ -319,7 +319,7 @@ describe("itwHasWalletAtLeastTwoCredentialsSelector", () => {
 });
 
 describe("test legacy credentials", () => {
-  it("itwCredentialsEidSelector returns O.some with the eid ", () => {
+  it("itwCredentialsEidSelector returns O.some with the eid", () => {
     const legacyEid = { ...mockedEid, format: "vc+sd-jwt" };
     const state = getStateWithCredentials({
       [legacyEid.credentialId]: legacyEid

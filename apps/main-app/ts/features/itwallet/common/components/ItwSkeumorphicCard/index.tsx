@@ -1,4 +1,9 @@
-import { IOColors, Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
+import {
+  hexToRgba,
+  IOColors,
+  Tag,
+  useScaleAnimation
+} from "@pagopa/io-app-design-system";
 import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import { ReactNode, useMemo } from "react";
@@ -172,7 +177,7 @@ const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
   const borderColor = borderColorMap[status];
   // Include "jwtExpired" as a valid status because the credential skeumorphic card with this state
   // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
-  const isValid = ["jwtExpired", ...validCredentialStatuses].includes(status);
+  const isValid = [...validCredentialStatuses, "jwtExpired"].includes(status);
 
   const dynamicStyle: StyleProp<ViewStyle> = {
     borderColor,
@@ -228,19 +233,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 8,
-    overflow: "hidden"
+    overflow: "hidden",
+    boxShadow: `0px 4px 24px ${hexToRgba(IOColors.black, 0.1)}`
   },
   card: {
-    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO,
-    shadowColor: IOColors.black,
-    shadowOffset: {
-      width: 0,
-      height: 4 // To avoid the shadow to be clipped by the header
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    // Android
-    elevation: 8
+    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO
   },
   tag: {
     position: "absolute",

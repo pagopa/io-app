@@ -28,6 +28,7 @@ import { emptyContextualHelp } from "../../../utils/contextualHelp.ts";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { ITW_REMOTE_ROUTES } from "../../itwallet/presentation/remote/navigation/routes.ts";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes.ts";
 import { PaymentsBarcodeRoutes } from "../../payments/barcode/navigation/routes";
@@ -156,6 +157,19 @@ const BarcodeScanScreen = () => {
         break;
       case "IDPAY":
         openDeepLink(barcode.authUrl);
+        break;
+      case "ITW_CREDENTIAL_OFFER":
+        /**
+         * Use replace so BARCODE_SCAN is removed from the parent stack.
+         * This lets the offer flow close with goBack and return directly
+         * to the screen shown before the scanner.
+         */
+        navigation.replace(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
+          params: {
+            itwCredentialOfferUri: barcode.itwCredentialOfferUri
+          }
+        });
         break;
       case "ITW_REMOTE":
         /**

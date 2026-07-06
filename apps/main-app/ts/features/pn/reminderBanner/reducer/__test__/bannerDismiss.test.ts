@@ -333,7 +333,7 @@ describe("isPnActivationReminderBannerRenderableSelector", () => {
     }
   );
 
-  it("should handle an error state for isPnInboxEnabled, treating it as 'true' ", () => {
+  it("should handle an error state for isPnInboxEnabled, treating it as 'true'", () => {
     // this is to avoid "uncertain" renders
     const state = {
       features: {

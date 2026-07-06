@@ -1,5 +1,7 @@
 import { createSelector } from "reselect";
 
+import type { GlobalState } from "../../../../../../store/reducers/types";
+
 import { getCredentialStatus } from "../../../../common/utils/itwCredentialStatusUtils";
 import {
   CredentialFormat,
@@ -109,3 +111,13 @@ export const shouldShowExpiredProximityCredentialsBannerSelector =
       pidStatus === "jwtExpired" &&
       areAllPresentableCredentialsExpired(presentableCredentialsByDocType)
   );
+
+/**
+ * Selector to determine whether a specific credential type is presentable.
+ * @param credentialType - The type of the credential to check.
+ * @param state - The global state.
+ * @returns Boolean indicating whether the specified credential type is presentable.
+ */
+export const isPresentableCredentialSelector =
+  (credentialType: string) => (state: GlobalState) =>
+    itwCredentialsAsMdocSelector(state)[credentialType] !== undefined;

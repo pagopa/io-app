@@ -233,7 +233,7 @@ describe("getCreditCardFromState", () => {
     }
   );
 
-  it("should return a credit card if all the field are correctly filled ", () => {
+  it("should return a credit card if all the field are correctly filled", () => {
     const cardState: CreditCardState = {
       pan: O.some(aValidPan),
       expirationDate: O.some(aValidExpirationDate),

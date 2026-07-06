@@ -33,7 +33,7 @@ describe("persistedPreferences", () => {
     );
   });
   describe("isMixpanelEnabled", () => {
-    it("should be reset mixpanel preference only on differentProfileLoggedIn action ", () => {
+    it("should be reset mixpanel preference only on differentProfileLoggedIn action", () => {
       const initialState: GlobalState = appReducer(
         undefined,
         applicationChangeState("active")

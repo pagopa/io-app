@@ -12,8 +12,8 @@ import {
 import * as superProp from "../superProperties";
 import { ItwSuperProperties } from "../superProperties";
 
-export const mockedRegisterSuperProperties = jest.fn();
-export const mockedSet = jest.fn();
+const mockedRegisterSuperProperties = jest.fn();
+const mockedSet = jest.fn();
 jest.mock("../../../../../mixpanel", () => ({
   isMixpanelInstanceInitialized: () => true,
   registerSuperProperties: (properties: MixpanelProperties) =>

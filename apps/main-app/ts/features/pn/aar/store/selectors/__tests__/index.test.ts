@@ -85,8 +85,8 @@ describe("thirdPartySenderDenominationSelector", () => {
     expect(result).toBeUndefined();
   });
 });
-describe(" currentAarFlowData and currentAarFlowStateType", () => {
-  it(" should return the correct AAR flow state from the global state", () => {
+describe("currentAarFlowData and currentAarFlowStateType", () => {
+  it("should return the correct AAR flow state from the global state", () => {
     const mockFetchingState =
       sendAarMockStateFactory.fetchingNotificationData();
 

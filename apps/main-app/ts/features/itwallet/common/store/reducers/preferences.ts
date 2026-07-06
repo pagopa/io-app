@@ -6,9 +6,7 @@ import { IdentificationContext } from "../../../machine/eid/context.ts";
 import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 import {
   itwClearCredentialUpgradeFailed,
-  itwClearSimplifiedActivationRequirements,
   itwDisableItwActivation,
-  itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
   itwSetCredentialUpgradeFailed,
@@ -32,9 +30,6 @@ export type ItwPreferencesState = {
   // Indicates whether the IT-Wallet activation should be disabled
   // because the user's device does not support NFC
   isItwActivationDisabled?: boolean;
-  // Indicates whether the user should activate IT-Wallet with the simplified flow,
-  // even if he/she already has a valid L3 PID (obtained outside the whitelist)
-  isItwSimplifiedActivationRequired?: boolean;
   // Indicates whether the user should see the modal to review the app.
   isPendingReview?: boolean;
   // Indicates whether the bottom sheet survey is visible when the user quits
@@ -57,24 +52,12 @@ const reducer = (
         )
       };
 
-    case getType(itwClearSimplifiedActivationRequirements): {
-      const { isItwSimplifiedActivationRequired: _, ...rest } = state;
-      return rest;
-    }
-
     case getType(itwDisableItwActivation): {
       return {
         ...state,
         isItwActivationDisabled: true
       };
     }
-
-    case getType(itwFreezeSimplifiedActivationRequirements):
-      return {
-        ...state,
-        isItwSimplifiedActivationRequired:
-          state.authLevel === "L3" && !state.isFiscalCodeWhitelisted
-      };
 
     case getType(itwLifecycleStoresReset):
       // When the wallet is being reset, we need to persist only the preferences:

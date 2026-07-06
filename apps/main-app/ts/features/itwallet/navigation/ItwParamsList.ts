@@ -4,11 +4,11 @@ import { ItwIdentificationCieWarningScreenNavigationParams } from "../identifica
 import { ItwIdentificationNavigationParams } from "../identification/common/screens/ItwIdentificationModeSelectionScreen.tsx";
 import { ItwIssuanceCredentialLandingScreenNavigationParams } from "../issuance/screens/ItwIssuanceCredentialLandingScreen.tsx";
 import { ItwIssuanceCredentialTrustIssuerNavigationParams } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
+import { ItwIssuanceCredentialOfferScreenNavigationParams } from "../offer/screens/ItwIssuanceCredentialOfferIntro.tsx";
 import { ItwCardOnboardingL3NavigationParams } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
 import { ItwPlaygroundParamsList } from "../playgrounds/navigation/ItwPlaygroundParamsList.ts";
 import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModalNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
-import { ItwPresentationCredentialCardScreenNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardScreen";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ITW_ROUTES } from "./routes";
@@ -45,6 +45,8 @@ export type ItwParamsList = ItwPlaygroundParamsList & {
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION]: undefined;
+  [ITW_ROUTES.ISSUANCE
+    .CREDENTIAL_OFFER_INTRO]: ItwIssuanceCredentialOfferScreenNavigationParams;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER]:
     | ItwIssuanceCredentialTrustIssuerNavigationParams
@@ -70,8 +72,6 @@ export type ItwParamsList = ItwPlaygroundParamsList & {
     .CREDENTIAL_ATTACHMENT]: ItwPresentationCredentialAttachmentNavigationParams;
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_CARD_MODAL]: ItwPresentationCredentialCardModalNavigationParams;
-  [ITW_ROUTES.PRESENTATION
-    .CREDENTIAL_CARD_SCREEN]: ItwPresentationCredentialCardScreenNavigationParams;
   // PRESENTATION
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;

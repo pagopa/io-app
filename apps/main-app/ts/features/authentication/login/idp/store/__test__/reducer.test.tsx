@@ -1,81 +1,38 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import {
-  incrementNativeLoginNativeAttempts,
   resetSpidLoginState,
-  setNativeLoginRequestInfo,
-  setStandardLoginInLoadingState,
-  setStandardLoginRequestState
+  setSpidLoginInLoadingState,
+  setSpidLoginRequestState
 } from "../actions";
 import { spidLoginReducer, SpidLoginState } from "../reducers";
 import { ErrorType } from "../types";
 
 describe("spidLoginReducer", () => {
   const initialState: SpidLoginState = {
-    nativeLogin: {
-      requestInfo: {
-        requestState: "LOADING",
-        nativeAttempts: 0
-      }
-    },
-    standardLogin: {
-      requestInfo: {
-        requestState: pot.noneLoading
-      }
+    requestInfo: {
+      requestState: pot.noneLoading
     }
   };
 
-  it("should handle setNativeLoginRequestInfo", () => {
-    const action = setNativeLoginRequestInfo({
-      requestState: "ERROR",
-      errorType: ErrorType.LOADING_ERROR,
-      nativeAttempts: 2
-    });
-    const state = spidLoginReducer(initialState, action);
-    expect(state.nativeLogin.requestInfo).toEqual(action.payload);
-  });
-
-  it("should handle incrementNativeLoginNativeAttempts", () => {
-    const state = spidLoginReducer(
-      initialState,
-      incrementNativeLoginNativeAttempts()
-    );
-    expect(state.nativeLogin.requestInfo.nativeAttempts).toBe(1);
-    expect(state.nativeLogin.requestInfo.requestState).toBe("LOADING");
-  });
-
-  it("should handle setStandardLoginRequestState", () => {
+  it("should handle setSpidLoginRequestState", () => {
     const newPot: pot.Pot<true, ErrorType> = pot.some(true);
     const state = spidLoginReducer(
       initialState,
-      setStandardLoginRequestState(newPot)
+      setSpidLoginRequestState(newPot)
     );
-    expect(state.standardLogin.requestInfo.requestState).toEqual(newPot);
+    expect(state.requestInfo.requestState).toEqual(newPot);
   });
 
-  it("should handle setStandardLoginInLoadingState", () => {
-    const state = spidLoginReducer(
-      initialState,
-      setStandardLoginInLoadingState()
-    );
-    expect(state.standardLogin.requestInfo.requestState).toEqual(
-      pot.noneLoading
-    );
+  it("should handle setSpidLoginInLoadingState", () => {
+    const state = spidLoginReducer(initialState, setSpidLoginInLoadingState());
+    expect(state.requestInfo.requestState).toEqual(pot.noneLoading);
   });
 
   it("should handle resetSpidLoginState", () => {
     const modifiedState: SpidLoginState = {
-      nativeLogin: {
-        requestInfo: {
-          requestState: "ERROR",
-          errorType: ErrorType.LOGIN_ERROR,
-          nativeAttempts: 99
-        }
-      },
-      standardLogin: {
-        requestInfo: {
-          requestState: pot.some(true)
-        }
+      requestInfo: {
+        requestState: pot.some(true)
       }
     };
 

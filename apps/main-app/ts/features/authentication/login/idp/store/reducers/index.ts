@@ -3,34 +3,19 @@ import { getType } from "typesafe-actions";
 
 import { Action } from "../../../../../../store/actions/types";
 import {
-  incrementNativeLoginNativeAttempts,
   resetSpidLoginState,
-  setNativeLoginRequestInfo,
-  setStandardLoginInLoadingState,
-  setStandardLoginRequestState
+  setSpidLoginInLoadingState,
+  setSpidLoginRequestState
 } from "../actions";
-import { NativeLoginRequestInfo, StandardLoginRequestInfo } from "../types";
+import { SpidLoginRequestInfo } from "../types";
 
 export type SpidLoginState = {
-  nativeLogin: {
-    requestInfo: NativeLoginRequestInfo;
-  };
-  standardLogin: {
-    requestInfo: StandardLoginRequestInfo;
-  };
+  requestInfo: SpidLoginRequestInfo;
 };
 
 const spidLoginInitialState: SpidLoginState = {
-  nativeLogin: {
-    requestInfo: {
-      requestState: "LOADING",
-      nativeAttempts: 0
-    }
-  },
-  standardLogin: {
-    requestInfo: {
-      requestState: pot.noneLoading
-    }
+  requestInfo: {
+    requestState: pot.noneLoading
   }
 };
 
@@ -39,47 +24,22 @@ export const spidLoginReducer = (
   action: Action
 ): SpidLoginState => {
   switch (action.type) {
-    case getType(incrementNativeLoginNativeAttempts):
-      return {
-        ...state,
-        nativeLogin: {
-          ...state.nativeLogin,
-          requestInfo: {
-            requestState: "LOADING",
-            nativeAttempts: state.nativeLogin.requestInfo.nativeAttempts + 1
-          }
-        }
-      };
     case getType(resetSpidLoginState):
       return spidLoginInitialState;
-    case getType(setNativeLoginRequestInfo):
+    case getType(setSpidLoginInLoadingState):
       return {
         ...state,
-        nativeLogin: {
-          ...state.nativeLogin,
-          requestInfo: action.payload
+        requestInfo: {
+          ...state.requestInfo,
+          requestState: pot.noneLoading
         }
       };
-    case getType(setStandardLoginInLoadingState):
+    case getType(setSpidLoginRequestState):
       return {
         ...state,
-        standardLogin: {
-          ...state.standardLogin,
-          requestInfo: {
-            ...state.standardLogin.requestInfo,
-            requestState: pot.noneLoading
-          }
-        }
-      };
-    case getType(setStandardLoginRequestState):
-      return {
-        ...state,
-        standardLogin: {
-          ...state.standardLogin,
-          requestInfo: {
-            ...state.standardLogin.requestInfo,
-            requestState: action.payload
-          }
+        requestInfo: {
+          ...state.requestInfo,
+          requestState: action.payload
         }
       };
     default:
