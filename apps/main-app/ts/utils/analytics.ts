@@ -17,6 +17,16 @@ import {
   setKeychainError
 } from "../store/storages/keychain";
 
+const isWebViewErrorEvent = (
+  e: Parameters<typeof trackSpidLoginError>[1]
+): e is WebViewErrorEvent => "nativeEvent" in e && e.nativeEvent != null;
+const isWebViewHttpErrorEvent = (
+  e: Parameters<typeof trackSpidLoginError>[1]
+): e is WebViewHttpErrorEvent =>
+  isWebViewErrorEvent(e) &&
+  "statusCode" in e.nativeEvent &&
+  e.nativeEvent.statusCode !== undefined;
+
 export type FlowType =
   | "firstOnboarding"
   | "onBoarding"
@@ -148,30 +158,27 @@ export function trackLollipopIsKeyStrongboxBackedFailure(reason: string) {
 // SPID Login
 export function trackSpidLoginError(
   idpName: string | undefined,
-  e: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
+  error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
 ) {
   const eventName = "SPID_ERROR";
-  if (isLoginUtilsError(e)) {
+  if (isLoginUtilsError(error)) {
     void mixpanelTrack(eventName, {
       idp: idpName,
-      code: e.userInfo?.statusCode,
-      description: e.userInfo?.error,
-      domain: e.userInfo?.url
+      code: error.userInfo?.statusCode,
+      description: error.userInfo?.error,
+      domain: error.userInfo?.url
     });
   } else {
-    const error = e as Error;
-    const webViewError = e as WebViewErrorEvent;
-    const webViewHttpError = e as WebViewHttpErrorEvent;
-    if (webViewHttpError.nativeEvent.statusCode) {
-      const { description, statusCode, url } = webViewHttpError.nativeEvent;
+    if (isWebViewHttpErrorEvent(error)) {
+      const { description, statusCode, url } = error.nativeEvent;
       void mixpanelTrack(eventName, {
         idp: idpName,
         code: statusCode,
         description,
         domain: toUrlWithoutQueryParams(url)
       });
-    } else if (webViewError.nativeEvent) {
-      const { code, description, domain } = webViewError.nativeEvent;
+    } else if (isWebViewErrorEvent(error)) {
+      const { code, description, domain } = error.nativeEvent;
       void mixpanelTrack(eventName, {
         idp: idpName,
         code,

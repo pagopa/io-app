@@ -130,10 +130,6 @@ export type Reset = {
   type: "reset";
 };
 
-export type GoToL2IdentificationMode = {
-  type: "go-to-l2-identification";
-};
-
 export type SimulateFailure = {
   type: "simulate-failure";
   failure: IssuanceFailure;
@@ -169,7 +165,6 @@ export type EidIssuanceEvents =
   | DoneActorEvent<Output, "credentialUpgradeMachine">
   | GoToCieWarning
   | Next
-  | GoToL2IdentificationMode
   | Reset
   | SimulateFailure
   | SessionRefreshComplete;

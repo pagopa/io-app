@@ -165,7 +165,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "environment": {
       "env": "prod",
-      "itWalletSpecsVersion": "1.0.0",
     },
     "identification": {
       "hasNfcFeature": {
@@ -240,21 +239,10 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "loginInfo": {
       "userFromSuccessLogin": false,
     },
-    "nativeLogin": {
-      "enabled": true,
-    },
     "spidLogin": {
-      "nativeLogin": {
-        "requestInfo": {
-          "nativeAttempts": 0,
-          "requestState": "LOADING",
-        },
-      },
-      "standardLogin": {
-        "requestInfo": {
-          "requestState": {
-            "kind": "PotNoneLoading",
-          },
+      "requestInfo": {
+        "requestState": {
+          "kind": "PotNoneLoading",
         },
       },
     },
