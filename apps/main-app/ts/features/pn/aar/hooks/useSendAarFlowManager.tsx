@@ -9,7 +9,7 @@ import { currentAarFlowData } from "../store/selectors";
 import {
   AarFlowState,
   maybeIunFromAarFlowState,
-  sendAarFlowStates,
+  sendAarFlowStates
 } from "../utils/stateUtils";
 
 type SendAarFlowManager = {
@@ -30,8 +30,8 @@ export const useSendAarFlowManager = (): SendAarFlowManager => {
   const handleTerminateFlow = useCallback(() => {
     dispatch(
       terminateAarFlow({
-        messageId: maybeIunFromAarFlowState(currentFlowData),
-      }),
+        messageId: maybeIunFromAarFlowState(currentFlowData)
+      })
     );
     navigation.popToTop();
   }, [dispatch, navigation, currentFlowData]);
@@ -43,8 +43,8 @@ export const useSendAarFlowManager = (): SendAarFlowManager => {
         dispatch(
           setAarFlowState({
             type: sendAarFlowStates.fetchingQRData,
-            qrCode: currentFlowData.qrCode,
-          }),
+            qrCode: currentFlowData.qrCode
+          })
         );
         break;
     }
@@ -53,6 +53,6 @@ export const useSendAarFlowManager = (): SendAarFlowManager => {
   return {
     terminateFlow: handleTerminateFlow,
     goToNextState,
-    currentFlowData,
+    currentFlowData
   };
 };

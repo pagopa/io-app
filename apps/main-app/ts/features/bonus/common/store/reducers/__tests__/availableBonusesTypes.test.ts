@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import {
   availableBonuses,
-  contentBonusVacanzeIT,
+  contentBonusVacanzeIT
 } from "../../../../__mock__/availableBonuses";
 import { BonusesAvailable } from "../../../../../../../definitions/content/BonusesAvailable";
 import { BonusVisibilityEnum } from "../../../../../../../definitions/content/BonusVisibility";
@@ -13,7 +13,7 @@ import {
   isAvailableBonusErrorSelector,
   isAvailableBonusLoadingSelector,
   isAvailableBonusNoneErrorSelector,
-  supportedAvailableBonusSelector,
+  supportedAvailableBonusSelector
 } from "../../selectors";
 import { AvailableBonusTypesState } from "../availableBonusesTypes";
 
@@ -24,7 +24,7 @@ const bonusMockContent = {
     "L'incentivo per supportare il settore del turismo dopo il lockdown richiesto dal COVID-19",
   title: "Richiesta Bonus Vacanze",
   content: contentBonusVacanzeIT,
-  tos_url: "https://io.italia.it/app-content/bonus_vacanze_tos.html",
+  tos_url: "https://io.italia.it/app-content/bonus_vacanze_tos.html"
 };
 
 const mockBonus: BonusAvailable = {
@@ -33,7 +33,7 @@ const mockBonus: BonusAvailable = {
   en: bonusMockContent,
   valid_from: new Date(),
   valid_to: new Date(),
-  is_active: false,
+  is_active: false
 };
 
 describe("availableBonusesTypes with FF enabled", () => {
@@ -41,12 +41,12 @@ describe("availableBonusesTypes with FF enabled", () => {
     jest
       .spyOn(bonus, "mapBonusIdFeatureFlag")
       .mockImplementation(
-        () => new Map<number, boolean>([[ID_CGN_TYPE, true]]),
+        () => new Map<number, boolean>([[ID_CGN_TYPE, true]])
       );
     expect(
       supportedAvailableBonusSelector.resultFunc(
-        pot.some([...availableBonuses]),
-      ).length,
+        pot.some([...availableBonuses])
+      ).length
     ).toBe(1);
   });
 
@@ -55,18 +55,18 @@ describe("availableBonusesTypes with FF enabled", () => {
       () =>
         new Map<number, boolean>([
           [ID_CGN_TYPE, true],
-          [4, true],
-        ]),
+          [4, true]
+        ])
     );
     const bonuses: BonusesAvailable = [
       ...availableBonuses,
       {
         ...mockBonus,
-        visibility: BonusVisibilityEnum.experimental,
-      },
+        visibility: BonusVisibilityEnum.experimental
+      }
     ];
     expect(
-      supportedAvailableBonusSelector.resultFunc(pot.some(bonuses)).length,
+      supportedAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
     ).toBe(2);
   });
 
@@ -75,18 +75,18 @@ describe("availableBonusesTypes with FF enabled", () => {
       () =>
         new Map<number, boolean>([
           [ID_CGN_TYPE, true],
-          [4, true],
-        ]),
+          [4, true]
+        ])
     );
     const bonuses: BonusesAvailable = [
       ...availableBonuses,
       {
         ...mockBonus,
-        visibility: BonusVisibilityEnum.visible,
-      },
+        visibility: BonusVisibilityEnum.visible
+      }
     ];
     expect(
-      supportedAvailableBonusSelector.resultFunc(pot.some(bonuses)).length,
+      supportedAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
     ).toBe(2);
   });
 
@@ -95,11 +95,11 @@ describe("availableBonusesTypes with FF enabled", () => {
       ...availableBonuses,
       {
         ...mockBonus,
-        visibility: BonusVisibilityEnum.hidden,
-      },
+        visibility: BonusVisibilityEnum.hidden
+      }
     ];
     expect(
-      supportedAvailableBonusSelector.resultFunc(pot.some(bonuses)).length,
+      supportedAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
     ).toBe(1);
   });
 
@@ -108,12 +108,12 @@ describe("availableBonusesTypes with FF enabled", () => {
       () =>
         new Map<number, boolean>([
           [ID_CGN_TYPE, true],
-          [4, true],
-        ]),
+          [4, true]
+        ])
     );
     const bonuses: BonusesAvailable = [];
     const result = supportedAvailableBonusSelector.resultFunc(
-      pot.some(bonuses),
+      pot.some(bonuses)
     );
     expect(result.length).toBe(0);
   });
@@ -123,24 +123,24 @@ describe("availableBonusesTypes with FF enabled", () => {
       () =>
         new Map<number, boolean>([
           [ID_CGN_TYPE, true],
-          [4, true],
-        ]),
+          [4, true]
+        ])
     );
     const visibility = BonusVisibilityEnum.experimental;
     const bonuses: BonusesAvailable = [
       {
         ...mockBonus,
         id_type: ID_CGN_TYPE,
-        visibility,
+        visibility
       },
       {
         ...mockBonus,
         id_type: -1,
-        visibility,
-      },
+        visibility
+      }
     ];
     const result = supportedAvailableBonusSelector.resultFunc(
-      pot.some(bonuses),
+      pot.some(bonuses)
     );
     expect(result.length).toBe(1);
     expect(result).toEqual([bonuses[0]]);
@@ -154,7 +154,7 @@ const loadingCases: ReadonlyArray<
   [pot.none, false],
   [pot.some([mockBonus]), false],
   [pot.noneError(new Error()), false],
-  [pot.someError([mockBonus], new Error()), false],
+  [pot.someError([mockBonus], new Error()), false]
 ];
 
 describe("isAvailableBonusLoadingSelector selector", () => {
@@ -163,7 +163,7 @@ describe("isAvailableBonusLoadingSelector selector", () => {
     (firstArg, expectedResult) => {
       const result = isAvailableBonusLoadingSelector.resultFunc(firstArg);
       expect(result).toEqual(expectedResult);
-    },
+    }
   );
 });
 
@@ -174,7 +174,7 @@ const errorCases: ReadonlyArray<
   [pot.none, false],
   [pot.some([mockBonus]), false],
   [pot.noneError(new Error()), true],
-  [pot.someError([mockBonus], new Error()), true],
+  [pot.someError([mockBonus], new Error()), true]
 ];
 describe("isAvailableBonusErrorSelector selector", () => {
   test.each(errorCases)(
@@ -182,7 +182,7 @@ describe("isAvailableBonusErrorSelector selector", () => {
     (firstArg, expectedResult) => {
       const result = isAvailableBonusErrorSelector.resultFunc(firstArg);
       expect(result).toEqual(expectedResult);
-    },
+    }
   );
 });
 
@@ -190,7 +190,7 @@ const noneErrorCases: ReadonlyArray<
   [
     firstInput: AvailableBonusTypesState,
     secondInput: boolean,
-    expectedResult: boolean,
+    expectedResult: boolean
   ]
 > = [
   [pot.noneLoading, true, true],
@@ -202,7 +202,7 @@ const noneErrorCases: ReadonlyArray<
   [pot.noneError(new Error()), true, true],
   [pot.noneError(new Error()), false, false],
   [pot.someError([mockBonus], new Error()), true, false],
-  [pot.someError([mockBonus], new Error()), false, false],
+  [pot.someError([mockBonus], new Error()), false, false]
 ];
 describe("isAvailableBonusNoneErrorSelector selector", () => {
   test.each(noneErrorCases)(
@@ -210,9 +210,9 @@ describe("isAvailableBonusNoneErrorSelector selector", () => {
     (firstArg, secondArg, expectedResult) => {
       const result = isAvailableBonusNoneErrorSelector.resultFunc(
         firstArg,
-        secondArg,
+        secondArg
       );
       expect(result).toEqual(expectedResult);
-    },
+    }
   );
 });

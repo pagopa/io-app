@@ -15,10 +15,10 @@ describe("FciEnvironmentSet", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciEnvironmentSet(O.some(EnvironmentEnum.test)));
     expect(store.getState().features.fci.environment).toStrictEqual(
-      O.some(EnvironmentEnum.test),
+      O.some(EnvironmentEnum.test)
     );
     expect(store.getState().features.fci.environment).not.toStrictEqual(
-      O.some(EnvironmentEnum.prod),
+      O.some(EnvironmentEnum.prod)
     );
   });
   it("should be an Option containing prod if the initialState is test and fciEnvironmentSet is dispatched with EnvironmentEnum.prod as payload", () => {
@@ -26,11 +26,11 @@ describe("FciEnvironmentSet", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciEnvironmentSet(O.some(EnvironmentEnum.test)));
     expect(store.getState().features.fci.environment).toStrictEqual(
-      O.some(EnvironmentEnum.test),
+      O.some(EnvironmentEnum.test)
     );
     store.dispatch(fciEnvironmentSet(O.some(EnvironmentEnum.prod)));
     expect(store.getState().features.fci.environment).toStrictEqual(
-      O.some(EnvironmentEnum.prod),
+      O.some(EnvironmentEnum.prod)
     );
   });
 });

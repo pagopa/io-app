@@ -15,8 +15,8 @@ const ReactNativeBlobUtilMock = (status: number, body: string = "") =>
     fetch: jest.fn().mockReturnValue({
       info: jest.fn().mockReturnValue({ status }),
       path: jest.fn().mockReturnValue(savePath),
-      text: jest.fn().mockResolvedValue(body),
-    }),
+      text: jest.fn().mockResolvedValue(body)
+    })
   })));
 
 describe("Test handleDownloadDocument", () => {
@@ -32,8 +32,8 @@ describe("Test handleDownloadDocument", () => {
         expectSaga(handleDownloadDocument, fciDownloadPreview.request({ url }))
           .put(
             fciDownloadPreview.success({
-              path: savePath,
-            }),
+              path: savePath
+            })
           )
           .run());
     });
@@ -49,8 +49,8 @@ describe("Test handleDownloadDocument", () => {
         expectSaga(handleDownloadDocument, fciDownloadPreview.request({ url }))
           .put(
             fciDownloadPreview.failure(
-              getNetworkError(new Error(`error ${status} fetching ${url}`)),
-            ),
+              getNetworkError(new Error(`error ${status} fetching ${url}`))
+            )
           )
           .run());
     });
@@ -66,8 +66,8 @@ describe("Test handleDownloadDocument", () => {
         expectSaga(handleDownloadDocument, fciDownloadPreview.request({ url }))
           .put(
             fciDownloadPreview.failure(
-              getNetworkError(new Error(`error ${status} fetching ${url}`)),
-            ),
+              getNetworkError(new Error(`error ${status} fetching ${url}`))
+            )
           )
           .run());
     });
@@ -83,7 +83,7 @@ describe("Test handleDownloadDocument", () => {
           RequestId:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
           Time:...</Message>
             <AuthenticationErrorDetail>Signature not valid in the specified time frame: ...</AuthenticationErrorDetail>
-          </Error>`,
+          </Error>`
         );
       });
 
@@ -101,7 +101,7 @@ describe("Test handleDownloadDocument", () => {
       function* saga() {
         const task = yield* fork(
           handleDownloadDocument,
-          fciDownloadPreview.request({ url }),
+          fciDownloadPreview.request({ url })
         );
         yield* cancel(task);
       }

@@ -6,7 +6,7 @@ import {
   SignatureConfigForgeInput,
   CutsomContentToSignInput,
   customContentSignatureBases,
-  CustomContentBaseSignature,
+  CustomContentBaseSignature
 } from "../../utils/fetch";
 import { KeyInfo } from "../../utils/crypto";
 import { constants } from "../constants";
@@ -14,60 +14,60 @@ import {
   generateSignatureInput,
   generateSignatureBase,
   toSignatureHeaderValue,
-  generateSignature,
+  generateSignature
 } from "../signature";
 import { SignatureConfig } from "../types/SignatureConfig";
 import { brokenMockSigner, mockSigner } from "../__mocks__/mockSigners";
 import { getError } from "../../../../utils/errors";
 
 const testHeaders: Record<any, string> = {
-  "": "",
+  "": ""
 };
 const testHeadersWithContentDigest: Record<any, string> = {
   "Content-Digest": "sha-256=:eNJnazvTtWDD2IoIlFZca3TDmPd3BpaM2GDcn4/bnSk=:",
-  ...testHeaders,
+  ...testHeaders
 };
 
 const testCustomHeaders = {
   "x-pagopa-lollipop-original-method": "GET",
-  "x-pagopa-lollipop-original-url": "/api/v1/profile",
+  "x-pagopa-lollipop-original-url": "/api/v1/profile"
 };
 const testCustomHeadersWithContentDigest = {
   "Content-Digest": "sha-256=:eNJnazvTtWDD2IoIlFZca3TDmPd3BpaM2GDcn4/bnSk=:",
   "Content-Type": "application/json",
   "Content-Length": "18",
-  ...testCustomHeaders,
+  ...testCustomHeaders
 };
 
 const publicKeyECKey: ECKey = {
   kty: "EC",
   crv: "P-256K",
   x: "xKey",
-  y: "yKey",
+  y: "yKey"
 };
 
 const publicKeyRSAKey: RSAKey = {
   kty: "RSA",
   alg: "rsa",
   e: "eKey",
-  n: "nKey",
+  n: "nKey"
 };
 
 const testKeyInfoWithECKey: Required<KeyInfo> = {
   keyTag: "AAA",
   publicKey: publicKeyECKey,
-  publicKeyThumbprint: "testThumbprint",
+  publicKeyThumbprint: "testThumbprint"
 };
 
 const testKeyInfoWithRSAKey: KeyInfo = {
   keyTag: "AAA",
   publicKey: publicKeyRSAKey,
-  publicKeyThumbprint: "testThumbprint",
+  publicKeyThumbprint: "testThumbprint"
 };
 
 const testLollipopConfigWithCustomContent: LollipopConfig = {
   nonce: "xyz123",
-  customContentToSign: { tos: "ASDFFA324SDFA==", sign: "DAFDEFAF323DSFA==" },
+  customContentToSign: { tos: "ASDFFA324SDFA==", sign: "DAFDEFAF323DSFA==" }
 };
 
 const testSignatureConfigForgeInputWithCustomContentAndECKey: SignatureConfigForgeInput =
@@ -76,7 +76,7 @@ const testSignatureConfigForgeInputWithCustomContentAndECKey: SignatureConfigFor
     keyTag: testKeyInfoWithRSAKey.keyTag!,
     lollipopConfig: testLollipopConfigWithCustomContent,
     method: "POST",
-    inputUrl: URLParse("https://example.com/hello?name=world"),
+    inputUrl: URLParse("https://example.com/hello?name=world")
   };
 
 const testSignatureConfigForgeInputWithCustomContentAndRSAKey: SignatureConfigForgeInput =
@@ -85,7 +85,7 @@ const testSignatureConfigForgeInputWithCustomContentAndRSAKey: SignatureConfigFo
     keyTag: testKeyInfoWithRSAKey.keyTag!,
     lollipopConfig: testLollipopConfigWithCustomContent,
     method: "POST",
-    inputUrl: URLParse("https://example.com/hello?name=world"),
+    inputUrl: URLParse("https://example.com/hello?name=world")
   };
 
 const testConfig: SignatureConfig = {
@@ -99,9 +99,9 @@ const testConfig: SignatureConfig = {
     path: "/hello",
     scheme: "https",
     targetUri: "https://example.com/hello?name=world",
-    originalUrl: "https://example.com/hello?name=world",
+    originalUrl: "https://example.com/hello?name=world"
   },
-  signatureParams: ["Content-Digest", "@method", "@path", "@authority"],
+  signatureParams: ["Content-Digest", "@method", "@path", "@authority"]
 };
 
 const testCustomHeadersConfig: SignatureConfig = {
@@ -115,51 +115,51 @@ const testCustomHeadersConfig: SignatureConfig = {
     path: "/hello",
     scheme: "https",
     targetUri: "https://example.com/hello?name=world",
-    originalUrl: "https://example.com/hello?name=world",
+    originalUrl: "https://example.com/hello?name=world"
   },
   signatureParams: [
     "Content-Digest",
     "Content-Type",
     "Content-Length",
     "x-pagopa-lollipop-original-method",
-    "x-pagopa-lollipop-original-url",
-  ],
+    "x-pagopa-lollipop-original-url"
+  ]
 };
 
 MockDate.set("2021-06-07T01:30:00.000Z");
 
 describe(`Test signature input generation`, () => {
   it(`without "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
-    testConfig,
+    testConfig
   )}`, () => {
     const signatureInput = generateSignatureInput(testHeaders, testConfig);
     expect(signatureInput).toBe(
-      'sig1=("@method" "@path" "@authority");created=1623029400;nonce="xyz";alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="',
+      'sig1=("@method" "@path" "@authority");created=1623029400;nonce="xyz";alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="'
     );
   });
 });
 
 describe(`Test signature input generation with "${constants.HEADERS.CONTENT_DIGEST}"`, () => {
   it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
-    testConfig,
+    testConfig
   )}`, () => {
     const signatureInput = generateSignatureInput(
       testHeadersWithContentDigest,
-      testConfig,
+      testConfig
     );
     expect(signatureInput).toBe(
-      'sig1=("content-digest" "@method" "@path" "@authority");created=1623029400;nonce="xyz";alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="',
+      'sig1=("content-digest" "@method" "@path" "@authority");created=1623029400;nonce="xyz";alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="'
     );
   });
 });
 
 describe(`Test generate signature base`, () => {
   it(`without "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
-    testConfig,
+    testConfig
   )}`, () => {
     const signatureBase = generateSignatureBase(
       testHeaders,
-      testConfig,
+      testConfig
     ).signatureBase;
     const expectedBase = `"@method": POST
 "@path": /hello
@@ -171,11 +171,11 @@ describe(`Test generate signature base`, () => {
 
 describe(`Test generate signature base with content-digest`, () => {
   it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
-    testConfig,
+    testConfig
   )}`, () => {
     const signatureBase = generateSignatureBase(
       testHeadersWithContentDigest,
-      testConfig,
+      testConfig
     ).signatureBase;
     const expectedBase = `"content-digest": sha-256=:eNJnazvTtWDD2IoIlFZca3TDmPd3BpaM2GDcn4/bnSk=:
 "@method": POST
@@ -188,11 +188,11 @@ describe(`Test generate signature base with content-digest`, () => {
 
 describe(`Test generate signature base with custom headers and content-digest`, () => {
   it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
-    testCustomHeadersConfig,
+    testCustomHeadersConfig
   )}`, () => {
     const signatureBase = generateSignatureBase(
       testCustomHeadersWithContentDigest,
-      testCustomHeadersConfig,
+      testCustomHeadersConfig
     ).signatureBase;
     const expectedBase = `"content-digest": sha-256=:eNJnazvTtWDD2IoIlFZca3TDmPd3BpaM2GDcn4/bnSk=:
 "content-type": application/json
@@ -210,7 +210,7 @@ describe(`Test generate signature base for multiple custom signatures RSAKey`, (
     keyInfo: testKeyInfoWithRSAKey,
     keyTag: testKeyInfoWithRSAKey.keyTag!,
     signatureConfigForgeInput:
-      testSignatureConfigForgeInputWithCustomContentAndRSAKey,
+      testSignatureConfigForgeInputWithCustomContentAndRSAKey
   };
   it(`should generate a base for every signature in customContent`, () => {
     const signatureBase = customContentSignatureBases(customContent);
@@ -232,7 +232,7 @@ describe(`Test generate signature base for multiple custom signatures RSAKey`, (
         headerIndex,
         headerPrefix,
         headerName: `x-pagopa-lollipop-custom-${headerPrefix}`,
-        headerValue,
+        headerValue
       };
 
       expect(controlObject).toEqual(base);
@@ -246,7 +246,7 @@ describe(`Test generate signature base for multiple custom signatures ECKey`, ()
     keyInfo: testKeyInfoWithECKey,
     keyTag: testKeyInfoWithECKey.keyTag!,
     signatureConfigForgeInput:
-      testSignatureConfigForgeInputWithCustomContentAndECKey,
+      testSignatureConfigForgeInputWithCustomContentAndECKey
   };
   it(`should generate a base for every signature in customContent`, () => {
     const signatureBase = customContentSignatureBases(customContent);
@@ -268,7 +268,7 @@ describe(`Test generate signature base for multiple custom signatures ECKey`, ()
         headerIndex,
         headerPrefix,
         headerName: `x-pagopa-lollipop-custom-${headerPrefix}`,
-        headerValue,
+        headerValue
       };
 
       expect(controlObject).toEqual(base);
@@ -278,11 +278,11 @@ describe(`Test generate signature base for multiple custom signatures ECKey`, ()
 
 describe(`Test generate signature with mock signed data`, () => {
   it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
-    testConfig,
+    testConfig
   )}`, async () => {
     const signature = toSignatureHeaderValue("mocksigneddata");
     const validateSignature = /^((sig[0-9]+)=:[A-Za-z0-9+/=]*:(, ?)?)+$/.test(
-      signature,
+      signature
     );
     expect(validateSignature).toBeTruthy();
     expect(signature).toBe("sig1=:mocksigneddata:");
@@ -291,12 +291,12 @@ describe(`Test generate signature with mock signed data`, () => {
 
 describe(`Test generate signature with signer`, () => {
   it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
-    testConfig,
+    testConfig
   )}`, async () => {
     const signer = mockSigner;
     const signature = await generateSignature(testHeaders, testConfig, signer);
     const validateSignature = /^((sig[0-9]+)=:[A-Za-z0-9+/=]*:(, ?)?)+$/.test(
-      signature,
+      signature
     );
     expect(validateSignature).toBeTruthy();
   });
@@ -304,7 +304,7 @@ describe(`Test generate signature with signer`, () => {
 
 describe(`Test generate signature`, () => {
   it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
-    testConfig,
+    testConfig
   )}`, async () => {
     const signer = brokenMockSigner;
     try {

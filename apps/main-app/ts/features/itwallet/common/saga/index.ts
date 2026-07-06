@@ -6,7 +6,7 @@ import { ActionType } from "typesafe-actions";
 import {
   syncItwAnalyticsProperties,
   updateNfcInfoTrackingProperties,
-  watchItwAnalyticsSaga,
+  watchItwAnalyticsSaga
 } from "../../analytics/saga";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
@@ -21,12 +21,12 @@ import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkC
 import { warmUpIntegrityServiceSaga } from "../../lifecycle/saga/checkIntegrityServiceReadySaga";
 import {
   checkWalletInstanceInconsistencySaga,
-  checkWalletInstanceStateSaga,
+  checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
 import {
   itwSetAuthLevel,
-  itwSetFiscalCodeWhitelisted,
+  itwSetFiscalCodeWhitelisted
 } from "../store/actions/preferences.ts";
 import { handleWalletUnitAttestationsCleanUp } from "../../credentials/saga/handleWalletUnitAttestationsCleanUp.ts";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
@@ -36,7 +36,7 @@ import { watchItwOfflineAccess } from "./offlineAccess.ts";
 export function* watchItwSaga(): SagaIterator {
   yield* takeLatest(
     itwSetFiscalCodeWhitelisted,
-    handleAuthLevelSanitizationSaga,
+    handleAuthLevelSanitizationSaga
   );
 
   yield* fork(warmUpIntegrityServiceSaga);
@@ -49,7 +49,7 @@ export function* watchItwSaga(): SagaIterator {
   yield* fork(watchItwAnalyticsSaga);
 
   const isWalletInstanceConsistent = yield* call(
-    checkWalletInstanceInconsistencySaga,
+    checkWalletInstanceInconsistencySaga
   );
 
   // If the wallet instance is inconsistent, we cannot proceed further.
@@ -111,7 +111,7 @@ export function* watchItwOfflineSaga(): SagaIterator {
  *   version is greater than 3.21
  */
 const handleAuthLevelSanitizationSaga = function* (
-  action: ActionType<typeof itwSetFiscalCodeWhitelisted>,
+  action: ActionType<typeof itwSetFiscalCodeWhitelisted>
 ): SagaIterator {
   if (action.payload) {
     // Skip the sanitization for whitelisted users
@@ -122,7 +122,7 @@ const handleAuthLevelSanitizationSaga = function* (
   const hasItwPID = pipe(
     yield* select(itwCredentialsEidSelector),
     O.map(isItwCredential),
-    O.getOrElse(() => false),
+    O.getOrElse(() => false)
   );
 
   if (!hasItwPID) {

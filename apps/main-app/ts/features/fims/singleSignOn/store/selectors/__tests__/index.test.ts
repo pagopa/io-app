@@ -13,7 +13,7 @@ import {
   fimsRelyingPartyDomainSelector,
   fimsRelyingPartyUrlIfFastLoginSelector,
   fimsRelyingPartyUrlSelector,
-  relyingPartyServiceIdSelector,
+  relyingPartyServiceIdSelector
 } from "../";
 import { Consent } from "../../../../../../../definitions/fims_sso/Consent";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -23,7 +23,7 @@ import { FIMS_SSO_ERROR_TAGS, FimsFlowStateTags } from "../../reducers";
 const errorTags: ReadonlyArray<FIMS_SSO_ERROR_TAGS> = [
   "AUTHENTICATION",
   "GENERIC",
-  "MISSING_INAPP_BROWSER",
+  "MISSING_INAPP_BROWSER"
 ];
 
 const flowStateTags: ReadonlyArray<FimsFlowStateTags> = [
@@ -31,13 +31,13 @@ const flowStateTags: ReadonlyArray<FimsFlowStateTags> = [
   "consents",
   "fastLogin_forced_restart",
   "idle",
-  "in-app-browser-loading",
+  "in-app-browser-loading"
 ];
 
 const ssoDataPots = (
   consent: Consent,
   errorTag: FIMS_SSO_ERROR_TAGS = "GENERIC",
-  debugMessage: string = "Failed",
+  debugMessage: string = "Failed"
 ) => [
   pot.none,
   pot.noneLoading,
@@ -48,8 +48,8 @@ const ssoDataPots = (
   pot.someUpdating(consent, consent),
   pot.someError(consent, {
     errorTag,
-    debugMessage,
-  }),
+    debugMessage
+  })
 ];
 
 describe("singleSignOn selectors", () => {
@@ -60,10 +60,10 @@ describe("singleSignOn selectors", () => {
         features: {
           fims: {
             sso: {
-              ssoData,
-            },
-          },
-        },
+              ssoData
+            }
+          }
+        }
       } as GlobalState;
       const consentsData = fimsConsentsDataSelector(state);
       expect(consentsData).toBe(ssoData);
@@ -78,10 +78,10 @@ describe("singleSignOn selectors", () => {
         features: {
           fims: {
             sso: {
-              relyingPartyUrl,
-            },
-          },
-        },
+              relyingPartyUrl
+            }
+          }
+        }
       } as GlobalState;
       const domain = fimsRelyingPartyDomainSelector(state);
       expect(domain).toBe(expectedUrl);
@@ -91,9 +91,9 @@ describe("singleSignOn selectors", () => {
       const state = {
         features: {
           fims: {
-            sso: {},
-          },
-        },
+            sso: {}
+          }
+        }
       } as GlobalState;
       const domain = fimsRelyingPartyDomainSelector(state);
       expect(domain).toBeUndefined();
@@ -107,10 +107,10 @@ describe("singleSignOn selectors", () => {
         features: {
           fims: {
             sso: {
-              relyingPartyUrl,
-            },
-          },
-        },
+              relyingPartyUrl
+            }
+          }
+        }
       } as GlobalState;
       const url = fimsRelyingPartyUrlSelector(state);
       expect(url).toBe(relyingPartyUrl);
@@ -124,10 +124,10 @@ describe("singleSignOn selectors", () => {
         features: {
           fims: {
             sso: {
-              ctaText,
-            },
-          },
-        },
+              ctaText
+            }
+          }
+        }
       } as GlobalState;
       const ctaTextResult = fimsCtaTextSelector(state);
       expect(ctaTextResult).toBe(ctaText);
@@ -141,10 +141,10 @@ describe("singleSignOn selectors", () => {
         features: {
           fims: {
             sso: {
-              relyingPartyServiceId: serviceId,
-            },
-          },
-        },
+              relyingPartyServiceId: serviceId
+            }
+          }
+        }
       } as GlobalState;
       const serviceIdResult = relyingPartyServiceIdSelector(state);
       expect(serviceIdResult).toBe(serviceId);
@@ -152,20 +152,20 @@ describe("singleSignOn selectors", () => {
   });
 
   describe("fimsEphemeralSessionOniOSSelector", () => {
-    [true, false].forEach((ephemeralSessionOniOS) =>
+    [true, false].forEach(ephemeralSessionOniOS =>
       it(`should return ephemeralSessionOniOS='${ephemeralSessionOniOS}'`, () => {
         const state = {
           features: {
             fims: {
               sso: {
-                ephemeralSessionOniOS,
-              },
-            },
-          },
+                ephemeralSessionOniOS
+              }
+            }
+          }
         } as GlobalState;
         const sessionFlag = fimsEphemeralSessionOniOSSelector(state);
         expect(sessionFlag).toBe(ephemeralSessionOniOS);
-      }),
+      })
     );
   });
 
@@ -176,12 +176,12 @@ describe("singleSignOn selectors", () => {
       _links: {
         consent: { href: consentUrl },
         abort: {
-          href: abortUrl,
-        },
-      },
+          href: abortUrl
+        }
+      }
     } as Consent;
-    errorTags.forEach((errorTag) =>
-      ssoDataPots(consent, errorTag).forEach((ssoDataPot) => {
+    errorTags.forEach(errorTag =>
+      ssoDataPots(consent, errorTag).forEach(ssoDataPot => {
         const isSome =
           ssoDataPot.kind === "PotSome" ||
           ssoDataPot.kind === "PotSomeError" ||
@@ -195,17 +195,17 @@ describe("singleSignOn selectors", () => {
             features: {
               fims: {
                 sso: {
-                  ssoData: ssoDataPot,
-                },
-              },
-            },
+                  ssoData: ssoDataPot
+                }
+              }
+            }
           } as GlobalState;
 
           const partialAbortUrl = fimsPartialAbortUrl(globalState);
           const expected = isSome ? abortUrl : undefined;
           expect(partialAbortUrl).toEqual(expected);
         });
-      }),
+      })
     );
   });
 
@@ -216,12 +216,12 @@ describe("singleSignOn selectors", () => {
       _links: {
         consent: { href: consentUrl },
         abort: {
-          href: abortUrl,
-        },
-      },
+          href: abortUrl
+        }
+      }
     } as Consent;
-    errorTags.forEach((errorTag) =>
-      ssoDataPots(consent, errorTag).forEach((ssoDataPot) => {
+    errorTags.forEach(errorTag =>
+      ssoDataPots(consent, errorTag).forEach(ssoDataPot => {
         const isSome =
           ssoDataPot.kind === "PotSome" ||
           ssoDataPot.kind === "PotSomeError" ||
@@ -235,12 +235,12 @@ describe("singleSignOn selectors", () => {
           const expected = isSome ? O.some(abortUrl) : O.none;
           expect(abortUrlFromConsents).toEqual(expected);
         });
-      }),
+      })
     );
   });
 
   describe("fimsAuthenticationFailedSelector", () => {
-    ssoDataPots({} as Consent).forEach((ssoDataPot) => {
+    ssoDataPots({} as Consent).forEach(ssoDataPot => {
       const expectedOutput =
         ssoDataPot.kind === "PotNoneError" ||
         ssoDataPot.kind === "PotSomeError";
@@ -249,10 +249,10 @@ describe("singleSignOn selectors", () => {
           features: {
             fims: {
               sso: {
-                ssoData: ssoDataPot,
-              },
-            },
-          },
+                ssoData: ssoDataPot
+              }
+            }
+          }
         } as GlobalState;
         const authenticationFailed =
           fimsAuthenticationFailedSelector(globalState);
@@ -262,8 +262,8 @@ describe("singleSignOn selectors", () => {
   });
 
   describe("fimsAuthenticationErrorTagSelector", () => {
-    errorTags.forEach((errorTag) =>
-      ssoDataPots({} as Consent, errorTag).forEach((ssoDataPot) => {
+    errorTags.forEach(errorTag =>
+      ssoDataPots({} as Consent, errorTag).forEach(ssoDataPot => {
         const isError =
           ssoDataPot.kind === "PotNoneError" ||
           ssoDataPot.kind === "PotSomeError";
@@ -276,10 +276,10 @@ describe("singleSignOn selectors", () => {
             features: {
               fims: {
                 sso: {
-                  ssoData: ssoDataPot,
-                },
-              },
-            },
+                  ssoData: ssoDataPot
+                }
+              }
+            }
           } as GlobalState;
           const errorTagResult =
             fimsAuthenticationErrorTagSelector(globalState);
@@ -289,15 +289,15 @@ describe("singleSignOn selectors", () => {
             expect(errorTagResult).toBeUndefined();
           }
         });
-      }),
+      })
     );
   });
 
   describe("fimsDebugDataSelector", () => {
     const debugMessage = "Failed to load consents";
-    [true, false].forEach((isDebugModeEnabled) =>
+    [true, false].forEach(isDebugModeEnabled =>
       ssoDataPots({} as Consent, undefined, debugMessage).forEach(
-        (ssoDataPot) => {
+        ssoDataPot => {
           const isError =
             ssoDataPot.kind === "PotNoneError" ||
             ssoDataPot.kind === "PotSomeError";
@@ -308,15 +308,15 @@ describe("singleSignOn selectors", () => {
           }`, () => {
             const globalState = {
               debug: {
-                isDebugModeEnabled,
+                isDebugModeEnabled
               },
               features: {
                 fims: {
                   sso: {
-                    ssoData: ssoDataPot,
-                  },
-                },
-              },
+                    ssoData: ssoDataPot
+                  }
+                }
+              }
             } as GlobalState;
             const debugData = fimsDebugDataSelector(globalState);
             if (isDebugModeEnabled && isError) {
@@ -325,8 +325,8 @@ describe("singleSignOn selectors", () => {
               expect(debugData).toBeUndefined();
             }
           });
-        },
-      ),
+        }
+      )
     );
   });
 
@@ -335,9 +335,9 @@ describe("singleSignOn selectors", () => {
       jest.restoreAllMocks();
     });
 
-    flowStateTags.forEach((flowState) => {
-      [true, false].forEach((isLoading) => {
-        [true, false].forEach((_isStrictNone) => {
+    flowStateTags.forEach(flowState => {
+      [true, false].forEach(isLoading => {
+        [true, false].forEach(_isStrictNone => {
           test(`should return '${
             flowState === "consents"
               ? isLoading || _isStrictNone
@@ -350,10 +350,10 @@ describe("singleSignOn selectors", () => {
                 fims: {
                   sso: {
                     currentFlowState: flowState,
-                    ssoData: pot.none,
-                  },
-                },
-              },
+                    ssoData: pot.none
+                  }
+                }
+              }
             } as GlobalState;
 
             jest.spyOn(pot, "isLoading").mockReturnValue(isLoading);
@@ -378,8 +378,8 @@ describe("singleSignOn selectors", () => {
 
   describe("fimsRelyingPartyUrlIfFastLoginSelector", () => {
     const url = "https://fast-login.it";
-    [url, undefined].forEach((relyingPartyUrl) =>
-      flowStateTags.forEach((currentFlowState) =>
+    [url, undefined].forEach(relyingPartyUrl =>
+      flowStateTags.forEach(currentFlowState =>
         it(`When relyingPartyUrl='${relyingPartyUrl}' and currentFlowState='${currentFlowState}' should return '${
           currentFlowState === "fastLogin_forced_restart" ? url : undefined
         }'`, () => {
@@ -388,10 +388,10 @@ describe("singleSignOn selectors", () => {
               fims: {
                 sso: {
                   relyingPartyUrl,
-                  currentFlowState,
-                },
-              },
-            },
+                  currentFlowState
+                }
+              }
+            }
           } as GlobalState;
 
           const relyingPartyUrlIfFastLogin =
@@ -405,8 +405,8 @@ describe("singleSignOn selectors", () => {
           } else {
             expect(relyingPartyUrlIfFastLogin).toBeUndefined();
           }
-        }),
-      ),
+        })
+      )
     );
   });
 });

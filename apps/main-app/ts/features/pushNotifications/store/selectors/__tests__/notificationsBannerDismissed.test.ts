@@ -7,7 +7,7 @@ import {
   pushNotificationsBannerForceDismissionDateSelector,
   shouldResetNotificationBannerDismissStateSelector,
   timesPushNotificationBannerDismissedSelector,
-  unreadMessagesCountAfterForceDismissionSelector,
+  unreadMessagesCountAfterForceDismissionSelector
 } from "../notificationsBannerDismissed";
 import { UserBehaviourState } from "../../reducers/userBehaviour";
 
@@ -19,7 +19,7 @@ type TestStateProps = {
 const getTestState = ({
   timesDismissed,
   forceDismissionDate,
-  messages,
+  messages
 }: TestStateProps): GlobalState =>
   ({
     entities: {
@@ -27,41 +27,41 @@ const getTestState = ({
         allPaginated: {
           inbox: {
             data: pot.some({
-              page: messages,
-            }),
-          },
-        },
-      },
+              page: messages
+            })
+          }
+        }
+      }
     },
     notifications: {
       userBehaviour: {
         pushNotificationBannerDismissalCount: timesDismissed ?? 0,
-        pushNotificationBannerForceDismissionDate: forceDismissionDate,
-      } as UserBehaviourState,
-    },
+        pushNotificationBannerForceDismissionDate: forceDismissionDate
+      } as UserBehaviourState
+    }
   }) as unknown as GlobalState;
 
 const unreadMessage = {
   isRead: false,
-  createdAt: new Date("2100-01-01"),
+  createdAt: new Date("2100-01-01")
 } as unknown as UIMessage;
 
 const readMessage = {
   isRead: true,
-  createdAt: new Date("2100-01-01"),
+  createdAt: new Date("2100-01-01")
 } as unknown as UIMessage;
 
 describe("pushNotificationsBannerForceDismissionDateSelector", () => {
   it("should return undefined when 'pushNotificationBannerForceDismissionDate' has no value", () => {
     const dismissionDate = pushNotificationsBannerForceDismissionDateSelector(
-      getTestState({}),
+      getTestState({})
     );
     expect(dismissionDate).toBe(undefined);
   });
   it("should return proper value when 'pushNotificationBannerForceDismissionDate' is defined", () => {
     const dismissionDateUE = new Date().getTime();
     const dismissionDate = pushNotificationsBannerForceDismissionDateSelector(
-      getTestState({ forceDismissionDate: dismissionDateUE }),
+      getTestState({ forceDismissionDate: dismissionDateUE })
     );
     expect(dismissionDate).toBe(dismissionDateUE);
   });
@@ -71,8 +71,8 @@ describe("timesPushNotificationsBannerDismissedSelector", () => {
   it("should return timesPushNotificationsBannerDismissed", () => {
     expect(
       timesPushNotificationBannerDismissedSelector(
-        getTestState({ timesDismissed: 1 }),
-      ),
+        getTestState({ timesDismissed: 1 })
+      )
     ).toBe(1);
   });
 });
@@ -85,52 +85,50 @@ describe("unreadMessagesCountAfterForceDismissionSelector, isForceDismissAndNotU
   describe(`if 'messageList' is undefined`, () => {
     const noMessageListTestState = getTestState({
       forceDismissionDate: 1,
-      timesDismissed: 3,
+      timesDismissed: 3
     });
     it("unreadMessagesCountAfterForceDismissionSelector should return 'undefined'", () => {
       expect(
-        unreadMessagesCountAfterForceDismissionSelector(noMessageListTestState),
+        unreadMessagesCountAfterForceDismissionSelector(noMessageListTestState)
       ).toBeUndefined();
     });
     it("isForceDismissAndNotUnreadMessagesHiddenSelector should return 'false'", () => {
       expect(
-        isForceDismissAndNotUnreadMessagesHiddenSelector(
-          noMessageListTestState,
-        ),
+        isForceDismissAndNotUnreadMessagesHiddenSelector(noMessageListTestState)
       ).toBe(false);
     });
     it("shouldResetNotificationBannerDismissStateSelector should return 'false'", () => {
       expect(
         shouldResetNotificationBannerDismissStateSelector(
-          noMessageListTestState,
-        ),
+          noMessageListTestState
+        )
       ).toBe(false);
     });
   });
   describe("if 'forceDismissDate' is 'undefined'", () => {
     const noForceDismissDateTestState = getTestState({
       messages: [unreadMessage, unreadMessage, unreadMessage, unreadMessage],
-      timesDismissed: 3,
+      timesDismissed: 3
     });
     it("unreadMessagesCountAfterForceDismissionSelector should return 'undefined'", () => {
       expect(
         unreadMessagesCountAfterForceDismissionSelector(
-          noForceDismissDateTestState,
-        ),
+          noForceDismissDateTestState
+        )
       ).toBeUndefined();
     });
     it("isForceDismissAndNotUnreadMessagesHiddenSelector should return 'false'", () => {
       expect(
         isForceDismissAndNotUnreadMessagesHiddenSelector(
-          noForceDismissDateTestState,
-        ),
+          noForceDismissDateTestState
+        )
       ).toBe(false);
     });
     it("shouldResetNotificationBannerDismissStateSelector should return 'false'", () => {
       expect(
         shouldResetNotificationBannerDismissStateSelector(
-          noForceDismissDateTestState,
-        ),
+          noForceDismissDateTestState
+        )
       ).toBe(false);
     });
   });
@@ -155,12 +153,12 @@ describe("unreadMessagesCountAfterForceDismissionSelector, isForceDismissAndNotU
             unreadMessage,
             ...(moreThanFour
               ? [unreadMessage, unreadMessage, unreadMessage]
-              : []),
+              : [])
           ]
         : [
             readMessage,
             readMessage,
-            ...(moreThanFour ? [readMessage, readMessage, readMessage] : []),
+            ...(moreThanFour ? [readMessage, readMessage, readMessage] : [])
           ];
 
       jest
@@ -170,23 +168,23 @@ describe("unreadMessagesCountAfterForceDismissionSelector, isForceDismissAndNotU
         messages: messageList,
         forceDismissionDate: isNew
           ? new Date("2000-1-1").getTime()
-          : new Date("2500-1-1").getTime(),
+          : new Date("2500-1-1").getTime()
       });
       it(`unreadMessagesCountAfterForceDismissionSelector should return '${unreadCount}'`, () => {
         expect(unreadMessagesCountAfterForceDismissionSelector(testState)).toBe(
-          unreadCount,
+          unreadCount
         );
       });
       it(`isForceDismissAndNotUnreadMessagesHiddenSelector should return '${!expected}'`, () => {
         expect(
-          isForceDismissAndNotUnreadMessagesHiddenSelector(testState),
+          isForceDismissAndNotUnreadMessagesHiddenSelector(testState)
         ).toBe(!expected);
       });
       it(`shouldResetNotificationBannerDismissStateSelector should return '${expected}'`, () => {
         expect(
-          shouldResetNotificationBannerDismissStateSelector(testState),
+          shouldResetNotificationBannerDismissStateSelector(testState)
         ).toBe(expected);
       });
-    },
+    }
   );
 });

@@ -20,7 +20,7 @@ import {
   setShownMessageCategoryAction,
   startPaymentStatusTracking,
   updatePaymentForMessage,
-  upsertMessageStatusAttributes,
+  upsertMessageStatusAttributes
 } from "..";
 import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
 import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
@@ -31,11 +31,11 @@ import {
   MessagePaymentError,
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,
-  toTimeoutMessagePaymentError,
+  toTimeoutMessagePaymentError
 } from "../../../types/paymentErrors";
 import {
   thirdPartyKind,
-  ThirdPartyMessageUnion,
+  ThirdPartyMessageUnion
 } from "../../../types/thirdPartyById";
 
 describe("index", () => {
@@ -45,40 +45,40 @@ describe("index", () => {
   const message = { title: "The title" } as UIMessage;
   const attachment = {
     id: "1",
-    url: "https://an.url",
+    url: "https://an.url"
   } as ThirdPartyAttachment;
   const genericError: MessagePaymentError =
     toGenericMessagePaymentError("An error occurred");
   const specificError: MessagePaymentError = toSpecificMessagePaymentError(
-    PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO,
+    PaymentFaultV2Enum.PAA_PAGAMENTO_DUPLICATO
   );
   const timeoutError: MessagePaymentError = toTimeoutMessagePaymentError();
   const paymentId = "00123456789001122334455667788";
 
   describe("getMessageDataAction.request", () => {
-    [false, true].forEach((fromPushNotification) =>
+    [false, true].forEach(fromPushNotification =>
       it(`should construt the action with proper type and payload (fromPushNotification ${fromPushNotification})`, () => {
         const requestAction = getMessageDataAction.request({
           messageId,
-          fromPushNotification,
+          fromPushNotification
         });
         expect(requestAction.type).toBe("GET_MESSAGE_DATA_REQUEST");
         expect(requestAction.payload).toEqual({
           messageId,
-          fromPushNotification,
+          fromPushNotification
         });
-      }),
+      })
     );
   });
 
   describe("getMessageDataAction.success", () => {
-    [false, true].forEach((containsAttachments) =>
-      [undefined, false, true].forEach((containsPayment) =>
-        [false, true].forEach((firstTimeOpening) =>
-          [false, true].forEach((hasFIMSCTA) =>
-            [false, true].forEach((hasRemoteContent) =>
-              [undefined, false, true].forEach((isLegacyGreenPass) =>
-                [false, true].forEach((isPNMessage) =>
+    [false, true].forEach(containsAttachments =>
+      [undefined, false, true].forEach(containsPayment =>
+        [false, true].forEach(firstTimeOpening =>
+          [false, true].forEach(hasFIMSCTA =>
+            [false, true].forEach(hasRemoteContent =>
+              [undefined, false, true].forEach(isLegacyGreenPass =>
+                [false, true].forEach(isPNMessage =>
                   it(`should construt the action with proper type and payload (containsAttachments ${containsAttachments}) (containsPayment ${containsPayment}) (firstTimeOpening ${firstTimeOpening}) (hasFIMSCTA ${hasFIMSCTA}) (hasRemoteContent ${hasRemoteContent}) (isLegacyGreenPass ${isLegacyGreenPass}) (isPNMessage ${isPNMessage})`, () => {
                     const organizationName = "The organization name";
                     const organizationFiscalCode = "12345678901";
@@ -99,7 +99,7 @@ describe("index", () => {
                       organizationFiscalCode,
                       organizationName,
                       serviceId,
-                      serviceName,
+                      serviceName
                     });
                     expect(requestAction.type).toBe("GET_MESSAGE_DATA_SUCCESS");
                     expect(requestAction.payload).toEqual({
@@ -117,15 +117,15 @@ describe("index", () => {
                       organizationFiscalCode,
                       organizationName,
                       serviceId,
-                      serviceName,
+                      serviceName
                     });
-                  }),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+                  })
+                )
+              )
+            )
+          )
+        )
+      )
     );
   });
 
@@ -138,22 +138,22 @@ describe("index", () => {
         "messageDetails",
         "preconditions",
         "thirdPartyMessageDetails",
-        "readStatusUpdate",
+        "readStatusUpdate"
       ] as const
-    ).forEach((phase) =>
-      [undefined, false, true].forEach((blockedFromPushNotification) =>
+    ).forEach(phase =>
+      [undefined, false, true].forEach(blockedFromPushNotification =>
         it(`should construt the action with proper type and payload (phase ${phase}) (fromPushNotification ${blockedFromPushNotification})`, () => {
           const requestAction = getMessageDataAction.failure({
             blockedFromPushNotificationOpt: blockedFromPushNotification,
-            phase,
+            phase
           });
           expect(requestAction.type).toBe("GET_MESSAGE_DATA_FAILURE");
           expect(requestAction.payload).toEqual({
             blockedFromPushNotificationOpt: blockedFromPushNotification,
-            phase,
+            phase
           });
-        }),
-      ),
+        })
+      )
     );
   });
 
@@ -162,7 +162,7 @@ describe("index", () => {
       const action = loadThirdPartyMessage.request({
         id: messageId,
         serviceId,
-        tag,
+        tag
       });
       expect(action.type).toBe("THIRD_PARTY_MESSAGE_LOAD_REQUEST");
       expect(action.payload).toEqual({ id: messageId, serviceId, tag });
@@ -170,19 +170,19 @@ describe("index", () => {
   });
   describe("loadThirdPartyMessage.success", () => {
     const thirdPartyKindsMock = Object.values(thirdPartyKind);
-    thirdPartyKindsMock.forEach((kind) =>
+    thirdPartyKindsMock.forEach(kind =>
       it(`should match expected type and payload and kind='${kind}'`, () => {
         const content = {
           kind,
-          id: messageId as string,
+          id: messageId as string
         } as ThirdPartyMessageUnion;
         const action = loadThirdPartyMessage.success({
           id: messageId,
-          content,
+          content
         });
         expect(action.type).toBe("THIRD_PARTY_MESSAGE_LOAD_SUCCESS");
         expect(action.payload).toEqual({ id: messageId, content });
-      }),
+      })
     );
   });
   describe("loadThirdPartyMessage.failure", () => {
@@ -190,7 +190,7 @@ describe("index", () => {
       const error = Error("An error occurred");
       const action = loadThirdPartyMessage.failure({
         id: messageId,
-        error,
+        error
       });
       expect(action.type).toBe("THIRD_PARTY_MESSAGE_LOAD_FAILURE");
       expect(action.payload).toEqual({ id: messageId, error });
@@ -214,7 +214,7 @@ describe("index", () => {
   describe("loadMessageById.request", () => {
     it("should match expected type and payload", () => {
       const action = loadMessageById.request({
-        id: messageId,
+        id: messageId
       });
       expect(action.type).toBe("MESSAGE_BY_ID_LOAD_REQUEST");
       expect(action.payload).toEqual({ id: messageId });
@@ -227,14 +227,14 @@ describe("index", () => {
       expect(action.payload).toEqual(message);
     });
   });
-  (["generic", "messageNotFound"] as const).forEach((kind) => {
+  (["generic", "messageNotFound"] as const).forEach(kind => {
     describe("loadMessageById.failure", () => {
       it(`should match expected type and payload with kind '${kind}'`, () => {
         const error = Error("An error occurred");
         const action = loadMessageById.failure({
           id: messageId,
           error,
-          kind,
+          kind
         });
         expect(action.type).toBe("MESSAGE_BY_ID_LOAD_FAILURE");
         expect(action.payload).toEqual({ id: messageId, error, kind });
@@ -245,7 +245,7 @@ describe("index", () => {
   describe("loadMessageDetails.request", () => {
     it("should match expected type and payload", () => {
       const action = loadMessageDetails.request({
-        id: messageId,
+        id: messageId
       });
       expect(action.type).toBe("MESSAGE_DETAILS_LOAD_REQUEST");
       expect(action.payload).toEqual({ id: messageId });
@@ -254,7 +254,7 @@ describe("index", () => {
   describe("loadMessageDetails.success", () => {
     it("should match expected type and payload", () => {
       const messageDetails = {
-        subject: "This is a message subject",
+        subject: "This is a message subject"
       } as UIMessageDetails;
       const action = loadMessageDetails.success(messageDetails);
       expect(action.type).toBe("MESSAGE_DETAILS_LOAD_SUCCESS");
@@ -266,7 +266,7 @@ describe("index", () => {
       const error = Error("An error occurred");
       const action = loadMessageDetails.failure({
         id: messageId,
-        error,
+        error
       });
       expect(action.type).toBe("MESSAGE_DETAILS_LOAD_FAILURE");
       expect(action.payload).toEqual({ id: messageId, error });
@@ -274,44 +274,44 @@ describe("index", () => {
   });
 
   describe("loadNextPageMessages.request", () => {
-    [undefined, false, true].forEach((archived) => {
-      [false, true].forEach((fromUserAction) => {
+    [undefined, false, true].forEach(archived => {
+      [false, true].forEach(fromUserAction => {
         it(`should match expected type and payload (archived ${archived}) (fromUserAction ${fromUserAction})`, () => {
           const pageSize = 12;
           const action = loadNextPageMessages.request({
             pageSize,
             cursor: messageId as string,
             filter: { getArchived: archived },
-            fromUserAction,
+            fromUserAction
           });
           expect(action.type).toBe("MESSAGES_LOAD_NEXT_PAGE_REQUEST");
           expect(action.payload).toEqual({
             pageSize,
             cursor: messageId,
             filter: { getArchived: archived },
-            fromUserAction,
+            fromUserAction
           });
         });
       });
     });
   });
   describe("loadNextPageMessages.success", () => {
-    [undefined, false, true].forEach((archived) => {
-      [false, true].forEach((fromUserAction) => {
-        [undefined, messageId].forEach((next) => {
+    [undefined, false, true].forEach(archived => {
+      [false, true].forEach(fromUserAction => {
+        [undefined, messageId].forEach(next => {
           it(`should match expected type and payload (archived ${archived}) (fromUserAction ${fromUserAction}) (next ${next})`, () => {
             const action = loadNextPageMessages.success({
               messages: [],
               filter: { getArchived: archived },
               fromUserAction,
-              pagination: { next },
+              pagination: { next }
             });
             expect(action.type).toBe("MESSAGES_LOAD_NEXT_PAGE_SUCCESS");
             expect(action.payload).toEqual({
               messages: [],
               filter: { getArchived: archived },
               fromUserAction,
-              pagination: { next },
+              pagination: { next }
             });
           });
         });
@@ -319,61 +319,61 @@ describe("index", () => {
     });
   });
   describe("loadNextPageMessages.failure", () => {
-    [undefined, false, true].forEach((archived) => {
+    [undefined, false, true].forEach(archived => {
       it(`should match expected type and payload (archived ${archived})`, () => {
         const error = Error("An error occurred");
         const action = loadNextPageMessages.failure({
           error,
-          filter: { getArchived: archived },
+          filter: { getArchived: archived }
         });
         expect(action.type).toBe("MESSAGES_LOAD_NEXT_PAGE_FAILURE");
         expect(action.payload).toEqual({
           error,
-          filter: { getArchived: archived },
+          filter: { getArchived: archived }
         });
       });
     });
   });
 
   describe("loadPreviousPageMessages.request", () => {
-    [undefined, false, true].forEach((archived) => {
-      [false, true].forEach((fromUserAction) => {
+    [undefined, false, true].forEach(archived => {
+      [false, true].forEach(fromUserAction => {
         it(`should match expected type and payload (archived ${archived}) (fromUserAction ${fromUserAction})`, () => {
           const pageSize = 12;
           const action = loadPreviousPageMessages.request({
             pageSize,
             cursor: messageId as string,
             filter: { getArchived: archived },
-            fromUserAction,
+            fromUserAction
           });
           expect(action.type).toBe("MESSAGES_LOAD_PREVIOUS_PAGE_REQUEST");
           expect(action.payload).toEqual({
             pageSize,
             cursor: messageId,
             filter: { getArchived: archived },
-            fromUserAction,
+            fromUserAction
           });
         });
       });
     });
   });
   describe("loadPreviousPageMessages.success", () => {
-    [undefined, false, true].forEach((archived) => {
-      [false, true].forEach((fromUserAction) => {
-        [undefined, messageId].forEach((previous) => {
+    [undefined, false, true].forEach(archived => {
+      [false, true].forEach(fromUserAction => {
+        [undefined, messageId].forEach(previous => {
           it(`should match expected type and payload (archived ${archived}) (fromUserAction ${fromUserAction}) (previous ${previous})`, () => {
             const action = loadPreviousPageMessages.success({
               messages: [],
               filter: { getArchived: archived },
               fromUserAction,
-              pagination: { previous },
+              pagination: { previous }
             });
             expect(action.type).toBe("MESSAGES_LOAD_PREVIOUS_PAGE_SUCCESS");
             expect(action.payload).toEqual({
               messages: [],
               filter: { getArchived: archived },
               fromUserAction,
-              pagination: { previous },
+              pagination: { previous }
             });
           });
         });
@@ -381,60 +381,60 @@ describe("index", () => {
     });
   });
   describe("loadPreviousPageMessages.failure", () => {
-    [undefined, false, true].forEach((archived) => {
+    [undefined, false, true].forEach(archived => {
       it(`should match expected type and payload (archived ${archived})`, () => {
         const error = Error("An error occurred");
         const action = loadPreviousPageMessages.failure({
           error,
-          filter: { getArchived: archived },
+          filter: { getArchived: archived }
         });
         expect(action.type).toBe("MESSAGES_LOAD_PREVIOUS_PAGE_FAILURE");
         expect(action.payload).toEqual({
           error,
-          filter: { getArchived: archived },
+          filter: { getArchived: archived }
         });
       });
     });
   });
 
   describe("reloadAllMessages.request", () => {
-    [undefined, false, true].forEach((archived) => {
-      [false, true].forEach((fromUserAction) => {
+    [undefined, false, true].forEach(archived => {
+      [false, true].forEach(fromUserAction => {
         it(`should match expected type and payload (archived ${archived}) (fromUserAction ${fromUserAction})`, () => {
           const pageSize = 12;
           const action = reloadAllMessages.request({
             pageSize,
             filter: { getArchived: archived },
-            fromUserAction,
+            fromUserAction
           });
           expect(action.type).toBe("MESSAGES_RELOAD_REQUEST");
           expect(action.payload).toEqual({
             pageSize,
             filter: { getArchived: archived },
-            fromUserAction,
+            fromUserAction
           });
         });
       });
     });
   });
   describe("reloadAllMessages.success", () => {
-    [undefined, false, true].forEach((archived) => {
-      [false, true].forEach((fromUserAction) => {
-        [undefined, messageId].forEach((previous) => {
-          [undefined, "01JWV8Q1WQ9AA7GFEMCF1311CC"].forEach((next) => {
+    [undefined, false, true].forEach(archived => {
+      [false, true].forEach(fromUserAction => {
+        [undefined, messageId].forEach(previous => {
+          [undefined, "01JWV8Q1WQ9AA7GFEMCF1311CC"].forEach(next => {
             it(`should match expected type and payload (archived ${archived}) (fromUserAction ${fromUserAction}) (previous ${previous}) (next ${next})`, () => {
               const action = reloadAllMessages.success({
                 messages: [],
                 filter: { getArchived: archived },
                 fromUserAction,
-                pagination: { previous, next },
+                pagination: { previous, next }
               });
               expect(action.type).toBe("MESSAGES_RELOAD_SUCCESS");
               expect(action.payload).toEqual({
                 messages: [],
                 filter: { getArchived: archived },
                 fromUserAction,
-                pagination: { previous, next },
+                pagination: { previous, next }
               });
             });
           });
@@ -443,17 +443,17 @@ describe("index", () => {
     });
   });
   describe("reloadAllMessages.failure", () => {
-    [undefined, false, true].forEach((archived) => {
+    [undefined, false, true].forEach(archived => {
       it(`should match expected type and payload (archived ${archived})`, () => {
         const error = Error("An error occurred");
         const action = reloadAllMessages.failure({
           error,
-          filter: { getArchived: archived },
+          filter: { getArchived: archived }
         });
         expect(action.type).toBe("MESSAGES_RELOAD_FAILURE");
         expect(action.payload).toEqual({
           error,
-          filter: { getArchived: archived },
+          filter: { getArchived: archived }
         });
       });
     });
@@ -463,78 +463,78 @@ describe("index", () => {
     { tag: "archiving" as const, isArchived: true },
     { tag: "reading" as const },
     { tag: "bulk" as const, isArchived: false },
-    { tag: "bulk" as const, isArchived: true },
+    { tag: "bulk" as const, isArchived: true }
   ];
   describe("upsertMessageStatusAttributes.request", () => {
-    updates.forEach((update) => {
+    updates.forEach(update => {
       it(`should match expected type and payload (update ${JSON.stringify(
-        update,
+        update
       )})`, () => {
         const action = upsertMessageStatusAttributes.request({
           message,
-          update,
+          update
         });
         expect(action.type).toBe("UPSERT_MESSAGE_STATUS_ATTRIBUTES_REQUEST");
         expect(action.payload).toEqual({
           message,
-          update,
+          update
         });
       });
     });
   });
   describe("upsertMessageStatusAttributes.success", () => {
-    updates.forEach((update) => {
+    updates.forEach(update => {
       it(`should match expected type and payload (update ${JSON.stringify(
-        update,
+        update
       )})`, () => {
         const action = upsertMessageStatusAttributes.success({
           message,
-          update,
+          update
         });
         expect(action.type).toBe("UPSERT_MESSAGE_STATUS_ATTRIBUTES_SUCCESS");
         expect(action.payload).toEqual({
           message,
-          update,
+          update
         });
       });
     });
   });
   describe("upsertMessageStatusAttributes.failure", () => {
-    updates.forEach((update) => {
+    updates.forEach(update => {
       it(`should match expected type and payload (payload ${JSON.stringify(
-        update,
+        update
       )})`, () => {
         const error = Error("An error occurred");
         const action = upsertMessageStatusAttributes.failure({
           error,
-          payload: { message, update },
+          payload: { message, update }
         });
         expect(action.type).toBe("UPSERT_MESSAGE_STATUS_ATTRIBUTES_FAILURE");
         expect(action.payload).toEqual({
           error,
-          payload: { message, update },
+          payload: { message, update }
         });
       });
     });
   });
 
   describe("downloadAttachment.request", () => {
-    [false, true].forEach((skipTracking) => {
+    [false, true].forEach(skipTracking => {
       it(`should match expected type and payload (skipTracking ${JSON.stringify(
-        skipTracking,
+        skipTracking
       )})`, () => {
         const action = downloadAttachment.request({
           attachment,
           messageId,
           skipMixpanelTrackingOnFailure: skipTracking,
-          serviceId,
+          serviceId
         });
         expect(action.type).toBe("DOWNLOAD_ATTACHMENT_REQUEST");
         expect(action.payload).toEqual({
           attachment,
           messageId,
           skipMixpanelTrackingOnFailure: skipTracking,
-          serviceId,
+          serviceId
         });
       });
     });
@@ -544,13 +544,13 @@ describe("index", () => {
       const action = downloadAttachment.success({
         attachment,
         messageId,
-        path: "/path",
+        path: "/path"
       });
       expect(action.type).toBe("DOWNLOAD_ATTACHMENT_SUCCESS");
       expect(action.payload).toEqual({
         attachment,
         messageId,
-        path: "/path",
+        path: "/path"
       });
     });
   });
@@ -560,13 +560,13 @@ describe("index", () => {
       const action = downloadAttachment.failure({
         attachment,
         error,
-        messageId,
+        messageId
       });
       expect(action.type).toBe("DOWNLOAD_ATTACHMENT_FAILURE");
       expect(action.payload).toEqual({
         attachment,
         error,
-        messageId,
+        messageId
       });
     });
   });
@@ -574,12 +574,12 @@ describe("index", () => {
     it(`should match expected type and payload`, () => {
       const action = downloadAttachment.cancel({
         attachment,
-        messageId,
+        messageId
       });
       expect(action.type).toBe("DOWNLOAD_ATTACHMENT_CANCEL");
       expect(action.payload).toEqual({
         attachment,
-        messageId,
+        messageId
       });
     });
   });
@@ -603,13 +603,13 @@ describe("index", () => {
       const action = removeCachedAttachment({
         attachment,
         messageId,
-        path: "/path/attachment",
+        path: "/path/attachment"
       });
       expect(action.type).toBe("REMOVE_CACHED_ATTACHMENT");
       expect(action.payload).toEqual({
         attachment,
         messageId,
-        path: "/path/attachment",
+        path: "/path/attachment"
       });
     });
   });
@@ -619,13 +619,13 @@ describe("index", () => {
       const action = updatePaymentForMessage.request({
         messageId,
         paymentId,
-        serviceId,
+        serviceId
       });
       expect(action.type).toBe("UPDATE_PAYMENT_FOR_MESSAGE_REQUEST");
       expect(action.payload).toEqual({
         messageId,
         paymentId,
-        serviceId,
+        serviceId
       });
     });
   });
@@ -635,38 +635,38 @@ describe("index", () => {
         messageId,
         paymentId,
         paymentData: {
-          amount: 100,
+          amount: 100
         } as PaymentInfoResponse,
-        serviceId,
+        serviceId
       });
       expect(action.type).toBe("UPDATE_PAYMENT_FOR_MESSAGE_SUCCESS");
       expect(action.payload).toEqual({
         messageId,
         paymentId,
         paymentData: {
-          amount: 100,
+          amount: 100
         },
-        serviceId,
+        serviceId
       });
     });
   });
   describe("updatePaymentForMessage.failure", () => {
-    [genericError, specificError, timeoutError].forEach((reason) => {
+    [genericError, specificError, timeoutError].forEach(reason => {
       it(`should match expected type and payload (reason ${JSON.stringify(
-        reason,
+        reason
       )})`, () => {
         const action = updatePaymentForMessage.failure({
           messageId,
           paymentId,
           reason,
-          serviceId,
+          serviceId
         });
         expect(action.type).toBe("UPDATE_PAYMENT_FOR_MESSAGE_FAILURE");
         expect(action.payload).toEqual({
           messageId,
           paymentId,
           reason,
-          serviceId,
+          serviceId
         });
       });
     });
@@ -703,7 +703,7 @@ describe("index", () => {
   });
 
   describe("setShownMessageCategoryAction", () => {
-    (["INBOX", "ARCHIVE"] as const).forEach((category) => {
+    (["INBOX", "ARCHIVE"] as const).forEach(category => {
       it(`should match expected type and payload (category ${category})`, () => {
         const action = setShownMessageCategoryAction(category);
         expect(action.type).toBe("SET_SHOWN_MESSAGE_CATEGORY");
@@ -713,7 +713,7 @@ describe("index", () => {
   });
 
   describe("requestAutomaticMessagesRefresh", () => {
-    (["INBOX", "ARCHIVE"] as const).forEach((category) => {
+    (["INBOX", "ARCHIVE"] as const).forEach(category => {
       it(`should match expected type and payload (category ${category})`, () => {
         const action = requestAutomaticMessagesRefresh(category);
         expect(action.type).toBe("REQUEST_AUTOMATIC_MESSAGE_REFRESH");

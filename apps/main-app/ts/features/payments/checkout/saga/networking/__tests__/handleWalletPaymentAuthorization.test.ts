@@ -7,7 +7,7 @@ import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import {
   WalletPaymentAuthorizePayload,
-  paymentsStartPaymentAuthorizationAction,
+  paymentsStartPaymentAuthorizationAction
 } from "../../../store/actions/networking";
 import { handleWalletPaymentAuthorization } from "../handleWalletPaymentAuthorization";
 import { PaymentMethodManagementTypeEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
@@ -22,46 +22,46 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       isAllCCP: false,
       transactionId: "",
       walletId: "",
-      paymentMethodManagement: PaymentMethodManagementTypeEnum.REDIRECT,
+      paymentMethodManagement: PaymentMethodManagementTypeEnum.REDIRECT
     };
   const T_SESSION_TOKEN = "ABCD";
 
   it(`should put ${getType(
-    paymentsStartPaymentAuthorizationAction.success,
+    paymentsStartPaymentAuthorizationAction.success
   )} when requestTransactionAuthorization is 200`, () => {
     const mockRequestTransactionAuthorization = jest.fn();
     const requestTransactionAuthorizationResponse: RequestAuthorizationResponse =
       {
         authorizationRequestId: "authorizationRequestId",
-        authorizationUrl: "authorizationUrl",
+        authorizationUrl: "authorizationUrl"
       };
 
     testSaga(
       handleWalletPaymentAuthorization,
       mockRequestTransactionAuthorization,
       paymentsStartPaymentAuthorizationAction.request(
-        requestTransactionAuthorizationPayload,
-      ),
+        requestTransactionAuthorizationPayload
+      )
     )
       .next()
       .next(T_SESSION_TOKEN)
       .next(
         E.right({
           status: 200,
-          value: requestTransactionAuthorizationResponse,
-        }),
+          value: requestTransactionAuthorizationResponse
+        })
       )
       .put(
         paymentsStartPaymentAuthorizationAction.success(
-          requestTransactionAuthorizationResponse,
-        ),
+          requestTransactionAuthorizationResponse
+        )
       )
       .next()
       .isDone();
   });
 
   it(`should put ${getType(
-    paymentsStartPaymentAuthorizationAction.failure,
+    paymentsStartPaymentAuthorizationAction.failure
   )} when requestTransactionAuthorization is not 200`, () => {
     const mockRequestTransactionAuthorization = jest.fn();
 
@@ -69,23 +69,23 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       handleWalletPaymentAuthorization,
       mockRequestTransactionAuthorization,
       paymentsStartPaymentAuthorizationAction.request(
-        requestTransactionAuthorizationPayload,
-      ),
+        requestTransactionAuthorizationPayload
+      )
     )
       .next()
       .next(T_SESSION_TOKEN)
       .next(E.right({ status: 400, value: undefined }))
       .put(
         paymentsStartPaymentAuthorizationAction.failure(
-          getGenericError(new Error(`Error: 400`)),
-        ),
+          getGenericError(new Error(`Error: 400`))
+        )
       )
       .next()
       .isDone();
   });
 
   it(`should put ${getType(
-    paymentsStartPaymentAuthorizationAction.failure,
+    paymentsStartPaymentAuthorizationAction.failure
   )} when requestTransactionAuthorization encoders returns an error`, () => {
     const mockRequestTransactionAuthorization = jest.fn();
 
@@ -93,16 +93,16 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       handleWalletPaymentAuthorization,
       mockRequestTransactionAuthorization,
       paymentsStartPaymentAuthorizationAction.request(
-        requestTransactionAuthorizationPayload,
-      ),
+        requestTransactionAuthorizationPayload
+      )
     )
       .next()
       .next(T_SESSION_TOKEN)
       .next(E.left([]))
       .put(
         paymentsStartPaymentAuthorizationAction.failure({
-          ...getGenericError(new Error(readablePrivacyReport([]))),
-        }),
+          ...getGenericError(new Error(readablePrivacyReport([])))
+        })
       )
       .next()
       .isDone();

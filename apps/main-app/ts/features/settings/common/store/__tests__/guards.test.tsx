@@ -6,7 +6,7 @@ import {
   isProfileEmailAlreadyTaken,
   isServicesPreferenceModeSet,
   getProfileEmail,
-  getProfileSpidEmail,
+  getProfileSpidEmail
 } from "../utils/guards";
 import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
@@ -25,26 +25,26 @@ const baseProfile = {
   version: 1,
   family_name: "Rossi",
   fiscal_code: "ABCDEF12G34H567I" as any,
-  name: "Mario",
+  name: "Mario"
 };
 
 describe("guards utils", () => {
   describe("isServicesPreferenceModeSet", () => {
     it("should return true if mode is AUTO", () => {
       expect(
-        isServicesPreferenceModeSet(ServicesPreferencesModeEnum.AUTO),
+        isServicesPreferenceModeSet(ServicesPreferencesModeEnum.AUTO)
       ).toBe(true);
     });
 
     it("should return true if mode is MANUAL", () => {
       expect(
-        isServicesPreferenceModeSet(ServicesPreferencesModeEnum.MANUAL),
+        isServicesPreferenceModeSet(ServicesPreferencesModeEnum.MANUAL)
       ).toBe(true);
     });
 
     it("should return false if mode is LEGACY", () => {
       expect(
-        isServicesPreferenceModeSet(ServicesPreferencesModeEnum.LEGACY),
+        isServicesPreferenceModeSet(ServicesPreferencesModeEnum.LEGACY)
       ).toBe(false);
     });
 
@@ -57,7 +57,7 @@ describe("guards utils", () => {
     it("should return true if email is validated", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
-        is_email_validated: true,
+        is_email_validated: true
       };
       expect(isProfileEmailValidated(profile)).toBe(true);
     });
@@ -65,7 +65,7 @@ describe("guards utils", () => {
     it("should return false if email is not validated", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
-        is_email_validated: false,
+        is_email_validated: false
       };
       expect(isProfileEmailValidated(profile)).toBe(false);
     });
@@ -73,7 +73,7 @@ describe("guards utils", () => {
     it("should return false if email validated is undefined", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
-        is_email_validated: undefined as any,
+        is_email_validated: undefined as any
       };
       expect(isProfileEmailValidated(profile)).toBe(false);
     });
@@ -83,7 +83,7 @@ describe("guards utils", () => {
     it("should return true if already taken is true", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
-        is_email_already_taken: true,
+        is_email_already_taken: true
       };
       expect(isProfileEmailAlreadyTaken(profile)).toBe(true);
     });
@@ -91,7 +91,7 @@ describe("guards utils", () => {
     it("should return false if already taken is false", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
-        is_email_already_taken: false,
+        is_email_already_taken: false
       };
       expect(isProfileEmailAlreadyTaken(profile)).toBe(false);
     });
@@ -99,7 +99,7 @@ describe("guards utils", () => {
     it("should return false if already taken is undefined", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
-        is_email_already_taken: undefined,
+        is_email_already_taken: undefined
       };
       expect(isProfileEmailAlreadyTaken(profile)).toBe(false);
     });
@@ -110,8 +110,8 @@ describe("guards utils", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
         service_preferences_settings: {
-          mode: ServicesPreferencesModeEnum.LEGACY,
-        },
+          mode: ServicesPreferencesModeEnum.LEGACY
+        }
       };
       expect(isProfileFirstOnBoarding(profile)).toBe(true);
     });
@@ -120,8 +120,8 @@ describe("guards utils", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
         service_preferences_settings: {
-          mode: ServicesPreferencesModeEnum.AUTO,
-        },
+          mode: ServicesPreferencesModeEnum.AUTO
+        }
       };
       expect(isProfileFirstOnBoarding(profile)).toBe(false);
     });
@@ -131,7 +131,7 @@ describe("guards utils", () => {
     it("should return true if email is defined", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
-        email: "test@example.com" as EmailAddress,
+        email: "test@example.com" as EmailAddress
       };
       expect(hasProfileEmail(profile)).toBe(true);
     });
@@ -139,7 +139,7 @@ describe("guards utils", () => {
     it("should return false if email is undefined", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
-        email: undefined,
+        email: undefined
       };
       expect(hasProfileEmail(profile)).toBe(false);
     });
@@ -150,7 +150,7 @@ describe("guards utils", () => {
       const email = "test@example.com" as EmailAddress;
       const profile: InitializedProfile = {
         ...baseProfile,
-        email,
+        email
       };
       expect(getProfileEmail(profile)).toEqual(O.some(email));
     });
@@ -158,7 +158,7 @@ describe("guards utils", () => {
     it("should return None if email is undefined", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
-        email: undefined,
+        email: undefined
       };
       expect(getProfileEmail(profile)).toEqual(O.none);
     });
@@ -169,7 +169,7 @@ describe("guards utils", () => {
       const spidEmail = "spid@example.com" as EmailAddress;
       const profile: InitializedProfile = {
         ...baseProfile,
-        spid_email: spidEmail,
+        spid_email: spidEmail
       };
       expect(getProfileSpidEmail(profile)).toEqual(O.some(spidEmail));
     });
@@ -177,7 +177,7 @@ describe("guards utils", () => {
     it("should return None if spid_email is undefined", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
-        spid_email: undefined,
+        spid_email: undefined
       };
       expect(getProfileSpidEmail(profile)).toEqual(O.none);
     });

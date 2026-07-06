@@ -73,8 +73,8 @@ describe("getServiceDetails", () => {
       .next(
         loadServiceDetail.failure({
           service_id: serviceId,
-          error: new Error(),
-        }),
+          error: new Error()
+        })
       )
       .returns(undefined);
   });

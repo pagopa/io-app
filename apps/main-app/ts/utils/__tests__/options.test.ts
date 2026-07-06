@@ -85,30 +85,30 @@ describe("maybeInnerProperty", () => {
   it("should return the inner property", () => {
     const obj = {
       person: {
-        name: "John",
-      },
+        name: "John"
+      }
     };
-    const innerProp = maybeInnerProperty(obj.person, "name", (n) => n);
+    const innerProp = maybeInnerProperty(obj.person, "name", n => n);
     expect(innerProp).toEqual(O.some("John"));
   });
 
   it("should return the inner property transformed by the mapping function", () => {
     const obj = {
       person: {
-        name: "John",
-      },
+        name: "John"
+      }
     };
-    const innerProp = maybeInnerProperty(obj.person, "name", (n) => n + "salt");
+    const innerProp = maybeInnerProperty(obj.person, "name", n => n + "salt");
     expect(innerProp).toEqual(O.some("Johnsalt"));
   });
 
   it("should return the O.none", () => {
     const obj = {
       person: {
-        name: undefined,
-      },
+        name: undefined
+      }
     };
-    const innerProp = maybeInnerProperty(obj.person, "name", (n) => n);
+    const innerProp = maybeInnerProperty(obj.person, "name", n => n);
     expect(innerProp).toEqual(O.none);
   });
 
@@ -117,9 +117,9 @@ describe("maybeInnerProperty", () => {
       person?: { name?: string };
     };
     const obj: Person = {
-      person: undefined,
+      person: undefined
     };
-    const innerProp = maybeInnerProperty(obj.person, "name", (n) => n);
+    const innerProp = maybeInnerProperty(obj.person, "name", n => n);
     expect(innerProp).toEqual(O.none);
   });
 });

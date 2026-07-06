@@ -104,6 +104,12 @@ export default defineConfig([
       // type used as a generic record argument throughout the codebase.
       "@typescript-eslint/consistent-type-definitions": "off",
 
+      // Formatting is owned by oxfmt, not prettier. @pagopa/eslint-config bundles
+      // eslint-plugin-prettier, whose rule enforces prettier defaults (trailing
+      // commas, arrow parens) that directly conflict with .oxfmtrc.json — leaving
+      // it on makes eslint --fix revert every oxfmt-formatted file.
+      "prettier/prettier": "off",
+
       // Auto-fix corrupts multi-line property values (see comment below)
       "perfectionist/sort-objects": "off",
 

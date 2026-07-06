@@ -9,28 +9,25 @@ describe("Test dates utils", () => {
     it("should return 1 if the two dates are consecutive", () => {
       const date = new Date();
       expect(
-        daysBetweenDate(new Date(), new Date(date.setDate(date.getDate() + 1))),
+        daysBetweenDate(new Date(), new Date(date.setDate(date.getDate() + 1)))
       ).toBe(1);
     });
     it("should return 2 if the two dates are two days apart", () => {
       const date = new Date();
       expect(
-        daysBetweenDate(new Date(), new Date(date.setDate(date.getDate() + 2))),
+        daysBetweenDate(new Date(), new Date(date.setDate(date.getDate() + 2)))
       ).toBe(2);
     });
     it("should return 3 if the two dates are three days apart", () => {
       const date = new Date();
       expect(
-        daysBetweenDate(new Date(), new Date(date.setDate(date.getDate() + 3))),
+        daysBetweenDate(new Date(), new Date(date.setDate(date.getDate() + 3)))
       ).toBe(3);
     });
     it("should return 30 if the two dates are 30 days apart", () => {
       const date = new Date();
       expect(
-        daysBetweenDate(
-          new Date(),
-          new Date(date.setDate(date.getDate() + 30)),
-        ),
+        daysBetweenDate(new Date(), new Date(date.setDate(date.getDate() + 30)))
       ).toBe(30);
     });
     it("should return 1 with 28th February and 29th February", () => {

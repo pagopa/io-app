@@ -28,7 +28,7 @@ describe("handleFimsGetConsentsList", () => {
 
       expect(result).toEqual({
         error: "invalid_grant",
-        error_description: "Invalid credentials",
+        error_description: "Invalid credentials"
       });
       expect(mockTrackAppCaughtError).not.toHaveBeenCalled();
     });
@@ -44,7 +44,7 @@ describe("handleFimsGetConsentsList", () => {
       expect(mockTrackAppCaughtError).toHaveBeenCalledWith(
         "safeParseFailureResponseBody",
         `JSON.parse threw an exception on a ${invalidJson.length}-character long input string`,
-        expect.any(String),
+        expect.any(String)
       );
     });
   });

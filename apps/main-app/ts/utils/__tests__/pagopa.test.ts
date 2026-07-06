@@ -23,13 +23,13 @@ const transaction: Transaction = {
   token: "token",
   updated: undefined,
   urlCheckout3ds: "urlCheckout3ds",
-  urlRedirectPSP: "urlRedirectPSP",
+  urlRedirectPSP: "urlRedirectPSP"
 };
 
 describe("cisSuccessTransaction", () => {
   it("should return true", () => {
     expect(
-      isSuccessTransaction({ ...transaction, accountingStatus: 1 }),
+      isSuccessTransaction({ ...transaction, accountingStatus: 1 })
     ).toBeTruthy();
   });
 
@@ -38,8 +38,8 @@ describe("cisSuccessTransaction", () => {
       isSuccessTransaction({
         ...transaction,
         accountingStatus: undefined,
-        idStatus: undefined,
-      }),
+        idStatus: undefined
+      })
     ).toBeFalsy();
   });
 
@@ -48,8 +48,8 @@ describe("cisSuccessTransaction", () => {
       isSuccessTransaction({
         ...transaction,
         accountingStatus: 2,
-        idStatus: 8,
-      }),
+        idStatus: 8
+      })
     ).toBeFalsy();
   });
 
@@ -58,15 +58,15 @@ describe("cisSuccessTransaction", () => {
       isSuccessTransaction({
         ...transaction,
         accountingStatus: undefined,
-        idStatus: 8,
-      }),
+        idStatus: 8
+      })
     ).toBeTruthy();
     expect(
       isSuccessTransaction({
         ...transaction,
         accountingStatus: undefined,
-        idStatus: 9,
-      }),
+        idStatus: 9
+      })
     ).toBeTruthy();
   });
 });

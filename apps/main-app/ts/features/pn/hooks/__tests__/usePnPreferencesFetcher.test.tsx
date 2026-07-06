@@ -10,22 +10,22 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
 import {
   ServicePreferenceResponse,
-  WithServiceID,
+  WithServiceID
 } from "../../../services/details/types/ServicePreferenceResponse";
 import PN_ROUTES from "../../navigation/routes";
 import { usePnPreferencesFetcher } from "../usePnPreferencesFetcher";
 
 jest.mock("../../../../store/hooks", () => ({
   ...jest.requireActual("../../../../store/hooks"),
-  useIODispatch: jest.fn(),
+  useIODispatch: jest.fn()
 }));
 jest.mock("../../../services/details/store/selectors", () => ({
   ...jest.requireActual("../../../services/details/store/selectors"),
-  servicePreferencePotByIdSelector: jest.fn(),
+  servicePreferencePotByIdSelector: jest.fn()
 }));
 jest.mock("react", () => ({
   ...jest.requireActual("react"),
-  useState: jest.fn(),
+  useState: jest.fn()
 }));
 
 type PreferencePotState = pot.Pot<
@@ -50,7 +50,7 @@ describe("usePnPreferencesFetcher", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (useState as jest.Mock).mockImplementation(
-      jest.requireActual("react").useState,
+      jest.requireActual("react").useState
     );
     mockUseIODispatch.mockReturnValue(mockDispatch);
   });
@@ -60,39 +60,39 @@ describe("usePnPreferencesFetcher", () => {
       { isLoading: true, isError: false, isEnabled: true },
       { isLoading: false, isError: false, isEnabled: true },
       { isLoading: false, isError: false, isEnabled: false },
-      { isLoading: false, isError: true, isEnabled: true },
+      { isLoading: false, isError: true, isEnabled: true }
     ];
 
     const preferenceCases = [
       pot.someLoading({
         id: pnServiceId,
         kind: "success",
-        value: { inbox: true },
+        value: { inbox: true }
       }),
       pot.some({
         id: pnServiceId,
         kind: "success",
-        value: { inbox: true },
+        value: { inbox: true }
       }),
       pot.some({
         id: pnServiceId,
         kind: "success",
-        value: { inbox: false },
+        value: { inbox: false }
       }),
       pot.someError(
         {
           id: pnServiceId,
           kind: "success",
-          value: { inbox: true },
+          value: { inbox: true }
         },
-        { id: pnServiceId, kind: "error", value: new Error("whatever") },
-      ),
+        { id: pnServiceId, kind: "error", value: new Error("whatever") }
+      )
     ] as Array<PreferencePotState>;
     const titles = [
       "pot.someLoading",
       "pot.some(true)",
       "pot.some(false)",
-      "error",
+      "error"
     ];
 
     for (const [index, title] of titles.entries()) {
@@ -106,7 +106,7 @@ describe("usePnPreferencesFetcher", () => {
         // The selector should be called with state and service ID
         expect(mockServicePreferencePotSelector).toHaveBeenCalledWith(
           expect.anything(),
-          pnServiceId,
+          pnServiceId
         );
       });
     }
@@ -140,6 +140,6 @@ const renderHook = () => {
     Component,
     PN_ROUTES.ACTIVATION_BANNER_FLOW,
     {},
-    createStore(appReducer, globalState as any),
+    createStore(appReducer, globalState as any)
   );
 };

@@ -10,7 +10,7 @@ import { fciEnvironmentSelector } from "../../features/fci/store/reducers/fciEnv
 import trackZendesk from "../../features/zendesk/analytics/index";
 import {
   analyticsAuthenticationCompleted,
-  analyticsAuthenticationStarted,
+  analyticsAuthenticationStarted
 } from "../actions/analytics";
 import { applicationChangeState } from "../actions/application";
 import {
@@ -25,7 +25,7 @@ import {
   sessionExpired,
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess,
-  sessionInvalid,
+  sessionInvalid
 } from "../../features/authentication/common/store/actions";
 import { cieAuthenticationError } from "../../features/authentication/login/cie/store/actions";
 import { contentMunicipalityLoad } from "../actions/content";
@@ -34,14 +34,14 @@ import {
   profileLoadFailure,
   profileLoadRequest,
   profileUpsert,
-  removeAccountMotivation,
+  removeAccountMotivation
 } from "../../features/settings/common/store/actions";
 import { profileEmailValidationChanged } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
 import { searchMessagesEnabled } from "../actions/search";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   deleteUserDataProcessing,
-  upsertUserDataProcessing,
+  upsertUserDataProcessing
 } from "../../features/settings/common/store/actions/userDataProcessing";
 import { buildEventProperties } from "../../utils/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
@@ -51,7 +51,7 @@ import { updateOfflineAccessReason } from "../../features/itwallet/analytics/pro
 import {
   trackLoginFailure,
   trackLogoutFailure,
-  trackLogoutSuccess,
+  trackLogoutSuccess
 } from "../../features/authentication/common/analytics";
 import { trackSessionCorrupted } from "../../features/authentication/activeSessionLogin/analytics";
 import { trackContentAction } from "./contentAnalytics";
@@ -63,7 +63,7 @@ const trackAction = (action: Action): void | ReadonlyArray<null> => {
     //
     case getType(applicationChangeState):
       return mixpanelTrack("APP_STATE_CHANGE", {
-        APPLICATION_STATE_NAME: action.payload,
+        APPLICATION_STATE_NAME: action.payload
       });
     //
     // Authentication actions (with properties)
@@ -71,12 +71,12 @@ const trackAction = (action: Action): void | ReadonlyArray<null> => {
     case getType(idpSelected):
       return mixpanelTrack(action.type, {
         SPID_IDP_ID: action.payload.id,
-        SPID_IDP_NAME: action.payload.name,
+        SPID_IDP_NAME: action.payload.name
       });
 
     case getType(idpLoginUrlChanged):
       return mixpanelTrack(action.type, {
-        SPID_URL: action.payload.url,
+        SPID_URL: action.payload.url
       });
 
     // dispatch to mixpanel when the email is validated
@@ -86,13 +86,13 @@ const trackAction = (action: Action): void | ReadonlyArray<null> => {
       return trackLogoutFailure(action.payload.error.message);
     case getType(upsertUserDataProcessing.failure):
       return mixpanelTrack(action.type, {
-        reason: action.payload.error.message,
+        reason: action.payload.error.message
       });
     // Failures with reason as Error and optional description
     case getType(cieAuthenticationError):
       return mixpanelTrack(
         action.type,
-        buildEventProperties("KO", undefined, action.payload),
+        buildEventProperties("KO", undefined, action.payload)
       );
     // Failures with reason as Error
     case getType(sessionInformationLoadFailure):
@@ -101,13 +101,13 @@ const trackAction = (action: Action): void | ReadonlyArray<null> => {
     //  Bonus vacanze
     case getType(loadAvailableBonuses.failure):
       return mixpanelTrack(action.type, {
-        reason: action.payload.message,
+        reason: action.payload.message
       });
     // track when a missing municipality is detected
     case getType(contentMunicipalityLoad.failure):
       return mixpanelTrack(action.type, {
         reason: action.payload.error.message,
-        codice_catastale: action.payload.codiceCatastale,
+        codice_catastale: action.payload.codiceCatastale
       });
     // download / delete profile
     case getType(upsertUserDataProcessing.success):
@@ -120,25 +120,25 @@ const trackAction = (action: Action): void | ReadonlyArray<null> => {
       return trackLoginFailure({
         idp: action.payload.idp,
         reason: action.payload.error.message,
-        flow: "auth",
+        flow: "auth"
       });
 
     case getType(loginSuccess):
       return mixpanelTrack(action.type, {
-        idp: action.payload.idp,
+        idp: action.payload.idp
       });
     case getType(clearCurrentSession):
       return mixpanelTrack(
         action.type,
-        buildEventProperties("TECH", undefined),
+        buildEventProperties("TECH", undefined)
       );
     case getType(analyticsAuthenticationStarted):
     case getType(analyticsAuthenticationCompleted):
       return mixpanelTrack(
         action.type,
         buildEventProperties("TECH", undefined, {
-          flow: action.payload,
-        }),
+          flow: action.payload
+        })
       );
     case getType(logoutSuccess):
       return trackLogoutSuccess();
@@ -168,7 +168,7 @@ const trackAction = (action: Action): void | ReadonlyArray<null> => {
     case getType(deleteUserDataProcessing.failure):
       return mixpanelTrack(action.type, {
         choice: action.payload.choice,
-        reason: action.payload.error.message,
+        reason: action.payload.error.message
       });
   }
 };

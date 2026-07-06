@@ -5,41 +5,41 @@ describe("getFAQsFromCategories", () => {
   const categories: ReadonlyArray<FAQsCategoriesType> = [
     "landing_SPID",
     "landing_CIE",
-    "authentication_IPD_selection",
+    "authentication_IPD_selection"
   ];
   const faqs: ReadonlyArray<FAQType> = [
     {
       title: I18n.t("faq.1.title"),
-      content: I18n.t("faq.1.content"),
+      content: I18n.t("faq.1.content")
     },
     {
       title: I18n.t("faq.2.title"),
-      content: I18n.t("faq.2.content"),
+      content: I18n.t("faq.2.content")
     },
     {
       title: I18n.t("faq.3.title"),
-      content: I18n.t("faq.3.content"),
+      content: I18n.t("faq.3.content")
     },
     {
       title: I18n.t("faq.4.title"),
-      content: I18n.t("faq.4.content"),
+      content: I18n.t("faq.4.content")
     },
     {
       title: I18n.t("faq.5.title"),
-      content: I18n.t("faq.5.content"),
+      content: I18n.t("faq.5.content")
     },
     {
       title: I18n.t("faq.6.title"),
-      content: I18n.t("faq.6.content"),
+      content: I18n.t("faq.6.content")
     },
     {
       title: I18n.t("faq.7.title"),
-      content: I18n.t("faq.7.content"),
+      content: I18n.t("faq.7.content")
     },
     {
       title: I18n.t("faq.8.title"),
-      content: I18n.t("faq.8.content"),
-    },
+      content: I18n.t("faq.8.content")
+    }
   ];
 
   it("should return the FAQType array from an array of FAQsCategoriesType", () => {
@@ -48,7 +48,7 @@ describe("getFAQsFromCategories", () => {
 
   it("should deduplicate FAQs when categories are repeated", () => {
     expect(getFAQsFromCategories([...categories, ...categories])).toStrictEqual(
-      faqs,
+      faqs
     );
   });
 
@@ -58,7 +58,7 @@ describe("getFAQsFromCategories", () => {
 
   it("Should return an empty array for an unmapped category key", () => {
     expect(
-      getFAQsFromCategories(["not mapped key" as FAQsCategoriesType]),
+      getFAQsFromCategories(["not mapped key" as FAQsCategoriesType])
     ).toStrictEqual([]);
   });
 });

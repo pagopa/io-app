@@ -5,7 +5,7 @@ import * as profileProp from "../profileProperties";
 import {
   updateCredentialProperties,
   updateItwAnalyticsProperties,
-  updatePropertiesWalletRevoked,
+  updatePropertiesWalletRevoked
 } from "../propertyUpdaters";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwSuperProperties } from "../superProperties";
@@ -18,8 +18,8 @@ jest.mock("../../../../../mixpanel", () => ({
   registerSuperProperties: (properties: MixpanelProperties) =>
     mockedRegisterSuperProperties(properties),
   getPeople: () => ({
-    set: mockedSet,
-  }),
+    set: mockedSet
+  })
 }));
 
 describe("propertyUpdaters", () => {
@@ -33,25 +33,25 @@ describe("propertyUpdaters", () => {
       .mockReturnValue({ ITW_STATUS_V2: "valid" } as any);
 
     jest.spyOn(superProp, "buildItwSuperProperties").mockReturnValue({
-      OFFLINE_ACCESS_REASON: "session_refresh",
+      OFFLINE_ACCESS_REASON: "session_refresh"
     } as ItwSuperProperties);
 
     updateItwAnalyticsProperties({} as GlobalState);
 
     expect(mockedSet).toHaveBeenCalledWith({
-      ITW_STATUS_V2: "valid",
+      ITW_STATUS_V2: "valid"
     });
 
     expect(mockedRegisterSuperProperties).toHaveBeenCalledWith({
       ITW_STATUS_V2: "valid",
-      OFFLINE_ACCESS_REASON: "session_refresh",
+      OFFLINE_ACCESS_REASON: "session_refresh"
     });
   });
 
   it("updates credential property only if it is an ITW analytics credential", () => {
     const profileSpy = jest.spyOn(
       profileProp,
-      "forceUpdateItwProfileProperties",
+      "forceUpdateItwProfileProperties"
     );
     const superSpy = jest.spyOn(superProp, "forceUpdateItwSuperProperties");
 
@@ -62,17 +62,17 @@ describe("propertyUpdaters", () => {
     expect(superSpy).toHaveBeenCalledTimes(1);
 
     expect(profileSpy).toHaveBeenCalledWith({
-      ITW_PG_V3: "valid",
+      ITW_PG_V3: "valid"
     });
     expect(superSpy).toHaveBeenCalledWith({
-      ITW_PG_V3: "valid",
+      ITW_PG_V3: "valid"
     });
   });
 
   it("resets only ITW analytics credentials on wallet revoked", () => {
     const profileSpy = jest.spyOn(
       profileProp,
-      "forceUpdateItwProfileProperties",
+      "forceUpdateItwProfileProperties"
     );
 
     updatePropertiesWalletRevoked();
@@ -81,7 +81,7 @@ describe("propertyUpdaters", () => {
 
     const callArg = profileSpy.mock.calls[0][0];
 
-    ITW_ANALYTICS_CREDENTIALS.forEach((k) => {
+    ITW_ANALYTICS_CREDENTIALS.forEach(k => {
       expect(callArg[k]).toBe("not_available");
     });
 

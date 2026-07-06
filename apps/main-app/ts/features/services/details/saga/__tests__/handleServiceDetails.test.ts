@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import {
   NonEmptyString,
-  OrganizationFiscalCode,
+  OrganizationFiscalCode
 } from "@pagopa/ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
@@ -22,13 +22,13 @@ const mockedService: ServiceDetails = {
   description: "description",
   metadata: {
     category: StandardServiceCategoryEnum.STANDARD,
-    scope: ScopeTypeEnum.NATIONAL,
+    scope: ScopeTypeEnum.NATIONAL
   },
   name: "servizio1",
   organization: {
     fiscal_code: "OrgFiscalCode" as OrganizationFiscalCode,
-    name: "OrgName" as NonEmptyString,
-  },
+    name: "OrgName" as NonEmptyString
+  }
 };
 const mockedGenericError = new Error(`response status 500`);
 
@@ -36,27 +36,27 @@ describe("handleServiceDetails", () => {
   const mockedServicesClient = servicesClientManager.getClient(
     "https://base.url",
     {
-      token: "mock-bearer-token",
-    },
+      token: "mock-bearer-token"
+    }
   );
   it("returns an error if backend response is 500", () => {
     testSaga(
       handleServiceDetails,
       mockedServicesClient.getServiceById,
-      loadServiceDetail.request(mockedServiceId),
+      loadServiceDetail.request(mockedServiceId)
     )
       .next()
       .call(
         withRefreshApiCall,
         mockedServicesClient.getServiceById({ serviceId: mockedServiceId }),
-        loadServiceDetail.request(mockedServiceId),
+        loadServiceDetail.request(mockedServiceId)
       )
       .next(E.right({ status: 500, value: "generic error" }))
       .put(
         loadServiceDetail.failure({
           service_id: mockedServiceId,
-          error: mockedGenericError,
-        }),
+          error: mockedGenericError
+        })
       )
       .next()
       .isDone();
@@ -66,13 +66,13 @@ describe("handleServiceDetails", () => {
     testSaga(
       handleServiceDetails,
       mockedServicesClient.getServiceById,
-      loadServiceDetail.request(mockedServiceId),
+      loadServiceDetail.request(mockedServiceId)
     )
       .next()
       .call(
         withRefreshApiCall,
         mockedServicesClient.getServiceById({ serviceId: mockedServiceId }),
-        loadServiceDetail.request(mockedServiceId),
+        loadServiceDetail.request(mockedServiceId)
       )
       .next(E.right({ status: 200, value: mockedService }))
       .put(loadServiceDetail.success(mockedService))

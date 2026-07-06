@@ -16,7 +16,7 @@ import {
   toScheduledPayload,
   toShownPayload,
   toUpdateRequiredPayload,
-  updateRequiredPreconditionStatusAction,
+  updateRequiredPreconditionStatusAction
 } from "../../actions/preconditions";
 import {
   MessagePreconditionStatus,
@@ -37,7 +37,7 @@ import {
   toRetrievingDataMPS,
   toScheduledMPS,
   toShownMPS,
-  toUpdateRequiredMPS,
+  toUpdateRequiredMPS
 } from "../messagePrecondition";
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
@@ -48,10 +48,10 @@ const categoryTag = TagEnum.GENERIC;
 const errorReason = "An error reason";
 const content = {
   title: "A title",
-  markdown: "A markdown",
+  markdown: "A markdown"
 };
 const messagePreconditionStatusesGenerator = (
-  inputCategoryTag: MessageCategory["tag"],
+  inputCategoryTag: MessageCategory["tag"]
 ) => [
   toErrorMPS(messageId, inputCategoryTag, errorReason),
   toIdleMPS(),
@@ -59,7 +59,7 @@ const messagePreconditionStatusesGenerator = (
   toRetrievingDataMPS(messageId, inputCategoryTag),
   toScheduledMPS(messageId, inputCategoryTag),
   toShownMPS(messageId, inputCategoryTag, content),
-  toUpdateRequiredMPS(),
+  toUpdateRequiredMPS()
 ];
 
 const computeExpectedOutput = (
@@ -72,7 +72,7 @@ const computeExpectedOutput = (
     | typeof scheduledPreconditionStatusAction
     | typeof shownPreconditionStatusAction
     | typeof updateRequiredPreconditionStatusAction
-  >,
+  >
 ) => {
   switch (fromStatus.state) {
     case "error":
@@ -82,7 +82,7 @@ const computeExpectedOutput = (
         case "TO_RETRIEVING_DATA_PRECONDITION_STATUS":
           return toRetrievingDataMPS(
             fromStatus.messageId,
-            fromStatus.categoryTag,
+            fromStatus.categoryTag
           );
       }
       break;
@@ -91,7 +91,7 @@ const computeExpectedOutput = (
         case "TO_SCHEDULED_PRECONDITION_STATUS":
           return toScheduledMPS(
             withAction.payload.messageId,
-            withAction.payload.categoryTag,
+            withAction.payload.categoryTag
           );
       }
       break;
@@ -103,13 +103,13 @@ const computeExpectedOutput = (
           return toErrorMPS(
             fromStatus.messageId,
             fromStatus.categoryTag,
-            withAction.payload.reason,
+            withAction.payload.reason
           );
         case "TO_SHOWN_PRECONDITION_STATUS":
           return toShownMPS(
             fromStatus.messageId,
             fromStatus.categoryTag,
-            fromStatus.content,
+            fromStatus.content
           );
       }
       break;
@@ -121,13 +121,13 @@ const computeExpectedOutput = (
           return toErrorMPS(
             fromStatus.messageId,
             fromStatus.categoryTag,
-            withAction.payload.reason,
+            withAction.payload.reason
           );
         case "TO_LOADING_CONTENT_PRECONDITION_STATUS":
           return toLoadingContentMPS(
             fromStatus.messageId,
             fromStatus.categoryTag,
-            withAction.payload.content,
+            withAction.payload.content
           );
       }
       break;
@@ -136,7 +136,7 @@ const computeExpectedOutput = (
         case "TO_RETRIEVING_DATA_PRECONDITION_STATUS":
           return toRetrievingDataMPS(
             fromStatus.messageId,
-            fromStatus.categoryTag,
+            fromStatus.categoryTag
           );
         case "TO_UPDATE_REQUIRED_PRECONDITION_STATUS":
           return toUpdateRequiredMPS();
@@ -150,7 +150,7 @@ const computeExpectedOutput = (
           return toErrorMPS(
             fromStatus.messageId,
             fromStatus.categoryTag,
-            withAction.payload.reason,
+            withAction.payload.reason
           );
       }
       break;
@@ -169,30 +169,29 @@ describe("messagePrecondition reducer", () => {
     errorPreconditionStatusAction(toErrorPayload(errorReason)),
     idlePreconditionStatusAction(toIdlePayload()),
     loadingContentPreconditionStatusAction(
-      toLoadingContentPayload(content, false),
+      toLoadingContentPayload(content, false)
     ),
     retrievingDataPreconditionStatusAction(toRetrievingDataPayload()),
     scheduledPreconditionStatusAction(
-      toScheduledPayload(messageId, categoryTag),
+      toScheduledPayload(messageId, categoryTag)
     ),
     shownPreconditionStatusAction(toShownPayload()),
-    updateRequiredPreconditionStatusAction(toUpdateRequiredPayload()),
+    updateRequiredPreconditionStatusAction(toUpdateRequiredPayload())
   ];
-  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
-    (initialStatus) =>
-      changeStatusActions.forEach((changeStatusAction) => {
-        const expectedStatus = computeExpectedOutput(
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(initialStatus =>
+    changeStatusActions.forEach(changeStatusAction => {
+      const expectedStatus = computeExpectedOutput(
+        initialStatus,
+        changeStatusAction
+      );
+      it(`should output '${expectedStatus.state}', starting from '${initialStatus.state}', after receiving action '${changeStatusAction.type}'`, () => {
+        const preconditionStatus = preconditionReducer(
           initialStatus,
-          changeStatusAction,
+          changeStatusAction
         );
-        it(`should output '${expectedStatus.state}', starting from '${initialStatus.state}', after receiving action '${changeStatusAction.type}'`, () => {
-          const preconditionStatus = preconditionReducer(
-            initialStatus,
-            changeStatusAction,
-          );
-          expect(preconditionStatus).toStrictEqual(expectedStatus);
-        });
-      }),
+        expect(preconditionStatus).toStrictEqual(expectedStatus);
+      });
+    })
   );
 });
 
@@ -202,18 +201,18 @@ describe("Message precondition status generators", () => {
       state: "error",
       messageId,
       categoryTag,
-      reason: "An error reason",
+      reason: "An error reason"
     };
     const mps = toErrorMPS(
       expectedMPS.messageId,
       expectedMPS.categoryTag,
-      expectedMPS.reason,
+      expectedMPS.reason
     );
     expect(mps).toStrictEqual(expectedMPS);
   });
   it("should return proper istance for 'toIdleMPS'", () => {
     const expectedMPS = {
-      state: "idle",
+      state: "idle"
     };
     const mps = toIdleMPS();
     expect(mps).toStrictEqual(expectedMPS);
@@ -225,13 +224,13 @@ describe("Message precondition status generators", () => {
       categoryTag,
       content: {
         title: "A title",
-        markdown: "A markdown content",
-      },
+        markdown: "A markdown content"
+      }
     };
     const mps = toLoadingContentMPS(
       expectedMPS.messageId,
       expectedMPS.categoryTag,
-      expectedMPS.content,
+      expectedMPS.content
     );
     expect(mps).toStrictEqual(expectedMPS);
   });
@@ -239,11 +238,11 @@ describe("Message precondition status generators", () => {
     const expectedMPS = {
       state: "retrievingData",
       messageId,
-      categoryTag,
+      categoryTag
     };
     const mps = toRetrievingDataMPS(
       expectedMPS.messageId,
-      expectedMPS.categoryTag,
+      expectedMPS.categoryTag
     );
     expect(mps).toStrictEqual(expectedMPS);
   });
@@ -251,7 +250,7 @@ describe("Message precondition status generators", () => {
     const expectedMPS = {
       state: "scheduled",
       messageId,
-      categoryTag,
+      categoryTag
     };
     const mps = toScheduledMPS(expectedMPS.messageId, expectedMPS.categoryTag);
     expect(mps).toStrictEqual(expectedMPS);
@@ -261,18 +260,18 @@ describe("Message precondition status generators", () => {
       state: "shown",
       messageId,
       categoryTag,
-      content,
+      content
     };
     const mps = toShownMPS(
       expectedMPS.messageId,
       expectedMPS.categoryTag,
-      expectedMPS.content,
+      expectedMPS.content
     );
     expect(mps).toStrictEqual(expectedMPS);
   });
   it("should return proper istance for 'toUpdateRequiredMPS'", () => {
     const expectedMPS = {
-      state: "updateRequired",
+      state: "updateRequired"
     };
     const mps = toUpdateRequiredMPS();
     expect(mps).toStrictEqual(expectedMPS);
@@ -287,7 +286,7 @@ describe("foldPreconditionStatus", () => {
     jest.fn(),
     jest.fn(),
     jest.fn(),
-    jest.fn(),
+    jest.fn()
   ];
 
   messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
@@ -304,7 +303,7 @@ describe("foldPreconditionStatus", () => {
           mocks[3],
           mocks[4],
           mocks[5],
-          mocks[6],
+          mocks[6]
         )(status);
         mocks.forEach((mock, mockIndex) => {
           if (statusIndex === mockIndex) {
@@ -315,20 +314,20 @@ describe("foldPreconditionStatus", () => {
           }
         });
       });
-    },
+    }
   );
 });
 
 describe("shouldPresentPreconditionsBottomSheetSelector", () => {
-  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach((status) => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
     const expectedOutput = status.state === "scheduled";
     it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
       const globalState = {
         entities: {
           messages: {
-            precondition: status,
-          },
-        },
+            precondition: status
+          }
+        }
       } as GlobalState;
 
       const shouldPresent =
@@ -344,10 +343,10 @@ describe("preconditionsRequireAppUpdateSelector", () => {
     TagEnum.EU_COVID_CERT,
     TagEnum.LEGAL_MESSAGE,
     PaymentTagEnum.PAYMENT,
-    SENDTagEnum.PN,
-  ].forEach((tagEnum) =>
-    messagePreconditionStatusesGenerator(tagEnum).forEach((status) =>
-      [false, true].forEach((pnAppVersionSupported) => {
+    SENDTagEnum.PN
+  ].forEach(tagEnum =>
+    messagePreconditionStatusesGenerator(tagEnum).forEach(status =>
+      [false, true].forEach(pnAppVersionSupported => {
         const expectedOutput =
           status.state === "updateRequired" ||
           (status.state === "scheduled" &&
@@ -365,19 +364,19 @@ describe("preconditionsRequireAppUpdateSelector", () => {
           const globalState = {
             entities: {
               messages: {
-                precondition: status,
-              },
-            },
+                precondition: status
+              }
+            }
           } as GlobalState;
           jest
             .spyOn(backendStatus, "isPnAppVersionSupportedSelector")
-            .mockImplementation((_) => pnAppVersionSupported);
+            .mockImplementation(_ => pnAppVersionSupported);
           const shouldPresent =
             preconditionsRequireAppUpdateSelector(globalState);
           expect(shouldPresent).toBe(expectedOutput);
         });
-      }),
-    ),
+      })
+    )
   );
 });
 
@@ -389,7 +388,7 @@ describe("preconditionsTitleContentSelector", () => {
     "loading",
     undefined,
     "header",
-    "empty",
+    "empty"
   ];
   messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
     (status, statusIndex) =>
@@ -397,18 +396,18 @@ describe("preconditionsTitleContentSelector", () => {
         const globalStatus = {
           entities: {
             messages: {
-              precondition: status,
-            },
-          },
+              precondition: status
+            }
+          }
         } as GlobalState;
         const titleContent = preconditionsTitleContentSelector(globalStatus);
         expect(titleContent).toStrictEqual(expectedOutput[statusIndex]);
-      }),
+      })
   );
 });
 
 describe("preconditionsTitleSelector", () => {
-  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach((status) => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
     const expectedOutput =
       status.state === "loadingContent" || status.state === "shown"
         ? status.content.title
@@ -417,9 +416,9 @@ describe("preconditionsTitleSelector", () => {
       const globalStatus = {
         entities: {
           messages: {
-            precondition: status,
-          },
-        },
+            precondition: status
+          }
+        }
       } as GlobalState;
       const title = preconditionsTitleSelector(globalStatus);
       expect(title).toStrictEqual(expectedOutput);
@@ -435,7 +434,7 @@ describe("preconditionsContentSelector", () => {
     "loading",
     undefined,
     "content",
-    "update",
+    "update"
   ];
   messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
     (status, statusIndex) =>
@@ -443,18 +442,18 @@ describe("preconditionsContentSelector", () => {
         const globalStatus = {
           entities: {
             messages: {
-              precondition: status,
-            },
-          },
+              precondition: status
+            }
+          }
         } as GlobalState;
         const contentStatus = preconditionsContentSelector(globalStatus);
         expect(contentStatus).toStrictEqual(expectedOutput[statusIndex]);
-      }),
+      })
   );
 });
 
 describe("preconditionsContentMarkdownSelector", () => {
-  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach((status) => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
     const expectedOutput =
       status.state === "loadingContent" || status.state === "shown"
         ? status.content.markdown
@@ -463,9 +462,9 @@ describe("preconditionsContentMarkdownSelector", () => {
       const globalStatus = {
         entities: {
           messages: {
-            precondition: status,
-          },
-        },
+            precondition: status
+          }
+        }
       } as GlobalState;
       const internalContent =
         preconditionsContentMarkdownSelector(globalStatus);
@@ -482,7 +481,7 @@ describe("preconditionsFooterSelector", () => {
     "view",
     undefined,
     "content",
-    "update",
+    "update"
   ];
   messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(
     (status, statusIndex) => {
@@ -490,19 +489,19 @@ describe("preconditionsFooterSelector", () => {
         const globalStatus = {
           entities: {
             messages: {
-              precondition: status,
-            },
-          },
+              precondition: status
+            }
+          }
         } as GlobalState;
         const footerContent = preconditionsFooterSelector(globalStatus);
         expect(footerContent).toStrictEqual(expectedOutput[statusIndex]);
       });
-    },
+    }
   );
 });
 
 describe("preconditionsCategoryTagSelector", () => {
-  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach((status) => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
     const expectedOutput =
       status.state === "idle" || status.state === "updateRequired"
         ? undefined
@@ -511,9 +510,9 @@ describe("preconditionsCategoryTagSelector", () => {
       const globalStatus = {
         entities: {
           messages: {
-            precondition: status,
-          },
-        },
+            precondition: status
+          }
+        }
       } as GlobalState;
       const internalCategoryTag =
         preconditionsCategoryTagSelector(globalStatus);
@@ -523,7 +522,7 @@ describe("preconditionsCategoryTagSelector", () => {
 });
 
 describe("preconditionsMessageIdSelector", () => {
-  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach((status) => {
+  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
     const expectedOutput =
       status.state === "idle" || status.state === "updateRequired"
         ? undefined
@@ -532,9 +531,9 @@ describe("preconditionsMessageIdSelector", () => {
       const globalStatus = {
         entities: {
           messages: {
-            precondition: status,
-          },
-        },
+            precondition: status
+          }
+        }
       } as GlobalState;
       const internalMessageId = preconditionsMessageIdSelector(globalStatus);
       expect(internalMessageId).toStrictEqual(expectedOutput);

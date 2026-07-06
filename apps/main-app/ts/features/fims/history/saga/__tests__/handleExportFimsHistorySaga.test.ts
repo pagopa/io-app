@@ -25,7 +25,7 @@ describe("handleExportFimsHistorySaga", () => {
       handleExportFimsHistorySaga,
       mockClient,
       mockBearerToken,
-      mockAction,
+      mockAction
     )
       .next()
       .call(withRefreshApiCall, resultPromise, mockAction)
@@ -35,7 +35,7 @@ describe("handleExportFimsHistorySaga", () => {
       .isDone();
 
     expect(mockClient).toHaveBeenCalledWith({
-      Bearer: `Bearer ${mockBearerToken}`,
+      Bearer: `Bearer ${mockBearerToken}`
     });
     expect(trackExportSucceeded).toHaveBeenCalledTimes(1);
   });
@@ -48,7 +48,7 @@ describe("handleExportFimsHistorySaga", () => {
       handleExportFimsHistorySaga,
       mockClient,
       mockBearerToken,
-      mockAction,
+      mockAction
     )
       .next()
       .call(withRefreshApiCall, resultPromise, mockAction)
@@ -67,7 +67,7 @@ describe("handleExportFimsHistorySaga", () => {
       handleExportFimsHistorySaga,
       mockClient,
       mockBearerToken,
-      mockAction,
+      mockAction
     )
       .next()
       .call(withRefreshApiCall, resultPromise, mockAction)
@@ -85,7 +85,7 @@ describe("handleExportFimsHistorySaga", () => {
       handleExportFimsHistorySaga,
       mockClient,
       mockBearerToken,
-      mockAction,
+      mockAction
     )
       .next()
       .call(withRefreshApiCall, resultPromise, mockAction)
@@ -104,7 +104,7 @@ describe("handleExportFimsHistorySaga", () => {
       handleExportFimsHistorySaga,
       mockClient,
       mockBearerToken,
-      mockAction,
+      mockAction
     )
       .put(fimsHistoryExport.failure())
       .run();

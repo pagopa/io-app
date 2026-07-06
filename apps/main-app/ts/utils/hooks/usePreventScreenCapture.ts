@@ -2,7 +2,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo, useRef } from "react";
 import {
   preventScreenCaptureAsync,
-  allowScreenCaptureAsync,
+  allowScreenCaptureAsync
 } from "expo-screen-capture";
 import { v4 as uuidv4 } from "uuid";
 import { isDevEnv } from "../environment";
@@ -58,6 +58,6 @@ export function usePreventScreenCapture(key?: string) {
         // eslint-disable-next-line functional/immutable-data
         timeoutRef.current = setTimeout(() => allowScreenCapture(tag), 500);
       };
-    }, [tag]),
+    }, [tag])
   );
 }

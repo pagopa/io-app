@@ -40,7 +40,7 @@ describe("FciDocumentUnavailableScreen", () => {
       const component = renderComponent(store);
       fireEvent.press(component.getByTestId("FciCloseButtonTestID"));
       expect(dispatchSpy).toHaveBeenCalledWith(
-        expect.objectContaining({ type: "FCI_END_REQUEST" }),
+        expect.objectContaining({ type: "FCI_END_REQUEST" })
       );
     });
   });
@@ -50,8 +50,8 @@ describe("FciDocumentUnavailableScreen", () => {
       const store = createTestStore();
       store.dispatch(
         fciSignatureRequestFromId.success({
-          ...mockSignatureRequestDetailView,
-        }),
+          ...mockSignatureRequestDetailView
+        })
       );
       const component = renderComponent(store);
       expect(component.queryByTestId("FciRetryButtonTestID")).not.toBeNull();
@@ -62,14 +62,14 @@ describe("FciDocumentUnavailableScreen", () => {
       const store = createTestStore();
       store.dispatch(
         fciSignatureRequestFromId.success({
-          ...mockSignatureRequestDetailView,
-        }),
+          ...mockSignatureRequestDetailView
+        })
       );
       const dispatchSpy = jest.spyOn(store, "dispatch");
       const component = renderComponent(store);
       fireEvent.press(component.getByTestId("FciRetryButtonTestID"));
       expect(dispatchSpy).toHaveBeenCalledWith(
-        expect.objectContaining({ type: "FCI_SIGNATURE_DETAIL_RETRY_REQUEST" }),
+        expect.objectContaining({ type: "FCI_SIGNATURE_DETAIL_RETRY_REQUEST" })
       );
     });
   });
@@ -82,7 +82,7 @@ describe("FciDocumentUnavailableScreen", () => {
 
     const scenarios: ReadonlyArray<ErrorKindScenario> = [
       { name: "expired", params: { errorKind: "expired" } },
-      { name: "generic", params: { errorKind: "generic" } },
+      { name: "generic", params: { errorKind: "generic" } }
     ];
 
     test.each(scenarios)(
@@ -91,18 +91,18 @@ describe("FciDocumentUnavailableScreen", () => {
         const store = createTestStore();
         const component = renderComponent(store, params);
         expect(component.getByTestId("FciDocUnavailableTestID")).not.toBeNull();
-      },
+      }
     );
   });
 });
 
 const renderComponent = (
   store: Store,
-  params: FciDocumentUnavailableScreenNavigationParams = {},
+  params: FciDocumentUnavailableScreenNavigationParams = {}
 ) =>
   renderScreenWithNavigationStoreContext<GlobalState>(
     () => <FciDocumentUnavailableScreen />,
     FCI_ROUTES.DOCUMENT_UNAVAILABLE,
     params,
-    store,
+    store
   );

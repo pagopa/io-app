@@ -2,7 +2,7 @@ import { entries } from "lodash";
 import {
   formatIntegerNumber,
   formatNumberAmount,
-  formatNumberWithNoDigits,
+  formatNumberWithNoDigits
 } from "../stringBuilder";
 import { setLocale, Locales } from "../../i18n";
 
@@ -13,7 +13,7 @@ const valuesEN = {
   "100.99": 100.99,
   "102.00": 101.999999, // round to the appropriate 2-decimals number
   "10.50": 10.5001,
-  "1,000.50": 1000.5,
+  "1,000.50": 1000.5
 };
 
 const valuesEN2 = {
@@ -22,7 +22,7 @@ const valuesEN2 = {
   "101": 100.99,
   "102": 101.999999, // round to the appropriate 2-decimals number
   "11": 10.5001,
-  "1,001": 1000.5,
+  "1,001": 1000.5
 };
 
 beforeAll(() => setLocale("en" as Locales));
@@ -30,10 +30,10 @@ beforeAll(() => setLocale("en" as Locales));
 describe("amountBuilder", () => {
   it("should render amounts correctly for EN language", async () => {
     entries(valuesEN).forEach(([k, v]) =>
-      expect(formatNumberAmount(v)).toEqual(k),
+      expect(formatNumberAmount(v)).toEqual(k)
     );
     entries(valuesEN2).forEach(([k, v]) =>
-      expect(formatNumberWithNoDigits(v)).toEqual(k),
+      expect(formatNumberWithNoDigits(v)).toEqual(k)
     );
   });
 });
@@ -45,7 +45,7 @@ const valuesIT = {
   "100,99": 100.99,
   "102,00": 101.999999, // round to the appropriate 2-decimals number
   "10,50": 10.5001,
-  "1.000,50": 1000.5,
+  "1.000,50": 1000.5
 };
 
 const valuesIT2 = {
@@ -54,17 +54,17 @@ const valuesIT2 = {
   "101": 100.99,
   "102": 101.999999,
   "11": 10.5001,
-  "1.001": 1000.5,
+  "1.001": 1000.5
 };
 
 describe("amountBuilder for IT locale", () => {
   it("should render amounts correctly for IT language", async () => {
     setLocale("it" as Locales);
     entries(valuesIT).forEach(([k, v]) =>
-      expect(formatNumberAmount(v)).toEqual(k),
+      expect(formatNumberAmount(v)).toEqual(k)
     );
     entries(valuesIT2).forEach(([k, v]) =>
-      expect(formatNumberWithNoDigits(v)).toEqual(k),
+      expect(formatNumberWithNoDigits(v)).toEqual(k)
     );
   });
 });

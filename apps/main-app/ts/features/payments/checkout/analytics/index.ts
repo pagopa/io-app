@@ -6,7 +6,7 @@ import {
   PaymentAnalyticsPhase,
   PaymentAnalyticsPreselectedPspFlag,
   PaymentAnalyticsSelectedMethodFlag,
-  PaymentAnalyticsSelectedPspFlag,
+  PaymentAnalyticsSelectedPspFlag
 } from "../../common/types/PaymentAnalytics";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
@@ -37,7 +37,7 @@ export type PaymentAnalyticsProps = {
 const MYBANK_PSP_BANNER_ID = "mybank_psp_selection";
 
 const getPaymentAnalyticsEventFromFailureOutcome = (
-  outcome: WalletPaymentOutcomeEnum,
+  outcome: WalletPaymentOutcomeEnum
 ) => {
   switch (outcome) {
     case WalletPaymentOutcomeEnum.AUTH_ERROR:
@@ -96,7 +96,7 @@ const getPaymentAnalyticsEventFromFailureOutcome = (
 };
 
 const getPaymentAnalyticsEventFromRequestFailure = (
-  failure: WalletPaymentFailure,
+  failure: WalletPaymentFailure
 ) => {
   switch (failure.faultCodeCategory) {
     case "PAYMENT_UNAVAILABLE":
@@ -132,52 +132,52 @@ const getPaymentAnalyticsEventFromRequestFailure = (
 export const trackPaymentSummaryLoading = () => {
   void mixpanelTrack(
     "PAYMENT_SUMMARY_LOADING",
-    buildEventProperties("UX", "control"),
+    buildEventProperties("UX", "control")
   );
 };
 
 export const trackPaymentSummaryInfoScreen = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_SUMMARY_INFO_SCREEN",
-    buildEventProperties("UX", "screen_view", props),
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
 export const trackPaymentSummaryNoticeCopy = (
-  props: Partial<PaymentAnalyticsProps> & { code: string },
+  props: Partial<PaymentAnalyticsProps> & { code: string }
 ) => {
   void mixpanelTrack(
     "PAYMENT_VERIFICA_COPY_INFO",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
 export const trackPaymentSummaryAmountInfo = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_AMOUNT_INFO",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
 export const trackPaymentMethodSelection = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_METHOD_SELECTION",
-    buildEventProperties("UX", "screen_view", props),
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
 export const trackPaymentMethodSelected = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_METHOD_SELECTED",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -185,214 +185,214 @@ export const trackPaymentBack = (screen: string) => {
   void mixpanelTrack(
     "PAYMENT_BACK",
     buildEventProperties("UX", "action", {
-      screen,
-    }),
+      screen
+    })
   );
 };
 
 export const trackPaymentMethodSelectionBackExit = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_METHOD_SELECTION_BACK_EXIT",
-    buildEventProperties("UX", "exit", props),
+    buildEventProperties("UX", "exit", props)
   );
 };
 
 export const trackPaymentMethodSelectionBackContinue = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_METHOD_SELECTION_BACK_CONTINUE",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
 export const trackPaymentMethodVerificaFatalError = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_VERIFICA_FATAL_ERROR",
-    buildEventProperties("KO", undefined, props),
+    buildEventProperties("KO", undefined, props)
   );
 };
 
 export const trackPaymentFeeSelection = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_FEE_SELECTION",
-    buildEventProperties("UX", "screen_view", props),
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
 export const trackPaymentFeeSelected = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_FEE_SELECTED",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
 export const trackPaymentSummaryScreen = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_SUMMARY",
-    buildEventProperties("UX", "screen_view", props),
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
 export const trackPaymentSummaryEditing = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_SUMMARY_EDITING",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
 export const trackPaymentConversion = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_UX_CONVERSION",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
 export const trackPaymentOutcomeSuccess = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   getPeople()?.increment("PAYMENT_COMPLETED", 1);
   void mixpanelTrack(
     "PAYMENT_UX_SUCCESS",
-    buildEventProperties("UX", "screen_view", props),
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
 export const trackPaymentOutcomeFailure = (
   outcome: WalletPaymentOutcomeEnum,
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     getPaymentAnalyticsEventFromFailureOutcome(outcome),
-    buildEventProperties("KO", undefined, props),
+    buildEventProperties("KO", undefined, props)
   );
 };
 
 export const trackPaymentRequestFailure = (
   failure: WalletPaymentFailure,
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     getPaymentAnalyticsEventFromRequestFailure(failure),
-    buildEventProperties("KO", undefined, props),
+    buildEventProperties("KO", undefined, props)
   );
 };
 
 export const trackPaymentErrorHelp = (
-  props: Partial<PaymentAnalyticsProps> & { error: string },
+  props: Partial<PaymentAnalyticsProps> & { error: string }
 ) => {
   void mixpanelTrack(
     "PAYMENT_ERROR_HELP",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
 export const trackPaymentNoSavedMethodExit = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_NO_SAVED_METHOD_EXIT",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
 export const trackPaymentExpiredMethodExit = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_METHOD_EXPIRED_DIFFERENT_METHOD",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
 export const trackPaymentNoticeDataEntry = () => {
   void mixpanelTrack(
     "PAYMENT_NOTICE_DATA_ENTRY",
-    buildEventProperties("UX", "screen_view"),
+    buildEventProperties("UX", "screen_view")
   );
 };
 
 export const trackPaymentOrganizationDataEntry = () => {
   void mixpanelTrack(
     "PAYMENT_ORGANIZATION_DATA_ENTRY",
-    buildEventProperties("UX", "screen_view"),
+    buildEventProperties("UX", "screen_view")
   );
 };
 
 export const trackPaymentStartFlow = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_START_FLOW",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
 export const trackPaymentsPspNotAvailableError = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_PSP_NOT_AVAILABLE_ERROR",
-    buildEventProperties("KO", "screen_view", props),
+    buildEventProperties("KO", "screen_view", props)
   );
 };
 
 export const trackPaymentsPspNotAvailableSelectNew = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_PSP_NOT_AVAILABLE_SELECT_NEW",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
 export const trackPaymentBrowserLanding = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_BROWSER_LANDING",
-    buildEventProperties("TECH", undefined, props),
+    buildEventProperties("TECH", undefined, props)
   );
 };
 
 export const trackPaymentUserCancellationRequest = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_USER_CANCELLATION_REQUEST",
-    buildEventProperties("UX", "screen_view", props),
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
 export const trackPaymentUserCancellationBack = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_USER_CANCELLATION_BACK",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
 export const trackPaymentUserCancellationContinue = (
-  props: Partial<PaymentAnalyticsProps>,
+  props: Partial<PaymentAnalyticsProps>
 ) => {
   void mixpanelTrack(
     "PAYMENT_USER_CANCELLATION_CONTINUE",
-    buildEventProperties("UX", "action", props),
+    buildEventProperties("UX", "action", props)
   );
 };
 
@@ -401,8 +401,8 @@ export const trackPaymentMyBankPspBanner = () =>
     "BANNER",
     buildEventProperties("UX", "screen_view", {
       banner_id: MYBANK_PSP_BANNER_ID,
-      banner_page: "PAYMENT_PICK_PSP_SCREEN",
-    }),
+      banner_page: "PAYMENT_PICK_PSP_SCREEN"
+    })
   );
 
 export const trackPaymentMyBankPspBannerClose = () =>
@@ -410,6 +410,6 @@ export const trackPaymentMyBankPspBannerClose = () =>
     "CLOSE_BANNER",
     buildEventProperties("UX", "action", {
       banner_id: MYBANK_PSP_BANNER_ID,
-      banner_page: "PAYMENT_PICK_PSP_SCREEN",
-    }),
+      banner_page: "PAYMENT_PICK_PSP_SCREEN"
+    })
   );

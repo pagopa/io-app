@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
   poweredBy: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-  },
+    gap: 8
+  }
 });

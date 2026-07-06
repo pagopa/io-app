@@ -8,12 +8,12 @@ import {
   profileHasErrorSelector,
   profileIsUpdatingSelector,
   pushNotificationPreviewEnabledSelector,
-  pushNotificationRemindersEnabledSelector,
+  pushNotificationRemindersEnabledSelector
 } from "../selectors";
 import {
   isProfileEmailValidated,
   isProfileFirstOnBoarding,
-  hasProfileEmail,
+  hasProfileEmail
 } from "../utils/guards";
 import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -26,17 +26,17 @@ describe("email profile selector", () => {
   const someEmail = O.some(mockedProfile.email);
   it("should return the user's email address", () => {
     expect(profileEmailSelector.resultFunc(potProfile)).toStrictEqual(
-      someEmail,
+      someEmail
     );
   });
 
   const potProfileWithNoEmail: ProfileState = pot.some({
     ...mockedProfile,
-    email: undefined,
+    email: undefined
   });
   it("should return O.none when the profile has no email address", () => {
     expect(
-      profileEmailSelector.resultFunc(potProfileWithNoEmail),
+      profileEmailSelector.resultFunc(potProfileWithNoEmail)
     ).toStrictEqual(O.none);
   });
 
@@ -46,7 +46,7 @@ describe("email profile selector", () => {
 
   it("should return false when user has not an email", () => {
     expect(
-      hasProfileEmail({ ...potProfile.value, email: undefined }),
+      hasProfileEmail({ ...potProfile.value, email: undefined })
     ).toStrictEqual(false);
   });
 
@@ -58,8 +58,8 @@ describe("email profile selector", () => {
     expect(
       isProfileEmailValidated({
         ...potProfile.value,
-        is_email_validated: false,
-      }),
+        is_email_validated: false
+      })
     ).toStrictEqual(false);
   });
 
@@ -68,9 +68,9 @@ describe("email profile selector", () => {
       isProfileFirstOnBoarding({
         ...potProfile.value,
         service_preferences_settings: {
-          mode: ServicesPreferencesModeEnum.LEGACY,
-        },
-      }),
+          mode: ServicesPreferencesModeEnum.LEGACY
+        }
+      })
     ).toStrictEqual(true);
   });
 
@@ -82,14 +82,14 @@ describe("email profile selector", () => {
 describe("isProfileEmailValidatedSelector", () => {
   it("should return false for pot.none profile", () => {
     const state = {
-      profile: pot.none,
+      profile: pot.none
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
   });
   it("should return false for pot.noneLoading profile", () => {
     const state = {
-      profile: pot.noneLoading,
+      profile: pot.noneLoading
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -98,15 +98,15 @@ describe("isProfileEmailValidatedSelector", () => {
     const state = {
       profile: pot.noneUpdating({
         email: "namesurname@domain.com",
-        is_email_validated: true,
-      }),
+        is_email_validated: true
+      })
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
   });
   it("should return false for pot.noneError profile", () => {
     const state = {
-      profile: pot.noneError(new Error()),
+      profile: pot.noneError(new Error())
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -114,8 +114,8 @@ describe("isProfileEmailValidatedSelector", () => {
   it("should return false for pot.some profile with undefined email", () => {
     const state = {
       profile: pot.some({
-        is_email_validated: true,
-      }),
+        is_email_validated: true
+      })
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -123,8 +123,8 @@ describe("isProfileEmailValidatedSelector", () => {
   it("should return false for pot.some profile with defined email but undefined is_email_validated", () => {
     const state = {
       profile: pot.some({
-        email: "namesurname@domain.com",
-      }),
+        email: "namesurname@domain.com"
+      })
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -133,8 +133,8 @@ describe("isProfileEmailValidatedSelector", () => {
     const state = {
       profile: pot.some({
         email: "namesurname@domain.com",
-        is_email_validated: false,
-      }),
+        is_email_validated: false
+      })
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -143,8 +143,8 @@ describe("isProfileEmailValidatedSelector", () => {
     const state = {
       profile: pot.some({
         email: "namesurname@domain.com",
-        is_email_validated: true,
-      }),
+        is_email_validated: true
+      })
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(true);
@@ -152,8 +152,8 @@ describe("isProfileEmailValidatedSelector", () => {
   it("should return false for pot.someLoading profile with undefined email", () => {
     const state = {
       profile: pot.someLoading({
-        is_email_validated: true,
-      }),
+        is_email_validated: true
+      })
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -161,8 +161,8 @@ describe("isProfileEmailValidatedSelector", () => {
   it("should return false for pot.someLoading profile with defined email but undefined is_email_validated", () => {
     const state = {
       profile: pot.someLoading({
-        email: "namesurname@domain.com",
-      }),
+        email: "namesurname@domain.com"
+      })
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -171,8 +171,8 @@ describe("isProfileEmailValidatedSelector", () => {
     const state = {
       profile: pot.someLoading({
         email: "namesurname@domain.com",
-        is_email_validated: false,
-      }),
+        is_email_validated: false
+      })
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -181,8 +181,8 @@ describe("isProfileEmailValidatedSelector", () => {
     const state = {
       profile: pot.someLoading({
         email: "namesurname@domain.com",
-        is_email_validated: true,
-      }),
+        is_email_validated: true
+      })
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(true);
@@ -191,13 +191,13 @@ describe("isProfileEmailValidatedSelector", () => {
     const state = {
       profile: pot.someUpdating(
         {
-          is_email_validated: true,
+          is_email_validated: true
         },
         {
           email: "namesurname@domain.com",
-          is_email_validated: true,
-        },
-      ),
+          is_email_validated: true
+        }
+      )
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -206,13 +206,13 @@ describe("isProfileEmailValidatedSelector", () => {
     const state = {
       profile: pot.someUpdating(
         {
-          email: "namesurname@domain.com",
+          email: "namesurname@domain.com"
         },
         {
           email: "namesurname@domain.com",
-          is_email_validated: true,
-        },
-      ),
+          is_email_validated: true
+        }
+      )
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -222,13 +222,13 @@ describe("isProfileEmailValidatedSelector", () => {
       profile: pot.someUpdating(
         {
           email: "namesurname@domain.com",
-          is_email_validated: false,
+          is_email_validated: false
         },
         {
           email: "namesurname@domain.com",
-          is_email_validated: true,
-        },
-      ),
+          is_email_validated: true
+        }
+      )
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -238,10 +238,10 @@ describe("isProfileEmailValidatedSelector", () => {
       profile: pot.someUpdating(
         {
           email: "namesurname@domain.com",
-          is_email_validated: true,
+          is_email_validated: true
         },
-        {},
-      ),
+        {}
+      )
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(true);
@@ -250,10 +250,10 @@ describe("isProfileEmailValidatedSelector", () => {
     const state = {
       profile: pot.someError(
         {
-          is_email_validated: true,
+          is_email_validated: true
         },
-        new Error(),
-      ),
+        new Error()
+      )
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -262,10 +262,10 @@ describe("isProfileEmailValidatedSelector", () => {
     const state = {
       profile: pot.someError(
         {
-          email: "namesurname@domain.com",
+          email: "namesurname@domain.com"
         },
-        new Error(),
-      ),
+        new Error()
+      )
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -275,10 +275,10 @@ describe("isProfileEmailValidatedSelector", () => {
       profile: pot.someError(
         {
           email: "namesurname@domain.com",
-          is_email_validated: false,
+          is_email_validated: false
         },
-        new Error(),
-      ),
+        new Error()
+      )
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(false);
@@ -288,10 +288,10 @@ describe("isProfileEmailValidatedSelector", () => {
       profile: pot.someError(
         {
           email: "namesurname@domain.com",
-          is_email_validated: true,
+          is_email_validated: true
         },
-        new Error(),
-      ),
+        new Error()
+      )
     } as GlobalState;
     const isProfileEmailValidated = isProfileEmailValidatedSelector(state);
     expect(isProfileEmailValidated).toBe(true);
@@ -301,7 +301,7 @@ describe("isProfileEmailValidatedSelector", () => {
 describe("pushNotificationRemindersEnabledSelector", () => {
   it("should return false for a pot.none profile", () => {
     const globalState = {
-      profile: pot.none,
+      profile: pot.none
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -309,7 +309,7 @@ describe("pushNotificationRemindersEnabledSelector", () => {
   });
   it("should return false for a pot.noneLoading profile", () => {
     const globalState = {
-      profile: pot.noneLoading,
+      profile: pot.noneLoading
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -318,8 +318,8 @@ describe("pushNotificationRemindersEnabledSelector", () => {
   it("should return false for a pot.noneUpdating profile", () => {
     const globalState = {
       profile: pot.noneUpdating({
-        reminder_status: ReminderStatusEnum.ENABLED,
-      }),
+        reminder_status: ReminderStatusEnum.ENABLED
+      })
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -327,7 +327,7 @@ describe("pushNotificationRemindersEnabledSelector", () => {
   });
   it("should return false for a pot.noneError profile", () => {
     const globalState = {
-      profile: pot.noneError(new ProfileError("test error")),
+      profile: pot.noneError(new ProfileError("test error"))
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -335,7 +335,7 @@ describe("pushNotificationRemindersEnabledSelector", () => {
   });
   it("should return false for a pot.some profile with undefined reminder_status", () => {
     const globalState = {
-      profile: pot.some({ reminder_status: undefined }),
+      profile: pot.some({ reminder_status: undefined })
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -343,7 +343,7 @@ describe("pushNotificationRemindersEnabledSelector", () => {
   });
   it("should return false for a pot.some profile with DISABLED reminder_status", () => {
     const globalState = {
-      profile: pot.some({ reminder_status: ReminderStatusEnum.DISABLED }),
+      profile: pot.some({ reminder_status: ReminderStatusEnum.DISABLED })
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -351,7 +351,7 @@ describe("pushNotificationRemindersEnabledSelector", () => {
   });
   it("should return true for a pot.some profile with ENABLED reminder_status", () => {
     const globalState = {
-      profile: pot.some({ reminder_status: ReminderStatusEnum.ENABLED }),
+      profile: pot.some({ reminder_status: ReminderStatusEnum.ENABLED })
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -359,7 +359,7 @@ describe("pushNotificationRemindersEnabledSelector", () => {
   });
   it("should return false for a pot.someLoading profile with undefined reminder_status", () => {
     const globalState = {
-      profile: pot.someLoading({ reminder_status: undefined }),
+      profile: pot.someLoading({ reminder_status: undefined })
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -368,8 +368,8 @@ describe("pushNotificationRemindersEnabledSelector", () => {
   it("should return false for a pot.someLoading profile with DISABLED reminder_status", () => {
     const globalState = {
       profile: pot.someLoading({
-        reminder_status: ReminderStatusEnum.DISABLED,
-      }),
+        reminder_status: ReminderStatusEnum.DISABLED
+      })
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -377,7 +377,7 @@ describe("pushNotificationRemindersEnabledSelector", () => {
   });
   it("should return true for a pot.someLoading profile with ENABLED reminder_status", () => {
     const globalState = {
-      profile: pot.someLoading({ reminder_status: ReminderStatusEnum.ENABLED }),
+      profile: pot.someLoading({ reminder_status: ReminderStatusEnum.ENABLED })
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -387,8 +387,8 @@ describe("pushNotificationRemindersEnabledSelector", () => {
     const globalState = {
       profile: pot.someUpdating(
         { reminder_status: undefined },
-        { reminder_status: ReminderStatusEnum.ENABLED },
-      ),
+        { reminder_status: ReminderStatusEnum.ENABLED }
+      )
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -398,8 +398,8 @@ describe("pushNotificationRemindersEnabledSelector", () => {
     const globalState = {
       profile: pot.someUpdating(
         { reminder_status: ReminderStatusEnum.DISABLED },
-        { reminder_status: ReminderStatusEnum.ENABLED },
-      ),
+        { reminder_status: ReminderStatusEnum.ENABLED }
+      )
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -409,8 +409,8 @@ describe("pushNotificationRemindersEnabledSelector", () => {
     const globalState = {
       profile: pot.someUpdating(
         { reminder_status: ReminderStatusEnum.ENABLED },
-        { reminder_status: ReminderStatusEnum.DISABLED },
-      ),
+        { reminder_status: ReminderStatusEnum.DISABLED }
+      )
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -420,8 +420,8 @@ describe("pushNotificationRemindersEnabledSelector", () => {
     const globalState = {
       profile: pot.someError(
         { reminder_status: undefined },
-        new ProfileError("test error"),
-      ),
+        new ProfileError("test error")
+      )
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -431,8 +431,8 @@ describe("pushNotificationRemindersEnabledSelector", () => {
     const globalState = {
       profile: pot.someError(
         { reminder_status: ReminderStatusEnum.DISABLED },
-        new ProfileError("test error"),
-      ),
+        new ProfileError("test error")
+      )
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -442,8 +442,8 @@ describe("pushNotificationRemindersEnabledSelector", () => {
     const globalState = {
       profile: pot.someError(
         { reminder_status: ReminderStatusEnum.ENABLED },
-        new ProfileError("test error"),
-      ),
+        new ProfileError("test error")
+      )
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);
@@ -454,14 +454,14 @@ describe("pushNotificationRemindersEnabledSelector", () => {
 describe("pushNotificationPreviewEnabledSelector", () => {
   it("should return false for a pot.none profile", () => {
     const globalState = {
-      profile: pot.none,
+      profile: pot.none
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(false);
   });
   it("should return false for a pot.noneLoading profile", () => {
     const globalState = {
-      profile: pot.noneLoading,
+      profile: pot.noneLoading
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(false);
@@ -469,22 +469,22 @@ describe("pushNotificationPreviewEnabledSelector", () => {
   it("should return false for a pot.noneUpdating profile", () => {
     const globalState = {
       profile: pot.noneUpdating({
-        reminder_status: ReminderStatusEnum.ENABLED,
-      }),
+        reminder_status: ReminderStatusEnum.ENABLED
+      })
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(false);
   });
   it("should return false for a pot.noneError profile", () => {
     const globalState = {
-      profile: pot.noneError(new ProfileError("test error")),
+      profile: pot.noneError(new ProfileError("test error"))
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(false);
   });
   it("should return false for a pot.some profile with undefined push_notifications_content_type", () => {
     const globalState = {
-      profile: pot.some({ push_notifications_content_type: undefined }),
+      profile: pot.some({ push_notifications_content_type: undefined })
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(false);
@@ -493,8 +493,8 @@ describe("pushNotificationPreviewEnabledSelector", () => {
     const globalState = {
       profile: pot.some({
         push_notifications_content_type:
-          PushNotificationsContentTypeEnum.ANONYMOUS,
-      }),
+          PushNotificationsContentTypeEnum.ANONYMOUS
+      })
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(false);
@@ -502,15 +502,15 @@ describe("pushNotificationPreviewEnabledSelector", () => {
   it("should return true for a pot.some profile with FULL push_notifications_content_type", () => {
     const globalState = {
       profile: pot.some({
-        push_notifications_content_type: PushNotificationsContentTypeEnum.FULL,
-      }),
+        push_notifications_content_type: PushNotificationsContentTypeEnum.FULL
+      })
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(true);
   });
   it("should return false for a pot.someLoading profile with undefined push_notifications_content_type", () => {
     const globalState = {
-      profile: pot.someLoading({ push_notifications_content_type: undefined }),
+      profile: pot.someLoading({ push_notifications_content_type: undefined })
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(false);
@@ -519,8 +519,8 @@ describe("pushNotificationPreviewEnabledSelector", () => {
     const globalState = {
       profile: pot.someLoading({
         push_notifications_content_type:
-          PushNotificationsContentTypeEnum.ANONYMOUS,
-      }),
+          PushNotificationsContentTypeEnum.ANONYMOUS
+      })
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(false);
@@ -528,8 +528,8 @@ describe("pushNotificationPreviewEnabledSelector", () => {
   it("should return true for a pot.someLoading profile with FULL push_notifications_content_type", () => {
     const globalState = {
       profile: pot.someLoading({
-        push_notifications_content_type: PushNotificationsContentTypeEnum.FULL,
-      }),
+        push_notifications_content_type: PushNotificationsContentTypeEnum.FULL
+      })
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(true);
@@ -540,9 +540,9 @@ describe("pushNotificationPreviewEnabledSelector", () => {
         { push_notifications_content_type: undefined },
         {
           push_notifications_content_type:
-            PushNotificationsContentTypeEnum.ANONYMOUS,
-        },
-      ),
+            PushNotificationsContentTypeEnum.ANONYMOUS
+        }
+      )
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(false);
@@ -552,13 +552,13 @@ describe("pushNotificationPreviewEnabledSelector", () => {
       profile: pot.someUpdating(
         {
           push_notifications_content_type:
-            PushNotificationsContentTypeEnum.ANONYMOUS,
+            PushNotificationsContentTypeEnum.ANONYMOUS
         },
         {
           push_notifications_content_type:
-            PushNotificationsContentTypeEnum.ANONYMOUS,
-        },
-      ),
+            PushNotificationsContentTypeEnum.ANONYMOUS
+        }
+      )
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(false);
@@ -567,14 +567,13 @@ describe("pushNotificationPreviewEnabledSelector", () => {
     const globalState = {
       profile: pot.someUpdating(
         {
-          push_notifications_content_type:
-            PushNotificationsContentTypeEnum.FULL,
+          push_notifications_content_type: PushNotificationsContentTypeEnum.FULL
         },
         {
           push_notifications_content_type:
-            PushNotificationsContentTypeEnum.ANONYMOUS,
-        },
-      ),
+            PushNotificationsContentTypeEnum.ANONYMOUS
+        }
+      )
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(true);
@@ -583,8 +582,8 @@ describe("pushNotificationPreviewEnabledSelector", () => {
     const globalState = {
       profile: pot.someError(
         { push_notifications_content_type: undefined },
-        new ProfileError("test error"),
-      ),
+        new ProfileError("test error")
+      )
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(false);
@@ -594,10 +593,10 @@ describe("pushNotificationPreviewEnabledSelector", () => {
       profile: pot.someError(
         {
           push_notifications_content_type:
-            PushNotificationsContentTypeEnum.ANONYMOUS,
+            PushNotificationsContentTypeEnum.ANONYMOUS
         },
-        new ProfileError("test error"),
-      ),
+        new ProfileError("test error")
+      )
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(false);
@@ -606,11 +605,10 @@ describe("pushNotificationPreviewEnabledSelector", () => {
     const globalState = {
       profile: pot.someError(
         {
-          push_notifications_content_type:
-            PushNotificationsContentTypeEnum.FULL,
+          push_notifications_content_type: PushNotificationsContentTypeEnum.FULL
         },
-        new ProfileError("test error"),
-      ),
+        new ProfileError("test error")
+      )
     } as GlobalState;
     const previewEnabled = pushNotificationPreviewEnabledSelector(globalState);
     expect(previewEnabled).toBe(true);
@@ -620,56 +618,56 @@ describe("pushNotificationPreviewEnabledSelector", () => {
 describe("profileHasErrorSelector", () => {
   it("should return false for a pot.none profile", () => {
     const globalState = {
-      profile: pot.none,
+      profile: pot.none
     } as GlobalState;
     const hasError = profileHasErrorSelector(globalState);
     expect(hasError).toBe(false);
   });
   it("should return false for a pot.noneLoading profile", () => {
     const globalState = {
-      profile: pot.noneLoading,
+      profile: pot.noneLoading
     } as GlobalState;
     const hasError = profileHasErrorSelector(globalState);
     expect(hasError).toBe(false);
   });
   it("should return false for a pot.noneUpdating profile", () => {
     const globalState = {
-      profile: pot.noneUpdating({}),
+      profile: pot.noneUpdating({})
     } as GlobalState;
     const hasError = profileHasErrorSelector(globalState);
     expect(hasError).toBe(false);
   });
   it("should return true for a pot.error profile", () => {
     const globalState = {
-      profile: pot.noneError(new ProfileError("test error")),
+      profile: pot.noneError(new ProfileError("test error"))
     } as GlobalState;
     const hasError = profileHasErrorSelector(globalState);
     expect(hasError).toBe(true);
   });
   it("should return false for a pot.some profile", () => {
     const globalState = {
-      profile: pot.some({}),
+      profile: pot.some({})
     } as GlobalState;
     const hasError = profileHasErrorSelector(globalState);
     expect(hasError).toBe(false);
   });
   it("should return false for a pot.someLoading profile", () => {
     const globalState = {
-      profile: pot.someLoading({}),
+      profile: pot.someLoading({})
     } as GlobalState;
     const hasError = profileHasErrorSelector(globalState);
     expect(hasError).toBe(false);
   });
   it("should return false for a pot.someUpdating profile", () => {
     const globalState = {
-      profile: pot.someUpdating({}, {}),
+      profile: pot.someUpdating({}, {})
     } as GlobalState;
     const hasError = profileHasErrorSelector(globalState);
     expect(hasError).toBe(false);
   });
   it("should return true for a pot.none profile", () => {
     const globalState = {
-      profile: pot.someError({}, new ProfileError("test error")),
+      profile: pot.someError({}, new ProfileError("test error"))
     } as GlobalState;
     const hasError = profileHasErrorSelector(globalState);
     expect(hasError).toBe(true);
@@ -679,56 +677,56 @@ describe("profileHasErrorSelector", () => {
 describe("profileIsUpdatingSelector", () => {
   it("should return false for a pot.none profile", () => {
     const globalState = {
-      profile: pot.none,
+      profile: pot.none
     } as GlobalState;
     const isUpdating = profileIsUpdatingSelector(globalState);
     expect(isUpdating).toBe(false);
   });
   it("should return false for a pot.noneLoading profile", () => {
     const globalState = {
-      profile: pot.noneLoading,
+      profile: pot.noneLoading
     } as GlobalState;
     const isUpdating = profileIsUpdatingSelector(globalState);
     expect(isUpdating).toBe(false);
   });
   it("should return true for a pot.noneUpdating profile", () => {
     const globalState = {
-      profile: pot.noneUpdating({}),
+      profile: pot.noneUpdating({})
     } as GlobalState;
     const isUpdating = profileIsUpdatingSelector(globalState);
     expect(isUpdating).toBe(true);
   });
   it("should return false for a pot.error profile", () => {
     const globalState = {
-      profile: pot.noneError(new ProfileError("test error")),
+      profile: pot.noneError(new ProfileError("test error"))
     } as GlobalState;
     const isUpdating = profileIsUpdatingSelector(globalState);
     expect(isUpdating).toBe(false);
   });
   it("should return false for a pot.some profile", () => {
     const globalState = {
-      profile: pot.some({}),
+      profile: pot.some({})
     } as GlobalState;
     const isUpdating = profileIsUpdatingSelector(globalState);
     expect(isUpdating).toBe(false);
   });
   it("should return false for a pot.someLoading profile", () => {
     const globalState = {
-      profile: pot.someLoading({}),
+      profile: pot.someLoading({})
     } as GlobalState;
     const isUpdating = profileIsUpdatingSelector(globalState);
     expect(isUpdating).toBe(false);
   });
   it("should return true for a pot.someUpdating profile", () => {
     const globalState = {
-      profile: pot.someUpdating({}, {}),
+      profile: pot.someUpdating({}, {})
     } as GlobalState;
     const isUpdating = profileIsUpdatingSelector(globalState);
     expect(isUpdating).toBe(true);
   });
   it("should return false for a pot.someError profile", () => {
     const globalState = {
-      profile: pot.someError({}, new ProfileError("test error")),
+      profile: pot.someError({}, new ProfileError("test error"))
     } as GlobalState;
     const isUpdating = profileIsUpdatingSelector(globalState);
     expect(isUpdating).toBe(false);

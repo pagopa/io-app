@@ -8,7 +8,7 @@ import {
   createStore,
   Middleware,
   Reducer,
-  StoreEnhancer,
+  StoreEnhancer
 } from "redux";
 import {
   createMigrate,
@@ -17,7 +17,7 @@ import {
   PersistedState,
   Persistor,
   persistReducer,
-  persistStore,
+  persistStore
 } from "redux-persist";
 import { createLogger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
@@ -25,29 +25,29 @@ import {
   isReady,
   remoteReady,
   remoteUndefined,
-  RemoteValue,
+  RemoteValue
 } from "../common/model/RemoteValue";
 import { CURRENT_REDUX_LOLLIPOP_STORE_VERSION } from "../features/lollipop/store";
 import {
   initialLollipopState,
-  LollipopState,
+  LollipopState
 } from "../features/lollipop/store/reducers/lollipop";
 import rootSaga from "../sagas";
 import { Action, Store } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
 import {
   authenticationPersistConfig,
-  createRootReducer,
+  createRootReducer
 } from "../store/reducers";
 import { ContentState } from "../store/reducers/content";
 import { entitiesPersistConfig } from "../store/reducers/entities";
 import {
   INSTALLATION_INITIAL_STATE,
-  InstallationState,
+  InstallationState
 } from "../store/reducers/installation";
 import {
   NOTIFICATIONS_STORE_VERSION,
-  NotificationsState,
+  NotificationsState
 } from "../features/pushNotifications/store/reducers";
 import { generateInitialState } from "../features/pushNotifications/store/reducers/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
@@ -72,8 +72,8 @@ const migrations: MigrationManifest = {
       ...state,
       notifications: {
         ...((state as any).notifications ? (state as any).notifications : {}),
-        installation: generateInitialState(),
-      },
+        installation: generateInitialState()
+      }
     }) as PersistedState,
 
   // version 1
@@ -82,7 +82,7 @@ const migrations: MigrationManifest = {
   "1": (state: PersistedState): PersistedState =>
     ({
       ...state,
-      entities: {},
+      entities: {}
     }) as PersistedState,
 
   // Version 2
@@ -91,9 +91,9 @@ const migrations: MigrationManifest = {
     merge({}, state, {
       entities: {
         messages: {
-          idsByServiceId: {}, // this has been removed after moving to paginated messages
-        },
-      },
+          idsByServiceId: {} // this has been removed after moving to paginated messages
+        }
+      }
     }),
 
   // Version 3
@@ -101,9 +101,9 @@ const migrations: MigrationManifest = {
   "3": (state: PersistedState) => {
     const entitiesState = (state as any).entities;
     const orgNameByFiscalCode = entitiesState.organizations;
-    const allOrganizations = Object.keys(orgNameByFiscalCode).map((key) => ({
+    const allOrganizations = Object.keys(orgNameByFiscalCode).map(key => ({
       fiscalCode: key,
-      name: orgNameByFiscalCode[key],
+      name: orgNameByFiscalCode[key]
     }));
 
     return {
@@ -112,9 +112,9 @@ const migrations: MigrationManifest = {
         ...(entitiesState ? entitiesState : {}),
         organizations: {
           nameByFiscalCode: orgNameByFiscalCode ? orgNameByFiscalCode : {},
-          all: allOrganizations ? allOrganizations : {},
-        },
-      },
+          all: allOrganizations ? allOrganizations : {}
+        }
+      }
     };
   },
 
@@ -127,11 +127,11 @@ const migrations: MigrationManifest = {
           ...state,
           persistedPreferences: {
             ...(state as PersistedGlobalState).persistedPreferences,
-            isPagoPATestEnabled: false,
-          },
+            isPagoPATestEnabled: false
+          }
         }
       : {
-          ...state,
+          ...state
         },
 
   // Version 5
@@ -140,8 +140,8 @@ const migrations: MigrationManifest = {
     ...state,
     onboarding: {
       isFingerprintAcknowledged: (state as PersistedGlobalState).onboarding
-        .isFingerprintAcknowledged,
-    },
+        .isFingerprintAcknowledged
+    }
   }),
 
   // Version 6
@@ -157,9 +157,9 @@ const migrations: MigrationManifest = {
           nameByFiscalCode: organizations.nameByFiscalCode
             ? organizations.nameByFiscalCode
             : {},
-          all: organizations.all ? organizations.all : {},
-        },
-      },
+          all: organizations.all ? organizations.all : {}
+        }
+      }
     };
   },
 
@@ -174,8 +174,8 @@ const migrations: MigrationManifest = {
     ...state,
     content: {
       ...(state as PersistedGlobalState).content,
-      servicesMetadata: {},
-    },
+      servicesMetadata: {}
+    }
   }),
 
   // Version 9
@@ -185,8 +185,8 @@ const migrations: MigrationManifest = {
     ...state,
     content: {
       ...(state as PersistedGlobalState).content,
-      servicesByScope: pot.none,
-    },
+      servicesByScope: pot.none
+    }
   }),
   // Version 10
   // since entities.messages are not persisted anymore, empty the related store section
@@ -194,8 +194,8 @@ const migrations: MigrationManifest = {
     ...state,
     entities: {
       ...(state as PersistedGlobalState).entities,
-      messages: {},
-    },
+      messages: {}
+    }
   }),
 
   // Version 11
@@ -204,16 +204,16 @@ const migrations: MigrationManifest = {
     ...state,
     persistedPreferences: {
       ...(state as PersistedGlobalState).persistedPreferences,
-      isCustomEmailChannelEnabled: pot.none,
-    },
+      isCustomEmailChannelEnabled: pot.none
+    }
   }),
   // Version 12
   // change default state of isDebugModeEnabled: false
   "12": (state: PersistedState) => ({
     ...state,
     debug: {
-      isDebugModeEnabled: false,
-    },
+      isDebugModeEnabled: false
+    }
   }),
   // Version 13
   // add content.idpTextData
@@ -222,8 +222,8 @@ const migrations: MigrationManifest = {
     ...state,
     content: {
       ...(state as PersistedGlobalState).content,
-      idpTextData: pot.none,
-    },
+      idpTextData: pot.none
+    }
   }),
   // Version 14
   // remove content.idpTextData
@@ -233,11 +233,11 @@ const migrations: MigrationManifest = {
     const newContent: ContentState = {
       municipality: content.municipality,
       contextualHelp: pot.none,
-      idps: remoteUndefined,
+      idps: remoteUndefined
     };
     return {
       ...state,
-      content: newContent,
+      content: newContent
     };
   },
   // Version 15
@@ -249,8 +249,8 @@ const migrations: MigrationManifest = {
       ...state,
       persistedPreferences: {
         ...persistedPreferences,
-        isMixpanelEnabled: null,
-      },
+        isMixpanelEnabled: null
+      }
     };
   },
   // Version 16
@@ -259,7 +259,7 @@ const migrations: MigrationManifest = {
     const content = (state as PersistedGlobalState).content;
     return {
       ...state,
-      content: { ...content, idps: remoteUndefined },
+      content: { ...content, idps: remoteUndefined }
     };
   },
   // Version 17
@@ -273,9 +273,9 @@ const migrations: MigrationManifest = {
         ...notifications,
         installation: {
           ...notifications.installation,
-          registeredToken: undefined,
-        },
-      },
+          registeredToken: undefined
+        }
+      }
     };
   },
   // Version 18
@@ -285,8 +285,8 @@ const migrations: MigrationManifest = {
     return {
       ...state,
       content: {
-        ..._.omit(content, "servicesMetadata"),
-      },
+        ..._.omit(content, "servicesMetadata")
+      }
     };
   },
   // Version 19
@@ -297,9 +297,9 @@ const migrations: MigrationManifest = {
     ...state,
     features: {
       mvl: {
-        preferences: { showAlertForAttachments: true },
-      },
-    },
+        preferences: { showAlertForAttachments: true }
+      }
+    }
   }),
   // Version 20
   // add installation.appVersionHistory
@@ -310,15 +310,15 @@ const migrations: MigrationManifest = {
       ...state,
       installation: {
         ...installation,
-        appVersionHistory: INSTALLATION_INITIAL_STATE.appVersionHistory,
-      },
+        appVersionHistory: INSTALLATION_INITIAL_STATE.appVersionHistory
+      }
     };
   },
   // Version 21
   // add lollipop
   "21": (state: PersistedState) => ({
     ...state,
-    lollipop: initialLollipopState,
+    lollipop: initialLollipopState
   }),
   // Version 22
   // This migration is necessary because
@@ -338,9 +338,9 @@ const migrations: MigrationManifest = {
           keyTag: keyTag ? O.some(keyTag) : O.none,
           _persist: {
             version: CURRENT_REDUX_LOLLIPOP_STORE_VERSION,
-            rehydrated: true,
-          },
-        },
+            rehydrated: true
+          }
+        }
       };
     }
     return state;
@@ -354,8 +354,8 @@ const migrations: MigrationManifest = {
     return {
       ...state,
       persistedPreferences: {
-        ..._.omit(persistedPreferences, "isExperimentalFeaturesEnabled"),
-      },
+        ..._.omit(persistedPreferences, "isExperimentalFeaturesEnabled")
+      }
     };
   },
   // Version 24
@@ -365,18 +365,18 @@ const migrations: MigrationManifest = {
       features: {
         payments: {
           history: {
-            archive: [],
-          },
-        },
-      },
+            archive: []
+          }
+        }
+      }
     }),
   // Version 25
   // Adds new wallet section FF
   "25": (state: PersistedState) =>
     merge(state, {
       persistedPreferences: {
-        isNewWalletSectionEnabled: false,
-      },
+        isNewWalletSectionEnabled: false
+      }
     }),
   // Version 26
   // Adds shouldShowPaymentsRedirectBanner persistence in feature wallet reducer
@@ -384,17 +384,17 @@ const migrations: MigrationManifest = {
     merge(state, {
       features: {
         wallet: {
-          preferences: {},
-        },
-      },
+          preferences: {}
+        }
+      }
     }),
   // Version 27
   // Adds it wallet section FF
   "27": (state: PersistedState) =>
     merge(state, {
       persistedPreferences: {
-        isItWalletTestEnabled: false,
-      },
+        isItWalletTestEnabled: false
+      }
     }),
   // Adds shouldShowAddMethodsBanner persistence in payments/home feature reducer
   "28": (state: PersistedState) =>
@@ -402,27 +402,27 @@ const migrations: MigrationManifest = {
       features: {
         payments: {
           home: {
-            shouldShowAddMethodsBanner: true,
-          },
-        },
-      },
+            shouldShowAddMethodsBanner: true
+          }
+        }
+      }
     }),
   // Adds wallet cards placeholders persistence in wallet feature reducer
   "29": (state: PersistedState) =>
     merge(state, {
       features: {
         wallet: {
-          placeholders: {},
-        },
-      },
+          placeholders: {}
+        }
+      }
     } as GlobalState),
   // Version 30
   // Adds new Messages Home FF
   "30": (state: PersistedState) =>
     merge(state, {
       persistedPreferences: {
-        isNewHomeSectionEnabled: false,
-      },
+        isNewHomeSectionEnabled: false
+      }
     }),
   // version 31
   // remove userMetadata from persisted state
@@ -443,8 +443,8 @@ const migrations: MigrationManifest = {
   "35": (state: PersistedState) =>
     merge(state, {
       persistedPreferences: {
-        isNewScanSectionEnabled: false,
-      },
+        isNewScanSectionEnabled: false
+      }
     }),
   // Remove isNewScanSectionEnabled from persistedPreferences
   "36": (state: PersistedState) =>
@@ -458,13 +458,13 @@ const migrations: MigrationManifest = {
         ...typedState.notifications,
         installation: {
           ...typedState.notifications.installation,
-          tokenStatus: { status: "unsent" },
+          tokenStatus: { status: "unsent" }
         },
         _persist: {
           version: NOTIFICATIONS_STORE_VERSION,
-          rehydrated: true,
-        },
-      },
+          rehydrated: true
+        }
+      }
     };
   },
   // Remove old wallets&payments feature and persisted state
@@ -476,8 +476,8 @@ const migrations: MigrationManifest = {
       ...state,
       persistedPreferences: {
         ...typedState.persistedPreferences,
-        isIOMarkdownEnabledOnMessagesAndServices: false,
-      },
+        isIOMarkdownEnabledOnMessagesAndServices: false
+      }
     };
   },
   // Add 'isItwOfflineAccessEnabled' to 'persistedPreferences'
@@ -487,8 +487,8 @@ const migrations: MigrationManifest = {
       ...state,
       persistedPreferences: {
         ...typedState.persistedPreferences,
-        isItwOfflineAccessEnabled: false,
-      },
+        isItwOfflineAccessEnabled: false
+      }
     };
   },
   // Add 'fontPreference' to 'persistedPreferences'
@@ -498,8 +498,8 @@ const migrations: MigrationManifest = {
       ...state,
       persistedPreferences: {
         ...typedState.persistedPreferences,
-        fontPreference: "comfortable",
-      },
+        fontPreference: "comfortable"
+      }
     };
   },
   // Remove 'isIOMarkdownEnabledOnMessagesAndServices' and rename 'isDesignSystemEnabled' to 'isExperimentalDesignEnabled'
@@ -519,8 +519,8 @@ const migrations: MigrationManifest = {
       ...state,
       persistedPreferences: {
         ...remaining,
-        isExperimentalDesignEnabled: isDesignSystemEnabled,
-      },
+        isExperimentalDesignEnabled: isDesignSystemEnabled
+      }
     };
   },
   // Convert persisted IDPS from autogenerated spec to new local spec
@@ -543,10 +543,10 @@ const migrations: MigrationManifest = {
         ...typedState.content,
         idps: isReady(typedState.content.idps)
           ? remoteReady(
-              fromGeneratedToLocalSpidIdp(typedState.content.idps.value.items),
+              fromGeneratedToLocalSpidIdp(typedState.content.idps.value.items)
             )
-          : { ...typedState.content.idps },
-      },
+          : { ...typedState.content.idps }
+      }
     };
   },
   // Remove isItwOfflineAccessEnabled from persistedPreferences
@@ -565,8 +565,8 @@ const migrations: MigrationManifest = {
       ...state,
       persistedPreferences: {
         ...typedState.persistedPreferences,
-        useMessagePaymentInfoV2: false,
-      },
+        useMessagePaymentInfoV2: false
+      }
     };
   },
   // Remove useMessagePaymentInfoV2 to persistedPreferences
@@ -585,8 +585,8 @@ const migrations: MigrationManifest = {
     return {
       ...state,
       persistedPreferences: {
-        ...restPersistedPreferences,
-      },
+        ...restPersistedPreferences
+      }
     };
   },
   // Add 'isAarFeatureEnabled' to 'persistedPreferences'
@@ -596,8 +596,8 @@ const migrations: MigrationManifest = {
       ...state,
       persistedPreferences: {
         ...typedState.persistedPreferences,
-        isAarFeatureEnabled: false,
-      },
+        isAarFeatureEnabled: false
+      }
     };
   },
   // Add 'themePreference' to 'persistedPreferences'
@@ -607,8 +607,8 @@ const migrations: MigrationManifest = {
       ...state,
       persistedPreferences: {
         ...typedState.persistedPreferences,
-        themePreference: "light",
-      },
+        themePreference: "light"
+      }
     };
   },
   // Remove 'isAarFeatureEnabled' from 'persistedPreferences'
@@ -627,10 +627,10 @@ const migrations: MigrationManifest = {
     return {
       ...state,
       persistedPreferences: {
-        ...restPersistedPreferences,
-      },
+        ...restPersistedPreferences
+      }
     };
-  },
+  }
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
@@ -647,11 +647,11 @@ const rootPersistConfig: PersistConfig = {
     "persistedPreferences",
     "installation",
     "content",
-    "crossSessions",
+    "crossSessions"
   ],
   // Transform functions used to manipulate state on store/rehydrate
   // TODO: add optionTransform https://www.pivotaltracker.com/story/show/170998374
-  transforms: [DateISO8601Transform, PotTransform],
+  transforms: [DateISO8601Transform, PotTransform]
 };
 
 const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
@@ -662,14 +662,14 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
   createRootReducer([
     rootPersistConfig,
     authenticationPersistConfig,
-    entitiesPersistConfig,
-  ]),
+    entitiesPersistConfig
+  ])
 );
 
 const logger = createLogger({
   predicate: (): boolean => isDebuggingInChrome,
   collapsed: true,
-  duration: true,
+  duration: true
 });
 
 // configure Reactotron if the app is running in dev mode
@@ -687,7 +687,7 @@ function configureStoreAndPersistor(): {
   const baseMiddlewares: ReadonlyArray<Middleware> = [
     sagaMiddleware,
     logger,
-    analytics.actionTracking, // generic tracker for selected redux actions
+    analytics.actionTracking // generic tracker for selected redux actions
   ];
 
   const middlewares = applyMiddleware(...baseMiddlewares);

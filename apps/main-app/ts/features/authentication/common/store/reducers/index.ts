@@ -12,7 +12,7 @@ import {
   sessionInvalid,
   logoutRequest,
   loginFailure,
-  sessionCorrupted,
+  sessionCorrupted
 } from "../actions";
 import { Action } from "../../../../../store/actions/types";
 import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
@@ -20,11 +20,11 @@ import { AuthenticationState, LoggedOutWithoutIdp } from "../models";
 import {
   isLoggedIn,
   isLoggedOutWithIdp,
-  isSessionExpired,
+  isSessionExpired
 } from "../utils/guards";
 import {
   consolidateActiveSessionLoginData,
-  setFinalizeLoggedOutUserWithDifferentCF,
+  setFinalizeLoggedOutUserWithDifferentCF
 } from "../../../activeSessionLogin/store/actions";
 
 // Here we mix the plain AuthenticationState with the keys added by redux-persist
@@ -33,12 +33,12 @@ type PersistedAuthenticationState = AuthenticationState & PersistPartial;
 // Initially the user is logged out and hasn't selected an IDP
 export const INITIAL_STATE: LoggedOutWithoutIdp = {
   kind: "LoggedOutWithoutIdp",
-  reason: "NOT_LOGGED_IN",
+  reason: "NOT_LOGGED_IN"
 };
 
 const authenticationReducer = (
   state: AuthenticationState = INITIAL_STATE,
-  action: Action,
+  action: Action
 ): AuthenticationState => {
   if (isActionOf(idpSelected, action) && !isLoggedIn(state)) {
     // Save the selected IDP in the state
@@ -46,8 +46,8 @@ const authenticationReducer = (
       ...state,
       ...{
         kind: "LoggedOutWithIdp",
-        idp: action.payload,
-      },
+        idp: action.payload
+      }
     };
   }
 
@@ -56,7 +56,7 @@ const authenticationReducer = (
     return {
       kind: "LoggedInWithoutSessionInfo",
       idp: state.idp,
-      sessionToken: action.payload.token,
+      sessionToken: action.payload.token
     };
   }
 
@@ -68,7 +68,7 @@ const authenticationReducer = (
     return {
       ...state,
       idp: action.payload.idp,
-      sessionToken: action.payload.token,
+      sessionToken: action.payload.token
     };
   }
 
@@ -77,8 +77,8 @@ const authenticationReducer = (
     return {
       ...state,
       ...{
-        sessionToken: action.payload,
-      },
+        sessionToken: action.payload
+      }
     };
   }
 
@@ -88,8 +88,8 @@ const authenticationReducer = (
       ...state,
       ...{
         kind: "LoggedInWithSessionInfo",
-        sessionInfo: action.payload,
-      },
+        sessionInfo: action.payload
+      }
     };
   }
 
@@ -98,8 +98,8 @@ const authenticationReducer = (
       ...state,
       ...{
         kind: "LogoutRequested",
-        reason: "NOT_LOGGED_IN",
-      },
+        reason: "NOT_LOGGED_IN"
+      }
     };
   }
 
@@ -120,7 +120,7 @@ const authenticationReducer = (
         ? "SESSION_EXPIRED"
         : isActionOf(sessionCorrupted, action)
           ? "SESSION_CORRUPTED"
-          : "NOT_LOGGED_IN",
+          : "NOT_LOGGED_IN"
     };
   }
 

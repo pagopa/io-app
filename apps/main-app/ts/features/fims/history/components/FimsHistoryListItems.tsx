@@ -6,7 +6,7 @@ import {
   Icon,
   IOListItemStyles,
   useIOTheme,
-  VSpacer,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import I18n from "i18next";
@@ -29,7 +29,7 @@ export type FimsHistoryBaseListItemProps = {
 
 export const FimsHistorySuccessListItem = ({
   serviceData,
-  consent,
+  consent
 }: FimsHistorySuccessListItemProps) => {
   const theme = useIOTheme();
 
@@ -42,7 +42,7 @@ export const FimsHistorySuccessListItem = ({
           {dateToAccessibilityReadableFormat(
             consent.timestamp,
             // eslint-disable-next-line i18next/no-literal-string -- date format token, not user-facing copy
-            "DD/MM/YYYY, HH:mm",
+            "DD/MM/YYYY, HH:mm"
           )}
         </Caption>
       </View>
@@ -59,7 +59,7 @@ export const FimsHistorySuccessListItem = ({
 };
 
 export const FimsHistoryFailureListItem = ({
-  item,
+  item
 }: FimsHistoryBaseListItemProps) => {
   const theme = useIOTheme();
 
@@ -70,19 +70,19 @@ export const FimsHistoryFailureListItem = ({
         {
           flexDirection: "row",
           justifyContent: "space-between",
-          alignItems: "center",
-        },
+          alignItems: "center"
+        }
       ]}
     >
       <View
         style={{
-          paddingVertical: 15,
+          paddingVertical: 15
         }}
       >
         <View
           style={{
             alignSelf: "flex-start",
-            flexDirection: "row",
+            flexDirection: "row"
           }}
         >
           <Icon name="calendar" size={16} color="grey-300" />
@@ -109,5 +109,5 @@ export const FimsHistoryFailureListItem = ({
 
 const defaultListItemStyles = [
   IOListItemStyles.listItem,
-  FimsHistorySharedStyles.fixedHeightListItem,
+  FimsHistorySharedStyles.fixedHeightListItem
 ];

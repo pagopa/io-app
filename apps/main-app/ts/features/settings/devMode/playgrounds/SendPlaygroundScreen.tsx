@@ -3,7 +3,7 @@ import {
   StyleSheet,
   TextInput as RNTextInput,
   View,
-  Appearance,
+  Appearance
 } from "react-native";
 import I18n from "i18next";
 import {
@@ -16,7 +16,7 @@ import {
   ListItemInfoCopy,
   ListItemSwitch,
   useIOToast,
-  VSpacer,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -27,7 +27,7 @@ import {
   isSendLollipopLambdaLoading,
   sendLollipopLambdaErrorReason,
   sendLollipopLambdaResponseBodyString,
-  sendLollipopLambdaResponseStatusCode,
+  sendLollipopLambdaResponseStatusCode
 } from "../../../pn/lollipopLambda/store/selectors";
 import { sendLollipopLambdaAction } from "../../../pn/lollipopLambda/store/actions";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
     height: 140,
     lineHeight: 20,
     minHeight: 120,
-    borderRadius: 8,
-  },
+    borderRadius: 8
+  }
 });
 
 export const SendPlaygroundScreen = () => {
@@ -63,28 +63,28 @@ export const SendPlaygroundScreen = () => {
   const errorReasonOrUndefined = useIOSelector(sendLollipopLambdaErrorReason);
   const isSagaLoading = useIOSelector(isSendLollipopLambdaLoading);
   const lollipopPlaygroundEnabled = useIOSelector(
-    isSendLollipopPlaygroundEnabledSelector,
+    isSendLollipopPlaygroundEnabledSelector
   );
   const sendUATEnvironmentEnabled = useIOSelector(isPnTestEnabledSelector);
   const responseBodyStringOrUndefined = useIOSelector(
-    sendLollipopLambdaResponseBodyString,
+    sendLollipopLambdaResponseBodyString
   );
   const responseStatusCodeOrUndefined = useIOSelector(
-    sendLollipopLambdaResponseStatusCode,
+    sendLollipopLambdaResponseStatusCode
   );
 
   const sendLollipopLambdaRequest = (httpVerb: "Get" | "Post") => {
     dispatch(
       sendLollipopLambdaAction.request({
         httpVerb,
-        body: requestBody,
-      }),
+        body: requestBody
+      })
     );
   };
 
   useHeaderSecondLevel({
     title: "",
-    supportRequest: false,
+    supportRequest: false
   });
 
   useEffect(() => {
@@ -97,7 +97,7 @@ export const SendPlaygroundScreen = () => {
     () => () => {
       dispatch(sendLollipopLambdaAction.cancel());
     },
-    [dispatch],
+    [dispatch]
   );
   return (
     <IOScrollView>
@@ -109,11 +109,11 @@ export const SendPlaygroundScreen = () => {
         description={I18n.t("features.pn.lollipopPlayground.uatDescription")}
         disabled={isSagaLoading}
         value={sendUATEnvironmentEnabled}
-        onSwitchValueChange={(enabled) =>
+        onSwitchValueChange={enabled =>
           dispatch(
             preferencesPnTestEnvironmentSetEnabled({
-              isPnTestEnabled: enabled,
-            }),
+              isPnTestEnabled: enabled
+            })
           )
         }
       />
@@ -128,22 +128,22 @@ export const SendPlaygroundScreen = () => {
             <VSpacer size={4} />
             <RNTextInput
               accessibilityLabel={I18n.t(
-                "features.pn.lollipopPlayground.postBodyLabel",
+                "features.pn.lollipopPlayground.postBodyLabel"
               )}
               editable={!isSagaLoading}
               submitBehavior="newline"
               multiline={true}
               placeholder={I18n.t(
-                "features.pn.lollipopPlayground.postBodyPlaceholder",
+                "features.pn.lollipopPlayground.postBodyPlaceholder"
               )}
               style={{
                 ...styles.textInput,
                 opacity: isSagaLoading ? 0.5 : 1.0,
                 color: bodyTextColor,
-                borderColor: bodyBorderColor,
+                borderColor: bodyBorderColor
               }}
               placeholderTextColor={placeholderTextColor}
-              onChangeText={(value) => setRequestBody(value)}
+              onChangeText={value => setRequestBody(value)}
               value={requestBody}
               scrollEnabled={false}
             />
@@ -151,7 +151,7 @@ export const SendPlaygroundScreen = () => {
             <ListItemInfo
               value={`${responseStatusCodeOrUndefined ?? ""}`}
               label={I18n.t(
-                "features.pn.lollipopPlayground.responseStatusCode",
+                "features.pn.lollipopPlayground.responseStatusCode"
               )}
               numberOfLines={1}
             />
@@ -161,7 +161,7 @@ export const SendPlaygroundScreen = () => {
               numberOfLines={1000}
               onPress={() =>
                 clipboardSetStringWithFeedback(
-                  responseBodyStringOrUndefined ?? "",
+                  responseBodyStringOrUndefined ?? ""
                 )
               }
             />

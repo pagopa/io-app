@@ -5,7 +5,7 @@ import {
   isStringNullyOrEmpty,
   maybeNotNullyString,
   formatBytesWithUnit,
-  capitalizeTextName,
+  capitalizeTextName
 } from "../strings";
 
 describe("capitalize", () => {

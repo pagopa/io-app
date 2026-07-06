@@ -6,16 +6,16 @@ import reducer, {
   FimsErrorStateType,
   FimsFlowStateTags,
   FimsSSOState,
-  INITIAL_STATE,
+  INITIAL_STATE
 } from "../";
 import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
 import {
   Consent,
-  TypeEnum,
+  TypeEnum
 } from "../../../../../../../definitions/fims_sso/Consent";
 import {
   applicationChangeState,
-  startApplicationInitialization,
+  startApplicationInitialization
 } from "../../../../../../store/actions/application";
 import { Action } from "../../../../../../store/actions/types";
 import * as UTILS from "../../../utils";
@@ -24,14 +24,14 @@ import {
   fimsAcceptConsentsFailureAction,
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction,
-  fimsSignAndRetrieveInAppBrowserUrlAction,
+  fimsSignAndRetrieveInAppBrowserUrlAction
 } from "../../actions";
 import * as SELECTORS from "../../selectors";
 
 const errorTags: ReadonlyArray<FIMS_SSO_ERROR_TAGS> = [
   "AUTHENTICATION",
   "GENERIC",
-  "MISSING_INAPP_BROWSER",
+  "MISSING_INAPP_BROWSER"
 ];
 
 const currentFlowStateTags: ReadonlyArray<FimsFlowStateTags> = [
@@ -39,13 +39,13 @@ const currentFlowStateTags: ReadonlyArray<FimsFlowStateTags> = [
   "consents",
   "fastLogin_forced_restart",
   "idle",
-  "in-app-browser-loading",
+  "in-app-browser-loading"
 ];
 
 const ssoDataPots = (
   consent: Consent,
   errorTag: FIMS_SSO_ERROR_TAGS = "GENERIC",
-  debugMessage: string = "Failed",
+  debugMessage: string = "Failed"
 ) => [
   pot.none,
   pot.noneLoading,
@@ -56,8 +56,8 @@ const ssoDataPots = (
   pot.someUpdating(consent, consent),
   pot.someError(consent, {
     errorTag,
-    debugMessage,
-  }),
+    debugMessage
+  })
 ];
 
 describe("singleSignOn reducer", () => {
@@ -74,8 +74,8 @@ describe("singleSignOn reducer", () => {
     const startApplicationInitializationAction =
       startApplicationInitialization();
 
-    [true, false].forEach((shouldRestart) =>
-      currentFlowStateTags.forEach((currentFlowState) =>
+    [true, false].forEach(shouldRestart =>
+      currentFlowStateTags.forEach(currentFlowState =>
         it(
           shouldRestart
             ? `should reset the SSO state and trigger a forced fast login restart with currentFlowState=${currentFlowState}`
@@ -89,26 +89,26 @@ describe("singleSignOn reducer", () => {
               ...INITIAL_STATE,
               currentFlowState,
               ssoData: pot.some({} as Consent),
-              relyingPartyServiceId: "01K1E048EYQ7212T55N82S6GVM" as ServiceId,
+              relyingPartyServiceId: "01K1E048EYQ7212T55N82S6GVM" as ServiceId
             };
 
             const singleSignOnState = reducer(
               initialState,
-              startApplicationInitializationAction,
+              startApplicationInitializationAction
             );
 
             if (shouldRestart) {
               expect(singleSignOnState.currentFlowState).toEqual(
-                "fastLogin_forced_restart",
+                "fastLogin_forced_restart"
               );
               expect(singleSignOnState.ssoData.kind).toEqual("PotNone");
               expect(singleSignOnState.relyingPartyServiceId).toBeUndefined();
             } else {
               expect(singleSignOnState).toEqual(INITIAL_STATE);
             }
-          },
-        ),
-      ),
+          }
+        )
+      )
     );
   });
 
@@ -117,15 +117,15 @@ describe("singleSignOn reducer", () => {
     const ctaText = "Click here";
     const ctaUrl = "https://an.url/consent";
 
-    errorTags.forEach((errorTag) =>
-      ssoDataPots(consentsResponse, errorTag).forEach((consentsList) =>
-        [true, false].forEach((ephemeralSessionOniOS) =>
-          currentFlowStateTags.forEach((currentFlowState) =>
+    errorTags.forEach(errorTag =>
+      ssoDataPots(consentsResponse, errorTag).forEach(consentsList =>
+        [true, false].forEach(ephemeralSessionOniOS =>
+          currentFlowStateTags.forEach(currentFlowState =>
             it(`should request consents list with state='${consentsList.kind}', flow='${currentFlowState}', ephemeralSessionOniOS='${ephemeralSessionOniOS}', errorTag='${errorTag}'`, () => {
               const fimsGetConsentsListA = fimsGetConsentsListAction.request({
                 ctaText,
                 ctaUrl,
-                ephemeralSessionOniOS,
+                ephemeralSessionOniOS
               });
 
               const singleSignOnState = reducer(
@@ -133,9 +133,9 @@ describe("singleSignOn reducer", () => {
                   ssoData: consentsList,
                   currentFlowState,
                   ephemeralSessionOniOS,
-                  ctaText,
+                  ctaText
                 },
-                fimsGetConsentsListA,
+                fimsGetConsentsListA
               );
 
               expect(singleSignOnState.ctaText).toEqual(ctaText);
@@ -144,12 +144,12 @@ describe("singleSignOn reducer", () => {
               expect(singleSignOnState.relyingPartyServiceId).toBeUndefined();
               expect(singleSignOnState.relyingPartyUrl).toEqual(ctaUrl);
               expect(singleSignOnState.ephemeralSessionOniOS).toEqual(
-                ephemeralSessionOniOS,
+                ephemeralSessionOniOS
               );
-            }),
-          ),
-        ),
-      ),
+            })
+          )
+        )
+      )
     );
   });
 
@@ -158,18 +158,18 @@ describe("singleSignOn reducer", () => {
     const consent: Consent = {
       _links: {
         abort: { href: "https://an.url/abort" },
-        consent: { href: "https://an.url/consent" },
+        consent: { href: "https://an.url/consent" }
       },
       redirect: { display_name: "Go to Redirect" },
       service_id: relyingPartyServiceId,
       type: TypeEnum.consent,
-      user_metadata: [{ display_name: "fullname", name: "John Smith" }],
+      user_metadata: [{ display_name: "fullname", name: "John Smith" }]
     };
 
-    errorTags.forEach((errorTag) =>
-      ssoDataPots(consent, errorTag).forEach((consentsList) =>
-        [true, false].forEach((ephemeralSessionOniOS) =>
-          currentFlowStateTags.forEach((currentFlowState) =>
+    errorTags.forEach(errorTag =>
+      ssoDataPots(consent, errorTag).forEach(consentsList =>
+        [true, false].forEach(ephemeralSessionOniOS =>
+          currentFlowStateTags.forEach(currentFlowState =>
             it(`should handle success with ssoData.kind='${consentsList.kind}', errorTag='${errorTag}', currentFlowState='${currentFlowState}', ephemeralSessionOniOS='${ephemeralSessionOniOS}'`, () => {
               const fimsGetConsentsListA =
                 fimsGetConsentsListAction.success(consent);
@@ -179,53 +179,53 @@ describe("singleSignOn reducer", () => {
                   ...INITIAL_STATE,
                   ssoData: consentsList,
                   currentFlowState,
-                  ephemeralSessionOniOS,
+                  ephemeralSessionOniOS
                 },
-                fimsGetConsentsListA,
+                fimsGetConsentsListA
               );
 
               expect(singleSignOnState.ssoData).toEqual(pot.some(consent));
               expect(singleSignOnState.relyingPartyServiceId).toEqual(
-                relyingPartyServiceId,
+                relyingPartyServiceId
               );
-            }),
-          ),
-        ),
-      ),
+            })
+          )
+        )
+      )
     );
   });
 
   describe("Receiving 'fimsAcceptConsentsAction'", () => {
-    ["https://an.url/acceptUrl", undefined].forEach((acceptUrl) =>
-      currentFlowStateTags.forEach((currentFlowState) =>
+    ["https://an.url/acceptUrl", undefined].forEach(acceptUrl =>
+      currentFlowStateTags.forEach(currentFlowState =>
         it(`should handle fimsAcceptConsentsAction with acceptUrl='${acceptUrl}', currentFlowState='${currentFlowState}'`, () => {
           const fimsAcceptConsentsA = fimsAcceptConsentsAction({ acceptUrl });
           const initialState: FimsSSOState = {
             ...INITIAL_STATE,
             currentFlowState,
             ssoData: pot.some({} as Consent),
-            relyingPartyServiceId: "01K1E048EYQ7212T55N82S6GVM" as ServiceId,
+            relyingPartyServiceId: "01K1E048EYQ7212T55N82S6GVM" as ServiceId
           };
 
           const singleSignOnState = reducer(initialState, fimsAcceptConsentsA);
 
           expect(singleSignOnState.currentFlowState).toEqual(
-            "in-app-browser-loading",
+            "in-app-browser-loading"
           );
           expect(singleSignOnState.ssoData).toEqual(pot.none);
-        }),
-      ),
+        })
+      )
     );
   });
 
   describe("Receiving 'fimsSignAndRetrieveInAppBrowserUrlAction.request'", () => {
-    currentFlowStateTags.forEach((currentFlowState) =>
+    currentFlowStateTags.forEach(currentFlowState =>
       it(`should handle fimsSignAndRetrieveInAppBrowserUrlAction.request with currentFlowState='${currentFlowState}'`, () => {
         const actionPayload: HttpClientSuccessResponse = {
           type: "success",
           status: 200,
           body: "{}",
-          headers: {},
+          headers: {}
         };
 
         const fimsSignAndRetrieveInAppBrowserUrlA =
@@ -234,19 +234,19 @@ describe("singleSignOn reducer", () => {
           ...INITIAL_STATE,
           currentFlowState,
           ssoData: pot.some({} as Consent),
-          relyingPartyServiceId: "01K1E048EYQ7212T55N82S6GVM" as ServiceId,
+          relyingPartyServiceId: "01K1E048EYQ7212T55N82S6GVM" as ServiceId
         };
 
         const singleSignOnState = reducer(
           initialState,
-          fimsSignAndRetrieveInAppBrowserUrlA,
+          fimsSignAndRetrieveInAppBrowserUrlA
         );
 
         expect(singleSignOnState.currentFlowState).toEqual(
-          "in-app-browser-loading",
+          "in-app-browser-loading"
         );
         expect(singleSignOnState.ssoData).toEqual(pot.none);
-      }),
+      })
     );
   });
 
@@ -255,18 +255,18 @@ describe("singleSignOn reducer", () => {
     const consent: Consent = {
       _links: {
         abort: { href: "https://an.url/abort" },
-        consent: { href: "https://an.url/consent" },
+        consent: { href: "https://an.url/consent" }
       },
       redirect: { display_name: "Go to Redirect" },
       service_id: relyingPartyServiceId,
       type: TypeEnum.consent,
-      user_metadata: [{ display_name: "fullname", name: "John Smith" }],
+      user_metadata: [{ display_name: "fullname", name: "John Smith" }]
     };
 
-    errorTags.forEach((errorTag) =>
-      ssoDataPots(consent, errorTag).forEach((consentsList) =>
-        [true, false].forEach((ephemeralSessionOniOS) =>
-          currentFlowStateTags.forEach((currentFlowState) =>
+    errorTags.forEach(errorTag =>
+      ssoDataPots(consent, errorTag).forEach(consentsList =>
+        [true, false].forEach(ephemeralSessionOniOS =>
+          currentFlowStateTags.forEach(currentFlowState =>
             it(`should handle success with ssoData.kind='${consentsList.kind}', errorTag='${errorTag}', currentFlowState='${currentFlowState}', ephemeralSessionOniOS='${ephemeralSessionOniOS}'`, () => {
               const fimsSignAndRetrieveInAppBrowserUrlA =
                 fimsSignAndRetrieveInAppBrowserUrlAction.success();
@@ -276,16 +276,16 @@ describe("singleSignOn reducer", () => {
                   ...INITIAL_STATE,
                   ssoData: consentsList,
                   currentFlowState,
-                  ephemeralSessionOniOS,
+                  ephemeralSessionOniOS
                 },
-                fimsSignAndRetrieveInAppBrowserUrlA,
+                fimsSignAndRetrieveInAppBrowserUrlA
               );
 
               expect(singleSignOnState.currentFlowState).toEqual("idle");
-            }),
-          ),
-        ),
-      ),
+            })
+          )
+        )
+      )
     );
   });
 
@@ -297,17 +297,17 @@ describe("singleSignOn reducer", () => {
       ["fimsAcceptConsentsFailureAction", fimsAcceptConsentsFailureAction],
       [
         "fimsSignAndRetrieveInAppBrowserUrlAction.failure",
-        fimsSignAndRetrieveInAppBrowserUrlAction.failure,
-      ],
+        fimsSignAndRetrieveInAppBrowserUrlAction.failure
+      ]
     ];
 
     failureActions.forEach(([name, actionCreator]) => {
-      errorTags.forEach((errorTag) =>
-        currentFlowStateTags.forEach((currentFlowState) =>
+      errorTags.forEach(errorTag =>
+        currentFlowStateTags.forEach(currentFlowState =>
           it(`should handle ${name} with errorTag='${errorTag}', currentFlowState='${currentFlowState}'`, () => {
             const payload: FimsErrorStateType = {
               errorTag,
-              debugMessage: "Failed",
+              debugMessage: "Failed"
             };
 
             const action = actionCreator(payload);
@@ -315,17 +315,17 @@ describe("singleSignOn reducer", () => {
               ...INITIAL_STATE,
               currentFlowState,
               ssoData: pot.some({} as Consent),
-              relyingPartyServiceId: "01K1E048EYQ7212T55N82S6GVM" as ServiceId,
+              relyingPartyServiceId: "01K1E048EYQ7212T55N82S6GVM" as ServiceId
             };
 
             const singleSignOnState = reducer(initialState, action);
 
             expect(singleSignOnState.currentFlowState).toEqual("idle");
             expect(singleSignOnState.ssoData).toEqual(
-              pot.toError(initialState.ssoData, payload),
+              pot.toError(initialState.ssoData, payload)
             );
-          }),
-        ),
+          })
+        )
       );
     });
   });
@@ -337,8 +337,8 @@ describe("singleSignOn reducer", () => {
 
     const fimsCancelOrAbortA = fimsCancelOrAbortAction();
 
-    ["https://an.url/abort", undefined].forEach((abortUrl) =>
-      currentFlowStateTags.forEach((currentFlowState) =>
+    ["https://an.url/abort", undefined].forEach(abortUrl =>
+      currentFlowStateTags.forEach(currentFlowState =>
         it(
           abortUrl
             ? `should set currentFlowState to 'abort' when abortUrl is present with currentFlowState=${currentFlowState}`
@@ -352,14 +352,14 @@ describe("singleSignOn reducer", () => {
               ...INITIAL_STATE,
               currentFlowState,
               ssoData: pot.some({} as Consent),
-              relyingPartyServiceId: "01K1E048EYQ7212T55N82S6GVM" as ServiceId,
+              relyingPartyServiceId: "01K1E048EYQ7212T55N82S6GVM" as ServiceId
             };
 
             const result = reducer(initialState, fimsCancelOrAbortA);
             expect(result.currentFlowState).toBe(abortUrl ? "abort" : "idle");
-          },
-        ),
-      ),
+          }
+        )
+      )
     );
   });
 });

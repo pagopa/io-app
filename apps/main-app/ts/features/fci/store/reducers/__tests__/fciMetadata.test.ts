@@ -18,7 +18,7 @@ describe("FciMetadataRequestReducer", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciMetadataRequest.request());
     expect(store.getState().features.fci.metadata).toStrictEqual(
-      pot.noneLoading,
+      pot.noneLoading
     );
   });
   it("should be remoteReady with action payload as value if the fciMetadataRequest.success is dispatched", () => {
@@ -26,7 +26,7 @@ describe("FciMetadataRequestReducer", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciMetadataRequest.success(mockFciMetadata));
     expect(store.getState().features.fci.metadata).toStrictEqual(
-      pot.some(mockFciMetadata),
+      pot.some(mockFciMetadata)
     );
   });
   it("should be pot.noneError if the fciMetadataRequest.failure is dispatched", () => {
@@ -34,7 +34,7 @@ describe("FciMetadataRequestReducer", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciMetadataRequest.failure(genericError));
     expect(store.getState().features.fci.metadata).toStrictEqual(
-      pot.noneError(genericError),
+      pot.noneError(genericError)
     );
   });
   it("should be pot.none if the fciClearStateRequest is dispatched", () => {

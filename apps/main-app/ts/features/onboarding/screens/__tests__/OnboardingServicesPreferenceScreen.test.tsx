@@ -16,26 +16,26 @@ const mockDispatch = jest.fn();
 const mockToast = {
   hideAll: jest.fn(),
   success: jest.fn(),
-  error: jest.fn(),
+  error: jest.fn()
 };
 
 jest.mock("../../../../store/hooks", () => ({
   useIODispatch: () => mockDispatch,
   useIOSelector: jest.fn(),
   useIOStore: () => ({
-    getState: jest.fn(),
-  }),
+    getState: jest.fn()
+  })
 }));
 
 jest.mock("../../../../navigation/params/AppParamsList", () => {
   const actual = jest.requireActual(
-    "../../../../navigation/params/AppParamsList",
+    "../../../../navigation/params/AppParamsList"
   );
   return {
     ...actual,
     useIONavigation: () => ({
-      navigate: mockNavigate,
-    }),
+      navigate: mockNavigate
+    })
   };
 });
 
@@ -43,7 +43,7 @@ jest.mock("@pagopa/io-app-design-system", () => {
   const actual = jest.requireActual("@pagopa/io-app-design-system");
   return {
     ...actual,
-    useIOToast: () => mockToast,
+    useIOToast: () => mockToast
   };
 });
 
@@ -51,7 +51,7 @@ jest.mock("../../../../utils/analytics", () => ({
   getFlowType: jest.fn(() => "mock-flow"),
   trackServiceConfiguration: jest.fn(),
   trackServiceConfigurationScreen: jest.fn(),
-  buildEventProperties: jest.fn(() => ({})),
+  buildEventProperties: jest.fn(() => ({}))
 }));
 
 const mockPresent = jest.fn();
@@ -61,9 +61,9 @@ jest.mock(
   () => ({
     useManualConfigBottomSheet: jest.fn(() => ({
       present: mockPresent,
-      manualConfigBottomSheet: null,
-    })),
-  }),
+      manualConfigBottomSheet: null
+    }))
+  })
 );
 
 // eslint-disable-next-line functional/no-let
@@ -72,7 +72,7 @@ let currentMockedState: {
   profileServicePreferencesMode?: ServicesPreferencesModeEnum;
 } = {
   profile: pot.none,
-  profileServicePreferencesMode: undefined,
+  profileServicePreferencesMode: undefined
 };
 
 beforeEach(() => {
@@ -93,10 +93,10 @@ describe("OnboardingServicesPreferenceScreen", () => {
   it("renders correctly", () => {
     const { getAllByText } = renderComponent();
     expect(
-      getAllByText(I18n.t("services.optIn.preferences.title"))[0],
+      getAllByText(I18n.t("services.optIn.preferences.title"))[0]
     ).toBeTruthy();
     expect(
-      getAllByText(I18n.t("services.optIn.preferences.body"))[0],
+      getAllByText(I18n.t("services.optIn.preferences.body"))[0]
     ).toBeTruthy();
   });
 
@@ -114,22 +114,22 @@ describe("OnboardingServicesPreferenceScreen", () => {
   it("calls dispatch when AUTO mode is selected", () => {
     const { getByText } = renderComponent();
     const autoButton = getByText(
-      I18n.t("services.optIn.preferences.quickConfig.title"),
+      I18n.t("services.optIn.preferences.quickConfig.title")
     );
     fireEvent.press(autoButton);
     expect(mockDispatch).toHaveBeenCalledWith(
       profileUpsert.request({
         service_preferences_settings: {
-          mode: ServicesPreferencesModeEnum.AUTO,
-        },
-      }),
+          mode: ServicesPreferencesModeEnum.AUTO
+        }
+      })
     );
   });
 
   it("opens confirmation modal when MANUAL mode is selected", () => {
     const { getByText } = renderComponent();
     const manualButton = getByText(
-      I18n.t("services.optIn.preferences.manualConfig.title"),
+      I18n.t("services.optIn.preferences.manualConfig.title")
     );
     fireEvent.press(manualButton);
     expect(mockPresent).toHaveBeenCalled();
@@ -138,16 +138,16 @@ describe("OnboardingServicesPreferenceScreen", () => {
 
 const renderComponent = (
   customState: Partial<typeof currentMockedState> = {},
-  isFirstOnboarding = true,
+  isFirstOnboarding = true
 ) => {
   currentMockedState = {
     ...currentMockedState,
-    ...customState,
+    ...customState
   };
 
   const initialAppState = appReducer(
     undefined,
-    applicationChangeState("active"),
+    applicationChangeState("active")
   );
   const store = createStore(appReducer, initialAppState as any);
 
@@ -155,6 +155,6 @@ const renderComponent = (
     OnboardingServicesPreferenceScreen,
     ROUTES.ONBOARDING_SERVICES_PREFERENCE,
     { isFirstOnboarding },
-    store,
+    store
   );
 };

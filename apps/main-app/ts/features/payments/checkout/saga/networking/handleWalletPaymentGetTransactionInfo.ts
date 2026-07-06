@@ -11,25 +11,25 @@ export function* handleWalletPaymentGetTransactionInfo(
   getTransactionInfo: PaymentClient["getTransactionInfoForIO"],
   action: ActionType<
     (typeof paymentsGetPaymentTransactionInfoAction)["request"]
-  >,
+  >
 ) {
   try {
     const getTransactionInfoResult = yield* withPaymentsSessionToken(
       getTransactionInfo,
       action,
       {
-        transactionId: action.payload.transactionId,
+        transactionId: action.payload.transactionId
       },
-      "pagoPAPlatformSessionToken",
+      "pagoPAPlatformSessionToken"
     );
 
     if (E.isLeft(getTransactionInfoResult)) {
       yield* put(
         paymentsGetPaymentTransactionInfoAction.failure({
           ...getGenericError(
-            new Error(readablePrivacyReport(getTransactionInfoResult.left)),
-          ),
-        }),
+            new Error(readablePrivacyReport(getTransactionInfoResult.left))
+          )
+        })
       );
       return;
     }
@@ -37,24 +37,24 @@ export function* handleWalletPaymentGetTransactionInfo(
     if (getTransactionInfoResult.right.status === 200) {
       yield* put(
         paymentsGetPaymentTransactionInfoAction.success(
-          getTransactionInfoResult.right.value,
-        ),
+          getTransactionInfoResult.right.value
+        )
       );
     } else if (getTransactionInfoResult.right.status !== 401) {
       // The 401 is handled by the withPaymentsSessionToken
       yield* put(
         paymentsGetPaymentTransactionInfoAction.failure({
           ...getGenericError(
-            new Error(JSON.stringify(getTransactionInfoResult.right.value)),
-          ),
-        }),
+            new Error(JSON.stringify(getTransactionInfoResult.right.value))
+          )
+        })
       );
     }
   } catch (e) {
     yield* put(
       paymentsGetPaymentTransactionInfoAction.failure({
-        ...getNetworkError(e),
-      }),
+        ...getNetworkError(e)
+      })
     );
   }
 }

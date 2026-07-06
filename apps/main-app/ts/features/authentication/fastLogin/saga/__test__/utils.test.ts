@@ -6,16 +6,16 @@ import {
   handleSessionExpiredSaga,
   ThirdPartyTokenError,
   withThirdPartyRefreshApiCall,
-  utilsExport,
+  utilsExport
 } from "../utils";
 import {
   refreshSessionToken,
-  savePendingAction,
+  savePendingAction
 } from "../../store/actions/tokenRefreshActions";
 import {
   checkCurrentSession,
   logoutRequest,
-  sessionExpired,
+  sessionExpired
 } from "../../../common/store/actions";
 import { isFastLoginEnabledSelector } from "../../store/selectors";
 import { Action } from "../../../../../store/actions/types";
@@ -47,14 +47,14 @@ describe("utils saga", () => {
     const gen = withRefreshApiCall(fakeApiCall401(), fakeAction);
     gen.next();
     expect(gen.next(unauthorizedResponse).value).toEqual(
-      put(savePendingAction({ pendingAction: fakeAction })),
+      put(savePendingAction({ pendingAction: fakeAction }))
     );
     expect(gen.next().value).toEqual(call(handleSessionExpiredSaga));
   });
 
   it("withRefreshApiCall should throw error when no action and no skipThrowingError is false", () => {
     const gen = withRefreshApiCall(fakeApiCall401(), {
-      errorMessage: "Session expired",
+      errorMessage: "Session expired"
     });
     gen.next();
     gen.next(unauthorizedResponse);
@@ -69,9 +69,9 @@ describe("utils saga", () => {
         refreshSessionToken.request({
           withUserInteraction: true,
           showIdentificationModalAtStartup: false,
-          showLoader: true,
-        }),
-      ),
+          showLoader: true
+        })
+      )
     );
   });
 
@@ -91,7 +91,7 @@ describe("utils saga", () => {
   it("withRefreshApiCall should handle 401 with no action and skipThrowingError true", () => {
     const gen = withRefreshApiCall(fakeApiCall401(), {
       errorMessage: "Session expired",
-      skipThrowingError: true,
+      skipThrowingError: true
     });
     gen.next();
     gen.next(unauthorizedResponse);
@@ -109,20 +109,20 @@ describe("utils saga", () => {
   it("should handle 401 + session valid → throws error", () => {
     const gen = withThirdPartyRefreshApiCall(fakeApiCall401(), {
       action: never as never,
-      errorHandling: { errorMessage: "session valid" },
+      errorHandling: { errorMessage: "session valid" }
     });
     gen.next();
     gen.next(unauthorizedResponse);
     gen.next(); // checkCurrentSession.request
     expect(() =>
-      gen.next(checkCurrentSession.success({ isSessionValid: true })),
+      gen.next(checkCurrentSession.success({ isSessionValid: true }))
     ).toThrow(ThirdPartyTokenError);
   });
 
   it("should handle 401 + session invalid + refresh started → return", () => {
     const gen = withThirdPartyRefreshApiCall(fakeApiCall401(), {
       action: never as never,
-      errorHandling: { errorMessage: "ok", skipThrowingError: true },
+      errorHandling: { errorMessage: "ok", skipThrowingError: true }
     });
     gen.next();
     gen.next(unauthorizedResponse);
@@ -132,8 +132,8 @@ describe("utils saga", () => {
       refreshAction: refreshSessionToken.request({
         withUserInteraction: true,
         showIdentificationModalAtStartup: false,
-        showLoader: true,
-      }),
+        showLoader: true
+      })
     });
     const result = gen.next();
     expect(result.value).toEqual(unauthorizedResponse);
@@ -142,14 +142,14 @@ describe("utils saga", () => {
   it("isReduxAction should return true if object has a type", () => {
     expect(
       utilsExportNotUndefined.isReduxAction({
-        type: "ACTION_TYPE",
-      } as unknown as Action),
+        type: "ACTION_TYPE"
+      } as unknown as Action)
     ).toBe(true);
   });
 
   it("isReduxAction should return false if object has no type", () => {
     expect(utilsExportNotUndefined.isReduxAction({ errorMessage: "err" })).toBe(
-      false,
+      false
     );
   });
 
@@ -164,7 +164,7 @@ describe("utils saga", () => {
   it("waitForTheTokenRefreshToBeStartedshould throw error if timeout wins", () => {
     const gen =
       utilsExportNotUndefined.waitForTheTokenRefreshToBeStarted(
-        "timeout error",
+        "timeout error"
       );
     gen.next();
     expect(() => gen.next({ timeout: true })).toThrow("timeout error");

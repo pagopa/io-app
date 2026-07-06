@@ -19,18 +19,18 @@ describe("handleIdPayGenerateCode", () => {
         handleIdPayGenerateCode,
         generateCode,
         tBearerToken,
-        idPayGenerateCode.request({ initiativeId: tInitiativeId }),
+        idPayGenerateCode.request({ initiativeId: tInitiativeId })
       )
         .next()
         .call(
           withThirdPartyRefreshApiCall,
           generateCode({
             bearerAuth: tBearerToken,
-            initiativeId: tInitiativeId,
+            initiativeId: tInitiativeId
           }),
           {
-            action: idPayGenerateCode.request({ initiativeId: tInitiativeId }),
-          },
+            action: idPayGenerateCode.request({ initiativeId: tInitiativeId })
+          }
         )
         .next(E.right({ status: 200, value: { idpayCode: tIdPayCode } }))
         .put(idPayGenerateCode.success({ idpayCode: tIdPayCode }))
@@ -40,31 +40,31 @@ describe("handleIdPayGenerateCode", () => {
   });
   describe("when the response is not successful", () => {
     it(`should put ${getType(
-      idPayGenerateCode.failure,
+      idPayGenerateCode.failure
     )} with the error`, () => {
       const generateCode = jest.fn();
       testSaga(
         handleIdPayGenerateCode,
         generateCode,
         tBearerToken,
-        idPayGenerateCode.request({ initiativeId: tInitiativeId }),
+        idPayGenerateCode.request({ initiativeId: tInitiativeId })
       )
         .next()
         .call(
           withThirdPartyRefreshApiCall,
           generateCode({
             bearerAuth: tBearerToken,
-            initiativeId: tInitiativeId,
+            initiativeId: tInitiativeId
           }),
           {
-            action: idPayGenerateCode.request({ initiativeId: tInitiativeId }),
-          },
+            action: idPayGenerateCode.request({ initiativeId: tInitiativeId })
+          }
         )
         .next(E.right({ status: 500 }))
         .put(
           idPayGenerateCode.failure({
-            ...getGenericError(new Error(`response status code 500`)),
-          }),
+            ...getGenericError(new Error(`response status code 500`))
+          })
         )
         .next()
         .isDone();
@@ -72,31 +72,31 @@ describe("handleIdPayGenerateCode", () => {
   });
   describe("when the request fails", () => {
     it(`should put ${getType(
-      idPayGenerateCode.failure,
+      idPayGenerateCode.failure
     )} with the error`, () => {
       const generateCode = jest.fn();
       testSaga(
         handleIdPayGenerateCode,
         generateCode,
         tBearerToken,
-        idPayGenerateCode.request({ initiativeId: tInitiativeId }),
+        idPayGenerateCode.request({ initiativeId: tInitiativeId })
       )
         .next()
         .call(
           withThirdPartyRefreshApiCall,
           generateCode({
             bearerAuth: tBearerToken,
-            initiativeId: tInitiativeId,
+            initiativeId: tInitiativeId
           }),
           {
-            action: idPayGenerateCode.request({ initiativeId: tInitiativeId }),
-          },
+            action: idPayGenerateCode.request({ initiativeId: tInitiativeId })
+          }
         )
         .next(E.left([]))
         .put(
           idPayGenerateCode.failure({
-            ...getGenericError(new Error(readablePrivacyReport([]))),
-          }),
+            ...getGenericError(new Error(readablePrivacyReport([])))
+          })
         )
         .next()
         .isDone();

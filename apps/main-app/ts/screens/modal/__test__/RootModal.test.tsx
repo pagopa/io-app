@@ -5,7 +5,7 @@ import { act } from "@testing-library/react-native";
 import I18n from "i18next";
 import {
   versionInfoLoadFailure,
-  versionInfoLoadSuccess,
+  versionInfoLoadSuccess
 } from "../../../common/versionInfo/store/actions/versionInfo";
 import { mockIoVersionInfo } from "../../../common/versionInfo/store/reducers/__mock__/ioVersionInfo";
 import { minAppVersionAppVersionTestCases } from "../../../common/versionInfo/store/reducers/__mock__/testVersion";
@@ -21,7 +21,7 @@ describe("RootModal", () => {
     it("Shouldn't render the UpdateAppModal", () => {
       const globalState = appReducer(
         undefined,
-        applicationChangeState("active"),
+        applicationChangeState("active")
       );
       jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("5.0.4.2");
       jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("5.0.4.2");
@@ -32,7 +32,7 @@ describe("RootModal", () => {
         RootModal,
         ROUTES.INGRESS,
         {},
-        store,
+        store
       );
       expect(testComponent).not.toBeNull();
 
@@ -43,7 +43,7 @@ describe("RootModal", () => {
     it("Shouldn't render the UpdateAppModal", () => {
       const globalState = appReducer(
         undefined,
-        applicationChangeState("active"),
+        applicationChangeState("active")
       );
       jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("5.0.4.2");
       jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("5.0.4.2");
@@ -57,7 +57,7 @@ describe("RootModal", () => {
         RootModal,
         ROUTES.INGRESS,
         {},
-        store,
+        store
       );
       expect(testComponent).not.toBeNull();
 
@@ -67,7 +67,7 @@ describe("RootModal", () => {
       it("Should render the UpdateAppModal after the success", () => {
         const globalState = appReducer(
           undefined,
-          applicationChangeState("active"),
+          applicationChangeState("active")
         );
         jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("5.0.4.2");
         jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("5.0.4.2");
@@ -82,7 +82,7 @@ describe("RootModal", () => {
             RootModal,
             ROUTES.INGRESS,
             {},
-            store,
+            store
           );
         expect(testComponent).not.toBeNull();
 
@@ -94,20 +94,20 @@ describe("RootModal", () => {
               ...mockIoVersionInfo,
               min_app_version: {
                 ios: "6.0.0.0",
-                android: "6.0.0.0",
-              },
-            }),
+                android: "6.0.0.0"
+              }
+            })
           );
         });
 
         expect(
-          testComponent.queryByText(I18n.t("titleUpdateApp")),
+          testComponent.queryByText(I18n.t("titleUpdateApp"))
         ).not.toBeNull();
       });
     });
   });
   jest.useFakeTimers();
-  minAppVersionAppVersionTestCases.forEach((t) => {
+  minAppVersionAppVersionTestCases.forEach(t => {
     it(`When min_app_version: ${t.e1}, appVersion: ${t.e2}, RootModal should ${
       t.e3 ? "not " : ""
     }render UpdateAppModal`, () => {
@@ -119,7 +119,7 @@ describe("RootModal", () => {
 const testRootModal = (
   minVersion: string,
   appVersion: string,
-  isSupported: boolean,
+  isSupported: boolean
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   jest.spyOn(DeviceInfo, "getVersion").mockReturnValue(appVersion);
@@ -131,26 +131,26 @@ const testRootModal = (
         ...mockIoVersionInfo,
         min_app_version: {
           ios: minVersion,
-          android: minVersion,
-        },
-      }),
+          android: minVersion
+        }
+      })
     );
   });
   expect(store.getState().versionInfo?.min_app_version).toStrictEqual({
     ios: minVersion,
-    android: minVersion,
+    android: minVersion
   });
 
   const testComponent = renderScreenWithNavigationStoreContext<GlobalState>(
     RootModal,
     ROUTES.INGRESS,
     {},
-    store,
+    store
   );
   expect(testComponent).not.toBeNull();
 
   const searchUpdateText = expect(
-    testComponent.queryByText(I18n.t("titleUpdateApp")),
+    testComponent.queryByText(I18n.t("titleUpdateApp"))
   );
   if (isSupported) {
     searchUpdateText.toBeNull();

@@ -2,13 +2,13 @@ import { createSelector } from "reselect";
 import { getCredentialStatus } from "../../../../common/utils/itwCredentialStatusUtils";
 import {
   itwCredentialsEidStatusSelector,
-  makeSelectAllCredentials,
+  makeSelectAllCredentials
 } from "../../../../credentials/store/selectors";
 import {
   CredentialFormat,
   CredentialMetadata,
   ItwJwtCredentialStatus,
-  MdocSupportedCredentialConfiguration,
+  MdocSupportedCredentialConfiguration
 } from "../../../../common/utils/itwTypesUtils";
 import type { GlobalState } from "../../../../../../store/reducers/types";
 
@@ -22,7 +22,7 @@ type PresentableCredentialsByDocType = Record<string, CredentialMetadata>;
  * @returns The credentials object.
  */
 const itwCredentialsAsMdocSelector = makeSelectAllCredentials(
-  CredentialFormat.MDOC,
+  CredentialFormat.MDOC
 );
 
 /**
@@ -45,11 +45,11 @@ export const itwPresentableCredentialsByDocTypeSelector = createSelector(
 
         return {
           ...acc,
-          [doctype]: credential,
+          [doctype]: credential
         };
       },
-      {},
-    ),
+      {}
+    )
 );
 
 /** Checks if a given credential is expired based on its status. */
@@ -67,7 +67,7 @@ const isExpiredPresentableCredential = (credential: CredentialMetadata) => {
  *   otherwise.
  */
 export const areAllPresentableCredentialsExpired = (
-  presentableCredentialsByDocType: PresentableCredentialsByDocType,
+  presentableCredentialsByDocType: PresentableCredentialsByDocType
 ) => {
   const presentableCredentials = Object.values(presentableCredentialsByDocType);
   return (
@@ -86,8 +86,8 @@ export const areAllPresentableCredentialsExpired = (
  */
 export const hasPresentableCredentialsSelector = createSelector(
   itwPresentableCredentialsByDocTypeSelector,
-  (presentableCredentialsByDocType) =>
-    Object.keys(presentableCredentialsByDocType).length > 0,
+  presentableCredentialsByDocType =>
+    Object.keys(presentableCredentialsByDocType).length > 0
 );
 
 /**
@@ -105,10 +105,10 @@ export const shouldShowExpiredProximityCredentialsBannerSelector =
     itwPresentableCredentialsByDocTypeSelector,
     (
       pidStatus: ItwJwtCredentialStatus | undefined,
-      presentableCredentialsByDocType,
+      presentableCredentialsByDocType
     ) =>
       pidStatus === "jwtExpired" &&
-      areAllPresentableCredentialsExpired(presentableCredentialsByDocType),
+      areAllPresentableCredentialsExpired(presentableCredentialsByDocType)
   );
 
 /**

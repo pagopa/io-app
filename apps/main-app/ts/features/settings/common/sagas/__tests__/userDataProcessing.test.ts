@@ -7,12 +7,12 @@ import { UserDataProcessingStatusEnum } from "../../../../../../definitions/iden
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing,
-  upsertUserDataProcessing,
+  upsertUserDataProcessing
 } from "../../store/actions/userDataProcessing";
 import {
   deleteUserDataProcessingSaga,
   loadUserDataProcessingSaga,
-  upsertUserDataProcessingSaga,
+  upsertUserDataProcessingSaga
 } from "../userDataProcessing";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 
@@ -20,7 +20,7 @@ describe("loadUserDataProcessingSaga", () => {
   const getUserDataProcessingRequest = jest.fn();
   const loadAction: ActionType<typeof loadUserDataProcessing.request> = {
     type: "LOAD_USER_DATA_PROCESSING_REQUEST",
-    payload: UserDataProcessingChoiceEnum.DOWNLOAD,
+    payload: UserDataProcessingChoiceEnum.DOWNLOAD
   };
 
   it("if response is 404, the user never submit the kind of request specified as the payload choice", () => {
@@ -28,22 +28,22 @@ describe("loadUserDataProcessingSaga", () => {
     testSaga(
       loadUserDataProcessingSaga,
       getUserDataProcessingRequest,
-      loadAction,
+      loadAction
     )
       .next()
       .call(
         withRefreshApiCall,
         getUserDataProcessingRequest({
-          choice: loadAction.payload,
+          choice: loadAction.payload
         }),
-        loadAction,
+        loadAction
       )
       .next(get404Response)
       .put(
         loadUserDataProcessing.success({
           choice: loadAction.payload,
-          value: undefined,
-        }),
+          value: undefined
+        })
       )
       .next()
       .isDone();
@@ -53,29 +53,29 @@ describe("loadUserDataProcessingSaga", () => {
     const mokedStatus: UserDataProcessing = {
       choice: UserDataProcessingChoiceEnum.DOWNLOAD,
       status: UserDataProcessingStatusEnum.PENDING,
-      version: 2,
+      version: 2
     };
     const get200Response = E.right({ status: 200, value: mokedStatus });
 
     testSaga(
       loadUserDataProcessingSaga,
       getUserDataProcessingRequest,
-      loadAction,
+      loadAction
     )
       .next()
       .call(
         withRefreshApiCall,
         getUserDataProcessingRequest({
-          choice: loadAction.payload,
+          choice: loadAction.payload
         }),
-        loadAction,
+        loadAction
       )
       .next(get200Response)
       .put(
         loadUserDataProcessing.success({
           choice: loadAction.payload,
-          value: mokedStatus,
-        }),
+          value: mokedStatus
+        })
       )
       .next()
       .isDone();
@@ -83,28 +83,28 @@ describe("loadUserDataProcessingSaga", () => {
 
   it("return a generic error if the backend returns 500", () => {
     const mokedError = new Error(
-      "loadUserDataProcessingSaga response status 500",
+      "loadUserDataProcessingSaga response status 500"
     );
     const get500Response = E.right({ status: 500, value: mokedError });
     testSaga(
       loadUserDataProcessingSaga,
       getUserDataProcessingRequest,
-      loadAction,
+      loadAction
     )
       .next()
       .call(
         withRefreshApiCall,
         getUserDataProcessingRequest({
-          choice: loadAction.payload,
+          choice: loadAction.payload
         }),
-        loadAction,
+        loadAction
       )
       .next(get500Response)
       .put(
         loadUserDataProcessing.failure({
           choice: loadAction.payload,
-          error: mokedError,
-        }),
+          error: mokedError
+        })
       )
       .next()
       .isDone();
@@ -115,13 +115,13 @@ describe("upsertUserDataProcessingSaga", () => {
   const postUserDataProcessingRequest = jest.fn();
   const requestAction: ActionType<typeof upsertUserDataProcessing.request> = {
     type: "UPSERT_USER_DATA_PROCESSING_REQUEST",
-    payload: UserDataProcessingChoiceEnum.DOWNLOAD,
+    payload: UserDataProcessingChoiceEnum.DOWNLOAD
   };
 
   const mokedNewStatus: UserDataProcessing = {
     choice: UserDataProcessingChoiceEnum.DOWNLOAD,
     status: UserDataProcessingStatusEnum.PENDING,
-    version: 2,
+    version: 2
   };
 
   it("if response is 200, the requrest has been submitted", () => {
@@ -129,15 +129,15 @@ describe("upsertUserDataProcessingSaga", () => {
     testSaga(
       upsertUserDataProcessingSaga,
       postUserDataProcessingRequest,
-      requestAction,
+      requestAction
     )
       .next()
       .call(
         withRefreshApiCall,
         postUserDataProcessingRequest({
-          body: { choice: requestAction.payload },
+          body: { choice: requestAction.payload }
         }),
-        requestAction,
+        requestAction
       )
       .next(post200Response)
       .put(upsertUserDataProcessing.success(mokedNewStatus))
@@ -148,29 +148,29 @@ describe("upsertUserDataProcessingSaga", () => {
   it("return a generic error if the backend returns 500", () => {
     const choice = UserDataProcessingChoiceEnum.DOWNLOAD;
     const mokedError = new Error(
-      `An error occurred while submitting a request to ${choice} the profile`,
+      `An error occurred while submitting a request to ${choice} the profile`
     );
     const get500Response = E.right({ status: 500 });
 
     testSaga(
       upsertUserDataProcessingSaga,
       postUserDataProcessingRequest,
-      requestAction,
+      requestAction
     )
       .next()
       .call(
         withRefreshApiCall,
         postUserDataProcessingRequest({
-          body: { choice: requestAction.payload },
+          body: { choice: requestAction.payload }
         }),
-        requestAction,
+        requestAction
       )
       .next(get500Response)
       .put(
         upsertUserDataProcessing.failure({
           choice: requestAction.payload,
-          error: mokedError,
-        }),
+          error: mokedError
+        })
       )
       .next()
       .isDone();
@@ -181,29 +181,29 @@ describe("deleteUserDataProcessingSaga", () => {
   const deleteUserDataProcessingRequest = jest.fn();
   const requestAction: ActionType<typeof deleteUserDataProcessing.request> = {
     type: "DELETE_USER_DATA_PROCESSING_REQUEST",
-    payload: UserDataProcessingChoiceEnum.DELETE,
+    payload: UserDataProcessingChoiceEnum.DELETE
   };
 
   const requestActionDownload: ActionType<
     typeof deleteUserDataProcessing.request
   > = {
     type: "DELETE_USER_DATA_PROCESSING_REQUEST",
-    payload: UserDataProcessingChoiceEnum.DOWNLOAD,
+    payload: UserDataProcessingChoiceEnum.DOWNLOAD
   };
   it("if response is 202, the request has been submitted", () => {
     const post202Response = E.right({ status: 202 });
     testSaga(
       deleteUserDataProcessingSaga,
       deleteUserDataProcessingRequest,
-      requestAction,
+      requestAction
     )
       .next()
       .call(
         withRefreshApiCall,
         deleteUserDataProcessingRequest({
-          choice: requestAction.payload,
+          choice: requestAction.payload
         }),
-        requestAction,
+        requestAction
       )
       .next(post202Response)
       .put(deleteUserDataProcessing.success({ choice: requestAction.payload }))
@@ -216,29 +216,29 @@ describe("deleteUserDataProcessingSaga", () => {
   it("return a generic error if the backend returns 409", () => {
     const choice = requestActionDownload.payload;
     const mokedError = new Error(
-      `response status ${409} with choice ${choice}`,
+      `response status ${409} with choice ${choice}`
     );
     const get409Response = E.right({ status: 409 });
 
     testSaga(
       deleteUserDataProcessingSaga,
       deleteUserDataProcessingRequest,
-      requestActionDownload,
+      requestActionDownload
     )
       .next()
       .call(
         withRefreshApiCall,
         deleteUserDataProcessingRequest({
-          choice,
+          choice
         }),
-        requestActionDownload,
+        requestActionDownload
       )
       .next(get409Response)
       .put(
         deleteUserDataProcessing.failure({
           choice,
-          error: mokedError,
-        }),
+          error: mokedError
+        })
       )
       .next()
       .isDone();

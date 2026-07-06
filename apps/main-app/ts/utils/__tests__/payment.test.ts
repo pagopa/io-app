@@ -7,7 +7,7 @@ import {
   DetailV2Keys,
   ErrorTypes,
   getTransactionIUV,
-  getV2ErrorMainType,
+  getV2ErrorMainType
 } from "../payment";
 
 describe("cleanTransactionDescription", () => {
@@ -15,42 +15,42 @@ describe("cleanTransactionDescription", () => {
     [
       [
         "/RFB/0123456789012/666.98/TXT/ actual description",
-        "actual description",
+        "actual description"
       ],
       [
         "RFB/0123456789012/666.98/TXT/ actual description",
-        "actual description",
+        "actual description"
       ],
       [
         "/RFA/0123456789012/666.98/TXT/ actual description",
-        "actual description",
+        "actual description"
       ],
       [
         "RFA/0123456789012/666.98/TXT/ actual description",
-        "actual description",
+        "actual description"
       ],
       [
         "RFS/0123456789012/666.98/TXT/ actual description",
-        "actual description",
+        "actual description"
       ],
       [
         "/RFS/0123456789012/666.98/TXT/ actual description",
-        "actual description",
+        "actual description"
       ],
       [
         "/RFS/0123456789012/666.98/TXT/ actual description/other text",
-        "actual description/other text",
+        "actual description/other text"
       ],
       [
         "/RFB/000001234556859/143.00",
-        `${I18n.t("payment.IUV")} 000001234556859`,
+        `${I18n.t("payment.IUV")} 000001234556859`
       ],
       ["/XYZ/TXT/some text", "some text"],
       ["/TXT/some text", "some text"],
       ["TXT/some text", "some text"],
       ["/TXT/some text/other text", "some text/other text"],
       ["TXT/some text/other text", "some text/other text"],
-      ["actual description", "actual description"],
+      ["actual description", "actual description"]
     ].forEach(([dirty, cleaned]) => {
       expect(cleanTransactionDescription(dirty)).toEqual(cleaned);
     });
@@ -95,32 +95,32 @@ describe("getTransactionIUV", () => {
   [
     Tuple2(
       "/RFB/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
-      O.some("02000000000495213"),
+      O.some("02000000000495213")
     ),
     Tuple2(
       "RFB/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
-      O.some("02000000000495213"),
+      O.some("02000000000495213")
     ),
     Tuple2(
       "/RFA/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
-      O.some("02000000000495213"),
+      O.some("02000000000495213")
     ),
     Tuple2(
       "RFA/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
-      O.some("02000000000495213"),
+      O.some("02000000000495213")
     ),
     Tuple2(
       "/RFS/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
-      O.some("02000000000495213"),
+      O.some("02000000000495213")
     ),
     Tuple2(
       "RFS/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
-      O.some("02000000000495213"),
+      O.some("02000000000495213")
     ),
     Tuple2("", O.none),
     Tuple2("RFC/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION", O.none),
-    Tuple2("RFB/", O.none),
-  ].forEach((tuple) => {
+    Tuple2("RFB/", O.none)
+  ].forEach(tuple => {
     it(`should extract the IUV from "${tuple.e1}"`, () => {
       expect(getTransactionIUV(tuple.e1)).toEqual(tuple.e2);
     });
@@ -138,10 +138,10 @@ describe("getV2ErrorMacro", () => {
       Tuple2<DetailV2Keys, ErrorTypes>("PPT_PAGAMENTO_DUPLICATO", "DUPLICATED"),
       Tuple2<DetailV2Keys, ErrorTypes>(
         "PAA_PAGAMENTO_SCONOSCIUTO",
-        "NOT_FOUND",
+        "NOT_FOUND"
       ),
-      Tuple2<DetailV2Keys, ErrorTypes>("PPT_RT_SCONOSCIUTA", "UNCOVERED"),
-    ].forEach((t) => {
+      Tuple2<DetailV2Keys, ErrorTypes>("PPT_RT_SCONOSCIUTA", "UNCOVERED")
+    ].forEach(t => {
       expect(getV2ErrorMainType(t.e1)).toBe(t.e2);
     });
   });

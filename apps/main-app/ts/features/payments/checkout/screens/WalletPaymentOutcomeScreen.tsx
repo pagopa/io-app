@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import I18n from "i18next";
 import {
   OperationResultScreenContent,
-  OperationResultScreenContentProps,
+  OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -19,17 +19,17 @@ import { PaymentsCheckoutParamsList } from "../navigation/params";
 import {
   selectWalletPaymentCurrentStep,
   walletPaymentDetailsSelector,
-  walletPaymentOnSuccessActionSelector,
+  walletPaymentOnSuccessActionSelector
 } from "../store/selectors";
 import {
   WalletPaymentOutcome,
-  WalletPaymentOutcomeEnum,
+  WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
 import ROUTES from "../../../../navigation/routes";
 import * as analytics from "../analytics";
 import {
   paymentAnalyticsDataSelector,
-  selectOngoingPaymentHistory,
+  selectOngoingPaymentHistory
 } from "../../history/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getPaymentPhaseFromStep } from "../utils";
@@ -69,7 +69,7 @@ const WalletPaymentOutcomeScreen = () => {
   const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
 
   const supportModal = usePaymentFailureSupportModal({
-    outcome,
+    outcome
   });
 
   const reversedPaymentModal = usePaymentReversedInfoBottomSheet();
@@ -87,22 +87,22 @@ const WalletPaymentOutcomeScreen = () => {
 
   useHeaderSecondLevel({
     title: "",
-    canGoBack: true,
+    canGoBack: true
   });
 
   const taxFeeAmount = pipe(
     selectedPspOption,
-    O.chainNullableK((psp) => psp.taxPayerFee),
-    O.getOrElse(() => 0),
+    O.chainNullableK(psp => psp.taxPayerFee),
+    O.getOrElse(() => 0)
   );
 
   const paymentAmount = pipe(
     paymentDetailsPot,
     pot.toOption,
     O.map(({ amount }) =>
-      formatNumberCentsToAmount(Number(amount) + taxFeeAmount, true, "right"),
+      formatNumberCentsToAmount(Number(amount) + taxFeeAmount, true, "right")
     ),
-    O.getOrElse(() => "-"),
+    O.getOrElse(() => "-")
   );
 
   const handleContactSupport = () => {
@@ -113,7 +113,7 @@ const WalletPaymentOutcomeScreen = () => {
         paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
-      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
     });
     supportModal.present();
   };
@@ -135,7 +135,7 @@ const WalletPaymentOutcomeScreen = () => {
       // TODO navigate to the transaction details if payment outcome is success
       navigation.popToTop();
       navigation.navigate(ROUTES.MAIN, {
-        screen: ROUTES.PAYMENTS_HOME,
+        screen: ROUTES.PAYMENTS_HOME
       });
       return;
     }
@@ -155,27 +155,27 @@ const WalletPaymentOutcomeScreen = () => {
     label: I18n.t("wallet.payment.outcome.SUCCESS.button"),
     accessibilityLabel: I18n.t("wallet.payment.outcome.SUCCESS.button"),
     onPress: handleSuccessClose,
-    testID: "wallet-payment-outcome-success-button",
+    testID: "wallet-payment-outcome-success-button"
   };
 
   const closeFailureAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("global.buttons.close"),
     accessibilityLabel: I18n.t("global.buttons.close"),
-    onPress: handleClose,
+    onPress: handleClose
   };
 
   const contactSupportAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.support.button"),
     accessibilityLabel: I18n.t("wallet.payment.support.button"),
-    onPress: handleContactSupport,
+    onPress: handleContactSupport
   };
 
   const paymentReversedAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.outcome.PAYMENT_REVERSED.primaryAction"),
     accessibilityLabel: I18n.t(
-      "wallet.payment.outcome.PAYMENT_REVERSED.primaryAction",
+      "wallet.payment.outcome.PAYMENT_REVERSED.primaryAction"
     ),
-    onPress: handleShowMoreOnReversedPayment,
+    onPress: handleShowMoreOnReversedPayment
   };
 
   useOnFirstRender(() => {
@@ -209,7 +209,7 @@ const WalletPaymentOutcomeScreen = () => {
         selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
         data_entry: paymentAnalyticsData?.startOrigin,
         browser_type: paymentAnalyticsData?.browserType,
-        is_onboarded: paymentAnalyticsData?.is_onboarded,
+        is_onboarded: paymentAnalyticsData?.is_onboarded
       });
       return;
     }
@@ -225,7 +225,7 @@ const WalletPaymentOutcomeScreen = () => {
       psp_selected: paymentAnalyticsData?.selectedPsp,
       browser_type: paymentAnalyticsData?.browserType,
       payment_phase: getPaymentPhaseFromStep(currentStep),
-      is_onboarded: paymentAnalyticsData?.is_onboarded,
+      is_onboarded: paymentAnalyticsData?.is_onboarded
     });
   };
 
@@ -235,10 +235,10 @@ const WalletPaymentOutcomeScreen = () => {
         return {
           pictogram: "success",
           title: I18n.t("wallet.payment.outcome.SUCCESS.title", {
-            amount: paymentAmount,
+            amount: paymentAmount
           }),
           subtitle: I18n.t("wallet.payment.outcome.SUCCESS.subtitle"),
-          action: closeSuccessAction,
+          action: closeSuccessAction
         };
       case WalletPaymentOutcomeEnum.GENERIC_ERROR:
       default:
@@ -246,101 +246,101 @@ const WalletPaymentOutcomeScreen = () => {
           pictogram: "umbrella",
           title: I18n.t("wallet.payment.outcome.GENERIC_ERROR.title"),
           subtitle: I18n.t("wallet.payment.outcome.GENERIC_ERROR.subtitle"),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.AUTH_ERROR:
         return {
           pictogram: "accessDenied",
           title: I18n.t("wallet.payment.outcome.AUTH_ERROR.title"),
           subtitle: I18n.t("wallet.payment.outcome.AUTH_ERROR.subtitle"),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.INVALID_DATA:
         return {
           pictogram: "cardIssue",
           title: I18n.t("wallet.payment.outcome.INVALID_DATA.title"),
           subtitle: I18n.t("wallet.payment.outcome.INVALID_DATA.subtitle"),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.TIMEOUT:
         return {
           pictogram: "time",
           title: I18n.t("wallet.payment.outcome.TIMEOUT.title"),
           subtitle: I18n.t("wallet.payment.outcome.TIMEOUT.subtitle"),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.CIRCUIT_ERROR:
         return {
           pictogram: "cardIssue",
           title: I18n.t("wallet.payment.outcome.CIRCUIT_ERROR.title"),
           action: contactSupportAction,
-          secondaryAction: closeFailureAction,
+          secondaryAction: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.MISSING_FIELDS:
         return {
           pictogram: "attention",
           title: I18n.t("wallet.payment.outcome.MISSING_FIELDS.title"),
           action: contactSupportAction,
-          secondaryAction: closeFailureAction,
+          secondaryAction: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.INVALID_CARD:
         return {
           pictogram: "cardIssue",
           title: I18n.t("wallet.payment.outcome.INVALID_CARD.title"),
           subtitle: I18n.t("wallet.payment.outcome.INVALID_CARD.subtitle"),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.CANCELED_BY_USER:
         return {
           pictogram: "trash",
           title: I18n.t("wallet.payment.outcome.CANCELED_BY_USER.title"),
           subtitle: I18n.t("wallet.payment.outcome.CANCELED_BY_USER.subtitle"),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.EXCESSIVE_AMOUNT:
         return {
           pictogram: "accessDenied",
           title: I18n.t("wallet.payment.outcome.EXCESSIVE_AMOUNT.title"),
           subtitle: I18n.t("wallet.payment.outcome.EXCESSIVE_AMOUNT.subtitle"),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.INVALID_METHOD:
         return {
           pictogram: "cardIssue",
           title: I18n.t("wallet.payment.outcome.INVALID_METHOD.title"),
           action: contactSupportAction,
-          secondaryAction: closeFailureAction,
+          secondaryAction: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.WAITING_CONFIRMATION_EMAIL:
         return {
           pictogram: "timing",
           title: I18n.t(
-            "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.title",
+            "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.title"
           ),
           subtitle: pipe(
             profileEmailOption,
-            O.map((email) =>
+            O.map(email =>
               I18n.t(
                 "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.subtitle",
-                { email },
-              ),
+                { email }
+              )
             ),
             O.getOrElse(() =>
               I18n.t(
-                "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.defaultSubtitle",
-              ),
-            ),
+                "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.defaultSubtitle"
+              )
+            )
           ),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.METHOD_NOT_ENABLED:
         return {
           pictogram: "activate",
           title: I18n.t("wallet.payment.outcome.METHOD_NOT_ENABLED.title"),
           subtitle: I18n.t(
-            "wallet.payment.outcome.METHOD_NOT_ENABLED.subtitle",
+            "wallet.payment.outcome.METHOD_NOT_ENABLED.subtitle"
           ),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
         return {
@@ -348,54 +348,54 @@ const WalletPaymentOutcomeScreen = () => {
           title: I18n.t("wallet.payment.outcome.PAYMENT_REVERSED.title"),
           subtitle: I18n.t("wallet.payment.outcome.PAYMENT_REVERSED.subtitle"),
           action: paymentReversedAction,
-          secondaryAction: closeFailureAction,
+          secondaryAction: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
         return {
           pictogram: "accessDenied",
           title: I18n.t("wallet.payment.outcome.PAYPAL_REMOVED_ERROR.title"),
           subtitle: I18n.t(
-            "wallet.payment.outcome.PAYPAL_REMOVED_ERROR.subtitle",
+            "wallet.payment.outcome.PAYPAL_REMOVED_ERROR.subtitle"
           ),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER:
         return {
           pictogram: "lostConnection",
           title: I18n.t(
-            "wallet.payment.outcome.IN_APP_BROWSER_CLOSED_BY_USER.title",
+            "wallet.payment.outcome.IN_APP_BROWSER_CLOSED_BY_USER.title"
           ),
           subtitle: I18n.t(
-            "wallet.payment.outcome.IN_APP_BROWSER_CLOSED_BY_USER.subtitle",
+            "wallet.payment.outcome.IN_APP_BROWSER_CLOSED_BY_USER.subtitle"
           ),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.INSUFFICIENT_AVAILABILITY_ERROR:
         return {
           pictogram: "emptyWallet",
           title: I18n.t(
-            "wallet.payment.outcome.INSUFFICIENT_AVAILABILITY_ERROR.title",
+            "wallet.payment.outcome.INSUFFICIENT_AVAILABILITY_ERROR.title"
           ),
           subtitle: I18n.t(
-            "wallet.payment.outcome.INSUFFICIENT_AVAILABILITY_ERROR.subtitle",
+            "wallet.payment.outcome.INSUFFICIENT_AVAILABILITY_ERROR.subtitle"
           ),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.CVV_ERROR:
         return {
           pictogram: "stopSecurity",
           title: I18n.t("wallet.payment.outcome.CVV_ERROR.title"),
           subtitle: I18n.t("wallet.payment.outcome.CVV_ERROR.subtitle"),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.PLAFOND_LIMIT_ERROR:
         return {
           pictogram: "meterLimit",
           title: I18n.t("wallet.payment.outcome.PLAFOND_LIMIT_ERROR.title"),
           subtitle: I18n.t(
-            "wallet.payment.outcome.PLAFOND_LIMIT_ERROR.subtitle",
+            "wallet.payment.outcome.PLAFOND_LIMIT_ERROR.subtitle"
           ),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.BE_NODE_KO:
         return {
@@ -403,7 +403,7 @@ const WalletPaymentOutcomeScreen = () => {
           title: I18n.t("wallet.payment.outcome.BE_NODE_KO.title"),
           subtitle: I18n.t("wallet.payment.outcome.BE_NODE_KO.subtitle"),
           action: closeFailureAction,
-          secondaryAction: contactSupportAction,
+          secondaryAction: contactSupportAction
         };
       case WalletPaymentOutcomeEnum.PSP_ERROR:
         return {
@@ -411,16 +411,16 @@ const WalletPaymentOutcomeScreen = () => {
           title: I18n.t("wallet.payment.outcome.PSP_ERROR.title"),
           subtitle: I18n.t("wallet.payment.outcome.PSP_ERROR.subtitle"),
           action: closeFailureAction,
-          secondaryAction: contactSupportAction,
+          secondaryAction: contactSupportAction
         };
       case WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR:
         return {
           pictogram: "umbrella",
           title: I18n.t("wallet.payment.outcome.AUTH_REQUEST_ERROR.title"),
           subtitle: I18n.t(
-            "wallet.payment.outcome.AUTH_REQUEST_ERROR.subtitle",
+            "wallet.payment.outcome.AUTH_REQUEST_ERROR.subtitle"
           ),
-          action: closeFailureAction,
+          action: closeFailureAction
         };
     }
   };

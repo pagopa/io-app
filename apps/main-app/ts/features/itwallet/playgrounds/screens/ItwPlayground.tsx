@@ -2,7 +2,7 @@ import {
   ContentWrapper,
   TabItem,
   TabNavigation,
-  VStack,
+  VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
@@ -34,13 +34,13 @@ const ItwPlayground = () => {
   const [page, setPage] = useState(0);
 
   useHeaderSecondLevel({
-    title: "Documenti su IO - Playgrounds",
+    title: "Documenti su IO - Playgrounds"
   });
 
   useFocusEffect(
     useCallback(() => {
       eidMachineRef.send({ type: "reset" });
-    }, [eidMachineRef]),
+    }, [eidMachineRef])
   );
 
   return (
@@ -61,7 +61,7 @@ const ItwPlayground = () => {
       </TabNavigation>
       <ScrollView
         contentContainerStyle={{
-          paddingBottom: screenEndMargin,
+          paddingBottom: screenEndMargin
         }}
       >
         <ContentWrapper>

@@ -9,20 +9,20 @@ import {
   cgnActivationFailure,
   cgnActivationStart,
   cgnActivationStatus,
-  cgnRequestActivation,
+  cgnRequestActivation
 } from "../store/actions/activation";
 import { cgnDetails } from "../store/actions/details";
 import {
   cgnEycaActivation,
   cgnEycaActivationCancel,
-  cgnEycaActivationStatusRequest,
+  cgnEycaActivationStatusRequest
 } from "../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
 import { cgnGenerateOtp } from "../store/actions/otp";
 import {
   cgnOfflineMerchants,
   cgnOnlineMerchants,
-  cgnSelectedMerchant,
+  cgnSelectedMerchant
 } from "../store/actions/merchants";
 import { cgnCodeFromBucket } from "../store/actions/bucket";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
@@ -60,7 +60,7 @@ const trackCgnAction = (action: Action): void => {
     case getType(cgnOfflineMerchants.success):
     case getType(cgnOnlineMerchants.success):
       return mixpanelTrack(action.type, {
-        foundMerchants: action.payload.length,
+        foundMerchants: action.payload.length
       });
     case getType(cgnCodeFromBucket.success):
       return mixpanelTrack(action.type, { status: action.payload.kind });
@@ -82,11 +82,11 @@ const trackCgnAction = (action: Action): void => {
     case getType(cgnCategories.failure):
     case getType(cgnUnsubscribe.failure):
       return mixpanelTrack(action.type, {
-        reason: getNetworkErrorMessage(action.payload),
+        reason: getNetworkErrorMessage(action.payload)
       });
     case getType(cgnActivationFailure):
       return mixpanelTrack(action.type, {
-        reason: action.payload,
+        reason: action.payload
       });
   }
 };
@@ -96,13 +96,13 @@ export default trackCgnAction;
 type TrackCgnEngagementBannerEvent = "BANNER" | "TAP_BANNER" | "CLOSE_BANNER";
 
 export const trackCgnEngagementBanner = (
-  event: TrackCgnEngagementBannerEvent,
+  event: TrackCgnEngagementBannerEvent
 ) =>
   mixpanelTrack(
     event,
     buildEventProperties("UX", "action", {
       banner_id: "CGN_ACTIVATION",
       banner_page: "MESSAGES_HOME",
-      banner_landing: CGN_ROUTES.ACTIVATION.INFORMATION_TOS,
-    }),
+      banner_landing: CGN_ROUTES.ACTIVATION.INFORMATION_TOS
+    })
   );

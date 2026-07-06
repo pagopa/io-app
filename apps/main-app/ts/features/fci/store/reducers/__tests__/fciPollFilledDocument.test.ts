@@ -12,8 +12,8 @@ describe("FciPollFilledDocumentReducer", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.fci.pollFilledDocument).toStrictEqual(
       pot.some({
-        isReady: false,
-      }),
+        isReady: false
+      })
     );
   });
   it("should be pot.some with isReady equal to false if the fciPollFilledDocumentRequest is dispatched", () => {
@@ -22,8 +22,8 @@ describe("FciPollFilledDocumentReducer", () => {
     store.dispatch(fciPollFilledDocument.request());
     expect(store.getState().features.fci.pollFilledDocument).toStrictEqual(
       pot.some({
-        isReady: false,
-      }),
+        isReady: false
+      })
     );
   });
   it("should be pot.some with payload as value if the fciPollFilledDocumentSuccess is dispatched", () => {
@@ -32,7 +32,7 @@ describe("FciPollFilledDocumentReducer", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciPollFilledDocument.success(payload));
     expect(store.getState().features.fci.pollFilledDocument).toStrictEqual(
-      pot.some(payload),
+      pot.some(payload)
     );
   });
   it("should be pot.noneError and isReady equal to false if the fciPollFilledDocumentFailure is dispatched", () => {
@@ -42,10 +42,10 @@ describe("FciPollFilledDocumentReducer", () => {
     expect(store.getState().features.fci.pollFilledDocument).toEqual(
       pot.someError(
         {
-          isReady: false,
+          isReady: false
         },
-        genericError,
-      ),
+        genericError
+      )
     );
   });
   it("should be pot.some and isReady equal to false if the fciClearStateRequest is dispatched", () => {
@@ -54,8 +54,8 @@ describe("FciPollFilledDocumentReducer", () => {
     store.dispatch(fciClearStateRequest());
     expect(store.getState().features.fci.pollFilledDocument).toStrictEqual(
       pot.some({
-        isReady: false,
-      }),
+        isReady: false
+      })
     );
   });
 });

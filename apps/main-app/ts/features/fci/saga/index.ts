@@ -13,12 +13,12 @@ import { apiUrlPrefix } from "../../../config";
 import {
   identificationPinReset,
   identificationRequest,
-  identificationSuccess,
+  identificationSuccess
 } from "../../identification/store/actions";
 import {
   fciSignatureRequestIdSelector,
   fciSignatureRequestSelector,
-  FciSignatureRequestState,
+  FciSignatureRequestState
 } from "../store/reducers/fciSignatureRequest";
 import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
 import { CreateSignatureBody } from "../../../../definitions/fci/CreateSignatureBody";
@@ -37,12 +37,12 @@ import {
   fciClearAllFiles,
   fciMetadataRequest,
   fciSignaturesListRequest,
-  fciDocumentSignatureFields,
+  fciDocumentSignatureFields
 } from "../store/actions";
 import {
   fciQtspClausesMetadataSelector,
   FciQtspClausesState,
-  fciQtspNonceSelector,
+  fciQtspNonceSelector
 } from "../store/reducers/fciQtspClauses";
 import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
 import { KeyInfo } from "../../lollipop/utils/crypto";
@@ -57,7 +57,7 @@ import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
 import {
   FciDownloadPreviewDirectoryPath,
-  handleDownloadDocument,
+  handleDownloadDocument
 } from "./networking/handleDownloadDocument";
 import { handleCreateSignature } from "./networking/handleCreateSignature";
 import { handleGetMetadata } from "./networking/handleGetMetadata";
@@ -71,7 +71,7 @@ import { handleDrawSignatureBox } from "./handleDrawSignatureBox";
  */
 export function* watchFciSaga(
   bearerToken: string,
-  keyInfo: KeyInfo,
+  keyInfo: KeyInfo
 ): SagaIterator {
   const fciGeneratedClient = createFciClient(apiUrlPrefix);
 
@@ -80,7 +80,7 @@ export function* watchFciSaga(
     fciSignatureRequestFromId.request,
     handleGetSignatureRequestById,
     fciGeneratedClient.getSignatureRequestById,
-    bearerToken,
+    bearerToken
   );
 
   // handle the request of getting QTSP metadata
@@ -88,7 +88,7 @@ export function* watchFciSaga(
     fciLoadQtspClauses.request,
     handleGetQtspMetadata,
     fciGeneratedClient.getQtspClausesMetadata,
-    bearerToken,
+    bearerToken
   );
 
   // handle the request of getting QTSP filled_document
@@ -96,7 +96,7 @@ export function* watchFciSaga(
     fciLoadQtspFilledDocument.request,
     handleCreateFilledDocument,
     fciGeneratedClient.createFilledDocument,
-    bearerToken,
+    bearerToken
   );
 
   yield* takeLatest(fciStartRequest, watchFciStartSaga);
@@ -104,7 +104,7 @@ export function* watchFciSaga(
   // handle the request of retrying a signature, getting FCI signatureRequestDetails and restarting the signing flow
   yield* takeLatest(
     fciSignatureRequestRetryFromId,
-    watchFciSignatureRequestRetrySaga,
+    watchFciSignatureRequestRetrySaga
   );
 
   yield* takeLatest(fciLoadQtspClauses.success, watchFciQtspClausesSaga);
@@ -122,7 +122,7 @@ export function* watchFciSaga(
     handleCreateSignature,
     apiUrlPrefix,
     bearerToken,
-    keyInfo,
+    keyInfo
   );
 
   yield* takeLatest(fciEndRequest, watchFciEndSaga);
@@ -133,14 +133,14 @@ export function* watchFciSaga(
     fciMetadataRequest.request,
     handleGetMetadata,
     fciGeneratedClient.getMetadata,
-    bearerToken,
+    bearerToken
   );
 
   yield* takeLatest(
     fciSignaturesListRequest.request,
     handleGetSignatureRequests,
     fciGeneratedClient.getSignatureRequests,
-    bearerToken,
+    bearerToken
   );
 
   yield* takeLatest(fciDocumentSignatureFields.request, handleDrawSignatureBox);
@@ -156,24 +156,24 @@ function* watchIdentificationPinResetSaga(): SagaIterator {
 /** Handle the FCI requests to get the QTSP filled_document */
 function* watchFciQtspClausesSaga(): SagaIterator {
   const potQtspClauses: FciQtspClausesState = yield* select(
-    fciQtspClausesMetadataSelector,
+    fciQtspClausesMetadataSelector
   );
 
   if (pot.isSome(potQtspClauses)) {
     const documentUrl = Buffer.from(
-      `${potQtspClauses.value.document_url}`,
+      `${potQtspClauses.value.document_url}`
     ).toString("base64");
     yield* put(
       fciLoadQtspFilledDocument.request({
-        document_url: documentUrl as NonEmptyString,
-      }),
+        document_url: documentUrl as NonEmptyString
+      })
     );
   } else {
     yield* call(
       NavigationService.dispatchNavigationAction,
       CommonActions.navigate(ROUTES.MAIN, {
-        screen: ROUTES.WORKUNIT_GENERIC_FAILURE,
-      }),
+        screen: ROUTES.WORKUNIT_GENERIC_FAILURE
+      })
     );
   }
 }
@@ -184,9 +184,9 @@ function* standardFciFlowStartSaga(): SagaIterator {
     StackActions.replace(FCI_ROUTES.MAIN, {
       screen: FCI_ROUTES.DOCUMENTS,
       params: {
-        attrs: undefined,
-      },
-    }),
+        attrs: undefined
+      }
+    })
   );
   // when the user start signing flow
   // start a request to get the QTSP metadata
@@ -203,7 +203,7 @@ function* standardFciFlowStartSaga(): SagaIterator {
 function* watchFciStartSaga(): SagaIterator {
   const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
   const isFciSecurityLevelCheckEnabled = yield* select(
-    isFciSecurityLevelCheckRemoteFFEnabledSelector,
+    isFciSecurityLevelCheckRemoteFFEnabledSelector
   );
 
   if (!isFciSecurityLevelCheckEnabled) {
@@ -217,8 +217,8 @@ function* watchFciStartSaga(): SagaIterator {
     yield* call(
       NavigationService.dispatchNavigationAction,
       StackActions.push(FCI_ROUTES.MAIN, {
-        screen: FCI_ROUTES.FCI_LOGIN_L3,
-      }),
+        screen: FCI_ROUTES.FCI_LOGIN_L3
+      })
     );
     return;
   }
@@ -226,7 +226,7 @@ function* watchFciStartSaga(): SagaIterator {
 
 /** Handle the FCI signature request retry saga */
 function* watchFciSignatureRequestRetrySaga(
-  action: ActionType<typeof fciSignatureRequestRetryFromId>,
+  action: ActionType<typeof fciSignatureRequestRetryFromId>
 ): SagaIterator {
   // get new SignatureRequestDetails
   yield* put(fciSignatureRequestFromId.request(action.payload));
@@ -234,7 +234,7 @@ function* watchFciSignatureRequestRetrySaga(
   while (true) {
     const result = yield* take([
       fciSignatureRequestFromId.success,
-      fciSignatureRequestFromId.failure,
+      fciSignatureRequestFromId.failure
     ]);
 
     if (isActionOf(fciSignatureRequestFromId.success, result)) {
@@ -260,7 +260,7 @@ function* watchFciSignatureRequestRetrySaga(
 
 /** Clears cached file for the fci document preview and reset the state to empty. */
 function* clearFciDownloadPreview(
-  action: ActionType<typeof fciDownloadPreviewClear>,
+  action: ActionType<typeof fciDownloadPreviewClear>
 ) {
   const path = action.payload.path;
   if (path) {
@@ -269,7 +269,7 @@ function* clearFciDownloadPreview(
   yield* put(fciDownloadPreview.cancel());
   yield* call(
     NavigationService.dispatchNavigationAction,
-    CommonActions.goBack(),
+    CommonActions.goBack()
   );
 }
 
@@ -278,21 +278,21 @@ function* watchFciSigningRequestSaga(): SagaIterator {
   yield* put(
     identificationRequest(false, true, undefined, {
       label: I18n.t("global.buttons.cancel"),
-      onCancel: () => undefined,
-    }),
+      onCancel: () => undefined
+    })
   );
 
   const res = yield* take(identificationSuccess);
 
   if (isActionOf(identificationSuccess, res)) {
     const potQtspClauses: FciQtspClausesState = yield* select(
-      fciQtspClausesMetadataSelector,
+      fciQtspClausesMetadataSelector
     );
     const potSignatureRequest: FciSignatureRequestState = yield* select(
-      fciSignatureRequestSelector,
+      fciSignatureRequestSelector
     );
     const qtspFilledDocumentUrl = yield* select(
-      fciQtspFilledDocumentUrlSelector,
+      fciQtspFilledDocumentUrlSelector
     );
     const qtspNonce = yield* select(fciQtspNonceSelector);
     const documentSignatures = yield* select(fciDocumentSignaturesSelector);
@@ -309,10 +309,10 @@ function* watchFciSigningRequestSaga(): SagaIterator {
         qtsp_clauses: {
           accepted_clauses: potQtspClauses.value.clauses,
           filled_document_url: Buffer.from(`${qtspFilledDocumentUrl}`).toString(
-            "base64",
+            "base64"
           ) as NonEmptyString,
-          nonce: qtspNonce as NonEmptyString,
-        },
+          nonce: qtspNonce as NonEmptyString
+        }
       };
 
       yield* put(fciSigningRequest.request(createSignaturePayload));
@@ -320,15 +320,15 @@ function* watchFciSigningRequestSaga(): SagaIterator {
 
     NavigationService.dispatchNavigationAction(
       CommonActions.navigate(FCI_ROUTES.MAIN, {
-        screen: FCI_ROUTES.TYP,
-      }),
+        screen: FCI_ROUTES.TYP
+      })
     );
   }
 }
 
 function* deletePath(path: string) {
-  yield RNFS.exists(path).then((exists) =>
-    exists ? RNFS.unlink(path) : Promise.resolve(),
+  yield RNFS.exists(path).then(exists =>
+    exists ? RNFS.unlink(path) : Promise.resolve()
   );
 }
 
@@ -343,12 +343,12 @@ function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));
   yield* call(
     NavigationService.dispatchNavigationAction,
-    CommonActions.navigate(ROUTES.MAIN),
+    CommonActions.navigate(ROUTES.MAIN)
   );
 }
 
 export function* navigateAfterFinishedFciActiveSessionLoginFlowSaga(
-  isActiveLoginSuccessProp: boolean,
+  isActiveLoginSuccessProp: boolean
 ): SagaIterator {
   const signatureRequestId = yield* select(fciSignatureRequestIdSelector);
   const activeSessionLoginFlow = yield* select(activeSessionLoginFlowSelector);
@@ -374,6 +374,6 @@ export const testable = isTestEnv
       clearFciDownloadPreview,
       watchFciSigningRequestSaga,
       clearAllFciFiles,
-      watchFciEndSaga,
+      watchFciEndSaga
     }
   : undefined;
