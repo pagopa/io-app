@@ -3,7 +3,7 @@ import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { useIOStore } from "../../../../store/hooks";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
-import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
+import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 import { CredentialIssuanceFailureType } from "./failure";
@@ -36,14 +36,9 @@ export const createCredentialIssuanceGuardsImplementation = (
     if (!context.credentialType) {
       return false;
     }
-    const credentialsCatalogue = itwCredentialsCatalogueByTypesSelector(
-      store.getState()
-    );
-    const { authentic_sources } =
-      credentialsCatalogue?.[context.credentialType] ?? {};
-    return Boolean(
-      authentic_sources?.[0].user_information_l10n_id ||
-      authentic_sources?.[0].user_information
-    );
+    const credentialIntroContent = itwCredentialIntroContentSelector(
+      context.credentialType
+    )(store.getState());
+    return Boolean(credentialIntroContent);
   }
 });

@@ -253,6 +253,12 @@ export const itwAvailableCredentialsListSelector = createSelector(
   }
 );
 
+/**
+ * Select the optional introduction content from the catalogue. The content is set by the
+ * Authentic Source and is a markdown text with additional information on the credential.
+ * @param credentialType The credential type to get the content
+ * @returns The translated markdown text or undefined
+ */
 export const itwCredentialIntroContentSelector =
   (credentialType: string | undefined) =>
   (state: GlobalState): string | undefined => {
@@ -264,7 +270,7 @@ export const itwCredentialIntroContentSelector =
     const { authentic_sources } = catalogue[credentialType];
     const { user_information_l10n_id, user_information } =
       authentic_sources.at(0) ?? {};
-    return user_information_l10n_id && translations
+    return translations && user_information_l10n_id
       ? translations[user_information_l10n_id]
       : user_information;
   };
