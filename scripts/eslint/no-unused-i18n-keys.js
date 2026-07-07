@@ -194,13 +194,15 @@ const collectLocaleKeys = () => {
       return;
     }
 
-    // Report the full `"key": value` span so editors underline the whole
-    // property. A flat `{ line, column }` has no end position, which makes
-    // ESLint/VS Code highlight only the first character.
+    // Report the key's span so editors underline the whole key. A flat
+    // `{ line, column }` has no end position, which makes ESLint/VS Code
+    // highlight only the first character.
     const start = sourceFile.getLineAndCharacterOfPosition(
-      property.getStart(sourceFile)
+      property.name.getStart(sourceFile)
     );
-    const end = sourceFile.getLineAndCharacterOfPosition(property.getEnd());
+    const end = sourceFile.getLineAndCharacterOfPosition(
+      property.name.getEnd()
+    );
 
     keys.push({
       key: keyPath,
