@@ -19,12 +19,12 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
-  selectCredentialIntroContentOption,
   selectCredentialTypeOption,
   selectResolvedCredentialOfferOption
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwRemoteLoadingScreen } from "../../presentation/remote/components/ItwRemoteLoadingScreen";
+import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 
 export type ItwIssuanceCredentialOfferScreenNavigationParams = {
   itwCredentialOfferUri: string;
@@ -63,10 +63,10 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
-  const introductionContentOption =
-    ItwCredentialIssuanceMachineContext.useSelector(
-      selectCredentialIntroContentOption
-    );
+  const credentialType = O.toUndefined(credentialTypeOption);
+  const markdownContent = useIOSelector(
+    itwCredentialIntroContentSelector(credentialType)
+  );
 
   useHeaderSecondLevel({
     title: "",
@@ -91,21 +91,14 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     machineRef.send({ type: "confirm-credential-offer" });
   }, [machineRef]);
 
-  if (
-    O.isNone(resolvedCredentialOfferOption) ||
-    O.isNone(credentialTypeOption)
-  ) {
+  if (O.isNone(resolvedCredentialOfferOption) || !credentialType) {
     return <ItwRemoteLoadingScreen title={I18n.t("global.genericWaiting")} />;
   }
 
   const fallbackTitle = I18n.t(
     "features.itWallet.issuance.credentialOffer.intro.fallbackTitle"
   );
-  const title = getCredentialNameFromType(
-    credentialTypeOption.value,
-    false,
-    fallbackTitle
-  );
+  const title = getCredentialNameFromType(credentialType, false, fallbackTitle);
 
   return (
     <IOScrollView
@@ -123,10 +116,10 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
           {I18n.t("features.itWallet.issuance.credentialIntro.subtitle")}
         </Body>
       </VStack>
-      {O.isSome(introductionContentOption) && (
+      {markdownContent && (
         <>
           <VSpacer size={16} />
-          <IOMarkdown content={introductionContentOption.value} />
+          <IOMarkdown content={markdownContent} />
         </>
       )}
     </IOScrollView>

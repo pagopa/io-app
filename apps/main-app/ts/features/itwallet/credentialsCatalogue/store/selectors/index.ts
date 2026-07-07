@@ -252,3 +252,19 @@ export const itwAvailableCredentialsListSelector = createSelector(
     return [...newEntries, ...pinnedEntries, ...restEntries];
   }
 );
+
+export const itwCredentialIntroContentSelector =
+  (credentialType: string | undefined) =>
+  (state: GlobalState): string | undefined => {
+    const translations = itwCatalogueTranslationsByLocaleSelector(state);
+    const catalogue = itwCredentialsCatalogueByTypesSelector(state);
+    if (!credentialType || !catalogue?.[credentialType]) {
+      return;
+    }
+    const { authentic_sources } = catalogue[credentialType];
+    const { user_information_l10n_id, user_information } =
+      authentic_sources.at(0) ?? {};
+    return user_information_l10n_id && translations
+      ? translations[user_information_l10n_id]
+      : user_information;
+  };
