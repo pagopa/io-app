@@ -42,12 +42,43 @@ describe("handleItwCredentialsStoreBundleSaga", () => {
       .run()
       .then(() => {
         expect(mockStoreAll).toHaveBeenCalledTimes(1);
+        // A non-batch credential is stored under its credentialId.
         expect(mockStoreAll).toHaveBeenCalledWith(
           payload.map(b => ({
-            credentialId: b.metadata.credentialId,
+            vaultId: b.metadata.credentialId,
             credential: b.credential
           }))
         );
+      });
+  });
+
+  it("collapses a batch into one metadata with keyTags and stores each copy under its keyTag", () => {
+    mockStoreAll.mockResolvedValue(undefined);
+    const copies: ReadonlyArray<CredentialBundle> = [
+      {
+        credential: "raw-jwt-0",
+        metadata: { ...ItwStoredCredentialsMocks.mdl, keyTag: "key-0" }
+      },
+      {
+        credential: "raw-jwt-1",
+        metadata: { ...ItwStoredCredentialsMocks.mdl, keyTag: "key-1" }
+      }
+    ];
+    const action = itwCredentialsStoreBundle(copies, {});
+
+    return expectSaga(handleItwCredentialsStoreBundleSaga, action)
+      .put(
+        itwCredentialsStore([
+          { ...copies[0].metadata, keyTags: ["key-0", "key-1"] }
+        ])
+      )
+      .run()
+      .then(() => {
+        // Each batch copy is stored under its own keyTag.
+        expect(mockStoreAll).toHaveBeenCalledWith([
+          { vaultId: "key-0", credential: "raw-jwt-0" },
+          { vaultId: "key-1", credential: "raw-jwt-1" }
+        ]);
       });
   });
 

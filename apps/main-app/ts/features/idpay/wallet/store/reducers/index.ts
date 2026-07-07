@@ -45,7 +45,6 @@ const INITIAL_STATE: IdPayWalletState = {
 const reducer = (
   state: IdPayWalletState = INITIAL_STATE,
   action: Action
-  // eslint-disable-next-line complexity
 ): IdPayWalletState => {
   switch (action.type) {
     case getType(idPayWalletGet.request):

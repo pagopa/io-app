@@ -10,6 +10,7 @@ import {
   ItwJwtCredentialStatus,
   MdocSupportedCredentialConfiguration
 } from "../../../../common/utils/itwTypesUtils";
+import type { GlobalState } from "../../../../../../store/reducers/types";
 
 type PresentableCredentialsByDocType = Record<string, CredentialMetadata>;
 
@@ -108,3 +109,13 @@ export const shouldShowExpiredProximityCredentialsBannerSelector =
       pidStatus === "jwtExpired" &&
       areAllPresentableCredentialsExpired(presentableCredentialsByDocType)
   );
+
+/**
+ * Selector to determine whether a specific credential type is presentable.
+ * @param credentialType - The type of the credential to check.
+ * @param state - The global state.
+ * @returns Boolean indicating whether the specified credential type is presentable.
+ */
+export const isPresentableCredentialSelector =
+  (credentialType: string) => (state: GlobalState) =>
+    itwCredentialsAsMdocSelector(state)[credentialType] !== undefined;

@@ -27,7 +27,7 @@ describe("ItwSettingsScreen", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    // By default, wallet invalid and no simplified activation
+    // By default, wallet invalid
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
       .mockReturnValue(false);

@@ -41,7 +41,7 @@ export const getLastStatusListCheckTimestamp = async (): Promise<
 };
 
 /**
- * Stores the timestamp of the last successfull fetch of the Status List, used
+ * Stores the timestamp of the last successful fetch of the Status List, used
  * to compute the age of the Status List and decide whether a refresh is needed.
  *
  * @param timestamp The timestamp to store, in milliseconds since the Unix epoch

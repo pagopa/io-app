@@ -177,6 +177,10 @@ const DESIGN_SYSTEM_ROUTES = {
     ITW_BRAND_EXPLORATION: {
       route: "DS_ITW_BRAND_EXPLORATION",
       title: "ITWallet brand exploration"
+    },
+    SERVICE_PREFERENCES: {
+      route: "DS_SERVICE_PREFERENCES",
+      title: "Service Preferences (animated)"
     }
   }
 } as const;

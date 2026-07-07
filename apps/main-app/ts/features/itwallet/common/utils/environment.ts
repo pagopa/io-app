@@ -1,5 +1,3 @@
-/* eslint-disable complexity */
-
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import Config from "react-native-config";
 
