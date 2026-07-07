@@ -6,11 +6,11 @@ import { fciEnvironmentSet } from "../../actions";
 import { EnvironmentEnum } from "../../../../../../definitions/fci/Environment";
 
 describe("FciEnvironmentSet", () => {
-  it("it should have an initialState equal to a none Option", () => {
+  it("should have an initialState equal to a none Option", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.fci.environment).toStrictEqual(O.none);
   });
-  it("it should be an Option containing test if the fciEnvironmentSet is dispatched with EnvironmentEnum.test as payload", () => {
+  it("should be an Option containing test if the fciEnvironmentSet is dispatched with EnvironmentEnum.test as payload", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciEnvironmentSet(O.some(EnvironmentEnum.test)));
@@ -21,7 +21,7 @@ describe("FciEnvironmentSet", () => {
       O.some(EnvironmentEnum.prod)
     );
   });
-  it("it should be an Option containing prod if the initialState is test and fciEnvironmentSet is dispatched with EnvironmentEnum.prod as payload", () => {
+  it("should be an Option containing prod if the initialState is test and fciEnvironmentSet is dispatched with EnvironmentEnum.prod as payload", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciEnvironmentSet(O.some(EnvironmentEnum.test)));

@@ -30,7 +30,7 @@ import {
 import { fciQtspFilledDocumentUrlSelector } from "../../store/reducers/fciQtspFilledDocument";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { spidLevelFromSessionInfoSelector } from "../../../authentication/common/store/selectors";
-import { isFciSecurityLevelCheckEnabledSelector } from "../../store/reducers/fciSecurityLevelReducer";
+import { isFciSecurityLevelCheckRemoteFFEnabledSelector } from "../../store/selectors/remoteConfig";
 import { FciDownloadPreviewDirectoryPath } from "../networking/handleDownloadDocument";
 import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
@@ -127,7 +127,10 @@ describe("FCI Saga Tests", () => {
       expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
-          [matchers.select(isFciSecurityLevelCheckEnabledSelector), false],
+          [
+            matchers.select(isFciSecurityLevelCheckRemoteFFEnabledSelector),
+            false
+          ],
           [matchers.call.fn(standardFciFlowStartSaga), undefined]
         ])
         .call(standardFciFlowStartSaga)
@@ -137,7 +140,10 @@ describe("FCI Saga Tests", () => {
       expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L3"],
-          [matchers.select(isFciSecurityLevelCheckEnabledSelector), true],
+          [
+            matchers.select(isFciSecurityLevelCheckRemoteFFEnabledSelector),
+            true
+          ],
           [matchers.call.fn(standardFciFlowStartSaga), undefined]
         ])
         .call(standardFciFlowStartSaga)
@@ -147,7 +153,10 @@ describe("FCI Saga Tests", () => {
       expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
-          [matchers.select(isFciSecurityLevelCheckEnabledSelector), true]
+          [
+            matchers.select(isFciSecurityLevelCheckRemoteFFEnabledSelector),
+            true
+          ]
         ])
         .call(
           NavigationService.dispatchNavigationAction,
@@ -274,7 +283,7 @@ describe("FCI Saga Tests", () => {
         .put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }))
         .call(
           NavigationService.dispatchNavigationAction,
-          CommonActions.navigate(ROUTES.MAIN, undefined, { pop: true })
+          CommonActions.navigate(ROUTES.MAIN)
         )
         .run());
   });

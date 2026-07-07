@@ -2,6 +2,134 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.36.0-rc.7](https://github.com/pagopa/io-app/compare/3.36.0-rc.6...3.36.0-rc.7) (2026-07-06)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Credentials catalog, claims display, mdoc verification ([#8236](https://github.com/pagopa/io-app/issues/8236)) ([bf8a20d](https://github.com/pagopa/io-app/commit/bf8a20d34e8e8ee551c76451e27015d1ac21e04a))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3612](https://pagopa.atlassian.net/browse/SIW-3612)] Display proximity CTA in all mdoc credentials detail screen ([#8237](https://github.com/pagopa/io-app/issues/8237)) ([6844f51](https://github.com/pagopa/io-app/commit/6844f51196c8f88213b597b42db58f43cb78c2e7))
+* [[IOPLT-1751](https://pagopa.atlassian.net/browse/IOPLT-1751)] Add `@pagopa/eslint-config` to the `eslint` configuration ([#7992](https://github.com/pagopa/io-app/issues/7992)) ([a02a0f6](https://github.com/pagopa/io-app/commit/a02a0f68e2ca048d9b25dfa3bb02edda6c8c7276))
+
+## [3.36.0-rc.6](https://github.com/pagopa/io-app/compare/3.36.0-rc.5...3.36.0-rc.6) (2026-07-03)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4545](https://pagopa.atlassian.net/browse/SIW-4545)] Handle navigation for skeumorphic credentials ([#8222](https://github.com/pagopa/io-app/issues/8222)) ([590562f](https://github.com/pagopa/io-app/commit/590562fa954f1bdee6675936483ad67467a3c1a3))
+
+## [3.36.0-rc.5](https://github.com/pagopa/io-app/compare/3.36.0-rc.4...3.36.0-rc.5) (2026-07-02)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4149](https://pagopa.atlassian.net/browse/SIW-4149)] Credential offer from third channel ([#8047](https://github.com/pagopa/io-app/issues/8047)) ([ff2012a](https://github.com/pagopa/io-app/commit/ff2012a05e6d0840349b409ac80b0d21e34ed1b1))
+* **IT-Wallet:** [[SIW-4430](https://pagopa.atlassian.net/browse/SIW-4430)] Automatic specs version: 1.0 for Documenti su IO, 1.3 for IT-Wallet ([#8184](https://github.com/pagopa/io-app/issues/8184)) ([d669b5e](https://github.com/pagopa/io-app/commit/d669b5e9ad55b154f49aae8bbde1fd7e34aea78a))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4550](https://pagopa.atlassian.net/browse/SIW-4550)] Fix mdoc credential remote presentation ([#8219](https://github.com/pagopa/io-app/issues/8219)) ([e7787c2](https://github.com/pagopa/io-app/commit/e7787c2ef8de02170cf1a4ceb516562edb5d58e0))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4345](https://pagopa.atlassian.net/browse/SIW-4345)] Remove IT-Wallet simplified activation ([#8160](https://github.com/pagopa/io-app/issues/8160)) ([79da850](https://github.com/pagopa/io-app/commit/79da8507e93250fb9b19c0626c8a67d80e2e33f3))
+* [[IEL-671](https://pagopa.atlassian.net/browse/IEL-671),[IEL-672](https://pagopa.atlassian.net/browse/IEL-672)] changed useFciCheckService bottomsheet and copy update ([#8220](https://github.com/pagopa/io-app/issues/8220)) ([e3ac62b](https://github.com/pagopa/io-app/commit/e3ac62bdabb6f0049de9d6c2938b36103cc48c90))
+
+## [3.36.0-rc.4](https://github.com/pagopa/io-app/compare/3.36.0-rc.3...3.36.0-rc.4) (2026-07-01)
+
+## [3.36.0-rc.3](https://github.com/pagopa/io-app/compare/3.36.0-rc.2...3.36.0-rc.3) (2026-06-30)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4183](https://pagopa.atlassian.net/browse/SIW-4183)] Add batch issuance to ITW and enable AV credential ([#8180](https://github.com/pagopa/io-app/issues/8180)) ([49ec5f8](https://github.com/pagopa/io-app/commit/49ec5f84e77aface1a5105feb52909893900fc97))
+* **IT-Wallet:** [[SIW-4428](https://pagopa.atlassian.net/browse/SIW-4428),[SIW-4452](https://pagopa.atlassian.net/browse/SIW-4452)] Update credential handling in catalogue and onboarding components ([#8190](https://github.com/pagopa/io-app/issues/8190)) ([cf279ab](https://github.com/pagopa/io-app/commit/cf279abe2192335d03413164aaa641e91b845eb0))
+* **IT-Wallet:** [[SIW-4488](https://pagopa.atlassian.net/browse/SIW-4488)] Update engagement banner and TYP copy for IT-Wallet flows ([#8205](https://github.com/pagopa/io-app/issues/8205)) ([6a4bbd7](https://github.com/pagopa/io-app/commit/6a4bbd7bda77dfde40418c6a055e379755f0a886))
+
+
+### Bug Fixes
+
+* [[IEL-632](https://pagopa.atlassian.net/browse/IEL-632),[IEL-631](https://pagopa.atlassian.net/browse/IEL-631),[IEL-668](https://pagopa.atlassian.net/browse/IEL-668)] FciLoginL3Screen centering and copy ([#8206](https://github.com/pagopa/io-app/issues/8206)) ([d9ee8f9](https://github.com/pagopa/io-app/commit/d9ee8f919f060c784cba71e1c8dbabe117c67213))
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] PID card spacing in wallet ([#8217](https://github.com/pagopa/io-app/issues/8217)) ([64ad391](https://github.com/pagopa/io-app/commit/64ad391fd40e15ded83b4979e4f884d0fe2dd720))
+
+
+### Chores
+
+* [[IOPLT-1460](https://pagopa.atlassian.net/browse/IOPLT-1460)] Add the new experimental redesign of `ServiceDetailsPreferences` ([#8202](https://github.com/pagopa/io-app/issues/8202)) ([3412ba8](https://github.com/pagopa/io-app/commit/3412ba8f238c1dd63a39057f2fa22b2b37b8fc4e))
+* [[IOPLT-1906](https://pagopa.atlassian.net/browse/IOPLT-1906)] Replace legacy shadow style with the new `boxShadow` property ([#8216](https://github.com/pagopa/io-app/issues/8216)) ([c05d45a](https://github.com/pagopa/io-app/commit/c05d45a3fe36c377fec1979d0602842a7b89885b))
+
+## [3.36.0-rc.2](https://github.com/pagopa/io-app/compare/3.36.0-rc.1...3.36.0-rc.2) (2026-06-29)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Fix banners rendering in ITW home screen ([#8215](https://github.com/pagopa/io-app/issues/8215)) ([5fd4b22](https://github.com/pagopa/io-app/commit/5fd4b224bbf4106752f00c9ab7e1500d87ee6d92))
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Replace reset with navigate in `closeIssuance` ([#8214](https://github.com/pagopa/io-app/issues/8214)) ([7386b79](https://github.com/pagopa/io-app/commit/7386b79f062a6ab89a3435d6a80f730bc8867314))
+
+## [3.36.0-rc.1](https://github.com/pagopa/io-app/compare/3.36.0-rc.0...3.36.0-rc.1) (2026-06-26)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Update IO Wallet SDK overrides ([#8212](https://github.com/pagopa/io-app/issues/8212)) ([dbc37de](https://github.com/pagopa/io-app/commit/dbc37de9bac6f0e45ba8b3cc47e42677150e2082))
+
+## [3.36.0-rc.0](https://github.com/pagopa/io-app/compare/3.35.0-rc.10...3.36.0-rc.0) (2026-06-26)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4411](https://pagopa.atlassian.net/browse/SIW-4411)] expose evaluated DCQL query results in credential issuance flow ([#8200](https://github.com/pagopa/io-app/issues/8200)) ([9eae32b](https://github.com/pagopa/io-app/commit/9eae32b5ce842014f45348841e4c005c4ddee874))
+
+## [3.35.0-rc.10](https://github.com/pagopa/io-app/compare/3.35.0-rc.9...3.35.0-rc.10) (2026-06-25)
+
+
+### Features
+
+* [[IOCOM-3171](https://pagopa.atlassian.net/browse/IOCOM-3171)] messages' details survey banner ([#8201](https://github.com/pagopa/io-app/issues/8201)) ([62eb12c](https://github.com/pagopa/io-app/commit/62eb12cfcf79e24eeace6e7852460407a0e1af8f))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Catch error when canceling user authentication for eID issuance ([#8208](https://github.com/pagopa/io-app/issues/8208)) ([9ea51bd](https://github.com/pagopa/io-app/commit/9ea51bdbae65380174214b5db6675fd0a9b27aaf))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4481](https://pagopa.atlassian.net/browse/SIW-4481)] Add tracking for ITW privacy screen view ([#8204](https://github.com/pagopa/io-app/issues/8204)) ([7caabd4](https://github.com/pagopa/io-app/commit/7caabd4417adf12392f1e17168fef95dbc965aaa))
+
+## [3.35.0-rc.9](https://github.com/pagopa/io-app/compare/3.35.0-rc.8...3.35.0-rc.9) (2026-06-25)
+
+
+### Chores
+
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] Downgrade React Navigation to version 6 ([#8198](https://github.com/pagopa/io-app/issues/8198)) ([c983253](https://github.com/pagopa/io-app/commit/c983253923eb606e6fd98ce77bea9f5c15fbd0f8))
+
+## [3.35.0-rc.8](https://github.com/pagopa/io-app/compare/3.35.0-rc.7...3.35.0-rc.8) (2026-06-24)
+
+
+### Chores
+
+* [[IOPLT-1901](https://pagopa.atlassian.net/browse/IOPLT-1901)] Remove deprecated Jasmine `fail()` global method from `jest` tests ([#8199](https://github.com/pagopa/io-app/issues/8199)) ([cfbdb3e](https://github.com/pagopa/io-app/commit/cfbdb3e7dc66e0e24c30aa3f0e1942c716a513cf))
+* [[IOPLT-1907](https://pagopa.atlassian.net/browse/IOPLT-1907)] Bump version of actions still using Node 20 ([#8203](https://github.com/pagopa/io-app/issues/8203)) ([ae2f19c](https://github.com/pagopa/io-app/commit/ae2f19c14c7bca86fb547a4d48e0a421a4f52cc0))
+
+## [3.35.0-rc.7](https://github.com/pagopa/io-app/compare/3.35.0-rc.6...3.35.0-rc.7) (2026-06-23)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Deduplicate IO Wallet SDK ([#8197](https://github.com/pagopa/io-app/issues/8197)) ([4e4888a](https://github.com/pagopa/io-app/commit/4e4888a7faa97351eb572ca5884b57769b22a598))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4476](https://pagopa.atlassian.net/browse/SIW-4476)] Enable BLE retrieval for NFC presentment flows ([#8185](https://github.com/pagopa/io-app/issues/8185)) ([dad786e](https://github.com/pagopa/io-app/commit/dad786e030b9655baf056284934021c56a604a1a))
+
 ## [3.35.0-rc.6](https://github.com/pagopa/io-app/compare/3.35.0-rc.5...3.35.0-rc.6) (2026-06-22)
 
 

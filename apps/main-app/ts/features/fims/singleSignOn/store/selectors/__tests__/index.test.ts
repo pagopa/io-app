@@ -239,7 +239,7 @@ describe("singleSignOn selectors", () => {
     );
   });
 
-  describe("fimsAuthenticationFailedSelector", () =>
+  describe("fimsAuthenticationFailedSelector", () => {
     ssoDataPots({} as Consent).forEach(ssoDataPot => {
       const expectedOutput =
         ssoDataPot.kind === "PotNoneError" ||
@@ -258,7 +258,8 @@ describe("singleSignOn selectors", () => {
           fimsAuthenticationFailedSelector(globalState);
         expect(authenticationFailed).toBe(expectedOutput);
       });
-    }));
+    });
+  });
 
   describe("fimsAuthenticationErrorTagSelector", () => {
     errorTags.forEach(errorTag =>
