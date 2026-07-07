@@ -113,7 +113,7 @@ describe("constantPollingFetch function", () => {
 
     describe("and the timeout is shorter than the response time", () => {
       // it never aborts
-      const DEFAULT_SHOULD_ABORT: Promise<boolean> = new Promise(_ => void 0);
+      const DEFAULT_SHOULD_ABORT = new Promise<boolean>(_ => void 0);
 
       // need to use different values to avoid going above the 5000ms timeout in Jest
       const REQUEST_TIMEOUT = 10;
