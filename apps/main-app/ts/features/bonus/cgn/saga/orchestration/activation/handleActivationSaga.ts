@@ -1,6 +1,4 @@
 import { CommonActions } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { call, put, race, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
@@ -35,11 +33,8 @@ const getNextNavigationStep = (
   action: ActionType<typeof cgnActivationStatus>
 ): (() => void) =>
   isActionOf(cgnActivationStatus.success, action)
-    ? pipe(
-        mapEnumToNavigation.get(action.payload.status),
-        O.fromNullable,
-        O.getOrElse(() => navigateToCgnActivationLoading)
-      )
+    ? (mapEnumToNavigation.get(action.payload.status) ??
+      navigateToCgnActivationLoading)
     : navigateToCgnActivationLoading;
 
 const isLoadingScreen = (screenName: string) =>

@@ -1,8 +1,8 @@
 import { CommonActions } from "@react-navigation/native";
-import * as E from "fp-ts/lib/Either";
 import { call, put, race, take } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import { SagaCallReturnType } from "../../../../../../types/utils";
+import { getNetworkError } from "../../../../../../utils/errors";
 import { BackendCGN } from "../../../api/backendCgn";
 import {
   navigateToCgnDetails,
@@ -37,36 +37,27 @@ export function* eycaActivationWorker(
 ) {
   yield* call(navigateToEycaActivationLoading);
 
-  const eycaActivation: SagaCallReturnType<typeof getActivation> = yield* call(
-    getActivation,
-    getEycaActivation
-  );
+  try {
+    const eycaActivation: SagaCallReturnType<typeof getActivation> =
+      yield* call(getActivation, getEycaActivation);
 
-  if (E.isRight(eycaActivation)) {
-    if (eycaActivation.right === "PROCESSING") {
+    if (eycaActivation === "PROCESSING") {
       yield* call(handleEycaActivationSaga, getEycaActivation);
     } else {
       const startActivation: SagaCallReturnType<typeof handleStartActivation> =
         yield* call(handleStartActivation, startEycaActivation);
-      // activation not handled error, stop
-      if (E.isLeft(startActivation)) {
-        yield* put(cgnEycaActivation.failure(startActivation.left));
+      // could be: ALREADY_ACTIVE, INELIGIBLE
+      if (["ALREADY_ACTIVE", "INELIGIBLE"].includes(startActivation)) {
+        yield* put(cgnEycaActivation.success(startActivation));
+        yield* call(navigateToCgnDetails);
         return;
       } else {
-        // could be: ALREADY_ACTIVE, INELIGIBLE
-        if (
-          ["ALREADY_ACTIVE", "INELIGIBLE"].some(
-            v => v === startActivation.right
-          )
-        ) {
-          yield* put(cgnEycaActivation.success(startActivation.right));
-          yield* call(navigateToCgnDetails);
-          return;
-        } else {
-          yield* call(handleEycaActivationSaga, getEycaActivation);
-        }
+        yield* call(handleEycaActivationSaga, getEycaActivation);
       }
     }
+  } catch (e) {
+    yield* put(cgnEycaActivation.failure(getNetworkError(e)));
+    return;
   }
 
   // Activation saga ended, request again the details

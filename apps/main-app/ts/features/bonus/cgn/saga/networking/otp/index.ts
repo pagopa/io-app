@@ -1,5 +1,4 @@
 import { ActionType } from "typesafe-actions";
-import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
@@ -21,7 +20,7 @@ export function* cgnGenerateOtp(
       generateOtpRequest,
       action
     )) as unknown as SagaCallReturnType<typeof generateOtp>;
-    if (E.isRight(generateOtpResult)) {
+    if ("right" in generateOtpResult) {
       if (generateOtpResult.right.status === 200) {
         yield* put(cgnGenerateOtpAction.success(generateOtpResult.right.value));
         yield* put(setMerchantDiscountCode(generateOtpResult.right.value.code));
