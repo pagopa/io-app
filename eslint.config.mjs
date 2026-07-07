@@ -112,7 +112,6 @@ export default defineConfig([
       "max-lines-per-function": "off",
       "@typescript-eslint/no-invalid-void-type": "off",
       "@typescript-eslint/no-empty-function": "off",
-      "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-inferrable-types": "off",

@@ -148,10 +148,10 @@ export function getProfileChannelsforServicesList(
     {} as BlockedInboxOrChannels
   );
 
-  servicesId.forEach(id => {
+  return servicesId.reduce((blockedChannels, id) => {
     const channels =
-      Object.keys(profileBlockedChannels).indexOf(id) !== -1
-        ? profileBlockedChannels[id]
+      Object.keys(blockedChannels).indexOf(id) !== -1
+        ? blockedChannels[id]
         : [];
 
     const updatedBlockedChannels =
@@ -164,15 +164,12 @@ export function getProfileChannelsforServicesList(
           : channels;
 
     if (updatedBlockedChannels.length !== 0) {
-      // eslint-disable-next-line functional/immutable-data
-      profileBlockedChannels[id] = updatedBlockedChannels;
-    } else {
-      // eslint-disable-next-line functional/immutable-data
-      delete profileBlockedChannels[id];
+      return { ...blockedChannels, [id]: updatedBlockedChannels };
     }
-  });
 
-  return profileBlockedChannels;
+    const { [id]: _removed, ...remainingChannels } = blockedChannels;
+    return remainingChannels;
+  }, profileBlockedChannels);
 }
 
 /**
@@ -231,14 +228,13 @@ export const getBlockedChannels =
     ].filter(_ => _ !== "");
 
     if (blockedChannelsForService.length === 0) {
-      // eslint-disable-next-line functional/immutable-data
-      delete profileBlockedChannels[serviceId];
-    } else {
-      // eslint-disable-next-line functional/immutable-data
-      profileBlockedChannels[serviceId] = blockedChannelsForService;
+      const { [serviceId]: _removed, ...remainingChannels } =
+        profileBlockedChannels;
+      return remainingChannels;
     }
 
     return {
-      ...profileBlockedChannels
+      ...profileBlockedChannels,
+      [serviceId]: blockedChannelsForService
     };
   };
