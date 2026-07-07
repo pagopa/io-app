@@ -111,7 +111,6 @@ export default defineConfig([
       // refactoring incompatible with the current codebase
       "max-lines-per-function": "off",
       "@typescript-eslint/no-invalid-void-type": "off",
-      "@typescript-eslint/no-empty-function": "off",
       "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-unused-vars": "off",
@@ -317,13 +316,16 @@ export default defineConfig([
       "**/*.test.ts",
       "**/*.test.tsx",
       "**/__tests__/**/*.ts",
-      "**/__tests__/**/*.tsx"
+      "**/__tests__/**/*.tsx",
+      "**/__mocks__/**/*.ts",
+      "**/__mocks__/**/*.tsx"
     ],
 
     rules: {
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-shadow": "off",
       "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-empty-function": "off",
       "i18next/no-literal-string": "off",
       "no-restricted-imports": "off"
     }
