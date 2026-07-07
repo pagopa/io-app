@@ -26,8 +26,8 @@ export const ItwDiscoveryLandingScreen = () => {
     }
 
     navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
-      level: isWhitelisted ? "l3" : "l2",
-      disableAnimation: true
+      animationEnabled: false,
+      level: isWhitelisted ? "l3" : "l2"
     });
   }, [navigation, isWalletActive, isItWalletActive, isWhitelisted]);
 

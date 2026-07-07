@@ -39,7 +39,7 @@ describe("handleExportFimsHistorySaga", () => {
     });
     expect(trackExportSucceeded).toHaveBeenCalledTimes(1);
   });
-  it('should dispatch success with payload "ALREADY_EXPORTING", but not track an export success when status is 409 ', () => {
+  it('should dispatch success with payload "ALREADY_EXPORTING", but not track an export success when status is 409', () => {
     const response = E.right({ status: 409 }) as ResponseType;
 
     const resultPromise = Promise.resolve(response);
@@ -58,7 +58,7 @@ describe("handleExportFimsHistorySaga", () => {
       .isDone();
     expect(trackExportSucceeded).toHaveBeenCalledTimes(0);
   });
-  it("should dispatch failure when status is anything else ", () => {
+  it("should dispatch failure when status is anything else", () => {
     const response = E.right({ status: 418 }) as ResponseType;
 
     const resultPromise = Promise.resolve(response);

@@ -12,8 +12,8 @@ import {
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ITW_ANALYTICS_CREDENTIALS } from "../propertyTypes";
 
-export const mockedRegisterSuperProperties = jest.fn();
-export const mockedSet = jest.fn();
+const mockedRegisterSuperProperties = jest.fn();
+const mockedSet = jest.fn();
 jest.mock("../../../../../mixpanel", () => ({
   isMixpanelInstanceInitialized: () => true,
   registerSuperProperties: (properties: MixpanelProperties) =>

@@ -63,7 +63,7 @@ describe("handlePaymentUpdateRequests", () => {
   });
 
   describe("paymentUpdateRequestWorker", () => {
-    it("should follow proper flow when using paymentDataRequest API (isTest true), and only terminate the worker if the dispatched cancel action has the same messageId as the worker as payload ", () => {
+    it("should follow proper flow when using paymentDataRequest API (isTest true), and only terminate the worker if the dispatched cancel action has the same messageId as the worker as payload", () => {
       const mockChannel = channel() as Channel<
         ActionType<typeof updatePaymentForMessage.request>
       >;

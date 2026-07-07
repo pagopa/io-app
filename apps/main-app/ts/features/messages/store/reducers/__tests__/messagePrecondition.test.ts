@@ -73,7 +73,6 @@ const computeExpectedOutput = (
     | typeof shownPreconditionStatusAction
     | typeof updateRequiredPreconditionStatusAction
   >
-  // eslint-disable-next-line complexity
 ) => {
   switch (fromStatus.state) {
     case "error":

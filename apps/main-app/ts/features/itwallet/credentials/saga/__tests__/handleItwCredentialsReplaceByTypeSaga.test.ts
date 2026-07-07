@@ -47,7 +47,11 @@ const makeState = (
 ): DeepPartial<GlobalState> => ({
   features: {
     itWallet: {
-      credentials: { credentials }
+      credentials: {
+        credentials: Object.values(credentials).reduce<
+          Record<string, CredentialMetadata>
+        >((acc, c) => ({ ...acc, [c.credentialId]: c }), {})
+      }
     }
   }
 });
@@ -77,7 +81,7 @@ describe("handleItwCredentialsReplaceByTypeSaga", () => {
         ]);
         expect(mockDeleteKey).toHaveBeenCalledWith(baseCredential.keyTag);
         expect(mockStoreAll).toHaveBeenCalledWith([
-          { credentialId: newMetadata.credentialId, credential: "raw-jwt" }
+          { vaultId: newMetadata.credentialId, credential: "raw-jwt" }
         ]);
       });
   });

@@ -29,7 +29,8 @@ const PagoPATestIndicator = () => (
         textTransform: "uppercase"
       }}
     >
-      Test
+      {/* eslint-disable-next-line i18next/no-literal-string -- test-environment badge label, not localized */}
+      {"Test"}
     </Text>
   </View>
 );

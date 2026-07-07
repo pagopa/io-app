@@ -1,4 +1,9 @@
-import { IOColors, Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
+import {
+  hexToRgba,
+  IOColors,
+  Tag,
+  useScaleAnimation
+} from "@pagopa/io-app-design-system";
 import { ReactNode, useMemo } from "react";
 
 import { Canvas } from "@shopify/react-native-skia";
@@ -228,19 +233,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 8,
-    overflow: "hidden"
+    overflow: "hidden",
+    boxShadow: `0px 4px 24px ${hexToRgba(IOColors.black, 0.1)}`
   },
   card: {
-    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO,
-    shadowColor: IOColors.black,
-    shadowOffset: {
-      width: 0,
-      height: 4 // To avoid the shadow to be clipped by the header
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    // Android
-    elevation: 8
+    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO
   },
   tag: {
     position: "absolute",

@@ -149,7 +149,7 @@ const AuthenticatedStackNavigator = () => {
           gestureEnabled: false,
           ...Platform.select({
             ios: {
-              animation: "none"
+              animationEnabled: false
             },
             default: undefined
           })
@@ -169,7 +169,7 @@ const AuthenticatedStackNavigator = () => {
           gestureEnabled: false,
           ...Platform.select({
             ios: {
-              animation: "none"
+              animationEnabled: false
             },
             default: undefined
           })
@@ -243,11 +243,7 @@ const AuthenticatedStackNavigator = () => {
         screenOptions={{
           headerShown: false,
           /* Avoid buggy modal behavior on Android */
-          ...(Platform.OS === "ios"
-            ? {
-                presentation: "modal"
-              }
-            : TransitionPresets.ScaleFromCenterAndroid)
+          presentation: Platform.OS === "ios" ? "modal" : "card"
         }}
       >
         <Stack.Screen
