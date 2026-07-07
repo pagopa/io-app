@@ -33,13 +33,19 @@ const RequestedCredentialsBlock = ({
         credentialType: getCredentialTypeByVct(c.vct),
         claimsToDisplay: c.claimsToDisplay
       }))
-      // This should never happen, but we need to filter out credentials with undefined type to support the null
-      // assertion in the map function below.
-      .filter(c => c.credentialType !== undefined)
+      // This should never happen, but we filter out credentials with an
+      // undefined type so the mapped `credentialType` is guaranteed defined.
+      .filter(
+        (
+          c
+        ): c is typeof c & {
+          credentialType: NonNullable<(typeof c)["credentialType"]>;
+        } => c.credentialType !== undefined
+      )
       .map(({ id, credentialType, claimsToDisplay }) => (
         <ItwClaimsSelector
           key={id}
-          credentialType={credentialType!}
+          credentialType={credentialType}
           items={claimsToDisplay}
           defaultExpanded
           selectionEnabled={false}
