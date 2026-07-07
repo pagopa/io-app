@@ -13,25 +13,26 @@ import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCre
 import { handleItwCredentialsVaultCoherenceSaga } from "../../credentials/saga/handleItwCredentialsVaultCoherenceSaga";
 import { handleItwCredentialsVaultMigrationSaga } from "../../credentials/saga/handleItwCredentialsVaultMigrationSaga";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
-import { itwCredentialsEidSelector } from "../../credentials/store/selectors/index.ts";
-import { watchItwCredentialsCatalogueSaga } from "../../credentialsCatalogue/saga/index.ts";
-import { checkHasNfcFeatureSaga } from "../../identification/common/saga/index.ts";
+import { handleWalletUnitAttestationsCleanUp } from "../../credentials/saga/handleWalletUnitAttestationsCleanUp";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors/index";
+import { watchItwCredentialsCatalogueSaga } from "../../credentialsCatalogue/saga/index";
+import { checkHasNfcFeatureSaga } from "../../identification/common/saga/index";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
-import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
+import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga";
 import { warmUpIntegrityServiceSaga } from "../../lifecycle/saga/checkIntegrityServiceReadySaga";
 import {
   checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
-import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
+import { watchItwTasksSaga } from "../../statusList/saga";
+import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
 import {
   itwSetAuthLevel,
   itwSetFiscalCodeWhitelisted
-} from "../store/actions/preferences.ts";
-import { handleWalletUnitAttestationsCleanUp } from "../../credentials/saga/handleWalletUnitAttestationsCleanUp.ts";
-import { isItwCredential } from "../utils/itwCredentialUtils.ts";
+} from "../store/actions/preferences";
+import { isItwCredential } from "../utils/itwCredentialUtils";
 import { watchItwEnvironment } from "./environment";
-import { watchItwOfflineAccess } from "./offlineAccess.ts";
+import { watchItwOfflineAccess } from "./offlineAccess";
 
 export function* watchItwSaga(): SagaIterator {
   yield* takeLatest(
@@ -45,6 +46,8 @@ export function* watchItwSaga(): SagaIterator {
   yield* fork(watchItwCredentialsCatalogueSaga);
   // Check if the fiscal code is enabled, to enable the L3
   yield* fork(checkFiscalCodeEnabledSaga);
+  // Registers and watches background tasks
+  yield* fork(watchItwTasksSaga);
   // Watch ITW analytics lifecycle (initial sync and reactive updates)
   yield* fork(watchItwAnalyticsSaga);
 
