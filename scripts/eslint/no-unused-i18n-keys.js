@@ -77,14 +77,31 @@ const collectSourceLiterals = () => {
       filePath.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS
     );
 
+    const addStaticKeys = expr => {
+      if (!expr) {
+        return;
+      }
+
+      if (ts.isStringLiteral(expr) || ts.isNoSubstitutionTemplateLiteral(expr)) {
+        literals.add(expr.text);
+        return;
+      }
+
+      if (ts.isConditionalExpression(expr)) {
+        addStaticKeys(expr.whenTrue);
+        addStaticKeys(expr.whenFalse);
+      }
+    };
+
     const visit = node => {
-      // Exact literals only; interpolated keys are intentionally left unmatched
-      // so they surface as warnings (we don't want dynamic i18n keys).
       if (
-        ts.isStringLiteral(node) ||
-        ts.isNoSubstitutionTemplateLiteral(node)
+        ts.isCallExpression(node) &&
+        ts.isPropertyAccessExpression(node.expression) &&
+        ts.isIdentifier(node.expression.expression) &&
+        node.expression.expression.text === "I18n" &&
+        node.expression.name.text === "t"
       ) {
-        literals.add(node.text);
+        addStaticKeys(node.arguments[0]);
       }
 
       ts.forEachChild(node, visit);
