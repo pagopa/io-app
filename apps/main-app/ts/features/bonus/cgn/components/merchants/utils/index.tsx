@@ -1,20 +1,19 @@
 import { WithinRangeInteger } from "@pagopa/ts-commons/lib/numbers";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { getCategorySpecs } from "../../../utils/filters";
 
-export const normalizedDiscountPercentage = (discount?: number) =>
-  pipe(
-    WithinRangeInteger(1, 100).decode(discount),
-    E.map(v => v.toString()),
-    E.getOrElse(() => "-")
-  );
+export const normalizedDiscountPercentage = (discount?: number) => {
+  const decodedDiscount = WithinRangeInteger(1, 100).decode(discount);
+  if ("right" in decodedDiscount) {
+    return decodedDiscount.right.toString();
+  }
+
+  return "-";
+};
 
 export const isValidDiscount = (discount?: number) =>
-  pipe(WithinRangeInteger(1, 100).decode(discount), E.isRight);
+  "right" in WithinRangeInteger(1, 100).decode(discount);
 
 export const moduleCGNaccessibilityLabel = (discountData: Discount) => {
   const { name, discount, productCategories, isNew } = discountData;
@@ -30,7 +29,7 @@ export const moduleCGNaccessibilityLabel = (discountData: Discount) => {
     ${productCategories
       .map(categoryKey => {
         const category = getCategorySpecs(categoryKey);
-        return O.isSome(category) ? I18n.t(category.value.nameKey) : "";
+        return category ? I18n.t(category.nameKey) : "";
       })
       .join(", ")}
       `;

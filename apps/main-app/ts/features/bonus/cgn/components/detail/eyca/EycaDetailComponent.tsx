@@ -1,6 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
 import { JSX, useCallback, useEffect } from "react";
 import {
   Alert,
@@ -70,24 +67,22 @@ const EycaDetailComponent = () => {
       case "REVOKED":
       case "EXPIRED":
         return <EycaStatusDetailsComponent eycaCard={eycaCard} />;
-      case "PENDING":
-        return pipe(
-          eycaActivationStatus,
-          O.fromNullable,
-          O.fold(
-            () => errorComponent,
-            as =>
-              as === "ERROR" || as === "NOT_FOUND" ? (
-                errorComponent
-              ) : (
-                <Alert
-                  testID="eyca-pending-component"
-                  variant="info"
-                  content={I18n.t("bonus.cgn.detail.status.eycaPending")}
-                />
-              )
-          )
+      case "PENDING": {
+        if (eycaActivationStatus === undefined) {
+          return errorComponent;
+        }
+
+        return eycaActivationStatus === "ERROR" ||
+          eycaActivationStatus === "NOT_FOUND" ? (
+          errorComponent
+        ) : (
+          <Alert
+            testID="eyca-pending-component"
+            variant="info"
+            content={I18n.t("bonus.cgn.detail.status.eycaPending")}
+          />
         );
+      }
       default:
         return null;
     }
@@ -110,11 +105,9 @@ const EycaDetailComponent = () => {
               }
             }}
           />
-          {pipe(
-            eyca,
-            O.fromNullable,
-            O.fold(() => errorComponent, renderComponentEycaStatus)
-          )}
+          {eyca === undefined
+            ? errorComponent
+            : renderComponentEycaStatus(eyca)}
         </>
       )}
       {bottomSheet}
