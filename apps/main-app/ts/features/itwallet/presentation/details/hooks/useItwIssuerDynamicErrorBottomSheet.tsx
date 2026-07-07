@@ -21,8 +21,7 @@ import { useItwRemoveCredentialWithConfirm } from "./useItwRemoveCredentialWithC
 type IssuerDynamicErrorBottomSheetActionMode =
   | "none"
   | "removeOnly"
-  | "updateAndRemove"
-  | "acknowledgeOnly";
+  | "updateAndRemove";
 
 type IssuerDynamicErrorBottomSheetContentConfig = {
   actionMode: IssuerDynamicErrorBottomSheetActionMode;
@@ -35,11 +34,6 @@ type UseItwIssuerDynamicErrorBottomSheetParams = {
   status?: ItwCredentialStatus;
 };
 
-export const isMdlSuspendedIssuerError = (credential: CredentialMetadata) =>
-  credential.credentialType === CredentialType.DRIVING_LICENSE &&
-  credential.storedStatusAssertion?.credentialStatus === "invalid" &&
-  credential.storedStatusAssertion.errorCode === "credential_suspended";
-
 /**
  * Maps the issuer dynamic error state to the additional mDL-only content/actions
  * shown in the bottom sheet.
@@ -48,7 +42,6 @@ export const isMdlSuspendedIssuerError = (credential: CredentialMetadata) =>
  * - expired mDL credentials show both update and remove actions
  * - invalid mDL credentials show both update and remove actions only when
  *   the issuer error code is `credential_invalid`
- * - suspended mDL credentials show an acknowledgement action only
  * - any other mDL status falls back to the single remove action
  */
 export const getIssuerDynamicErrorBottomSheetContentConfig = (
@@ -60,13 +53,6 @@ export const getIssuerDynamicErrorBottomSheetContentConfig = (
   if (credentialType !== CredentialType.DRIVING_LICENSE) {
     return {
       actionMode: "none",
-      showDrivingLicenseExtraContent: false
-    };
-  }
-
-  if (isMdlSuspendedIssuerError(credential)) {
-    return {
-      actionMode: "acknowledgeOnly",
       showDrivingLicenseExtraContent: false
     };
   }
@@ -106,17 +92,6 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
     credential,
     status
   );
-  const isMdlSuspended = isMdlSuspendedIssuerError(credential);
-
-  const title = isMdlSuspended
-    ? I18n.t("features.itWallet.presentation.alerts.mdl.suspended.title")
-    : localizedMessage.title;
-
-  const content = isMdlSuspended
-    ? I18n.t(
-        "features.itWallet.presentation.bottomSheets.mDL.suspended.content"
-      )
-    : localizedMessage.description;
 
   const handleUpdateCredential = () => {
     if (status) {
@@ -139,10 +114,10 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
   };
 
   const bottomSheet = useIOBottomSheetModal({
-    title,
+    title: localizedMessage.title,
     component: (
       <VStack space={24}>
-        <IOMarkdown content={content} />
+        <IOMarkdown content={localizedMessage.description} />
         {contentConfig.showDrivingLicenseExtraContent && (
           <IOMarkdown
             content={I18n.t(
@@ -182,18 +157,6 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
                 "features.itWallet.presentation.alerts.mdl.invalid.cta"
               )}
               onPress={confirmAndRemoveCredential}
-            />
-          </View>
-        )}
-        {contentConfig.actionMode === "acknowledgeOnly" && (
-          <View style={{ marginBottom: 16 }}>
-            <IOButton
-              variant="solid"
-              fullWidth
-              label={I18n.t(
-                "features.itWallet.presentation.bottomSheets.mDL.suspended.cta"
-              )}
-              onPress={() => bottomSheet.dismiss()}
             />
           </View>
         )}

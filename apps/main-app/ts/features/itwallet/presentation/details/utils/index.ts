@@ -62,6 +62,16 @@ export const getItwDisplayCredentialStatus = (
   return credentialStatus;
 };
 
+/**
+ * Returns whether the stored status assertion reports a suspended driving
+ * licence, a case with dedicated static copy that must not fall back to the
+ * issuer-provided dynamic error.
+ */
+export const isMdlSuspendedIssuerError = (credential: CredentialMetadata) =>
+  credential.credentialType === CredentialType.DRIVING_LICENSE &&
+  credential.storedStatusAssertion?.credentialStatus === "invalid" &&
+  credential.storedStatusAssertion.errorCode === "credential_suspended";
+
 export const shouldShowMdlUpdateDigitalCredential = (
   credential: CredentialMetadata,
   status?: ItwCredentialStatus

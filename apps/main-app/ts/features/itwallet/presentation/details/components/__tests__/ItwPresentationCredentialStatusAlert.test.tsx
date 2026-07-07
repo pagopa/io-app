@@ -162,31 +162,41 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     expect(result).toBe(CredentialAlertType.ATTRIBUTE_UPDATE);
   });
 
-  it.each([
-    "ATTRIBUTE_UPDATE",
-    "attribute_update",
-    "credential_attribute_update",
-    "credential_attributes_updated"
-  ])(
-    "recognizes %s as a credential attribute update",
-    credentialAttributeUpdateErrorCode => {
-      expect(
-        isCredentialAttributeUpdate({
-          storedStatusAssertion: {
-            credentialStatus: "invalid",
-            errorCode: credentialAttributeUpdateErrorCode
-          }
-        } as CredentialMetadata)
-      ).toBe(true);
-    }
-  );
+  it("returns MDL_SUSPENDED before dynamic issuer errors", () => {
+    const result = deriveCredentialAlertType({
+      credentialStatus: "invalid",
+      eidStatus: "valid",
+      isOffline: false,
+      isItwL3: false,
+      message: mockMessage,
+      isMdlSuspended: true
+    });
 
-  it("does not recognize unrelated error codes as credential attribute updates", () => {
+    expect(result).toBe(CredentialAlertType.MDL_SUSPENDED);
+  });
+
+  it("recognizes attribute_update as a credential attribute update", () => {
     expect(
       isCredentialAttributeUpdate({
         storedStatusAssertion: {
           credentialStatus: "invalid",
-          errorCode: "credential_invalid"
+          errorCode: "attribute_update"
+        }
+      } as CredentialMetadata)
+    ).toBe(true);
+  });
+
+  it.each([
+    "ATTRIBUTE_UPDATE",
+    "credential_attribute_update",
+    "credential_attributes_updated",
+    "credential_invalid"
+  ])("does not recognize %s as a credential attribute update", errorCode => {
+    expect(
+      isCredentialAttributeUpdate({
+        storedStatusAssertion: {
+          credentialStatus: "invalid",
+          errorCode
         }
       } as CredentialMetadata)
     ).toBe(false);
@@ -302,7 +312,7 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     const component = renderComponent({
       storedStatusAssertion: {
         credentialStatus: "invalid",
-        errorCode: "ATTRIBUTE_UPDATE"
+        errorCode: "attribute_update"
       }
     });
 
@@ -338,7 +348,7 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     const component = renderComponent({
       storedStatusAssertion: {
         credentialStatus: "invalid",
-        errorCode: "ATTRIBUTE_UPDATE"
+        errorCode: "attribute_update"
       }
     });
 
@@ -364,7 +374,7 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     const component = renderComponent({
       storedStatusAssertion: {
         credentialStatus: "invalid",
-        errorCode: "ATTRIBUTE_UPDATE"
+        errorCode: "attribute_update"
       }
     });
 
