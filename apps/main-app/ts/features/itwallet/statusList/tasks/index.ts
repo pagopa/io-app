@@ -19,9 +19,8 @@ export const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 4;
  * Register the ITW Status List fetch task handler with expo-task-manager.
  * Important: must be defined at module level.
  *
- * Checks whether the Status List needs to be refreshed (i.e. last
- * check was more than 24 hours ago) and, if so, fetches it and updates the
- * last check timestamp.
+ * Current behavior: stores the background wake-up timestamp (used later for analytics).
+ * Status List refresh/fetch logic will be added separately.
  */
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
