@@ -169,7 +169,7 @@ describe(`Test generate signature base`, () => {
   });
 });
 
-describe(`Test generate signature base`, () => {
+describe(`Test generate signature base with content-digest`, () => {
   it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
     testConfig
   )}`, () => {
@@ -186,7 +186,7 @@ describe(`Test generate signature base`, () => {
   });
 });
 
-describe(`Test generate signature base`, () => {
+describe(`Test generate signature base with custom headers and content-digest`, () => {
   it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
     testCustomHeadersConfig
   )}`, () => {

@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, fork, select, take, takeLatest } from "typed-redux-saga/macro";
+import { call, fork, select, take } from "typed-redux-saga/macro";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
@@ -7,27 +7,26 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
-} from "../tasks";
+} from "../tasks/manager";
 
 /**
  * Registers the ITW Status List fetch task with expo-background-task.
  */
 export function* registerStatusListFetchTaskSaga(): SagaIterator {
-  const isWalletValid = yield* select(itwLifecycleIsValidSelector);
-  if (!isWalletValid) {
-    // If wallet not valid, wait for a credential store, which is a strong
-    // signal of wallet activation.
-    yield* take(itwCredentialsStore);
-  }
+  while (true) {
+    const isWalletValid = yield* select(itwLifecycleIsValidSelector);
+    if (!isWalletValid) {
+      // Wait for a credential store, a strong signal of wallet activation.
+      yield* take(itwCredentialsStore);
+    }
 
-  // Register the background task for Status List fetch only for active wallet
-  // instances
-  yield* call(registerItwStatusListFetchTask);
+    // Register only for active wallet instances (idempotent).
+    yield* call(registerItwStatusListFetchTask);
 
-  // Unregister background tasks on wallet reset
-  yield* takeLatest(itwLifecycleStoresReset, function* () {
+    // On wallet reset, unregister and loop to await the next reactivation.
+    yield* take(itwLifecycleStoresReset);
     yield* call(unregisterItwStatusListFetchTask);
-  });
+  }
 }
 
 export function* watchItwTasksSaga(): SagaIterator {

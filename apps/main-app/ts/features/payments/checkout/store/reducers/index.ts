@@ -101,7 +101,6 @@ const INITIAL_STATE: PaymentsCheckoutState = {
 const reducer = (
   state: PaymentsCheckoutState = INITIAL_STATE,
   action: Action
-  // eslint-disable-next-line complexity
 ): PaymentsCheckoutState => {
   switch (action.type) {
     case getType(initPaymentStateAction):
