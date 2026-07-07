@@ -108,7 +108,7 @@ export const openWebUrl = (url: string, onError: () => void = constNull) => {
 export const openAppStoreUrl = async (onError: () => void = constNull) => {
   try {
     await Linking.openURL(storeUrl);
-  } catch (e) {
+  } catch {
     openWebUrl(webStoreURL, onError);
   }
 };
