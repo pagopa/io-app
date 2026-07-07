@@ -41,7 +41,7 @@ export const registerItwStatusListFetchTask = async (): Promise<void> => {
 /**
  * Unregister the ITW Status List background fetch task with expo-background-task.
  *
- * @throws Will throw an error if the unregistration fails
+ * No-op if the task is not registered; errors during unregistration are ignored.
  */
 export const unregisterItwStatusListFetchTask = async (): Promise<void> => {
   try {
