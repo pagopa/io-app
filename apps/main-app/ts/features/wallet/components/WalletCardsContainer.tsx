@@ -14,10 +14,7 @@ import {
   itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderWalletDiscoveryBannerSelector
 } from "../../itwallet/common/store/selectors";
-import {
-  itwNotEmptyWalletSuccessBannerDataSelector,
-  itwShouldShowNotEmptyWalletSuccessBannerSelector
-} from "../../itwallet/common/store/selectors/preferences";
+import { itwWalletActivationFeedbackBannerSelector } from "../../itwallet/common/store/selectors/preferences";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
@@ -54,11 +51,8 @@ const WalletCardsContainer = () => {
   const shouldRenderL2EngagementBanner = useIOSelector(
     itwShouldRenderL2EngagementBannerForInactiveWalletSelector
   );
-  const shouldShowCredentialSuccessBanner = useIOSelector(
-    itwShouldShowNotEmptyWalletSuccessBannerSelector
-  );
-  const notEmptyWalletSuccessBannerData = useIOSelector(
-    itwNotEmptyWalletSuccessBannerDataSelector
+  const walletActivationFeedbackBannerData = useIOSelector(
+    itwWalletActivationFeedbackBannerSelector
   );
 
   useItwWalletInstanceRevocationAlert();
@@ -77,13 +71,12 @@ const WalletCardsContainer = () => {
         {shouldRenderItwDiscoveryBanner && (
           <ItwDiscoveryBanner style={{ marginVertical: 8 }} />
         )}
-        {shouldShowCredentialSuccessBanner &&
-          notEmptyWalletSuccessBannerData && (
-            <ItwActivationSuccessFeedbackBanner
-              docStatus={notEmptyWalletSuccessBannerData.docStatus}
-              authMethod={notEmptyWalletSuccessBannerData.authMethod}
-            />
-          )}
+        {walletActivationFeedbackBannerData && (
+          <ItwActivationSuccessFeedbackBanner
+            docStatus={walletActivationFeedbackBannerData.docStatus}
+            authMethod={walletActivationFeedbackBannerData.authMethod}
+          />
+        )}
         <View testID="walletCardsContainerTestID" style={styles.walletContent}>
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
           <OtherWalletCardsContainer />
@@ -96,8 +89,7 @@ const WalletCardsContainer = () => {
     shouldRenderItwCardsContainer,
     shouldRenderItwDiscoveryBanner,
     shouldRenderL2EngagementBanner,
-    shouldShowCredentialSuccessBanner,
-    notEmptyWalletSuccessBannerData
+    walletActivationFeedbackBannerData
   ]);
 
   return (

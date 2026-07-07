@@ -4,13 +4,13 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { IdentificationContext } from "../../../machine/eid/context.ts";
 import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 import {
-  ItwNotEmptyWalletSuccessBannerData,
-  itwClearNotEmptyWalletSuccessBannerData,
+  ItwWalletActivationFeedbackBannerData,
+  itwClearWalletActivationFeedbackBannerData,
   itwClearCredentialUpgradeFailed,
   itwDisableItwActivation,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
-  itwSetNotEmptyWalletSuccessBannerData,
+  itwSetWalletActivationFeedbackBannerData,
   itwSetCredentialUpgradeFailed,
   itwSetFiscalCodeWhitelisted,
   itwSetIdentificationMode,
@@ -39,7 +39,7 @@ export type ItwPreferencesState = {
   identificationMode?: IdentificationContext["mode"];
   // Set when a credential is successfully added together with an IT Wallet eID activation.
   // Used to show the credential success survey banner in WALLET_HOME for 7 days.
-  notEmptyWalletSuccessBannerData?: ItwNotEmptyWalletSuccessBannerData;
+  walletActivationFeedbackBannerData?: ItwWalletActivationFeedbackBannerData;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {};
@@ -128,15 +128,15 @@ const reducer = (
       };
     }
 
-    case getType(itwSetNotEmptyWalletSuccessBannerData): {
+    case getType(itwSetWalletActivationFeedbackBannerData): {
       return {
         ...state,
-        notEmptyWalletSuccessBannerData: action.payload
+        walletActivationFeedbackBannerData: action.payload
       };
     }
 
-    case getType(itwClearNotEmptyWalletSuccessBannerData): {
-      const { notEmptyWalletSuccessBannerData: _, ...rest } = state;
+    case getType(itwClearWalletActivationFeedbackBannerData): {
+      const { walletActivationFeedbackBannerData: _, ...rest } = state;
       return rest;
     }
 

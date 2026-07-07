@@ -19,7 +19,7 @@ import { toItwIdMethod } from "../../analytics/utils/types";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
   itwSetAuthLevel,
-  itwSetNotEmptyWalletSuccessBannerData,
+  itwSetWalletActivationFeedbackBannerData,
   itwSetCredentialUpgradeFailed,
   itwSetIdentificationMode
 } from "../../common/store/actions/preferences";
@@ -335,7 +335,7 @@ export const createEidIssuanceActionsImplementation = (
           : undefined)
     );
     store.dispatch(
-      itwSetNotEmptyWalletSuccessBannerData({
+      itwSetWalletActivationFeedbackBannerData({
         date: new Date().toISOString(),
         docStatus,
         authMethod
