@@ -24,6 +24,7 @@ export type MixPanelCredentialVersion = "V2" | "V3";
  * ITW_RES: Residency (obtained with IT Wallet)
  * ITW_EDIP: Education Diploma (obtained with IT Wallet)
  * ITW_EDAT: Education Attendance (obtained with IT Wallet)
+ * ITW_AV: Age Verification (obtained with IT Wallet)
  * UNKNOWN: placeholder used when a credential exists in the app but is not yet tracked on Mixpanel
  */
 const mixPanelCredentials = [
@@ -40,6 +41,7 @@ const mixPanelCredentials = [
   "ITW_RES",
   "ITW_EDIP",
   "ITW_EDAT",
+  "ITW_AV",
   "UNKNOWN"
 ] as const;
 
@@ -65,7 +67,8 @@ export const CREDENTIALS_MAP: Record<
   education_enrollment: "ITW_EE",
   residency: "ITW_RES",
   education_diploma: "ITW_EDIP",
-  education_attendance: "ITW_EDAT"
+  education_attendance: "ITW_EDAT",
+  proof_of_age: "ITW_AV"
 };
 
 export type CredentialStatusAssertionFailure = {
