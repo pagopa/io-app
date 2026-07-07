@@ -285,7 +285,7 @@ export const ItwPresentationCredentialDetail = ({
       };
     }
 
-    if (itwFeaturesEnabled && isPresentableCredential) {
+    if (isProximityEnabled && isPresentableCredential) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.present"),
         icon: "productITWallet",
@@ -327,6 +327,7 @@ export const ItwPresentationCredentialDetail = ({
     shouldShowMdlUpdateCta,
     isL3Credential,
     isPresentableCredential,
+    isProximityEnabled,
     contentClaim,
     navigation,
     mixPanelCredential,
