@@ -19,6 +19,7 @@ import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
 import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { itwHasNfcFeatureSelector } from "../store/selectors";
 import {
   isL3FeaturesEnabledSelector,
   selectCredentialType,
@@ -63,12 +64,15 @@ export const ItwIdentificationModeSelectionScreen = ({
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
+  const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
   const isL2Active = useIOSelector(itwLifecycleIsValidSelector);
 
   const isReissuanceMode = mode === "reissuance";
 
   const isCiePinDisabled =
-    disabledIdentificationMethods.includes("CiePin") || level === "l2-fallback";
+    disabledIdentificationMethods.includes("CiePin") ||
+    level === "l2-fallback" ||
+    !hasNfcFeature;
   const isSpidDisabled = disabledIdentificationMethods.includes("SPID");
   const isCieIdDisabled = disabledIdentificationMethods.includes("CieID");
 
