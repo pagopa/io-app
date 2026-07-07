@@ -100,13 +100,17 @@ describe("itwCredentialsCatalogueByTypesSelector", () => {
       cred1: {
         credential_type: "cred1",
         name: "Credential 1",
-        description: "Description for Credential 1"
+        description: "Description for Credential 1",
+        authentic_sources: [
+          { id: "as-1", user_information_l10n_id: "as-1.userinfo" }
+        ]
       },
       cred2: {
         credential_type: "cred2",
         name: "Credential 2",
         name_l10n_id: "cred2.name",
-        description: "Description for Credential 2"
+        description: "Description for Credential 2",
+        authentic_sources: [{ id: "as-2" }]
       }
     });
   });
