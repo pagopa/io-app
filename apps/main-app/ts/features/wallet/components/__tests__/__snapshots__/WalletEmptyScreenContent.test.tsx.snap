@@ -1462,7 +1462,7 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                             Parte di
                           </Text>
                           <SvgMock
-                            accessibilityLabel="IT Wallet"
+                            accessibilityLabel="IT-Wallet"
                             height={16}
                             width={80}
                           />

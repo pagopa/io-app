@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.36.0-rc.7](https://github.com/pagopa/io-app/compare/3.36.0-rc.6...3.36.0-rc.7) (2026-07-06)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Credentials catalog, claims display, mdoc verification ([#8236](https://github.com/pagopa/io-app/issues/8236)) ([bf8a20d](https://github.com/pagopa/io-app/commit/bf8a20d34e8e8ee551c76451e27015d1ac21e04a))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3612](https://pagopa.atlassian.net/browse/SIW-3612)] Display proximity CTA in all mdoc credentials detail screen ([#8237](https://github.com/pagopa/io-app/issues/8237)) ([6844f51](https://github.com/pagopa/io-app/commit/6844f51196c8f88213b597b42db58f43cb78c2e7))
+* [[IOPLT-1751](https://pagopa.atlassian.net/browse/IOPLT-1751)] Add `@pagopa/eslint-config` to the `eslint` configuration ([#7992](https://github.com/pagopa/io-app/issues/7992)) ([a02a0f6](https://github.com/pagopa/io-app/commit/a02a0f68e2ca048d9b25dfa3bb02edda6c8c7276))
+
 ## [3.36.0-rc.6](https://github.com/pagopa/io-app/compare/3.36.0-rc.5...3.36.0-rc.6) (2026-07-03)
 
 
