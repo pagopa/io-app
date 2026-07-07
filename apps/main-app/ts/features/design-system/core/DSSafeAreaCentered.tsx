@@ -14,7 +14,7 @@ import {
 
 export const DSSafeAreaCentered = () => {
   const insets = useSafeAreaInsets();
-  const fixedBottomBarHeight: number = 70;
+  const fixedBottomBarHeight = 70;
 
   return (
     <SafeAreaView

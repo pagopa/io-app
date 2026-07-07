@@ -57,7 +57,7 @@ describe("MessageDetailsScrollViewAdditionalSpace", () => {
 const renderComponent = (
   hasCTA1: boolean,
   hasCTA2: boolean,
-  messageId: string = "01HRW5J2QYMH3FWAA5CYGXSC84"
+  messageId = "01HRW5J2QYMH3FWAA5CYGXSC84"
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
