@@ -28,20 +28,14 @@ const RequestedCredentialsBlock = ({
     {credentials
       .filter(c => c.format === "dc+sd-jwt") // TODO: [SIW-3998] Support MDOC remote presentation
       .filter(c => c.claimsToDisplay.length > 0)
-      .map(c => ({
-        id: c.id,
-        credentialType: getCredentialTypeByVct(c.vct),
-        claimsToDisplay: c.claimsToDisplay
-      }))
-      // This should never happen, but we filter out credentials with an
-      // undefined type so the mapped `credentialType` is guaranteed defined.
-      .filter(
-        (
-          c
-        ): c is typeof c & {
-          credentialType: NonNullable<(typeof c)["credentialType"]>;
-        } => c.credentialType !== undefined
-      )
+      // Credentials with an unrecognized type should never happen; flatMap
+      // drops them, which also narrows `credentialType` to a defined value.
+      .flatMap(c => {
+        const credentialType = getCredentialTypeByVct(c.vct);
+        return credentialType === undefined
+          ? []
+          : [{ id: c.id, credentialType, claimsToDisplay: c.claimsToDisplay }];
+      })
       .map(({ id, credentialType, claimsToDisplay }) => (
         <ItwClaimsSelector
           key={id}
