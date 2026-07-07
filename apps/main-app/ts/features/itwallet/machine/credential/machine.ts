@@ -51,6 +51,7 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToEidVerificationExpiredScreen: notImplemented,
     closeIssuance: notImplemented,
     navigateToCardOnboardingScreen: notImplemented,
+    navigateToCredentialOfferDiscoveryScreen: notImplemented,
 
     /**
      * Store actions
@@ -141,19 +142,36 @@ export const itwCredentialIssuanceMachine = setup({
       invoke: {
         src: "processCredentialOffer",
         input: ({ context }) => ({
-          credentialOfferUri: context.credentialOfferUri!
+          credentialOfferUri: context.credentialOfferUri
         }),
-        onDone: {
-          target: "CredentialOfferResolved",
-          actions: assign(({ event }) => ({
-            resolvedCredentialOffer: {
-              offer: event.output.offer,
-              grantDetails: event.output.grantDetails
-            },
-            credentialType:
-              event.output.grantDetails.authorizationCodeGrant.scope
-          }))
-        },
+        onDone: [
+          {
+            guard: ({ context }) => !context.isWalletValid,
+            target: "CredentialOfferResolved",
+            actions: [
+              assign(({ event }) => ({
+                resolvedCredentialOffer: {
+                  offer: event.output.offer,
+                  grantDetails: event.output.grantDetails
+                },
+                credentialType:
+                  event.output.grantDetails.authorizationCodeGrant.scope
+              })),
+              "navigateToCredentialOfferDiscoveryScreen"
+            ]
+          },
+          {
+            target: "CredentialOfferResolved",
+            actions: assign(({ event }) => ({
+              resolvedCredentialOffer: {
+                offer: event.output.offer,
+                grantDetails: event.output.grantDetails
+              },
+              credentialType:
+                event.output.grantDetails.authorizationCodeGrant.scope
+            }))
+          }
+        ],
         onError: {
           target: "#itwCredentialIssuanceMachine.Failure",
           actions: "setFailure"
@@ -174,7 +192,7 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         "confirm-credential-offer": {
           target: "EvaluateFlow",
-          actions: assign({ mode: "issuance" as const })
+          actions: ["onInit", assign({ mode: "issuance" as const })]
         },
         close: {
           target: "Idle",
@@ -306,8 +324,8 @@ export const itwCredentialIssuanceMachine = setup({
         src: "requestCredential",
         input: ({ context }) => ({
           credentialType: context.credentialType,
-          resolvedCredentialOffer: context.resolvedCredentialOffer,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+          resolvedCredentialOffer: context.resolvedCredentialOffer,
           skipMdocIssuance: !context.isItWalletValid // Do not request mDoc credentials for non IT-Wallet instances
         }),
         onDone: {
@@ -353,6 +371,7 @@ export const itwCredentialIssuanceMachine = setup({
             src: "obtainAccessToken",
             input: ({ context }) => ({
               requestedCredential: context.requestedCredential,
+              evaluatedDcqlQuery: context.evaluatedDcqlQuery,
               codeVerifier: context.codeVerifier,
               issuerConf: context.issuerConf,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt,

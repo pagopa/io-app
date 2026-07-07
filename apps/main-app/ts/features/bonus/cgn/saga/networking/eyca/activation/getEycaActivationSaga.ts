@@ -23,7 +23,7 @@ const cgnResultPolling = 1000 as Millisecond;
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
 type StartEycaStatus = "INELIGIBLE" | "ALREADY_ACTIVE" | "PROCESSING";
-const mapStatus: Map<number, StartEycaStatus> = new Map([
+const mapStatus = new Map<number, StartEycaStatus>([
   [201, "PROCESSING"],
   [202, "PROCESSING"],
   [403, "INELIGIBLE"],

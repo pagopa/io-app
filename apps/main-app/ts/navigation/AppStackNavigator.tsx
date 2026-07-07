@@ -19,11 +19,11 @@ import FocusAwareStatusBar from "../components/ui/FocusAwareStatusBar";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
+import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import {
-  getCredentialOfferInternalRoute,
-  isPotentialCredentialOfferInvocation,
-  ITW_CREDENTIAL_OFFER_LINKING_PREFIXES
+  ITW_CREDENTIAL_OFFER_LINKING_PREFIXES,
+  parseCredentialOfferLink
 } from "../features/itwallet/offer/utils";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { storeLinkingUrl } from "../features/linking/actions";
@@ -47,7 +47,6 @@ import {
 } from "../utils/navigation";
 import { IONavigationDarkTheme, IONavigationLightTheme } from "./theme";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
-import IngressStackNavigator from "./IngressStackNavigator";
 import NavigationService, {
   navigationRef,
   setMainNavigatorReady
@@ -81,16 +80,16 @@ export const AppStackNavigator = (): ReactElement => {
     dispatch(startApplicationInitialization());
   }, [dispatch]);
 
-  if (startupStatus === StartupStatusEnum.INITIAL) {
-    return <IngressStackNavigator />;
-  }
-
   if (startupStatus === StartupStatusEnum.OFFLINE) {
     return <OfflineStackNavigator />;
   }
 
   if (startupStatus === StartupStatusEnum.NOT_AUTHENTICATED) {
     return <NotAuthenticatedStackNavigator />;
+  }
+
+  if (startupStatus === StartupStatusEnum.INITIAL) {
+    return <IngressScreen />;
   }
 
   return <AuthenticatedStackNavigator />;
@@ -155,12 +154,6 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         [ROUTES.PAGE_NOT_FOUND]: "*"
       }
     },
-    getInitialURL: async () => {
-      const url = await Linking.getInitialURL();
-      return url && isPotentialCredentialOfferInvocation(url)
-        ? getCredentialOfferInternalRoute(url)
-        : url;
-    },
     subscribe: linkingSubscription(dispatch, store)
   };
 
@@ -191,7 +184,11 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
          *  this handler is called on app wake and thus there
          *  is no risk of overwriting any previously stored deep link
          */
-        dispatch(storeLinkingUrl(initialUrl));
+        dispatch(
+          storeLinkingUrl(
+            parseCredentialOfferLink(initialUrl)?.internalRoute ?? initialUrl
+          )
+        );
       }
     });
   });

@@ -10,7 +10,7 @@ import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
@@ -62,8 +62,10 @@ const BarcodeScanScreen = () => {
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
-  useHardwareBackButton(() => {
-    navigation.goBack();
+  useHardwareBackButtonWhenFocused(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    }
     return true;
   });
 
@@ -198,7 +200,7 @@ const BarcodeScanScreen = () => {
          * to the screen shown before the scanner.
          */
         navigation.replace(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.INTRO,
+          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
           params: {
             itwCredentialOfferUri: barcode.itwCredentialOfferUri
           }

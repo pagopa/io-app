@@ -1,5 +1,5 @@
 import { Body, H2, VSpacer, VStack } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback } from "react";
@@ -7,8 +7,8 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
-  IOStackNavigationRouteProps,
-  useIONavigation
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -54,7 +54,7 @@ type ContentViewProps = {
 };
 
 const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
-  const navigation = useIONavigation();
+  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const resolvedCredentialOfferOption =
     ItwCredentialIssuanceMachineContext.useSelector(

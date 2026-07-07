@@ -43,13 +43,13 @@ describe("cisSuccessTransaction", () => {
     ).toBeFalsy();
   });
 
-  it("should return false", () => {
+  it("should return false when accountingStatus is 2", () => {
     expect(
       isSuccessTransaction({ ...transaction, accountingStatus: 2, idStatus: 8 })
     ).toBeFalsy();
   });
 
-  it("should return true", () => {
+  it("should return true when accountingStatus is undefined and idStatus is a success code", () => {
     expect(
       isSuccessTransaction({
         ...transaction,

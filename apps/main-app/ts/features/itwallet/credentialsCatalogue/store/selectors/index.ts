@@ -18,6 +18,11 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { Locales } from "../../../../../i18n";
 import { persistedPreferencesSelector } from "../../../../../store/reducers/persistedPreferences";
+import {
+  itwHiddenCredentialsSelector,
+  itwNewCredentialsSelector,
+  itwPinnedCredentialsSelector
+} from "../../../common/store/selectors/remoteConfig";
 
 export type CredentialsListEntry = {
   type: string;
@@ -182,15 +187,31 @@ export const itwCredentialNameResolverSelector = createSelector(
 
 /**
  * Select the list of all obtainable credentials that are available in the catalogue (if enabled),
- * or the hardcoded list otherwise. This list is not filtered any further: it includes all credentials.
+ * or the hardcoded list otherwise.
+ *
+ * When the catalogue is enabled, credentials are ordered and filtered according to remote config:
+ * - Credentials in `hidden_credentials` are excluded.
+ * - Credentials in `new_credentials` appear first (in array order).
+ * - Credentials in `pinned_credentials` (not already new) appear next (in array order).
+ * - Remaining credentials follow default order.
  */
 export const itwAvailableCredentialsListSelector = createSelector(
   [
     itwIsCatalogueEnabledForCredentialsList,
     itwCredentialsCatalogueSelector,
-    itwCredentialNameResolverSelector
+    itwCredentialNameResolverSelector,
+    itwPinnedCredentialsSelector,
+    itwNewCredentialsSelector,
+    itwHiddenCredentialsSelector
   ],
-  (isEnabled, catalogue, resolveName): ReadonlyArray<CredentialsListEntry> => {
+  (
+    isEnabled,
+    catalogue,
+    resolveName,
+    pinnedCredentials,
+    remoteNewCredentials,
+    hiddenCredentials
+  ): ReadonlyArray<CredentialsListEntry> => {
     if (!isEnabled) {
       return hardcodedCredentialsList;
     }
@@ -199,8 +220,12 @@ export const itwAvailableCredentialsListSelector = createSelector(
       return EMPTY_ARRAY;
     }
 
-    return catalogue.credentials
-      .filter(credential => credential.credential_type !== CredentialType.PID)
+    const entries: ReadonlyArray<CredentialsListEntry> = catalogue.credentials
+      .filter(
+        credential =>
+          credential.credential_type !== CredentialType.PID &&
+          !hiddenCredentials.includes(credential.credential_type)
+      )
       .map(credential => ({
         name: resolveName(
           credential.credential_type,
@@ -208,5 +233,22 @@ export const itwAvailableCredentialsListSelector = createSelector(
         ),
         type: credential.credential_type
       }));
+
+    const newEntries = remoteNewCredentials
+      .map(type => entries.find(e => e.type === type))
+      .filter((e): e is CredentialsListEntry => e !== undefined);
+
+    const pinnedEntries = pinnedCredentials
+      .filter(type => !remoteNewCredentials.includes(type))
+      .map(type => entries.find(e => e.type === type))
+      .filter((e): e is CredentialsListEntry => e !== undefined);
+
+    const restEntries = entries.filter(
+      e =>
+        !remoteNewCredentials.includes(e.type) &&
+        !pinnedCredentials.includes(e.type)
+    );
+
+    return [...newEntries, ...pinnedEntries, ...restEntries];
   }
 );

@@ -4,6 +4,14 @@ import { ITW_CREDENTIAL_OFFER_LINKING_PATH } from "../offer/utils";
 import { ITW_REMOTE_ROUTES } from "../presentation/remote/navigation/routes.ts";
 import { ITW_ROUTES } from "./routes";
 
+const safeDecodeURIComponent = (value: string): string => {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+};
+
 /**
  * Hook which returns the linking options for internal navigation routes for the IT Wallet.
  * This hook only defines the static linking configuration and does not conditionally enable or disable routes based on wallet status or lifecycle.
@@ -61,10 +69,10 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
        *
        * Starts the credential offer issuance flow from an external link.
        */
-      [ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.INTRO]: {
+      [ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO]: {
         path: ITW_CREDENTIAL_OFFER_LINKING_PATH,
         parse: {
-          itwCredentialOfferUri: decodeURIComponent
+          itwCredentialOfferUri: safeDecodeURIComponent
         }
       }
     }

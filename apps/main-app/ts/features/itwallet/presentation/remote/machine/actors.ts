@@ -7,9 +7,11 @@ import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
 import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { Env } from "../../../common/utils/environment";
 import { getWalletInstanceAttestation } from "../../../common/utils/itwAttestationUtils";
+import { getRepresentativeVaultId } from "../../../common/utils/itwCredentialUtils";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../../common/utils/itwStoreUtils";
 import {
+  CredentialFormat,
   CredentialMetadata,
   RequestObject,
   WalletInstanceAttestations
@@ -29,7 +31,14 @@ import {
 } from "../utils/itwRemoteTypeUtils";
 import { InvalidCredentialsStatusError } from "./failure";
 
-type CredentialsSdJwt = Array<RemotePresentation.Credential4Dcql>;
+type CredentialsForDcql = Array<RemotePresentation.Credential4Dcql>;
+
+// Credentials split by format, as required by the DCQL evaluation that parses SD-JWT and mDoc
+// credentials with different decoders.
+type CredentialsByFormat = {
+  sdJwt: CredentialsForDcql;
+  mdoc: CredentialsForDcql;
+};
 
 export type EvaluateRelyingPartyTrustInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
@@ -188,29 +197,35 @@ export const createRemoteActorsImplementation = (
     // The evaluation will require the full credential.
     const credentialsData = await Promise.all(
       Object.values(credentials).map(async c => {
-        const credential = await CredentialsVault.get(c.credentialId);
+        // Present the representative copy (the only one for a non-batch credential).
+        const vaultId = getRepresentativeVaultId(c);
+        const credential = await CredentialsVault.get(vaultId);
         assert(
           credential,
-          `Credential with id ${c.credentialId} not found in secure storage`
+          `Credential with vaultId ${vaultId} not found in secure storage`
         );
         return {
           keyTag: c.keyTag,
+          format: c.format,
           credential
         };
       })
     );
 
-    // Prepare credentials to evaluate the Relying Party request
-    const credentialsSdJwt =
+    // Prepare credentials to evaluate the Relying Party request, split by format since the DCQL
+    // evaluation decodes SD-JWT and mDoc credentials (e.g. proof of age) with different parsers.
+    const { sdJwt, mdoc } =
       prepareCredentialsForDcqlEvaluation(credentialsData);
 
     // Evaluate the DCQL query against the credentials contained in the Wallet
     const result = await ioWallet.RemotePresentation.evaluateDcqlQuery(
       requestObject.dcql_query as DcqlQuery,
-      credentialsSdJwt
+      sdJwt,
+      mdoc
     );
 
-    // Check whether any of the requested credential is invalid
+    // Check whether any of the requested credentials cannot be presented remotely:
+    // revocation blocks any credential, while a non-valid PID cannot be sent remotely.
     const invalidCredentials = getInvalidCredentials(result, credentials);
 
     if (invalidCredentials.length > 0) {
@@ -299,5 +314,16 @@ export const createRemoteActorsImplementation = (
 };
 
 const prepareCredentialsForDcqlEvaluation = (
-  credentials: Array<{ keyTag: string; credential: string }>
-): CredentialsSdJwt => credentials.map(c => [c.keyTag, c.credential]);
+  credentials: Array<{ keyTag: string; format: string; credential: string }>
+): CredentialsByFormat => {
+  const isMdoc = (c: { format: string }) => c.format === CredentialFormat.MDOC;
+  const toEntry = (c: {
+    keyTag: string;
+    credential: string;
+  }): RemotePresentation.Credential4Dcql => [c.keyTag, c.credential];
+
+  return {
+    sdJwt: credentials.filter(c => !isMdoc(c)).map(toEntry),
+    mdoc: credentials.filter(isMdoc).map(toEntry)
+  };
+};

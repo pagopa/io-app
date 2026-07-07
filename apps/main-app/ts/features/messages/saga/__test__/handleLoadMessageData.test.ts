@@ -227,7 +227,7 @@ describe("getThirdPartyDataMessage", () => {
       .next(O.none)
       .returns(thirdPartyMessage);
   });
-  it("should dispatch a loadThirdPartyMessage.request and return undefined when the related saga fails ", () => {
+  it("should dispatch a loadThirdPartyMessage.request and return undefined when the related saga fails", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
     const service = {
       id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,

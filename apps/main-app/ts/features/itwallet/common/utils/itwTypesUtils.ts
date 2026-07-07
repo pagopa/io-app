@@ -14,6 +14,13 @@ import { CredentialType } from "./itwMocksUtils.ts";
 export type RequestObject = RemotePresentation.RequestObject;
 
 /**
+ * Alias for the result of evaluating a DCQL query against local credentials.
+ */
+export type EvaluatedDcqlQueryResult = Awaited<
+  ReturnType<RemotePresentation.RemotePresentationApi["evaluateDcqlQuery"]>
+>;
+
+/**
  * Alias type for the relying party entity configuration.
  */
 export type RpEntityConfiguration = RemotePresentation.RelyingPartyConfig;
@@ -94,6 +101,14 @@ export type StoredStatusAssertion =
  */
 export type CredentialMetadata = {
   keyTag: string;
+  /**
+   * Key tags of every copy of a batch credential (e.g. one-time-use credentials obtained in
+   * batch). Present only for batch credentials; non-batch credentials omit it. The array is the
+   * source of truth for the batch and `keyTags[0]` is the representative copy, mirrored by
+   * `keyTag` so existing single-credential consumers keep working. The raw bytes of each copy are
+   * stored in {@link CredentialsVault} under that copy's `keyTag` as vault id.
+   */
+  keyTags?: ReadonlyArray<string>;
   format: string;
   parsedCredential: ParsedCredential;
   credentialType: string;
