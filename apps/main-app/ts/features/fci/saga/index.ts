@@ -1,15 +1,27 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
+import { Action } from "redux";
 import { ActionType, isActionOf } from "typesafe-actions";
 import RNFS from "react-native-fs";
-import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
+import {
+  call,
+  delay,
+  race,
+  takeLatest,
+  put,
+  select,
+  take
+} from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import I18n from "i18next";
 import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
 import ROUTES from "../../../navigation/routes";
 import { apiUrlPrefix } from "../../../config";
+import { applicationChangeState } from "../../../store/actions/application";
+import { appCurrentStateSelector } from "../../../store/reducers/appState";
 import {
   identificationPinReset,
   identificationRequest,
@@ -63,6 +75,32 @@ import { handleCreateSignature } from "./networking/handleCreateSignature";
 import { handleGetMetadata } from "./networking/handleGetMetadata";
 import { handleGetSignatureRequests } from "./networking/handleGetSignatureRequests";
 import { handleDrawSignatureBox } from "./handleDrawSignatureBox";
+
+/**
+ * Timeout in milliseconds to wait for the app to become active.
+ * If the app doesn't become active within this time, the saga continues anyway.
+ */
+const APP_ACTIVE_TIMEOUT = (5 * 1000) as Millisecond;
+
+/**
+ * Waits for the app to return to the active state.
+ * This prevents network requests from being killed and auto-retried
+ * when the app transitions from inactive to active.
+ *
+ * Uses a race condition between:
+ * - A timeout (to avoid waiting indefinitely)
+ * - An action listener that waits for the app to become active
+ */
+function* waitForAppActive() {
+  yield* race({
+    timeout: delay(APP_ACTIVE_TIMEOUT),
+    appActive: take(
+      (action: Action) =>
+        isActionOf(applicationChangeState, action) &&
+        action.payload === "active"
+    )
+  });
+}
 
 /**
  * Handle the FCI Signature requests
@@ -315,6 +353,15 @@ function* watchFciSigningRequestSaga(): SagaIterator {
       qtspFilledDocumentUrl &&
       qtspNonce
     ) {
+      // Check if the app is in active state
+      // This prevents the signature request from being killed and re-triggered
+      // when the app transitions from inactive to active after biometric authentication
+      const currentAppState = yield* select(appCurrentStateSelector);
+      if (currentAppState !== "active") {
+        // Wait for the app to return to active state before proceeding
+        yield* call(waitForAppActive);
+      }
+
       const createSignaturePayload: CreateSignatureBody = {
         signature_request_id: potSignatureRequest.value.id,
         documents_to_sign: documentSignatures,

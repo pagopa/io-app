@@ -7,6 +7,8 @@ import NavigationService from "../../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../../navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 import { identificationSuccess } from "../../../identification/store/actions";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appCurrentStateSelector } from "../../../../store/reducers/appState";
 import {
   fciClearStateRequest,
   fciStartRequest,
@@ -250,7 +252,8 @@ describe("FCI Saga Tests", () => {
           [
             matchers.select(fciDocumentSignaturesSelector),
             mockDocumentSignatures
-          ]
+          ],
+          [matchers.select(appCurrentStateSelector), "active"]
         ])
         .put.like({
           action: {
@@ -258,6 +261,115 @@ describe("FCI Saga Tests", () => {
           }
         })
         .dispatch(identificationSuccess({ isBiometric: false }))
+        .put.like({
+          action: {
+            type: "FCI_SIGNING_REQUEST"
+          }
+        })
+        .run());
+
+    it("should create signature immediately when app is in active state", () =>
+      expectSaga(watchFciSigningRequestSaga)
+        .provide([
+          [
+            matchers.select(fciQtspClausesMetadataSelector),
+            pot.some(mockQtspClauses)
+          ],
+          [
+            matchers.select(fciSignatureRequestSelector),
+            pot.some(mockSignatureRequest)
+          ],
+          [
+            matchers.select(fciQtspFilledDocumentUrlSelector),
+            mockFilledDocumentUrl
+          ],
+          [matchers.select(fciQtspNonceSelector), mockNonce],
+          [
+            matchers.select(fciDocumentSignaturesSelector),
+            mockDocumentSignatures
+          ],
+          [matchers.select(appCurrentStateSelector), "active"]
+        ])
+        .put.like({
+          action: {
+            type: "IDENTIFICATION_REQUEST"
+          }
+        })
+        .dispatch(identificationSuccess({ isBiometric: false }))
+        .put.like({
+          action: {
+            type: "FCI_SIGNING_REQUEST"
+          }
+        })
+        .run());
+
+    it("should wait for app to become active before creating signature when app is inactive", () =>
+      expectSaga(watchFciSigningRequestSaga)
+        .provide([
+          [
+            matchers.select(fciQtspClausesMetadataSelector),
+            pot.some(mockQtspClauses)
+          ],
+          [
+            matchers.select(fciSignatureRequestSelector),
+            pot.some(mockSignatureRequest)
+          ],
+          [
+            matchers.select(fciQtspFilledDocumentUrlSelector),
+            mockFilledDocumentUrl
+          ],
+          [matchers.select(fciQtspNonceSelector), mockNonce],
+          [
+            matchers.select(fciDocumentSignaturesSelector),
+            mockDocumentSignatures
+          ],
+          [matchers.select(appCurrentStateSelector), "inactive"]
+        ])
+        .put.like({
+          action: {
+            type: "IDENTIFICATION_REQUEST"
+          }
+        })
+        .dispatch(identificationSuccess({ isBiometric: false }))
+        // Simulate app becoming active after biometric auth
+        .dispatch(applicationChangeState("active"))
+        .put.like({
+          action: {
+            type: "FCI_SIGNING_REQUEST"
+          }
+        })
+        .run());
+
+    it("should wait for app to become active before creating signature when app is in background", () =>
+      expectSaga(watchFciSigningRequestSaga)
+        .provide([
+          [
+            matchers.select(fciQtspClausesMetadataSelector),
+            pot.some(mockQtspClauses)
+          ],
+          [
+            matchers.select(fciSignatureRequestSelector),
+            pot.some(mockSignatureRequest)
+          ],
+          [
+            matchers.select(fciQtspFilledDocumentUrlSelector),
+            mockFilledDocumentUrl
+          ],
+          [matchers.select(fciQtspNonceSelector), mockNonce],
+          [
+            matchers.select(fciDocumentSignaturesSelector),
+            mockDocumentSignatures
+          ],
+          [matchers.select(appCurrentStateSelector), "background"]
+        ])
+        .put.like({
+          action: {
+            type: "IDENTIFICATION_REQUEST"
+          }
+        })
+        .dispatch(identificationSuccess({ isBiometric: false }))
+        // Simulate app becoming active after returning from background
+        .dispatch(applicationChangeState("active"))
         .put.like({
           action: {
             type: "FCI_SIGNING_REQUEST"
