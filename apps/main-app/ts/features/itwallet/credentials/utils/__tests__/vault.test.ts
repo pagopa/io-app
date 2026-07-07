@@ -69,8 +69,8 @@ describe("vault", () => {
       mockSecureStorage.put.mockResolvedValue(undefined);
 
       await CredentialsVault.storeAll([
-        { credentialId: "credential1", credential: "value1" },
-        { credentialId: "credential2", credential: "value2" }
+        { vaultId: "credential1", credential: "value1" },
+        { vaultId: "credential2", credential: "value2" }
       ]);
 
       expect(mockSecureStorage.put).toHaveBeenCalledTimes(2);
@@ -99,8 +99,8 @@ describe("vault", () => {
 
       await expect(
         CredentialsVault.storeAll([
-          { credentialId: "credential1", credential: "value1" },
-          { credentialId: "credential2", credential: "value2" }
+          { vaultId: "credential1", credential: "value1" },
+          { vaultId: "credential2", credential: "value2" }
         ])
       ).rejects.toThrow("Storage error");
     });

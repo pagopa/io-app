@@ -1,305 +1,367 @@
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import { fixupConfigRules } from '@eslint/compat';
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
-import prettierConfig from 'eslint-config-prettier';
-import i18Next from 'eslint-plugin-i18next';
-import functional from 'eslint-plugin-functional';
-import importPlugin from 'eslint-plugin-import';
-import sonarjs from 'eslint-plugin-sonarjs';
-import stylisticEslintPluginJs from '@stylistic/eslint-plugin-js';
-import { defineConfig, globalIgnores } from 'eslint/config';
-import reactNativeConfig from '@react-native/eslint-config/flat';
-import tseslint from 'typescript-eslint';
-import delegateEffectsRule from './scripts/eslint/delegate-effects.js';
+import { defineConfig, globalIgnores } from "eslint/config";
+import { fixupConfigRules } from "@eslint/compat";
+import { FlatCompat } from "@eslint/eslintrc";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import pagopaConfig from "@pagopa/eslint-config/jest";
+import tseslint from "typescript-eslint";
+import reactNativeConfig from "@react-native/eslint-config/flat";
+import importPlugin from "eslint-plugin-import";
+import functional from "eslint-plugin-functional";
+import sonarjs from "eslint-plugin-sonarjs";
+import i18Next from "eslint-plugin-i18next";
+import js from "@eslint/js";
+import delegateEffectsRule from "./scripts/eslint/delegate-effects.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
-	baseDirectory: __dirname,
-	recommendedConfig: js.configs.recommended,
-	allConfig: js.configs.all
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all
+});
+
+// @typescript-eslint and jest are already registered by pagopaConfig (via
+// typescript-eslint and @pagopa/eslint-config/jest, the latter scoping jest to
+// test files). Strip the plugins — and jest's now-orphaned rules, which the RN
+// config applies globally — to avoid "Cannot redefine plugin" errors.
+const reactNativeSanitizedConfig = reactNativeConfig.map(config => {
+  if (!config.plugins?.["@typescript-eslint"] && !config.plugins?.jest) {
+    return config;
+  }
+  const {
+    "@typescript-eslint": _tsRemoved,
+    jest: _jestRemoved,
+    ...plugins
+  } = config.plugins;
+  const rules = Object.fromEntries(
+    Object.entries(config.rules ?? {}).filter(
+      ([rule]) => !rule.startsWith("jest/")
+    )
+  );
+  return { ...config, plugins, rules };
 });
 
 export default defineConfig([
-	globalIgnores([
-		'**/*.js',
-		'**/*.cjs',
-		'**/*.mjs',
-		'locales/locales.ts',
-		'ts/utils/__tests__/xss.test.ts',
-		'definitions/*',
-		'**/*.typegen.ts'
-	]),
-	{
-		files: ['**/*.ts', '**/*.tsx'],
-		extends: [
-			js.configs.recommended,
-			// Only include rules from tseslint, not the plugin registration,
-			// because @react-native/eslint-config/flat already registers @typescript-eslint
-			...tseslint.configs.recommended.filter(c => !c.plugins),
-			...reactNativeConfig,
-			...fixupConfigRules(compat.extends('plugin:react-native-a11y/all')),
-			prettierConfig
-		],
+  globalIgnores([
+    "**/*.js",
+    "**/*.cjs",
+    "**/*.mjs",
+    "locales/locales.ts",
+    "ts/utils/__tests__/xss.test.ts",
+    "definitions/*",
+    "**/*.typegen.ts"
+  ]),
 
-		languageOptions: {
-			parser: tseslint.parser,
-			sourceType: 'module',
+  // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
+  // eslint-plugin-prettier, perfectionist.
+  // Perfectionist block is excluded — sorting rules are deferred to a follow-up PR.
+  ...pagopaConfig.filter(config => !config.plugins?.perfectionist),
 
-			parserOptions: {
-				projectService: true,
-        		tsconfigRootDir: __dirname,
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    extends: [
+      js.configs.recommended,
+      // Only include rules from tseslint, not the plugin registration,
+      // because @react-native/eslint-config/flat already registers @typescript-eslint
+      ...tseslint.configs.recommended.filter(c => !c.plugins),
+      ...reactNativeSanitizedConfig,
+      ...fixupConfigRules(compat.extends("plugin:react-native-a11y/all"))
+    ],
 
-				ecmaFeatures: {
-					jsx: true
-				}
-			}
-		},
+    languageOptions: {
+      parser: tseslint.parser,
+      sourceType: "module",
 
-		plugins: {
-			import: importPlugin,
-			functional,
-			sonarjs,
-			'@stylistic/js': stylisticEslintPluginJs,
-			i18next: i18Next,
-			'typed-redux-saga': { rules: { 'delegate-effects': delegateEffectsRule } }
-		},
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: __dirname,
 
-		rules: {
-			'react/react-in-jsx-scope': 'off',
-			'react/jsx-uses-react': 'off',
-			'comma-dangle': ['error', 'never'],
-			'no-case-declarations': 'off',
-			'no-inner-declarations': 'off',
-			'prefer-const': 'error',
-			curly: 'error',
+        ecmaFeatures: {
+          jsx: true
+        }
+      }
+    },
 
-			'spaced-comment': [
-				'error',
-				'always',
-				{
-					block: {
-						balanced: true
-					}
-				}
-			],
+    plugins: {
+      // Remove `import` plugin once we adopt
+      // `perfectionist/sort-imports` rules
+      import: importPlugin,
+      functional,
+      sonarjs,
+      i18next: i18Next,
+      "typed-redux-saga": { rules: { "delegate-effects": delegateEffectsRule } }
+    },
 
-			radix: 'error',
-			'one-var': ['error', 'never'],
-			'object-shorthand': 'error',
-			'no-var': 'error',
-			'no-param-reassign': 'error',
-			'no-underscore-dangle': 'error',
-			'no-undef-init': 'error',
-			'no-throw-literal': 'error',
-			'no-new-wrappers': 'error',
-			'no-eval': 'error',
-			'no-console': 'error',
-			'no-caller': 'error',
-			'no-bitwise': 'error',
-			'no-void': 'off',
-			'no-duplicate-imports': 'error',
-			quotes: 'off',
-			eqeqeq: ['error', 'smart'],
-			'max-classes-per-file': ['error', 1],
-			'guard-for-in': 'error',
-			complexity: 'error',
-			'arrow-body-style': 'error',
-			'import/order': 'error',
-			'@typescript-eslint/no-unused-vars': 'off',
-			'@typescript-eslint/no-require-imports': [
-				'error',
-				{
-					allow: [
-						'\\.png$',
-						'\\.jpg$',
-						'\\.jpeg$',
-						'\\.gif$',
-						'\\.svg',
-						'\\.webp$'
-					]
-				}
-			],
-			'@typescript-eslint/explicit-module-boundary-types': 'off',
-			'@typescript-eslint/no-inferrable-types': 'off',
-			'@typescript-eslint/no-explicit-any': 'off',
+    rules: {
+      // START: OVERWRITTEN RULES FROM PAGOPA/ESLINT-CONFIG
+      //
+      // Converting `type = {}` to `interface {}` breaks assignability to
+      // `Record<string, unknown>` — TypeScript requires an explicit index
+      // signature on interfaces, whereas type aliases satisfy it structurally.
+      // This affects analytics helpers, navigation param lists, and any other
+      // type used as a generic record argument throughout the codebase.
+      "@typescript-eslint/consistent-type-definitions": "off",
 
-			'@typescript-eslint/array-type': [
-				'error',
-				{
-					default: 'generic'
-				}
-			],
+      // Auto-fix corrupts multi-line property values (see comment below)
+      "perfectionist/sort-objects": "off",
 
-			'@typescript-eslint/await-thenable': 'error',
-			'@typescript-eslint/consistent-type-assertions': 'error',
-			'@typescript-eslint/dot-notation': 'error',
+      // Rules from tseslint.strict / pagopa config that require widespread
+      // refactoring incompatible with the current codebase
+      "max-lines-per-function": "off",
+      "@typescript-eslint/no-invalid-void-type": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/no-dynamic-delete": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-inferrable-types": "off",
+      "@typescript-eslint/no-explicit-any": "off",
 
-			'@typescript-eslint/no-floating-promises': 'error',
-			'no-unused-expressions': 'off',
-			'@typescript-eslint/no-unused-expressions': ['error'],
-			'@typescript-eslint/prefer-function-type': 'error',
-			'@typescript-eslint/restrict-plus-operands': 'error',
-			'@typescript-eslint/unified-signatures': 'error',
-			'react/prop-types': 'off',
-			'react/display-name': 'off',
-			'react/jsx-key': 'error',
+      // Incorrectly fires on mapped types (`[P in ...]`) — only meant for
+      // plain index signatures (`[key: string]: V`) which should use Record<K,V>
+      "@typescript-eslint/consistent-indexed-object-style": "off",
 
-			'react/jsx-no-bind': [
-				'error',
-				{
-					allowArrowFunctions: true
-				}
-			],
+      // Widespread, deliberate test patterns from pagopa's jest config that
+      // would require refactoring the whole test suite to satisfy:
+      // - narrowing fp-ts Either/Option before asserting inside the guard
+      "jest/no-conditional-expect": "off",
+      // - importing shared fixtures directly from __mocks__ directories
+      "jest/no-mocks-import": "off",
+      // - asserting a mock was called without pinning its exact arguments
+      "jest/prefer-called-with": "off",
 
-			'react/no-unstable-nested-components': [
-				'off',
-				{
-					allowAsProps: true
-				}
-			],
+      // END: OVERWRITTEN RULES FROM PAGOPA/ESLINT-CONFIG
 
-			'react/no-direct-mutation-state': 'off',
-			'react/require-render-return': 'off',
-			'functional/no-let': 'error',
-			'functional/immutable-data': [
-				'error',
-				{
-					ignoreAccessorPattern: [
-						'navigation.**',
-						'navigate.**',
-						'StackActions.**'
-					]
-				}
-			],
-			'sonarjs/no-small-switch': 'off',
-			'sonarjs/no-duplicate-string': 'off',
-			'sonarjs/no-nested-template-literals': 'warn',
-			'react-native/no-unused-styles': 'error',
-			'react-native/split-platform-components': 'off',
-			'react-native/no-inline-styles': 'off',
-			'react-native/no-color-literals': 'error',
-			'react-native/no-raw-text': 'off',
-			'react-native/no-single-element-style-arrays': 'warn',
-			'react-native-a11y/has-accessibility-hint': 'off',
+      // CODE STYLE
+      curly: "error",
+      "spaced-comment": [
+        "error",
+        "always",
+        {
+          block: {
+            balanced: true
+          }
+        }
+      ],
+      "one-var": ["error", "never"],
+      "object-shorthand": "error",
+      // TODO: Remove this property once the migration
+      // from class components is completed
+      "max-classes-per-file": ["error", 1],
 
-			'i18next/no-literal-string': [
-				'error',
-				{
-					mode: 'jsx-only',
+      // GENERAL JS SAFETY
+      // Deprecated since ESLint 5.1.0 — overrides @react-native/eslint-config warn
+      "no-catch-shadow": "off",
+      "no-case-declarations": "off",
+      "no-underscore-dangle": "error",
+      "no-throw-literal": "error",
+      "no-console": "error",
+      "no-caller": "error",
+      "no-void": "off",
+      "no-duplicate-imports": "error",
+      // Remove the following `import` rule
+      // once we adopt `perfectionist/sort-imports`
+      "import/order": "error",
 
-					'jsx-attributes': {
-						include: [
-							'accessibilityLabel',
-							'accessibilityHint',
-							'placeholder',
-							'title',
-							'alt'
-						],
-						exclude: []
-					},
+      // TYPESCRIPT
+      // Downgraded to warn — existing shadows are widespread and non-critical
+      "@typescript-eslint/no-shadow": "warn",
+      "@typescript-eslint/no-require-imports": [
+        "error",
+        {
+          allow: [
+            "\\.png$",
+            "\\.jpg$",
+            "\\.jpeg$",
+            "\\.gif$",
+            "\\.svg",
+            "\\.webp$"
+          ]
+        }
+      ],
+      "@typescript-eslint/array-type": [
+        "error",
+        {
+          default: "generic"
+        }
+      ],
+      "@typescript-eslint/await-thenable": "error",
+      "@typescript-eslint/dot-notation": "error",
+      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/restrict-plus-operands": "error",
 
-					'jsx-components': {
-						include: [],
-						exclude: ['Trans']
-					},
+      // REACT
+      "react/jsx-uses-react": "off",
+      "react/prop-types": "off",
+      "react/jsx-key": "error",
+      // Less relevant rule with contemporary React with hooks
+      "react/jsx-no-bind": [
+        "error",
+        {
+          allowArrowFunctions: true
+        }
+      ],
+      // It could highlight performance issues,
+      // with some noise on trivial cases
+      "react/no-unstable-nested-components": "off",
+      // TODO: Remove these two properties once the migration
+      // from class components is completed
+      "react/no-direct-mutation-state": "off",
+      "react/require-render-return": "off",
 
-					words: {
-						exclude: ['\\s+', '[0-9!-/:-@\\[-`{-~]+', '[•·]+', '.']
-					},
+      // REACT NATIVE
+      "react-native/no-unused-styles": "error",
+      "react-native/no-inline-styles": "off",
+      "react-native/no-color-literals": "error",
+      "react-native/no-single-element-style-arrays": "error",
 
-					'object-properties': {
-						include: [],
-						exclude: []
-					}
-				}
-			],
+      // ACCESSIBILITY
+      "react-native-a11y/has-accessibility-hint": "off",
 
-			'typed-redux-saga/delegate-effects': 'error',
+      // SONAR
+      "sonarjs/no-nested-template-literals": "error",
 
-			'import/no-extraneous-dependencies': ['error', {
-				devDependencies: true, 
-				optionalDependencies: false,
-				peerDependencies: false,
-			}],
-			
-			'no-restricted-imports': [
-				'error',
-				{
-					paths: [
-						{
-							name: 'i18n-js',
-							message:
-								'Importing I18n from "i18n-js" is not allowed. Import it from "ts/i18n.ts" instead.'
-						},
-						{
-							name: '@pagopa/ts-commons',
-							importNames: ['pot'],
-							message:
-								'Importing { pot } from "@pagopa/ts-commons" is not allowed. Use \'import * as pot from "@pagopa/ts-commons/lib/pot"\' instead.'
-						},
-						{
-							name: 'redux-saga/effects',
-							message:
-								'Importing from "redux-saga/effects" is not allowed. Use "typed-redux-saga/macro" instead for type-safe saga effects.'
-						}
-					]
-				}
-			]
-		},
+      // FUNCTIONAL PROGRAMMING
+      "functional/no-let": "error",
+      "functional/immutable-data": [
+        "error",
+        {
+          // TODO: Remove this once we migrate to newer versions of `react-navigation`
+          ignoreAccessorPattern: [
+            "navigation.**",
+            "navigate.**",
+            "StackActions.**"
+          ]
+        }
+      ],
 
-		settings: {
-			react: {
-				version: 'detect'
-			}
-		}
-	},
-	{
-		files: ['**/*.test.ts', '**/*.test.tsx'],
+      // INTERNATIONALISATION
+      "i18next/no-literal-string": [
+        "error",
+        {
+          mode: "jsx-only",
 
-		rules: {
-			'@typescript-eslint/no-non-null-assertion': 'off',
-			'@typescript-eslint/no-shadow': 'off',
-			'@typescript-eslint/no-require-imports': 'off',
-			'i18next/no-literal-string': 'off',
-			'no-restricted-imports': 'off'
-		}
-	},
-	{
-		files: [
-			'**/design-system/**/*.ts',
-			'**/design-system/**/*.tsx',
-			'**/playgrounds/**/*.ts',
-			'**/playgrounds/**/*.tsx',
-			'**/devMode/**/*.ts',
-			'**/devMode/**/*.tsx',
-			'**/debug/**/*.ts',
-			'**/debug/**/*.tsx',
-			'**/__mocks__/**/*.ts',
-			'**/__mocks__/**/*.tsx'
-		],
+          "jsx-attributes": {
+            include: [
+              "accessibilityLabel",
+              "accessibilityHint",
+              "placeholder",
+              "title",
+              "alt"
+            ],
+            exclude: []
+          },
 
-		rules: {
-			'i18next/no-literal-string': 'off'
-		}
-	},
-	{
-		files: ['**/*.ts'],
+          "jsx-components": {
+            include: [],
+            exclude: ["Trans"]
+          },
 
-		rules: {
-			'i18next/no-literal-string': 'off'
-		}
-	},
-	{
-		files: ['**/*.tsx'],
+          words: {
+            exclude: ["\\s+", "[0-9!-/:-@\\[-`{-~]+", "[•·]+", "."]
+          },
 
-		ignores: [],
+          "object-properties": {
+            include: [],
+            exclude: ["testID"]
+          }
+        }
+      ],
 
-		rules: {
-			'i18next/no-literal-string': 'off'
-		}
-	}
+      // REDUX SAGA
+      "typed-redux-saga/delegate-effects": "error",
+
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          devDependencies: true,
+          optionalDependencies: false,
+          peerDependencies: false
+        }
+      ],
+
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "i18n-js",
+              message:
+                'Importing I18n from "i18n-js" is not allowed. Import it from "ts/i18n.ts" instead.'
+            },
+            {
+              name: "@pagopa/ts-commons",
+              importNames: ["pot"],
+              message:
+                'Importing { pot } from "@pagopa/ts-commons" is not allowed. Use \'import * as pot from "@pagopa/ts-commons/lib/pot"\' instead.'
+            },
+            {
+              name: "redux-saga/effects",
+              message:
+                'Importing from "redux-saga/effects" is not allowed. Use "typed-redux-saga/macro" instead for type-safe saga effects.'
+            }
+          ]
+        }
+      ]
+    },
+
+    settings: {
+      react: {
+        version: "detect"
+      }
+    }
+  },
+  {
+    files: [
+      "**/*.test.ts",
+      "**/*.test.tsx",
+      "**/__tests__/**/*.ts",
+      "**/__tests__/**/*.tsx"
+    ],
+
+    rules: {
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-shadow": "off",
+      "@typescript-eslint/no-require-imports": "off",
+      "i18next/no-literal-string": "off",
+      "no-restricted-imports": "off"
+    }
+  },
+  {
+    // Data-driven tests here derive titles dynamically (loop variables,
+    // `fn.name`, ternaries). Allow non-string titles while keeping the
+    // empty/whitespace/duplicate-prefix checks active. Scoped to `.ts` test
+    // files only: `jest/valid-title` is an active rule and pagopa's config
+    // only registers the jest plugin for `.{js,ts}` test files, not `.tsx`.
+    files: ["**/*.test.ts", "**/__tests__/**/*.ts"],
+
+    rules: {
+      "jest/valid-title": [
+        "error",
+        {
+          ignoreTypeOfDescribeName: true,
+          ignoreTypeOfTestName: true
+        }
+      ]
+    }
+  },
+  {
+    files: [
+      "**/design-system/**/*.ts",
+      "**/design-system/**/*.tsx",
+      "**/playgrounds/**/*.ts",
+      "**/playgrounds/**/*.tsx",
+      "**/devMode/**/*.ts",
+      "**/devMode/**/*.tsx",
+      "**/debug/**/*.ts",
+      "**/debug/**/*.tsx",
+      "**/__mocks__/**/*.ts",
+      "**/__mocks__/**/*.tsx"
+    ],
+
+    rules: {
+      "i18next/no-literal-string": "off"
+    }
+  }
 ]);
