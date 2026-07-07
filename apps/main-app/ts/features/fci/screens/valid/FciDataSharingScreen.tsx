@@ -49,8 +49,9 @@ const FciDataSharingScreen = (): ReactElement => {
   );
   const email = useIOSelector(profileEmailSelector);
 
-  const { present, bottomSheet: fciAbortSignature } =
-    useFciAbortSignatureFlow();
+  const { present, bottomSheet: fciAbortSignature } = useFciAbortSignatureFlow({
+    showDialogOnBack: false
+  });
 
   useOnFirstRender(() => {
     trackFciUserDataShare();

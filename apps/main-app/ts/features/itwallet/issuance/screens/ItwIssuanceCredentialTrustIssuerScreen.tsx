@@ -32,10 +32,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
-import {
-  CredentialMetadata,
-  RequestObject
-} from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
@@ -45,7 +42,7 @@ import {
   selectCredentialTypeOption,
   selectIsIssuing,
   selectIsLoading,
-  selectRequestedCredentialOption
+  selectRequiredClaimsOption
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -56,10 +53,10 @@ import {
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
+  animationEnabled?: boolean;
   credentialType?: string;
   isUpgrade?: boolean;
   mode?: CredentialIssuanceMode;
-  disableAnimation?: boolean;
 };
 
 type ScreenProps =
@@ -78,10 +75,9 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const requestedCredentialOption =
-    ItwCredentialIssuanceMachineContext.useSelector(
-      selectRequestedCredentialOption
-    );
+  const requiredClaimsOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectRequiredClaimsOption
+  );
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
@@ -112,7 +108,7 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   return pipe(
     sequenceS(O.Monad)({
       credentialType: credentialTypeOption,
-      requestedCredential: requestedCredentialOption,
+      requiredClaimNames: requiredClaimsOption,
       eid: eidOption
     }),
     O.fold(
@@ -124,14 +120,18 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
 
 type ContentViewProps = {
   credentialType: string;
-  requestedCredential: RequestObject;
+  requiredClaimNames: ReadonlyArray<string>;
   eid: CredentialMetadata;
 };
 
 /**
  * Renders the content of the screen
  */
-const ContentView = ({ credentialType, eid }: ContentViewProps) => {
+const ContentView = ({
+  credentialType,
+  requiredClaimNames,
+  eid
+}: ContentViewProps) => {
   const route = useRoute();
   const hasScrolledToBottom = useRef(false);
   const privacyUrl = useIOSelector(state =>
@@ -175,10 +175,10 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const claims = parseClaims(eid.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
   });
-  const requiredClaims = claims.map(claim => ({
-    claim,
-    source: eidCredentialName
-  }));
+  const requiredClaims = requiredClaimNames.flatMap(name => {
+    const claim = claims.find(({ id }) => id === name);
+    return claim ? [{ claim, source: eidCredentialName }] : [];
+  });
 
   // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens
   const trackScrollToBottom = (crossed: boolean) => {

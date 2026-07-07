@@ -124,7 +124,7 @@ describe("unreadMessagesCountAfterForceDismissionSelector, isForceDismissAndNotU
         )
       ).toBe(false);
     });
-    it("shouldResetNotificationBannerDismissStateSelector should return 'false' ", () => {
+    it("shouldResetNotificationBannerDismissStateSelector should return 'false'", () => {
       expect(
         shouldResetNotificationBannerDismissStateSelector(
           noForceDismissDateTestState
