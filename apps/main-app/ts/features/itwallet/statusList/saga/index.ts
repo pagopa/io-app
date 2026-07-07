@@ -9,7 +9,7 @@ import { itwStatusListReferencedUrisSelector } from "../store/selectors";
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
-} from "../tasks";
+} from "../tasks/manager";
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 
 /**
@@ -31,6 +31,7 @@ export function* registerStatusListFetchTaskSaga(): SagaIterator {
     yield* call(unregisterItwStatusListFetchTask);
   }
 }
+
 /**
  * Runs startup coherence for the Status List Token cache.
  * First prunes cached entries no longer referenced by any owner, then refreshes

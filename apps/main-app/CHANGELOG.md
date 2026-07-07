@@ -2,6 +2,75 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.36.0-rc.8](https://github.com/pagopa/io-app/compare/3.36.0-rc.7...3.36.0-rc.8) (2026-07-07)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] Implement `expo-background-task` for Status List background fetch ([#8233](https://github.com/pagopa/io-app/issues/8233)) ([ac5a4bc](https://github.com/pagopa/io-app/commit/ac5a4bc331bd4fbe1e471bcbec2b726e2182bb1b)), closes [/#diff-7ae45ad102eab3b6d7e7896acd08c427a9b25b346470d7bc6507b6481575d519R96-R98](https://github.com/pagopa///issues/diff-7ae45ad102eab3b6d7e7896acd08c427a9b25b346470d7bc6507b6481575d519R96-R98) [/#diff-e70329c240cbde250c4cf9499d16af44da3323edee966f9c4c2c55385da47008R137-R143](https://github.com/pagopa///issues/diff-e70329c240cbde250c4cf9499d16af44da3323edee966f9c4c2c55385da47008R137-R143) [/#diff-6701f6e68eb818df064691dfe50a2070f5af1dd45c5299c8299782d934a668f3R525](https://github.com/pagopa///issues/diff-6701f6e68eb818df064691dfe50a2070f5af1dd45c5299c8299782d934a668f3R525) [/#diff-6701f6e68eb818df064691dfe50a2070f5af1dd45c5299c8299782d934a668f3R544](https://github.com/pagopa///issues/diff-6701f6e68eb818df064691dfe50a2070f5af1dd45c5299c8299782d934a668f3R544) [/#diff-1679e0f2fa3191277b8e23ec38dd7abbe0543d528050a026d1580c242239ee31L16-R39](https://github.com/pagopa///issues/diff-1679e0f2fa3191277b8e23ec38dd7abbe0543d528050a026d1580c242239ee31L16-R39) [/#diff-1679e0f2fa3191277b8e23ec38dd7abbe0543d528050a026d1580c242239ee31R100-R103](https://github.com/pagopa///issues/diff-1679e0f2fa3191277b8e23ec38dd7abbe0543d528050a026d1580c242239ee31R100-R103) [/#diff-0b5810437eae8d523f9eb8c78aa8cb99d0034002e508c44e577badeb12c64034R1-R52](https://github.com/pagopa///issues/diff-0b5810437eae8d523f9eb8c78aa8cb99d0034002e508c44e577badeb12c64034R1-R52) [/#diff-e151b993d63bb2047f84910631be5f4976d0649c92d3cbb51b57fa3b1d1150faL47-R51](https://github.com/pagopa///issues/diff-e151b993d63bb2047f84910631be5f4976d0649c92d3cbb51b57fa3b1d1150faL47-R51) [/#diff-f3ba0db1a86822542f174ba66345e5b92234c0b90117445fbc0be8c16985be35R1-R26](https://github.com/pagopa///issues/diff-f3ba0db1a86822542f174ba66345e5b92234c0b90117445fbc0be8c16985be35R1-R26) [/#diff-c03472a911a4d4c33a562ca97db11c2d14896c4627003956c1579f90c1d57d7dR1-R132](https://github.com/pagopa///issues/diff-c03472a911a4d4c33a562ca97db11c2d14896c4627003956c1579f90c1d57d7dR1-R132) [/#diff-99b8b26eca513046f01a9bc3ffb95e710cdfab222fc96582b4cee396f9f0bea6L8-R14](https://github.com/pagopa///issues/diff-99b8b26eca513046f01a9bc3ffb95e710cdfab222fc96582b4cee396f9f0bea6L8-R14) [/#diff-99b8b26eca513046f01a9bc3ffb95e710cdfab222fc96582b4cee396f9f0bea6R28-R39](https://github.com/pagopa///issues/diff-99b8b26eca513046f01a9bc3ffb95e710cdfab222fc96582b4cee396f9f0bea6R28-R39) [/#diff-99b8b26eca513046f01a9bc3ffb95e710cdfab222fc96582b4cee396f9f0bea6L45-R119](https://github.com/pagopa///issues/diff-99b8b26eca513046f01a9bc3ffb95e710cdfab222fc96582b4cee396f9f0bea6L45-R119)
+
+## [3.36.0-rc.7](https://github.com/pagopa/io-app/compare/3.36.0-rc.6...3.36.0-rc.7) (2026-07-06)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Credentials catalog, claims display, mdoc verification ([#8236](https://github.com/pagopa/io-app/issues/8236)) ([bf8a20d](https://github.com/pagopa/io-app/commit/bf8a20d34e8e8ee551c76451e27015d1ac21e04a))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3612](https://pagopa.atlassian.net/browse/SIW-3612)] Display proximity CTA in all mdoc credentials detail screen ([#8237](https://github.com/pagopa/io-app/issues/8237)) ([6844f51](https://github.com/pagopa/io-app/commit/6844f51196c8f88213b597b42db58f43cb78c2e7))
+* [[IOPLT-1751](https://pagopa.atlassian.net/browse/IOPLT-1751)] Add `@pagopa/eslint-config` to the `eslint` configuration ([#7992](https://github.com/pagopa/io-app/issues/7992)) ([a02a0f6](https://github.com/pagopa/io-app/commit/a02a0f68e2ca048d9b25dfa3bb02edda6c8c7276))
+
+## [3.36.0-rc.6](https://github.com/pagopa/io-app/compare/3.36.0-rc.5...3.36.0-rc.6) (2026-07-03)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4545](https://pagopa.atlassian.net/browse/SIW-4545)] Handle navigation for skeumorphic credentials ([#8222](https://github.com/pagopa/io-app/issues/8222)) ([590562f](https://github.com/pagopa/io-app/commit/590562fa954f1bdee6675936483ad67467a3c1a3))
+
+## [3.36.0-rc.5](https://github.com/pagopa/io-app/compare/3.36.0-rc.4...3.36.0-rc.5) (2026-07-02)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4149](https://pagopa.atlassian.net/browse/SIW-4149)] Credential offer from third channel ([#8047](https://github.com/pagopa/io-app/issues/8047)) ([ff2012a](https://github.com/pagopa/io-app/commit/ff2012a05e6d0840349b409ac80b0d21e34ed1b1))
+* **IT-Wallet:** [[SIW-4430](https://pagopa.atlassian.net/browse/SIW-4430)] Automatic specs version: 1.0 for Documenti su IO, 1.3 for IT-Wallet ([#8184](https://github.com/pagopa/io-app/issues/8184)) ([d669b5e](https://github.com/pagopa/io-app/commit/d669b5e9ad55b154f49aae8bbde1fd7e34aea78a))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4550](https://pagopa.atlassian.net/browse/SIW-4550)] Fix mdoc credential remote presentation ([#8219](https://github.com/pagopa/io-app/issues/8219)) ([e7787c2](https://github.com/pagopa/io-app/commit/e7787c2ef8de02170cf1a4ceb516562edb5d58e0))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4345](https://pagopa.atlassian.net/browse/SIW-4345)] Remove IT-Wallet simplified activation ([#8160](https://github.com/pagopa/io-app/issues/8160)) ([79da850](https://github.com/pagopa/io-app/commit/79da8507e93250fb9b19c0626c8a67d80e2e33f3))
+* [[IEL-671](https://pagopa.atlassian.net/browse/IEL-671),[IEL-672](https://pagopa.atlassian.net/browse/IEL-672)] changed useFciCheckService bottomsheet and copy update ([#8220](https://github.com/pagopa/io-app/issues/8220)) ([e3ac62b](https://github.com/pagopa/io-app/commit/e3ac62bdabb6f0049de9d6c2938b36103cc48c90))
+
+## [3.36.0-rc.4](https://github.com/pagopa/io-app/compare/3.36.0-rc.3...3.36.0-rc.4) (2026-07-01)
+
+## [3.36.0-rc.3](https://github.com/pagopa/io-app/compare/3.36.0-rc.2...3.36.0-rc.3) (2026-06-30)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4183](https://pagopa.atlassian.net/browse/SIW-4183)] Add batch issuance to ITW and enable AV credential ([#8180](https://github.com/pagopa/io-app/issues/8180)) ([49ec5f8](https://github.com/pagopa/io-app/commit/49ec5f84e77aface1a5105feb52909893900fc97))
+* **IT-Wallet:** [[SIW-4428](https://pagopa.atlassian.net/browse/SIW-4428),[SIW-4452](https://pagopa.atlassian.net/browse/SIW-4452)] Update credential handling in catalogue and onboarding components ([#8190](https://github.com/pagopa/io-app/issues/8190)) ([cf279ab](https://github.com/pagopa/io-app/commit/cf279abe2192335d03413164aaa641e91b845eb0))
+* **IT-Wallet:** [[SIW-4488](https://pagopa.atlassian.net/browse/SIW-4488)] Update engagement banner and TYP copy for IT-Wallet flows ([#8205](https://github.com/pagopa/io-app/issues/8205)) ([6a4bbd7](https://github.com/pagopa/io-app/commit/6a4bbd7bda77dfde40418c6a055e379755f0a886))
+
+
+### Bug Fixes
+
+* [[IEL-632](https://pagopa.atlassian.net/browse/IEL-632),[IEL-631](https://pagopa.atlassian.net/browse/IEL-631),[IEL-668](https://pagopa.atlassian.net/browse/IEL-668)] FciLoginL3Screen centering and copy ([#8206](https://github.com/pagopa/io-app/issues/8206)) ([d9ee8f9](https://github.com/pagopa/io-app/commit/d9ee8f919f060c784cba71e1c8dbabe117c67213))
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] PID card spacing in wallet ([#8217](https://github.com/pagopa/io-app/issues/8217)) ([64ad391](https://github.com/pagopa/io-app/commit/64ad391fd40e15ded83b4979e4f884d0fe2dd720))
+
+
+### Chores
+
+* [[IOPLT-1460](https://pagopa.atlassian.net/browse/IOPLT-1460)] Add the new experimental redesign of `ServiceDetailsPreferences` ([#8202](https://github.com/pagopa/io-app/issues/8202)) ([3412ba8](https://github.com/pagopa/io-app/commit/3412ba8f238c1dd63a39057f2fa22b2b37b8fc4e))
+* [[IOPLT-1906](https://pagopa.atlassian.net/browse/IOPLT-1906)] Replace legacy shadow style with the new `boxShadow` property ([#8216](https://github.com/pagopa/io-app/issues/8216)) ([c05d45a](https://github.com/pagopa/io-app/commit/c05d45a3fe36c377fec1979d0602842a7b89885b))
+
 ## [3.36.0-rc.2](https://github.com/pagopa/io-app/compare/3.36.0-rc.1...3.36.0-rc.2) (2026-06-29)
 
 

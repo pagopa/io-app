@@ -125,7 +125,7 @@ describe("ITW credentials reducer", () => {
         sequenceOfActions
       );
 
-      const remainingCredentials = {
+      const remainingCredentials: Record<string, CredentialMetadata> = {
         [mockedEid.credentialId]: mockedEid,
         [mockedCredential.credentialId]: mockedCredential,
         [mockedCredential2.credentialId]: mockedCredential2
@@ -206,7 +206,7 @@ describe("ITW credentials reducer", () => {
     });
   });
 
-  it("should update existing credentials overwriting the previous instances", () => {
+  it("should update existing credentials overwriting the previous instance", () => {
     const updatedCredential: CredentialMetadata = {
       ...mockedCredential,
       storedStatusAssertion: {
@@ -232,6 +232,27 @@ describe("ITW credentials reducer", () => {
       [mockedEid.credentialId]: mockedEid,
       [mockedCredential.credentialId]: updatedCredential,
       [mockedCredential2.credentialId]: mockedCredential2
+    });
+  });
+
+  it("stores a batch credential as a single entry listing all its keyTags", () => {
+    const batchCredential: CredentialMetadata = {
+      ...mockedCredential,
+      keyTags: ["d191ad52-2674-46f3-9610-6eb7bd9146a3", "key-2", "key-3"]
+    };
+
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      itwCredentialsStore([batchCredential])
+    ];
+    const targetSate = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+
+    expect(targetSate.features.itWallet.credentials.credentials).toEqual({
+      [batchCredential.credentialId]: batchCredential
     });
   });
 });

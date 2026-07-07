@@ -7,12 +7,16 @@ import {
   registerStatusListFetchTaskSaga,
   startupStatusListCoherenceSaga
 } from "..";
+import { refreshStaleEntries, startupCoherence } from "../../utils/cache";
+import { itwStatusListReferencedUrisSelector } from "../../store/selectors";
+import { registerStatusListFetchTaskSaga } from "..";
+import { itwCredentialsStore } from "../../../credentials/store/actions";
+import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
+import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
-} from "../../tasks";
-import { refreshStaleEntries, startupCoherence } from "../../utils/cache";
-import { itwStatusListReferencedUrisSelector } from "../../store/selectors";
+} from "../../tasks/manager";
 
 describe("registerStatusListFetchTaskSaga", () => {
   it("registers the fetch task immediately when the wallet is valid", () => {

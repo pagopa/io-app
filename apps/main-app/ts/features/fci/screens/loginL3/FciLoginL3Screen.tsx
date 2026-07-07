@@ -37,11 +37,13 @@ export const FciLoginL3Screen = () => {
 
   useEffect(() => {
     setOptions({
+      headerTransparent: true,
       header: () => (
         <HeaderSecondLevel
           title=""
           ignoreSafeAreaMargin={false}
           type="singleAction"
+          backgroundColor="transparent"
           firstAction={{
             icon: "closeMedium",
             onPress: () => {

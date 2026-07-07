@@ -1,4 +1,3 @@
-import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
 import { AppDispatch } from "../../../../App";
@@ -29,13 +28,14 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
   it("should be succeded", async () => {
-    const result = await regenerateKeyGetRedirectsAndVerifySaml(
-      "loginUri",
-      "keyTag",
-      false,
-      false,
-      dispatch
-    );
-    expect(E.isRight(result)).toBeTruthy();
+    await expect(
+      regenerateKeyGetRedirectsAndVerifySaml(
+        "loginUri",
+        "keyTag",
+        false,
+        false,
+        dispatch
+      )
+    ).resolves.toBe(url);
   });
 });

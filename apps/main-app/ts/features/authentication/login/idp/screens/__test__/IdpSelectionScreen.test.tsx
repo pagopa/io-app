@@ -75,7 +75,7 @@ describe("IdpSelectionScreen", () => {
     expect(mockDispatch).toHaveBeenCalledWith(loadIdps.request());
   });
 
-  it("should dispatch idpSelected and navigate to IDP_LOGIN when native login is disabled", () => {
+  it("should dispatch idpSelected and navigate to IDP_LOGIN", () => {
     jest.spyOn(IOHooks, "useIODispatch").mockReturnValue(mockDispatch);
 
     jest

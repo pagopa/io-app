@@ -32,14 +32,18 @@ export const selectRequiredClaimsOption = (snapshot: MachineSnapshot) =>
     )
   );
 
-export const selectCredentialOption = (snapshot: MachineSnapshot) =>
-  // At this stage, since the retrieval flow targets credentials under the same `scope` in multiple formats,
-  // we continue using the SD-JWT format to display credential details.
-  O.fromNullable(
-    snapshot.context.credentials?.find(
+export const selectCredentialOption = (snapshot: MachineSnapshot) => {
+  // At this stage the retrieval flow targets credentials under the same `scope` in multiple formats:
+  // prefer the SD-JWT format to display credential details, but fall back to the first available
+  // credential for mso_mdoc-only credentials (e.g. proof of age obtained in batch), which have no
+  // SD-JWT copy and would otherwise leave the preview stuck on loading.
+  const credentials = snapshot.context.credentials;
+  return O.fromNullable(
+    credentials?.find(
       ({ metadata }) => metadata.format !== CredentialFormat.MDOC
-    )
+    ) ?? credentials?.[0]
   );
+};
 
 export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
@@ -59,3 +63,10 @@ export const selectCredentialIntroContentOption = ({
       metadata => metadata.authentic_sources[0]?.user_information
     )
   );
+
+export const selectResolvedCredentialOfferOption = (
+  snapshot: MachineSnapshot
+) => O.fromNullable(snapshot.context.resolvedCredentialOffer);
+
+export const selectHasResolvedCredentialOffer = (snapshot: MachineSnapshot) =>
+  snapshot.context.resolvedCredentialOffer !== undefined;

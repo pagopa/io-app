@@ -36,7 +36,7 @@ describe("cgnActivationWorker", () => {
       .next();
   });
 
-  it("should activate user's CGN already on loading screen ", () => {
+  it("should activate user's CGN already on loading screen", () => {
     const returnedAction = cgnActivationStatus.success({
       status: CgnActivationProgressEnum.SUCCESS
     });
