@@ -1,6 +1,5 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getGenericError } from "../../../../../../../utils/errors";
 import { cgnOnlineMerchantsSaga } from "../cgnOnlineMerchantsSaga";
@@ -29,14 +28,14 @@ describe("cgnOnlineMerchantsSaga", () => {
   it("should dispatch success action on successful API call", () => {
     testSaga(cgnOnlineMerchantsSaga, getOnlineMerchants, requestAction)
       .next()
-      .next(E.right({ status: 200, value: { items } }))
+      .next({ _tag: "Right", right: { status: 200, value: { items } } })
       .put(cgnOnlineMerchants.success(items))
       .next()
       .isDone();
   });
 
   it("should dispatch failure action on API error", () => {
-    const leftResponse = E.left([]);
+    const leftResponse = { _tag: "Left", left: [] };
     const expectedError = new Error(readableReport([]));
 
     testSaga(cgnOnlineMerchantsSaga, getOnlineMerchants, requestAction)
@@ -50,7 +49,7 @@ describe("cgnOnlineMerchantsSaga", () => {
   it("should not dispatch success or failure on 401 response", () => {
     testSaga(cgnOnlineMerchantsSaga, getOnlineMerchants, requestAction)
       .next()
-      .next(E.right({ status: 401 }))
+      .next({ _tag: "Right", right: { status: 401 } })
       .next()
       .isDone();
   });
@@ -70,7 +69,7 @@ describe("cgnOnlineMerchantsSaga", () => {
     const unexpectedStatus = 500;
     testSaga(cgnOnlineMerchantsSaga, getOnlineMerchants, requestAction)
       .next()
-      .next(E.right({ status: unexpectedStatus }))
+      .next({ _tag: "Right", right: { status: unexpectedStatus } })
       .put(
         cgnOnlineMerchants.failure(
           getGenericError(new Error(`Response in status ${unexpectedStatus}`))

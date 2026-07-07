@@ -1,4 +1,3 @@
-import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { getGenericError } from "../../../../../../../utils/errors";
@@ -12,14 +11,14 @@ describe("cgnCategoriesSaga", () => {
   it(`should dispatch success on 200 response`, () => {
     testSaga(cgnCategoriesSaga, cgnCategoriesRequest, request)
       .next()
-      .next(E.right({ status: 200, value: { items: [] } }))
+      .next({ _tag: "Right", right: { status: 200, value: { items: [] } } })
       .put(cgnCategories.success([]))
       .next()
       .isDone();
   });
 
   it("should dispatch failure action on API error", () => {
-    const leftResponse = E.left([]);
+    const leftResponse = { _tag: "Left", left: [] };
     const expectedError = new Error(readableReport([]));
 
     testSaga(cgnCategoriesSaga, cgnCategoriesRequest, request)
@@ -33,7 +32,7 @@ describe("cgnCategoriesSaga", () => {
   it("should do nothing if status is 401", () => {
     testSaga(cgnCategoriesSaga, cgnCategoriesRequest, request)
       .next()
-      .next(E.right({ status: 401 }))
+      .next({ _tag: "Right", right: { status: 401 } })
       .next()
       .isDone();
   });
@@ -56,7 +55,7 @@ describe("cgnCategoriesSaga", () => {
     };
     testSaga(cgnCategoriesSaga, cgnCategoriesRequest, request)
       .next()
-      .next(E.right(unexpectedData))
+      .next({ _tag: "Right", right: unexpectedData })
       .put(
         cgnCategories.failure(
           getGenericError(
@@ -74,7 +73,7 @@ describe("cgnCategoriesSaga", () => {
     const unexpectedStatus = 500;
     testSaga(cgnCategoriesSaga, cgnCategoriesRequest, request)
       .next()
-      .next(E.right({ status: unexpectedStatus }))
+      .next({ _tag: "Right", right: { status: unexpectedStatus } })
       .put(
         cgnCategories.failure(
           getGenericError(new Error(`Response in status ${unexpectedStatus}`))

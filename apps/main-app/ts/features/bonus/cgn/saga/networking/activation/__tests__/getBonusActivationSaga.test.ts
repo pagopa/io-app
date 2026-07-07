@@ -1,4 +1,3 @@
-import * as E from "fp-ts/Either";
 import { testSaga } from "redux-saga-test-plan";
 import {
   cgnActivationSaga,
@@ -15,7 +14,7 @@ describe("cgnActivationSaga", () => {
   const handleCgnStatusPolling = jest.fn();
   const saga = cgnActivationSaga(startCgnActivation, handleCgnStatusPolling);
   it("should handle activation saga with 201 status", () => {
-    const response = E.right({ status: 201 });
+    const response = { _tag: "Right", right: { status: 201 } };
     testSaga(saga)
       .next()
       .call(startCgnActivation, {})
@@ -28,7 +27,7 @@ describe("cgnActivationSaga", () => {
   });
 
   it("should handle activation saga with 202 status", () => {
-    const response = E.right({ status: 202 });
+    const response = { _tag: "Right", right: { status: 202 } };
     testSaga(saga)
       .next()
       .call(startCgnActivation, {})
@@ -44,7 +43,7 @@ describe("cgnActivationSaga", () => {
 
   [403, 409].forEach(status => {
     it(`should handle activation saga with ${status} status`, () => {
-      const response = E.right({ status });
+      const response = { _tag: "Right", right: { status } };
       testSaga(saga)
         .next()
         .call(startCgnActivation, {})
@@ -68,13 +67,16 @@ describe("handleCgnStatusPolling", () => {
     const getCgnActivation = jest.fn();
     const saga = handleCgnStatusPolling(getCgnActivation);
 
-    const response = E.right({
-      status: 200,
-      value: {
-        status: StatusEnum.COMPLETED,
-        instance_id: { id: "" } as InstanceId
+    const response = {
+      _tag: "Right",
+      right: {
+        status: 200,
+        value: {
+          status: StatusEnum.COMPLETED,
+          instance_id: { id: "" } as InstanceId
+        }
       }
-    });
+    };
 
     testSaga(saga)
       .next()
@@ -97,13 +99,16 @@ describe("handleCgnStatusPolling", () => {
     const getCgnActivation = jest.fn();
     const saga = handleCgnStatusPolling(getCgnActivation);
 
-    const response = E.right({
-      status: 200,
-      value: {
-        status: StatusEnum.PENDING,
-        instance_id: { id: "" } as InstanceId
+    const response = {
+      _tag: "Right",
+      right: {
+        status: 200,
+        value: {
+          status: StatusEnum.PENDING,
+          instance_id: { id: "" } as InstanceId
+        }
       }
-    });
+    };
 
     testSaga(saga)
       .next()

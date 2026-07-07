@@ -1,4 +1,3 @@
-import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { getGenericError } from "../../../../../../../utils/errors";
@@ -27,12 +26,13 @@ describe("cgnGetInformationSaga", () => {
   it(`should dispatch success on 200 response`, () => {
     testSaga(cgnGetInformationSaga, getInfoRequest, request)
       .next()
-      .next(
-        E.right({
+      .next({
+        _tag: "Right",
+        right: {
           status: 200,
           value: card
-        })
-      )
+        }
+      })
       .put(
         walletAddCards([
           {
@@ -52,12 +52,13 @@ describe("cgnGetInformationSaga", () => {
   it(`should dispatch success on 200 response with non activated card`, () => {
     testSaga(cgnGetInformationSaga, getInfoRequest, request)
       .next()
-      .next(
-        E.right({
+      .next({
+        _tag: "Right",
+        right: {
           status: 200,
           value: expiredCard
-        })
-      )
+        }
+      })
       .put(
         walletAddCards([
           {
@@ -75,7 +76,7 @@ describe("cgnGetInformationSaga", () => {
   });
 
   it("should dispatch failure action on API error", () => {
-    const leftResponse = E.left([]);
+    const leftResponse = { _tag: "Left", left: [] };
     const expectedError = new Error(readableReport([]));
 
     testSaga(cgnGetInformationSaga, getInfoRequest, request)
@@ -89,7 +90,7 @@ describe("cgnGetInformationSaga", () => {
   it("should cancel on 404 status", () => {
     testSaga(cgnGetInformationSaga, getInfoRequest, request)
       .next()
-      .next(E.right({ status: 404 }))
+      .next({ _tag: "Right", right: { status: 404 } })
       .put(cgnDetails.cancel())
       .next()
       .isDone();
@@ -110,7 +111,7 @@ describe("cgnGetInformationSaga", () => {
     const unexpectedStatus = 500;
     testSaga(cgnGetInformationSaga, getInfoRequest, request)
       .next()
-      .next(E.right({ status: unexpectedStatus }))
+      .next({ _tag: "Right", right: { status: unexpectedStatus } })
       .put(
         cgnDetails.failure(
           getGenericError(new Error(`response status ${unexpectedStatus}`))
