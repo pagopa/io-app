@@ -20,7 +20,6 @@ export type GuidedTourProps = {
   title: string;
   description: string;
   cutoutStyle?: TourCutoutStyle;
-  cutoutPadding?: number;
 };
 
 export const GuidedTour = (props: PropsWithChildren<GuidedTourProps>) => {
@@ -44,14 +43,12 @@ export const GuidedTour = (props: PropsWithChildren<GuidedTourProps>) => {
     activeGroupId === props.groupId &&
     items.length > 0 &&
     items[stepIndex]?.index === props.index;
-  const cutoutPadding = props.cutoutPadding ?? 0;
 
   useEffect(() => {
     registerItem(props.groupId, props.index, animatedRef, {
       title: props.title,
       description: props.description,
-      cutoutStyle: props.cutoutStyle,
-      cutoutPadding
+      cutoutStyle: props.cutoutStyle
     });
 
     return () => {
@@ -65,7 +62,6 @@ export const GuidedTour = (props: PropsWithChildren<GuidedTourProps>) => {
     props.title,
     props.description,
     props.cutoutStyle,
-    cutoutPadding,
     animatedRef
   ]);
 
@@ -92,23 +88,21 @@ export const GuidedTour = (props: PropsWithChildren<GuidedTourProps>) => {
     const ox = overlay?.pageX ?? 0;
     const oy = overlay?.pageY ?? 0;
 
-    const paddedX = target.pageX - ox - cutoutPadding;
-    const paddedY = target.pageY - oy - cutoutPadding;
-    const paddedWidth = target.width + cutoutPadding * 2;
-    const paddedHeight = target.height + cutoutPadding * 2;
+    const newX = target.pageX - ox;
+    const newY = target.pageY - oy;
 
     // Only update when the position actually changed to avoid
     // unnecessary Skia canvas redraws.
     if (
-      paddedX !== cutoutX.value ||
-      paddedY !== cutoutY.value ||
-      paddedWidth !== cutoutW.value ||
-      paddedHeight !== cutoutH.value
+      newX !== cutoutX.value ||
+      newY !== cutoutY.value ||
+      target.width !== cutoutW.value ||
+      target.height !== cutoutH.value
     ) {
-      cutoutX.value = paddedX;
-      cutoutY.value = paddedY;
-      cutoutW.value = paddedWidth;
-      cutoutH.value = paddedHeight;
+      cutoutX.value = newX;
+      cutoutY.value = newY;
+      cutoutW.value = target.width;
+      cutoutH.value = target.height;
     }
   }, false);
 

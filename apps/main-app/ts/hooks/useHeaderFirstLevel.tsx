@@ -1,10 +1,5 @@
 import { HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import { useLayoutEffect, useMemo } from "react";
-import {
-  HeaderFirstLevelActions,
-  hasHeaderFirstLevelTourActions,
-  IOHeaderFirstLevel
-} from "../components/ui/IOHeaderFirstLevel";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../navigation/params/MainTabParamsList";
 import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
@@ -24,7 +19,7 @@ type HeaderFirstLevelHookProps = Omit<
   HeaderFirstLevel,
   "ignoreSafeAreaMargin" | "actions"
 > & {
-  actions?: HeaderFirstLevelActions;
+  actions?: HeaderFirstLevel["actions"];
 };
 
 /**
@@ -40,8 +35,8 @@ export const useHeaderFirstLevel = ({
   const actionHelp = useHeaderFirstLevelActionPropHelp(currentRoute);
   const actionSettings = useHeaderFirstLevelActionPropSettings();
   const { isAlertVisible } = useIOAlertVisible();
-  const actions: HeaderFirstLevelActions = useMemo(() => {
-    const fallbackActions: HeaderFirstLevelActions = [
+  const actions: HeaderFirstLevel["actions"] = useMemo(() => {
+    const fallbackActions: HeaderFirstLevel["actions"] = [
       actionSettings,
       actionHelp
     ];
@@ -69,13 +64,9 @@ export const useHeaderFirstLevel = ({
   }, [actionSettings, actionHelp, incomingActions]);
 
   useLayoutEffect(() => {
-    const HeaderComponent = hasHeaderFirstLevelTourActions(actions)
-      ? IOHeaderFirstLevel
-      : HeaderFirstLevel;
-
     navigation.setOptions({
       header: () => (
-        <HeaderComponent
+        <HeaderFirstLevel
           {...rest}
           actions={actions}
           ignoreSafeAreaMargin={isAlertVisible}
