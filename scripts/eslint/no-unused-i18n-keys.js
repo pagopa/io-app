@@ -4,6 +4,17 @@
  * The Italian locale is the canonical source for app copy. Reporting dead keys
  * directly on `locales/it/index.json` keeps translation cleanup incremental and
  * exposes places where dynamic i18n keys hide real usage from static analysis.
+ *
+ * Performance: linting the locale file forces a full scan of the `ts/` tree,
+ * which the long-lived ESLint server in an IDE re-runs on every keystroke.
+ * Parsed keys are cached per file by mtime (see `fileLiteralsCache`) so only
+ * changed files are re-read/parsed; steady-state re-lints just walk + stat.
+ *
+ * Known limitation: under `eslint --cache` the locale file's cached result is
+ * keyed on its own contents, but this rule depends on every source file. If a
+ * `I18n.t` usage is removed without touching the locale file, the newly-unused
+ * key is only reported once the locale file itself changes (or the cache is
+ * cleared). Full `eslint .` and CI runs are unaffected.
  */
 
 "use strict";
@@ -64,50 +75,86 @@ const listProductionSourceFiles = dirPath =>
       : [];
   });
 
+// Per-file cache of static I18n.t keys, keyed by mtime. The ESLint server is
+// long-lived in IDEs and re-lints the locale file on every edit; without this
+// each re-lint re-reads and TypeScript-parses the whole ts/ tree (~600ms).
+// ponytail: the tree is still re-walked each run (~65ms). Add directory-watch
+// invalidation only if that shows up in a profile.
+const fileLiteralsCache = new Map();
+
+const parseFileLiterals = (filePath, sourceText) => {
+  const literals = [];
+
+  const sourceFile = ts.createSourceFile(
+    filePath,
+    sourceText,
+    ts.ScriptTarget.Latest,
+    true,
+    filePath.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS
+  );
+
+  const addStaticKeys = expr => {
+    if (!expr) {
+      return;
+    }
+
+    if (ts.isStringLiteral(expr) || ts.isNoSubstitutionTemplateLiteral(expr)) {
+      literals.push(expr.text);
+      return;
+    }
+
+    if (ts.isConditionalExpression(expr)) {
+      addStaticKeys(expr.whenTrue);
+      addStaticKeys(expr.whenFalse);
+    }
+  };
+
+  const visit = node => {
+    if (
+      ts.isCallExpression(node) &&
+      ts.isPropertyAccessExpression(node.expression) &&
+      ts.isIdentifier(node.expression.expression) &&
+      node.expression.expression.text === "I18n" &&
+      node.expression.name.text === "t"
+    ) {
+      addStaticKeys(node.arguments[0]);
+    }
+
+    ts.forEachChild(node, visit);
+  };
+
+  visit(sourceFile);
+
+  return literals;
+};
+
+const getFileLiterals = filePath => {
+  const { mtimeMs } = fs.statSync(filePath);
+  const cached = fileLiteralsCache.get(filePath);
+
+  if (cached && cached.mtimeMs === mtimeMs) {
+    return cached.literals;
+  }
+
+  const sourceText = fs.readFileSync(filePath, "utf8");
+  // `I18n` is the only identifier we collect calls on, so files that never
+  // mention it cannot contribute keys — skip the expensive TypeScript parse.
+  const literals = sourceText.includes("I18n")
+    ? parseFileLiterals(filePath, sourceText)
+    : [];
+
+  fileLiteralsCache.set(filePath, { mtimeMs, literals });
+
+  return literals;
+};
+
 const collectSourceLiterals = () => {
   const literals = new Set();
 
   for (const filePath of listProductionSourceFiles(sourceRoot)) {
-    const sourceText = fs.readFileSync(filePath, "utf8");
-    const sourceFile = ts.createSourceFile(
-      filePath,
-      sourceText,
-      ts.ScriptTarget.Latest,
-      true,
-      filePath.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS
-    );
-
-    const addStaticKeys = expr => {
-      if (!expr) {
-        return;
-      }
-
-      if (ts.isStringLiteral(expr) || ts.isNoSubstitutionTemplateLiteral(expr)) {
-        literals.add(expr.text);
-        return;
-      }
-
-      if (ts.isConditionalExpression(expr)) {
-        addStaticKeys(expr.whenTrue);
-        addStaticKeys(expr.whenFalse);
-      }
-    };
-
-    const visit = node => {
-      if (
-        ts.isCallExpression(node) &&
-        ts.isPropertyAccessExpression(node.expression) &&
-        ts.isIdentifier(node.expression.expression) &&
-        node.expression.expression.text === "I18n" &&
-        node.expression.name.text === "t"
-      ) {
-        addStaticKeys(node.arguments[0]);
-      }
-
-      ts.forEachChild(node, visit);
-    };
-
-    visit(sourceFile);
+    for (const key of getFileLiterals(filePath)) {
+      literals.add(key);
+    }
   }
 
   return literals;
