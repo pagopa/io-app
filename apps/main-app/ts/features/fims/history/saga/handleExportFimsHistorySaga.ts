@@ -43,7 +43,7 @@ export function* handleExportFimsHistorySaga(
     );
 
     yield* put(resultAction);
-  } catch (e: any) {
+  } catch (e) {
     yield* put(fimsHistoryExport.failure());
   }
 }

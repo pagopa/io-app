@@ -42,6 +42,13 @@ export const trackItwWalletInstanceRevocation = (
   );
 };
 
+export const trackItwWalletInstanceResetFailure = () => {
+  void mixpanelTrack(
+    ITW_LIFECYCLE_ERRORS_EVENTS.ITW_RESET_FAILURE,
+    buildEventProperties("KO", "error")
+  );
+};
+
 export const trackItwWalletBadState = () => {
   void mixpanelTrack(
     ITW_LIFECYCLE_ERRORS_EVENTS.ITW_BAD_STATE_WALLET_DEACTIVATED,
