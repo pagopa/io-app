@@ -107,13 +107,23 @@ export default defineConfig([
       // Auto-fix corrupts multi-line property values (see comment below)
       "perfectionist/sort-objects": "off",
 
+      // Allow `_`-prefixed throwaways and rest-sibling destructuring omits
+      // (`const { key, ...rest } = obj`), matching tsc's own noUnusedLocals.
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          ignoreRestSiblings: true
+        }
+      ],
+
       // Rules from tseslint.strict / pagopa config that require widespread
       // refactoring incompatible with the current codebase
       "max-lines-per-function": "off",
       "@typescript-eslint/no-invalid-void-type": "off",
       "@typescript-eslint/no-empty-function": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
-      "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-inferrable-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
 
