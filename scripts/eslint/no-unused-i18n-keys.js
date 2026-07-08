@@ -129,23 +129,29 @@ const parseFileLiterals = (filePath, sourceText) => {
 };
 
 const getFileLiterals = filePath => {
-  const { mtimeMs } = fs.statSync(filePath);
-  const cached = fileLiteralsCache.get(filePath);
+  const fileDescriptor = fs.openSync(filePath, "r");
 
-  if (cached && cached.mtimeMs === mtimeMs) {
-    return cached.literals;
+  try {
+    const { mtimeMs } = fs.fstatSync(fileDescriptor);
+    const cached = fileLiteralsCache.get(filePath);
+
+    if (cached && cached.mtimeMs === mtimeMs) {
+      return cached.literals;
+    }
+
+    const sourceText = fs.readFileSync(fileDescriptor, "utf8");
+    // `I18n` is the only identifier we collect calls on, so files that never
+    // mention it cannot contribute keys — skip the expensive TypeScript parse.
+    const literals = sourceText.includes("I18n")
+      ? parseFileLiterals(filePath, sourceText)
+      : [];
+
+    fileLiteralsCache.set(filePath, { mtimeMs, literals });
+
+    return literals;
+  } finally {
+    fs.closeSync(fileDescriptor);
   }
-
-  const sourceText = fs.readFileSync(filePath, "utf8");
-  // `I18n` is the only identifier we collect calls on, so files that never
-  // mention it cannot contribute keys — skip the expensive TypeScript parse.
-  const literals = sourceText.includes("I18n")
-    ? parseFileLiterals(filePath, sourceText)
-    : [];
-
-  fileLiteralsCache.set(filePath, { mtimeMs, literals });
-
-  return literals;
 };
 
 const collectSourceLiterals = () => {
