@@ -20,7 +20,7 @@ import { itwIntegrityServiceStatusSelector } from "../../issuance/store/selector
  * @returns true if the integrity service becomes ready within the timeout period, false otherwise
  */
 export function* checkIntegrityServiceReadySaga(
-  timeout: number = 10000
+  timeout = 10000
 ): Generator<ReduxSagaEffect, boolean> {
   const integrityServiceStatus = yield* select(
     itwIntegrityServiceStatusSelector

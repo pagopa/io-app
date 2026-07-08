@@ -1004,3 +1004,23 @@ export const isSendLollipopPlaygroundEnabledSelector = (
   const remoteConfig = remoteConfigOption.value;
   return !!remoteConfig.pn.lollipopPlaygroundEnabled;
 };
+
+export const fseDiscoveryBannerWebUrlSelector = (
+  state: GlobalState
+): string | undefined => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    return undefined;
+  }
+  return remoteConfigOption.value.fse?.landingBanner?.engagement_url;
+};
+export const isFseDiscoveryBannerDismissableSelector = (
+  state: GlobalState
+): boolean => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    return false;
+  }
+
+  return remoteConfigOption.value.fse?.landingBanner?.is_dismissable ?? false;
+};

@@ -27,8 +27,6 @@ const blockMargin = 48;
 
 const blueBackground = IOColors["blueIO-850"];
 
-const handlePress = () => {};
-
 export const DSTabNavigation = () => {
   const theme = useIOTheme();
 
@@ -156,16 +154,11 @@ const renderTabItemLight = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="Light">
       <HStack space={tabItemMargin}>
-        <TabItem
-          label="Label tab"
-          accessibilityLabel="Label tab"
-          onPress={handlePress}
-        />
+        <TabItem label="Label tab" accessibilityLabel="Label tab" />
         <TabItem
           label="Label tab"
           accessibilityLabel="Label tab"
           icon={"starEmpty"}
-          onPress={handlePress}
         />
       </HStack>
     </DSComponentViewerBox>
@@ -176,32 +169,24 @@ const renderTabItemLight = () => (
           label="Label tab"
           accessibilityLabel="Label tab"
           selected={true}
-          onPress={handlePress}
         />
         <TabItem
           label="Label tab"
           accessibilityLabel="Label tab"
           icon={"starEmpty"}
           selected={true}
-          onPress={handlePress}
         />
       </HStack>
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="Light · Disabled">
       <HStack space={tabItemMargin}>
-        <TabItem
-          label="Label tab"
-          accessibilityLabel="Label tab"
-          disabled
-          onPress={handlePress}
-        />
+        <TabItem label="Label tab" accessibilityLabel="Label tab" disabled />
         <TabItem
           label="Label tab"
           accessibilityLabel="Label tab"
           disabled
           icon={"starEmpty"}
-          onPress={handlePress}
         />
       </HStack>
     </DSComponentViewerBox>
@@ -224,14 +209,12 @@ const renderTabItemDark = () => (
             label="Label tab"
             accessibilityLabel="Label tab"
             color="dark"
-            onPress={handlePress}
           />
           <TabItem
             label="Label tab"
             accessibilityLabel="Label tab"
             icon={"starEmpty"}
             color="dark"
-            onPress={handlePress}
           />
         </HStack>
       </DSComponentViewerBox>
@@ -243,7 +226,6 @@ const renderTabItemDark = () => (
             accessibilityLabel="Label tab"
             color="dark"
             selected={true}
-            onPress={handlePress}
           />
           <TabItem
             label="Label tab"
@@ -251,7 +233,6 @@ const renderTabItemDark = () => (
             icon={"starFilled"}
             color="dark"
             selected={true}
-            onPress={handlePress}
           />
         </HStack>
       </DSComponentViewerBox>
@@ -263,7 +244,6 @@ const renderTabItemDark = () => (
             accessibilityLabel="Label tab"
             color="dark"
             disabled={true}
-            onPress={handlePress}
           />
           <TabItem
             label="Label tab"
@@ -271,7 +251,6 @@ const renderTabItemDark = () => (
             icon={"starEmpty"}
             color="dark"
             disabled={true}
-            onPress={handlePress}
           />
         </HStack>
       </DSComponentViewerBox>

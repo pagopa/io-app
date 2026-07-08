@@ -67,7 +67,7 @@ type FontStyleObject = {
 const makeFontFamilyName = (
   font: IOFontFamily,
   weight?: IOFontWeight,
-  isItalic: boolean = false
+  isItalic = false
 ): string =>
   Platform.select({
     default: "undefined",
