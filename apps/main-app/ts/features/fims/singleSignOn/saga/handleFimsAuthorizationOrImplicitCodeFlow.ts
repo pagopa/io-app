@@ -126,7 +126,7 @@ const getLollipopParamsFromUrlString = (url: string) => {
     const params: PolyfillURLSearchParams = constructedUrl.searchParams;
     params.forEach((value, name) => lollipopParams.set(name, value));
     return lollipopParams;
-  } catch (error) {
+  } catch {
     return undefined;
   }
 };
