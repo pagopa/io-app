@@ -3646,7 +3646,8 @@
         },
         "credentialPreview": {
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",
-          "title": "{{credential}}: ecco l'anteprima dei tuoi dati",
+          "title": "Controlla i dettagli",
+          "subtitle": "Se i dati sono corretti, aggiungi il documento al Portafoglio.",
           "bottomSheet": {
             "about": {
               "title": "Chi è?",
@@ -3655,11 +3656,18 @@
             "authSource": {
               "title": "Chi è",
               "subtitle": "È l’ente o la banca dati digitale che detiene i dati contenuti all'interno del tuo documento."
+            },
+            "somethingWrong": {
+              "title": "Qualcosa non torna sui dati del documento",
+              "body": "Se riscontri errori o incongruenze, ti invitiamo a segnalarli all'ente che detiene i dati e ne è responsabile.",
+              "bodyAuthSource": "Per questo documento digitale, l'ente di riferimento è {{authSource}}.",
+              "bodyFooter": "Una volta che i dati saranno stati corretti, potrai ripetere l'operazione di aggiunta del documento al portafoglio.",
+              "primaryAction": "Ho capito"
             }
           },
           "actions": {
             "primary": "Aggiungi al Portafoglio",
-            "secondary": "Annulla"
+            "somethingWrong": "Qualcosa non torna?"
           }
         },
         "upgrade": {
