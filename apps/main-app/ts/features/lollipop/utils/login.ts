@@ -64,7 +64,7 @@ export const lollipopSamlVerify = (
       .catch(_ => {
         onFailure("Unable to convert saml request from xml to json");
       });
-  } catch (e) {
+  } catch {
     onFailure("Unable to decode saml request");
   }
 };

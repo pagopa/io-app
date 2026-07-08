@@ -15,7 +15,7 @@ const slackToken = process.env.IO_APP_SLACK_HELPER_BOT_TOKEN;
 export const slackPostMessage = async (
   text: string,
   channel: string,
-  unfurlMessage: boolean = true
+  unfurlMessage = true
 ): Promise<unknown> => {
   const url = new URL(endpoint);
   const res = await fetch(url, {

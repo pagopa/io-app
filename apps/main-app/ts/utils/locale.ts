@@ -28,7 +28,7 @@ export const getFullLocale = (): LocalizedMessageKeys =>
  */
 export function getLocalePrimary(
   locale: string,
-  separator: string = "-"
+  separator = "-"
 ): O.Option<string> {
   return pipe(
     O.some(locale.split(separator)),

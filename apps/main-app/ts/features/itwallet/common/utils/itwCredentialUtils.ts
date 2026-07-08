@@ -124,8 +124,8 @@ const getCredentialNameByType = (
 
 export const getCredentialNameFromType = (
   type: string | undefined,
-  isItwCredential: boolean = false,
-  withDefault: string = ""
+  isItwCredential = false,
+  withDefault = ""
 ): string => {
   if (!type) {
     return withDefault;

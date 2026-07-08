@@ -213,7 +213,7 @@ export const fastLoginMaxRetries = pipe(
 export const pageSize: number = DEFAULT_PAGE_SIZE;
 
 // This is the maximum number supported by API via pagination regardless of the content.
-export const maximumItemsFromAPI: number = 100;
+export const maximumItemsFromAPI = 100;
 
 export const testOverlayCaption: string | undefined =
   Config.TEST_OVERLAY_CAPTION;

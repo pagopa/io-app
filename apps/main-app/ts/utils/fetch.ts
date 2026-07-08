@@ -38,7 +38,7 @@ export function toFetchTimeout(timeout: Millisecond = fetchTimeout) {
 
 export function toRetriableFetch(
   maxRetries: number = fetchMaxRetries,
-  retryOnStatusCode: number = 429,
+  retryOnStatusCode = 429,
   backoff: (n: number) => Millisecond = calculateExponentialBackoffInterval(),
   shouldAbort?: Promise<boolean>
 ): (fetch: FixedFetch) => typeof fetch {
@@ -64,7 +64,7 @@ export function toRetriableFetch(
 export function defaultRetryingFetch(
   timeout: Millisecond = fetchTimeout,
   maxRetries: number = fetchMaxRetries,
-  retryOnStatusCode: number = 429
+  retryOnStatusCode = 429
 ): typeof fetch {
   const timeoutFetch = toFetchTimeout(timeout);
   // eslint-disable-next-line @typescript-eslint/no-shadow

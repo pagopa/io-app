@@ -9,7 +9,7 @@ import { constants } from "./constants";
  */
 function generateDigestHeader(body: string): string {
   // eslint-disable-next-line functional/no-let
-  let contentDigest: string = "";
+  let contentDigest = "";
 
   // Validate the input payload
   if (!body) {

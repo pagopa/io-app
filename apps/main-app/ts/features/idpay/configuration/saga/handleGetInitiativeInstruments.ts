@@ -69,7 +69,7 @@ export function* handleGetInitiativeInstruments(
 /** Handle the refresh polling for the initiative instruments */
 export function* handleInitiativeInstrumentsRefresh(
   initiativeId: string,
-  refreshDelay: number = 3000
+  refreshDelay = 3000
 ) {
   yield* put(
     idpayInitiativeInstrumentsGet.request({

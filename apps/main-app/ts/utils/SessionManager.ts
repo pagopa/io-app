@@ -17,9 +17,9 @@ const waitRetry = 8000 as Millisecond;
  */
 export class SessionManager<T> {
   private token?: T;
-  private isSessionEnabled: boolean = true;
+  private isSessionEnabled = true;
   private mutex = new Mutex();
-  private isRefreshing: boolean = false;
+  private isRefreshing = false;
 
   /**
    * Critical section:
@@ -76,7 +76,7 @@ export class SessionManager<T> {
 
   constructor(
     private refreshSession: () => Promise<O.Option<T>>,
-    private maxRetries: number = 0
+    private maxRetries = 0
   ) {}
 
   /** Returns the current token, if there's one */

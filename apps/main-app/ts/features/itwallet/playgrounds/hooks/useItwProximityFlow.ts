@@ -217,7 +217,7 @@ export const useItwProximityFlow = () => {
     [env]
   );
 
-  const closeFlow = useCallback(async (sendError: boolean = false) => {
+  const closeFlow = useCallback(async (sendError = false) => {
     try {
       if (sendError) {
         await ISO18013_5.sendErrorResponse(

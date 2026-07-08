@@ -174,7 +174,7 @@ export const itwCredentialNameResolverSelector = createSelector(
     itwLifecycleIsITWalletValidSelector
   ],
   (isCatalogueEnabled, catalogue, translations, withL3Design) =>
-    (credentialType: string | undefined, withDefault: string = ""): string => {
+    (credentialType: string | undefined, withDefault = ""): string => {
       if (isCatalogueEnabled && credentialType && catalogue && translations) {
         const catalogueMeta = catalogue[credentialType];
         const resolvedName =

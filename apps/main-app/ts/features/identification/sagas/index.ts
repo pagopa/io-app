@@ -92,12 +92,12 @@ function* waitIdentificationResult(): Generator<
  */
 export function* startAndReturnIdentificationResult(
   pin: PinString,
-  canResetPin: boolean = true,
-  isValidatingTask: boolean = false,
+  canResetPin = true,
+  isValidatingTask = false,
   identificationGenericData?: IdentificationGenericData,
   identificationCancelData?: IdentificationCancelData,
   identificationSuccessData?: IdentificationSuccessData,
-  shufflePad: boolean = false,
+  shufflePad = false,
   identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
 ): Generator<
   ReduxSagaEffect,

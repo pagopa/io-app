@@ -86,7 +86,6 @@ export const getProximityDetails: GetProximityDetails = ({
 }) => {
   // Exclude the WIA document type from the request
   const { [WIA_DOC_TYPE]: _, ...rest } = request;
-
   assert(
     Object.keys(rest).length > 0,
     "No requested documents found in the Verifier request"

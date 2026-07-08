@@ -59,7 +59,7 @@ type DefaultTokenType = Exclude<TokenType, "zendeskToken">;
  *   inserted.
  */
 export const formatRequestedTokenString = (
-  needToRefreshZendeskToken: boolean = false,
+  needToRefreshZendeskToken = false,
   tokenType?: Array<TokenType>
 ): string => {
   // If tokenType is provided and contains values, return the joined tokens

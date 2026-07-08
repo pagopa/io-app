@@ -19,10 +19,11 @@ if (!testableCieCardReadingAnimation) {
     "handleApplicationInitialized is not available in test environment"
   );
 }
-const CieCardReadingAnimationProps =
-  testableCieCardReadingAnimation.types.CieCardReadingAnimationProps;
+type CieCardReadingAnimationProps = NonNullable<
+  typeof testableCieCardReadingAnimation
+>["types"]["CieCardReadingAnimationProps"];
 
-const defaultProps: typeof CieCardReadingAnimationProps = {
+const defaultProps: CieCardReadingAnimationProps = {
   readingState: ReadingState.waiting_card,
   pictogramName: "accessDenied",
   circleColor: "#000000"

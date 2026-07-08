@@ -86,7 +86,7 @@ export const ItwBrandedBox = ({
 
   /* We don't need to look at the whole quaternion range,
       just a very small part of it. */
-  const quaternionRange: number = 0.5;
+  const quaternionRange = 0.5;
 
   const skiaLightTranslateX = useDerivedValue(() => {
     const translateX = interpolate(

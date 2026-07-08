@@ -30,7 +30,7 @@ export function* backendStatusSaga(
       return true;
     }
     return false;
-  } catch (e) {
+  } catch {
     // do nothing. it should be a network or decoding error
     return false;
   }

@@ -12,7 +12,7 @@ import { handlePushNotificationIfNeeded } from "../features/pushNotifications/sa
  * need to be handled once the app has finished loading/initializing.
  */
 export function* maybeHandlePendingBackgroundActions(
-  shouldResetToMainNavigator: boolean = false
+  shouldResetToMainNavigator = false
 ) {
   // check if we have a stored linking URL to process
   if (yield* call(handleStoredLinkingUrlIfNeeded)) {

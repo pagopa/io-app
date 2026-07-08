@@ -17,8 +17,8 @@ import { TextInput } from "react-native";
  */
 const useInputFocus = (
   inputRef: RefObject<TextInput | TextInputValidationRefProps | null>,
-  delayMs: number = 500,
-  canAutoFocus: boolean = true
+  delayMs = 500,
+  canAutoFocus = true
 ) => {
   const hasFocused = useRef(false);
   const isFocused = useIsFocused();

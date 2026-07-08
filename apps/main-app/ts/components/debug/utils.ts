@@ -37,7 +37,7 @@ type TruncatableSet = Set<TruncatableValue>;
  */
 export const truncateObjectStrings = <T extends TruncatableValue>(
   value: T,
-  maxLength: number = 250
+  maxLength = 250
 ): T => {
   if (typeof value === "string") {
     return (

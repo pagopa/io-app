@@ -234,7 +234,7 @@ export function useMaxBrightness({
           "change",
           handleAppStateChange
         );
-      } catch (error) {
+      } catch {
         // Ignore
       }
     };

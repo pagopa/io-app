@@ -47,7 +47,7 @@ export type BiometricsType = BiometricsErrorType | BiometricsValidType;
  *   when biometrics are unavailable. Default: true
  */
 export const getBiometricsType = (
-  shouldTrackError: boolean = true
+  shouldTrackError = true
 ): Promise<BiometricsType> =>
   FingerprintScanner.isSensorAvailable()
     .then((biometryType: Biometrics) => {

@@ -339,7 +339,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         await cieManager.start(CIE_ALERT_MESSAGES_CONFIG);
         await cieManager.startListeningNFC();
         setReadingState(ReadingState.waiting_card);
-      } catch (e) {
+      } catch {
         trackLoginCieCardReadingError(loginType);
         setReadingState(ReadingState.error);
       }
