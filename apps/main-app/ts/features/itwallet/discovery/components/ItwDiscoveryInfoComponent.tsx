@@ -53,9 +53,9 @@ import {
 } from "../analytics";
 
 // Offset to avoid to scroll to the block without margins
-const scrollOffset: number = 12;
+const scrollOffset = 12;
 // Percentage of the visible block after which the anchor link is hidden
-const intersectionRatio: number = 0.3;
+const intersectionRatio = 0.3;
 
 type Props = {
   credentialType?: string;

@@ -123,7 +123,6 @@ export default defineConfig([
       "max-lines-per-function": "off",
       "@typescript-eslint/no-empty-function": "off",
       "@typescript-eslint/no-dynamic-delete": "off",
-      "@typescript-eslint/no-inferrable-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
 
       // Incorrectly fires on mapped types (`[P in ...]`) — only meant for

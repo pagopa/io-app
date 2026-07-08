@@ -73,8 +73,8 @@ export const DSDynamicBackground = () => {
 
   const screenSize = Dimensions.get("screen").width;
   const heroHeight: number = 350 + insets.top;
-  const scrollGradientHeight: number = 32;
-  const headerHeight: number = 60;
+  const scrollGradientHeight = 32;
+  const headerHeight = 60;
   // const heroOffset: number = 50;
 
   const renderedOrganizationsURIs: Array<{
