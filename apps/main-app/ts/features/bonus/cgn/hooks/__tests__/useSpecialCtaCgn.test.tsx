@@ -1,6 +1,6 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { render } from "@testing-library/react-native";
-import { Alert } from "react-native";
+import { fireEvent, render } from "@testing-library/react-native";
+import { Alert, Pressable, Text } from "react-native";
 import {
   remoteLoading,
   remoteReady,
@@ -64,17 +64,30 @@ describe("useSpecialCtaCgn", () => {
   });
 
   const renderHook = () => {
-    let latestAction: ReturnType<typeof useSpecialCtaCgn>;
-
     const Component = () => {
-      latestAction = useSpecialCtaCgn(serviceId);
-      return null;
+      const action = useSpecialCtaCgn(serviceId);
+
+      return (
+        <>
+          <Text testID="special-cgn-cta-testid">{action?.testID}</Text>
+          <Text testID="special-cgn-cta-loading">
+            {String(action?.loading)}
+          </Text>
+          {action ? (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="special-cgn-cta"
+              testID={action.testID}
+              onPress={action.onPress}
+            />
+          ) : null}
+        </>
+      );
     };
 
     const screen = render(<Component />);
     return {
       screen,
-      getAction: () => latestAction,
       Component
     };
   };
@@ -85,9 +98,12 @@ describe("useSpecialCtaCgn", () => {
       .mockReturnValueOnce(false)
       .mockReturnValueOnce(remoteUndefined);
 
-    const { getAction } = renderHook();
+    const { screen } = renderHook();
 
-    expect(getAction()).toBeUndefined();
+    expect(
+      screen.getByTestId("special-cgn-cta-testid").props.children
+    ).toBeUndefined();
+    expect(screen.queryByTestId("service-activate-bonus-button")).toBeNull();
   });
 
   it("returns activation CTA and dispatches start flow on press", () => {
@@ -95,11 +111,12 @@ describe("useSpecialCtaCgn", () => {
       .spyOn(analytics, "trackServicesCgnStartRequest")
       .mockImplementation(jest.fn());
 
-    const { getAction } = renderHook();
-    const action = getAction();
+    const { screen } = renderHook();
 
-    expect(action?.testID).toBe("service-activate-bonus-button");
-    action?.onPress();
+    expect(screen.getByTestId("special-cgn-cta-testid").props.children).toBe(
+      "service-activate-bonus-button"
+    );
+    fireEvent.press(screen.getByTestId("service-activate-bonus-button"));
 
     expect(trackSpy).toHaveBeenCalledWith(serviceId);
     expect(mockDispatch).toHaveBeenNthCalledWith(
@@ -119,11 +136,12 @@ describe("useSpecialCtaCgn", () => {
       .spyOn(analytics, "trackSpecialServiceStatusChanged")
       .mockImplementation(jest.fn());
 
-    const { getAction } = renderHook();
-    const action = getAction();
+    const { screen } = renderHook();
 
-    expect(action?.testID).toBe("service-cgn-deactivate-bonus-button");
-    action?.onPress();
+    expect(screen.getByTestId("special-cgn-cta-testid").props.children).toBe(
+      "service-cgn-deactivate-bonus-button"
+    );
+    fireEvent.press(screen.getByTestId("service-cgn-deactivate-bonus-button"));
 
     const buttons = alertSpy.mock.calls[0][2];
     expect(buttons?.[0].onPress).toBeDefined();
@@ -165,8 +183,10 @@ describe("useSpecialCtaCgn", () => {
       .mockReturnValueOnce(true)
       .mockReturnValueOnce(remoteLoading);
 
-    const { getAction } = renderHook();
+    const { screen } = renderHook();
 
-    expect(getAction()?.loading).toBe(true);
+    expect(screen.getByTestId("special-cgn-cta-loading").props.children).toBe(
+      "true"
+    );
   });
 });
