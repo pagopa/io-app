@@ -26,6 +26,7 @@ export type MixPanelCredentialVersion = "V2" | "V3";
  * ITW_EDAT: Education Attendance (obtained with IT Wallet)
  * UNKNOWN: placeholder used when a credential exists in the app but is not yet tracked on Mixpanel
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const mixPanelCredentials = [
   "ITW_ID_V2",
   "ITW_PG_V2",
