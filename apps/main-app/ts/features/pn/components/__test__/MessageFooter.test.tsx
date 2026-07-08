@@ -47,9 +47,9 @@ describe("MessageFooter", () => {
 });
 
 const renderScreen = (
-  isCancelled: boolean = false,
-  messageId: string = "01HRAAFS3VJAAKWKV8NM8Z6CPQ",
-  maxVisiblePaymentCount: number = 5
+  isCancelled = false,
+  messageId = "01HRAAFS3VJAAKWKV8NM8Z6CPQ",
+  maxVisiblePaymentCount = 5
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);

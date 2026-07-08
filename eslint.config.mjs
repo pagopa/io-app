@@ -124,7 +124,6 @@ export default defineConfig([
       "@typescript-eslint/no-invalid-void-type": "off",
       "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
-      "@typescript-eslint/no-inferrable-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
 
       // Incorrectly fires on mapped types (`[P in ...]`) — only meant for

@@ -17,11 +17,7 @@ const baseMerchant: OnlineMerchant = {
   newDiscounts: false
 };
 
-const renderItem = (
-  item: OnlineMerchant,
-  index: number = 0,
-  count: number = 1
-) => {
+const renderItem = (item: OnlineMerchant, index = 0, count = 1) => {
   const renderFn = CgnMerchantListViewRenderItem({
     onItemPress: mockOnItemPress,
     count

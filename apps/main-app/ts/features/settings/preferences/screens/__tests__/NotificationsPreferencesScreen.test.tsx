@@ -184,7 +184,7 @@ describe("NotificationsPreferencesScreen", () => {
 const renderScreen = (
   previewValue?: PushNotificationsContentTypeEnum,
   reminderValue?: ReminderStatusEnum,
-  isUpdatingProfile: boolean = false
+  isUpdatingProfile = false
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const profile = {
