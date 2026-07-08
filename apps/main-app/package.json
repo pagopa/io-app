@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.36.0-rc.7",
+  "version": "3.36.0-rc.9",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -95,10 +95,12 @@
     "date-fns": "^1.29.0",
     "eslint-plugin-react-native": "^4.0.0",
     "expo": "^55.0.8",
+    "expo-background-task": "~55.0.18",
     "expo-constants": "~55.0.16",
     "expo-device": "~55.0.17",
     "expo-notifications": "~55.0.23",
     "expo-screen-capture": "~55.0.9",
+    "expo-task-manager": "~55.0.16",
     "fp-ts": "^2.12.1",
     "front-matter": "^4.0.2",
     "hastscript": "^7.0.2",
