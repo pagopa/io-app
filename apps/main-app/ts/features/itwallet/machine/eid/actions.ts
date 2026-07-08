@@ -15,20 +15,19 @@ import {
   trackItwIdVerifiedDocument,
   trackSaveCredentialSuccess
 } from "../../analytics";
-import { toItwIdMethod } from "../../analytics/utils/types";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
+import { toSurveyAuthMethod } from "../../analytics/utils";
+import { toItwIdMethod } from "../../analytics/utils/types";
 import {
   itwSetAuthLevel,
-  itwSetWalletActivationFeedbackBannerData,
   itwSetCredentialUpgradeFailed,
-  itwSetIdentificationMode
+  itwSetIdentificationMode,
+  itwSetWalletActivationFeedbackBannerData
 } from "../../common/store/actions/preferences";
-import { toSurveyAuthMethod } from "../../analytics/utils";
-import {
-  itwIdentificationModeSelector,
-  itwIsPidReissuingSurveyHiddenSelector
-} from "../../common/store/selectors/preferences";
+import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
+import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
@@ -39,9 +38,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
-import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
-import { Context, IdentificationContext } from "./context";
+import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
 export const createEidIssuanceActionsImplementation = (
@@ -327,13 +324,7 @@ export const createEidIssuanceActionsImplementation = (
       return;
     }
     const docStatus = context.mode === "upgrade" ? "active" : "not_active";
-    const storedMode = itwIdentificationModeSelector(store.getState());
-    const authMethod = toSurveyAuthMethod(
-      context.identification ??
-        (storedMode
-          ? ({ mode: storedMode, level: "L2" } as IdentificationContext)
-          : undefined)
-    );
+    const authMethod = toSurveyAuthMethod(context.identification);
     store.dispatch(
       itwSetWalletActivationFeedbackBannerData({
         date: new Date().toISOString(),
