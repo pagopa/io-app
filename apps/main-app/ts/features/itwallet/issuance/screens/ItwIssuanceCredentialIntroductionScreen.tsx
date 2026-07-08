@@ -2,6 +2,7 @@ import {
   ContentWrapper,
   H2,
   IOColors,
+  IOMarkdown,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -20,7 +21,6 @@ import {
 import { getMixPanelCredential } from "../../analytics/utils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import {
   selectCredentialTypeOption,
