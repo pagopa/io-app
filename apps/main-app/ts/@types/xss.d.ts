@@ -1,5 +1,4 @@
 declare module "xss" {
-  import { FilterXSS } from "xss";
   export type FilterXSSOptions = any;
 
   /**
