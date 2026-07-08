@@ -25,7 +25,7 @@ export function* getCurrentStatusWalletInstance() {
       itwVersion,
       sessionToken
     );
-  } catch (e) {
+  } catch {
     return undefined;
   }
 }

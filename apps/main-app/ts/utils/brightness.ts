@@ -232,7 +232,7 @@ export function useMaxBrightness({
           "change",
           nextAppState => void handleAppStateChange(nextAppState)
         );
-      } catch (error) {
+      } catch {
         // Ignore
       }
     };

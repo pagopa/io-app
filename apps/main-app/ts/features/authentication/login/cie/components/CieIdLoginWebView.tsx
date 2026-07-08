@@ -86,7 +86,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           // Redirects the user to the error screen
           navigateToCieIdAuthUrlError(url);
         }
-      } catch (error) {
+      } catch {
         // Redirects the user to the error screen
         navigateToCieIdAuthUrlError(url);
       }
