@@ -2,13 +2,11 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
-import { Action } from "redux";
 import { ActionType, isActionOf } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import {
   call,
   delay,
-  race,
   takeLatest,
   put,
   select,
@@ -20,7 +18,6 @@ import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
 import ROUTES from "../../../navigation/routes";
 import { apiUrlPrefix } from "../../../config";
-import { applicationChangeState } from "../../../store/actions/application";
 import { appCurrentStateSelector } from "../../../store/reducers/appState";
 import {
   identificationPinReset,
@@ -77,29 +74,46 @@ import { handleGetSignatureRequests } from "./networking/handleGetSignatureReque
 import { handleDrawSignatureBox } from "./handleDrawSignatureBox";
 
 /**
- * Timeout in milliseconds to wait for the app to become active.
- * If the app doesn't become active within this time, the saga continues anyway.
+ * Maximum time to wait for the app to become active (20 seconds).
  */
-const APP_ACTIVE_TIMEOUT = (5 * 1000) as Millisecond;
+const APP_ACTIVE_POLLING_TIMEOUT = (20 * 1000) as Millisecond;
 
 /**
- * Waits for the app to return to the active state.
+ * Interval between polling checks (2 seconds).
+ */
+const APP_ACTIVE_POLLING_INTERVAL = (2 * 1000) as Millisecond;
+
+/**
+ * Waits for the app to return to the active state using a polling strategy.
  * This prevents network requests from being killed and auto-retried
  * when the app transitions from inactive to active.
  *
- * Uses a race condition between:
- * - A timeout (to avoid waiting indefinitely)
- * - An action listener that waits for the app to become active
+ * Polls the app state every APP_ACTIVE_POLLING_INTERVAL milliseconds
+ * for a maximum of APP_ACTIVE_POLLING_TIMEOUT milliseconds.
+ * If the app becomes active before the timeout, returns immediately.
+ * If the timeout expires, continues anyway.
  */
 function* waitForAppActive() {
-  yield* race({
-    timeout: delay(APP_ACTIVE_TIMEOUT),
-    appActive: take(
-      (action: Action) =>
-        isActionOf(applicationChangeState, action) &&
-        action.payload === "active"
-    )
-  });
+  const startTime = new Date().getTime();
+
+  while (true) {
+    const currentAppState = yield* select(appCurrentStateSelector);
+
+    // If app is active, exit immediately
+    if (currentAppState === "active") {
+      return;
+    }
+
+    // Check if timeout has been exceeded
+    const now = new Date().getTime();
+    if (now - startTime >= APP_ACTIVE_POLLING_TIMEOUT) {
+      // Timeout exceeded, continue anyway
+      return;
+    }
+
+    // Wait before the next poll
+    yield* delay(APP_ACTIVE_POLLING_INTERVAL);
+  }
 }
 
 /**
@@ -353,6 +367,13 @@ function* watchFciSigningRequestSaga(): SagaIterator {
       qtspFilledDocumentUrl &&
       qtspNonce
     ) {
+      // Navigate to the Thank You Page immediately to show loading
+      NavigationService.dispatchNavigationAction(
+        CommonActions.navigate(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.TYP
+        })
+      );
+
       // Check if the app is in active state
       // This prevents the signature request from being killed and re-triggered
       // when the app transitions from inactive to active after biometric authentication
@@ -376,12 +397,6 @@ function* watchFciSigningRequestSaga(): SagaIterator {
 
       yield* put(fciSigningRequest.request(createSignaturePayload));
     }
-
-    NavigationService.dispatchNavigationAction(
-      CommonActions.navigate(FCI_ROUTES.MAIN, {
-        screen: FCI_ROUTES.TYP
-      })
-    );
   }
 }
 
