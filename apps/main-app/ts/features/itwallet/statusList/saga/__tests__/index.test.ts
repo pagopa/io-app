@@ -1,56 +1,28 @@
 import { testSaga } from "redux-saga-test-plan";
-import { itwCredentialsStore } from "../../../credentials/store/actions";
-import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
-import { selectItwSpecsVersion } from "../../../common/store/selectors/environment";
-import {
-  registerStatusListFetchTaskSaga,
-  startupStatusListCoherenceSaga
-} from "..";
-import { refreshStaleEntries, startupCoherence } from "../../utils/cache";
-import { itwStatusListReferencedUrisSelector } from "../../store/selectors";
-import { registerStatusListFetchTaskSaga } from "..";
-import { itwCredentialsStore } from "../../../credentials/store/actions";
-import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
-import {
-  registerItwStatusListFetchTask,
-  unregisterItwStatusListFetchTask
-} from "../../tasks/manager";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences";
+import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
+import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
+import { watchItwStatusListSaga } from "..";
 
-describe("registerStatusListFetchTaskSaga", () => {
-  it("registers the fetch task immediately when the wallet is valid", () => {
-    testSaga(registerStatusListFetchTaskSaga)
+describe("watchItwStatusListSaga", () => {
+  it("stops when L3 is not enabled", () => {
+    testSaga(watchItwStatusListSaga)
       .next()
-      .select(itwLifecycleIsValidSelector)
-      .next(true)
-      .call(registerItwStatusListFetchTask);
-  });
-
-  it("waits for wallet activation before registering the fetch task", () => {
-    testSaga(registerStatusListFetchTaskSaga)
-      .next()
-      .select(itwLifecycleIsValidSelector)
+      .select(itwIsL3EnabledSelector)
       .next(false)
-      .take(itwCredentialsStore)
-      .next()
-      .call(registerItwStatusListFetchTask);
+      .isDone();
   });
 
-  it("registers the fetch task again after reset and reactivation", () => {
-    testSaga(registerStatusListFetchTaskSaga)
+  it("forks status list sagas when L3 is enabled", () => {
+    testSaga(watchItwStatusListSaga)
       .next()
-      .select(itwLifecycleIsValidSelector)
+      .select(itwIsL3EnabledSelector)
       .next(true)
-      .call(registerItwStatusListFetchTask)
+      .fork(registerStatusListFetchTaskSaga)
       .next()
-      .take(itwLifecycleStoresReset)
+      .fork(checkStatusListCoherenceSaga)
       .next()
-      .call(unregisterItwStatusListFetchTask)
-      .next()
-      .select(itwLifecycleIsValidSelector)
-      .next(true)
-      .call(registerItwStatusListFetchTask);
+      .isDone();
   });
 });
 
