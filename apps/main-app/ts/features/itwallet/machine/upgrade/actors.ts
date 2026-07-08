@@ -203,17 +203,24 @@ export const createCredentialUpgradeActorsImplementation = (
   ...createCommonActorsImplementation(store)
 });
 
+type JwtPayload = {
+  status?: {
+    status_list: { idx: number; uri: string };
+  };
+};
+
 // Get the status list reference whithout fetching
 // to avoid adding further overhead to the upgrade flow.
-const enrichBundlesWithStatusListReference = async (
+// TODO: expose `getStatusListEntry` from io-react-native-wallet
+const enrichBundlesWithStatusListReference = (
   bundles: ReadonlyArray<CredentialBundle>
-): Promise<ReadonlyArray<CredentialBundle>> =>
+): ReadonlyArray<CredentialBundle> =>
   bundles.map(bundle => {
     if (bundle.metadata.format !== CredentialFormat.SD_JWT) {
       return bundle;
     }
     const decoded = decodeJwt(bundle.credential);
-    const statusList = decoded.payload.status.status_list;
+    const statusList = (decoded.payload as JwtPayload).status?.status_list;
     return statusList
       ? {
           credential: bundle.credential,
