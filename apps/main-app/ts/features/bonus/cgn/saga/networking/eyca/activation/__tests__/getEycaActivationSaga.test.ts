@@ -78,6 +78,29 @@ describe("handleEycaActivationSaga", () => {
         .isDone();
     }).not.toThrow();
   });
+
+  it("should dispatch timeout when polling threshold is exceeded", () => {
+    const nowSpy = jest
+      .spyOn(Date, "now")
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(10001);
+
+    expect(() => {
+      testSaga(handleEycaActivationSaga, getEycaActivation)
+        .next()
+        .call(getActivation, getEycaActivation)
+        .next("PROCESSING")
+        .put(cgnEycaActivation.success("POLLING"))
+        .next()
+        .call(startTimer, 1000)
+        .next()
+        .put(cgnEycaActivation.success("POLLING_TIMEOUT"))
+        .next()
+        .isDone();
+    }).not.toThrow();
+
+    nowSpy.mockRestore();
+  });
 });
 
 describe("getActivation", () => {
@@ -213,6 +236,19 @@ describe("getActivation", () => {
       expect(error.value.message).toBe("Network error");
     }
   });
+
+  it("should throw error on decoder failure payload", () => {
+    const iterator = getActivation(getEycaActivation);
+    iterator.next();
+
+    try {
+      iterator.next({ _tag: "Left", left: [] } as never);
+      throw new Error("expected getActivation to throw");
+    } catch (e) {
+      const error = e as ReturnType<typeof getGenericError>;
+      expect(error.kind).toBe("generic");
+    }
+  });
 });
 
 describe("handleStartActivation", () => {
@@ -248,5 +284,19 @@ describe("handleStartActivation", () => {
           .isDone();
       }).not.toThrow();
     });
+  });
+
+  it("should throw on unexpected start activation status", () => {
+    const iterator = handleStartActivation(startEycaActivation);
+    iterator.next();
+
+    try {
+      iterator.next({ _tag: "Right", right: { status: 500 } } as never);
+      throw new Error("expected handleStartActivation to throw");
+    } catch (e) {
+      const error = e as ReturnType<typeof getGenericError>;
+      expect(error.kind).toBe("generic");
+      expect(error.value.message).toBe("response status 500");
+    }
   });
 });

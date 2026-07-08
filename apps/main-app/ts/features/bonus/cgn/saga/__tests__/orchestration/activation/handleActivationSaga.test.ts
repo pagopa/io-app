@@ -1,4 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
+import { CommonActions } from "@react-navigation/native";
+import { call, take } from "redux-saga/effects";
 import NavigationService from "../../../../../../../navigation/NavigationService";
 import {
   navigateToCgnActivationCompleted,
@@ -6,9 +8,15 @@ import {
   navigateToCgnActivationTimeout
 } from "../../../orchestration/navigation/actions";
 import CGN_ROUTES from "../../../../navigation/routes";
-import { cgnActivationStatus } from "../../../../store/actions/activation";
+import {
+  cgnActivationCancel,
+  cgnActivationStatus
+} from "../../../../store/actions/activation";
 import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";
-import { cgnActivationWorker } from "../../../orchestration/activation/handleActivationSaga";
+import {
+  cgnActivationWorker,
+  handleCgnActivationSaga
+} from "../../../orchestration/activation/handleActivationSaga";
 
 jest.mock("react-native-share", () => ({
   open: jest.fn()
@@ -22,18 +30,21 @@ describe("cgnActivationWorker", () => {
       status: CgnActivationProgressEnum.SUCCESS
     });
 
-    testSaga(cgnActivationWorker, cgnActivationSaga)
-      .next()
-      .call(NavigationService.getCurrentRouteName)
-      .next("ANY_ROUTE")
-      .call(navigateToCgnActivationLoading)
-      .next()
-      .call(cgnActivationSaga)
-      .next(returnedAction)
-      .put(returnedAction)
-      .next()
-      .call(navigateToCgnActivationCompleted)
-      .next();
+    expect(() => {
+      testSaga(cgnActivationWorker, cgnActivationSaga)
+        .next()
+        .call(NavigationService.getCurrentRouteName)
+        .next("ANY_ROUTE")
+        .call(navigateToCgnActivationLoading)
+        .next()
+        .call(cgnActivationSaga)
+        .next(returnedAction)
+        .put(returnedAction)
+        .next()
+        .call(navigateToCgnActivationCompleted)
+        .next()
+        .isDone();
+    }).not.toThrow();
   });
 
   it("should activate user's CGN already on loading screen", () => {
@@ -41,16 +52,19 @@ describe("cgnActivationWorker", () => {
       status: CgnActivationProgressEnum.SUCCESS
     });
 
-    testSaga(cgnActivationWorker, cgnActivationSaga)
-      .next()
-      .call(NavigationService.getCurrentRouteName)
-      .next(CGN_ROUTES.ACTIVATION.LOADING)
-      .call(cgnActivationSaga)
-      .next(returnedAction)
-      .put(returnedAction)
-      .next()
-      .call(navigateToCgnActivationCompleted)
-      .next();
+    expect(() => {
+      testSaga(cgnActivationWorker, cgnActivationSaga)
+        .next()
+        .call(NavigationService.getCurrentRouteName)
+        .next(CGN_ROUTES.ACTIVATION.LOADING)
+        .call(cgnActivationSaga)
+        .next(returnedAction)
+        .put(returnedAction)
+        .next()
+        .call(navigateToCgnActivationCompleted)
+        .next()
+        .isDone();
+    }).not.toThrow();
   });
 
   it("should navigate to TIMEOUT SCREEN on user's CGN activation", () => {
@@ -58,17 +72,60 @@ describe("cgnActivationWorker", () => {
       status: CgnActivationProgressEnum.TIMEOUT
     });
 
-    testSaga(cgnActivationWorker, cgnActivationSaga)
-      .next()
-      .call(NavigationService.getCurrentRouteName)
-      .next("ANY_ROUTE")
-      .call(navigateToCgnActivationLoading)
-      .next()
-      .call(cgnActivationSaga)
-      .next(returnedAction)
-      .put(returnedAction)
-      .next()
-      .call(navigateToCgnActivationTimeout)
-      .next();
+    expect(() => {
+      testSaga(cgnActivationWorker, cgnActivationSaga)
+        .next()
+        .call(NavigationService.getCurrentRouteName)
+        .next("ANY_ROUTE")
+        .call(navigateToCgnActivationLoading)
+        .next()
+        .call(cgnActivationSaga)
+        .next(returnedAction)
+        .put(returnedAction)
+        .next()
+        .call(navigateToCgnActivationTimeout)
+        .next()
+        .isDone();
+    }).not.toThrow();
+  });
+
+  it("should stay on loading screen when activation fails", () => {
+    const returnedAction = cgnActivationStatus.failure(new Error("boom"));
+
+    expect(() => {
+      testSaga(cgnActivationWorker, cgnActivationSaga)
+        .next()
+        .call(NavigationService.getCurrentRouteName)
+        .next("ANY_ROUTE")
+        .call(navigateToCgnActivationLoading)
+        .next()
+        .call(cgnActivationSaga)
+        .next(returnedAction)
+        .put(returnedAction)
+        .next()
+        .isDone();
+    }).not.toThrow();
+  });
+});
+
+describe("handleCgnActivationSaga", () => {
+  it("should navigate back on cancel action", () => {
+    const cgnActivationSaga = jest.fn();
+
+    expect(() => {
+      testSaga(handleCgnActivationSaga, cgnActivationSaga)
+        .next()
+        .race({
+          activation: call(cgnActivationWorker, cgnActivationSaga),
+          cancelAction: take(cgnActivationCancel)
+        })
+        .next({ cancelAction: cgnActivationCancel() })
+        .call(
+          NavigationService.dispatchNavigationAction,
+          CommonActions.goBack()
+        )
+        .next()
+        .isDone();
+    }).not.toThrow();
   });
 });
