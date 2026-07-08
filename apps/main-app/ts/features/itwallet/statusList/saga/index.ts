@@ -1,9 +1,11 @@
 import { SagaIterator } from "redux-saga";
 import { call, fork, select } from "typed-redux-saga/macro";
+
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { checkStatusListCoherenceSaga } from "./checkStatusListCoherenceSaga";
 import { refreshStaleStatusListsSaga } from "./refreshStaleStatusListsSaga";
 import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
+
 export function* watchItwStatusListSaga(): SagaIterator {
   const isWhitelisted = yield* select(itwIsL3EnabledSelector);
   if (!isWhitelisted) {

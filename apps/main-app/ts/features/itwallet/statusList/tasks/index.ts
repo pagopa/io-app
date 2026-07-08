@@ -1,19 +1,8 @@
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
-import { storeLastStatusListCheckTimestamp } from "../utils/storage";
 
-/**
- * Identifier for the ITW Status List background fetch task.
- * Must match the task name used in TaskManager.defineTask.
- */
-export const ITW_STATUS_LIST_FETCH_TASK = "io-itw-status-list-fetch";
-
-/**
- * Interval in minutes for the ITW Status List fetch task.
- * The task will be scheduled to run approximately every this amount of minutes.
- * Note that the actual execution timing is determined by the OS and may vary.
- */
-export const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 4;
+import { refreshStaleEntries } from "../utils/refresh";
+import { ITW_STATUS_LIST_FETCH_TASK } from "../utils/consts";
 
 /**
  * Register the ITW Status List fetch task handler with expo-task-manager.
@@ -24,12 +13,10 @@ export const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 4;
  */
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
-    const itwVersion = await getPersistedItwVersion();
-    const now = Date.now();
+    // TODO get itw spec version
+    // const itwVersion = await getPersistedItwVersion();
 
-    await refreshStaleEntries({ itwVersion }, now);
-    await storeLastStatusListCheckTimestamp(now);
-
+    await refreshStaleEntries({ itwVersion: "1.3.3" });
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch {
     return BackgroundTask.BackgroundTaskResult.Failed;

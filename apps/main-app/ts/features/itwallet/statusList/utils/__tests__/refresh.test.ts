@@ -6,6 +6,7 @@ import {
   refreshStatusListToken,
   refreshWithBoundedParallelism
 } from "../refresh";
+import { STORAGE_KEY_LAST_CHECK_TIME } from "../storage";
 import { type StatusListContext } from "../types";
 
 const mockGetByUri = jest.fn<Promise<string>, [string]>();
@@ -203,31 +204,46 @@ describe("refreshWithBoundedParallelism", () => {
 
 describe("refreshStaleEntries", () => {
   beforeEach(async () => {
+    jest.restoreAllMocks();
     mockGetByUri.mockReset();
     await AsyncStorage.clear();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it("refreshes only stale entries", async () => {
     const freshUri = "https://issuer.example/status/fresh";
     const staleUri = "https://issuer.example/status/stale";
+    const now = 1500000;
+    jest.spyOn(Date, "now").mockReturnValue(now);
     mockGetByUri.mockImplementation(uri =>
       Promise.resolve(fakeJwt(makeValidPayload(uri)))
     );
 
-    await refreshStaleEntries(
-      [
-        makeValidPayload(freshUri, { exp: 2000 }),
-        makeValidPayload(staleUri, { exp: 1000 })
-      ],
-      context,
-      1500000
+    await StatusListRepository.upsert(
+      freshUri,
+      makeValidPayload(freshUri, { exp: 2000 })
     );
+    await StatusListRepository.upsert(
+      staleUri,
+      makeValidPayload(staleUri, { exp: 1000 })
+    );
+
+    await refreshStaleEntries(context);
 
     expect(mockGetByUri).toHaveBeenCalledTimes(1);
     expect(mockGetByUri).toHaveBeenCalledWith(staleUri);
-    await expect(StatusListRepository.get(freshUri)).resolves.toBeUndefined();
+    await expect(StatusListRepository.get(freshUri)).resolves.toMatchObject({
+      sub: freshUri,
+      exp: 2000
+    });
     await expect(StatusListRepository.get(staleUri)).resolves.toMatchObject({
       sub: staleUri
     });
+    await expect(
+      AsyncStorage.getItem(STORAGE_KEY_LAST_CHECK_TIME)
+    ).resolves.toBe(now.toString());
   });
 });

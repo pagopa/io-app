@@ -6,6 +6,7 @@ import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { StatusListRepository } from "./repository";
 import { StatusListContext } from "./types";
 import { isStale } from "./validity";
+import { storeLastStatusListCheckTimestamp } from "./storage";
 
 /** Maximum number of concurrent refresh operations. */
 const MAX_CONCURRENT_REFRESHES = 3;
@@ -81,13 +82,15 @@ export const refreshWithBoundedParallelism = async (
  * @param now - Current time in ms since epoch (injected for testability)
  */
 export const refreshStaleEntries = async (
-  tokens: ReadonlyArray<CredentialStatus.StatusList>,
-  context: StatusListContext,
-  now: number = Date.now()
+  context: StatusListContext
 ): Promise<void> => {
-  const staleUris = tokens
+  const now = Date.now();
+  const entries = await StatusListRepository.list();
+
+  const staleUris = entries
     .filter(payload => isStale(payload, now))
     .map(payload => payload.sub);
 
   await refreshWithBoundedParallelism(context, staleUris);
+  await storeLastStatusListCheckTimestamp(now);
 };
