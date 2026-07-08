@@ -25,7 +25,7 @@ export const DSAnimatedPictograms = () => {
   const insets = useSafeAreaInsets();
   const theme = useIOTheme();
 
-  const scrollGradientHeight: number = 32;
+  const scrollGradientHeight = 32;
   const pictogramSize: IOPictogramSizeScale = 180;
 
   const pictogramsRefs: Array<AnimatedPictogramType> = [

@@ -23,7 +23,7 @@ export const getBiometryIconName = (
 
 export const getAccessibiliyIdentificationInstructions = (
   biometricType: BiometricsValidType | undefined,
-  isBimoetricIdentificatoinFailed: boolean = false
+  isBimoetricIdentificatoinFailed = false
 ) => {
   if (isBimoetricIdentificatoinFailed) {
     return I18n.t("identification.instructions.useUnlockCodeA11y");
