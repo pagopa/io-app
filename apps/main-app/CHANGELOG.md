@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.36.0-rc.9](https://github.com/pagopa/io-app/compare/3.36.0-rc.8...3.36.0-rc.9) (2026-07-07)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4551](https://pagopa.atlassian.net/browse/SIW-4551)] Align credential offer intro screen to catalogue intro screen ([#8243](https://github.com/pagopa/io-app/issues/8243)) ([7cce544](https://github.com/pagopa/io-app/commit/7cce5449aa85565b7088b482575a00c2a689243c))
+
 ## [3.36.0-rc.8](https://github.com/pagopa/io-app/compare/3.36.0-rc.7...3.36.0-rc.8) (2026-07-07)
 
 
