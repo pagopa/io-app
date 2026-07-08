@@ -10,8 +10,6 @@ import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskS
 
 describe("registerStatusListFetchTaskSaga", () => {
   it("registers the fetch task immediately when the wallet is valid", () => {
-    expect.hasAssertions();
-
     testSaga(registerStatusListFetchTaskSaga)
       .next()
       .select(itwLifecycleIsValidSelector)
@@ -20,8 +18,6 @@ describe("registerStatusListFetchTaskSaga", () => {
   });
 
   it("waits for wallet activation before registering the fetch task", () => {
-    expect.hasAssertions();
-
     testSaga(registerStatusListFetchTaskSaga)
       .next()
       .select(itwLifecycleIsValidSelector)
@@ -32,8 +28,6 @@ describe("registerStatusListFetchTaskSaga", () => {
   });
 
   it("registers the fetch task again after reset and reactivation", () => {
-    expect.hasAssertions();
-
     testSaga(registerStatusListFetchTaskSaga)
       .next()
       .select(itwLifecycleIsValidSelector)

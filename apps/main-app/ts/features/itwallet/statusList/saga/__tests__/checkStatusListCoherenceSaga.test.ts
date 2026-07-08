@@ -13,8 +13,6 @@ const makePayload = (sub: string): CredentialStatus.StatusList => ({
 
 describe("checkStatusListCoherenceSaga", () => {
   it("removes cached URIs that are no longer referenced", () => {
-    expect.hasAssertions();
-
     const referencedUris = ["https://issuer.example/status/1"];
     const cached = [
       makePayload("https://issuer.example/status/1"),
@@ -35,8 +33,6 @@ describe("checkStatusListCoherenceSaga", () => {
   });
 
   it("does not remove anything when every cached URI is referenced", () => {
-    expect.hasAssertions();
-
     const referencedUris = [
       "https://issuer.example/status/1",
       "https://issuer.example/status/1"

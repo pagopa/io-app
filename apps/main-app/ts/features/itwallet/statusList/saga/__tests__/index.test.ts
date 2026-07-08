@@ -6,8 +6,6 @@ import { watchItwStatusListSaga } from "..";
 
 describe("watchItwStatusListSaga", () => {
   it("stops when L3 is not enabled", () => {
-    expect.hasAssertions();
-
     testSaga(watchItwStatusListSaga)
       .next()
       .select(itwIsL3EnabledSelector)
@@ -16,8 +14,6 @@ describe("watchItwStatusListSaga", () => {
   });
 
   it("forks status list sagas when L3 is enabled", () => {
-    expect.hasAssertions();
-
     testSaga(watchItwStatusListSaga)
       .next()
       .select(itwIsL3EnabledSelector)
