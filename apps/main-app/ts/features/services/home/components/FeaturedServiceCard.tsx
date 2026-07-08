@@ -28,7 +28,7 @@ export type FeaturedServiceCardProps = WithTestID<{
 export const CARD_WIDTH = 210;
 
 const cardPadding: IOSpacingScale = 16;
-const cardBorderRadius: number = 8;
+const cardBorderRadius = 8;
 /* Space between the `Avatar` and the content below */
 const cardSafeInnerSpace: IOSpacingScale = 16;
 
