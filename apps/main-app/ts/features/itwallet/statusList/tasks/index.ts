@@ -1,8 +1,9 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
 
-import { refreshStaleEntries } from "../utils/refresh";
 import { ITW_STATUS_LIST_FETCH_TASK } from "../utils/consts";
+import { refreshStaleEntries } from "../utils/refresh";
 
 /**
  * Register the ITW Status List fetch task handler with expo-task-manager.
@@ -14,7 +15,7 @@ import { ITW_STATUS_LIST_FETCH_TASK } from "../utils/consts";
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
     // TODO [SIW-4623] get itw spec version from background context
-    const itwVersion = "1.3.3";
+    const itwVersion: ItwVersion = "1.3.3";
 
     await refreshStaleEntries({ itwVersion });
     return BackgroundTask.BackgroundTaskResult.Success;
