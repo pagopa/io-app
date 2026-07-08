@@ -42,7 +42,7 @@ import { CieWarningType } from "../../../identification/cie/utils/types";
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
 const T_INTEGRITY_KEY = "abc";
-const T_WIA: string = "abcdefg";
+const T_WIA = "abcdefg";
 const T_WUA = { wua1: "wua-jwt" };
 const T_ROUTE_NAME = "ITW_IDENTIFICATION_TEST_ROUTE";
 const T_ACCESS_TOKEN: CredentialAccessToken = {

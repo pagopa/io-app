@@ -87,7 +87,7 @@ describe("OnboardingNotificationsPreferencesScreen", () => {
 
 const renderScreen = (
   isFirstOnboarding: boolean,
-  isUpdatingProfile: boolean = false
+  isUpdatingProfile = false
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const finalState = {
