@@ -61,7 +61,7 @@ export function* handleGetIDPayInitiativesFromInstrument(
 
 export function* handleInitiativesFromInstrumentRefresh(
   idWallet: string,
-  refreshDelay: number = 5000
+  refreshDelay = 5000
 ) {
   while (true) {
     yield* delay(refreshDelay);

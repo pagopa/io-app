@@ -16,7 +16,7 @@ import {
   handleFimsResourcesDeallocation
 } from "../sagaUtils";
 
-const abortTimeoutMillisecondsGenerator: number = 8000;
+const abortTimeoutMillisecondsGenerator = 8000;
 
 describe("handleFimsAbortOrCancel", () => {
   const mockedOidcProviderDomain = "https://provider.com";
