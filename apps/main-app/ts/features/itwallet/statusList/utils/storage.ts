@@ -18,7 +18,7 @@ export const storeLastStatusListCheckTimestamp = async (
       STORAGE_KEY_LAST_CHECK_TIME,
       timestamp.toString()
     );
-  } catch (error) {
+  } catch {
     // Since the store happens outside the app context, there's no way to log or
     // track this error
   }
@@ -35,7 +35,7 @@ export const getLastStatusListCheckTimestamp = async (): Promise<
   try {
     const raw = await AsyncStorage.getItem(STORAGE_KEY_LAST_CHECK_TIME);
     return raw ? parseInt(raw, 10) : undefined;
-  } catch (error) {
+  } catch {
     return undefined;
   }
 };
@@ -54,7 +54,7 @@ export const storeLastStatusListFetchTimestamp = async (
       STORAGE_KEY_LAST_FETCH_TIME,
       timestamp.toString()
     );
-  } catch (error) {
+  } catch {
     // Since the store happens outside the app context, there's no way to log or
     // track this error
   }
@@ -74,7 +74,7 @@ export const getLastStatusListFetchTimestamp = async (): Promise<
   try {
     const raw = await AsyncStorage.getItem(STORAGE_KEY_LAST_FETCH_TIME);
     return raw ? parseInt(raw, 10) : undefined;
-  } catch (error) {
+  } catch {
     return undefined;
   }
 };

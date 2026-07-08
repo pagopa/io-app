@@ -1,6 +1,5 @@
 /* eslint-disable functional/immutable-data */
 import {
-  Canvas,
   Rect,
   LinearGradient as SkiaLinearGradient,
   vec

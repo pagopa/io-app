@@ -51,15 +51,18 @@ describe("tokenRefreshSaga", () => {
     testableTokenRefreshSaga.handleRefreshSessionToken;
   const doRefreshTokenSaga = testableTokenRefreshSaga.doRefreshTokenSaga;
   const handleRequestError = testableTokenRefreshSaga.handleRequestError;
-  const RequestStateType = testableTokenRefreshSaga.types.RequestStateType;
+  type RequestStateType = NonNullable<
+    typeof testableTokenRefreshSaga
+  >["types"]["RequestStateType"];
 
   if (!testable?.types.RefreshSessionTokenRequestPayload) {
     throw new Error(
       "RefreshSessionTokenRequestPayload is not available in test environment"
     );
   }
-  const RefreshSessionTokenRequestPayload =
-    testable?.types.RefreshSessionTokenRequestPayload;
+  type RefreshSessionTokenRequestPayload = NonNullable<
+    typeof testable
+  >["types"]["RefreshSessionTokenRequestPayload"];
 
   it("should watch refreshSessionToken.request with takeLatest", () => {
     const gen = watchTokenRefreshSaga();
@@ -70,7 +73,7 @@ describe("tokenRefreshSaga", () => {
 
   describe("handleRefreshSessionToken", () => {
     const createAction = (
-      withUserInteraction: typeof RefreshSessionTokenRequestPayload
+      withUserInteraction: RefreshSessionTokenRequestPayload
     ) => refreshSessionToken.request(withUserInteraction);
 
     it("should dispatch refreshTokenNoPinError if pin is missing and interaction is true", () => {
@@ -246,7 +249,7 @@ describe("tokenRefreshSaga", () => {
 
   describe("doRefreshTokenSaga", () => {
     const createAction = (
-      payload: typeof RefreshSessionTokenRequestPayload = {
+      payload: RefreshSessionTokenRequestPayload = {
         withUserInteraction: false,
         showIdentificationModalAtStartup: false,
         showLoader: false
@@ -292,7 +295,7 @@ describe("tokenRefreshSaga", () => {
     });
   });
   it("should set max-retries when no response is provided", () => {
-    const requestState: typeof RequestStateType = {
+    const requestState: RequestStateType = {
       counter: fastLoginMaxRetries - 1,
       status: "in-progress",
       error: undefined
