@@ -13,7 +13,7 @@ import {
 } from "../../store/actions/tokenRefreshActions";
 
 import { getPin } from "../../../../../utils/keychain";
-import { logoutRequest } from "../../../common/store/actions";
+import { logoutRequest, sessionExpired } from "../../../common/store/actions";
 import { dismissSupport } from "../../../../../utils/supportAssistance";
 import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
@@ -269,27 +269,26 @@ describe("tokenRefreshSaga", () => {
       const action = createAction();
       const gen = doRefreshTokenSaga(action);
 
-      gen.next(); // showLoader
-      gen.next(); // createNonceClient
-
-      const response403 = E.right({
-        status: 403,
-        value: { token: "fake" }
-      });
-
+      // Step through the happy path up to performFastLogin, providing a valid
+      // nonce so the saga reaches the token request.
       gen.next(); // performGetNonce
-      gen.next(response403); // simulate nonce OK
-      gen.next(); // getKeyInfo
-      gen.next({}); // keyInfo
-      gen.next(); // createFastLoginClient
-      gen.next(
-        E.right({
-          status: 403,
-          value: {}
-        })
+      const nonceOk = E.right({ status: 200, value: { nonce: "fake-nonce" } });
+      gen.next(nonceOk); // getKeyInfo
+      gen.next({}); // performFastLogin
+
+      // A 403 on the token request triggers the retry delay before the error
+      // is classified as a session expiration.
+      expect(gen.next(E.right({ status: 403, value: {} })).value).toEqual(
+        delay(1000)
       );
 
-      gen.next(); // delay
+      // Once resumed, the 403 is handled as session-expired: the saga fails the
+      // refresh and dispatches sessionExpired, then completes.
+      expect(gen.next().value).toEqual(
+        put(refreshSessionToken.failure(new Error("response status 403")))
+      );
+      expect(gen.next().value).toEqual(put(sessionExpired()));
+      expect(gen.next().done).toBe(true);
     });
   });
   it("should set max-retries when no response is provided", () => {
