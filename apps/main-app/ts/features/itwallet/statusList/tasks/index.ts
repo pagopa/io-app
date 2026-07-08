@@ -13,10 +13,10 @@ import { ITW_STATUS_LIST_FETCH_TASK } from "../utils/consts";
  */
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
-    // TODO get itw spec version
-    // const itwVersion = await getPersistedItwVersion();
+    // TODO [SIW-4623] get itw spec version from background context
+    const itwVersion = "1.3.3";
 
-    await refreshStaleEntries({ itwVersion: "1.3.3" });
+    await refreshStaleEntries({ itwVersion });
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch {
     return BackgroundTask.BackgroundTaskResult.Failed;
