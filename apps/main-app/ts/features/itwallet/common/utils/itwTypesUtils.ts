@@ -104,8 +104,8 @@ type LegacyCredentialValidity =
 type CredentialValidity = {
   type: "status_list";
   statusList: { idx: number; uri: string };
-  rawStatus: string;
-  status: string;
+  rawStatus?: string;
+  status?: string;
 };
 
 /**

@@ -1,4 +1,5 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
+import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import * as O from "fp-ts/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
@@ -9,6 +10,7 @@ import { getRepresentativeVaultId } from "../../common/utils/itwCredentialUtils"
 import {
   CredentialAccessToken,
   CredentialBundle,
+  CredentialFormat,
   CredentialMetadata,
   IssuerConfiguration,
   WalletInstanceAttestations
@@ -187,7 +189,7 @@ export const createCredentialUpgradeActorsImplementation = (
 
     return {
       credentialType: credential.credentialType,
-      credentials,
+      credentials: enrichBundlesWithStatusListReference(credentials),
       walletUnitAttestations: authorizedCredentials.reduce(
         (acc, c) =>
           c.walletUnitAttestationId && c.walletUnitAttestation
@@ -200,3 +202,25 @@ export const createCredentialUpgradeActorsImplementation = (
 
   ...createCommonActorsImplementation(store)
 });
+
+// Get the status list reference whithout fetching
+// to avoid adding further overhead to the upgrade flow.
+const enrichBundlesWithStatusListReference = async (
+  bundles: ReadonlyArray<CredentialBundle>
+): Promise<ReadonlyArray<CredentialBundle>> =>
+  bundles.map(bundle => {
+    if (bundle.metadata.format !== CredentialFormat.SD_JWT) {
+      return bundle;
+    }
+    const decoded = decodeJwt(bundle.credential);
+    const statusList = decoded.payload.status.status_list;
+    return statusList
+      ? {
+          credential: bundle.credential,
+          metadata: {
+            ...bundle.metadata,
+            validity: { type: "status_list", statusList }
+          }
+        }
+      : bundle;
+  });
