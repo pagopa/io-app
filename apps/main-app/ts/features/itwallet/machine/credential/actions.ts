@@ -104,7 +104,7 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents,
     CredentialIssuanceEvents
   >) => {
-    navigation.replace(ITW_ROUTES.MAIN, {
+    navigation.navigate(ITW_ROUTES.MAIN, {
       screen: context.isItWalletValid
         ? ITW_ROUTES.L3_ONBOARDING
         : ITW_ROUTES.ONBOARDING
