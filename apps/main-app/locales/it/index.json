@@ -2294,6 +2294,11 @@
     }
   },
   "features": {
+    "fseDiscoveryBanner": {
+      "title": "Il tuo Fascicolo Sanitario Elettronico è già disponibile!",
+      "body": "Accedi e consulta referti, prescrizioni e servizi in un unico spazio digitale. È semplice e sicuro. Con te, per la tua salute.",
+      "cta": "Vai al tuo Fascicolo"
+    },
     "messages": {
       "pushNotifications": {
         "banner": {
@@ -4590,10 +4595,10 @@
         },
         "addCredential": {
           "title": "Aggiungi un documento",
-          "description": "Premi “+” o “Aggiungi documento” per scegliere un documento digitale da aggiungere al Portafoglio."
+          "description": "Premi “+” per scegliere un documento digitale da aggiungere al Portafoglio."
         },
         "qrCode": {
-          "title": "Mostra il codice QR a chi verifica",
+          "title": "Mostra i documenti a chi verifica",
           "description": "Chi verifica i tuoi documenti dal vivo usa un’app ufficiale per scansionare questo codice QR. "
         }
       }

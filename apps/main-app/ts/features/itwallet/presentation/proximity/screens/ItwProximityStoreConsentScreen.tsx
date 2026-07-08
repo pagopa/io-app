@@ -12,7 +12,7 @@ export const ItwProximityStoreConsentScreen = () => {
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
 
   const handleContinue =
-    (storeConsent: boolean = false) =>
+    (storeConsent = false) =>
     () =>
       dispatch(
         identificationRequest(

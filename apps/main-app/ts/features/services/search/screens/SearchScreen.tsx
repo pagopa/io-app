@@ -33,7 +33,7 @@ import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibil
 import * as analytics from "../../common/analytics";
 
 const INPUT_PADDING: IOSpacingScale = 16;
-const MIN_QUERY_LENGTH: number = 3;
+const MIN_QUERY_LENGTH = 3;
 
 type InstitutionListItemComponentProps = {
   item: Institution;

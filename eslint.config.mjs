@@ -107,15 +107,23 @@ export default defineConfig([
       // Auto-fix corrupts multi-line property values (see comment below)
       "perfectionist/sort-objects": "off",
 
+      // Allow `_`-prefixed throwaways and rest-sibling destructuring omits
+      // (`const { key, ...rest } = obj`), matching tsc's own noUnusedLocals.
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          ignoreRestSiblings: true
+        }
+      ],
+
       // Rules from tseslint.strict / pagopa config that require widespread
       // refactoring incompatible with the current codebase
       "max-lines-per-function": "off",
       "@typescript-eslint/no-invalid-void-type": "off",
-      "@typescript-eslint/no-empty-function": "off",
       "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "@typescript-eslint/no-inferrable-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
 
       // Incorrectly fires on mapped types (`[P in ...]`) — only meant for
@@ -314,16 +322,15 @@ export default defineConfig([
   },
   {
     files: [
-      "**/*.test.ts",
-      "**/*.test.tsx",
-      "**/__tests__/**/*.ts",
-      "**/__tests__/**/*.tsx"
+      "**/*.test.{ts,tsx}",
+      "**/{__tests__,__mocks__}/**/*.{ts,tsx}"
     ],
 
     rules: {
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-shadow": "off",
       "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-empty-function": "off",
       "i18next/no-literal-string": "off",
       "no-restricted-imports": "off"
     }
@@ -348,16 +355,7 @@ export default defineConfig([
   },
   {
     files: [
-      "**/design-system/**/*.ts",
-      "**/design-system/**/*.tsx",
-      "**/playgrounds/**/*.ts",
-      "**/playgrounds/**/*.tsx",
-      "**/devMode/**/*.ts",
-      "**/devMode/**/*.tsx",
-      "**/debug/**/*.ts",
-      "**/debug/**/*.tsx",
-      "**/__mocks__/**/*.ts",
-      "**/__mocks__/**/*.tsx"
+      "**/{design-system,playgrounds,devMode,debug,__mocks__}/**/*.{ts,tsx}"
     ],
 
     rules: {
