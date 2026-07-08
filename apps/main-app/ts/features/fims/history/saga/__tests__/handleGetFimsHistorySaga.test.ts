@@ -98,7 +98,7 @@ describe("handleGetFimsHistorySaga", () => {
 
     expect(mockTrackFailure).toHaveBeenCalledWith("GENERIC_NON_200: 404");
   });
-  it("Should dispatch fimsHistoryGet.failure if the response's decode has failed ( its status is [left] ) ", () => {
+  it("Should dispatch fimsHistoryGet.failure if the response's decode has failed ( its status is [left] )", () => {
     const mockTrackFailure = jest.fn();
     jest
       .spyOn(TRACK_FAILURE, "trackHistoryFailure")

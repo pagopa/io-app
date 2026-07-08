@@ -3119,7 +3119,7 @@
       }
     },
     "itWallet": {
-      "title": "IT-WALLET",
+      "title": "IT-Wallet",
       "credentialName": {
         "pid": "IT-Wallet ID",
         "eid": "Identità Digitale",
@@ -3999,7 +3999,7 @@
           "trustmark": "Mostra certificato di autenticità",
           "openPdf": "Mostra documento",
           "shareButton": "Salva o condividi",
-          "present": "Avvia verifica"
+          "present": "Mostra codice QR"
         },
         "eid": {
           "verificationExpired": {
@@ -4590,10 +4590,10 @@
         },
         "addCredential": {
           "title": "Aggiungi un documento",
-          "description": "Premi “+” o “Aggiungi documento” per scegliere un documento digitale da aggiungere al Portafoglio."
+          "description": "Premi “+” per scegliere un documento digitale da aggiungere al Portafoglio."
         },
         "qrCode": {
-          "title": "Mostra il codice QR a chi verifica",
+          "title": "Mostra i documenti a chi verifica",
           "description": "Chi verifica i tuoi documenti dal vivo usa un’app ufficiale per scansionare questo codice QR. "
         }
       }
