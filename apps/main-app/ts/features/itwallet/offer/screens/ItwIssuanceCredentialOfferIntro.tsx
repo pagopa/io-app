@@ -73,7 +73,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     selectCredentialTypeOption
   );
   const credentialType = O.toUndefined(credentialTypeOption);
-  const markdownContent = useIOSelector(
+  const introductionContent = useIOSelector(
     itwCredentialIntroContentSelector(credentialType)
   );
 
@@ -101,7 +101,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   }, [machineRef]);
 
   const isResolved = O.isSome(resolvedCredentialOfferOption) && credentialType;
-  const shouldSkipIntro = isResolved && !markdownContent;
+  const shouldSkipIntro = isResolved && !introductionContent;
 
   useEffect(() => {
     if (shouldSkipIntro) {
@@ -137,9 +137,9 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
       <ContentWrapper marginTop={24}>
         <H2>{title}</H2>
         <VSpacer size={16} />
-        {markdownContent && (
+        {introductionContent && (
           <View style={styles.contentBox}>
-            <IOMarkdown content={markdownContent} />
+            <IOMarkdown content={introductionContent} />
           </View>
         )}
       </ContentWrapper>
