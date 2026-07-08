@@ -313,7 +313,7 @@ export const createEidIssuanceActionsImplementation = (
     store.dispatch(itwSetIdentificationMode(context.identification?.mode));
   },
 
-  storeNotEmptyWalletSuccessBannerData: ({
+  storeWalletActivationFeedbackBannerData: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     // Store banner data only for:

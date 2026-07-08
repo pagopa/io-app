@@ -98,7 +98,7 @@ const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 const trackItwIdAuthenticationCompleted = jest.fn();
 const trackItwIdVerifiedDocument = jest.fn();
-const storeNotEmptyWalletSuccessBannerData = jest.fn();
+const storeWalletActivationFeedbackBannerData = jest.fn();
 
 /**
  * Actors
@@ -166,7 +166,7 @@ describe("itwEidIssuanceMachine", () => {
       storeAuthLevel,
       trackItwIdAuthenticationCompleted,
       trackItwIdVerifiedDocument,
-      storeNotEmptyWalletSuccessBannerData
+      storeWalletActivationFeedbackBannerData
     },
     actors: {
       verifyTrustFederation: fromPromise<void, WithItwVersion>(
@@ -1096,9 +1096,9 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "add-new-credential" });
 
     expect(navigateToCredentialCatalog).toHaveBeenCalledTimes(1);
-    // entry does not re-fire when resuming from a snapshot, so storeNotEmptyWalletSuccessBannerData
+    // entry does not re-fire when resuming from a snapshot, so storeWalletActivationFeedbackBannerData
     // is never called in this path (it only fires on entry when credentialType is set)
-    expect(storeNotEmptyWalletSuccessBannerData).not.toHaveBeenCalled();
+    expect(storeWalletActivationFeedbackBannerData).not.toHaveBeenCalled();
   });
 
   it("Should store banner data on entering Success when EID activation was triggered by a credential request", async () => {
@@ -1127,8 +1127,8 @@ describe("itwEidIssuanceMachine", () => {
 
     await waitForActor(actor, snap => snap.matches("Success"));
 
-    // entry fires on genuine transition into Success → storeNotEmptyWalletSuccessBannerData called
-    expect(storeNotEmptyWalletSuccessBannerData).toHaveBeenCalledTimes(1);
+    // entry fires on genuine transition into Success → storeWalletActivationFeedbackBannerData called
+    expect(storeWalletActivationFeedbackBannerData).toHaveBeenCalledTimes(1);
     // add-new-credential is not sent in this flow
     expect(navigateToCredentialCatalog).not.toHaveBeenCalled();
   });
