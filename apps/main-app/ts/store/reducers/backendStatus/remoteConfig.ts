@@ -582,7 +582,7 @@ export const generateDynamicUrlSelector = createSelector(
 
       // Append the provided path to the base URL.
       return `${baseUrl}${path}`;
-    } catch (error) {
+    } catch {
       // In case of an error (e.g., missing key or invalid path), return the base URL key as a fallback.
       return baseUrlKey;
     }

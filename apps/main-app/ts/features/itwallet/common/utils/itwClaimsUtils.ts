@@ -390,7 +390,7 @@ const DrivingPrivilegesFromFlatRaw = new t.Type<
           restrictions_conditions: null
         }))
       );
-    } catch (e) {
+    } catch {
       return t.failure(input, c);
     }
   },
@@ -458,7 +458,7 @@ export const DrivingPrivilegesFromRaw = new t.Type<
             item.codes?.value.map(({ code }) => code.value).join(", ") ?? null
         }))
       );
-    } catch (e) {
+    } catch {
       return t.failure(input, c);
     }
   },
