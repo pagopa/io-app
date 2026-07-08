@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import _ from "lodash";
 import { act, fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import I18n from "i18next";
