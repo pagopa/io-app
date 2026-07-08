@@ -10,8 +10,8 @@ import {
   paginatedInstitutionsPotSelector
 } from "../store/selectors";
 
-const LIMIT: number = 10;
-const NEXT_PAGE_LOADING_WAIT_MILLISECONDS: number = 1000;
+const LIMIT = 10;
+const NEXT_PAGE_LOADING_WAIT_MILLISECONDS = 1000;
 
 export const useInstitutionsFetcher = () => {
   const dispatch = useIODispatch();
