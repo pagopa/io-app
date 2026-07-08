@@ -21,6 +21,18 @@ import { getLastStatusListCheckTimestamp } from "../../statusList/utils/storage"
 const formatDate = (timestamp: number | undefined): string =>
   timestamp ? format(new Date(timestamp), "DD/MM/YY HH:mm:ss") : "n/a";
 
+const formatAge = (lastFetchTime: number | undefined): string => {
+  if (!lastFetchTime) {
+    return "n/a";
+  }
+
+  const diffInMs = Date.now() - lastFetchTime;
+  const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+  const diffInMinutes = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
+
+  return `${diffInHours}h ${diffInMinutes}m`;
+};
+
 export const ItwStatusListSection = () => {
   const [lastCheckTime, setLastCheckTime] = useState<number>();
 
@@ -34,6 +46,8 @@ export const ItwStatusListSection = () => {
     <View>
       <ListItemHeader label="Status List" />
       <ListItemInfo label="Last check" value={formatDate(lastCheckTime)} />
+      <Divider />
+      <ListItemInfo label="Age" value={formatAge(lastCheckTime)} />
       <VSpacer size={8} />
       <IOButton
         variant="solid"
