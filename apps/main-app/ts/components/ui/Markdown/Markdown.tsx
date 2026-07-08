@@ -78,11 +78,11 @@ export const Markdown = (props: MarkdownProps) => {
   const compileMarkdownAsync = useCallback(
     (
       markdown: string,
-      animated: boolean = false,
+      animated = false,
       onError?: (error: any) => void,
       cssStyle?: string,
-      useCustomSortedList: boolean = false,
-      avoidTextSelection: boolean = false
+      useCustomSortedList = false,
+      avoidTextSelection = false
     ) => {
       requestAnimationFrame(() => {
         if (animated) {
