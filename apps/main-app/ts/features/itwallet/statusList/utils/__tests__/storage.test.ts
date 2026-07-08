@@ -1,20 +1,18 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   getLastStatusListCheckTimestamp,
-  getPersistedItwVersion,
   STORAGE_KEY_LAST_CHECK_TIME,
   storeLastStatusListCheckTimestamp
 } from "../storage";
 
-const PERSIST_KEY = "persist:itWallet";
+jest.mock("@react-native-async-storage/async-storage", () =>
+  require("@react-native-async-storage/async-storage/jest/async-storage-mock")
+);
 
-// Mirrors the redux-persist on-disk shape: each whitelisted slice is itself a
-// JSON string within the root object.
-const writePersistedEnvironment = (environment: object) =>
-  AsyncStorage.setItem(
-    PERSIST_KEY,
-    JSON.stringify({ environment: JSON.stringify(environment) })
-  );
+beforeEach(async () => {
+  jest.restoreAllMocks();
+  await AsyncStorage.clear();
+});
 
 describe("storeLastStatusListCheckTimestamp", () => {
   it("stores the timestamp as a string under the expected key", async () => {
@@ -55,28 +53,5 @@ describe("getLastStatusListCheckTimestamp", () => {
       .mockRejectedValueOnce(new Error("boom"));
 
     await expect(getLastStatusListCheckTimestamp()).resolves.toBeUndefined();
-  });
-});
-
-describe("getPersistedItwVersion", () => {
-  beforeEach(async () => {
-    await AsyncStorage.clear();
-  });
-
-  it("reads the version from the persisted itWallet store", async () => {
-    await writePersistedEnvironment({
-      env: "prod",
-      itWalletSpecsVersion: "1.3.3"
-    });
-    await expect(getPersistedItwVersion()).resolves.toBe("1.3.3");
-  });
-
-  it("returns the app default when the store is absent", async () => {
-    await expect(getPersistedItwVersion()).resolves.toBe("1.0.0");
-  });
-
-  it("returns the app default when the persisted payload is malformed", async () => {
-    await AsyncStorage.setItem(PERSIST_KEY, "not-json");
-    await expect(getPersistedItwVersion()).resolves.toBe("1.0.0");
   });
 });

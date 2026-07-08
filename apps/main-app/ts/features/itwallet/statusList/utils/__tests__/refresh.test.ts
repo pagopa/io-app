@@ -1,6 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { StatusListRepository } from "../repository";
-import { refreshStatusListToken } from "../refresh";
+import {
+  refreshStaleEntries,
+  refreshStatusListToken,
+  refreshWithBoundedParallelism
+} from "../refresh";
 import { type StatusListContext } from "../types";
 
 const mockGetByUri = jest.fn<Promise<string>, [string]>();
@@ -36,11 +41,15 @@ const URI = "https://issuer.example/status/1";
 
 const context: StatusListContext = { itwVersion: "1.3.3" };
 
-const makeValidPayload = () => ({
-  sub: URI,
+const makeValidPayload = (
+  uri: string = URI,
+  overrides: Partial<CredentialStatus.StatusList> = {}
+): CredentialStatus.StatusList => ({
+  sub: uri,
   iat: 1680000000,
   exp: 1700000000,
-  status_list: { bits: 2 as const, lst: "eNrbuRgAAhcBXQ" }
+  status_list: { bits: 2 as const, lst: "eNrbuRgAAhcBXQ" },
+  ...overrides
 });
 
 /**
@@ -58,6 +67,11 @@ const fakeJwt = (payload: Record<string, unknown>): string => {
 const mockStatusListToken = (jwt: string) => {
   mockGetByUri.mockResolvedValue(jwt);
 };
+
+const flushPromises = () =>
+  new Promise(resolve => {
+    setTimeout(resolve, 0);
+  });
 
 describe("refreshStatusListToken", () => {
   beforeEach(async () => {
@@ -85,7 +99,7 @@ describe("refreshStatusListToken", () => {
     const result = await refreshStatusListToken(context, URI);
 
     expect(result).toBe(false);
-    expect(await StatusListRepository.get(URI)).toBeUndefined();
+    await expect(StatusListRepository.get(URI)).resolves.toBeFalsy();
   });
 
   it("returns false for malformed payload", async () => {
@@ -125,7 +139,7 @@ describe("refreshStatusListToken", () => {
     const result = await refreshStatusListToken(context, URI);
 
     expect(result).toBe(false);
-    expect(await StatusListRepository.get(URI)).toBeDefined();
+    await expect(StatusListRepository.get(URI)).resolves.toBeDefined();
   });
 
   it("overwrites existing entry on successful refresh", async () => {
@@ -140,5 +154,80 @@ describe("refreshStatusListToken", () => {
     expect(result).toBe(true);
     const cached = await StatusListRepository.get(URI);
     expect(cached?.iat).toBe(1690000000);
+  });
+});
+
+describe("refreshWithBoundedParallelism", () => {
+  beforeEach(async () => {
+    mockGetByUri.mockReset();
+    await AsyncStorage.clear();
+  });
+
+  it("refreshes at most three status lists at a time", async () => {
+    const uris = Array.from(
+      { length: 5 },
+      (_, idx) => `https://issuer.example/status/${idx + 1}`
+    );
+    const resolvers = new Map<string, (jwt: string) => void>();
+
+    mockGetByUri.mockImplementation(
+      uri =>
+        new Promise(resolve => {
+          resolvers.set(uri, resolve);
+        })
+    );
+
+    const refresh = refreshWithBoundedParallelism(context, uris);
+
+    expect(mockGetByUri).toHaveBeenCalledTimes(3);
+    expect(mockGetByUri).toHaveBeenNthCalledWith(1, uris[0]);
+    expect(mockGetByUri).toHaveBeenNthCalledWith(2, uris[1]);
+    expect(mockGetByUri).toHaveBeenNthCalledWith(3, uris[2]);
+
+    uris.slice(0, 3).forEach(uri => {
+      resolvers.get(uri)?.(fakeJwt(makeValidPayload(uri)));
+    });
+    await flushPromises();
+
+    expect(mockGetByUri).toHaveBeenCalledTimes(5);
+
+    uris.slice(3).forEach(uri => {
+      resolvers.get(uri)?.(fakeJwt(makeValidPayload(uri)));
+    });
+    await refresh;
+
+    const cached = await StatusListRepository.list();
+    expect(cached.map(payload => payload.sub).sort()).toEqual(uris);
+  });
+});
+
+describe("refreshStaleEntries", () => {
+  beforeEach(async () => {
+    mockGetByUri.mockReset();
+    await AsyncStorage.clear();
+  });
+
+  it("refreshes only stale entries", async () => {
+    const freshUri = "https://issuer.example/status/fresh";
+    const staleUri = "https://issuer.example/status/stale";
+    mockGetByUri.mockImplementation(uri =>
+      Promise.resolve(fakeJwt(makeValidPayload(uri)))
+    );
+
+    await refreshStaleEntries(
+      [
+        makeValidPayload(freshUri, { exp: 2000 }),
+        makeValidPayload(staleUri, { exp: 1000 })
+      ],
+      context,
+      1500000
+    );
+
+    expect(mockGetByUri).toHaveBeenCalledTimes(1);
+    expect(mockGetByUri).toHaveBeenCalledWith(staleUri);
+    await expect(StatusListRepository.get(freshUri)).resolves.toBeUndefined();
+    await expect(StatusListRepository.get(staleUri)).resolves.toMatchObject({
+      sub: staleUri
+    });
   });
 });

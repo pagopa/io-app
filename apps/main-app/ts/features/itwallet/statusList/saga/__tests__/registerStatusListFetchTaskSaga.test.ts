@@ -1,3 +1,4 @@
+/* eslint-disable jest/expect-expect */
 import { testSaga } from "redux-saga-test-plan";
 import { itwCredentialsStore } from "../../../credentials/store/actions";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";

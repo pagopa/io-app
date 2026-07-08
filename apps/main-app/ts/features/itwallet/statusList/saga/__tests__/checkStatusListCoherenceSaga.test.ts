@@ -1,3 +1,4 @@
+/* eslint-disable jest/expect-expect */
 import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { testSaga } from "redux-saga-test-plan";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
