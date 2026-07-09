@@ -41,7 +41,7 @@ export const ItwPresentationCredentialUnknownStatus = ({
 
   const navigation = useIONavigation();
   const credentialName = useItwCredentialName(credential.credentialType);
-  const previousAssertionRef = useRef(credential.storedStatusAssertion);
+  const previousAssertionRef = useRef(credential.validity);
 
   useHeaderSecondLevel({
     title: "",
@@ -53,16 +53,13 @@ export const ItwPresentationCredentialUnknownStatus = ({
   // This approach avoids storing additional data in the global store and ensures this logic
   // can be removed in the future with minimal impact.
   useEffect(() => {
-    if (
-      isRetrying &&
-      previousAssertionRef.current !== credential.storedStatusAssertion
-    ) {
+    if (isRetrying && previousAssertionRef.current !== credential.validity) {
       setIsRetryComplete(true);
       setIsRetrying(false);
       // eslint-disable-next-line functional/immutable-data
-      previousAssertionRef.current = credential.storedStatusAssertion;
+      previousAssertionRef.current = credential.validity;
     }
-  }, [credential.storedStatusAssertion, isRetrying]);
+  }, [credential.validity, isRetrying]);
 
   const isLoaderVisible =
     isRetrying ||
