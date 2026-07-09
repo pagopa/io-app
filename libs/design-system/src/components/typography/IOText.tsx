@@ -1,7 +1,6 @@
 import { ComponentProps, ComponentPropsWithRef, useMemo } from "react";
 import {
   AccessibilityRole,
-  ColorValue,
   GestureResponderEvent,
   Text,
   TextStyle

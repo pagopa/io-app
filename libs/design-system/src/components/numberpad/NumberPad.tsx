@@ -80,7 +80,7 @@ export const NumberPad = ({
   /**
    * Renders the buttons row from a given array.
    */
-  // eslint-disable-next-line arrow-body-style
+
   const renderButtonsRow = useCallback(
     (row: Array<Optional<number | string>>) =>
       row.map(item => {
@@ -134,7 +134,6 @@ export const NumberPad = ({
     ]
   );
 
-  // eslint-disable-next-line arrow-body-style
   const numberPad = useMemo(
     () => (
       <VStack space={16}>
@@ -142,6 +141,7 @@ export const NumberPad = ({
           [1, 2, 3],
           [4, 5, 6],
           [7, 8, 9],
+          // eslint-disable-next-line i18next/no-literal-string -- slot discriminator, not user-facing copy
           [biometricType, 0, "delete"]
         ].map((row, i) => (
           <View key={i} style={styles.numberPad}>

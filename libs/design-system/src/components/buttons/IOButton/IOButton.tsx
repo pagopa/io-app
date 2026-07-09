@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import { ComponentProps, Ref, useCallback, useEffect, useRef } from "react";
 import {
   AccessibilityRole,

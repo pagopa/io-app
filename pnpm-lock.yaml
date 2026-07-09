@@ -14836,9 +14836,7 @@ snapshots:
       metro-runtime: 0.83.7
     transitivePeerDependencies:
       - '@babel/core'
-      - bufferutil
       - supports-color
-      - utf-8-validate
 
   '@react-native/new-app-screen@0.80.0-nightly-20250506-3ac16dd6a(@types/react@19.2.16)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)':
     dependencies:

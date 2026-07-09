@@ -81,8 +81,8 @@ export const CodeInput = ({
     status === "error"
       ? filledDotColorError
       : variant === "primary"
-      ? filledDotColorDarkBg
-      : filledDotColorThemeBased;
+        ? filledDotColorDarkBg
+        : filledDotColorThemeBased;
 
   useEffect(() => {
     if (onValidate && value.length === length) {

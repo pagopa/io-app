@@ -16,8 +16,8 @@ type Avatar = {
   logoUri?: ImageSourcePropType;
 };
 
-const internalSpaceDefaultSize: number = 6;
-const internalSpaceLargeSize: number = 9;
+const internalSpaceDefaultSize = 6;
+const internalSpaceLargeSize = 9;
 const internalSpacePlaceholderDefaultSize: IOSpacingScale = 12;
 const internalSpacePlaceholderLargeSize: IOSpacingScale = 16;
 const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);

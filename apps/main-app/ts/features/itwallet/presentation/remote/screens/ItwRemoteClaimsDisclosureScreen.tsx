@@ -95,6 +95,7 @@ const ContentView = () => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       footerActions={{
         actions: {
           type: "TwoButtons",

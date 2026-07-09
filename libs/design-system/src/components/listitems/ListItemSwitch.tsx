@@ -39,7 +39,7 @@ const DISABLED_OPACITY = 0.5;
 
 /* Estimated height of the native switch component,
 both on iOS & Android */
-const ESTIMATED_SWITCH_HEIGHT: number = 32;
+const ESTIMATED_SWITCH_HEIGHT = 32;
 
 export type ListItemSwitchProps = PartialProps &
   ListItemSwitchGraphicProps &

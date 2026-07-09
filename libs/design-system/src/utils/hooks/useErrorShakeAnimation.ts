@@ -8,7 +8,7 @@ import {
 import { useCallback } from "react";
 import { triggerHaptic } from "../../functions";
 
-const SHAKE_OFFSET: number = 8;
+const SHAKE_OFFSET = 8;
 
 export const useErrorShakeAnimation = () => {
   const translate = useSharedValue(0);

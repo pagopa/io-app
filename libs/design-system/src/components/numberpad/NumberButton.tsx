@@ -36,7 +36,7 @@ type ColorMapVariant = {
   foreground: IOColors;
 };
 
-const numberPadBtnSize: number = 56;
+const numberPadBtnSize = 56;
 
 /**
  * Based on a `Pressable` element, it displays a number button with animations on press In and Out.

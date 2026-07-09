@@ -27,7 +27,7 @@ type Props = {
 
 type OwnProps = Props & Pick<PressableProps, "disabled" | "onPress">;
 
-const checkBoxRadius: number = 5;
+const checkBoxRadius = 5;
 
 const styles = StyleSheet.create({
   checkboxBorder: {

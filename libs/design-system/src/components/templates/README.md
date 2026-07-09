@@ -12,7 +12,7 @@ A special `ScrollView` that includes a button which forces the page to scroll to
 import { ForceScrollDownView } from "@pagopa/io-app-design-system";
 
 const SpecialPage = () => (
-  <ForceScrollDownView>
+  <ForceScrollDownView buttonAccessibilityLabel="Scroll to bottom">
     { /* [Screen content] */}
   </ForceScrollDownView>
 );

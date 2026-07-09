@@ -5,9 +5,18 @@ import { TextInputBase } from "./TextInputBase";
 type TextInputPasswordProps = Omit<
   ComponentProps<typeof TextInputBase>,
   "isPassword"
->;
+> & {
+  /**
+   * Announced by screen readers for the button that shows/hides the password.
+   * Required because this package has no i18n layer: the consumer owns the copy.
+   */
+  buttonAccessibilityLabel: string;
+};
 
-export const TextInputPassword = (props: TextInputPasswordProps) => {
+export const TextInputPassword = ({
+  buttonAccessibilityLabel,
+  ...props
+}: TextInputPasswordProps) => {
   const { onBlur, disabled } = props;
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -16,7 +25,7 @@ export const TextInputPassword = (props: TextInputPasswordProps) => {
       icon={showPassword ? "eyeShow" : "eyeHide"}
       disabled={disabled}
       onPress={() => setShowPassword(v => !v)}
-      accessibilityLabel="Toggle secret input"
+      accessibilityLabel={buttonAccessibilityLabel}
     />
   );
 

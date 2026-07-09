@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore (ignore Path unused component)
-import { Svg, Path } from "react-native-svg";
+import { Svg, Path } from "react-native-svg"; // eslint-disable-line @typescript-eslint/no-unused-vars -- injected into the generated pictograms
 import { SVGPictogramProps } from "../types";
 
 // The `generateNewPictograms.js`s script uses this template to generate

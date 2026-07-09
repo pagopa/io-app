@@ -52,6 +52,7 @@ export const IOListItemLogoMargin: IOModuleIDPSpacing = 8;
 ░░░ SPACING CONSTANTS ░░░
 */
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const spacingConstantKeys = ["screenEndMargin"] as const;
 
 export type IOSpacingConstants = {

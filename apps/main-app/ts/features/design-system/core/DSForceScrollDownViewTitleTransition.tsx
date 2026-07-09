@@ -23,6 +23,7 @@ export const DSForceScrollDownViewTitleTransition = () => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel="Scroll to bottom"
       animatedRef={animatedScrollViewRef}
       threshold={CUSTOM_SLOT_HEIGHT}
       contentContainerStyle={{

@@ -50,7 +50,7 @@ describe("addCacheTimestampToUri", () => {
       if (typeof res === "object" && !Array.isArray(res)) {
         expect(res.uri).toMatch(uriRegex);
       } else {
-        fail("res is not a number");
+        throw new Error("res is not an ImageURISource");
       }
     });
 
@@ -61,7 +61,7 @@ describe("addCacheTimestampToUri", () => {
       if (typeof res === "object" && !Array.isArray(res)) {
         expect(res.uri).toMatch(uriRegex);
       } else {
-        fail("res is not a number");
+        throw new Error("res is not an ImageURISource");
       }
     });
 
@@ -71,7 +71,7 @@ describe("addCacheTimestampToUri", () => {
       if (typeof res === "number") {
         expect(res).toBe(localSrc);
       } else {
-        fail("res is not a number");
+        throw new Error("res is not a number");
       }
     });
 

@@ -128,6 +128,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       footerActions={{
         actions: {
           type: "SingleButton",

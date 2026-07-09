@@ -102,8 +102,8 @@ export const exitTransitionInnerContent = () => {
 A custom enter transition designed for the `AlertEdgeToEdge` component.
 */
 
-const alertEdgeToEdgeEnterTransitionDuration: number = 500; /* in ms */
-const alertEdgeToEdgeExitTransitionDuration: number = 400; /* in ms */
+const alertEdgeToEdgeEnterTransitionDuration = 500; /* in ms */
+const alertEdgeToEdgeExitTransitionDuration = 400; /* in ms */
 
 export const alertEdgeToEdgeInsetTransitionConfig: WithTimingConfig = {
   duration: 400,
@@ -147,7 +147,7 @@ const iconTransitionWithTimingConfig = {
   easing: Easing.inOut(Easing.cubic)
 };
 
-const iconTransitionScaleFactor: number = 0.75;
+const iconTransitionScaleFactor = 0.75;
 
 export const enterTransitionInputIcon = () => {
   "worklet";

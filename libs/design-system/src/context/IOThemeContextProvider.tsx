@@ -46,7 +46,7 @@ export const IOThemeContextProvider = ({
 
   const resolvedTheme =
     currentTheme === "unspecified"
-      ? Appearance.getColorScheme() ?? "light"
+      ? (Appearance.getColorScheme() ?? "light")
       : currentTheme;
 
   const handleThemeChange = useCallback((newTheme: ColorSchemeName) => {

@@ -48,6 +48,7 @@ export const DSForceScrollDownView = () => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel="Scroll to bottom"
       footerActions={footerActions}
       contentContainerStyle={{
         paddingTop: IOVisualCostants.appMarginDefault

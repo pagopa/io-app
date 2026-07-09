@@ -135,13 +135,14 @@ const InputValidationComponentWrapper = (
 const InputPasswordComponentWrapper = (
   props: Omit<
     ComponentProps<typeof TextInputPassword>,
-    "value" | "onChangeText"
+    "value" | "onChangeText" | "buttonAccessibilityLabel"
   > & { value?: string }
 ) => {
   const [inputValue, setInputValue] = useState(props.value ?? "");
 
   return (
     <TextInputPassword
+      buttonAccessibilityLabel="Toggle secret input"
       {...props}
       value={inputValue}
       onChangeText={setInputValue}

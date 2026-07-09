@@ -12,6 +12,7 @@ const CUSTOM_SLOT_HEIGHT = 150;
 
 export const DSForceScrollDownViewCustomSlot = () => (
   <ForceScrollDownView
+    buttonAccessibilityLabel="Scroll to bottom"
     threshold={CUSTOM_SLOT_HEIGHT}
     contentContainerStyle={{
       paddingTop: IOVisualCostants.appMarginDefault

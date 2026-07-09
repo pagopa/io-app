@@ -37,6 +37,7 @@ export type IOFontFamily = keyof typeof fonts;
  */
 const fontSizes = [12, 14, 16, 20, 22, 26, 28, 32] as const;
 const fontSizesLegacy = [17, 28, 31, 35] as const;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const allFontSizes = [...new Set([...fontSizes, ...fontSizesLegacy])];
 export type IOFontSize = (typeof allFontSizes)[number];
 
@@ -55,6 +56,7 @@ const weights = [
 ] as const;
 export type IOFontWeight = (typeof weights)[number];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const weightValues = ["200", "300", "400", "500", "600", "700", "900"] as const;
 export type IOFontWeightNumeric = (typeof weightValues)[number];
 
@@ -138,7 +140,7 @@ export const makeFontStyleObject = (
   lineHeight: TextStyle["lineHeight"],
   weight: IOFontWeight = defaultWeight,
   fontStyle: TextStyle["fontStyle"] = "normal",
-  boldEnabled: boolean = false
+  boldEnabled = false
 ): FontStyleObject => {
   /* If bold text is currently enabled, we select the next
      available `IOFontWeight` value */

@@ -172,6 +172,9 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
     <>
       <View style={styles.container} testID="itwDiscoveryInfoComponentTestID">
         <ForceScrollDownView
+          buttonAccessibilityLabel={I18n.t(
+            "global.accessibility.scrollToBottom"
+          )}
           footerActions={{
             actions: {
               type: "TwoButtons",

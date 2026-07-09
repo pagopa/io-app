@@ -247,10 +247,10 @@ export const ListItemInfo = ({
   const componentValueToAccessibility = typeof value === "string" ? value : "";
 
   const topBadgeText =
-    topElement?.type === "badge" ? topElement.componentProps.text ?? "" : "";
+    topElement?.type === "badge" ? (topElement.componentProps.text ?? "") : "";
 
   const endBadgeText =
-    endElement?.type === "badge" ? endElement.componentProps.text ?? "" : "";
+    endElement?.type === "badge" ? (endElement.componentProps.text ?? "") : "";
 
   /**
    * Build text in VISUAL ORDER

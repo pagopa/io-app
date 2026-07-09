@@ -61,6 +61,11 @@ export type ForceScrollDownView = {
    * (outside this component)
    */
   animatedRef?: AnimatedRef<Animated.ScrollView>;
+  /**
+   * Announced by screen readers for the "scroll to bottom" button.
+   * Required because this package has no i18n layer: the consumer owns the copy.
+   */
+  buttonAccessibilityLabel: string;
 } & ForceScrollDownViewSlot &
   Pick<
     ScrollViewProps,
@@ -81,7 +86,8 @@ const ForceScrollDownView = ({
   contentContainerStyle,
   scrollEnabled = true,
   onThresholdCrossed,
-  animatedRef
+  animatedRef,
+  buttonAccessibilityLabel
 }: ForceScrollDownView) => {
   const internalAnimatedRef = useAnimatedRef<Animated.ScrollView>();
   const scrollViewRef = animatedRef ?? internalAnimatedRef;
@@ -180,7 +186,7 @@ const ForceScrollDownView = ({
     <Animated.View style={[styles.scrollDownButton, buttonTransitionStyle]}>
       <IconButtonSolid
         testID={"ScrollDownButton"}
-        accessibilityLabel="Scroll to bottom"
+        accessibilityLabel={buttonAccessibilityLabel}
         icon="arrowBottom"
         onPress={handleScrollDownPress}
       />

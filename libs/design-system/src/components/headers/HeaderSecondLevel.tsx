@@ -240,12 +240,12 @@ export const HeaderSecondLevel = ({
           [headerBgColorTransparentState, headerBgColorSolidState]
         )
       : scrollValues
-      ? interpolateColor(
-          scrollValues.contentOffsetY.value,
-          [0, scrollValues.triggerOffset],
-          [headerBgColorTransparentState, headerBgColorSolidState]
-        )
-      : headerBgColorSolidState,
+        ? interpolateColor(
+            scrollValues.contentOffsetY.value,
+            [0, scrollValues.triggerOffset],
+            [headerBgColorTransparentState, headerBgColorSolidState]
+          )
+        : headerBgColorSolidState,
     borderColor: enableDiscreteTransition
       ? interpolateColor(
           bgColorDiscreteTransition.value,
@@ -253,24 +253,24 @@ export const HeaderSecondLevel = ({
           [borderColorTransparentState, borderColorSolidState]
         )
       : scrollValues
-      ? interpolateColor(
-          scrollValues.contentOffsetY.value,
-          [0, scrollValues.triggerOffset],
-          [borderColorTransparentState, borderColorSolidState]
-        )
-      : "transparent"
+        ? interpolateColor(
+            scrollValues.contentOffsetY.value,
+            [0, scrollValues.triggerOffset],
+            [borderColorTransparentState, borderColorSolidState]
+          )
+        : "transparent"
   }));
 
   const titleAnimatedStyle = useAnimatedStyle(() => ({
     opacity: enableDiscreteTransition
       ? interpolate(bgColorDiscreteTransition.value, [0, 1], [0, 1])
       : scrollValues
-      ? interpolate(
-          scrollValues.contentOffsetY.value,
-          [0, scrollValues.triggerOffset],
-          [0, 1]
-        )
-      : 1
+        ? interpolate(
+            scrollValues.contentOffsetY.value,
+            [0, scrollValues.triggerOffset],
+            [0, 1]
+          )
+        : 1
   }));
 
   const [importantForAccessibility, setImportantForAccessibility] = useState<
@@ -287,7 +287,7 @@ export const HeaderSecondLevel = ({
       if (currentOffset !== previousOffset) {
         const offsetToCompare = enableDiscreteTransition
           ? 0
-          : scrollValues?.triggerOffset ?? 0;
+          : (scrollValues?.triggerOffset ?? 0);
         // Sets accessibility to "yes" when scrolled past the threshold, else hides it from screen readers.
         const newValue =
           (currentOffset ?? 0) > offsetToCompare && !ignoreAccessibilityCheck

@@ -163,6 +163,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
       <ForceScrollDownView
+        buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
         contentContainerStyle={{ flexGrow: 1 }}
         footerActions={{
           actions: {

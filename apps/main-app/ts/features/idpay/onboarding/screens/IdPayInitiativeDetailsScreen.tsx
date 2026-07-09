@@ -126,6 +126,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       contentContainerStyle={{ flexGrow: 1 }}
       footerActions={{
         actions: {

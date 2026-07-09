@@ -200,6 +200,7 @@ const ContentView = ({
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       onThresholdCrossed={trackScrollToBottom}
       footerActions={{
         actions: {

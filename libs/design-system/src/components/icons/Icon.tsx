@@ -518,9 +518,6 @@ export const AnimatedIcon = ({
 so we need to convert <Icon> into a class component first.
 https://github.com/software-mansion/react-native-reanimated/discussions/1527  */
 class AnimatedIconClassComponent extends Component<IOAnimatedIconsProps> {
-  constructor(props: IOAnimatedIconsProps) {
-    super(props);
-  }
   render() {
     return <AnimatedIcon {...this.props} />;
   }

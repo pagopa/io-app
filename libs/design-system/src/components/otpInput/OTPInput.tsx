@@ -152,8 +152,8 @@ export const OTPInput = ({
 
   const accessibilityValueText = isSecret
     ? props.accessibilityValueText(accessibilityValueTextParams)
-    : props.accessibilityValueText?.(accessibilityValueTextParams) ??
-      value.split("").join(", ");
+    : (props.accessibilityValueText?.(accessibilityValueTextParams) ??
+      value.split("").join(", "));
 
   const cells = useMemo(() => Array.from({ length }), [length]);
 
@@ -212,8 +212,8 @@ export const OTPInput = ({
                 hasError
                   ? "error"
                   : hasFocus && value.length === i
-                  ? "focus"
-                  : "default"
+                    ? "focus"
+                    : "default"
               }
               secret={isSecret}
               value={value[i]}

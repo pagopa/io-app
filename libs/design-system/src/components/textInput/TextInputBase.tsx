@@ -73,14 +73,14 @@ type InputTextProps = WithTestID<{
 }>;
 
 const inputMarginTop: IOSpacingScale = 16;
-const inputHeight: number = 60;
+const inputHeight = 60;
 const inputPaddingHorizontal: IOSpacingScale = 12;
 const inputPaddingVertical: IOSpacingScale = 8;
-const inputRadius: number = 8;
-const inputTransitionDuration: number = 250;
-const inputLabelScaleFactor: number = 0.75; /* 16pt becomes 12pt */
+const inputRadius = 8;
+const inputTransitionDuration = 250;
+const inputLabelScaleFactor = 0.75; /* 16pt becomes 12pt */
 const inputLabelFontSize: IOFontSize = 16;
-const inputDisabledOpacity: number = 0.5;
+const inputDisabledOpacity = 0.5;
 const inputRightElementMargin: IOSpacingScale = 8;
 const iconSize: IOIconSizeScale = 24;
 const iconMargin: IOSpacingScale = 8;

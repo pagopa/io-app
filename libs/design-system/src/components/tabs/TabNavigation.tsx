@@ -46,7 +46,7 @@ const TabNavigation = ({
 
   const stretchItems = tabAlignment === "stretch";
 
-  const wrapChild = (child: ReactElement<TabItem>, index: number = 0) => (
+  const wrapChild = (child: ReactElement<TabItem>, index = 0) => (
     <View
       key={child.props.label}
       style={[

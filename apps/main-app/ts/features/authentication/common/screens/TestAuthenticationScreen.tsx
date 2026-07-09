@@ -179,6 +179,9 @@ const TestAuthenticationScreen = () => {
       />
       <VSpacer size={16} />
       <TextInputPassword
+        buttonAccessibilityLabel={I18n.t(
+          "global.accessibility.togglePasswordVisibility"
+        )}
         placeholder={I18n.t("global.password")}
         value={password}
         onChangeText={setPassword}

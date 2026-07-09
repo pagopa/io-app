@@ -129,8 +129,8 @@ const TabItem = ({
   const itemState: TabItemState = selected
     ? "selected"
     : disabled
-    ? "disabled"
-    : "default";
+      ? "disabled"
+      : "default";
 
   const foregroundColor = mapColorStates[color].foreground[itemState];
 
@@ -158,7 +158,7 @@ const TabItem = ({
     )
   }));
 
-  const activeIcon = selected ? iconSelected ?? icon : icon;
+  const activeIcon = selected ? (iconSelected ?? icon) : icon;
 
   const handleOnPress = useCallback(
     (event: GestureResponderEvent) => {

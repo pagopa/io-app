@@ -7,8 +7,8 @@ import { IOSpacingScale, IOVisualCostants } from "../../../core";
 const extraSafeAreaMargin: IOSpacingScale = 8;
 
 export const useBottomMargins = (
-  withSecondaryAction: boolean = false,
-  excludeSafeAreaMargins: boolean = false
+  withSecondaryAction = false,
+  excludeSafeAreaMargins = false
 ) => {
   const insets = useSafeAreaInsets();
   const needSafeAreaMargin = insets.bottom !== 0;

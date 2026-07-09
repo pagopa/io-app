@@ -44,8 +44,9 @@ type BaseModuleProps = {
   isFetching?: boolean;
 };
 
-type ModuleCredentialProps =
-  | BaseModuleProps & ImageProps & PressableModuleBaseProps;
+type ModuleCredentialProps = BaseModuleProps &
+  ImageProps &
+  PressableModuleBaseProps;
 
 const ModuleCredential = (
   props: WithTestID<LoadingModuleProps | ModuleCredentialProps>

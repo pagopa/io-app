@@ -41,13 +41,13 @@ import {
 const inputPaddingHorizontal: IOSpacingScale = 12;
 const inputPaddingVertical: IOSpacingScale = 8;
 const inputPaddingClearButton: IOSpacingScale = 8;
-const inputRadius: number = 8;
+const inputRadius = 8;
 const iconMargin: IOSpacingScale = 8;
 const iconSize: IOIconSizeScale = 16;
 const iconCloseSize: IOIconSizeScale = 24;
 const inputFontSizePlaceholder: IOFontSize = 14;
 const cancelButtonMargin: IOSpacingScale = 16;
-const inputTransitionDuration: number = 250;
+const inputTransitionDuration = 250;
 
 type SearchInputPressableProps = {
   onPress: (event: GestureResponderEvent) => void;

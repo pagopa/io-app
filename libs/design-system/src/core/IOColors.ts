@@ -203,6 +203,7 @@ export type IOColorsExtra = keyof typeof IOColorsExtra;
 ░░░ THEME COLORS ░░░
 */
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const themeKeys = [
   // General
   "appBackground-primary",
@@ -471,7 +472,7 @@ Return the color value with RGBA format (RGB + Alpha transparency), starting fro
 @param opacity Opacity value that range from 0 to 1. Default value = 1.
  */
 /* Taken from this Gist: https://gist.github.com/danieliser/b4b24c9f772066bcf0a6 */
-export const hexToRgba = (hexCode: ColorValue, opacity: number = 1) => {
+export const hexToRgba = (hexCode: ColorValue, opacity = 1) => {
   const hex = hexCode.toString().replace("#", "");
 
   const r = parseInt(hex.substring(0, 2), 16);
