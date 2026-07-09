@@ -63,10 +63,18 @@ export const getCredentialStatusAssertion = async (
 
 export const shouldRequestStatusAssertion = ({
   validity,
-  jwt
+  jwt,
+  spec_version
 }: CredentialMetadata) => {
   // Skip status assertion check for expired JWTs to avoid credential_not_found errors with 0.7 credentials
   if (isAfter(new Date(), new Date(jwt.expiration))) {
+    return false;
+  }
+
+  // Extra security check to ensure that a 1.3+ credential without `validity` does not request an assertion.
+  // Under normal circumstances this should not happen because this function is not called when the current
+  // IoWallet instance does not support status assertion.
+  if (spec_version !== "1.0.0") {
     return false;
   }
 
