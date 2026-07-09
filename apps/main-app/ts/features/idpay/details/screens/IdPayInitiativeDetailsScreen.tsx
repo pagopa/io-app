@@ -25,7 +25,8 @@ import {
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
-import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
+import { useAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
+import { UpdateAppAlert } from "../../../../components/UpdateAppAlert";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -478,9 +479,10 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   );
 };
 
-const IdPayInitiativeDetailsScreen = withAppRequiredUpdate(
-  IdPayInitiativeDetailsScreenComponent,
-  "idpay.initiative_details"
-);
-
-export { IdPayInitiativeDetailsScreen };
+export const IdPayInitiativeDetailsScreen = () => {
+  const requiresUpdate = useAppRequiredUpdate("idpay.initiative_details");
+  if (requiresUpdate) {
+    return <UpdateAppAlert />;
+  }
+  return <IdPayInitiativeDetailsScreenComponent />;
+};

@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
-import { ComponentType } from "react";
 import I18n from "i18next";
 import { IDPayDetailsRoutes } from "../../navigation";
 import { IdPayInitiativeDetailsScreen } from "../IdPayInitiativeDetailsScreen";
@@ -14,12 +13,6 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { NetworkError } from "../../../../../utils/errors";
-
-jest.mock("../../../../../components/helpers/withAppRequiredUpdate", () => ({
-  withAppRequiredUpdate: (
-    Component: ComponentType<typeof IdPayInitiativeDetailsScreen>
-  ) => Component
-}));
 
 const mockedInitiative = {
   voucherEndDate: new Date(2023, 1, 1),
