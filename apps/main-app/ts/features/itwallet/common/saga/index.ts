@@ -24,7 +24,7 @@ import {
   checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
-import { watchItwTasksSaga } from "../../statusList/saga";
+import { watchItwStatusListSaga } from "../../statusList/saga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
 import {
   itwSetAuthLevel,
@@ -47,7 +47,7 @@ export function* watchItwSaga(): SagaIterator {
   // Check if the fiscal code is enabled, to enable the L3
   yield* fork(checkFiscalCodeEnabledSaga);
   // Registers and watches background tasks
-  yield* fork(watchItwTasksSaga);
+  yield* fork(watchItwStatusListSaga);
   // Watch ITW analytics lifecycle (initial sync and reactive updates)
   yield* fork(watchItwAnalyticsSaga);
 
