@@ -119,7 +119,7 @@ export function* checkCredentialsStatusAssertion() {
   if (!isWalletValid) {
     return;
   }
-  // TODO: [SIW-3963] Handle status list integration
+
   if (!getIoWallet(itwVersion).CredentialStatus.statusAssertion.isSupported) {
     return;
   }
