@@ -159,9 +159,6 @@ export default defineConfig([
       ],
       "one-var": ["error", "never"],
       "object-shorthand": "error",
-      // TODO: Remove this property once the migration
-      // from class components is completed
-
       // GENERAL JS SAFETY
       // Deprecated since ESLint 5.1.0 — overrides @react-native/eslint-config warn
       "no-catch-shadow": "off",
@@ -217,8 +214,6 @@ export default defineConfig([
       // It could highlight performance issues,
       // with some noise on trivial cases
       "react/no-unstable-nested-components": "off",
-      // TODO: Remove these two properties once the migration
-      // from class components is completed
       // REACT NATIVE
       "react-native/no-unused-styles": "error",
       "react-native/no-inline-styles": "off",
