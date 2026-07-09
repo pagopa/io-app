@@ -3,7 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useIOStore } from "../../../../../store/hooks.ts";
 import { ItwSessionExpiredError } from "../../../api/client.ts";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors";
 import { isItwEnabledSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";

@@ -1,5 +1,5 @@
 import { testSaga } from "redux-saga-test-plan";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
 import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
 import { watchItwStatusListSaga } from "..";

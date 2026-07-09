@@ -6,7 +6,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceEidReissuanceLandingScreen } from "../ItwIssuanceEidReissuanceLandingScreen";
-import * as commonSelectors from "../../../common/store/selectors/preferences";
+import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 
 describe("ItwIssuanceEidReissuanceLandingScreen", () => {
@@ -28,7 +28,7 @@ describe("ItwIssuanceEidReissuanceLandingScreen", () => {
         .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
         .mockReturnValue(isItWalletValid);
       jest
-        .spyOn(commonSelectors, "itwIsL3EnabledSelector")
+        .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
         .mockReturnValue(canActivateItWallet);
       jest
         .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")

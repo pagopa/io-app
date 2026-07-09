@@ -39,10 +39,8 @@ import {
 } from "../../analytics";
 import { PoweredByItWalletText } from "../../common/components/PoweredByItWalletText.tsx";
 import { selectItwEnv } from "../../common/store/selectors/environment.ts";
-import {
-  itwIsActivationDisabledSelector,
-  itwIsL3EnabledSelector
-} from "../../common/store/selectors/preferences.ts";
+import { itwIsActivationDisabledSelector } from "../../common/store/selectors/preferences.ts";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/index.ts";
 import {
   isL2Credential,
   isUpcomingCredential

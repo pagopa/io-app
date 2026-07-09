@@ -26,7 +26,7 @@ import {
 } from "../../analytics";
 import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
 import { selectItwEnv } from "../../common/store/selectors/environment";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { isItwEnabledSelector } from "../../common/store/selectors/remoteConfig";
 import {
   isL2Credential,

@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector

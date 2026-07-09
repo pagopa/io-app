@@ -7,7 +7,7 @@ import I18n from "i18next";
 import { Alert, View } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferences";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsFiscalCodeWhitelisted } from "../../common/store/selectors/preferences";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 import {
   itwLifecycleIsInstalledSelector,
@@ -22,7 +22,7 @@ export const ItwLifecycleSection = () => {
   const isItwInstalled = useIOSelector(itwLifecycleIsInstalledSelector);
   const isItwOperational = useIOSelector(itwLifecycleIsOperationalSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isFiscalCodeWhitelisted = useIOSelector(itwIsL3EnabledSelector);
+  const isFiscalCodeWhitelisted = useIOSelector(itwIsFiscalCodeWhitelisted);
   const isITWalletInstanceValid = useIOSelector(
     itwLifecycleIsITWalletValidSelector
   );

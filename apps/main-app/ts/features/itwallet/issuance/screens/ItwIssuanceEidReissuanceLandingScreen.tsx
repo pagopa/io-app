@@ -9,7 +9,7 @@ import {
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,

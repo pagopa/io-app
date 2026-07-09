@@ -44,7 +44,10 @@ describe("isItwDiscoveryBannerRenderableSelector", () => {
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(lifecycleValid);
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
+        .mockReturnValue(false);
+      jest
+        .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
         .mockReturnValue(false);
       jest
         .spyOn(ingressSelectors, "offlineAccessReasonSelector")
@@ -109,8 +112,11 @@ describe("itwShouldRenderL3UpgradeBannerSelector", () => {
         .spyOn(ingressSelectors, "offlineAccessReasonSelector")
         .mockReturnValue(offlineAccessReason);
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
         .mockReturnValue(isL3Enabled);
+      jest
+        .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
+        .mockReturnValue(false);
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
         .mockReturnValue(isEidL3);
@@ -199,8 +205,11 @@ describe("itwShouldRenderWalletUpgradeMDLDetailsBannerSelector", () => {
         .spyOn(ingressSelectors, "offlineAccessReasonSelector")
         .mockReturnValue(offlineAccessReason);
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
         .mockReturnValue(isL3Enabled);
+      jest
+        .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
+        .mockReturnValue(false);
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
         .mockReturnValue(isEidL3);
@@ -257,8 +266,11 @@ describe("itwShouldRenderDiscoveryBannerSelector", () => {
         .spyOn(ingressSelectors, "offlineAccessReasonSelector")
         .mockReturnValue(offlineAccessReason);
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
         .mockReturnValue(isL3Enabled);
+      jest
+        .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
+        .mockReturnValue(false);
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(lifecycleValid);
@@ -316,8 +328,11 @@ describe("itwShouldRenderInboxDiscoveryBannerSelector", () => {
         .spyOn(ingressSelectors, "offlineAccessReasonSelector")
         .mockReturnValue(undefined);
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
         .mockReturnValue(isL3Enabled);
+      jest
+        .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
+        .mockReturnValue(false);
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(lifecycleValid);
@@ -361,8 +376,11 @@ describe("itwShouldRenderWalletDiscoveryBannerSelector", () => {
         .spyOn(ingressSelectors, "offlineAccessReasonSelector")
         .mockReturnValue(undefined);
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
         .mockReturnValue(isL3Enabled);
+      jest
+        .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
+        .mockReturnValue(false);
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(lifecycleValid);

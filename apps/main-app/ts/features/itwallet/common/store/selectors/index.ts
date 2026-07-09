@@ -27,12 +27,21 @@ import {
 import {
   itwCredentialUpgradeFailedSelector,
   itwIsActivationDisabledSelector,
-  itwIsL3EnabledSelector
+  itwIsFiscalCodeWhitelisted
 } from "./preferences";
 import {
   isItwEnabledSelector,
+  isItwMinAppVersionSupportedSelector,
   isItwProximityMinAppVersionSupportedSelector
 } from "./remoteConfig";
+
+/**
+ * Returns whether the L3 features are enabled.
+ * @param state the application global state
+ */
+export const itwIsL3EnabledSelector = (state: GlobalState) =>
+  !!itwIsFiscalCodeWhitelisted(state) ||
+  isItwMinAppVersionSupportedSelector(state);
 
 /**
  * Returns if the discovery banner should be rendered. The banner is rendered if:

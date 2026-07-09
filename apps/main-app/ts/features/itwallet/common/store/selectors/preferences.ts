@@ -1,5 +1,4 @@
 import { GlobalState } from "../../../../../store/reducers/types";
-import { isItwMinAppVersionSupportedSelector } from "./remoteConfig";
 
 export const itwPreferencesSelector = (state: GlobalState) =>
   state.features.itWallet.preferences;
@@ -26,9 +25,8 @@ export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
  * Returns whether the fiscal code is whitelisted for L3 features.
  * @param state the application global state
  */
-export const itwIsL3EnabledSelector = (state: GlobalState) =>
-  !!state.features.itWallet.preferences.isFiscalCodeWhitelisted ||
-  isItwMinAppVersionSupportedSelector(state);
+export const itwIsFiscalCodeWhitelisted = (state: GlobalState) =>
+  !!state.features.itWallet.preferences.isFiscalCodeWhitelisted;
 
 /**
  * Selects the state that indicates whether the bottom sheet of survey is visible.

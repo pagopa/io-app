@@ -24,7 +24,7 @@ import { trackItwRemoteInvalidAuthResponseBottomSheet } from "../analytics";
 import { getDismissalContextFromFailure } from "../analytics/utils";
 import { trackItwKoStateAction } from "../../../analytics";
 import { useIOSelector } from "../../../../../store/hooks.ts";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors";
 import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
 
 const zendeskAssistanceErrors = [

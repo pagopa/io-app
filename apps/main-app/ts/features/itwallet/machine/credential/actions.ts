@@ -17,7 +17,7 @@ import { getMixPanelCredential } from "../../analytics/utils";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
   itwWalletInstanceAttestationStore,

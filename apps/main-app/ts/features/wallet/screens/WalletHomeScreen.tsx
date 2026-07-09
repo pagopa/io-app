@@ -25,8 +25,10 @@ import {
 import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
-import { isItwProximityEnabledSelector } from "../../itwallet/common/store/selectors";
-import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences.ts";
+import {
+  isItwProximityEnabledSelector,
+  itwIsL3EnabledSelector
+} from "../../itwallet/common/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";

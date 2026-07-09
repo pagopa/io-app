@@ -3,7 +3,7 @@ import I18n from "i18next";
 import { memo, useMemo } from "react";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 
 type Props = {
   type: string;

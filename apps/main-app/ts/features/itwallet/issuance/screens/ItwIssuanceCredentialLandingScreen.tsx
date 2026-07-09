@@ -10,7 +10,7 @@ import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialStatusSelector

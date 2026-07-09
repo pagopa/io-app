@@ -10,7 +10,7 @@ import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential
 import { ITW_ROUTES } from "../../../navigation/routes";
 import * as itwRemoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
+import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as envSelectors from "../../../common/store/selectors/environment";
 import { EnvType } from "../../../common/utils/environment";
 
@@ -142,7 +142,7 @@ describe("WalletCardOnboardingScreen", () => {
         .mockReturnValue(true);
 
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
         .mockReturnValue(isL3Enabled);
 
       jest.spyOn(envSelectors, "selectItwEnv").mockReturnValue(env as EnvType);

@@ -9,7 +9,7 @@ import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import { useGuidedTourRegion } from "../../../tour/components/useGuidedTourRegion";
 import { startTourAction } from "../../../tour/store/actions";
 import { isTourCompletedSelector } from "../../../tour/store/selectors";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import {
   ITW_TOUR_GROUP_ID,
   ITW_TOUR_STEP_ADD_BUTTON

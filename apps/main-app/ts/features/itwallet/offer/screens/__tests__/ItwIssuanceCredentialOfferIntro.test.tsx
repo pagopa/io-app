@@ -9,7 +9,7 @@ import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
+import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import * as catalogSelectors from "../../../credentialsCatalogue/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
@@ -50,7 +50,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockReturnValue(false);
     jest
-      .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+      .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
       .mockReturnValue(true);
     jest
       .spyOn(catalogSelectors, "itwCredentialIntroContentSelector")

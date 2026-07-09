@@ -15,7 +15,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { ITW_REMOTE_ROUTES } from "../../navigation/routes";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import * as preferencesSelectors from "../../../../common/store/selectors/preferences";
+import * as itwCommonSelectors from "../../../../common/store/selectors";
 
 describe("ItwRemoteFailureScreen", () => {
   test.each<RemoteFailure>([
@@ -55,7 +55,7 @@ describe("ItwRemoteFailureScreen", () => {
     }
   ])("should render failure screen for $type", failure => {
     jest
-      .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+      .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
       .mockImplementation(constTrue);
     expect(renderComponent(failure)).toMatchSnapshot();
   });
