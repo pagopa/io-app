@@ -23,7 +23,7 @@ export function* handleGetWhitelistedStatus(
       yield* put(itwSetFiscalCodeWhitelisted(whitelisted));
     }
     // Non-200 responses (e.g. BE downtime): preserve the last known persisted value.
-  } catch (e) {
+  } catch {
     // Network/unexpected errors: preserve the last known persisted value.
   }
 }
