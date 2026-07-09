@@ -1,17 +1,9 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { PureComponent } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
-import {
-  AccessibilityInfo,
-  AppState,
-  AppStateStatus,
-  EmitterSubscription,
-  NativeEventSubscription,
-  StatusBar
-} from "react-native";
+import { AccessibilityInfo, AppState, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
-import { connect } from "react-redux";
 import DebugInfoOverlay from "./components/debug/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
@@ -24,19 +16,14 @@ import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
 import { applicationChangeState } from "./store/actions/application";
-import { setDebugCurrentRouteName } from "./store/actions/debug";
-import { navigateBack } from "./store/actions/navigation";
 import { setScreenReaderEnabled } from "./store/actions/preferences";
 import { Store } from "./store/actions/types";
+import { useIODispatch, useIOSelector } from "./store/hooks";
 import { isDebugModeEnabledSelector } from "./store/reducers/debug";
 import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
 } from "./store/reducers/persistedPreferences";
-import { GlobalState } from "./store/reducers/types";
-
-type Props = ReturnType<typeof mapStateToProps> &
-  typeof mapDispatchToProps & { store: Store };
 
 /**
  * The main container of the application with:
@@ -46,130 +33,96 @@ type Props = ReturnType<typeof mapStateToProps> &
  * - the UpdateAppModal, if the backend is not compatible with the installed app version
  * - the root for displaying light modals
  */
-class RootContainer extends PureComponent<Props> {
-  private subscription: NativeEventSubscription | undefined;
-  private accessibilitySubscription: EmitterSubscription | undefined;
-  private clearNotificationHandlers: () => void;
+const RootContainerInner = ({ store }: { store: Store }) => {
+  const dispatch = useIODispatch();
+  const preferredLanguage = useIOSelector(preferredLanguageSelector);
+  const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
+  const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
 
-  constructor(props: Props) {
-    super(props);
-    void setupAndroidNotificationChannel();
-    this.clearNotificationHandlers = configurePushNotificationListeners(
-      props.store
-    );
-  }
+  const clearNotificationHandlersRef = useRef<() => void>(() => undefined);
 
-  private handleApplicationActivity = (activity: AppStateStatus) =>
-    this.props.applicationChangeState(activity);
-
-  private handleScreenReaderEnabled = (isScreenReaderEnabled: boolean) =>
-    this.props.setScreenReaderEnabled({
-      screenReaderEnabled: isScreenReaderEnabled
-    });
-
-  public componentDidMount() {
-    // boot: send the status of the application
-    this.handleApplicationActivity(AppState.currentState);
-    // eslint-disable-next-line functional/immutable-data
-    this.subscription = AppState.addEventListener(
-      "change",
-      this.handleApplicationActivity
-    );
-    // eslint-disable-next-line functional/immutable-data
-    this.accessibilitySubscription = AccessibilityInfo.addEventListener(
-      "screenReaderChanged",
-      this.handleScreenReaderEnabled
-    );
-    AccessibilityInfo.isScreenReaderEnabled()
-      .then(this.handleScreenReaderEnabled)
-      .catch(() => undefined);
-
-    this.updateLocale();
-    // Hide splash screen
-    SplashScreen.hide();
-  }
-
-  /**
-   * If preferred language is set in the Persisted Store it sets the app global Locale
-   * otherwise it continues using the default locale set from the SO
-   */
-  private updateLocale = () =>
+  const updateLocale = useCallback(() => {
     pipe(
-      this.props.preferredLanguage,
+      preferredLanguage,
       O.map(l => {
         setLocale(l);
       })
     );
+  }, [preferredLanguage]);
 
-  public componentWillUnmount() {
-    this.subscription?.remove();
-    this.accessibilitySubscription?.remove();
-    this.clearNotificationHandlers();
-  }
+  // Mount/unmount: set up app-state listener, accessibility, notifications, splash
+  useEffect(() => {
+    void setupAndroidNotificationChannel();
+    // eslint-disable-next-line functional/immutable-data
+    clearNotificationHandlersRef.current =
+      configurePushNotificationListeners(store);
 
-  public componentDidUpdate() {
-    this.updateLocale();
-  }
+    dispatch(applicationChangeState(AppState.currentState));
 
-  public render() {
-    // FIXME: perhaps instead of navigating to a "background"
-    //        screen, we can make this screen blue based on
-    //        the redux state (i.e. background)
+    const subscription = AppState.addEventListener("change", activity => {
+      dispatch(applicationChangeState(activity));
+    });
 
-    // if we have no information about the backend, don't force the update
-
-    return (
-      <>
-        <StatusBar
-          translucent
-          barStyle={"dark-content"}
-          backgroundColor={"transparent"}
-        />
-        <IONavigationContainer />
-
-        {/* When debug mode is enabled, the following information
-        is displayed:
-         - App version, e.g: v.2.x
-         - Route name (as constant), e.g: MESSAGES_INBOX
-         - pagoPA test indicator
-         */}
-        {this.props.isDebugModeEnabled && <DebugInfoOverlay />}
-        {/* When debug mode is disabled, only the pagoPA
-        test indicator is displayed. It's the same component,
-        but not grouped with other indicators. */}
-        {this.props.isPagoPATestEnabled && !this.props.isDebugModeEnabled && (
-          <PagoPATestIndicatorOverlay />
-        )}
-
-        <RootModal />
-        <LightModalRoot />
-      </>
+    const accessibilitySubscription = AccessibilityInfo.addEventListener(
+      "screenReaderChanged",
+      isEnabled => {
+        dispatch(setScreenReaderEnabled({ screenReaderEnabled: isEnabled }));
+      }
     );
-  }
-}
 
-const mapStateToProps = (state: GlobalState) => ({
-  preferredLanguage: preferredLanguageSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  isDebugModeEnabled: isDebugModeEnabledSelector(state)
-});
+    void AccessibilityInfo.isScreenReaderEnabled().then(isEnabled => {
+      dispatch(setScreenReaderEnabled({ screenReaderEnabled: isEnabled }));
+    });
 
-const mapDispatchToProps = {
-  applicationChangeState,
-  navigateBack,
-  setDebugCurrentRouteName,
-  setScreenReaderEnabled
+    SplashScreen.hide();
+
+    return () => {
+      subscription.remove();
+      accessibilitySubscription.remove();
+      clearNotificationHandlersRef.current();
+    };
+    // store and dispatch are stable singleton references; intentionally omitted
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Sync locale whenever preferred language changes (runs on mount and on updates)
+  useEffect(() => {
+    updateLocale();
+  }, [updateLocale]);
+
+  return (
+    <>
+      <StatusBar
+        translucent
+        barStyle={"dark-content"}
+        backgroundColor={"transparent"}
+      />
+      <IONavigationContainer />
+
+      {/* When debug mode is enabled, the following information
+      is displayed:
+       - App version, e.g: v.2.x
+       - Route name (as constant), e.g: MESSAGES_INBOX
+       - pagoPA test indicator
+       */}
+      {isDebugModeEnabled && <DebugInfoOverlay />}
+      {/* When debug mode is disabled, only the pagoPA
+      test indicator is displayed. It's the same component,
+      but not grouped with other indicators. */}
+      {isPagoPATestEnabled && !isDebugModeEnabled && (
+        <PagoPATestIndicatorOverlay />
+      )}
+
+      <RootModal />
+      <LightModalRoot />
+    </>
+  );
 };
-
-const RootContainerClass = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RootContainer);
 
 const RootContainerFC = ({ store }: { store: Store }) => {
   useAppThemeConfiguration();
 
-  return <RootContainerClass store={store} />;
+  return <RootContainerInner store={store} />;
 };
 
 export default RootContainerFC;
