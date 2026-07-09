@@ -28,7 +28,6 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
-import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -49,8 +48,7 @@ export const createCredentialIssuanceActionsImplementation = (
     return {
       isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
       isWalletValid: itwLifecycleIsValidSelector(state),
-      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
-      credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state)
+      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state)
     };
   }),
 
@@ -106,7 +104,7 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents,
     CredentialIssuanceEvents
   >) => {
-    navigation.replace(ITW_ROUTES.MAIN, {
+    navigation.navigate(ITW_ROUTES.MAIN, {
       screen: context.isItWalletValid
         ? ITW_ROUTES.L3_ONBOARDING
         : ITW_ROUTES.ONBOARDING
