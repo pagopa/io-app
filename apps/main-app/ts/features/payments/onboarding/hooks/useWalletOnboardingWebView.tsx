@@ -78,7 +78,7 @@ export const useWalletOnboardingWebView = ({
   );
 
   const handleOnboardingResult = useCallback(
-    (resultUrl: string, isContextual: boolean = false) => {
+    (resultUrl: string, isContextual = false) => {
       const url = new URLParse(resultUrl, true);
 
       const outcome = pipe(
@@ -111,7 +111,7 @@ export const useWalletOnboardingWebView = ({
   );
 
   const openBrowserSessionOnboarding = useCallback(
-    async (url: string, isContextual: boolean = false) => {
+    async (url: string, isContextual = false) => {
       try {
         const result =
           Platform.OS === "ios"

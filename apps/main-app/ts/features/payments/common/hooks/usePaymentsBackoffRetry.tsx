@@ -21,7 +21,7 @@ export const usePaymentsBackoffRetry = (id: PaymentsBackoffRetry) => {
    * @param showToast If true it shows automatically a toast with the time remaining to retry
    * @returns true if the request can be retried, otherwise false
    */
-  const canRetryRequest = (showToast: boolean = true) => {
+  const canRetryRequest = (showToast = true) => {
     if (
       backoff?.allowedRetryTimestamp &&
       !isBackoffRetryTimeElapsed(backoff?.allowedRetryTimestamp)

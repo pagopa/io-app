@@ -40,8 +40,8 @@ import {
 } from "../../store/reducers/merchants";
 
 const INPUT_PADDING: IOSpacingScale = 16;
-const MIN_SEARCH_TEXT_LENGTH: number = 3;
-const SEARCH_DELAY: number = 300;
+const MIN_SEARCH_TEXT_LENGTH = 3;
+const SEARCH_DELAY = 300;
 
 export function CgnMerchantSearchScreen() {
   const insets = useSafeAreaInsets();

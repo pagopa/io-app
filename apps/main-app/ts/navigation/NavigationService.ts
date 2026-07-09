@@ -10,7 +10,7 @@ import { AppParamsList } from "./params/AppParamsList";
 
 export const navigationRef = createRef<NavigationContainerRef<AppParamsList>>();
 // eslint-disable-next-line functional/no-let
-let isNavigationReady: boolean = false;
+let isNavigationReady = false;
 
 // eslint-disable-next-line functional/no-let
 let isMainNavigatorReady = false;

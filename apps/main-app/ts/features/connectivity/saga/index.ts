@@ -82,7 +82,7 @@ export function* connectionStatusSaga(
       }
       yield* delay(CONNECTIVITY_STATUS_FAILURE_INTERVAL);
       continue;
-    } catch (e) {
+    } catch {
       // we ignore errors and treat them as a connection failure
       yield* put(setConnectionStatus(false));
     }
@@ -101,7 +101,7 @@ function* checkBackendConnectionStatus(
   try {
     const response = yield* call(client.getPing, {});
     return E.isRight(response) && response.right.status === 204;
-  } catch (e) {
+  } catch {
     return false;
   }
 }

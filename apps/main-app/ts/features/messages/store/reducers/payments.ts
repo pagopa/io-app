@@ -277,7 +277,7 @@ export const paymentStatisticsForMessageUncachedSelector = (
         throw Error("Data is not ready");
       }
     }, initialPaymentStatistics(paymentCount));
-  } catch (e) {
+  } catch {
     return undefined;
   }
 };

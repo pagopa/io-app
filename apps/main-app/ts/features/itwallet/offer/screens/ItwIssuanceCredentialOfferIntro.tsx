@@ -1,10 +1,17 @@
-import { Body, H2, VSpacer, VStack } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  H2,
+  IOColors,
+  IOMarkdown,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
+import { Image, StyleSheet, View } from "react-native";
 
-import IOMarkdown from "../../../../components/IOMarkdown";
+import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
@@ -18,14 +25,16 @@ import {
 } from "../../../../store/reducers/startup";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
-  selectCredentialIntroContentOption,
   selectCredentialTypeOption,
   selectResolvedCredentialOfferOption
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwRemoteLoadingScreen } from "../../presentation/remote/components/ItwRemoteLoadingScreen";
+
+const introHeroUri = Image.resolveAssetSource(introHeroSource).uri;
 
 export type ItwIssuanceCredentialOfferScreenNavigationParams = {
   itwCredentialOfferUri: string;
@@ -64,10 +73,10 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
-  const introductionContentOption =
-    ItwCredentialIssuanceMachineContext.useSelector(
-      selectCredentialIntroContentOption
-    );
+  const credentialType = O.toUndefined(credentialTypeOption);
+  const introductionContent = useIOSelector(
+    itwCredentialIntroContentSelector(credentialType)
+  );
 
   useHeaderSecondLevel({
     title: "",
@@ -92,21 +101,23 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     machineRef.send({ type: "confirm-credential-offer" });
   }, [machineRef]);
 
-  if (
-    O.isNone(resolvedCredentialOfferOption) ||
-    O.isNone(credentialTypeOption)
-  ) {
+  const isResolved = O.isSome(resolvedCredentialOfferOption) && credentialType;
+  const shouldSkipIntro = isResolved && !introductionContent;
+
+  useEffect(() => {
+    if (shouldSkipIntro) {
+      handleContinue();
+    }
+  }, [shouldSkipIntro, handleContinue]);
+
+  if (!isResolved || shouldSkipIntro) {
     return <ItwRemoteLoadingScreen title={I18n.t("global.genericWaiting")} />;
   }
 
   const fallbackTitle = I18n.t(
     "features.itWallet.issuance.credentialOffer.intro.fallbackTitle"
   );
-  const title = getCredentialNameFromType(
-    credentialTypeOption.value,
-    false,
-    fallbackTitle
-  );
+  const title = getCredentialNameFromType(credentialType, false, fallbackTitle);
 
   return (
     <IOScrollView
@@ -117,21 +128,41 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
           onPress: handleContinue
         }
       }}
+      includeContentMargins={false}
     >
-      <VStack>
+      <Image
+        accessibilityIgnoresInvertColors
+        source={{ uri: introHeroUri }}
+        style={styles.hero}
+      />
+      <ContentWrapper marginTop={24}>
         <H2>{title}</H2>
-        <Body>
-          {I18n.t("features.itWallet.issuance.credentialIntro.subtitle")}
-        </Body>
-      </VStack>
-      {O.isSome(introductionContentOption) && (
-        <>
-          <VSpacer size={16} />
-          <IOMarkdown content={introductionContentOption.value} />
-        </>
-      )}
+        <VSpacer size={16} />
+        {introductionContent && (
+          <View style={styles.contentBox}>
+            <IOMarkdown content={introductionContent} />
+          </View>
+        )}
+      </ContentWrapper>
     </IOScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  hero: {
+    width: "100%",
+    height: "auto",
+    resizeMode: "cover",
+    aspectRatio: 4 / 3,
+    opacity: 0.8
+  },
+  contentBox: {
+    borderRadius: 8,
+    borderWidth: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderColor: IOColors["grey-100"]
+  }
+});
 
 export { ItwIssuanceCredentialOfferIntroScreen };

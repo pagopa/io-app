@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import _ from "lodash";
 import { createStore } from "redux";
 
 import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
@@ -186,7 +185,7 @@ describe("NotificationsPreferencesScreen", () => {
 const renderScreen = (
   previewValue?: PushNotificationsContentTypeEnum,
   reminderValue?: ReminderStatusEnum,
-  isUpdatingProfile: boolean = false
+  isUpdatingProfile = false
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const profile = {

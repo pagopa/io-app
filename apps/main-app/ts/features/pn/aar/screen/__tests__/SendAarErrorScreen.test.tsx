@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { createStore } from "redux";
 
 import * as LOADING_SCREEN from "../../../../../components/screens/LoadingScreenContent";

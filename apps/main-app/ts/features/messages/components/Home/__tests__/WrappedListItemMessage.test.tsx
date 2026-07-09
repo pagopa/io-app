@@ -6,6 +6,7 @@ import { MessageCategory } from "../../../../../../definitions/communication/Mes
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { PaidReason } from "../../../../../store/reducers/entities/payments";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
@@ -251,9 +252,9 @@ const renderComponent = (
   message: UIMessage,
   isArchiving: boolean,
   source: "ARCHIVE" | "INBOX" | "SEARCH",
-  screenReaderEnabled: boolean = false
+  screenReaderEnabled = false
 ) => {
-  const paymentId: string = "00112233445566778899001122334";
+  const paymentId = "00112233445566778899001122334";
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const stateWithPayment = {
     ...initialState,
@@ -271,8 +272,9 @@ const renderComponent = (
       paymentByRptId: {
         ...initialState.entities.paymentByRptId,
         [paymentId]: {
-          kind: "COMPLETED"
-        }
+          kind: "COMPLETED",
+          transactionId: undefined
+        } satisfies PaidReason
       }
     },
     preferences: {

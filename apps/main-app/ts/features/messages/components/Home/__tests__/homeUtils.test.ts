@@ -86,7 +86,7 @@ const createGlobalState = (
     }
   }) as GlobalState;
 
-const checkReturnedAction = (action?: Action, getArchived: boolean = false) => {
+const checkReturnedAction = (action?: Action, getArchived = false) => {
   expect(action).not.toBeUndefined();
   expect(action?.type).toBe("MESSAGES_RELOAD_REQUEST");
   const reloadAllMessagesRequest = action as ActionType<

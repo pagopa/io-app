@@ -68,7 +68,7 @@ const usePnActivation = (serviceId: ServiceId) => {
  */
 export const useSpecialCtaPn = (
   serviceId: ServiceId,
-  activate: boolean = false
+  activate = false
 ): IOScrollViewActions["primary"] | undefined => {
   const isPnEnabled = useIOSelector(isPnRemoteEnabledSelector);
   const isPnSupported = useIOSelector(isPnAppVersionSupportedSelector);

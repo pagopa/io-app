@@ -1,8 +1,4 @@
 declare module "react-native-barcode-builder" {
-  import { oneOf } from "fp-ts/lib/Foldable2v";
-  import { api } from "jsbarcode/jsbarcode";
-  import { PureComponent } from "react";
-
   export interface BarcodeProps {
     background?: string;
     format?: barcodeTypes;

@@ -14,7 +14,6 @@ import Share from "react-native-share";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { ItwGenericErrorContent } from "../../../common/components/ItwGenericErrorContent.tsx";
 import {
   getClaimsFullLocale,
@@ -55,7 +54,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
       safeBottomAreaHeight: 0
     });
 
-  usePreventScreenCapture();
+  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
   useFocusEffect(
     useCallback(
       () =>
@@ -83,7 +82,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
           url: uri,
           failOnCancel: false
         });
-      } catch (err) {
+      } catch {
         toast.show(I18n.t("messagePDFPreview.errors.sharing"));
       }
     };

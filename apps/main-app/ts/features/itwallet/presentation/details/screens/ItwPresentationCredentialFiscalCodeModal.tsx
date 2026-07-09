@@ -16,7 +16,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import {
   selectFiscalCodeFromEid,
   selectNameSurnameFromEid
@@ -74,7 +73,7 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
   const nameSurname = useIOSelector(selectNameSurnameFromEid);
   const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
 
-  usePreventScreenCapture();
+  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
   useFocusEffect(

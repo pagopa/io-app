@@ -34,7 +34,7 @@ async function generateSignature(
   headers: Record<string, string>,
   config: SignatureConfig,
   signer: Signer,
-  signatureOrdinal: number = 1
+  signatureOrdinal = 1
 ): Promise<string> {
   const baseString = generateSignatureBase(headers, config).signatureBase;
   const keyTag = config.signKeyTag;
@@ -59,11 +59,11 @@ async function generateSignature(
 function generateSignatureBase(
   headers: Record<string, string>,
   config: SignatureConfig,
-  signatureOrdinal: number = 1
+  signatureOrdinal = 1
 ): SignatureBaseResult {
   try {
     // eslint-disable-next-line functional/no-let
-    let baseString: string = "";
+    let baseString = "";
     const signatureParams: Array<string> = config.signatureParams;
 
     signatureParams.forEach(headerParameter => {
@@ -133,10 +133,10 @@ function generateSignatureBase(
 function generateSignatureInput(
   headers: Record<string, string>,
   config: SignatureConfig,
-  signatureOrdinal: number = 1
+  signatureOrdinal = 1
 ): string {
   // eslint-disable-next-line functional/no-let
-  let signatureInputPayload: string = "";
+  let signatureInputPayload = "";
   config.signatureParams.forEach(param => {
     if (contentRelatedHeaderParameterMissing(param, headers)) {
       return;
@@ -162,7 +162,7 @@ function generateSignatureInput(
 function generateSignatureInputValue(
   payload: string,
   config: SignatureConfig,
-  signatureOrdinal: number = 1
+  signatureOrdinal = 1
 ): string {
   // https://github.com/pagopa/io-backend/pull/973
   const unixTimestamp = getUnixTimestamp();
@@ -185,7 +185,7 @@ async function generateSignatureValue(
   payload: string,
   keyTag: string,
   signer: Signer,
-  signatureOrdinal: number = 1
+  signatureOrdinal = 1
 ): Promise<string> {
   const signature: string = await signer.sign(payload, keyTag);
 
@@ -247,7 +247,7 @@ function getUnixTimestamp(): number {
  */
 function toSignatureHeaderValue(
   signature: string,
-  signatureOrdinal: number = 1
+  signatureOrdinal = 1
 ): string {
   return (
     constants.SIGNATURE_PREFIX(signatureOrdinal) +

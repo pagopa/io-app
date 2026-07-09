@@ -171,7 +171,7 @@ describe("ItwDiscoveryBanner", () => {
       }
     );
 
-    it("should navigate to onboarding when reactivation banner action is pressed", () => {
+    it("should navigate to discovery screen when reactivation banner action is pressed", () => {
       setupMocks({
         name: "reactivation banner",
         isWalletActive: false,
@@ -186,7 +186,8 @@ describe("ItwDiscoveryBanner", () => {
       fireEvent.press(getByTestId("itwReactivationBannerTestID"));
 
       expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.L3_ONBOARDING
+        screen: ITW_ROUTES.DISCOVERY.INFO,
+        params: { level: "l3" }
       });
     });
   });

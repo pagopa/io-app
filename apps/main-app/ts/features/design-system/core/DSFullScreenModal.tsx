@@ -9,7 +9,7 @@ import {
 import { ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const bottomBarHeight: number = 70;
+const bottomBarHeight = 70;
 
 export const DSFullScreenModal = () => {
   const insets = useSafeAreaInsets();

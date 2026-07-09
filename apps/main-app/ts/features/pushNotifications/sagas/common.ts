@@ -13,7 +13,7 @@ import { checkNotificationPermissions } from "../utils";
 import { navigateToMessageRouterAction } from "../utils/navigation";
 
 export function* checkAndUpdateNotificationPermissionsIfNeeded(
-  skipAnalyticsTracking: boolean = false
+  skipAnalyticsTracking = false
 ) {
   // Retrieve system notification receival permission
   const systemNotificationPermissions = yield* call(
@@ -29,7 +29,7 @@ export function* checkAndUpdateNotificationPermissionsIfNeeded(
 }
 
 export function* handlePushNotificationIfNeeded(
-  shouldResetToMainNavigator: boolean = false
+  shouldResetToMainNavigator = false
 ) {
   const pendingMessageState = yield* select(pendingMessageStateSelector);
   if (pendingMessageState) {
@@ -69,7 +69,7 @@ export function* handlePushNotificationIfNeeded(
 
 export function* updateNotificationPermissionsIfNeeded(
   systemNotificationPermissions: boolean,
-  skipAnalyticsTracking: boolean = false
+  skipAnalyticsTracking = false
 ) {
   // Retrieve the in-memory redux value of the
   // notification receival permission

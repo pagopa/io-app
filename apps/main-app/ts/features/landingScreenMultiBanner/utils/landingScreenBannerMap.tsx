@@ -17,6 +17,8 @@ import { PNActivationReminderBanner } from "../../pn/reminderBanner/components/P
 import { isPnActivationReminderBannerRenderableSelector } from "../../pn/reminderBanner/reducer/bannerDismiss";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
+import { FseDiscoveryBanner } from "../../services/fseDiscoveryBanner/components/FseDiscoveryBanner";
+import { isFseDiscoveryBannerRenderableSelector } from "../../services/fseDiscoveryBanner/store/selectors";
 
 export type BannerMapById = {
   [key in LandingScreenBannerId]: ComponentAndLogic;
@@ -37,7 +39,8 @@ export const LANDING_SCREEN_BANNERS_ENABLED_MAP = {
   ITW_DISCOVERY: true /** Legacy Documenti su IO */,
   LV_EXPIRATION_REMINDER: true,
   SEND_ACTIVATION_REMINDER: true,
-  CGN_ENGAGEMENT_BANNER: true
+  CGN_ENGAGEMENT_BANNER: true,
+  FSE_ENGAGEMENT_BANNER: true
 } as const;
 
 export const landingScreenBannerMap: BannerMapById = {
@@ -86,5 +89,11 @@ export const landingScreenBannerMap: BannerMapById = {
       <CgnDiscoveryBanner handleOnClose={closeHandler} />
     ),
     isRenderableSelector: isCgnEngagementBannerRenderableSelector
+  },
+  FSE_ENGAGEMENT_BANNER: {
+    component: closeHandler => (
+      <FseDiscoveryBanner handleOnClose={closeHandler} />
+    ),
+    isRenderableSelector: isFseDiscoveryBannerRenderableSelector
   }
 } as const;

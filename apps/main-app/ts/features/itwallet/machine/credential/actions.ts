@@ -19,7 +19,6 @@ import { getMixPanelCredential } from "../../analytics/utils";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
-import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
@@ -50,8 +49,7 @@ export const createCredentialIssuanceActionsImplementation = (
     return {
       isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
       isWalletValid: itwLifecycleIsValidSelector(state),
-      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
-      credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state)
+      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state)
     };
   }),
 
@@ -107,7 +105,7 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents,
     CredentialIssuanceEvents
   >) => {
-    navigation.replace(ITW_ROUTES.MAIN, {
+    navigation.navigate(ITW_ROUTES.MAIN, {
       screen: context.isItWalletValid
         ? ITW_ROUTES.L3_ONBOARDING
         : ITW_ROUTES.ONBOARDING

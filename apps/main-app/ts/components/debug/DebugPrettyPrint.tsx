@@ -89,7 +89,7 @@ export const DebugPrettyPrint = withDebugEnabled(
         });
 
         await RNFS.unlink(filePath);
-      } catch (err) {
+      } catch {
         toast.error("Error sharing debug data");
       }
     };

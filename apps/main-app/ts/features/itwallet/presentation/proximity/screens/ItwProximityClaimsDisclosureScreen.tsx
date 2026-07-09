@@ -13,7 +13,6 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList.
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { generateDynamicUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig.ts";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../../urls.ts";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { identificationRequest } from "../../../../identification/store/actions";
 import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
@@ -42,7 +41,7 @@ export const ItwProximityClaimsDisclosureScreen = () => {
     selectProximityDetails
   );
 
-  usePreventScreenCapture();
+  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 

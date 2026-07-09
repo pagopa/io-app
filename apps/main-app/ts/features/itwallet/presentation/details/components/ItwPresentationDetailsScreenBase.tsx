@@ -27,7 +27,7 @@ export type ItwPresentationDetailsScreenBaseProps = {
   headerTransparent?: boolean;
 };
 
-const scrollTriggerOffsetValue: number = 88;
+const scrollTriggerOffsetValue = 88;
 
 const ItwPresentationDetailsScreenBase = ({
   credential,

@@ -116,9 +116,7 @@ const scrollVerticallyToView = (
       scrollViewRef.current.getInnerViewNode(),
       (_: number, y: number, __: number) => {
         scrollViewRef.current?.scrollTo({ y, animated: true });
-      },
-
-      () => {}
+      }
     );
   }
 };

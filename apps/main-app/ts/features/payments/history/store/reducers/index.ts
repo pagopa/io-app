@@ -374,7 +374,7 @@ const appendItemToArchive = (
 const updatePaymentHistory = (
   state: PaymentsHistoryState,
   data: PaymentHistory,
-  newAttempt: boolean = false
+  newAttempt = false
 ): PaymentsHistoryState => {
   const currentAttempt = state.ongoingPayment?.attempt || 0;
   const updatedOngoingPaymentHistory: PaymentHistory = {

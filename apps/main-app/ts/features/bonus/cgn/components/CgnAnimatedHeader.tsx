@@ -28,7 +28,7 @@ type CgnAnimatedHeaderProps = {
   ref?: React.Ref<View>;
 };
 
-const HEIGHT = Platform.select({ ios: 210, android: 185 });
+const HEIGHT = Platform.select({ ios: 210, android: 185, default: 185 });
 const CARD_BORDER_RADIUS = 24;
 
 const CgnAnimatedHeader = ({
@@ -90,7 +90,7 @@ const CgnAnimatedHeader = ({
               indicatorAnimStyle,
               {
                 position: "absolute",
-                bottom: HEIGHT! * 0.6,
+                bottom: HEIGHT * 0.6,
                 alignSelf: "center",
                 zIndex: 2
               }

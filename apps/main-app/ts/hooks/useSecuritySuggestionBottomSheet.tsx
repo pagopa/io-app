@@ -16,7 +16,7 @@ import { useIOBottomSheetModal } from "../utils/hooks/bottomSheet";
  */
 
 export const useSecuritySuggestionsBottomSheet = (
-  useManualBottomsheetOpening: boolean = true
+  useManualBottomsheetOpening = true
 ) => {
   const isFastLoginFFEnabled = useIOSelector(isFastLoginFFEnabledSelector);
   const securityAdviceAcknowledged = useIOSelector(

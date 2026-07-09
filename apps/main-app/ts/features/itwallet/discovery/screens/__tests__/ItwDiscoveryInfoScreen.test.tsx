@@ -14,6 +14,18 @@ import {
   ItwDiscoveryInfoScreenProps
 } from "../ItwDiscoveryInfoScreen";
 
+jest.mock("@pagopa/io-app-design-system", () => {
+  const actual = jest.requireActual("@pagopa/io-app-design-system");
+  const { View } = jest.requireActual("react-native");
+
+  return {
+    ...actual,
+    ForceScrollDownView: ({ children }: import("react").PropsWithChildren) => (
+      <View>{children}</View>
+    )
+  };
+});
+
 describe("ItwDiscoveryInfoScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -25,6 +37,18 @@ describe("ItwDiscoveryInfoScreen", () => {
       .mockReturnValue(true);
     const { getByTestId } = renderComponent("l3");
     expect(getByTestId("itwDiscoveryInfoComponentTestID")).toBeTruthy();
+  });
+
+  it("should render privacy and terms as a link for level l3", () => {
+    jest
+      .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
+      .mockReturnValue(true);
+    const { getByText } = renderComponent("l3");
+
+    expect(
+      getByText("Informativa Privacy e i Termini e Condizioni d'uso.").props
+        .accessibilityRole
+    ).toBe("link");
   });
 
   it("should render ItwNfcNotSupportedComponent for level l3 when NFC is not supported", () => {

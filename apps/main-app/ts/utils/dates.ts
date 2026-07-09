@@ -83,8 +83,8 @@ export function formatDateAsDay(date: Date): ReturnType<typeof format> {
  */
 export function formatDateAsLocal(
   date: Date,
-  includeYear: boolean = false,
-  extendedYear: boolean = false
+  includeYear = false,
+  extendedYear = false
 ): ReturnType<typeof dateFnsFormat> {
   const dateFormat = I18n.t("global.dateFormats.dayMonth");
   return extendedYear

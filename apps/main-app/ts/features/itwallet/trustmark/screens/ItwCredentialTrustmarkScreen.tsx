@@ -4,7 +4,6 @@ import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
-import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
@@ -25,7 +24,7 @@ const ItwCredentialTrustmarkScreenComponent = (params: ScreenProps) => {
   const { credentialType } = params.route.params;
   const credentialName = useItwCredentialName(credentialType);
 
-  usePreventScreenCapture();
+  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
   return (

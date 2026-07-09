@@ -14,7 +14,6 @@ import LoadingScreenContent from "../../../../components/screens/LoadingScreenCo
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { identificationRequest } from "../../../identification/store/actions";
 import { getMixPanelCredential } from "../../analytics/utils";
@@ -42,7 +41,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
     selectCredentialOption
   );
 
-  usePreventScreenCapture();
+  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 

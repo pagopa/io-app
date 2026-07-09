@@ -37,8 +37,7 @@ const reducer = (
   switch (action.type) {
     case getType(itwDebugClearCredentialStatusOverride): {
       const { credentialType } = action.payload;
-      const { [credentialType]: _, ...rest } = state.credentialStatusOverrides;
-      // Reset savedCredentials too if no overrides remain
+      const { [credentialType]: _, ...rest } = state.credentialStatusOverrides; // Reset savedCredentials too if no overrides remain
       const hasOverrides = Object.keys(rest).length > 0;
       return {
         ...state,

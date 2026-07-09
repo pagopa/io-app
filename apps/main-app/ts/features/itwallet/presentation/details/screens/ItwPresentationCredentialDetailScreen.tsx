@@ -17,7 +17,6 @@ import {
   useIONavigation
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { identificationRequest } from "../../../../identification/store/actions";
 import { trackCredentialRenewStart } from "../../../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils";
@@ -219,7 +218,7 @@ export const ItwPresentationCredentialDetail = ({
   );
 
   useDebugInfo(credential);
-  usePreventScreenCapture();
+  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
 
   useFocusEffect(
     useCallback(() => {

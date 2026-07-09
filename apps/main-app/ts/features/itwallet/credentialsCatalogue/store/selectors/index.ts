@@ -167,7 +167,7 @@ export const itwCredentialNameResolverSelector = createSelector(
     itwLifecycleIsITWalletValidSelector
   ],
   (isCatalogueEnabled, catalogue, translations, withL3Design) =>
-    (credentialType: string | undefined, withDefault: string = ""): string => {
+    (credentialType: string | undefined, withDefault = ""): string => {
       if (isCatalogueEnabled && credentialType && catalogue && translations) {
         const catalogueMeta = catalogue[credentialType];
         const resolvedName =
@@ -253,3 +253,25 @@ export const itwAvailableCredentialsListSelector = createSelector(
     return [...newEntries, ...pinnedEntries, ...restEntries];
   }
 );
+
+/**
+ * Select the optional introduction content from the catalogue. The content is set by the
+ * Authentic Source and is a markdown text with additional information on the credential.
+ * @param credentialType The credential type to get the content
+ * @returns The translated markdown text or undefined
+ */
+export const itwCredentialIntroContentSelector =
+  (credentialType: string | undefined) =>
+  (state: GlobalState): string | undefined => {
+    const translations = itwCatalogueTranslationsByLocaleSelector(state);
+    const catalogue = itwCredentialsCatalogueByTypesSelector(state);
+    if (!credentialType || !catalogue?.[credentialType]) {
+      return;
+    }
+    const { authentic_sources } = catalogue[credentialType];
+    const { user_information_l10n_id, user_information } =
+      authentic_sources.at(0) ?? {};
+    return translations && user_information_l10n_id
+      ? translations[user_information_l10n_id]
+      : user_information;
+  };

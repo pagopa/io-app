@@ -261,7 +261,7 @@ const renderHook = (
   flow: NotificationModalFlow = "send_notification_opening",
   sendOpeningSource: SendOpeningSource = "not_set",
   sendUserType: SendUserType = "not_set",
-  shouldSetSecurityAdviceUponLeaving: boolean = false
+  shouldSetSecurityAdviceUponLeaving = false
 ) => {
   const Component = () => {
     const hookOutput = MAIN_FILE.usePushNotificationEngagement(

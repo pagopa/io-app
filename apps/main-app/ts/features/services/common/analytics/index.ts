@@ -191,7 +191,7 @@ export const trackSearchInput = () =>
     buildEventProperties("UX", "action")
   );
 
-export const trackSearchResult = (results_count: number = 0) =>
+export const trackSearchResult = (results_count = 0) =>
   void mixpanelTrack(
     "SERVICES_SEARCH_RESULT_PAGE",
     buildEventProperties("UX", "screen_view", { results_count })

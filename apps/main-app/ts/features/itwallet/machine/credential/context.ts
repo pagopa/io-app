@@ -1,6 +1,5 @@
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
 
-import { DigitalCredentialMetadata } from "../../common/utils/itwCredentialsCatalogueUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
@@ -25,10 +24,6 @@ export type Context = {
    * Obtained credentials from the issuer.
    */
   credentials: ReadonlyArray<CredentialBundle> | undefined;
-  /**
-   * The credentials catalogue as a dictionary, with an entry for each credential type.
-   */
-  credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
   /**
    * The type of the credential being issued.
    */
@@ -103,7 +98,6 @@ export const InitialContext: Context = {
   responseMode: undefined,
   credentials: undefined,
   failure: undefined,
-  credentialsCatalogue: undefined,
   credentialOfferUri: undefined,
   resolvedCredentialOffer: undefined,
   accessToken: undefined

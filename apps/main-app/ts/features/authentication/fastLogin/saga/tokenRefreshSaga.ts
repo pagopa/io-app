@@ -179,7 +179,7 @@ function* doRefreshTokenSaga(
         }
         handleRequestError(requestState, nonceResponse);
       }
-    } catch (e) {
+    } catch {
       yield* delay(RETRY_TIMEOUT_MS);
       handleRequestError(requestState);
     }

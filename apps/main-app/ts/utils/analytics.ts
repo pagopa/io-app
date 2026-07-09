@@ -67,10 +67,7 @@ export const booleanToYesNo = (value: boolean): "no" | "yes" =>
     )
   );
 
-export const numberToYesNoOnThreshold = (
-  value: number,
-  threshold: number = 0
-) =>
+export const numberToYesNoOnThreshold = (value: number, threshold = 0) =>
   pipe(
     value > threshold,
     B.fold(

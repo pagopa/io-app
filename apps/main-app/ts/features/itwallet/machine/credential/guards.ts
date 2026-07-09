@@ -1,11 +1,10 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
-import { constFalse, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 
 import { useIOStore } from "../../../../store/hooks";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
+import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 import { CredentialIssuanceFailureType } from "./failure";
@@ -17,14 +16,13 @@ export const createCredentialIssuanceGuardsImplementation = (
   isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
     "error" in event && event.error instanceof ItwSessionExpiredError,
 
-  hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
-    pipe(
-      O.fromNullable(context.walletInstanceAttestation?.jwt),
-      O.map(attestation =>
-        isWalletInstanceAttestationValid(itwVersion, attestation)
-      ),
-      O.getOrElse(() => false)
-    ),
+  hasValidWalletInstanceAttestation: ({ context }: { context: Context }) => {
+    const attestation = context.walletInstanceAttestation?.jwt;
+    if (!attestation) {
+      return false;
+    }
+    return isWalletInstanceAttestationValid(itwVersion, attestation);
+  },
 
   isStatusError: ({ context }: { context: Context }) =>
     context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS,
@@ -35,11 +33,13 @@ export const createCredentialIssuanceGuardsImplementation = (
     return eidStatus === "jwtExpired";
   },
 
-  hasCredentialIntroContent: ({ context }: { context: Context }) =>
-    pipe(
-      O.fromNullable(context.credentialType),
-      O.chainNullableK(type => context.credentialsCatalogue?.[type]),
-      O.map(metadata => !!metadata.authentic_sources[0]?.user_information),
-      O.getOrElse(constFalse)
-    )
+  hasCredentialIntroContent: ({ context }: { context: Context }) => {
+    if (!context.credentialType) {
+      return false;
+    }
+    const credentialIntroContent = itwCredentialIntroContentSelector(
+      context.credentialType
+    )(store.getState());
+    return Boolean(credentialIntroContent);
+  }
 });

@@ -30,7 +30,7 @@ import { UIMessage } from "../types";
 import { getMessageSearchResult } from "./searchUtils";
 
 const INPUT_PADDING: IOSpacingScale = 16;
-const MIN_QUERY_LENGTH: number = 3;
+const MIN_QUERY_LENGTH = 3;
 
 export const MessagesSearchScreen = () => {
   const insets = useSafeAreaInsets();

@@ -57,7 +57,7 @@ export const JsonFromString = new t.Type<Json, string, string>(
   (s, c) => {
     try {
       return t.success(JSON.parse(s));
-    } catch (e) {
+    } catch {
       return t.failure(s, c);
     }
   },

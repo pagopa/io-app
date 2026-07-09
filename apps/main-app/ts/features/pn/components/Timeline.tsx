@@ -88,7 +88,7 @@ const mapColorStatus: Record<NonNullable<TimelineStatus>, ColorStates> = {
   }
 };
 
-const borderWidth: number = 1.5;
+const borderWidth = 1.5;
 
 const TimelineDot = ({
   isFirst,

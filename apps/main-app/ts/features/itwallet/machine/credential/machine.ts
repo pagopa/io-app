@@ -248,7 +248,10 @@ export const itwCredentialIssuanceMachine = setup({
         },
         back: {
           target: "Idle",
-          actions: "navigateToCardOnboardingScreen"
+          actions: [
+            assign({ credentialType: undefined }),
+            "navigateToCardOnboardingScreen"
+          ]
         }
       }
     },

@@ -11,7 +11,7 @@ import { cieIDSelectedSecurityLevelSelector } from "../store/selectors";
 
 export function* shouldTrackLevelSecurityMismatchSaga(
   maybeSessionInformation: O.Option<PublicSession>,
-  isActiveLoginSuccess: boolean = false
+  isActiveLoginSuccess = false
 ) {
   const selectedSecurityLevel = yield* select(
     cieIDSelectedSecurityLevelSelector

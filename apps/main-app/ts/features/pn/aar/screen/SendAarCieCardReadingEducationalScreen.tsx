@@ -57,7 +57,6 @@ export const SendAarCieCardReadingEducationalScreen = ({
       }
       case sendAarFlowStates.cieScanning: {
         const { type: _, ...params } = currentAarState;
-
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING, {
           ...params,
           animationTypeForReplace: "push"

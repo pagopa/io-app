@@ -98,13 +98,6 @@ export const ItwDiscoveryBanner = ({
     });
   };
 
-  const navigateToDocumentOnboardingScreen = () => {
-    trackItwDiscoveryBannerTap(trackBannerProperties);
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.L3_ONBOARDING
-    });
-  };
-
   const handleOnDismiss = () => {
     trackItwDiscoveryBannerClosure(trackBannerProperties);
     onDismiss?.();
@@ -129,7 +122,7 @@ export const ItwDiscoveryBanner = ({
         )}
         labelClose={I18n.t("global.buttons.close")}
         onClose={handleOnDismiss}
-        onPress={navigateToDocumentOnboardingScreen}
+        onPress={navigateToDiscoveryScreen}
         pictogramName="itWallet"
         testID="itwReactivationBannerTestID"
         title={I18n.t("features.itWallet.engagementBanner.reactivation.title")}

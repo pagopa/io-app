@@ -44,7 +44,7 @@ export function* handleExportFimsHistorySaga(
     );
 
     yield* put(resultAction);
-  } catch (e: any) {
+  } catch {
     yield* put(fimsHistoryExport.failure());
   }
 }

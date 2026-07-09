@@ -171,7 +171,7 @@ export function* withThirdPartyRefreshApiCall<R>(
         // The refreshSessionToken.request action will be dispatched,
         // and the refreshing flow is started.
         yield* call(waitForTheTokenRefreshToBeStarted, errorMessage);
-      } catch (e) {
+      } catch {
         // If for some reason the token refresh flow is not started,
         // we should throw an error.
         throw new ThirdPartyTokenError(errorMessage);

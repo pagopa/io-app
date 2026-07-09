@@ -119,7 +119,7 @@ export const createActorsImplementation = (
           }
         )
       );
-    } catch (e) {
+    } catch {
       return Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE);
     }
   });

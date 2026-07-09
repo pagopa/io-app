@@ -11,8 +11,8 @@ import {
   useSafeAreaInsets
 } from "react-native-safe-area-context";
 
-const bottomBarHeight: number = 70;
-const topBarHeight: number = 55;
+const bottomBarHeight = 70;
+const topBarHeight = 55;
 
 export const DSEdgeToEdgeArea = () => {
   const insets = useSafeAreaInsets();

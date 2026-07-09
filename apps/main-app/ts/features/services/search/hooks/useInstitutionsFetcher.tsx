@@ -12,7 +12,7 @@ import {
   paginatedInstitutionsSelector
 } from "../store/selectors";
 
-const LIMIT: number = 20;
+const LIMIT = 20;
 
 export const useInstitutionsFetcher = () => {
   const dispatch = useIODispatch();

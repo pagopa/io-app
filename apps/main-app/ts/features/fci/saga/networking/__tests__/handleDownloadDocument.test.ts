@@ -8,7 +8,7 @@ import { handleDownloadDocument } from "../handleDownloadDocument";
 
 const savePath = "/tmp/example.pdf";
 
-const ReactNativeBlobUtilMock = (status: number, body: string = "") =>
+const ReactNativeBlobUtilMock = (status: number, body = "") =>
   // `config` is not a pre-existing property on the mocked module, so
   // jest.spyOn() cannot be used here, assign the mock directly instead.
   // eslint-disable-next-line functional/immutable-data, jest/prefer-spy-on

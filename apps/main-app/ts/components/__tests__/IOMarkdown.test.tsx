@@ -6,7 +6,7 @@ import { appReducer } from "../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
 import IOMarkdown from "../IOMarkdown";
 
-const markdownString: string = `
+const markdownString = `
 # Main Title
 
 ## Subtitle

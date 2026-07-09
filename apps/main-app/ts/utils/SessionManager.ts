@@ -17,14 +17,14 @@ const waitRetry = 8000 as Millisecond;
  * concurrent functions that need the token and may detect expired tokens.
  */
 export class SessionManager<T> {
-  private isRefreshing: boolean = false;
-  private isSessionEnabled: boolean = true;
+  private isRefreshing = false;
+  private isSessionEnabled = true;
   private mutex = new Mutex();
   private token?: T;
 
   constructor(
     private refreshSession: () => Promise<O.Option<T>>,
-    private maxRetries: number = 0
+    private maxRetries = 0
   ) {}
 
   /**

@@ -218,7 +218,7 @@ type HookState = {
   servicePreferenceByChannel: boolean | undefined;
 };
 
-const renderHook = (state: HookState, activateFlag: boolean = false) => {
+const renderHook = (state: HookState, activateFlag = false) => {
   const Component = () => {
     const action = useSpecialCtaPn(mockServiceId, activateFlag);
     testingAction = action?.onPress;

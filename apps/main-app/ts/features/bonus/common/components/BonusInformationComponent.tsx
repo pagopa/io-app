@@ -102,7 +102,7 @@ const getTosFooter = (
   );
 
 // value is defined the height of the image
-const imageHeight: number = 270;
+const imageHeight = 270;
 
 /**
  * A screen to explain how the bonus activation works and how it will be assigned

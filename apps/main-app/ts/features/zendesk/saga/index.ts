@@ -123,7 +123,7 @@ function* getZendeskTokenSaga(
     if (!isFastLogin || response.right.status !== 401) {
       yield* put(getZendeskToken.failure());
     }
-  } catch (e) {
+  } catch {
     yield* put(getZendeskToken.failure());
   }
 }

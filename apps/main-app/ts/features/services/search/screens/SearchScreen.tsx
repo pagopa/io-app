@@ -34,7 +34,7 @@ import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { searchPaginatedInstitutionsGet } from "../store/actions";
 
 const INPUT_PADDING: IOSpacingScale = 16;
-const MIN_QUERY_LENGTH: number = 3;
+const MIN_QUERY_LENGTH = 3;
 
 type InstitutionListItemComponentProps = {
   index: number;

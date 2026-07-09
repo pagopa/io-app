@@ -1,6 +1,5 @@
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import _isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Linking, Platform, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -99,7 +98,7 @@ const ActiveSessionCieIdLoginWebView = ({
           // Redirects the user to the error screen
           navigateToCieIdAuthUrlError(url);
         }
-      } catch (error) {
+      } catch {
         // Redirects the user to the error screen
         navigateToCieIdAuthUrlError(url);
       }

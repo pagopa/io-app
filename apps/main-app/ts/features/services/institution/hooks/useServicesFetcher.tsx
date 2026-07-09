@@ -12,7 +12,7 @@ import {
   paginatedServicesSelector
 } from "../store/selectors";
 
-const LIMIT: number = 20;
+const LIMIT = 20;
 
 export const useServicesFetcher = (institutionId: string) => {
   const dispatch = useIODispatch();

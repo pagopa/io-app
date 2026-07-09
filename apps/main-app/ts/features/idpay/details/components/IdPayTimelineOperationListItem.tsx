@@ -399,7 +399,7 @@ export const getOperationSubtitle = (operationDate: Date): string => {
 export const getOperationSubtitleWithAmount = (
   operationDate: Date,
   amount: number | undefined,
-  withMinusSign: boolean = false
+  withMinusSign = false
 ): string => {
   const signString = withMinusSign ? "−" : "";
   const amountString = `${formatAbsNumberAmountCentsOrDefault(amount)} €`;

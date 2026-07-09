@@ -11,10 +11,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as preferencesSelectors from "../../../common/store/selectors/preferences";
+import * as catalogSelectors from "../../../credentialsCatalogue/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import {
-  selectCredentialIntroContentOption,
   selectCredentialTypeOption,
   selectResolvedCredentialOfferOption
 } from "../../../machine/credential/selectors";
@@ -34,7 +34,6 @@ const TEST_NAVIGATOR_ROUTE = "TEST_NAVIGATOR";
 
 const Stack = createStackNavigator<ItwParamsList>();
 const someOption = <T,>(value: T) => ({ _tag: "Some" as const, value });
-const noneOption = { _tag: "None" as const };
 
 describe("ItwIssuanceCredentialOfferIntroScreen", () => {
   const machineSend = jest.fn();
@@ -55,6 +54,9 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
       .mockReturnValue(true);
     jest
+      .spyOn(catalogSelectors, "itwCredentialIntroContentSelector")
+      .mockReturnValue(() => undefined);
+    jest
       .spyOn(ItwCredentialIssuanceMachineContext, "useActorRef")
       .mockReturnValue({ send: machineSend } as any);
     jest
@@ -74,10 +76,6 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
 
         if (selector === selectCredentialTypeOption) {
           return someOption(T_CREDENTIAL_TYPE) as any;
-        }
-
-        if (selector === selectCredentialIntroContentOption) {
-          return noneOption as any;
         }
 
         return undefined as any;

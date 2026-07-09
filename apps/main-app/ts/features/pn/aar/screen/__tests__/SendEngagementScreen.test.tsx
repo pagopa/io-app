@@ -268,7 +268,7 @@ describe("SendEngagementScreen", () => {
 });
 
 const renderScreen = (
-  systemNotificationsEnabled: boolean = false,
+  systemNotificationsEnabled = false,
   sendOpeningSource: SendOpeningSource = DEFAULT_OPENING_SOURCE,
   sendUserType: SendUserType = DEFAULT_USER_TYPE
 ) => {
