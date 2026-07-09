@@ -23,7 +23,7 @@ import {
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
 import I18n from "i18next";
-import { withLoadingSpinner } from "../../../../../components/helpers/withLoadingSpinner";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { selectedIdentityProviderSelector } from "../../../../../features/authentication/common/store/selectors";
 import { ephemeralKeyTagSelector } from "../../../../../features/lollipop/store/reducers/lollipop";
@@ -299,36 +299,34 @@ const CieWebView = (props: Props) => {
     );
   }
 
-  const WithLoading = withLoadingSpinner(() => (
-    <View style={{ flex: 1 }}>
-      {requestInfo.requestState === "AUTHORIZED" &&
-        internalState.authUrl === undefined && (
-          <WebView
-            testID="webview"
-            androidCameraAccessDisabled={true}
-            androidMicrophoneAccessDisabled={true}
-            ref={webView}
-            userAgent={defaultUserAgent}
-            javaScriptEnabled={true}
-            injectedJavaScript={injectJs}
-            onLoadEnd={handleOnLoadEnd}
-            onError={handleOnError}
-            onHttpError={handleOnError}
-            onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-            source={{ uri: requestInfo.url } as WebViewSource}
-            key={internalState.key}
-          />
-        )}
-    </View>
-  ));
-
   return (
-    <WithLoading
+    <LoadingSpinnerOverlay
       isLoading={!cieFlowForDevServerEnabled}
       loadingOpacity={1.0}
       loadingCaption={I18n.t("global.genericWaiting")}
       onCancel={props.onClose}
-    />
+    >
+      <View style={{ flex: 1 }}>
+        {requestInfo.requestState === "AUTHORIZED" &&
+          internalState.authUrl === undefined && (
+            <WebView
+              testID="webview"
+              androidCameraAccessDisabled={true}
+              androidMicrophoneAccessDisabled={true}
+              ref={webView}
+              userAgent={defaultUserAgent}
+              javaScriptEnabled={true}
+              injectedJavaScript={injectJs}
+              onLoadEnd={handleOnLoadEnd}
+              onError={handleOnError}
+              onHttpError={handleOnError}
+              onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+              source={{ uri: requestInfo.url } as WebViewSource}
+              key={internalState.key}
+            />
+          )}
+      </View>
+    </LoadingSpinnerOverlay>
   );
 };
 
