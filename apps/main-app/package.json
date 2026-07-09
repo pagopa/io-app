@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.36.0-rc.4",
+  "version": "3.36.0-rc.10",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -42,10 +42,7 @@
     "dev-pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
+    "*.{ts,tsx}": ["prettier --write", "eslint --fix"]
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.9",
@@ -65,7 +62,7 @@
     "@pagopa/io-react-native-jwt": "^2.2.0",
     "@pagopa/io-react-native-login-utils": "1.2.0",
     "@pagopa/io-react-native-secure-storage": "^0.2.1",
-    "@pagopa/io-react-native-wallet": "3.5.0",
+    "@pagopa/io-react-native-wallet": "3.6.2",
     "@pagopa/io-react-native-zendesk": "^0.3.30",
     "@pagopa/react-native-cie": "^1.5.0",
     "@pagopa/ts-commons": "^10.15.0",
@@ -188,6 +185,7 @@
     "@eslint/compat": "^2.0.3",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^10.0.1",
+    "@pagopa/eslint-config": "6.2.0",
     "@pagopa/openapi-codegen-ts": "^14.2.0",
     "@react-native-community/cli": "20.0.0",
     "@react-native-community/cli-platform-android": "20.0.0",

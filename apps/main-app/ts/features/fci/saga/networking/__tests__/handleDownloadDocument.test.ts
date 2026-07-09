@@ -7,8 +7,10 @@ import { getNetworkError } from "../../../../../utils/errors";
 
 const savePath = "/tmp/example.pdf";
 
-const ReactNativeBlobUtilMock = (status: number, body: string = "") =>
-  // eslint-disable-next-line functional/immutable-data
+const ReactNativeBlobUtilMock = (status: number, body = "") =>
+  // `config` is not a pre-existing property on the mocked module, so
+  // jest.spyOn() cannot be used here, assign the mock directly instead.
+  // eslint-disable-next-line functional/immutable-data, jest/prefer-spy-on
   ((ReactNativeBlobUtil as any).config = jest.fn(() => ({
     fetch: jest.fn().mockReturnValue({
       info: jest.fn().mockReturnValue({ status }),

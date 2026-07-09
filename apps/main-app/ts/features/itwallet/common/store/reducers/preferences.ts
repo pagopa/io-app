@@ -4,12 +4,13 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { IdentificationContext } from "../../../machine/eid/context.ts";
 import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 import {
+  ItwWalletActivationFeedbackBannerData,
+  itwClearWalletActivationFeedbackBannerData,
   itwClearCredentialUpgradeFailed,
-  itwClearSimplifiedActivationRequirements,
   itwDisableItwActivation,
-  itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
+  itwSetWalletActivationFeedbackBannerData,
   itwSetCredentialUpgradeFailed,
   itwSetFiscalCodeWhitelisted,
   itwSetIdentificationMode,
@@ -26,9 +27,6 @@ export type ItwPreferencesState = {
   claimValuesHidden?: boolean;
   // Indicates whether the fiscal code is whitelisted for L3 features
   isFiscalCodeWhitelisted?: boolean;
-  // Indicates whether the user should activate IT-Wallet with the simplified flow,
-  // even if he/she already has a valid L3 PID (obtained outside the whitelist)
-  isItwSimplifiedActivationRequired?: boolean;
   // Indicates whether the bottom sheet survey is visible when the user quits
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
@@ -39,6 +37,9 @@ export type ItwPreferencesState = {
   isItwActivationDisabled?: boolean;
   // Indicates the identification mode used for the user
   identificationMode?: IdentificationContext["mode"];
+  // Set when a credential is successfully added together with an IT Wallet eID activation.
+  // Used to show the credential success survey banner in WALLET_HOME for 7 days.
+  walletActivationFeedbackBannerData?: ItwWalletActivationFeedbackBannerData;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {};
@@ -74,18 +75,6 @@ const reducer = (
         ...state,
         isFiscalCodeWhitelisted: action.payload
       };
-    }
-
-    case getType(itwFreezeSimplifiedActivationRequirements):
-      return {
-        ...state,
-        isItwSimplifiedActivationRequired:
-          state.authLevel === "L3" && !state.isFiscalCodeWhitelisted
-      };
-
-    case getType(itwClearSimplifiedActivationRequirements): {
-      const { isItwSimplifiedActivationRequired: _, ...rest } = state;
-      return rest;
     }
 
     case getType(itwSetPidReissuingSurveyHidden): {
@@ -137,6 +126,18 @@ const reducer = (
         ...state,
         identificationMode: action.payload
       };
+    }
+
+    case getType(itwSetWalletActivationFeedbackBannerData): {
+      return {
+        ...state,
+        walletActivationFeedbackBannerData: action.payload
+      };
+    }
+
+    case getType(itwClearWalletActivationFeedbackBannerData): {
+      const { walletActivationFeedbackBannerData: _, ...rest } = state;
+      return rest;
     }
 
     default:

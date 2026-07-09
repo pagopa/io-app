@@ -46,9 +46,10 @@ import {
 } from "../store/reducers/fciQtspClauses";
 import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
 import { KeyInfo } from "../../lollipop/utils/crypto";
+import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import { createFciClient } from "../api/backendFci";
 import { spidLevelFromSessionInfoSelector } from "../../authentication/common/store/selectors";
-import { isFciSecurityLevelCheckEnabledSelector } from "../store/reducers/fciSecurityLevelReducer";
+import { isFciSecurityLevelCheckRemoteFFEnabledSelector } from "../store/selectors/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
 import { activeSessionLoginFlowSelector } from "../../authentication/activeSessionLogin/store/selectors";
 import { setActiveSessionLoginFlow } from "../../authentication/activeSessionLogin/store/actions";
@@ -208,7 +209,7 @@ function* standardFciFlowStartSaga(): SagaIterator {
 function* watchFciStartSaga(): SagaIterator {
   const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
   const isFciSecurityLevelCheckEnabled = yield* select(
-    isFciSecurityLevelCheckEnabledSelector
+    isFciSecurityLevelCheckRemoteFFEnabledSelector
   );
 
   if (!isFciSecurityLevelCheckEnabled) {
@@ -246,13 +247,27 @@ function* watchFciSignatureRequestRetrySaga(
 
     if (isActionOf(fciSignatureRequestFromId.success, result)) {
       if (result.payload.id === action.payload) {
-        /**
-         * when restarting the flow from 'DocumentUnavailableScreen',
-         * FciDocumentsScreen will still get pot error if not reset
-         */
-        yield* put(fciDownloadPreview.cancel());
-        // start a new signing flow
-        yield* put(fciStartRequest());
+        const { status, expires_at } = result.payload;
+        const isSignable =
+          status === SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE &&
+          new Date(expires_at) >= new Date();
+
+        if (isSignable) {
+          /**
+           * when restarting the flow from 'DocumentUnavailableScreen',
+           * FciDocumentsScreen will still get pot error if not reset
+           */
+          yield* put(fciDownloadPreview.cancel());
+          yield* put(fciStartRequest());
+        } else {
+          yield* call(
+            NavigationService.dispatchNavigationAction,
+            StackActions.replace(FCI_ROUTES.MAIN, {
+              screen: FCI_ROUTES.ROUTER,
+              params: { signatureRequestId: action.payload }
+            })
+          );
+        }
         return;
       }
 
