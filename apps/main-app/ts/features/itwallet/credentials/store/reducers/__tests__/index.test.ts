@@ -130,11 +130,9 @@ describe("ITW credentials reducer", () => {
       );
       const remainingCredentials: Record<string, CredentialMetadata> =
         Object.fromEntries(
-          Object.entries({
-            [mockedEid.credentialId]: mockedEid,
-            [mockedCredential.credentialId]: mockedCredential,
-            [mockedCredential2.credentialId]: mockedCredential2
-          }).filter(([credentialId]) => !removedIds.has(credentialId))
+          [mockedEid, mockedCredential, mockedCredential2]
+            .filter(({ credentialId }) => !removedIds.has(credentialId))
+            .map(credential => [credential.credentialId, credential])
         );
 
       expect(targetSate.features.itWallet.credentials.credentials).toEqual(
