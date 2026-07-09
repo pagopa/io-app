@@ -2295,6 +2295,11 @@
     }
   },
   "features": {
+    "fseDiscoveryBanner": {
+      "title": "Il tuo Fascicolo Sanitario Elettronico è già disponibile!",
+      "body": "Accedi e consulta referti, prescrizioni e servizi in un unico spazio digitale. È semplice e sicuro. Con te, per la tua salute.",
+      "cta": "Vai al tuo Fascicolo"
+    },
     "messages": {
       "pushNotifications": {
         "banner": {
@@ -3120,7 +3125,7 @@
       }
     },
     "itWallet": {
-      "title": "IT-WALLET",
+      "title": "IT-Wallet",
       "credentialName": {
         "pid": "IT-Wallet ID",
         "eid": "Identità Digitale",
@@ -3304,10 +3309,14 @@
                 "content": "IT-Wallet si integrerà al Portafoglio Digitale Europeo: potrai usare i tuoi documenti con pieno valore legale in tutta Europa."
               }
             },
-            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
+            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso.]({{privacyUrl}})",
             "actions": {
               "primary": "Continua",
-              "anchor": "Scopri tutti i vantaggi"
+              "secondary": "Scopri di più su IT-Wallet"
+            },
+            "detailsBottomSheet": {
+              "title": "IT-Wallet su IO: il nuovo portafoglio digitale pubblico",
+              "action": "Ho capito"
             },
             "dismissalDialog": {
               "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
@@ -4000,7 +4009,7 @@
           "trustmark": "Mostra certificato di autenticità",
           "openPdf": "Mostra documento",
           "shareButton": "Salva o condividi",
-          "present": "Avvia verifica"
+          "present": "Mostra codice QR"
         },
         "eid": {
           "verificationExpired": {
@@ -4388,6 +4397,29 @@
             "content": "Raccontaci la tua esperienza con la verifica e aiutaci a migliorare.",
             "action": "Inizia"
           }
+        },
+        "eidActivationSuccess": {
+          "banner": {
+            "title": "Puoi dirci com’è andata?",
+            "content": "Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.",
+            "action": "Inizia"
+          }
+        },
+        "eidActivationExit": {
+          "bottomSheet": {
+            "title": "Ti va di dirci perché?",
+            "content": "Hai deciso di non continuare con IT-Wallet: facci sapere il perché, così potremo migliorare la tua esperienza in app. Ci vorrà un minuto!",
+            "primaryAction": "Dicci la tua",
+            "secondaryAction": "Non ora"
+          }
+        },
+        "credentialExit": {
+          "bottomSheet": {
+            "title": "Ti va di dirci perché?",
+            "content": "Hai deciso di non continuare: facci sapere il perché, così potremo migliorare la tua esperienza in app. Ci vorrà un minuto!",
+            "primaryAction": "Dicci la tua",
+            "secondaryAction": "Non ora"
+          }
         }
       },
       "walletInstanceRevoked": {
@@ -4591,10 +4623,10 @@
         },
         "addCredential": {
           "title": "Aggiungi un documento",
-          "description": "Premi “+” o “Aggiungi documento” per scegliere un documento digitale da aggiungere al Portafoglio."
+          "description": "Premi “+” per scegliere un documento digitale da aggiungere al Portafoglio."
         },
         "qrCode": {
-          "title": "Mostra il codice QR a chi verifica",
+          "title": "Mostra i documenti a chi verifica",
           "description": "Chi verifica i tuoi documenti dal vivo usa un’app ufficiale per scansionare questo codice QR. "
         }
       }

@@ -20,7 +20,6 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
-import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackOpenItwTos } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
@@ -83,7 +82,7 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   );
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
-  usePreventScreenCapture();
+  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
@@ -154,10 +153,14 @@ const ContentView = ({
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({
         exit_page: route.name,
         credential: mixPanelCredential
+      });
+      machineRef.send({
+        type: "close",
+        surveyStep: isItwL3 ? "data_share" : undefined,
+        surveyCredential: isItwL3 ? mixPanelCredential : undefined
       });
     }
   });
@@ -247,7 +250,9 @@ const ContentView = ({
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
             privacyUrl
           })}
-          rules={generateItwIOMarkdownRules({ linkCallback: trackOpenItwTos })}
+          rules={generateItwIOMarkdownRules({
+            linkCallback: trackOpenItwTos
+          })}
         />
       </ContentWrapper>
     </ForceScrollDownView>

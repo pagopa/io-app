@@ -10,7 +10,7 @@ import { KeyboardAvoidingView, Platform } from "react-native";
  */
 export const withKeyboard = (
   content: ReactNode,
-  insideSafeAreaView: boolean = false
+  insideSafeAreaView = false
 ) => (
   <KeyboardAvoidingView
     behavior={Platform.OS === "android" ? undefined : "padding"}

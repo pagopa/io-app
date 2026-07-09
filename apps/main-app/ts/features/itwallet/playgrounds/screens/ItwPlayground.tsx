@@ -5,7 +5,7 @@ import {
   VStack
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
@@ -22,6 +22,12 @@ import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwMiscSection } from "../components/ItwMiscSection";
 import { ItwPidIssuanceSection } from "../components/ItwPidIssuanceSection";
 import { ItwSpecsVersionSection } from "../components/ItwSpecsVersionSection";
+import { ItwStatusListSection } from "../components/ItwStatusListSection";
+
+type PlaygroundTab = {
+  label: string;
+  content: ReactNode;
+};
 
 /**
  * ITW Playground screen
@@ -29,7 +35,7 @@ import { ItwSpecsVersionSection } from "../components/ItwSpecsVersionSection";
  */
 const ItwPlayground = () => {
   const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const { screenEndMargin } = useScreenEndMargin();
+  const { screenEndMargin, screenEndSafeArea } = useScreenEndMargin();
   const [page, setPage] = useState(0);
 
   useHeaderSecondLevel({
@@ -42,49 +48,70 @@ const ItwPlayground = () => {
     }, [eidMachineRef])
   );
 
+  const tabs: ReadonlyArray<PlaygroundTab> = [
+    {
+      label: "Environment",
+      content: (
+        <>
+          <ItwEnvironmentSection />
+          <ItwLifecycleSection />
+          <ItwSpecsVersionSection />
+          <ItwMiscSection />
+        </>
+      )
+    },
+    {
+      label: "Issuance",
+      content: <ItwPidIssuanceSection />
+    },
+    {
+      label: "ISO-18013",
+      content: <ItwIso18013Section />
+    },
+    {
+      label: "Status",
+      content: <ItwCredentialStatusOverrideSection />
+    },
+    {
+      label: "Status List",
+      content: <ItwStatusListSection />
+    },
+    {
+      label: "Screens",
+      content: (
+        <>
+          <ItwL3ScreensSection />
+          <ItwIdentificationScreensSection />
+        </>
+      )
+    },
+    {
+      label: "Components",
+      content: <ItwComponentsSection />
+    },
+    {
+      label: "Cards",
+      content: <ItwCardsSection />
+    },
+    {
+      label: "Header Cards",
+      content: <ItwCardsHeaderSection />
+    }
+  ];
+
   return (
-    <VStack space={16}>
+    <VStack space={16} style={{ paddingBottom: screenEndMargin }}>
       <TabNavigation
         tabAlignment="start"
         selectedIndex={page}
         onItemPress={setPage}
       >
-        <TabItem label="Environment" accessibilityLabel="Environment" />
-        <TabItem label="Issuance" accessibilityLabel="Issuance" />
-        <TabItem label="ISO-18013" accessibilityLabel="ISO-18013" />
-        <TabItem label="Status" accessibilityLabel="Status" />
-        <TabItem label="Screens" accessibilityLabel="Screens" />
-        <TabItem label="Components" accessibilityLabel="Components" />
-        <TabItem label="Cards" accessibilityLabel="Cards" />
-        <TabItem label="Header Cards" accessibilityLabel="Header Cards" />
+        {tabs.map(({ label }) => (
+          <TabItem key={label} label={label} accessibilityLabel={label} />
+        ))}
       </TabNavigation>
-      <ScrollView
-        contentContainerStyle={{
-          paddingBottom: screenEndMargin
-        }}
-      >
-        <ContentWrapper>
-          {page === 0 && (
-            <>
-              <ItwEnvironmentSection />
-              <ItwLifecycleSection />
-              <ItwSpecsVersionSection />
-              <ItwMiscSection />
-            </>
-          )}
-          {page === 1 && <ItwPidIssuanceSection />}
-          {page === 2 && <ItwIso18013Section />}
-          {page === 3 && <ItwCredentialStatusOverrideSection />}
-          {page === 4 && (
-            <>
-              <ItwL3ScreensSection />
-              <ItwIdentificationScreensSection />
-            </>
-          )}
-          {page === 5 && <ItwComponentsSection />}
-          {page === 6 && <ItwCardsSection />}
-          {page === 7 && <ItwCardsHeaderSection />}
-        </ContentWrapper>
+      <ScrollView contentContainerStyle={{ paddingBottom: screenEndSafeArea }}>
+        <ContentWrapper>{tabs[page]?.content}</ContentWrapper>
       </ScrollView>
     </VStack>
   );

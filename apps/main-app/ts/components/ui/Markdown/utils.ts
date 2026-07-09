@@ -19,8 +19,8 @@ export const convertOldDemoMarkdownTag = (markdown: string) =>
 export const generateHtml = (
   content: string,
   cssStyle?: string,
-  useCustomSortedList: boolean = false,
-  avoidTextSelection: boolean = false
+  useCustomSortedList = false,
+  avoidTextSelection = false
 ) => `
   <!DOCTYPE html>
   <html>

@@ -30,6 +30,7 @@ export const ITW_BRAND_GRADIENT_ERROR = [
   "rgba(220, 227, 252, 1)"
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const themeKeys = [
   // Screens
   "header-background",

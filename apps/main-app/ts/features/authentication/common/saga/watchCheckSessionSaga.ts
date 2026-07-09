@@ -21,7 +21,7 @@ import { sessionInfoSelector } from "../store/selectors";
 export function* checkSession(
   getSessionValidity: SessionManagerClient["getSessionState"],
   fields?: string, // the `fields` parameter is optional and it defaults to an empty object
-  mergeOldAndNewValues: boolean = false
+  mergeOldAndNewValues = false
 ): Generator<
   ReduxSagaEffect,
   TypeOfApiResponseStatus<GetSessionStateT> | undefined,

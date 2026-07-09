@@ -41,6 +41,7 @@ export const FimsHistorySuccessListItem = ({
         <Caption color={theme["textBody-tertiary"]}>
           {dateToAccessibilityReadableFormat(
             consent.timestamp,
+            // eslint-disable-next-line i18next/no-literal-string -- date format token, not user-facing copy
             "DD/MM/YYYY, HH:mm"
           )}
         </Caption>
@@ -88,6 +89,7 @@ export const FimsHistoryFailureListItem = ({
           <HSpacer size={4} />
           <Caption color={theme["textBody-tertiary"]}>
             {}
+            {/* eslint-disable-next-line i18next/no-literal-string -- date format token, not user-facing copy */}
             {dateToAccessibilityReadableFormat(item.timestamp, "DD,MM,YYYY")}
           </Caption>
         </View>

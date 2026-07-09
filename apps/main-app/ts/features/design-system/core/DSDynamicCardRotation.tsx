@@ -52,21 +52,21 @@ type LightSize = {
 /* LIGHT
    Visual parameters */
 const lightSizePercentage: ViewStyle["width"] = "90%";
-const lightScaleMultiplier: number = 1;
+const lightScaleMultiplier = 1;
 const lightOpacity: ViewStyle["opacity"] = 0.9;
-const lightSkiaOpacity: number = 0.4;
+const lightSkiaOpacity = 0.4;
 /* Percentage of visible light when it's near
 card boundaries */
-const visibleLightPercentage: number = 0.25;
+const visibleLightPercentage = 0.25;
 
 /* CARD
    Visual parameters */
 const cardAspectRatio: ViewStyle["aspectRatio"] = 7 / 4;
-const cardBorderRadius: number = 24;
-const cardBorderWidth: number = 1;
+const cardBorderRadius = 24;
+const cardBorderWidth = 1;
 const cardBorderColor: ColorValue = IOColors["hanPurple-500"];
 const cardBorderHighlighted: ColorValue = IOColors.white;
-const cardBorderOpacity: number = 0.65;
+const cardBorderOpacity = 0.65;
 // Drivers' License
 const cardGradient: Array<Color> = ["#F4ACD5", "#FCE6F2"];
 // Flag
@@ -133,7 +133,7 @@ export const DSDynamicCardRotation = () => {
 
   /* We don't need to consider the whole
     sensor range, just the 1/10 */
-  const sensorRange: number = 0.1;
+  const sensorRange = 0.1;
 
   /* Calculate the light position using quaternions */
   const lightAnimatedStyle = useAnimatedStyle(() => {

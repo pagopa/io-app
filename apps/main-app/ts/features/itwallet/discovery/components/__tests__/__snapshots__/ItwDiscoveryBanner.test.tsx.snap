@@ -1356,7 +1356,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT Wallet"
+                                accessibilityLabel="IT-Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -2551,7 +2551,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT Wallet"
+                                accessibilityLabel="IT-Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -3746,7 +3746,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT Wallet"
+                                accessibilityLabel="IT-Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -4783,7 +4783,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT Wallet"
+                                accessibilityLabel="IT-Wallet"
                                 height={16}
                                 width={80}
                               />

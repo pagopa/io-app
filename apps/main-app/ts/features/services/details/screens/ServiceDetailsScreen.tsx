@@ -48,7 +48,7 @@ type ServiceDetailsScreenProps = IOStackNavigationRouteProps<
   "SERVICE_DETAIL"
 >;
 
-const headerPaddingBottom: number = 138;
+const headerPaddingBottom = 138;
 
 const styles = StyleSheet.create({
   cardContainer: {

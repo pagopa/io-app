@@ -42,7 +42,7 @@ import { CieWarningType } from "../../../identification/cie/utils/types";
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
 const T_INTEGRITY_KEY = "abc";
-const T_WIA: string = "abcdefg";
+const T_WIA = "abcdefg";
 const T_WUA = { wua1: "wua-jwt" };
 const T_ROUTE_NAME = "ITW_IDENTIFICATION_TEST_ROUTE";
 const T_ACCESS_TOKEN: CredentialAccessToken = {
@@ -88,6 +88,8 @@ const storeWalletInstanceAttestation = jest.fn();
 const closeIssuance = jest.fn();
 const handleSessionExpired = jest.fn();
 const resetWalletInstance = jest.fn();
+const refreshCredentialsCatalogue = jest.fn();
+const storeCredentialUpgradeFailures = jest.fn();
 const trackWalletInstanceCreation = jest.fn();
 const trackWalletInstanceRevocation = jest.fn();
 const trackIdentificationMethodSelected = jest.fn();
@@ -96,7 +98,7 @@ const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 const trackItwIdAuthenticationCompleted = jest.fn();
 const trackItwIdVerifiedDocument = jest.fn();
-const refreshCredentialsCatalogue = jest.fn();
+const storeWalletActivationFeedbackBannerData = jest.fn();
 
 /**
  * Actors
@@ -156,13 +158,15 @@ describe("itwEidIssuanceMachine", () => {
       closeIssuance,
       handleSessionExpired,
       resetWalletInstance,
+      refreshCredentialsCatalogue,
+      storeCredentialUpgradeFailures,
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
       trackIdentificationMethodSelected,
       storeAuthLevel,
       trackItwIdAuthenticationCompleted,
       trackItwIdVerifiedDocument,
-      refreshCredentialsCatalogue
+      storeWalletActivationFeedbackBannerData
     },
     actors: {
       verifyTrustFederation: fromPromise<void, WithItwVersion>(
@@ -352,19 +356,13 @@ describe("itwEidIssuanceMachine", () => {
 
     // Wallet instance creation and attestation obtainment success
 
-    // Navigate to ipzs privacy screen
-    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
-
-    // Accept IPZS privacy
-    actor.send({ type: "accept-ipzs-privacy" });
     // Navigate to identification mode selection
-
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
         UserIdentification: "Identification"
       })
     );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
 
     /**
@@ -1075,6 +1073,50 @@ describe("itwEidIssuanceMachine", () => {
     });
   });
 
+  it("Should skip IPZS privacy when privacy and ToS have been confirmed from discovery", async () => {
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
+    actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: "Identification"
+    });
+    expect(navigateToIpzsPrivacyScreen).not.toHaveBeenCalled();
+    expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should navigate to IPZS privacy from ToS acceptance without changing state", () => {
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
+    actor.send({ type: "go-to-ipzs-privacy" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    expect(navigateToIpzsPrivacyScreen).toHaveBeenCalledTimes(1);
+  });
+
   it("Should allow the user to add a new credential once eID issuance is complete", () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
@@ -1089,13 +1131,44 @@ describe("itwEidIssuanceMachine", () => {
     });
     actor.start();
 
-    /**
-     * Go to wallet
-     */
-
     actor.send({ type: "add-new-credential" });
 
     expect(navigateToCredentialCatalog).toHaveBeenCalledTimes(1);
+    // entry does not re-fire when resuming from a snapshot, so storeWalletActivationFeedbackBannerData
+    // is never called in this path (it only fires on entry when credentialType is set)
+    expect(storeWalletActivationFeedbackBannerData).not.toHaveBeenCalled();
+  });
+
+  it("Should store banner data on entering Success when EID activation was triggered by a credential request", async () => {
+    storeEidCredentialActor.mockResolvedValue(undefined);
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "DisplayingPreview" },
+      context: {
+        mode: "issuance",
+        level: "l2",
+        credentialType: "MDL",
+        eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "add-to-wallet" });
+
+    await waitForActor(actor, snap => snap.matches("Success"));
+
+    // entry fires on genuine transition into Success → storeWalletActivationFeedbackBannerData called
+    expect(storeWalletActivationFeedbackBannerData).toHaveBeenCalledTimes(1);
+    // add-new-credential is not sent in this flow
+    expect(navigateToCredentialCatalog).not.toHaveBeenCalled();
   });
 
   it("Should return to TOS acceptance if session expires when creating a Wallet Instance", async () => {
@@ -1159,7 +1232,7 @@ describe("itwEidIssuanceMachine", () => {
     );
   });
 
-  it("Should return to TOS acceptance if session expires when obtaining a Wallet Instance Attestation ", async () => {
+  it("Should return to TOS acceptance if session expires when obtaining a Wallet Instance Attestation", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -2153,7 +2226,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("Should handle credentials upgrade", (done: jest.DoneCallback) => {
+  it("Should handle credentials upgrade", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -2182,14 +2255,16 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    const subUpgrading = actor.subscribe(snap => {
-      if (_.isEqual(snap.value, { CredentialsUpgrade: "Upgrading" })) {
-        subUpgrading.unsubscribe();
-        done();
-      }
-    });
+    await new Promise<void>(resolve => {
+      const subUpgrading = actor.subscribe(snap => {
+        if (_.isEqual(snap.value, { CredentialsUpgrade: "Upgrading" })) {
+          subUpgrading.unsubscribe();
+          resolve();
+        }
+      });
 
-    actor.send({ type: "add-to-wallet" });
+      actor.send({ type: "add-to-wallet" });
+    });
   });
 
   it("Should skip credentials upgrade if no credentials are present", async () => {

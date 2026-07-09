@@ -17,6 +17,19 @@ const styles = StyleSheet.create({
   }
 });
 
+// Italian locale is intentional for message timestamps; these formatters are
+// hoisted out of JSX both to avoid re-instantiating them on every render and
+// because the locale/format tokens are technical, not localizable copy.
+const messageDateFormatter = new Intl.DateTimeFormat("it", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric"
+});
+const messageTimeFormatter = new Intl.DateTimeFormat("it", {
+  hour: "2-digit",
+  minute: "2-digit"
+});
+
 export type MessageDetailsHeaderProps = PropsWithChildren<{
   createdAt: Date | undefined;
   messageId: string;
@@ -36,14 +49,9 @@ const MessageDetailsHeaderContent = ({
     </H3>
     {createdAt && (
       <BodySmall weight="Regular" testID="date">
-        {`${new Intl.DateTimeFormat("it", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric"
-        }).format(createdAt)}, ${new Intl.DateTimeFormat("it", {
-          hour: "2-digit",
-          minute: "2-digit"
-        }).format(createdAt)}`}
+        {`${messageDateFormatter.format(
+          createdAt
+        )}, ${messageTimeFormatter.format(createdAt)}`}
       </BodySmall>
     )}
   </VStack>

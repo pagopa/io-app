@@ -24,7 +24,7 @@ export const CARD_WIDTH =
   Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
 
 const cardPaddingHorizontal: IOSpacingScale = 12;
-const cardBorderRadius: number = 8;
+const cardBorderRadius = 8;
 const cardAvatarMargin: IOSpacingScale = 8;
 
 const styles = StyleSheet.create({
