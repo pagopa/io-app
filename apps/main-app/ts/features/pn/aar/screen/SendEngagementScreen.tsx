@@ -76,7 +76,7 @@ export const SendEngagementScreen = ({ route }: SendEngagementScreenProps) => {
   }, [navigation]);
 
   const onActivateService = useCallback(
-    (isRetry: boolean = false) => {
+    (isRetry = false) => {
       trackSendActivationModalDialogActivationStart(
         flow,
         sendOpeningSource,

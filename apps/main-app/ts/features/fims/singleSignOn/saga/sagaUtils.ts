@@ -39,7 +39,7 @@ export const absoluteRedirectUrl = (
   try {
     const redirectUrl = new PolyfillURL(redirect);
     return redirectUrl.href;
-  } catch (error) {
+  } catch {
     try {
       const originalUrl = new PolyfillURL(originalRequestUrl);
       const origin = originalUrl.origin;
