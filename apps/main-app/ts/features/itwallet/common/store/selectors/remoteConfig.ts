@@ -2,7 +2,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
-import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   getAppVersion,
@@ -135,36 +134,36 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
 /**
  * Returns whether the current app version meets the minimum required to use IT Wallet.
  */
-export const isItwMinAppVersionSupportedSelector = (
-  state: GlobalState
-): boolean => {
-  const version = O.toUndefined(remoteConfigSelector(state))?.itw
-    ?.itw_min_app_version;
-  if (!version) {
-    return false;
+export const isItwMinAppVersionSupportedSelector = createSelector(
+  itwRemoteConfigSelector,
+  (itwConfig): boolean => {
+    const version = O.toUndefined(itwConfig)?.itw_min_app_version;
+    if (!version) {
+      return false;
+    }
+    return isVersionSupported(
+      Platform.OS === "ios" ? version.ios : version.android,
+      getAppVersion()
+    );
   }
-  return isVersionSupported(
-    Platform.OS === "ios" ? version.ios : version.android,
-    getAppVersion()
-  );
-};
+);
 
 /**
  * Returns whether the current app version meets the minimum required to use Proximity presentation.
  */
-export const isItwProximityMinAppVersionSupportedSelector = (
-  state: GlobalState
-): boolean => {
-  const version = O.toUndefined(remoteConfigSelector(state))?.itw
-    ?.proximity_min_app_version;
-  if (!version) {
-    return false;
+export const isItwProximityMinAppVersionSupportedSelector = createSelector(
+  itwRemoteConfigSelector,
+  (itwConfig): boolean => {
+    const version = O.toUndefined(itwConfig)?.proximity_min_app_version;
+    if (!version) {
+      return false;
+    }
+    return isVersionSupported(
+      Platform.OS === "ios" ? version.ios : version.android,
+      getAppVersion()
+    );
   }
-  return isVersionSupported(
-    Platform.OS === "ios" ? version.ios : version.android,
-    getAppVersion()
-  );
-};
+);
 
 /**
  * Return the credential types that are pinned at the top of the catalogue list.
