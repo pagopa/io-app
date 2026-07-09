@@ -3308,10 +3308,14 @@
                 "content": "IT-Wallet si integrerà al Portafoglio Digitale Europeo: potrai usare i tuoi documenti con pieno valore legale in tutta Europa."
               }
             },
-            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
+            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso.]({{privacyUrl}})",
             "actions": {
               "primary": "Continua",
-              "anchor": "Scopri tutti i vantaggi"
+              "secondary": "Scopri di più su IT-Wallet"
+            },
+            "detailsBottomSheet": {
+              "title": "IT-Wallet su IO: il nuovo portafoglio digitale pubblico",
+              "action": "Ho capito"
             },
             "dismissalDialog": {
               "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",

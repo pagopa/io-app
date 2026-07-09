@@ -356,19 +356,13 @@ describe("itwEidIssuanceMachine", () => {
 
     // Wallet instance creation and attestation obtainment success
 
-    // Navigate to ipzs privacy screen
-    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
-
-    // Accept IPZS privacy
-    actor.send({ type: "accept-ipzs-privacy" });
     // Navigate to identification mode selection
-
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
         UserIdentification: "Identification"
       })
     );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
 
     /**
@@ -1079,7 +1073,51 @@ describe("itwEidIssuanceMachine", () => {
     });
   });
 
-  it("Should navigate to credential catalog on add-new-credential (regular flow, no credential pre-selected)", () => {
+  it("Should skip IPZS privacy when privacy and ToS have been confirmed from discovery", async () => {
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
+    actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: "Identification"
+    });
+    expect(navigateToIpzsPrivacyScreen).not.toHaveBeenCalled();
+    expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should navigate to IPZS privacy from ToS acceptance without changing state", () => {
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
+    actor.send({ type: "go-to-ipzs-privacy" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    expect(navigateToIpzsPrivacyScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should allow the user to add a new credential once eID issuance is complete", () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
