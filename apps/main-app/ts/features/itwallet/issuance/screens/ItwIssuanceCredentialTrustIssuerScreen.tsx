@@ -25,7 +25,8 @@ import { trackOpenItwTos } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { useOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { OfflineFailureComponent } from "../../../../components/error/OfflineFailure";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -259,7 +260,10 @@ const ContentView = ({
   );
 };
 
-// Offline failure screen HOC
-export const ItwIssuanceCredentialTrustIssuerScreen = withOfflineFailureScreen(
-  ItwIssuanceCredentialTrustIssuer
-);
+export const ItwIssuanceCredentialTrustIssuerScreen = () => {
+  const isOffline = useOfflineFailureScreen();
+  if (isOffline) {
+    return <OfflineFailureComponent isHeaderVisible={true} />;
+  }
+  return <ItwIssuanceCredentialTrustIssuer />;
+};

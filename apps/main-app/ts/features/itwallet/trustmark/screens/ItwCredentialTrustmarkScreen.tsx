@@ -7,7 +7,8 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwTrustmarkExpirationTimer } from "../components/ItwTrustmarkExpirationTimer";
 import { ItwTrustmarkQrCode } from "../components/ItwTrustmarkQrCode";
 import { ItwTrustmarkMachineProvider } from "../machine/provider";
-import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { useOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { OfflineFailureComponent } from "../../../../components/error/OfflineFailure";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 
 export type ItwCredentialTrustmarkScreenNavigationParams = {
@@ -46,7 +47,10 @@ const ItwCredentialTrustmarkScreenComponent = (params: ScreenProps) => {
   );
 };
 
-// Offline failure screen HOC
-export const ItwCredentialTrustmarkScreen = withOfflineFailureScreen(
-  ItwCredentialTrustmarkScreenComponent
-);
+export const ItwCredentialTrustmarkScreen = () => {
+  const isOffline = useOfflineFailureScreen();
+  if (isOffline) {
+    return <OfflineFailureComponent isHeaderVisible={true} />;
+  }
+  return <ItwCredentialTrustmarkScreenComponent />;
+};
