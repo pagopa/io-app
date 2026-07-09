@@ -27,7 +27,7 @@ describe("getCredentialStatus", () => {
             value: "2024-01-12" // Expired
           }
         },
-        storedStatusAssertion: { credentialStatus: "invalid" }
+        validity: { type: "status_assertion", status: "invalid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("expired");
@@ -71,7 +71,7 @@ describe("getCredentialStatus", () => {
             value: "2024-01-12" // Expired
           }
         },
-        storedStatusAssertion: { credentialStatus: "invalid" }
+        validity: { type: "status_assertion", status: "invalid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("expired");
@@ -215,7 +215,7 @@ describe("getCredentialStatus", () => {
             value: "2034-12-31"
           }
         },
-        storedStatusAssertion: { credentialStatus: "invalid" }
+        validity: { type: "status_assertion", status: "invalid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("invalid");
@@ -235,7 +235,7 @@ describe("getCredentialStatus", () => {
             value: "2034-12-31"
           }
         },
-        storedStatusAssertion: { credentialStatus: "invalid" }
+        validity: { type: "status_assertion", status: "invalid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("invalid");
@@ -303,8 +303,9 @@ describe("getCredentialStatus", () => {
     it("should return unknown when the status assertion could not be fetched", () => {
       const mockCredential: CredentialMetadata = {
         ...ItwStoredCredentialsMocks.eid,
-        storedStatusAssertion: {
-          credentialStatus: "unknown"
+        validity: {
+          type: "status_assertion",
+          status: "unknown"
         }
       };
       expect(getCredentialStatus(mockCredential, options)).toEqual("unknown");

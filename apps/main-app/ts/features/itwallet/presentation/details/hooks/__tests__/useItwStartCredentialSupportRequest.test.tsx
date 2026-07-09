@@ -123,8 +123,9 @@ describe("useItwStartCredentialSupportRequest", () => {
   it("sets the failure code field and appends log when storedStatusAssertion errorCode is present", () => {
     const credentialWithError: CredentialMetadata = {
       ...baseMockedCredential,
-      storedStatusAssertion: {
-        credentialStatus: "invalid",
+      validity: {
+        type: "status_assertion",
+        status: "invalid",
         errorCode: "driving_license_suspended"
       }
     };
