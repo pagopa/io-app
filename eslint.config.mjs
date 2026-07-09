@@ -121,14 +121,19 @@ export default defineConfig([
       // Rules from tseslint.strict / pagopa config that require widespread
       // refactoring incompatible with the current codebase
       "max-lines-per-function": "off",
-      "@typescript-eslint/no-invalid-void-type": "off",
       "@typescript-eslint/no-dynamic-delete": "off",
-      "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-explicit-any": "off",
 
       // Incorrectly fires on mapped types (`[P in ...]`) — only meant for
       // plain index signatures (`[key: string]: V`) which should use Record<K,V>
       "@typescript-eslint/consistent-indexed-object-style": "off",
+
+      // Most violations are `typesafe-actions` empty payloads
+      // (`createStandardAction("X")<void>()`, `createAsyncAction(...)<void, S, F>()`).
+      // `void` here is load-bearing: it makes the action creator callable with no
+      // argument while keeping a `payload` slot. Re-enabling requires a deliberate
+      // action-shape refactor, not a mechanical fix.
+      "@typescript-eslint/no-invalid-void-type": "off",
 
       // Widespread, deliberate test patterns from pagopa's jest config that
       // would require refactoring the whole test suite to satisfy:
@@ -321,10 +326,7 @@ export default defineConfig([
     }
   },
   {
-    files: [
-      "**/*.test.{ts,tsx}",
-      "**/{__tests__,__mocks__}/**/*.{ts,tsx}"
-    ],
+    files: ["**/*.test.{ts,tsx}", "**/{__tests__,__mocks__}/**/*.{ts,tsx}"],
 
     rules: {
       "@typescript-eslint/no-non-null-assertion": "off",
