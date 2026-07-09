@@ -211,4 +211,8 @@ export type TrackStartCredentialUpgradeProperties = {
   position: ItwCredentialActionPosition;
 };
 
-type QualtricsSurveyId = "confirm_eid_flow_exit" | "confirm_eid_flow_success";
+type QualtricsSurveyId =
+  | "confirm_eid_flow_exit"
+  | "confirm_eid_flow_success"
+  | "itw_credential_exit"
+  | "itw_eid_activation_exit";

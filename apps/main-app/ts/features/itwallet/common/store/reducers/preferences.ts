@@ -6,6 +6,7 @@ import { IdentificationContext } from "../../../machine/eid/context.ts";
 import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 import {
   itwClearCredentialUpgradeFailed,
+  itwClearWalletActivationFeedbackBannerData,
   itwDisableItwActivation,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
@@ -13,7 +14,9 @@ import {
   itwSetFiscalCodeWhitelisted,
   itwSetIdentificationMode,
   itwSetPidReissuingSurveyHidden,
-  itwSetReviewPending
+  itwSetReviewPending,
+  itwSetWalletActivationFeedbackBannerData,
+  ItwWalletActivationFeedbackBannerData
 } from "../actions/preferences";
 
 export type ItwPreferencesState = {
@@ -35,6 +38,9 @@ export type ItwPreferencesState = {
   // Indicates whether the bottom sheet survey is visible when the user quits
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
+  // Set when a credential is successfully added together with an IT Wallet eID activation.
+  // Used to show the credential success survey banner in WALLET_HOME for 7 days.
+  walletActivationFeedbackBannerData?: ItwWalletActivationFeedbackBannerData;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {};
@@ -51,6 +57,11 @@ const reducer = (
           type => type !== action.payload
         )
       };
+
+    case getType(itwClearWalletActivationFeedbackBannerData): {
+      const { walletActivationFeedbackBannerData: _, ...rest } = state;
+      return rest;
+    }
 
     case getType(itwDisableItwActivation): {
       return {
@@ -82,13 +93,13 @@ const reducer = (
         authLevel: action.payload
       };
     }
-
     case getType(itwSetClaimValuesHidden): {
       return {
         ...state,
         claimValuesHidden: action.payload
       };
     }
+
     case getType(itwSetCredentialUpgradeFailed):
       return {
         ...state,
@@ -120,6 +131,13 @@ const reducer = (
       return {
         ...state,
         isPendingReview: action.payload
+      };
+    }
+
+    case getType(itwSetWalletActivationFeedbackBannerData): {
+      return {
+        ...state,
+        walletActivationFeedbackBannerData: action.payload
       };
     }
 

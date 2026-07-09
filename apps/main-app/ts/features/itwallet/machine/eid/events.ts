@@ -4,6 +4,7 @@ import { DoneActorEvent, ErrorActorEvent } from "xstate";
 import type { IssuanceFailure } from "./failure";
 
 import { SpidIdp } from "../../../../utils/idps";
+import { EidActivationExitStep } from "../../common/hooks/useItwActivationExitSurveyBottomSheet";
 import { CieWarningType } from "../../identification/cie/utils/types";
 import { Output } from "../upgrade/output";
 import { EidIssuanceLevel, EidIssuanceMode } from "./context";
@@ -43,6 +44,8 @@ export type CiePinEntered = {
 };
 
 export type Close = {
+  /** Step at which the user exited, used to show the Qualtrics survey in WALLET_HOME. */
+  surveyStep?: EidActivationExitStep;
   type: "close";
 };
 

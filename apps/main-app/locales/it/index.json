@@ -4396,6 +4396,29 @@
             "content": "Raccontaci la tua esperienza con la verifica e aiutaci a migliorare.",
             "action": "Inizia"
           }
+        },
+        "eidActivationSuccess": {
+          "banner": {
+            "title": "Puoi dirci com’è andata?",
+            "content": "Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.",
+            "action": "Inizia"
+          }
+        },
+        "eidActivationExit": {
+          "bottomSheet": {
+            "title": "Ti va di dirci perché?",
+            "content": "Hai deciso di non continuare con IT-Wallet: facci sapere il perché, così potremo migliorare la tua esperienza in app. Ci vorrà un minuto!",
+            "primaryAction": "Dicci la tua",
+            "secondaryAction": "Non ora"
+          }
+        },
+        "credentialExit": {
+          "bottomSheet": {
+            "title": "Ti va di dirci perché?",
+            "content": "Hai deciso di non continuare: facci sapere il perché, così potremo migliorare la tua esperienza in app. Ci vorrà un minuto!",
+            "primaryAction": "Dicci la tua",
+            "secondaryAction": "Non ora"
+          }
         }
       },
       "walletInstanceRevoked": {

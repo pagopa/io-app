@@ -17,11 +17,13 @@ import {
   trackSaveCredentialSuccess
 } from "../../analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
+import { toSurveyAuthMethod } from "../../analytics/utils";
 import { toItwIdMethod } from "../../analytics/utils/types";
 import {
   itwSetAuthLevel,
   itwSetCredentialUpgradeFailed,
-  itwSetIdentificationMode
+  itwSetIdentificationMode,
+  itwSetWalletActivationFeedbackBannerData
 } from "../../common/store/actions/preferences";
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
@@ -241,7 +243,8 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   closeIssuance: ({
-    context
+    context,
+    event
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     const isWalletInNavigationState = isRouteInNavigationState(
       navigation.getState(),
@@ -258,9 +261,14 @@ export const createEidIssuanceActionsImplementation = (
     );
     const isReissuance = context.mode === "reissuance";
 
+    const surveyStep = event.type === "close" ? event.surveyStep : undefined;
+
     navigation.navigate(ROUTES.MAIN, {
       screen: ROUTES.WALLET_HOME,
-      params: { requiredEidFeedback: isReissuance && !isSurveyHidden }
+      params: {
+        requiredEidFeedback: isReissuance && !isSurveyHidden,
+        activationExitSurvey: surveyStep ? { step: surveyStep } : undefined
+      }
     });
   },
 
@@ -304,6 +312,27 @@ export const createEidIssuanceActionsImplementation = (
     // Save the auth level in the preferences
     store.dispatch(itwSetAuthLevel(context.identification?.level));
     store.dispatch(itwSetIdentificationMode(context.identification?.mode));
+  },
+
+  storeWalletActivationFeedbackBannerData: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    // Store banner data only for:
+    // - credential-triggered activation (credentialType set): user skips success page
+    // - upgrade flow (mode === "upgrade")
+    // Regular issuance with "Add document" CTA keeps the banner on the success page directly.
+    if (!context.credentialType && context.mode !== "upgrade") {
+      return;
+    }
+    const docStatus = context.mode === "upgrade" ? "active" : "not_active";
+    const authMethod = toSurveyAuthMethod(context.identification);
+    store.dispatch(
+      itwSetWalletActivationFeedbackBannerData({
+        date: new Date().toISOString(),
+        docStatus,
+        authMethod
+      })
+    );
   },
 
   storeCredentialUpgradeFailures: ({

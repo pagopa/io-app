@@ -39,8 +39,23 @@ export const itwSetIdentificationMode = createStandardAction(
   "ITW_SET_IDENTIFICATION_MODE"
 )<IdentificationContext["mode"] | undefined>();
 
+export type ItwWalletActivationFeedbackBannerData = {
+  authMethod: string;
+  date: string;
+  docStatus: "active" | "not_active";
+};
+
+export const itwSetWalletActivationFeedbackBannerData = createStandardAction(
+  "ITW_SET_WALLET_ACTIVATION_FEEDBACK_BANNER_DATA"
+)<ItwWalletActivationFeedbackBannerData>();
+
+export const itwClearWalletActivationFeedbackBannerData = createStandardAction(
+  "ITW_CLEAR_WALLET_ACTIVATION_FEEDBACK_BANNER_DATA"
+)<void>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwClearCredentialUpgradeFailed>
+  | ActionType<typeof itwClearWalletActivationFeedbackBannerData>
   | ActionType<typeof itwDisableItwActivation>
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
@@ -48,4 +63,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwSetIdentificationMode>
   | ActionType<typeof itwSetPidReissuingSurveyHidden>
-  | ActionType<typeof itwSetReviewPending>;
+  | ActionType<typeof itwSetReviewPending>
+  | ActionType<typeof itwSetWalletActivationFeedbackBannerData>;

@@ -91,8 +91,12 @@ const ContentView = ({ credential }: ContentViewProps) => {
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+      machineRef.send({
+        type: "close",
+        surveyStep: isItwL3 ? "doc_preview" : undefined,
+        surveyCredential: isItwL3 ? mixPanelCredential : undefined
+      });
     }
   });
 

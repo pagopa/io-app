@@ -8,6 +8,7 @@ import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 
 import { CreateSignatureBody } from "../../../../definitions/fci/CreateSignatureBody";
+import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import { apiUrlPrefix } from "../../../config";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
@@ -274,13 +275,27 @@ function* watchFciSignatureRequestRetrySaga(
 
     if (isActionOf(fciSignatureRequestFromId.success, result)) {
       if (result.payload.id === action.payload) {
-        /**
-         * when restarting the flow from 'DocumentUnavailableScreen',
-         * FciDocumentsScreen will still get pot error if not reset
-         */
-        yield* put(fciDownloadPreview.cancel());
-        // start a new signing flow
-        yield* put(fciStartRequest());
+        const { status, expires_at } = result.payload;
+        const isSignable =
+          status === SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE &&
+          new Date(expires_at) >= new Date();
+
+        if (isSignable) {
+          /**
+           * when restarting the flow from 'DocumentUnavailableScreen',
+           * FciDocumentsScreen will still get pot error if not reset
+           */
+          yield* put(fciDownloadPreview.cancel());
+          yield* put(fciStartRequest());
+        } else {
+          yield* call(
+            NavigationService.dispatchNavigationAction,
+            StackActions.replace(FCI_ROUTES.MAIN, {
+              screen: FCI_ROUTES.ROUTER,
+              params: { signatureRequestId: action.payload }
+            })
+          );
+        }
         return;
       }
 

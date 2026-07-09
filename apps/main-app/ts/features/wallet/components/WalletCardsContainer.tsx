@@ -7,6 +7,7 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
+import ItwActivationSuccessFeedbackBanner from "../../itwallet/common/components/ItwActivationSuccessFeedbackBanner";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
@@ -14,6 +15,7 @@ import {
   itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderWalletDiscoveryBannerSelector
 } from "../../itwallet/common/store/selectors";
+import { itwWalletActivationFeedbackBannerSelector } from "../../itwallet/common/store/selectors/preferences";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
@@ -50,6 +52,9 @@ const WalletCardsContainer = () => {
   const shouldRenderL2EngagementBanner = useIOSelector(
     itwShouldRenderL2EngagementBannerForInactiveWalletSelector
   );
+  const walletActivationFeedbackBannerData = useIOSelector(
+    itwWalletActivationFeedbackBannerSelector
+  );
 
   useItwWalletInstanceRevocationAlert();
 
@@ -67,6 +72,12 @@ const WalletCardsContainer = () => {
         {shouldRenderItwDiscoveryBanner && (
           <ItwDiscoveryBanner style={{ marginVertical: 8 }} />
         )}
+        {walletActivationFeedbackBannerData && (
+          <ItwActivationSuccessFeedbackBanner
+            authMethod={walletActivationFeedbackBannerData.authMethod}
+            docStatus={walletActivationFeedbackBannerData.docStatus}
+          />
+        )}
         <View style={styles.walletContent} testID="walletCardsContainerTestID">
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
           <OtherWalletCardsContainer />
@@ -78,7 +89,8 @@ const WalletCardsContainer = () => {
     shouldRenderEmptyState,
     shouldRenderItwCardsContainer,
     shouldRenderItwDiscoveryBanner,
-    shouldRenderL2EngagementBanner
+    shouldRenderL2EngagementBanner,
+    walletActivationFeedbackBannerData
   ]);
 
   return (
@@ -89,6 +101,7 @@ const WalletCardsContainer = () => {
       <ItwEnvironmentAlert />
       <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />
+
       {walletContent}
     </Animated.View>
   );

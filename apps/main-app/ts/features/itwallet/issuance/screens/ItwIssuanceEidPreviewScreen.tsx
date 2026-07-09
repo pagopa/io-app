@@ -105,10 +105,33 @@ const ContentView = ({ eid }: ContentViewProps) => {
     parsedCredential: eid.parsedCredential
   });
 
+  const customLabels = isL3
+    ? {
+        customLabels: {
+          title: I18n.t(
+            "features.itWallet.discovery.screen.itw.dismissalDialog.title"
+          ),
+          body: I18n.t(
+            "features.itWallet.discovery.screen.itw.dismissalDialog.body"
+          ),
+          confirmLabel: I18n.t(
+            "features.itWallet.discovery.screen.itw.dismissalDialog.confirm"
+          ),
+          cancelLabel: I18n.t(
+            "features.itWallet.discovery.screen.itw.dismissalDialog.cancel"
+          )
+        }
+      }
+    : undefined;
+
   const dismissDialog = useItwDismissalDialog({
+    ...customLabels,
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+      machineRef.send({
+        type: "close",
+        surveyStep: isL3 ? "pid_preview" : undefined
+      });
     }
   });
 

@@ -1,5 +1,7 @@
 import { ErrorActorEvent } from "xstate";
 
+import { MixPanelCredential } from "../../analytics/utils/types";
+import { CredentialExitStep } from "../../common/hooks/useItwCredentialExitSurveyBottomSheet";
 import { CredentialIssuanceMode } from "./context";
 
 export type AddToWallet = {
@@ -11,6 +13,9 @@ export type Back = {
 };
 
 export type Close = {
+  surveyCredential?: MixPanelCredential;
+  /** Step and credential at which the user exited, used to show the Qualtrics survey in WALLET_HOME. */
+  surveyStep?: CredentialExitStep;
   type: "close";
 };
 
