@@ -18,7 +18,7 @@ import { splitAndTakeFirst } from "./strings";
  */
 export function getResourceNameFromUrl(
   resourceUrl: string,
-  includeExt: boolean = false
+  includeExt = false
 ): string {
   const splitted = resourceUrl.split("/");
   const resourceName = splitted[splitted.length - 1].toLowerCase();

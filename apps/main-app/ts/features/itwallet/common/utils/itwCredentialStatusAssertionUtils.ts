@@ -112,7 +112,7 @@ function createIssuerConfSharedFetch(maxAge = 86400) {
   // eslint-disable-next-line functional/no-let
   let sharedPromise: Promise<IssuerConfiguration> | null = null;
   // eslint-disable-next-line functional/no-let
-  let timestamp: number = -1;
+  let timestamp = -1;
 
   return function getIssuerConf(env: Env, itwVersion: ItwVersion) {
     if (timestamp + maxAge * 1000 < Date.now() || !sharedPromise) {
