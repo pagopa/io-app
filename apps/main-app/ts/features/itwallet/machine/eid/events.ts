@@ -29,6 +29,10 @@ export type AcceptIpzsPrivacy = {
   type: "accept-ipzs-privacy";
 };
 
+export type GoToIpzsPrivacy = {
+  type: "go-to-ipzs-privacy";
+};
+
 export type AddToWallet = {
   type: "add-to-wallet";
 };
@@ -139,6 +143,7 @@ export type EidIssuanceEvents =
   | Start
   | AcceptTos
   | AcceptIpzsPrivacy
+  | GoToIpzsPrivacy
   | SelectIdentificationMode
   | SelectSpidIdp
   | CiePinEntered

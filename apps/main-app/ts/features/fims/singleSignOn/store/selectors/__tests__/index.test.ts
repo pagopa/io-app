@@ -37,7 +37,7 @@ const flowStateTags: ReadonlyArray<FimsFlowStateTags> = [
 const ssoDataPots = (
   consent: Consent,
   errorTag: FIMS_SSO_ERROR_TAGS = "GENERIC",
-  debugMessage: string = "Failed"
+  debugMessage = "Failed"
 ) => [
   pot.none,
   pot.noneLoading,
