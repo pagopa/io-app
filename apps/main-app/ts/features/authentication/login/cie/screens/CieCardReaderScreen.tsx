@@ -8,12 +8,20 @@ import {
   ContentWrapper,
   H3,
   IOButton,
+  IOColors,
   IOPictograms,
-  VSpacer
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
-import { useFocusEffect } from "@react-navigation/native";
-import { PureComponent, ReactNode, useCallback, useRef } from "react";
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
+import I18n from "i18next";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   Platform,
@@ -21,22 +29,30 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { connect } from "react-redux";
-import I18n from "i18next";
 import HapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { ReduxProps } from "../../../../../store/actions/types";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
+} from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { isDevEnv } from "../../../../../utils/environment";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
+import {
+  WAIT_TIMEOUT_NAVIGATION,
+  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY,
+  accessibityTimeout,
+  analyticActions,
+  getTextForState
+} from "../../../activeSessionLogin/shared/utils";
 import {
   trackLoginCieCardReaderScreen,
   trackLoginCieCardReadingError,
@@ -54,14 +70,6 @@ import {
 } from "../store/actions";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieUatEndpoint } from "../utils/endpoints";
-import {
-  analyticActions,
-  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY,
-  WAIT_TIMEOUT_NAVIGATION,
-  accessibityTimeout,
-  getTextForState
-} from "../../../activeSessionLogin/shared/utils";
-import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -73,12 +81,11 @@ export type CieCardReaderNavigationProps = IOStackNavigationRouteProps<
   "CIE_CARD_READER_SCREEN"
 >;
 
-type Props = CieCardReaderNavigationProps &
-  ReduxProps &
-  ReturnType<typeof mapStateToProps> & {
-    headerHeight: number;
-    blueColorName: string;
-  };
+type SetErrorParameter = {
+  eventReason: CieAuthenticationErrorReason;
+  errorDescription?: string;
+  navigation?: () => void;
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -94,382 +101,405 @@ const styles = StyleSheet.create({
   }
 });
 
-type State = {
-  // Get the current status of the card reading
-  readingState: ReadingState;
-  title: string;
-  subtitle?: string;
-  content?: string;
-  errorMessage?: string;
-};
-
-type setErrorParameter = {
-  eventReason: CieAuthenticationErrorReason;
-  errorDescription?: string;
-  navigation?: () => void;
-};
-
 const getPictogramName = (state: ReadingState): IOPictograms => {
   switch (state) {
-    default:
-    case ReadingState.reading:
-    case ReadingState.waiting_card:
-      return Platform.select({
-        ios: "nfcScaniOS",
-        default: "nfcScanAndroid"
-      });
     case ReadingState.error:
       return "empty";
     case ReadingState.completed:
       return "success";
+    case ReadingState.reading:
+    case ReadingState.waiting_card:
+    default:
+      return Platform.select({
+        ios: "nfcScaniOS",
+        default: "nfcScanAndroid"
+      });
   }
 };
 
 /**
- *  This screen shown while reading the card
+ * This screen is shown while reading the CIE card.
  */
-class CieCardReaderScreen extends PureComponent<Props, State> {
-  private choosenTool = assistanceToolRemoteConfig(
-    this.props.assistanceToolConfig
+const CieCardReaderScreen = () => {
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<AuthenticationParamsList, "CIE_CARD_READER_SCREEN">
+    >();
+  const route =
+    useRoute<RouteProp<AuthenticationParamsList, "CIE_CARD_READER_SCREEN">>();
+  const theme = useIOTheme();
+  const circleColor = IOColors[theme["interactiveElem-default"]];
+
+  const dispatch = useIODispatch();
+  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+  const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
+  const isScreenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
+
+  const ciePin = route.params.ciePin;
+  const cieAuthorizationUri = route.params.authorizationUri;
+
+  const choosenTool = useMemo(
+    () => assistanceToolRemoteConfig(assistanceToolConfig),
+    [assistanceToolConfig]
   );
-  constructor(props: Props) {
-    super(props);
-    trackLoginCieCardReaderScreen();
-    this.state = {
-      /*
-      These are the states that can occur when reading the cie (from SDK)
-      - waiting_card (we are ready for read ->radar effect)
-      - reading (we are reading the card -> progress animation)
-      - error (the reading is interrupted -> progress animation stops and the progress circle becomes red)
-      - completed (the reading has been completed)
-      */
-      readingState: ReadingState.waiting_card,
-      ...getTextForState(ReadingState.waiting_card)
-    };
-    this.startCieiOS = this.startCieiOS.bind(this);
-    this.startCieAndroid = this.startCieAndroid.bind(this);
-  }
 
-  get ciePin(): string {
-    return this.props.route.params.ciePin;
-  }
+  const [readingState, setReadingState] = useState<ReadingState>(
+    ReadingState.waiting_card
+  );
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
 
-  get cieAuthorizationUri(): string {
-    return this.props.route.params.authorizationUri;
-  }
+  // Ref to access latest readingState inside cieManager callbacks without stale closures
+  const readingStateRef = useRef(readingState);
+  useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    readingStateRef.current = readingState;
+  }, [readingState]);
 
-  private setError = ({
-    eventReason,
-    errorDescription,
-    navigation
-  }: setErrorParameter) => {
-    const cieDescription =
-      errorDescription ?? analyticActions.get(eventReason) ?? "";
-
-    this.dispatchAnalyticEvent({
-      reason: eventReason,
-      cieDescription,
-      flow: "auth"
-    });
-
-    this.setState(
-      {
-        readingState: ReadingState.error,
-        errorMessage: cieDescription
-      },
-      () => {
-        HapticFeedback.trigger(HapticFeedbackTypes.notificationError);
-        navigation?.();
-      }
-    );
-  };
-
-  private dispatchAnalyticEvent = (error: CieAuthenticationErrorPayload) => {
-    this.props.dispatch(cieAuthenticationError(error));
-  };
-
-  private handleCieEvent = async (event: CEvent) => {
-    handleSendAssistanceLog(this.choosenTool, event.event);
-    switch (event.event) {
-      // Reading starts
-      case "ON_TAG_DISCOVERED":
-        if (this.state.readingState !== ReadingState.reading) {
-          this.setState({ readingState: ReadingState.reading }, () => {
-            HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
-          });
-        }
-        break;
-      // "Function not supported" seems to be TAG_ERROR_NFC_NOT_SUPPORTED
-      // for the iOS SDK
-      case "Function not supported" as unknown:
-      case "TAG_ERROR_NFC_NOT_SUPPORTED":
-      case "ON_TAG_DISCOVERED_NOT_CIE":
-        this.setError({
-          eventReason: event.event,
-          navigation: () =>
-            this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.CIE_WRONG_CARD_SCREEN
-            })
-        });
-        break;
-      case "AUTHENTICATION_ERROR":
-      case "ON_NO_INTERNET_CONNECTION":
-        this.setError({
-          eventReason: event.event,
-          navigation: () =>
-            this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.CIE_UNEXPECTED_ERROR
-            })
-        });
-        break;
-      case "EXTENDED_APDU_NOT_SUPPORTED":
-        this.setError({
-          eventReason: event.event,
-          navigation: () =>
-            this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen:
-                AUTHENTICATION_ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN
-            })
-        });
-        break;
-      case "Transmission Error":
-      case "ON_TAG_LOST":
-        this.setError({ eventReason: event.event });
-        break;
-
-      // The card is temporarily locked. Unlock is available by CieID app
-      case "PIN Locked":
-      case "ON_CARD_PIN_LOCKED":
-      case "ON_PIN_ERROR":
-        this.setError({
-          eventReason: event.event,
-          navigation: () =>
-            this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.CIE_WRONG_PIN_SCREEN,
-              params: {
-                remainingCount:
-                  event.event === "ON_CARD_PIN_LOCKED" ? 0 : event.attemptsLeft
-              }
-            })
-        });
-        break;
-
-      // CIE is Expired or Revoked
-      case "CERTIFICATE_EXPIRED":
-      case "CERTIFICATE_REVOKED":
-        this.setError({
-          eventReason: event.event,
-          navigation: () =>
-            this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-              screen: AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN
-            })
-        });
-        break;
-
-      default:
-        break;
-    }
-    this.updateContent();
-  };
-
-  private announceUpdate = () => {
-    if (this.state.content) {
-      AccessibilityInfo.announceForAccessibility(this.state.content);
-    }
-  };
-
-  private updateContent = () => {
-    switch (this.state.readingState) {
+  // Derived display text — recomputed whenever readingState or errorMessage changes,
+  // replacing the original updateContent / getTextForState imperative calls.
+  const { title, subtitle, content } = useMemo(() => {
+    switch (readingState) {
       case ReadingState.reading:
-        this.setState(
-          {
-            title: I18n.t("authentication.cie.card.readerCardTitle"),
-            subtitle: "",
-            content: I18n.t("authentication.cie.card.readerCardFooter")
-          },
-          this.announceUpdate
-        );
-        break;
+        return {
+          title: I18n.t("authentication.cie.card.readerCardTitle"),
+          subtitle: "",
+          content: I18n.t("authentication.cie.card.readerCardFooter")
+        };
       case ReadingState.error:
-        trackLoginCieCardReadingError();
-        this.setState(
-          state => getTextForState(ReadingState.error, state.errorMessage),
-          this.announceUpdate
-        );
-        break;
+        return getTextForState(ReadingState.error, errorMessage);
       case ReadingState.completed:
-        this.setState(
-          {
-            title: I18n.t("authentication.cie.card.cieCardValid"),
-            subtitle: "",
-            // duplicate message so screen reader can read the updated message
-            content: this.props.isScreenReaderEnabled
-              ? I18n.t("authentication.cie.card.cieCardValid")
-              : undefined
-          },
-          this.announceUpdate
-        );
-        break;
-      // waiting_card state
+        return {
+          title: I18n.t("authentication.cie.card.cieCardValid"),
+          subtitle: "",
+          content: isScreenReaderEnabled
+            ? I18n.t("authentication.cie.card.cieCardValid")
+            : undefined
+        };
       default:
-        this.setState(
-          getTextForState(ReadingState.waiting_card),
-          this.announceUpdate
-        );
+        return getTextForState(ReadingState.waiting_card);
     }
-  };
+  }, [readingState, errorMessage, isScreenReaderEnabled]);
 
-  // TODO: It should reset authentication process
-  private handleCieError = (error: Error) => {
-    trackLoginCieCardReadingError();
-    handleSendAssistanceLog(this.choosenTool, error.message);
-    this.setError({ eventReason: "GENERIC", errorDescription: error.message });
-  };
-
-  private handleCieSuccess = (cieConsentUri: string) => {
-    if (this.state.readingState === ReadingState.completed) {
-      return;
+  // Announce content changes to accessibility services (replaces announceUpdate setState callbacks)
+  useEffect(() => {
+    if (content) {
+      AccessibilityInfo.announceForAccessibility(content);
     }
-    handleSendAssistanceLog(this.choosenTool, "authentication SUCCESS");
-    this.setState({ readingState: ReadingState.completed }, () => {
-      this.updateContent();
-      setTimeout(
-        async () => {
-          trackLoginCieCardReadingSuccess();
-          this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-            screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
-            params: {
-              cieConsentUri
-            }
+  }, [content]);
+
+  // Track error analytics whenever the reading state transitions to error
+  useEffect(() => {
+    if (readingState === ReadingState.error) {
+      trackLoginCieCardReadingError();
+    }
+  }, [readingState]);
+
+  const dispatchAnalyticEvent = useCallback(
+    (error: CieAuthenticationErrorPayload) => {
+      dispatch(cieAuthenticationError(error));
+    },
+    [dispatch]
+  );
+
+  const setError = useCallback(
+    ({ eventReason, errorDescription, navigation: nav }: SetErrorParameter) => {
+      const cieDescription =
+        errorDescription ?? analyticActions.get(eventReason) ?? "";
+      dispatchAnalyticEvent({
+        reason: eventReason,
+        cieDescription,
+        flow: "auth"
+      });
+      setErrorMessage(cieDescription);
+      setReadingState(ReadingState.error);
+      HapticFeedback.trigger(HapticFeedbackTypes.notificationError);
+      nav?.();
+    },
+    [dispatchAnalyticEvent]
+  );
+
+  // Refs holding the latest callbacks to avoid stale closures inside cieManager event handlers
+  const setErrorRef = useRef(setError);
+  const navigationRef = useRef(navigation);
+  useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    setErrorRef.current = setError;
+    // eslint-disable-next-line functional/immutable-data
+    navigationRef.current = navigation;
+  }, [setError, navigation]);
+
+  const handleCieEvent = useCallback(
+    async (event: CEvent) => {
+      handleSendAssistanceLog(choosenTool, event.event);
+      const nav = navigationRef.current;
+      switch (event.event) {
+        case "ON_TAG_DISCOVERED":
+          if (readingStateRef.current !== ReadingState.reading) {
+            setReadingState(ReadingState.reading);
+            HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
+          }
+          break;
+        case "Function not supported" as unknown:
+        case "TAG_ERROR_NFC_NOT_SUPPORTED":
+        case "ON_TAG_DISCOVERED_NOT_CIE":
+          setErrorRef.current({
+            eventReason: event.event,
+            navigation: () =>
+              nav.navigate(AUTHENTICATION_ROUTES.MAIN, {
+                screen: AUTHENTICATION_ROUTES.CIE_WRONG_CARD_SCREEN
+              })
           });
-          // if screen reader is enabled, give more time to read the success message
-        },
-        this.props.isScreenReaderEnabled
-          ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
-          : // if is iOS don't wait. The thank you page is shown natively
-            Platform.select({ ios: 0, default: WAIT_TIMEOUT_NAVIGATION })
-      );
-    });
-  };
+          break;
+        case "AUTHENTICATION_ERROR":
+        case "ON_NO_INTERNET_CONNECTION":
+          setErrorRef.current({
+            eventReason: event.event,
+            navigation: () =>
+              nav.navigate(AUTHENTICATION_ROUTES.MAIN, {
+                screen: AUTHENTICATION_ROUTES.CIE_UNEXPECTED_ERROR
+              })
+          });
+          break;
+        case "EXTENDED_APDU_NOT_SUPPORTED":
+          setErrorRef.current({
+            eventReason: event.event,
+            navigation: () =>
+              nav.navigate(AUTHENTICATION_ROUTES.MAIN, {
+                screen:
+                  AUTHENTICATION_ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN
+              })
+          });
+          break;
+        case "Transmission Error":
+        case "ON_TAG_LOST":
+          setErrorRef.current({ eventReason: event.event });
+          break;
+        case "PIN Locked":
+        case "ON_CARD_PIN_LOCKED":
+        case "ON_PIN_ERROR":
+          setErrorRef.current({
+            eventReason: event.event,
+            navigation: () =>
+              nav.navigate(AUTHENTICATION_ROUTES.MAIN, {
+                screen: AUTHENTICATION_ROUTES.CIE_WRONG_PIN_SCREEN,
+                params: {
+                  remainingCount:
+                    event.event === "ON_CARD_PIN_LOCKED"
+                      ? 0
+                      : event.attemptsLeft
+                }
+              })
+          });
+          break;
+        case "CERTIFICATE_EXPIRED":
+        case "CERTIFICATE_REVOKED":
+          setErrorRef.current({
+            eventReason: event.event,
+            navigation: () =>
+              nav.navigate(AUTHENTICATION_ROUTES.MAIN, {
+                screen: AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN
+              })
+          });
+          break;
+        default:
+          break;
+      }
+    },
+    [choosenTool]
+  );
 
-  public async startCieAndroid(useCieUat: boolean) {
-    cieManager
-      .start()
-      .then(async () => {
-        cieManager.onEvent(this.handleCieEvent);
-        cieManager.onError(this.handleCieError);
-        cieManager.onSuccess(this.handleCieSuccess);
-        await cieManager.setPin(this.ciePin);
-        cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
-        cieManager.enableLog(isDevEnv);
-        cieManager.setCustomIdpUrl(useCieUat ? getCieUatEndpoint() : null);
-        await cieManager.startListeningNFC();
-        this.setState({ readingState: ReadingState.waiting_card });
-      })
-      .catch(() => {
-        this.setState({ readingState: ReadingState.error });
+  const handleCieError = useCallback(
+    (error: Error) => {
+      handleSendAssistanceLog(choosenTool, error.message);
+      setErrorRef.current({
+        eventReason: "GENERIC",
+        errorDescription: error.message
       });
-  }
+    },
+    [choosenTool]
+  );
 
-  public async startCieiOS(useCieUat: boolean) {
-    cieManager.removeAllListeners();
-    cieManager.onEvent(this.handleCieEvent);
-    cieManager.onError(this.handleCieError);
-    cieManager.onSuccess(this.handleCieSuccess);
-    cieManager.enableLog(isDevEnv);
-    cieManager.setCustomIdpUrl(useCieUat ? getCieUatEndpoint() : null);
-    await cieManager.setPin(this.ciePin);
-    cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
-    cieManager
-      .start({
-        readingInstructions: I18n.t(
-          "authentication.cie.card.iosAlert.readingInstructions"
-        ),
-        moreTags: I18n.t("authentication.cie.card.iosAlert.moreTags"),
-        readingInProgress: I18n.t(
-          "authentication.cie.card.iosAlert.readingInProgress"
-        ),
-        readingSuccess: I18n.t(
-          "authentication.cie.card.iosAlert.readingSuccess"
-        ),
-        invalidCard: I18n.t("authentication.cie.card.iosAlert.invalidCard"),
-        tagLost: I18n.t("authentication.cie.card.iosAlert.tagLost"),
-        cardLocked: I18n.t("authentication.cie.card.iosAlert.cardLocked"),
-        wrongPin1AttemptLeft: I18n.t(
-          "authentication.cie.card.iosAlert.wrongPin1AttemptLeft"
-        ),
-        wrongPin2AttemptLeft: I18n.t(
-          "authentication.cie.card.iosAlert.wrongPin2AttemptLeft"
-        ),
-        genericError: I18n.t("authentication.cie.card.iosAlert.genericError")
-      })
-      .then(async () => {
-        await cieManager.startListeningNFC();
-        this.setState({ readingState: ReadingState.waiting_card });
-        this.updateContent();
-      })
-      .catch(() => {
-        this.setState({ readingState: ReadingState.error });
+  // Holds the consent URI so it is accessible in the completed-state effect below
+  const cieConsentUriRef = useRef<string | null>(null);
+
+  const handleCieSuccess = useCallback(
+    (cieConsentUri: string) => {
+      if (readingStateRef.current === ReadingState.completed) {
+        return;
+      }
+      handleSendAssistanceLog(choosenTool, "authentication SUCCESS");
+      // eslint-disable-next-line functional/immutable-data
+      cieConsentUriRef.current = cieConsentUri;
+      setReadingState(ReadingState.completed);
+    },
+    [choosenTool]
+  );
+
+  // Navigate to the consent screen once reading completes
+  // (replaces the setState callback in the original handleCieSuccess)
+  useEffect(() => {
+    if (readingState !== ReadingState.completed || !cieConsentUriRef.current) {
+      return undefined;
+    }
+    const consentUri = cieConsentUriRef.current;
+    const delay = isScreenReaderEnabled
+      ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
+      : Platform.select({ ios: 0, default: WAIT_TIMEOUT_NAVIGATION });
+    const timer = setTimeout(() => {
+      trackLoginCieCardReadingSuccess();
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
+        params: { cieConsentUri: consentUri }
       });
-  }
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [readingState, isScreenReaderEnabled, navigation]);
 
-  public async componentDidMount() {
+  const startCieAndroid = useCallback(
+    async (useCieUat: boolean) => {
+      cieManager
+        .start()
+        .then(async () => {
+          cieManager.onEvent(handleCieEvent);
+          cieManager.onError(handleCieError);
+          cieManager.onSuccess(handleCieSuccess);
+          await cieManager.setPin(ciePin);
+          cieManager.setAuthenticationUrl(cieAuthorizationUri);
+          cieManager.enableLog(isDevEnv);
+          cieManager.setCustomIdpUrl(useCieUat ? getCieUatEndpoint() : null);
+          await cieManager.startListeningNFC();
+          setReadingState(ReadingState.waiting_card);
+        })
+        .catch(() => {
+          setReadingState(ReadingState.error);
+        });
+    },
+    [
+      handleCieEvent,
+      handleCieError,
+      handleCieSuccess,
+      ciePin,
+      cieAuthorizationUri
+    ]
+  );
+
+  const startCieiOS = useCallback(
+    async (useCieUat: boolean) => {
+      cieManager.removeAllListeners();
+      cieManager.onEvent(handleCieEvent);
+      cieManager.onError(handleCieError);
+      cieManager.onSuccess(handleCieSuccess);
+      cieManager.enableLog(isDevEnv);
+      cieManager.setCustomIdpUrl(useCieUat ? getCieUatEndpoint() : null);
+      await cieManager.setPin(ciePin);
+      cieManager.setAuthenticationUrl(cieAuthorizationUri);
+      cieManager
+        .start({
+          readingInstructions: I18n.t(
+            "authentication.cie.card.iosAlert.readingInstructions"
+          ),
+          moreTags: I18n.t("authentication.cie.card.iosAlert.moreTags"),
+          readingInProgress: I18n.t(
+            "authentication.cie.card.iosAlert.readingInProgress"
+          ),
+          readingSuccess: I18n.t(
+            "authentication.cie.card.iosAlert.readingSuccess"
+          ),
+          invalidCard: I18n.t("authentication.cie.card.iosAlert.invalidCard"),
+          tagLost: I18n.t("authentication.cie.card.iosAlert.tagLost"),
+          cardLocked: I18n.t("authentication.cie.card.iosAlert.cardLocked"),
+          wrongPin1AttemptLeft: I18n.t(
+            "authentication.cie.card.iosAlert.wrongPin1AttemptLeft"
+          ),
+          wrongPin2AttemptLeft: I18n.t(
+            "authentication.cie.card.iosAlert.wrongPin2AttemptLeft"
+          ),
+          genericError: I18n.t("authentication.cie.card.iosAlert.genericError")
+        })
+        .then(async () => {
+          await cieManager.startListeningNFC();
+          setReadingState(ReadingState.waiting_card);
+        })
+        .catch(() => {
+          setReadingState(ReadingState.error);
+        });
+    },
+    [
+      handleCieEvent,
+      handleCieError,
+      handleCieSuccess,
+      ciePin,
+      cieAuthorizationUri
+    ]
+  );
+
+  // Mount: track screen view + start CIE reading
+  // Unmount: stop NFC and remove listeners (replaces componentDidMount/componentWillUnmount)
+  useEffect(() => {
+    trackLoginCieCardReaderScreen();
     const startCie = Platform.select({
-      ios: this.startCieiOS,
-      default: this.startCieAndroid
+      ios: startCieiOS,
+      default: startCieAndroid
     });
-    await startCie(this.props.isCieUatEnabled);
-  }
+    void startCie(isCieUatEnabled);
 
-  public async componentWillUnmount() {
-    await cieManager.stopListeningNFC().catch(() => {
-      // Ignore errors on stop listening NFC
-    });
-    cieManager.removeAllListeners();
-  }
+    return () => {
+      void cieManager.stopListeningNFC().catch(() => {
+        // Ignore errors on stop listening NFC
+      });
+      cieManager.removeAllListeners();
+    };
+    // startCie functions and isCieUatEnabled are stable after mount;
+    // this effect intentionally mirrors componentDidMount/componentWillUnmount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  private handleCancel = () =>
-    this.props.navigation.reset({
-      index: 0,
-      routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
-    });
+  const handleCancel = useCallback(
+    () =>
+      navigation.reset({
+        index: 0,
+        routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
+      }),
+    [navigation]
+  );
 
-  private getFooter = () =>
-    Platform.select({
-      default: (
-        <View style={{ alignItems: "center" }}>
-          <View>
-            <IOButton
-              variant="link"
-              label={I18n.t("global.buttons.close")}
-              onPress={this.handleCancel}
-            />
-          </View>
+  const footer = Platform.select({
+    default: (
+      <View style={{ alignItems: "center" }}>
+        <View>
+          <IOButton
+            variant="link"
+            label={I18n.t("global.buttons.close")}
+            onPress={handleCancel}
+          />
         </View>
-      ),
-      ios: (
-        <View style={{ alignItems: "center" }}>
-          <View>
-            <IOButton
-              variant="solid"
-              label={I18n.t("authentication.cie.nfc.retry")}
-              onPress={() => this.startCieiOS(this.props.isCieUatEnabled)}
-            />
-          </View>
-          <VSpacer size={24} />
-          <View>
-            <IOButton
-              variant="link"
-              label={I18n.t("global.buttons.close")}
-              onPress={this.handleCancel}
-            />
-          </View>
+      </View>
+    ),
+    ios: (
+      <View style={{ alignItems: "center" }}>
+        <View>
+          <IOButton
+            variant="solid"
+            label={I18n.t("authentication.cie.nfc.retry")}
+            onPress={() => void startCieiOS(isCieUatEnabled)}
+          />
         </View>
-      )
-    });
+        <VSpacer size={24} />
+        <View>
+          <IOButton
+            variant="link"
+            label={I18n.t("global.buttons.close")}
+            onPress={handleCancel}
+          />
+        </View>
+      </View>
+    )
+  });
 
-  public render(): ReactNode {
-    return (
+  return (
+    <View style={styles.container}>
       <SafeAreaView style={{ flex: 1 }} testID="cie-card-reader-screen-test-id">
         <ScrollView
           centerContent={true}
@@ -477,46 +507,24 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         >
           <ContentWrapper>
             <CieCardReadingAnimation
-              pictogramName={getPictogramName(this.state.readingState)}
-              readingState={this.state.readingState}
-              circleColor={this.props.blueColorName}
+              pictogramName={getPictogramName(readingState)}
+              readingState={readingState}
+              circleColor={circleColor}
             />
             <VSpacer size={32} />
-            <Title
-              text={this.state.title}
-              accessibilityLabel={
-                this.state.subtitle
-                  ? `${this.state.title}. ${this.state.subtitle}`
-                  : this.state.title
-              }
-            />
+            <Title text={title} />
             <VSpacer size={8} />
-            {this.state.subtitle && (
-              <Body style={styles.centerText}>{this.state.subtitle}</Body>
-            )}
+            {subtitle && <Body style={styles.centerText}>{subtitle}</Body>}
             <VSpacer size={24} />
-            {this.state.readingState !== ReadingState.completed &&
-              this.getFooter()}
+            {readingState !== ReadingState.completed && footer}
           </ContentWrapper>
         </ScrollView>
       </SafeAreaView>
-    );
-  }
-}
+    </View>
+  );
+};
 
-const mapStateToProps = (state: GlobalState) => ({
-  assistanceToolConfig: assistanceToolConfigSelector(state),
-  isCieUatEnabled: isCieLoginUatEnabledSelector(state),
-  isScreenReaderEnabled: isScreenReaderEnabledSelector(state)
-});
-
-const ReaderScreen = (props: Props) => (
-  <View style={styles.container}>
-    <CieCardReaderScreen {...props} />
-  </View>
-);
-
-const Title = (props: { text: string; accessibilityLabel: string }) => {
+const Title = (props: { text: string }) => {
   const titleRef = useRef<View>(null);
 
   useFocusEffect(
@@ -534,4 +542,4 @@ const Title = (props: { text: string; accessibilityLabel: string }) => {
   );
 };
 
-export default connect(mapStateToProps)(ReaderScreen);
+export default CieCardReaderScreen;
