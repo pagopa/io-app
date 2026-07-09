@@ -19,7 +19,6 @@ import { getMixPanelCredential } from "../../analytics/utils";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
   itwWalletInstanceAttestationStore,
@@ -50,7 +49,7 @@ export const createCredentialIssuanceActionsImplementation = (
     return {
       isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
       walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
-      credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state)
+      credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state),
       isWalletValid: itwLifecycleIsValidSelector(state)
     };
   }),
