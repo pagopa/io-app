@@ -122,7 +122,6 @@ export default defineConfig([
       // refactoring incompatible with the current codebase
       "max-lines-per-function": "off",
       "@typescript-eslint/no-invalid-void-type": "off",
-      "@typescript-eslint/no-empty-function": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-explicit-any": "off",
 
@@ -321,17 +320,13 @@ export default defineConfig([
     }
   },
   {
-    files: [
-      "**/*.test.ts",
-      "**/*.test.tsx",
-      "**/__tests__/**/*.ts",
-      "**/__tests__/**/*.tsx"
-    ],
+    files: ["**/*.test.{ts,tsx}", "**/{__tests__,__mocks__}/**/*.{ts,tsx}"],
 
     rules: {
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-shadow": "off",
       "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-empty-function": "off",
       "i18next/no-literal-string": "off",
       "no-restricted-imports": "off"
     }
@@ -356,16 +351,7 @@ export default defineConfig([
   },
   {
     files: [
-      "**/design-system/**/*.ts",
-      "**/design-system/**/*.tsx",
-      "**/playgrounds/**/*.ts",
-      "**/playgrounds/**/*.tsx",
-      "**/devMode/**/*.ts",
-      "**/devMode/**/*.tsx",
-      "**/debug/**/*.ts",
-      "**/debug/**/*.tsx",
-      "**/__mocks__/**/*.ts",
-      "**/__mocks__/**/*.tsx"
+      "**/{design-system,playgrounds,devMode,debug,__mocks__}/**/*.{ts,tsx}"
     ],
 
     rules: {
