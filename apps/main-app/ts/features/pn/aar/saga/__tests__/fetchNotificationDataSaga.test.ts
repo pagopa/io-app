@@ -1,5 +1,4 @@
 import * as E from "fp-ts/lib/Either";
-import _ from "lodash";
 import { testSaga } from "redux-saga-test-plan";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";

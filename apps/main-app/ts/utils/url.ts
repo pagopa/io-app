@@ -18,7 +18,7 @@ import { splitAndTakeFirst } from "./strings";
  */
 export function getResourceNameFromUrl(
   resourceUrl: string,
-  includeExt: boolean = false
+  includeExt = false
 ): string {
   const splitted = resourceUrl.split("/");
   const resourceName = splitted[splitted.length - 1].toLowerCase();
@@ -108,7 +108,7 @@ export const openWebUrl = (url: string, onError: () => void = constNull) => {
 export const openAppStoreUrl = async (onError: () => void = constNull) => {
   try {
     await Linking.openURL(storeUrl);
-  } catch (e) {
+  } catch {
     openWebUrl(webStoreURL, onError);
   }
 };
