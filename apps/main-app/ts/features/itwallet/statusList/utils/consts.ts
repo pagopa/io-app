@@ -1,5 +1,7 @@
 export const STORAGE_PREFIX = "@io.itwallet.statusList";
 
+export const STORAGE_KEY_LAST_CHECK_TIME = `${STORAGE_PREFIX}:lastCheckTime`;
+
 /**
  * Identifier for the ITW Status List background fetch task.
  * Must match the task name used in TaskManager.defineTask.

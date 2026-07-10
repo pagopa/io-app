@@ -1,9 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   getLastStatusListCheckTimestamp,
-  STORAGE_KEY_LAST_CHECK_TIME,
   storeLastStatusListCheckTimestamp
 } from "../storage";
+import { STORAGE_KEY_LAST_CHECK_TIME } from "../consts";
 
 jest.mock("@react-native-async-storage/async-storage", () =>
   require("@react-native-async-storage/async-storage/jest/async-storage-mock")
