@@ -62,15 +62,17 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(queryByTestId("SpidMethodModuleTestIDL2")).not.toBeNull();
     expect(queryByTestId("CieIDMethodModuleTestIDL2")).not.toBeNull();
   });
-  jest
-    .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
-    .mockReturnValue(false);
+  it("[issuance, l2] hides CIE+PIN when NFC is unavailable", () => {
+    jest
+      .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
+      .mockReturnValue(false);
 
-  const { queryByTestId } = renderComponent("issuance", "l2");
+    const { queryByTestId } = renderComponent("issuance", "l2");
 
-  expect(queryByTestId("CiePinMethodModuleTestIDL2")).toBeNull();
-  expect(queryByTestId("SpidMethodModuleTestIDL2")).not.toBeNull();
-  expect(queryByTestId("CieIDMethodModuleTestIDL2")).not.toBeNull();
+    expect(queryByTestId("CiePinMethodModuleTestIDL2")).toBeNull();
+    expect(queryByTestId("SpidMethodModuleTestIDL2")).not.toBeNull();
+    expect(queryByTestId("CieIDMethodModuleTestIDL2")).not.toBeNull();
+  });
 
   it("[issuance, l3] shows all L3 methods with the recommended badge and the noCie button", () => {
     const { queryByTestId } = renderComponent("issuance", "l3");
