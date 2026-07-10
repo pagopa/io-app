@@ -267,10 +267,14 @@ export const itwCredentialIntroContentSelector =
     if (!credentialType || !catalogue?.[credentialType]) {
       return;
     }
-    const { authentic_sources } = catalogue[credentialType];
-    const { user_information_l10n_id, user_information } =
-      authentic_sources.at(0) ?? {};
-    return translations && user_information_l10n_id
-      ? translations[user_information_l10n_id]
-      : user_information;
+    const authSource = catalogue[credentialType].authentic_sources.at(0);
+    const userInformationL10nId =
+      authSource &&
+      "user_information_l10n_id" in authSource &&
+      typeof authSource.user_information_l10n_id === "string"
+        ? authSource.user_information_l10n_id
+        : undefined;
+    return translations && userInformationL10nId
+      ? translations[userInformationL10nId]
+      : authSource?.user_information;
   };
