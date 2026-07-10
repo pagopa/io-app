@@ -61,13 +61,13 @@ type IOScrollViewWithRevealProps = WithTestID<
    the gradient opaciy transition */
 const gradientOpacityScrollTrigger = 0.85;
 /* Extended gradient area above the actions */
-const gradientSafeAreaHeight: number = 80;
+const gradientSafeAreaHeight = 80;
 /* Margin between solid variant and link variant */
 const spaceBetweenActionAndLink: IOSpacer = 16;
 /* Extra bottom margin for iPhone bottom handle because
    Link variant doesn't have a fixed height */
 const extraSafeAreaMargin: IOSpacingScale = 8;
-const anchorLinkTransitionDuration: number = 600; // in ms
+const anchorLinkTransitionDuration = 600; // in ms
 
 const styles = StyleSheet.create({
   gradientBottomActions: {
@@ -125,7 +125,7 @@ export const IOScrollViewWithReveal = ({
 
   /* We need a fixed height, because when the anchor action is hidden,
     there's a layout shift in the button container */
-  const actionBlockHeight: number = 100;
+  const actionBlockHeight = 100;
 
   const { bottomMargin, needSafeAreaMargin } = useFooterActionsMargin();
 

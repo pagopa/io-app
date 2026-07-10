@@ -10,7 +10,11 @@ import {
   trackBackToWallet,
   trackItwCredentialReissuingFailed
 } from "../analytics";
-import { getMixPanelCredential } from "../../analytics/utils";
+import {
+  getMixPanelCredential,
+  toSurveyAuthMethod
+} from "../../analytics/utils";
+import ItwActivationSuccessFeedbackBanner from "../../common/components/ItwActivationSuccessFeedbackBanner";
 import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
@@ -23,6 +27,7 @@ import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectCredentialType,
+  selectIdentification,
   selectIsLoading,
   selectIssuanceMode,
   selectUpgradeFailedCredentials
@@ -169,12 +174,21 @@ export const ItwIssuanceEidResultScreen = () => {
 const ItwEidSuccessResultContent = ({
   isWalletEmpty,
   onAddDocument,
-  onGoToWallet
+  onGoToWallet,
+  docStatus = "not_active",
+  showBanner = true
 }: {
   isWalletEmpty: boolean;
   onAddDocument: () => void;
   onGoToWallet: () => void;
+  docStatus?: "active" | "not_active";
+  showBanner?: boolean;
 }) => {
+  const route = useRoute();
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const authMethod = toSurveyAuthMethod(identification);
+
   if (isWalletEmpty) {
     return (
       <OperationResultScreenContent
@@ -189,9 +203,47 @@ const ItwEidSuccessResultContent = ({
           ),
           onPress: onGoToWallet
         }}
-      />
+      >
+        {showBanner && (
+          <ItwActivationSuccessFeedbackBanner
+            docStatus={docStatus}
+            authMethod={authMethod}
+          />
+        )}
+      </OperationResultScreenContent>
     );
   }
+
+  return (
+    <ItwIssuanceEidIssuanceResultContent
+      docStatus={docStatus}
+      showBanner={showBanner}
+      onAddCredential={onAddDocument}
+      onBackToWallet={() => {
+        onGoToWallet();
+        trackBackToWallet({ exit_page: route.name, credential: "ITW_ID_V2" });
+      }}
+    />
+  );
+};
+
+type ItwIssuanceEidIssuanceResultContentProps = {
+  docStatus: "active" | "not_active";
+  onAddCredential: () => void;
+  onBackToWallet: () => void;
+  showBanner?: boolean;
+};
+
+const ItwIssuanceEidIssuanceResultContent = ({
+  docStatus,
+  onAddCredential,
+  onBackToWallet,
+  showBanner = true
+}: ItwIssuanceEidIssuanceResultContentProps) => {
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+
+  const authMethod = toSurveyAuthMethod(identification);
 
   return (
     <OperationResultScreenContent
@@ -204,7 +256,7 @@ const ItwEidSuccessResultContent = ({
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.itw.withDocuments.primaryAction"
         ),
-        onPress: onAddDocument,
+        onPress: onAddCredential,
         icon: "addSmall",
         iconPosition: "end"
       }}
@@ -212,9 +264,16 @@ const ItwEidSuccessResultContent = ({
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.secondaryAction"
         ),
-        onPress: onGoToWallet
+        onPress: onBackToWallet
       }}
-    />
+    >
+      {showBanner && (
+        <ItwActivationSuccessFeedbackBanner
+          docStatus={docStatus}
+          authMethod={authMethod}
+        />
+      )}
+    </OperationResultScreenContent>
   );
 };
 
@@ -278,11 +337,15 @@ const ItwIssuanceEidUpgradeResultContent = ({
     );
   }
 
+  // The upgrade flow means the user already had DocIO (L2) active, so docStatus is "active".
+  // The survey banner is shown in WalletHome (via Redux) instead of here.
   return (
     <ItwEidSuccessResultContent
       isWalletEmpty={isWalletEmpty}
       onAddDocument={handleAddCredential}
       onGoToWallet={handleGoToWalletWithTracking}
+      docStatus="active"
+      showBanner={false}
     />
   );
 };

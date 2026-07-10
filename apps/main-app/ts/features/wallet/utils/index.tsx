@@ -35,10 +35,7 @@ export const walletCardComponentMapper: Record<
  * @param stacked - Whether the card is stacked or not
  * @returns The rendered card or null if the card is not found
  */
-export const renderWalletCardFn = (
-  card: WalletCard,
-  stacked: boolean = false
-) => {
+export const renderWalletCardFn = (card: WalletCard, stacked = false) => {
   const { key, category, type, ...cardProps } = card;
   const Component = walletCardComponentMapper[type];
   return Component ? (

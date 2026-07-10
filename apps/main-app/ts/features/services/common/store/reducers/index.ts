@@ -11,10 +11,15 @@ import servicesDetailsReducer, {
 import favouriteServicesReducer, {
   FavouriteServicesState
 } from "../../../favouriteServices/store/reducers";
+import {
+  fseDiscoveryBannerPersistor,
+  FseDiscoveryBannerState
+} from "../../../fseDiscoveryBanner/store/reducers";
 
 export type ServicesState = {
   details: ServicesDetailsState;
   favouriteServices: FavouriteServicesState & PersistPartial;
+  fseDiscoveryBanner: FseDiscoveryBannerState & PersistPartial;
   home: ServicesHomeState;
   institution: InstitutionState;
   search: SearchState;
@@ -23,6 +28,7 @@ export type ServicesState = {
 const servicesReducer = combineReducers({
   details: servicesDetailsReducer,
   favouriteServices: favouriteServicesReducer,
+  fseDiscoveryBanner: fseDiscoveryBannerPersistor,
   home: homeReducer,
   institution: institutionReducer,
   search: searchReducer
