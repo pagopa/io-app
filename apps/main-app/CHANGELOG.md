@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.36.0-rc.13](https://github.com/pagopa/io-app/compare/3.36.0-rc.12...3.36.0-rc.13) (2026-07-10)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4035](https://pagopa.atlassian.net/browse/SIW-4035)] PAR credential offer ([#8113](https://github.com/pagopa/io-app/issues/8113)) ([5618546](https://github.com/pagopa/io-app/commit/561854665821aa210e4c8571bf3fad9f93aa3849))
+* **IT-Wallet:** [[SIW-4341](https://pagopa.atlassian.net/browse/SIW-4341)] Error on CIE inconsistent with login data ([#8183](https://github.com/pagopa/io-app/issues/8183)) ([3219bf0](https://github.com/pagopa/io-app/commit/3219bf06ff2e0980d1345c64160415b776589f00))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4622](https://pagopa.atlassian.net/browse/SIW-4622)] Re-eanble `usePreventScreenCapture` ([#8258](https://github.com/pagopa/io-app/issues/8258)) ([a95539a](https://github.com/pagopa/io-app/commit/a95539a2b6af07493a9a1b0aedf623c1b0af6003)), closes [pagopa/io-app#8257](https://github.com/pagopa/io-app/issues/8257)
+* [[IOPLT-1948](https://pagopa.atlassian.net/browse/IOPLT-1948)] Restrict application of `jest/expect-expect` ESLint rule ([#8254](https://github.com/pagopa/io-app/issues/8254)) ([f8c2988](https://github.com/pagopa/io-app/commit/f8c29888cdf54e87c585fd35a5ad706290f9146b))
+
 ## [3.36.0-rc.12](https://github.com/pagopa/io-app/compare/3.36.0-rc.11...3.36.0-rc.12) (2026-07-10)
 
 ## [3.36.0-rc.11](https://github.com/pagopa/io-app/compare/3.36.0-rc.10...3.36.0-rc.11) (2026-07-09)
