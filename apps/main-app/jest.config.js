@@ -1,5 +1,9 @@
 module.exports = {
   preset: "react-native",
+  // Cap concurrency and recycle workers to keep RAM bounded.
+  maxWorkers: "50%",
+  // Above the per-worker baseline so only bloated workers recycle.
+  workerIdleMemoryLimit: "2.5GB",
   transform: {
     "\\.[jt]sx?$": "babel-jest",
     "\\.mjs$": "babel-jest"

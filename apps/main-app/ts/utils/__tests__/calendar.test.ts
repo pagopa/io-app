@@ -2,8 +2,8 @@ import I18n from "i18next";
 import { convertLocalCalendarName } from "../calendar";
 
 describe("Convert calendar title to readable string", () => {
-  const requestedCalendar: string = "calendar_displayname_local";
-  const requestBadFormat: string = "caLeNdar_DisplaynAme_local ";
+  const requestedCalendar = "calendar_displayname_local";
+  const requestBadFormat = "caLeNdar_DisplaynAme_local ";
   const unknownCalendar = "Unknown Calendar";
 
   const resultCalendarString = I18n.t(

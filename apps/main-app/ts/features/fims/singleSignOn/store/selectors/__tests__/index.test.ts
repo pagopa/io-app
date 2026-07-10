@@ -37,7 +37,7 @@ const flowStateTags: ReadonlyArray<FimsFlowStateTags> = [
 const ssoDataPots = (
   consent: Consent,
   errorTag: FIMS_SSO_ERROR_TAGS = "GENERIC",
-  debugMessage: string = "Failed"
+  debugMessage = "Failed"
 ) => [
   pot.none,
   pot.noneLoading,
@@ -239,7 +239,7 @@ describe("singleSignOn selectors", () => {
     );
   });
 
-  describe("fimsAuthenticationFailedSelector", () =>
+  describe("fimsAuthenticationFailedSelector", () => {
     ssoDataPots({} as Consent).forEach(ssoDataPot => {
       const expectedOutput =
         ssoDataPot.kind === "PotNoneError" ||
@@ -258,7 +258,8 @@ describe("singleSignOn selectors", () => {
           fimsAuthenticationFailedSelector(globalState);
         expect(authenticationFailed).toBe(expectedOutput);
       });
-    }));
+    });
+  });
 
   describe("fimsAuthenticationErrorTagSelector", () => {
     errorTags.forEach(errorTag =>

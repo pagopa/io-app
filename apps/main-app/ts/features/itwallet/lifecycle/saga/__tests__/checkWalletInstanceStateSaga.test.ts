@@ -35,6 +35,7 @@ describe("checkWalletInstanceStateSaga", () => {
       features: {
         itWallet: {
           issuance: { integrityKeyTag: O.none },
+          preferences: {},
           credentials: { credentials: {} }
         }
       }
@@ -176,7 +177,8 @@ describe("checkWalletInstanceStateSaga", () => {
           issuance: { integrityKeyTag: O.none },
           credentials: {
             credentials: { [mockPid.credentialId]: mockPid }
-          }
+          },
+          preferences: {}
         }
       }
     };
@@ -197,7 +199,8 @@ describe("checkWalletInstanceStateSaga", () => {
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
           credentials: { credentials: {} },
-          environment: { env: "prod" }
+          environment: { env: "prod" },
+          preferences: {}
         }
       }
     };

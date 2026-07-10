@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { act, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -31,9 +30,6 @@ jest.mock("@react-navigation/native", () => {
           }
           if (prop === "setOptions") {
             return mockSetOptions;
-          }
-          if (prop === "addListener") {
-            return jest.fn(() => jest.fn());
           }
           return mockShouldNeverCall;
         }

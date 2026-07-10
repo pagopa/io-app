@@ -45,7 +45,7 @@ const currentFlowStateTags: ReadonlyArray<FimsFlowStateTags> = [
 const ssoDataPots = (
   consent: Consent,
   errorTag: FIMS_SSO_ERROR_TAGS = "GENERIC",
-  debugMessage: string = "Failed"
+  debugMessage = "Failed"
 ) => [
   pot.none,
   pot.noneLoading,
@@ -289,7 +289,7 @@ describe("singleSignOn reducer", () => {
     );
   });
 
-  describe(` receiving 'fimsGetConsentsListAction.failure' or 'fimsAcceptConsentsFailureAction' or 'fimsSignAndRetrieveInAppBrowserUrlAction.failure'`, () => {
+  describe(`receiving 'fimsGetConsentsListAction.failure' or 'fimsAcceptConsentsFailureAction' or 'fimsSignAndRetrieveInAppBrowserUrlAction.failure'`, () => {
     const failureActions: ReadonlyArray<
       [string, (payload: FimsErrorStateType) => Action]
     > = [
