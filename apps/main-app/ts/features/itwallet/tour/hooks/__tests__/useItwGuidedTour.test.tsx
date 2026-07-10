@@ -7,6 +7,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import * as tourSelectors from "../../../../tour/store/selectors";
 import * as ingressSelectors from "../../../../ingress/store/selectors";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
 import { startTourAction } from "../../../../tour/store/actions";
 import { ITW_TOUR_GROUP_ID } from "../../utils/constants";
 import { useItwGuidedTour } from "../useItwGuidedTour";
@@ -89,7 +90,7 @@ describe("useItwGuidedTour", () => {
     const store = renderHook({
       isItWalletValid: true,
       isCompleted: false,
-      offlineAccessReason: "SESSION_EXPIRED"
+      offlineAccessReason: OfflineAccessReasonEnum.TIMEOUT
     });
 
     jest.advanceTimersByTime(300);
@@ -103,7 +104,7 @@ describe("useItwGuidedTour", () => {
 type Params = {
   isItWalletValid: boolean;
   isCompleted: boolean;
-  offlineAccessReason: string | undefined;
+  offlineAccessReason: OfflineAccessReasonEnum | undefined;
 };
 
 const renderHook = ({
@@ -119,8 +120,7 @@ const renderHook = ({
     .mockReturnValue(isCompleted);
   jest
     .spyOn(ingressSelectors, "offlineAccessReasonSelector")
-
-    .mockReturnValue(offlineAccessReason as any);
+    .mockReturnValue(offlineAccessReason);
 
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
