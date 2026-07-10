@@ -6,7 +6,7 @@ const LOGO_SIZE = 180;
 
 export function getLogoForInstitution(
   institutionId: string,
-  logosRepoUrl: string = `${contentRepoUrl}/logos`
+  logosRepoUrl = `${contentRepoUrl}/logos`
 ) {
   return [`organizations/${institutionId.replace(/^0+/, "")}`].map(u => ({
     uri: `${logosRepoUrl}/${u}.png`,
@@ -24,7 +24,7 @@ export function getLogoForInstitution(
  */
 export function logosForService(
   service: ServiceDetails,
-  logosRepoUrl: string = `${contentRepoUrl}/logos`
+  logosRepoUrl = `${contentRepoUrl}/logos`
 ): ReadonlyArray<ImageURISource> {
   return [
     `services/${service.id.toLowerCase()}`,
