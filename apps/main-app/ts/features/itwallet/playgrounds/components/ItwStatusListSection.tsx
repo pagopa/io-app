@@ -15,7 +15,7 @@ import { View } from "react-native";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isDevEnv } from "../../../../utils/environment";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { ITW_STATUS_LIST_FETCH_TASK } from "../../statusList/tasks";
+import { ITW_STATUS_LIST_FETCH_TASK } from "../../statusList/utils/consts";
 import { getLastStatusListCheckTimestamp } from "../../statusList/utils/storage";
 
 const formatDate = (timestamp: number | undefined): string =>
