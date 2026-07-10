@@ -25,10 +25,6 @@ import fciSignatureFieldDrawingReducer, {
   FciSignatureFieldDrawingState
 } from "./fciSignatureFieldDrawing";
 import fciEnvironmentReducer, { FciEnvironmentState } from "./fciEnvironment";
-import {
-  fciSecurityLevelReducer,
-  FciSecurityLevelStateType
-} from "./fciSecurityLevelReducer";
 
 export type FciState = {
   signatureRequest: FciSignatureRequestState;
@@ -42,7 +38,6 @@ export type FciState = {
   metadata: FciMetadataRequestState;
   signaturesList: FciSignaturesListRequestState;
   environment: FciEnvironmentState;
-  securityLevel: FciSecurityLevelStateType;
 };
 
 const fciReducer = combineReducers<FciState, Action>({
@@ -56,8 +51,7 @@ const fciReducer = combineReducers<FciState, Action>({
   pollFilledDocument: fciPollFilledDocumentReducer,
   metadata: fciMetadataReducer,
   signaturesList: fciSignaturesListRequestReducer,
-  environment: fciEnvironmentReducer,
-  securityLevel: fciSecurityLevelReducer
+  environment: fciEnvironmentReducer
 });
 
 export default fciReducer;

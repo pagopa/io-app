@@ -33,7 +33,6 @@ export const SendAarActivateNfcScreen = ({
   useEffect(() => {
     if (currentAarData.type === sendAarFlowStates.cieScanning) {
       const { type: _, ...params } = currentAarData;
-
       navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING, params);
     }
   }, [currentAarData, navigation]);

@@ -47,7 +47,7 @@ export const attachmentDownloadUrl = (
 // It also prevents a retry-after that is too long for the user
 export const restrainRetryAfterIntervalInMilliseconds = (
   input: number,
-  upperBoundSeconds: number = 24
+  upperBoundSeconds = 24
 ) => {
   if (input >= 0 && input <= upperBoundSeconds) {
     return 1000 * input;

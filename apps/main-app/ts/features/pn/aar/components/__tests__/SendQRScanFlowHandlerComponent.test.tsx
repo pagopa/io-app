@@ -199,8 +199,8 @@ describe("SendQRScanFlowHandlerComponent - AAR enabled", () => {
 });
 
 function renderComponent(
-  sendServiceActive: boolean = true,
-  notificationPermissionsEnabled: boolean = true
+  sendServiceActive = true,
+  notificationPermissionsEnabled = true
 ) {
   const baseState = appReducer(undefined, applicationChangeState("active"));
   const globalState = {

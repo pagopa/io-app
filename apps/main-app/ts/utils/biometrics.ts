@@ -44,7 +44,7 @@ export type BiometricsType = BiometricsErrorType | BiometricsValidType;
  * @param shouldTrackError - If true, tracks BIOMETRIC_ERROR event on Mixpanel when biometrics are unavailable. Default: true
  */
 export const getBiometricsType = (
-  shouldTrackError: boolean = true
+  shouldTrackError = true
 ): Promise<BiometricsType> =>
   FingerprintScanner.isSensorAvailable()
     .then((biometryType: Biometrics) => {

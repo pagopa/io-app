@@ -33,9 +33,7 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { generateAccessibleLinkRule } from "../../../common/components/IOMarkdown/customRules.tsx";
 import { trackOpenItwTos } from "../../analytics";
-import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
-import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
@@ -75,37 +73,13 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
     }, [machineRef, isWalletValid, credentialType])
   );
 
-  const dismissalDialog = useItwDismissalDialog({
-    customLabels: {
-      title: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.title"
-      ),
-      body: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.body"
-      ),
-      confirmLabel: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.confirm"
-      ),
-      cancelLabel: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.cancel"
-      )
-    },
-    handleDismiss: () => {
-      machineRef.send({ type: "close" });
-    },
-    dismissalContext: {
-      screen_name: ITW_SCREENVIEW_EVENTS.ITW_INTRO,
-      itw_flow: "L3"
-    }
-  });
-
   useHeaderSecondLevel({
     contextualHelp: emptyContextualHelp,
     supportRequest: true,
     title: "",
     goBack: () => {
       trackItwIntroBack("L3");
-      dismissalDialog.show();
+      machineRef.send({ type: "close", surveyStep: "intro" });
     },
     onStartSupportRequest: () => {
       toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
