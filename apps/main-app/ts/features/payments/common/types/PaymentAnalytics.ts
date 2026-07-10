@@ -11,7 +11,7 @@ export type PaymentAnalyticsData = {
   >;
   pspList?: ReadonlyArray<Bundle>;
   selectedPsp?: string;
-  selectedPspFlag?: PaymentAnalyticsSelectedPspFlag;
+  selectedPspFlag?: PaymentAnalyticsPspFlag;
   selectedPaymentMethod?: string;
   formattedAmount?: string;
   serviceName?: string;
@@ -45,13 +45,10 @@ export type PaymentsAnalyticsHomeStatus =
 
 export type PaymentAnalyticsSelectedMethodFlag = "none" | "last_used" | "saved";
 
-export type PaymentAnalyticsPreselectedPspFlag =
+export type PaymentAnalyticsPspFlag =
   | "none"
   | "cheaper"
-  | "customer";
-
-export type PaymentAnalyticsSelectedPspFlag =
-  | PaymentAnalyticsPreselectedPspFlag
+  | "customer"
   | "unique";
 
 export type PaymentAnalyticsEditingType = "payment_method" | "psp";

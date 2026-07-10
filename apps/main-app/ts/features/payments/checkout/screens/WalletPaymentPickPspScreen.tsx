@@ -33,6 +33,7 @@ import {
   walletPaymentSelectedPspSelector
 } from "../store/selectors/psps";
 import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
+import { getPreselectedPspFlagType } from "../utils";
 import { FaultCodeCategoryEnum } from "../types/PspPaymentMethodNotAvailableProblemJson";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
@@ -98,7 +99,6 @@ const WalletPaymentPickPspScreen = () => {
       ) {
         return;
       }
-      const preSelectedPsp = O.toUndefined(selectedPspOption);
       analytics.trackPaymentFeeSelection({
         attempt: paymentAnalyticsData?.attempt,
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
@@ -108,7 +108,7 @@ const WalletPaymentPickPspScreen = () => {
         amount: paymentAnalyticsData?.formattedAmount,
         expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
         payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
-        preselected_psp_flag: preSelectedPsp ? "customer" : "none",
+        preselected_psp_flag: getPreselectedPspFlagType(sortedPspList),
         saved_payment_method:
           paymentAnalyticsData?.savedPaymentMethods?.length || 0
       });
@@ -145,6 +145,7 @@ const WalletPaymentPickPspScreen = () => {
       saved_payment_method:
         paymentAnalyticsData?.savedPaymentMethods?.length || 0,
       payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+      preselected_psp_flag: getPreselectedPspFlagType(sortedPspList),
       selected_psp_flag: paymentAnalyticsData?.selectedPspFlag
     });
     dispatch(
