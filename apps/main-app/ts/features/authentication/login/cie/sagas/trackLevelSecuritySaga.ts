@@ -10,7 +10,7 @@ import { PublicSession } from "../../../../../../definitions/session_manager/Pub
 
 export function* shouldTrackLevelSecurityMismatchSaga(
   maybeSessionInformation: O.Option<PublicSession>,
-  isActiveLoginSuccess: boolean = false
+  isActiveLoginSuccess = false
 ) {
   const selectedSecurityLevel = yield* select(
     cieIDSelectedSecurityLevelSelector
