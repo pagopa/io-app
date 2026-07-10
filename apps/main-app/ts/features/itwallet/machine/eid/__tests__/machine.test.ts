@@ -1082,7 +1082,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(getWalletAttestation).toHaveBeenCalledTimes(0);
 
     // Accept privacy and ToS from IPZS privacy screen
-    actor.send({ type: "accept-tos" });
+    actor.send({ type: "accept-ipzs-privacy" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: "Identification"
