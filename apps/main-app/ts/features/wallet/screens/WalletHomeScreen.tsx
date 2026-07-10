@@ -42,6 +42,7 @@ import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navi
 import { hasPresentableCredentialsSelector } from "../../itwallet/presentation/proximity/store/selectors/credentials";
 import {
   ITW_TOUR_GROUP_ID,
+  ITW_TOUR_STEP_ADD_BUTTON,
   ITW_TOUR_STEP_QR_BUTTON
 } from "../../itwallet/tour/utils/constants.ts";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
@@ -68,6 +69,8 @@ type ScreenProps = IOStackNavigationRouteProps<
   MainTabParamsList,
   "WALLET_HOME"
 >;
+
+const HEADER_ACTION_HIT_SLOP = 8;
 
 const WalletHomeScreen = ({ route }: ScreenProps) => {
   const navigation = useIONavigation();
@@ -132,7 +135,16 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         {
           accessibilityLabel: I18n.t("features.wallet.home.screen.legacy.cta"),
           icon: "add",
-          onPress: handleAddToWalletButtonPress
+          onPress: handleAddToWalletButtonPress,
+          tourGuideProps: {
+            groupId: ITW_TOUR_GROUP_ID,
+            index: ITW_TOUR_STEP_ADD_BUTTON,
+            title: I18n.t("features.itWallet.tour.addCredential.title"),
+            description: I18n.t(
+              "features.itWallet.tour.addCredential.description"
+            ),
+            cutoutPadding: HEADER_ACTION_HIT_SLOP
+          }
         }
       ],
       variant: "primary"
