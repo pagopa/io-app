@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.36.0-rc.10",
+  "version": "3.36.0-rc.14",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -42,7 +42,10 @@
     "dev-pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["prettier --write", "eslint --fix"]
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.9",
