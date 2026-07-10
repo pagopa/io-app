@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.36.0-rc.14](https://github.com/pagopa/io-app/compare/3.36.0-rc.13...3.36.0-rc.14) (2026-07-10)
+
+
+### Bug Fixes
+
+* [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] remove bg task registration ([#8268](https://github.com/pagopa/io-app/issues/8268)) ([398145e](https://github.com/pagopa/io-app/commit/398145e21ced973818ab0b5fb61444c6f8c29e2c))
+
 ## [3.36.0-rc.13](https://github.com/pagopa/io-app/compare/3.36.0-rc.12...3.36.0-rc.13) (2026-07-10)
 
 
