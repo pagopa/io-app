@@ -20,12 +20,12 @@ export const identificationRequest = createAction(
   "IDENTIFICATION_REQUEST",
   resolve =>
     (
-      canResetPin: boolean = true,
-      isValidatingTask: boolean = false,
+      canResetPin = true,
+      isValidatingTask = false,
       identificationGenericData?: IdentificationGenericData,
       identificationCancelData?: IdentificationCancelData,
       identificationSuccessData?: IdentificationSuccessData,
-      shufflePad: boolean = false,
+      shufflePad = false,
       identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
     ) =>
       resolve({
@@ -47,12 +47,12 @@ export const identificationStart = createAction(
   resolve =>
     (
       pin: PinString,
-      canResetPin: boolean = true,
-      isValidatingTask: boolean = false,
+      canResetPin = true,
+      isValidatingTask = false,
       identificationGenericData?: IdentificationGenericData,
       identificationCancelData?: IdentificationCancelData,
       identificationSuccessData?: IdentificationSuccessData,
-      shufflePad: boolean = false,
+      shufflePad = false,
       identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
     ) =>
       resolve({

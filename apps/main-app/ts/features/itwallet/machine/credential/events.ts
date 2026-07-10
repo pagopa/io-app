@@ -1,4 +1,6 @@
 import { ErrorActorEvent } from "xstate";
+import { CredentialExitStep } from "../../common/hooks/useItwCredentialExitSurveyBottomSheet";
+import { MixPanelCredential } from "../../analytics/utils/types";
 import { CredentialIssuanceMode } from "./context";
 
 export type SelectCredential = {
@@ -25,10 +27,22 @@ export type Back = {
 
 export type Close = {
   type: "close";
+  /** Step and credential at which the user exited, used to show the Qualtrics survey in WALLET_HOME. */
+  surveyStep?: CredentialExitStep;
+  surveyCredential?: MixPanelCredential;
 };
 
 export type Continue = {
   type: "continue";
+};
+
+export type StartCredentialOffer = {
+  type: "start-credential-offer";
+  itwCredentialOfferUri: string;
+};
+
+export type ConfirmCredentialOffer = {
+  type: "confirm-credential-offer";
 };
 
 type SessionRefreshComplete = {
@@ -44,4 +58,6 @@ export type CredentialIssuanceEvents =
   | Close
   | Continue
   | SessionRefreshComplete
-  | ErrorActorEvent;
+  | ErrorActorEvent
+  | StartCredentialOffer
+  | ConfirmCredentialOffer;

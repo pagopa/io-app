@@ -2,6 +2,7 @@ import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { DoneActorEvent, ErrorActorEvent } from "xstate";
 import { SpidIdp } from "../../../../utils/idps";
 import { CieWarningType } from "../../identification/cie/utils/types";
+import { EidActivationExitStep } from "../../common/hooks/useItwActivationExitSurveyBottomSheet";
 import { Output } from "../upgrade/output";
 import type { IssuanceFailure } from "./failure";
 import { EidIssuanceLevel, EidIssuanceMode } from "./context";
@@ -27,6 +28,10 @@ export type AcceptTos = {
 
 export type AcceptIpzsPrivacy = {
   type: "accept-ipzs-privacy";
+};
+
+export type GoToIpzsPrivacy = {
+  type: "go-to-ipzs-privacy";
 };
 
 export type AddToWallet = {
@@ -92,6 +97,8 @@ export type Back = {
 
 export type Close = {
   type: "close";
+  /** Step at which the user exited, used to show the Qualtrics survey in WALLET_HOME. */
+  surveyStep?: EidActivationExitStep;
 };
 
 export type NfcEnabled = {
@@ -126,10 +133,6 @@ export type Reset = {
   type: "reset";
 };
 
-export type GoToL2IdentificationMode = {
-  type: "go-to-l2-identification";
-};
-
 export type SimulateFailure = {
   type: "simulate-failure";
   failure: IssuanceFailure;
@@ -143,6 +146,7 @@ export type EidIssuanceEvents =
   | Start
   | AcceptTos
   | AcceptIpzsPrivacy
+  | GoToIpzsPrivacy
   | SelectIdentificationMode
   | SelectSpidIdp
   | CiePinEntered
@@ -164,7 +168,6 @@ export type EidIssuanceEvents =
   | DoneActorEvent<Output, "credentialUpgradeMachine">
   | GoToCieWarning
   | Next
-  | GoToL2IdentificationMode
   | Reset
   | SimulateFailure
   | SessionRefreshComplete;

@@ -44,9 +44,10 @@ type Props = {
   credential: CredentialMetadata;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const excludedCredentialTypes = [
   CredentialType.PID,
-  CredentialType.AGE_VERIFICATION,
+  CredentialType.PROOF_OF_AGE,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
   CredentialType.RESIDENCY,

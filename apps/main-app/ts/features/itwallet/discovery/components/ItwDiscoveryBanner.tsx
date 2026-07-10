@@ -68,11 +68,11 @@ export const ItwDiscoveryBanner = ({
   }, [isWalletActive, isWalletEmpty, hasMdl, isRemotelyActive]);
 
   const bannerLanding = useMemo(() => {
-    if (!isWalletActive || isWalletEmpty) {
+    if (isRemotelyActive) {
       return ITW_SCREENVIEW_EVENTS.WALLET_ADD_LIST_ITEM;
     }
     return ITW_SCREENVIEW_EVENTS.ITW_INTRO;
-  }, [isWalletActive, isWalletEmpty]);
+  }, [isRemotelyActive]);
 
   const trackBannerProperties = useMemo(
     () => ({
@@ -94,13 +94,6 @@ export const ItwDiscoveryBanner = ({
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: { level: "l3" }
-    });
-  };
-
-  const navigateToDocumentOnboardingScreen = () => {
-    trackItwDiscoveryBannerTap(trackBannerProperties);
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.L3_ONBOARDING
     });
   };
 
@@ -131,7 +124,7 @@ export const ItwDiscoveryBanner = ({
         color="turquoise"
         onClose={handleOnDismiss}
         labelClose={I18n.t("global.buttons.close")}
-        onPress={navigateToDocumentOnboardingScreen}
+        onPress={navigateToDiscoveryScreen}
       />
     );
   }
@@ -144,7 +137,7 @@ export const ItwDiscoveryBanner = ({
           "features.itWallet.engagementBanner.activation.description"
         )}
         action={I18n.t("features.itWallet.engagementBanner.activation.action")}
-        onPress={navigateToDocumentOnboardingScreen}
+        onPress={navigateToDiscoveryScreen}
         onDismiss={handleOnDismiss}
         dismissable={true}
         style={style}
@@ -162,7 +155,7 @@ export const ItwDiscoveryBanner = ({
         action={I18n.t(
           "features.itWallet.engagementBanner.upgrade_empty.action"
         )}
-        onPress={navigateToDocumentOnboardingScreen}
+        onPress={navigateToDiscoveryScreen}
         onDismiss={handleOnDismiss}
         style={style}
       />

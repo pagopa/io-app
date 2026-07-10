@@ -114,7 +114,7 @@ describe("mayUserActivateBiometric function", () => {
     expect(result).toMatch(expected);
   });
 
-  it("returns SENSOR_ERROR when getBiometricsType promise cannot be resolved ", async () => {
+  it("returns SENSOR_ERROR when getBiometricsType promise cannot be resolved", async () => {
     const getBiometricsTypeRejectedMock = Promise.reject();
 
     try {

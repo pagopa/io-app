@@ -10,16 +10,24 @@ import {
   trackBackToWallet,
   trackItwCredentialReissuingFailed
 } from "../analytics";
-import { getMixPanelCredential } from "../../analytics/utils";
+import {
+  getMixPanelCredential,
+  toSurveyAuthMethod
+} from "../../analytics/utils";
+import ItwActivationSuccessFeedbackBanner from "../../common/components/ItwActivationSuccessFeedbackBanner";
 import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import { selectHasResolvedCredentialOffer } from "../../machine/credential/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
+  isL3FeaturesEnabledSelector,
   selectCredentialType,
+  selectIdentification,
   selectIsLoading,
   selectIssuanceMode,
   selectUpgradeFailedCredentials
@@ -30,6 +38,10 @@ export const ItwIssuanceEidResultScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
+  const hasResolvedCredentialOffer =
+    ItwCredentialIssuanceMachineContext.useSelector(
+      selectHasResolvedCredentialOffer
+    );
   const issuanceMode =
     ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const failedCredentials = ItwEidIssuanceMachineContext.useSelector(
@@ -38,6 +50,10 @@ export const ItwIssuanceEidResultScreen = () => {
   const credentialType =
     ItwEidIssuanceMachineContext.useSelector(selectCredentialType);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isL3IssuanceFlow = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
   const isEidMachineLoading =
     ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
@@ -69,17 +85,35 @@ export const ItwIssuanceEidResultScreen = () => {
 
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
+  const handleGoToWalletWithTracking = () => {
+    handleBackToWallet();
+    trackBackToWallet({
+      exit_page: route.name,
+      credential: "ITW_ID_V2"
+    });
+  };
+
   useEffect(() => {
     // When the EID issuance was triggered by a credential request, the credential
     // issuance must not start prematurely while the EID machine is still loading.
     if (credentialType && !isEidMachineLoading) {
+      if (hasResolvedCredentialOffer) {
+        credentialMachineRef.send({ type: "confirm-credential-offer" });
+        return;
+      }
+
       credentialMachineRef.send({
         type: "select-credential",
         mode: "issuance",
         credentialType
       });
     }
-  }, [credentialType, credentialMachineRef, isEidMachineLoading]);
+  }, [
+    credentialType,
+    credentialMachineRef,
+    hasResolvedCredentialOffer,
+    isEidMachineLoading
+  ]);
 
   if (credentialType) {
     return <ItwIssuanceEidCredentialTriggerContent />;
@@ -97,30 +131,149 @@ export const ItwIssuanceEidResultScreen = () => {
     return <ItwIssuanceEidReissuanceResultContent />;
   }
 
+  if (!isL3IssuanceFlow) {
+    return (
+      <OperationResultScreenContent
+        pictogram="success"
+        title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
+        subtitle={I18n.t(
+          "features.itWallet.issuance.eidResult.success.subtitle"
+        )}
+        action={{
+          label: I18n.t(
+            "features.itWallet.issuance.eidResult.success.primaryAction"
+          ),
+          onPress: handleAddCredential
+        }}
+        secondaryAction={{
+          label: I18n.t(
+            "features.itWallet.issuance.eidResult.success.secondaryAction"
+          ),
+          onPress: handleGoToWalletWithTracking
+        }}
+      />
+    );
+  }
+
+  return (
+    <ItwEidSuccessResultContent
+      isWalletEmpty={isWalletEmpty}
+      onAddDocument={handleAddCredential}
+      onGoToWallet={handleGoToWalletWithTracking}
+    />
+  );
+};
+
+/**
+ * IT-Wallet (L3) success TYP shown after the PID has been obtained (both in the
+ * standard issuance flow and at the end of the "Documenti su IO" → IT-Wallet
+ * upgrade flow). Two versions are shown depending on whether the wallet already
+ * contains at least one digital document (the eID/PID is not counted, regardless
+ * of "Documenti su IO" activation)
+ */
+const ItwEidSuccessResultContent = ({
+  isWalletEmpty,
+  onAddDocument,
+  onGoToWallet,
+  docStatus = "not_active",
+  showBanner = true
+}: {
+  isWalletEmpty: boolean;
+  onAddDocument: () => void;
+  onGoToWallet: () => void;
+  docStatus?: "active" | "not_active";
+  showBanner?: boolean;
+}) => {
+  const route = useRoute();
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const authMethod = toSurveyAuthMethod(identification);
+
+  if (isWalletEmpty) {
+    return (
+      <OperationResultScreenContent
+        pictogram="success"
+        title={I18n.t("features.itWallet.issuance.eidResult.success.itw.title")}
+        subtitle={I18n.t(
+          "features.itWallet.issuance.eidResult.success.itw.withoutDocuments.subtitle"
+        )}
+        action={{
+          label: I18n.t(
+            "features.itWallet.issuance.eidResult.success.itw.withoutDocuments.primaryAction"
+          ),
+          onPress: onGoToWallet
+        }}
+      >
+        {showBanner && (
+          <ItwActivationSuccessFeedbackBanner
+            docStatus={docStatus}
+            authMethod={authMethod}
+          />
+        )}
+      </OperationResultScreenContent>
+    );
+  }
+
+  return (
+    <ItwIssuanceEidIssuanceResultContent
+      docStatus={docStatus}
+      showBanner={showBanner}
+      onAddCredential={onAddDocument}
+      onBackToWallet={() => {
+        onGoToWallet();
+        trackBackToWallet({ exit_page: route.name, credential: "ITW_ID_V2" });
+      }}
+    />
+  );
+};
+
+type ItwIssuanceEidIssuanceResultContentProps = {
+  docStatus: "active" | "not_active";
+  onAddCredential: () => void;
+  onBackToWallet: () => void;
+  showBanner?: boolean;
+};
+
+const ItwIssuanceEidIssuanceResultContent = ({
+  docStatus,
+  onAddCredential,
+  onBackToWallet,
+  showBanner = true
+}: ItwIssuanceEidIssuanceResultContentProps) => {
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+
+  const authMethod = toSurveyAuthMethod(identification);
+
   return (
     <OperationResultScreenContent
       pictogram="success"
-      title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
-      subtitle={I18n.t("features.itWallet.issuance.eidResult.success.subtitle")}
+      title={I18n.t("features.itWallet.issuance.eidResult.success.itw.title")}
+      subtitle={I18n.t(
+        "features.itWallet.issuance.eidResult.success.itw.withDocuments.subtitle"
+      )}
       action={{
         label: I18n.t(
-          "features.itWallet.issuance.eidResult.success.primaryAction"
+          "features.itWallet.issuance.eidResult.success.itw.withDocuments.primaryAction"
         ),
-        onPress: handleAddCredential
+        onPress: onAddCredential,
+        icon: "addSmall",
+        iconPosition: "end"
       }}
       secondaryAction={{
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.secondaryAction"
         ),
-        onPress: () => {
-          handleBackToWallet();
-          trackBackToWallet({
-            exit_page: route.name,
-            credential: "ITW_ID_V2"
-          });
-        }
+        onPress: onBackToWallet
       }}
-    />
+    >
+      {showBanner && (
+        <ItwActivationSuccessFeedbackBanner
+          docStatus={docStatus}
+          authMethod={authMethod}
+        />
+      )}
+    </OperationResultScreenContent>
   );
 };
 
@@ -129,13 +282,28 @@ const ItwIssuanceEidUpgradeResultContent = ({
 }: {
   failedCredentials: ReadonlyArray<CredentialMetadata>;
 }) => {
+  const route = useRoute();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+  const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
   const failedCredentialName = useItwCredentialName(
     failedCredentials[0]?.credentialType
   );
 
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
+
+  const handleAddCredential = () => {
+    machineRef.send({ type: "add-new-credential" });
+    trackAddFirstCredential();
+  };
+
+  const handleGoToWalletWithTracking = () => {
+    handleBackToWallet();
+    trackBackToWallet({
+      exit_page: route.name,
+      credential: "ITW_ID_V2"
+    });
+  };
 
   if (isLoading) {
     return (
@@ -169,17 +337,15 @@ const ItwIssuanceEidUpgradeResultContent = ({
     );
   }
 
+  // The upgrade flow means the user already had DocIO (L2) active, so docStatus is "active".
+  // The survey banner is shown in WalletHome (via Redux) instead of here.
   return (
-    <OperationResultScreenContent
-      pictogram="success"
-      title={I18n.t("features.itWallet.issuance.upgrade.success.title")}
-      subtitle={I18n.t("features.itWallet.issuance.upgrade.success.subtitle")}
-      action={{
-        label: I18n.t(
-          "features.itWallet.issuance.upgrade.success.primaryAction"
-        ),
-        onPress: handleBackToWallet
-      }}
+    <ItwEidSuccessResultContent
+      isWalletEmpty={isWalletEmpty}
+      onAddDocument={handleAddCredential}
+      onGoToWallet={handleGoToWalletWithTracking}
+      docStatus="active"
+      showBanner={false}
     />
   );
 };

@@ -20,7 +20,6 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
-import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackOpenItwTos } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
@@ -32,10 +31,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
-import {
-  CredentialMetadata,
-  RequestObject
-} from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
@@ -45,7 +41,7 @@ import {
   selectCredentialTypeOption,
   selectIsIssuing,
   selectIsLoading,
-  selectRequestedCredentialOption
+  selectRequiredClaimsOption
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -78,16 +74,15 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const requestedCredentialOption =
-    ItwCredentialIssuanceMachineContext.useSelector(
-      selectRequestedCredentialOption
-    );
+  const requiredClaimsOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectRequiredClaimsOption
+  );
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
-  usePreventScreenCapture();
+  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
@@ -112,7 +107,7 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   return pipe(
     sequenceS(O.Monad)({
       credentialType: credentialTypeOption,
-      requestedCredential: requestedCredentialOption,
+      requiredClaimNames: requiredClaimsOption,
       eid: eidOption
     }),
     O.fold(
@@ -124,14 +119,18 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
 
 type ContentViewProps = {
   credentialType: string;
-  requestedCredential: RequestObject;
+  requiredClaimNames: ReadonlyArray<string>;
   eid: CredentialMetadata;
 };
 
 /**
  * Renders the content of the screen
  */
-const ContentView = ({ credentialType, eid }: ContentViewProps) => {
+const ContentView = ({
+  credentialType,
+  requiredClaimNames,
+  eid
+}: ContentViewProps) => {
   const route = useRoute();
   const hasScrolledToBottom = useRef(false);
   const privacyUrl = useIOSelector(state =>
@@ -154,10 +153,14 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({
         exit_page: route.name,
         credential: mixPanelCredential
+      });
+      machineRef.send({
+        type: "close",
+        surveyStep: isItwL3 ? "data_share" : undefined,
+        surveyCredential: isItwL3 ? mixPanelCredential : undefined
       });
     }
   });
@@ -175,10 +178,10 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const claims = parseClaims(eid.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
   });
-  const requiredClaims = claims.map(claim => ({
-    claim,
-    source: eidCredentialName
-  }));
+  const requiredClaims = requiredClaimNames.flatMap(name => {
+    const claim = claims.find(({ id }) => id === name);
+    return claim ? [{ claim, source: eidCredentialName }] : [];
+  });
 
   // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens
   const trackScrollToBottom = (crossed: boolean) => {
@@ -247,7 +250,9 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
             privacyUrl
           })}
-          rules={generateItwIOMarkdownRules({ linkCallback: trackOpenItwTos })}
+          rules={generateItwIOMarkdownRules({
+            linkCallback: trackOpenItwTos
+          })}
         />
       </ContentWrapper>
     </ForceScrollDownView>
