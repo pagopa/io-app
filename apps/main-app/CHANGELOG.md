@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.36.0-rc.11](https://github.com/pagopa/io-app/compare/3.36.0-rc.10...3.36.0-rc.11) (2026-07-09)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4384](https://pagopa.atlassian.net/browse/SIW-4384),[SIW-4483](https://pagopa.atlassian.net/browse/SIW-4483)] Add Qualtrics survey entry points for eID and credential flows ([#8170](https://github.com/pagopa/io-app/issues/8170)) ([0e92db0](https://github.com/pagopa/io-app/commit/0e92db0f9f5131449090862131fd7d450982a833))
+* **IT-Wallet:** [[SIW-4621](https://pagopa.atlassian.net/browse/SIW-4621)] Add Status List repository ([#8255](https://github.com/pagopa/io-app/issues/8255)) ([69f2bb5](https://github.com/pagopa/io-app/commit/69f2bb532bc015ded6b70a9789b84e4ede84ed58))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4616](https://pagopa.atlassian.net/browse/SIW-4616)] Display credential intro screen before issuance  ([#8247](https://github.com/pagopa/io-app/issues/8247)) ([fd8f397](https://github.com/pagopa/io-app/commit/fd8f397bd269996bc00b5110398fcb295ae7111d))
+
+
+### Chores
+
+* [[IEL-684](https://pagopa.atlassian.net/browse/IEL-684)]] Fci's retry now check signature request status ([#8251](https://github.com/pagopa/io-app/issues/8251)) ([2a05114](https://github.com/pagopa/io-app/commit/2a0511413a8608f127debead5624c48bc20c4841))
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] update @pagopa/io-react-native-wallet to version 3.6.2 ([#8259](https://github.com/pagopa/io-app/issues/8259)) ([f36f1e1](https://github.com/pagopa/io-app/commit/f36f1e13fbca93b31787e1922ecd2d3bad967e57))
+* **IT-Wallet:** [[SIW-4427](https://pagopa.atlassian.net/browse/SIW-4427)] Enhance IT-Wallet upgrade flow steps ([#8172](https://github.com/pagopa/io-app/issues/8172)) ([df1cc4a](https://github.com/pagopa/io-app/commit/df1cc4a3a76dd1487d6247a3a5278db7943074da))
+* [[IOPLT-1947](https://pagopa.atlassian.net/browse/IOPLT-1947)] Enforce ESLint `no-non-null-assertion` rule as error ([#8250](https://github.com/pagopa/io-app/issues/8250)) ([7fde216](https://github.com/pagopa/io-app/commit/7fde216f26332fe1d9ad97ccd836528559d6694e))
+
 ## [3.36.0-rc.10](https://github.com/pagopa/io-app/compare/3.36.0-rc.9...3.36.0-rc.10) (2026-07-08)
 
 

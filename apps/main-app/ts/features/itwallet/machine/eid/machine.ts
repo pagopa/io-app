@@ -90,6 +90,7 @@ export const itwEidIssuanceMachine = setup({
     cleanupIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeAuthLevel: notImplemented,
+    storeWalletActivationFeedbackBannerData: notImplemented,
     storeCredentialUpgradeFailures: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
@@ -1297,10 +1298,14 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     Success: {
-      entry: ["refreshCredentialsCatalogue", "navigateToSuccessScreen"],
+      entry: [
+        "refreshCredentialsCatalogue",
+        "navigateToSuccessScreen",
+        "storeWalletActivationFeedbackBannerData"
+      ],
       on: {
         "add-new-credential": {
-          actions: "navigateToCredentialCatalog"
+          actions: ["navigateToCredentialCatalog"]
         },
         "go-to-wallet": {
           actions: "navigateToWallet"

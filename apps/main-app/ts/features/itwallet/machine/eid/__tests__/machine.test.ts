@@ -88,6 +88,8 @@ const storeWalletInstanceAttestation = jest.fn();
 const closeIssuance = jest.fn();
 const handleSessionExpired = jest.fn();
 const resetWalletInstance = jest.fn();
+const refreshCredentialsCatalogue = jest.fn();
+const storeCredentialUpgradeFailures = jest.fn();
 const trackWalletInstanceCreation = jest.fn();
 const trackWalletInstanceRevocation = jest.fn();
 const trackIdentificationMethodSelected = jest.fn();
@@ -96,7 +98,7 @@ const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 const trackItwIdAuthenticationCompleted = jest.fn();
 const trackItwIdVerifiedDocument = jest.fn();
-const refreshCredentialsCatalogue = jest.fn();
+const storeWalletActivationFeedbackBannerData = jest.fn();
 
 /**
  * Actors
@@ -156,13 +158,15 @@ describe("itwEidIssuanceMachine", () => {
       closeIssuance,
       handleSessionExpired,
       resetWalletInstance,
+      refreshCredentialsCatalogue,
+      storeCredentialUpgradeFailures,
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
       trackIdentificationMethodSelected,
       storeAuthLevel,
       trackItwIdAuthenticationCompleted,
       trackItwIdVerifiedDocument,
-      refreshCredentialsCatalogue
+      storeWalletActivationFeedbackBannerData
     },
     actors: {
       verifyTrustFederation: fromPromise<void, WithItwVersion>(
@@ -1127,13 +1131,44 @@ describe("itwEidIssuanceMachine", () => {
     });
     actor.start();
 
-    /**
-     * Go to wallet
-     */
-
     actor.send({ type: "add-new-credential" });
 
     expect(navigateToCredentialCatalog).toHaveBeenCalledTimes(1);
+    // entry does not re-fire when resuming from a snapshot, so storeWalletActivationFeedbackBannerData
+    // is never called in this path (it only fires on entry when credentialType is set)
+    expect(storeWalletActivationFeedbackBannerData).not.toHaveBeenCalled();
+  });
+
+  it("Should store banner data on entering Success when EID activation was triggered by a credential request", async () => {
+    storeEidCredentialActor.mockResolvedValue(undefined);
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "DisplayingPreview" },
+      context: {
+        mode: "issuance",
+        level: "l2",
+        credentialType: "MDL",
+        eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "add-to-wallet" });
+
+    await waitForActor(actor, snap => snap.matches("Success"));
+
+    // entry fires on genuine transition into Success → storeWalletActivationFeedbackBannerData called
+    expect(storeWalletActivationFeedbackBannerData).toHaveBeenCalledTimes(1);
+    // add-new-credential is not sent in this flow
+    expect(navigateToCredentialCatalog).not.toHaveBeenCalled();
   });
 
   it("Should return to TOS acceptance if session expires when creating a Wallet Instance", async () => {

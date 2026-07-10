@@ -4,10 +4,13 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { IdentificationContext } from "../../../machine/eid/context.ts";
 import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 import {
+  ItwWalletActivationFeedbackBannerData,
+  itwClearWalletActivationFeedbackBannerData,
   itwClearCredentialUpgradeFailed,
   itwDisableItwActivation,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
+  itwSetWalletActivationFeedbackBannerData,
   itwSetCredentialUpgradeFailed,
   itwSetFiscalCodeWhitelisted,
   itwSetIdentificationMode,
@@ -34,6 +37,9 @@ export type ItwPreferencesState = {
   isItwActivationDisabled?: boolean;
   // Indicates the identification mode used for the user
   identificationMode?: IdentificationContext["mode"];
+  // Set when a credential is successfully added together with an IT Wallet eID activation.
+  // Used to show the credential success survey banner in WALLET_HOME for 7 days.
+  walletActivationFeedbackBannerData?: ItwWalletActivationFeedbackBannerData;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {};
@@ -120,6 +126,18 @@ const reducer = (
         ...state,
         identificationMode: action.payload
       };
+    }
+
+    case getType(itwSetWalletActivationFeedbackBannerData): {
+      return {
+        ...state,
+        walletActivationFeedbackBannerData: action.payload
+      };
+    }
+
+    case getType(itwClearWalletActivationFeedbackBannerData): {
+      const { walletActivationFeedbackBannerData: _, ...rest } = state;
+      return rest;
     }
 
     default:
