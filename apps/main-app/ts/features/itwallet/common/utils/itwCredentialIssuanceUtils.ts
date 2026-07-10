@@ -93,10 +93,17 @@ export type RequestCredential = (args: {
 
 /**
  * Requests a credential from the issuer.
+ *
+ * When issuance starts from a Credential Offer, the `authorization_code` grant
+ * details drive the flow: the offer's `authorization_server` is validated
+ * against the issuer metadata during trust evaluation, while `scope` and
+ * `issuer_state` are forwarded to the Pushed Authorization Request.
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
  * @param walletInstanceAttestation - The wallet instance attestation
+ * @param skipMdocIssuance - Whether mDoc credential configurations must be excluded from the request
+ * @param resolvedCredentialOffer - The resolved Credential Offer with its grant details, when issuance starts from an offer
  * @param pid - The PID credential to evaluate the issuer DCQL query before showing the trust issuer screen
  * @returns The credential request object
  */
@@ -114,12 +121,18 @@ export const requestCredential: RequestCredential = async ({
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
-  // Evaluate issuer trust
+  const authorizationCodeGrant =
+    resolvedCredentialOffer?.grantDetails.authorizationCodeGrant;
+
+  // Evaluate issuer trust. The authorization server declared by the offer
+  // must match one of the issuer metadata `authorization_servers`.
   const credentialIssuer =
     resolvedCredentialOffer?.offer.credential_issuer ??
     env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion);
-  const { issuerConf } =
-    await ioWallet.CredentialIssuance.evaluateIssuerTrust(credentialIssuer);
+  const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
+    credentialIssuer,
+    { authorizationServer: authorizationCodeGrant?.authorizationServer }
+  );
 
   const credentialIds = resolvedCredentialOffer?.offer
     .credential_configuration_ids
@@ -150,7 +163,10 @@ export const requestCredential: RequestCredential = async ({
       {
         walletInstanceAttestation,
         redirectUri: env.ISSUANCE_REDIRECT_URI,
-        wiaCryptoContext
+        wiaCryptoContext,
+        // Offer flow only: forwarded to the PAR, omitted in the catalogue flow
+        scope: authorizationCodeGrant?.scope,
+        issuerState: authorizationCodeGrant?.issuerState
       }
     );
 

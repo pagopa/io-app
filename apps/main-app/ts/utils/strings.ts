@@ -29,7 +29,7 @@ export function isTextIncludedCaseInsensitive(
  * @param text
  * @param separator
  */
-export function capitalize(text: string, separator: string = " ") {
+export function capitalize(text: string, separator = " ") {
   return text
     .split(separator)
     .reduce(
@@ -96,7 +96,7 @@ export const splitAndTakeFirst = (text: string, splitter: string) =>
 
 export const withTrailingPoliceCarLightEmojii = (
   text: string,
-  visible: boolean = true
+  visible = true
 ) => {
   if (visible) {
     return `${text} \u{1F6A8}`;
@@ -139,10 +139,7 @@ export const formatBytesWithUnit = (bytes: number) => {
  * capitalizeTextName("d'angelo"); //returns "D'Angelo"
  */
 
-export const capitalizeTextName = (
-  text: string,
-  separator: string = " "
-): string => {
+export const capitalizeTextName = (text: string, separator = " "): string => {
   // Match leading and trailing spaces
   const leadingSpacesMatch = /^\s*/.exec(text);
   const trailingSpacesMatch = /\s*$/.exec(text);

@@ -41,7 +41,7 @@ jest.mock("@pagopa/io-react-native-crypto", () => ({
 MockDate.set("2023-01-01T01:00:00");
 const mockTimestamp = 1672534800; // 2023-01-01T01:00:00
 
-const testInit = (signBody: boolean = false) => ({
+const testInit = (signBody = false) => ({
   headers: {
     Authorization: "Bearer 123",
     "x-pagopa-lollipop-original-method": "GET",
