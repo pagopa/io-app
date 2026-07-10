@@ -2,7 +2,8 @@ import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { STORAGE_PREFIX } from "../consts";
 import { StatusListRepository, STORAGE_ENTRY_PREFIX } from "../repository";
-import { STORAGE_KEY_LAST_CHECK_TIME } from "../storage";
+
+const OTHER_FEATURE_STORAGE_KEY = `${STORAGE_PREFIX}:otherKey`;
 
 jest.mock("@react-native-async-storage/async-storage", () =>
   require("@react-native-async-storage/async-storage/jest/async-storage-mock")
@@ -111,7 +112,7 @@ describe("repository", () => {
 
     it("ignores other storage keys with the same feature prefix", async () => {
       await StatusListRepository.upsert(makeUri(1), makePayload(1));
-      await AsyncStorage.setItem(STORAGE_KEY_LAST_CHECK_TIME, "1700000000000");
+      await AsyncStorage.setItem(OTHER_FEATURE_STORAGE_KEY, "1700000000000");
 
       const entries = await StatusListRepository.list();
       expect(entries).toHaveLength(1);
@@ -181,12 +182,12 @@ describe("repository", () => {
 
     it("keeps non-entry keys with the same feature prefix", async () => {
       await StatusListRepository.upsert(makeUri(1), makePayload(1));
-      await AsyncStorage.setItem(STORAGE_KEY_LAST_CHECK_TIME, "1700000000000");
+      await AsyncStorage.setItem(OTHER_FEATURE_STORAGE_KEY, "1700000000000");
 
       await StatusListRepository.clear();
 
       await expect(
-        AsyncStorage.getItem(STORAGE_KEY_LAST_CHECK_TIME)
+        AsyncStorage.getItem(OTHER_FEATURE_STORAGE_KEY)
       ).resolves.toBe("1700000000000");
     });
   });

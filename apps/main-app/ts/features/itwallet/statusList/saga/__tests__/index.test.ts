@@ -1,7 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
-import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
 import { watchItwStatusListSaga } from "..";
 
 describe("watchItwStatusListSaga", () => {
@@ -18,8 +17,6 @@ describe("watchItwStatusListSaga", () => {
       .next()
       .select(itwIsL3EnabledSelector)
       .next(true)
-      .fork(registerStatusListFetchTaskSaga)
-      .next()
       .fork(checkStatusListCoherenceSaga)
       .next()
       .isDone();
