@@ -191,7 +191,11 @@ export type ItwDismissalAction = {
   user_action: string;
 };
 
-type QualtricsSurveyId = "confirm_eid_flow_success" | "confirm_eid_flow_exit";
+type QualtricsSurveyId =
+  | "confirm_eid_flow_success"
+  | "confirm_eid_flow_exit"
+  | "itw_eid_activation_exit"
+  | "itw_credential_exit";
 
 export type TrackQualtricsSurvey = {
   survey_id: QualtricsSurveyId;

@@ -90,6 +90,7 @@ export const itwEidIssuanceMachine = setup({
     cleanupIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeAuthLevel: notImplemented,
+    storeWalletActivationFeedbackBannerData: notImplemented,
     storeCredentialUpgradeFailures: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
@@ -340,6 +341,15 @@ export const itwEidIssuanceMachine = setup({
             target: "TrustFederationVerification"
           }
         ],
+        "go-to-ipzs-privacy": {
+          actions: "navigateToIpzsPrivacyScreen"
+        },
+        "accept-ipzs-privacy": [
+          {
+            // The IPZS privacy can be opened from the Discovery screen in the L3 flow.
+            target: "TrustFederationVerification"
+          }
+        ],
         close: {
           target: "#itwEidIssuanceMachine.Idle",
           actions: "closeIssuance"
@@ -367,8 +377,8 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            // When reissuing or fallback to L2, if both integrity key tag and wallet instance attestation are valid,
-            guard: or(["isReissuance", "isL2Fallback"]),
+            // When reissuing, fallback to L2 or L3, if both integrity key tag and wallet instance attestation are valid,
+            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             target: "UserIdentification.Identification"
           },
           {
@@ -387,7 +397,7 @@ export const itwEidIssuanceMachine = setup({
       after: {
         5000: [
           {
-            guard: or(["isReissuance", "isL2Fallback"]),
+            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             actions: "navigateToIdentificationScreen"
           },
           {
@@ -473,7 +483,7 @@ export const itwEidIssuanceMachine = setup({
         }),
         onDone: [
           {
-            guard: or(["isReissuance", "isL2Fallback"]),
+            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             actions: [
               assign(({ event }) => ({
                 walletInstanceAttestation: event.output
@@ -573,6 +583,10 @@ export const itwEidIssuanceMachine = setup({
                 guard: "isL2Fallback",
                 target: "#itwEidIssuanceMachine.Idle",
                 actions: "navigateToTosScreen"
+              },
+              {
+                guard: "isL3FeaturesEnabled",
+                target: "#itwEidIssuanceMachine.TosAcceptance"
               },
               {
                 target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
@@ -1284,10 +1298,14 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     Success: {
-      entry: ["refreshCredentialsCatalogue", "navigateToSuccessScreen"],
+      entry: [
+        "refreshCredentialsCatalogue",
+        "navigateToSuccessScreen",
+        "storeWalletActivationFeedbackBannerData"
+      ],
       on: {
         "add-new-credential": {
-          actions: "navigateToCredentialCatalog"
+          actions: ["navigateToCredentialCatalog"]
         },
         "go-to-wallet": {
           actions: "navigateToWallet"
