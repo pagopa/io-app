@@ -10,7 +10,7 @@ import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import { useGuidedTourRegion } from "../../../tour/components/useGuidedTourRegion";
 import { startTourAction } from "../../../tour/store/actions";
 import { isTourCompletedSelector } from "../../../tour/store/selectors";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   ITW_TOUR_GROUP_ID,
   ITW_TOUR_STEP_ADD_BUTTON
@@ -23,7 +23,7 @@ export const useItwGuidedTour = () => {
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
 
   const { width: screenWidth } = Dimensions.get("window");
-  const isItwActive = useIOSelector(itwIsL3EnabledSelector);
+  const isItwActive = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isCompleted = useIOSelector(state =>
     isTourCompletedSelector(state, ITW_TOUR_GROUP_ID)
   );

@@ -10,7 +10,6 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback } from "react";
@@ -30,6 +29,7 @@ import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
+  selectCanRenderEidPreview,
   selectEidOption,
   selectIdentification,
   selectIsLoading
@@ -44,20 +44,21 @@ import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPrevi
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
+  const canRenderEidPreview = ItwEidIssuanceMachineContext.useSelector(
+    selectCanRenderEidPreview
+  );
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  return pipe(
-    eidOption,
-    O.fold(
-      // If there is no eID in the context (None), we can safely assume the issuing phase is still ongoing.
-      // A None eID cannot be stored in the context, as any issuance failure causes the machine to transition
-      // to the Failure state.
-      () => <LoadingScreenContent title={I18n.t("global.genericWaiting")} />,
-      eid => <ContentView eid={eid.metadata} />
-    )
-  );
+  // If there is no eID in the context, the issuing phase is still ongoing.
+  // Once the eID is assigned, wait for the identity-match check to finish before
+  // rendering its details; otherwise the preview could flash before a mismatch failure.
+  if (!canRenderEidPreview || O.isNone(eidOption)) {
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
+  }
+
+  return <ContentView eid={eidOption.value.metadata} />;
 };
 
 type ContentViewProps = {

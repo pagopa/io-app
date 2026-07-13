@@ -56,6 +56,15 @@ export const selectMrtdCallbackUrl = (snapshot: MachineSnapshot) =>
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwTags.Loading);
 
+/**
+ * The eID context is assigned before the identity-match check completes, so the
+ * preview content must wait until the machine reaches a state where it is safe
+ * to expose the issued credential.
+ */
+export const selectCanRenderEidPreview = (snapshot: MachineSnapshot) =>
+  snapshot.matches({ Issuance: "DisplayingPreview" }) ||
+  snapshot.matches({ Issuance: "StoringCredential" });
+
 export const selectUpgradeFailedCredentials = (snapshot: MachineSnapshot) =>
   pipe(
     snapshot.context.failedCredentials,
