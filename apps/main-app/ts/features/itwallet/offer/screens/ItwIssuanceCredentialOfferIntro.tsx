@@ -10,6 +10,8 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { Image, StyleSheet, View } from "react-native";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
@@ -22,15 +24,17 @@ import {
   StartupStatusEnum
 } from "../../../../store/reducers/startup";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
-  selectCredentialIntroContentOption,
   selectCredentialTypeOption,
   selectResolvedCredentialOfferOption
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { ItwRemoteLoadingScreen } from "../../presentation/remote/components/ItwRemoteLoadingScreen";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
 
 const introHeroUri = Image.resolveAssetSource(introHeroSource).uri;
@@ -50,7 +54,7 @@ const ItwIssuanceCredentialOfferIntroScreen = ({ route }: ScreenProps) => {
   const startupStatus = useIOSelector(isStartupLoaded);
 
   if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
-    return <ItwRemoteLoadingScreen title={I18n.t("global.genericWaiting")} />;
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
   return (
@@ -72,10 +76,10 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
-  const introductionContentOption =
-    ItwCredentialIssuanceMachineContext.useSelector(
-      selectCredentialIntroContentOption
-    );
+  const credentialType = O.toUndefined(credentialTypeOption);
+  const introductionContent = useIOSelector(
+    itwCredentialIntroContentSelector(credentialType)
+  );
 
   useHeaderSecondLevel({
     title: "",
@@ -100,9 +104,19 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     machineRef.send({ type: "confirm-credential-offer" });
   }, [machineRef]);
 
-  const isResolved =
-    O.isSome(resolvedCredentialOfferOption) && O.isSome(credentialTypeOption);
-  const shouldSkipIntro = isResolved && O.isNone(introductionContentOption);
+  const storedCredentialOption = useIOSelector(
+    itwCredentialSelector(credentialType ?? "")
+  );
+
+  // Continuing the offer flow would silently overwrite the stored credential,
+  // so it is blocked when the credential is already in the wallet and valid.
+  const isCredentialAlreadyAdded =
+    O.isSome(storedCredentialOption) &&
+    getCredentialStatus(storedCredentialOption.value) === "valid";
+
+  const isResolved = O.isSome(resolvedCredentialOfferOption) && credentialType;
+  const shouldSkipIntro =
+    isResolved && !isCredentialAlreadyAdded && !introductionContent;
 
   useEffect(() => {
     if (shouldSkipIntro) {
@@ -111,17 +125,45 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   }, [shouldSkipIntro, handleContinue]);
 
   if (!isResolved || shouldSkipIntro) {
-    return <ItwRemoteLoadingScreen title={I18n.t("global.genericWaiting")} />;
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
+  }
+
+  if (isCredentialAlreadyAdded && credentialType) {
+    return (
+      <OperationResultScreenContent
+        pictogram="itWallet"
+        title={I18n.t(
+          "features.itWallet.issuance.credentialAlreadyAdded.title"
+        )}
+        subtitle={I18n.t(
+          "features.itWallet.issuance.credentialAlreadyAdded.body"
+        )}
+        action={{
+          label: I18n.t(
+            "features.itWallet.issuance.credentialAlreadyAdded.primaryAction"
+          ),
+          onPress: () => {
+            machineRef.send({ type: "close" });
+            navigation.replace(ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL, {
+              credentialType
+            });
+          }
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.close"),
+          onPress: () => {
+            machineRef.send({ type: "close" });
+            navigation.goBack();
+          }
+        }}
+      />
+    );
   }
 
   const fallbackTitle = I18n.t(
     "features.itWallet.issuance.credentialOffer.intro.fallbackTitle"
   );
-  const title = getCredentialNameFromType(
-    credentialTypeOption.value,
-    false,
-    fallbackTitle
-  );
+  const title = getCredentialNameFromType(credentialType, false, fallbackTitle);
 
   return (
     <IOScrollView
@@ -142,9 +184,9 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
       <ContentWrapper marginTop={24}>
         <H2>{title}</H2>
         <VSpacer size={16} />
-        {O.isSome(introductionContentOption) && (
+        {introductionContent && (
           <View style={styles.contentBox}>
-            <IOMarkdown content={introductionContentOption.value} />
+            <IOMarkdown content={introductionContent} />
           </View>
         )}
       </ContentWrapper>

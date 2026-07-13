@@ -154,10 +154,14 @@ const ContentView = ({
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({
         exit_page: route.name,
         credential: mixPanelCredential
+      });
+      machineRef.send({
+        type: "close",
+        surveyStep: isItwL3 ? "data_share" : undefined,
+        surveyCredential: isItwL3 ? mixPanelCredential : undefined
       });
     }
   });
@@ -247,7 +251,9 @@ const ContentView = ({
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
             privacyUrl
           })}
-          rules={generateItwIOMarkdownRules({ linkCallback: trackOpenItwTos })}
+          rules={generateItwIOMarkdownRules({
+            linkCallback: trackOpenItwTos
+          })}
         />
       </ContentWrapper>
     </ForceScrollDownView>
