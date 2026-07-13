@@ -6,7 +6,7 @@ import {
   useIOTheme,
   VSpacer,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ServicesHeader, ServicesHeaderSkeleton } from "./ServicesHeader";
 
 const WINDOW_HEIGHT = Dimensions.get("window").height;

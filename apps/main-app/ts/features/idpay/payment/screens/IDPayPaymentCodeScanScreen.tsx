@@ -1,4 +1,4 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {

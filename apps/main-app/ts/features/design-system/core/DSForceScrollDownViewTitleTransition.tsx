@@ -5,7 +5,7 @@ import {
   IOColors,
   IOVisualCostants,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
@@ -23,6 +23,7 @@ export const DSForceScrollDownViewTitleTransition = () => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel="Scroll to bottom"
       animatedRef={animatedScrollViewRef}
       threshold={CUSTOM_SLOT_HEIGHT}
       contentContainerStyle={{

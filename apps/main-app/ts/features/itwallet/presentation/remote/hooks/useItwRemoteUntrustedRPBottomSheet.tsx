@@ -1,4 +1,4 @@
-import { Body, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, ListItemHeader, VSpacer } from "@io-app/design-system";
 import { View } from "react-native";
 import { memo } from "react";
 import I18n from "i18next";

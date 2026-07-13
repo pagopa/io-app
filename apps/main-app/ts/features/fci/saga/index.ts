@@ -1,15 +1,24 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
 import { ActionType, isActionOf } from "typesafe-actions";
 import RNFS from "react-native-fs";
-import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
+import {
+  call,
+  delay,
+  takeLatest,
+  put,
+  select,
+  take
+} from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import I18n from "i18next";
 import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
 import ROUTES from "../../../navigation/routes";
 import { apiUrlPrefix } from "../../../config";
+import { appCurrentStateSelector } from "../../../store/reducers/appState";
 import {
   identificationPinReset,
   identificationRequest,
@@ -63,6 +72,49 @@ import { handleCreateSignature } from "./networking/handleCreateSignature";
 import { handleGetMetadata } from "./networking/handleGetMetadata";
 import { handleGetSignatureRequests } from "./networking/handleGetSignatureRequests";
 import { handleDrawSignatureBox } from "./handleDrawSignatureBox";
+
+/**
+ * Maximum time to wait for the app to become active (20 seconds).
+ */
+const APP_ACTIVE_POLLING_TIMEOUT = (20 * 1000) as Millisecond;
+
+/**
+ * Interval between polling checks (2 seconds).
+ */
+const APP_ACTIVE_POLLING_INTERVAL = (2 * 1000) as Millisecond;
+
+/**
+ * Waits for the app to return to the active state using a polling strategy.
+ * This prevents network requests from being killed and auto-retried
+ * when the app transitions from inactive to active.
+ *
+ * Polls the app state every APP_ACTIVE_POLLING_INTERVAL milliseconds
+ * for a maximum of APP_ACTIVE_POLLING_TIMEOUT milliseconds.
+ * If the app becomes active before the timeout, returns immediately.
+ * If the timeout expires, continues anyway.
+ */
+function* waitForAppActive() {
+  const startTime = new Date().getTime();
+
+  while (true) {
+    const currentAppState = yield* select(appCurrentStateSelector);
+
+    // If app is active, exit immediately
+    if (currentAppState === "active") {
+      return;
+    }
+
+    // Check if timeout has been exceeded
+    const now = new Date().getTime();
+    if (now - startTime >= APP_ACTIVE_POLLING_TIMEOUT) {
+      // Timeout exceeded, continue anyway
+      return;
+    }
+
+    // Wait before the next poll
+    yield* delay(APP_ACTIVE_POLLING_INTERVAL);
+  }
+}
 
 /**
  * Handle the FCI Signature requests
@@ -315,6 +367,22 @@ function* watchFciSigningRequestSaga(): SagaIterator {
       qtspFilledDocumentUrl &&
       qtspNonce
     ) {
+      // Navigate to the Thank You Page immediately to show loading
+      NavigationService.dispatchNavigationAction(
+        CommonActions.navigate(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.TYP
+        })
+      );
+
+      // Check if the app is in active state
+      // This prevents the signature request from being killed and re-triggered
+      // when the app transitions from inactive to active after biometric authentication
+      const currentAppState = yield* select(appCurrentStateSelector);
+      if (currentAppState !== "active") {
+        // Wait for the app to return to active state before proceeding
+        yield* call(waitForAppActive);
+      }
+
       const createSignaturePayload: CreateSignatureBody = {
         signature_request_id: potSignatureRequest.value.id,
         documents_to_sign: documentSignatures,
@@ -329,12 +397,6 @@ function* watchFciSigningRequestSaga(): SagaIterator {
 
       yield* put(fciSigningRequest.request(createSignaturePayload));
     }
-
-    NavigationService.dispatchNavigationAction(
-      CommonActions.navigate(FCI_ROUTES.MAIN, {
-        screen: FCI_ROUTES.TYP
-      })
-    );
   }
 }
 

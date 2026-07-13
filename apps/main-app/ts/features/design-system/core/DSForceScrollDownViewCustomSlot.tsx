@@ -5,13 +5,14 @@ import {
   IOColors,
   IOVisualCostants,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { View } from "react-native";
 
 const CUSTOM_SLOT_HEIGHT = 150;
 
 export const DSForceScrollDownViewCustomSlot = () => (
   <ForceScrollDownView
+    buttonAccessibilityLabel="Scroll to bottom"
     threshold={CUSTOM_SLOT_HEIGHT}
     contentContainerStyle={{
       paddingTop: IOVisualCostants.appMarginDefault

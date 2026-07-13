@@ -44,9 +44,12 @@
       "moreInfo": "Vuoi saperne di più?"
     },
     "accessibility": {
+      "inputDigitCounter": "{{valueLength}} di {{length}} numeri inseriti",
       "minusSymbol": "meno",
       "reload": "Ricarica",
       "search": "Cerca",
+      "scrollToBottom": "Scorri fino in fondo",
+      "togglePasswordVisibility": "Mostra o nascondi la password",
       "expanded": "Espanso",
       "collapsed": "Compresso",
       "cieReadingProgress": "Lettura {{percentage}}% completata",

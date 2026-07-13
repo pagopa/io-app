@@ -1,4 +1,4 @@
-import { Banner } from "@pagopa/io-app-design-system";
+import { Banner } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import { memo, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";

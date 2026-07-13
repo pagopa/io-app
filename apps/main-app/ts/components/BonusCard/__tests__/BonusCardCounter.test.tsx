@@ -1,4 +1,4 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors } from "@io-app/design-system";
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { Store, createStore } from "redux";

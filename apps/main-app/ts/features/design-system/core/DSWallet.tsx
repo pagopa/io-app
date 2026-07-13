@@ -1,4 +1,4 @@
-import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VStack } from "@io-app/design-system";
 import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 import { WalletCardsCategoryContainer } from "../../wallet/components/WalletCardsCategoryContainer";
 import { WalletCard, WalletCardCategory } from "../../wallet/types";

@@ -1,4 +1,4 @@
-import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { Banner, IOVisualCostants } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
