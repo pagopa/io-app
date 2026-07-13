@@ -7,7 +7,7 @@ import {
   IOVisualCostants,
   ListItemNav,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { FlatList } from "react-native";

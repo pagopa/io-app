@@ -1,4 +1,4 @@
-import { IOButton, TextInputValidation } from "@pagopa/io-app-design-system";
+import { IOButton, TextInputValidation } from "@io-app/design-system";
 import {
   PaymentNoticeNumberFromString,
   RptId

@@ -5,7 +5,7 @@ import {
   RadioGroup,
   RadioItemWithAmount,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";

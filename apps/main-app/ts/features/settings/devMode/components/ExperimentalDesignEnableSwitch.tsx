@@ -1,8 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  ListItemSwitch,
-  useIOExperimentalDesign
-} from "@pagopa/io-app-design-system";
+import { ListItemSwitch, useIOExperimentalDesign } from "@io-app/design-system";
 import I18n from "i18next";
 import { useIOSelector, useIODispatch } from "../../../../store/hooks";
 import { isExperimentalDesignEnabledSelector } from "../../../../store/reducers/persistedPreferences";

@@ -1,11 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import {
-  Badge,
-  Divider,
-  H6,
-  HSpacer,
-  BodySmall
-} from "@pagopa/io-app-design-system";
+import { Badge, Divider, H6, HSpacer, BodySmall } from "@io-app/design-system";
 import I18n from "i18next";
 import { SignatureRequestListView } from "../../../../definitions/fci/SignatureRequestListView";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";

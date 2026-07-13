@@ -1,4 +1,4 @@
-import { H3, IOSkeleton } from "@pagopa/io-app-design-system";
+import { H3, IOSkeleton } from "@io-app/design-system";
 import { View } from "react-native";
 import { useIOSelector } from "../../../../store/hooks";
 import {

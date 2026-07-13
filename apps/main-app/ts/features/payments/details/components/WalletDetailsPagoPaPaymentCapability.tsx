@@ -1,4 +1,4 @@
-import { IOToast, ListItemSwitch } from "@pagopa/io-app-design-system";
+import { IOToast, ListItemSwitch } from "@io-app/design-system";
 
 import { FC, useState } from "react";
 import I18n from "i18next";

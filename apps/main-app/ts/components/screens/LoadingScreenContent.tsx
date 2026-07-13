@@ -12,7 +12,7 @@ import {
   useIOTheme,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 import { ComponentProps, useEffect } from "react";
 import { AccessibilityInfo, Platform, StyleSheet, View } from "react-native";

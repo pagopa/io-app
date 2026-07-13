@@ -5,7 +5,7 @@ import {
   HSpacer,
   IOSpacer,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 type DSSpacerViewerBoxProps = {
   size: IOSpacer;

@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { BannerErrorState, ListItemHeader } from "@pagopa/io-app-design-system";
+import { BannerErrorState, ListItemHeader } from "@io-app/design-system";
 import I18n from "i18next";
 import { View } from "react-native";
 import { FeaturedService } from "../../../../../definitions/services/FeaturedService";

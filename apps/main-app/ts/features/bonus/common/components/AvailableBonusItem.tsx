@@ -1,4 +1,4 @@
-import { Badge, Body, H6, HSpacer } from "@pagopa/io-app-design-system";
+import { Badge, Body, H6, HSpacer } from "@io-app/design-system";
 
 import { FunctionComponent } from "react";
 import { Image, Pressable, StyleSheet, View, ViewStyle } from "react-native";

@@ -1,4 +1,4 @@
-import { Body, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, VSpacer } from "@io-app/design-system";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 
 export const DSHeaderSecondLevelWithSectionTitle = () => (

@@ -5,7 +5,7 @@ import {
   IOColors,
   IOVisualCostants,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Platform, ScrollView, Text, View } from "react-native";
 import {
   SafeAreaView,

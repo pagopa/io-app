@@ -6,7 +6,7 @@ import {
   IOButton,
   IOVisualCostants,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ComponentProps, useState } from "react";
 import { Alert } from "react-native";
 
@@ -48,6 +48,7 @@ export const DSForceScrollDownView = () => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel="Scroll to bottom"
       footerActions={footerActions}
       contentContainerStyle={{
         paddingTop: IOVisualCostants.appMarginDefault

@@ -8,7 +8,7 @@ import {
   Pictogram,
   VStack,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { View, ScrollView, StyleSheet } from "react-native";
 import { PropsWithChildren, Ref } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";

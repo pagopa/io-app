@@ -8,7 +8,7 @@ import {
   SearchInput,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useCallback, useEffect, useMemo } from "react";
 import { ListRenderItemInfo, View } from "react-native";
 import Animated, {

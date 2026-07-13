@@ -8,7 +8,7 @@ import {
   IOMarkdownLite,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -164,6 +164,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
       <ForceScrollDownView
+        buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
         contentContainerStyle={{ flexGrow: 1 }}
         footerActions={{
           actions: {

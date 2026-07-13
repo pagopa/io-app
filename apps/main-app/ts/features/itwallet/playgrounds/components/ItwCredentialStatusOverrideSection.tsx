@@ -4,7 +4,7 @@ import {
   RadioGroup,
   RadioItem,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useState } from "react";
 import { View } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

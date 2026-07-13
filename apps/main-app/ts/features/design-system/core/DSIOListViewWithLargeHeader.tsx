@@ -1,4 +1,4 @@
-import { ListItemHeader, ListItemInfo } from "@pagopa/io-app-design-system";
+import { ListItemHeader, ListItemInfo } from "@io-app/design-system";
 import { useState } from "react";
 import { Alert } from "react-native";
 import I18n from "i18next";
