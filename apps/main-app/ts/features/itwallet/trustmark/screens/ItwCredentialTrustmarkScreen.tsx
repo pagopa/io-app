@@ -47,10 +47,10 @@ const ItwCredentialTrustmarkScreenComponent = (params: ScreenProps) => {
   );
 };
 
-export const ItwCredentialTrustmarkScreen = () => {
+export const ItwCredentialTrustmarkScreen = (props: ScreenProps) => {
   const isOffline = useOfflineFailureScreen();
   if (isOffline) {
     return <OfflineFailureComponent isHeaderVisible={true} />;
   }
-  return <ItwCredentialTrustmarkScreenComponent />;
+  return <ItwCredentialTrustmarkScreenComponent {...props} />;
 };

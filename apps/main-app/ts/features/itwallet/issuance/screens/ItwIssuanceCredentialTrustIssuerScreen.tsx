@@ -260,10 +260,10 @@ const ContentView = ({
   );
 };
 
-export const ItwIssuanceCredentialTrustIssuerScreen = () => {
+export const ItwIssuanceCredentialTrustIssuerScreen = (props: ScreenProps) => {
   const isOffline = useOfflineFailureScreen();
   if (isOffline) {
     return <OfflineFailureComponent isHeaderVisible={true} />;
   }
-  return <ItwIssuanceCredentialTrustIssuer />;
+  return <ItwIssuanceCredentialTrustIssuer {...props} />;
 };
