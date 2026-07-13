@@ -442,7 +442,7 @@ export const createCredentialIssuanceActorsImplementation = (
         ...credential.metadata,
         validity: {
           type: "status_list",
-          status,
+          status: status.toLowerCase(), // TODO: [SIW-4664] Export a more accurate type from `getStatus`
           rawStatus,
           statusList: { uri, idx }
         }
