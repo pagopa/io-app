@@ -4,7 +4,7 @@ import {
   HStack,
   IOVisualCostants,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useEffect, useRef } from "react";
 import { View } from "react-native";

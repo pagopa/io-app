@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react-native";
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@io-app/design-system";
 import i18n from "i18next";
 import { useSendActivationFlow } from "../useSendActivationFlow";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -27,7 +27,7 @@ jest.mock("../../../../../store/hooks", () => ({
   useIOSelector: (fn: () => any) => fn()
 }));
 
-jest.mock("@pagopa/io-app-design-system", () => ({
+jest.mock("@io-app/design-system", () => ({
   useIOToast: jest.fn()
 }));
 

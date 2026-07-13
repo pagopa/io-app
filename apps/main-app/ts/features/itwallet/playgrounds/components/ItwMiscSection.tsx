@@ -4,7 +4,7 @@ import {
   ListItemInfo,
   ListItemSwitch,
   ListItemSwitchProps
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { View } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { resetTourCompletedAction } from "../../../tour/store/actions";

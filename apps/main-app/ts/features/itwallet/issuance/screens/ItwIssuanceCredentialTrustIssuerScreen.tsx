@@ -5,7 +5,7 @@ import {
   ListItemHeader,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
@@ -20,6 +20,7 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackOpenItwTos } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
@@ -82,7 +83,7 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   );
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
-  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
+  usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
@@ -200,6 +201,7 @@ const ContentView = ({
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       onThresholdCrossed={trackScrollToBottom}
       footerActions={{
         actions: {

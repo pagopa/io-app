@@ -1,4 +1,4 @@
-import { Body, ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper, VStack } from "@io-app/design-system";
 import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -7,6 +7,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwTrustmarkExpirationTimer } from "../components/ItwTrustmarkExpirationTimer";
 import { ItwTrustmarkQrCode } from "../components/ItwTrustmarkQrCode";
 import { ItwTrustmarkMachineProvider } from "../machine/provider";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 
@@ -23,7 +24,7 @@ const ItwCredentialTrustmarkScreenComponent = (params: ScreenProps) => {
   const { credentialType } = params.route.params;
   const credentialName = useItwCredentialName(credentialType);
 
-  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
+  usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
   return (

@@ -1,5 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import { H6, IOColors, VSpacer, hexToRgba } from "@pagopa/io-app-design-system";
+import { H6, IOColors, VSpacer, hexToRgba } from "@io-app/design-system";
 import {
   Canvas,
   Color,

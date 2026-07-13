@@ -1,4 +1,4 @@
-import { Body, ListItemCheckbox } from "@pagopa/io-app-design-system";
+import { Body, ListItemCheckbox } from "@io-app/design-system";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "i18next";

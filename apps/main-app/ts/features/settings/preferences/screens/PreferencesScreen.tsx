@@ -4,11 +4,7 @@
  */
 import { ComponentProps, useCallback, useRef } from "react";
 import { Alert, FlatList, ListRenderItemInfo, View } from "react-native";
-import {
-  Divider,
-  IOVisualCostants,
-  ListItemNav
-} from "@pagopa/io-app-design-system";
+import { Divider, IOVisualCostants, ListItemNav } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "i18next";

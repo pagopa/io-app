@@ -1,4 +1,4 @@
-import { LabelMini } from "@pagopa/io-app-design-system";
+import { LabelMini } from "@io-app/design-system";
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";

@@ -7,7 +7,7 @@ import {
 } from "react";
 
 import { View } from "react-native";
-import { Alert } from "@pagopa/io-app-design-system";
+import { Alert } from "@io-app/design-system";
 import I18n from "i18next";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import {

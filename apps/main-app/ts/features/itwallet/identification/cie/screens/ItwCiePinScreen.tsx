@@ -4,7 +4,7 @@ import {
   IOButton,
   OTPInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
@@ -22,6 +22,7 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { isCieLoginUatEnabledSelector } from "../../../../authentication/login/cie/store/selectors";
 import { trackItWalletCiePinEnter } from "../../analytics";
@@ -37,7 +38,7 @@ const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
 });
 
 export const ItwCiePinScreen = () => {
-  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
+  usePreventScreenCapture();
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -121,6 +122,12 @@ export const ItwCiePinScreen = () => {
                 ref={pinPadViewRef}
                 secret
                 value={pin}
+                accessibilityValueText={({ valueLength, length }) =>
+                  I18n.t("global.accessibility.inputDigitCounter", {
+                    valueLength,
+                    length
+                  })
+                }
                 accessibilityLabel={I18n.t(
                   "authentication.cie.pin.accessibility.label"
                 )}

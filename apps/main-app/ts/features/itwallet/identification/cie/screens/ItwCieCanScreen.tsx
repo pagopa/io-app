@@ -4,7 +4,7 @@ import {
   H2,
   OTPInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
@@ -21,6 +21,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { isCieLoginUatEnabledSelector } from "../../../../authentication/login/cie/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
@@ -30,7 +31,7 @@ import { trackItwIdEnterCan } from "../../analytics";
 const CIE_CAN_LENGTH = 6;
 
 export const ItwCieCanScreen = () => {
-  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
+  usePreventScreenCapture();
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -102,6 +103,12 @@ export const ItwCieCanScreen = () => {
                 ref={canPadViewRef}
                 secret
                 value={can}
+                accessibilityValueText={({ valueLength, length }) =>
+                  I18n.t("global.accessibility.inputDigitCounter", {
+                    valueLength,
+                    length
+                  })
+                }
                 accessibilityLabel={I18n.t(
                   "authentication.cie.pin.accessibility.label"
                 )}

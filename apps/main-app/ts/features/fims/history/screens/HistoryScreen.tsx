@@ -1,5 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { useRef, useEffect, useCallback } from "react";
 import I18n from "i18next";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";

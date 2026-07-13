@@ -1,4 +1,4 @@
-import { FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
+import { FeatureInfo, VSpacer } from "@io-app/design-system";
 import i18n from "i18next";
 import { useEffect } from "react";
 import { IOScrollViewCentredContent } from "../../../../../components/ui/IOScrollViewCentredContent";

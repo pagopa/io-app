@@ -1,4 +1,4 @@
-import { Divider, ListItemHeader } from "@pagopa/io-app-design-system";
+import { Divider, ListItemHeader } from "@io-app/design-system";
 
 import { ReactElement } from "react";
 import I18n from "i18next";

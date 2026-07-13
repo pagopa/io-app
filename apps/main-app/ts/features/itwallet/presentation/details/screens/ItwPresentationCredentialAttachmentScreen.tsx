@@ -3,7 +3,7 @@ import {
   FooterActionsMeasurements,
   IOColors,
   useIOToast
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useCallback, useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
@@ -20,6 +20,7 @@ import {
 import { ParsedCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { trackWalletCredentialFAC_SIMILE } from "../analytics";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { useIOSelector } from "../../../../../store/hooks";
 
@@ -53,7 +54,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
       safeBottomAreaHeight: 0
     });
 
-  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
+  usePreventScreenCapture();
   useFocusEffect(
     useCallback(
       () =>

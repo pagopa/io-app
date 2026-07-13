@@ -1,4 +1,4 @@
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
+import { Divider, ListItemNav, VSpacer } from "@io-app/design-system";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";

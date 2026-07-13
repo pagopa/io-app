@@ -13,7 +13,7 @@ import {
   VSpacer,
   IOVisualCostants,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import {
   JSX,

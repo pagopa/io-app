@@ -1,4 +1,4 @@
-import { LabelMini, Tag, useIOTheme } from "@pagopa/io-app-design-system";
+import { LabelMini, Tag, useIOTheme } from "@io-app/design-system";
 import { Fragment } from "react";
 import I18n from "i18next";
 import { Card } from "../../../../../definitions/cgn/Card";

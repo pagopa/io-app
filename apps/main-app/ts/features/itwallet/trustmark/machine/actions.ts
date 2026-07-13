@@ -1,4 +1,4 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@io-app/design-system";
 import { differenceInSeconds } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { ActionArgs, assign } from "xstate";

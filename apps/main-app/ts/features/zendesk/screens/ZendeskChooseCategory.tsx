@@ -1,8 +1,4 @@
-import {
-  Divider,
-  IOVisualCostants,
-  ListItemNav
-} from "@pagopa/io-app-design-system";
+import { Divider, IOVisualCostants, ListItemNav } from "@io-app/design-system";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import I18n from "i18next";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";

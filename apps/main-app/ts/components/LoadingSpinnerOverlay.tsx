@@ -4,7 +4,7 @@ import {
   IOColors,
   hexToRgba,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
