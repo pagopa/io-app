@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { Dimensions } from "react-native";
-import { IOMaxFontSizeMultiplier } from "@pagopa/io-app-design-system";
+import { IOMaxFontSizeMultiplier } from "@io-app/design-system";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";

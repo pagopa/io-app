@@ -3,7 +3,7 @@ import {
   IOAppMargin,
   IOColors,
   useScaleAnimation
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { memo } from "react";
 import { Dimensions, Pressable, StyleSheet } from "react-native";
 import Barcode from "react-native-barcode-builder";

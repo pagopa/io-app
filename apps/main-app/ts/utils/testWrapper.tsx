@@ -5,7 +5,7 @@ import { ComponentType } from "react";
 import { Provider } from "react-redux";
 import { Store } from "redux";
 import { Linking } from "react-native";
-import { IOThemeContextProvider } from "@pagopa/io-app-design-system";
+import { IOThemeContextProvider } from "@io-app/design-system";
 import { TestInnerNavigationContainer } from "../navigation/AppStackNavigator";
 import * as linkingSubscription from "../navigation/linkingSubscription";
 

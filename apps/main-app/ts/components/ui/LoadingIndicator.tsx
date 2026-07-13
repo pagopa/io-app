@@ -1,4 +1,4 @@
-import { LoadingSpinner } from "@pagopa/io-app-design-system";
+import { LoadingSpinner } from "@io-app/design-system";
 import { ComponentProps } from "react";
 import I18n from "i18next";
 import { WithTestID } from "../../types/WithTestID";

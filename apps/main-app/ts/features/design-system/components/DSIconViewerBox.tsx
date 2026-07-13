@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text } from "react-native";
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme } from "@io-app/design-system";
 import { ReactNode } from "react";
 
 export const iconItemGutter = 8;

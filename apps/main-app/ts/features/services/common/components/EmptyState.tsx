@@ -6,7 +6,7 @@ import {
   VSpacer,
   VStack,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 const styles = StyleSheet.create({

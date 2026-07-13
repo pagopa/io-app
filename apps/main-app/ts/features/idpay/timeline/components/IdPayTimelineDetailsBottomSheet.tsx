@@ -1,9 +1,4 @@
-import {
-  H6,
-  IOSkeleton,
-  Pictogram,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { H6, IOSkeleton, Pictogram, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as E from "fp-ts/lib/Either";

@@ -1,4 +1,4 @@
-import { IOColors, useIOTheme, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme, VSpacer } from "@io-app/design-system";
 
 import { ComponentProps, useCallback, useRef, Ref } from "react";
 import {

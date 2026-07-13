@@ -1,8 +1,4 @@
-import {
-  ListItemInfo,
-  ListItemInfoCopy,
-  Divider
-} from "@pagopa/io-app-design-system";
+import { ListItemInfo, ListItemInfoCopy, Divider } from "@io-app/design-system";
 import I18n from "i18next";
 import { EycaCardActivated } from "../../../../../../../definitions/cgn/EycaCardActivated";
 import { EycaCardExpired } from "../../../../../../../definitions/cgn/EycaCardExpired";

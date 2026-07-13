@@ -3,7 +3,7 @@ import {
   IOButton,
   IOVisualCostants,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";

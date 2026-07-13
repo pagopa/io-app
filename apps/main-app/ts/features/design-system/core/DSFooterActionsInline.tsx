@@ -4,7 +4,7 @@ import {
   FooterActionsInline,
   H1,
   useFooterActionsInlineMeasurements
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Alert, ScrollView, View } from "react-native";
 
 export const DSFooterActionsInline = () => {

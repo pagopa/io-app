@@ -14,7 +14,7 @@ import {
   ListItemTransactionLogo,
   VStack,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Fragment } from "react";
 import { Alert, View } from "react-native";
 import I18n from "i18next";

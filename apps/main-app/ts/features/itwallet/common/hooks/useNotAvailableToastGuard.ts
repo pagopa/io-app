@@ -1,4 +1,4 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@io-app/design-system";
 import { useCallback } from "react";
 import I18n from "i18next";
 import { useIOSelector } from "../../../../store/hooks.ts";

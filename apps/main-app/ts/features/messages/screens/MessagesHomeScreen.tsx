@@ -1,4 +1,4 @@
-import { HeaderActionProps } from "@pagopa/io-app-design-system";
+import { HeaderActionProps } from "@io-app/design-system";
 import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";

@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@pagopa/io-app-design-system";
+import { IOVisualCostants } from "@io-app/design-system";
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 

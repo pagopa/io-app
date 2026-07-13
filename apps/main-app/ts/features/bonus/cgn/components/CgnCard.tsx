@@ -4,7 +4,7 @@ import {
   BodySmall,
   Tag,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Image, StyleSheet, View } from "react-native";
 import I18n from "i18next";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";

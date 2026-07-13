@@ -1,9 +1,4 @@
-import {
-  Body,
-  ContentWrapper,
-  IOButton,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper, IOButton, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
