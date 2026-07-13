@@ -1,4 +1,4 @@
-import { ModuleNavigationAlt } from "@pagopa/io-app-design-system";
+import { ModuleNavigationAlt } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { trackItWalletIDMethodSelected } from "../../../analytics";

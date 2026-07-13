@@ -6,7 +6,7 @@ import {
   BodySmall,
   useIOTheme,
   HStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
 import { StyleSheet, View } from "react-native";

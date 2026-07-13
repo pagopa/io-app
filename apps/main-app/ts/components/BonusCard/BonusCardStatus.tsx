@@ -1,4 +1,4 @@
-import { IOSkeleton } from "@pagopa/io-app-design-system";
+import { IOSkeleton } from "@io-app/design-system";
 
 import { ReactNode } from "react";
 import { ColorValue, StyleSheet, View } from "react-native";

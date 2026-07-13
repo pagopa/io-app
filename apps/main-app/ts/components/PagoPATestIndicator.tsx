@@ -1,4 +1,4 @@
-import { IOColors, Icon, hexToRgba } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, hexToRgba } from "@io-app/design-system";
 import { StyleSheet, Text, View } from "react-native";
 
 const debugItemBgColor = hexToRgba(IOColors.white, 0.4);

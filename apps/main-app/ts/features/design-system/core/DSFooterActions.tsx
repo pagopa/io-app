@@ -4,7 +4,7 @@ import {
   VSpacer,
   useFooterActionsMeasurements,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Fragment } from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 

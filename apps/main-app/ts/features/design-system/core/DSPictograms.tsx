@@ -11,7 +11,7 @@ import {
   VStack,
   hexToRgba,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 import { JSX } from "react";
 import {

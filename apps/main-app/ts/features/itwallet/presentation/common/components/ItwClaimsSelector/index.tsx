@@ -5,9 +5,9 @@ import {
   IOAccordionRadius,
   IOColors,
   IOSpacingScale,
-  useIOThemeContext
-} from "@pagopa/io-app-design-system";
-import { useAccordionAnimation } from "@pagopa/io-app-design-system/src/hooks/useAccordionAnimation";
+  useIOThemeContext,
+  useAccordionAnimation
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment } from "react";
 import { AccessibilityInfo, StyleSheet, View } from "react-native";

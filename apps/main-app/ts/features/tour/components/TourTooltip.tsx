@@ -9,7 +9,7 @@ import {
   HStack,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, {
   SharedValue,

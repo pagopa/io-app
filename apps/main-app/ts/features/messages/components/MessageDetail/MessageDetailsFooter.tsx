@@ -3,7 +3,7 @@ import {
   IOColors,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useMemo } from "react";
 import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";

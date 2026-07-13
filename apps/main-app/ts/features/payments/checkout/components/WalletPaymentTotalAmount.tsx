@@ -1,10 +1,4 @@
-import {
-  Divider,
-  H3,
-  H6,
-  IOSkeleton,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+import { Divider, H3, H6, IOSkeleton, useIOTheme } from "@io-app/design-system";
 import { View } from "react-native";
 import I18n from "i18next";
 import { formatNumberCurrencyCentsOrDefault } from "../../../idpay/common/utils/strings";

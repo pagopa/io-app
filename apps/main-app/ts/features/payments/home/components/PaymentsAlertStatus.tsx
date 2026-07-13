@@ -1,4 +1,4 @@
-import { Alert } from "@pagopa/io-app-design-system";
+import { Alert } from "@io-app/design-system";
 import { constVoid } from "fp-ts/lib/function";
 import { GestureResponderEvent } from "react-native";
 import Animated, {

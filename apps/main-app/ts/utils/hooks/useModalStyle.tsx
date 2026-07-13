@@ -1,8 +1,4 @@
-import {
-  IOColors,
-  useIOTheme,
-  useIOThemeContext
-} from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme, useIOThemeContext } from "@io-app/design-system";
 import { ColorValue, ViewStyle } from "react-native";
 
 type ModalStyleProps = {

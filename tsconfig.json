@@ -2,5 +2,9 @@
   "extends": "./tsconfig.base.json",
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["android", "ios", "**/node_modules", "**/Pods"],
-  "references": []
+  "references": [
+    {
+      "path": "./libs/design-system"
+    }
+  ]
 }

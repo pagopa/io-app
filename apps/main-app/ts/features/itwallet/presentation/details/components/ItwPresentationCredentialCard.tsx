@@ -3,7 +3,7 @@ import {
   IOSpacingScale,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 import { PropsWithChildren, useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";

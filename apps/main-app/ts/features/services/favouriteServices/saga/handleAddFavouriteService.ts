@@ -1,7 +1,7 @@
 import I18n from "i18next";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import {
   addFavouriteServiceRequest,
   addFavouriteServiceSuccess

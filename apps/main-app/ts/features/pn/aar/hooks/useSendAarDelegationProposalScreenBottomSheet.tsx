@@ -1,4 +1,4 @@
-import { FeatureInfo, IOButton, VStack } from "@pagopa/io-app-design-system";
+import { FeatureInfo, IOButton, VStack } from "@io-app/design-system";
 import { constUndefined } from "fp-ts/lib/function";
 import i18n from "i18next";
 import { useRef } from "react";

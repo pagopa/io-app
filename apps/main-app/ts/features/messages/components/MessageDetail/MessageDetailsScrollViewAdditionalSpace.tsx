@@ -1,5 +1,5 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOStyles, buttonSolidHeight } from "@pagopa/io-app-design-system";
+import { IOStyles, buttonSolidHeight } from "@io-app/design-system";
 import { View } from "react-native";
 import { useIOSelector } from "../../../../store/hooks";
 import { isPaymentsButtonVisibleSelector } from "../../store/reducers/payments";
