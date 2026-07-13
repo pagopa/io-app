@@ -7,7 +7,7 @@ import { ProximityEvents } from "./events";
 
 export enum ProximityFailureType {
   RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
-  ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING = "ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING",
+  MISSING_CREDENTIALS = "MISSING_CREDENTIALS",
   TIMEOUT = "TIMEOUT",
   UNEXPECTED = "UNEXPECTED",
   UNTRUSTED_RP = "UNTRUSTED_RP"
@@ -18,7 +18,7 @@ export enum ProximityFailureType {
  */
 export type ReasonTypeByFailure = {
   [ProximityFailureType.RELYING_PARTY_GENERIC]: Error;
-  [ProximityFailureType.ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING]: MissingCredentialError;
+  [ProximityFailureType.MISSING_CREDENTIALS]: MissingCredentialError;
   [ProximityFailureType.TIMEOUT]: TimeoutError;
   [ProximityFailureType.UNEXPECTED]: unknown;
   [ProximityFailureType.UNTRUSTED_RP]: UntrustedRpError;
@@ -66,7 +66,7 @@ export const mapEventToFailure = (event: ProximityEvents): ProximityFailure => {
 
   if (error instanceof MissingCredentialError) {
     return {
-      type: ProximityFailureType.ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING,
+      type: ProximityFailureType.MISSING_CREDENTIALS,
       reason: error
     };
   }

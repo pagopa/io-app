@@ -1,5 +1,6 @@
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -9,8 +10,8 @@ import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.ts
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
+import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentatioMissingCredentialsFailureContent.tsx";
 import { trackItwProximityUnofficialVerifierBottomSheet } from "../analytics/index.ts";
-import { ItwProximityMissingCredentialsFailureContent } from "../components/ItwProximityMissingCredentialsFailureContent.tsx";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
@@ -51,17 +52,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
       "features.itWallet.presentation.proximity.relyingParty.untrustedRp.bottomSheet.title"
     )
   });
-
-  if (
-    failure.type ===
-    ProximityFailureType.ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING
-  ) {
-    return (
-      <ItwProximityMissingCredentialsFailureContent
-        credentialTypes={failure.reason.credentialTypes}
-      />
-    );
-  }
 
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
@@ -122,6 +112,15 @@ const ContentView = ({ failure }: ContentViewProps) => {
     };
 
   const resultScreenProps = getOperationResultScreenContentProps();
+
+  if (failure.type === ProximityFailureType.MISSING_CREDENTIALS) {
+    return (
+      <ItwPresentationMissingCredentialsFailureContent
+        credentialTypes={failure.reason.credentialTypes}
+        onClose={() => machineRef.send({ type: "close" })}
+      />
+    );
+  }
 
   return (
     <>
