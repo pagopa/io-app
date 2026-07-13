@@ -196,9 +196,6 @@
     "copyIntoClipboard": "copia negli appunti",
     "copyFeedback": "Copiato negli appunti"
   },
-  "errors": {
-    "profileUpdateError": "Si è verificato un errore durante l'aggiornamento del tuo profilo."
-  },
   "permissionRationale": {
     "calendar": {
       "title": "Consenti l’accesso al calendario",
@@ -586,9 +583,6 @@
         "error": "Si è verificato un errore con la tua richiesta"
       }
     }
-  },
-  "cie": {
-    "title": "Appoggia la carta"
   },
   "authentication": {
     "landing": {
@@ -1110,8 +1104,6 @@
   },
   "payment": {
     "IUV": "IUV",
-    "IUV_extended": "Identificativo Univoco di Versamento",
-    "notice": "Avviso",
     "noticeCode": "Codice Avviso",
     "confirm": {
       "a11y": {
@@ -1737,9 +1729,6 @@
       "title": "Non perderti i messaggi importanti!"
     }
   },
-  "biometric_recognition": {
-    "needed_to_disable": "Riconoscimento richiesto per disabilitare"
-  },
   "send_email_messages": {
     "title": "Inoltro dei messaggi via email",
     "subtitle": "Vuoi che IO inoltri un’anteprima dei messaggi all’indirizzo **{{email}}**?",
@@ -1978,14 +1967,10 @@
   "titleUpdateApp": "Aggiorna IO!",
   "msgErrorUpdateApp": "Si è verificato un errore durante l'apertura dello store delle app",
   "messageUpdateApp": "IO introduce spesso piccole migliorie e nuove funzioni: per continuare a usare l'app è necessario aggiornarla all'ultima versione.",
-  "openStore": "Apri {{storeName}}",
   "btnUpdateApp": "Aggiorna l'app",
   "systemsOff": {
     "title": "C'è un problema sui nostri sistemi",
     "closeApp": "Chiudi l'app e riprova tra qualche minuto."
-  },
-  "contextualHelp": {
-    "title": "IO ti aiuto"
   },
   "bottomSheets": {
     "ciePin": {
@@ -2881,11 +2866,6 @@
         "toast": {
           "newMethod": "Metodo aggiunto!"
         },
-        "paymentsBanner": {
-          "title": "Vuoi pagare un avviso?",
-          "action": "Vai alla sezione Pagamenti",
-          "close": "Chiudi"
-        },
         "otherMethods": {
           "error": {
             "banner": {
@@ -2977,9 +2957,6 @@
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
         },
-        "status": {
-          "failure": "FALLITA"
-        },
         "receipt": {
           "a11y": {
             "preview": "Anteprima ricevuta in formato PDF"
@@ -3062,9 +3039,6 @@
           "title": "Cosa significa?",
           "explainationContent": "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “PayPal pagamento veloce”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
         }
-      },
-      "errors": {
-        "transactionCreationError": "C’è un problema con i sistemi di pagamento."
       },
       "checkout": {
         "bottomSheet": {
@@ -3712,12 +3686,6 @@
           "title": "Documento in arrivo",
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
-        },
-        "invalidWallet": {
-          "title": "Ottieni IT-Wallet per continuare",
-          "subtitle": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti bastano la Carta di Identità Elettronica (CIE) e il suo PIN.",
-          "primaryAction": "Inizia",
-          "secondaryAction": "Non ora"
         },
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
@@ -4455,13 +4423,6 @@
             "title": "Ambiente di test IT-Wallet",
             "content": "Se avevi attivato Documenti su IO, la funzionalità è stata disattivata automaticamente.\nPer riattivarla, esci dall’ambiente di test e attiva di nuovo Documenti su IO.",
             "action": "Esci dall'ambiente di test"
-          }
-        },
-        "itwSpecsVersion": {
-          "description": "Cambia la versione delle specifiche tecniche. Questa azione reimposta lo stato di IT-Wallet.",
-          "alert": {
-            "title": "IT-Wallet v{{itwVersion}}",
-            "content": "Stai per cambiare la versione delle specifiche tecniche utilizzate.\nQuesta funzionalità è sperimentale e potrebbe causare malfunzionamenti di IT-Wallet."
           }
         },
         "walletL3": {
@@ -5381,9 +5342,7 @@
   "bonusCard": {
     "validUntil": "Valida fino al {{endDate}}",
     "expiring": "Scade il {{endDate}}",
-    "expired": "Scaduta il {{endDate}}",
     "paused": "In pausa",
-    "removed": "Rimossa",
     "used": "Utilizzato"
   },
   "transaction": {

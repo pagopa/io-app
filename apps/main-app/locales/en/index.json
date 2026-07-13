@@ -147,9 +147,6 @@
     "copyIntoClipboard": "copy to clipboard",
     "copyFeedback": "Copied to clipboard"
   },
-  "errors": {
-    "profileUpdateError": "An error occurred while updating your profile."
-  },
   "permissionRationale": {
     "calendar": {
       "title": "Allow calendar access",
@@ -517,9 +514,6 @@
         "error": "An error occurred with your request"
       }
     }
-  },
-  "cie": {
-    "title": "Touch the card"
   },
   "authentication": {
     "landing": {
@@ -1028,7 +1022,6 @@
     "notValid": "Invalid date."
   },
   "payment": {
-    "notice": "Notice",
     "noticeCode": "Notice code",
     "confirm": {
       "termsAndConditions": "By continuing, you accept the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) and confirm that you have read the [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) of {{pspName}}.",
@@ -1417,9 +1410,6 @@
       "title": "Don't miss any important messages!"
     }
   },
-  "biometric_recognition": {
-    "needed_to_disable": "Recognition required to disable"
-  },
   "send_email_messages": {
     "title": "Forward messages by email",
     "subtitle": "You want IO to forward message previews to **{{email}}**?",
@@ -1658,11 +1648,7 @@
   "titleUpdateApp": "Update IO!",
   "msgErrorUpdateApp": "An error occurred while opening the app store",
   "messageUpdateApp": "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version..",
-  "openStore": "Open {{storeName}}",
   "btnUpdateApp": "Update the IO app",
-  "contextualHelp": {
-    "title": "IO helps you"
-  },
   "bottomSheets": {
     "ciePin": {
       "title": "Where can I find my PIN?",

@@ -127,9 +127,6 @@
     "copyIntoClipboard": "in die Zwischenablage kopieren",
     "copyFeedback": "In die Zwischenablage kopiert"
   },
-  "errors": {
-    "profileUpdateError": "Beim Aktualisieren deines Profils ist ein Fehler aufgetreten."
-  },
   "permissionRationale": {
     "calendar": {
       "title": "Zugriff auf den Kalender gewähren",
@@ -432,9 +429,6 @@
         "error": "Bei deiner Anfrage ist ein Fehler aufgetreten"
       }
     }
-  },
-  "cie": {
-    "title": "Karte berühren"
   },
   "authentication": {
     "landing": {
@@ -895,8 +889,6 @@
     "notValid": "Ungültiges Datum"
   },
   "payment": {
-    "IUV_extended": "Einheitlicher Zahlungskodex (IUV)",
-    "notice": "Zahlungsmitteilung",
     "noticeCode": "Zahlungsmitteilungskodex",
     "confirm": {
       "totalAmount": "Zu zahlender Gesamtbetrag",
@@ -1461,9 +1453,6 @@
       "title": "Verpasse keine wichtigen Mitteilungen!"
     }
   },
-  "biometric_recognition": {
-    "needed_to_disable": "Bestätigung zur Deaktivierung erforderlich"
-  },
   "send_email_messages": {
     "title": "Mitteilungen mittels E-Mail weiterleiten",
     "subtitle": "Möchtest du, dass IO eine Vorschau der Mitteilung an die E-Mail-Adresse **{{email}}** sendet?",
@@ -1644,14 +1633,10 @@
   "titleUpdateApp": "Aktualisiere IO!",
   "msgErrorUpdateApp": "Beim Öffnen des App-Stores ist ein Fehler aufgetreten",
   "messageUpdateApp": "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können, ist es notwendig, sie auf die neueste Version zu aktualisieren.",
-  "openStore": "Öffne {{storeName}}",
   "btnUpdateApp": "Aktualisiere IO",
   "systemsOff": {
     "title": "Es gibt ein Problem mit unseren Systemen",
     "closeApp": "Schließe die App und versuche es in ein paar Minuten erneut."
-  },
-  "contextualHelp": {
-    "title": "IO hilft dir"
   },
   "bottomSheets": {
     "ciePin": {
@@ -1962,11 +1947,6 @@
         "toast": {
           "newMethod": "Element hinzugefügt!"
         },
-        "paymentsBanner": {
-          "title": "Möchtest du eine Aufforderung bezahlen?",
-          "action": "Geh zum Bereich Zahlungen",
-          "close": "Schließen"
-        },
         "otherMethods": {
           "error": {
             "banner": {
@@ -2042,9 +2022,6 @@
           "title": "Hier siehst du deine pagoPA-Quittungen",
           "content": "Bezahle eine Zahlungsmitteilung in der App oder mittels jedem pagoPA-fähigen Kanal."
         },
-        "status": {
-          "failure": "FEHLGESCHLAGEN"
-        },
         "receipt": {
           "title": "pagoPA-Quittung",
           "shareButton": "Speichern oder teilen",
@@ -2099,9 +2076,6 @@
           "title": "Was bedeutet das?",
           "explainationContent": "Wenn du diese Methode gespeichert hast, hast du {{pspBusinessName}} autorisiert, Transaktionen über 'PayPal-Schnellzahlung' abzuwickeln.\n\nWenn du einen anderen Anbieter verwenden möchtest, füge die Methode erneut zu deinem Konto hinzu.\n\nUm die Autorisierung zu widerrufen, entferne die Methode aus deinem Konto.\n\nVerwende die PayPal-App, um die Karte oder das Bankkonto zu ändern, von der/dem du die Gebühren abbuchen möchtest."
         }
-      },
-      "errors": {
-        "transactionCreationError": "Es gibt ein Problem mit den Bezahlsystemen."
       },
       "checkout": {
         "bottomSheet": {
@@ -2589,9 +2563,7 @@
   "bonusCard": {
     "validUntil": "Gültig bis {{endDate}}",
     "expiring": "Verfällt am {{endDate}}",
-    "expired": "Abgelaufen am {{endDate}}",
-    "paused": "In Pause",
-    "removed": "Entfernt"
+    "paused": "In Pause"
   },
   "transaction": {
     "details": {
