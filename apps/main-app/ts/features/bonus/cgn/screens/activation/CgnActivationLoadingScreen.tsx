@@ -1,4 +1,4 @@
-import { Body, ContentWrapper, H3, VStack } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper, H3, VStack } from "@io-app/design-system";
 import { useRef } from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

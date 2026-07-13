@@ -1,4 +1,4 @@
-import { Divider, IOSkeleton, VSpacer } from "@pagopa/io-app-design-system";
+import { Divider, IOSkeleton, VSpacer } from "@io-app/design-system";
 import { View } from "react-native";
 import { FimsHistorySharedStyles } from "../utils/styles";
 

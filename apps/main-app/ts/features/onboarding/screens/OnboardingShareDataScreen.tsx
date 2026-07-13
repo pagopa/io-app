@@ -1,4 +1,4 @@
-import { Banner, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, ContentWrapper, VSpacer } from "@io-app/design-system";
 import { ReactElement, useCallback, useMemo } from "react";
 import I18n from "i18next";
 import { setMixpanelEnabled } from "../../../store/actions/mixpanel";

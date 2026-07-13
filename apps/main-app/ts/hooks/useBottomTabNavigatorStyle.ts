@@ -4,7 +4,7 @@ import {
   IOColors,
   useIOTheme,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

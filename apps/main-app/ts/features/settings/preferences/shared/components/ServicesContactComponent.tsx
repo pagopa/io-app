@@ -1,4 +1,4 @@
-import { IOMarkdownLite, RadioGroup } from "@pagopa/io-app-design-system";
+import { IOMarkdownLite, RadioGroup } from "@io-app/design-system";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import I18n from "i18next";
 import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";

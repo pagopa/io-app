@@ -6,7 +6,7 @@ import {
   ListItemNav,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { ListRenderItemInfo, RefreshControl } from "react-native";

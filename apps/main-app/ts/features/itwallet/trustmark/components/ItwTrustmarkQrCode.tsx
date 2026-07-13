@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@pagopa/io-app-design-system";
+import { IOVisualCostants } from "@io-app/design-system";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "i18next";

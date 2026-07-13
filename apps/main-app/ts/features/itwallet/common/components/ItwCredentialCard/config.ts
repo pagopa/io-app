@@ -1,4 +1,4 @@
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { useIOThemeContext } from "@io-app/design-system";
 import { DataSourceParam } from "@shopify/react-native-skia";
 import Color from "color";
 import { useMemo } from "react";

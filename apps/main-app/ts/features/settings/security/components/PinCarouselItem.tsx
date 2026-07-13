@@ -5,7 +5,7 @@ import {
   H4,
   VSpacer,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { RefObject, memo } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { useDetectSmallScreen } from "../../../../hooks/useDetectSmallScreen";

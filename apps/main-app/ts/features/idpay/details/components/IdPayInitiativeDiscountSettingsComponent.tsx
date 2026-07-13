@@ -1,8 +1,4 @@
-import {
-  IOSkeleton,
-  ListItemHeader,
-  ListItemNav
-} from "@pagopa/io-app-design-system";
+import { IOSkeleton, ListItemHeader, ListItemNav } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/core";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";

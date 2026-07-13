@@ -12,7 +12,7 @@ import {
   IOPictograms,
   VSpacer,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import {
   RouteProp,

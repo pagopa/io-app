@@ -1,10 +1,4 @@
-import {
-  Divider,
-  H6,
-  Icon,
-  IOColors,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+import { Divider, H6, Icon, IOColors, useIOTheme } from "@io-app/design-system";
 import { Fragment } from "react";
 import { View, StyleSheet } from "react-native";
 import { Claim } from "../../../../../definitions/fims_sso/Claim";

@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { VStack, IOButton, IOMarkdown } from "@pagopa/io-app-design-system";
+import { VStack, IOButton, IOMarkdown } from "@io-app/design-system";
 import I18n from "i18next";
 import { useIODispatch } from "../../../../store/hooks";
 import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";

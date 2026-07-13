@@ -12,7 +12,7 @@ import {
   Pictogram,
   Body,
   IOButton
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

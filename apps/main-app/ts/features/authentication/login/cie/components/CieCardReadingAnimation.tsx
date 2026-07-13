@@ -3,7 +3,7 @@ import {
   IOPictogramSizeScale,
   IOPictograms,
   Pictogram
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
 import { CircularProgress } from "../../../../../components/ui/CircularProgress";

@@ -44,7 +44,7 @@ jest.mock("../../../../store/hooks", () => ({
 }));
 
 const mockErrorToast = jest.fn();
-jest.mock("@pagopa/io-app-design-system", () => ({
+jest.mock("@io-app/design-system", () => ({
   useIOToast: () => ({
     error: mockErrorToast
   })

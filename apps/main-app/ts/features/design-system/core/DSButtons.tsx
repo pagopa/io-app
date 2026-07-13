@@ -15,7 +15,7 @@ import {
   VStack,
   hexToRgba,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Fragment, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";

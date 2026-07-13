@@ -1,6 +1,6 @@
 /* eslint-disable functional/immutable-data */
 import _ from "lodash";
-import { Nullable } from "@pagopa/io-app-design-system";
+import { Nullable } from "@io-app/design-system";
 
 export type BaseClientOptions = { readonly token: string };
 

@@ -118,3 +118,5 @@ GeneratedDotEnv.m
 .nx/polygraph
 .claude/worktrees
 .claude/settings.local.json
+
+*.tsbuildinfo

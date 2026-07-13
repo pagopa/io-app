@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { Fragment } from "react";
-import { HSpacer, IOButton, VSpacer } from "@pagopa/io-app-design-system";
+import { HSpacer, IOButton, VSpacer } from "@io-app/design-system";
 
 export type Suggestion = {
   label: string;

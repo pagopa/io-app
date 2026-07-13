@@ -7,7 +7,7 @@ import {
   IOSkeleton,
   IOVisualCostants,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 type ServiceListSkeletonProps = {
   /**

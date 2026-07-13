@@ -3,7 +3,7 @@ import {
   Body,
   FooterActions,
   IOVisualCostants
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";

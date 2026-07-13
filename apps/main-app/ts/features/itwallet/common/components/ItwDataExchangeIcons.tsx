@@ -1,6 +1,6 @@
 import { memo } from "react";
 import type { ImageURISource } from "react-native";
-import { Avatar, HStack, Icon, useIOTheme } from "@pagopa/io-app-design-system";
+import { Avatar, HStack, Icon, useIOTheme } from "@io-app/design-system";
 
 type Props = {
   requesterLogoUri: ImageURISource | undefined;

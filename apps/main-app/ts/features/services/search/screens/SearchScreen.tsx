@@ -17,7 +17,7 @@ import {
   ListItemHeader,
   SearchInput,
   SearchInputRef
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { Institution } from "../../../../../definitions/services/Institution";
