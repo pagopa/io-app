@@ -9,10 +9,10 @@ import {
   IOColors,
   IOVisualCostants,
   hexToRgba
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
-const bottomBarHeight: number = 70;
-const topBarHeight: number = 55;
+const bottomBarHeight = 70;
+const topBarHeight = 55;
 
 export const DSEdgeToEdgeArea = () => {
   const insets = useSafeAreaInsets();

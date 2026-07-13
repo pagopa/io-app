@@ -6,7 +6,7 @@ import {
   ListItemNav,
   useIOToast,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import I18n from "i18next";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";

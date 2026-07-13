@@ -1,4 +1,4 @@
-import { IOToast, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { IOToast, IOVisualCostants } from "@io-app/design-system";
 import I18n from "i18next";
 import { useRef } from "react";
 import { useIOSelector } from "../../../../../store/hooks";

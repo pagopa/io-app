@@ -7,7 +7,7 @@ import {
   IOColors,
   IOThemeLight,
   IOThemeDark
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { constVoid } from "fp-ts/lib/function";

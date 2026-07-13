@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@pagopa/io-app-design-system";
+import { IOVisualCostants } from "@io-app/design-system";
 import { memo, ReactNode } from "react";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 

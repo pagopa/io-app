@@ -14,7 +14,7 @@ import {
   RadioItem,
   VStack,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ComponentProps, useState } from "react";
 import { Alert, Text, View } from "react-native";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";

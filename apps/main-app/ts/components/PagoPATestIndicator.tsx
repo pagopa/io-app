@@ -1,4 +1,4 @@
-import { IOColors, Icon, hexToRgba } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, hexToRgba } from "@io-app/design-system";
 import { StyleSheet, Text, View } from "react-native";
 
 const debugItemBgColor = hexToRgba(IOColors.white, 0.4);
@@ -29,7 +29,8 @@ const PagoPATestIndicator = () => (
         textTransform: "uppercase"
       }}
     >
-      Test
+      {/* eslint-disable-next-line i18next/no-literal-string -- test-environment badge label, not localized */}
+      {"Test"}
     </Text>
   </View>
 );

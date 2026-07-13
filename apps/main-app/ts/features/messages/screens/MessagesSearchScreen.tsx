@@ -5,7 +5,7 @@ import {
   SearchInput,
   SearchInputRef,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -29,7 +29,7 @@ import { UIMessage } from "../types";
 import { getMessageSearchResult } from "./searchUtils";
 
 const INPUT_PADDING: IOSpacingScale = 16;
-const MIN_QUERY_LENGTH: number = 3;
+const MIN_QUERY_LENGTH = 3;
 
 export const MessagesSearchScreen = () => {
   const insets = useSafeAreaInsets();

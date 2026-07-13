@@ -1,5 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { useIOThemeContext } from "@io-app/design-system";
 import {
   Canvas,
   Circle as SkiaCircle,
@@ -88,7 +88,7 @@ export const ItwBrandedBox = ({
 
   /* We don't need to look at the whole quaternion range,
       just a very small part of it. */
-  const quaternionRange: number = 0.5;
+  const quaternionRange = 0.5;
 
   const skiaLightTranslateX = useDerivedValue(() => {
     const translateX = interpolate(

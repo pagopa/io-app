@@ -1,4 +1,4 @@
-import { HeaderActionProps } from "@pagopa/io-app-design-system";
+import { HeaderActionProps } from "@io-app/design-system";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";

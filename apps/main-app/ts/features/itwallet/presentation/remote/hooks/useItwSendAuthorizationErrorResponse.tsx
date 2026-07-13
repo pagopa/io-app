@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { constNull } from "fp-ts/lib/function";
-import { Nullable } from "@pagopa/io-app-design-system";
+import { Nullable } from "@io-app/design-system";
 import { AuthErrorResponseBody } from "../utils/itwRemoteTypeUtils";
 import { RemoteFailure, RemoteFailureType } from "../machine/failure";
 import { selectUnverifiedRequestObject } from "../machine/selectors";

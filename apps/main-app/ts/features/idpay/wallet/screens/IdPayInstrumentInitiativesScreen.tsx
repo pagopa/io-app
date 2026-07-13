@@ -8,7 +8,7 @@ import {
   HSpacer,
   IOVisualCostants,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import { useEffect } from "react";

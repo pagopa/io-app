@@ -1,4 +1,4 @@
-import { Alert } from "@pagopa/io-app-design-system";
+import { Alert } from "@io-app/design-system";
 import I18n from "i18next";
 import { NewCredential } from "../../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";

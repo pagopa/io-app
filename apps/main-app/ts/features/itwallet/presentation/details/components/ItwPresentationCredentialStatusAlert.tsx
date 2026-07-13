@@ -1,4 +1,4 @@
-import { Alert, IOButton, IOToast, VStack } from "@pagopa/io-app-design-system";
+import { Alert, IOButton, IOToast, VStack } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
@@ -44,6 +44,7 @@ type Props = {
   credential: CredentialMetadata;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const excludedCredentialTypes = [
   CredentialType.PID,
   CredentialType.PROOF_OF_AGE,

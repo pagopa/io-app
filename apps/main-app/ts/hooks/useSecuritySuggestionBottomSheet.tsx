@@ -15,7 +15,7 @@ import SecuritySuggestions from "../features/authentication/fastLogin/components
  */
 
 export const useSecuritySuggestionsBottomSheet = (
-  useManualBottomsheetOpening: boolean = true
+  useManualBottomsheetOpening = true
 ) => {
   const isFastLoginFFEnabled = useIOSelector(isFastLoginFFEnabledSelector);
   const securityAdviceAcknowledged = useIOSelector(

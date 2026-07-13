@@ -9,7 +9,7 @@ import {
   useIOThemeContext,
   VStack,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { format } from "date-fns";
 import { capitalize } from "lodash";
 import { StyleSheet, View } from "react-native";

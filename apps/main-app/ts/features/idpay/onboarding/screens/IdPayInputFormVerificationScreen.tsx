@@ -1,4 +1,4 @@
-import { H6, IOToast, TextInput, VSpacer } from "@pagopa/io-app-design-system";
+import { H6, IOToast, TextInput, VSpacer } from "@io-app/design-system";
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
 import I18n from "i18next";

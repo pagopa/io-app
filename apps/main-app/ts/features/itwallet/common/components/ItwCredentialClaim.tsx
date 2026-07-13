@@ -1,4 +1,4 @@
-import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
+import { Divider, ListItemInfo } from "@io-app/design-system";
 import * as E from "fp-ts/Either";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";

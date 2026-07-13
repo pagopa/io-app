@@ -1,4 +1,4 @@
-import { Alert, VSpacer } from "@pagopa/io-app-design-system";
+import { Alert, VSpacer } from "@io-app/design-system";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { createRef } from "react";
 import { View } from "react-native";

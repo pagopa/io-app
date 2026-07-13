@@ -67,7 +67,6 @@ describe("SendAarActivateNfcScreen", () => {
 
       if (isCieScanning) {
         const { type: _T, ...params } = aarState;
-
         expect(mockReplace).toHaveBeenCalledTimes(1);
         expect(mockReplace).toHaveBeenCalledWith(
           PN_ROUTES.SEND_AAR_CIE_CARD_READING,

@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@io-app/design-system";
 import { Linking } from "react-native";
 import I18n from "i18next";
 import {
@@ -239,23 +239,31 @@ const ContentView = ({ failure }: ContentViewProps) => {
               "features.itWallet.issuance.notMatchingIdentityError.title"
             ),
             subtitle: I18n.t(
-              "features.itWallet.issuance.notMatchingIdentityError.body"
+              isL3Issuance
+                ? "features.itWallet.issuance.notMatchingIdentityError.body.l3"
+                : "features.itWallet.issuance.notMatchingIdentityError.body.l2"
             ),
-            pictogram: "accessDenied",
+            pictogram: "attention",
             action: {
-              label: I18n.t(
-                "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
-              ),
+              label: I18n.t("global.buttons.retry"),
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure.reason,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t("global.buttons.retry")
+                });
+                machineRef.send({ type: "retry" });
+              }
+            },
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
               onPress: () =>
                 closeIssuance({
                   reason: failure.reason,
                   cta_category: "custom_2",
-                  cta_id: I18n.t(
-                    "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
-                  )
-                }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-            },
-            secondaryAction: supportModalAction
+                  cta_id: I18n.t("global.buttons.close")
+                })
+            }
           };
         case IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY:
           return {

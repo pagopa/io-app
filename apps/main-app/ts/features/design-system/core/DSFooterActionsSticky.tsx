@@ -4,7 +4,7 @@ import {
   IOColors,
   VSpacer,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { Fragment, useMemo, useState } from "react";
 import {

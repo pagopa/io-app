@@ -1,7 +1,4 @@
-import {
-  HeaderActionProps,
-  HeaderSecondLevel
-} from "@pagopa/io-app-design-system";
+import { HeaderActionProps, HeaderSecondLevel } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect } from "react";
 import { useStartSupportRequest } from "../hooks/useStartSupportRequest";

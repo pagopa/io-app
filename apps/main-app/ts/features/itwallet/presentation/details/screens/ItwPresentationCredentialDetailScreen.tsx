@@ -3,7 +3,7 @@ import {
   IOButton,
   Optional,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import I18n from "i18next";
@@ -47,6 +47,7 @@ import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
 import { trackItwProximityShowQrCode } from "../../proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../proximity/navigation/routes";
+import { isPresentableCredentialSelector } from "../../proximity/store/selectors/credentials";
 import {
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE,
@@ -196,6 +197,9 @@ export const ItwPresentationCredentialDetail = ({
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  const isPresentableCredential = useIOSelector(
+    isPresentableCredentialSelector(credential.credentialType)
+  );
   const displayStatus = useItwDisplayCredentialStatus(status);
   const contentClaim = credential.parsedCredential[WellKnownClaim.content];
   const hasSkeumorphicCard = credentialsWithSkeumorphicCard.includes(
@@ -279,10 +283,7 @@ export const ItwPresentationCredentialDetail = ({
       };
     }
 
-    if (
-      credentialType === CredentialType.DRIVING_LICENSE &&
-      itwFeaturesEnabled
-    ) {
+    if (itwFeaturesEnabled && isPresentableCredential) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.present"),
         icon: "productITWallet",
@@ -324,6 +325,7 @@ export const ItwPresentationCredentialDetail = ({
     shouldShowMdlUpdateCta,
     itwFeaturesEnabled,
     isL3Credential,
+    isPresentableCredential,
     contentClaim,
     navigation,
     mixPanelCredential,

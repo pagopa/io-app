@@ -12,7 +12,7 @@ import {
   ListItemSwitch,
   VSpacer,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import I18n from "i18next";
 import { ComponentProps, useContext } from "react";
@@ -54,8 +54,6 @@ import { notificationsInstallationSelector } from "../../../pushNotifications/st
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { clearCache } from "../../common/store/actions";
 import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig.ts";
-import { fciL3LocalFlag } from "../../../fci/store/actions/index.ts";
-import { fciSecurityLevelLocalFFSelector } from "../../../fci/store/reducers/fciSecurityLevelReducer.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -472,7 +470,6 @@ const DeveloperTestEnvironmentSection = ({
   const isActiveSessionLoginLocallyEnabled = useIOSelector(
     isActiveSessionLoginLocallyEnabledSelector
   );
-  const fciL3LocalFeatureFlag = useIOSelector(fciSecurityLevelLocalFFSelector);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -542,10 +539,6 @@ const DeveloperTestEnvironmentSection = ({
     }
   };
 
-  const onFciSecurityLevelLocalFlagToggleChange = (enabled: boolean) => {
-    dispatch(fciL3LocalFlag(enabled));
-  };
-
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
       label: I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
@@ -571,12 +564,6 @@ const DeveloperTestEnvironmentSection = ({
       ),
       value: isActiveSessionLoginLocallyEnabled,
       onSwitchValueChange: onActiveSessionLoginToggle
-    },
-    {
-      label: I18n.t("features.fci.requestL3.localFlag.title"),
-      description: I18n.t("features.fci.requestL3.localFlag.description"),
-      value: fciL3LocalFeatureFlag,
-      onSwitchValueChange: onFciSecurityLevelLocalFlagToggleChange
     }
   ];
 

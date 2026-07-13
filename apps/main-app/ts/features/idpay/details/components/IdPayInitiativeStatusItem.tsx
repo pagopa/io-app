@@ -1,9 +1,4 @@
-import {
-  Badge,
-  Divider,
-  H6,
-  IOListItemStyles
-} from "@pagopa/io-app-design-system";
+import { Badge, Divider, H6, IOListItemStyles } from "@io-app/design-system";
 import { ComponentProps } from "react";
 import { View } from "react-native";
 import I18n from "i18next";

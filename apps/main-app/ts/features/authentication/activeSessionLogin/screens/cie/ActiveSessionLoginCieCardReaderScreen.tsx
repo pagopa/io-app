@@ -12,7 +12,7 @@ import {
   IOPictograms,
   VSpacer,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import I18n from "i18next";
 import { useFocusEffect } from "@react-navigation/native";
@@ -342,7 +342,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         await cieManager.start(CIE_ALERT_MESSAGES_CONFIG);
         await cieManager.startListeningNFC();
         setReadingState(ReadingState.waiting_card);
-      } catch (e) {
+      } catch {
         trackLoginCieCardReadingError(loginType);
         setReadingState(ReadingState.error);
       }
