@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.37.0-rc.2](https://github.com/pagopa/io-app/compare/3.37.0-rc.1...3.37.0-rc.2) (2026-07-13)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Disable `usePreventScreenCapture` ([#8264](https://github.com/pagopa/io-app/issues/8264)) ([1010669](https://github.com/pagopa/io-app/commit/1010669fc220831bc30d1ebd9c69eb08808b0bfa))
+
 ## [3.37.0-rc.1](https://github.com/pagopa/io-app/compare/3.37.0-rc.0...3.37.0-rc.1) (2026-07-10)
 
 
