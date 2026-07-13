@@ -59,8 +59,8 @@ const FingerprintScreen = () => {
     () => ({
       type: "TwoButtons",
       primary: {
-        label: I18n.t("global.buttons.activate2"),
-        accessibilityLabel: I18n.t("global.buttons.activate2"),
+        label: I18n.t("global.buttons.activate"),
+        accessibilityLabel: I18n.t("global.buttons.activate"),
         onPress: () => {
           mayUserActivateBiometric()
             .then(_ => {
