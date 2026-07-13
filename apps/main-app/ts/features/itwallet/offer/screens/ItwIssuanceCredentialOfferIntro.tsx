@@ -30,6 +30,7 @@ import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
+  selectIsLoading,
   selectResolvedCredentialOfferOption
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
@@ -76,6 +77,8 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
+  const isLoading =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const credentialType = O.toUndefined(credentialTypeOption);
   const introductionContent = useIOSelector(
     itwCredentialIntroContentSelector(credentialType)
@@ -172,7 +175,8 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
         type: "SingleButton",
         primary: {
           label: I18n.t("global.buttons.continue"),
-          onPress: handleContinue
+          onPress: handleContinue,
+          loading: isLoading
         }
       }}
     >
