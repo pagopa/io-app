@@ -343,6 +343,15 @@ export default defineConfig([
           ignoreTypeOfDescribeName: true,
           ignoreTypeOfTestName: true
         }
+      ],
+      // Saga tests assert through redux-saga-test-plan's chainable APIs
+      // (`testSaga(...).next()`, `expectSaga(...).run()`) rather than a bare
+      // `expect`, so teach the rule to treat those as assertion helpers.
+      "jest/expect-expect": [
+        "warn",
+        {
+          assertFunctionNames: ["expect", "expectSaga", "testSaga"]
+        }
       ]
     }
   },

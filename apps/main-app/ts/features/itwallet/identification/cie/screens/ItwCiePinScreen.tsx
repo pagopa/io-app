@@ -22,6 +22,7 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { isCieLoginUatEnabledSelector } from "../../../../authentication/login/cie/store/selectors";
 import { trackItWalletCiePinEnter } from "../../analytics";
@@ -37,7 +38,7 @@ const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
 });
 
 export const ItwCiePinScreen = () => {
-  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
+  usePreventScreenCapture();
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
