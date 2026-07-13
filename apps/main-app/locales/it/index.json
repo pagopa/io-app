@@ -1164,7 +1164,6 @@
       "outcome": {
         "SUCCESS": {
           "title": "Il metodo è stato aggiunto",
-          "subtitle": "",
           "primaryAction": "Vedi dettagli"
         },
         "GENERIC_ERROR": {
@@ -1189,7 +1188,6 @@
         },
         "CANCELED_BY_USER": {
           "title": "L'operazione è stata annullata",
-          "subtitle": "",
           "primaryAction": "Chiudi"
         },
         "INVALID_SESSION": {
@@ -1199,7 +1197,6 @@
         },
         "ALREADY_ONBOARDED": {
           "title": "Hai già aggiunto questo metodo",
-          "subtitle": "",
           "primaryAction": "Chiudi"
         },
         "BPAY_NOT_FOUND": {
@@ -4325,11 +4322,6 @@
           "alert": {
             "content": "Hai bisogno di tornare alla versione completa di IO?",
             "action": "Ricarica l’app IO"
-          },
-          "modal": {
-            "title": "",
-            "content": "",
-            "footerAction": ""
           }
         },
         "back_online": {
