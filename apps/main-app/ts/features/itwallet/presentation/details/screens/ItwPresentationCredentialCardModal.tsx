@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { getMixPanelCredential } from "../../../analytics/utils";
 import {
   ItwSkeumorphicCard,
@@ -56,7 +57,7 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const dispatch = useIODispatch();
 
-  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
+  usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
   useFocusEffect(
