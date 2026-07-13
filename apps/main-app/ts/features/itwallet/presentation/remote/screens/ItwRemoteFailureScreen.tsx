@@ -2,30 +2,30 @@ import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 
-import { ItwRemoteMachineContext } from "../machine/provider.tsx";
-import { selectFailureOption } from "../machine/selectors.ts";
-import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
-import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../../components/screens/OperationResultScreenContent.tsx";
-import { RemoteFailure, RemoteFailureType } from "../machine/failure.ts";
-import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
-import { useItwRemoteUntrustedRPBottomSheet } from "../hooks/useItwRemoteUntrustedRPBottomSheet.tsx";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
+import { trackItwKoStateAction } from "../../../analytics";
+import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 import { useItwFailureSupportModal } from "../../../common/hooks/useItwFailureSupportModal.tsx";
 import { ZendeskSubcategoryValue } from "../../../common/hooks/useItwZendeskSupport";
-import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse.tsx";
-import { useItwRemoteEventsTracking } from "../hooks/useItwRemoteEventsTracking";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
+import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
+import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
+import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent.tsx";
 import { trackItwRemoteInvalidAuthResponseBottomSheet } from "../analytics";
 import { getDismissalContextFromFailure } from "../analytics/utils";
-import { trackItwKoStateAction } from "../../../analytics";
-import { useIOSelector } from "../../../../../store/hooks.ts";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
-import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
-import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentatioMissingCredentialsFailureContent.tsx";
+import { useItwRemoteEventsTracking } from "../hooks/useItwRemoteEventsTracking";
+import { useItwRemoteUntrustedRPBottomSheet } from "../hooks/useItwRemoteUntrustedRPBottomSheet.tsx";
+import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse.tsx";
+import { RemoteFailure, RemoteFailureType } from "../machine/failure.ts";
+import { ItwRemoteMachineContext } from "../machine/provider.tsx";
+import { selectFailureOption } from "../machine/selectors.ts";
 
 const zendeskAssistanceErrors = [
   RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE,

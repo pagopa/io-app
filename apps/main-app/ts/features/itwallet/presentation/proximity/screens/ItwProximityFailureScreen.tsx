@@ -10,7 +10,7 @@ import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.ts
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
-import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentatioMissingCredentialsFailureContent.tsx";
+import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent.tsx";
 import { trackItwProximityUnofficialVerifierBottomSheet } from "../analytics/index.ts";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure.ts";
