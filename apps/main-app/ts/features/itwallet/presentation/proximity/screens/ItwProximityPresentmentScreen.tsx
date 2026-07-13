@@ -6,13 +6,18 @@ import {
   hexToRgba,
   IOButton,
   IOColors,
+  IOVisualCostants,
   VSpacer,
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect, useLayoutEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import Animated, { LinearTransition } from "react-native-reanimated";
+import Animated, {
+  LinearTransition,
+  useAnimatedRef
+} from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -33,6 +38,8 @@ import { selectFailure, selectIsLoading } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
 import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/selectors/credentials.ts";
 
+const QRCODE_BOX_BORDER_RADIUS = 16;
+
 export type ItwProximityPresentmentScreenNavigationParams = {
   source?: ItwProximityQrCodeTracking["source"];
 };
@@ -47,7 +54,10 @@ export const ItwProximityPresentmentScreen = ({
 }: ItwProximityPresentmentScreenProps) => {
   const { source } = route.params;
 
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
+
   const navigation = useIONavigation();
+  const safeAreaInsets = useSafeAreaInsets();
 
   const machineRef = ItwProximityMachineContext.useActorRef();
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
@@ -90,10 +100,14 @@ export const ItwProximityPresentmentScreen = ({
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: () => machineRef.send({ type: "close" })
           }}
+          transparent={true}
+          enableDiscreteTransition={true}
+          animatedRef={animatedScrollViewRef}
         />
-      )
+      ),
+      headerTransparent: true
     });
-  }, [navigation, machineRef]);
+  }, [navigation, machineRef, animatedScrollViewRef]);
 
   const handleContactlessPress = () => {
     machineRef.send({ type: "start-nfc-presentment" });
@@ -113,7 +127,12 @@ export const ItwProximityPresentmentScreen = ({
   };
 
   return (
-    <IOScrollView>
+    <IOScrollView
+      contentContainerStyle={{
+        marginTop: safeAreaInsets.top + IOVisualCostants.headerHeight
+      }}
+      animatedRef={animatedScrollViewRef}
+    >
       {shouldShowExpiredCredentialsBanner && (
         <Animated.View
           layout={LinearTransition.duration(200)}
@@ -137,6 +156,7 @@ export const ItwProximityPresentmentScreen = ({
         <ItwBrandedBox
           variant={isFailure ? "error" : "default"}
           backgroundVariant={"gradient"}
+          borderRadius={QRCODE_BOX_BORDER_RADIUS}
         >
           <VStack space={16}>
             {!isFailure && (
@@ -191,6 +211,7 @@ const styles = StyleSheet.create({
     marginBottom: 24
   },
   qrCodeShadow: {
-    boxShadow: `0px 4px 32px ${hexToRgba(IOColors.black, 0.1)}`
+    boxShadow: `0px 4px 32px ${hexToRgba(IOColors.black, 0.1)}`,
+    borderRadius: QRCODE_BOX_BORDER_RADIUS
   }
 });

@@ -204,6 +204,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                         contentContainerStyle={
                           [
                             {
+                              "marginTop": 56,
                               "paddingBottom": 56,
                               "paddingHorizontal": 24,
                             },
@@ -211,6 +212,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                           ]
                         }
                         decelerationRate="normal"
+                        forwardedRef={[Function]}
                         jestAnimatedProps={
                           {
                             "value": {},
@@ -235,6 +237,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                           <View
                             style={
                               {
+                                "borderRadius": 16,
                                 "boxShadow": "0px 4px 32px rgba(14,15,19,0.1)",
                               }
                             }
@@ -1578,7 +1581,14 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                         importantForAccessibility="auto"
                         onLayout={[Function]}
                         pointerEvents="box-none"
-                        style={null}
+                        style={
+                          {
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
                       >
                         <View
                           accessibilityRole="header"
@@ -1591,8 +1601,8 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                           jestAnimatedStyle={
                             {
                               "value": {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
+                                "backgroundColor": "rgba(255, 255, 255, 0)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             }
                           }
@@ -1613,8 +1623,8 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
+                                "backgroundColor": "rgba(255, 255, 255, 0)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             ]
                           }
@@ -1694,7 +1704,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                 jestAnimatedStyle={
                                   {
                                     "value": {
-                                      "opacity": 1,
+                                      "opacity": 0,
                                     },
                                   }
                                 }
@@ -1725,7 +1735,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": 1,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
@@ -2134,6 +2144,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                         contentContainerStyle={
                           [
                             {
+                              "marginTop": 56,
                               "paddingBottom": 56,
                               "paddingHorizontal": 24,
                             },
@@ -2141,6 +2152,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                           ]
                         }
                         decelerationRate="normal"
+                        forwardedRef={[Function]}
                         jestAnimatedProps={
                           {
                             "value": {},
@@ -2165,6 +2177,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                           <View
                             style={
                               {
+                                "borderRadius": 16,
                                 "boxShadow": "0px 4px 32px rgba(14,15,19,0.1)",
                               }
                             }
@@ -3750,7 +3763,14 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                         importantForAccessibility="auto"
                         onLayout={[Function]}
                         pointerEvents="box-none"
-                        style={null}
+                        style={
+                          {
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
                       >
                         <View
                           accessibilityRole="header"
@@ -3763,8 +3783,8 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                           jestAnimatedStyle={
                             {
                               "value": {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
+                                "backgroundColor": "rgba(255, 255, 255, 0)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             }
                           }
@@ -3785,8 +3805,8 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
+                                "backgroundColor": "rgba(255, 255, 255, 0)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             ]
                           }
@@ -3866,7 +3886,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                 jestAnimatedStyle={
                                   {
                                     "value": {
-                                      "opacity": 1,
+                                      "opacity": 0,
                                     },
                                   }
                                 }
@@ -3897,7 +3917,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": 1,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
@@ -4306,6 +4326,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                         contentContainerStyle={
                           [
                             {
+                              "marginTop": 56,
                               "paddingBottom": 56,
                               "paddingHorizontal": 24,
                             },
@@ -4313,6 +4334,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                           ]
                         }
                         decelerationRate="normal"
+                        forwardedRef={[Function]}
                         jestAnimatedProps={
                           {
                             "value": {},
@@ -4337,6 +4359,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                           <View
                             style={
                               {
+                                "borderRadius": 16,
                                 "boxShadow": "0px 4px 32px rgba(14,15,19,0.1)",
                               }
                             }
@@ -5709,7 +5732,14 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                         importantForAccessibility="auto"
                         onLayout={[Function]}
                         pointerEvents="box-none"
-                        style={null}
+                        style={
+                          {
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
                       >
                         <View
                           accessibilityRole="header"
@@ -5722,8 +5752,8 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                           jestAnimatedStyle={
                             {
                               "value": {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
+                                "backgroundColor": "rgba(255, 255, 255, 0)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             }
                           }
@@ -5744,8 +5774,8 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
+                                "backgroundColor": "rgba(255, 255, 255, 0)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             ]
                           }
@@ -5825,7 +5855,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                 jestAnimatedStyle={
                                   {
                                     "value": {
-                                      "opacity": 1,
+                                      "opacity": 0,
                                     },
                                   }
                                 }
@@ -5856,7 +5886,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": 1,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
@@ -6265,6 +6295,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                         contentContainerStyle={
                           [
                             {
+                              "marginTop": 56,
                               "paddingBottom": 56,
                               "paddingHorizontal": 24,
                             },
@@ -6272,6 +6303,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                           ]
                         }
                         decelerationRate="normal"
+                        forwardedRef={[Function]}
                         jestAnimatedProps={
                           {
                             "value": {},
@@ -6546,6 +6578,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                           <View
                             style={
                               {
+                                "borderRadius": 16,
                                 "boxShadow": "0px 4px 32px rgba(14,15,19,0.1)",
                               }
                             }
@@ -7889,7 +7922,14 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                         importantForAccessibility="auto"
                         onLayout={[Function]}
                         pointerEvents="box-none"
-                        style={null}
+                        style={
+                          {
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
                       >
                         <View
                           accessibilityRole="header"
@@ -7902,8 +7942,8 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                           jestAnimatedStyle={
                             {
                               "value": {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
+                                "backgroundColor": "rgba(255, 255, 255, 0)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             }
                           }
@@ -7924,8 +7964,8 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
+                                "backgroundColor": "rgba(255, 255, 255, 0)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             ]
                           }
@@ -8005,7 +8045,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                 jestAnimatedStyle={
                                   {
                                     "value": {
-                                      "opacity": 1,
+                                      "opacity": 0,
                                     },
                                   }
                                 }
@@ -8036,7 +8076,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": 1,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
