@@ -33,3 +33,4 @@ jobs:
           filter_langs:
             - it
             - en
+          replace_breaks: false
