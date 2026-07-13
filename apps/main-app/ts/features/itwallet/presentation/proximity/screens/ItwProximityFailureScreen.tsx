@@ -10,6 +10,7 @@ import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwar
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
 import { trackItwProximityUnofficialVerifierBottomSheet } from "../analytics/index.ts";
+import { ItwProximityMissingCredentialsFailureContent } from "../components/ItwProximityMissingCredentialsFailureContent.tsx";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
@@ -28,50 +29,86 @@ type ContentViewProps = { failure: ProximityFailure };
 
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwProximityMachineContext.useActorRef();
-  const i18nNs = "features.itWallet.presentation.proximity"; // Common i18n namespace
 
   useDebugInfo({
     failure: serializeFailureReason(failure)
   });
 
+  useItwProximityEventsTracking({ failure });
+
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: (
       <>
         <Body>
-          {I18n.t(`${i18nNs}.relyingParty.untrustedRp.bottomSheet.content`)}
+          {I18n.t(
+            "features.itWallet.presentation.proximity.relyingParty.untrustedRp.bottomSheet.content"
+          )}
         </Body>
         <VSpacer size={24} />
       </>
     ),
-    title: I18n.t(`${i18nNs}.relyingParty.untrustedRp.bottomSheet.title`)
+    title: I18n.t(
+      "features.itWallet.presentation.proximity.relyingParty.untrustedRp.bottomSheet.title"
+    )
   });
+
+  if (
+    failure.type ===
+    ProximityFailureType.ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING
+  ) {
+    return (
+      <ItwProximityMissingCredentialsFailureContent
+        credentialTypes={failure.reason.credentialTypes}
+      />
+    );
+  }
 
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
-        case ProximityFailureType.RELYING_PARTY_GENERIC:
+        case ProximityFailureType.TIMEOUT:
           return {
-            title: I18n.t(`${i18nNs}.relyingParty.genericError.title`),
-            subtitle: I18n.t(`${i18nNs}.relyingParty.genericError.subtitle`),
+            title: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.timeout.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.timeout.subtitle"
+            ),
             pictogram: "umbrella",
             action: {
               label: I18n.t(
-                `${i18nNs}.relyingParty.genericError.primaryAction`
+                "features.itWallet.presentation.proximity.relyingParty.timeout.primaryAction"
               ),
               onPress: () => machineRef.send({ type: "close" })
             }
           };
-        case ProximityFailureType.TIMEOUT:
+        case ProximityFailureType.UNTRUSTED_RP:
           return {
-            title: I18n.t(`${i18nNs}.relyingParty.timeout.title`),
-            subtitle: I18n.t(`${i18nNs}.relyingParty.timeout.subtitle`),
-            pictogram: "umbrella",
+            title: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.untrustedRp.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.untrustedRp.subtitle"
+            ),
+            pictogram: "stopSecurity",
             action: {
-              label: I18n.t(`${i18nNs}.relyingParty.timeout.primaryAction`),
+              label: I18n.t(
+                "features.itWallet.presentation.proximity.relyingParty.untrustedRp.primaryAction"
+              ),
               onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.proximity.relyingParty.untrustedRp.secondaryAction"
+              ),
+              onPress: () => {
+                trackItwProximityUnofficialVerifierBottomSheet();
+                present();
+              }
             }
           };
         case ProximityFailureType.UNEXPECTED:
+        default:
           return {
             title: I18n.t("features.itWallet.generic.error.title"),
             subtitle: I18n.t("features.itWallet.generic.error.body"),
@@ -81,29 +118,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
               onPress: () => machineRef.send({ type: "close" })
             }
           };
-        case ProximityFailureType.UNTRUSTED_RP:
-          return {
-            title: I18n.t(`${i18nNs}.relyingParty.untrustedRp.title`),
-            subtitle: I18n.t(`${i18nNs}.relyingParty.untrustedRp.subtitle`),
-            pictogram: "stopSecurity",
-            action: {
-              label: I18n.t(`${i18nNs}.relyingParty.untrustedRp.primaryAction`),
-              onPress: () => machineRef.send({ type: "close" })
-            },
-            secondaryAction: {
-              label: I18n.t(
-                `${i18nNs}.relyingParty.untrustedRp.secondaryAction`
-              ),
-              onPress: () => {
-                trackItwProximityUnofficialVerifierBottomSheet();
-                present();
-              }
-            }
-          };
       }
     };
-
-  useItwProximityEventsTracking({ failure });
 
   const resultScreenProps = getOperationResultScreenContentProps();
 

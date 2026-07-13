@@ -4287,6 +4287,25 @@
                 "title": "Chi può leggere i tuoi dati?",
                 "content": "IO controlla sempre chi sta richiedendo la lettura dei tuoi dati e non ti permette di continuare se non riconosce il sistema utilizzato per la verifica.\n\nL'app può condividere i tuoi dati solo con enti e soggetti autorizzati."
               }
+            },
+            "missingCredentials": {
+              "one": {
+                "title": "Non puoi continuare perché manca un documento",
+                "subtitle": "È richiesta la verifica del seguente documento che non è presente nel tuo Portafoglio IT-Wallet.",
+                "primaryAction": "Aggiungi documento",
+                "secondaryAction": "Chiudi"
+              },
+              "other": {
+                "title": "Non puoi continuare perché mancano alcuni documenti",
+                "subtitle": "Scopri i documenti mancanti necessari per questa verifica. ",
+                "primaryAction": "Mostra documenti",
+                "secondaryAction": "Chiudi",
+                "bottomSheet": {
+                  "title": "Documenti mancanti",
+                  "subtitle": "I seguenti documenti non sono presenti nel tuo Portafoglio IT-Wallet. ",
+                  "primaryAction": "Aggiungi documento"
+                }
+              }
             }
           },
           "success": {
