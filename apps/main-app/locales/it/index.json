@@ -3508,13 +3508,6 @@
               "subtitle": "Se riscontri più volte il problema, attendi qualche minuto e riprova."
             }
           }
-        },
-        "cieId": {
-          "loading": {
-            "title": "Connessione con la tua app CieID in corso...",
-            "subtitle": "Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione",
-            "cancel": "Annulla connessione"
-          }
         }
       },
       "issuance": {
