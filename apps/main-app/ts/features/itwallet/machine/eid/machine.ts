@@ -80,7 +80,6 @@ export const itwEidIssuanceMachine = setup({
     navigateToCieWarningScreen: notImplemented,
     navigateToCieCanScreen: notImplemented,
     navigateToCieInternalAuthAndMrtdScreen: notImplemented,
-    navigateToUpgradeCredentialsScreen: notImplemented,
     closeIssuance: notImplemented,
 
     /**
@@ -1253,16 +1252,8 @@ export const itwEidIssuanceMachine = setup({
     CredentialsUpgrade: {
       description:
         "This state handles the upgrade of credentials in the wallet",
-      initial: "Intro",
+      initial: "Upgrading",
       states: {
-        Intro: {
-          entry: "navigateToUpgradeCredentialsScreen",
-          on: {
-            next: {
-              target: "Upgrading"
-            }
-          }
-        },
         Upgrading: {
           entry: "navigateToSuccessScreen",
           tags: [ItwTags.Loading],

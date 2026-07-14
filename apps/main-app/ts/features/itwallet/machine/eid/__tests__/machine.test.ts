@@ -90,7 +90,6 @@ const navigateToNfcInstructionsScreen = jest.fn();
 const navigateToCieIdLoginScreen = jest.fn();
 const navigateToCieWarningScreen = jest.fn();
 const navigateToIdentificationScreen = jest.fn();
-const navigateToUpgradeCredentialsScreen = jest.fn();
 const storeIntegrityKeyTag = jest.fn();
 const cleanupIntegrityKeyTag = jest.fn();
 const storeWalletInstanceAttestation = jest.fn();
@@ -160,7 +159,6 @@ describe("itwEidIssuanceMachine", () => {
       navigateToIdentificationScreen,
       navigateToCieCanScreen,
       navigateToCieInternalAuthAndMrtdScreen,
-      navigateToUpgradeCredentialsScreen,
       storeIntegrityKeyTag,
       cleanupIntegrityKeyTag,
       storeWalletInstanceAttestation,

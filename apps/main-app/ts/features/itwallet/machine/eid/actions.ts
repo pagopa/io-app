@@ -236,12 +236,6 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToUpgradeCredentialsScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS
-    });
-  },
-
   closeIssuance: ({
     context,
     event
