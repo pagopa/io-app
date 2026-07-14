@@ -100,15 +100,15 @@ export const ItwCieCanScreen = () => {
             <VSpacer size={24} />
             <View style={{ flex: 1 }}>
               <OTPInput
-                ref={canPadViewRef}
-                secret
-                value={can}
                 accessibilityValueText={({ valueLength, length }) =>
-                  I18n.t("global.accessibility.inputDigitCounter", {
+                  I18n.t("global.accessibility.otpInput.valueText", {
                     valueLength,
                     length
                   })
                 }
+                ref={canPadViewRef}
+                secret
+                value={can}
                 accessibilityLabel={I18n.t(
                   "authentication.cie.pin.accessibility.label"
                 )}
