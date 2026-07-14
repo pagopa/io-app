@@ -26,7 +26,7 @@ export type PaymentAnalyticsData = {
   >;
   selectedPaymentMethod?: string;
   selectedPsp?: string;
-  selectedPspFlag?: PaymentAnalyticsSelectedPspFlag;
+  selectedPspFlag?: PaymentAnalyticsPspFlag;
   serviceName?: string;
   startOrigin?: PaymentStartOrigin;
   transactionsHomeLength?: number;
@@ -37,11 +37,6 @@ export type PaymentAnalyticsEditingType = "payment_method" | "psp";
 
 export type PaymentAnalyticsPhase = "attiva" | "pagamento" | "verifica";
 
-export type PaymentAnalyticsPreselectedPspFlag =
-  | "cheaper"
-  | "customer"
-  | "none";
-
 export type PaymentAnalyticsPspFlag =
   | "cheaper"
   | "customer"
@@ -49,10 +44,6 @@ export type PaymentAnalyticsPspFlag =
   | "unique";
 
 export type PaymentAnalyticsSelectedMethodFlag = "last_used" | "none" | "saved";
-
-export type PaymentAnalyticsSelectedPspFlag =
-  | "unique"
-  | PaymentAnalyticsPreselectedPspFlag;
 
 export type PaymentsAnalyticsHomeAddWalletEntryPoint =
   | "payments_home"
