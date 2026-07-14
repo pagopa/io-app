@@ -1,9 +1,10 @@
-import { Svg, Rect, Path } from "react-native-svg";
+import { Path, Rect, Svg } from "react-native-svg";
+
 import { SVGLogoProps } from "../types";
 
 const LogoPaymentAmex = ({ size }: SVGLogoProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24">
-    <Rect y="4" width="24" height="16" rx="2" fill="#016FD0" />
+  <Svg height={size} viewBox="0 0 24 24" width={size}>
+    <Rect fill="#016FD0" height="16" rx="2" width="24" y="4" />
     <Path
       d="M13.764 17.394v-5.702l10.148.01v1.574l-1.173 1.254 1.173 1.265v1.608h-1.873l-.995-1.098-.988 1.102-6.292-.013Z"
       fill="#FFFFFE"
@@ -21,10 +22,10 @@ const LogoPaymentAmex = ({ size }: SVGLogoProps) => (
       fill="#FFFFFE"
     />
     <Path
-      fillRule="evenodd"
       clipRule="evenodd"
       d="M12.726 11.697 14.7 7.25h1.565l1.965 4.446h-1.387l-.372-.89h-2.018l-.373.89h-1.354Zm2.736-3.303-.592 1.415h1.184l-.592-1.415Z"
       fill="#016FD0"
+      fillRule="evenodd"
     />
     <Path
       d="M18.212 11.696V7.25l1.903.006.98 2.733.985-2.74h1.832v4.446l-1.179.01V8.653l-1.113 3.043h-1.075l-1.136-3.054v3.054h-1.197Z"

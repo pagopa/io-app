@@ -1,25 +1,26 @@
 import {
   IOColors,
-  IOPictogramSizeScale,
   IOPictograms,
+  IOPictogramSizeScale,
   Pictogram
 } from "@io-app/design-system";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
+
 import { CircularProgress } from "../../../../../components/ui/CircularProgress";
 import { isDevEnv } from "../../../../../utils/environment";
 
 export enum ReadingState {
-  "reading" = "reading",
-  "error" = "error",
   "completed" = "completed",
+  "error" = "error",
+  "reading" = "reading",
   "waiting_card" = "waiting_card"
 }
 
 type CieCardReadingAnimationProps = Readonly<{
-  readingState: ReadingState;
-  pictogramName: IOPictograms;
   circleColor: string;
+  pictogramName: IOPictograms;
+  readingState: ReadingState;
 }>;
 
 // Image dimension
@@ -126,25 +127,25 @@ const CieCardReadingAnimation = ({
   }, [readingState, startAnimation]);
 
   return (
-    <View style={{ alignSelf: "center" }} accessible={false}>
+    <View accessible={false} style={{ alignSelf: "center" }}>
       <CircularProgress
-        size={imgSize}
-        radius={imgSize / 2}
         progress={
           readingState === ReadingState.completed ? 100 : progressBarValue
         }
-        strokeWidth={circleBorderWidth}
+        radius={imgSize / 2}
+        size={imgSize}
+        strokeBgColor={IOColors["grey-100"]}
         strokeColor={
           readingState === ReadingState.error
             ? IOColors["grey-100"]
             : circleColor
         }
-        strokeBgColor={IOColors["grey-100"]}
+        strokeWidth={circleBorderWidth}
       >
         {/* Use a `View` to translate the Pictogram to simulate the
         `Bleed` variant effect */}
         <View style={styles.imgTranslated}>
-          <Pictogram size={"100%"} name={pictogramName} />
+          <Pictogram name={pictogramName} size={"100%"} />
         </View>
       </CircularProgress>
     </View>

@@ -9,14 +9,15 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
+
 import { WithTestID } from "../../utils/types";
 
 const windowWidth = Dimensions.get("window").width;
 
 type Dismissable = WithTestID<{
-  onDismiss?: () => void;
-  dismissThreshold?: number;
   children: ReactNode;
+  dismissThreshold?: number;
+  onDismiss?: () => void;
 }>;
 
 /**

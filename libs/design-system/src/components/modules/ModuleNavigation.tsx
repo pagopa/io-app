@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
+
 import { useIOTheme } from "../../context";
 import {
   IOListItemVisualParams,
@@ -15,7 +16,7 @@ import {
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
-import { IOIcons, Icon } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { HStack, VStack } from "../layout";
 import { IOSkeleton } from "../skeleton";
 import { BodySmall, LabelMini } from "../typography";
@@ -25,24 +26,24 @@ import {
   PressableModuleBaseProps
 } from "./PressableModuleBase";
 
+type BaseProps = ImageProps &
+  PressableModuleBaseProps & {
+    badge?: Badge;
+    isLoading?: false;
+    subtitle?: string;
+    title: string;
+  };
+
+type ImageProps =
+  | { icon: IOIcons; image?: never }
+  | { icon?: never; image: ImageSourcePropType | ImageURISource };
+
 type LoadingProps = {
   isLoading: true;
   loadingAccessibilityLabel?: string;
 };
 
-type ImageProps =
-  | { icon: IOIcons; image?: never }
-  | { icon?: never; image: ImageURISource | ImageSourcePropType };
-
-type BaseProps = {
-  isLoading?: false;
-  title: string;
-  subtitle?: string;
-  badge?: Badge;
-} & ImageProps &
-  PressableModuleBaseProps;
-
-type ModuleNavigationProps = LoadingProps | BaseProps;
+type ModuleNavigationProps = BaseProps | LoadingProps;
 
 export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
   const theme = useIOTheme();
@@ -61,17 +62,17 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
 
   const iconComponent = icon && !hugeFontEnabled && (
     <Icon
+      color="grey-300"
       name={icon}
       size={IOSelectionListItemVisualParams.iconSize}
-      color="grey-300"
     />
   );
 
   const imageComponent = image && (
     <Image
+      accessibilityIgnoresInvertColors={true}
       source={image}
       style={styles.image}
-      accessibilityIgnoresInvertColors={true}
     />
   );
 
@@ -87,15 +88,15 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
           <View style={{ flexShrink: 1 }}>
             <BodySmall
               color={theme["interactiveElem-default"]}
-              weight="Semibold"
-              numberOfLines={2}
               lineBreakMode="middle"
+              numberOfLines={2}
               style={{ flexShrink: 1 }}
+              weight="Semibold"
             >
               {title}
             </BodySmall>
             {subtitle && (
-              <LabelMini weight="Regular" color={theme["textBody-tertiary"]}>
+              <LabelMini color={theme["textBody-tertiary"]} weight="Regular">
                 {subtitle}
               </LabelMini>
             )}
@@ -105,8 +106,8 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
           <Badge {...badge} />
         ) : onPress ? (
           <Icon
-            name="chevronRightListItem"
             color={theme["interactiveElem-default"]}
+            name="chevronRightListItem"
             size={IOListItemVisualParams.chevronSize}
           />
         ) : null}
@@ -119,23 +120,23 @@ const ModuleNavigationSkeleton = ({
   loadingAccessibilityLabel
 }: Pick<LoadingProps, "loadingAccessibilityLabel">) => (
   <ModuleStatic
-    accessible={true}
     accessibilityLabel={loadingAccessibilityLabel}
     accessibilityState={{ busy: true }}
+    accessible={true}
+    endBlock={
+      <IOSkeleton height={24} radius={16} shape="rectangle" width={64} />
+    }
     startBlock={
       <HStack
-        style={{ alignItems: "center" }}
         space={IOVisualCostants.iconMargin as IOSpacer}
+        style={{ alignItems: "center" }}
       >
-        <IOSkeleton shape="square" size={24} radius={8} />
+        <IOSkeleton radius={8} shape="square" size={24} />
         <VStack space={4}>
-          <IOSkeleton shape="rectangle" width={96} height={16} radius={8} />
-          <IOSkeleton shape="rectangle" width={160} height={12} radius={8} />
+          <IOSkeleton height={16} radius={8} shape="rectangle" width={96} />
+          <IOSkeleton height={12} radius={8} shape="rectangle" width={160} />
         </VStack>
       </HStack>
-    }
-    endBlock={
-      <IOSkeleton shape="rectangle" width={64} height={24} radius={16} />
     }
   />
 );

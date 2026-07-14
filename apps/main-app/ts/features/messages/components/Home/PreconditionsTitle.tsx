@@ -1,5 +1,6 @@
 import { H3, IOSkeleton } from "@io-app/design-system";
 import { View } from "react-native";
+
 import { useIOSelector } from "../../../../store/hooks";
 import {
   preconditionsTitleContentSelector,
@@ -11,17 +12,17 @@ export const PreconditionsTitle = () => {
   switch (titleContent) {
     case "empty":
       return <View />;
-    case "loading":
-      return <PreconditionsSkeleton />;
     case "header":
       return <PreconditionsHeader />;
+    case "loading":
+      return <PreconditionsSkeleton />;
   }
   return null;
 };
 
 const PreconditionsSkeleton = () => (
-  <View style={{ flex: 1 }} accessible={false}>
-    <IOSkeleton shape="rectangle" width={182} height={20} radius={4} />
+  <View accessible={false} style={{ flex: 1 }}>
+    <IOSkeleton height={20} radius={4} shape="rectangle" width={182} />
   </View>
 );
 

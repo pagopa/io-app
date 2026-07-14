@@ -1,61 +1,58 @@
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { WalletInfo as EcommerceWalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { WalletInfo as EcommerceWalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { PaymentStartOrigin } from "../../checkout/types";
 
+export type PaymentAnalyticsBrowserType = "inapp_browser" | "webview";
+
 export type PaymentAnalyticsData = {
-  savedPaymentMethods?: ReadonlyArray<WalletInfo | EcommerceWalletInfo>;
-  savedPaymentMethodsUnavailable?: ReadonlyArray<
-    WalletInfo | EcommerceWalletInfo
-  >;
-  pspList?: ReadonlyArray<Bundle>;
-  selectedPsp?: string;
-  selectedPspFlag?: PaymentAnalyticsSelectedPspFlag;
-  selectedPaymentMethod?: string;
-  formattedAmount?: string;
-  serviceName?: string;
-  startOrigin?: PaymentStartOrigin;
-  verifiedData?: PaymentRequestsGetResponse;
   attempt?: number;
+  browserType?: PaymentAnalyticsBrowserType;
+  formattedAmount?: string;
+  is_onboarded?: boolean;
   paymentsHomeStatus?: PaymentsAnalyticsHomeStatus;
-  transactionsHomeLength?: number;
-  receiptUser?: PaymentsAnalyticsReceiptUser;
+  pspList?: ReadonlyArray<Bundle>;
+  receiptEventId?: string;
   receiptFirstTimeOpening?: boolean;
   receiptFirstTimeOpeningPDF?: boolean;
-  receiptOrganizationName?: string;
   receiptOrganizationFiscalCode?: string;
+  receiptOrganizationName?: string;
   receiptPayerFiscalCode?: string;
-  receiptEventId?: string;
-  browserType?: PaymentAnalyticsBrowserType;
-  is_onboarded?: boolean;
+  receiptUser?: PaymentsAnalyticsReceiptUser;
+  savedPaymentMethods?: ReadonlyArray<EcommerceWalletInfo | WalletInfo>;
+  savedPaymentMethodsUnavailable?: ReadonlyArray<
+    EcommerceWalletInfo | WalletInfo
+  >;
+  selectedPaymentMethod?: string;
+  selectedPsp?: string;
+  selectedPspFlag?: PaymentAnalyticsPspFlag;
+  serviceName?: string;
+  startOrigin?: PaymentStartOrigin;
+  transactionsHomeLength?: number;
+  verifiedData?: PaymentRequestsGetResponse;
 };
-
-export type PaymentsAnalyticsReceiptUser = "payee" | "payer";
-
-export type PaymentsAnalyticsHomeAddWalletEntryPoint =
-  | "wallet_home"
-  | "payments_home";
-
-export type PaymentsAnalyticsHomeStatus =
-  | "empty"
-  | "empty receipts"
-  | "empty method"
-  | "complete";
-
-export type PaymentAnalyticsSelectedMethodFlag = "none" | "last_used" | "saved";
-
-export type PaymentAnalyticsPreselectedPspFlag =
-  | "none"
-  | "cheaper"
-  | "customer";
-
-export type PaymentAnalyticsSelectedPspFlag =
-  | PaymentAnalyticsPreselectedPspFlag
-  | "unique";
 
 export type PaymentAnalyticsEditingType = "payment_method" | "psp";
 
-export type PaymentAnalyticsPhase = "verifica" | "attiva" | "pagamento";
+export type PaymentAnalyticsPhase = "attiva" | "pagamento" | "verifica";
 
-export type PaymentAnalyticsBrowserType = "webview" | "inapp_browser";
+export type PaymentAnalyticsPspFlag =
+  | "cheaper"
+  | "customer"
+  | "none"
+  | "unique";
+
+export type PaymentAnalyticsSelectedMethodFlag = "last_used" | "none" | "saved";
+
+export type PaymentsAnalyticsHomeAddWalletEntryPoint =
+  | "payments_home"
+  | "wallet_home";
+
+export type PaymentsAnalyticsHomeStatus =
+  | "complete"
+  | "empty"
+  | "empty method"
+  | "empty receipts";
+
+export type PaymentsAnalyticsReceiptUser = "payee" | "payer";

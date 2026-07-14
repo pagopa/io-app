@@ -1,19 +1,20 @@
 import { ComponentProps, memo, useRef, useState } from "react";
 import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
+
 import { Icon } from "../../components/icons";
 import { useIOTheme } from "../../context";
 import {
+  hexToRgba,
   IOColors,
   IOSpacingScale,
-  IOVisualCostants,
-  hexToRgba
+  IOVisualCostants
 } from "../../core";
 import { addCacheTimestampToUri } from "../../utils/image";
 import avatarSearchPlaceholder from "./placeholder/avatar-placeholder.png";
 
 type Avatar = {
-  size: "small" | "medium";
   logoUri?: ImageSourcePropType;
+  size: "medium" | "small";
 };
 
 const internalSpaceDefaultSize = 6;
@@ -102,8 +103,8 @@ export const Avatar = ({ logoUri, size }: Avatar) => {
     >
       {imageSource === undefined ? (
         <Icon
-          name="institution"
           color={theme["icon-decorative"]}
+          name="institution"
           size={"100%"}
         />
       ) : (
@@ -118,9 +119,9 @@ export const Avatar = ({ logoUri, size }: Avatar) => {
         >
           <Image
             accessibilityIgnoresInvertColors
+            onError={onError}
             source={imageSource}
             style={styles.avatarImage}
-            onError={onError}
           />
         </View>
       )}
@@ -130,7 +131,7 @@ export const Avatar = ({ logoUri, size }: Avatar) => {
 
 export type AvatarSearchProps = Pick<
   ComponentProps<typeof Image>,
-  "source" | "defaultSource" | "onError"
+  "defaultSource" | "onError" | "source"
 >;
 
 /**
@@ -176,8 +177,8 @@ export const AvatarSearch = memo(
           ) : (
             <Image
               accessibilityIgnoresInvertColors
-              source={source}
               onError={onError}
+              source={source}
               style={styles.avatarImage}
             />
           )}

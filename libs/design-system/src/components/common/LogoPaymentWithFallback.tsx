@@ -1,7 +1,7 @@
 import { IOColors } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { findFirstCaseInsensitive } from "../../utils/object";
-import { IOIconSizeScale, Icon } from "../icons";
+import { Icon, IOIconSizeScale } from "../icons";
 import {
   IOLogoPaymentExtType,
   IOLogoPaymentType,
@@ -14,8 +14,8 @@ import {
 type LogoPaymentWithFallbackProps = {
   brand?: string;
   fallbackIconColor?: IOColors;
-  size?: IOIconSizeScale;
   isExtended?: boolean;
+  size?: IOIconSizeScale;
 };
 
 /**
@@ -41,9 +41,9 @@ export const LogoPaymentWithFallback = ({
     return (
       <Icon
         allowFontScaling
+        color={fallbackIconColor}
         name="creditCard"
         size={size}
-        color={fallbackIconColor}
       />
     );
   }
@@ -54,9 +54,9 @@ export const LogoPaymentWithFallback = ({
     return (
       <Icon
         allowFontScaling
+        color={fallbackIconColor}
         name="creditCard"
         size={size}
-        color={fallbackIconColor}
       />
     );
   }

@@ -1,6 +1,7 @@
 import { ComponentProps } from "react";
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import { IOColors, IOListItemStyles, IOListItemVisualParams } from "../../core";
 import { useListItemAnimation } from "../../hooks";
@@ -9,16 +10,16 @@ import { WithTestID } from "../../utils/types";
 import { AnimatedIcon, IOIcons } from "../icons";
 import { ButtonText } from "../typography/ButtonText";
 
-export type ListItemAction = WithTestID<{
-  label: string;
-  variant: "primary" | "danger";
-  onPress: (event: GestureResponderEvent) => void;
-  icon?: IOIcons;
-}> &
-  Pick<
-    ComponentProps<typeof Pressable>,
-    "accessibilityLabel" | "accessibilityHint"
-  >;
+export type ListItemAction = Pick<
+  ComponentProps<typeof Pressable>,
+  "accessibilityHint" | "accessibilityLabel"
+> &
+  WithTestID<{
+    icon?: IOIcons;
+    label: string;
+    onPress: (event: GestureResponderEvent) => void;
+    variant: "danger" | "primary";
+  }>;
 
 export const ListItemAction = ({
   variant,
@@ -48,20 +49,20 @@ export const ListItemAction = ({
 
   return (
     <Pressable
+      accessibilityHint={accessibilityHint}
+      accessibilityLabel={listItemAccessibilityLabel}
+      accessibilityRole="button"
+      accessible={true}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
-      accessible={true}
-      accessibilityLabel={listItemAccessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole="button"
       testID={testID}
     >
       <Animated.View
-        style={[IOListItemStyles.listItem, backgroundAnimatedStyle]}
-        importantForAccessibility="no-hide-descendants"
         accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
+        style={[IOListItemStyles.listItem, backgroundAnimatedStyle]}
       >
         <Animated.View
           style={[
@@ -78,8 +79,8 @@ export const ListItemAction = ({
           {icon && (
             <AnimatedIcon
               allowFontScaling
-              name={icon}
               color={IOColors[mapForegroundColor[variant]]}
+              name={icon}
               size={IOListItemVisualParams.iconSize}
             />
           )}

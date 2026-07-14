@@ -1,5 +1,6 @@
-import { useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
+import { useEffect } from "react";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { trackContentNotAvailable } from "../../../../utils/analytics";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";

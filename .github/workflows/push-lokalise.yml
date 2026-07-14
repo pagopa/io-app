@@ -27,3 +27,5 @@ jobs:
         translations_path: |
           apps/main-app/locales
         file_ext: json
+        additional_params: |
+          cleanup_mode: true

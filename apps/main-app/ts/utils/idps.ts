@@ -1,4 +1,5 @@
 import { ImageSourcePropType } from "react-native";
+
 import { SpidIdp as GeneratedSpidIdpType } from "../../definitions/content/SpidIdp";
 
 export const fromGeneratedToLocalSpidIdp = (
@@ -17,8 +18,8 @@ export const fromGeneratedToLocalSpidIdp = (
 
 export type SpidIdp = Omit<GeneratedSpidIdpType, "logo"> & {
   logo: {
-    light: ImageSourcePropType;
     dark?: ImageSourcePropType;
+    light: ImageSourcePropType;
   };
 };
 

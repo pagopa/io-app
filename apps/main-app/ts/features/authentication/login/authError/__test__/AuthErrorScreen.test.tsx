@@ -1,18 +1,17 @@
-import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
+import { createStore } from "redux";
+
+import { applicationChangeState } from "../../../../../store/actions/application";
+import * as hooks from "../../../../../store/hooks";
+import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-
-import AuthErrorScreen from "../screens/AuthErrorScreen";
 import {
   resetSpidLoginState,
   setSpidLoginInLoadingState
 } from "../../idp/store/actions";
-
-import * as hooks from "../../../../../store/hooks";
+import AuthErrorScreen from "../screens/AuthErrorScreen";
 
 const mockNavigation = jest.fn();
 const mockDispatch = jest.fn();

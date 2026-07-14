@@ -5,20 +5,21 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
-import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
+
 import { IOScrollViewActions } from "../../../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
+import { useIOSelector, useIOStore } from "../../../../../../store/hooks";
+import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../../../utils/url";
+import { isActiveSessionLoginSelector } from "../../../../activeSessionLogin/store/selectors";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import {
   trackCieIdWizardScreen,
   trackWizardCieIdSelected
 } from "../../analytics";
 import { SpidLevel } from "../../utils";
-import { useIOSelector, useIOStore } from "../../../../../../store/hooks";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import { isActiveSessionLoginSelector } from "../../../../activeSessionLogin/store/selectors";
-import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 
 export const CIE_ID_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/cie-id/";
@@ -63,24 +64,24 @@ const CieIdWizard = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      actions={screenActions()}
+      description={I18n.t("authentication.wizards.cie_id_wizard.description")}
       title={{
         label,
         accessibilityLabel: label
       }}
-      description={I18n.t("authentication.wizards.cie_id_wizard.description")}
-      actions={screenActions()}
     >
       <ContentWrapper>
         <VSpacer size={12} />
         <IOButton
-          variant="link"
-          testID="cie-id-wizard-open-cie-id-link"
+          label={I18n.t("authentication.wizards.cie_id_wizard.link")}
           onPress={() => {
             openWebUrl(CIE_ID_LINK, () => {
               error(I18n.t("global.jserror.title"));
             });
           }}
-          label={I18n.t("authentication.wizards.cie_id_wizard.link")}
+          testID="cie-id-wizard-open-cie-id-link"
+          variant="link"
         />
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>

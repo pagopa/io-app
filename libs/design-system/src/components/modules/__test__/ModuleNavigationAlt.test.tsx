@@ -1,7 +1,7 @@
 // __tests__/ModuleNavigationAlt.test.tsx
 import { render } from "@testing-library/react-native";
-
 import { Alert } from "react-native";
+
 import { renderWithExperimentalEnabledContextProvider } from "../../../utils/testing";
 import { ModuleNavigationAlt } from "../ModuleNavigationAlt";
 
@@ -22,7 +22,7 @@ describe("ModuleNavigationAlt - Snapshot", () => {
 
   it("Title only + chevron (onPress)", () => {
     const { toJSON } = render(
-      <ModuleNavigationAlt title="My Title" onPress={onPress} icon="spid" />
+      <ModuleNavigationAlt icon="spid" onPress={onPress} title="My Title" />
     );
     expect(toJSON()).toMatchSnapshot();
   });
@@ -30,9 +30,9 @@ describe("ModuleNavigationAlt - Snapshot", () => {
   it("Title + Subtitle", () => {
     const { toJSON } = render(
       <ModuleNavigationAlt
-        title="My Title"
-        subtitle="A nice subtitle"
         icon="spid"
+        subtitle="A nice subtitle"
+        title="My Title"
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -41,10 +41,10 @@ describe("ModuleNavigationAlt - Snapshot", () => {
   it("With Badge (badge + chevron)", () => {
     const { toJSON } = render(
       <ModuleNavigationAlt
-        title="With Badge"
-        onPress={onPress}
         badge={{ text: "TEST", variant: "highlight" }}
         icon="spid"
+        onPress={onPress}
+        title="With Badge"
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -53,9 +53,9 @@ describe("ModuleNavigationAlt - Snapshot", () => {
   it("With Image (no icon) + chevron (onPress)", () => {
     const { toJSON } = render(
       <ModuleNavigationAlt
-        title="With Image"
         image={{ uri: "https://example.com/icon.png" }}
         onPress={onPress}
+        title="With Image"
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -75,7 +75,7 @@ describe("ModuleNavigationAlt - Snapshot (Experimental Enabled)", () => {
 
   it("Title only + chevron (onPress)", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
-      <ModuleNavigationAlt title="My Title" onPress={onPress} icon="spid" />
+      <ModuleNavigationAlt icon="spid" onPress={onPress} title="My Title" />
     );
     expect(toJSON()).toMatchSnapshot();
   });
@@ -83,9 +83,9 @@ describe("ModuleNavigationAlt - Snapshot (Experimental Enabled)", () => {
   it("Title + Subtitle", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ModuleNavigationAlt
-        title="My Title"
-        subtitle="A nice subtitle"
         icon="spid"
+        subtitle="A nice subtitle"
+        title="My Title"
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -94,10 +94,10 @@ describe("ModuleNavigationAlt - Snapshot (Experimental Enabled)", () => {
   it("With Badge (badge + chevron)", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ModuleNavigationAlt
-        title="With Badge"
-        onPress={onPress}
         badge={{ text: "TEST", variant: "highlight" }}
         icon="spid"
+        onPress={onPress}
+        title="With Badge"
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -106,9 +106,9 @@ describe("ModuleNavigationAlt - Snapshot (Experimental Enabled)", () => {
   it("With Image (no icon) + chevron (onPress) - Experimental", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ModuleNavigationAlt
-        title="With Image"
         image={{ uri: "https://example.com/icon.png" }}
         onPress={onPress}
+        title="With Image"
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -117,10 +117,10 @@ describe("ModuleNavigationAlt - Snapshot (Experimental Enabled)", () => {
   it("should forward testID", () => {
     const { getByTestId } = render(
       <ModuleNavigationAlt
-        testID="module-navigation-alt"
-        title="With Image"
         image={{ uri: "https://example.com/icon.png" }}
         onPress={jest.fn()}
+        testID="module-navigation-alt"
+        title="With Image"
       />
     );
 

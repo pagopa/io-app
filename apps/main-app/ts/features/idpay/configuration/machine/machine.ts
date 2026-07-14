@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import {
   assertEvent,
   assign,
@@ -9,6 +9,7 @@ import {
   fromPromise,
   setup
 } from "xstate";
+
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import { IbanListDTO } from "../../../../../definitions/idpay/IbanListDTO";
 import { IbanPutDTO } from "../../../../../definitions/idpay/IbanPutDTO";
@@ -129,7 +130,7 @@ export const idPayConfigurationMachine = setup({
     ),
     enrollIban: fromPromise<
       undefined,
-      { initiativeId: string; iban: IbanDTO | IbanPutDTO }
+      { iban: IbanDTO | IbanPutDTO; initiativeId: string }
     >(notImplementedStub)
   },
   guards: {

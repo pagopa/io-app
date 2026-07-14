@@ -1,5 +1,6 @@
 import { Body, ContentWrapper, VStack } from "@io-app/design-system";
 import I18n from "i18next";
+
 import { OfflineFailureComponent } from "../../../../components/error/OfflineFailure";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -31,10 +32,10 @@ const ItwCredentialTrustmarkScreenComponent = (params: ScreenProps) => {
   return (
     <ItwTrustmarkMachineProvider credentialType={credentialType}>
       <IOScrollViewWithLargeHeader
+        headerActionsProp={{ showHelp: true }}
         title={{
           label: credentialName
         }}
-        headerActionsProp={{ showHelp: true }}
       >
         <ContentWrapper>
           <VStack space={24}>

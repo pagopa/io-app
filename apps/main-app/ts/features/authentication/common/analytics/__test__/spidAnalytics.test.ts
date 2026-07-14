@@ -1,13 +1,12 @@
+import { mixpanelTrack } from "../../../../../mixpanel";
+import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/profileProperties";
+import { buildEventProperties } from "../../../../../utils/analytics";
+import { AUTH_ERRORS } from "../../components/AuthErrorComponent";
 import {
   EventProperties,
   trackLoginSpidError,
   trackLoginSpidIdpSelected
 } from "../spidAnalytics";
-
-import { AUTH_ERRORS } from "../../components/AuthErrorComponent";
-import { mixpanelTrack } from "../../../../../mixpanel";
-import { buildEventProperties } from "../../../../../utils/analytics";
-import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/profileProperties";
 
 jest.mock("../../../../../mixpanel", () => ({
   mixpanelTrack: jest.fn()

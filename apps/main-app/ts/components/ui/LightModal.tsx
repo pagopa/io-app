@@ -22,18 +22,19 @@ import {
   StyleSheet,
   View
 } from "react-native";
+
 import { isScreenReaderEnabled } from "../../utils/accessibility";
 export type LightModalContextInterface = Readonly<{
   component: ReactNode;
-  showModal: (component: ReactNode) => void;
-  showModalFadeInAnimation: (component: ReactNode) => void;
+  hideModal: () => void;
+  onHiddenModal: () => void;
+  setOnHiddenModal: (callback: () => void) => void;
   showAnimatedModal: (
     component: ReactNode,
     animatedValue?: AnimationLightModal
   ) => void;
-  hideModal: () => void;
-  onHiddenModal: () => void;
-  setOnHiddenModal: (callback: () => void) => void;
+  showModal: (component: ReactNode) => void;
+  showModalFadeInAnimation: (component: ReactNode) => void;
 }>;
 
 export const LightModalContext = createContext<LightModalContextInterface>({
@@ -132,11 +133,11 @@ const FadeInAnimation = Animated.timing(fadeAnim, {
 });
 
 export type AnimationLightModal =
-  | typeof ScaleAnimation
-  | typeof TopBottomAnimation
   | typeof BottomTopAnimation
   | typeof LeftRightAnimation
-  | typeof RightLeftAnimation;
+  | typeof RightLeftAnimation
+  | typeof ScaleAnimation
+  | typeof TopBottomAnimation;
 
 export const LightModalConsumer = LightModalContext.Consumer;
 

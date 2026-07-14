@@ -10,8 +10,8 @@ import { GlobalState } from "../../store/reducers/types";
 // Keys accepted by the hook, add new keys here if you need to check for app update on a specific feature
 export type AppUpdateFeatureKey =
   | "fims"
-  | "idpay.onboarding"
   | "idpay.initiative_details"
+  | "idpay.onboarding"
   | "send";
 
 export type RequiredUpdateMixPanelTracking = {

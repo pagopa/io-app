@@ -10,8 +10,8 @@ import {
   IOButton,
   IOColors,
   IOPictograms,
-  VSpacer,
-  useIOTheme
+  useIOTheme,
+  VSpacer
 } from "@io-app/design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import {
@@ -33,6 +33,7 @@ import HapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import {
   IOStackNavigationProp,
   IOStackNavigationRouteProps
@@ -47,11 +48,11 @@ import {
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
 import {
-  WAIT_TIMEOUT_NAVIGATION,
-  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY,
   accessibityTimeout,
   analyticActions,
-  getTextForState
+  getTextForState,
+  WAIT_TIMEOUT_NAVIGATION,
+  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
 } from "../../../activeSessionLogin/shared/utils";
 import {
   trackLoginCieCardReaderScreen,
@@ -64,26 +65,26 @@ import CieCardReadingAnimation, {
   ReadingState
 } from "../components/CieCardReadingAnimation";
 import {
+  cieAuthenticationError,
   CieAuthenticationErrorPayload,
-  CieAuthenticationErrorReason,
-  cieAuthenticationError
+  CieAuthenticationErrorReason
 } from "../store/actions";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieUatEndpoint } from "../utils/endpoints";
-
-export type CieCardReaderScreenNavigationParams = {
-  ciePin: string;
-  authorizationUri: string;
-};
 
 export type CieCardReaderNavigationProps = IOStackNavigationRouteProps<
   AuthenticationParamsList,
   "CIE_CARD_READER_SCREEN"
 >;
 
+export type CieCardReaderScreenNavigationParams = {
+  authorizationUri: string;
+  ciePin: string;
+};
+
 type SetErrorParameter = {
-  eventReason: CieAuthenticationErrorReason;
   errorDescription?: string;
+  eventReason: CieAuthenticationErrorReason;
   navigation?: () => void;
 };
 
@@ -103,10 +104,10 @@ const styles = StyleSheet.create({
 
 const getPictogramName = (state: ReadingState): IOPictograms => {
   switch (state) {
-    case ReadingState.error:
-      return "empty";
     case ReadingState.completed:
       return "success";
+    case ReadingState.error:
+      return "empty";
     case ReadingState.reading:
     case ReadingState.waiting_card:
     default:
@@ -161,14 +162,6 @@ const CieCardReaderScreen = () => {
   // replacing the original updateContent / getTextForState imperative calls.
   const { title, subtitle, content } = useMemo(() => {
     switch (readingState) {
-      case ReadingState.reading:
-        return {
-          title: I18n.t("authentication.cie.card.readerCardTitle"),
-          subtitle: "",
-          content: I18n.t("authentication.cie.card.readerCardFooter")
-        };
-      case ReadingState.error:
-        return getTextForState(ReadingState.error, errorMessage);
       case ReadingState.completed:
         return {
           title: I18n.t("authentication.cie.card.cieCardValid"),
@@ -176,6 +169,14 @@ const CieCardReaderScreen = () => {
           content: isScreenReaderEnabled
             ? I18n.t("authentication.cie.card.cieCardValid")
             : undefined
+        };
+      case ReadingState.error:
+        return getTextForState(ReadingState.error, errorMessage);
+      case ReadingState.reading:
+        return {
+          title: I18n.t("authentication.cie.card.readerCardTitle"),
+          subtitle: "",
+          content: I18n.t("authentication.cie.card.readerCardFooter")
         };
       default:
         return getTextForState(ReadingState.waiting_card);
@@ -235,15 +236,9 @@ const CieCardReaderScreen = () => {
       handleSendAssistanceLog(choosenTool, event.event);
       const nav = navigationRef.current;
       switch (event.event) {
-        case "ON_TAG_DISCOVERED":
-          if (readingStateRef.current !== ReadingState.reading) {
-            setReadingState(ReadingState.reading);
-            HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
-          }
-          break;
         case "Function not supported" as unknown:
-        case "TAG_ERROR_NFC_NOT_SUPPORTED":
         case "ON_TAG_DISCOVERED_NOT_CIE":
+        case "TAG_ERROR_NFC_NOT_SUPPORTED":
           setErrorRef.current({
             eventReason: event.event,
             navigation: () =>
@@ -262,6 +257,16 @@ const CieCardReaderScreen = () => {
               })
           });
           break;
+        case "CERTIFICATE_EXPIRED":
+        case "CERTIFICATE_REVOKED":
+          setErrorRef.current({
+            eventReason: event.event,
+            navigation: () =>
+              nav.navigate(AUTHENTICATION_ROUTES.MAIN, {
+                screen: AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN
+              })
+          });
+          break;
         case "EXTENDED_APDU_NOT_SUPPORTED":
           setErrorRef.current({
             eventReason: event.event,
@@ -272,13 +277,9 @@ const CieCardReaderScreen = () => {
               })
           });
           break;
-        case "Transmission Error":
-        case "ON_TAG_LOST":
-          setErrorRef.current({ eventReason: event.event });
-          break;
-        case "PIN Locked":
         case "ON_CARD_PIN_LOCKED":
         case "ON_PIN_ERROR":
+        case "PIN Locked":
           setErrorRef.current({
             eventReason: event.event,
             navigation: () =>
@@ -293,15 +294,15 @@ const CieCardReaderScreen = () => {
               })
           });
           break;
-        case "CERTIFICATE_EXPIRED":
-        case "CERTIFICATE_REVOKED":
-          setErrorRef.current({
-            eventReason: event.event,
-            navigation: () =>
-              nav.navigate(AUTHENTICATION_ROUTES.MAIN, {
-                screen: AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN
-              })
-          });
+        case "ON_TAG_DISCOVERED":
+          if (readingStateRef.current !== ReadingState.reading) {
+            setReadingState(ReadingState.reading);
+            HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
+          }
+          break;
+        case "ON_TAG_LOST":
+        case "Transmission Error":
+          setErrorRef.current({ eventReason: event.event });
           break;
         default:
           break;
@@ -322,7 +323,7 @@ const CieCardReaderScreen = () => {
   );
 
   // Holds the consent URI so it is accessible in the completed-state effect below
-  const cieConsentUriRef = useRef<string | null>(null);
+  const cieConsentUriRef = useRef<null | string>(null);
 
   const handleCieSuccess = useCallback(
     (cieConsentUri: string) => {
@@ -470,9 +471,9 @@ const CieCardReaderScreen = () => {
       <View style={{ alignItems: "center" }}>
         <View>
           <IOButton
-            variant="link"
             label={I18n.t("global.buttons.close")}
             onPress={handleCancel}
+            variant="link"
           />
         </View>
       </View>
@@ -481,17 +482,17 @@ const CieCardReaderScreen = () => {
       <View style={{ alignItems: "center" }}>
         <View>
           <IOButton
-            variant="solid"
             label={I18n.t("authentication.cie.nfc.retry")}
             onPress={() => void startCieiOS(isCieUatEnabled)}
+            variant="solid"
           />
         </View>
         <VSpacer size={24} />
         <View>
           <IOButton
-            variant="link"
             label={I18n.t("global.buttons.close")}
             onPress={handleCancel}
+            variant="link"
           />
         </View>
       </View>
@@ -507,9 +508,9 @@ const CieCardReaderScreen = () => {
         >
           <ContentWrapper>
             <CieCardReadingAnimation
+              circleColor={circleColor}
               pictogramName={getPictogramName(readingState)}
               readingState={readingState}
-              circleColor={circleColor}
             />
             <VSpacer size={32} />
             <Title text={title} />

@@ -1,12 +1,12 @@
 import * as mixpanelModule from "../../../../../mixpanel";
 import {
-  trackLoginCiePinScreen,
-  trackLoginCiePinInfo,
   trackLoginCieCardReaderScreen,
+  trackLoginCieCardReadingError,
   trackLoginCieCardReadingSuccess,
   trackLoginCieConsentDataUsageScreen,
-  trackLoginCieCardReadingError,
-  trackLoginCieDataSharingError
+  trackLoginCieDataSharingError,
+  trackLoginCiePinInfo,
+  trackLoginCiePinScreen
 } from "../cieAnalytics";
 
 describe("cieAnalytics", () => {

@@ -8,6 +8,7 @@ import {
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { useLayoutEffect } from "react";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { generateDynamicUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig.ts";
@@ -90,13 +91,13 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
       headerShown: true,
       header: () => (
         <HeaderSecondLevel
-          title={""}
-          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: dismissalDialog.show
           }}
+          title={""}
+          type="singleAction"
         />
       )
     });

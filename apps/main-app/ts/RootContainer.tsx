@@ -1,9 +1,9 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect, useRef } from "react";
-
 import { AccessibilityInfo, AppState, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
+
 import DebugInfoOverlay from "./components/debug/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
@@ -93,9 +93,9 @@ const RootContainerInner = ({ store }: { store: Store }) => {
   return (
     <>
       <StatusBar
-        translucent
-        barStyle={"dark-content"}
         backgroundColor={"transparent"}
+        barStyle={"dark-content"}
+        translucent
       />
       <IONavigationContainer />
 

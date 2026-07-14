@@ -3,14 +3,14 @@ import {
   IOVisualCostants,
   ListItemHeader
 } from "@io-app/design-system";
-
 import { PropsWithChildren } from "react";
 import { View } from "react-native";
+
 import { useDebugEnabled } from "./withDebugEnabled";
 
 export type DebugViewProps = {
-  title?: string;
   ignoreHorizontalMargins?: boolean;
+  title?: string;
 };
 
 /**
@@ -27,7 +27,6 @@ export const DebugView = ({
   }
   return (
     <View
-      testID="DebugViewTestID"
       style={{
         paddingHorizontal: 24,
         paddingBottom: 12,
@@ -36,8 +35,9 @@ export const DebugView = ({
           ? -IOVisualCostants.appMarginDefault
           : 0
       }}
+      testID="DebugViewTestID"
     >
-      <ListItemHeader label={title} iconName="ladybug" />
+      <ListItemHeader iconName="ladybug" label={title} />
       {children}
     </View>
   );

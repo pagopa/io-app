@@ -1,16 +1,17 @@
 import { fireEvent, waitFor } from "@testing-library/react-native";
-import { createStore } from "redux";
-import { Alert } from "react-native";
 import I18n from "i18next";
-import * as selectors from "../../../../../store/hooks";
-import * as privacySelectors from "../../../common/store/selectors/userDataProcessing";
-import * as cgnSelectors from "../../../../bonus/cgn/store/reducers/details";
-import RemoveAccountDetails from "../RemoveAccountDetailsScreen";
+import { Alert } from "react-native";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import * as selectors from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as cgnSelectors from "../../../../bonus/cgn/store/reducers/details";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import { resetDeleteUserDataProcessing } from "../../../common/store/actions/userDataProcessing";
+import * as privacySelectors from "../../../common/store/selectors/userDataProcessing";
+import RemoveAccountDetails from "../RemoveAccountDetailsScreen";
 
 const mockDispatch = jest.fn();
 const mockToast = { error: jest.fn(), success: jest.fn(), hideAll: jest.fn() };
@@ -34,11 +35,11 @@ describe("RemoveAccountDetailsScreen", () => {
     jest.clearAllMocks();
     (selectors.useIOSelector as jest.Mock).mockImplementation(selector => {
       switch (selector) {
-        case privacySelectors.isUserDataProcessingDeleteLoadingSelector:
+        case cgnSelectors.isCgnEnrolledSelector:
           return false;
         case privacySelectors.isUserDataProcessingDeleteErrorSelector:
           return false;
-        case cgnSelectors.isCgnEnrolledSelector:
+        case privacySelectors.isUserDataProcessingDeleteLoadingSelector:
           return false;
         default:
           return undefined;
