@@ -5,13 +5,16 @@ import {
   ListItemHeader,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useRef } from "react";
+
+import type { CredentialIssuanceMode } from "../../machine/credential/context";
+
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -20,6 +23,7 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackOpenItwTos } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
@@ -35,7 +39,6 @@ import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import type { CredentialIssuanceMode } from "../../machine/credential/context";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
@@ -82,7 +85,7 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   );
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
-  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
+  usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
@@ -119,8 +122,8 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
 
 type ContentViewProps = {
   credentialType: string;
-  requiredClaimNames: ReadonlyArray<string>;
   eid: CredentialMetadata;
+  requiredClaimNames: ReadonlyArray<string>;
 };
 
 /**
@@ -200,7 +203,7 @@ const ContentView = ({
 
   return (
     <ForceScrollDownView
-      onThresholdCrossed={trackScrollToBottom}
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       footerActions={{
         actions: {
           type: "TwoButtons",
@@ -215,6 +218,7 @@ const ContentView = ({
           }
         }
       }}
+      onThresholdCrossed={trackScrollToBottom}
     >
       <ContentWrapper>
         <VSpacer size={24} />
@@ -238,11 +242,11 @@ const ContentView = ({
         />
         <VSpacer size={24} />
         <ListItemHeader
+          iconColor={theme["icon-default"]}
+          iconName="security"
           label={I18n.t(
             "features.itWallet.issuance.credentialAuth.requiredClaims"
           )}
-          iconName="security"
-          iconColor={theme["icon-default"]}
         />
         <ItwRequestedClaimsList items={requiredClaims} />
         <VSpacer size={32} />

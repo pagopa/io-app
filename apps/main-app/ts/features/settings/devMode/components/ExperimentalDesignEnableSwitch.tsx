@@ -1,13 +1,11 @@
+import { ListItemSwitch, useIOExperimentalDesign } from "@io-app/design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  ListItemSwitch,
-  useIOExperimentalDesign
-} from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { useIOSelector, useIODispatch } from "../../../../store/hooks";
-import { isExperimentalDesignEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { preferencesExperimentalDesignEnabled } from "../../../../store/actions/persistedPreferences";
+
 import { DS_PERSISTENCE_KEY } from "../../../../common/context/DSExperimentalContext";
+import { preferencesExperimentalDesignEnabled } from "../../../../store/actions/persistedPreferences";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isExperimentalDesignEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 const ExperimentalDesignEnableSwitch = () => {
   const isExperimentalDesignEnabled = useIOSelector(
@@ -34,8 +32,8 @@ const ExperimentalDesignEnableSwitch = () => {
   return (
     <ListItemSwitch
       label={I18n.t("profile.main.experimentalEnvironment")}
-      value={isExperimentalDesignEnabled && isExperimental}
       onSwitchValueChange={onSwitchValueChange}
+      value={isExperimentalDesignEnabled && isExperimental}
     />
   );
 };

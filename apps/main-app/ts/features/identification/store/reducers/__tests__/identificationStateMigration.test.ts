@@ -1,10 +1,11 @@
 import MockDate from "mockdate";
 import { PersistPartial } from "redux-persist";
+
+import { IdentificationState } from "..";
 import {
   IDENTIFICATION_STATE_MIGRATION_VERSION,
   identificationStateMigration
 } from "../../../../../store/reducers";
-import { IdentificationState } from "..";
 
 MockDate.set(new Date("2024-03-13T10:30:20.000Z"));
 

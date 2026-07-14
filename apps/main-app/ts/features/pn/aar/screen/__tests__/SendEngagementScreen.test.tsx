@@ -1,21 +1,22 @@
-import { createStore } from "redux";
 import { act, fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
+import { createStore } from "redux";
+
+import * as navigation from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { SendEngagementScreen } from "../SendEngagementScreen";
-import PN_ROUTES from "../../../navigation/routes";
-import * as navigation from "../../../../../navigation/params/AppParamsList";
-import { pnActivationUpsert } from "../../../store/actions";
 import { GlobalState } from "../../../../../store/reducers/types";
-import * as sendAnalytics from "../../../analytics/send";
-import { NOTIFICATIONS_ROUTES } from "../../../../pushNotifications/navigation/routes";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import {
   NotificationModalFlow,
   SendOpeningSource,
   SendUserType
 } from "../../../../pushNotifications/analytics";
+import { NOTIFICATIONS_ROUTES } from "../../../../pushNotifications/navigation/routes";
+import * as sendAnalytics from "../../../analytics/send";
+import PN_ROUTES from "../../../navigation/routes";
+import { pnActivationUpsert } from "../../../store/actions";
+import { SendEngagementScreen } from "../SendEngagementScreen";
 
 const DEFAULT_OPENING_SOURCE: SendOpeningSource = "not_set";
 const DEFAULT_USER_TYPE: SendUserType = "not_set";
@@ -31,8 +32,8 @@ jest.mock("../../../analytics/activationReminderBanner", () => ({
 
 const mockToastSuccess = jest.fn();
 const mockToastError = jest.fn();
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual("@pagopa/io-app-design-system"),
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual("@io-app/design-system"),
   useIOToast: () => ({
     show: (_message: string, _options?: unknown) => jest.fn(),
     error: mockToastError,

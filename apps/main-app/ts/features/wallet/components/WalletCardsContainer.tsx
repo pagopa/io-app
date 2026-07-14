@@ -1,15 +1,15 @@
-import { ListItemHeader } from "@pagopa/io-app-design-system";
+import { ListItemHeader } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
+import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import ItwActivationSuccessFeedbackBanner from "../../itwallet/common/components/ItwActivationSuccessFeedbackBanner";
-import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
-import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import {
   itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderWalletDiscoveryBannerSelector
@@ -25,9 +25,9 @@ import {
   shouldRenderWalletLoadingStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
-import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
+import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
 /**
@@ -73,11 +73,11 @@ const WalletCardsContainer = () => {
         )}
         {walletActivationFeedbackBannerData && (
           <ItwActivationSuccessFeedbackBanner
-            docStatus={walletActivationFeedbackBannerData.docStatus}
             authMethod={walletActivationFeedbackBannerData.authMethod}
+            docStatus={walletActivationFeedbackBannerData.docStatus}
           />
         )}
-        <View testID="walletCardsContainerTestID" style={styles.walletContent}>
+        <View style={styles.walletContent} testID="walletCardsContainerTestID">
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
           <OtherWalletCardsContainer />
         </View>
@@ -94,10 +94,10 @@ const WalletCardsContainer = () => {
 
   return (
     <Animated.View
-      style={styles.container}
       layout={LinearTransition.duration(200)}
+      style={styles.container}
     >
-      <ItwEnvironmentAlert />
+      {/* <ItwEnvironmentAlert /> */}
       <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />
 
@@ -111,9 +111,9 @@ const WalletCardsContainer = () => {
  */
 const WalletCardsContainerSkeleton = () => (
   <>
-    <WalletCardSkeleton testID="walletCardSkeletonTestID_1" cardProps={{}} />
-    <WalletCardSkeleton testID="walletCardSkeletonTestID_2" cardProps={{}} />
-    <WalletCardSkeleton testID="walletCardSkeletonTestID_3" cardProps={{}} />
+    <WalletCardSkeleton cardProps={{}} testID="walletCardSkeletonTestID_1" />
+    <WalletCardSkeleton cardProps={{}} testID="walletCardSkeletonTestID_2" />
+    <WalletCardSkeleton cardProps={{}} testID="walletCardSkeletonTestID_3" />
   </>
 );
 
@@ -136,14 +136,14 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   return (
     <View>
       <ListItemHeader
-        testID={"walletCardsCategoryOtherHeaderTestID"}
         label={I18n.t("features.wallet.cards.categories.other")}
+        testID={"walletCardsCategoryOtherHeaderTestID"}
       />
       <View style={styles.cardsWrapper}>
         <WalletCardsCategoryContainer
+          cards={cards}
           key="cards_category_other"
           testID="otherWalletCardsContainerTestID"
-          cards={cards}
         />
       </View>
       <WalletCardsCategoryRetryErrorBanner />

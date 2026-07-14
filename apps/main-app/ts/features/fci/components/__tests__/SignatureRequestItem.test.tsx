@@ -1,8 +1,9 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
-import SignatureRequestItem from "../SignatureRequestItem";
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
+
 import { DossierTitle } from "../../../../../definitions/fci/DossierTitle";
+import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
+import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
+import SignatureRequestItem from "../SignatureRequestItem";
 
 type Props = {
   item: SignatureRequestListView;

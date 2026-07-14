@@ -1,12 +1,13 @@
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
-import { trackItwCiePinTutorialCie } from "../../analytics";
+
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectIdentification
 } from "../../../machine/eid/selectors";
+import { trackItwCiePinTutorialCie } from "../../analytics";
 import { ItwCiePreparationAnimatedImage } from "../components/ItwCiePreparationAnimatedImage";
 import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
@@ -37,7 +38,13 @@ export const ItwCiePreparationNfcScreen = () => {
 
   return (
     <ItwCiePreparationScreenContent
-      title={I18n.t(`features.itWallet.identification.cie.prepare.nfc.title`)}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: I18n.t(`features.itWallet.identification.cie.prepare.nfc.cta`),
+          onPress: () => machineRef.send({ type: "next" })
+        }
+      }}
       description={I18n.t(
         `features.itWallet.identification.cie.prepare.nfc.description`
       )}
@@ -47,13 +54,7 @@ export const ItwCiePreparationNfcScreen = () => {
           staticSource={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc_static.png")}
         />
       }
-      actions={{
-        type: "SingleButton",
-        primary: {
-          label: I18n.t(`features.itWallet.identification.cie.prepare.nfc.cta`),
-          onPress: () => machineRef.send({ type: "next" })
-        }
-      }}
+      title={I18n.t(`features.itWallet.identification.cie.prepare.nfc.title`)}
     >
       {infoBottomSheet.bottomSheet}
     </ItwCiePreparationScreenContent>

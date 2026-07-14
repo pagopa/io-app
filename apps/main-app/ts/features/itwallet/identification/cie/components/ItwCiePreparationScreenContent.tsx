@@ -1,4 +1,4 @@
-import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VStack } from "@io-app/design-system";
 import { PropsWithChildren, ReactNode } from "react";
 import {
   Dimensions,
@@ -7,17 +7,18 @@ import {
   StyleSheet,
   View
 } from "react-native";
+
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 
 type Props = {
-  title: string;
-  description: string;
   actions?: IOScrollViewActions;
+  description: string;
   goBack?: () => void;
+  title: string;
 } & (
-  | { imageSrc: ImageSourcePropType; imageComponent?: ReactNode }
-  | { imageSrc?: never; imageComponent: ReactNode }
+  | { imageComponent: ReactNode; imageSrc?: never }
+  | { imageComponent?: ReactNode; imageSrc: ImageSourcePropType }
 );
 
 export const ItwCiePreparationScreenContent = ({
@@ -30,11 +31,11 @@ export const ItwCiePreparationScreenContent = ({
   goBack
 }: PropsWithChildren<Props>) => (
   <IOScrollViewWithLargeHeader
-    title={{ label: title }}
-    description={description}
-    headerActionsProp={{ showHelp: true }}
     actions={actions}
+    description={description}
     goBack={goBack}
+    headerActionsProp={{ showHelp: true }}
+    title={{ label: title }}
   >
     <ContentWrapper>
       <VStack space={16}>
@@ -43,8 +44,8 @@ export const ItwCiePreparationScreenContent = ({
           {imageComponent ?? (
             <Image
               accessibilityIgnoresInvertColors
-              source={imageSrc}
               resizeMode="contain"
+              source={imageSrc}
               style={styles.image}
             />
           )}
