@@ -1,11 +1,7 @@
 import { memo, ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import { useLinkTo } from "@react-navigation/native";
-import {
-  IOColors,
-  IOVisualCostants,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+import { IOColors, IOVisualCostants, useIOTheme } from "@io-app/design-system";
 import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";

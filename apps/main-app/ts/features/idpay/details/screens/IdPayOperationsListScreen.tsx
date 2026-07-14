@@ -7,7 +7,7 @@ import {
   IOVisualCostants,
   LoadingSpinner,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useRoute } from "@react-navigation/core";
 import { RouteProp } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";

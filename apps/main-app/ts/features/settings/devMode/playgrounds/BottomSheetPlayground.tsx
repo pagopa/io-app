@@ -7,7 +7,7 @@ import {
   VStack,
   useFooterActionsMeasurements,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ModalBottomSheet } from "@swmansion/react-native-bottom-sheet";
 import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";

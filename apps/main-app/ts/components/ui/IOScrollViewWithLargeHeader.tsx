@@ -7,7 +7,7 @@ import {
   useIOTheme,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import { ComponentProps, ReactNode, Ref, useMemo, useState } from "react";
 

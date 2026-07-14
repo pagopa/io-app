@@ -1,6 +1,6 @@
 import { ComponentProps, memo } from "react";
 import I18n from "i18next";
-import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
+import { ListItemAction, useIOToast } from "@io-app/design-system";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isFavouriteServiceSelector } from "../../favouriteServices/store/selectors";
 import {

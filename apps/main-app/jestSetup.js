@@ -25,6 +25,19 @@ import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
 jest.mock("expo-screen-capture", () => ({}));
+jest.mock("expo-background-task", () => ({
+  BackgroundTaskStatus: { Available: 2, Restricted: 1 },
+  BackgroundTaskResult: { Success: 1, Failed: 2 },
+  getStatusAsync: jest.fn().mockResolvedValue(2),
+  registerTaskAsync: jest.fn().mockResolvedValue(undefined),
+  unregisterTaskAsync: jest.fn().mockResolvedValue(undefined),
+  triggerTaskWorkerForTestingAsync: jest.fn().mockResolvedValue(undefined),
+  addExpirationListener: jest.fn(() => ({ remove: jest.fn() }))
+}));
+jest.mock("expo-task-manager", () => ({
+  defineTask: jest.fn(),
+  isTaskRegisteredAsync: jest.fn().mockResolvedValue(false)
+}));
 jest.mock("react-native-haptic-feedback", () => ({
   ...jest.requireActual("react-native-haptic-feedback"),
   trigger: jest.fn()
@@ -129,8 +142,8 @@ jest.mock("@gorhom/bottom-sheet", () => {
   };
 });
 
-jest.mock("@pagopa/io-app-design-system", () => {
-  const actual = jest.requireActual("@pagopa/io-app-design-system");
+jest.mock("@io-app/design-system", () => {
+  const actual = jest.requireActual("@io-app/design-system");
   const React = require("react");
   const { Text } = require("react-native");
   return {

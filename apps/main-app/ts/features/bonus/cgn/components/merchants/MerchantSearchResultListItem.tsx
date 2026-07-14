@@ -5,7 +5,7 @@ import {
   H6,
   IOColors,
   ListItemNav
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Keyboard, Text, View, StyleSheet } from "react-native";
 import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";

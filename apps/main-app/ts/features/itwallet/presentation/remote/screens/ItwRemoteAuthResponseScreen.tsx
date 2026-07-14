@@ -1,5 +1,5 @@
 import { Linking } from "react-native";
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";

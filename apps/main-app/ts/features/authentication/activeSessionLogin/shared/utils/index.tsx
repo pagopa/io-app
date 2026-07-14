@@ -50,7 +50,7 @@ export type TextForState = {
 // some texts changes depending on current running Platform
 export const getTextForState = (
   state: ReadingState.waiting_card | ReadingState.error,
-  errorMessage: string = ""
+  errorMessage = ""
 ): TextForState => {
   const texts: Record<
     ReadingState.waiting_card | ReadingState.error,

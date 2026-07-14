@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { CheckboxLabel } from "@pagopa/io-app-design-system";
+import { CheckboxLabel } from "@io-app/design-system";
 import { QtspClause } from "../../../../definitions/fci/QtspClause";
 import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
 import { useIOSelector } from "../../../store/hooks";

@@ -1,4 +1,4 @@
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { HeaderSecondLevel } from "@io-app/design-system";
 import i18n from "i18next";
 import { useCallback, useEffect, useLayoutEffect } from "react";
 import { Alert } from "react-native";
@@ -33,7 +33,6 @@ export const SendAarActivateNfcScreen = ({
   useEffect(() => {
     if (currentAarData.type === sendAarFlowStates.cieScanning) {
       const { type: _, ...params } = currentAarData;
-
       navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING, params);
     }
   }, [currentAarData, navigation]);

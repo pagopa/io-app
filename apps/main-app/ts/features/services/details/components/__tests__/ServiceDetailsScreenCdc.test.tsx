@@ -1,4 +1,4 @@
-import { Body } from "@pagopa/io-app-design-system";
+import { Body } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import { createStore } from "redux";

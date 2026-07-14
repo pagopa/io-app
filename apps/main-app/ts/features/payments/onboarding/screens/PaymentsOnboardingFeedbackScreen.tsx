@@ -1,4 +1,4 @@
-import { IOPictograms } from "@pagopa/io-app-design-system";
+import { IOPictograms } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useRef } from "react";

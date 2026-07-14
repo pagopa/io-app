@@ -2,7 +2,7 @@ import {
   HSpacer,
   IOSpacingScale,
   IOVisualCostants
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { FlatList, FlatListProps, StyleSheet } from "react-native";
 import { TestID, WithTestID } from "../../../../types/WithTestID";
 import {

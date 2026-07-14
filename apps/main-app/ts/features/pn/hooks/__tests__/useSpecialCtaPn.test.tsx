@@ -1,4 +1,4 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { createStore } from "redux";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -9,10 +9,10 @@ import { openAppStoreUrl } from "../../../../utils/url";
 import * as ANALYTICS from "../../analytics";
 import { useSpecialCtaPn } from "../useSpecialCtaPn";
 
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual("@pagopa/io-app-design-system"),
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual("@io-app/design-system"),
   IOToast: {
-    ...jest.requireActual("@pagopa/io-app-design-system").IOToast,
+    ...jest.requireActual("@io-app/design-system").IOToast,
     success: jest.fn(),
     error: jest.fn()
   }
@@ -217,7 +217,7 @@ type HookState = {
   isLoadingPnActivation: boolean;
 };
 
-const renderHook = (state: HookState, activateFlag: boolean = false) => {
+const renderHook = (state: HookState, activateFlag = false) => {
   const Component = () => {
     const action = useSpecialCtaPn(mockServiceId, activateFlag);
     testingAction = action?.onPress;

@@ -1,5 +1,5 @@
-import { OTPInput } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+import i18n from "i18next";
+import { OTPInput } from "@io-app/design-system";
 import { useEffect, useState } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import CieLoginConfigScreenContent from "../components/CieLoginConfigScreenContent";
@@ -12,13 +12,10 @@ type PinViewProps = {
 };
 const PinView = (props: PinViewProps) => (
   <OTPInput
-    accessibilityValueText={({ valueLength, length }) =>
-      I18n.t("global.accessibility.otpInput.valueText", {
-        valueLength,
-        length
-      })
-    }
     secret
+    accessibilityValueText={({ valueLength, length }) =>
+      i18n.t("global.accessibility.inputDigitCounter", { valueLength, length })
+    }
     value={props.pin}
     length={PIN_LENGTH}
     onValueChange={props.setPin}
@@ -44,6 +41,7 @@ const CieLoginConfigScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      // eslint-disable-next-line i18next/no-literal-string -- hidden developer-only screen, label not localized
       title={{ label: "CIE Login Settings" }}
       testID="CieLoginConfigScreen"
       includeContentMargins

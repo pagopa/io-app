@@ -1,4 +1,4 @@
-import { IOThemeContextProvider } from "@pagopa/io-app-design-system";
+import { IOThemeContextProvider } from "@io-app/design-system";
 import { render } from "@testing-library/react-native";
 import I18n from "i18next";
 import { TourStepIndicator } from "../TourStepIndicator";

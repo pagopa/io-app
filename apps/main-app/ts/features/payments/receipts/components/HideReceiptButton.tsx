@@ -1,4 +1,4 @@
-import { ContentWrapper, ListItemAction } from "@pagopa/io-app-design-system";
+import { ContentWrapper, ListItemAction } from "@io-app/design-system";
 import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import I18n from "i18next";

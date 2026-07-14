@@ -1,4 +1,4 @@
-import { H6, VSpacer, VStack } from "@pagopa/io-app-design-system";
+import { H6, VSpacer, VStack } from "@io-app/design-system";
 import { View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";

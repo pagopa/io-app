@@ -9,7 +9,7 @@ import {
   WithTestID,
   useIOTheme,
   useListItemAnimation
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ComponentProps, ReactNode, memo, useCallback } from "react";
 
 import { GestureResponderEvent, Pressable, View } from "react-native";

@@ -1,4 +1,4 @@
-import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
+import { IOColors, Tag, useIOTheme } from "@io-app/design-system";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { isBefore } from "date-fns";
@@ -120,8 +120,8 @@ const getCredentialNameByType = (
 
 export const getCredentialNameFromType = (
   type: string | undefined,
-  isItwCredential: boolean = false,
-  withDefault: string = ""
+  isItwCredential = false,
+  withDefault = ""
 ): string => {
   if (!type) {
     return withDefault;

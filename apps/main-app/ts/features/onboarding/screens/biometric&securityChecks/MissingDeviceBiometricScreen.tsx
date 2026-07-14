@@ -1,4 +1,4 @@
-import { ListItemInfo } from "@pagopa/io-app-design-system";
+import { ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";

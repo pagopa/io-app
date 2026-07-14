@@ -6,7 +6,7 @@ import {
   IOColors,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Second } from "@pagopa/ts-commons/lib/units";
 import { useEffect, useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";

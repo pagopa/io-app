@@ -16,7 +16,7 @@ import {
   IOVisualCostants,
   ModuleIDP,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ComponentProps, FunctionComponent, ReactElement } from "react";
 import { SpidIdp } from "../../../../../utils/idps";
 

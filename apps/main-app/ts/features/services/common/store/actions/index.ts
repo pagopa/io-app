@@ -4,9 +4,11 @@ import { ServicePreferenceActions } from "../../../details/store/actions/prefere
 import { InstitutionServicesActions } from "../../../institution/store/actions";
 import { SearchActions } from "../../../search/store/actions";
 import { FavouriteServicesActions } from "../../../favouriteServices/store/actions";
+import { FseDiscoveryBannerActions } from "../../../fseDiscoveryBanner/store/actions";
 
 export type ServicesActions =
   | FavouriteServicesActions
+  | FseDiscoveryBannerActions
   | InstitutionServicesActions
   | SearchActions
   | ServiceDetailsActions

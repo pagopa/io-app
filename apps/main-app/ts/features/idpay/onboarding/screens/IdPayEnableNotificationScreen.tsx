@@ -1,4 +1,4 @@
-import { Badge, IOToast, VSpacer } from "@pagopa/io-app-design-system";
+import { Badge, IOToast, VSpacer } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";

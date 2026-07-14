@@ -9,7 +9,7 @@ import {
   SearchInput,
   SearchInputRef,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   FlatList,
@@ -39,8 +39,8 @@ import {
 import { MerchantSearchResultListItem } from "../../components/merchants/MerchantSearchResultListItem";
 
 const INPUT_PADDING: IOSpacingScale = 16;
-const MIN_SEARCH_TEXT_LENGTH: number = 3;
-const SEARCH_DELAY: number = 300;
+const MIN_SEARCH_TEXT_LENGTH = 3;
+const SEARCH_DELAY = 300;
 
 export function CgnMerchantSearchScreen() {
   const insets = useSafeAreaInsets();

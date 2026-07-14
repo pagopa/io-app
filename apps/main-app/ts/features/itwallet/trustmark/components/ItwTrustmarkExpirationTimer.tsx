@@ -4,7 +4,7 @@ import {
   Icon,
   IOMarkdownLite,
   IOSkeleton
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { format } from "date-fns";
 import { useMemo } from "react";
 import { View } from "react-native";

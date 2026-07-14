@@ -7,7 +7,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { isDevEnv } from "../environment";
 
-const activeTags: Set<string> = new Set();
+const activeTags = new Set<string>();
 
 const preventScreenCapture = (tag: string) => {
   if (!activeTags.has(tag)) {
@@ -41,7 +41,13 @@ export function usePreventScreenCapture(key?: string) {
 
   useFocusEffect(
     useCallback(() => {
-      if (isDevEnv) {
+      if (
+        isDevEnv ||
+        /* 
+        TODO [SIW-4622] Re-enable screen capture prevention 
+        */
+        true
+      ) {
         return;
       }
 

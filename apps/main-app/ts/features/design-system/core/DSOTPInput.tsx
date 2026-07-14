@@ -13,7 +13,7 @@ import {
   RadioItem,
   VStack,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
 import I18n from "i18next";
 
@@ -131,9 +131,7 @@ const scrollVerticallyToView = (
       scrollViewRef.current.getInnerViewNode(),
       (_: number, y: number, __: number) => {
         scrollViewRef.current?.scrollTo({ y, animated: true });
-      },
-
-      () => {}
+      }
     );
   }
 };

@@ -1,4 +1,4 @@
-import { ListItemAction } from "@pagopa/io-app-design-system";
+import { ListItemAction } from "@io-app/design-system";
 import { useEffect } from "react";
 import { Alert, Platform } from "react-native";
 import I18n from "i18next";

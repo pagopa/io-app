@@ -1,4 +1,4 @@
-import { WithTestID } from "@pagopa/io-app-design-system";
+import { WithTestID } from "@io-app/design-system";
 import { ComponentType } from "react";
 
 import { StyleSheet } from "react-native";
