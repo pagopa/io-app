@@ -38,8 +38,6 @@ import { selectFailure, selectIsLoading } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
 import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/selectors/credentials.ts";
 
-const QRCODE_BOX_BORDER_RADIUS = 16;
-
 export type ItwProximityPresentmentScreenNavigationParams = {
   source?: ItwProximityQrCodeTracking["source"];
 };
@@ -152,32 +150,30 @@ export const ItwProximityPresentmentScreen = ({
         </Animated.View>
       )}
 
-      <View style={styles.qrCodeShadow}>
-        <ItwBrandedBox
-          variant={isFailure ? "error" : "default"}
-          backgroundVariant={"gradient"}
-          borderRadius={QRCODE_BOX_BORDER_RADIUS}
-        >
-          <VStack space={16}>
-            {!isFailure && (
-              <VStack space={8} style={{ marginHorizontal: 16 }}>
-                <H6 style={{ textAlign: "center" }}>
-                  {I18n.t(
-                    "features.itWallet.presentation.proximity.engagement.title"
-                  )}
-                </H6>
-                <BodySmall style={{ textAlign: "center" }}>
-                  {I18n.t(
-                    "features.itWallet.presentation.proximity.engagement.instruction"
-                  )}
-                </BodySmall>
-              </VStack>
-            )}
+      <ItwBrandedBox
+        variant={isFailure ? "error" : "default"}
+        backgroundVariant={"gradient"}
+        style={styles.qrCodeShadow}
+      >
+        <VStack space={16}>
+          {!isFailure && (
+            <VStack space={8} style={{ marginHorizontal: 16 }}>
+              <H6 style={{ textAlign: "center" }}>
+                {I18n.t(
+                  "features.itWallet.presentation.proximity.engagement.title"
+                )}
+              </H6>
+              <BodySmall style={{ textAlign: "center" }}>
+                {I18n.t(
+                  "features.itWallet.presentation.proximity.engagement.instruction"
+                )}
+              </BodySmall>
+            </VStack>
+          )}
 
-            <ItwProximityQrCodeImage source={source} />
-          </VStack>
-        </ItwBrandedBox>
-      </View>
+          <ItwProximityQrCodeImage source={source} />
+        </VStack>
+      </ItwBrandedBox>
 
       <View
         style={{ alignSelf: "center", marginTop: 32, marginBottom: 24, gap: 8 }}
@@ -211,7 +207,6 @@ const styles = StyleSheet.create({
     marginBottom: 24
   },
   qrCodeShadow: {
-    boxShadow: `0px 4px 32px ${hexToRgba(IOColors.black, 0.1)}`,
-    borderRadius: QRCODE_BOX_BORDER_RADIUS
+    boxShadow: `0px 4px 32px ${hexToRgba(IOColors.black, 0.1)}`
   }
 });
