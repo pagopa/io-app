@@ -1,5 +1,6 @@
 import { Body, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps

@@ -1,6 +1,5 @@
-import Clipboard from "@react-native-clipboard/clipboard";
 import { IOToast } from "@io-app/design-system";
-
+import Clipboard from "@react-native-clipboard/clipboard";
 import I18n from "i18next";
 
 /**

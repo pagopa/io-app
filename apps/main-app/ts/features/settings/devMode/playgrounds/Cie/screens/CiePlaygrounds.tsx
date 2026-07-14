@@ -9,6 +9,7 @@ import {
 import { CieLogger, CieUtils } from "@pagopa/io-react-native-cie";
 import { Fragment, useCallback, useState } from "react";
 import { Platform } from "react-native";
+
 import { IOScrollView } from "../../../../../../components/ui/IOScrollView";
 import { useAppStateActive } from "../../../../../../hooks/useAppStateActive";
 import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
@@ -104,7 +105,6 @@ export const CiePlaygrounds = () => {
         <Fragment key={`home-screen-info-fragment-${info.label}-${index}`}>
           {index !== 0 && <Divider />}
           <ListItemInfo
-            value={info.label}
             endElement={{
               type: "badge",
               componentProps: {
@@ -112,6 +112,7 @@ export const CiePlaygrounds = () => {
                 variant: info.value ? "success" : "error"
               }
             }}
+            value={info.label}
           />
         </Fragment>
       ))}
@@ -127,9 +128,9 @@ export const CiePlaygrounds = () => {
           <>
             <Divider />
             <ListItemNav
-              value="Open NFC Settings"
               icon="coggle"
               onPress={() => void CieUtils.openNfcSettings()}
+              value="Open NFC Settings"
             />
           </>
         )}
@@ -137,9 +138,9 @@ export const CiePlaygrounds = () => {
           <>
             <Divider />
             <ListItemNav
-              value="View logs"
               icon="docAttach"
               onPress={() => void obtainLogs()}
+              value="View logs"
             />
           </>
         )}

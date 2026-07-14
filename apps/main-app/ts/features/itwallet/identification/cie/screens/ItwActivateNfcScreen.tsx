@@ -5,9 +5,10 @@ import {
   ListItemInfo
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback } from "react";
 import { Alert } from "react-native";
-import I18n from "i18next";
+
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import * as cieUtils from "../../../../authentication/login/cie/utils/cie";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
@@ -55,8 +56,6 @@ export const ItwActivateNfcScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{ label: I18n.t("features.itWallet.identification.nfc.title") }}
-      description={I18n.t("features.itWallet.identification.nfc.description")}
       actions={{
         type: "TwoButtons",
         primary: {
@@ -68,33 +67,35 @@ export const ItwActivateNfcScreen = () => {
           onPress: () => void onContinue()
         }
       }}
+      description={I18n.t("features.itWallet.identification.nfc.description")}
+      title={{ label: I18n.t("features.itWallet.identification.nfc.title") }}
     >
       <ContentWrapper>
         <ListItemHeader
           label={I18n.t("features.itWallet.identification.nfc.header")}
         />
         <ListItemInfo
+          icon="systemSettingsAndroid"
           label={I18n.t("features.itWallet.identification.nfc.steps.label", {
             value: 1
           })}
           value={I18n.t("features.itWallet.identification.nfc.steps.1")}
-          icon="systemSettingsAndroid"
         />
         <Divider />
         <ListItemInfo
+          icon="systemAppsAndroid"
           label={I18n.t("features.itWallet.identification.nfc.steps.label", {
             value: 2
           })}
           value={I18n.t("features.itWallet.identification.nfc.steps.2")}
-          icon="systemAppsAndroid"
         />
         <Divider />
         <ListItemInfo
+          icon="systemToggleInstructions"
           label={I18n.t("features.itWallet.identification.nfc.steps.label", {
             value: 3
           })}
           value={I18n.t("features.itWallet.identification.nfc.steps.3")}
-          icon="systemToggleInstructions"
         />
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>

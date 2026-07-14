@@ -12,6 +12,8 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import cieCanEducationalSource from "../../../../../img/features/pn/cieCanEducational.png";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -22,12 +24,11 @@ import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { trackSendAarMandateCieCanEnter } from "../analytics";
 import { setAarFlowState } from "../store/actions";
-import { sendAarFlowStates } from "../utils/stateUtils";
 import {
   aarAdresseeDenominationSelector,
   currentAarFlowData
 } from "../store/selectors";
-import cieCanEducationalSource from "../../../../../img/features/pn/cieCanEducational.png";
+import { sendAarFlowStates } from "../utils/stateUtils";
 
 export const CIE_CAN_LENGTH = 6;
 
@@ -53,15 +54,15 @@ export const SendAarCieCanInsertionScreen = ({
 
   useEffect(() => {
     switch (currentAarState.type) {
-      case sendAarFlowStates.cieScanningAdvisory: {
-        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL, {
-          animationTypeForReplace: "push"
-        });
-        break;
-      }
       case sendAarFlowStates.cieCanAdvisory: {
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL, {
           animationTypeForReplace: "pop"
+        });
+        break;
+      }
+      case sendAarFlowStates.cieScanningAdvisory: {
+        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL, {
+          animationTypeForReplace: "push"
         });
         break;
       }
@@ -130,13 +131,13 @@ export const SendAarCieCanInsertionScreen = ({
         })}
       </Body>
       <Image
+        accessibilityIgnoresInvertColors
         source={{
           uri
         }}
         style={{
           aspectRatio
         }}
-        accessibilityIgnoresInvertColors
       />
     </VStack>
   );
@@ -157,24 +158,17 @@ export const SendAarCieCanInsertionScreen = ({
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
+    <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
       <KeyboardAvoidingView
         behavior={Platform.select({
           ios: "padding",
           android: undefined
         })}
-        style={{ flex: 1 }}
         keyboardVerticalOffset={headerHeight}
+        style={{ flex: 1 }}
       >
         <IOScrollViewWithLargeHeader
-          title={{
-            label: i18n.t("features.pn.aar.flow.cieCanInsertion.title")
-          }}
-          description={i18n.t(
-            "features.pn.aar.flow.cieCanInsertion.description"
-          )}
-          onDescriptionLinkPress={handleDescriptionLinkPress}
-          headerActionsProp={{ showHelp: true }}
+          alwaysBounceVertical={false}
           contextualHelp={{
             title: i18n.t(
               "features.pn.aar.flow.delegated.cieContextualHelp.title"
@@ -183,31 +177,38 @@ export const SendAarCieCanInsertionScreen = ({
               "features.pn.aar.flow.delegated.cieContextualHelp.body"
             )
           }}
+          description={i18n.t(
+            "features.pn.aar.flow.cieCanInsertion.description"
+          )}
           goBack={handleGoBack}
+          headerActionsProp={{ showHelp: true }}
           includeContentMargins
-          alwaysBounceVertical={false}
+          onDescriptionLinkPress={handleDescriptionLinkPress}
+          title={{
+            label: i18n.t("features.pn.aar.flow.cieCanInsertion.title")
+          }}
         >
           <VSpacer size={8} />
           <OTPInput
+            accessibilityHint={i18n.t(
+              "authentication.cie.pin.accessibility.hint"
+            )}
+            accessibilityLabel={i18n.t(
+              "authentication.cie.pin.accessibility.label"
+            )}
             accessibilityValueText={({ valueLength, length }) =>
               i18n.t("global.accessibility.otpInput.valueText", {
                 valueLength,
                 length
               })
             }
-            ref={canPadViewRef}
-            secret
+            autoFocus={isFocused}
+            key={isFocused ? "focused" : "unfocused"}
             length={CIE_CAN_LENGTH}
             onValueChange={handleCanChange}
+            ref={canPadViewRef}
+            secret
             value={can}
-            autoFocus={isFocused}
-            accessibilityLabel={i18n.t(
-              "authentication.cie.pin.accessibility.label"
-            )}
-            accessibilityHint={i18n.t(
-              "authentication.cie.pin.accessibility.hint"
-            )}
-            key={isFocused ? "focused" : "unfocused"}
           />
         </IOScrollViewWithLargeHeader>
       </KeyboardAvoidingView>

@@ -10,6 +10,7 @@ jest.mock("@io-app/design-system", () => ({
 import { IOToast } from "@io-app/design-system";
 import { Alert } from "react-native";
 import { createStore } from "redux";
+
 import {
   remoteError,
   remoteLoading,
@@ -21,14 +22,14 @@ import * as USEIO from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as ANALYTICS from "../../../common/analytics";
+import { FIMS_ROUTES } from "../../../common/navigation";
 import {
   fimsHistoryExport,
   resetFimsHistoryExportState
 } from "../../store/actions";
 import { FimsHistoryState } from "../../store/reducer";
 import { useFimsHistoryExport } from "../useFimsHistoryResultToasts";
-import { FIMS_ROUTES } from "../../../common/navigation";
-import * as ANALYTICS from "../../../common/analytics";
 
 // eslint-disable-next-line functional/no-let
 let testingHandleExportOnPress = () => {

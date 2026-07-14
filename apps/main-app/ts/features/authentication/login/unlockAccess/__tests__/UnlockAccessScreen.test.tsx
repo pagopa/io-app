@@ -1,12 +1,13 @@
-import configureMockStore from "redux-mock-store";
 import I18n from "i18next";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../store/reducers";
+import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import UnlockAccessScreen from "../../../login/unlockAccess/screens/UnlockAccessScreen";
 import { UnlockAccessProps } from "../components/UnlockAccessComponent";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 describe("UnlockAccessScreen", () => {
   it("render UnlockAccessComponent with authLevel L2", () => {

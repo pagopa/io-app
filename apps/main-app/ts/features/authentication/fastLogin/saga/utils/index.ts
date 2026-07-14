@@ -1,23 +1,39 @@
-import { call, select, put, take, race, delay } from "typed-redux-saga/macro";
+import { IResponseType } from "@pagopa/ts-commons/lib/requests";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import { SagaIterator } from "redux-saga";
+import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { isActionOf } from "typesafe-actions";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { isFastLoginEnabledSelector } from "../../store/selectors";
+
+import { Action } from "../../../../../store/actions/types";
+import { isDevEnv } from "../../../../../utils/environment";
 import {
   checkCurrentSession,
   sessionExpired
 } from "../../../common/store/actions";
-import { Action } from "../../../../../store/actions/types";
 import {
   refreshSessionToken,
   savePendingAction
 } from "../../store/actions/tokenRefreshActions";
-import { isDevEnv } from "../../../../../utils/environment";
+import { isFastLoginEnabledSelector } from "../../store/selectors";
 
 const ACTION_TO_WAIT_FOR_TIMEOUT = 3000 as Millisecond;
+
+export type RefreshApiCallErrorHandlingType = Omit<
+  RefreshApiCallErrorHandlingTypeWithTypeField,
+  "type"
+>;
+
+export type RefreshThirdPartyApiCallOptions =
+  | {
+      action: never;
+      errorHandling?: RefreshThirdPartyApiCallErrorHandling;
+    }
+  | {
+      action?: Action;
+      errorHandling: never;
+    };
 
 type RefreshApiCallErrorHandlingTypeWithTypeField = {
   errorMessage?: string;
@@ -34,25 +50,45 @@ type RefreshThirdPartyApiCallErrorHandling = {
   skipThrowingError?: boolean;
 };
 
-export type RefreshThirdPartyApiCallOptions =
-  | {
-      action?: Action;
-      errorHandling: never;
+type ThirdPartyTokenErrorType = "SESSION_IS_STILL_VALID";
+
+export class ThirdPartyTokenError extends Error {
+  public readonly type?: ThirdPartyTokenErrorType;
+
+  constructor(
+    message: string | undefined,
+    type: ThirdPartyTokenErrorType = "SESSION_IS_STILL_VALID"
+  ) {
+    // Pass parent constructor parameters
+    super(message);
+
+    // Maintains stack trace for where our error was thrown (only available on V8)
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, ThirdPartyTokenError);
     }
-  | {
-      action: never;
-      errorHandling?: RefreshThirdPartyApiCallErrorHandling;
-    };
 
-export type RefreshApiCallErrorHandlingType = Omit<
-  RefreshApiCallErrorHandlingTypeWithTypeField,
-  "type"
->;
+    this.name = "ThirdPartyTokenError";
+    if (message) {
+      this.message = message;
+    }
+    // Set custom information
+    this.type = type;
+  }
+}
 
-function isReduxAction<A extends Action>(
-  obj?: A | RefreshApiCallErrorHandlingType
-): obj is A {
-  return !!(obj && "type" in obj);
+export function* handleSessionExpiredSaga() {
+  const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+  if (isFastLoginEnabled) {
+    yield* put(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
+  } else {
+    yield* put(sessionExpired());
+  }
 }
 
 // The function implementation with flexible parameter handling
@@ -88,34 +124,6 @@ export function* withRefreshApiCall<R, A extends Action>(
     }
   }
   return response;
-}
-
-function* waitForTheTokenRefreshToBeStarted(errorMessage?: string) {
-  const { refreshAction, timeout } = yield* race({
-    refreshAction: take(refreshSessionToken.request),
-    timeout: delay(ACTION_TO_WAIT_FOR_TIMEOUT)
-  });
-
-  if (timeout) {
-    throw new Error(errorMessage);
-  }
-
-  return refreshAction;
-}
-
-function isSessionValidOrWeFailedToCheck(resultAction: Action) {
-  return (
-    (isActionOf(checkCurrentSession.success, resultAction) &&
-      resultAction.payload.isSessionValid) ||
-    isActionOf(checkCurrentSession.failure, resultAction)
-  );
-}
-
-function isSessionInvalid(resultAction: Action) {
-  return (
-    isActionOf(checkCurrentSession.success, resultAction) &&
-    !resultAction.payload.isSessionValid
-  );
 }
 
 export function* withThirdPartyRefreshApiCall<R>(
@@ -188,44 +196,37 @@ export function* withThirdPartyRefreshApiCall<R>(
   return response;
 }
 
-export function* handleSessionExpiredSaga() {
-  const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
-  if (isFastLoginEnabled) {
-    yield* put(
-      refreshSessionToken.request({
-        withUserInteraction: true,
-        showIdentificationModalAtStartup: false,
-        showLoader: true
-      })
-    );
-  } else {
-    yield* put(sessionExpired());
-  }
+function isReduxAction<A extends Action>(
+  obj?: A | RefreshApiCallErrorHandlingType
+): obj is A {
+  return !!(obj && "type" in obj);
 }
 
-type ThirdPartyTokenErrorType = "SESSION_IS_STILL_VALID";
-export class ThirdPartyTokenError extends Error {
-  public readonly type?: ThirdPartyTokenErrorType;
+function isSessionInvalid(resultAction: Action) {
+  return (
+    isActionOf(checkCurrentSession.success, resultAction) &&
+    !resultAction.payload.isSessionValid
+  );
+}
 
-  constructor(
-    message: string | undefined,
-    type: ThirdPartyTokenErrorType = "SESSION_IS_STILL_VALID"
-  ) {
-    // Pass parent constructor parameters
-    super(message);
+function isSessionValidOrWeFailedToCheck(resultAction: Action) {
+  return (
+    (isActionOf(checkCurrentSession.success, resultAction) &&
+      resultAction.payload.isSessionValid) ||
+    isActionOf(checkCurrentSession.failure, resultAction)
+  );
+}
+function* waitForTheTokenRefreshToBeStarted(errorMessage?: string) {
+  const { refreshAction, timeout } = yield* race({
+    refreshAction: take(refreshSessionToken.request),
+    timeout: delay(ACTION_TO_WAIT_FOR_TIMEOUT)
+  });
 
-    // Maintains stack trace for where our error was thrown (only available on V8)
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, ThirdPartyTokenError);
-    }
-
-    this.name = "ThirdPartyTokenError";
-    if (message) {
-      this.message = message;
-    }
-    // Set custom information
-    this.type = type;
+  if (timeout) {
+    throw new Error(errorMessage);
   }
+
+  return refreshAction;
 }
 export const utilsExport = isDevEnv
   ? {

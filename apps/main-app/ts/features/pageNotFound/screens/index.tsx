@@ -1,9 +1,10 @@
 import { useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
+
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { openAppStoreUrl } from "../../../utils/url";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { openAppStoreUrl } from "../../../utils/url";
 import {
   track404ErrorScreen,
   track404ErrorScreenCloseButton,
@@ -23,9 +24,6 @@ export const PageNotFound = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="empty"
-      title={I18n.t("pageNotFound.title")}
-      subtitle={I18n.t("pageNotFound.subtitle")}
       action={{
         testID: BTN_UPDATE_TEST_ID,
         label: I18n.t("btnUpdateApp"),
@@ -36,6 +34,7 @@ export const PageNotFound = () => {
           });
         }
       }}
+      pictogram="empty"
       secondaryAction={{
         testID: BTN_CLOSE_TEST_ID,
         label: I18n.t("global.buttons.close"),
@@ -44,6 +43,8 @@ export const PageNotFound = () => {
           popToTop();
         }
       }}
+      subtitle={I18n.t("pageNotFound.subtitle")}
+      title={I18n.t("pageNotFound.title")}
     />
   );
 };

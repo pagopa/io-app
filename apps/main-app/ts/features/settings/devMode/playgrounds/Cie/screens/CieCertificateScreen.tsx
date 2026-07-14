@@ -1,4 +1,3 @@
-import I18n from "i18next";
 import {
   IOButton,
   ListItemHeader,
@@ -7,6 +6,7 @@ import {
 } from "@io-app/design-system";
 import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
+import I18n from "i18next";
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -16,6 +16,7 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../../../hooks/useScreenEndMargin";
 import { ReadStatusComponent } from "../components/ReadStatusComponent";
@@ -97,7 +98,7 @@ export const CieCertificateReadingScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={["bottom"]}>
+    <SafeAreaView edges={["bottom"]} style={styles.container}>
       <KeyboardAvoidingView
         behavior="padding"
         contentContainerStyle={{
@@ -117,22 +118,22 @@ export const CieCertificateReadingScreen = () => {
         <View>
           <ListItemHeader label="Insert card PIN" />
           <OTPInput
-            secret
             accessibilityValueText={({ valueLength, length }) =>
               I18n.t("global.accessibility.inputDigitCounter", {
                 valueLength,
                 length
               })
             }
-            value={code}
             length={CIE_PIN_LENGTH}
             onValueChange={onPinChanged}
+            secret
+            value={code}
           />
         </View>
         <VSpacer size={16} />
         <IOButton
-          label={status === "reading" ? "Stop reading" : "Start reading"}
           disabled={code.length !== 8}
+          label={status === "reading" ? "Stop reading" : "Start reading"}
           onPress={() =>
             void (status === "reading"
               ? handleStopReading()

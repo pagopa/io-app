@@ -1,5 +1,3 @@
-import { ComponentProps, useCallback } from "react";
-import { FlatList, StyleSheet } from "react-native";
 import {
   Divider,
   IOVisualCostants,
@@ -7,10 +5,13 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
+import { ComponentProps, useCallback } from "react";
+import { FlatList, StyleSheet } from "react-native";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import * as analytics from "../../common/analytics";
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
+import * as analytics from "../../common/analytics";
 
 const styles = StyleSheet.create({
   containerList: {
@@ -63,7 +64,9 @@ export const useServicesHomeBottomSheet = () => {
     component: (
       <FlatList
         data={navigationListItems}
+        ItemSeparatorComponent={() => <Divider />}
         keyExtractor={(item, index) => `${item.value}-${index}`}
+        ListFooterComponent={<VSpacer size={16} />}
         renderItem={({ item: { onPress, ...rest } }) => (
           <ListItemNav
             {...rest}
@@ -75,8 +78,6 @@ export const useServicesHomeBottomSheet = () => {
         )}
         scrollEnabled={false}
         style={styles.containerList}
-        ItemSeparatorComponent={() => <Divider />}
-        ListFooterComponent={<VSpacer size={16} />}
       />
     )
   });

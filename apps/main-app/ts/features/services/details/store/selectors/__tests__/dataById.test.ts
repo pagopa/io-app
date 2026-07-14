@@ -3,14 +3,7 @@ import {
   OrganizationFiscalCode
 } from "@pagopa/ts-commons/lib/strings";
 import { Action } from "redux";
-import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
-import { ServiceDetails } from "../../../../../../../definitions/services/ServiceDetails";
-import { StandardServiceCategoryEnum } from "../../../../../../../definitions/services/StandardServiceCategory";
-import { ScopeTypeEnum } from "../../../../../../../definitions/services/ScopeType";
-import { SpecialServiceCategoryEnum } from "../../../../../../../definitions/services/SpecialServiceCategory";
-import { loadServiceDetail } from "../../actions/details";
-import { appReducer } from "../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../store/reducers/types";
+
 import {
   isErrorServiceDetailsByIdSelector,
   isLoadingServiceDetailsByIdSelector,
@@ -18,6 +11,14 @@ import {
   serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
 } from "..";
+import { ScopeTypeEnum } from "../../../../../../../definitions/services/ScopeType";
+import { ServiceDetails } from "../../../../../../../definitions/services/ServiceDetails";
+import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
+import { SpecialServiceCategoryEnum } from "../../../../../../../definitions/services/SpecialServiceCategory";
+import { StandardServiceCategoryEnum } from "../../../../../../../definitions/services/StandardServiceCategory";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { loadServiceDetail } from "../../actions/details";
 
 const serviceId = "serviceId" as ServiceId;
 

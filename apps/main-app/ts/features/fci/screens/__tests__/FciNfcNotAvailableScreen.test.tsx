@@ -1,15 +1,16 @@
 import { act, fireEvent } from "@testing-library/react-native";
+
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { FCI_ROUTES } from "../../navigation/routes";
-import { FciNfcNotAvailableScreen } from "../loginL3/FciNfcNotAvailableScreen";
 import {
   trackFciNfcNotSupported,
   trackFciNfcNotSupportedClose
 } from "../../analytics";
+import { FCI_ROUTES } from "../../navigation/routes";
 import { fciEndRequest } from "../../store/actions";
+import { FciNfcNotAvailableScreen } from "../loginL3/FciNfcNotAvailableScreen";
 
 jest.mock("../../analytics");
 

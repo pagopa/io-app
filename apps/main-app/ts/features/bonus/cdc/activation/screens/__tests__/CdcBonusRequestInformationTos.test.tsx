@@ -1,12 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { ID_CDC_TYPE } from "../../../../common/utils";
-import CdcBonusRequestInformationTos from "../CdcBonusRequestInformationTos";
 import { CDC_ROUTES } from "../../../common/navigation/routes";
+import CdcBonusRequestInformationTos from "../CdcBonusRequestInformationTos";
 
 const renderComponent = (state: GlobalState) => {
   const store = createStore(appReducer, state as any);

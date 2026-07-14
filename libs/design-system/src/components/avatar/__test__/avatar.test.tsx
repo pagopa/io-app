@@ -1,10 +1,11 @@
 import { render } from "@testing-library/react-native";
+
 import { renderWithExperimentalEnabledContextProvider } from "../../../utils/testing";
 import { Avatar, AvatarSearch } from "../Avatar";
 
 describe("Test Avatar Components", () => {
   it("Avatar Snapshot", () => {
-    const { toJSON } = render(<Avatar size={"small"} logoUri={{ uri: "" }} />);
+    const { toJSON } = render(<Avatar logoUri={{ uri: "" }} size={"small"} />);
     expect(toJSON()).toMatchSnapshot();
   });
 
@@ -17,7 +18,7 @@ describe("Test Avatar Components", () => {
 describe("Test Avatar Components - Experimental Enabled", () => {
   it("Avatar Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
-      <Avatar size={"small"} logoUri={{ uri: "" }} />
+      <Avatar logoUri={{ uri: "" }} size={"small"} />
     );
     expect(toJSON()).toMatchSnapshot();
   });

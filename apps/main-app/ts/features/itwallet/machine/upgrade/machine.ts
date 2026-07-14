@@ -1,9 +1,10 @@
 import { assign, fromCallback, fromPromise, setup } from "xstate";
+
 import { ItwSessionExpiredError } from "../../api/client";
 import {
+  LoadContextOutput,
   RequestAccessTokenOutput,
   RequestAccessTokenParams,
-  LoadContextOutput,
   UpgradeCredentialOutput,
   UpgradeCredentialParams
 } from "./actors";

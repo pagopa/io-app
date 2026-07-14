@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import { ColorValue, LayoutChangeEvent, StyleSheet, View } from "react-native";
+
 import { useIOTheme, useIOThemeContext } from "../../context";
 import {
   IOColors,
@@ -11,11 +12,6 @@ import {
 import { WithTestID } from "../../utils/types";
 import { IOButton, IOButtonBlockSpecificProps } from "../buttons";
 import { useBottomMargins } from "./hooks/useBottomMargins";
-
-type IOButtonBlockProps = Omit<
-  IOButtonBlockSpecificProps,
-  "variant" | "fullWidth"
->;
 
 export type FooterActionsInlineMeasurements = {
   /* Height of the safe bottom area. It includes:
@@ -31,14 +27,19 @@ export type FooterActionsInlineMeasurements = {
 
 type FooterActionsInline = WithTestID<
   PropsWithChildren<{
-    startAction: IOButtonBlockProps;
     endAction: IOButtonBlockProps;
-    onMeasure?: (measurements: FooterActionsInlineMeasurements) => void;
     /* Don't include safe area insets */
     excludeSafeAreaMargins?: boolean;
     /* Fixed at the bottom of the screen */
     fixed?: boolean;
+    onMeasure?: (measurements: FooterActionsInlineMeasurements) => void;
+    startAction: IOButtonBlockProps;
   }>
+>;
+
+type IOButtonBlockProps = Omit<
+  IOButtonBlockSpecificProps,
+  "fullWidth" | "variant"
 >;
 
 const styles = StyleSheet.create({
@@ -119,9 +120,9 @@ export const FooterActionsInline = ({
       testID={testID}
     >
       <View
-        style={[styles.buttonContainer, { paddingTop: topSpacing }]}
         onLayout={getActionBlockMeasurements}
         pointerEvents="box-none"
+        style={[styles.buttonContainer, { paddingTop: topSpacing }]}
       >
         <View
           style={{
@@ -130,10 +131,10 @@ export const FooterActionsInline = ({
           }}
         >
           <View style={styles.buttonWrapper}>
-            <IOButton variant="outline" fullWidth {...startAction} />
+            <IOButton fullWidth variant="outline" {...startAction} />
           </View>
           <View style={styles.buttonWrapper}>
-            <IOButton variant="solid" fullWidth {...endAction} />
+            <IOButton fullWidth variant="solid" {...endAction} />
           </View>
         </View>
       </View>

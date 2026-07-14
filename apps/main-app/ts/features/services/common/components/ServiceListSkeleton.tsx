@@ -1,5 +1,3 @@
-import { Fragment } from "react";
-import { View } from "react-native";
 import {
   Divider,
   IOListItemStyles,
@@ -8,6 +6,8 @@ import {
   IOVisualCostants,
   VSpacer
 } from "@io-app/design-system";
+import { Fragment } from "react";
+import { View } from "react-native";
 
 type ServiceListSkeletonProps = {
   /**
@@ -35,7 +35,7 @@ export const ServiceListSkeleton = ({
     {sectionTitleShown && (
       <>
         <VSpacer size={16} />
-        <IOSkeleton shape="rectangle" radius={8} width={62} height={16} />
+        <IOSkeleton height={16} radius={8} shape="rectangle" width={62} />
         <VSpacer size={16} />
       </>
     )}
@@ -56,14 +56,14 @@ const ServiceListItemSkeleton = ({
       {avatarShown && (
         <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
           <IOSkeleton
+            radius={IOVisualCostants.avatarRadiusSizeSmall}
             shape="square"
             size={IOVisualCostants.avatarSizeSmall}
-            radius={IOVisualCostants.avatarRadiusSizeSmall}
           />
         </View>
       )}
       <View style={{ flex: 1 }}>
-        <IOSkeleton shape="rectangle" radius={8} width={"60%"} height={16} />
+        <IOSkeleton height={16} radius={8} shape="rectangle" width={"60%"} />
       </View>
     </View>
   </View>

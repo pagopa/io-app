@@ -1,9 +1,10 @@
-import { Svg, Path } from "react-native-svg";
+import { Path, Svg } from "react-native-svg";
+
 import { SVGLogoProps } from "../types";
 
 const LogoPaymentMastercard = ({ size }: SVGLogoProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24">
-    <Path fill="#FF5F00" d="M8.75195 5.58569h6.48752v11.659H8.75195z" />
+  <Svg height={size} viewBox="0 0 24 24" width={size}>
+    <Path d="M8.75195 5.58569h6.48752v11.659H8.75195z" fill="#FF5F00" />
     <Path
       d="M9.16382 11.4162c-.00179-2.27475 1.04248-4.42399 2.83188-5.82847-3.03993-2.38904-7.40537-2.04106-10.02841.7994-2.62305 2.84046-2.62305 7.21977 0 10.06017 2.62304 2.8405 6.98848 3.1885 10.02841.7994-1.79-1.4049-2.8343-3.555-2.83188-5.8305Z"
       fill="#EB001B"

@@ -1,11 +1,12 @@
 import {
-  IOButton,
   H4,
+  IOButton,
   IOToast,
   ToastNotification,
-  VStack,
-  useIOTheme
+  useIOTheme,
+  VStack
 } from "@io-app/design-system";
+
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const sectionTitleMargin = 16;
@@ -22,46 +23,46 @@ export const DSToastNotifications = () => {
           <H4 color={theme["textHeading-default"]}>Events</H4>
           <VStack space={componentMargin}>
             <IOButton
-              fullWidth
-              variant="outline"
-              label="Neutral"
               accessibilityLabel="Neutral"
+              fullWidth
+              label="Neutral"
               onPress={() => IOToast.show("Hello!")}
+              variant="outline"
             />
             <IOButton
-              fullWidth
-              variant="outline"
-              label="Error"
               accessibilityLabel="Error"
+              fullWidth
+              label="Error"
               onPress={() => IOToast.error("Error")}
+              variant="outline"
             />
             <IOButton
-              fullWidth
-              variant="outline"
-              label="Info"
               accessibilityLabel="Info"
+              fullWidth
+              label="Info"
               onPress={() => IOToast.info("Info")}
+              variant="outline"
             />
             <IOButton
-              fullWidth
-              variant="outline"
-              label="Success"
               accessibilityLabel="Success"
+              fullWidth
+              label="Success"
               onPress={() => IOToast.success("Success")}
+              variant="outline"
             />
             <IOButton
-              fullWidth
-              variant="outline"
-              label="Warning"
               accessibilityLabel="Warning"
+              fullWidth
+              label="Warning"
               onPress={() => IOToast.warning("Warning")}
+              variant="outline"
             />
             <IOButton
-              fullWidth
-              variant="outline"
-              label="Hide all"
               accessibilityLabel="Hide all"
+              fullWidth
+              label="Hide all"
               onPress={() => IOToast.hideAll()}
+              variant="outline"
             />
           </VStack>
         </VStack>
@@ -69,25 +70,25 @@ export const DSToastNotifications = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Component</H4>
           <VStack space={componentMargin}>
-            <ToastNotification message="Neutral" icon="checkTickBig" />
+            <ToastNotification icon="checkTickBig" message="Neutral" />
             <ToastNotification
-              message="Error"
               icon="errorFilled"
+              message="Error"
               variant="error"
             />
             <ToastNotification
-              message="Info"
               icon="infoFilled"
+              message="Info"
               variant="info"
             />
             <ToastNotification
-              message="Success"
               icon="success"
+              message="Success"
               variant="success"
             />
             <ToastNotification
-              message="Warning"
               icon="warningFilled"
+              message="Warning"
               variant="warning"
             />
           </VStack>

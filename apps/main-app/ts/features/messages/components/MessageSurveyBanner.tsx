@@ -1,16 +1,17 @@
 import { Banner, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import i18next from "i18next";
+
 import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../store/hooks";
 import { messageSurveyBannerUriSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
 import { openWebUrl } from "../../../utils/url";
+import { PNMessage } from "../../pn/store/types/types";
 import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { hasAttachmentsSelector } from "../store/reducers/thirdPartyById";
 import { UIMessage, UIMessageDetails } from "../types";
-import { PNMessage } from "../../pn/store/types/types";
 
 const MessageKind = {
   STANDARD: "STANDARD",
@@ -23,10 +24,10 @@ const MessageKind = {
 type MessageKind = (typeof MessageKind)[keyof typeof MessageKind];
 
 type QualtricsParameters = {
-  organizationFiscalCode: string;
-  serviceId: ServiceId;
-  sendingDate: string;
   messageType: MessageKind;
+  organizationFiscalCode: string;
+  sendingDate: string;
+  serviceId: ServiceId;
 };
 
 export const StandardMessageSurveyBanner = ({
@@ -48,14 +49,14 @@ export const StandardMessageSurveyBanner = ({
 
   return (
     <MessageSurveyBanner
-      organizationFiscalCode={message.organizationFiscalCode}
-      serviceId={message.serviceId}
-      sendingDate={message.createdAt.toISOString()}
       messageType={messageKindFromStandardMessage(
         message,
         messageDetails,
         hasAttachments
       )}
+      organizationFiscalCode={message.organizationFiscalCode}
+      sendingDate={message.createdAt.toISOString()}
+      serviceId={message.serviceId}
     />
   );
 };
@@ -78,10 +79,10 @@ export const SendMessageSurveyBanner = ({
 
   return (
     <MessageSurveyBanner
-      organizationFiscalCode={organizationFiscalCode}
-      serviceId={serviceId}
-      sendingDate={message.created_at.toISOString()}
       messageType={MessageKind.SEND}
+      organizationFiscalCode={organizationFiscalCode}
+      sendingDate={message.created_at.toISOString()}
+      serviceId={serviceId}
     />
   );
 };
@@ -99,12 +100,12 @@ const MessageSurveyBanner = (props: QualtricsParameters) => {
     <>
       <VSpacer size={16} />
       <Banner
-        testID="message-survey-banner"
-        color="neutral"
-        pictogramName="feedback"
-        content={i18next.t("messageDetails.surveyBanner.content")}
         action={i18next.t("messageDetails.surveyBanner.action")}
+        color="neutral"
+        content={i18next.t("messageDetails.surveyBanner.content")}
         onPress={() => openWebUrl(url)}
+        pictogramName="feedback"
+        testID="message-survey-banner"
       />
     </>
   );
@@ -137,8 +138,16 @@ const encodeQualtricsParameters = (
   qualtricsUrl: string,
   params: QualtricsParameters
 ): string => {
+  // Serialize with an explicit, stable key order so the encoded payload does
+  // not depend on the caller's prop/object key insertion order.
+  const orderedParams = {
+    organizationFiscalCode: params.organizationFiscalCode,
+    serviceId: params.serviceId,
+    sendingDate: params.sendingDate,
+    messageType: params.messageType
+  };
   const parametersBase64Url = Buffer.from(
-    JSON.stringify(params),
+    JSON.stringify(orderedParams),
     "utf8"
   ).toString("base64url");
 

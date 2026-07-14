@@ -1,24 +1,25 @@
-import * as E from "fp-ts/lib/Either";
-import * as t from "io-ts";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
+import * as E from "fp-ts/lib/Either";
+import * as t from "io-ts";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+
 import { AccessToken } from "../../../../../definitions/session_manager/AccessToken";
 import { PasswordLogin } from "../../../../../definitions/session_manager/PasswordLogin";
 import { BackendPublicClient } from "../../../../api/backendPublic";
 import { apiUrlPrefix } from "../../../../config";
-import { loginFailure, loginSuccess, testLoginRequest } from "../store/actions";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
-import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 import { ephemeralPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../../../lollipop/utils/login";
 import {
   isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
 } from "../../activeSessionLogin/store/selectors";
+import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
+import { loginFailure, loginSuccess, testLoginRequest } from "../store/actions";
 
 // Started by redux action
 export function* handleTestLogin({

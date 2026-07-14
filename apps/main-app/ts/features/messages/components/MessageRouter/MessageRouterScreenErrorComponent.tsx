@@ -1,5 +1,6 @@
 import I18n from "i18next";
 import { useMemo } from "react";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -17,9 +18,9 @@ export const MessageRouterScreenErrorComponent = ({
   onCancel,
   messageId
 }: {
-  onRetry: () => void;
-  onCancel: () => void;
   messageId: string;
+  onCancel: () => void;
+  onRetry: () => void;
 }) => {
   const errorVariant = useIOSelector((state: GlobalState) =>
     messageRouterScreenErrorVariantSelector(state, messageId)
