@@ -13,15 +13,18 @@ import { TrackQualtricsSurvey } from "../../analytics/utils/types";
 import { IT_WALLET_SURVEY_EID_ACTIVATION_SUCCESS } from "../utils/constants";
 
 type Props = {
-  /** Authentication method used: spid | cieidL2 | cieidL3 | ciepin */
+  /* Authentication method used: spid | cieidL2 | cieidL3 | ciepin */
   authMethod: string;
-  /** Current Documenti su IO status: active if eID was already valid before, not_active otherwise. */
+  /* Current Documenti su IO status: active if eID was already valid before, not_active otherwise. */
   docStatus: "active" | "not_active";
+  /* Optional style for the banner container */
+  style?: React.ComponentProps<typeof View>["style"];
 };
 
 const ItwActivationSuccessFeedbackBanner = ({
   docStatus,
-  authMethod
+  authMethod,
+  style: customStyle
 }: Props) => {
   const [isVisible, setIsVisible] = useState(true);
   const { name: routeName } = useRoute();
@@ -52,7 +55,7 @@ const ItwActivationSuccessFeedbackBanner = ({
   }
 
   return (
-    <View style={{ marginTop: 8 }}>
+    <View style={customStyle}>
       <Banner
         action={I18n.t(
           "features.itWallet.feedback.eidActivationSuccess.banner.action"
