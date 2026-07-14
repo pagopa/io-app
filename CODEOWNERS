@@ -1,9 +1,9 @@
 # see https://help.github.com/en/articles/about-code-owners#example-of-a-codeowners-file
 
-* @pagopa/io-app @ChrisMattew @gispada @soixdev91 @emilio-dimari 
+* @pagopa/io-app @ChrisMattew @gispada @soixdev91 @emilio-dimari @Leerti
 
-/locales/ @pagopa/io-app @thisisjp @ChrisMattew @gispada @soixdev91 @emilio-dimari
-/ios/IO/it.lproj/ @pagopa/io-app @thisisjp @ChrisMattew @gispada @soixdev91 @emilio-dimari
-/ios/IO/en.lproj/ @pagopa/io-app @thisisjp @ChrisMattew @gispada @soixdev91 @emilio-dimari
-/ts/features/design-system @pagopa/io-app @dmnplb @ChrisMattew @gispada @soixdev91 @emilio-dimari
-/ts/components/ui @pagopa/io-app @dmnplb @ChrisMattew @gispada @soixdev91 @emilio-dimari
+/locales/ @pagopa/io-app @thisisjp @ChrisMattew @gispada @soixdev91 @emilio-dimari @Leerti
+/ios/IO/it.lproj/ @pagopa/io-app @thisisjp @ChrisMattew @gispada @soixdev91 @emilio-dimari @Leerti
+/ios/IO/en.lproj/ @pagopa/io-app @thisisjp @ChrisMattew @gispada @soixdev91 @emilio-dimari @Leerti
+/ts/features/design-system @pagopa/io-app @dmnplb @ChrisMattew @gispada @soixdev91 @emilio-dimari @Leerti
+/ts/components/ui @pagopa/io-app @dmnplb @ChrisMattew @gispada @soixdev91 @emilio-dimari @Leerti
