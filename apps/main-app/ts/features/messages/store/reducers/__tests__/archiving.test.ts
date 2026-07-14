@@ -448,7 +448,7 @@ describe("nextQueuedMessageDataUncachedSelector", () => {
 
     expect(output).toEqual({
       archiving: false,
-      messageId: otherMessageId
+      messageId
     });
   });
 });
