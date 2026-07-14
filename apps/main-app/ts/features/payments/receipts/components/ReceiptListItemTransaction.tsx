@@ -1,8 +1,4 @@
-import {
-  Avatar,
-  IOIcons,
-  ListItemTransaction
-} from "@pagopa/io-app-design-system";
+import { Avatar, IOIcons, ListItemTransaction } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { memo, RefObject, useMemo } from "react";

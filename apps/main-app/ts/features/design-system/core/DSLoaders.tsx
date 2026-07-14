@@ -7,7 +7,7 @@ import {
   VStack,
   hexToRgba,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 import { ReactNode, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";

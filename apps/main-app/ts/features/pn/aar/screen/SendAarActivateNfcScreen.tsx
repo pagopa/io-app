@@ -1,4 +1,4 @@
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { HeaderSecondLevel } from "@io-app/design-system";
 import i18n from "i18next";
 import { useCallback, useEffect, useLayoutEffect } from "react";
 import { Alert } from "react-native";

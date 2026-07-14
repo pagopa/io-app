@@ -1,4 +1,4 @@
-import { Body, IOSkeleton, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, IOSkeleton, VSpacer } from "@io-app/design-system";
 import { View } from "react-native";
 import I18n from "i18next";
 import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";

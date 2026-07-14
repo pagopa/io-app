@@ -6,13 +6,18 @@ import {
   hexToRgba,
   IOButton,
   IOColors,
+  IOVisualCostants,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect, useLayoutEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import Animated, { LinearTransition } from "react-native-reanimated";
+import Animated, {
+  LinearTransition,
+  useAnimatedRef
+} from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -47,7 +52,10 @@ export const ItwProximityPresentmentScreen = ({
 }: ItwProximityPresentmentScreenProps) => {
   const { source } = route.params;
 
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
+
   const navigation = useIONavigation();
+  const safeAreaInsets = useSafeAreaInsets();
 
   const machineRef = ItwProximityMachineContext.useActorRef();
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
@@ -90,10 +98,14 @@ export const ItwProximityPresentmentScreen = ({
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: () => machineRef.send({ type: "close" })
           }}
+          transparent={true}
+          enableDiscreteTransition={true}
+          animatedRef={animatedScrollViewRef}
         />
-      )
+      ),
+      headerTransparent: true
     });
-  }, [navigation, machineRef]);
+  }, [navigation, machineRef, animatedScrollViewRef]);
 
   const handleContactlessPress = () => {
     machineRef.send({ type: "start-nfc-presentment" });
@@ -113,7 +125,12 @@ export const ItwProximityPresentmentScreen = ({
   };
 
   return (
-    <IOScrollView>
+    <IOScrollView
+      contentContainerStyle={{
+        marginTop: safeAreaInsets.top + IOVisualCostants.headerHeight
+      }}
+      animatedRef={animatedScrollViewRef}
+    >
       {shouldShowExpiredCredentialsBanner && (
         <Animated.View
           layout={LinearTransition.duration(200)}
@@ -133,31 +150,30 @@ export const ItwProximityPresentmentScreen = ({
         </Animated.View>
       )}
 
-      <View style={styles.qrCodeShadow}>
-        <ItwBrandedBox
-          variant={isFailure ? "error" : "default"}
-          backgroundVariant={"gradient"}
-        >
-          <VStack space={16}>
-            {!isFailure && (
-              <VStack space={8} style={{ marginHorizontal: 16 }}>
-                <H6 style={{ textAlign: "center" }}>
-                  {I18n.t(
-                    "features.itWallet.presentation.proximity.engagement.title"
-                  )}
-                </H6>
-                <BodySmall style={{ textAlign: "center" }}>
-                  {I18n.t(
-                    "features.itWallet.presentation.proximity.engagement.instruction"
-                  )}
-                </BodySmall>
-              </VStack>
-            )}
+      <ItwBrandedBox
+        variant={isFailure ? "error" : "default"}
+        backgroundVariant={"gradient"}
+        style={styles.qrCodeShadow}
+      >
+        <VStack space={16}>
+          {!isFailure && (
+            <VStack space={8} style={{ marginHorizontal: 16 }}>
+              <H6 style={{ textAlign: "center" }}>
+                {I18n.t(
+                  "features.itWallet.presentation.proximity.engagement.title"
+                )}
+              </H6>
+              <BodySmall style={{ textAlign: "center" }}>
+                {I18n.t(
+                  "features.itWallet.presentation.proximity.engagement.instruction"
+                )}
+              </BodySmall>
+            </VStack>
+          )}
 
-            <ItwProximityQrCodeImage source={source} />
-          </VStack>
-        </ItwBrandedBox>
-      </View>
+          <ItwProximityQrCodeImage source={source} />
+        </VStack>
+      </ItwBrandedBox>
 
       <View
         style={{ alignSelf: "center", marginTop: 32, marginBottom: 24, gap: 8 }}

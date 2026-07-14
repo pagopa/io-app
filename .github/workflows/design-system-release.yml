@@ -1,0 +1,35 @@
+name: Publish the Design System to npm registry
+on:
+  release:
+    types: [created]
+jobs:
+  npm-release:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # Required for OIDC
+    if: startsWith(github.event.release.tag_name, 'Design System')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: ./.github/actions/setup-pnpm
+      - name: Install npm 11
+        run: npm install -g npm@11.7.0
+      - name: Cache Nx
+        uses: actions/cache@2c8a9bd7457de244a408f35966fab2fb45fda9c8 # v6.0.0
+        with:
+          path: .nx
+          key: ${{ runner.os }}-nx-cache-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-nx-cache-${{ github.head_ref || github.ref_name }}-
+            ${{ runner.os }}-nx-cache-
+      - name: Build the library
+        run: pnpm nx prepack io-app-design-system
+      - name: Publish package on NPM 📦
+        working-directory: libs/design-system
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [[[ "$VERSION" == *-* ]]; then
+            npm publish --tag next
+          else
+            npm publish
+          fi

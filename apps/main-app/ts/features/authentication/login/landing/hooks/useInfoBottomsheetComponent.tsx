@@ -1,4 +1,4 @@
-import { Divider, ListItemAction } from "@pagopa/io-app-design-system";
+import { Divider, ListItemAction } from "@io-app/design-system";
 import _isEqual from "lodash/isEqual";
 import { useCallback, useRef } from "react";
 import { View } from "react-native";

@@ -1,4 +1,4 @@
-import { Banner } from "@pagopa/io-app-design-system";
+import { Banner } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";

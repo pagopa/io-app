@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { View } from "react-native";
-import { IOButton } from "@pagopa/io-app-design-system";
+import { IOButton } from "@io-app/design-system";
 import * as rnCieId from "@pagopa/io-react-native-cieid";
 import useNavigateToLoginMethod from "../useNavigateToLoginMethod";
 import * as fastLoginSelector from "../../../fastLogin/store/selectors";

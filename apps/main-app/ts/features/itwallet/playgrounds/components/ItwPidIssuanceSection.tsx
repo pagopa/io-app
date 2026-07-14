@@ -1,4 +1,4 @@
-import { ListItemHeader, ListItemNav } from "@pagopa/io-app-design-system";
+import { ListItemHeader, ListItemNav } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Alert, View } from "react-native";

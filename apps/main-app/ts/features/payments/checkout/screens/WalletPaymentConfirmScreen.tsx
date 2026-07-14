@@ -3,7 +3,7 @@ import {
   ListItemHeader,
   ModuleCheckout,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";

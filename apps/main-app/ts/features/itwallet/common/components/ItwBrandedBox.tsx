@@ -1,5 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { useIOThemeContext } from "@io-app/design-system";
 import {
   Canvas,
   Circle as SkiaCircle,
@@ -29,6 +29,7 @@ type ItwIridescentBorderProps = {
   borderThickness?: number;
   borderRadius?: number;
   backgroundVariant?: "solid" | "gradient";
+  style?: React.ComponentProps<typeof View>["style"];
 };
 
 const brandedBoxGradientColors = ["#FFFFFF", "#FBFDFF", "#F6FBFF", "#F2F9FF"];
@@ -46,7 +47,8 @@ export const ItwBrandedBox = ({
   borderRadius = 16,
   backgroundVariant = "solid",
   variant = "default",
-  children
+  children,
+  style: customStyle
 }: PropsWithChildren<ItwIridescentBorderProps>) => {
   const theme = useItWalletTheme();
   const { themeType } = useIOThemeContext();
@@ -148,6 +150,7 @@ export const ItwBrandedBox = ({
       onLayout={onLayout}
       style={[
         styles.container,
+        customStyle,
         {
           borderRadius,
           backgroundColor: theme["banner-background"]
