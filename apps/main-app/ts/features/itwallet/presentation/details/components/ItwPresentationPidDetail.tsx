@@ -1,4 +1,4 @@
-import { Divider, ListItemHeader } from "@pagopa/io-app-design-system";
+import { Divider, ListItemHeader } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo, useState } from "react";
 import { View } from "react-native";

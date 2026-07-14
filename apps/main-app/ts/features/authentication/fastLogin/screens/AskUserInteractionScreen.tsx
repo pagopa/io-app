@@ -1,5 +1,5 @@
 import { Modal } from "react-native";
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme } from "@io-app/design-system";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
   OperationResultScreenContent,

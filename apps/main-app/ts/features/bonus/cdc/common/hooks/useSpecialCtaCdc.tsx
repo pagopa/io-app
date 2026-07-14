@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import I18n from "i18next";
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { useIOSelector } from "../../../../../store/hooks";
 import { isCdcAppVersionSupportedSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";

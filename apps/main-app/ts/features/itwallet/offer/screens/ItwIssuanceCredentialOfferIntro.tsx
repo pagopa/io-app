@@ -4,7 +4,7 @@ import {
   IOColors,
   IOMarkdown,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -185,7 +185,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
         source={{ uri: introHeroUri }}
         style={styles.hero}
       />
-      <ContentWrapper marginTop={24}>
+      <ContentWrapper style={{ marginTop: 24 }}>
         <H2>{title}</H2>
         <VSpacer size={16} />
         {introductionContent && (

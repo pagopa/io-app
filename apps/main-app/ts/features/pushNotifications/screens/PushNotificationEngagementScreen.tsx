@@ -1,5 +1,5 @@
 import i18next from "i18next";
-import { Body, HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { Body, HeaderSecondLevel } from "@io-app/design-system";
 import { useCallback, useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { WhatsNewScreenContent } from "../../../components/screens/WhatsNewScreenContent";

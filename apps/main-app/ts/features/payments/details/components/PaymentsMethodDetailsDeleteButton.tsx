@@ -1,4 +1,4 @@
-import { IOToast, ListItemAction } from "@pagopa/io-app-design-system";
+import { IOToast, ListItemAction } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Alert, Platform } from "react-native";
 import I18n from "i18next";

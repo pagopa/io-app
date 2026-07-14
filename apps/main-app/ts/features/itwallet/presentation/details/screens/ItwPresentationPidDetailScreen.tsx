@@ -1,4 +1,4 @@
-import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VStack } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";

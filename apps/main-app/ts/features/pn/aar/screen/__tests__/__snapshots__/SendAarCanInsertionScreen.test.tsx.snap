@@ -417,7 +417,7 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                       accessibilityLabel="Campo di inserimento per pin della Carta di Identità elettronica"
                                       accessibilityValue={
                                         {
-                                          "text": "",
+                                          "text": "0 di 6 numeri inseriti",
                                         }
                                       }
                                       accessible={true}

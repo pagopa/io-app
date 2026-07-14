@@ -9,7 +9,7 @@ import {
   IOText,
   IconButton,
   useIOToast
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import RNFS from "react-native-fs";

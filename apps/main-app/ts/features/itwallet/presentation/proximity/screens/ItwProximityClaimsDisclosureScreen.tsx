@@ -5,7 +5,7 @@ import {
   HeaderSecondLevel,
   IOMarkdownLite,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useLayoutEffect } from "react";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
@@ -129,6 +129,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       footerActions={{
         actions: {
           type: "SingleButton",

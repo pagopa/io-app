@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.37.0-rc.3](https://github.com/pagopa/io-app/compare/3.37.0-rc.2...3.37.0-rc.3) (2026-07-13)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4267](https://pagopa.atlassian.net/browse/SIW-4267),[SIW-4268](https://pagopa.atlassian.net/browse/SIW-4268),[SIW-4604](https://pagopa.atlassian.net/browse/SIW-4604)] Add Mixpanel tracking for Age Verification credential ([#8249](https://github.com/pagopa/io-app/issues/8249)) ([ffa7e75](https://github.com/pagopa/io-app/commit/ffa7e7575111ddb80e5ed99e667afcdd87295cbc))
+* **IT-Wallet:** [[SIW-4639](https://pagopa.atlassian.net/browse/SIW-4639)] Add loading indicator to continue button in credential offer intro screen ([#8282](https://github.com/pagopa/io-app/issues/8282)) ([128187e](https://github.com/pagopa/io-app/commit/128187e1ac8a30df3009c822a2eb5cb8670873c0))
+
+
+### Bug Fixes
+
+* [[IEL-685](https://pagopa.atlassian.net/browse/IEL-685)] Added logic to poll the app's status in the FCI flow ([#8260](https://github.com/pagopa/io-app/issues/8260)) ([b4490c6](https://github.com/pagopa/io-app/commit/b4490c62bcf901a672e21d8f89257e3069518912))
+
 ## [3.37.0-rc.2](https://github.com/pagopa/io-app/compare/3.37.0-rc.1...3.37.0-rc.2) (2026-07-13)
 
 

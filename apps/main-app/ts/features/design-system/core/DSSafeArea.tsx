@@ -4,7 +4,7 @@ import {
   IOColors,
   IOVisualCostants,
   hexToRgba
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView, Text, View } from "react-native";
 

@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from "react";
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { HeaderSecondLevel } from "@io-app/design-system";
 import { Alert } from "react-native";
 import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";

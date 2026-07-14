@@ -1,7 +1,7 @@
 import { useCallback, useRef } from "react";
 import { View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import { Alert } from "@pagopa/io-app-design-system";
+import { Alert } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";

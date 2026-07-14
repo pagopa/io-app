@@ -1,4 +1,4 @@
-import { IOColors, hexToRgba, useIOTheme } from "@pagopa/io-app-design-system";
+import { IOColors, hexToRgba, useIOTheme } from "@io-app/design-system";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
 
 /* Fake Transparent BG */

@@ -5,7 +5,7 @@ import {
   IOColors,
   IOVisualCostants,
   Pictogram
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { Platform, StyleSheet, View } from "react-native";

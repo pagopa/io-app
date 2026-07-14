@@ -6,7 +6,7 @@ import {
   IOMarkdownLite,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { ComponentProps, createRef, JSX, useCallback, useState } from "react";
 

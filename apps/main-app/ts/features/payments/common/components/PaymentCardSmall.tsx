@@ -7,7 +7,7 @@ import {
   hexToRgba,
   useIOTheme,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";

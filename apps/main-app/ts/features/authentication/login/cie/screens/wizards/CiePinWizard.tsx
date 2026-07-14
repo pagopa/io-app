@@ -5,7 +5,7 @@ import {
   IOMarkdown,
   useIOToast,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { View } from "react-native";
 import I18n from "i18next";

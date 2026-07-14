@@ -1,4 +1,4 @@
-import { IOButton, VSpacer } from "@pagopa/io-app-design-system";
+import { IOButton, VSpacer } from "@io-app/design-system";
 import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
 import { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";

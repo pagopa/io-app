@@ -1,8 +1,4 @@
-import {
-  Banner,
-  IOVisualCostants,
-  useIOToast
-} from "@pagopa/io-app-design-system";
+import { Banner, IOVisualCostants, useIOToast } from "@io-app/design-system";
 import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
