@@ -3,7 +3,7 @@ import {
   ListItemHeader,
   OTPInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { CieManager, NfcEvent } from "@pagopa/io-react-native-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
 import I18n from "i18next";

@@ -1,4 +1,4 @@
-import { Body, OTPInput, VSpacer, VStack } from "@pagopa/io-app-design-system";
+import { Body, OTPInput, VSpacer, VStack } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
