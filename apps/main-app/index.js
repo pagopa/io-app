@@ -5,62 +5,115 @@
 import "./shim";
 import "react-native-get-random-values";
 import "react-native-quick-base64";
-import { AlertStatic as Alert, AppRegistry } from "react-native";
-import DeviceInfo from "react-native-device-info";
-import {
-  setJSExceptionHandler,
-  setNativeExceptionHandler
-} from "react-native-exception-handler";
+import React, { useEffect, useState } from "react";
+import { AppRegistry, AppState } from "react-native";
 
-import "./ts/i18n";
-import { isMixpanelInstanceInitialized, mixpanelTrack } from "./ts/mixpanel";
 import { name as appName } from "./app.json";
-import { initializePushNotifications } from "./ts/features/pushNotifications/utils/configurePushNotification";
 
 // Registers the TaskManager.defineTask handler required by Expo headless runs.
 import "./ts/features/itwallet/statusList/tasks";
 
-void initializePushNotifications();
+let AppComponent;
 
-const errorHandler = (e, isFatal) => {
-  if (isFatal) {
-    if (isMixpanelInstanceInitialized()) {
-      mixpanelTrack("APPLICATION_ERROR", {
-        TYPE: "js",
-        ERROR: JSON.stringify(e),
-        APP_VERSION: DeviceInfo.getReadableVersion()
-      });
-    }
-    Alert.alert(
-      "Unexpected error occurred",
-      `
+const isForegroundAppState = appState =>
+  appState === "active" || appState === "inactive";
+
+const loadForegroundApp = () => {
+  if (AppComponent) {
+    return AppComponent;
+  }
+
+  require("./ts/i18n");
+  const { AlertStatic: Alert } = require("react-native");
+  const DeviceInfo = require("react-native-device-info").default;
+  const {
+    setJSExceptionHandler,
+    setNativeExceptionHandler
+  } = require("react-native-exception-handler");
+  const {
+    isMixpanelInstanceInitialized,
+    mixpanelTrack
+  } = require("./ts/mixpanel");
+  const {
+    initializePushNotifications
+  } = require("./ts/features/pushNotifications/utils/configurePushNotification");
+
+  void initializePushNotifications();
+
+  const errorHandler = (e, isFatal) => {
+    if (isFatal) {
+      if (isMixpanelInstanceInitialized()) {
+        mixpanelTrack("APPLICATION_ERROR", {
+          TYPE: "js",
+          ERROR: JSON.stringify(e),
+          APP_VERSION: DeviceInfo.getReadableVersion()
+        });
+      }
+      Alert.alert(
+        "Unexpected error occurred",
+        `
         Error: ${isFatal ? "Fatal:" : ""} ${e.name} ${e.message}
         You will need to restart the app.
         `
-    );
-  } else {
-    // eslint-disable-next-line no-console
-    console.log(e); // So that we can see it in the ADB logs in case of Android if needed
-  }
+      );
+    } else {
+      // eslint-disable-next-line no-console
+      console.log(e); // So that we can see it in the ADB logs in case of Android if needed
+    }
+  };
+
+  setJSExceptionHandler(errorHandler);
+  setNativeExceptionHandler(exceptionString => {
+    if (isMixpanelInstanceInitialized()) {
+      mixpanelTrack("APPLICATION_ERROR", {
+        TYPE: "native",
+        ERROR: exceptionString,
+        APP_VERSION: DeviceInfo.getReadableVersion()
+      });
+    }
+  });
+
+  AppComponent = require("./ts/App").default;
+  return AppComponent;
 };
 
-setJSExceptionHandler(errorHandler);
-setNativeExceptionHandler(exceptionString => {
-  if (isMixpanelInstanceInitialized()) {
-    mixpanelTrack("APPLICATION_ERROR", {
-      TYPE: "native",
-      ERROR: exceptionString,
-      APP_VERSION: DeviceInfo.getReadableVersion()
-    });
-  }
-});
-
 /**
- * Lazily resolves the React root component for foreground app launches.
+ * Defers the normal application bootstrap during an iOS background launch.
  *
- * Expo background tasks also evaluate this entrypoint in a headless JS runtime.
- * Only the global TaskManager.defineTask registration is safe in that path:
- * importing App eagerly would create the Redux store, start sagas and rehydrate
- * persisted state, which may read secure storage while the app is backgrounded.
+ * ponytail: the shared JS bundle remains; use a native entrypoint only if
+ * strict task isolation becomes necessary.
  */
-AppRegistry.registerComponent(appName, () => require("./ts/App").default);
+const ForegroundApp = () => {
+  const [RootComponent, setRootComponent] = useState(() =>
+    isForegroundAppState(AppState.currentState)
+      ? loadForegroundApp()
+      : undefined
+  );
+
+  useEffect(() => {
+    if (RootComponent) {
+      return undefined;
+    }
+
+    const loadAppIfForeground = nextAppState => {
+      if (isForegroundAppState(nextAppState)) {
+        setRootComponent(() => loadForegroundApp());
+      }
+    };
+    const subscription = AppState.addEventListener(
+      "change",
+      loadAppIfForeground
+    );
+    loadAppIfForeground(AppState.currentState);
+
+    return () => subscription.remove();
+  }, [RootComponent]);
+
+  return RootComponent ? React.createElement(RootComponent) : null;
+};
+
+AppRegistry.registerComponent(appName, () =>
+  isForegroundAppState(AppState.currentState)
+    ? loadForegroundApp()
+    : ForegroundApp
+);

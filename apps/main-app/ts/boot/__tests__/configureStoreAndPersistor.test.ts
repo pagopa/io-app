@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { AppState, type AppStateStatus } from "react-native";
 
 import {
   isReady,
@@ -7,7 +8,6 @@ import {
   remoteReady,
   remoteUndefined
 } from "../../common/model/RemoteValue";
-import { testable } from "../configureStoreAndPersistor";
 
 jest.mock("redux-persist", () => ({
   createMigrate: jest.fn(),
@@ -23,7 +23,34 @@ jest.mock("redux-saga", () => {
   return () => fn;
 });
 
+// eslint-disable-next-line functional/immutable-data
+Object.defineProperty(AppState, "currentState", {
+  configurable: true,
+  value: "active"
+});
+
+const { testable } =
+  require("../configureStoreAndPersistor") as typeof import("../configureStoreAndPersistor");
+
 describe("configureStoreAndPersistor", () => {
+  describe("assertAppIsForeground", () => {
+    test.each<AppStateStatus>(["active", "inactive"])(
+      "allows Redux bootstrap while the app state is %s",
+      appState => {
+        expect(() => testable!.assertAppIsForeground(appState)).not.toThrow();
+      }
+    );
+
+    test.each<AppStateStatus | null>(["background", "unknown", null])(
+      "rejects Redux bootstrap while the app state is %s",
+      appState => {
+        expect(() => testable!.assertAppIsForeground(appState)).toThrow(
+          "Redux store cannot be initialized outside a foreground app state"
+        );
+      }
+    );
+  });
+
   describe("CURRENT_REDUX_STORE_VERSION", () => {
     it("should match expected value", () => {
       const version = testable!.CURRENT_REDUX_STORE_VERSION;
