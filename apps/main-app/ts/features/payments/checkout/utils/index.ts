@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { ZendeskSubCategoriesMap } from "../../../../../definitions/content/ZendeskSubCategoriesMap";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentMethodManagementTypeEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
@@ -18,8 +17,8 @@ export const WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL =
 
 export const isValidPaymentMethod = (method: PaymentMethodResponse) =>
   [
-    PaymentMethodManagementTypeEnum.ONBOARDABLE,
     PaymentMethodManagementTypeEnum.NOT_ONBOARDABLE,
+    PaymentMethodManagementTypeEnum.ONBOARDABLE,
     PaymentMethodManagementTypeEnum.ONBOARDABLE_WITH_PAYMENT,
     PaymentMethodManagementTypeEnum.REDIRECT
   ].includes(method.methodManagement) &&
@@ -55,12 +54,12 @@ export const getPaymentPhaseFromStep = (
   step: WalletPaymentStepEnum
 ): PaymentAnalyticsPhase => {
   switch (step) {
+    case WalletPaymentStepEnum.CONFIRM_TRANSACTION:
+      return "pagamento";
     case WalletPaymentStepEnum.PICK_PAYMENT_METHOD:
       return "attiva";
     case WalletPaymentStepEnum.PICK_PSP:
       return "attiva";
-    case WalletPaymentStepEnum.CONFIRM_TRANSACTION:
-      return "pagamento";
     default:
       return "verifica";
   }

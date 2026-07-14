@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -7,8 +8,8 @@ import {
   populateStoresWithEphemeralAarMessageData,
   terminateAarFlow
 } from "../../../../pn/aar/store/actions";
-import { clearCache } from "../../../../settings/common/store/actions";
 import { mockEphemeralAarMessageDataActionPayload } from "../../../../pn/aar/utils/testUtils";
+import { clearCache } from "../../../../settings/common/store/actions";
 import {
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails

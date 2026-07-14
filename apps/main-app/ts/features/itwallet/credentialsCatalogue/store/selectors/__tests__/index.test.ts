@@ -1,13 +1,15 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { type GlobalState } from "../../../../../../store/reducers/types";
-import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
+import * as O from "fp-ts/lib/Option";
+
 import {
   itwAvailableCredentialsListSelector,
   itwCatalogueTranslationsByLocaleSelector,
+  itwCredentialIntroContentSelector,
   itwCredentialsCatalogueByTypesSelector,
   itwCredentialsCatalogueSelector
 } from "..";
+import { type GlobalState } from "../../../../../../store/reducers/types";
+import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
 
 const mockCatalogue = {
   taxonomy_uri: "",
@@ -17,23 +19,27 @@ const mockCatalogue = {
     {
       credential_type: "cred1",
       name: "Credential 1",
-      description: "Description for Credential 1"
+      description: "Description for Credential 1",
+      authentic_sources: [
+        { id: "as-1", user_information_l10n_id: "as-1.userinfo" }
+      ]
     },
     {
       credential_type: "cred2",
       name: "Credential 2",
       name_l10n_id: "cred2.name",
-      description: "Description for Credential 2"
+      description: "Description for Credential 2",
+      authentic_sources: [{ id: "as-2" }]
     }
   ] as DigitalCredentialsCatalogue["credentials"]
 };
 
 const buildState = (
   overrides: Partial<{
-    isEnabledForCredentialsList: boolean;
     catalogue: pot.Pot<DigitalCredentialsCatalogue, unknown>;
-    translations: pot.Pot<Record<string, Record<string, string>>, unknown>;
+    isEnabledForCredentialsList: boolean;
     preferredLanguage: string;
+    translations: pot.Pot<Record<string, Record<string, string>>, unknown>;
   }> = {}
 ) =>
   ({
@@ -95,13 +101,17 @@ describe("itwCredentialsCatalogueByTypesSelector", () => {
       cred1: {
         credential_type: "cred1",
         name: "Credential 1",
-        description: "Description for Credential 1"
+        description: "Description for Credential 1",
+        authentic_sources: [
+          { id: "as-1", user_information_l10n_id: "as-1.userinfo" }
+        ]
       },
       cred2: {
         credential_type: "cred2",
         name: "Credential 2",
         name_l10n_id: "cred2.name",
-        description: "Description for Credential 2"
+        description: "Description for Credential 2",
+        authentic_sources: [{ id: "as-2" }]
       }
     });
   });
@@ -211,5 +221,51 @@ describe("itwAvailableCredentialsListSelector", () => {
         type: "education_attendance"
       }
     ]);
+  });
+});
+
+describe("itwCredentialIntroContentSelector", () => {
+  it("should extracted the translated user_information_l10n_id", () => {
+    const state = buildState({
+      isEnabledForCredentialsList: false,
+      catalogue: pot.some(mockCatalogue),
+      translations: pot.some({
+        it: { "as-1.userinfo": "New credential 2026" }
+      })
+    });
+    expect(itwCredentialIntroContentSelector("cred1")(state)).toEqual(
+      "New credential 2026"
+    );
+  });
+
+  it("should extract user_information as is", () => {
+    const state = buildState({
+      isEnabledForCredentialsList: false,
+      catalogue: pot.some({
+        credentials: [
+          {
+            credential_type: "cred1",
+            name: "Credential 1",
+            description: "Description for Credential 1",
+            authentic_sources: [
+              { id: "as-1", user_information: "Legacy credential" }
+            ]
+          }
+        ]
+      } as DigitalCredentialsCatalogue)
+    });
+    expect(itwCredentialIntroContentSelector("cred1")(state)).toEqual(
+      "Legacy credential"
+    );
+  });
+
+  it("should return undefined when no user information is present", () => {
+    const state = buildState({
+      isEnabledForCredentialsList: false,
+      catalogue: pot.some(mockCatalogue)
+    });
+    expect(itwCredentialIntroContentSelector("cred2")(state)).toEqual(
+      undefined
+    );
   });
 });

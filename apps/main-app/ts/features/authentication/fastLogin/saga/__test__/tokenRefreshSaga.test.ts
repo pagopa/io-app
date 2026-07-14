@@ -1,29 +1,29 @@
-import { put, call, takeLatest, take, delay } from "typed-redux-saga/macro";
-import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import { call, delay, put, take, takeLatest } from "typed-redux-saga/macro";
+
+import { fastLoginMaxRetries } from "../../../../../config";
+import NavigationService from "../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../navigation/routes";
+import { getPin } from "../../../../../utils/keychain";
+import { dismissSupport } from "../../../../../utils/supportAssistance";
 import {
-  testableTokenRefreshSaga,
-  watchTokenRefreshSaga
-} from "../tokenRefreshSaga";
+  identificationFailure,
+  identificationRequest,
+  identificationSuccess
+} from "../../../../identification/store/actions";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import { logoutRequest, sessionExpired } from "../../../common/store/actions";
 import {
   askUserToRefreshSessionToken,
   refreshSessionToken,
   refreshTokenNoPinError,
   testable
 } from "../../store/actions/tokenRefreshActions";
-
-import { getPin } from "../../../../../utils/keychain";
-import { logoutRequest } from "../../../common/store/actions";
-import { dismissSupport } from "../../../../../utils/supportAssistance";
-import NavigationService from "../../../../../navigation/NavigationService";
-import ROUTES from "../../../../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import { fastLoginMaxRetries } from "../../../../../config";
 import {
-  identificationFailure,
-  identificationRequest,
-  identificationSuccess
-} from "../../../../identification/store/actions";
+  testableTokenRefreshSaga,
+  watchTokenRefreshSaga
+} from "../tokenRefreshSaga";
 
 jest.mock("../../../../../navigation/NavigationService", () => ({
   navigate: jest.fn()
@@ -51,15 +51,18 @@ describe("tokenRefreshSaga", () => {
     testableTokenRefreshSaga.handleRefreshSessionToken;
   const doRefreshTokenSaga = testableTokenRefreshSaga.doRefreshTokenSaga;
   const handleRequestError = testableTokenRefreshSaga.handleRequestError;
-  const RequestStateType = testableTokenRefreshSaga.types.RequestStateType;
+  type RequestStateType = NonNullable<
+    typeof testableTokenRefreshSaga
+  >["types"]["RequestStateType"];
 
   if (!testable?.types.RefreshSessionTokenRequestPayload) {
     throw new Error(
       "RefreshSessionTokenRequestPayload is not available in test environment"
     );
   }
-  const RefreshSessionTokenRequestPayload =
-    testable?.types.RefreshSessionTokenRequestPayload;
+  type RefreshSessionTokenRequestPayload = NonNullable<
+    typeof testable
+  >["types"]["RefreshSessionTokenRequestPayload"];
 
   it("should watch refreshSessionToken.request with takeLatest", () => {
     const gen = watchTokenRefreshSaga();
@@ -70,7 +73,7 @@ describe("tokenRefreshSaga", () => {
 
   describe("handleRefreshSessionToken", () => {
     const createAction = (
-      withUserInteraction: typeof RefreshSessionTokenRequestPayload
+      withUserInteraction: RefreshSessionTokenRequestPayload
     ) => refreshSessionToken.request(withUserInteraction);
 
     it("should dispatch refreshTokenNoPinError if pin is missing and interaction is true", () => {
@@ -246,7 +249,7 @@ describe("tokenRefreshSaga", () => {
 
   describe("doRefreshTokenSaga", () => {
     const createAction = (
-      payload: typeof RefreshSessionTokenRequestPayload = {
+      payload: RefreshSessionTokenRequestPayload = {
         withUserInteraction: false,
         showIdentificationModalAtStartup: false,
         showLoader: false
@@ -269,31 +272,30 @@ describe("tokenRefreshSaga", () => {
       const action = createAction();
       const gen = doRefreshTokenSaga(action);
 
-      gen.next(); // showLoader
-      gen.next(); // createNonceClient
-
-      const response403 = E.right({
-        status: 403,
-        value: { token: "fake" }
-      });
-
+      // Step through the happy path up to performFastLogin, providing a valid
+      // nonce so the saga reaches the token request.
       gen.next(); // performGetNonce
-      gen.next(response403); // simulate nonce OK
-      gen.next(); // getKeyInfo
-      gen.next({}); // keyInfo
-      gen.next(); // createFastLoginClient
-      gen.next(
-        E.right({
-          status: 403,
-          value: {}
-        })
+      const nonceOk = E.right({ status: 200, value: { nonce: "fake-nonce" } });
+      gen.next(nonceOk); // getKeyInfo
+      gen.next({}); // performFastLogin
+
+      // A 403 on the token request triggers the retry delay before the error
+      // is classified as a session expiration.
+      expect(gen.next(E.right({ status: 403, value: {} })).value).toEqual(
+        delay(1000)
       );
 
-      gen.next(); // delay
+      // Once resumed, the 403 is handled as session-expired: the saga fails the
+      // refresh and dispatches sessionExpired, then completes.
+      expect(gen.next().value).toEqual(
+        put(refreshSessionToken.failure(new Error("response status 403")))
+      );
+      expect(gen.next().value).toEqual(put(sessionExpired()));
+      expect(gen.next().done).toBe(true);
     });
   });
   it("should set max-retries when no response is provided", () => {
-    const requestState: typeof RequestStateType = {
+    const requestState: RequestStateType = {
       counter: fastLoginMaxRetries - 1,
       status: "in-progress",
       error: undefined

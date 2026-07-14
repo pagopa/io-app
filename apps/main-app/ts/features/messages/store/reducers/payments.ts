@@ -1,8 +1,6 @@
 import { getType } from "typesafe-actions";
-import { isTestEnv } from "../../../../utils/environment";
-import { Action } from "../../../../store/actions/types";
-import { UIMessageDetails } from "../../types";
-import { GlobalState } from "../../../../store/reducers/types";
+
+import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
 import {
   isError,
   isLoading,
@@ -14,31 +12,34 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../common/model/RemoteValue";
-import {
-  addUserSelectedPaymentRptId,
-  cancelQueuedPaymentUpdates,
-  reloadAllMessages,
-  updatePaymentForMessage
-} from "../actions";
-import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
-import { isProfileEmailValidatedSelector } from "../../../settings/common/store/selectors";
 import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
-import {
-  duplicateSetAndAdd,
-  duplicateSetAndRemove,
-  getRptIdStringFromPaymentData
-} from "../../utils";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { isTestEnv } from "../../../../utils/environment";
 import {
   isExpiredPaymentFromDetailV2Enum,
   isOngoingPaymentFromDetailV2Enum,
   isPaidPaymentFromDetailV2Enum,
   isRevokedPaymentFromDetailV2Enum
 } from "../../../../utils/payment";
+import { isProfileEmailValidatedSelector } from "../../../settings/common/store/selectors";
+import { UIMessageDetails } from "../../types";
 import {
   isMessagePaymentSpecificError,
   isTimeoutOrGenericOrOngoingPaymentError,
   MessagePaymentError
 } from "../../types/paymentErrors";
+import {
+  duplicateSetAndAdd,
+  duplicateSetAndRemove,
+  getRptIdStringFromPaymentData
+} from "../../utils";
+import {
+  addUserSelectedPaymentRptId,
+  cancelQueuedPaymentUpdates,
+  reloadAllMessages,
+  updatePaymentForMessage
+} from "../actions";
 import { messagePaymentDataSelector } from "./detailsById";
 
 export type MultiplePaymentState = {
@@ -48,20 +49,20 @@ export type MultiplePaymentState = {
   userSelectedPayments: Set<string>;
 };
 
+export type PaymentStatistics = {
+  errorCount: number;
+  expiredCount: number;
+  ongoingCount: number;
+  paidCount: number;
+  paymentCount: number;
+  revokedCount: number;
+  unpaidCount: number;
+};
+
 export type SinglePaymentState = {
   [key: string]:
     | RemoteValue<PaymentInfoResponse, MessagePaymentError>
     | undefined;
-};
-
-export type PaymentStatistics = {
-  paymentCount: number;
-  unpaidCount: number;
-  paidCount: number;
-  errorCount: number;
-  expiredCount: number;
-  revokedCount: number;
-  ongoingCount: number;
 };
 
 const initialPaymentStatistics = (paymentCount: number): PaymentStatistics => ({
@@ -84,6 +85,40 @@ export const paymentsReducer = (
   action: Action
 ): MultiplePaymentState => {
   switch (action.type) {
+    case getType(addUserSelectedPaymentRptId):
+      return {
+        ...state,
+        userSelectedPayments: duplicateSetAndAdd(
+          state.userSelectedPayments,
+          action.payload
+        )
+      };
+    case getType(cancelQueuedPaymentUpdates): {
+      const messageId = action.payload.messageId;
+      const messagePayments = state.paymentStatusListById[messageId];
+      return messagePayments != null
+        ? {
+            ...state,
+            paymentStatusListById: {
+              ...state.paymentStatusListById,
+              [messageId]: purgePaymentsWithIncompleteData(messagePayments)
+            }
+          }
+        : state;
+    }
+    case getType(reloadAllMessages.request):
+      return initialState;
+    case getType(updatePaymentForMessage.failure):
+      return {
+        ...state,
+        paymentStatusListById: {
+          ...state.paymentStatusListById,
+          [action.payload.messageId]: {
+            ...state.paymentStatusListById[action.payload.messageId],
+            [action.payload.paymentId]: remoteError(action.payload.reason)
+          }
+        }
+      };
     case getType(updatePaymentForMessage.request):
       return {
         ...state,
@@ -110,40 +145,6 @@ export const paymentsReducer = (
           }
         }
       };
-    case getType(updatePaymentForMessage.failure):
-      return {
-        ...state,
-        paymentStatusListById: {
-          ...state.paymentStatusListById,
-          [action.payload.messageId]: {
-            ...state.paymentStatusListById[action.payload.messageId],
-            [action.payload.paymentId]: remoteError(action.payload.reason)
-          }
-        }
-      };
-    case getType(cancelQueuedPaymentUpdates): {
-      const messageId = action.payload.messageId;
-      const messagePayments = state.paymentStatusListById[messageId];
-      return messagePayments != null
-        ? {
-            ...state,
-            paymentStatusListById: {
-              ...state.paymentStatusListById,
-              [messageId]: purgePaymentsWithIncompleteData(messagePayments)
-            }
-          }
-        : state;
-    }
-    case getType(addUserSelectedPaymentRptId):
-      return {
-        ...state,
-        userSelectedPayments: duplicateSetAndAdd(
-          state.userSelectedPayments,
-          action.payload
-        )
-      };
-    case getType(reloadAllMessages.request):
-      return initialState;
   }
   return state;
 };
@@ -196,13 +197,13 @@ export const paymentsButtonStateSelector = (
   const paymentId = getRptIdStringFromPaymentData(paymentData);
   const paymentStatus = paymentStateSelector(state, messageId, paymentId);
   switch (paymentStatus.kind) {
-    case "undefined":
+    case "error":
+      return "hidden";
     case "loading":
+    case "undefined":
       return "loading";
     case "ready":
       return "enabled";
-    case "error":
-      return "hidden";
   }
 };
 
@@ -255,7 +256,7 @@ export const paymentStatisticsForMessageUncachedSelector = (
         throw Error("Data is not ready");
       }
     }, initialPaymentStatistics(paymentCount));
-  } catch (e) {
+  } catch {
     return undefined;
   }
 };

@@ -1,8 +1,9 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@io-app/design-system";
+
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 
 export const LoaderComponent = () => (
-  <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
+  <LoadingSpinnerOverlay isLoading={true} loadingOpacity={1.0}>
     <VSpacer size={16} />
   </LoadingSpinnerOverlay>
 );

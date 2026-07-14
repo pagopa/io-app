@@ -1,6 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { StateFrom } from "xstate";
+
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { IdentificationContext } from "./context";
@@ -55,6 +56,15 @@ export const selectMrtdCallbackUrl = (snapshot: MachineSnapshot) =>
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwTags.Loading);
 
+/**
+ * The eID context is assigned before the identity-match check completes, so the
+ * preview content must wait until the machine reaches a state where it is safe
+ * to expose the issued credential.
+ */
+export const selectCanRenderEidPreview = (snapshot: MachineSnapshot) =>
+  snapshot.matches({ Issuance: "DisplayingPreview" }) ||
+  snapshot.matches({ Issuance: "StoringCredential" });
+
 export const selectUpgradeFailedCredentials = (snapshot: MachineSnapshot) =>
   pipe(
     snapshot.context.failedCredentials,
@@ -64,8 +74,8 @@ export const selectUpgradeFailedCredentials = (snapshot: MachineSnapshot) =>
         [] as ReadonlyArray<
           CredentialMetadata & {
             failure?: {
-              type: string;
               reason: unknown;
+              type: string;
             };
           }
         >

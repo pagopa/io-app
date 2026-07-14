@@ -3,8 +3,9 @@ import {
   IOVisualCostants,
   ListItemHeader,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ScrollView, View } from "react-native";
+
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import {
   ItwCredentialCard,
@@ -57,12 +58,12 @@ export const ItwCardsSection = () => (
       >
         {ALL_CREDENTIAL_TYPES.map(credentialType => (
           <ItwCredentialWalletCard
-            key={credentialType}
             cardProps={{
               credentialType,
               withItwDesign: true
             }}
             isStacked
+            key={credentialType}
           />
         ))}
       </View>
@@ -71,24 +72,24 @@ export const ItwCardsSection = () => (
       <View key={credentialType}>
         <ListItemHeader label={getCredentialNameFromType(credentialType)} />
         <ScrollView
+          contentContainerStyle={{
+            paddingHorizontal: IOVisualCostants.appMarginDefault / 2,
+            paddingTop: 8,
+            paddingBottom: 24
+          }}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           style={{
             aspectRatio: 15 / 9,
             marginHorizontal: -IOVisualCostants.appMarginDefault
           }}
-          contentContainerStyle={{
-            paddingHorizontal: IOVisualCostants.appMarginDefault / 2,
-            paddingTop: 8,
-            paddingBottom: 24
-          }}
         >
           <HStack space={8}>
             {ALL_CREDENTIAL_STATUSES.map(status => (
               <DSComponentViewerBox key={status} name={status}>
                 <ItwCredentialCard
-                  credentialType={credentialType}
                   credentialStatus={status}
+                  credentialType={credentialType}
                 />
               </DSComponentViewerBox>
             ))}
@@ -101,9 +102,9 @@ export const ItwCardsSection = () => (
       <ListItemHeader label={"Stack"} />
       {LEGACY_CREDENTIAL_TYPES.map(credentialType => (
         <ItwCredentialWalletCard
-          key={credentialType}
           cardProps={{ credentialType }}
           isStacked
+          key={credentialType}
         />
       ))}
     </View>
@@ -111,24 +112,24 @@ export const ItwCardsSection = () => (
       <View key={credentialType}>
         <ListItemHeader label={getCredentialNameFromType(credentialType)} />
         <ScrollView
+          contentContainerStyle={{
+            paddingHorizontal: IOVisualCostants.appMarginDefault,
+            paddingTop: 8,
+            paddingBottom: 24
+          }}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           style={{
             aspectRatio: 15 / 9,
             marginHorizontal: -IOVisualCostants.appMarginDefault
           }}
-          contentContainerStyle={{
-            paddingHorizontal: IOVisualCostants.appMarginDefault,
-            paddingTop: 8,
-            paddingBottom: 24
-          }}
         >
           <HStack space={8}>
             {ALL_CREDENTIAL_STATUSES.map(status => (
               <DSComponentViewerBox key={status} name={status}>
                 <ItwCredentialCardLegacy
-                  credentialType={credentialType}
                   credentialStatus={status}
+                  credentialType={credentialType}
                 />
               </DSComponentViewerBox>
             ))}

@@ -1,12 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import { Action } from "redux";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+
 import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
 import {
   ThirdPartyMessage,
   ThirdPartyMessageDetails
 } from "../../../../../../definitions/communication/ThirdPartyMessage";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { toSome } from "../../../../../store/reducers/IndexedByIdPot";
@@ -19,8 +20,8 @@ import {
 import { mockEphemeralAarMessageDataActionPayload } from "../../../../pn/aar/utils/testUtils";
 import { UIMessageDetails } from "../../../types";
 import {
-  ThirdPartyMessageUnion,
-  thirdPartyKind
+  thirdPartyKind,
+  ThirdPartyMessageUnion
 } from "../../../types/thirdPartyById";
 import {
   loadMessageDetails,
@@ -29,11 +30,11 @@ import {
 } from "../../actions";
 import { DetailsById } from "../detailsById";
 import {
-  ThirdPartyById,
   hasAttachmentsSelector,
   messageMarkdownSelector,
   messageTitleSelector,
   testable,
+  ThirdPartyById,
   thirdPartyByIdReducer,
   thirdPartyFromIdSelector,
   thirdPartyMessageAttachmentsSelector,

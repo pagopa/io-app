@@ -1,15 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+
 import { PushNotificationsContentTypeEnum } from "../../../definitions/identity/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/identity/ReminderStatus";
 import { ServiceId } from "../../../definitions/services/ServiceId";
+import * as lifecycleSelectors from "../../features/itwallet/lifecycle/store/selectors";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { ServicesState } from "../../features/services/common/store/reducers";
 import { ServicePreferenceResponse } from "../../features/services/details/types/ServicePreferenceResponse";
 import { GlobalState } from "../../store/reducers/types";
-import * as BIOMETRICS from "../../utils/biometrics";
-import * as lifecycleSelectors from "../../features/itwallet/lifecycle/store/selectors";
 import * as analytics from "../../utils/analytics";
+import * as BIOMETRICS from "../../utils/biometrics";
 import { updateMixpanelProfileProperties } from "../profileProperties";
 
 // eslint-disable-next-line functional/no-let

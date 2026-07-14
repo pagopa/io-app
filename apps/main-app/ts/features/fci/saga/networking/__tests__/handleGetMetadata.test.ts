@@ -1,12 +1,13 @@
-import { testSaga } from "redux-saga-test-plan";
 import { left, right } from "fp-ts/lib/Either";
+import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
-import { getNetworkError } from "../../../../../utils/errors";
-import { mockFciMetadata } from "../../../types/__mocks__/Metadata.mock";
+
 import { Metadata } from "../../../../../../definitions/fci/Metadata";
-import { handleGetMetadata } from "../handleGetMetadata";
-import { fciMetadataRequest } from "../../../store/actions";
+import { getNetworkError } from "../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { fciMetadataRequest } from "../../../store/actions";
+import { mockFciMetadata } from "../../../types/__mocks__/Metadata.mock";
+import { handleGetMetadata } from "../handleGetMetadata";
 
 const successResponse = {
   status: 200,
@@ -26,7 +27,7 @@ describe("handleGetMetadata", () => {
   const getMetadataRequest = mockBackendFciClient({
     Bearer: "mock-token"
   });
-  it("it should dispatch fciMetadataRequest.success with the response payload if the response is right and the status code is 200", () => {
+  it("should dispatch fciMetadataRequest.success with the response payload if the response is right and the status code is 200", () => {
     testSaga(handleGetMetadata, mockBackendFciClient, "mock-token", loadAction)
       .next()
       .call(withRefreshApiCall, getMetadataRequest, loadAction)
@@ -35,7 +36,7 @@ describe("handleGetMetadata", () => {
       .next()
       .isDone();
   });
-  it("it should dispatch fciMetadataRequest.failure with the response status code as payload if the response is right and the status code is different from 200", () => {
+  it("should dispatch fciMetadataRequest.failure with the response status code as payload if the response is right and the status code is different from 200", () => {
     testSaga(handleGetMetadata, mockBackendFciClient, "mock-token", loadAction)
       .next()
       .call(withRefreshApiCall, getMetadataRequest, loadAction)
@@ -48,7 +49,7 @@ describe("handleGetMetadata", () => {
       .next()
       .isDone();
   });
-  it("it should dispatch fciMetadataRequest.failure with a fixed message as payload if the response left", () => {
+  it("should dispatch fciMetadataRequest.failure with a fixed message as payload if the response left", () => {
     testSaga(handleGetMetadata, mockBackendFciClient, "mock-token", loadAction)
       .next()
       .call(withRefreshApiCall, getMetadataRequest, loadAction)
@@ -61,7 +62,7 @@ describe("handleGetMetadata", () => {
       .next()
       .isDone();
   });
-  it("it should dispatch fciMetadataRequest.failure with the error message as payload if an exception is raised", () => {
+  it("should dispatch fciMetadataRequest.failure with the error message as payload if an exception is raised", () => {
     const mockedError = new Error("mockedErrorMessage");
     testSaga(handleGetMetadata, mockBackendFciClient, "mock-token", loadAction)
       .next()

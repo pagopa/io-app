@@ -6,13 +6,14 @@ import {
   IOSkeleton,
   IOVisualCostants,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
 import Animated, { FadeIn } from "react-native-reanimated";
+
 import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../../../store/hooks";
@@ -82,57 +83,57 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
   if (failure !== undefined) {
     return (
       <StatusBox
-        iconName="warningFilled"
-        description={I18n.t(
-          "features.itWallet.presentation.proximity.engagement.qrCode.error"
-        )}
         action={
           <View style={styles.retryActionContainer}>
             <IOButton
-              variant="link"
               label={I18n.t("global.buttons.retry")}
               onPress={handleRetry}
+              variant="link"
             />
           </View>
         }
+        description={I18n.t(
+          "features.itWallet.presentation.proximity.engagement.qrCode.error"
+        )}
+        iconName="warningFilled"
       />
     );
   }
 
   if (!qrCodeString) {
-    return <IOSkeleton shape="square" size={QR_CODE_SIZE} radius={16} />;
+    return <IOSkeleton radius={16} shape="square" size={QR_CODE_SIZE} />;
   }
 
   return (
     <Animated.View entering={FadeIn.duration(200)}>
       <QRCode
         color={theme["textBody-default"]}
-        value={qrCodeString}
-        size={QR_CODE_SIZE}
         errorCorrectionLevel="H"
+        logo={<ItwIcon height={QR_CODE_LOGO_SIZE} width={QR_CODE_LOGO_SIZE} />}
+        logoAreaBorderRadius={8}
+        logoAreaSize={88}
         shapeOptions={{
           shape: "circle",
           eyePatternShape: "rounded",
           eyePatternGap: 0,
           gap: 0
         }}
-        logoAreaSize={88}
-        logoAreaBorderRadius={8}
-        logo={<ItwIcon width={QR_CODE_LOGO_SIZE} height={QR_CODE_LOGO_SIZE} />}
+        size={QR_CODE_SIZE}
+        value={qrCodeString}
       />
     </Animated.View>
   );
 };
 
 type StatusBoxProps = {
-  iconName: "warningFilled" | "qrCode";
-  description: string;
   action?: React.ReactNode;
+  description: string;
+  iconName: "qrCode" | "warningFilled";
 };
 
 const StatusBox = ({ iconName, description, action }: StatusBoxProps) => (
   <View style={styles.statusBox}>
-    <Icon name={iconName} size={24} color="grey-700" />
+    <Icon color="grey-700" name={iconName} size={24} />
     <Body style={styles.statusDescription}>{description}</Body>
     {action}
   </View>

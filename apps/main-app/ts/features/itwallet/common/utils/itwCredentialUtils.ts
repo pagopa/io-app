@@ -1,7 +1,8 @@
-import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
-import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
-import I18n from "i18next";
+import { IOColors, Tag, useIOTheme } from "@io-app/design-system";
+import { Mdoc, SdJwt } from "@pagopa/io-react-native-wallet";
 import { isBefore } from "date-fns";
+import I18n from "i18next";
+
 import { ItwIridescentBorderVariant } from "../components/ItwBrandedSkiaBorder";
 import { CredentialType } from "./itwMocksUtils";
 import {
@@ -68,9 +69,9 @@ export const newCredentials = [
   CredentialType.EDUCATION_ATTENDANCE
 ] as const;
 
-export type NewCredential = (typeof newCredentials)[number];
-
 export type L2Credential = (typeof l2Credentials)[number];
+
+export type NewCredential = (typeof newCredentials)[number];
 
 // Credentials that will be available in the future
 export const upcomingCredentials = [] as ReadonlyArray<string>;
@@ -120,8 +121,8 @@ const getCredentialNameByType = (
 
 export const getCredentialNameFromType = (
   type: string | undefined,
-  isItwCredential: boolean = false,
-  withDefault: string = ""
+  isItwCredential = false,
+  withDefault = ""
 ): string => {
   if (!type) {
     return withDefault;
@@ -198,9 +199,9 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
 ];
 
 type ExtractVerification = (args: {
+  credential: CredentialBundle["credential"];
   format: CredentialMetadata["format"];
   parsedCredential: CredentialMetadata["parsedCredential"];
-  credential: CredentialBundle["credential"];
 }) => StoredVerification | undefined;
 
 /**
@@ -216,10 +217,10 @@ export const extractVerification: ExtractVerification = ({
   try {
     const verification = (() => {
       switch (format) {
-        case CredentialFormat.SD_JWT:
-          return SdJwt.getVerification(credential);
         case CredentialFormat.MDOC:
           return Mdoc.getVerificationFromParsedCredential(parsedCredential);
+        case CredentialFormat.SD_JWT:
+          return SdJwt.getVerification(credential);
         default:
           return undefined;
       }

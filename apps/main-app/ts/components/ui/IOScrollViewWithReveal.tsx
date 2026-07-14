@@ -10,9 +10,8 @@ import {
   IOVisualCostants,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
-
 import {
   ComponentProps,
   Fragment,
@@ -20,7 +19,6 @@ import {
   useLayoutEffect,
   useMemo
 } from "react";
-
 import { ColorValue, StyleSheet, View } from "react-native";
 import { easeGradient } from "react-native-easing-gradient";
 import LinearGradient from "react-native-linear-gradient";
@@ -35,24 +33,25 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 import { WithTestID } from "../../types/WithTestID";
 import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
 import { ButtonBlockProps } from "./utils/buttons";
 
-type ButtonLinkProps = Omit<IOButtonLinkSpecificProps, "color" | "variant">;
-
 export type IOScrollViewRevealActions = {
-  primary: Omit<ButtonBlockProps, "color">;
   anchor: ButtonLinkProps;
+  primary: Omit<ButtonBlockProps, "color">;
 };
+
+type ButtonLinkProps = Omit<IOButtonLinkSpecificProps, "color" | "variant">;
 
 type IOScrollViewWithRevealProps = WithTestID<
   PropsWithChildren<{
-    headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
     actions: IOScrollViewRevealActions;
-    debugMode?: boolean;
     animatedRef: AnimatedRef<Animated.ScrollView>;
+    debugMode?: boolean;
+    headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
     hideAnchorAction: SharedValue<boolean>;
   }>
 >;
@@ -61,13 +60,13 @@ type IOScrollViewWithRevealProps = WithTestID<
    the gradient opaciy transition */
 const gradientOpacityScrollTrigger = 0.85;
 /* Extended gradient area above the actions */
-const gradientSafeAreaHeight: number = 80;
+const gradientSafeAreaHeight = 80;
 /* Margin between solid variant and link variant */
 const spaceBetweenActionAndLink: IOSpacer = 16;
 /* Extra bottom margin for iPhone bottom handle because
    Link variant doesn't have a fixed height */
 const extraSafeAreaMargin: IOSpacingScale = 8;
-const anchorLinkTransitionDuration: number = 600; // in ms
+const anchorLinkTransitionDuration = 600; // in ms
 
 const styles = StyleSheet.create({
   gradientBottomActions: {
@@ -125,7 +124,7 @@ export const IOScrollViewWithReveal = ({
 
   /* We need a fixed height, because when the anchor action is hidden,
     there's a layout shift in the button container */
-  const actionBlockHeight: number = 100;
+  const actionBlockHeight = 100;
 
   const { bottomMargin, needSafeAreaMargin } = useFooterActionsMargin();
 
@@ -226,23 +225,24 @@ export const IOScrollViewWithReveal = ({
   return (
     <Fragment>
       <Animated.ScrollView
-        ref={animatedRef}
-        testID={testID}
-        onScroll={handleScroll}
-        scrollEventThrottle={8}
-        snapToEnd={false}
-        decelerationRate="normal"
         contentContainerStyle={[
           {
             paddingBottom: actions ? safeBottomAreaHeight : bottomMargin,
             flexGrow: 1
           }
         ]}
+        decelerationRate="normal"
+        onScroll={handleScroll}
+        ref={animatedRef}
+        scrollEventThrottle={8}
+        snapToEnd={false}
+        testID={testID}
       >
         {children}
       </Animated.ScrollView>
       {actions && (
         <View
+          pointerEvents="box-none"
           style={[
             styles.gradientBottomActions,
             {
@@ -250,17 +250,16 @@ export const IOScrollViewWithReveal = ({
               paddingBottom: bottomMargin
             }
           ]}
-          pointerEvents="box-none"
           {...(testID && { testID: `${testID}-actions` })}
         >
           <Animated.View
+            pointerEvents="none"
             style={[
               styles.gradientContainer,
               debugMode && {
                 backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
               }
             ]}
-            pointerEvents="none"
           >
             <Animated.View
               style={[
@@ -273,11 +272,11 @@ export const IOScrollViewWithReveal = ({
               ]}
             >
               <LinearGradient
+                colors={colors}
+                locations={locations}
                 style={{
                   height: gradientAreaHeight - safeBackgroundBlockHeight
                 }}
-                locations={locations}
-                colors={colors}
               />
             </Animated.View>
 
@@ -292,7 +291,7 @@ export const IOScrollViewWithReveal = ({
               }}
             />
           </Animated.View>
-          <View style={styles.buttonContainer} pointerEvents="box-none">
+          <View pointerEvents="box-none" style={styles.buttonContainer}>
             <Animated.View
               onLayout={event => {
                 anchorLinkHeight.value = event.nativeEvent.layout.height;
@@ -304,7 +303,7 @@ export const IOScrollViewWithReveal = ({
             </Animated.View>
 
             <View style={{ marginBottom: extraBottomMargin }}>
-              <IOButton variant="solid" fullWidth {...actions.primary} />
+              <IOButton fullWidth variant="solid" {...actions.primary} />
             </View>
           </View>
         </View>

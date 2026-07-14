@@ -1,5 +1,5 @@
-import { GlobalState } from "../../../../../store/reducers/types";
 import { Action } from "../../../../../store/actions/types";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { MessageListCategory } from "../../../types/messageListCategory";
 import {
   interruptMessageArchivingProcessingAction,
@@ -10,17 +10,17 @@ import {
 } from "../../actions/archiving";
 import {
   Archiving,
-  INITIAL_STATE,
-  ProcessingResult,
   archivingReducer,
   areThereEntriesForShownMessageListCategorySelector,
+  INITIAL_STATE,
   isArchivingDisabledSelector,
   isArchivingInProcessingModeSelector,
   isArchivingInSchedulingModeSelector,
+  isMessageScheduledForArchivingSelector,
   nextQueuedMessageDataUncachedSelector,
+  ProcessingResult,
   processingResultReasonSelector,
-  processingResultTypeSelector,
-  isMessageScheduledForArchivingSelector
+  processingResultTypeSelector
 } from "../archiving";
 
 const messageId = "01K1QB59HSR7JX4TV5FEAR7PB6";
@@ -440,7 +440,7 @@ describe("nextQueuedMessageDataUncachedSelector", () => {
   it("should return the first archive-to-inbox queued message when there are no inbox-to-archive messages", () => {
     const state = stateWithArchiving({
       ...INITIAL_STATE,
-      fromArchiveToInbox: new Set([otherMessageId, messageId]),
+      fromArchiveToInbox: new Set([messageId, otherMessageId]),
       status: "enabled"
     });
 

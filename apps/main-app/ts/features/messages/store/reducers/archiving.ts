@@ -1,28 +1,29 @@
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { MessageListCategory } from "../../types/messageListCategory";
+import { duplicateSetAndRemove, duplicateSetAndToggle } from "../../utils";
 import {
-  resetMessageArchivingAction,
   interruptMessageArchivingProcessingAction,
   removeScheduledMessageArchivingAction,
+  resetMessageArchivingAction,
   startProcessingMessageArchivingAction,
   toggleScheduledMessageArchivingAction
 } from "../actions/archiving";
-import { duplicateSetAndRemove, duplicateSetAndToggle } from "../../utils";
-import { GlobalState } from "../../../../store/reducers/types";
-import { MessageListCategory } from "../../types/messageListCategory";
-
-export type ArchivingStatus = "disabled" | "enabled" | "processing";
-
-export type ProcessingResult = {
-  type: "success" | "error";
-  reason: string;
-};
 
 export type Archiving = {
   fromArchiveToInbox: Set<string>;
   fromInboxToArchive: Set<string>;
   processingResult: ProcessingResult | undefined;
   status: ArchivingStatus;
+};
+
+export type ArchivingStatus = "disabled" | "enabled" | "processing";
+
+export type ProcessingResult = {
+  reason: string;
+  type: "error" | "success";
 };
 
 export const INITIAL_STATE: Archiving = {
@@ -37,6 +38,38 @@ export const archivingReducer = (
   action: Action
 ): Archiving => {
   switch (action.type) {
+    case getType(interruptMessageArchivingProcessingAction): {
+      if (state.status === "processing") {
+        return {
+          ...state,
+          processingResult: action.payload,
+          status: "enabled"
+        };
+      }
+      return state;
+    }
+    case getType(removeScheduledMessageArchivingAction): {
+      const stateDirection = action.payload.fromInboxToArchive
+        ? "fromInboxToArchive"
+        : "fromArchiveToInbox";
+      return {
+        ...state,
+        [stateDirection]: duplicateSetAndRemove(
+          state[stateDirection],
+          action.payload.messageId
+        )
+      };
+    }
+    case getType(resetMessageArchivingAction): {
+      return { ...INITIAL_STATE, processingResult: action.payload };
+    }
+    case getType(startProcessingMessageArchivingAction): {
+      return {
+        ...state,
+        processingResult: undefined,
+        status: "processing"
+      };
+    }
     case getType(toggleScheduledMessageArchivingAction): {
       if (state.status === "processing") {
         return state;
@@ -53,38 +86,6 @@ export const archivingReducer = (
           action.payload.messageId
         )
       };
-    }
-    case getType(resetMessageArchivingAction): {
-      return { ...INITIAL_STATE, processingResult: action.payload };
-    }
-    case getType(startProcessingMessageArchivingAction): {
-      return {
-        ...state,
-        processingResult: undefined,
-        status: "processing"
-      };
-    }
-    case getType(removeScheduledMessageArchivingAction): {
-      const stateDirection = action.payload.fromInboxToArchive
-        ? "fromInboxToArchive"
-        : "fromArchiveToInbox";
-      return {
-        ...state,
-        [stateDirection]: duplicateSetAndRemove(
-          state[stateDirection],
-          action.payload.messageId
-        )
-      };
-    }
-    case getType(interruptMessageArchivingProcessingAction): {
-      if (state.status === "processing") {
-        return {
-          ...state,
-          processingResult: action.payload,
-          status: "enabled"
-        };
-      }
-      return state;
     }
     default: {
       return state;

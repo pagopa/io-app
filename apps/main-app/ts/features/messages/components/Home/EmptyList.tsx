@@ -1,9 +1,9 @@
-import { IOPictograms } from "@pagopa/io-app-design-system";
+import { IOPictograms } from "@io-app/design-system";
 import * as B from "fp-ts/lib/boolean";
 import { constUndefined, pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
-import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { ButtonBlockProps } from "../../../../components/ui/utils/buttons";
 import { pageSize } from "../../../../config";
@@ -24,7 +24,7 @@ export type EmptyListProps = {
 type ScreenDataType = {
   action?: Pick<
     ButtonBlockProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
+    "accessibilityLabel" | "label" | "onPress" | "testID"
   >;
   pictogram: IOPictograms;
   subtitle?: string;
@@ -62,13 +62,6 @@ export const EmptyList = ({ category }: EmptyListProps) => {
 
   const screenData = useMemo((): ScreenDataType | undefined => {
     switch (emptyListReason) {
-      case "noData":
-        const categoryKey = category === "ARCHIVE" ? "archive" : "inbox";
-        return {
-          pictogram: "empty",
-          subtitle: I18n.t(`messages.${categoryKey}.emptyMessage.subtitle`),
-          title: I18n.t(`messages.${categoryKey}.emptyMessage.title`)
-        };
       case "error":
         return {
           action: {
@@ -78,6 +71,13 @@ export const EmptyList = ({ category }: EmptyListProps) => {
           },
           pictogram: "fatalError",
           title: I18n.t("messages.loadingErrorTitle")
+        };
+      case "noData":
+        const categoryKey = category === "ARCHIVE" ? "archive" : "inbox";
+        return {
+          pictogram: "empty",
+          subtitle: I18n.t(`messages.${categoryKey}.emptyMessage.subtitle`),
+          title: I18n.t(`messages.${categoryKey}.emptyMessage.title`)
         };
       default:
         return undefined;

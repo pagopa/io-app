@@ -1,17 +1,18 @@
 import { createStore } from "redux";
-import { F24Section } from "../F24Section";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import * as thirdPartyById from "../../../messages/store/reducers/thirdPartyById";
+
 import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import * as thirdPartyById from "../../../messages/store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
-import PN_ROUTES from "../../navigation/routes";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import PN_ROUTES from "../../navigation/routes";
+import { F24Section } from "../F24Section";
 
 jest.mock(
   "../../../messages/components/MessageDetail/MessageDetailsAttachmentItem"
@@ -135,11 +136,11 @@ const renderComponent = (
   return renderScreenWithNavigationStoreContext(
     () => (
       <F24Section
-        messageId={"01HS1ANR1SDPN3BP51X3G74T64"}
-        serviceId={"01HS1ANWT4N83QGATCXYMXDP8M" as ServiceId}
         isCancelled={isCancelled}
+        messageId={"01HS1ANR1SDPN3BP51X3G74T64"}
         sendOpeningSource={openingSource}
         sendUserType={userType}
+        serviceId={"01HS1ANWT4N83QGATCXYMXDP8M" as ServiceId}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

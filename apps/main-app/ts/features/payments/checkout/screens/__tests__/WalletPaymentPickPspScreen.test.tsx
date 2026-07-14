@@ -1,8 +1,9 @@
 import { act, fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { View } from "react-native";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
-import I18n from "i18next";
+
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentMethodStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";

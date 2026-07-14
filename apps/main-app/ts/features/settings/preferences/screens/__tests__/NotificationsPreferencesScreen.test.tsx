@@ -1,15 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import _ from "lodash";
 import { createStore } from "redux";
+
+import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
 import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/identity/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../../definitions/identity/ReminderStatus";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { NotificationsPreferencesScreen } from "../NotificationsPreferencesScreen";
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import { NotificationsPreferencesScreen } from "../NotificationsPreferencesScreen";
 
 describe("NotificationsPreferencesScreen", () => {
   it("given an undefined 'reminder_status' then the switch should be off", () => {
@@ -185,7 +185,7 @@ describe("NotificationsPreferencesScreen", () => {
 const renderScreen = (
   previewValue?: PushNotificationsContentTypeEnum,
   reminderValue?: ReminderStatusEnum,
-  isUpdatingProfile: boolean = false
+  isUpdatingProfile = false
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const profile = {

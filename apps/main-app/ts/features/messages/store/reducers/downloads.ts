@@ -1,11 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import {
-  DownloadAttachmentCancel,
-  clearRequestedAttachmentDownload,
-  downloadAttachment,
-  removeCachedAttachment
-} from "../actions";
+
+import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
 import {
@@ -15,7 +11,12 @@ import {
   toSome
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
+import {
+  clearRequestedAttachmentDownload,
+  downloadAttachment,
+  DownloadAttachmentCancel,
+  removeCachedAttachment
+} from "../actions";
 
 export type Download = {
   attachment: ThirdPartyAttachment;
@@ -27,14 +28,14 @@ export type DownloadError = {
   error: Error;
 };
 
-type RequestedDownload = {
-  messageId: string;
-  attachmentId: string;
+export type Downloads = {
+  requestedDownload?: RequestedDownload;
+  statusById: Record<string, IndexedById<pot.Pot<Download, Error>> | undefined>;
 };
 
-export type Downloads = {
-  statusById: Record<string, IndexedById<pot.Pot<Download, Error>> | undefined>;
-  requestedDownload?: RequestedDownload;
+type RequestedDownload = {
+  attachmentId: string;
+  messageId: string;
 };
 
 export const INITIAL_STATE: Downloads = {
@@ -49,6 +50,40 @@ export const downloadsReducer = (
   action: Action
 ): Downloads => {
   switch (action.type) {
+    case getType(clearRequestedAttachmentDownload):
+      return {
+        ...state,
+        requestedDownload: undefined
+      };
+    case getType(downloadAttachment.cancel):
+      // the download was cancelled, so it goes back to none
+      return {
+        ...state,
+        statusById: {
+          ...state.statusById,
+          [action.payload.messageId]: toNone(
+            action.payload.attachment.id,
+            state.statusById[action.payload.messageId] ?? {}
+          )
+        },
+
+        requestedDownload: requestDownloadAfterCancelledAction(
+          state,
+          action.payload
+        )
+      };
+    case getType(downloadAttachment.failure):
+      return {
+        ...state,
+        statusById: {
+          ...state.statusById,
+          [action.payload.messageId]: toError(
+            action.payload.attachment.id,
+            state.statusById[action.payload.messageId] ?? {},
+            action.payload.error
+          )
+        }
+      };
     case getType(downloadAttachment.request):
       return {
         ...state,
@@ -79,35 +114,6 @@ export const downloadsReducer = (
           )
         }
       };
-    case getType(downloadAttachment.failure):
-      return {
-        ...state,
-        statusById: {
-          ...state.statusById,
-          [action.payload.messageId]: toError(
-            action.payload.attachment.id,
-            state.statusById[action.payload.messageId] ?? {},
-            action.payload.error
-          )
-        }
-      };
-    case getType(downloadAttachment.cancel):
-      // the download was cancelled, so it goes back to none
-      return {
-        ...state,
-        statusById: {
-          ...state.statusById,
-          [action.payload.messageId]: toNone(
-            action.payload.attachment.id,
-            state.statusById[action.payload.messageId] ?? {}
-          )
-        },
-
-        requestedDownload: requestDownloadAfterCancelledAction(
-          state,
-          action.payload
-        )
-      };
     case getType(removeCachedAttachment):
       return {
         ...state,
@@ -118,11 +124,6 @@ export const downloadsReducer = (
             state.statusById[action.payload.messageId] ?? {}
           )
         }
-      };
-    case getType(clearRequestedAttachmentDownload):
-      return {
-        ...state,
-        requestedDownload: undefined
       };
     default:
       return state;

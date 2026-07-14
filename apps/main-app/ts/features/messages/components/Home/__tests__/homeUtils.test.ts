@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { ActionType } from "typesafe-actions";
 import { StyleSheet } from "react-native";
+import { ActionType } from "typesafe-actions";
+
 import { maximumItemsFromAPI, pageSize } from "../../../../../config";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -30,6 +31,11 @@ import {
 import { UIMessage } from "../../../types";
 import { MessageListCategory } from "../../../types/messageListCategory";
 import {
+  ListItemMessageEnhancedHeight,
+  ListItemMessageStandardHeight
+} from "../DS/ListItemMessage";
+import { SkeletonHeight } from "../DS/ListItemMessageSkeleton";
+import {
   accessibilityLabelForMessageItem,
   archiveUnarchiveAccessibilityInstructions,
   generateMessageListLayoutInfo,
@@ -43,11 +49,6 @@ import {
   nextPageLoadingWaitMillisecondsGenerator,
   refreshIntervalMillisecondsGenerator
 } from "../homeUtils";
-import {
-  ListItemMessageEnhancedHeight,
-  ListItemMessageStandardHeight
-} from "../DS/ListItemMessage";
-import { SkeletonHeight } from "../DS/ListItemMessageSkeleton";
 
 const createGlobalState = (
   archiveData: MessagePagePot,
@@ -85,7 +86,7 @@ const createGlobalState = (
     }
   }) as GlobalState;
 
-const checkReturnedAction = (action?: Action, getArchived: boolean = false) => {
+const checkReturnedAction = (action?: Action, getArchived = false) => {
   expect(action).not.toBeUndefined();
   expect(action?.type).toBe("MESSAGES_RELOAD_REQUEST");
   const reloadAllMessagesRequest = action as ActionType<

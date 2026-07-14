@@ -1,28 +1,29 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
+import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { mockPdfAttachment } from "../../../__mocks__/attachment";
 import {
+  clearRequestedAttachmentDownload,
+  downloadAttachment,
   DownloadAttachmentCancel,
   DownloadAttachmentError,
   DownloadAttachmentRequest,
   DownloadAttachmentSuccess,
-  clearRequestedAttachmentDownload,
-  downloadAttachment,
   removeCachedAttachment
 } from "../../actions";
 import {
-  Downloads,
-  INITIAL_STATE,
   downloadedMessageAttachmentSelector,
+  Downloads,
   downloadsReducer,
-  requestedDownloadErrorSelector,
+  INITIAL_STATE,
   isDownloadingMessageAttachmentSelector,
-  isRequestedAttachmentDownloadSelector
+  isRequestedAttachmentDownloadSelector,
+  requestedDownloadErrorSelector
 } from "../downloads";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 const path = "/path/attachment.pdf";
 
@@ -444,9 +445,11 @@ describe("downloadsReducer", () => {
       })
     );
 
-    expect(initialState.requestedDownload).toBeDefined();
-    expect(initialState.requestedDownload?.messageId).toBe(messageId);
-    expect(initialState.requestedDownload?.attachmentId).toBe(attachment.id);
+    it("should set the requestedDownload after a downloadAttachment.request action", () => {
+      expect(initialState.requestedDownload).toBeDefined();
+      expect(initialState.requestedDownload?.messageId).toBe(messageId);
+      expect(initialState.requestedDownload?.attachmentId).toBe(attachment.id);
+    });
 
     it("Should return pot.none and clear the requestedDownload after a downloadAttachment.cancel action", () => {
       const cancelState = downloadsReducer(
