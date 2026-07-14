@@ -56,6 +56,22 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
+        case ProximityFailureType.RELYING_PARTY_GENERIC:
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.genericError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.genericError.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.proximity.relyingParty.genericError.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
         case ProximityFailureType.TIMEOUT:
           return {
             title: I18n.t(
