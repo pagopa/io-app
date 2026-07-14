@@ -6,6 +6,7 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
 import ItwActivationSuccessFeedbackBanner from "../../itwallet/common/components/ItwActivationSuccessFeedbackBanner";
+import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
@@ -96,7 +97,7 @@ const WalletCardsContainer = () => {
       style={styles.container}
       layout={LinearTransition.duration(200)}
     >
-      {/* <ItwEnvironmentAlert /> */}
+      <ItwEnvironmentAlert />
       <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />
 
