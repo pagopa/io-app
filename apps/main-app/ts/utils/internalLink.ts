@@ -56,7 +56,7 @@ const allowedRoutes = {
   ...routesToNavigationLink,
   ...cgnRoutesToNavigationLink,
   ...legacyRoutesToNavigationLink,
-  ...(fciEnabled ? fciRoutesToNavigationLink : {})
+  ...(fciEnabled ? fciRoutesToNavigationLink : {}) // evaluate if check on fciEnabled is needed here or if it can be deleted
 };
 
 export const isServiceDetailNavigationLink = (
