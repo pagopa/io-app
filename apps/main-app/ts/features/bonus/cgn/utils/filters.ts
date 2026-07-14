@@ -1,7 +1,4 @@
-import {
-  HeaderSecondLevel,
-  IOCategoryIcons
-} from "@pagopa/io-app-design-system";
+import { HeaderSecondLevel, IOCategoryIcons } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import { StatusBarProps } from "react-native";
 import I18n from "i18next";

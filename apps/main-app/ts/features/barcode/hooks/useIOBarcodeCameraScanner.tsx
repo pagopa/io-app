@@ -1,4 +1,4 @@
-import { IOColors, LoadingSpinner } from "@pagopa/io-app-design-system";
+import { IOColors, LoadingSpinner } from "@io-app/design-system";
 import * as R from "fp-ts/ReadonlyRecord";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";

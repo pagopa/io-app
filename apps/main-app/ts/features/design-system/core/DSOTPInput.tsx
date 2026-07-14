@@ -8,11 +8,12 @@ import {
   IOVisualCostants,
   IconButton,
   OTPInput,
+  OTPInputAccessibilityValueText,
   RadioGroup,
   RadioItem,
   VStack,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
 
 import { RefObject, useCallback, useMemo, useRef, useState } from "react";
@@ -83,6 +84,11 @@ const OTPWrapper = ({
     [validation, otpCompare]
   );
 
+  const secretAccessibilityValueText: OTPInputAccessibilityValueText = ({
+    valueLength,
+    length
+  }) => `${valueLength} of ${length} digits entered`;
+
   return useMemo(
     () => (
       <VStack space={16}>
@@ -91,7 +97,14 @@ const OTPWrapper = ({
           accessibilityLabel={"OTP Input"}
           onValueChange={onValueChange}
           length={otpLength}
-          secret={secret}
+          {...(secret === true
+            ? {
+                secret: true as const,
+                accessibilityValueText: secretAccessibilityValueText
+              }
+            : {
+                accessibilityValueText: secretAccessibilityValueText
+              })}
           onValidate={onValidate}
           errorMessage={"Wrong OTP"}
           autoFocus={autoFocus}
@@ -116,9 +129,7 @@ const scrollVerticallyToView = (
       scrollViewRef.current.getInnerViewNode(),
       (_: number, y: number, __: number) => {
         scrollViewRef.current?.scrollTo({ y, animated: true });
-      },
-
-      () => {}
+      }
     );
   }
 };

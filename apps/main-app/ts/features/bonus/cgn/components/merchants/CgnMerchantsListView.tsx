@@ -4,7 +4,7 @@ import {
   H6,
   HSpacer,
   ListItemNav
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ListRenderItem, View } from "react-native";
 import I18n from "i18next";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";

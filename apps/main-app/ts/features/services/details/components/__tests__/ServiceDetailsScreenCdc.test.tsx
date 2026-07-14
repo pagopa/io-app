@@ -1,4 +1,4 @@
-import { Body } from "@pagopa/io-app-design-system";
+import { Body } from "@io-app/design-system";
 import _ from "lodash";
 import { createStore } from "redux";
 import { Config } from "../../../../../../definitions/content/Config";

@@ -5,7 +5,7 @@ import {
   ListItemHeader,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
@@ -154,10 +154,14 @@ const ContentView = ({
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({
         exit_page: route.name,
         credential: mixPanelCredential
+      });
+      machineRef.send({
+        type: "close",
+        surveyStep: isItwL3 ? "data_share" : undefined,
+        surveyCredential: isItwL3 ? mixPanelCredential : undefined
       });
     }
   });
@@ -197,6 +201,7 @@ const ContentView = ({
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       onThresholdCrossed={trackScrollToBottom}
       footerActions={{
         actions: {
@@ -247,7 +252,9 @@ const ContentView = ({
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
             privacyUrl
           })}
-          rules={generateItwIOMarkdownRules({ linkCallback: trackOpenItwTos })}
+          rules={generateItwIOMarkdownRules({
+            linkCallback: trackOpenItwTos
+          })}
         />
       </ContentWrapper>
     </ForceScrollDownView>

@@ -16,7 +16,7 @@ import {
 } from "react-native-url-polyfill";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { LollipopConfig } from "../../../lollipop";
@@ -126,7 +126,7 @@ const getLollipopParamsFromUrlString = (url: string) => {
     const params: PolyfillURLSearchParams = constructedUrl.searchParams;
     params.forEach((value, name) => lollipopParams.set(name, value));
     return lollipopParams;
-  } catch (error) {
+  } catch {
     return undefined;
   }
 };

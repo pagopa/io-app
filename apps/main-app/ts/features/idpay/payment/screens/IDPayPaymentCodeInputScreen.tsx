@@ -1,4 +1,4 @@
-import { TextInput } from "@pagopa/io-app-design-system";
+import { TextInput } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";

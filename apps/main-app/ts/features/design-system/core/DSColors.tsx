@@ -14,7 +14,7 @@ import {
   themeStatusColorsDarkMode,
   themeStatusColorsLightMode,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ColorValue, Dimensions, StyleSheet, Text, View } from "react-native";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 

@@ -6,7 +6,7 @@ import {
   ListItemInfo,
   ListItemInfoCopy,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { CommonActions } from "@react-navigation/native";
 import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";

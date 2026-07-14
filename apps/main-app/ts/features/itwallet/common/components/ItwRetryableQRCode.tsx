@@ -1,13 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Appearance, StyleSheet, View } from "react-native";
 import { memo } from "react";
-import {
-  Body,
-  Icon,
-  IOButton,
-  IOColors,
-  IOIcons
-} from "@pagopa/io-app-design-system";
+import { Body, Icon, IOButton, IOColors, IOIcons } from "@io-app/design-system";
 import {
   QrCodeImage,
   QrCodeImageProps

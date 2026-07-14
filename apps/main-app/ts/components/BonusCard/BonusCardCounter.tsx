@@ -5,7 +5,7 @@ import {
   LabelMini,
   useIOThemeContext,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useEffect } from "react";
 import { ColorValue, StyleSheet, View } from "react-native";
 import Animated, {

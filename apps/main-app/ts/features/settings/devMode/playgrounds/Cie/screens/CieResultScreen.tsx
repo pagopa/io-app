@@ -1,4 +1,4 @@
-import { IOColors, IOText } from "@pagopa/io-app-design-system";
+import { IOColors, IOText } from "@io-app/design-system";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { Alert, Platform, Share, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -38,7 +38,7 @@ export function CieResultScreen({ route }: Props) {
           dialogTitle: `Share ${title} "Result"`
         }
       );
-    } catch (error) {
+    } catch {
       Alert.alert("Error", "Could not share the result");
     }
   };

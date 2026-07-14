@@ -9,7 +9,7 @@ import {
   IOButton,
   ModuleNavigation,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useLayoutEffect, useRef } from "react";
 import { View } from "react-native";

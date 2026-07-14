@@ -1,4 +1,4 @@
-import { Body, FooterActionsInline } from "@pagopa/io-app-design-system";
+import { Body, FooterActionsInline } from "@io-app/design-system";
 import { StackActions } from "@react-navigation/native";
 import { increment } from "fp-ts/lib/function";
 import { ComponentProps } from "react";

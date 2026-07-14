@@ -5,7 +5,7 @@ import {
   Tag,
   makeFontStyleObject,
   useIOExperimentalDesign
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import Color from "color";
 import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";

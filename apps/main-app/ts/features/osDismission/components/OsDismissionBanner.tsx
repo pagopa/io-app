@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { Banner, IOVisualCostants } from "@io-app/design-system";
 import { View, StyleSheet } from "react-native";
 import { openWebUrl } from "../../../utils/url";
 

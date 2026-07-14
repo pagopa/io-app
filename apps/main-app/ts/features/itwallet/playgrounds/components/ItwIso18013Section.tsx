@@ -4,7 +4,7 @@ import {
   ListItemInfo,
   ListItemNav,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Alert, View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

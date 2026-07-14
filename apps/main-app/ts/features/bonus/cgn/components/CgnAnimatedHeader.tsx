@@ -7,7 +7,7 @@ import {
   IOVisualCostants,
   useIOThemeContext,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { ActivityIndicator, Platform, StyleSheet, View } from "react-native";
 import Animated, {
@@ -27,7 +27,7 @@ type CgnAnimatedHeaderProps = {
   isRefreshingValue?: SharedValue<number>;
 };
 
-const HEIGHT = Platform.select({ ios: 210, android: 185 });
+const HEIGHT = Platform.select({ ios: 210, android: 185, default: 185 });
 const CARD_BORDER_RADIUS = 24;
 
 const CgnAnimatedHeader = ({
@@ -89,7 +89,7 @@ const CgnAnimatedHeader = ({
               indicatorAnimStyle,
               {
                 position: "absolute",
-                bottom: HEIGHT! * 0.6,
+                bottom: HEIGHT * 0.6,
                 alignSelf: "center",
                 zIndex: 2
               }

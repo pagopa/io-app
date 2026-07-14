@@ -6,7 +6,7 @@ import {
   RadioGroup,
   hexToRgba,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useCallback, useState } from "react";
 import { ScrollView, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
@@ -25,7 +25,7 @@ export const DSAnimatedPictograms = () => {
   const insets = useSafeAreaInsets();
   const theme = useIOTheme();
 
-  const scrollGradientHeight: number = 32;
+  const scrollGradientHeight = 32;
   const pictogramSize: IOPictogramSizeScale = 180;
 
   const pictogramsRefs: Array<AnimatedPictogramType> = [

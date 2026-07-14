@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
+import { Divider, ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";

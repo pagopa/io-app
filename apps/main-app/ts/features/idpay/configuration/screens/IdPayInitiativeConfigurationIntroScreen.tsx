@@ -6,7 +6,7 @@ import {
   Icon,
   VSpacer,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
 import { View } from "react-native";

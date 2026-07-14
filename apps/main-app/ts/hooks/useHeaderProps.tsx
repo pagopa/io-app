@@ -2,7 +2,7 @@ import {
   HeaderActionProps,
   HeaderSecondLevel,
   IOIcons
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ComponentProps, useMemo } from "react";
 import I18n from "i18next";
 import {

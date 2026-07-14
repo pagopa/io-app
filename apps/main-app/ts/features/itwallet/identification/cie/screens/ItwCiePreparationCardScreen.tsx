@@ -21,9 +21,8 @@ export const ItwCiePreparationCardScreen = () => {
         "features.itWallet.discovery.screen.itw.dismissalDialog.cancel"
       )
     },
-    handleDismiss: () => {
-      machineRef.send({ type: "close" });
-    }
+    handleDismiss: () =>
+      machineRef.send({ type: "close", surveyStep: "cie_preparation" })
   });
 
   return (
