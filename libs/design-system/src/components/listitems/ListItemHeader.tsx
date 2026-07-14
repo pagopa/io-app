@@ -1,5 +1,6 @@
 import { ComponentProps, useCallback, useMemo } from "react";
 import { View } from "react-native";
+
 import { useIOTheme } from "../../context";
 import {
   IOListItemStyles,
@@ -11,47 +12,47 @@ import {
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
-import { IOButton, IOButtonLinkSpecificProps, IconButton } from "../buttons";
-import { IOIcons, Icon } from "../icons";
+import { IconButton, IOButton, IOButtonLinkSpecificProps } from "../buttons";
+import { Icon, IOIcons } from "../icons";
 import { VSpacer } from "../layout";
 import { BodySmall, H6 } from "../typography";
 
-type ButtonLinkActionProps = {
-  type: "buttonLink";
-  componentProps: Omit<IOButtonLinkSpecificProps, "variant">;
-};
-
-type IconButtonActionProps = {
-  type: "iconButton";
-  componentProps: ComponentProps<typeof IconButton>;
-};
+export type ListItemHeader = IconProps &
+  WithTestID<{
+    // Accessibility
+    accessibilityLabel?: string;
+    description?: string;
+    endElement?: EndElementProps;
+    label: string;
+    numberOfLines?: number;
+  }>;
 
 type BadgeProps = {
-  type: "badge";
   componentProps: ComponentProps<typeof Badge>;
+  type: "badge";
+};
+
+type ButtonLinkActionProps = {
+  componentProps: Omit<IOButtonLinkSpecificProps, "variant">;
+  type: "buttonLink";
+};
+
+type EndElementProps =
+  | BadgeProps
+  | ButtonLinkActionProps
+  | IconButtonActionProps;
+
+type IconButtonActionProps = {
+  componentProps: ComponentProps<typeof IconButton>;
+  type: "iconButton";
 };
 
 type IconProps =
   | {
-      iconName: IOIcons;
       iconColor?: ComponentProps<typeof Icon>["color"];
+      iconName: IOIcons;
     }
-  | { iconName?: never; iconColor?: never };
-
-type EndElementProps =
-  | ButtonLinkActionProps
-  | IconButtonActionProps
-  | BadgeProps;
-
-export type ListItemHeader = WithTestID<{
-  label: string;
-  numberOfLines?: number;
-  endElement?: EndElementProps;
-  description?: string;
-  // Accessibility
-  accessibilityLabel?: string;
-}> &
-  IconProps;
+  | { iconColor?: never; iconName?: never };
 
 const iconMargin: IOSpacingScale = IOVisualCostants.iconMargin;
 
@@ -72,9 +73,9 @@ export const ListItemHeader = ({
   const itemInfoTextComponent = useMemo(
     () => (
       <View
-        accessible
-        accessibilityRole="header"
         accessibilityLabel={accessibilityLabel ?? label}
+        accessibilityRole="header"
+        accessible
       >
         <H6 color={theme["textBody-tertiary"]}>{label}</H6>
       </View>
@@ -87,12 +88,12 @@ export const ListItemHeader = ({
       const { type, componentProps } = endElement;
 
       switch (type) {
+        case "badge":
+          return <Badge {...componentProps} />;
         case "buttonLink":
           return <IOButton variant="link" {...componentProps} />;
         case "iconButton":
           return <IconButton {...componentProps} />;
-        case "badge":
-          return <Badge {...componentProps} />;
         default:
           return <></>;
       }
@@ -112,8 +113,8 @@ export const ListItemHeader = ({
           >
             <Icon
               allowFontScaling
-              name={iconName}
               color={iconColor ?? theme["icon-decorative"]}
+              name={iconName}
               size={IOListItemVisualParams.iconSize}
             />
           </View>
@@ -128,7 +129,7 @@ export const ListItemHeader = ({
       {description && (
         <View>
           <VSpacer size={IOSelectionListItemVisualParams.descriptionMargin} />
-          <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+          <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
             {description}
           </BodySmall>
         </View>

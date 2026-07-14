@@ -8,11 +8,12 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import {
-  IOVisualCostants,
   enterTransitionAlertEdgeToEdge,
   enterTransitionAlertEdgeToEdgeContent,
-  exitTransitionAlertEdgeToEdge
+  exitTransitionAlertEdgeToEdge,
+  IOVisualCostants
 } from "../../core";
 import {
   IOColors,
@@ -23,7 +24,7 @@ import { IOAlertSpacing } from "../../core/IOSpacing";
 import { useScaleAnimation } from "../../hooks";
 import { makeFontStyleObject } from "../../utils/fonts";
 import { WithTestID } from "../../utils/types";
-import { IOIconSizeScale, IOIcons, Icon } from "../icons";
+import { Icon, IOIcons, IOIconSizeScale } from "../icons";
 import { Body } from "../typography";
 
 const iconSize: IOIconSizeScale = 24;
@@ -39,30 +40,30 @@ const styles = StyleSheet.create({
   }
 });
 
-type AlertProps = WithTestID<{
-  variant: "error" | "warning" | "info" | "success";
-  content: string;
-  viewRef?: RefObject<View>;
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
-}>;
+export type AlertEdgeToEdgeProps = AlertActionProps & AlertProps;
 
 type AlertActionProps =
   | {
-      action?: string;
-      onPress: (event: GestureResponderEvent) => void;
-    }
-  | {
       action?: never;
       onPress?: never;
+    }
+  | {
+      action?: string;
+      onPress: (event: GestureResponderEvent) => void;
     };
 
-export type AlertEdgeToEdgeProps = AlertProps & AlertActionProps;
+type AlertProps = WithTestID<{
+  accessibilityHint?: string;
+  accessibilityLabel?: string;
+  content: string;
+  variant: "error" | "info" | "success" | "warning";
+  viewRef?: RefObject<View>;
+}>;
 
 type VariantStates = {
-  icon: IOIcons;
   background: IOColorsStatusBackground;
   foreground: IOColorsStatusForeground;
+  icon: IOIcons;
 };
 
 // COMPONENT CONFIGURATION
@@ -119,16 +120,16 @@ export const AlertEdgeToEdge = ({
         }}
       >
         <Icon
+          color={mapVariantStates[variant].foreground}
           name={mapVariantStates[variant].icon}
           size={iconSize}
-          color={mapVariantStates[variant].foreground}
         />
       </View>
       <View style={{ flex: 1 }}>
         <Body
+          accessibilityRole="text"
           color={mapVariantStates[variant].foreground}
           weight={"Regular"}
-          accessibilityRole="text"
         >
           {content}
           {action && (
@@ -153,15 +154,15 @@ export const AlertEdgeToEdge = ({
 
   const PressableButton = () => (
     <Pressable
-      testID={testID}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole={"button"}
+      // A11y related props
+      accessible={true}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
-      // A11y related props
-      accessible={true}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole={"button"}
+      testID={testID}
     >
       <Animated.View
         entering={enterTransitionAlertEdgeToEdgeContent}
@@ -174,12 +175,12 @@ export const AlertEdgeToEdge = ({
 
   const StaticComponent = () => (
     <Animated.View
+      accessibilityHint={accessibilityHint}
+      accessibilityRole="alert"
+      accessible={false}
       entering={enterTransitionAlertEdgeToEdgeContent}
       style={styles.alert}
       testID={testID}
-      accessible={false}
-      accessibilityRole="alert"
-      accessibilityHint={accessibilityHint}
     >
       {renderMainBlock()}
     </Animated.View>
