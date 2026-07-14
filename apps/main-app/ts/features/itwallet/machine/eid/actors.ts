@@ -2,6 +2,15 @@ import { CieUtils } from "@pagopa/io-react-native-cie";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
+
+import type {
+  AuthenticationContext,
+  CieContext,
+  EidIssuanceLevel,
+  IdentificationContext,
+  MrtdPoPContext
+} from "./context";
+
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -10,14 +19,16 @@ import { trackItwRequest } from "../../analytics";
 import { toItwIdMethod } from "../../analytics/utils/types";
 import { Env } from "../../common/utils/environment";
 import {
-  getWalletInstanceAttestation,
   getIntegrityHardwareKeyTag,
+  getWalletInstanceAttestation,
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
+import { generateKeysWithWalletUnitAttestation } from "../../common/utils/itwCredentialIssuanceUtils";
 import { isAssertionGenerationError } from "../../common/utils/itwFailureUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
@@ -42,46 +53,13 @@ import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
 import { createCommonActorsImplementation } from "../utils/actors";
-import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
-import { generateKeysWithWalletUnitAttestation } from "../../common/utils/itwCredentialIssuanceUtils";
-import type {
-  AuthenticationContext,
-  CieContext,
-  EidIssuanceLevel,
-  IdentificationContext,
-  MrtdPoPContext
-} from "./context";
-
-export type WithItwVersion<T = { [K: string]: any }> = T & {
-  itwVersion: ItwVersion;
-};
 
 export type CreateWalletInstanceActorParams = WithItwVersion<{
   isRenewal: boolean;
 }>;
 
-export type RequestAccessTokenActorParams = WithItwVersion<{
-  walletInstanceAttestation: string | undefined;
-  authenticationContext: AuthenticationContext | undefined;
-}>;
-
-export type RequestEidActorParams = WithItwVersion<{
-  identification: IdentificationContext | undefined;
-  authenticationContext: AuthenticationContext | undefined;
-  level: EidIssuanceLevel | undefined;
+export type GetWalletAttestationActorParams = WithItwVersion<{
   integrityKeyTag: string | undefined;
-  accessToken: CredentialAccessToken | undefined;
-}>;
-
-export type RequestEidActorOutput = {
-  credential: CredentialBundle;
-  walletUnitAttestations: Record<string, string>;
-};
-
-export type StartAuthFlowActorParams = WithItwVersion<{
-  walletInstanceAttestation: string | undefined;
-  identification: IdentificationContext | undefined;
-  withMRTDPoP: boolean;
 }>;
 
 export type InitMrtdPoPChallengeActorParams = WithItwVersion<{
@@ -89,19 +67,43 @@ export type InitMrtdPoPChallengeActorParams = WithItwVersion<{
   walletInstanceAttestation: string | undefined;
 }>;
 
-export type ValidateMrtdPoPChallengeActorParams = WithItwVersion<{
+export type RequestAccessTokenActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
   walletInstanceAttestation: string | undefined;
-  mrtdContext: MrtdPoPContext | undefined;
 }>;
 
-export type GetWalletAttestationActorParams = WithItwVersion<{
+export type RequestEidActorOutput = {
+  credential: CredentialBundle;
+  walletUnitAttestations: Record<string, string>;
+};
+
+export type RequestEidActorParams = WithItwVersion<{
+  accessToken: CredentialAccessToken | undefined;
+  authenticationContext: AuthenticationContext | undefined;
+  identification: IdentificationContext | undefined;
   integrityKeyTag: string | undefined;
+  level: EidIssuanceLevel | undefined;
+}>;
+
+export type StartAuthFlowActorParams = WithItwVersion<{
+  identification: IdentificationContext | undefined;
+  walletInstanceAttestation: string | undefined;
+  withMRTDPoP: boolean;
 }>;
 
 export type StoreEidCredentialActorParams = {
   eid: CredentialBundle | undefined;
   walletUnitAttestations?: Record<string, string>;
+};
+
+export type ValidateMrtdPoPChallengeActorParams = WithItwVersion<{
+  authenticationContext: AuthenticationContext | undefined;
+  mrtdContext: MrtdPoPContext | undefined;
+  walletInstanceAttestation: string | undefined;
+}>;
+
+export type WithItwVersion<T = { [K: string]: any }> = T & {
+  itwVersion: ItwVersion;
 };
 
 /**

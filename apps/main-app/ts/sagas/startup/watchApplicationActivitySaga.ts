@@ -1,19 +1,20 @@
 import { AppStateStatus } from "react-native";
 import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
+
 import { backgroundActivityTimeout } from "../../config";
-import NavigationService from "../../navigation/NavigationService";
-import { applicationChangeState } from "../../store/actions/application";
-import { identificationRequest } from "../../features/identification/store/actions";
-import { ReduxSagaEffect } from "../../types/utils";
-import {
-  StartupStatusEnum,
-  isStartupLoaded
-} from "../../store/reducers/startup";
-import { maybeHandlePendingBackgroundActions } from "../backgroundActions";
 import { areTwoMinElapsedFromLastActivity } from "../../features/authentication/fastLogin/store/actions/sessionRefreshActions";
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
+import { identificationRequest } from "../../features/identification/store/actions";
 import { IdentificationBackActionType } from "../../features/identification/store/reducers";
+import NavigationService from "../../navigation/NavigationService";
+import { applicationChangeState } from "../../store/actions/application";
+import {
+  isStartupLoaded,
+  StartupStatusEnum
+} from "../../store/reducers/startup";
+import { ReduxSagaEffect } from "../../types/utils";
+import { maybeHandlePendingBackgroundActions } from "../backgroundActions";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:

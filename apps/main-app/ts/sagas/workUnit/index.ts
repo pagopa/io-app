@@ -6,9 +6,17 @@ import {
   isActionOf,
   TypeConstant
 } from "typesafe-actions";
+
 import NavigationService from "../../navigation/NavigationService";
 import { navigateToWorkunitGenericFailureScreen } from "../../store/actions/navigation";
 import { ReduxSagaEffect } from "../../types/utils";
+
+/**
+ * The result of the WorkUnit
+ *
+ * @deprecated
+ */
+export type SagaResult = "back" | "cancel" | "completed" | "failure";
 
 /**
  * The data model needed to run the workunit
@@ -16,26 +24,19 @@ import { ReduxSagaEffect } from "../../types/utils";
  * @deprecated
  */
 export type WorkUnit = {
-  // The navigation action that will be used if the current screen isn't the `startScreenName`
-  startScreenNavigation: () => void;
-  // The expected first screen of the workflow
-  startScreenName: string;
-  // The action that will be taken when the workflow is completed
-  complete: ActionCreator<TypeConstant>;
-  // The action that will be taken when the workflow has been canceled
-  cancel: ActionCreator<TypeConstant>;
   // The action that will be taken when `back` is pressed from the `startScreenName`
   back: ActionCreator<TypeConstant>;
+  // The action that will be taken when the workflow has been canceled
+  cancel: ActionCreator<TypeConstant>;
+  // The action that will be taken when the workflow is completed
+  complete: ActionCreator<TypeConstant>;
   // The action that will be taken when the workflow fails for unexpected reasons
   failure: ActionCreator<TypeConstant>;
+  // The expected first screen of the workflow
+  startScreenName: string;
+  // The navigation action that will be used if the current screen isn't the `startScreenName`
+  startScreenNavigation: () => void;
 };
-
-/**
- * The result of the WorkUnit
- *
- * @deprecated
- */
-export type SagaResult = "cancel" | "completed" | "back" | "failure";
 
 /** @deprecated */
 export type WorkUnitHandler<T = unknown> = (
@@ -43,20 +44,55 @@ export type WorkUnitHandler<T = unknown> = (
 ) => Generator<ReduxSagaEffect, SagaResult, T>;
 
 /**
- * Ensure that the `startScreen` is the current screen or navigate to
- * `startScreen` using `navigateTo`
+ * Execute the work unit, and wait for an action to complete
  *
  * @deprecated
- * @param navigateTo
- * @param startScreen
+ * @param wu
  */
-function* ensureScreen(navigateTo: () => void, startScreen: string) {
-  const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
-    yield* call(NavigationService.getCurrentRouteName);
+export function* executeWorkUnit(
+  wu: WorkUnit
+): Generator<
+  ReduxSagaEffect,
+  SagaResult,
+  ActionType<
+    typeof wu.back | typeof wu.cancel | typeof wu.complete | typeof wu.failure
+  >
+> {
+  yield* call(ensureScreen, wu.startScreenNavigation, wu.startScreenName);
 
-  if (currentRoute !== undefined && currentRoute !== startScreen) {
-    yield* call(navigateTo);
+  const result = yield* take<
+    ActionType<
+      typeof wu.back | typeof wu.cancel | typeof wu.complete | typeof wu.failure
+    >
+  >([wu.complete, wu.cancel, wu.back, wu.failure]);
+
+  if (isActionOf(wu.complete, result)) {
+    return "completed";
+  } else if (isActionOf(wu.cancel, result)) {
+    return "cancel";
+  } else if (isActionOf(wu.back, result)) {
+    return "back";
+  } else if (isActionOf(wu.failure, result)) {
+    return "failure";
   }
+  throw new Error(`Unhandled case for ${result}`);
+}
+
+/**
+ * TODO: Generic handling for the failure of a workunit, navigate to
+ * GenericFailureScren
+ *
+ * @deprecated
+ * @param g
+ */
+export function* withFailureHandling<T>(
+  g: (...args: Array<any>) => Generator<ReduxSagaEffect, SagaResult, T>
+) {
+  const res = yield* call(g);
+  if (res === "failure") {
+    yield* call(navigateToWorkunitGenericFailureScreen);
+  }
+  return res;
 }
 
 /**
@@ -83,53 +119,18 @@ export function* withResetNavigationStack<T>(
 }
 
 /**
- * TODO: Generic handling for the failure of a workunit, navigate to
- * GenericFailureScren
+ * Ensure that the `startScreen` is the current screen or navigate to
+ * `startScreen` using `navigateTo`
  *
  * @deprecated
- * @param g
+ * @param navigateTo
+ * @param startScreen
  */
-export function* withFailureHandling<T>(
-  g: (...args: Array<any>) => Generator<ReduxSagaEffect, SagaResult, T>
-) {
-  const res = yield* call(g);
-  if (res === "failure") {
-    yield* call(navigateToWorkunitGenericFailureScreen);
+function* ensureScreen(navigateTo: () => void, startScreen: string) {
+  const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
+    yield* call(NavigationService.getCurrentRouteName);
+
+  if (currentRoute !== undefined && currentRoute !== startScreen) {
+    yield* call(navigateTo);
   }
-  return res;
-}
-
-/**
- * Execute the work unit, and wait for an action to complete
- *
- * @deprecated
- * @param wu
- */
-export function* executeWorkUnit(
-  wu: WorkUnit
-): Generator<
-  ReduxSagaEffect,
-  SagaResult,
-  ActionType<
-    typeof wu.cancel | typeof wu.complete | typeof wu.back | typeof wu.failure
-  >
-> {
-  yield* call(ensureScreen, wu.startScreenNavigation, wu.startScreenName);
-
-  const result = yield* take<
-    ActionType<
-      typeof wu.cancel | typeof wu.complete | typeof wu.back | typeof wu.failure
-    >
-  >([wu.complete, wu.cancel, wu.back, wu.failure]);
-
-  if (isActionOf(wu.complete, result)) {
-    return "completed";
-  } else if (isActionOf(wu.cancel, result)) {
-    return "cancel";
-  } else if (isActionOf(wu.back, result)) {
-    return "back";
-  } else if (isActionOf(wu.failure, result)) {
-    return "failure";
-  }
-  throw new Error(`Unhandled case for ${result}`);
 }

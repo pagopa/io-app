@@ -1,9 +1,10 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as E from "fp-ts/lib/Either";
+
 import { isDefined } from "../../../../../utils/guards";
 import {
-  WellKnownClaim,
-  parseClaims
+  parseClaims,
+  WellKnownClaim
 } from "../../../common/utils/itwClaimsUtils";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";

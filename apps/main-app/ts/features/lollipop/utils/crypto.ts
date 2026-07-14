@@ -1,17 +1,17 @@
 import {
-  PublicKey,
   CryptoError,
-  isKeyStrongboxBacked
+  isKeyStrongboxBacked,
+  PublicKey
 } from "@pagopa/io-react-native-crypto";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-
+import * as O from "fp-ts/lib/Option";
 import { jwkThumbprintByEncoding } from "jwk-thumbprint";
-import { isAndroid } from "../../../utils/platform";
+
 import {
   trackLollipopIsKeyStrongboxBackedFailure,
   trackLollipopIsKeyStrongboxBackedSuccess
 } from "../../../utils/analytics";
+import { isAndroid } from "../../../utils/platform";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT } from "./login";
 
 export type KeyInfo = {

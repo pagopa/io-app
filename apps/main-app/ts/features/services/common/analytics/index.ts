@@ -1,9 +1,11 @@
 import { getType } from "typesafe-actions";
+
 import { mixpanelTrack } from "../../../../mixpanel";
 import { Action } from "../../../../store/actions/types";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
 import { loadServicePreference } from "../../details/store/actions/preference";
+import { FavouriteServicesSortType } from "../../favouriteServices/types";
 import {
   featuredInstitutionsGet,
   featuredServicesGet,
@@ -11,22 +13,15 @@ import {
 } from "../../home/store/actions";
 import { paginatedServicesGet } from "../../institution/store/actions";
 import { searchPaginatedInstitutionsGet } from "../../search/store/actions";
-import { FavouriteServicesSortType } from "../../favouriteServices/types";
-
-type ServiceBaseType = {
-  service_id: string;
-  service_name: string;
-} & InstitutionBaseType;
 
 type InstitutionBaseType = {
   organization_name: string;
 };
 
-type ServiceDetailsType = {
-  bottom_cta_available: boolean;
-  organization_fiscal_code: string;
-  service_category: "special" | "standard";
-} & ServiceBaseType;
+type ServiceBaseType = InstitutionBaseType & {
+  service_id: string;
+  service_name: string;
+};
 
 type ServiceDetailsConsentType = {
   is_special_service: boolean;
@@ -36,6 +31,12 @@ type ServiceDetailsConsentType = {
   service_id: string;
 };
 
+type ServiceDetailsType = ServiceBaseType & {
+  bottom_cta_available: boolean;
+  organization_fiscal_code: string;
+  service_category: "special" | "standard";
+};
+
 const ConsentTypeLabels = {
   inbox: "main",
   email: "email",
@@ -43,9 +44,34 @@ const ConsentTypeLabels = {
   can_access_message_read_status: "read_confirmation"
 } as const;
 
+export type CtaCategoryType = "custom_1" | "custom_2";
+
+type InstitutionDetailsType = InstitutionBaseType & {
+  organization_fiscal_code: string;
+  services_count: number;
+};
+
+type InstitutionSelectedType = InstitutionBaseType & {
+  organization_fiscal_code: string;
+  source:
+    | "featured_organizations"
+    | "main_list"
+    | "recent_list"
+    | "search_list";
+};
+
+type SearchStartType = {
+  source: "bottom_link" | "favourites" | "header_icon" | "search_bar";
+};
+
 type ServiceConsentChangedType = {
-  consent_type: keyof typeof ConsentTypeLabels;
   consent_status: boolean;
+  consent_type: keyof typeof ConsentTypeLabels;
+  service_id: string;
+};
+
+type ServiceDetailsCtaTappedType = {
+  cta_category: CtaCategoryType;
   service_id: string;
 };
 
@@ -54,37 +80,12 @@ type ServiceDetailsUserExitType = {
   service_id: string;
 };
 
+type ServiceSelectedType = ServiceBaseType & {
+  source: "favourites" | "featured_services" | "organization_detail";
+};
+
 type SpecialServiceStatusChangedType = {
   is_active: boolean;
-  service_id: string;
-};
-
-type InstitutionDetailsType = {
-  organization_fiscal_code: string;
-  services_count: number;
-} & InstitutionBaseType;
-
-type ServiceSelectedType = {
-  source: "favourites" | "featured_services" | "organization_detail";
-} & ServiceBaseType;
-
-type InstitutionSelectedType = {
-  organization_fiscal_code: string;
-  source:
-    | "featured_organizations"
-    | "main_list"
-    | "search_list"
-    | "recent_list";
-} & InstitutionBaseType;
-
-type SearchStartType = {
-  source: "bottom_link" | "header_icon" | "favourites" | "search_bar";
-};
-
-export type CtaCategoryType = "custom_1" | "custom_2";
-
-type ServiceDetailsCtaTappedType = {
-  cta_category: CtaCategoryType;
   service_id: string;
 };
 
@@ -93,7 +94,7 @@ export const trackServicesHome = () =>
 
 export const trackServicesHomeError = (
   reason: string,
-  source: "featured_services" | "featured_organizations" | "main_list"
+  source: "featured_organizations" | "featured_services" | "main_list"
 ) =>
   void mixpanelTrack(
     "SERVICES_ERROR",
@@ -332,32 +333,15 @@ export const trackServicesFavouritesSortSelected = (
 /** Isolated tracker for services actions */
 export const trackServicesAction = (action: Action): void => {
   switch (action.type) {
-    // Services home
-    case getType(paginatedInstitutionsGet.failure):
-      return trackServicesHomeError(
-        getNetworkErrorMessage(action.payload),
-        "main_list"
-      );
-    case getType(featuredServicesGet.failure):
-      return trackServicesHomeError(
-        getNetworkErrorMessage(action.payload),
-        "featured_services"
-      );
     case getType(featuredInstitutionsGet.failure):
       return trackServicesHomeError(
         getNetworkErrorMessage(action.payload),
         "featured_organizations"
       );
-    // Search results
-    case getType(searchPaginatedInstitutionsGet.success):
-      return trackSearchResult(action.payload.count);
-    case getType(searchPaginatedInstitutionsGet.failure):
-      return trackSearchError(getNetworkErrorMessage(action.payload));
-    // Institution details
-    case getType(paginatedServicesGet.failure):
-      return trackInstitutionDetailsError(
-        action.payload.id,
-        getNetworkErrorMessage(action.payload)
+    case getType(featuredServicesGet.failure):
+      return trackServicesHomeError(
+        getNetworkErrorMessage(action.payload),
+        "featured_services"
       );
     // Service details
     case getType(loadServicePreference.failure):
@@ -365,5 +349,22 @@ export const trackServicesAction = (action: Action): void => {
         action.payload.id,
         getNetworkErrorMessage(action.payload)
       );
+    // Services home
+    case getType(paginatedInstitutionsGet.failure):
+      return trackServicesHomeError(
+        getNetworkErrorMessage(action.payload),
+        "main_list"
+      );
+    // Institution details
+    case getType(paginatedServicesGet.failure):
+      return trackInstitutionDetailsError(
+        action.payload.id,
+        getNetworkErrorMessage(action.payload)
+      );
+    case getType(searchPaginatedInstitutionsGet.failure):
+      return trackSearchError(getNetworkErrorMessage(action.payload));
+    // Search results
+    case getType(searchPaginatedInstitutionsGet.success):
+      return trackSearchResult(action.payload.count);
   }
 };

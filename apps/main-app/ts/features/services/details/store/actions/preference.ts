@@ -1,11 +1,12 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
+
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { NetworkError } from "../../../../../utils/errors";
 import {
   ServicePreference,
   ServicePreferenceResponse,
   WithServiceID
 } from "../../types/ServicePreferenceResponse";
-import { NetworkError } from "../../../../../utils/errors";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 /** Actions to load the specified preferences for a given ServiceID */
 export const loadServicePreference = createAsyncAction(

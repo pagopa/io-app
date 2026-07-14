@@ -1,25 +1,26 @@
-import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { Banner, IOVisualCostants } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { createRef, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
-  trackItwBannerVisualized,
   trackItwBannerClosure,
-  trackItwBannerTap
+  trackItwBannerTap,
+  trackItwBannerVisualized
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType";
 import { itwCloseBanner } from "../../store/actions/banners";
 
 export type ItwDiscoveryBannerProps = {
-  withTitle?: boolean;
-  ignoreMargins?: boolean;
   closable?: boolean;
   handleOnClose?: () => void;
+  ignoreMargins?: boolean;
+  withTitle?: boolean;
 };
 
 /**
@@ -90,16 +91,16 @@ export const ItwDiscoveryBannerLegacy = ({
   return (
     <View style={!ignoreMargins && styles.margins}>
       <Banner
-        testID="itwDiscoveryBannerTestID"
-        ref={bannerRef}
-        title={withTitle ? title : undefined}
-        content={content}
         action={action}
-        pictogramName="itWallet"
         color="turquoise"
-        onClose={closable ? handleClose : undefined}
+        content={content}
         labelClose={I18n.t("global.buttons.close")}
+        onClose={closable ? handleClose : undefined}
         onPress={handleOnPress}
+        pictogramName="itWallet"
+        ref={bannerRef}
+        testID="itwDiscoveryBannerTestID"
+        title={withTitle ? title : undefined}
       />
     </View>
   );

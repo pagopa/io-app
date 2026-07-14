@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import {
   CredentialBundle,
   CredentialMetadata
@@ -85,10 +86,10 @@ export const itwCredentialsRefreshStatusByType = createStandardAction(
 )<string>();
 
 export type ItwCredentialsActions =
-  | ActionType<typeof itwCredentialsStoreBundle>
-  | ActionType<typeof itwCredentialsStore>
+  | ActionType<typeof itwCredentialsRefreshStatusByType>
   | ActionType<typeof itwCredentialsRemove>
   | ActionType<typeof itwCredentialsRemoveByType>
-  | ActionType<typeof itwCredentialsRefreshStatusByType>
   | ActionType<typeof itwCredentialsReplaceByType>
+  | ActionType<typeof itwCredentialsStore>
+  | ActionType<typeof itwCredentialsStoreBundle>
   | ActionType<typeof itwCredentialsVaultMigrationComplete>;

@@ -9,10 +9,22 @@ import {
   takeEvery
 } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
+
 import { customEmailChannelSetEnabled } from "../../../store/actions/persistedPreferences";
-import { profileLoadSuccess } from "../../settings/common/store/actions";
 import { isCustomEmailChannelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { ReduxSagaEffect } from "../../../types/utils";
+import { profileLoadSuccess } from "../../settings/common/store/actions";
+
+export function* checkEmailNotificationPreferencesSaga(): SagaIterator {
+  yield* takeEvery(
+    getType(profileLoadSuccess),
+    emailNotificationPreferencesSaga
+  );
+}
+
+export function* emailNotificationPreferencesSaga(): SagaIterator {
+  yield* put(customEmailChannelSetEnabled(false));
+}
 
 /**
  * A saga to match at the first startup if the user has customized settings
@@ -37,15 +49,4 @@ export function* watchEmailNotificationPreferencesSaga(): Generator<
   const checkSaga = yield* fork(checkEmailNotificationPreferencesSaga);
   yield* take(customEmailChannelSetEnabled);
   yield* cancel(checkSaga);
-}
-
-export function* checkEmailNotificationPreferencesSaga(): SagaIterator {
-  yield* takeEvery(
-    getType(profileLoadSuccess),
-    emailNotificationPreferencesSaga
-  );
-}
-
-export function* emailNotificationPreferencesSaga(): SagaIterator {
-  yield* put(customEmailChannelSetEnabled(false));
 }

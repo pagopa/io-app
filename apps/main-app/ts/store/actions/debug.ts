@@ -24,7 +24,7 @@ export const resetDebugData =
   createStandardAction("DEBUG_RESET_DATA")<ReadonlyArray<string>>();
 
 export type DebugActions =
-  | ActionType<typeof setDebugModeEnabled>
+  | ActionType<typeof resetDebugData>
   | ActionType<typeof setDebugCurrentRouteName>
   | ActionType<typeof setDebugData>
-  | ActionType<typeof resetDebugData>;
+  | ActionType<typeof setDebugModeEnabled>;

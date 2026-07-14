@@ -2,9 +2,9 @@
 
 export type KeychainDB = {
   [key: string]: {
-    username: string;
     password: string;
     service: string;
+    username: string;
   };
 };
 

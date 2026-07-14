@@ -1,5 +1,7 @@
-import { useCallback, useEffect } from "react";
 import I18n from "i18next";
+import { useCallback, useEffect } from "react";
+
+import SecuritySuggestions from "../features/authentication/fastLogin/components/SecuritySuggestions";
 import {
   isFastLoginFFEnabledSelector,
   isSecurityAdviceAcknowledgedEnabled,
@@ -7,7 +9,6 @@ import {
 } from "../features/authentication/fastLogin/store/selectors";
 import { useIOSelector } from "../store/hooks";
 import { useIOBottomSheetModal } from "../utils/hooks/bottomSheet";
-import SecuritySuggestions from "../features/authentication/fastLogin/components/SecuritySuggestions";
 
 /**
  * @param useManualBottomsheetOpening If true the caller must use the methods

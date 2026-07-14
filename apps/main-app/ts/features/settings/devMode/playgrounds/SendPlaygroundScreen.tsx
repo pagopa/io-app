@@ -1,11 +1,3 @@
-import { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  TextInput as RNTextInput,
-  View,
-  Appearance
-} from "react-native";
-import I18n from "i18next";
 import {
   Body,
   Divider,
@@ -17,21 +9,30 @@ import {
   ListItemSwitch,
   useIOToast,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
+import I18n from "i18next";
+import { useEffect, useState } from "react";
+import {
+  Appearance,
+  TextInput as RNTextInput,
+  StyleSheet,
+  View
+} from "react-native";
+
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { preferencesPnTestEnvironmentSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { preferencesPnTestEnvironmentSetEnabled } from "../../../../store/actions/persistedPreferences";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isSendLollipopPlaygroundEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
+import { sendLollipopLambdaAction } from "../../../pn/lollipopLambda/store/actions";
 import {
   isSendLollipopLambdaLoading,
   sendLollipopLambdaErrorReason,
   sendLollipopLambdaResponseBodyString,
   sendLollipopLambdaResponseStatusCode
 } from "../../../pn/lollipopLambda/store/selectors";
-import { sendLollipopLambdaAction } from "../../../pn/lollipopLambda/store/actions";
-import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { isSendLollipopPlaygroundEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 const styles = StyleSheet.create({
   textInput: {
@@ -105,10 +106,9 @@ export const SendPlaygroundScreen = () => {
         label={I18n.t("features.pn.lollipopPlayground.environmentTitle")}
       />
       <ListItemSwitch
-        label={I18n.t("features.pn.lollipopPlayground.uatLabel")}
         description={I18n.t("features.pn.lollipopPlayground.uatDescription")}
         disabled={isSagaLoading}
-        value={sendUATEnvironmentEnabled}
+        label={I18n.t("features.pn.lollipopPlayground.uatLabel")}
         onSwitchValueChange={enabled =>
           dispatch(
             preferencesPnTestEnvironmentSetEnabled({
@@ -116,6 +116,7 @@ export const SendPlaygroundScreen = () => {
             })
           )
         }
+        value={sendUATEnvironmentEnabled}
       />
       <Divider />
       {lollipopPlaygroundEnabled && (
@@ -131,51 +132,51 @@ export const SendPlaygroundScreen = () => {
                 "features.pn.lollipopPlayground.postBodyLabel"
               )}
               editable={!isSagaLoading}
-              submitBehavior="newline"
               multiline={true}
+              onChangeText={value => setRequestBody(value)}
               placeholder={I18n.t(
                 "features.pn.lollipopPlayground.postBodyPlaceholder"
               )}
+              placeholderTextColor={placeholderTextColor}
+              scrollEnabled={false}
               style={{
                 ...styles.textInput,
                 opacity: isSagaLoading ? 0.5 : 1.0,
                 color: bodyTextColor,
                 borderColor: bodyBorderColor
               }}
-              placeholderTextColor={placeholderTextColor}
-              onChangeText={value => setRequestBody(value)}
+              submitBehavior="newline"
               value={requestBody}
-              scrollEnabled={false}
             />
             <VSpacer size={16} />
             <ListItemInfo
-              value={`${responseStatusCodeOrUndefined ?? ""}`}
               label={I18n.t(
                 "features.pn.lollipopPlayground.responseStatusCode"
               )}
               numberOfLines={1}
+              value={`${responseStatusCodeOrUndefined ?? ""}`}
             />
             <ListItemInfoCopy
               label={I18n.t("features.pn.lollipopPlayground.responseBody")}
-              value={responseBodyStringOrUndefined ?? ""}
               numberOfLines={1000}
               onPress={() =>
                 clipboardSetStringWithFeedback(
                   responseBodyStringOrUndefined ?? ""
                 )
               }
+              value={responseBodyStringOrUndefined ?? ""}
             />
             <VSpacer size={32} />
             <IOButton
               label={I18n.t("features.pn.lollipopPlayground.requestGet")}
-              onPress={() => sendLollipopLambdaRequest("Get")}
               loading={isSagaLoading}
+              onPress={() => sendLollipopLambdaRequest("Get")}
             />
             <VSpacer size={8} />
             <IOButton
               label={I18n.t("features.pn.lollipopPlayground.requestPost")}
-              onPress={() => sendLollipopLambdaRequest("Post")}
               loading={isSagaLoading}
+              onPress={() => sendLollipopLambdaRequest("Post")}
             />
           </View>
           <VSpacer size={16} />

@@ -1,16 +1,17 @@
+import { useIsFocused } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect, useMemo } from "react";
-import { useIsFocused } from "@react-navigation/native";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { fciEndRequest, fciStartRequest } from "../store/actions";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
-  trackFciSignatureRequestStatus,
-  trackFciSignatureExpired
+  trackFciSignatureExpired,
+  trackFciSignatureRequestStatus
 } from "../analytics";
-import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
+import { fciEndRequest, fciStartRequest } from "../store/actions";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
+import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
 import SignatureStatusComponent from "./SignatureStatusComponent";
 
 /** A component to render the cases of success for a signature request */
@@ -84,62 +85,62 @@ const SuccessComponent = (props: {
   if (isExpiredDocument) {
     return (
       <SignatureStatusComponent
-        title={I18n.t("features.fci.errors.expired.title")}
-        subTitle={I18n.t("features.fci.errors.expired.subTitle")}
-        onPress={() => dispatch(fciEndRequest())}
         email={issuer_email}
+        onPress={() => dispatch(fciEndRequest())}
         pictogram={"ended"}
+        subTitle={I18n.t("features.fci.errors.expired.subTitle")}
         testID={"ExpiredSignatureRequestTestID"}
+        title={I18n.t("features.fci.errors.expired.title")}
       />
     );
   }
 
   // the signature request could have various status
   switch (status) {
-    case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
-      return null;
-    case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
+    case SignatureRequestStatusEnum.CANCELLED:
       return (
         <SignatureStatusComponent
-          title={I18n.t("features.fci.errors.waitForQtsp.title")}
-          subTitle={I18n.t("features.fci.errors.waitForQtsp.subTitle")}
+          email={issuer_email}
           onPress={() => dispatch(fciEndRequest())}
-          pictogram={"timing"}
-          testID={"WaitQtspSignatureRequestTestID"}
-        />
-      );
-    case SignatureRequestStatusEnum.SIGNED:
-      return (
-        <SignatureStatusComponent
-          title={I18n.t("features.fci.errors.signed.title")}
-          subTitle={I18n.t("features.fci.errors.signed.subTitle")}
-          onPress={() => dispatch(fciEndRequest())}
-          pictogram={"success"}
-          testID={"SignedSignatureRequestTestID"}
+          pictogram={"ended"}
+          subTitle={I18n.t("features.fci.errors.generic.cancelled.subTitle")}
+          testID={"CancelledSignatureRequestTestID"}
+          title={I18n.t("features.fci.errors.generic.cancelled.title")}
         />
       );
     case SignatureRequestStatusEnum.REJECTED:
       return (
         <SignatureStatusComponent
-          title={I18n.t("features.fci.errors.generic.rejected.title")}
-          subTitle={I18n.t("features.fci.errors.generic.rejected.subTitle")}
           email={issuer_email}
           onPress={() => dispatch(fciEndRequest())}
           pictogram={"umbrella"}
+          subTitle={I18n.t("features.fci.errors.generic.rejected.subTitle")}
           testID="RejectedSignatureRequestTestID"
+          title={I18n.t("features.fci.errors.generic.rejected.title")}
         />
       );
-    case SignatureRequestStatusEnum.CANCELLED:
+    case SignatureRequestStatusEnum.SIGNED:
       return (
         <SignatureStatusComponent
-          title={I18n.t("features.fci.errors.generic.cancelled.title")}
-          subTitle={I18n.t("features.fci.errors.generic.cancelled.subTitle")}
-          email={issuer_email}
           onPress={() => dispatch(fciEndRequest())}
-          pictogram={"ended"}
-          testID={"CancelledSignatureRequestTestID"}
+          pictogram={"success"}
+          subTitle={I18n.t("features.fci.errors.signed.subTitle")}
+          testID={"SignedSignatureRequestTestID"}
+          title={I18n.t("features.fci.errors.signed.title")}
         />
       );
+    case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
+      return (
+        <SignatureStatusComponent
+          onPress={() => dispatch(fciEndRequest())}
+          pictogram={"timing"}
+          subTitle={I18n.t("features.fci.errors.waitForQtsp.subTitle")}
+          testID={"WaitQtspSignatureRequestTestID"}
+          title={I18n.t("features.fci.errors.waitForQtsp.title")}
+        />
+      );
+    case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
+      return null;
     default:
       /* This case should not occur because all cases mapped
       by openapi are handled. If the status we receive
@@ -149,10 +150,10 @@ const SuccessComponent = (props: {
       so this default is never triggered. */
       return (
         <SignatureStatusComponent
-          title={I18n.t("features.fci.errors.generic.default.title")}
-          subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
-          pictogram={"umbrella"}
           onPress={() => dispatch(fciEndRequest())}
+          pictogram={"umbrella"}
+          subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+          title={I18n.t("features.fci.errors.generic.default.title")}
         />
       );
   }

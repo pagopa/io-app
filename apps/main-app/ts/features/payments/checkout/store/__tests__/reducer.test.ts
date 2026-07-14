@@ -1,7 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
+
 import { AmountEuroCents } from "../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
+import { PaymentMethodStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
+import { TransactionStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/TransactionStatus";
 import { WalletLastUsageTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletLastUsageType";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -27,8 +30,6 @@ import {
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
 import { WALLET_PAYMENT_STEP_MAX } from "../reducers";
-import { PaymentMethodStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
-import { TransactionStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/TransactionStatus";
 
 describe("payments checkout reducer index.ts", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));

@@ -10,11 +10,11 @@ import {
   useIOTheme,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
-
+} from "@io-app/design-system";
 import { ComponentProps, useEffect } from "react";
 import { AccessibilityInfo, Platform, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
 import { WithTestID } from "../../types/WithTestID";
 import {
@@ -31,18 +31,18 @@ const styles = StyleSheet.create({
 
 type ButtonProps = Pick<
   IOButtonProps,
-  "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
+  "accessibilityLabel" | "icon" | "label" | "onPress" | "testID"
 >;
 
 const SPACE_BETWEEN_SPINNER_AND_TEXT = 24;
 
 type LoadingScreenContentProps = WithTestID<{
-  title: string;
-  subtitle?: string;
   action?: ButtonProps;
-  headerVisible?: boolean;
   animatedPictogramSource?: IOAnimatedPictograms;
   banner?: ComponentProps<typeof Banner>;
+  headerVisible?: boolean;
+  subtitle?: string;
+  title: string;
 }>;
 
 export const LoadingScreenContent = ({
@@ -70,11 +70,11 @@ export const LoadingScreenContent = ({
 
   return (
     <SafeAreaView
+      edges={headerVisible ? ["bottom"] : undefined}
       style={[
         styles.container,
         { backgroundColor: IOColors[theme["appBackground-primary"]] }
       ]}
-      edges={headerVisible ? ["bottom"] : undefined}
       testID={testID}
     >
       <ContentWrapper style={{ flex: 1 }}>
@@ -83,15 +83,15 @@ export const LoadingScreenContent = ({
           style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
         >
           <View
-            accessible={false}
             accessibilityElementsHidden={true}
+            accessible={false}
             importantForAccessibility={"no-hide-descendants"}
           >
             {animatedPictogramSource ? (
               <AnimatedPictogram
+                loop={true}
                 name={animatedPictogramSource}
                 size={120}
-                loop={true}
               />
             ) : (
               <LoadingIndicator />
@@ -99,9 +99,9 @@ export const LoadingScreenContent = ({
           </View>
           <VStack space={8} style={{ alignItems: "center" }}>
             <H3
-              style={{ textAlign: "center" }}
-              color={theme["textHeading-secondary"]}
               accessibilityLabel={title}
+              color={theme["textHeading-secondary"]}
+              style={{ textAlign: "center" }}
             >
               {title}
             </H3>

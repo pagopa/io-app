@@ -3,10 +3,10 @@ import {
   IOSpacingScale,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
-
+} from "@io-app/design-system";
 import { PropsWithChildren, useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
@@ -70,17 +70,17 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
           <ItwSkeumorphicCard
             credential={credential}
             isFlipped={isFlipped}
+            onPress={handleCardPress}
             status={status}
             valuesHidden={valuesHidden}
-            onPress={handleCardPress}
           />
         </FlipGestureDetector>
       </CardContainer>
       <VSpacer size={8} />
       <ContentWrapper style={styles.centeredLayout}>
         <ItwPresentationCredentialCardFlipButton
-          isFlipped={isFlipped}
           handleOnPress={handleFlipButtonPress}
+          isFlipped={isFlipped}
         />
       </ContentWrapper>
     </VStack>

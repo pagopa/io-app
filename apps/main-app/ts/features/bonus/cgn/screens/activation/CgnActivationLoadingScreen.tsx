@@ -1,8 +1,9 @@
-import { Body, ContentWrapper, H3, VStack } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper, H3, VStack } from "@io-app/design-system";
+import I18n from "i18next";
 import { useRef } from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import I18n from "i18next";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -20,15 +21,15 @@ const LoadingComponent = () => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, justifyContent: "center" }}
       accessible
       ref={ref}
+      style={{ flex: 1, justifyContent: "center" }}
     >
       <ContentWrapper>
         <VStack space={24} style={{ alignItems: "center" }}>
           <View
-            accessible={false}
             accessibilityElementsHidden={true}
+            accessible={false}
             importantForAccessibility={"no-hide-descendants"}
           >
             <LoadingIndicator />
@@ -52,14 +53,14 @@ const ErrorComponent = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram={"umbrella"}
-      title={I18n.t("bonus.cgn.activation.error.title")}
-      subtitle={I18n.t("bonus.cgn.activation.error.body")}
       action={{
         accessibilityLabel: I18n.t("global.buttons.close"),
         label: I18n.t("global.buttons.close"),
         onPress: onCancel
       }}
+      pictogram={"umbrella"}
+      subtitle={I18n.t("bonus.cgn.activation.error.body")}
+      title={I18n.t("bonus.cgn.activation.error.title")}
     />
   );
 };

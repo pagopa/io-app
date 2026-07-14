@@ -8,7 +8,7 @@ import {
   ListItemSwitch,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ComponentProps, useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 import Animated, {
@@ -18,6 +18,7 @@ import Animated, {
   withDelay,
   withSpring
 } from "react-native-reanimated";
+
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
@@ -92,13 +93,13 @@ const PlaceholderBox = ({
 
   return (
     <Animated.View
+      accessibilityLabel={label}
+      accessible
       layout={layout}
       style={[
         styles.placeholder,
         { backgroundColor: IOColors[theme["appBackground-secondary"]] }
       ]}
-      accessible
-      accessibilityLabel={label}
     >
       <Body color={theme["textBody-tertiary"]}>{label}</Body>
     </Animated.View>
@@ -147,12 +148,12 @@ export const DSServicePreferences = () => {
         <Animated.View layout={layoutTransition}>
           <ListItemHeader label="Questo servizio può" />
           <ListItemSwitch
+            description="Preferenza principale che controlla le opzioni qui sotto"
+            disabled={isMainDisabled}
             icon="message"
             label="Contattarti in app"
-            description="Preferenza principale che controlla le opzioni qui sotto"
-            value={isMainEnabled}
-            disabled={isMainDisabled}
             onSwitchValueChange={setIsMainEnabled}
+            value={isMainEnabled}
           />
 
           {/* Skips the dependent switches' entering animations on the screen's
@@ -169,8 +170,8 @@ export const DSServicePreferences = () => {
                   <ListItemSwitch
                     icon="bell"
                     label="Inviarti notifiche push"
-                    value={isPushEnabled}
                     onSwitchValueChange={setIsPushEnabled}
+                    value={isPushEnabled}
                   />
                 </Animated.View>
                 {/* Gated by the premium flag, mirroring the original
@@ -185,8 +186,8 @@ export const DSServicePreferences = () => {
                     <ListItemSwitch
                       icon="read"
                       label="Ricevere conferme di lettura"
-                      value={isReadStatusEnabled}
                       onSwitchValueChange={setIsReadStatusEnabled}
+                      value={isReadStatusEnabled}
                     />
                   </Animated.View>
                 )}
@@ -200,16 +201,16 @@ export const DSServicePreferences = () => {
         <Animated.View layout={layoutTransition}>
           <VStack space={8}>
             <IOButton
-              variant="solid"
               label={
                 isMainDisabled ? "Enable main switch" : "Disable main switch"
               }
               onPress={toggleMainDisabled}
+              variant="solid"
             />
             <IOButton
-              variant="outline"
               label={isPremium ? "Disable premium" : "Enable premium"}
               onPress={togglePremium}
+              variant="outline"
             />
           </VStack>
         </Animated.View>

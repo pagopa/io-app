@@ -1,4 +1,10 @@
 import { useEffect } from "react";
+
+import { getMixPanelCredential } from "../../analytics/utils";
+import {
+  serializeFailureReason,
+  shouldSerializeReason
+} from "../../common/utils/itwStoreUtils";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType
@@ -10,17 +16,12 @@ import {
   trackCredentialNotEntitledFailure,
   trackItwAddCredentialNotTrustedIssuer
 } from "../analytics";
-import { getMixPanelCredential } from "../../analytics/utils";
-import {
-  serializeFailureReason,
-  shouldSerializeReason
-} from "../../common/utils/itwStoreUtils";
 
 type Params = {
-  failure: CredentialIssuanceFailure;
-  isItwL3: boolean;
   credentialType?: string;
+  failure: CredentialIssuanceFailure;
   invalidErrorCode?: string;
+  isItwL3: boolean;
 };
 
 /** Track errors occurred during the credential issuance process for analytics. */

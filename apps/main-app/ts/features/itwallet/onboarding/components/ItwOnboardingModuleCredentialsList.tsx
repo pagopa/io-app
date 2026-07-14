@@ -1,6 +1,7 @@
-import * as O from "fp-ts/lib/Option";
 import { constFalse, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
+
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -114,21 +115,21 @@ export const ItwOnboardingModuleCredentialsList = ({
 
   return credentialsToDisplay.map(({ type, name }) => (
     <ItwOnboardingModuleCredential
-      key={`itw_credential_${type}`}
-      type={type}
-      showIcon={!isL3Enabled}
+      credentialName={name}
       isActive={itwCredentialsTypes.includes(type)}
-      isDisabled={remotelyDisabledCredentials.includes(type)}
-      isUpcoming={isUpcomingCredential(type)}
-      isNew={newCredentials.includes(type)}
       isCredentialIssuancePending={isCredentialIssuancePending}
+      isDisabled={remotelyDisabledCredentials.includes(type)}
+      isNew={newCredentials.includes(type)}
       isSelectedCredential={pipe(
         selectedCredentialOption,
         O.map(t => t === type),
         O.getOrElse(constFalse)
       )}
+      isUpcoming={isUpcomingCredential(type)}
+      key={`itw_credential_${type}`}
       onPress={beginCredentialIssuance}
-      credentialName={name}
+      showIcon={!isL3Enabled}
+      type={type}
     />
   ));
 };

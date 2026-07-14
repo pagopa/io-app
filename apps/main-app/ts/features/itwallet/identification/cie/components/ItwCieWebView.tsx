@@ -12,6 +12,7 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
+
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { useIOSelector } from "../../../../../store/hooks";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
@@ -67,7 +68,7 @@ const ItwCieWebView = ({ onWebViewError, ...props }: ItwCieWebViewProps) => {
   const webView = createRef<WebView>();
 
   const handleOnError = (
-    err: WebViewErrorEvent | WebViewHttpErrorEvent | Error
+    err: Error | WebViewErrorEvent | WebViewHttpErrorEvent
   ): void =>
     pipe(
       err,
@@ -92,7 +93,7 @@ const ItwCieWebView = ({ onWebViewError, ...props }: ItwCieWebViewProps) => {
         })
     );
 
-  const handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
+  const handleOnLoadEnd = (e: WebViewErrorEvent | WebViewNavigationEvent) => {
     const eventTitle = e.nativeEvent.title.toLowerCase();
     if (
       eventTitle === "pagina web non disponibile" ||
@@ -107,13 +108,13 @@ const ItwCieWebView = ({ onWebViewError, ...props }: ItwCieWebViewProps) => {
   return (
     <WebView
       {...props}
-      ref={webView}
-      userAgent={defaultUserAgent}
-      javaScriptEnabled={true}
       injectedJavaScript={injectedJavaScript}
-      onLoadEnd={handleOnLoadEnd}
+      javaScriptEnabled={true}
       onError={handleOnError}
       onHttpError={handleOnError}
+      onLoadEnd={handleOnLoadEnd}
+      ref={webView}
+      userAgent={defaultUserAgent}
     />
   );
 };
@@ -158,10 +159,10 @@ export const ItwCieAuthenticationWebview = ({
     <>
       {authenticationUrl && (
         <ItwCieWebView
-          source={{ uri: authenticationUrl }}
           onMessage={handleMessage}
           onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
           onWebViewError={onWebViewError}
+          source={{ uri: authenticationUrl }}
         />
       )}
       <View style={StyleSheet.absoluteFillObject}>
@@ -202,7 +203,6 @@ export const ItwCieAuthorizationWebview = ({
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ItwCieWebView
-        source={{ uri: authorizationUrl }}
         onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
         onWebViewError={onWebViewError}
         originWhitelist={[
@@ -211,6 +211,7 @@ export const ItwCieAuthorizationWebview = ({
           "http://*",
           ISSUANCE_REDIRECT_URI
         ]}
+        source={{ uri: authorizationUrl }}
       />
     </SafeAreaView>
   );

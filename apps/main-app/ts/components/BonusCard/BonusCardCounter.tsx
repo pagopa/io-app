@@ -5,7 +5,7 @@ import {
   LabelMini,
   useIOThemeContext,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useEffect } from "react";
 import { ColorValue, StyleSheet, View } from "react-native";
 import Animated, {
@@ -14,11 +14,7 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 
-type CounterType = "Value" | "ValueWithProgress";
-
-type BaseProps = {
-  type: CounterType;
-};
+export type BonusCardCounter = BaseProps & LoadingProps;
 
 type AmountProps = {
   type: "Value";
@@ -26,20 +22,24 @@ type AmountProps = {
 };
 
 type AmountWithProgressProps = {
-  type: "ValueWithProgress";
-  value: string;
   /** Progress bar value, expressed in a range from 0 to 1 */
   progress: number;
+  type: "ValueWithProgress";
+  value: string;
 };
 
-type LoadingProps =
-  | { isLoading: true; label?: string; skeletonColor: ColorValue }
-  | ({ isLoading?: false; label: string } & (
-      | AmountProps
-      | AmountWithProgressProps
-    ));
+type BaseProps = {
+  type: CounterType;
+};
 
-export type BonusCardCounter = BaseProps & LoadingProps;
+type CounterType = "Value" | "ValueWithProgress";
+
+type LoadingProps =
+  | ((AmountProps | AmountWithProgressProps) & {
+      isLoading?: false;
+      label: string;
+    })
+  | { isLoading: true; label?: string; skeletonColor: ColorValue };
 
 const BonusCardCounter = (props: BonusCardCounter) => {
   const isDark = useIOThemeContext().themeType === "dark";
@@ -47,8 +47,8 @@ const BonusCardCounter = (props: BonusCardCounter) => {
   if (props.isLoading) {
     return (
       <BonusCardCounterSkeleton
-        type={props.type}
         skeletonColor={props.skeletonColor}
+        type={props.type}
       />
     );
   }
@@ -59,9 +59,9 @@ const BonusCardCounter = (props: BonusCardCounter) => {
       testID="BonusCardCounterTestID"
     >
       <LabelMini
-        weight="Regular"
-        style={{ textAlign: "center" }}
         color={isDark ? "white" : "blueItalia-850"}
+        style={{ textAlign: "center" }}
+        weight="Regular"
       >
         {props.label}
       </LabelMini>
@@ -121,8 +121,8 @@ const BonusCardCounterSkeleton = ({
   type,
   skeletonColor
 }: {
-  type: CounterType;
   skeletonColor: ColorValue;
+  type: CounterType;
 }) => (
   <View
     style={[styles.container, { alignItems: "center" }]}
@@ -130,28 +130,28 @@ const BonusCardCounterSkeleton = ({
   >
     <IOSkeleton
       color={skeletonColor}
-      shape="rectangle"
       height={16}
-      width={64}
       radius={16}
+      shape="rectangle"
+      width={64}
     />
     <VSpacer size={8} />
     <IOSkeleton
       color={skeletonColor}
-      shape="rectangle"
       height={24}
-      width={100}
       radius={24}
+      shape="rectangle"
+      width={100}
     />
     {type === "ValueWithProgress" && (
       <>
         <VSpacer size={8} />
         <IOSkeleton
           color={skeletonColor}
-          shape="rectangle"
           height={6}
-          width={110}
           radius={8}
+          shape="rectangle"
+          width={110}
         />
       </>
     )}

@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../store/actions/types";
 import {
   CredentialMetadata,
@@ -31,17 +32,6 @@ const reducer = (
   action: Action
 ): ItwDebugState => {
   switch (action.type) {
-    case getType(itwDebugSetCredentialStatusOverride): {
-      const { credentialType, status } = action.payload;
-      return {
-        ...state,
-        credentialStatusOverrides: {
-          ...state.credentialStatusOverrides,
-          [credentialType]: status
-        }
-      };
-    }
-
     case getType(itwDebugClearCredentialStatusOverride): {
       const { credentialType } = action.payload;
       const { [credentialType]: _, ...rest } = state.credentialStatusOverrides; // Reset savedCredentials too if no overrides remain
@@ -52,6 +42,9 @@ const reducer = (
         savedCredentials: hasOverrides ? state.savedCredentials : undefined
       };
     }
+
+    case getType(itwDebugReset):
+      return initialState;
 
     case getType(itwDebugSaveOriginalCredentials): {
       // Only save originals once (don't overwrite if already saved)
@@ -65,8 +58,16 @@ const reducer = (
       return { ...state, savedCredentials: record };
     }
 
-    case getType(itwDebugReset):
-      return initialState;
+    case getType(itwDebugSetCredentialStatusOverride): {
+      const { credentialType, status } = action.payload;
+      return {
+        ...state,
+        credentialStatusOverrides: {
+          ...state.credentialStatusOverrides,
+          [credentialType]: status
+        }
+      };
+    }
 
     default:
       return state;

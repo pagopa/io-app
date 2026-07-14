@@ -1,21 +1,22 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
+
 import { GlobalState } from "../../../../store/reducers/types";
 import { isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
 import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
+import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import { idPayWalletInitiativeListSelector } from "../../../idpay/wallet/store/reducers";
+import { isItwEnabledSelector } from "../../../itwallet/common/store/selectors/remoteConfig";
 import { itwLifecycleIsValidSelector } from "../../../itwallet/lifecycle/store/selectors";
-import { paymentsWalletUserMethodsSelector } from "../../../payments/wallet/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../itwallet/walletInstance/store/selectors";
+import { paymentsWalletUserMethodsSelector } from "../../../payments/wallet/store/selectors";
 import {
   WalletCard,
+  walletCardCategories,
   WalletCardCategory,
-  WalletCardType,
-  walletCardCategories
+  WalletCardType
 } from "../../types";
 import { WalletCardCategoryFilter } from "../../types/index";
-import { isItwEnabledSelector } from "../../../itwallet/common/store/selectors/remoteConfig";
-import { isConnectedSelector } from "../../../connectivity/store/selectors";
 
 /** Returns the list of cards excluding hidden cards */
 export const selectWalletCards = createSelector(

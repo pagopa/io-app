@@ -1,19 +1,20 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import OnboardingCompletedScreen from "../screens/OnboardingCompletedScreen";
+
+import ROUTES from "../../../navigation/routes";
+import { isGestureEnabled } from "../../../utils/navigation";
 import { OnboardingNotificationsInfoScreenConsent } from "../../pushNotifications/screens/OnboardingNotificationsInfoScreenConsent";
 import { OnboardingNotificationsPreferencesScreen } from "../../pushNotifications/screens/OnboardingNotificationsPreferencesScreen";
+import EmailInsertScreen from "../../settings/userData/shared/screens/EmailInsertScreen";
+import EmailValidationSendEmailScreen from "../../settings/userData/shared/screens/EmailValidationSendEmailScreen";
+import FingerprintScreen from "../screens/biometric&securityChecks/FingerprintScreen";
+import MissingDeviceBiometricScreen from "../screens/biometric&securityChecks/MissingDeviceBiometricScreen";
+import MissingDevicePinScreen from "../screens/biometric&securityChecks/MissingDevicePinScreen";
+import OnboardingCompletedScreen from "../screens/OnboardingCompletedScreen";
 import OnboardingPinScreen from "../screens/OnboardingPinScreen";
 import OnboardingServicesPreferenceScreen from "../screens/OnboardingServicesPreferenceScreen";
 import OnboardingShareDataScreen from "../screens/OnboardingShareDataScreen";
 import OnboardingTosScreen from "../screens/OnboardingTosScreen";
 import ServicePreferenceCompleteScreen from "../screens/ServicePreferenceCompleteScreen";
-import FingerprintScreen from "../screens/biometric&securityChecks/FingerprintScreen";
-import MissingDeviceBiometricScreen from "../screens/biometric&securityChecks/MissingDeviceBiometricScreen";
-import MissingDevicePinScreen from "../screens/biometric&securityChecks/MissingDevicePinScreen";
-import { isGestureEnabled } from "../../../utils/navigation";
-import EmailValidationSendEmailScreen from "../../settings/userData/shared/screens/EmailValidationSendEmailScreen";
-import EmailInsertScreen from "../../settings/userData/shared/screens/EmailInsertScreen";
-import ROUTES from "../../../navigation/routes";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
 
 const Stack = createStackNavigator<OnboardingParamsList>();
@@ -24,61 +25,61 @@ const OnboardingNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <Stack.Screen
-      name={ROUTES.ONBOARDING_SHARE_DATA}
       component={OnboardingShareDataScreen}
+      name={ROUTES.ONBOARDING_SHARE_DATA}
     />
     <Stack.Screen
-      name={ROUTES.ONBOARDING_SERVICES_PREFERENCE}
       component={OnboardingServicesPreferenceScreen}
+      name={ROUTES.ONBOARDING_SERVICES_PREFERENCE}
     />
     <Stack.Screen
-      options={{ headerShown: false }}
-      name={ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE}
       component={ServicePreferenceCompleteScreen}
+      name={ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE}
+      options={{ headerShown: false }}
     />
     <Stack.Screen
-      options={{ headerShown: true }}
-      name={ROUTES.ONBOARDING_TOS}
       component={OnboardingTosScreen}
+      name={ROUTES.ONBOARDING_TOS}
+      options={{ headerShown: true }}
     />
     <Stack.Screen
-      name={ROUTES.ONBOARDING_PIN}
       component={OnboardingPinScreen}
+      name={ROUTES.ONBOARDING_PIN}
     />
     <Stack.Screen
-      options={{ headerShown: false }}
-      name={ROUTES.ONBOARDING_FINGERPRINT}
       component={FingerprintScreen}
+      name={ROUTES.ONBOARDING_FINGERPRINT}
+      options={{ headerShown: false }}
     />
     <Stack.Screen
-      options={{ headerShown: false }}
-      name={ROUTES.ONBOARDING_MISSING_DEVICE_PIN}
       component={MissingDevicePinScreen}
-    />
-    <Stack.Screen
+      name={ROUTES.ONBOARDING_MISSING_DEVICE_PIN}
       options={{ headerShown: false }}
-      name={ROUTES.ONBOARDING_MISSING_DEVICE_BIOMETRIC}
-      component={MissingDeviceBiometricScreen}
     />
     <Stack.Screen
-      options={{ gestureEnabled: false }}
-      name={ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN}
+      component={MissingDeviceBiometricScreen}
+      name={ROUTES.ONBOARDING_MISSING_DEVICE_BIOMETRIC}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
       component={EmailInsertScreen}
+      name={ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN}
+      options={{ gestureEnabled: false }}
     />
 
     <Stack.Screen
-      options={{ gestureEnabled: false, headerShown: false }}
-      name={ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN}
       component={EmailValidationSendEmailScreen}
+      name={ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN}
+      options={{ gestureEnabled: false, headerShown: false }}
     />
     <Stack.Screen
-      options={{ headerShown: false }}
-      name={ROUTES.ONBOARDING_COMPLETED}
       component={OnboardingCompletedScreen}
+      name={ROUTES.ONBOARDING_COMPLETED}
+      options={{ headerShown: false }}
     />
     <Stack.Screen
-      name={ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES}
       component={OnboardingNotificationsPreferencesScreen}
+      name={ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES}
     />
     <Stack.Group
       screenOptions={{
@@ -88,8 +89,8 @@ const OnboardingNavigator = () => (
       }}
     >
       <Stack.Screen
-        name={ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT}
         component={OnboardingNotificationsInfoScreenConsent}
+        name={ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT}
       />
     </Stack.Group>
   </Stack.Navigator>

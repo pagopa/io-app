@@ -3,16 +3,17 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { NetworkError } from "../../../../../utils/errors";
-import { SearchResult } from "../../../../../../definitions/cgn/merchants/SearchResult";
-import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
-import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { SearchRequest } from "../../../../../../definitions/cgn/merchants/SearchRequest";
-import { OfflineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OfflineMerchantSearchRequest";
-import { OnlineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OnlineMerchantSearchRequest";
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
+
 import { CountResult } from "../../../../../../definitions/cgn/merchants/CountResult";
+import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
+import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
+import { OfflineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OfflineMerchantSearchRequest";
+import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
+import { OnlineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OnlineMerchantSearchRequest";
+import { SearchRequest } from "../../../../../../definitions/cgn/merchants/SearchRequest";
+import { SearchResult } from "../../../../../../definitions/cgn/merchants/SearchResult";
+import { NetworkError } from "../../../../../utils/errors";
 
 /** Count merchants conventioned with CGN */
 export const cgnMerchantsCount = createAsyncAction(
@@ -62,10 +63,10 @@ export const resetMerchantDiscountCode = createStandardAction(
 
 export type CgnMerchantsAction =
   | ActionType<typeof cgnMerchantsCount>
-  | ActionType<typeof cgnSearchMerchants>
   | ActionType<typeof cgnOfflineMerchants>
   | ActionType<typeof cgnOnlineMerchants>
+  | ActionType<typeof cgnSearchMerchants>
   | ActionType<typeof cgnSelectedMerchant>
+  | ActionType<typeof resetMerchantDiscountCode>
   | ActionType<typeof selectMerchantDiscount>
-  | ActionType<typeof setMerchantDiscountCode>
-  | ActionType<typeof resetMerchantDiscountCode>;
+  | ActionType<typeof setMerchantDiscountCode>;

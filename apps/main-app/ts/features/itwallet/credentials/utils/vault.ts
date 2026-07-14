@@ -76,7 +76,7 @@ const store = async (vaultId: string, credential: string): Promise<void> => {
  * @throws If any Secure Storage operation fails
  */
 const storeAll = async (
-  credentials: ReadonlyArray<{ vaultId: string; credential: string }>
+  credentials: ReadonlyArray<{ credential: string; vaultId: string }>
 ) => {
   await Promise.all(
     credentials.map(data => store(data.vaultId, data.credential))

@@ -1,32 +1,27 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Appearance, StyleSheet, View } from "react-native";
+import { Body, Icon, IOButton, IOColors, IOIcons } from "@io-app/design-system";
 import { memo } from "react";
-import {
-  Body,
-  Icon,
-  IOButton,
-  IOColors,
-  IOIcons
-} from "@pagopa/io-app-design-system";
+import { Appearance, StyleSheet, View } from "react-native";
+
 import {
   QrCodeImage,
   QrCodeImageProps
 } from "../../../../components/QrCodeImage";
 
-type Props = {
-  /** If `true`, displays the retry UI instead of the QR code */
-  shouldRetry?: boolean;
-  /** Text shown above the retry button to describe the issue or context */
-  retryDescription: string;
-  /** Label of the retry button */
-  retryLabel: string;
-  /** Icon shown above the retry description (defaults to "noticeFilled") */
-  retryIcon?: Extract<IOIcons, "noticeFilled" | "warningFilled">;
+type Props = QrCodeImageProps & {
   /** If true, shows a loading indicator on the retry button */
   isRetrying?: boolean;
   /** Function called when the retry button is pressed */
   onRetry: () => void;
-} & QrCodeImageProps;
+  /** Text shown above the retry button to describe the issue or context */
+  retryDescription: string;
+  /** Icon shown above the retry description (defaults to "noticeFilled") */
+  retryIcon?: Extract<IOIcons, "noticeFilled" | "warningFilled">;
+  /** Label of the retry button */
+  retryLabel: string;
+  /** If `true`, displays the retry UI instead of the QR code */
+  shouldRetry?: boolean;
+};
 
 /**
  * Component that renders a QR code from a given value and, if any error occur,
@@ -44,16 +39,16 @@ const ItwRetryableQRCode = ({
   if (shouldRetry) {
     return (
       <View style={[styles.retryBox, { width: qrCodeProps.size }]}>
-        <Icon name={retryIcon} size={24} color="grey-700" />
+        <Icon color="grey-700" name={retryIcon} size={24} />
         <Body style={styles.retryDescription}>{retryDescription}</Body>
         {/* This margin top is set to avoid a visual glitch when loading state changes */}
         <View style={{ marginTop: isRetrying ? -4 : 0 }}>
           {/* @ts-ignore */}
           <IOButton
-            variant="link"
-            loading={isRetrying}
             label={retryLabel}
+            loading={isRetrying}
             onPress={onRetry}
+            variant="link"
           />
         </View>
       </View>

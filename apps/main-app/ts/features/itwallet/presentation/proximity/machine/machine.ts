@@ -8,11 +8,12 @@ import {
   setup,
   stateIn
 } from "xstate";
+
 import {
-  SendErrorResponseActorOutput,
+  ProximityCommunicationLogicInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
-  ProximityCommunicationLogicInput,
+  SendErrorResponseActorOutput,
   StartEngagementActorInput
 } from "./actors";
 import { Context, InitialContext } from "./context";

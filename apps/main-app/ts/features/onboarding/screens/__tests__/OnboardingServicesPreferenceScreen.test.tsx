@@ -1,15 +1,16 @@
-import { fireEvent } from "@testing-library/react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createStore } from "redux";
+import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
-import OnboardingServicesPreferenceScreen from "../OnboardingServicesPreferenceScreen";
+import { createStore } from "redux";
+
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/identity/ServicesPreferencesMode";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
+import { useIOSelector } from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { useIOSelector } from "../../../../store/hooks";
 import { profileUpsert } from "../../../settings/common/store/actions";
+import OnboardingServicesPreferenceScreen from "../OnboardingServicesPreferenceScreen";
 
 const mockNavigate = jest.fn();
 const mockDispatch = jest.fn();
@@ -39,8 +40,8 @@ jest.mock("../../../../navigation/params/AppParamsList", () => {
   };
 });
 
-jest.mock("@pagopa/io-app-design-system", () => {
-  const actual = jest.requireActual("@pagopa/io-app-design-system");
+jest.mock("@io-app/design-system", () => {
+  const actual = jest.requireActual("@io-app/design-system");
   return {
     ...actual,
     useIOToast: () => mockToast

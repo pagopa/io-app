@@ -1,10 +1,11 @@
 import MockDate from "mockdate";
+
 import { ItwStoredCredentialsMocks } from "../../../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../../../common/utils/itwTypesUtils";
 import {
   areAllPresentableCredentialsExpired,
   shouldShowExpiredProximityCredentialsBannerSelector
 } from "../credentials";
-import { CredentialMetadata } from "../../../../../common/utils/itwTypesUtils";
 
 describe("proximity selectors", () => {
   afterEach(() => {

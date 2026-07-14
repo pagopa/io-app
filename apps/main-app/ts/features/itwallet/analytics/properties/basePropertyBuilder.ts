@@ -1,5 +1,6 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   itwAuthLevelSelector,
@@ -143,12 +144,12 @@ export const computeItwStatus = (
   }
 
   switch (identificationMode) {
-    case "spid":
-      return "L2+ (spid_can)";
     case "cieId":
       return authLevel === "L2" ? "L3 (cieid_can)" : "L3 (cieid_pin)";
     case "ciePin":
       return "L3 (cie_pin)";
+    case "spid":
+      return "L2+ (spid_can)";
     default:
       return authLevel;
   }

@@ -11,15 +11,15 @@ import * as t from "io-ts";
  *
  * @since 0.5.14
  */
-export type Json = boolean | number | string | null | JsonArray | JsonRecord;
+export type Json = boolean | JsonArray | JsonRecord | null | number | string;
+
+/** @since 0.5.14 */
+export type JsonArray = ReadonlyArray<Json>;
 
 /** @since 0.5.14 */
 export interface JsonRecord {
   readonly [key: string]: Json;
 }
-
-/** @since 0.5.14 */
-export type JsonArray = ReadonlyArray<Json>;
 
 /** @since 0.5.15 */
 export const JsonArray: t.Type<JsonArray> = t.recursion("JsonArray", () =>

@@ -1,8 +1,9 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
-import { GlobalState } from "../../../../store/reducers/types.ts";
+
 import { isMinAppVersionSupported } from "../../../../store/reducers/featureFlagWithMinAppVersionStatus.ts";
+import { GlobalState } from "../../../../store/reducers/types.ts";
 
 const fciRemoteConfigSelector = (state: GlobalState) =>
   pipe(

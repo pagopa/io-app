@@ -1,16 +1,16 @@
-import URLParse from "url-parse";
 import { PublicKey, sign } from "@pagopa/io-react-native-crypto";
-import { pipe } from "fp-ts/lib/function";
-import * as A from "fp-ts/lib/Array";
-import * as TE from "fp-ts/lib/TaskEither";
-import * as O from "fp-ts/lib/Option";
-
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as A from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as TE from "fp-ts/lib/TaskEither";
+import URLParse from "url-parse";
+
 import {
-  LollipopConfig,
   chainSignPromises,
-  SignPromiseResult,
   getSignAlgorithm,
+  LollipopConfig,
+  SignPromiseResult,
   toSignatureComponents
 } from "..";
 import { toFetchTimeout, toRetriableFetch } from "../../../utils/fetch";
@@ -202,32 +202,60 @@ export const customContentToSignPromises = (
     )
   );
 
-export type CustomContentBaseSignature = {
+export type CustomContentBaseSignature = SignatureBaseResult & {
   headerIndex: number;
-  headerPrefix: string;
   headerName: string;
+  headerPrefix: string;
   headerValue: string;
-} & SignatureBaseResult;
+};
+
+export type CutsomContentToSignInput = Required<Pick<KeyInfo, "keyTag">> & {
+  customContentToSign: Record<string, string> | undefined;
+  keyInfo: KeyInfo;
+  signatureConfigForgeInput: SignatureConfigForgeInput;
+};
 
 export type SignatureConfigForgeInput = {
-  publicKey: PublicKey;
+  inputUrl: URLParse;
   keyTag: string;
   lollipopConfig: LollipopConfig;
   method: string;
-  inputUrl: URLParse;
+  publicKey: PublicKey;
 };
 
-type RequestAndKeyInfoForLPFetch = {
-  input: string;
-  init: RequestInit;
+type RequestAndKeyInfoForLPFetch = Pick<
+  SignatureConfigForgeInput,
+  "keyTag" | "method" | "publicKey"
+> & {
   headers: HeadersInit;
-} & Pick<SignatureConfigForgeInput, "publicKey" | "keyTag" | "method">;
+  init: RequestInit;
+  input: string;
+};
 
-export type CutsomContentToSignInput = {
-  customContentToSign: Record<string, string> | undefined;
-  signatureConfigForgeInput: SignatureConfigForgeInput;
-  keyInfo: KeyInfo;
-} & Required<Pick<KeyInfo, "keyTag">>;
+/** Add a pair header:value to the current fetch init.headers. */
+function addHeader(
+  init: RequestInit,
+  headerName: string,
+  headerValue: number | string
+) {
+  return {
+    ...init,
+    headers: {
+      ...init.headers,
+      [headerName]: headerValue
+    }
+  };
+}
+
+function extractHttpRequestComponents(input: string, init: RequestInit) {
+  const inputUrl = new URLParse(input, true);
+  const method = init.method?.toUpperCase() ?? "";
+  const body = init.body;
+  const bodyString = body as string;
+  const originalUrl = inputUrl.toString();
+
+  return { body, bodyString, inputUrl, method, originalUrl };
+}
 
 function forgeSignatureConfig(
   forgeInput: SignatureConfigForgeInput,
@@ -244,31 +272,6 @@ function forgeSignatureConfig(
       forgeInput.inputUrl
     ),
     signatureParams
-  };
-}
-
-function extractHttpRequestComponents(input: string, init: RequestInit) {
-  const inputUrl = new URLParse(input, true);
-  const method = init.method?.toUpperCase() ?? "";
-  const body = init.body;
-  const bodyString = body as string;
-  const originalUrl = inputUrl.toString();
-
-  return { body, bodyString, inputUrl, method, originalUrl };
-}
-
-/** Add a pair header:value to the current fetch init.headers. */
-function addHeader(
-  init: RequestInit,
-  headerName: string,
-  headerValue: string | number
-) {
-  return {
-    ...init,
-    headers: {
-      ...init.headers,
-      [headerName]: headerValue
-    }
   };
 }
 

@@ -1,31 +1,32 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import ReactNativeBlobUtil from "react-native-blob-util";
-import { expectSaga, testSaga } from "redux-saga-test-plan";
-import { Effect } from "redux-saga/effects";
-import * as matchers from "redux-saga-test-plan/matchers";
-import { call, take } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import {
-  handleDownloadAttachment,
-  testable
-} from "../handleDownloadAttachment";
-import {
-  cancelPreviousAttachmentDownload,
-  downloadAttachment
-} from "../../store/actions";
-import { mockPdfAttachment } from "../../__mocks__/attachment";
+import ReactNativeBlobUtil from "react-native-blob-util";
+import { expectSaga, testSaga } from "redux-saga-test-plan";
+import * as matchers from "redux-saga-test-plan/matchers";
+import { Effect } from "redux-saga/effects";
+import { call, take } from "typed-redux-saga/macro";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { getKeyInfo } from "../../../lollipop/saga";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { downloadAarAttachmentSaga } from "../../../pn/aar/saga/downloadAarAttachmentSaga";
-import { thirdPartyMessageSelector } from "../../store/reducers/thirdPartyById";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { getKeyInfo } from "../../../lollipop/saga";
+import { mockPdfAttachment } from "../../__mocks__/attachment";
 import * as analytics from "../../analytics";
+import {
+  cancelPreviousAttachmentDownload,
+  downloadAttachment
+} from "../../store/actions";
+import { thirdPartyMessageSelector } from "../../store/reducers/thirdPartyById";
+import {
+  handleDownloadAttachment,
+  testable
+} from "../handleDownloadAttachment";
 
 const messageId = "01JTT75QYSHWBTNTFM3CZZ17SH";
 const savePath = "/tmp/attachment.pdf";

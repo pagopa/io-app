@@ -1,4 +1,5 @@
 import sha from "sha.js";
+
 import { ProximityDetails } from "../utils/types";
 import { ConsentData } from "./types";
 

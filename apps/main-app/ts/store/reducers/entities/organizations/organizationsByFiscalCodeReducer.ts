@@ -2,12 +2,12 @@
 
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
+
 import {
   logoutSuccess,
   sessionCorrupted,
   sessionExpired
 } from "../../../../features/authentication/common/store/actions";
-
 import { updateOrganizations } from "../../../actions/organizations";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -24,17 +24,17 @@ const reducer = (
   action: Action
 ): OrganizationNamesByFiscalCodeState => {
   switch (action.type) {
+    case getType(logoutSuccess):
+
+    case getType(sessionCorrupted):
+    case getType(sessionExpired):
+      return INITIAL_STATE;
     case getType(updateOrganizations):
       return {
         ...state,
         [action.payload.organization.fiscal_code]:
           action.payload.organization.name
       };
-
-    case getType(logoutSuccess):
-    case getType(sessionExpired):
-    case getType(sessionCorrupted):
-      return INITIAL_STATE;
 
     default:
       return state;

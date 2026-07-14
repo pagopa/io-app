@@ -1,6 +1,7 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -10,6 +11,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../utils/url";
 import {
@@ -25,7 +27,6 @@ import { paymentCompletedSuccess } from "../store/actions/orchestration";
 import { selectWalletPaymentCurrentStep } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { CHECKOUT_ASSISTANCE_ARTICLE, getPaymentPhaseFromStep } from "../utils";
-import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 
 export const HC_PAYMENT_CANCELED_ERROR_ID = "PAYMENT_CANCELED_ERROR";
 
@@ -184,12 +185,21 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     faultCodeDetail
   }: WalletPaymentFailure): OperationResultScreenContentProps => {
     switch (faultCodeCategory) {
-      case "PAYMENT_UNAVAILABLE":
+      case "DOMAIN_UNKNOWN":
         return {
-          pictogram: "fatalError",
-          title: I18n.t("wallet.payment.failure.PAYMENT_UNAVAILABLE.title"),
-          action: contactSupportAction,
-          secondaryAction: closeAction
+          pictogram: "comunicationProblem",
+          title: I18n.t("wallet.payment.failure.DOMAIN_UNKNOWN.title"),
+          subtitle: I18n.t("wallet.payment.failure.DOMAIN_UNKNOWN.subtitle"),
+          action: closeAction,
+          secondaryAction: contactSupportAction
+        };
+      case "PAYMENT_CANCELED":
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.title"),
+          subtitle: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.subtitle"),
+          action: closeAction,
+          secondaryAction: discoverMoreAction
         };
       case "PAYMENT_DATA_ERROR":
         return {
@@ -198,13 +208,18 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           action: closeAction,
           secondaryAction: contactSupportAction
         };
-      case "DOMAIN_UNKNOWN":
+      case "PAYMENT_DUPLICATED":
         return {
-          pictogram: "comunicationProblem",
-          title: I18n.t("wallet.payment.failure.DOMAIN_UNKNOWN.title"),
-          subtitle: I18n.t("wallet.payment.failure.DOMAIN_UNKNOWN.subtitle"),
-          action: closeAction,
-          secondaryAction: contactSupportAction
+          pictogram: "moneyCheck",
+          title: I18n.t("wallet.payment.failure.PAYMENT_DUPLICATED.title"),
+          action: closeAction
+        };
+      case "PAYMENT_EXPIRED":
+        return {
+          pictogram: "time",
+          title: I18n.t("wallet.payment.failure.PAYMENT_EXPIRED.title"),
+          subtitle: I18n.t("wallet.payment.failure.PAYMENT_EXPIRED.subtitle"),
+          action: closeAction
         };
       case "PAYMENT_ONGOING": {
         if (faultCodeDetail === "PAA_PAGAMENTO_IN_CORSO") {
@@ -243,26 +258,22 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           secondaryAction: closeAction
         };
       }
-      case "PAYMENT_EXPIRED":
+      case "PAYMENT_SLOWDOWN_ERROR":
         return {
-          pictogram: "time",
-          title: I18n.t("wallet.payment.failure.PAYMENT_EXPIRED.title"),
-          subtitle: I18n.t("wallet.payment.failure.PAYMENT_EXPIRED.subtitle"),
-          action: closeAction
-        };
-      case "PAYMENT_CANCELED":
-        return {
-          pictogram: "accessDenied",
-          title: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.title"),
-          subtitle: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.subtitle"),
+          pictogram: "umbrella",
+          title: I18n.t("wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.title"),
+          subtitle: I18n.t(
+            "wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.subtitle"
+          ),
           action: closeAction,
-          secondaryAction: discoverMoreAction
+          secondaryAction: contactSupportAction
         };
-      case "PAYMENT_DUPLICATED":
+      case "PAYMENT_UNAVAILABLE":
         return {
-          pictogram: "moneyCheck",
-          title: I18n.t("wallet.payment.failure.PAYMENT_DUPLICATED.title"),
-          action: closeAction
+          pictogram: "fatalError",
+          title: I18n.t("wallet.payment.failure.PAYMENT_UNAVAILABLE.title"),
+          action: contactSupportAction,
+          secondaryAction: closeAction
         };
       case "PAYMENT_UNKNOWN":
         return {
@@ -293,16 +304,6 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
             "wallet.payment.failure.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR.subtitle"
           ),
           action: selectOtherPaymentMethodAction
-        };
-      case "PAYMENT_SLOWDOWN_ERROR":
-        return {
-          pictogram: "umbrella",
-          title: I18n.t("wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.title"),
-          subtitle: I18n.t(
-            "wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.subtitle"
-          ),
-          action: closeAction,
-          secondaryAction: contactSupportAction
         };
 
       default:

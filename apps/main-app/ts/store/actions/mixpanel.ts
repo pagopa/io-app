@@ -10,6 +10,6 @@ export const setMixpanelEnabled = createStandardAction(
   "MIXPANEL_SET_ENABLED"
 )<boolean>();
 
-type MixpanelActionsTypes = typeof setMixpanelEnabled;
-
 export type MixpanelActions = ActionType<MixpanelActionsTypes>;
+
+type MixpanelActionsTypes = typeof setMixpanelEnabled;

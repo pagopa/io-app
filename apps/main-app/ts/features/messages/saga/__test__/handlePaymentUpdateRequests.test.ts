@@ -3,29 +3,30 @@ import { Channel, channel } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
 import { fork } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
+
 import { PaymentFaultV2Enum } from "../../../../../definitions/communication/PaymentFaultV2";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as MIXPANEL from "../../../../mixpanel";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { Action } from "../../../../store/actions/types";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import {
-  UpdatePaymentForMessageSuccess,
   cancelQueuedPaymentUpdates,
-  updatePaymentForMessage
+  updatePaymentForMessage,
+  UpdatePaymentForMessageSuccess
 } from "../../store/actions";
 import {
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,
   toTimeoutMessagePaymentError
 } from "../../types/paymentErrors";
+import { getCommunicationClient } from "../commons";
 import {
   handlePaymentUpdateRequests,
   testable
 } from "../handlePaymentUpdateRequests";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { Action } from "../../../../store/actions/types";
-import { getCommunicationClient } from "../commons";
 
 jest.mock("../commons");
 
@@ -81,22 +82,22 @@ describe("handlePaymentUpdateRequests", () => {
         .next(true)
         .inspect(
           (effect: {
-            type: string;
             payload: {
               hasVerifiedPayment: {
-                type: string;
                 payload: {
-                  fn: GeneratorFunction;
                   args: Array<any>;
+                  fn: GeneratorFunction;
                 };
+                type: string;
               };
               wasCancelled: {
-                type: string;
                 payload: {
                   pattern: (actionParam: Action) => boolean;
                 };
+                type: string;
               };
             };
+            type: string;
           }) => {
             expect(effect.type).toBe("RACE");
             const { hasVerifiedPayment, wasCancelled } = effect.payload;

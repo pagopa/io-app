@@ -1,17 +1,13 @@
 /* eslint-disable functional/immutable-data */
-import {
-  IOColors,
-  useIOTheme,
-  useIOThemeContext
-} from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme, useIOThemeContext } from "@io-app/design-system";
 import {
   LinkingOptions,
   NavigationContainer,
   NavigationContainerProps
 } from "@react-navigation/native";
 import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
-
 import { Linking, View } from "react-native";
+
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import { useStoredFontPreference } from "../common/context/DSTypefaceContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
@@ -21,11 +17,11 @@ import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator"
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import {
   ITW_CREDENTIAL_OFFER_LINKING_PREFIXES,
   parseCredentialOfferLink
 } from "../features/itwallet/offer/utils";
-import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { storeLinkingUrl } from "../features/linking/actions";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -38,24 +34,24 @@ import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
 import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
-import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
+import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
 import { isTestEnv } from "../utils/environment";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
-import { IONavigationDarkTheme, IONavigationLightTheme } from "./theme";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
+import { linkingSubscription } from "./linkingSubscription";
 import NavigationService, {
   navigationRef,
   setMainNavigatorReady
 } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import OfflineStackNavigator from "./OfflineStackNavigator";
-import { linkingSubscription } from "./linkingSubscription";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
+import { IONavigationDarkTheme, IONavigationLightTheme } from "./theme";
 
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
@@ -195,12 +191,8 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
 
   return (
     <NavigationContainer
-      theme={
-        themeType === "light" ? IONavigationLightTheme : IONavigationDarkTheme
-      }
-      ref={navigationRef}
-      linking={linking}
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
+      linking={linking}
       onReady={() => {
         NavigationService.setNavigationReady();
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
@@ -217,11 +209,15 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         }
         routeNameRef.current = currentRouteName;
       }}
+      ref={navigationRef}
+      theme={
+        themeType === "light" ? IONavigationLightTheme : IONavigationDarkTheme
+      }
     >
       <FocusAwareStatusBar
+        animated
         backgroundColor={IOColors[theme["appBackground-primary"]]}
         barStyle={themeType === "dark" ? "light-content" : "dark-content"}
-        animated
       />
       {props.children}
     </NavigationContainer>

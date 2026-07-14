@@ -1,9 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { constTrue, pipe } from "fp-ts/lib/function";
 import { isAfter } from "date-fns";
+import { constTrue, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
+
+import { Locales } from "../../../../../i18n";
+import { persistedPreferencesSelector } from "../../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../../store/reducers/types";
+import {
+  itwHiddenCredentialsSelector,
+  itwNewCredentialsSelector,
+  itwPinnedCredentialsSelector
+} from "../../../common/store/selectors/remoteConfig";
 import {
   DigitalCredentialMetadata,
   DigitalCredentialsCatalogue
@@ -14,19 +22,12 @@ import {
   newCredentials,
   upcomingCredentials
 } from "../../../common/utils/itwCredentialUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { Locales } from "../../../../../i18n";
-import { persistedPreferencesSelector } from "../../../../../store/reducers/persistedPreferences";
-import {
-  itwHiddenCredentialsSelector,
-  itwNewCredentialsSelector,
-  itwPinnedCredentialsSelector
-} from "../../../common/store/selectors/remoteConfig";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 export type CredentialsListEntry = {
-  type: string;
   name: string;
+  type: string;
 };
 
 const EMPTY_ARRAY: ReadonlyArray<CredentialsListEntry> = [];
@@ -263,3 +264,27 @@ export const itwAvailableCredentialsListSelector = createSelector(
     return [...newEntries, ...pinnedEntries, ...restEntries];
   }
 );
+
+/**
+ * Select the optional introduction content from the catalogue. The content is
+ * set by the Authentic Source and is a markdown text with additional
+ * information on the credential.
+ *
+ * @param credentialType The credential type to get the content
+ * @returns The translated markdown text or undefined
+ */
+export const itwCredentialIntroContentSelector =
+  (credentialType: string | undefined) =>
+  (state: GlobalState): string | undefined => {
+    const translations = itwCatalogueTranslationsByLocaleSelector(state);
+    const catalogue = itwCredentialsCatalogueByTypesSelector(state);
+    if (!credentialType || !catalogue?.[credentialType]) {
+      return;
+    }
+    const { authentic_sources } = catalogue[credentialType];
+    const { user_information_l10n_id, user_information } =
+      authentic_sources.at(0) ?? {};
+    return translations && user_information_l10n_id
+      ? translations[user_information_l10n_id]
+      : user_information;
+  };

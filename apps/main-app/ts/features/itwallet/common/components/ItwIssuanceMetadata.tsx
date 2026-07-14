@@ -1,6 +1,7 @@
-import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
+import { Divider, ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
@@ -30,14 +31,14 @@ type ItwIssuanceMetadataProps = {
 };
 
 type ItwMetadataIssuanceListItemProps = {
-  label: string;
-  value: string;
   bottomSheet: {
-    contentTitle: string;
     contentBody: string;
+    contentTitle: string;
     onPress: () => void;
   };
   isPreview?: boolean;
+  label: string;
+  value: string;
 };
 
 const ItwMetadataIssuanceListItem = ({
@@ -77,10 +78,10 @@ const ItwMetadataIssuanceListItem = ({
   return (
     <>
       <ListItemInfo
+        accessibilityLabel={`${label} ${value}`}
         endElement={endElement}
         label={label}
         value={value}
-        accessibilityLabel={`${label} ${value}`}
       />
       {bottomSheet.bottomSheet}
     </>
@@ -178,23 +179,23 @@ export const ItwIssuanceMetadata = ({
     <>
       {authSource && (
         <ItwMetadataIssuanceListItem
+          bottomSheet={authSourceBottomSheet}
+          isPreview={isPreview}
           label={I18n.t(
             "features.itWallet.verifiableCredentials.claims.authenticSource"
           )}
           value={authSource}
-          isPreview={isPreview}
-          bottomSheet={authSourceBottomSheet}
         />
       )}
       {authSource && releaserName && <Divider />}
       {releaserName && (
         <ItwMetadataIssuanceListItem
+          bottomSheet={releaserNameBottomSheet}
+          isPreview={isPreview}
           label={I18n.t(
             `features.itWallet.verifiableCredentials.claims.${releasedByKey}`
           )}
           value={releaserName}
-          isPreview={isPreview}
-          bottomSheet={releaserNameBottomSheet}
         />
       )}
     </>

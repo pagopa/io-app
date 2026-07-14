@@ -1,51 +1,52 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
+  createMigrate,
   MigrationManifest,
   PersistConfig,
   PersistedState,
-  createMigrate,
   persistReducer
 } from "redux-persist";
 import { getType } from "typesafe-actions";
-import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import { Action } from "../../../../../store/actions/types";
 import createSecureStorage from "../../../../../store/storages/secureStorage";
+import { isDevEnv } from "../../../../../utils/environment";
+import { NetworkError } from "../../../../../utils/errors";
+import {
+  WalletInstanceAttestations,
+  WalletInstanceStatus
+} from "../../../common/utils/itwTypesUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
-  itwWalletInstanceAttestationStore,
-  itwUpdateWalletInstanceStatus,
+  itwSetWalletInstanceRemotelyActive,
   itwSetWalletInstanceRenewalError,
-  itwWalletUnitAttestationsStore,
+  itwUpdateWalletInstanceStatus,
+  itwWalletInstanceAttestationStore,
   itwWalletUnitAttestationsRemoveById,
-  itwSetWalletInstanceRemotelyActive
+  itwWalletUnitAttestationsStore
 } from "../actions";
-import {
-  WalletInstanceStatus,
-  WalletInstanceAttestations
-} from "../../../common/utils/itwTypesUtils";
-import { NetworkError } from "../../../../../utils/errors";
-import { isDevEnv } from "../../../../../utils/environment";
 
 export type ItwWalletInstanceState = {
   /** The new Wallet Attestation in multiple formats */
-  attestation: WalletInstanceAttestations | undefined;
-  /** The Wallet Instance status fetched from the Wallet Provider backend */
-  status: pot.Pot<WalletInstanceStatus, NetworkError>;
+  attestation: undefined | WalletInstanceAttestations;
+  /**
+   * Indicates whether the user has an already active wallet instance but the
+   * actual local wallet is not active.
+   */
+  isRemotelyActive?: boolean;
   /**
    * Whether a wallet instance renewal has already failed. Used to prevent
    * re-entering the recovery block on subsequent actor retries.
    */
   renewalError: boolean;
+  /** The Wallet Instance status fetched from the Wallet Provider backend */
+  status: pot.Pot<WalletInstanceStatus, NetworkError>;
   /**
    * Record of Wallet Unit Attestations keyed by ID. They are not stored on
    * credentials to avoid duplication (one WUA might contain multiple keys) and
    * to avoid bloating the stored credential unnecessarily.
    */
   walletUnitAttestations: Record<string, string>;
-  /**
-   * Indicates whether the user has an already active wallet instance but the
-   * actual local wallet is not active.
-   */
-  isRemotelyActive?: boolean;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
@@ -95,19 +96,30 @@ const reducer = (
   action: Action
 ): ItwWalletInstanceState => {
   switch (action.type) {
-    case getType(itwWalletInstanceAttestationStore): {
+    case getType(itwLifecycleStoresReset):
+      return {
+        ...itwWalletInstanceInitialState,
+        // Should be persisted on wallet resets
+        isRemotelyActive: state.isRemotelyActive
+      };
+
+    case getType(itwSetWalletInstanceRemotelyActive): {
       return {
         ...state,
-        status: pot.none,
-        attestation: action.payload,
-        renewalError: false
+        isRemotelyActive: action.payload
       };
     }
 
-    case getType(itwUpdateWalletInstanceStatus.success): {
+    case getType(itwSetWalletInstanceRenewalError):
       return {
         ...state,
-        status: pot.some(action.payload)
+        renewalError: action.payload
+      };
+
+    case getType(itwUpdateWalletInstanceStatus.cancel): {
+      return {
+        ...state,
+        status: pot.none
       };
     }
 
@@ -118,26 +130,19 @@ const reducer = (
       };
     }
 
-    case getType(itwUpdateWalletInstanceStatus.cancel): {
+    case getType(itwUpdateWalletInstanceStatus.success): {
       return {
         ...state,
-        status: pot.none
+        status: pot.some(action.payload)
       };
     }
 
-    case getType(itwSetWalletInstanceRenewalError):
+    case getType(itwWalletInstanceAttestationStore): {
       return {
         ...state,
-        renewalError: action.payload
-      };
-
-    case getType(itwWalletUnitAttestationsStore): {
-      return {
-        ...state,
-        walletUnitAttestations: {
-          ...state.walletUnitAttestations,
-          ...action.payload
-        }
+        status: pot.none,
+        attestation: action.payload,
+        renewalError: false
       };
     }
 
@@ -152,19 +157,15 @@ const reducer = (
       };
     }
 
-    case getType(itwSetWalletInstanceRemotelyActive): {
+    case getType(itwWalletUnitAttestationsStore): {
       return {
         ...state,
-        isRemotelyActive: action.payload
+        walletUnitAttestations: {
+          ...state.walletUnitAttestations,
+          ...action.payload
+        }
       };
     }
-
-    case getType(itwLifecycleStoresReset):
-      return {
-        ...itwWalletInstanceInitialState,
-        // Should be persisted on wallet resets
-        isRemotelyActive: state.isRemotelyActive
-      };
 
     default:
       return state;

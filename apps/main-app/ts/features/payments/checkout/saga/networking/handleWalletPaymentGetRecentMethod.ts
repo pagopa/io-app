@@ -1,11 +1,12 @@
 import * as E from "fp-ts/lib/Either";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { PaymentClient } from "../../../common/api/client";
-import { paymentsGetRecentPaymentMethodUsedAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
+import { paymentsGetRecentPaymentMethodUsedAction } from "../../store/actions/networking";
 
 export function* handleWalletPaymentGetRecentMethod(
   getUserLastPaymentMethod: PaymentClient["getUserLastPaymentMethodUsed"],

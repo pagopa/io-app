@@ -1,9 +1,10 @@
 import { call, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { loadServicePreference } from "../../details/store/actions/preference";
-import { isServicePreferenceResponseSuccess } from "../../details/types/ServicePreferenceResponse";
+
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { loadServicePreference } from "../../details/store/actions/preference";
+import { isServicePreferenceResponseSuccess } from "../../details/types/ServicePreferenceResponse";
 
 /**
  * This saga is used to update the profile properties after special services

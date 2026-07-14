@@ -1,9 +1,10 @@
 /** A screen to alert the user about the number of attempts remains */
 import I18n from "i18next";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const CieUnexpectedErrorScreen = () => {
   const navigation = useIONavigation();
@@ -28,11 +29,11 @@ const CieUnexpectedErrorScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="umbrella"
-      title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
-      subtitle={I18n.t("authentication.cie.card.error.genericErrorSubtitle")}
       action={action}
+      pictogram="umbrella"
       secondaryAction={secondaryAction}
+      subtitle={I18n.t("authentication.cie.card.error.genericErrorSubtitle")}
+      title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
     />
   );
 };

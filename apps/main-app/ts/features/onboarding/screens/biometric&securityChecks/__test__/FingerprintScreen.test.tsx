@@ -1,15 +1,16 @@
 import { fireEvent, waitFor } from "@testing-library/react-native";
-import { createStore } from "redux";
 import I18n from "i18next";
-import FingerprintScreen from "../FingerprintScreen";
-import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../../store/actions/persistedPreferences";
-import * as biometrics from "../../../../../utils/biometrics";
-import * as analytics from "../../../../settings/security/shared/analytics";
-import * as hooks from "../../../../../store/hooks";
+import { createStore } from "redux";
+
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../../store/actions/persistedPreferences";
+import * as hooks from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
+import * as biometrics from "../../../../../utils/biometrics";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as analytics from "../../../../settings/security/shared/analytics";
+import FingerprintScreen from "../FingerprintScreen";
 
 jest.mock("../../../../../store/hooks", () => {
   const original = jest.requireActual("../../../../../store/hooks");
@@ -67,7 +68,7 @@ describe("FingerprintScreen", () => {
     (biometrics.mayUserActivateBiometric as jest.Mock).mockResolvedValue(true);
 
     const { getByLabelText } = renderComponent();
-    const activateButton = getByLabelText(I18n.t("global.buttons.activate2"));
+    const activateButton = getByLabelText(I18n.t("global.buttons.activate"));
 
     fireEvent.press(activateButton);
 
@@ -90,7 +91,7 @@ describe("FingerprintScreen", () => {
     );
 
     const { getByLabelText } = renderComponent();
-    const activateButton = getByLabelText(I18n.t("global.buttons.activate2"));
+    const activateButton = getByLabelText(I18n.t("global.buttons.activate"));
 
     fireEvent.press(activateButton);
 

@@ -1,8 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { upsertMessageStatusAttributes } from "../../actions";
+
 import { Action } from "../../../../../store/actions/types";
 import { UIMessage } from "../../../types";
+import { upsertMessageStatusAttributes } from "../../actions";
 import { AllPaginated, Collection } from "./types";
 
 /**
@@ -70,6 +71,38 @@ export const reduceUpsertMessageStatusAttributes = (
   });
 
   switch (action.type) {
+    case getType(upsertMessageStatusAttributes.failure): {
+      const message = action.payload.payload.message;
+      if (message) {
+        const { update } = action.payload.payload;
+
+        if (update.tag === "reading") {
+          return {
+            ...state,
+            archive: replace(message, state.archive),
+            inbox: replace(message, state.inbox)
+          };
+        }
+
+        if (update.tag === "bulk" || update.tag === "archiving") {
+          if (update.isArchived) {
+            return {
+              ...state,
+              archive: remove(message, state.archive),
+              inbox: insert(message, state.inbox)
+            };
+          } else {
+            return {
+              ...state,
+              archive: insert(message, state.archive),
+              inbox: remove(message, state.inbox)
+            };
+          }
+        }
+      }
+      return state;
+    }
+
     case getType(upsertMessageStatusAttributes.request): {
       const message = action.payload.message;
       if (message) {
@@ -103,38 +136,6 @@ export const reduceUpsertMessageStatusAttributes = (
                 { ...message, isRead, isArchived: false },
                 state.inbox
               )
-            };
-          }
-        }
-      }
-      return state;
-    }
-
-    case getType(upsertMessageStatusAttributes.failure): {
-      const message = action.payload.payload.message;
-      if (message) {
-        const { update } = action.payload.payload;
-
-        if (update.tag === "reading") {
-          return {
-            ...state,
-            archive: replace(message, state.archive),
-            inbox: replace(message, state.inbox)
-          };
-        }
-
-        if (update.tag === "bulk" || update.tag === "archiving") {
-          if (update.isArchived) {
-            return {
-              ...state,
-              archive: remove(message, state.archive),
-              inbox: insert(message, state.inbox)
-            };
-          } else {
-            return {
-              ...state,
-              archive: insert(message, state.archive),
-              inbox: remove(message, state.inbox)
             };
           }
         }

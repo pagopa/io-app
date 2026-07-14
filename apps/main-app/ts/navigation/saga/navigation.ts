@@ -1,15 +1,41 @@
-import { call, delay } from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import NavigationService from "../NavigationService";
+import { call, delay } from "typed-redux-saga/macro";
+
 import {
   trackMainNavigatorStackReadyOk,
   trackMainNavigatorStackReadyTimeout,
   trackNavigationServiceInitializationCompleted,
   trackNavigationServiceInitializationTimeout
 } from "../analytics/navigation";
+import NavigationService from "../NavigationService";
 
 const navigatorPollingTime = 125 as Millisecond;
 const warningWaitNavigatorTime = 2000 as Millisecond;
+
+export function* waitForMainNavigator() {
+  // eslint-disable-next-line functional/no-let
+  let isMainNavReady = yield* call(NavigationService.getIsMainNavigatorReady);
+
+  // eslint-disable-next-line functional/no-let
+  let timeoutLogged = false;
+  const startTime = performance.now();
+
+  // before continuing we must wait for the main navigator tack to be ready
+  while (!isMainNavReady) {
+    const elapsedTime = performance.now() - startTime;
+    if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
+      timeoutLogged = true;
+
+      yield* call(trackMainNavigatorStackReadyTimeout);
+    }
+    yield* delay(navigatorPollingTime);
+    isMainNavReady = yield* call(NavigationService.getIsMainNavigatorReady);
+  }
+
+  const initTime = performance.now() - startTime;
+
+  yield* call(trackMainNavigatorStackReadyOk, initTime);
+}
 
 /**
  * Wait until the {@link NavigationService} is initialized. The NavigationService
@@ -42,29 +68,4 @@ export function* waitForNavigatorServiceInitialization() {
   const initTime = performance.now() - startTime;
 
   yield* call(trackNavigationServiceInitializationCompleted, initTime);
-}
-
-export function* waitForMainNavigator() {
-  // eslint-disable-next-line functional/no-let
-  let isMainNavReady = yield* call(NavigationService.getIsMainNavigatorReady);
-
-  // eslint-disable-next-line functional/no-let
-  let timeoutLogged = false;
-  const startTime = performance.now();
-
-  // before continuing we must wait for the main navigator tack to be ready
-  while (!isMainNavReady) {
-    const elapsedTime = performance.now() - startTime;
-    if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
-      timeoutLogged = true;
-
-      yield* call(trackMainNavigatorStackReadyTimeout);
-    }
-    yield* delay(navigatorPollingTime);
-    isMainNavReady = yield* call(NavigationService.getIsMainNavigatorReady);
-  }
-
-  const initTime = performance.now() - startTime;
-
-  yield* call(trackMainNavigatorStackReadyOk, initTime);
 }

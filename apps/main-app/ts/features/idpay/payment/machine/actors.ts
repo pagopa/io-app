@@ -1,7 +1,8 @@
 import * as E from "fp-ts/lib/Either";
-import * as TE from "fp-ts/lib/TaskEither";
 import { flow, pipe } from "fp-ts/lib/function";
+import * as TE from "fp-ts/lib/TaskEither";
 import { fromPromise } from "xstate";
+
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { CodeEnum as TransactionErrorCodeEnum } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { useIODispatch } from "../../../../store/hooks";
@@ -156,23 +157,23 @@ const mapErrorCodeToFailure = (
   code: TransactionErrorCodeEnum
 ): PaymentFailureEnum => {
   switch (code) {
-    case TransactionErrorCodeEnum.PAYMENT_TRANSACTION_EXPIRED:
-    case TransactionErrorCodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED:
-      return PaymentFailureEnum.PAYMENT_TRANSACTION_EXPIRED;
-    case TransactionErrorCodeEnum.PAYMENT_USER_SUSPENDED:
-      return PaymentFailureEnum.PAYMENT_USER_SUSPENDED;
-    case TransactionErrorCodeEnum.PAYMENT_USER_NOT_ONBOARDED:
-      return PaymentFailureEnum.PAYMENT_USER_NOT_ONBOARDED;
-    case TransactionErrorCodeEnum.PAYMENT_USER_UNSUBSCRIBED:
-      return PaymentFailureEnum.PAYMENT_USER_UNSUBSCRIBED;
+    case TransactionErrorCodeEnum.PAYMENT_ALREADY_ASSIGNED:
+      return PaymentFailureEnum.PAYMENT_ALREADY_ASSIGNED;
     case TransactionErrorCodeEnum.PAYMENT_ALREADY_AUTHORIZED:
       return PaymentFailureEnum.PAYMENT_ALREADY_AUTHORIZED;
     case TransactionErrorCodeEnum.PAYMENT_BUDGET_EXHAUSTED:
       return PaymentFailureEnum.PAYMENT_BUDGET_EXHAUSTED;
-    case TransactionErrorCodeEnum.PAYMENT_ALREADY_ASSIGNED:
-      return PaymentFailureEnum.PAYMENT_ALREADY_ASSIGNED;
     case TransactionErrorCodeEnum.PAYMENT_INITIATIVE_INVALID_DATE:
       return PaymentFailureEnum.PAYMENT_INITIATIVE_INVALID_DATE;
+    case TransactionErrorCodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED:
+    case TransactionErrorCodeEnum.PAYMENT_TRANSACTION_EXPIRED:
+      return PaymentFailureEnum.PAYMENT_TRANSACTION_EXPIRED;
+    case TransactionErrorCodeEnum.PAYMENT_USER_NOT_ONBOARDED:
+      return PaymentFailureEnum.PAYMENT_USER_NOT_ONBOARDED;
+    case TransactionErrorCodeEnum.PAYMENT_USER_SUSPENDED:
+      return PaymentFailureEnum.PAYMENT_USER_SUSPENDED;
+    case TransactionErrorCodeEnum.PAYMENT_USER_UNSUBSCRIBED:
+      return PaymentFailureEnum.PAYMENT_USER_UNSUBSCRIBED;
     case TransactionErrorCodeEnum.PAYMENT_GENERIC_ERROR:
     case TransactionErrorCodeEnum.PAYMENT_MERCHANT_NOT_ONBOARDED:
     case TransactionErrorCodeEnum.PAYMENT_NOT_ALLOWED_FOR_TRX_STATUS:

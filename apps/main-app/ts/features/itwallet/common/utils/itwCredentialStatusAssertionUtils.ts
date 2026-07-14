@@ -1,19 +1,20 @@
 import {
-  ItwVersion,
-  createCryptoContextFor
+  createCryptoContextFor,
+  ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { isAfter } from "date-fns";
 import * as t from "io-ts";
+
 import { assert } from "../../../../utils/assert";
+import { Env } from "./environment";
+import { WIA_KEYTAG } from "./itwCryptoContextUtils";
+import { getIoWallet } from "./itwIoWallet";
 import {
   CredentialBundle,
   CredentialFormat,
   CredentialMetadata,
   IssuerConfiguration
 } from "./itwTypesUtils";
-import { WIA_KEYTAG } from "./itwCryptoContextUtils";
-import { getIoWallet } from "./itwIoWallet";
-import { Env } from "./environment";
 
 const fetchIssuerConfShared = createIssuerConfSharedFetch();
 
@@ -77,8 +78,8 @@ export const shouldRequestStatusAssertion = ({
 
   switch (storedStatusAssertion.credentialStatus) {
     // We could not determine the status or the credential is invalid, try to request another assertion
-    case "unknown":
     case "invalid":
+    case "unknown":
       return true;
     // When the status assertion is expired request a new one
     case "valid":
@@ -107,7 +108,7 @@ export const StatusAssertionError = t.intersection([
  */
 function createIssuerConfSharedFetch(maxAge = 86400) {
   // eslint-disable-next-line functional/no-let
-  let sharedPromise: Promise<IssuerConfiguration> | null = null;
+  let sharedPromise: null | Promise<IssuerConfiguration> = null;
   // eslint-disable-next-line functional/no-let
   let timestamp = -1;
 

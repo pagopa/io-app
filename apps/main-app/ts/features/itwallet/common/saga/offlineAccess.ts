@@ -1,6 +1,7 @@
 import { AppStateStatus } from "react-native";
 import { fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
+
 import { backgroundActivityTimeout } from "../../../../config";
 import {
   applicationChangeState,
@@ -15,13 +16,24 @@ import {
   resetOfflineAccessReason,
   setOfflineAccessReason
 } from "../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
+import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import {
   itwOfflineAccessCounterReset,
   itwOfflineAccessCounterUp
 } from "../store/actions/securePreferences";
-import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
-import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
+
+/** Watch actions that trigger the offline access counter reset. */
+export function* watchItwOfflineAccess() {
+  yield* takeLatest(
+    getType(itwUpdateWalletInstanceStatus.success),
+    handleItwOfflineAccessCounterReset
+  );
+
+  yield* fork(watchItwOfflineAccessCounterUp);
+  yield* fork(watchOfflineWalletBackgroundActivity);
+}
 
 /**
  * Handles the offline access counter reset by listening for the wallet instance
@@ -128,15 +140,4 @@ function* watchOfflineWalletBackgroundActivity() {
       }
     }
   );
-}
-
-/** Watch actions that trigger the offline access counter reset. */
-export function* watchItwOfflineAccess() {
-  yield* takeLatest(
-    getType(itwUpdateWalletInstanceStatus.success),
-    handleItwOfflineAccessCounterReset
-  );
-
-  yield* fork(watchItwOfflineAccessCounterUp);
-  yield* fork(watchOfflineWalletBackgroundActivity);
 }

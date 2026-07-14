@@ -2,16 +2,17 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
 import { RouteProp, useLinkTo, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect } from "react";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import IOMarkdown from "../../../../components/IOMarkdown";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -52,7 +53,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   const servicePreferenceResponseSuccess = useIOSelector(state =>
     servicePreferenceResponseSuccessByIdSelector(
       state,
-      params.serviceId as string & INonEmptyStringTag
+      params.serviceId as INonEmptyStringTag & string
     )
   );
 
@@ -126,6 +127,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       contentContainerStyle={{ flexGrow: 1 }}
       footerActions={{
         actions: {

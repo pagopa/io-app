@@ -1,9 +1,10 @@
 import { isString as lodashIsString } from "lodash";
+
 import { MessagesFailurePayload } from "../features/messages/store/actions";
 
-export type TimeoutError = { readonly kind: "timeout" };
 export type GenericError = { readonly kind: "generic"; value: Error };
-export type NetworkError = TimeoutError | GenericError;
+export type NetworkError = GenericError | TimeoutError;
+export type TimeoutError = { readonly kind: "timeout" };
 
 /** Return an error starting from an unknown input value */
 export const getError = (error: unknown): Error => {
@@ -40,10 +41,10 @@ export const getNetworkErrorMessage = (error: NetworkError): string =>
 
 export const getErrorFromNetworkError = (networkError: NetworkError): Error => {
   switch (networkError.kind) {
-    case "timeout":
-      return new Error("Timeout Error");
     case "generic":
       return networkError.value;
+    case "timeout":
+      return new Error("Timeout Error");
   }
 };
 

@@ -2,17 +2,18 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { getPaymentsReceiptDownloadAction } from "../store/actions";
+
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
-import { TransactionClient } from "../../common/api/client";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { byteArrayToBase64 } from "../utils";
+import { TransactionClient } from "../../common/api/client";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
-import { DownloadReceiptHeaders } from "../utils/types";
+import { getPaymentsReceiptDownloadAction } from "../store/actions";
 import {
   DownloadReceiptOutcomeErrorEnum,
   ReceiptDownloadFailure
 } from "../types";
+import { byteArrayToBase64 } from "../utils";
+import { DownloadReceiptHeaders } from "../utils/types";
 
 /**
  * Handle the remote call to get the transaction receipt pdf from the biz events

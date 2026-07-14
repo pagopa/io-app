@@ -1,4 +1,4 @@
-import { SagaIterator, channel } from "redux-saga";
+import { channel, SagaIterator } from "redux-saga";
 import {
   call,
   put,
@@ -7,26 +7,27 @@ import {
   takeEvery,
   takeLatest
 } from "typed-redux-saga/macro";
+
 import { PreferredLanguageEnum } from "../../../../../definitions/identity/PreferredLanguage";
 import { IDPayClient } from "../../common/api/client";
 import {
-  IdPayInitiativesFromInstrumentPayloadType,
-  idPayInitiativeWaitingListGet,
   idPayInitiativesFromInstrumentGet,
+  IdPayInitiativesFromInstrumentPayloadType,
   idPayInitiativesFromInstrumentRefreshStart,
   idPayInitiativesFromInstrumentRefreshStop,
-  idPayWalletGet,
   idpayInitiativesInstrumentDelete,
-  idpayInitiativesInstrumentEnroll
+  idpayInitiativesInstrumentEnroll,
+  idPayInitiativeWaitingListGet,
+  idPayWalletGet
 } from "../store/actions";
 import {
   handleGetIDPayInitiativesFromInstrument,
   handleInitiativesFromInstrumentRefresh
 } from "./handleGetInitiativesFromInstrument";
+import { handleGetInitiativeWaitingList } from "./handleGetInitiativeWaitingList";
 import { handleGetIDPayWallet } from "./handleGetWallet";
 import { handleInitiativeInstrumentDelete } from "./handleInitiativeInstrumentDelete";
 import { handleInitiativeInstrumentEnrollment } from "./handleInitiativeInstrumentEnrollment";
-import { handleGetInitiativeWaitingList } from "./handleGetInitiativeWaitingList";
 
 /**
  * Handle the IDPay Wallet requests

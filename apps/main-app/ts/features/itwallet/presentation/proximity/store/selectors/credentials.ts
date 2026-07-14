@@ -1,16 +1,18 @@
 import { createSelector } from "reselect";
+
+import type { GlobalState } from "../../../../../../store/reducers/types";
+
 import { getCredentialStatus } from "../../../../common/utils/itwCredentialStatusUtils";
-import {
-  itwCredentialsEidStatusSelector,
-  makeSelectAllCredentials
-} from "../../../../credentials/store/selectors";
 import {
   CredentialFormat,
   CredentialMetadata,
   ItwJwtCredentialStatus,
   MdocSupportedCredentialConfiguration
 } from "../../../../common/utils/itwTypesUtils";
-import type { GlobalState } from "../../../../../../store/reducers/types";
+import {
+  itwCredentialsEidStatusSelector,
+  makeSelectAllCredentials
+} from "../../../../credentials/store/selectors";
 
 type PresentableCredentialsByDocType = Record<string, CredentialMetadata>;
 

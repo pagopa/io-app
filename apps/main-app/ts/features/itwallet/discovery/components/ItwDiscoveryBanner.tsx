@@ -1,7 +1,8 @@
-import { Banner, IOSkeleton } from "@pagopa/io-app-design-system";
+import { Banner, IOSkeleton } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useCallback, useMemo } from "react";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -108,26 +109,26 @@ export const ItwDiscoveryBanner = ({
 
   if (!hasItwInstance && isRemotelyActive === undefined) {
     return (
-      <IOSkeleton shape="rectangle" width={"100%"} height={200} radius={8} />
+      <IOSkeleton height={200} radius={8} shape="rectangle" width={"100%"} />
     );
   }
 
   if (isRemotelyActive) {
     return (
       <Banner
-        testID="itwReactivationBannerTestID"
-        title={I18n.t("features.itWallet.engagementBanner.reactivation.title")}
-        content={I18n.t(
-          "features.itWallet.engagementBanner.reactivation.description"
-        )}
         action={I18n.t(
           "features.itWallet.engagementBanner.reactivation.confirm"
         )}
-        pictogramName="itWallet"
         color="turquoise"
-        onClose={handleOnDismiss}
+        content={I18n.t(
+          "features.itWallet.engagementBanner.reactivation.description"
+        )}
         labelClose={I18n.t("global.buttons.close")}
+        onClose={handleOnDismiss}
         onPress={navigateToDiscoveryScreen}
+        pictogramName="itWallet"
+        testID="itwReactivationBannerTestID"
+        title={I18n.t("features.itWallet.engagementBanner.reactivation.title")}
       />
     );
   }
@@ -135,15 +136,15 @@ export const ItwDiscoveryBanner = ({
   if (!isWalletActive) {
     return (
       <ItwEngagementBanner
-        title={I18n.t("features.itWallet.engagementBanner.activation.title")}
+        action={I18n.t("features.itWallet.engagementBanner.activation.action")}
         description={I18n.t(
           "features.itWallet.engagementBanner.activation.description"
         )}
-        action={I18n.t("features.itWallet.engagementBanner.activation.action")}
-        onPress={navigateToDiscoveryScreen}
-        onDismiss={handleOnDismiss}
         dismissable={true}
+        onDismiss={handleOnDismiss}
+        onPress={navigateToDiscoveryScreen}
         style={style}
+        title={I18n.t("features.itWallet.engagementBanner.activation.title")}
       />
     );
   }
@@ -151,16 +152,16 @@ export const ItwDiscoveryBanner = ({
   if (isWalletEmpty) {
     return (
       <ItwEngagementBanner
-        title={I18n.t("features.itWallet.engagementBanner.upgrade_empty.title")}
-        description={I18n.t(
-          "features.itWallet.engagementBanner.upgrade_empty.description"
-        )}
         action={I18n.t(
           "features.itWallet.engagementBanner.upgrade_empty.action"
         )}
-        onPress={navigateToDiscoveryScreen}
+        description={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_empty.description"
+        )}
         onDismiss={handleOnDismiss}
+        onPress={navigateToDiscoveryScreen}
         style={style}
+        title={I18n.t("features.itWallet.engagementBanner.upgrade_empty.title")}
       />
     );
   }
@@ -168,34 +169,34 @@ export const ItwDiscoveryBanner = ({
   if (hasMdl) {
     return (
       <ItwEngagementBanner
-        title={I18n.t(
-          "features.itWallet.engagementBanner.upgrade_with_mdl.title"
+        action={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_with_mdl.action"
         )}
         description={I18n.t(
           "features.itWallet.engagementBanner.upgrade_with_mdl.description"
         )}
-        action={I18n.t(
-          "features.itWallet.engagementBanner.upgrade_with_mdl.action"
-        )}
-        onPress={navigateToDiscoveryScreen}
-        onDismiss={handleOnDismiss}
         dismissable={true}
+        onDismiss={handleOnDismiss}
+        onPress={navigateToDiscoveryScreen}
         style={style}
+        title={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_with_mdl.title"
+        )}
       />
     );
   }
 
   return (
     <ItwEngagementBanner
-      title={I18n.t("features.itWallet.engagementBanner.upgrade.title")}
+      action={I18n.t("features.itWallet.engagementBanner.upgrade.action")}
       description={I18n.t(
         "features.itWallet.engagementBanner.upgrade.description"
       )}
-      action={I18n.t("features.itWallet.engagementBanner.upgrade.action")}
-      onPress={navigateToDiscoveryScreen}
-      onDismiss={handleOnDismiss}
       dismissable={true}
+      onDismiss={handleOnDismiss}
+      onPress={navigateToDiscoveryScreen}
       style={style}
+      title={I18n.t("features.itWallet.engagementBanner.upgrade.title")}
     />
   );
 };

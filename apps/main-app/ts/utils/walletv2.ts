@@ -1,13 +1,16 @@
+import { pipe } from "fp-ts/lib/function";
 /**
  * Return true if function is enabled for the wallet (aka payment method)
  *
  * @param wallet
  */
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
+
+import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
+import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
 import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
-import { CardInfo, TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
+import { CardInfo, TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 import {
   PatchedPaymentMethodInfo,
   PatchedWalletV2,
@@ -15,8 +18,6 @@ import {
   RawPaymentMethod,
   Wallet
 } from "../types/pagopa";
-import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
-import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
 import {
   CreditCardExpirationMonth,
   CreditCardExpirationYear,

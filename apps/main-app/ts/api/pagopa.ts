@@ -19,6 +19,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import _ from "lodash";
+
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -300,8 +301,8 @@ const getPspList: GetPspListUsingGETTExtra = {
 
 type PspParams = {
   readonly Bearer: string;
-  readonly idWallet: string;
   readonly idPayment: string;
+  readonly idWallet: string;
   readonly language: string;
 };
 
@@ -436,10 +437,10 @@ const getPans: GetPansUsingGETT = {
 
 export type AddWalletsBancomatCardUsingPOSTTExtra = r.IPostApiRequestType<
   {
-    readonly Bearer: string;
     readonly bancomatCardsRequest: BancomatCardsRequest;
+    readonly Bearer: string;
   },
-  "Content-Type" | "Authorization",
+  "Authorization" | "Content-Type",
   never,
   | r.IResponseType<200, PatchedWalletV2ListResponse>
   | r.IResponseType<201, undefined>
@@ -507,7 +508,7 @@ export type AddWalletsCobadge = r.IPostApiRequestType<
     readonly Bearer: string;
     readonly cobadegPaymentInstrumentsRequest: CobadegPaymentInstrumentsRequest;
   },
-  "Content-Type" | "Authorization",
+  "Authorization" | "Content-Type",
   never,
   | r.IResponseType<200, PatchedWalletV2ListResponse>
   | r.IResponseType<201, undefined>
@@ -516,7 +517,7 @@ export type AddWalletsCobadge = r.IPostApiRequestType<
   | r.IResponseType<404, undefined>
 >;
 
-const cobadgeInstrumentReplacer = (key: string | number, value: any) => {
+const cobadgeInstrumentReplacer = (key: number | string, value: any) => {
   if (key !== "expiringDate") {
     return value;
   }
@@ -545,7 +546,7 @@ const addCobadgeToWallet: AddWalletsCobadge = {
 
 export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
   { readonly Bearer: string; readonly bPayRequest: BPayRequest },
-  "Content-Type" | "Authorization",
+  "Authorization" | "Content-Type",
   never,
   | r.IResponseType<200, PatchedWalletV2ListResponse>
   | r.IResponseType<201, undefined>
@@ -573,7 +574,7 @@ export type ChangePayOptionT = r.IPutApiRequestType<
     readonly idWallet: number;
     readonly walletPaymentStatusRequest: WalletPaymentStatusRequest;
   },
-  "Content-Type" | "Authorization",
+  "Authorization" | "Content-Type",
   never,
   | r.IResponseType<200, PatchedWalletV2Response>
   | r.IResponseType<400, undefined>
@@ -644,6 +645,8 @@ const withPaymentManagerToken =
     ) as P;
     return f(params);
   };
+
+export type PaymentManagerClient = ReturnType<typeof PaymentManagerClient>;
 
 export function PaymentManagerClient(
   baseUrl: string,
@@ -873,7 +876,7 @@ export function PaymentManagerClient(
           language: getLocalePrimaryWithFallback()
         })
     ),
-    getPspV2: (payload: { idWallet: number; idPayment: string }) =>
+    getPspV2: (payload: { idPayment: string; idWallet: number }) =>
       pipe(
         createFetchRequestForApi(getPspListV2, options),
         withPaymentManagerToken,
@@ -886,5 +889,3 @@ export function PaymentManagerClient(
       )
   };
 }
-
-export type PaymentManagerClient = ReturnType<typeof PaymentManagerClient>;

@@ -1,7 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PureComponent } from "react";
-
 import {
   AccessibilityInfo,
   AppState,
@@ -12,6 +11,7 @@ import {
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
+
 import DebugInfoOverlay from "./components/debug/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
@@ -39,19 +39,16 @@ type Props = ReturnType<typeof mapStateToProps> &
   typeof mapDispatchToProps & { store: Store };
 
 /**
- * The main container of the application with:
- *
- * - The Navigator
- * - The IdentificationModal, for authenticating user after login by CIE/SPID
- * - The SystemOffModal, shown if backend is unavailable
- * - The UpdateAppModal, if the backend is not compatible with the installed app
- *   version
- * - The root for displaying light modals
+ * The main container of the application with: - the Navigator - the
+ * IdentificationModal, for authenticating user after login by CIE/SPID - the
+ * SystemOffModal, shown if backend is unavailable - the UpdateAppModal, if the
+ * backend is not compatible with the installed app version - the root for
+ * displaying light modals
  */
 class RootContainer extends PureComponent<Props> {
-  private subscription: NativeEventSubscription | undefined;
   private accessibilitySubscription: EmitterSubscription | undefined;
   private clearNotificationHandlers: () => void;
+  private subscription: NativeEventSubscription | undefined;
 
   constructor(props: Props) {
     super(props);
@@ -60,14 +57,6 @@ class RootContainer extends PureComponent<Props> {
       props.store
     );
   }
-
-  private handleApplicationActivity = (activity: AppStateStatus) =>
-    this.props.applicationChangeState(activity);
-
-  private handleScreenReaderEnabled = (isScreenReaderEnabled: boolean) =>
-    this.props.setScreenReaderEnabled({
-      screenReaderEnabled: isScreenReaderEnabled
-    });
 
   public componentDidMount() {
     // boot: send the status of the application
@@ -91,26 +80,14 @@ class RootContainer extends PureComponent<Props> {
     SplashScreen.hide();
   }
 
-  /**
-   * If preferred language is set in the Persisted Store it sets the app global
-   * Locale otherwise it continues using the default locale set from the SO
-   */
-  private updateLocale = () =>
-    pipe(
-      this.props.preferredLanguage,
-      O.map(l => {
-        setLocale(l);
-      })
-    );
+  public componentDidUpdate() {
+    this.updateLocale();
+  }
 
   public componentWillUnmount() {
     this.subscription?.remove();
     this.accessibilitySubscription?.remove();
     this.clearNotificationHandlers();
-  }
-
-  public componentDidUpdate() {
-    this.updateLocale();
   }
 
   public render() {
@@ -123,9 +100,9 @@ class RootContainer extends PureComponent<Props> {
     return (
       <>
         <StatusBar
-          translucent
-          barStyle={"dark-content"}
           backgroundColor={"transparent"}
+          barStyle={"dark-content"}
+          translucent
         />
         <IONavigationContainer />
 
@@ -148,6 +125,26 @@ class RootContainer extends PureComponent<Props> {
       </>
     );
   }
+
+  private handleApplicationActivity = (activity: AppStateStatus) =>
+    this.props.applicationChangeState(activity);
+
+  private handleScreenReaderEnabled = (isScreenReaderEnabled: boolean) =>
+    this.props.setScreenReaderEnabled({
+      screenReaderEnabled: isScreenReaderEnabled
+    });
+
+  /**
+   * If preferred language is set in the Persisted Store it sets the app global
+   * Locale otherwise it continues using the default locale set from the SO
+   */
+  private updateLocale = () =>
+    pipe(
+      this.props.preferredLanguage,
+      O.map(l => {
+        setLocale(l);
+      })
+    );
 }
 
 const mapStateToProps = (state: GlobalState) => ({

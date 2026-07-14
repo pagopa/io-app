@@ -5,9 +5,10 @@ import dfns_it from "date-fns/locale/it";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import * as t from "io-ts";
 import { Errors } from "io-ts";
-import I18n from "i18next";
+
 import { Locales } from "../i18n";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 import { getLocalePrimary } from "./locale";
@@ -52,18 +53,25 @@ export const formatDateAsShortFormat = (date: Date): string =>
     ? I18n.t("global.date.invalid")
     : new Intl.DateTimeFormat("it", { dateStyle: "short" }).format(date);
 
-export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
-  return format(date, "MMM");
+export function format(
+  date: Date | number | string,
+  dateFormat?: string
+): ReturnType<typeof dateFnsFormat> {
+  const localePrimary = getLocalePrimary(I18n.language);
+  return dateFnsFormat(
+    date,
+    dateFormat,
+    pipe(
+      localePrimary,
+      O.chainNullableK(lp => locales[lp as Locales]), // becomes empty if locales[lp] is undefined
+      O.map(locale => ({ locale })),
+      O.toUndefined // if some returns the value, if empty return undefined)
+    )
+  );
 }
 
 export function formatDateAsDay(date: Date): ReturnType<typeof format> {
   return format(date, "DD");
-}
-
-export function formatDateAsReminder(
-  date: Date
-): ReturnType<typeof dateFnsFormat> {
-  return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 }
 
 /**
@@ -88,21 +96,14 @@ export function formatDateAsLocal(
       : format(date, dateFormat);
 }
 
-export function format(
-  date: string | number | Date,
-  dateFormat?: string
+export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
+  return format(date, "MMM");
+}
+
+export function formatDateAsReminder(
+  date: Date
 ): ReturnType<typeof dateFnsFormat> {
-  const localePrimary = getLocalePrimary(I18n.language);
-  return dateFnsFormat(
-    date,
-    dateFormat,
-    pipe(
-      localePrimary,
-      O.chainNullableK(lp => locales[lp as Locales]), // becomes empty if locales[lp] is undefined
-      O.map(locale => ({ locale })),
-      O.toUndefined // if some returns the value, if empty return undefined)
-    )
-  );
+  return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 }
 
 /**
@@ -111,7 +112,7 @@ export function format(
  * @param month
  */
 export const decodeCreditCardMonth = (
-  month: string | number | undefined
+  month: number | string | undefined
 ): E.Either<Error | Errors, number> => {
   // convert month to string (if it is a number) and
   // ensure it is left padded: 2 -> 02
@@ -131,7 +132,7 @@ export const decodeCreditCardMonth = (
  * @param year
  */
 export const decodeCreditCardYear = (
-  year: string | number | undefined
+  year: number | string | undefined
 ): E.Either<Error | Errors, number> => {
   const yearStr = (year ?? "").toString().trim();
   // if the year is 2 digits, convert it to 4 digits: 21 -> 2021
@@ -164,8 +165,8 @@ export const decodeCreditCardYear = (
  * @param year
  */
 export const dateFromMonthAndYear = (
-  month: string | number | undefined,
-  year: string | number | undefined
+  month: number | string | undefined,
+  year: number | string | undefined
 ): O.Option<Date> => {
   const maybeMonth = decodeCreditCardMonth(month);
   const maybeYear = decodeCreditCardYear(year);
@@ -184,8 +185,8 @@ export const dateFromMonthAndYear = (
  * @param expireYear
  */
 export const isExpired = (
-  expireMonth: string | number | undefined,
-  expireYear: string | number | undefined
+  expireMonth: number | string | undefined,
+  expireYear: number | string | undefined
 ): E.Either<Error, boolean> => {
   const maybeMonth = decodeCreditCardMonth(expireMonth);
   const maybeYear = decodeCreditCardYear(expireYear);
@@ -218,7 +219,7 @@ export const isExpiredDate = (expiryDate: Date): boolean => {
   return nowYearMonth > expiryDate;
 };
 
-export type ExpireStatus = "VALID" | "EXPIRING" | "EXPIRED";
+export type ExpireStatus = "EXPIRED" | "EXPIRING" | "VALID";
 
 /**
  * A function to check if the given date is in the past or in the future. It

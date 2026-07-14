@@ -3,28 +3,29 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { NoticeListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeListWrapResponse";
 import { NetworkError } from "../../../../../utils/errors";
 import { HideReceiptTrigger } from "../../analytics";
 import { ReceiptDownloadFailure, ReceiptsCategoryFilter } from "../../types";
 
+type PaymentsLatestReceiptSuccessPayload = {
+  continuationToken?: string;
+  data: NoticeListWrapResponse["notices"];
+};
+
 type PaymentsReceiptPayload = {
+  continuationToken?: string;
   firstLoad?: boolean;
   noticeCategory?: ReceiptsCategoryFilter;
-  size?: number;
-  continuationToken?: string;
   onSuccess?: (continuationToken?: string) => void;
+  size?: number;
 };
 
 type PaymentsReceiptSuccessPayload = {
-  data: NoticeListWrapResponse["notices"];
   appendElements?: boolean;
-};
-
-type PaymentsLatestReceiptSuccessPayload = {
   data: NoticeListWrapResponse["notices"];
-  continuationToken?: string;
 };
 
 export const getPaymentsReceiptAction = createAsyncAction(
@@ -42,8 +43,8 @@ export const getPaymentsLatestReceiptAction = createAsyncAction(
 )<void, PaymentsLatestReceiptSuccessPayload, NetworkError, void>();
 
 type PaymentsTransactionDetailsPayload = {
-  transactionId: string;
   isPayer?: boolean;
+  transactionId: string;
 };
 
 export const getPaymentsReceiptDetailsAction = createAsyncAction(
@@ -58,16 +59,16 @@ export const getPaymentsReceiptDetailsAction = createAsyncAction(
   void
 >();
 
-type PaymentsTransactionReceiptPayload = {
-  transactionId: string;
-  onSuccess?: () => void;
-  onError?: () => void;
-  onErrorGeneration?: () => void;
-};
-
 export type PaymentsTransactionReceiptInfoPayload = {
   base64File: string;
   filename?: string;
+};
+
+type PaymentsTransactionReceiptPayload = {
+  onError?: () => void;
+  onErrorGeneration?: () => void;
+  onSuccess?: () => void;
+  transactionId: string;
 };
 
 /** Asycn action to download biz-events transaction preview pdf */
@@ -100,8 +101,8 @@ export const setNeedsHomeListRefreshAction = createStandardAction(
 )<boolean>();
 
 export type PaymentsReceiptActions =
-  | ActionType<typeof getPaymentsReceiptAction>
   | ActionType<typeof getPaymentsLatestReceiptAction>
+  | ActionType<typeof getPaymentsReceiptAction>
   | ActionType<typeof getPaymentsReceiptDetailsAction>
   | ActionType<typeof getPaymentsReceiptDownloadAction>
   | ActionType<typeof hidePaymentsReceiptAction>

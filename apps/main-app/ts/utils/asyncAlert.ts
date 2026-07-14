@@ -1,5 +1,5 @@
-import { Alert, AlertButton, AlertOptions } from "react-native";
 import I18n from "i18next";
+import { Alert, AlertButton, AlertOptions } from "react-native";
 
 /**
  * The result of the Alert.
@@ -8,8 +8,8 @@ import I18n from "i18next";
  * - OnDismiss: The user tapped on empty space, dismissing the alert
  */
 type AlertResult =
-  | { kind: "onPress"; text: AlertButton["text"]; style: AlertButton["style"] }
-  | { kind: "onDismiss" };
+  | { kind: "onDismiss" }
+  | { kind: "onPress"; style: AlertButton["style"]; text: AlertButton["text"] };
 
 /**
  * Wraps the {@link Alert.alert} using promises instead of callback. If there are

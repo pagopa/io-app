@@ -1,8 +1,9 @@
 import { PathConfigMap } from "@react-navigation/native";
-import { IDPayDetailsRoutes } from "../../details/navigation";
-import { IdPayPaymentRoutes } from "../../payment/navigation/routes";
+
 import { AppParamsList } from "../../../../navigation/params/AppParamsList";
+import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayOnboardingRoutes } from "../../onboarding/navigation/routes";
+import { IdPayPaymentRoutes } from "../../payment/navigation/routes";
 
 export const idPayLinkingOptions: PathConfigMap<AppParamsList> = {
   /** IDPay initiative onboarding */

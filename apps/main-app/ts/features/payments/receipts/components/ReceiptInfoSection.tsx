@@ -12,24 +12,24 @@ import {
   ListItemInfoCopy,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
+import I18n from "i18next";
 import { capitalize } from "lodash";
 import { View } from "react-native";
 
-import I18n from "i18next";
 import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { capitalizeTextName } from "../../../../utils/strings";
-import { getPayerInfoLabel, isValidPspName, removeAsterisks } from "../utils";
 import { PaymentListItemInfo } from "../../common/components/PaymentListItemInfo";
+import { getPayerInfoLabel, isValidPspName, removeAsterisks } from "../utils";
 import { ReceiptDivider } from "./ReceiptDivider";
 
 type Props = {
-  transaction?: NoticeDetailResponse;
   loading?: boolean;
   showUnavailableReceiptBanner?: boolean;
+  transaction?: NoticeDetailResponse;
 };
 
 /** Component that shows the biz-events transaction info */
@@ -55,8 +55,8 @@ const ReceiptInfoSection = ({
           }}
         >
           <ListItemHeader
-            label={I18n.t("transaction.details.info.title")}
             accessibilityLabel={I18n.t("transaction.details.info.title")}
+            label={I18n.t("transaction.details.info.title")}
           />
           {loading && (
             <>
@@ -76,8 +76,8 @@ const ReceiptInfoSection = ({
               {transactionInfo.payer && (
                 <>
                   <PaymentListItemInfo
-                    testID="payer-info"
                     label={I18n.t("transaction.details.info.executedBy")}
+                    testID="payer-info"
                     value={getPayerInfoLabel(transactionInfo.payer)}
                   />
                   <Divider />
@@ -129,13 +129,13 @@ const ReceiptInfoSection = ({
               {transactionInfo.rrn && (
                 <>
                   <ListItemInfoCopy
-                    onPress={() =>
-                      clipboardSetStringWithFeedback(transactionInfo.rrn ?? "")
-                    }
                     accessibilityLabel={`${I18n.t(
                       "transaction.details.info.rrn"
                     )}: ${transactionInfo.rrn}`}
                     label={I18n.t("transaction.details.info.rrn")}
+                    onPress={() =>
+                      clipboardSetStringWithFeedback(transactionInfo.rrn ?? "")
+                    }
                     value={transactionInfo.rrn}
                   />
                   <Divider />
@@ -144,15 +144,15 @@ const ReceiptInfoSection = ({
               {transactionInfo.authCode && (
                 <>
                   <ListItemInfoCopy
+                    accessibilityLabel={`${I18n.t(
+                      "transaction.details.info.authCode"
+                    )}: ${transactionInfo.authCode}`}
+                    label={I18n.t("transaction.details.info.authCode")}
                     onPress={() =>
                       clipboardSetStringWithFeedback(
                         transactionInfo.authCode ?? ""
                       )
                     }
-                    accessibilityLabel={`${I18n.t(
-                      "transaction.details.info.authCode"
-                    )}: ${transactionInfo.authCode}`}
-                    label={I18n.t("transaction.details.info.authCode")}
                     value={transactionInfo.authCode}
                   />
                   <Divider />
@@ -160,15 +160,15 @@ const ReceiptInfoSection = ({
               )}
               {transactionInfo.eventId && (
                 <ListItemInfoCopy
+                  accessibilityLabel={`${I18n.t(
+                    "transaction.details.info.transactionId"
+                  )}: ${transactionInfo.eventId}`}
+                  label={I18n.t("transaction.details.info.transactionId")}
                   onPress={() =>
                     clipboardSetStringWithFeedback(
                       transactionInfo.eventId ?? ""
                     )
                   }
-                  accessibilityLabel={`${I18n.t(
-                    "transaction.details.info.transactionId"
-                  )}: ${transactionInfo.eventId}`}
-                  label={I18n.t("transaction.details.info.transactionId")}
                   value={transactionInfo.eventId}
                 />
               )}
@@ -178,8 +178,8 @@ const ReceiptInfoSection = ({
         {showUnavailableReceiptBanner && (
           <>
             <Alert
-              variant="info"
               content={I18n.t("transaction.details.bannerImported.content")}
+              variant="info"
             />
             <VSpacer size={12} />
           </>
@@ -193,10 +193,6 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
   if (walletInfo.blurredNumber && walletInfo.brand) {
     return (
       <PaymentListItemInfo
-        label={I18n.t("transaction.details.info.paymentMethod")}
-        value={`${capitalize(walletInfo.brand)} •••• ${removeAsterisks(
-          walletInfo.blurredNumber
-        )}`}
         accessibilityLabel={I18n.t("wallet.methodDetails.a11y.credit.hpan", {
           circuit: walletInfo.brand,
           // we space the hpan to make the screen reader read it digit by digit
@@ -204,7 +200,11 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
             .split("")
             .join(" ")
         })}
+        label={I18n.t("transaction.details.info.paymentMethod")}
         paymentLogoIcon={walletInfo.brand as IOLogoPaymentType}
+        value={`${capitalize(walletInfo.brand)} •••• ${removeAsterisks(
+          walletInfo.blurredNumber
+        )}`}
       />
     );
   }
@@ -212,8 +212,8 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
     return (
       <ListItemInfo
         label={I18n.t("transaction.details.info.paymentMethod")}
-        value="PayPal"
         paymentLogoIcon={"payPal"}
+        value="PayPal"
       />
     );
   }
@@ -222,9 +222,9 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
 
 const SkeletonItem = () => (
   <View style={{ flex: 1, paddingVertical: 12 }} testID="skeleton-item">
-    <IOSkeleton shape="rectangle" height={16} width="80%" radius={4} />
+    <IOSkeleton height={16} radius={4} shape="rectangle" width="80%" />
     <VSpacer size={8} />
-    <IOSkeleton shape="rectangle" height={16} width="25%" radius={4} />
+    <IOSkeleton height={16} radius={4} shape="rectangle" width="25%" />
   </View>
 );
 

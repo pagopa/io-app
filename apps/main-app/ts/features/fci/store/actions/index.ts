@@ -1,23 +1,24 @@
+import * as O from "fp-ts/lib/Option";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import * as O from "fp-ts/lib/Option";
+
 import { CreateFilledDocument } from "../../../../../definitions/fci/CreateFilledDocument";
 import { CreateSignatureBody } from "../../../../../definitions/fci/CreateSignatureBody";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
+import { EnvironmentEnum } from "../../../../../definitions/fci/Environment";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
+import { Metadata } from "../../../../../definitions/fci/Metadata";
 import { QtspClausesMetadataDetailView } from "../../../../../definitions/fci/QtspClausesMetadataDetailView";
 import { SignatureDetailView } from "../../../../../definitions/fci/SignatureDetailView";
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
-import { NetworkError } from "../../../../utils/errors";
-import { Metadata } from "../../../../../definitions/fci/Metadata";
 import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
-import { Document } from "../reducers/fciSignatureFieldDrawing";
+import { NetworkError } from "../../../../utils/errors";
 import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
-import { EnvironmentEnum } from "../../../../../definitions/fci/Environment";
 import { FciNetworkError } from "../../utils/errors.ts";
+import { Document } from "../reducers/fciSignatureFieldDrawing";
 
 /** Get and handle the signatureRequest from id */
 export const fciSignatureRequestFromId = createAsyncAction(
@@ -114,7 +115,7 @@ export const fciDocumentSignatureFields = createAsyncAction(
   "FCI_DOCUMENT_SIGNATURE_FIELDS_REQUEST",
   "FCI_DOCUMENT_SIGNATURE_FIELDS_SUCCESS",
   "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE"
-)<{ uri: string; attrs: SignatureFieldAttrType }, Document, Error>();
+)<{ attrs: SignatureFieldAttrType; uri: string }, Document, Error>();
 
 /** Action to interact with the environment reducer. */
 export const fciEnvironmentSet = createStandardAction("FCI_ENVIRONMENT_SET")<
@@ -122,21 +123,21 @@ export const fciEnvironmentSet = createStandardAction("FCI_ENVIRONMENT_SET")<
 >();
 
 export type FciActions =
-  | ActionType<typeof fciSignatureRequestFromId>
-  | ActionType<typeof fciSignatureRequestRetryFromId>
-  | ActionType<typeof fciLoadQtspClauses>
-  | ActionType<typeof fciLoadQtspFilledDocument>
-  | ActionType<typeof fciSigningRequest>
+  | ActionType<typeof fciClearAllFiles>
   | ActionType<typeof fciClearStateRequest>
-  | ActionType<typeof fciStartRequest>
-  | ActionType<typeof fciUpdateDocumentSignaturesRequest>
-  | ActionType<typeof fciStartSigningRequest>
-  | ActionType<typeof fciEndRequest>
+  | ActionType<typeof fciDocumentSignatureFields>
   | ActionType<typeof fciDownloadPreview>
   | ActionType<typeof fciDownloadPreviewClear>
-  | ActionType<typeof fciPollFilledDocument>
-  | ActionType<typeof fciClearAllFiles>
+  | ActionType<typeof fciEndRequest>
+  | ActionType<typeof fciEnvironmentSet>
+  | ActionType<typeof fciLoadQtspClauses>
+  | ActionType<typeof fciLoadQtspFilledDocument>
   | ActionType<typeof fciMetadataRequest>
+  | ActionType<typeof fciPollFilledDocument>
+  | ActionType<typeof fciSignatureRequestFromId>
+  | ActionType<typeof fciSignatureRequestRetryFromId>
   | ActionType<typeof fciSignaturesListRequest>
-  | ActionType<typeof fciDocumentSignatureFields>
-  | ActionType<typeof fciEnvironmentSet>;
+  | ActionType<typeof fciSigningRequest>
+  | ActionType<typeof fciStartRequest>
+  | ActionType<typeof fciStartSigningRequest>
+  | ActionType<typeof fciUpdateDocumentSignaturesRequest>;

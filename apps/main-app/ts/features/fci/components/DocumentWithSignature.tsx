@@ -10,7 +10,7 @@ import {
   useFooterActionsMeasurements,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -19,16 +19,17 @@ import { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Pdf, { PdfRef } from "react-native-pdf";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
 import { ButtonBlockProps } from "../../../components/ui/utils/buttons";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton.ts";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { WithTestID } from "../../../types/WithTestID";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { fciDocumentSignatureFields } from "../store/actions";
 import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton.ts";
 import DocumentsNavigationBar from "./DocumentsNavigationBar";
 import LoadingComponent from "./LoadingComponent";
 
@@ -113,11 +114,9 @@ const DocumentWithSignature = (props: Props) => {
        * report that the first page has loaded
        */
       <Pdf
-        ref={pdfRef}
-        source={{
-          uri: document
-        }}
-        page={page}
+        enablePaging
+        // TODO: add test for errors https://pagopa.atlassian.net/browse/SFEQS-1606
+        onError={props.onError}
         onLoadComplete={(numberOfPages, _) => {
           setTotalPages(numberOfPages);
         }}
@@ -127,10 +126,12 @@ const DocumentWithSignature = (props: Props) => {
           }
           setCurrentPage(internalPage);
         }}
-        // TODO: add test for errors https://pagopa.atlassian.net/browse/SFEQS-1606
-        onError={props.onError}
         onPressLink={constNull}
-        enablePaging
+        page={page}
+        ref={pdfRef}
+        source={{
+          uri: document
+        }}
         style={styles.pdf}
       />
     ),
@@ -203,19 +204,19 @@ const DocumentWithSignature = (props: Props) => {
 
   return (
     <SafeAreaView
+      edges={["top", "left", "right"]}
       style={{
         flex: 1,
         backgroundColor: IOColors[theme["appBackground-primary"]]
       }}
       testID={"FciDocumentsScreenTestID"}
-      edges={["top", "left", "right"]}
     >
       <ContentWrapper style={{ alignItems: "center", flexDirection: "row" }}>
         <HSpacer />
         <H5 style={styles.headerTitle}>{I18n.t("messagePDFPreview.title")}</H5>
         <IconButton
-          color="neutral"
           accessibilityLabel={I18n.t("global.buttons.close")}
+          color="neutral"
           icon="closeLarge"
           onPress={props.onClose}
           testID="FciDocumentWithSignatureTopRightButtonTestID"
@@ -223,7 +224,13 @@ const DocumentWithSignature = (props: Props) => {
       </ContentWrapper>
       <VSpacer />
       <DocumentsNavigationBar
+        disabled={false}
+        iconLeftDisabled={currentPage === 1}
+        iconRightDisabled={currentPage === totalPages}
         indicatorPosition={"right"}
+        onNext={onNext}
+        onPrevious={onPrevious}
+        testID={"FciDocumentsNavBarTestID"}
         titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
           currentDoc: currentDoc + 1,
           totalDocs: documents.length
@@ -232,12 +239,6 @@ const DocumentWithSignature = (props: Props) => {
           currentPage,
           totalPages
         })}
-        iconLeftDisabled={currentPage === 1}
-        iconRightDisabled={currentPage === totalPages}
-        onPrevious={onPrevious}
-        onNext={onNext}
-        disabled={false}
-        testID={"FciDocumentsNavBarTestID"}
       />
       <View
         style={{
@@ -251,11 +252,11 @@ const DocumentWithSignature = (props: Props) => {
         <RenderMask />
       </View>
       <FooterActions
-        onMeasure={handleFooterActionsMeasurements}
         actions={{
           type: "SingleButton",
           primary: continueButtonProps
         }}
+        onMeasure={handleFooterActionsMeasurements}
       />
     </SafeAreaView>
   );

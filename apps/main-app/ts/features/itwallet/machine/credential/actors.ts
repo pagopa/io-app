@@ -1,9 +1,11 @@
-import * as O from "fp-ts/lib/Option";
-import { fromPromise } from "xstate";
 import type {
   CredentialOffer,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
+
+import * as O from "fp-ts/lib/Option";
+import { fromPromise } from "xstate";
+
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -16,6 +18,7 @@ import {
   isAssertionGenerationError
 } from "../../common/utils/itwFailureUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
@@ -31,7 +34,6 @@ import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
-import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import { createCommonActorsImplementation } from "../utils/actors";
 import { Context } from "./context";
 export type GetWalletAttestationActorOutput = Awaited<
@@ -45,14 +47,6 @@ export type ObtainAccessTokenActorInput = Partial<
   >
 >;
 
-export type RequestCredentialActorInput = Partial<
-  Parameters<credentialIssuanceUtils.RequestCredential>[0]
->;
-
-export type RequestCredentialActorOutput = Awaited<
-  ReturnType<typeof credentialIssuanceUtils.requestCredential>
->;
-
 export type ObtainCredentialActorInput = Partial<
   Parameters<credentialIssuanceUtils.ObtainCredential>[0]
 >;
@@ -64,19 +58,27 @@ export type ObtainCredentialActorOutput = {
 
 export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
 
-export type VerifyTrustFederationActorInput = Pick<
-  Context,
-  "resolvedCredentialOffer"
->;
-
 export type ProcessCredentialOfferActorInput = {
   credentialOfferUri: Context["credentialOfferUri"];
 };
 
 export type ProcessCredentialOfferActorOutput = {
-  offer: CredentialOffer.CredentialOffer;
   grantDetails: CredentialOffer.ExtractGrantDetailsResult;
+  offer: CredentialOffer.CredentialOffer;
 };
+
+export type RequestCredentialActorInput = Partial<
+  Parameters<credentialIssuanceUtils.RequestCredential>[0]
+>;
+
+export type RequestCredentialActorOutput = Awaited<
+  ReturnType<typeof credentialIssuanceUtils.requestCredential>
+>;
+
+export type VerifyTrustFederationActorInput = Pick<
+  Context,
+  "resolvedCredentialOffer"
+>;
 
 /**
  * Builds the dictionary of Wallet Unit Attestations generated during issuance,

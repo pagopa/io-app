@@ -1,15 +1,16 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import * as E from "fp-ts/lib/Either";
+import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
-import { identity, pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { Platform } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
-import I18n from "i18next";
+
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/communication/CreatedMessageWithContentAndAttachments";
+import { TranslationKeys } from "../i18n";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
 import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
-import { TranslationKeys } from "../i18n";
 import { formatDateAsReminder } from "./dates";
 
 /** Utility functions to interact with the device calendars */
@@ -19,7 +20,20 @@ import { formatDateAsReminder } from "./dates";
  * that the authorized values comes from user choise otherwise comes from a
  * previous recorded choice
  */
-type CalendarAuthorization = { authorized: boolean; asked: boolean };
+type CalendarAuthorization = { asked: boolean; authorized: boolean };
+
+type CalendarTitleTranslation = { [key: string]: TranslationKeys };
+
+/**
+ * This Type has been introduced after this story
+ * https://www.pivotaltracker.com/story/show/172079415 to solve the bug on some
+ * android devices (mostly the one running MIUI) naming their local calendar
+ * with camel case notation this is a common situation as figured on a related
+ * reddit post
+ * https://www.reddit.com/r/Xiaomi/comments/84jgdn/google_calendars_not_syncing_or_even_requesting/
+ * and can be seen on MIUI's github repository
+ * https://github.com/ChameleonOS/miui_framework/blob/master/java/miui/provider/ExtraCalendarContracts.java
+ */
 
 /**
  * A function that checks if the user has already permission to read/write to
@@ -33,11 +47,6 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
       case "authorized":
         // the app is authorized to access the service
         return { authorized: true, asked: false };
-      case "restricted":
-        // the app is not authorized to access the service
-        // (e.g. parental control on iOS or when the user
-        // denies definitely on Android)
-        return { authorized: false, asked: false };
       case "denied":
         // the user explicitly denied access to the service for the app
         if (Platform.OS === "ios") {
@@ -46,6 +55,11 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
         // but in Android we can ask for it again
         // (i.e. shouldShowRequestPermissionRationale returns true)
         break;
+      case "restricted":
+        // the app is not authorized to access the service
+        // (e.g. parental control on iOS or when the user
+        // denies definitely on Android)
+        return { authorized: false, asked: false };
       case "undetermined":
         // the user has not yet made a choice
         break;
@@ -62,19 +76,6 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
     return { authorized: false, asked: false };
   }
 }
-
-/**
- * This Type has been introduced after this story
- * https://www.pivotaltracker.com/story/show/172079415 to solve the bug on some
- * android devices (mostly the one running MIUI) naming their local calendar
- * with camel case notation this is a common situation as figured on a related
- * reddit post
- * https://www.reddit.com/r/Xiaomi/comments/84jgdn/google_calendars_not_syncing_or_even_requesting/
- * and can be seen on MIUI's github repository
- * https://github.com/ChameleonOS/miui_framework/blob/master/java/miui/provider/ExtraCalendarContracts.java
- */
-
-type CalendarTitleTranslation = { [key: string]: TranslationKeys };
 
 const calendarTitleTranslations: CalendarTitleTranslation = {
   calendar_displayname_local: "profile.preferences.calendar.local_calendar",

@@ -3,6 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { NetworkError } from "../../../../../utils/errors";
 import {
   CatalogueTranslations,
@@ -31,6 +32,6 @@ export const itwSetCatalogueEnabledForCredentialsList = createStandardAction(
 )<boolean>();
 
 export type ItwCredentialsCatalogueActions =
-  | ActionType<typeof itwFetchCredentialsCatalogue>
   | ActionType<typeof itwFetchCatalogueTranslations>
+  | ActionType<typeof itwFetchCredentialsCatalogue>
   | ActionType<typeof itwSetCatalogueEnabledForCredentialsList>;

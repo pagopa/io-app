@@ -4,20 +4,22 @@ import {
   H4,
   H5,
   HStack,
+  IconButton,
   IOButton,
   IOVisualCostants,
-  IconButton,
   OTPInput,
+  OTPInputProps,
   RadioGroup,
   RadioItem,
-  VStack,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+  useIOTheme,
+  VStack
+} from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
-
+import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { RefObject, useCallback, useMemo, useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+
 import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 
@@ -26,15 +28,15 @@ const OTP_COMPARE_8 = "12345678";
 const OTP_LENGTH_6 = 6;
 const OTP_COMPARE_6 = "123456";
 
+type OtpID = typeof OTP_LENGTH_6 | typeof OTP_LENGTH_8;
+
 type WrapperProps = {
+  autoFocus?: boolean;
+  otpCompare: string;
+  otpLength: number;
   secret?: boolean;
   validation?: boolean;
-  autoFocus?: boolean;
-  otpLength: number;
-  otpCompare: string;
 };
-
-type OtpID = typeof OTP_LENGTH_6 | typeof OTP_LENGTH_8;
 
 const radioButtons: ReadonlyArray<RadioItem<OtpID>> = [
   {
@@ -83,42 +85,53 @@ const OTPWrapper = ({
     [validation, otpCompare]
   );
 
-  return useMemo(
-    () => (
+  return useMemo(() => {
+    const commonProps: OTPInputProps = {
+      value,
+      accessibilityLabel: "OTP Input",
+      onValueChange,
+      length: otpLength,
+      onValidate,
+      errorMessage: "Wrong OTP",
+      autoFocus
+    };
+
+    return (
       <VStack space={16}>
-        <OTPInput
-          value={value}
-          accessibilityLabel={"OTP Input"}
-          onValueChange={onValueChange}
-          length={otpLength}
-          secret={secret}
-          onValidate={onValidate}
-          errorMessage={"Wrong OTP"}
-          autoFocus={autoFocus}
-        />
+        {secret ? (
+          <OTPInput
+            {...commonProps}
+            accessibilityValueText={({ valueLength, length }) =>
+              I18n.t("global.accessibility.otpInput.valueText", {
+                valueLength,
+                length
+              })
+            }
+            secret
+          />
+        ) : (
+          <OTPInput {...commonProps} />
+        )}
         <IOButton
-          variant="solid"
-          onPress={() => setValue("")}
           label={"Pulisci valore"}
+          onPress={() => setValue("")}
+          variant="solid"
         />
       </VStack>
-    ),
-    [value, onValueChange, secret, onValidate, autoFocus, otpLength]
-  );
+    );
+  }, [value, onValueChange, secret, onValidate, autoFocus, otpLength]);
 };
 
 const scrollVerticallyToView = (
-  scrollViewRef: RefObject<ScrollView | null>,
-  targetViewRef: RefObject<View | null>
+  scrollViewRef: RefObject<null | ScrollView>,
+  targetViewRef: RefObject<null | View>
 ) => {
   if (targetViewRef.current && scrollViewRef.current) {
     targetViewRef.current.measureLayout(
       scrollViewRef.current.getInnerViewNode(),
       (_: number, y: number, __: number) => {
         scrollViewRef.current?.scrollTo({ y, animated: true });
-      },
-
-      () => {}
+      }
     );
   }
 };
@@ -136,10 +149,10 @@ export const DSOTPInput = () => {
     title: "OTP settings",
     component: (
       <RadioGroup<OtpID>
-        type="radioListItem"
         items={radioButtons}
-        selectedItem={selectedItem}
         onPress={setSelectedItem}
+        selectedItem={selectedItem}
+        type="radioListItem"
       />
     )
   });
@@ -191,10 +204,10 @@ export const DSOTPInput = () => {
                 OTP Input with length of {otpConfig.otpLength}
               </H4>
               <IconButton
-                color="neutral"
                 accessibilityLabel="open settings"
-                onPress={present}
+                color="neutral"
                 icon="coggle"
+                onPress={present}
               />
             </HStack>
 
@@ -221,7 +234,9 @@ export const DSOTPInput = () => {
               <VStack space={sectionTitleMargin}>
                 <H5 color={theme["textHeading-default"]}>Autofocus</H5>
                 <IOButton
-                  variant={showAutofocusableOTP ? "solid" : "outline"}
+                  label={`${
+                    showAutofocusableOTP ? "Hide" : "Show"
+                  } Autofocusable OTP`}
                   onPress={() => {
                     setShowAutofocusableOTP(!showAutofocusableOTP);
                     setTimeout(() => {
@@ -231,9 +246,7 @@ export const DSOTPInput = () => {
                       );
                     }, 100);
                   }}
-                  label={`${
-                    showAutofocusableOTP ? "Hide" : "Show"
-                  } Autofocusable OTP`}
+                  variant={showAutofocusableOTP ? "solid" : "outline"}
                 />
                 {showAutofocusableOTP && (
                   <View ref={autofocusableOTPViewRef}>
