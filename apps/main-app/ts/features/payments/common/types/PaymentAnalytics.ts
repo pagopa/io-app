@@ -6,8 +6,6 @@ import { PaymentStartOrigin } from "../../checkout/types";
 
 export type PaymentAnalyticsBrowserType = "inapp_browser" | "webview";
 
-export type PaymentAnalyticsBrowserType = "inapp_browser" | "webview";
-
 export type PaymentAnalyticsData = {
   attempt?: number;
   browserType?: PaymentAnalyticsBrowserType;
