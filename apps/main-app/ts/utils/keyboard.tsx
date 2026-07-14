@@ -1,6 +1,6 @@
+import { IOVisualCostants } from "@io-app/design-system";
 import { ReactNode } from "react";
 import { KeyboardAvoidingView, Platform } from "react-native";
-import customVariables from "../theme/variables";
 
 /**
  * include content inside KeyboardAvoidingView
@@ -10,13 +10,13 @@ import customVariables from "../theme/variables";
  */
 export const withKeyboard = (
   content: ReactNode,
-  insideSafeAreaView: boolean = false
+  insideSafeAreaView = false
 ) => (
   <KeyboardAvoidingView
     behavior={Platform.OS === "android" ? undefined : "padding"}
     keyboardVerticalOffset={Platform.select({
       ios: insideSafeAreaView ? 110 : 0,
-      android: customVariables.contentPadding
+      android: IOVisualCostants.appMarginDefault
     })}
   >
     {content}

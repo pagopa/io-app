@@ -10,7 +10,7 @@ import {
   ListItemInfo,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
@@ -223,7 +223,7 @@ const FaqManager = (props: FaqManagerProps) => {
           ListHeaderComponent={<VSpacer size={8} />}
           scrollEnabled={false}
           data={contextualHelpData.faqs}
-          keyExtractor={(item, index) => `${item.title}-${index}`}
+          keyExtractor={c => c.title}
           renderItem={renderFaqItem}
           ItemSeparatorComponent={() => <VSpacer size={8} />}
           ListFooterComponent={<VSpacer size={8} />}

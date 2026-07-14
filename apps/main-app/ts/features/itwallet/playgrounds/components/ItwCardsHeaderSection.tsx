@@ -2,7 +2,7 @@ import {
   IOVisualCostants,
   ListItemHeader,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { View } from "react-native";
 import { ItwCredentialDetailCard } from "../../common/components/ItwCredentialDetailCard";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -13,7 +13,7 @@ const ALL_CREDENTIAL_TYPES: ReadonlyArray<string> = [
   CredentialType.DRIVING_LICENSE,
   CredentialType.EUROPEAN_DISABILITY_CARD,
   CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-  CredentialType.AGE_VERIFICATION,
+  CredentialType.PROOF_OF_AGE,
   CredentialType.EDUCATION_ATTENDANCE,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_DIPLOMA,

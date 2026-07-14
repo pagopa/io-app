@@ -5,14 +5,14 @@ import {
   useIOExperimentalDesign,
   useIOTheme,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform } from "react-native";
 import {
   IONavigationDarkTheme,
   IONavigationLightTheme
-} from "../../../theme/navigations";
+} from "../../../navigation/theme";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
 import { DSAdvice } from "../core/DSAdvice";
@@ -68,6 +68,7 @@ import { DSScreenEndMargin } from "../core/DSScreenEndMargin";
 import { DSScreenOperationResult } from "../core/DSScreenOperationResult";
 import { DSScreenOperationResultAnimated } from "../core/DSScreenOperationResultAnimated";
 import { DSSelection } from "../core/DSSelection";
+import { DSServicePreferences } from "../core/DSServicePreferences";
 import { DSStepper } from "../core/DSStepper";
 import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
@@ -137,7 +138,7 @@ export const DesignSystemNavigator = () => {
             color: IOColors[theme["textHeading-default"]]
           },
           headerTitleAlign: "center",
-          headerBackButtonDisplayMode: "minimal",
+          headerBackTitleVisible: false,
           headerShown: true,
           autoHideHomeIndicator: true
         }}
@@ -411,6 +412,15 @@ export const DesignSystemNavigator = () => {
             headerTitle:
               DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITW_BRAND_EXPLORATION.title,
             headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.SERVICE_PREFERENCES.route}
+          component={DSServicePreferences}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.SERVICE_PREFERENCES.title
           }}
         />
 

@@ -3,6 +3,7 @@ import {
   parseClaims,
   WellKnownClaim
 } from "../../../common/utils/itwClaimsUtils";
+import { getRepresentativeVaultId } from "../../../common/utils/itwCredentialUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { TimeoutError, UntrustedRpError } from "./errors";
 import type {
@@ -34,6 +35,40 @@ type GetProximityDetails = (params: {
 }) => ProximityDetails;
 
 /**
+ * Get the relying party identifier from the Verifier request, which is used to
+ * identify the RP in the presentation details.
+ *
+ * If `requireAuthenticated` is `true`, the function will throw an error if the
+ * request does not contain authenticated certificate data.
+ * Otherwise, we tentatively get verifier's commonName from the certificate data
+ * if available, but we allow the flow to proceed even if it's not present.
+ * This can be useful for testing purposes, and should not be used in production.
+ *
+ * @param certificateData The certificate data from the Verifier request
+ * @param requireAuthenticated Whether to require the RP to be authenticated
+ *
+ * @throws UntrustedRpError if the certificate data does not contain verifier's
+ * commonName and `requireAuthenticated` is `true`
+ */
+export const getVerifierIdentity = (
+  certificateData: VerifierRequest["request"][string]["certificateData"],
+  requireAuthenticated?: boolean
+): string => {
+  if (!requireAuthenticated) {
+    return certificateData?.commonName || "Unknown";
+  }
+
+  // Get the common name from the certificate data as relying party identifier
+  if (!certificateData?.commonName) {
+    throw new UntrustedRpError(
+      "Missing certificate data for RP identification"
+    );
+  }
+
+  return certificateData.commonName;
+};
+
+/**
  * Get the Presentation details based on the request from the Verifier.
  *
  * @param request The request from the Verifier, specifying which document types and claims are required
@@ -52,16 +87,21 @@ export const getProximityDetails: GetProximityDetails = ({
 }) => {
   // Exclude the WIA document type from the request
   const { [WIA_DOC_TYPE]: _, ...rest } = request;
+  assert(
+    Object.keys(rest).length > 0,
+    "No requested documents found in the Verifier request"
+  );
 
   return Object.entries(rest).map(
-    ([docType, { isAuthenticated, ...namespaces }]) => {
+    ([docType, { isAuthenticated, certificateData, ...namespaces }]) => {
       // Stop the flow if the verifier (RP) is not trusted
       if (!isAuthenticated && requireAuthenticated) {
         throw new UntrustedRpError("Untrusted RP");
       }
 
-      const credential = credentialsByType[docType];
+      const rpId = getVerifierIdentity(certificateData, requireAuthenticated);
 
+      const credential = credentialsByType[docType];
       assert(credential, `Credential not found for docType: ${docType}`);
       // Extract required fields from the verifier request.
       // Each field is formatted as "namespace:field" to match the structure
@@ -79,13 +119,14 @@ export const getProximityDetails: GetProximityDetails = ({
       );
 
       return {
+        rpId,
         credentialType: credential.credentialType,
         claimsToDisplay: parseClaims(parsedCredential, {
           exclude: [WellKnownClaim.unique_id]
         })
       };
     }
-  );
+  ) as ProximityDetails;
 };
 
 /**
@@ -99,7 +140,7 @@ export const getProximityDetails: GetProximityDetails = ({
 export const getDocuments = async (
   request: VerifierRequest["request"],
   credentials: Record<string, CredentialMetadata>,
-  getCredential: (credentialId: string) => Promise<string | undefined>
+  getCredential: (vaultId: string) => Promise<string | undefined>
 ): Promise<Array<RequestedDocument>> => {
   const documents = await Promise.all(
     Object.entries(request).map(async ([docType]) => {
@@ -107,10 +148,12 @@ export const getDocuments = async (
       // This should be guaranteed by getProximityDetails having already validated credentials
       assert(credential, `Credential not found for docType: ${docType}`);
 
-      const signedContent = await getCredential(credential.credentialId);
+      // Present the representative copy (the only one for a non-batch credential).
+      const vaultId = getRepresentativeVaultId(credential);
+      const signedContent = await getCredential(vaultId);
       assert(
         signedContent,
-        `Credential not found in secure store for id: ${credential.credentialId}`
+        `Credential not found in secure store for vaultId: ${vaultId}`
       );
 
       return {
@@ -143,7 +186,7 @@ export const generateAcceptedFields = (
   request: VerifierRequest["request"]
 ): AcceptedFields =>
   Object.entries(request).reduce(
-    (acc, [docType, { isAuthenticated, ...namespaces }]) => ({
+    (acc, [docType, { isAuthenticated, certificateData, ...namespaces }]) => ({
       ...acc,
       [docType]: acceptAllFields(namespaces)
     }),

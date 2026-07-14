@@ -10,7 +10,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
-    onLayout={[Function]}
     style={
       [
         {
@@ -22,28 +21,64 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
   >
     <View
       style={
-        {
-          "flex": 1,
-        }
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
-          aria-hidden={false}
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -58,39 +93,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             }
           >
             <View
-              collapsable={false}
-              pointerEvents="box-none"
-              style={
-                {
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 1,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                pointerEvents="auto"
-                style={
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "flex": 1,
-                    "shadowColor": "rgba(0, 0, 0, 1)",
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.3,
-                    "shadowRadius": 0,
-                  }
-                }
-              />
-            </View>
-            <View
               pointerEvents="none"
               style={
                 {
@@ -101,16 +103,11 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             <View
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "alignItems": "stretch",
-                    "flex": 1,
-                    "flexDirection": "row",
-                  },
-                  {
-                    "marginHorizontal": 5,
-                  },
-                ]
+                {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
               }
             >
               <View
@@ -118,11 +115,10 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-start",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-start",
+                    "justifyContent": "center",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -141,15 +137,14 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 }
               >
                 <Text
+                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
-                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
-                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -163,11 +158,10 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-end",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-end",
+                    "justifyContent": "center",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -187,9 +181,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -206,13 +198,11 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -223,14 +213,34 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
-            aria-hidden={false}
             collapsable={false}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            collapsable={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -238,22 +248,35 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                   "right": 0,
                   "top": 0,
                 },
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                  "visibility": "visible",
-                },
               ]
             }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "opacity": 1,
-                }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
               }
-            />
+            }
+          >
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -271,10 +294,17 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
-                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
                   }
                 }
               >
@@ -299,6 +329,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                     style={
                       {
                         "flex": 1,
+                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -463,6 +494,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -561,7 +593,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
-    onLayout={[Function]}
     style={
       [
         {
@@ -573,28 +604,64 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
   >
     <View
       style={
-        {
-          "flex": 1,
-        }
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
-          aria-hidden={false}
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -609,39 +676,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             }
           >
             <View
-              collapsable={false}
-              pointerEvents="box-none"
-              style={
-                {
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 1,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                pointerEvents="auto"
-                style={
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "flex": 1,
-                    "shadowColor": "rgba(0, 0, 0, 1)",
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.3,
-                    "shadowRadius": 0,
-                  }
-                }
-              />
-            </View>
-            <View
               pointerEvents="none"
               style={
                 {
@@ -652,16 +686,11 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             <View
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "alignItems": "stretch",
-                    "flex": 1,
-                    "flexDirection": "row",
-                  },
-                  {
-                    "marginHorizontal": 5,
-                  },
-                ]
+                {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
               }
             >
               <View
@@ -669,11 +698,10 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-start",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-start",
+                    "justifyContent": "center",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -692,15 +720,14 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 }
               >
                 <Text
+                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
-                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
-                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -714,11 +741,10 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-end",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-end",
+                    "justifyContent": "center",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -738,9 +764,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -757,13 +781,11 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -774,14 +796,34 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
-            aria-hidden={false}
             collapsable={false}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            collapsable={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -789,22 +831,35 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                   "right": 0,
                   "top": 0,
                 },
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                  "visibility": "visible",
-                },
               ]
             }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "opacity": 1,
-                }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
               }
-            />
+            }
+          >
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -822,10 +877,17 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
-                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
                   }
                 }
               >
@@ -850,6 +912,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                     style={
                       {
                         "flex": 1,
+                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -1014,6 +1077,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -1112,7 +1176,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
-    onLayout={[Function]}
     style={
       [
         {
@@ -1124,28 +1187,64 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
   >
     <View
       style={
-        {
-          "flex": 1,
-        }
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
-          aria-hidden={false}
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -1160,39 +1259,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             }
           >
             <View
-              collapsable={false}
-              pointerEvents="box-none"
-              style={
-                {
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 1,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                pointerEvents="auto"
-                style={
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "flex": 1,
-                    "shadowColor": "rgba(0, 0, 0, 1)",
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.3,
-                    "shadowRadius": 0,
-                  }
-                }
-              />
-            </View>
-            <View
               pointerEvents="none"
               style={
                 {
@@ -1203,16 +1269,11 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             <View
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "alignItems": "stretch",
-                    "flex": 1,
-                    "flexDirection": "row",
-                  },
-                  {
-                    "marginHorizontal": 5,
-                  },
-                ]
+                {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
               }
             >
               <View
@@ -1220,11 +1281,10 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-start",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-start",
+                    "justifyContent": "center",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -1243,15 +1303,14 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 }
               >
                 <Text
+                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
-                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
-                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -1265,11 +1324,10 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-end",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-end",
+                    "justifyContent": "center",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -1289,9 +1347,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1308,13 +1364,11 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1325,14 +1379,34 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
-            aria-hidden={false}
             collapsable={false}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            collapsable={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -1340,22 +1414,35 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                   "right": 0,
                   "top": 0,
                 },
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                  "visibility": "visible",
-                },
               ]
             }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "opacity": 1,
-                }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
               }
-            />
+            }
+          >
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -1373,10 +1460,17 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
-                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
                   }
                 }
               >
@@ -1401,6 +1495,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                     style={
                       {
                         "flex": 1,
+                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -1565,6 +1660,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -1663,7 +1759,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
-    onLayout={[Function]}
     style={
       [
         {
@@ -1675,28 +1770,64 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
   >
     <View
       style={
-        {
-          "flex": 1,
-        }
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
-          aria-hidden={false}
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -1711,39 +1842,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             }
           >
             <View
-              collapsable={false}
-              pointerEvents="box-none"
-              style={
-                {
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 1,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                pointerEvents="auto"
-                style={
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "flex": 1,
-                    "shadowColor": "rgba(0, 0, 0, 1)",
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.3,
-                    "shadowRadius": 0,
-                  }
-                }
-              />
-            </View>
-            <View
               pointerEvents="none"
               style={
                 {
@@ -1754,16 +1852,11 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             <View
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "alignItems": "stretch",
-                    "flex": 1,
-                    "flexDirection": "row",
-                  },
-                  {
-                    "marginHorizontal": 5,
-                  },
-                ]
+                {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
               }
             >
               <View
@@ -1771,11 +1864,10 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-start",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-start",
+                    "justifyContent": "center",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -1794,15 +1886,14 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 }
               >
                 <Text
+                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
-                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
-                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -1816,11 +1907,10 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-end",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-end",
+                    "justifyContent": "center",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -1840,9 +1930,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1859,13 +1947,11 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1876,14 +1962,34 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
-            aria-hidden={false}
             collapsable={false}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            collapsable={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -1891,22 +1997,35 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                   "right": 0,
                   "top": 0,
                 },
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                  "visibility": "visible",
-                },
               ]
             }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "opacity": 1,
-                }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
               }
-            />
+            }
+          >
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -1924,10 +2043,17 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
-                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
                   }
                 }
               >
@@ -1952,6 +2078,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                     style={
                       {
                         "flex": 1,
+                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -2116,6 +2243,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -2214,7 +2342,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
-    onLayout={[Function]}
     style={
       [
         {
@@ -2226,28 +2353,64 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
   >
     <View
       style={
-        {
-          "flex": 1,
-        }
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
-          aria-hidden={false}
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -2262,39 +2425,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             }
           >
             <View
-              collapsable={false}
-              pointerEvents="box-none"
-              style={
-                {
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 1,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                pointerEvents="auto"
-                style={
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "flex": 1,
-                    "shadowColor": "rgba(0, 0, 0, 1)",
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.3,
-                    "shadowRadius": 0,
-                  }
-                }
-              />
-            </View>
-            <View
               pointerEvents="none"
               style={
                 {
@@ -2305,16 +2435,11 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             <View
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "alignItems": "stretch",
-                    "flex": 1,
-                    "flexDirection": "row",
-                  },
-                  {
-                    "marginHorizontal": 5,
-                  },
-                ]
+                {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
               }
             >
               <View
@@ -2322,11 +2447,10 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-start",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-start",
+                    "justifyContent": "center",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -2345,15 +2469,14 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 }
               >
                 <Text
+                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
-                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
-                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -2367,11 +2490,10 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-end",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-end",
+                    "justifyContent": "center",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -2391,9 +2513,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2410,13 +2530,11 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2427,14 +2545,34 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
-            aria-hidden={false}
             collapsable={false}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            collapsable={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -2442,22 +2580,35 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                   "right": 0,
                   "top": 0,
                 },
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                  "visibility": "visible",
-                },
               ]
             }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "opacity": 1,
-                }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
               }
-            />
+            }
+          >
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -2475,10 +2626,17 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
-                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
                   }
                 }
               >
@@ -2503,6 +2661,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                     style={
                       {
                         "flex": 1,
+                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -2667,6 +2826,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -2878,6 +3038,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -2976,7 +3137,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
-    onLayout={[Function]}
     style={
       [
         {
@@ -2988,28 +3148,64 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
   >
     <View
       style={
-        {
-          "flex": 1,
-        }
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
-          aria-hidden={false}
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -3024,39 +3220,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             }
           >
             <View
-              collapsable={false}
-              pointerEvents="box-none"
-              style={
-                {
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 1,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                pointerEvents="auto"
-                style={
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "flex": 1,
-                    "shadowColor": "rgba(0, 0, 0, 1)",
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.3,
-                    "shadowRadius": 0,
-                  }
-                }
-              />
-            </View>
-            <View
               pointerEvents="none"
               style={
                 {
@@ -3067,16 +3230,11 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             <View
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "alignItems": "stretch",
-                    "flex": 1,
-                    "flexDirection": "row",
-                  },
-                  {
-                    "marginHorizontal": 5,
-                  },
-                ]
+                {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
               }
             >
               <View
@@ -3084,11 +3242,10 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-start",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-start",
+                    "justifyContent": "center",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -3107,15 +3264,14 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 }
               >
                 <Text
+                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
-                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
-                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -3129,11 +3285,10 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-end",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-end",
+                    "justifyContent": "center",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -3153,9 +3308,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3172,13 +3325,11 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3189,14 +3340,34 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
-            aria-hidden={false}
             collapsable={false}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            collapsable={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -3204,22 +3375,35 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                   "right": 0,
                   "top": 0,
                 },
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                  "visibility": "visible",
-                },
               ]
             }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "opacity": 1,
-                }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
               }
-            />
+            }
+          >
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -3237,10 +3421,17 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
-                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
                   }
                 }
               >
@@ -3265,6 +3456,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                     style={
                       {
                         "flex": 1,
+                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -3429,6 +3621,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -3640,6 +3833,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -3738,7 +3932,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
-    onLayout={[Function]}
     style={
       [
         {
@@ -3750,28 +3943,64 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
   >
     <View
       style={
-        {
-          "flex": 1,
-        }
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
-          aria-hidden={false}
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -3786,39 +4015,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             }
           >
             <View
-              collapsable={false}
-              pointerEvents="box-none"
-              style={
-                {
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 1,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                pointerEvents="auto"
-                style={
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "flex": 1,
-                    "shadowColor": "rgba(0, 0, 0, 1)",
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.3,
-                    "shadowRadius": 0,
-                  }
-                }
-              />
-            </View>
-            <View
               pointerEvents="none"
               style={
                 {
@@ -3829,16 +4025,11 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             <View
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "alignItems": "stretch",
-                    "flex": 1,
-                    "flexDirection": "row",
-                  },
-                  {
-                    "marginHorizontal": 5,
-                  },
-                ]
+                {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
               }
             >
               <View
@@ -3846,11 +4037,10 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-start",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-start",
+                    "justifyContent": "center",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -3869,15 +4059,14 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 }
               >
                 <Text
+                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
-                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
-                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -3891,11 +4080,10 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-end",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-end",
+                    "justifyContent": "center",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -3915,9 +4103,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3934,13 +4120,11 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3951,14 +4135,34 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
-            aria-hidden={false}
             collapsable={false}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            collapsable={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -3966,22 +4170,35 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                   "right": 0,
                   "top": 0,
                 },
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                  "visibility": "visible",
-                },
               ]
             }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "opacity": 1,
-                }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
               }
-            />
+            }
+          >
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -3999,10 +4216,17 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
-                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
                   }
                 }
               >
@@ -4027,6 +4251,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                     style={
                       {
                         "flex": 1,
+                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -4191,6 +4416,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -4402,6 +4628,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -4500,7 +4727,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
-    onLayout={[Function]}
     style={
       [
         {
@@ -4512,28 +4738,64 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
   >
     <View
       style={
-        {
-          "flex": 1,
-        }
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
-          aria-hidden={false}
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -4548,39 +4810,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             }
           >
             <View
-              collapsable={false}
-              pointerEvents="box-none"
-              style={
-                {
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 1,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                pointerEvents="auto"
-                style={
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "flex": 1,
-                    "shadowColor": "rgba(0, 0, 0, 1)",
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.3,
-                    "shadowRadius": 0,
-                  }
-                }
-              />
-            </View>
-            <View
               pointerEvents="none"
               style={
                 {
@@ -4591,16 +4820,11 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             <View
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "alignItems": "stretch",
-                    "flex": 1,
-                    "flexDirection": "row",
-                  },
-                  {
-                    "marginHorizontal": 5,
-                  },
-                ]
+                {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
               }
             >
               <View
@@ -4608,11 +4832,10 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-start",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-start",
+                    "justifyContent": "center",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -4631,15 +4854,14 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 }
               >
                 <Text
+                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
-                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
-                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -4653,11 +4875,10 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "center",
+                    "alignItems": "flex-end",
                     "flexBasis": 0,
-                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "flex-end",
+                    "justifyContent": "center",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -4677,9 +4898,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4696,13 +4915,11 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -4713,14 +4930,34 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
-            aria-hidden={false}
             collapsable={false}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            collapsable={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -4728,22 +4965,35 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                   "right": 0,
                   "top": 0,
                 },
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                  "visibility": "visible",
-                },
               ]
             }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "opacity": 1,
-                }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
               }
-            />
+            }
+          >
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -4761,10 +5011,17 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
-                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
                   }
                 }
               >
@@ -4789,6 +5046,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                     style={
                       {
                         "flex": 1,
+                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -4953,6 +5211,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -5164,6 +5423,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {

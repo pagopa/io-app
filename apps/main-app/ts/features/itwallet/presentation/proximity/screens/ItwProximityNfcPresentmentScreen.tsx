@@ -5,7 +5,7 @@ import {
   IOColors,
   IOVisualCostants,
   Pictogram
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { Platform, StyleSheet, View } from "react-native";
@@ -52,17 +52,13 @@ const IOsContent = () => {
 
   return (
     <IOScrollView
-      actions={
-        isSuccess
-          ? {
-              type: "SingleButton",
-              primary: {
-                label: I18n.t("global.buttons.close"),
-                onPress: handleDismiss
-              }
-            }
-          : undefined
-      }
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: I18n.t("global.buttons.close"),
+          onPress: handleDismiss
+        }
+      }}
     >
       <View style={[styles.container, { marginTop: insets.top }]}>
         <HStack>

@@ -1,4 +1,4 @@
-import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VStack } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import {
   Dimensions,

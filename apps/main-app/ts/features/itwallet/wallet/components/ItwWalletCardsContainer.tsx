@@ -1,4 +1,4 @@
-import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VStack } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
@@ -97,10 +97,16 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const sectionHeader = useMemo((): React.ReactElement => {
     if (isNewItwRenderable) {
       return (
-        <ListItemHeader
-          testID={"walletCardsCategoryItwIdCardHeaderTestID"}
-          label={I18n.t("features.wallet.cards.categories.itw")}
-        />
+        <>
+          <ListItemHeader
+            testID={"walletCardsCategoryItwIdCardHeaderTestID"}
+            label={I18n.t("features.wallet.cards.categories.itw")}
+          />
+          {/* IT-Wallet renders the PID card below the header */}
+          <View style={styles.cardsWrapper}>
+            <ItwWalletIdCard isStacked={cards.length > 0} />
+          </View>
+        </>
       );
     }
     return (
@@ -124,14 +130,12 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         }}
       />
     );
-  }, [iconColor, isNewItwRenderable, eidInfoBottomSheet.present]);
+  }, [iconColor, isNewItwRenderable, cards, eidInfoBottomSheet.present]);
 
   return (
     <View>
       <VStack space={16}>
-        {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
         {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
-        <ItwWalletReadyBanner />
         {!shouldHideEidAlert && (
           <ItwEidLifecycleAlert
             lifecycleStatus={LIFECYCLE_STATUS}
@@ -142,8 +146,13 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       </VStack>
 
       {sectionHeader}
-      <View style={styles.cardsWrapper}>
-        {isNewItwRenderable && <ItwWalletIdCard isStacked={cards.length > 0} />}
+
+      <View style={[styles.cardsWrapper, { gap: 16 }]}>
+        {shouldRenderUpgradeBanner && (
+          <ItwDiscoveryBanner flow="wallet" style={{ marginHorizontal: 8 }} />
+        )}
+        <ItwWalletReadyBanner />
+
         {cards.length > 0 && (
           <GuidedTour
             groupId={ITW_TOUR_GROUP_ID}
@@ -169,5 +178,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 const styles = StyleSheet.create({
   cardsWrapper: {
     marginHorizontal: -8
+  },
+  bannersWrapper: {
+    marginHorizontal: 8
   }
 });

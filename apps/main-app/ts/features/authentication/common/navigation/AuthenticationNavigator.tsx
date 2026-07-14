@@ -2,7 +2,7 @@ import {
   TransitionPresets,
   createStackNavigator
 } from "@react-navigation/stack";
-import { IOVisualCostants } from "@pagopa/io-app-design-system";
+import { IOVisualCostants } from "@io-app/design-system";
 import { Platform } from "react-native";
 import CieLoginConfigScreen from "../../login/cie/screens/CieLoginConfigScreen";
 import IdpLoginScreen from "../../login/idp/screens/IdpLoginScreen";
@@ -14,7 +14,6 @@ import CieConsentDataUsageScreen from "../../login/cie/screens/CieConsentDataUsa
 import CieExpiredOrInvalidScreen from "../../login/cie/screens/CieExpiredOrInvalidScreen";
 import CiePinScreen from "../../login/cie/screens/CiePinScreen";
 import CieWrongCiePinScreen from "../../login/cie/screens/CieWrongCiePinScreen";
-import { AuthSessionPage } from "../../login/idp/screens/idpAuthSessionHandler";
 import RootedDeviceModal from "../../../../screens/modal/RootedDeviceModal";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import CieUnexpectedErrorScreen from "../../login/cie/screens/CieUnexpectedErrorScreen";
@@ -116,11 +115,6 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={AUTHENTICATION_ROUTES.IDP_LOGIN_ACTIVE_SESSION_LOGIN}
       component={ActiveSessionIdpLoginScreen}
-    />
-
-    <Stack.Screen
-      name={AUTHENTICATION_ROUTES.AUTH_SESSION}
-      component={AuthSessionPage}
     />
 
     <Stack.Screen

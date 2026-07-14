@@ -37,6 +37,7 @@ const OutcomeCodes = {
   "19": OutcomeCode
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const OutcomeCodesCodec = t.type(OutcomeCodes);
 
 export type OutcomeStatus = t.TypeOf<typeof Status>;

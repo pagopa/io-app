@@ -1,4 +1,4 @@
-import { IOButtonProps } from "@pagopa/io-app-design-system";
+import { IOButtonProps } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect } from "react";
 import { Platform } from "react-native";
@@ -79,7 +79,7 @@ export const ItwCieCardReadProgressContent = (
           title={I18n.t(
             `features.itWallet.identification.cie.readingCard.${platform}.idle.title`
           )}
-          pictogram="nfcScanAndroid"
+          pictogram="nfcScanGreyAndroid"
           secondaryAction={cancelAction}
         />
       );

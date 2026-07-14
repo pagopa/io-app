@@ -1,9 +1,4 @@
-import {
-  Banner,
-  Divider,
-  ListItemInfo,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { Banner, Divider, ListItemInfo, VStack } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 
@@ -49,8 +44,9 @@ const FciDataSharingScreen = (): ReactElement => {
   );
   const email = useIOSelector(profileEmailSelector);
 
-  const { present, bottomSheet: fciAbortSignature } =
-    useFciAbortSignatureFlow();
+  const { present, bottomSheet: fciAbortSignature } = useFciAbortSignatureFlow({
+    showDialogOnBack: false
+  });
 
   useOnFirstRender(() => {
     trackFciUserDataShare();

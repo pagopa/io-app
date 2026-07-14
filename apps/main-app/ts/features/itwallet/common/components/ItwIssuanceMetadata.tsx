@@ -1,4 +1,4 @@
-import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
+import { Divider, ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { useIOSelector } from "../../../../store/hooks";
@@ -16,7 +16,11 @@ import {
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
-import { getAuthSource, getItwAuthSource } from "../utils/itwMetadataUtils.ts";
+import {
+  getAuthSource,
+  getForcedItwAuthSource,
+  getItwAuthSource
+} from "../utils/itwMetadataUtils.ts";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils.ts";
 
@@ -115,13 +119,14 @@ export const ItwIssuanceMetadata = ({
   );
 
   const authSource =
-    credentialsFromCatalogue &&
+    getForcedItwAuthSource(credential.credentialType) ??
+    (credentialsFromCatalogue &&
     credentialsFromCatalogue[credential.credentialType]
       ? getItwAuthSource(
           credentialsFromCatalogue[credential.credentialType],
           translationsByLocale
         )
-      : getAuthSource(credential);
+      : getAuthSource(credential));
 
   const releasedByKey =
     itwCredential && credential.credentialType === CredentialType.PID

@@ -1,4 +1,3 @@
-import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { ActionArgs, assign } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../../store/hooks";
@@ -6,7 +5,10 @@ import { assert } from "../../../../../utils/assert";
 import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
 import { itwGrantProximityConsent } from "../store/actions";
 import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors/credentials";
-import { getConsentDataFromProximityDetails } from "../store/utils";
+import {
+  generateConsentKey,
+  getConsentDataFromProximityDetails
+} from "../store/utils";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 
@@ -38,7 +40,7 @@ export const createProximityActionsImplementation = (
 
   navigateToNfcActivationScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION
+      screen: ITW_PROXIMITY_ROUTES.NFC_ACTIVATION
     });
   },
 
@@ -83,11 +85,20 @@ export const createProximityActionsImplementation = (
     navigation.pop();
   },
 
-  attemptSessionTermination: () => {
-    ISO18013_5.sendErrorResponse(ISO18013_5.ErrorCode.SESSION_TERMINATED).catch(
-      () => null
-    );
-  },
+  grantConsent: assign<Context, ProximityEvents, unknown, ProximityEvents, any>(
+    ({ context }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
+      assert(
+        context.proximityDetails,
+        "ProximityDetails must be present in context to grant consent"
+      );
+
+      const consentData = getConsentDataFromProximityDetails(
+        context.proximityDetails
+      );
+
+      return { grantedConsentKey: generateConsentKey(consentData) };
+    }
+  ),
 
   storeConsent: ({
     context
@@ -98,7 +109,6 @@ export const createProximityActionsImplementation = (
     );
 
     const consentData = getConsentDataFromProximityDetails(
-      "IPZS", // TODO - use actual RP ID when available instead of hardcoding
       context.proximityDetails
     );
 

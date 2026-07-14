@@ -9,6 +9,7 @@ import { UIMessage } from "../../../types";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { WrappedListItemMessage } from "../WrappedListItemMessage";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { PaidReason } from "../../../../../store/reducers/entities/payments";
 import {
   scheduledPreconditionStatusAction,
   toScheduledPayload
@@ -23,8 +24,7 @@ jest.mock("@react-navigation/native", () => ({
     "@react-navigation/native"
   ),
   useNavigation: () => ({
-    navigate: mockNavigate,
-    addListener: jest.fn(() => jest.fn())
+    navigate: mockNavigate
   })
 }));
 const mockDispatch = jest.fn();
@@ -251,9 +251,9 @@ const renderComponent = (
   message: UIMessage,
   isArchiving: boolean,
   source: "INBOX" | "ARCHIVE" | "SEARCH",
-  screenReaderEnabled: boolean = false
+  screenReaderEnabled = false
 ) => {
-  const paymentId: string = "00112233445566778899001122334";
+  const paymentId = "00112233445566778899001122334";
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const stateWithPayment = {
     ...initialState,
@@ -271,8 +271,9 @@ const renderComponent = (
       paymentByRptId: {
         ...initialState.entities.paymentByRptId,
         [paymentId]: {
-          kind: "COMPLETED"
-        }
+          kind: "COMPLETED",
+          transactionId: undefined
+        } satisfies PaidReason
       }
     },
     preferences: {

@@ -9,6 +9,7 @@ import {
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import { getMixPanelCredential } from "../../analytics/utils";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import {
   itwCredentialsEidStatusSelector,
@@ -24,7 +25,6 @@ import {
   trackItwAlreadyHasCredential,
   trackItwIssuanceFromMsgFailure
 } from "../analytics";
-import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 
 export type ItwIssuanceCredentialLandingScreenNavigationParams = {
   credentialType: string;
@@ -96,9 +96,9 @@ export const ItwIssuanceCredentialLandingScreen = ({
     if (!isItwValid) {
       // ITW not active, redirect to discovery info screen
       navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
+        animationEnabled: false,
         level: isWhitelisted ? "l3" : "l2",
-        credentialType,
-        disableAnimation: true
+        credentialType
       });
       return;
     }
@@ -106,8 +106,8 @@ export const ItwIssuanceCredentialLandingScreen = ({
     if (isItwValid) {
       // ITW active, proceed to credential issuance
       navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
-        credentialType,
-        disableAnimation: true
+        animationEnabled: false,
+        credentialType
       });
       return;
     }

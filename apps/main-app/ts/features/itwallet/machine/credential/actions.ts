@@ -1,11 +1,12 @@
-import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs, assign } from "xstate";
+import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
+import { ActionArgs, assertEvent, assign } from "xstate";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
+import { isRouteInNavigationState } from "../../../../utils/navigation";
+import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import {
   trackSaveCredentialSuccess,
   trackStartAddNewCredential,
@@ -13,18 +14,21 @@ import {
   trackWalletDataShare,
   trackWalletDataShareAccepted
 } from "../../analytics";
-import { getMixPanelCredential } from "../../analytics/utils";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
-import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
+import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
+import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
   itwWalletInstanceAttestationStore,
   itwWalletUnitAttestationsStore
 } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -45,7 +49,8 @@ export const createCredentialIssuanceActionsImplementation = (
     return {
       isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
       walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
-      credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state)
+      credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state),
+      isWalletValid: itwLifecycleIsValidSelector(state)
     };
   }),
 
@@ -101,15 +106,42 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents,
     CredentialIssuanceEvents
   >) => {
-    navigation.replace(ITW_ROUTES.MAIN, {
+    navigation.navigate(ITW_ROUTES.MAIN, {
       screen: context.isItWalletValid
         ? ITW_ROUTES.L3_ONBOARDING
         : ITW_ROUTES.ONBOARDING
     });
   },
 
-  closeIssuance: () => {
-    navigation.popToTop();
+  closeIssuance: ({
+    event
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    const isWalletInNavigationState = isRouteInNavigationState(
+      navigation.getState(),
+      ROUTES.WALLET_HOME
+    );
+
+    if (!isWalletInNavigationState && navigation.canGoBack()) {
+      navigation.goBack();
+      return;
+    }
+
+    assertEvent(event, "close");
+    const { surveyStep, surveyCredential } = event;
+
+    navigation.navigate(ROUTES.MAIN, {
+      screen: ROUTES.WALLET_HOME,
+      params: {
+        credentialExitSurvey:
+          surveyStep && surveyCredential
+            ? { step: surveyStep, credential: surveyCredential }
+            : undefined
+      }
+    });
   },
 
   storeWalletInstanceAttestation: ({

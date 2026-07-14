@@ -1,4 +1,4 @@
-import { Banner } from "@pagopa/io-app-design-system";
+import { Banner } from "@io-app/design-system";
 import I18n from "i18next";
 import { View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -25,7 +25,7 @@ export const ItwWalletReadyBanner = () => {
   };
 
   return (
-    <View style={{ marginHorizontal: -8 }}>
+    <View style={{ marginHorizontal: 8 }}>
       <Banner
         testID="itwWalletReadyBannerTestID"
         title={

@@ -1,16 +1,11 @@
-import {
-  Divider,
-  IOToast,
-  ListItemNav,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Divider, IOToast, ListItemNav, VSpacer } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
@@ -49,6 +44,7 @@ import {
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -61,8 +57,10 @@ const BarcodeScanScreen = () => {
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
-  useHardwareBackButton(() => {
-    navigation.goBack();
+  useHardwareBackButtonWhenFocused(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    }
     return true;
   });
 
@@ -187,6 +185,19 @@ const BarcodeScanScreen = () => {
           params: {
             screen: PN_ROUTES.QR_SCAN_FLOW,
             params: { aarUrl: barcode.qrCodeContent }
+          }
+        });
+        break;
+      case "ITW_CREDENTIAL_OFFER":
+        /**
+         * Use replace so BARCODE_SCAN is removed from the parent stack.
+         * This lets the offer flow close with goBack and return directly
+         * to the screen shown before the scanner.
+         */
+        navigation.replace(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
+          params: {
+            itwCredentialOfferUri: barcode.itwCredentialOfferUri
           }
         });
         break;

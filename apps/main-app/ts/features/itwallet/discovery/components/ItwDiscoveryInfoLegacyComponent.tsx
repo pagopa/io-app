@@ -1,4 +1,4 @@
-import { ContentWrapper, H1, VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, H1, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet } from "react-native";

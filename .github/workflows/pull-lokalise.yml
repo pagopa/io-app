@@ -1,0 +1,36 @@
+name: Pull locales from Lokalise
+on:
+  workflow_dispatch:
+concurrency:
+  group: lokalise-pull-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: false
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  pull-locales:
+    runs-on: ubuntu-latest
+    environment: lokalise
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Pull from Lokalise
+      uses: lokalise/lokalise-pull-action@70a1a7afde662b154275af1a124f3a21345b3fcf #v5.2.1
+      with:
+        api_token: ${{ secrets.LOKALISE_API_TOKEN }}
+        project_id: ${{ secrets.LOKALISE_PROJECT_ID }}
+        translations_path: |
+          apps/main-app/locales
+        base_lang: it
+        file_format: json
+        always_pull_base: true
+        pr_title: "chore: Update translations from Lokalise"
+        git_user_name: "github-actions[bot]"
+        git_user_email: "github-actions[bot]@users.noreply.github.com"
+        additional_params: |
+          indentation: 2sp
+          placeholder_format: i18n
+          filter_langs:
+            - it
+            - en
+          replace_breaks: false

@@ -5,7 +5,7 @@ import {
   useIOThemeContext,
   useScaleAnimation,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   Canvas,
   ColorMatrix,
@@ -136,7 +136,7 @@ export const ItwCredentialTrustmark = ({
 
   /* We don't need to look at the whole quaternion range,
   just a very small part of it. */
-  const quaternionRange: number = 0.1;
+  const quaternionRange = 0.1;
 
   const skiaLightTranslateX = useDerivedValue(() => {
     const translateX = interpolate(

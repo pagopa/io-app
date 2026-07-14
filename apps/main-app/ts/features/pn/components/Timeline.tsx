@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
-import { Caption, H6, IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { Caption, H6, IOColors, VSpacer } from "@io-app/design-system";
 
 type ColorStates = {
   background: string;
@@ -88,7 +88,7 @@ const mapColorStatus: Record<NonNullable<TimelineStatus>, ColorStates> = {
   }
 };
 
-const borderWidth: number = 1.5;
+const borderWidth = 1.5;
 
 const TimelineDot = ({
   isFirst,

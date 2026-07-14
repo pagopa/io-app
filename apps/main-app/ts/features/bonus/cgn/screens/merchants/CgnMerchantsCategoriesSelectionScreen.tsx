@@ -6,13 +6,17 @@ import {
   TabItem,
   TabNavigation,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
-import { useState } from "react";
-import { View } from "react-native";
-import { RefreshControl } from "react-native-gesture-handler";
+import { useEffect, useMemo, useState } from "react";
+import { Platform, RefreshControl, View } from "react-native";
+import Animated, {
+  useAnimatedRef,
+  useAnimatedScrollHandler,
+  useDerivedValue,
+  useSharedValue
+} from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
@@ -71,42 +75,21 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const tabRoutesKeys = Object.keys(CgnMerchantsHomeTabRoutes);
 
-  const ListHeaderComponent = (
-    <>
-      <TabNavigation
-        includeContentMargins={true}
-        tabAlignment="start"
-        selectedIndex={tabRoutesKeys.indexOf(selectedTab)}
-      >
-        {tabRoutesKeys.map((routeKey, index) => {
-          const route = routeKey as keyof CgnMerchantsHomeTabParamsList;
-          const onPress = () => setSelectedTab(route);
+  const animatedFlatListRef = useAnimatedRef<Animated.FlatList<unknown>>();
 
-          const label = tabOptions[route].title;
-          const accessibilityLabel = I18n.t(
-            "bonus.cgn.merchantsList.tabs.a11y",
-            {
-              label,
-              index: index + 1,
-              total: tabRoutesKeys.length
-            }
-          );
-          return (
-            <TabItem
-              testID={`cgn-merchants-tab-${route}`}
-              icon={tabOptions[route].icon}
-              label={label}
-              accessibilityLabel={accessibilityLabel}
-              key={route}
-              onPress={onPress}
-            />
-          );
-        })}
-      </TabNavigation>
-      <VSpacer size={16} />
-    </>
+  const rawScrollY = useSharedValue(0);
+  const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
+    // eslint-disable-next-line functional/immutable-data
+    rawScrollY.value = contentOffset.y;
+  });
+
+  // PULL_TRIGGER_DISTANCE approximates the iOS UIRefreshControl pull threshold
+  const PULL_TRIGGER_DISTANCE = 80;
+  const pullProgress = useDerivedValue(() =>
+    Math.min(1, Math.max(0, -rawScrollY.value / PULL_TRIGGER_DISTANCE))
   );
-  const animatedFlatListRef = useAnimatedRef<any>();
+
+  const isRefreshingSharedValue = useSharedValue(0);
 
   useHeaderSecondLevel({
     title: I18n.t("bonus.cgn.merchantsList.screenTitle"),
@@ -129,35 +112,100 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     }
   });
 
+  const [isPullRefresh, setIsPullRefresh] = useState(false);
+
+  const isRefreshing =
+    (refreshControlProps?.refreshing ?? false) && isPullRefresh;
+
+  useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isRefreshingSharedValue.value = isRefreshing ? 1 : 0;
+  }, [isRefreshing, isRefreshingSharedValue]);
+
+  useEffect(() => {
+    if (!refreshControlProps?.refreshing) {
+      setIsPullRefresh(false);
+    }
+  }, [refreshControlProps?.refreshing]);
+
+  const ListHeaderComponent = useMemo(
+    () => (
+      <>
+        <CgnAnimatedHeader
+          pullProgress={pullProgress}
+          isRefreshingValue={isRefreshingSharedValue}
+        />
+        <View style={{ flexGrow: 0, flexShrink: 0 }}>
+          <TabNavigation
+            includeContentMargins={true}
+            tabAlignment="start"
+            selectedIndex={tabRoutesKeys.indexOf(selectedTab)}
+          >
+            {tabRoutesKeys.map((routeKey, index) => {
+              const route = routeKey as keyof CgnMerchantsHomeTabParamsList;
+              const onPress = () => setSelectedTab(route);
+
+              const label = tabOptions[route].title;
+              const accessibilityLabel = I18n.t(
+                "bonus.cgn.merchantsList.tabs.a11y",
+                {
+                  label,
+                  index: index + 1,
+                  total: tabRoutesKeys.length
+                }
+              );
+              return (
+                <TabItem
+                  testID={`cgn-merchants-tab-${route}`}
+                  icon={tabOptions[route].icon}
+                  label={label}
+                  accessibilityLabel={accessibilityLabel}
+                  key={route}
+                  onPress={onPress}
+                />
+              );
+            })}
+          </TabNavigation>
+        </View>
+        <VSpacer size={16} />
+      </>
+    ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedTab]
+  );
+
   return (
-    <View style={{ flex: 1 }}>
-      <CgnAnimatedHeader ref={animatedFlatListRef}>
-        {ListHeaderComponent}
-      </CgnAnimatedHeader>
-      <Animated.FlatList
-        scrollEventThrottle={8}
-        snapToEnd={false}
-        data={[...data]}
-        keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
-        renderItem={({ item, index }) => renderItem(item as any, index)}
-        refreshControl={
-          refreshControlProps && (
-            <RefreshControl
-              tintColor={IOColors.black}
-              {...refreshControlProps}
-            />
-          )
-        }
-        ListFooterComponent={ListFooterComponent}
-        ListEmptyComponent={ListEmptyComponent}
-        ItemSeparatorComponent={() => <Divider />}
-        style={{ flex: 1 }}
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingBottom: IOVisualCostants.appMarginDefault + bottom
-        }}
-      />
-    </View>
+    <Animated.FlatList
+      ref={animatedFlatListRef}
+      scrollEventThrottle={8}
+      onScroll={scrollHandler}
+      snapToEnd={false}
+      data={[...data]}
+      keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
+      renderItem={({ item, index }) => renderItem(item as any, index)}
+      refreshControl={
+        refreshControlProps && (
+          <RefreshControl
+            tintColor={Platform.OS === "ios" ? "transparent" : IOColors.black}
+            {...refreshControlProps}
+            refreshing={isRefreshing}
+            onRefresh={() => {
+              refreshControlProps.onRefresh();
+              setIsPullRefresh(true);
+            }}
+          />
+        )
+      }
+      ListHeaderComponent={ListHeaderComponent}
+      ListFooterComponent={ListFooterComponent}
+      ListEmptyComponent={ListEmptyComponent}
+      ItemSeparatorComponent={() => <Divider />}
+      style={{ flex: 1 }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingBottom: IOVisualCostants.appMarginDefault + bottom
+      }}
+    />
   );
 };
 

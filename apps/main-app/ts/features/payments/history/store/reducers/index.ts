@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import * as O from "fp-ts/lib/Option";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
@@ -374,7 +373,7 @@ const appendItemToArchive = (
 const updatePaymentHistory = (
   state: PaymentsHistoryState,
   data: PaymentHistory,
-  newAttempt: boolean = false
+  newAttempt = false
 ): PaymentsHistoryState => {
   const currentAttempt = state.ongoingPayment?.attempt || 0;
   const updatedOngoingPaymentHistory: PaymentHistory = {

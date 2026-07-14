@@ -1,4 +1,4 @@
-import { H3, H6, IOSkeleton, useIOTheme } from "@pagopa/io-app-design-system";
+import { H3, H6, IOSkeleton, useIOTheme } from "@io-app/design-system";
 import { View } from "react-native";
 import I18n from "i18next";
 import { formatAmountText } from "../utils";

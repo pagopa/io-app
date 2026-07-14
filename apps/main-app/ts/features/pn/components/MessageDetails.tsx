@@ -5,7 +5,7 @@ import {
   VSpacer,
   useFooterActionsMeasurements,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as SEP from "fp-ts/lib/Separated";
@@ -13,22 +13,23 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useRef } from "react";
 import { ScrollView } from "react-native";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";
+import { SendMessageSurveyBanner } from "../../messages/components/MessageSurveyBanner";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { PNMessage } from "../store/types/types";
 import {
   maxVisiblePaymentCount,
   openingSourceIsAarMessage,
   shouldUseBottomSheetForPayments
 } from "../utils";
-import {
-  SendOpeningSource,
-  SendUserType
-} from "../../pushNotifications/analytics";
 import { BannerAttachments } from "./BannerAttachments";
 import { F24Section } from "./F24Section";
 import { MessageBottomMenu } from "./MessageBottomMenu";
@@ -148,6 +149,7 @@ export const MessageDetails = ({
             sendOpeningSource={sendOpeningSource}
             sendUserType={sendUserType}
           />
+          <SendMessageSurveyBanner message={message} serviceId={serviceId} />
           <VSpacer size={16} />
         </ContentWrapper>
         <MessageBottomMenu

@@ -12,7 +12,7 @@ import {
   TabNavigation,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { clamp } from "lodash";
@@ -25,6 +25,7 @@ import {
 } from "../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
+import { openWebUrl } from "../../../../utils/url.ts";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation.ts";
 import {
   isCgnDetailsLoading,
@@ -56,7 +57,6 @@ import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
-import { openWebUrl } from "../../../../utils/url.ts";
 
 const MAX_INDEX = 1;
 
@@ -149,7 +149,7 @@ const ItwCredentialOnboardingSection = () => {
     return catalogueCredentials.filter(c => !isUpcomingCredential(c.type));
   }, [catalogueCredentials, shouldShowUpcoming, isItWalletActivationDisabled]);
 
-  const { obtained, notObtained } = useIOSelector(
+  const { notObtained } = useIOSelector(
     makeItwCredentialsByPresenceSelector(credentialsToDisplay)
   );
 
@@ -177,20 +177,6 @@ const ItwCredentialOnboardingSection = () => {
             action={I18n.t("features.wallet.onboarding.no-nfc-banner.cta")}
             onPress={() => openWebUrl(NFC_NOT_SUPPORTED_FAQ_URL)}
           />
-        )}
-
-        {/* Obtained credentials  */}
-        {obtained.length > 0 && (
-          <VStack space={8}>
-            <View style={styles.header}>
-              <H6 role="heading" color={theme["textBody-tertiary"]}>
-                {I18n.t("features.wallet.onboarding.l3-sections.added")}
-              </H6>
-            </View>
-            <ItwOnboardingModuleCredentialsList
-              credentialsToDisplay={obtained}
-            />
-          </VStack>
         )}
 
         {/* Documenti su IO fallback action */}
@@ -293,7 +279,8 @@ const OtherCardsOnboardingSection = () => {
 
 const styles = StyleSheet.create({
   tabs: {
-    paddingVertical: 16
+    paddingTop: 8,
+    paddingBottom: 16
   },
   header: {
     flex: 1,

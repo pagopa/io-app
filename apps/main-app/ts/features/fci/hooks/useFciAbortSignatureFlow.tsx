@@ -2,22 +2,36 @@ import {
   FooterActions,
   IOMarkdownLite,
   useIOExperimentalDesign
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { Alert } from "react-native";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { trackFciUserExit } from "../analytics";
 import { fciEndRequest } from "../store/actions";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
+import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton.ts";
 
 /**
- * A hook that returns a function to present the abort signature flow bottom sheet
+ * `showDialogOnBack` — when `true` (default), pressing back shows the abort confirmation dialog.
+ *   When `false`, back is handled internally: calls `onBackPress` if provided, otherwise `navigation.goBack()`.
+ * `onBackPress` — custom back handler used when `showDialogOnBack` is `false`.
  */
-export const useFciAbortSignatureFlow = () => {
+type Props = {
+  showDialogOnBack?: boolean;
+  onBackPress?: () => void;
+};
+
+/**
+ * A hook that returns a function to present the abort signature flow bottom sheet.
+ * Always intercepts the hardware back button; behavior is controlled via {@link Props}.
+ */
+export const useFciAbortSignatureFlow = (props?: Props) => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const route = useRoute();
   const dossierTitle = useIOSelector(fciSignatureRequestDossierTitleSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
@@ -85,6 +99,15 @@ export const useFciAbortSignatureFlow = () => {
    * TODO: remove when the experimental design will be enabled by default (SFEQS-2090)
    */
   const present = () => (isExperimental ? showAlert() : presentBs());
+
+  useHardwareBackButtonWhenFocused(() => {
+    if (props?.showDialogOnBack === false) {
+      (props.onBackPress ?? navigation.goBack)();
+    } else {
+      present();
+    }
+    return true;
+  });
 
   return {
     dismiss,

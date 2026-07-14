@@ -1,9 +1,9 @@
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
-import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
+import { IOColors, useIOTheme } from "@io-app/design-system";
+import {
+  isLoginUtilsError,
+  LoginUtilsError
+} from "@pagopa/io-react-native-login-utils";
 import CookieManager from "@react-native-cookies/cookies";
-import { pipe } from "fp-ts/lib/function";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
 import {
   createRef,
   Dispatch,
@@ -242,6 +242,52 @@ const CieWebView = (props: Props) => {
     }
   };
 
+  const handleLogin = useCallback(async () => {
+    try {
+      if (Platform.OS === "android") {
+        await CookieManager.removeSessionCookies().catch(() => {
+          throw new Error("Error clearing cookies");
+        });
+      }
+      const url = await regenerateKeyGetRedirectsAndVerifySaml(
+        loginUri,
+        ephemeralKeyTag,
+        mixpanelEnabled,
+        isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
+        dispatch,
+        idp?.id,
+        isActiveSessionLogin ? hashedFiscalCode : undefined
+      );
+      setRequestInfo({
+        requestState: "AUTHORIZED",
+        nativeAttempts: requestInfo.nativeAttempts,
+        url
+      });
+    } catch (error) {
+      if (error instanceof Error || isLoginUtilsError(error)) {
+        handleOnError(error);
+      }
+    }
+  }, [
+    dispatch,
+    handleOnError,
+    ephemeralKeyTag,
+    hashedFiscalCode,
+    idp?.id,
+    isActiveSessionFastLogin,
+    isActiveSessionLogin,
+    isFastLogin,
+    loginUri,
+    mixpanelEnabled,
+    requestInfo.nativeAttempts
+  ]);
+
+  useEffect(() => {
+    if (requestInfo.requestState === "LOADING") {
+      void handleLogin();
+    }
+  }, [handleLogin, requestInfo.requestState]);
+
   if (internalState.error) {
     return (
       <ErrorComponent
@@ -251,41 +297,6 @@ const CieWebView = (props: Props) => {
         onClose={props.onClose}
       />
     );
-  }
-
-  if (requestInfo.requestState === "LOADING") {
-    void pipe(
-      TE.tryCatch(
-        () =>
-          Platform.OS === "android"
-            ? CookieManager.removeSessionCookies()
-            : Promise.resolve(true),
-        () => new Error("Error clearing cookies")
-      ),
-      TE.chain(
-        _ => () =>
-          regenerateKeyGetRedirectsAndVerifySaml(
-            loginUri,
-            ephemeralKeyTag,
-            mixpanelEnabled,
-            isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-            dispatch,
-            idp?.id,
-            isActiveSessionLogin ? hashedFiscalCode : undefined
-          )
-      ),
-      TE.fold(
-        e => T.of(handleOnError(e)),
-        url =>
-          T.of(
-            setRequestInfo({
-              requestState: "AUTHORIZED",
-              nativeAttempts: requestInfo.nativeAttempts,
-              url
-            })
-          )
-      )
-    )();
   }
 
   const WithLoading = withLoadingSpinner(() => (

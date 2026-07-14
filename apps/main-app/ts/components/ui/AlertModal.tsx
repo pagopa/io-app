@@ -3,10 +3,9 @@ import {
   hexToRgba,
   IOColors,
   IOVisualCostants
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
-import themeVariables from "../../theme/variables";
 import { useModalStyle } from "../../utils/hooks/useModalStyle";
 import { AlertModalOverlay } from "./AlertModalOverlay";
 
@@ -17,7 +16,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "auto",
     width: "auto",
-    padding: themeVariables.contentPadding,
+    padding: IOVisualCostants.appMarginDefault,
     marginHorizontal: IOVisualCostants.appMarginDefault,
     borderCurve: "continuous",
     borderRadius: 16

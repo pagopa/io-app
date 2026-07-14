@@ -8,7 +8,7 @@ import {
   Pictogram,
   VSpacer,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   cloneElement,
   isValidElement,
@@ -26,7 +26,12 @@ import {
 
 type ButtonProps = Pick<
   IOButtonProps,
-  "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
+  | "label"
+  | "accessibilityLabel"
+  | "onPress"
+  | "testID"
+  | "icon"
+  | "iconPosition"
 >;
 
 type OperationResultScreenContentProps = WithTestID<{

@@ -12,7 +12,7 @@ import {
   ListItemInfoCopy,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { capitalize } from "lodash";
 import { View } from "react-native";
 
@@ -39,7 +39,6 @@ const ReceiptInfoSection = ({
   transaction,
   loading,
   showUnavailableReceiptBanner
-  // eslint-disable-next-line complexity
 }: Props) => {
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-primary"]];

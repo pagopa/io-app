@@ -5,7 +5,7 @@ import {
   IOButtonBlockSpecificProps,
   useIOThemeContext,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -101,7 +101,7 @@ const getTosFooter = (
   );
 
 // value is defined the height of the image
-const imageHeight: number = 270;
+const imageHeight = 270;
 
 /**
  * A screen to explain how the bonus activation works and how it will be assigned

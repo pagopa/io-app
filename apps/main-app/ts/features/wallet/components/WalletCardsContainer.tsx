@@ -1,11 +1,11 @@
-import { ListItemHeader } from "@pagopa/io-app-design-system";
+import { ListItemHeader } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
-import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
+import ItwActivationSuccessFeedbackBanner from "../../itwallet/common/components/ItwActivationSuccessFeedbackBanner";
 import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
@@ -13,6 +13,7 @@ import {
   itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderWalletDiscoveryBannerSelector
 } from "../../itwallet/common/store/selectors";
+import { itwWalletActivationFeedbackBannerSelector } from "../../itwallet/common/store/selectors/preferences";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
@@ -49,6 +50,9 @@ const WalletCardsContainer = () => {
   const shouldRenderL2EngagementBanner = useIOSelector(
     itwShouldRenderL2EngagementBannerForInactiveWalletSelector
   );
+  const walletActivationFeedbackBannerData = useIOSelector(
+    itwWalletActivationFeedbackBannerSelector
+  );
 
   useItwWalletInstanceRevocationAlert();
 
@@ -66,6 +70,12 @@ const WalletCardsContainer = () => {
         {shouldRenderItwDiscoveryBanner && (
           <ItwDiscoveryBanner style={{ marginVertical: 8 }} />
         )}
+        {walletActivationFeedbackBannerData && (
+          <ItwActivationSuccessFeedbackBanner
+            docStatus={walletActivationFeedbackBannerData.docStatus}
+            authMethod={walletActivationFeedbackBannerData.authMethod}
+          />
+        )}
         <View testID="walletCardsContainerTestID" style={styles.walletContent}>
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
           <OtherWalletCardsContainer />
@@ -77,7 +87,8 @@ const WalletCardsContainer = () => {
     shouldRenderEmptyState,
     shouldRenderItwCardsContainer,
     shouldRenderItwDiscoveryBanner,
-    shouldRenderL2EngagementBanner
+    shouldRenderL2EngagementBanner,
+    walletActivationFeedbackBannerData
   ]);
 
   return (
@@ -85,9 +96,10 @@ const WalletCardsContainer = () => {
       style={styles.container}
       layout={LinearTransition.duration(200)}
     >
-      <ItwEnvironmentAlert />
+      {/* <ItwEnvironmentAlert /> */}
       <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />
+
       {walletContent}
     </Animated.View>
   );
@@ -146,11 +158,12 @@ export {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    paddingVertical: 8
   },
   walletContent: {
     flex: 1,
-    gap: 8
+    gap: 16
   },
   cardsWrapper: {
     marginHorizontal: -8

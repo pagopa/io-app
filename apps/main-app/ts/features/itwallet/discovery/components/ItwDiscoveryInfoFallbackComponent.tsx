@@ -5,7 +5,7 @@ import {
   H3,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet } from "react-native";
@@ -13,8 +13,6 @@ import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
-import ROUTES from "../../../../navigation/routes.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
@@ -34,7 +32,6 @@ import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
  * Documenti su IO after an user chooses to not use IT-WAllet
  */
 export const ItwDiscoveryInfoFallbackComponent = () => {
-  const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
@@ -69,17 +66,7 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
       )
     },
     handleDismiss: () => {
-      navigation.reset({
-        index: 1,
-        routes: [
-          {
-            name: ROUTES.MAIN,
-            params: {
-              screen: ROUTES.WALLET_HOME
-            }
-          }
-        ]
-      });
+      machineRef.send({ type: "close" });
     },
     dismissalContext: {
       screen_name: ITW_SCREENVIEW_EVENTS.ITW_INTRO,

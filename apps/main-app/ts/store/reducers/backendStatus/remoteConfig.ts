@@ -582,7 +582,7 @@ export const generateDynamicUrlSelector = createSelector(
 
       // Append the provided path to the base URL.
       return `${baseUrl}${path}`;
-    } catch (error) {
+    } catch {
       // In case of an error (e.g., missing key or invalid path), return the base URL key as a fallback.
       return baseUrlKey;
     }
@@ -746,6 +746,24 @@ export const appFeedbackUriConfigSelector = (topic: TopicKeys = "general") =>
         O.toUndefined
       )
   );
+
+export const messageSurveyBannerUriSelector = (
+  state: GlobalState
+): string | undefined => {
+  const remoteConfig = remoteConfigSelector(state);
+
+  const isEnabled = isPropertyWithMinAppVersionEnabled({
+    remoteConfig,
+    mainLocalFlag: true,
+    configPropertyName: "messages_feedback_banner"
+  });
+
+  if (O.isNone(remoteConfig) || !isEnabled) {
+    return undefined;
+  }
+
+  return remoteConfig.value.messages_feedback_banner?.feedback_uri;
+};
 
 export const appFeedbackEnabledSelector = (state: GlobalState) =>
   pipe(state, remoteConfigSelector, remoteConfig =>
@@ -985,4 +1003,24 @@ export const isSendLollipopPlaygroundEnabledSelector = (
   }
   const remoteConfig = remoteConfigOption.value;
   return !!remoteConfig.pn.lollipopPlaygroundEnabled;
+};
+
+export const fseDiscoveryBannerWebUrlSelector = (
+  state: GlobalState
+): string | undefined => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    return undefined;
+  }
+  return remoteConfigOption.value.fse?.landingBanner?.engagement_url;
+};
+export const isFseDiscoveryBannerDismissableSelector = (
+  state: GlobalState
+): boolean => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    return false;
+  }
+
+  return remoteConfigOption.value.fse?.landingBanner?.is_dismissable ?? false;
 };

@@ -15,16 +15,15 @@ jest.mock("@react-navigation/native", () => ({
     "@react-navigation/native"
   ),
   useNavigation: () => ({
-    navigate: mockNavigate,
-    addListener: jest.fn(() => jest.fn())
+    navigate: mockNavigate
   })
 }));
 
 const mockToast = jest.fn();
 
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual<typeof import("@pagopa/io-app-design-system")>(
-    "@pagopa/io-app-design-system"
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual<typeof import("@io-app/design-system")>(
+    "@io-app/design-system"
   ),
   useIOToast: () => ({
     error: mockToast

@@ -3,22 +3,20 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   H2,
-  HeaderSecondLevel,
   HStack,
   Icon,
   IOMarkdownLite,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useCallback, useLayoutEffect } from "react";
+import { useCallback } from "react";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { identificationRequest } from "../../../identification/store/actions";
@@ -29,6 +27,7 @@ import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
+  selectCanRenderEidPreview,
   selectEidOption,
   selectIdentification,
   selectIsLoading
@@ -39,24 +38,26 @@ import {
   trackItwRequestSuccess,
   trackSaveCredentialToWallet
 } from "../analytics";
+import { toItwIdMethod } from "../../analytics/utils/types";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
+  const canRenderEidPreview = ItwEidIssuanceMachineContext.useSelector(
+    selectCanRenderEidPreview
+  );
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  return pipe(
-    eidOption,
-    O.fold(
-      // If there is no eID in the context (None), we can safely assume the issuing phase is still ongoing.
-      // A None eID cannot be stored in the context, as any issuance failure causes the machine to transition
-      // to the Failure state.
-      () => <LoadingScreenContent title={I18n.t("global.genericWaiting")} />,
-      eid => <ContentView eid={eid.metadata} />
-    )
-  );
+  // If there is no eID in the context, the issuing phase is still ongoing.
+  // Once the eID is assigned, wait for the identity-match check to finish before
+  // rendering its details; otherwise the preview could flash before a mismatch failure.
+  if (!canRenderEidPreview || O.isNone(eidOption)) {
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
+  }
+
+  return <ContentView eid={eidOption.value.metadata} />;
 };
 
 type ContentViewProps = {
@@ -69,7 +70,6 @@ type ContentViewProps = {
  */
 const ContentView = ({ eid }: ContentViewProps) => {
   const dispatch = useIODispatch();
-  const navigation = useIONavigation();
   const route = useRoute();
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -93,8 +93,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
       });
       if (identification) {
         trackItwRequestSuccess(
-          identification?.mode,
-          identification?.level,
+          toItwIdMethod(identification),
+          identification.level,
           isL3 ? "L3" : "L2"
         );
       }
@@ -105,10 +105,33 @@ const ContentView = ({ eid }: ContentViewProps) => {
     parsedCredential: eid.parsedCredential
   });
 
+  const customLabels = isL3
+    ? {
+        customLabels: {
+          title: I18n.t(
+            "features.itWallet.discovery.screen.itw.dismissalDialog.title"
+          ),
+          body: I18n.t(
+            "features.itWallet.discovery.screen.itw.dismissalDialog.body"
+          ),
+          confirmLabel: I18n.t(
+            "features.itWallet.discovery.screen.itw.dismissalDialog.confirm"
+          ),
+          cancelLabel: I18n.t(
+            "features.itWallet.discovery.screen.itw.dismissalDialog.cancel"
+          )
+        }
+      }
+    : undefined;
+
   const dismissDialog = useItwDismissalDialog({
+    ...customLabels,
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+      machineRef.send({
+        type: "close",
+        surveyStep: isL3 ? "pid_preview" : undefined
+      });
     }
   });
 
@@ -132,26 +155,16 @@ const ContentView = ({ eid }: ContentViewProps) => {
     );
   };
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-      header: () => (
-        <HeaderSecondLevel
-          title=""
-          type="singleAction"
-          firstAction={{
-            icon: "closeLarge",
-            onPress: dismissDialog.show,
-            accessibilityLabel: I18n.t("global.buttons.close")
-          }}
-        />
-      )
-    });
-  }, [navigation, dismissDialog]);
+  useHeaderSecondLevel({
+    title: "",
+    goBack: dismissDialog.show,
+    supportRequest: true
+  });
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
       <ForceScrollDownView
+        buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
         contentContainerStyle={{ flexGrow: 1 }}
         footerActions={{
           actions: {

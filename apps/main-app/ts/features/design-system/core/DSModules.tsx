@@ -10,7 +10,7 @@ import {
   PaymentNoticeStatus,
   VStack,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Alert } from "react-native";
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";

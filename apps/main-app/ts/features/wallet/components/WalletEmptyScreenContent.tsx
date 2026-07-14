@@ -3,7 +3,7 @@ import {
   IOButton,
   IOVisualCostants,
   Pictogram
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 import ItwDeckImage from "../../../../img/features/itWallet/brand/itw_deck_wallet.svg";
@@ -20,10 +20,15 @@ const WalletEmptyScreenContent = () => {
 
   const handleAddToWalletButtonPress = () => {
     trackWalletAdd();
+    if (isItWalletEnabled) {
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.DISCOVERY.INFO,
+        params: { level: "l3" }
+      });
+      return;
+    }
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: isItWalletEnabled
-        ? ITW_ROUTES.L3_ONBOARDING
-        : ITW_ROUTES.ONBOARDING
+      screen: ITW_ROUTES.ONBOARDING
     });
   };
 

@@ -1,6 +1,6 @@
+import { IOVisualCostants } from "@io-app/design-system";
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
-import customVariables from "../../../theme/variables";
 
 type Props = {
   children: ReactNode;
@@ -8,8 +8,8 @@ type Props = {
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: customVariables.contentPadding * -1,
-    marginRight: customVariables.contentPadding * -1
+    marginLeft: IOVisualCostants.appMarginDefault * -1,
+    marginRight: IOVisualCostants.appMarginDefault * -1
   }
 });
 

@@ -8,9 +8,10 @@ import {
   H1,
   IOButton,
   IOToast,
+  IOVisualCostants,
   TextInputValidation,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
@@ -43,7 +44,6 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import themeVariables from "../../../../../theme/variables";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { getFlowType } from "../../../../../utils/analytics";
 import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
@@ -574,7 +574,7 @@ const EmailInsertScreen = () => {
             behavior={Platform.OS === "android" ? undefined : "padding"}
             keyboardVerticalOffset={Platform.select({
               ios: 110 + 16,
-              android: themeVariables.contentPadding
+              android: IOVisualCostants.appMarginDefault
             })}
           >
             <ContinueButton onContinue={continueOnPress} />

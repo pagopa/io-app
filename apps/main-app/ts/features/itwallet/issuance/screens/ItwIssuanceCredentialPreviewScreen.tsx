@@ -3,7 +3,7 @@ import {
   ForceScrollDownView,
   H2,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -16,13 +16,8 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { identificationRequest } from "../../../identification/store/actions";
-import {
-  trackCredentialPreview,
-  trackIssuanceCredentialScrollToBottom,
-  trackItwExit,
-  trackSaveCredentialToWallet
-} from "../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import {
@@ -33,8 +28,13 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { selectCredentialOption } from "../../machine/credential/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import {
+  trackCredentialPreview,
+  trackIssuanceCredentialScrollToBottom,
+  trackItwExit,
+  trackSaveCredentialToWallet
+} from "../analytics";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
-import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -91,8 +91,12 @@ const ContentView = ({ credential }: ContentViewProps) => {
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+      machineRef.send({
+        type: "close",
+        surveyStep: isItwL3 ? "doc_preview" : undefined,
+        surveyCredential: isItwL3 ? mixPanelCredential : undefined
+      });
     }
   });
 
@@ -125,7 +129,8 @@ const ContentView = ({ credential }: ContentViewProps) => {
 
   useHeaderSecondLevel({
     title: "",
-    goBack: dismissDialog.show
+    goBack: dismissDialog.show,
+    supportRequest: true
   });
 
   useDebugInfo({
@@ -134,6 +139,7 @@ const ContentView = ({ credential }: ContentViewProps) => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       contentContainerStyle={{ flexGrow: 1 }}
       onThresholdCrossed={trackScrollToBottom}
       footerActions={{

@@ -1,4 +1,4 @@
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { useIOThemeContext } from "@io-app/design-system";
 import { Canvas, Path, Skia } from "@shopify/react-native-skia";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
@@ -201,7 +201,7 @@ export const CgnAnimatedBackground = () => {
 
   return (
     <Canvas
-      style={[StyleSheet.absoluteFillObject, { backgroundColor }]}
+      style={[StyleSheet.absoluteFill, { backgroundColor }]}
       pointerEvents="none"
       onSize={canvasSize}
     >

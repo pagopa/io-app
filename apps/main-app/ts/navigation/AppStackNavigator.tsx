@@ -1,9 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import {
-  IOColors,
-  useIOTheme,
-  useIOThemeContext
-} from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme, useIOThemeContext } from "@io-app/design-system";
 import {
   LinkingOptions,
   NavigationContainer,
@@ -19,7 +15,12 @@ import FocusAwareStatusBar from "../components/ui/FocusAwareStatusBar";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
+import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+import {
+  ITW_CREDENTIAL_OFFER_LINKING_PREFIXES,
+  parseCredentialOfferLink
+} from "../features/itwallet/offer/utils";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { storeLinkingUrl } from "../features/linking/actions";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
@@ -34,18 +35,14 @@ import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
 import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
-import {
-  IONavigationDarkTheme,
-  IONavigationLightTheme
-} from "../theme/navigations";
 import { isTestEnv } from "../utils/environment";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
+import { IONavigationDarkTheme, IONavigationLightTheme } from "./theme";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
-import IngressStackNavigator from "./IngressStackNavigator";
 import NavigationService, {
   navigationRef,
   setMainNavigatorReady
@@ -79,16 +76,16 @@ export const AppStackNavigator = (): ReactElement => {
     dispatch(startApplicationInitialization());
   }, [dispatch]);
 
-  if (startupStatus === StartupStatusEnum.INITIAL) {
-    return <IngressStackNavigator />;
-  }
-
   if (startupStatus === StartupStatusEnum.OFFLINE) {
     return <OfflineStackNavigator />;
   }
 
   if (startupStatus === StartupStatusEnum.NOT_AUTHENTICATED) {
     return <NotAuthenticatedStackNavigator />;
+  }
+
+  if (startupStatus === StartupStatusEnum.INITIAL) {
+    return <IngressScreen />;
   }
 
   return <AuthenticatedStackNavigator />;
@@ -109,7 +106,11 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
 
   const linking: LinkingOptions<AppParamsList> = {
     enabled: !isTestEnv, // disable linking in test env
-    prefixes: [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
+    prefixes: [
+      IO_INTERNAL_LINK_PREFIX,
+      IO_UNIVERSAL_LINK_PREFIX,
+      ...ITW_CREDENTIAL_OFFER_LINKING_PREFIXES
+    ],
     config: {
       initialRouteName: ROUTES.MAIN,
       screens: {
@@ -179,7 +180,11 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
          *  this handler is called on app wake and thus there
          *  is no risk of overwriting any previously stored deep link
          */
-        dispatch(storeLinkingUrl(initialUrl));
+        dispatch(
+          storeLinkingUrl(
+            parseCredentialOfferLink(initialUrl)?.internalRoute ?? initialUrl
+          )
+        );
       }
     });
   });

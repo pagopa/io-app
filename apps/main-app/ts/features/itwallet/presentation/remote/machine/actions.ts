@@ -54,7 +54,7 @@ export const createRemoteActionsImplementation = (
   },
 
   navigateToBarcodeScanScreen: () => {
-    navigation.navigate(ROUTES.BARCODE_SCAN);
+    navigation.navigate(ROUTES.BARCODE_SCAN, undefined);
   },
 
   navigateToAuthResponseScreen: () => {

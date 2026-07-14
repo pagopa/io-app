@@ -1,4 +1,4 @@
-import { Banner, IOToast, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, IOToast, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { useEffect } from "react";

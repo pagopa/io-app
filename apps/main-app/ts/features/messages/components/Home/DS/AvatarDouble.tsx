@@ -5,7 +5,7 @@ import {
   Icon,
   hexToRgba,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useCallback, useRef, useState } from "react";
 import {
   Image,
@@ -21,8 +21,8 @@ type AvatarDoubleProps = {
 };
 
 const avatarContainerSize = 30;
-const avatarDoubleRadiusSizeSmall: number = 6;
-const internalSpaceDefaultSize: number = 3;
+const avatarDoubleRadiusSizeSmall = 6;
+const internalSpaceDefaultSize = 3;
 const internalSpacePlaceholderDefaultSize: IOSpacingScale = 6;
 const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);
 

@@ -1,8 +1,4 @@
-import {
-  Divider,
-  IOVisualCostants,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Divider, IOVisualCostants, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { ComponentProps, useEffect, useState } from "react";
@@ -84,7 +80,9 @@ const FciQtspClausesScreen = () => {
     useFciCheckService();
 
   const { present: showAbort, bottomSheet: fciAbortSignature } =
-    useFciAbortSignatureFlow();
+    useFciAbortSignatureFlow({
+      showDialogOnBack: false
+    });
 
   const openUrl = (url: string) => {
     navigation.navigate(FCI_ROUTES.MAIN, {

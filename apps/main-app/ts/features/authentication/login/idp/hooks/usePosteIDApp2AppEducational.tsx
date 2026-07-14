@@ -3,18 +3,18 @@ import {
   FeatureInfo,
   IOMarkdownLite,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { View } from "react-native";
 import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { SpidIdp } from "../../../../../utils/idps";
-import { StandardLoginRequestInfo } from "../store/types";
+import { SpidLoginRequestInfo } from "../store/types";
 
 type Props = {
   selectedIdp?: SpidIdp;
-  requestState: StandardLoginRequestInfo["requestState"];
+  requestState: SpidLoginRequestInfo["requestState"];
 };
 
 export const usePosteIDApp2AppEducational = ({

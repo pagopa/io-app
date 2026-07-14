@@ -1,6 +1,6 @@
 import i18n from "i18next";
 import { useEffect } from "react";
-import { Body, HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { Body, HeaderSecondLevel } from "@io-app/design-system";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -37,11 +37,13 @@ export const FciLoginL3Screen = () => {
 
   useEffect(() => {
     setOptions({
+      headerTransparent: true,
       header: () => (
         <HeaderSecondLevel
           title=""
           ignoreSafeAreaMargin={false}
           type="singleAction"
+          backgroundColor="transparent"
           firstAction={{
             icon: "closeMedium",
             onPress: () => {

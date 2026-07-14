@@ -1,4 +1,4 @@
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { useIOThemeContext } from "@io-app/design-system";
 import { DataSourceParam } from "@shopify/react-native-skia";
 import Color from "color";
 import { useMemo } from "react";
@@ -281,7 +281,7 @@ export const credentialCardConfigs: Partial<
       }
     }
   },
-  [CredentialType.AGE_VERIFICATION]: {
+  [CredentialType.PROOF_OF_AGE]: {
     light: {
       color: "#CECFF2",
       titleColor: "#363740",

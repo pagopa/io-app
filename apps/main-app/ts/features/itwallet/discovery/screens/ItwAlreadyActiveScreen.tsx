@@ -1,15 +1,15 @@
-import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
+import { useCallback } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import ROUTES from "../../../../navigation/routes";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { ItwFlow } from "../../analytics/utils/types";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
 import { trackItwAlreadyActivated } from "../analytics";
-import { ItwFlow } from "../../analytics/utils/types";
 
 export const ItwAlreadyActiveScreen = () => {
   useItwDisableGestureNavigation();
@@ -34,7 +34,7 @@ export const ItwAlreadyActiveScreen = () => {
   };
 
   const handleClose = () => {
-    navigation.pop();
+    navigation.popToTop();
   };
 
   useFocusEffect(

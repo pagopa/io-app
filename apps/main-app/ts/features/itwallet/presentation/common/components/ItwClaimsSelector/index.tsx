@@ -5,11 +5,12 @@ import {
   IOAccordionRadius,
   IOColors,
   IOSpacingScale,
-  useIOThemeContext
-} from "@pagopa/io-app-design-system";
-import { useAccordionAnimation } from "@pagopa/io-app-design-system/src/hooks/useAccordionAnimation";
+  useIOThemeContext,
+  useAccordionAnimation
+} from "@io-app/design-system";
+import I18n from "i18next";
 import { Fragment } from "react";
-import { StyleSheet, View } from "react-native";
+import { AccessibilityInfo, StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
@@ -97,6 +98,13 @@ export const ItwClaimsSelector = ({
 
   const onItemPress = () => {
     toggleAccordion();
+    AccessibilityInfo.announceForAccessibility(
+      I18n.t(
+        !expanded
+          ? "global.accessibility.expanded"
+          : "global.accessibility.collapsed"
+      )
+    );
     onToggle?.(!expanded);
   };
 

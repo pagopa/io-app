@@ -1,15 +1,11 @@
-import {
-  Body,
-  IOButton,
-  ListItemSwitch,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { Body, IOButton, ListItemSwitch, VStack } from "@io-app/design-system";
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
   PROXIMITY_STATUS,
@@ -68,6 +64,12 @@ export const ItwProximityPlaygroundScreen = () => {
     sendDocument,
     sendError
   } = useItwProximityFlow();
+
+  useDebugInfo({
+    status,
+    request,
+    isNfcEnabled
+  });
 
   useHeaderSecondLevel({
     title: "Proximity Playground"

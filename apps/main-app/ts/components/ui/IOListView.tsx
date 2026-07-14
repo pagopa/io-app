@@ -4,7 +4,7 @@ import {
   IOVisualCostants,
   hexToRgba,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 import { ComponentProps, ReactElement, useState } from "react";
 
@@ -108,7 +108,6 @@ export const IOListView = <T,>({
   ItemSeparatorComponent,
   testID,
   loading
-  // eslint-disable-next-line complexity
 }: IOListView<T>) => {
   const theme = useIOTheme();
 
