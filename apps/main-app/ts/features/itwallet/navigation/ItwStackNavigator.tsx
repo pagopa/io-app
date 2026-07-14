@@ -340,8 +340,9 @@ const InnerNavigator = memo(() => {
 });
 
 /**
- * A higher-order component which renders the screen only if IT Wallet is enabled.
- * In case IT Wallet is not enabled, it renders an error screen.
+ * A higher-order component which renders the screen only if IT Wallet is
+ * enabled. In case IT Wallet is not enabled, it renders an error screen.
+ *
  * @param Screen - The screen to render
  * @returns The component or the error screen
  */

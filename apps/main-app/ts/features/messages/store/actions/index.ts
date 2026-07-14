@@ -68,9 +68,7 @@ export const getMessageDataAction = createAsyncAction(
   FailureGetMessageDataActionType
 >();
 
-/**
- * The user requests the message third party content.
- */
+/** The user requests the message third party content. */
 export const loadThirdPartyMessage = createAsyncAction(
   "THIRD_PARTY_MESSAGE_LOAD_REQUEST",
   "THIRD_PARTY_MESSAGE_LOAD_SUCCESS",
@@ -89,9 +87,7 @@ export const cancelGetMessageDataAction = createAction(
   "GET_MESSAGE_DATA_CANCEL_REQUEST"
 );
 
-/**
- * Load a single message given its ID
- */
+/** Load a single message given its ID */
 export type LoadMessageByIdFailureKind = "generic" | "messageNotFound";
 export const loadMessageById = createAsyncAction(
   "MESSAGE_BY_ID_LOAD_REQUEST",
@@ -103,9 +99,7 @@ export const loadMessageById = createAsyncAction(
   { error: Error; id: string; kind: LoadMessageByIdFailureKind }
 >();
 
-/**
- * Load a single message's details given its ID
- */
+/** Load a single message's details given its ID */
 export const loadMessageDetails = createAsyncAction(
   "MESSAGE_DETAILS_LOAD_REQUEST",
   "MESSAGE_DETAILS_LOAD_SUCCESS",
@@ -223,9 +217,7 @@ export type DownloadAttachmentSuccess = {
   path: string;
 };
 
-/**
- * The user requests an attachment download.
- */
+/** The user requests an attachment download. */
 export const downloadAttachment = createAsyncAction(
   "DOWNLOAD_ATTACHMENT_REQUEST",
   "DOWNLOAD_ATTACHMENT_SUCCESS",
@@ -246,9 +238,7 @@ export const clearRequestedAttachmentDownload = createAction(
   "CLEAR_REQUESTED_ATTACHMNET_DOWNLOAD"
 );
 
-/**
- * This action removes any cached data in order to perform another download.
- */
+/** This action removes any cached data in order to perform another download. */
 export const removeCachedAttachment = createStandardAction(
   "REMOVE_CACHED_ATTACHMENT"
 )<DownloadAttachmentSuccess>();

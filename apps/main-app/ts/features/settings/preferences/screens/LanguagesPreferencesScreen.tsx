@@ -34,9 +34,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.preferences.language.contextualHelpContent"
 };
 
-/**
- * Allows the user to select one of the available Languages as preferred
- */
+/** Allows the user to select one of the available Languages as preferred */
 
 type AppLocaleId = `app-locale-${Locales}`;
 

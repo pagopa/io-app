@@ -9,9 +9,7 @@ export const buttonTextLineHeight = 20;
 `AnimatedText` for color transition through Reanimated */
 const defaultColor: IOColors = "white";
 
-/**
- * `ButtonText` typographic style
- */
+/** `ButtonText` typographic style */
 export const ButtonText = ({
   color: customColor,
   ...props

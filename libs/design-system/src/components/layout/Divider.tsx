@@ -5,9 +5,7 @@ import { IOColors } from "../../core/IOColors";
 
 const DEFAULT_BORDER_SIZE = StyleSheet.hairlineWidth;
 
-/**
-Horizontal `Divider` component
- */
+/** Horizontal `Divider` component */
 export const Divider = () => {
   const theme = useIOTheme();
 

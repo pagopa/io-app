@@ -56,7 +56,8 @@ export const CardBackground = memo(({ background, color, overlay }: Props) => {
 });
 
 /**
- * @deprecated Only used for the older Documenti su IO, will be removed in the future
+ * @deprecated Only used for the older Documenti su IO, will be removed in the
+ *   future
  */
 const legacyCredentialCardBackgrounds: { [type: string]: number } = {
   [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../../img/features/itWallet/cards/dc.png"),
@@ -65,7 +66,8 @@ const legacyCredentialCardBackgrounds: { [type: string]: number } = {
 };
 
 /**
- * @deprecated Only used for the older Documenti su IO, will be removed in the future
+ * @deprecated Only used for the older Documenti su IO, will be removed in the
+ *   future
  */
 const legacyCredentialGradientColors: { [type: string]: Array<string> } = {
   [CredentialType.EDUCATION_DEGREE]: ["#F2F1CE", "#ECECEC"],
@@ -81,7 +83,8 @@ type LegacyProps = {
 };
 
 /**
- * @deprecated Only used for the older Documenti su IO, will be removed in the future
+ * @deprecated Only used for the older Documenti su IO, will be removed in the
+ *   future
  */
 export const LegacyCardBackground = ({
   credentialType,

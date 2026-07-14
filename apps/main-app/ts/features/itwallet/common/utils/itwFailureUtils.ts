@@ -9,20 +9,19 @@ import { z } from "zod";
 import { WithCredentialMetadata } from "./ItwFailureTypes";
 
 /**
- * This file contains utility functions related to failures in the context of common xState flows
+ * This file contains utility functions related to failures in the context of
+ * common xState flows
  */
 
-/**
- * Guard used to check if the error is a `FederationError`.
- */
+/** Guard used to check if the error is a `FederationError`. */
 export const isFederationError = (
   error: unknown
 ): error is Trust.Errors.FederationError =>
   error instanceof Trust.Errors.FederationError;
 
 /**
- * Integrity errors thrown by the device.
- * These errors might occur locally before calling the Wallet Provider.
+ * Integrity errors thrown by the device. These errors might occur locally
+ * before calling the Wallet Provider.
  */
 const localIntegrityErrors: Array<CryptoErrorCodes | IntegrityErrorCodes> = [
   "REQUEST_ATTESTATION_FAILED",
@@ -65,8 +64,9 @@ const mrtdTaxIdCodeMismatchFailure = z.object({
 });
 
 /**
- * Guard used to identify ANPR PID 404 issuance failures.
- * It is identified by the presence of reason.error with value "credential_not_found" inside an IssuerResponseError with code `CredentialInvalidStatus` and HTTP status 404.
+ * Guard used to identify ANPR PID 404 issuance failures. It is identified by
+ * the presence of reason.error with value "credential_not_found" inside an
+ * IssuerResponseError with code `CredentialInvalidStatus` and HTTP status 404.
  */
 export const isAnprPid404Failure = (
   e: unknown
@@ -74,14 +74,16 @@ export const isAnprPid404Failure = (
   Errors.isIssuerResponseError(e) && anprPid404Failure.safeParse(e).success;
 
 /**
- * Enrich instances of Error with `credentialId` so it is possible to retrieve the credential configuration
- * from `credential_configurations_supported` in the Issuer's EC. This is needed during multi-credential issuance
- * to get dynamic error messages, because the original error may not contain the credential configuration ID.
+ * Enrich instances of Error with `credentialId` so it is possible to retrieve
+ * the credential configuration from `credential_configurations_supported` in
+ * the Issuer's EC. This is needed during multi-credential issuance to get
+ * dynamic error messages, because the original error may not contain the
+ * credential configuration ID.
  *
  * This function **modifies the original error**.
  *
  * @param metadata.credentialId The credential configuration ID
- * @return A function that enriches the error and rethrows it
+ * @returns A function that enriches the error and rethrows it
  * @throws The original error, with the new `metadata` property
  */
 export const enrichErrorWithMetadata =

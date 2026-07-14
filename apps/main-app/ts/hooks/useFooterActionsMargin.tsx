@@ -8,16 +8,14 @@ type FooterActionsMargin = {
 };
 
 /**
- * A custom React Hook that returns the bottom margin value after taking
- * into consideration the safe area insets and the need to include
- * a default margin or not.
+ * A custom React Hook that returns the bottom margin value after taking into
+ * consideration the safe area insets and the need to include a default margin
+ * or not.
  *
- * Depending on those conditions, it returns two values:
- * - `bottomMargin`
- *    The amount of space to add just before the end of the actions block.
- * - `needSafeAreaMargin`
- *    A boolean value that indicates if the safe area insets are needed.
- *    We expose this value in case of need.
+ * Depending on those conditions, it returns two values: - `bottomMargin` The
+ * amount of space to add just before the end of the actions block. -
+ * `needSafeAreaMargin` A boolean value that indicates if the safe area insets
+ * are needed. We expose this value in case of need.
  */
 export const useFooterActionsMargin = (
   excludeSafeAreaMargins?: boolean

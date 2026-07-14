@@ -1,6 +1,6 @@
 /**
- * An HOC that uses the LightModalConsumer to inject LightModalContext
- * into the wrapped component.
+ * An HOC that uses the LightModalConsumer to inject LightModalContext into the
+ * wrapped component.
  */
 
 import hoistNonReactStatics from "hoist-non-react-statics";

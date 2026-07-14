@@ -31,20 +31,19 @@ import { CardColorScheme } from "./types";
 
 export type ItwCredentialCard = {
   /**
-   * Current status of the credential, used to determine the
-   * visual representation and the status tag to display.
+   * Current status of the credential, used to determine the visual
+   * representation and the status tag to display.
    */
   credentialStatus?: ItwCredentialStatus;
   /**
-   * Type of the credential, which is used to determine the
-   * visual representation and styling of the card.
+   * Type of the credential, which is used to determine the visual
+   * representation and styling of the card.
    */
   credentialType: string;
   /**
-   * Issue date of the credential.
-   * Used to determine whether the card should display
-   * the "upgrade pending" badge when the user owns
-   * an L3 PID and the credential was issued before it.
+   * Issue date of the credential. Used to determine whether the card should
+   * display the "upgrade pending" badge when the user owns an L3 PID and the
+   * credential was issued before it.
    */
   issuedAt?: string;
 };
@@ -156,7 +155,8 @@ export const ItwCredentialCard = memo(
 );
 
 /**
- * @deprecated Only used for the older Documenti su IO, will be removed in the future
+ * @deprecated Only used for the older Documenti su IO, will be removed in the
+ *   future
  */
 export const ItwCredentialCardLegacy = ({
   credentialType,

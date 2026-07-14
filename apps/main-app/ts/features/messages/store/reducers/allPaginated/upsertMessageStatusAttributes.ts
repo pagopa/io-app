@@ -7,8 +7,8 @@ import { upsertMessageStatusAttributes } from "../../actions";
 import { AllPaginated, Collection } from "./types";
 
 /**
- * Implements an optimistic UI by updating the state at request time and rolling back the updates
- * in case of failure.
+ * Implements an optimistic UI by updating the state at request time and rolling
+ * back the updates in case of failure.
  *
  * @param state
  * @param action

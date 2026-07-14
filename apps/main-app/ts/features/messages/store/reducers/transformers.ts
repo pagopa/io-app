@@ -12,8 +12,8 @@ import {
 } from "../../types";
 
 /**
- * Map an enriched message item from API to the app domain.
- * Since `category` is optional, it falls back on GENERIC.
+ * Map an enriched message item from API to the app domain. Since `category` is
+ * optional, it falls back on GENERIC.
  *
  * @param messageFromApi
  */

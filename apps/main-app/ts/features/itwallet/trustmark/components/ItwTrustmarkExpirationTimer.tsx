@@ -14,9 +14,7 @@ import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { ItwTrustmarkMachineContext } from "../machine/provider";
 import { selectExpirationSeconds, selectFailure } from "../machine/selectors";
 
-/**
- * Timer that shows the remaining time before the trustmark expires
- */
+/** Timer that shows the remaining time before the trustmark expires */
 const ItwTrustmarkExpirationTimer = () => {
   const expirationSeconds = ItwTrustmarkMachineContext.useSelector(
     selectExpirationSeconds

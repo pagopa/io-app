@@ -13,8 +13,8 @@ import {
 } from "../reducers";
 
 /**
- * An action dispatched by the screen.
- * The identification saga will intercept it and enrich with the current unlock code.
+ * An action dispatched by the screen. The identification saga will intercept it
+ * and enrich with the current unlock code.
  */
 export const identificationRequest = createAction(
   "IDENTIFICATION_REQUEST",
@@ -39,9 +39,7 @@ export const identificationRequest = createAction(
       })
 );
 
-/**
- * Action dispatched internally by the identification saga to start the process.
- */
+/** Action dispatched internally by the identification saga to start the process. */
 export const identificationStart = createAction(
   "IDENTIFICATION_START",
   resolve =>

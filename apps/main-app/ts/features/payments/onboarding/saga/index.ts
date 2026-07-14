@@ -11,6 +11,7 @@ import { handleStartWalletOnboarding } from "./handleStartWalletOnboarding";
 
 /**
  * Handle Wallet onboarding requests
+ *
  * @param bearerToken
  */
 export function* watchPaymentsOnboardingSaga(

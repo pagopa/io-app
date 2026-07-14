@@ -67,46 +67,42 @@ type HelpProps = {
 };
 
 type Props = HelpProps & {
-  /**
-   * Mixpanel analytics parameters
-   */
+  /** Mixpanel analytics parameters */
   barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
   /**
-   * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
-   * If the format is not supported it will return an UNSUPPORTED_FORMAT error
+   * Accepted barcoded formats that can be detected. Leave empty to accept all
+   * formats. If the format is not supported it will return an
+   * UNSUPPORTED_FORMAT error
    */
   barcodeFormats?: Array<IOBarcodeFormat>;
   /**
-   * Accepted barcode types that can be detected. Leave empty to accept all types.
-   * If the type is not supported it will return an UNKNOWN_CONTENT error
+   * Accepted barcode types that can be detected. Leave empty to accept all
+   * types. If the type is not supported it will return an UNKNOWN_CONTENT
+   * error
    */
   barcodeTypes?: Array<IOBarcodeType>;
-  /**
-   * Disables barcode scan capabilities, putting the component in an idle state
-   */
+  /** Disables barcode scan capabilities, putting the component in an idle state */
   isDisabled?: boolean;
   /**
-   * If true, the screen goes into a loading state which disables all interaction and displays a loading indicator
+   * If true, the screen goes into a loading state which disables all
+   * interaction and displays a loading indicator
    */
   isLoading?: boolean;
-  /**
-   * Callback called when a barcode is not successfully decoded
-   */
+  /** Callback called when a barcode is not successfully decoded */
   onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
-  /**
-   * Callback called when a barcode is successfully decoded
-   */
+  /** Callback called when a barcode is successfully decoded */
   onBarcodeSuccess: (
     barcodes: Array<IOBarcode>,
     origin: IOBarcodeOrigin
   ) => void;
   /**
-   * Callback called when the upload file input is pressed, necessary to show the file input modal
+   * Callback called when the upload file input is pressed, necessary to show
+   * the file input modal
    */
   onFileInputPressed: () => void;
   /**
-   * Callback called when the manual input button is pressed
-   * necessary to navigate to the manual input screen or show the manual input modal
+   * Callback called when the manual input button is pressed necessary to
+   * navigate to the manual input screen or show the manual input modal
    */
   onManualInputPressed: () => void;
 };
@@ -150,7 +146,6 @@ const BarcodeScanBaseScreenComponent = ({
    * Updates the app state when it changes.
    *
    * @param {string} nextAppState - The next state of the app.
-   *
    * @returns {void}
    */
   useEffect(() => {

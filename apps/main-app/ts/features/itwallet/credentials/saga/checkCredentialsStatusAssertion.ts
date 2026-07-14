@@ -43,7 +43,8 @@ import { CredentialsVault } from "../utils/vault";
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
 /**
- * This saga is responsible to check the status assertion for each credential in the wallet.
+ * This saga is responsible to check the status assertion for each credential in
+ * the wallet.
  */
 export function* checkCredentialsStatusAssertion() {
   const isWalletValid = yield* select(itwLifecycleIsValidSelector);
@@ -106,8 +107,8 @@ export function* checkCredentialsStatusAssertion() {
 }
 
 /**
- * Saga that updates a specific credential status assertion without additional logic.
- * It is triggered by the user when the credential status is unknown.
+ * Saga that updates a specific credential status assertion without additional
+ * logic. It is triggered by the user when the credential status is unknown.
  */
 export function* handleCredentialStatusAssertionRetry(
   action: ActionType<typeof itwCredentialsRefreshStatusByType>

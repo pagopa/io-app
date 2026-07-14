@@ -40,8 +40,8 @@ const useCdcGoToService = () => {
 };
 
 /**
- * This hook determines and returns the appropriate primary action prop
- * for going to the CDC service.
+ * This hook determines and returns the appropriate primary action prop for
+ * going to the CDC service.
  */
 export const useSpecialCtaCdc = ():
   | IOScrollViewActions["primary"]

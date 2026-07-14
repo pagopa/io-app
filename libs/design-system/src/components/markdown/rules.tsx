@@ -45,8 +45,8 @@ type StyledSegment = {
 };
 
 /**
- * Recursively walks inline AST nodes and produces flat styled segments
- * with accumulated bold/italic/link state.
+ * Recursively walks inline AST nodes and produces flat styled segments with
+ * accumulated bold/italic/link state.
  */
 const flattenInlineNodes = (
   nodes: ReadonlyArray<MarkdownNode>,
@@ -100,8 +100,8 @@ const flattenInlineNodes = (
   }, []);
 
 /**
- * Renders a single styled segment as either a raw string
- * or an IOText element with the appropriate props.
+ * Renders a single styled segment as either a raw string or an IOText element
+ * with the appropriate props.
  */
 const renderSegment = (
   segment: StyledSegment,
@@ -150,10 +150,7 @@ const headingComponentMap: Record<string, HeadingComponent> = {
 
 /* ─── Block rendering helpers ─── */
 
-/**
- * Renders a paragraph block by flattening inline children
- * into styled segments.
- */
+/** Renders a paragraph block by flattening inline children into styled segments. */
 const renderParagraph = (
   node: MarkdownNode,
   context: RenderContext
@@ -175,10 +172,10 @@ const renderParagraph = (
 };
 
 /**
- * Creates a render rule for a heading level using the corresponding
- * DS heading component (H1-H6). This ensures headings inherit
- * dynamicTypeRamp, uppercase/letterSpacing (H5), legacy typeface (H6),
- * and theme colors automatically.
+ * Creates a render rule for a heading level using the corresponding DS heading
+ * component (H1-H6). This ensures headings inherit dynamicTypeRamp,
+ * uppercase/letterSpacing (H5), legacy typeface (H6), and theme colors
+ * automatically.
  */
 const makeHeadingRule =
   (Heading: HeadingComponent): RenderRule =>
@@ -338,9 +335,7 @@ const htmlRule: RenderRule = node => {
   return null;
 };
 
-/**
- * The complete set of default render rules for all supported node types.
- */
+/** The complete set of default render rules for all supported node types. */
 export const DEFAULT_RULES: Record<MarkdownNodeType, RenderRule> = {
   heading1: makeHeadingRule(headingComponentMap.heading1),
   heading2: makeHeadingRule(headingComponentMap.heading2),

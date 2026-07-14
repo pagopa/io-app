@@ -8,9 +8,11 @@ import WalletDetailsPagoPaPaymentCapability from "./WalletDetailsPagoPaPaymentCa
 type Props = { paymentMethod: WalletInfo };
 
 /**
- * This component allows the user to choose and change the common settings for a payment methods
+ * This component allows the user to choose and change the common settings for a
+ * payment methods
+ *
+ * @class
  * @param props
- * @constructor
  */
 const WalletDetailsPaymentMethodSettings = (props: Props): ReactElement => (
   <>

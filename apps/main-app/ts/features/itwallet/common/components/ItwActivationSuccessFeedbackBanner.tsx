@@ -15,7 +15,10 @@ import { IT_WALLET_SURVEY_EID_ACTIVATION_SUCCESS } from "../utils/constants";
 type Props = {
   /** Authentication method used: spid | cieidL2 | cieidL3 | ciepin */
   authMethod: string;
-  /** Current Documenti su IO status: active if eID was already valid before, not_active otherwise. */
+  /**
+   * Current Documenti su IO status: active if eID was already valid before,
+   * not_active otherwise.
+   */
   docStatus: "active" | "not_active";
 };
 

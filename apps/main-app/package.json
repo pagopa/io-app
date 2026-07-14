@@ -2,6 +2,18 @@
   "name": "@io-app/main-app",
   "version": "3.37.0-rc.4",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pagopa/io-app.git"
+  },
+  "browser": {
+    "crypto": "react-native-crypto",
+    "path": "path-browserify"
+  },
+  "react-native": {
+    "path": "path-browserify",
+    "crypto": "react-native-crypto"
+  },
   "scripts": {
     "start": "react-native start",
     "setup": "pnpm install && pnpm prepare",
@@ -41,12 +53,6 @@
     "lollipop_checks-uncomment": "./scripts/toggle-comments-on-lollipop-checks.sh uncomment ./ts/sagas/startup.ts",
     "dev-pod-install": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod install && cd ..",
     "dev-pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
   },
   "dependencies": {
     "@io-app/design-system": "workspace:@pagopa/io-app-design-system@*",
@@ -255,20 +261,14 @@
     "ts-node": "^7.0.1",
     "typescript-eslint": "^8.58.0"
   },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "oxfmt",
+      "eslint --fix"
+    ]
+  },
   "engines": {
     "node": ">=20"
-  },
-  "react-native": {
-    "path": "path-browserify",
-    "crypto": "react-native-crypto"
-  },
-  "browser": {
-    "crypto": "react-native-crypto",
-    "path": "path-browserify"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pagopa/io-app.git"
   },
   "standard-version": {
     "scripts": {

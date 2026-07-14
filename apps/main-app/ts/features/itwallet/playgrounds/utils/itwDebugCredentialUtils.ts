@@ -11,7 +11,10 @@ import {
 const EXPIRING_DAYS = 15;
 const SAFE_JWT_DAYS = 365;
 
-/** Statuses available for the PID — only JWT-based, since the wallet card does not support status assertions on the eID. */
+/**
+ * Statuses available for the PID — only JWT-based, since the wallet card does
+ * not support status assertions on the eID.
+ */
 export const PID_OVERRIDE_STATUSES: ReadonlyArray<ItwJwtCredentialStatus> = [
   "valid",
   "jwtExpiring",
@@ -38,11 +41,11 @@ export const getAvailableStatusOverrides = (
     : CREDENTIAL_OVERRIDE_STATUSES;
 
 /**
- * Returns a copy of the given credential modified so that
- * getCredentialStatus will naturally return the requested status.
+ * Returns a copy of the given credential modified so that getCredentialStatus
+ * will naturally return the requested status.
  *
- * This is intentionally kept in the playground module and never
- * imported by production code.
+ * This is intentionally kept in the playground module and never imported by
+ * production code.
  */
 export const applyStatusToCredential = (
   credential: CredentialMetadata,

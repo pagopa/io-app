@@ -9,8 +9,8 @@ type CodeBlockProps = {
 };
 
 /**
- * Theme-aware code block with a subtle background and border,
- * similar to GitHub's fenced code block styling.
+ * Theme-aware code block with a subtle background and border, similar to
+ * GitHub's fenced code block styling.
  */
 export const CodeBlock = ({ content }: CodeBlockProps) => {
   const theme = useIOTheme();

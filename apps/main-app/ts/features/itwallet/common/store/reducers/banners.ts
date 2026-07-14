@@ -6,14 +6,14 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwCloseBanner, itwShowBanner } from "../actions/banners";
 
 /**
- * Pseudo-infinite duration in days.
- * Used to hide banners "forever" or until app reset/reinstallation.
+ * Pseudo-infinite duration in days. Used to hide banners "forever" or until app
+ * reset/reinstallation.
  */
 const FOREVER = 100 * 365; // approx. 100 years
 
 /**
- * Identifiers for IT Wallet banners
- * To add a new banner add a new id to this type
+ * Identifiers for IT Wallet banners To add a new banner add a new id to this
+ * type
  */
 export type ItwBannerId =
   | "ageVerificationUsageDetails" // Age Verification usage banner placed in credential details screen
@@ -25,8 +25,8 @@ export type ItwBannerId =
   | "upgradeMDLDetails"; // Upgrade to IT Wallet banner placed in MDL details screen
 
 /**
- * Mapping between banner identifiers and the duration (expressed in days) for which they should be hidden
- * after each dismissal.
+ * Mapping between banner identifiers and the duration (expressed in days) for
+ * which they should be hidden after each dismissal.
  */
 export const bannerHideDurations: Record<ItwBannerId, NonEmptyArray<number>> = {
   discovery: [6 * 30], // ~6 months
@@ -50,9 +50,7 @@ export type ItwBannersState = Partial<
   >
 >;
 
-/**
- * Initial state for IT Wallet banners
- */
+/** Initial state for IT Wallet banners */
 export const itwBannersInitialState: ItwBannersState = {};
 
 const reducer = (

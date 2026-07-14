@@ -86,9 +86,9 @@ export function* watchZendeskSupportSaga() {
   });
 }
 /**
- *
- * @param getSession is the API call to get the session tokens.
- * The goal of this saga is to take Zendesk token from the BE in order to properly report to support.
+ * @param getSession Is the API call to get the session tokens. The goal of this
+ *   saga is to take Zendesk token from the BE in order to properly report to
+ *   support.
  */
 function* getZendeskTokenSaga(
   getSession: SessionManagerClient["getSessionState"]

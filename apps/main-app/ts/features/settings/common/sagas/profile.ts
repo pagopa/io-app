@@ -1,6 +1,4 @@
-/**
- * A saga that manages the Profile.
- */
+/** A saga that manages the Profile. */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -227,9 +225,10 @@ function* createOrUpdateProfileSaga(
 }
 
 /**
- * collection of predicates to forward chosen information:
- * - first element contains the handler to check if the event should be dispatched
- * - second element contains the callback to execute if the first element condition is verified
+ * Collection of predicates to forward chosen information: - first element
+ * contains the handler to check if the event should be dispatched - second
+ * element contains the callback to execute if the first element condition is
+ * verified
  */
 const profileChangePredicates: ReadonlyArray<
   [
@@ -256,11 +255,11 @@ const profileChangePredicates: ReadonlyArray<
 ];
 
 /**
- * Upsert the user's latest app version, only if it's different
- * from the one stored in the backend.
+ * Upsert the user's latest app version, only if it's different from the one
+ * stored in the backend.
  *
- * ⚠️ This saga will _block_ if the upsert request will be triggered
- * because of possible race conditions with the profile version.
+ * ⚠️ This saga will _block_ if the upsert request will be triggered because of
+ * possible race conditions with the profile version.
  */
 export function* upsertAppVersionSaga() {
   const profileState: ReturnType<typeof profileSelector> =
@@ -369,7 +368,9 @@ function* checkLoadedProfile(
 }
 
 /**
- * check if the current logged profile fiscal code is the same of the previous stored one
+ * Check if the current logged profile fiscal code is the same of the previous
+ * stored one
+ *
  * @param profileLoadSuccessAction
  */
 function* checkStoreHashedFiscalCode(

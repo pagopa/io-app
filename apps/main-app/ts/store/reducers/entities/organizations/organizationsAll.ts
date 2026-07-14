@@ -1,6 +1,4 @@
-/**
- * A reducer to store the organization names and fiscal codes
- */
+/** A reducer to store the organization names and fiscal codes */
 import { getType } from "typesafe-actions";
 
 import {
@@ -22,9 +20,9 @@ export type OrganizationsAllState = ReadonlyArray<Organization>;
 const INITIAL_STATE: OrganizationsAllState = [];
 
 /**
- * This reducer will only return local organizations in the future
- * after the necessary information is returned from the backend
- * TODO https://www.pivotaltracker.com/story/show/166898141
+ * This reducer will only return local organizations in the future after the
+ * necessary information is returned from the backend TODO
+ * https://www.pivotaltracker.com/story/show/166898141
  */
 const reducer = (
   state: OrganizationsAllState = INITIAL_STATE,

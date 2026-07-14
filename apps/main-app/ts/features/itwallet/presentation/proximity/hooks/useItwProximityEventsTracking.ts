@@ -18,9 +18,7 @@ type Params = {
   failure: ProximityFailure;
 };
 
-/**
- * Track errors occurred during the proximity presentation flow for analytics.
- */
+/** Track errors occurred during the proximity presentation flow for analytics. */
 
 export const useItwProximityEventsTracking = ({ failure }: Params) => {
   const hasGivenConsent = ItwProximityMachineContext.useSelector(

@@ -27,9 +27,9 @@ export const fetchCredentialsCatalogue = (env: Env, itwVersion: ItwVersion) =>
   );
 
 /**
- * Fetch locale bundles for the credential catalogue and authentic sources.
- * Only available for IT-Wallet spec v1.3.3. Returns an empty object if the
- * catalogue carries no localization metadata or the API is unavailable.
+ * Fetch locale bundles for the credential catalogue and authentic sources. Only
+ * available for IT-Wallet spec v1.3.3. Returns an empty object if the catalogue
+ * carries no localization metadata or the API is unavailable.
  *
  * @param itwVersion - IT-Wallet technical specs version
  * @param catalogue - A previously fetched Digital Credentials Catalogue

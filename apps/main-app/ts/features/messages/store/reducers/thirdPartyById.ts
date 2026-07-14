@@ -36,6 +36,7 @@ export const initialState: ThirdPartyById = {};
 
 /**
  * Store third party message content
+ *
  * @param state
  * @param action
  */

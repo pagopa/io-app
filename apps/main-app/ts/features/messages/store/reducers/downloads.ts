@@ -44,9 +44,7 @@ export const INITIAL_STATE: Downloads = {
   statusById: {}
 };
 
-/**
- * A reducer to store all downloads
- */
+/** A reducer to store all downloads */
 export const downloadsReducer = (
   state: Downloads = INITIAL_STATE,
   action: Action

@@ -105,8 +105,9 @@ export const useSendAarDelegationProposalScreenBottomSheet = ({
     component: <Body />,
     onDismiss: () => {
       /**
-       * This is a workaround that allows us to track the bottom-sheet close event only when
-       * the closing action is direct and not the result of another action
+       * This is a workaround that allows us to track the bottom-sheet close
+       * event only when the closing action is direct and not the result of
+       * another action
        */
       if (!ctaPressed.current) {
         trackSendAarNotificationOpeningMandateBottomSheetClosure();

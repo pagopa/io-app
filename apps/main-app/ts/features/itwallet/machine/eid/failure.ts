@@ -40,7 +40,8 @@ export type IssuanceFailure =
   TypedIssuanceFailures[keyof TypedIssuanceFailures];
 
 /**
- * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
+ * Type that maps known reasons with the corresponding failure, in order to
+ * avoid unknowns as much as possible.
  */
 export type ReasonTypeByFailure = {
   [IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY]: Errors.IssuerResponseError;
@@ -65,10 +66,12 @@ type TypedIssuanceFailures = {
 };
 
 /**
- * Maps an event dispatched by the eID issuance machine to a failure object.
- * If the event is not an error event, a generic failure is returned.
+ * Maps an event dispatched by the eID issuance machine to a failure object. If
+ * the event is not an error event, a generic failure is returned.
+ *
  * @param event - The event to map
- * @returns a failure object which can be used to fill the failure screen with the appropriate content
+ * @returns A failure object which can be used to fill the failure screen with
+ *   the appropriate content
  */
 export const mapEventToFailure = (
   event: EidIssuanceEvents

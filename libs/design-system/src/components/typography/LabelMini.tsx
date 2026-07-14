@@ -16,9 +16,7 @@ type LabelMiniProps = Omit<TypographicStyleProps, "ref"> &
     weight?: Extract<IOFontWeight, "Regular" | "Semibold">;
   };
 
-/**
- * `LabelMini` typographic style
- */
+/** `LabelMini` typographic style */
 export const LabelMini = ({
   ref,
   weight: customWeight,

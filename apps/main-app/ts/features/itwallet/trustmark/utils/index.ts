@@ -14,8 +14,9 @@ import {
 
 /**
  * Returns the document number for a credential, if applicable
- * @param credential the credential from which to extract the document number
- * @returns a string representing the document number, undefined if not found
+ *
+ * @param credential The credential from which to extract the document number
+ * @returns A string representing the document number, undefined if not found
  */
 export const getCredentialDocumentNumber = (
   parsedCredential: ParsedCredential
@@ -25,8 +26,9 @@ export const getCredentialDocumentNumber = (
 };
 
 /**
- * Maps a credential type to the correct type for the trustmark generation.
- * This type is used to display the correct credential name in the verifier website.
+ * Maps a credential type to the correct type for the trustmark generation. This
+ * type is used to display the correct credential name in the verifier website.
+ *
  * @param credential The stored credential
  * @returns The credential type for trustmark generation
  */
@@ -41,10 +43,11 @@ const getCredentialTypeForTrustmark = ({
 
 /**
  * Generates the trustmark URL for a credential.
+ *
  * @param env - The environment to use for the verifier base URL
  * @param walletInstanceAttestation - The wallet instance attestation
  * @param credential - The credential to generate the trustmark for
- * @returns the trustmark URL
+ * @returns The trustmark URL
  */
 export const getCredentialTrustmark = async (
   { VERIFIER_BASE_URL }: Env,
@@ -53,19 +56,13 @@ export const getCredentialTrustmark = async (
   metadata: CredentialMetadata
 ) => {
   const ioWallet = getIoWallet(itwVersion);
-  /**
-   * Create the crypto context for the WIA
-   */
+  /** Create the crypto context for the WIA */
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
-  /**
-   * Get the document number from the credential
-   */
+  /** Get the document number from the credential */
   const docNumber = getCredentialDocumentNumber(metadata.parsedCredential);
 
-  /**
-   * Generate the trustmark
-   */
+  /** Generate the trustmark */
   const { jwt, expirationTime } =
     await ioWallet.Trustmark.getCredentialTrustmark({
       walletInstanceAttestation,

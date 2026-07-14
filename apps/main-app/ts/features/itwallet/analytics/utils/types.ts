@@ -10,22 +10,17 @@ export type KoState = {
 export type MixPanelCredentialVersion = "V2" | "V3";
 
 /**
- * This is the list of credentials that are tracked in MixPanel
- * ITW_ID_V2: PersonIdentificationData (obtained with Documenti su IO)
- * ITW_PG_V2: mDL
- * ITW_TS_V2: EuropeanHealthInsuranceCard
- * ITW_CED_V2: EuropeanDisabilityCard
- * ITW_PID: PID (obtained with IT Wallet)
- * ITW_PG_V3: mDL (obtained with IT Wallet)
- * ITW_TS_V3: EuropeanHealthInsuranceCard (obtained with IT Wallet)
- * ITW_CED_V3: EuropeanDisabilityCard (obtained with IT Wallet)
- * ITW_ED: ED (obtained with IT Wallet)
- * ITW_EE: EE (obtained with IT Wallet)
- * ITW_RES: Residency (obtained with IT Wallet)
- * ITW_EDIP: Education Diploma (obtained with IT Wallet)
- * ITW_EDAT: Education Attendance (obtained with IT Wallet)
- * ITW_AV: Age Verification (obtained with IT Wallet)
- * UNKNOWN: placeholder used when a credential exists in the app but is not yet tracked on Mixpanel
+ * This is the list of credentials that are tracked in MixPanel ITW_ID_V2:
+ * PersonIdentificationData (obtained with Documenti su IO) ITW_PG_V2: mDL
+ * ITW_TS_V2: EuropeanHealthInsuranceCard ITW_CED_V2: EuropeanDisabilityCard
+ * ITW_PID: PID (obtained with IT Wallet) ITW_PG_V3: mDL (obtained with IT
+ * Wallet) ITW_TS_V3: EuropeanHealthInsuranceCard (obtained with IT Wallet)
+ * ITW_CED_V3: EuropeanDisabilityCard (obtained with IT Wallet) ITW_ED: ED
+ * (obtained with IT Wallet) ITW_EE: EE (obtained with IT Wallet) ITW_RES:
+ * Residency (obtained with IT Wallet) ITW_EDIP: Education Diploma (obtained
+ * with IT Wallet) ITW_EDAT: Education Attendance (obtained with IT Wallet)
+ * ITW_AV: Age Verification (obtained with IT Wallet) UNKNOWN: placeholder used
+ * when a credential exists in the app but is not yet tracked on Mixpanel
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const mixPanelCredentials = [
@@ -134,14 +129,10 @@ export type TrackItwBannerProperties = {
 };
 
 /**
- * This map is used to map the credentials status to the MixPanel credential status (not for eID)
- * valid: valid
- * invalid: not_valid
- * expired: expired
- * expiring: expiring
- * jwtExpired: verification_expired
- * jwtExpiring: expiring_verification
- * unknown: unknown
+ * This map is used to map the credentials status to the MixPanel credential
+ * status (not for eID) valid: valid invalid: not_valid expired: expired
+ * expiring: expiring jwtExpired: verification_expired jwtExpiring:
+ * expiring_verification unknown: unknown
  */
 export const CREDENTIAL_STATUS_MAP: Record<
   ItwCredentialStatus,

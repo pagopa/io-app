@@ -174,7 +174,9 @@ describe("test idpay timeline reducer and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayTimelinePageGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayTimelinePageGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d"
+      })
     );
     store.dispatch(
       idpayTimelinePageGet.success({
@@ -195,7 +197,9 @@ describe("test idpay timeline reducer and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayTimelinePageGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayTimelinePageGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d"
+      })
     );
     store.dispatch(idpayTimelinePageGet.failure(mockFailure));
 

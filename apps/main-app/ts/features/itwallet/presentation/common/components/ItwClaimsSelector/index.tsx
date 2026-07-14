@@ -31,37 +31,30 @@ const COLLAPSED_RADIUS_THRESHOLD = 0.001;
 const COLLAPSIBLE_BORDER = 1;
 
 type Props = {
-  /**
-   * Accessibilty
-   */
+  /** Accessibilty */
   accessibilityLabel?: string;
-  /**
-   * Credential type to display as title of the accordion
-   */
+  /** Credential type to display as title of the accordion */
   credentialType: string;
   /**
    * Whether the accordion starts expanded.
+   *
    * @default false
    */
   defaultExpanded?: boolean;
-  /**
-   * The list of items to display within the accordion.
-   */
+  /** The list of items to display within the accordion. */
   items: Array<ClaimDisplayFormat>;
-  /**
-   * Function called when a item is selected.
-   */
+  /** Function called when a item is selected. */
   onItemSelected?: (item: ClaimDisplayFormat, selected: boolean) => void;
   /**
-   * Function called when the accordion is toggled to collapsed or expanded state.
+   * Function called when the accordion is toggled to collapsed or expanded
+   * state.
    */
   onToggle?: (expanded: boolean) => void;
-  /**
-   * The IDs of the selected items, when the component is controlled.
-   */
+  /** The IDs of the selected items, when the component is controlled. */
   selectedItemIds?: Array<string>;
   /**
    * Enable the selection of items with a checkbox.
+   *
    * @default false
    */
   selectionEnabled?: boolean;

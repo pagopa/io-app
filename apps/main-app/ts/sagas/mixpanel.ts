@@ -22,9 +22,7 @@ import { GlobalState } from "../store/reducers/types";
 import { ReduxSagaEffect } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 
-/**
- * check, and eventually ask, about mixpanel opt-in
- */
+/** Check, and eventually ask, about mixpanel opt-in */
 export function* askMixpanelOptIn() {
   const isMixpanelEnabledResult: ReturnType<typeof isMixpanelEnabled> =
     yield* select(isMixpanelEnabled);

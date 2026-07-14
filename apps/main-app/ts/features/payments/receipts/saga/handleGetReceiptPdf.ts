@@ -16,8 +16,10 @@ import { byteArrayToBase64 } from "../utils";
 import { DownloadReceiptHeaders } from "../utils/types";
 
 /**
- * Handle the remote call to get the transaction receipt pdf from the biz events API
- @param getPaymentMethods
+ * Handle the remote call to get the transaction receipt pdf from the biz events
+ * API
+ *
+ * @param getPaymentMethods
  * @param action
  */
 export function* handleGetReceiptPdf(

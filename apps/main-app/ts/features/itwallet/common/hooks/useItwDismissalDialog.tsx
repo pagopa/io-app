@@ -25,13 +25,18 @@ type ItwDismissalDialogProps = {
 };
 
 /**
- * Allows to show a dismissal dialog in which the user must confirm the desire to close the current flow.
- * This hook also handles the hardware back button to show the dialog when the user presses the back button.
- * @param handleDismiss - An optionalfunction that will be called when the user confirms the dismissal.
- * @param dismissalContext - An optional dismissal context to be used for analytics tracking.
+ * Allows to show a dismissal dialog in which the user must confirm the desire
+ * to close the current flow. This hook also handles the hardware back button to
+ * show the dialog when the user presses the back button.
+ *
+ * @param handleDismiss - An optionalfunction that will be called when the user
+ *   confirms the dismissal.
+ * @param dismissalContext - An optional dismissal context to be used for
+ *   analytics tracking.
  * @param enabled - If false, disables the internal hardware back handler.
- * @param customLabels - Optional object to override the default title, message, confirm button label, and cancel button label.
- * @returns a function that can be used to show the dialog
+ * @param customLabels - Optional object to override the default title, message,
+ *   confirm button label, and cancel button label.
+ * @returns A function that can be used to show the dialog
  */
 export const useItwDismissalDialog = ({
   handleDismiss,

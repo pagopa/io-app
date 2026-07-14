@@ -2,6 +2,7 @@ import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 /**
  * A reducer for the Installation state.
+ *
  * @flow
  */
 import { getType } from "typesafe-actions";

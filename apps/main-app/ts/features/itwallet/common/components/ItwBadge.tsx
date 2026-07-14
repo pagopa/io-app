@@ -22,9 +22,7 @@ type Props = {
   variant?: "filled" | "outlined";
 };
 
-/**
- * This component renders the logo of the IT Wallet, image and text.
- */
+/** This component renders the logo of the IT Wallet, image and text. */
 // TODO: replace with the correct image [SIW-2412]
 export const ItwBadge = memo(({ variant = "filled" }: Props) => {
   const SkiaComponent = skiaComponentMap[variant];

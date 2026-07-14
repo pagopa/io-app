@@ -1,6 +1,4 @@
-/**
- * Action types and action creator related to the Search.
- */
+/** Action types and action creator related to the Search. */
 
 import * as O from "fp-ts/lib/Option";
 import { ActionType, createStandardAction } from "typesafe-actions";

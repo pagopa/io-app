@@ -55,37 +55,23 @@ export type IOButtonProps = WithTestID<
       ComponentProps<typeof Pressable>,
       "accessibilityHint" | "accessibilityLabel" | "disabled"
     > & {
-      /**
-       * @default button
-       */
+      /** @default button */
       accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
-      /**
-       * @default primary
-       */
+      /** @default primary */
       color?: IOButtonColor;
-      /**
-       * @default false
-       */
+      /** @default false */
       fullWidth?: boolean;
       icon?: IOIcons;
-      /**
-       * @default start
-       */
+      /** @default start */
       iconPosition?: "end" | "start";
       label: string;
-      /**
-       * @default false
-       */
+      /** @default false */
       loading?: boolean;
-      /**
-       * @default 1
-       */
+      /** @default 1 */
       numberOfLines?: number;
       onPress: (event: GestureResponderEvent) => void;
       ref?: Ref<View>;
-      /**
-       * @default auto
-       */
+      /** @default auto */
       textAlign?: TextStyle["textAlign"];
     }
 >;

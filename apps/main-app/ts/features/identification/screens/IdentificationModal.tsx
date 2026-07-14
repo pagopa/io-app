@@ -176,10 +176,10 @@ export const IdentificationModal = () => {
       }
       onIdentificationSuccess(isBiometric);
       /**
-       * if the identification was successful, if at least two minutes
-       * have passed since the last time the app was placed in the
-       * background and returned to the foreground then the dispatch
-       * of the action that refreshes the session will be performed
+       * If the identification was successful, if at least two minutes have
+       * passed since the last time the app was placed in the background and
+       * returned to the foreground then the dispatch of the action that
+       * refreshes the session will be performed
        */
       if (hasTwoMinutesElapsedSinceLastActivity && isFastLoginEnabled) {
         onSuccessDispatchTokenRefresh();

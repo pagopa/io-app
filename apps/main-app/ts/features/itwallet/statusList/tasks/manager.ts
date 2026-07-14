@@ -17,7 +17,8 @@ export {
 
 /**
  * Registers the ITW Status List background fetch task with expo-background-task
- * if the background task API is available and the task is not already registered.
+ * if the background task API is available and the task is not already
+ * registered.
  */
 export const registerItwStatusListFetchTask = async (): Promise<void> => {
   try {
@@ -40,9 +41,11 @@ export const registerItwStatusListFetchTask = async (): Promise<void> => {
 };
 
 /**
- * Unregister the ITW Status List background fetch task with expo-background-task.
+ * Unregister the ITW Status List background fetch task with
+ * expo-background-task.
  *
- * No-op if the task is not registered; errors during unregistration are ignored.
+ * No-op if the task is not registered; errors during unregistration are
+ * ignored.
  */
 export const unregisterItwStatusListFetchTask = async (): Promise<void> => {
   try {

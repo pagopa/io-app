@@ -11,9 +11,7 @@ import {
   IOSpacingScale
 } from "./IOSpacing";
 
-/**
- * A collection of default styles used within IO App.
- */
+/** A collection of default styles used within IO App. */
 
 interface IOVisualCostants {
   appMarginDefault: IOAppMargin;
@@ -64,9 +62,7 @@ export const IOStyles = StyleSheet.create({
   }
 });
 
-/**
- * BUTTON STYLES
- */
+/** BUTTON STYLES */
 
 /* SIZE
 - Height for classic buttons
@@ -159,9 +155,7 @@ export const IOIconButtonStyles = StyleSheet.create({
   }
 });
 
-/**
- * LIST ITEM STYLES
- */
+/** LIST ITEM STYLES */
 
 interface IOListItemVisualParams {
   actionMargin: IOSpacingScale;
@@ -208,9 +202,7 @@ export const IOModuleStyles = StyleSheet.create({
   }
 });
 
-/**
- * SELECTION ITEM STYLES
- */
+/** SELECTION ITEM STYLES */
 
 interface IOSelectionTickVisualParams {
   borderWidth: number;

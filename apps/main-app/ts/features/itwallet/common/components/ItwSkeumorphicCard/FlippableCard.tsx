@@ -15,7 +15,8 @@ export type FlippableCardProps = {
 };
 
 /**
- * Renders a component which can be flipped to show both of its sides with an animation.
+ * Renders a component which can be flipped to show both of its sides with an
+ * animation.
  */
 const FlippableCard = ({
   FrontComponent,

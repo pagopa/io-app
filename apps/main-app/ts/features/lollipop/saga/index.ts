@@ -118,9 +118,7 @@ export function* generateLollipopKeySaga() {
   }
 }
 
-/**
- * Generates a new crypto key pair.
- */
+/** Generates a new crypto key pair. */
 function* cryptoKeyGenerationSaga(
   keyTag: string,
   previousKeyTag: O.Option<string>
@@ -130,9 +128,7 @@ function* cryptoKeyGenerationSaga(
   yield* call(generateCryptoKeyPair, keyTag);
 }
 
-/**
- * Deletes the crypto key pair corresponding to the provided `keyTag`.
- */
+/** Deletes the crypto key pair corresponding to the provided `keyTag`. */
 function* deleteCryptoKeyPair(keyTag: string) {
   // Key is persisted even after uninstalling the application on iOS.
   const keyAlreadyExistsOnKeystore = yield* call(checkPublicKeyExists, keyTag);
@@ -151,9 +147,7 @@ function* deleteCryptoKeyPair(keyTag: string) {
   }
 }
 
-/**
- * Deletes a previous saved crypto key pair.
- */
+/** Deletes a previous saved crypto key pair. */
 function* deletePreviousCryptoKeyPair(keyTag: O.Option<string>) {
   if (O.isSome(keyTag)) {
     yield* call(deleteCryptoKeyPair, keyTag.value);
@@ -176,9 +170,7 @@ export function* getKeyInfo() {
   return yield* call(generateKeyInfo, keyTag, publicKey);
 }
 
-/**
- * Generates a new crypto key pair.
- */
+/** Generates a new crypto key pair. */
 function* generateCryptoKeyPair(keyTag: string) {
   try {
     // Remove an already existing key with the same tag.

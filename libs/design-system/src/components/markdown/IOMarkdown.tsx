@@ -37,18 +37,15 @@ export type IOMarkdownProps = {
 };
 
 /**
- * Full-featured markdown component that renders markdown content
- * using design system primitives.
+ * Full-featured markdown component that renders markdown content using design
+ * system primitives.
  *
  * @remarks
- * This component is still experimental. Check that it is correctly
- * formatting your text before proceeding to use it.
- *
- * Supports headings, paragraphs, bold, italic, links, lists,
- * blockquotes (as Banner), images, code, horizontal rules, and HTML breaks.
- *
- * Individual node types can be disabled via `disabledRules`, and
- * render rules can be overridden via the `rules` prop.
+ *   This component is still experimental. Check that it is correctly formatting
+ *   your text before proceeding to use it. Supports headings, paragraphs, bold,
+ *   italic, links, lists, blockquotes (as Banner), images, code, horizontal
+ *   rules, and HTML breaks. Individual node types can be disabled via
+ *   `disabledRules`, and render rules can be overridden via the `rules` prop.
  */
 export const IOMarkdown = ({
   content,
