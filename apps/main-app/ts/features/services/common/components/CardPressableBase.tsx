@@ -2,7 +2,7 @@ import {
   PressableBaseProps,
   useScaleAnimation,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { PropsWithChildren, useCallback } from "react";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 

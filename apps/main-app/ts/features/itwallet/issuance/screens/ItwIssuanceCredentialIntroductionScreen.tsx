@@ -4,12 +4,11 @@ import {
   IOColors,
   IOMarkdown,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { sequenceS } from "fp-ts/lib/Apply";
 import { useCallback, useMemo } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -24,12 +23,12 @@ import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/pr
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import {
   selectCredentialTypeOption,
-  selectCredentialIntroContentOption,
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
+import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 
 const introHeroUri = Image.resolveAssetSource(introHeroSource).uri;
 
@@ -38,10 +37,6 @@ export const ItwIssuanceCredentialIntroductionScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
-  const introductionContentOption =
-    ItwCredentialIssuanceMachineContext.useSelector(
-      selectCredentialIntroContentOption
-    );
 
   useHeaderSecondLevel({
     title: "",
@@ -49,30 +44,25 @@ export const ItwIssuanceCredentialIntroductionScreen = () => {
   });
 
   return pipe(
-    sequenceS(O.Monad)({
-      credentialType: credentialTypeOption,
-      markdownContent: introductionContentOption
-    }),
+    credentialTypeOption,
     O.fold(
       () => <ItwGenericErrorContent />, // This should never happen
-      innerProps => <ContentView {...innerProps} />
+      credentialType => <ContentView credentialType={credentialType} />
     )
   );
 };
 
 type ContentViewProps = {
   credentialType: string;
-  markdownContent: string;
 };
 
-export const ContentView = ({
-  credentialType,
-  markdownContent
-}: ContentViewProps) => {
+export const ContentView = ({ credentialType }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const markdownContent =
+    useIOSelector(itwCredentialIntroContentSelector(credentialType)) ?? "";
   const credentialName = useItwCredentialName(credentialType);
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credentialType, isItwL3),
@@ -107,7 +97,7 @@ export const ContentView = ({
         source={{ uri: introHeroUri }}
         style={styles.hero}
       />
-      <ContentWrapper marginTop={24}>
+      <ContentWrapper style={{ marginTop: 24 }}>
         <H2>{credentialName}</H2>
         <VSpacer size={16} />
         <View style={styles.contentBox}>

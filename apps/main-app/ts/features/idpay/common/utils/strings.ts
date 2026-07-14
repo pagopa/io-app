@@ -14,7 +14,7 @@ export const formatNumberCurrencyCents = (cents: number) =>
 
 export const formatNumberCurrencyOrDefault = (
   input: number | undefined,
-  defaultValue: string = "-"
+  defaultValue = "-"
 ) =>
   pipe(
     input,
@@ -25,7 +25,7 @@ export const formatNumberCurrencyOrDefault = (
 
 export const formatNumberCurrencyCentsOrDefault = (
   input: number | undefined,
-  defaultValue: string = "-"
+  defaultValue = "-"
 ) =>
   pipe(
     input,
@@ -47,7 +47,7 @@ export const formatNumberCurrencyCentsOrDefault = (
  */
 export const formatAbsNumberAmountCentsOrDefault = (
   amount: number | undefined,
-  defaultValue: string = "-"
+  defaultValue = "-"
 ) =>
   pipe(
     amount,
@@ -65,8 +65,8 @@ export const formatAbsNumberAmountCentsOrDefault = (
  */
 export const formatDateOrDefault = (
   input?: Date,
-  defaultValue: string = "-",
-  dateFormat: string = "D MMMM YYYY, HH:mm"
+  defaultValue = "-",
+  dateFormat = "D MMMM YYYY, HH:mm"
 ) =>
   pipe(
     input,

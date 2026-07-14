@@ -9,7 +9,7 @@ import {
   ListItemHeader,
   ListItemInfo,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Route, useRoute } from "@react-navigation/native";
 
 import I18n from "i18next";
@@ -41,7 +41,7 @@ export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
 }>;
 
-const scrollTriggerOffsetValue: number = 88;
+const scrollTriggerOffsetValue = 88;
 
 const CgnMerchantDetailScreen = () => {
   // -------    hooks

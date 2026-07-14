@@ -17,7 +17,7 @@ import {
   ListItemHeader,
   SearchInput,
   SearchInputRef
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { Institution } from "../../../../../definitions/services/Institution";
@@ -33,7 +33,7 @@ import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibil
 import * as analytics from "../../common/analytics";
 
 const INPUT_PADDING: IOSpacingScale = 16;
-const MIN_QUERY_LENGTH: number = 3;
+const MIN_QUERY_LENGTH = 3;
 
 type InstitutionListItemComponentProps = {
   item: Institution;

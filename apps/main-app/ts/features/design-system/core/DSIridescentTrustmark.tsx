@@ -1,4 +1,4 @@
-import { H4, useIOTheme, VSpacer } from "@pagopa/io-app-design-system";
+import { H4, useIOTheme, VSpacer } from "@io-app/design-system";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
 import { ItwStoredCredentialsMocks } from "../../itwallet/common/utils/itwMocksUtils";

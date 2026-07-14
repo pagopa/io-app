@@ -1,4 +1,4 @@
-import { ListItemAction } from "@pagopa/io-app-design-system";
+import { ListItemAction } from "@io-app/design-system";
 import { constVoid } from "fp-ts/function";
 import I18n from "i18next";
 import { memo } from "react";

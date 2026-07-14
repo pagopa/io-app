@@ -7,7 +7,7 @@ import {
   IOVisualCostants,
   Icon,
   hexToRgba
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";

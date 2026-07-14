@@ -8,7 +8,7 @@ import {
   IOVisualCostants,
   TestID,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 import I18n from "i18next";
 import { WithTestID } from "../../../../types/WithTestID";
@@ -28,7 +28,7 @@ export type FeaturedServiceCardProps = WithTestID<{
 export const CARD_WIDTH = 210;
 
 const cardPadding: IOSpacingScale = 16;
-const cardBorderRadius: number = 8;
+const cardBorderRadius = 8;
 /* Space between the `Avatar` and the content below */
 const cardSafeInnerSpace: IOSpacingScale = 16;
 

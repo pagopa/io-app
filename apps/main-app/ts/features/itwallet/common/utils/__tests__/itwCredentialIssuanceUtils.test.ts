@@ -6,7 +6,8 @@ import {
 import {
   CredentialAccessToken,
   CredentialBundle,
-  CredentialFormat
+  CredentialFormat,
+  CredentialOfferResolved
 } from "../itwTypesUtils";
 import { Env } from "../environment";
 import { getWalletUnitAttestation } from "../itwAttestationUtils";
@@ -124,6 +125,28 @@ describe("requestCredential", () => {
     ISSUANCE_REDIRECT_URI: "ioit://credential"
   } as unknown as Env;
 
+  const buildResolvedCredentialOffer = (authorizationCodeGrant: {
+    scope: string;
+    authorizationServer?: string;
+    issuerState?: string;
+  }): CredentialOfferResolved => ({
+    offer: {
+      credential_issuer: offerCredentialIssuer,
+      credential_configuration_ids: [offerCredentialConfigurationId],
+      grants: {
+        authorization_code: {
+          scope: authorizationCodeGrant.scope,
+          authorization_server: authorizationCodeGrant.authorizationServer,
+          issuer_state: authorizationCodeGrant.issuerState
+        }
+      }
+    },
+    grantDetails: {
+      grantType: "authorization_code",
+      authorizationCodeGrant
+    }
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
     evaluateIssuerTrust.mockResolvedValue({
@@ -165,30 +188,16 @@ describe("requestCredential", () => {
       walletInstanceAttestation: "wia",
       skipMdocIssuance: true,
       pid,
-      resolvedCredentialOffer: {
-        offer: {
-          credential_issuer: offerCredentialIssuer,
-          credential_configuration_ids: [offerCredentialConfigurationId],
-          grants: {
-            authorization_code: {
-              scope: "education_degree",
-              authorization_server: offerCredentialIssuer,
-              issuer_state: "issuer-state"
-            }
-          }
-        },
-        grantDetails: {
-          grantType: "authorization_code",
-          authorizationCodeGrant: {
-            scope: "education_degree",
-            authorizationServer: offerCredentialIssuer,
-            issuerState: "issuer-state"
-          }
-        }
-      }
+      resolvedCredentialOffer: buildResolvedCredentialOffer({
+        scope: "education_degree",
+        authorizationServer: offerCredentialIssuer,
+        issuerState: "issuer-state"
+      })
     });
 
-    expect(evaluateIssuerTrust).toHaveBeenCalledWith(offerCredentialIssuer);
+    expect(evaluateIssuerTrust).toHaveBeenCalledWith(offerCredentialIssuer, {
+      authorizationServer: offerCredentialIssuer
+    });
     expect(env.WALLET_EAA_PROVIDER_BASE_URL.value).not.toHaveBeenCalled();
     expect(startUserAuthorization).toHaveBeenCalledWith(
       expect.any(Object),
@@ -203,6 +212,66 @@ describe("requestCredential", () => {
     ]);
     expect(result.evaluatedDcqlQuery).toBe(evaluatedDcqlQueryResult);
   });
+
+  test.each([
+    {
+      name: "credential offer with full grant details",
+      resolvedCredentialOffer: buildResolvedCredentialOffer({
+        scope: "education_degree",
+        authorizationServer: offerCredentialIssuer,
+        issuerState: "issuer-state"
+      }),
+      expectedIssuer: offerCredentialIssuer,
+      expectedAuthorizationServer: offerCredentialIssuer,
+      expectedScope: "education_degree",
+      expectedIssuerState: "issuer-state"
+    },
+    {
+      name: "credential offer with scope only",
+      resolvedCredentialOffer: buildResolvedCredentialOffer({
+        scope: "education_degree"
+      }),
+      expectedIssuer: offerCredentialIssuer,
+      expectedAuthorizationServer: undefined,
+      expectedScope: "education_degree",
+      expectedIssuerState: undefined
+    },
+    {
+      name: "catalogue flow without credential offer",
+      resolvedCredentialOffer: undefined,
+      expectedIssuer: defaultIssuer,
+      expectedAuthorizationServer: undefined,
+      expectedScope: undefined,
+      expectedIssuerState: undefined
+    }
+  ])(
+    "forwards the grant details to trust evaluation and PAR for the $name",
+    async ({
+      resolvedCredentialOffer,
+      expectedIssuer,
+      expectedAuthorizationServer,
+      expectedScope,
+      expectedIssuerState
+    }) => {
+      await requestCredential({
+        env,
+        itwVersion: "1.3.3",
+        credentialType: "education_degree",
+        walletInstanceAttestation: "wia",
+        skipMdocIssuance: true,
+        pid,
+        resolvedCredentialOffer
+      });
+
+      expect(evaluateIssuerTrust).toHaveBeenCalledWith(expectedIssuer, {
+        authorizationServer: expectedAuthorizationServer
+      });
+
+      const [, , , authorizationContext] = startUserAuthorization.mock.calls[0];
+      expect(authorizationContext.scope).toBe(expectedScope);
+      expect(authorizationContext.issuerState).toBe(expectedIssuerState);
+    }
+  );
 
   it("rejects resolved credential offers without supported configuration IDs", async () => {
     evaluateIssuerTrust.mockResolvedValue({

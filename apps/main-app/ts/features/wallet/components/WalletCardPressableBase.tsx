@@ -2,7 +2,7 @@ import {
   PressableBaseProps,
   useScaleAnimation,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 
 import { Pressable } from "react-native";

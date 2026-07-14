@@ -28,7 +28,9 @@ import {
   sendVisitTheWebsiteUrlSelector,
   isSendLollipopPlaygroundEnabledSelector,
   isCGNDiscoveryBannerEnabledSelector,
-  engagementCGNDiscoveryBannerSelector
+  engagementCGNDiscoveryBannerSelector,
+  fseDiscoveryBannerWebUrlSelector,
+  isFseDiscoveryBannerDismissableSelector
 } from "../remoteConfig";
 
 describe("remoteConfig", () => {
@@ -1487,5 +1489,93 @@ describe("engagementCGNDiscoveryBannerSelector", () => {
         "en-EN": "test"
       }
     });
+  });
+});
+
+describe("fseDiscoveryBannerWebUrlSelector", () => {
+  const webUrl = "https://example.com/fse";
+
+  it("should return undefined if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+
+    expect(fseDiscoveryBannerWebUrlSelector(state)).toBeUndefined();
+  });
+
+  it("should return undefined if the FSE landing banner web url is missing", () => {
+    const state = {
+      remoteConfig: O.some({
+        fse: {
+          landingBanner: {}
+        }
+      })
+    } as GlobalState;
+
+    expect(fseDiscoveryBannerWebUrlSelector(state)).toBeUndefined();
+  });
+
+  it("should return the FSE landing banner web url", () => {
+    const state = {
+      remoteConfig: O.some({
+        fse: {
+          landingBanner: {
+            engagement_url: webUrl
+          }
+        }
+      })
+    } as GlobalState;
+
+    expect(fseDiscoveryBannerWebUrlSelector(state)).toBe(webUrl);
+  });
+});
+
+describe("isFseDiscoveryBannerDismissableSelector", () => {
+  it("should return false if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+
+    expect(isFseDiscoveryBannerDismissableSelector(state)).toBe(false);
+  });
+
+  it("should return false if the FSE landing banner dismissable flag is missing", () => {
+    const state = {
+      remoteConfig: O.some({
+        fse: {
+          landingBanner: {}
+        }
+      })
+    } as GlobalState;
+
+    expect(isFseDiscoveryBannerDismissableSelector(state)).toBe(false);
+  });
+
+  it("should return false if the FSE landing banner is not dismissable", () => {
+    const state = {
+      remoteConfig: O.some({
+        fse: {
+          landingBanner: {
+            is_dismissable: false
+          }
+        }
+      })
+    } as GlobalState;
+
+    expect(isFseDiscoveryBannerDismissableSelector(state)).toBe(false);
+  });
+
+  it("should return true if the FSE landing banner is dismissable", () => {
+    const state = {
+      remoteConfig: O.some({
+        fse: {
+          landingBanner: {
+            is_dismissable: true
+          }
+        }
+      })
+    } as GlobalState;
+
+    expect(isFseDiscoveryBannerDismissableSelector(state)).toBe(true);
   });
 });

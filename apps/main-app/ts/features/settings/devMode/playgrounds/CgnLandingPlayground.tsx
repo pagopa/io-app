@@ -6,7 +6,7 @@ import {
   FooterActionsInline,
   useFooterActionsInlineMeasurements,
   IOSpacing
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useState } from "react";
 import { View } from "react-native";
 import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";

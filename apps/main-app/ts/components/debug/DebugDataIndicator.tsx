@@ -4,7 +4,7 @@ import {
   IOText,
   Icon,
   hexToRgba
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import _ from "lodash";
 import { Pressable, StyleSheet } from "react-native";
 import { useIOSelector } from "../../store/hooks";

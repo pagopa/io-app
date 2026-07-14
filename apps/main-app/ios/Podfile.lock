@@ -1,8 +1,8 @@
 PODS:
   - Alamofire (5.11.2)
   - boost (1.84.0)
-  - BVLinearGradient (2.5.6):
-    - React
+  - BVLinearGradient (2.8.3):
+    - React-Core
   - CieSDK (0.1.21)
   - DoubleConversion (1.1.6)
   - EXApplication (55.0.15):
@@ -4420,7 +4420,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 400275dd1c6d87d95a041861d2a59da4b520a203
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
-  BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
+  BVLinearGradient: cb006ba232a1f3e4f341bb62c42d1098c284da70
   CieSDK: 832ee98a89d0fc79c1a429c6ad8f31a056741d59
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   EXApplication: 82a44fa8236bb644a805ee21e64054eeb01d22ea
@@ -4443,7 +4443,7 @@ SPEC CHECKSUMS:
   FBLazyVector: 06b1c8278e6e1b31ef68e9e14c296b7872e79e48
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  hermes-engine: 9c45a1dcb85eca692601d2f4fff763b820c8176d
+  hermes-engine: a9fa6e476e53cfc4bec161780fc1164385578488
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
   IoReactNativeIso18013: 730061a6443f611f163c38ec49b6dc5a4aae3f81

@@ -3,7 +3,7 @@ import {
   IOSkeleton,
   ListItemTransaction,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { View } from "react-native";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";

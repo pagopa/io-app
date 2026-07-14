@@ -5,7 +5,7 @@ import {
   HSpacer,
   IOSkeleton,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 import {
   createRef,

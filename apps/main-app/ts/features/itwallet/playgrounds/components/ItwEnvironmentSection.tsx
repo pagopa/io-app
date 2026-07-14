@@ -1,8 +1,4 @@
-import {
-  ListItemHeader,
-  RadioGroup,
-  RadioItem
-} from "@pagopa/io-app-design-system";
+import { ListItemHeader, RadioGroup, RadioItem } from "@io-app/design-system";
 import { Alert, View } from "react-native";
 import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

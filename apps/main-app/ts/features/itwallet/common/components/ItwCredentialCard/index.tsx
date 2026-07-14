@@ -4,7 +4,7 @@ import {
   IOText,
   Tag,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import Color from "color";
 import I18n from "i18next";
 import { memo, useMemo } from "react";

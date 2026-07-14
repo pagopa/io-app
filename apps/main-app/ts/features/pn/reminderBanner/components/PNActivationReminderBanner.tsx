@@ -1,4 +1,4 @@
-import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { Banner, IOVisualCostants } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useRef } from "react";
 import { StyleSheet, View } from "react-native";
