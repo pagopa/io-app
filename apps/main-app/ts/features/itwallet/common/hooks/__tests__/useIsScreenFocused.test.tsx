@@ -1,6 +1,7 @@
 import { NavigationContext } from "@react-navigation/native";
 import { act, renderHook } from "@testing-library/react-native";
 import { PropsWithChildren } from "react";
+
 import { useIsScreenFocused } from "../useIsScreenFocused";
 
 type FocusListener = () => void;
@@ -11,7 +12,7 @@ const createNavigationStub = (initialFocused: boolean) => {
     isFocused: () => initialFocused,
     addListener
   };
-  const getListener = (event: "focus" | "blur"): FocusListener =>
+  const getListener = (event: "blur" | "focus"): FocusListener =>
     addListener.mock.calls.find(([e]) => e === event)?.[1];
   return { navigation, getListener };
 };
