@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
+
 import { useIOTheme } from "../../context";
 import { IOSelectionListItemVisualParams, IOSpacer } from "../../core";
 import { IOButton } from "../buttons";
@@ -15,26 +16,26 @@ import { BodySmall, H6 } from "../typography";
 import { ModuleStatic } from "./ModuleStatic";
 import { PressableModuleBase } from "./PressableModuleBase";
 
+export type ModuleCheckoutProps = BaseProps | LoadingProps;
+
+type BaseProps = ImageProps & {
+  ctaText?: string;
+  isLoading?: false;
+  onPress: () => void;
+  paymentLogo?: IOLogoPaymentType;
+  subtitle?: string;
+  title: string;
+};
+
+type ImageProps =
+  | { image: ImageSourcePropType | ImageURISource; paymentLogo?: never }
+  | { image?: never; paymentLogo: IOLogoPaymentType }
+  | { image?: never; paymentLogo?: never };
+
 type LoadingProps = {
   isLoading: true;
   loadingAccessibilityLabel?: string;
 };
-
-type ImageProps =
-  | { paymentLogo: IOLogoPaymentType; image?: never }
-  | { paymentLogo?: never; image: ImageURISource | ImageSourcePropType }
-  | { paymentLogo?: never; image?: never };
-
-type BaseProps = {
-  isLoading?: false;
-  paymentLogo?: IOLogoPaymentType;
-  title: string;
-  subtitle?: string;
-  ctaText?: string;
-  onPress: () => void;
-} & ImageProps;
-
-export type ModuleCheckoutProps = LoadingProps | BaseProps;
 
 const IMAGE_MARGIN: IOSpacer = 12;
 
@@ -43,7 +44,7 @@ const ModuleBaseContent = ({
   image,
   title,
   subtitle
-}: Pick<BaseProps, "paymentLogo" | "title" | "subtitle"> &
+}: Pick<BaseProps, "paymentLogo" | "subtitle" | "title"> &
   Pick<ImageProps, "image">) => {
   const theme = useIOTheme();
 
@@ -58,9 +59,9 @@ const ModuleBaseContent = ({
       ) : (
         image && (
           <Image
+            accessibilityIgnoresInvertColors={true}
             source={image}
             style={styles.image}
-            accessibilityIgnoresInvertColors={true}
           />
         )
       )}
@@ -68,7 +69,7 @@ const ModuleBaseContent = ({
       <View style={{ flexGrow: 1, flexShrink: 1 }}>
         <H6 color={theme["textBody-default"]}>{title}</H6>
         {subtitle && (
-          <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+          <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
             {subtitle}
           </BodySmall>
         )}
@@ -90,34 +91,34 @@ export const ModuleCheckout = (props: ModuleCheckoutProps) => {
 
   return ctaText ? (
     <PressableModuleBase
-      onPress={onPress}
       accessibilityLabel={
         subtitle ? `${title}, ${subtitle}, ${ctaText}` : `${title}, ${ctaText}`
       }
+      onPress={onPress}
     >
       <HStack space={4} style={{ alignItems: "center" }}>
         <ModuleBaseContent
-          title={title}
-          subtitle={subtitle}
-          paymentLogo={paymentLogo}
           image={image}
+          paymentLogo={paymentLogo}
+          subtitle={subtitle}
+          title={title}
         />
         <View
-          pointerEvents="none"
           accessibilityElementsHidden
           importantForAccessibility="no-hide-descendants"
+          pointerEvents="none"
         >
-          <IOButton variant="link" label={ctaText} onPress={() => null} />
+          <IOButton label={ctaText} onPress={() => null} variant="link" />
         </View>
       </HStack>
     </PressableModuleBase>
   ) : (
     <ModuleStatic>
       <ModuleBaseContent
-        title={title}
-        subtitle={subtitle}
-        paymentLogo={paymentLogo}
         image={image}
+        paymentLogo={paymentLogo}
+        subtitle={subtitle}
+        title={title}
       />
     </ModuleStatic>
   );
@@ -127,20 +128,20 @@ const ModuleCheckoutSkeleton = ({
   loadingAccessibilityLabel
 }: Pick<LoadingProps, "loadingAccessibilityLabel">) => (
   <ModuleStatic
-    accessible={true}
     accessibilityLabel={loadingAccessibilityLabel}
     accessibilityState={{ busy: true }}
+    accessible={true}
+    endBlock={
+      <IOSkeleton height={16} radius={8} shape="rectangle" width={64} />
+    }
     startBlock={
       <HStack space={8} style={{ alignItems: "center" }}>
-        <IOSkeleton shape="square" size={24} radius={8} />
+        <IOSkeleton radius={8} shape="square" size={24} />
         <VStack space={8}>
-          <IOSkeleton shape="rectangle" width={170} height={20} radius={8} />
-          <IOSkeleton shape="rectangle" width={110} height={16} radius={8} />
+          <IOSkeleton height={20} radius={8} shape="rectangle" width={170} />
+          <IOSkeleton height={16} radius={8} shape="rectangle" width={110} />
         </VStack>
       </HStack>
-    }
-    endBlock={
-      <IOSkeleton shape="rectangle" width={64} height={16} radius={8} />
     }
   />
 );

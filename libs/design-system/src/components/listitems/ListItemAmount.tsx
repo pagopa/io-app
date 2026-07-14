@@ -1,5 +1,6 @@
 import { ComponentProps } from "react";
 import { View } from "react-native";
+
 import { useIOTheme } from "../../context";
 import {
   IOListItemStyles,
@@ -8,26 +9,26 @@ import {
 } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
-import { IOIcons, Icon } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { H3, H6 } from "../typography";
 
-type ValueProps = ComponentProps<typeof H3>;
+export type ListItemAmount = IconProps &
+  WithTestID<{
+    // Accessibility
+    accessibilityLabel?: string;
+    label: string;
+    valueElementProps?: ValueProps;
+    valueString: string;
+  }>;
 
 type IconProps =
   | {
-      iconName: IOIcons;
       iconColor?: ComponentProps<typeof Icon>["color"];
+      iconName: IOIcons;
     }
-  | { iconName?: never; iconColor?: never };
+  | { iconColor?: never; iconName?: never };
 
-export type ListItemAmount = WithTestID<{
-  label: string;
-  valueElementProps?: ValueProps;
-  valueString: string;
-  // Accessibility
-  accessibilityLabel?: string;
-}> &
-  IconProps;
+type ValueProps = ComponentProps<typeof H3>;
 
 const iconMargin: IOSpacingScale = 8;
 
@@ -48,9 +49,9 @@ export const ListItemAmount = ({
 
   const itemInfoTextComponent = (
     <View
+      accessibilityElementsHidden={false}
       accessible={false}
       importantForAccessibility={"no-hide-descendants"}
-      accessibilityElementsHidden={false}
     >
       <H6 color={theme["textBody-tertiary"]}>{label}</H6>
     </View>
@@ -58,10 +59,10 @@ export const ListItemAmount = ({
 
   return (
     <View
+      accessibilityLabel={listItemAccessibilityLabel}
+      accessible
       style={IOListItemStyles.listItem}
       testID={testID}
-      accessible
-      accessibilityLabel={listItemAccessibilityLabel}
     >
       <View
         style={[
@@ -72,18 +73,18 @@ export const ListItemAmount = ({
         {iconName && !hugeFontEnabled && (
           <Icon
             allowFontScaling
-            name={iconName}
             color={iconColor ?? theme["icon-decorative"]}
+            name={iconName}
             size={IOListItemVisualParams.iconSize}
           />
         )}
         <View style={{ flex: 1 }}>{itemInfoTextComponent}</View>
         <H3
           {...valueElementProps}
-          color={theme["textBody-default"]}
           accessibilityLabel={`${listItemAccessibilityLabel}; ${
             valueElementProps?.accessibilityLabel ?? ""
           }`}
+          color={theme["textBody-default"]}
         >
           {valueString}
         </H3>

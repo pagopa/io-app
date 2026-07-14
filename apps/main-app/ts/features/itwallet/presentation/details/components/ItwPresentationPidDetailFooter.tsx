@@ -3,6 +3,7 @@ import { constVoid } from "fp-ts/function";
 import I18n from "i18next";
 import { memo } from "react";
 import { Alert, View } from "react-native";
+
 import { trackItwStartDeactivation } from "../../../analytics";
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
@@ -41,18 +42,18 @@ const ItwPresentationPidDetailFooter = () => {
   return (
     <View>
       <ListItemAction
-        variant="primary"
         icon="website"
         label={I18n.t(
           "features.itWallet.presentation.credentialDetails.discoverItWallet"
         )}
         onPress={useNotAvailableToastGuard(constVoid)}
+        variant="primary"
       />
       <ListItemAction
-        variant="danger"
         icon="trashcan"
         label={I18n.t("features.itWallet.presentation.itWalletId.cta.revoke")}
         onPress={handleRevokePress}
+        variant="danger"
       />
     </View>
   );

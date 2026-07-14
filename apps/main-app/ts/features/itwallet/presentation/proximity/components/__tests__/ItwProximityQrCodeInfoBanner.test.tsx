@@ -1,11 +1,12 @@
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { trackItwBannerVisualized } from "../../../../analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../navigation/routes";
 import { ItwProximityQrCodeInfoBanner } from "../ItwProximityQrCodeInfoBanner";
-import { trackItwBannerVisualized } from "../../../../analytics";
 
 jest.mock("../../../../analytics", () => ({
   ...jest.requireActual("../../../../analytics"),

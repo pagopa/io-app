@@ -1,5 +1,5 @@
-import { loginInfoReducer } from "../reducers";
 import { loginSuccess } from "../../../common/store/actions";
+import { loginInfoReducer } from "../reducers";
 
 describe("loginInfoReducer", () => {
   it("should return the initial state", () => {

@@ -1,12 +1,13 @@
 import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
-import { withWalletCardBaseComponent } from "../../../../wallet/components/WalletCardBaseComponent";
-import { WalletCardPressableBase } from "../../../../wallet/components/WalletCardPressableBase";
-import { cdcWalletVisibilityConfigSelector } from "../../common/store/selectors/remoteConfig";
+
 import { useIOSelector } from "../../../../../store/hooks";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { getDeviceId } from "../../../../../utils/device";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
+import { withWalletCardBaseComponent } from "../../../../wallet/components/WalletCardBaseComponent";
+import { WalletCardPressableBase } from "../../../../wallet/components/WalletCardPressableBase";
+import { cdcWalletVisibilityConfigSelector } from "../../common/store/selectors/remoteConfig";
 import { CdcCard, CdcCardProps } from "./CdcCard";
 
 const WrappedCdcCard = (props: CdcCardProps) => {

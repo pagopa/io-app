@@ -8,11 +8,12 @@ import {
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { useWindowDimensions, View } from "react-native";
+
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { useDetectSmallScreen } from "../../../../hooks/useDetectSmallScreen.ts";
 import { useIOSelector } from "../../../../store/hooks";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
-import { useDetectSmallScreen } from "../../../../hooks/useDetectSmallScreen.ts";
 
 export type SendEngagementComponentProps = {
   isLoading: boolean;
@@ -74,30 +75,30 @@ export const SendEngagementComponent = ({
       </H3>
       <VSpacer size={24} />
       <FeatureInfo
-        pictogramProps={{ name: "emailDotNotif", pictogramStyle: "default" }}
         body={
           <IOMarkdownLite
             content={I18n.t("features.pn.aar.serviceActivation.feature1")}
           />
         }
+        pictogramProps={{ name: "emailDotNotif", pictogramStyle: "default" }}
       />
       <VSpacer size={24} />
       <FeatureInfo
-        pictogramProps={{ name: "savingMoney", pictogramStyle: "default" }}
         body={
           <IOMarkdownLite
             content={I18n.t("features.pn.aar.serviceActivation.feature2")}
           />
         }
+        pictogramProps={{ name: "savingMoney", pictogramStyle: "default" }}
       />
       <VSpacer size={24} />
       <FeatureInfo
-        pictogramProps={{ name: "cardFavourite", pictogramStyle: "default" }}
         body={
           <IOMarkdownLite
             content={I18n.t("features.pn.aar.serviceActivation.feature3")}
           />
         }
+        pictogramProps={{ name: "cardFavourite", pictogramStyle: "default" }}
       />
       <VSpacer size={32} />
       <IOMarkdownLite

@@ -1,5 +1,6 @@
-import { Alert } from "react-native";
 import { render } from "@testing-library/react-native";
+import { Alert } from "react-native";
+
 import { renderWithExperimentalEnabledContextProvider } from "../../../utils/testing";
 import { Banner } from "../Banner";
 
@@ -11,12 +12,12 @@ describe("Test Banner Components", () => {
   it("Banner Snapshot", () => {
     const { toJSON } = render(
       <Banner
-        color="neutral"
-        title="Banner title"
-        pictogramName="charity"
-        action="Action text"
-        onPress={onLinkPress}
         accessibilityLabel="Action text"
+        action="Action text"
+        color="neutral"
+        onPress={onLinkPress}
+        pictogramName="charity"
+        title="Banner title"
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -27,12 +28,12 @@ describe("Test Banner Components - Experimental Enabled", () => {
   it("Banner Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <Banner
-        color="neutral"
-        title="Banner title"
-        pictogramName="charity"
-        action="Action text"
-        onPress={onLinkPress}
         accessibilityLabel="Action text"
+        action="Action text"
+        color="neutral"
+        onPress={onLinkPress}
+        pictogramName="charity"
+        title="Banner title"
       />
     );
     expect(toJSON()).toMatchSnapshot();

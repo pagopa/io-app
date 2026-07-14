@@ -1,24 +1,25 @@
 import { ComponentProps, ReactNode } from "react";
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
-import { IOListItemStyles, IOListItemVisualParams } from "../../core";
+
 import { useIOTheme } from "../../context";
+import { IOListItemStyles, IOListItemVisualParams } from "../../core";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Icon } from "../icons";
 import { BodySmall, H6 } from "../typography";
 
-export type ListItemNavAlert = WithTestID<{
-  value: string | ReactNode;
-  description?: string | ReactNode;
-  withoutIcon?: boolean;
-  onPress: (event: GestureResponderEvent) => void;
-}> &
-  Pick<
-    ComponentProps<typeof Pressable>,
-    "accessibilityLabel" | "accessibilityHint"
-  >;
+export type ListItemNavAlert = Pick<
+  ComponentProps<typeof Pressable>,
+  "accessibilityHint" | "accessibilityLabel"
+> &
+  WithTestID<{
+    description?: ReactNode | string;
+    onPress: (event: GestureResponderEvent) => void;
+    value: ReactNode | string;
+    withoutIcon?: boolean;
+  }>;
 
 export const ListItemNavAlert = ({
   value,
@@ -54,7 +55,7 @@ export const ListItemNavAlert = ({
       {description && (
         <>
           {typeof description === "string" ? (
-            <BodySmall weight="Semibold" color={theme.errorText}>
+            <BodySmall color={theme.errorText} weight="Semibold">
               {description}
             </BodySmall>
           ) : (
@@ -69,20 +70,20 @@ export const ListItemNavAlert = ({
 
   return (
     <Pressable
+      accessibilityHint={accessibilityHint}
+      accessibilityLabel={listItemAccessibilityLabel}
+      accessibilityRole="button"
+      accessible={true}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
-      accessible={true}
-      accessibilityLabel={listItemAccessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole="button"
       testID={testID}
     >
       <Animated.View
-        style={[IOListItemStyles.listItem, backgroundAnimatedStyle]}
-        importantForAccessibility="no-hide-descendants"
         accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
+        style={[IOListItemStyles.listItem, backgroundAnimatedStyle]}
       >
         <Animated.View
           style={[
@@ -99,16 +100,16 @@ export const ListItemNavAlert = ({
           {!withoutIcon && (
             <Icon
               allowFontScaling
-              name="errorFilled"
               color={theme.errorIcon}
+              name="errorFilled"
               size={IOListItemVisualParams.iconSize}
             />
           )}
           <View style={{ flex: 1 }}>{listItemNavAlertContent}</View>
           <Icon
             allowFontScaling
-            name="chevronRightListItem"
             color={iconColor}
+            name="chevronRightListItem"
             size={IOListItemVisualParams.chevronSize}
           />
         </Animated.View>

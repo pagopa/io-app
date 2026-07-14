@@ -1,13 +1,14 @@
-import { testSaga } from "redux-saga-test-plan";
 import { left, right } from "fp-ts/lib/Either";
+import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
-import { getNetworkError } from "../../../../../utils/errors";
-import { mockQtspClausesMetadata } from "../../../types/__mocks__/QtspClausesMetadata.mock";
-import { fciLoadQtspClauses } from "../../../store/actions";
-import { handleGetQtspMetadata } from "../handleGetQtspMetadata";
+
 import { QtspClausesMetadataDetailView } from "../../../../../../definitions/fci/QtspClausesMetadataDetailView";
-import { fciIssuerEnvironmentSelector } from "../../../store/reducers/fciSignatureRequest";
+import { getNetworkError } from "../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { fciLoadQtspClauses } from "../../../store/actions";
+import { fciIssuerEnvironmentSelector } from "../../../store/reducers/fciSignatureRequest";
+import { mockQtspClausesMetadata } from "../../../types/__mocks__/QtspClausesMetadata.mock";
+import { handleGetQtspMetadata } from "../handleGetQtspMetadata";
 
 const successResponse = {
   status: 200,

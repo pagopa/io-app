@@ -1,4 +1,5 @@
 import { ScaledSize } from "react-native";
+
 import { IOVisualCostants } from "../../../core";
 import { ChildrenCoords, DisplayInsets, Placement } from "./types";
 
@@ -59,12 +60,6 @@ export const getTooltipCoords = (
   const { width: screenWidth, height: screenHeight } = screenDimensions;
 
   switch (placement) {
-    case "top":
-      return {
-        bottom: screenHeight - childrenCoords.y + ARROW_HEIGHT + EMPTY_SPACE,
-        left: displayInsets.left,
-        width: screenWidth - displayInsets.left - displayInsets.right
-      };
     case "bottom":
       return {
         top:
@@ -92,6 +87,12 @@ export const getTooltipCoords = (
         left: elementSize,
         width: screenWidth - (elementSize + displayInsets.right)
       };
+    case "top":
+      return {
+        bottom: screenHeight - childrenCoords.y + ARROW_HEIGHT + EMPTY_SPACE,
+        left: displayInsets.left,
+        width: screenWidth - displayInsets.left - displayInsets.right
+      };
     // TODO: provide a default center position in case of Tooltip without children
     default:
       return {};
@@ -113,11 +114,6 @@ export const getArrowCoords = (
   const { width: screenWidth, height: screenHeight } = screenDimensions;
 
   switch (placement) {
-    case "top":
-      return {
-        bottom: screenHeight - childrenCoords.y + EMPTY_SPACE,
-        left: childrenCoords.x + childrenCoords.width / 2 - ARROW_WIDTH / 2
-      };
     case "bottom":
       return {
         top: childrenCoords.y + childrenCoords.height + EMPTY_SPACE,
@@ -137,6 +133,11 @@ export const getArrowCoords = (
       return {
         top: childrenCoords.y,
         left: childrenCoords.width + childrenCoords.x + EMPTY_SPACE
+      };
+    case "top":
+      return {
+        bottom: screenHeight - childrenCoords.y + EMPTY_SPACE,
+        left: childrenCoords.x + childrenCoords.width / 2 - ARROW_WIDTH / 2
       };
     default:
       // TODO: provide a default center position in case of Tooltip without children

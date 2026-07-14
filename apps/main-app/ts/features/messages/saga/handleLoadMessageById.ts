@@ -1,6 +1,7 @@
 import { isRight } from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/communication/CreatedMessageWithContentAndAttachments";
 import { SagaCallReturnType } from "../../../types/utils";
 import { convertUnknownToError } from "../../../utils/errors";

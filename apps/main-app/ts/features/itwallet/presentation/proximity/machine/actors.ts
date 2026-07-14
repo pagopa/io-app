@@ -1,5 +1,8 @@
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { fromCallback, fromPromise } from "xstate";
+
+import type { EventsPayload } from "../utils/types";
+
 import { assert } from "../../../../../utils/assert";
 import { Env } from "../../../common/utils/environment";
 import { CredentialsVault } from "../../../credentials/utils/vault";
@@ -7,14 +10,13 @@ import {
   checkBluetoothActivation,
   checkBluetoothPermissions
 } from "../utils/ble";
+import { checkNfcActivation } from "../utils/nfc";
 import {
   generateAcceptedFields,
   getDocuments,
   getProximityDetails,
   promiseWithTimeout
 } from "../utils/presentation";
-import type { EventsPayload } from "../utils/types";
-import { checkNfcActivation } from "../utils/nfc";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 
@@ -31,14 +33,6 @@ const ENGAGEMENT_CONFIG: Record<
   nfc: { engagementModes: ["nfc"], retrievalMethods: ["ble", "nfc"] }
 };
 
-export type StartEngagementActorInput = {
-  engagementMode: ISO18013_5.EngagementMode;
-};
-
-export type SendErrorResponseActorOutput = Awaited<
-  ReturnType<typeof ISO18013_5.sendErrorResponse>
->;
-
 export type ProximityCommunicationLogicInput = Pick<Context, "credentials">;
 
 export type SendDocumentsActorInput = Pick<
@@ -49,6 +43,14 @@ export type SendDocumentsActorInput = Pick<
 export type SendDocumentsActorOutput = Awaited<
   ReturnType<typeof ISO18013_5.sendResponse>
 >;
+
+export type SendErrorResponseActorOutput = Awaited<
+  ReturnType<typeof ISO18013_5.sendErrorResponse>
+>;
+
+export type StartEngagementActorInput = {
+  engagementMode: ISO18013_5.EngagementMode;
+};
 
 export const createProximityActorsImplementation = (env: Env) => {
   const checkBluetoothPermissionsActor = fromPromise<boolean>(

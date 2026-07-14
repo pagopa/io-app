@@ -1,15 +1,16 @@
 import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
+
 import { GlobalState } from "../../../../../store/reducers/types";
-import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
   trackItwVaultMigrationFailed,
   trackItwVaultMigrationRequest,
   trackItwVaultMigrationSuccess
 } from "../../analytics";
-import { CredentialsVault } from "../../utils/vault";
 import { itwCredentialsVaultMigrationComplete } from "../../store/actions";
+import { CredentialsVault } from "../../utils/vault";
 import { handleItwCredentialsVaultMigrationSaga } from "../handleItwCredentialsVaultMigrationSaga";
 
 jest.mock("../../utils/vault", () => ({

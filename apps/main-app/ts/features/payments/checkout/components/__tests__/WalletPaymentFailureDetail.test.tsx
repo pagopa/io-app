@@ -1,23 +1,24 @@
-import { createStore } from "redux";
-import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
-import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
+import { createStore } from "redux";
+import configureMockStore from "redux-mock-store";
+
+import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { openWebUrl } from "../../../../../utils/url";
+import * as analytics from "../../analytics";
 import { usePaymentFailureSupportModal } from "../../hooks/usePaymentFailureSupportModal";
+import { PaymentsCheckoutRoutes } from "../../navigation/routes";
+import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
+import { CHECKOUT_ASSISTANCE_ARTICLE } from "../../utils";
 import {
   HC_PAYMENT_CANCELED_ERROR_ID,
   WalletPaymentFailureDetail
 } from "../WalletPaymentFailureDetail";
-import * as analytics from "../../analytics";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { PaymentsCheckoutRoutes } from "../../navigation/routes";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
-import { openWebUrl } from "../../../../../utils/url";
-import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
-import { CHECKOUT_ASSISTANCE_ARTICLE } from "../../utils";
 
 jest.mock("../../hooks/usePaymentFailureSupportModal", () => ({
   usePaymentFailureSupportModal: jest.fn()
