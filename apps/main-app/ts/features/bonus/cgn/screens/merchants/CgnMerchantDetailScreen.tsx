@@ -9,7 +9,7 @@ import {
   ListItemHeader,
   ListItemInfo,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";

@@ -2,18 +2,17 @@ import {
   ContentWrapper,
   Icon,
   Tag,
+  VSpacer,
   useFooterActionsMeasurements,
-  useIOTheme,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
+  useIOTheme
+} from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as SEP from "fp-ts/lib/Separated";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useRef } from "react";
 import { ScrollView } from "react-native";
-
 import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { ServiceId } from "../../../../definitions/services/ServiceId";
@@ -43,10 +42,10 @@ import { MessagePayments } from "./MessagePayments";
 export type MessageDetailsProps = {
   message: PNMessage;
   messageId: string;
+  serviceId: ServiceId;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
   sendOpeningSource: SendOpeningSource;
   sendUserType: SendUserType;
-  serviceId: ServiceId;
 };
 
 export const MessageDetails = ({
@@ -88,12 +87,12 @@ export const MessageDetails = ({
       >
         <ContentWrapper>
           <MessageDetailsHeader
-            canNavigateToServiceDetails={!isAarMessage}
-            createdAt={maybeMessageDate}
             messageId={messageId}
             serviceId={serviceId}
             subject={message.subject}
+            createdAt={maybeMessageDate}
             thirdPartySenderDenomination={message.senderDenomination}
+            canNavigateToServiceDetails={!isAarMessage}
           >
             <Tag
               text={I18n.t("features.pn.details.badge.legalValue")}
@@ -101,13 +100,13 @@ export const MessageDetails = ({
             />
             {attachmentList.length > 0 && (
               <Icon
+                color={theme["icon-default"]}
+                name="attachment"
                 accessibilityLabel={I18n.t(
                   "messageDetails.accessibilityAttachmentIcon"
                 )}
-                color={theme["icon-default"]}
-                name="attachment"
-                size={16}
                 testID="attachment-tag"
+                size={16}
               />
             )}
           </MessageDetailsHeader>
@@ -126,29 +125,29 @@ export const MessageDetails = ({
             banner={<BannerAttachments />}
             disabled={message.isCancelled}
             messageId={messageId}
+            serviceId={serviceId}
             sendOpeningSource={sendOpeningSource}
             sendUserType={sendUserType}
-            serviceId={serviceId}
           />
           <VSpacer size={16} />
           <MessagePayments
-            completedPaymentNoticeCodes={completedPaymentNoticeCodes}
-            isCancelled={isCancelled}
-            maxVisiblePaymentCount={maxVisiblePaymentCount}
             messageId={messageId}
+            isCancelled={isCancelled}
             payments={payments}
+            completedPaymentNoticeCodes={completedPaymentNoticeCodes}
+            maxVisiblePaymentCount={maxVisiblePaymentCount}
             presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+            serviceId={serviceId}
             sendOpeningSource={sendOpeningSource}
             sendUserType={sendUserType}
-            serviceId={serviceId}
           />
           <VSpacer size={16} />
           <F24Section
-            isCancelled={message.isCancelled}
             messageId={messageId}
+            isCancelled={message.isCancelled}
+            serviceId={serviceId}
             sendOpeningSource={sendOpeningSource}
             sendUserType={sendUserType}
-            serviceId={serviceId}
           />
           <SendMessageSurveyBanner message={message} serviceId={serviceId} />
           <VSpacer size={16} />
@@ -165,12 +164,12 @@ export const MessageDetails = ({
         />
       </ScrollView>
       <MessageFooter
-        isCancelled={isCancelled}
-        maxVisiblePaymentCount={maxVisiblePaymentCount}
         messageId={messageId}
-        onMeasure={handleFooterActionsMeasurements}
         payments={payments}
+        maxVisiblePaymentCount={maxVisiblePaymentCount}
+        isCancelled={isCancelled}
         presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+        onMeasure={handleFooterActionsMeasurements}
         sendOpeningSource={sendOpeningSource}
         sendUserType={sendUserType}
       />
@@ -179,9 +178,9 @@ export const MessageDetails = ({
           messageId={messageId}
           payments={payments}
           presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+          serviceId={serviceId}
           sendOpeningSource={sendOpeningSource}
           sendUserType={sendUserType}
-          serviceId={serviceId}
         />
       )}
     </>

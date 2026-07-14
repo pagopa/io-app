@@ -5,20 +5,19 @@ import {
   H4,
   VSpacer,
   WithTestID
-} from "@pagopa/io-app-design-system";
-import { memo, RefObject } from "react";
+} from "@io-app/design-system";
+import { RefObject, memo } from "react";
 import { useWindowDimensions, View } from "react-native";
-
 import { useDetectSmallScreen } from "../../../../hooks/useDetectSmallScreen";
 
 export type PinCaouselItemProps = WithTestID<{
-  description?: string;
-  handleOnValidate: (val: string) => boolean;
-  maxLength: number;
-  onValueChange: (val: string) => void;
   title: string;
-  titleRef?: RefObject<null | View>;
+  titleRef?: RefObject<View | null>;
+  description?: string;
   value: string;
+  maxLength: number;
+  handleOnValidate: (val: string) => boolean;
+  onValueChange: (val: string) => void;
 }>;
 
 export const PinCarouselItem = memo(
@@ -46,18 +45,18 @@ export const PinCarouselItem = memo(
         testID={testID}
       >
         <H4
-          accessible
           ref={titleRef}
-          style={{ textAlign: "center" }}
+          accessible
           testID={`${testID}_title`}
+          style={{ textAlign: "center" }}
         >
           {title}
         </H4>
         {description && (
           <Body
             accessible
-            style={{ textAlign: "center" }}
             testID={`${testID}_description`}
+            style={{ textAlign: "center" }}
           >
             {description}
           </Body>
@@ -71,8 +70,8 @@ export const PinCarouselItem = memo(
           length={maxLength}
           onValidate={handleOnValidate}
           onValueChange={onValueChange}
-          value={value}
           variant="neutral"
+          value={value}
         />
       </ContentWrapper>
     );

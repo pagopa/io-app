@@ -3,7 +3,7 @@ import {
   ListItemHeader,
   RadioGroup,
   RadioItem
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";

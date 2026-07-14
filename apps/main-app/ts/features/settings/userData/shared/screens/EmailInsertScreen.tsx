@@ -11,7 +11,7 @@ import {
   IOVisualCostants,
   TextInputValidation,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";

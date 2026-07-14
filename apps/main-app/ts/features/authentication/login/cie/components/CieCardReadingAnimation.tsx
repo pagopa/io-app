@@ -7,7 +7,7 @@ import {
   IOPictograms,
   IOPictogramSizeScale,
   Pictogram
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { PureComponent } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
 

@@ -1,12 +1,11 @@
 import {
   BodySmall,
-  Icon,
   IOAlertSpacing,
-  IOColors
-} from "@pagopa/io-app-design-system";
+  IOColors,
+  Icon
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
-
 import { useIOSelector } from "../../../../store/hooks";
 import { withWalletCategoryFilter } from "../../../wallet/utils";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../walletInstance/store/selectors";
@@ -28,8 +27,8 @@ export const ItwWalletNotAvailableBanner = withWalletCategoryFilter(
 
     return (
       <View
-        style={styles.bannerContainer}
         testID="itwWalletNotAvailableBannerTestID"
+        style={styles.bannerContainer}
       >
         <Icon name="warningFilled" />
         <BodySmall style={styles.textCenter}>

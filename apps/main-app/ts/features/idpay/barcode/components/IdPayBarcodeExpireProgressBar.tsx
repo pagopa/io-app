@@ -1,4 +1,4 @@
-import { BodySmall, VSpacer } from "@pagopa/io-app-design-system";
+import { BodySmall, VSpacer } from "@io-app/design-system";
 import { format } from "date-fns";
 import I18n from "i18next";
 import { useEffect, useState } from "react";

@@ -1,4 +1,4 @@
-import { Banner, useIOToast, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, useIOToast, VSpacer } from "@io-app/design-system";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import _ from "lodash";

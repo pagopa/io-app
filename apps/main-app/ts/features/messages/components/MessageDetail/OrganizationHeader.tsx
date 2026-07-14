@@ -5,7 +5,7 @@ import {
   IOColors,
   IOSpacingScale,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import i18n from "i18next";
 import { useCallback } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";

@@ -5,14 +5,13 @@ import {
   H6,
   IOColors,
   ListItemNav
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
+import { Keyboard, Text, View, StyleSheet } from "react-native";
 import I18n from "i18next";
-import { Keyboard, StyleSheet, Text, View } from "react-native";
-
-import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { highlightSearchText } from "../../../../../utils/highlightSearchText";
 import CGN_ROUTES from "../../navigation/routes";
+import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";
+import { highlightSearchText } from "../../../../../utils/highlightSearchText";
 
 const TEXT_LEGNTH_WITH_BADGE = 60;
 const TEXT_LEGNTH_WITHOUT_BADGE = 100;
@@ -38,7 +37,6 @@ export function MerchantSearchResultListItem({
   return (
     <ContentWrapper>
       <ListItemNav
-        accessibilityLabel={item.name}
         onPress={() => {
           navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
             screen: CGN_ROUTES.DETAILS.MERCHANTS.DETAIL,
@@ -54,7 +52,7 @@ export function MerchantSearchResultListItem({
           >
             <View style={styles.listItemTextContainer}>
               <H6>{highlightText({ text: item.name, searchText })}</H6>
-              <Body ellipsizeMode="tail" numberOfLines={2}>
+              <Body numberOfLines={2} ellipsizeMode="tail">
                 {highlightText({
                   text: item.description,
                   searchText,
@@ -73,13 +71,14 @@ export function MerchantSearchResultListItem({
                 }}
               >
                 <Badge
-                  text={I18n.t("bonus.cgn.merchantsList.news")}
                   variant="cgn"
+                  text={I18n.t("bonus.cgn.merchantsList.news")}
                 />
               </View>
             )}
           </View>
         }
+        accessibilityLabel={item.name}
       />
     </ContentWrapper>
   );
@@ -90,9 +89,9 @@ function highlightText({
   text,
   estimatedTextLengthToDisplay
 }: {
-  estimatedTextLengthToDisplay?: number;
-  searchText: string;
   text: string;
+  searchText: string;
+  estimatedTextLengthToDisplay?: number;
 }) {
   const chunks = highlightSearchText({
     text,

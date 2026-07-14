@@ -1,4 +1,4 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@io-app/design-system";
 import i18n from "i18next";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";

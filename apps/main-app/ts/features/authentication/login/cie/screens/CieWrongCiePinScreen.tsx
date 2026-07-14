@@ -1,18 +1,17 @@
-import { IOPictograms } from "@pagopa/io-app-design-system";
-import { Route, useRoute } from "@react-navigation/native";
-import { constNull } from "fp-ts/lib/function";
-import I18n from "i18next";
 /**
  * A screen to alert the user about the number of attempts remains
  */
 import { useCallback, useMemo } from "react";
+import { Route, useRoute } from "@react-navigation/native";
+import { IOPictograms } from "@io-app/design-system";
 import { Linking } from "react-native";
-
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { constNull } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { WithTestID } from "../../../../../types/WithTestID";
-import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 
 export type CieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
@@ -50,17 +49,17 @@ const CieWrongCiePinScreen = () => {
   }, []);
 
   type MessageAction<T extends string> = {
-    accessibilityLabel: T;
     label: T;
+    accessibilityLabel: T;
     onPress: () => void;
   };
 
   type Message = {
-    action: MessageAction<string>;
     pictogram: IOPictograms;
-    secondaryAction: MessageAction<string>;
-    subtitle: string;
     title: string;
+    subtitle: string;
+    action: MessageAction<string>;
+    secondaryAction: MessageAction<string>;
   };
 
   type Messages = {

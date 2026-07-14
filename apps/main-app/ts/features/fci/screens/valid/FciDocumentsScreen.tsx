@@ -3,8 +3,7 @@ import {
   IOColors,
   IOSpacing,
   useFooterActionsInlineMeasurements
-} from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
+} from "@io-app/design-system";
 import {
   RouteProp,
   StackActions,
@@ -15,18 +14,16 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as S from "fp-ts/lib/string";
-import I18n from "i18next";
-import { ComponentProps, useEffect, useRef, useState } from "react";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useRef, useState, useEffect, ComponentProps } from "react";
 import { StyleSheet, View } from "react-native";
 import Pdf, { PdfRef } from "react-native-pdf";
-
+import I18n from "i18next";
 import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackFciDocOpeningSuccess,
   trackFciDocumentsView,
@@ -57,6 +54,8 @@ import {
   getRequiredSignatureFields,
   getSignatureFieldsLength
 } from "../../utils/signatureFields";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -230,11 +229,13 @@ const FciDocumentsScreen = () => {
      * onPageChanged, which is called to report that the first page
      * has loaded */
     <Pdf
-      enablePaging
       key={`${
         documents[currentDoc]?.id ?? "doc"
       }:${downloadPath}:${focusEpoch}`}
-      onError={_ => setHasDocumentLoadError(true)}
+      ref={pdfRef}
+      source={{
+        uri: `${downloadPath}`
+      }}
       onLoadComplete={(numberOfPages, _) => {
         if (!isFocused) {
           return;
@@ -248,10 +249,8 @@ const FciDocumentsScreen = () => {
         setTotalPages(numberOfPages);
         setCurrentPage(page);
       }}
-      ref={pdfRef}
-      source={{
-        uri: `${downloadPath}`
-      }}
+      onError={_ => setHasDocumentLoadError(true)}
+      enablePaging
       style={styles.pdf}
     />
   );
@@ -304,17 +303,7 @@ const FciDocumentsScreen = () => {
   return (
     <>
       <DocumentsNavigationBar
-        disabled={false}
-        iconLeftDisabled={totalPages === 0 || currentPage === 1}
-        /**
-         * buttons have to be disabled when totalPages is not ready yet (zero value) OR
-         * when corresponding limit is reached
-         */
-        iconRightDisabled={currentPage >= totalPages}
         indicatorPosition={"right"}
-        onNext={onNext}
-        onPrevious={onPrevious}
-        testID={"FciDocumentsNavBarTestID"}
         titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
           currentDoc: currentDoc + 1,
           totalDocs: documents.length
@@ -323,6 +312,16 @@ const FciDocumentsScreen = () => {
           currentPage,
           totalPages
         })}
+        /**
+         * buttons have to be disabled when totalPages is not ready yet (zero value) OR
+         * when corresponding limit is reached
+         */
+        iconRightDisabled={currentPage >= totalPages}
+        iconLeftDisabled={totalPages === 0 || currentPage === 1}
+        onPrevious={onPrevious}
+        onNext={onNext}
+        disabled={false}
+        testID={"FciDocumentsNavBarTestID"}
       />
       <View style={{ flex: 1 }} testID={"FciDocumentsScreenTestID"}>
         {documents.length > 0 && (
@@ -338,9 +337,9 @@ const FciDocumentsScreen = () => {
               {renderPager()}
             </View>
             <FooterActionsInline
-              endAction={endActionButtonProps}
               onMeasure={handleFooterActionsInlineMeasurements}
               startAction={cancelButtonProps}
+              endAction={endActionButtonProps}
             />
           </>
         )}

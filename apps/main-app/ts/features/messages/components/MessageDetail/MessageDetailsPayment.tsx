@@ -1,8 +1,4 @@
-import {
-  ListItemHeader,
-  useIOTheme,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ListItemHeader, useIOTheme, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 
 import { ServiceId } from "../../../../../definitions/services/ServiceId";

@@ -1,4 +1,4 @@
-import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, VSpacer } from "@io-app/design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";

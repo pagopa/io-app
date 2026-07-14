@@ -6,7 +6,7 @@ import {
   VSpacer,
   VStack,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { TxtParagraphNode, TxtStrongNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";

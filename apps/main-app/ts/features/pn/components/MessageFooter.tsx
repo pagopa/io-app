@@ -1,33 +1,32 @@
+import { MutableRefObject, useCallback, useEffect } from "react";
 import {
   FooterActions,
   FooterActionsMeasurements,
   IOSpacing,
   useIOToast
-} from "@pagopa/io-app-design-system";
-import I18n from "i18next";
-import { MutableRefObject, useCallback, useEffect } from "react";
+} from "@io-app/design-system";
 import { useDispatch } from "react-redux";
-
+import I18n from "i18next";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
+import { getRptIdStringFromPayment } from "../utils/rptId";
+import { trackPNPaymentStart, trackPNShowAllPayments } from "../analytics";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
+import { paymentsButtonStateSelector } from "../store/reducers/payments";
+import { shouldUseBottomSheetForPayments } from "../utils";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
-import { trackPNPaymentStart, trackPNShowAllPayments } from "../analytics";
-import { paymentsButtonStateSelector } from "../store/reducers/payments";
-import { shouldUseBottomSheetForPayments } from "../utils";
-import { getRptIdStringFromPayment } from "../utils/rptId";
 
 export type MessageFooterProps = {
-  isCancelled: boolean;
-  maxVisiblePaymentCount: number;
   messageId: string;
-  onMeasure: (measurements: FooterActionsMeasurements) => void;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
+  maxVisiblePaymentCount: number;
+  isCancelled: boolean;
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
+  onMeasure: (measurements: FooterActionsMeasurements) => void;
   sendOpeningSource: SendOpeningSource;
   sendUserType: SendUserType;
 };
@@ -99,6 +98,7 @@ export const MessageFooter = ({
 
   return (
     <FooterActions
+      onMeasure={onMeasure}
       actions={{
         type: "SingleButton",
         primary: {
@@ -108,7 +108,6 @@ export const MessageFooter = ({
           loading: isLoading
         }
       }}
-      onMeasure={onMeasure}
     />
   );
 };

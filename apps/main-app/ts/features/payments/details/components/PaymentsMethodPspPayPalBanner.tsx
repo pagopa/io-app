@@ -1,9 +1,9 @@
-import { Banner, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useRef } from "react";
-import { View } from "react-native";
-import Animated, { FadeOut } from "react-native-reanimated";
+import { VSpacer, Banner } from "@io-app/design-system";
 
+import Animated, { FadeOut } from "react-native-reanimated";
+import { View } from "react-native";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { paymentsPayPalBannerSetIsClosedAction } from "../store/actions";
 import { walletPayPalBannerClosedSelector } from "../store/selectors";
@@ -23,14 +23,14 @@ const PaymentsMethodPspPayPalBanner = () => {
       <Animated.View exiting={FadeOut.duration(200)} style={{ zIndex: 9999 }}>
         <Banner
           color="neutral"
+          pictogramName="help"
+          title={I18n.t("features.payments.details.payPal.banner.title")}
           content={I18n.t("features.payments.details.payPal.banner.content")}
+          onClose={handleOnCloseBanner}
           labelClose={I18n.t(
             "idpay.initiative.discountDetails.IDPayCode.banner.close"
           )}
-          onClose={handleOnCloseBanner}
-          pictogramName="help"
           ref={bannerViewRef}
-          title={I18n.t("features.payments.details.payPal.banner.title")}
         />
         <VSpacer size={24} />
       </Animated.View>

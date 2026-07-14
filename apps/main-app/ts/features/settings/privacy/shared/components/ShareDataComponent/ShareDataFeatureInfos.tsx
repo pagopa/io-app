@@ -1,8 +1,4 @@
-import {
-  FeatureInfo,
-  IOMarkdownLite,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { FeatureInfo, IOMarkdownLite, VSpacer } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";

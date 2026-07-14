@@ -1,4 +1,4 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
@@ -39,8 +39,8 @@ jest.mock("../../../../../navigation/params/AppParamsList", () => ({
   })
 }));
 
-jest.mock("@pagopa/io-app-design-system", () => {
-  const actual = jest.requireActual("@pagopa/io-app-design-system");
+jest.mock("@io-app/design-system", () => {
+  const actual = jest.requireActual("@io-app/design-system");
   return {
     ...actual,
     IOToast: {

@@ -1,4 +1,4 @@
-import { Body, ListItemAction } from "@pagopa/io-app-design-system";
+import { Body, ListItemAction } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { Alert } from "react-native";

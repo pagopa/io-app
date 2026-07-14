@@ -3,7 +3,7 @@ import {
   IOVisualCostants,
   ListItemHeader,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ScrollView, View } from "react-native";
 
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";

@@ -1,4 +1,4 @@
-import { Divider, H6, ListItemInfoCopy } from "@pagopa/io-app-design-system";
+import { Divider, H6, ListItemInfoCopy } from "@io-app/design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 

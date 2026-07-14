@@ -3,14 +3,14 @@ import {
   TextInput,
   TextInputPassword,
   TextInputValidation,
-  useIOTheme,
-  VStack
-} from "@pagopa/io-app-design-system";
+  VStack,
+  useIOTheme
+} from "@io-app/design-system";
+
 import { ComponentProps, useState } from "react";
 import { View } from "react-native";
-
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSTextFields = () => {
   const theme = useIOTheme();
@@ -26,42 +26,42 @@ export const DSTextFields = () => {
           <H4 color={theme["textHeading-default"]}>Base input</H4>
 
           <VStack space={componentMargin}>
-            <DSComponentViewerBox name="Base input" reverse>
+            <DSComponentViewerBox reverse name="Base input">
               <InputComponentWrapper placeholder={"Base input"} />
             </DSComponentViewerBox>
 
             <DSComponentViewerBox
-              name="Base input with value formatted"
               reverse
+              name="Base input with value formatted"
             >
               <InputComponentWrapper
-                bottomMessage="Handles credit card input type"
-                inputType={"credit-card"}
                 placeholder={"Base input"}
+                inputType={"credit-card"}
+                bottomMessage="Handles credit card input type"
               />
             </DSComponentViewerBox>
 
-            <DSComponentViewerBox name="Base input with validation" reverse>
+            <DSComponentViewerBox reverse name="Base input with validation">
               <InputValidationComponentWrapper
-                bottomMessage="Inserisci almeno 3 caratteri"
-                onValidate={value => value.length > 2}
                 placeholder={"Base input"}
+                onValidate={value => value.length > 2}
+                bottomMessage="Inserisci almeno 3 caratteri"
               />
             </DSComponentViewerBox>
 
             <DSComponentViewerBox
-              name="Base input with validation and error"
               reverse
+              name="Base input with validation and error"
             >
               <InputValidationComponentWrapper
+                placeholder={"Base input"}
+                onValidate={value => value.length > 2}
                 bottomMessage="Inserisci almeno 3 caratteri"
                 errorMessage="Troppo corto"
-                onValidate={value => value.length > 2}
-                placeholder={"Base input"}
               />
             </DSComponentViewerBox>
 
-            <DSComponentViewerBox name="Base input with icon" reverse>
+            <DSComponentViewerBox reverse name="Base input with icon">
               <InputComponentWrapper icon="amount" placeholder={"Base input"} />
             </DSComponentViewerBox>
           </VStack>
@@ -91,8 +91,8 @@ export const DSTextFields = () => {
               />
               <InputValidationComponentWrapper
                 disabled
-                onValidate={value => value.length > 2}
                 placeholder={"Validation input (Disabled)"}
+                onValidate={value => value.length > 2}
               />
             </VStack>
           </View>
@@ -103,31 +103,31 @@ export const DSTextFields = () => {
 };
 
 const InputComponentWrapper = (
-  props: Omit<ComponentProps<typeof TextInput>, "onChangeText" | "value"> & {
+  props: Omit<ComponentProps<typeof TextInput>, "value" | "onChangeText"> & {
     value?: string;
   }
 ) => {
   const [inputValue, setInputValue] = useState(props.value ?? "");
 
   return (
-    <TextInput {...props} onChangeText={setInputValue} value={inputValue} />
+    <TextInput {...props} value={inputValue} onChangeText={setInputValue} />
   );
 };
 
 const InputValidationComponentWrapper = (
   props: Omit<
     ComponentProps<typeof TextInputValidation>,
-    "errorMessage" | "onChangeText" | "value"
-  > & { errorMessage?: string; value?: string }
+    "value" | "onChangeText" | "errorMessage"
+  > & { value?: string; errorMessage?: string }
 ) => {
   const [inputValue, setInputValue] = useState(props.value ?? "");
 
   return (
     <TextInputValidation
       {...props}
+      value={inputValue}
       errorMessage={props.errorMessage ?? "error"}
       onChangeText={setInputValue}
-      value={inputValue}
     />
   );
 };
@@ -135,16 +135,17 @@ const InputValidationComponentWrapper = (
 const InputPasswordComponentWrapper = (
   props: Omit<
     ComponentProps<typeof TextInputPassword>,
-    "onChangeText" | "value"
+    "value" | "onChangeText" | "buttonAccessibilityLabel"
   > & { value?: string }
 ) => {
   const [inputValue, setInputValue] = useState(props.value ?? "");
 
   return (
     <TextInputPassword
+      buttonAccessibilityLabel="Toggle secret input"
       {...props}
-      onChangeText={setInputValue}
       value={inputValue}
+      onChangeText={setInputValue}
     />
   );
 };

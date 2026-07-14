@@ -5,7 +5,7 @@ import {
   Pictogram,
   VStack,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 export type EmptyListProps = WithTestID<{
   pictogram: IOPictograms;

@@ -5,7 +5,7 @@ import {
   IOColors,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useCallback, useEffect } from "react";
 import { Dimensions, Platform, StyleSheet, View } from "react-native";

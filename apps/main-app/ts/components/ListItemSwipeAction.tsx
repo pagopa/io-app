@@ -6,7 +6,7 @@ import {
   IOSpringValues,
   IOVisualCostants,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { memo, ReactNode, RefObject, useCallback, useMemo } from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";

@@ -2,7 +2,6 @@ import {
   Avatar,
   AvatarSearch,
   H4,
-  hexToRgba,
   HSpacer,
   HStack,
   IOColors,
@@ -16,21 +15,21 @@ import {
   LogoPayment,
   LogoPaymentCard,
   LogoPaymentExt,
-  useIOTheme,
   VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
+  VStack,
+  hexToRgba,
+  useIOTheme
+} from "@io-app/design-system";
 import { ScrollView, StyleSheet, View } from "react-native";
-
 import { LogoPaymentExtended } from "../../../components/ui/LogoPaymentExtended";
-import { DEFAULT_CONTENT_REPO_URL } from "../../../config";
 import { AvatarDouble } from "../../messages/components/Home/DS/AvatarDouble";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import {
   DSLogoPaymentViewerBox,
   logoItemGutter
 } from "../components/DSLogoPaymentViewerBox";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { DEFAULT_CONTENT_REPO_URL } from "../../../config";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -136,7 +135,7 @@ const renderAvatar = () => (
       >
         <HStack space={8}>
           {organizationsURIs.map(({ imageSource }, i) => (
-            <Avatar key={i} logoUri={imageSource} size="small" />
+            <Avatar key={i} size="small" logoUri={imageSource} />
           ))}
           <HSpacer size={32} />
         </HStack>
@@ -151,7 +150,7 @@ const renderAvatar = () => (
       >
         <HStack space={8}>
           {organizationsURIs.map(({ imageSource }, i) => (
-            <Avatar key={i} logoUri={imageSource} size="medium" />
+            <Avatar key={i} size="medium" logoUri={imageSource} />
           ))}
           <HSpacer size={32} />
         </HStack>
@@ -183,12 +182,12 @@ const renderPaymentLogosSmall = () => (
   <View style={styles.itemsWrapper}>
     {Object.entries(IOPaymentLogos).map(([logoItemName]) => (
       <DSLogoPaymentViewerBox
-        image={
-          <LogoPayment name={logoItemName as IOLogoPaymentType} size={"100%"} />
-        }
         key={logoItemName}
         name={logoItemName}
         size="medium"
+        image={
+          <LogoPayment name={logoItemName as IOLogoPaymentType} size={"100%"} />
+        }
       />
     ))}
   </View>
@@ -198,15 +197,15 @@ const renderPaymentLogosBig = () => (
   <View style={styles.itemsWrapper}>
     {Object.entries(IOPaymentExtLogos).map(([logoItemName]) => (
       <DSLogoPaymentViewerBox
+        key={logoItemName}
+        name={logoItemName}
+        size="large"
         image={
           <LogoPaymentExt
             name={logoItemName as IOLogoPaymentExtType}
             size={"100%"}
           />
         }
-        key={logoItemName}
-        name={logoItemName}
-        size="large"
       />
     ))}
   </View>
@@ -238,16 +237,17 @@ const renderPaymentLogosCard = () => (
   <VStack space={24}>
     {Object.entries(IOPaymentCardLogos).map(([logoItemName]) => (
       <DSLogoPaymentViewerBox
+        key={logoItemName}
+        name={logoItemName}
+        size="full"
         image={
           <LogoPaymentCard
             align="start"
             height={32}
+            accessibilityLabel={logoItemName}
             name={logoItemName as IOLogoPaymentCardType}
           />
         }
-        key={logoItemName}
-        name={logoItemName}
-        size="full"
       />
     ))}
     <DSComponentViewerBox
@@ -264,9 +264,27 @@ const renderPaymentLogosCard = () => (
         }}
       >
         <VStack space={8}>
-          <LogoPaymentCard align="start" debugMode height={32} name="payPal" />
-          <LogoPaymentCard align="center" debugMode height={32} name="payPal" />
-          <LogoPaymentCard align="end" debugMode height={32} name="payPal" />
+          <LogoPaymentCard
+            debugMode
+            height={32}
+            accessibilityLabel="payPal"
+            name="payPal"
+            align="start"
+          />
+          <LogoPaymentCard
+            debugMode
+            height={32}
+            accessibilityLabel="payPal"
+            name="payPal"
+            align="center"
+          />
+          <LogoPaymentCard
+            debugMode
+            height={32}
+            accessibilityLabel="payPal"
+            name="payPal"
+            align="end"
+          />
         </VStack>
       </View>
     </DSComponentViewerBox>

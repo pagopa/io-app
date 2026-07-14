@@ -3,7 +3,7 @@ import {
   FooterActions,
   IOVisualCostants,
   useFooterActionsMeasurements
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { FlashList } from "@shopify/flash-list";
 import I18n from "i18next";
 

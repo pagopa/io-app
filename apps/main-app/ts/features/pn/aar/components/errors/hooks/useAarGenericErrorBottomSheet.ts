@@ -1,4 +1,4 @@
-import { Optional } from "@pagopa/io-app-design-system";
+import { Optional } from "@io-app/design-system";
 import { isFunction } from "lodash";
 
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";

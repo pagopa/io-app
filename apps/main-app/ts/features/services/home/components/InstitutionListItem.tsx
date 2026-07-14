@@ -1,4 +1,4 @@
-import { ListItemNav } from "@pagopa/io-app-design-system";
+import { ListItemNav } from "@io-app/design-system";
 import { memo } from "react";
 
 import { Institution } from "../../../../../definitions/services/Institution";

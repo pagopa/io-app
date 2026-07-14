@@ -5,7 +5,7 @@ import {
   IOPictograms,
   Pictogram,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ComponentProps } from "react";
 import { View } from "react-native";
 

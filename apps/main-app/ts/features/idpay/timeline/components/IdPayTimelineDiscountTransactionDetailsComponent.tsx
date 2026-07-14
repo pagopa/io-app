@@ -5,12 +5,11 @@ import {
   ListItemInfo,
   ListItemInfoCopy,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
+} from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
+import { pipe } from "fp-ts/lib/function";
 import { View } from "react-native";
-
+import I18n from "i18next";
 import {
   TransactionDetailDTO,
   StatusEnum as TransactionStatusEnum
@@ -35,10 +34,10 @@ const IdPayTimelineDiscountTransactionDetailsComponent = (props: Props) => {
           return (
             <>
               <Alert
+                variant="info"
                 content={I18n.t(
                   "idpay.initiative.operationDetails.discount.details.alerts.CANCELLED"
                 )}
-                variant="info"
               />
               <VSpacer size={16} />
             </>
@@ -89,8 +88,8 @@ const IdPayTimelineDiscountTransactionDetailsComponent = (props: Props) => {
         label={I18n.t(
           "idpay.initiative.operationDetails.discount.details.labels.business"
         )}
-        numberOfLines={2}
         value={businessName}
+        numberOfLines={2}
       />
       <Divider />
       <ListItemInfo
@@ -111,10 +110,10 @@ const IdPayTimelineDiscountTransactionDetailsComponent = (props: Props) => {
         label={I18n.t(
           "idpay.initiative.operationDetails.discount.details.labels.transactionID"
         )}
+        value={transaction.operationId}
         onPress={() => {
           clipboardSetStringWithFeedback(transaction.operationId);
         }}
-        value={transaction.operationId}
       />
     </View>
   );

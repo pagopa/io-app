@@ -1,4 +1,4 @@
-import { H3 } from "@pagopa/io-app-design-system";
+import { H3 } from "@io-app/design-system";
 import { render } from "@testing-library/react-native";
 
 import { withWalletCardBaseComponent } from "../WalletCardBaseComponent";

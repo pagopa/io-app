@@ -1,4 +1,4 @@
-import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper } from "@io-app/design-system";
 import { Dimensions, Platform, StyleSheet, View } from "react-native";
 import Animated, {
   SharedValue,

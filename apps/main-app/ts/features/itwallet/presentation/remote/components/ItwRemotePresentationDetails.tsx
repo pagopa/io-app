@@ -2,14 +2,13 @@ import {
   Alert,
   ListItemCheckbox,
   ListItemHeader,
-  useIOTheme,
   VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
+  VStack,
+  useIOTheme
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { memo, useMemo } from "react";
 import { View } from "react-native";
-
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { ItwClaimsSelector } from "../../common/components/ItwClaimsSelector";
 import { ItwRemoteMachineContext } from "../machine/provider";
@@ -39,10 +38,10 @@ const RequestedCredentialsBlock = ({
       })
       .map(({ id, credentialType, claimsToDisplay }) => (
         <ItwClaimsSelector
-          credentialType={credentialType}
-          defaultExpanded
-          items={claimsToDisplay}
           key={id}
+          credentialType={credentialType}
+          items={claimsToDisplay}
+          defaultExpanded
           selectionEnabled={false}
         />
       ))}
@@ -78,6 +77,11 @@ const ItwRemotePresentationDetails = () => {
       {required.map(({ purpose, credentials }) => (
         <View key={`required:${purpose}`}>
           <ListItemHeader
+            label={I18n.t(
+              "features.itWallet.presentation.selectiveDisclosure.requiredClaims"
+            )}
+            iconName="security"
+            iconColor={theme["icon-decorative"]}
             description={
               purpose
                 ? I18n.t("features.itWallet.presentation.remote.purpose", {
@@ -85,11 +89,6 @@ const ItwRemotePresentationDetails = () => {
                   })
                 : undefined
             }
-            iconColor={theme["icon-decorative"]}
-            iconName="security"
-            label={I18n.t(
-              "features.itWallet.presentation.selectiveDisclosure.requiredClaims"
-            )}
           />
           <RequestedCredentialsBlock credentials={credentials} />
         </View>
@@ -98,6 +97,11 @@ const ItwRemotePresentationDetails = () => {
       {optional.map(({ purpose, credentials }) => (
         <View key={`optional:${purpose}`}>
           <ListItemCheckbox
+            value={I18n.t(
+              "features.itWallet.presentation.selectiveDisclosure.optionalClaims"
+            )}
+            icon="security"
+            onValueChange={() => sendCredentialsToMachine(credentials)}
             description={
               purpose
                 ? I18n.t("features.itWallet.presentation.remote.purpose", {
@@ -105,19 +109,14 @@ const ItwRemotePresentationDetails = () => {
                   })
                 : undefined
             }
-            icon="security"
-            onValueChange={() => sendCredentialsToMachine(credentials)}
-            value={I18n.t(
-              "features.itWallet.presentation.selectiveDisclosure.optionalClaims"
-            )}
           />
           <RequestedCredentialsBlock credentials={credentials} />
           <VSpacer size={16} />
           <Alert
+            variant="info"
             content={I18n.t(
               "features.itWallet.presentation.selectiveDisclosure.optionalClaimsAlert"
             )}
-            variant="info"
           />
         </View>
       ))}

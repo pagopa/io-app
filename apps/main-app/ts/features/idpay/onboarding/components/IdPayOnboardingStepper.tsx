@@ -1,5 +1,4 @@
-import { Stepper, VSpacer } from "@pagopa/io-app-design-system";
-
+import { Stepper, VSpacer } from "@io-app/design-system";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { stepperCountSelector } from "../machine/selectors";
 

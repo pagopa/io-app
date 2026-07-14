@@ -1,9 +1,4 @@
-import {
-  Divider,
-  H6,
-  IconButton,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+import { Divider, H6, IconButton, useIOTheme } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment, useMemo } from "react";
 import { View } from "react-native";

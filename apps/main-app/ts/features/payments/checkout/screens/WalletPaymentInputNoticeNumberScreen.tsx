@@ -1,4 +1,4 @@
-import { IOButton, TextInputValidation } from "@pagopa/io-app-design-system";
+import { IOButton, TextInputValidation } from "@io-app/design-system";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";

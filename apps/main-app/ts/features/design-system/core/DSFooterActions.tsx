@@ -1,10 +1,10 @@
 import {
   FooterActions,
   IOColors,
+  VSpacer,
   useFooterActionsMeasurements,
-  useIOTheme,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+  useIOTheme
+} from "@io-app/design-system";
 import { Fragment } from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -42,6 +42,7 @@ export const DSFooterActions = () => {
         ))}
       </ScrollView>
       <FooterActions
+        onMeasure={handleFooterActionsMeasurements}
         actions={{
           type: "SingleButton",
           primary: {
@@ -57,7 +58,6 @@ export const DSFooterActions = () => {
           //   onPress: onButtonPress
           // }
         }}
-        onMeasure={handleFooterActionsMeasurements}
       />
     </View>
   );

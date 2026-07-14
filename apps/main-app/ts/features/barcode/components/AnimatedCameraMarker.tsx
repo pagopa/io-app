@@ -1,4 +1,4 @@
-import { IOEasingCurves } from "@pagopa/io-app-design-system";
+import { IOEasingCurves } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 import Animated, { AnimatedStyle, FadeIn } from "react-native-reanimated";
 

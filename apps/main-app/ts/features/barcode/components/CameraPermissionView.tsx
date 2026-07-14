@@ -6,7 +6,7 @@ import {
   IOPictograms,
   Pictogram,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 type Props = {

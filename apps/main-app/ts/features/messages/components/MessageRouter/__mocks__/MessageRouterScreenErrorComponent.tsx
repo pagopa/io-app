@@ -1,4 +1,4 @@
-import { IOButton } from "@pagopa/io-app-design-system";
+import { IOButton } from "@io-app/design-system";
 import { View } from "react-native";
 
 export const MessageRouterScreenErrorComponent = ({

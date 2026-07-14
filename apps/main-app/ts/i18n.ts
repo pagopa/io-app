@@ -14,7 +14,7 @@ import en from "../locales/en/index.json";
 import it from "../locales/it/index.json";
 // import { contentRepoUrl } from "./config";
 
-const resources = {
+export const resources = {
   it: {
     index: it
   },
@@ -141,6 +141,9 @@ void i18next
   .init({
     lng: "it",
     fallbackLng: "it",
+    // An empty value is a missing translation, not a blank string: fall back to
+    // `it` rather than silently rendering nothing.
+    returnEmptyString: false,
     supportedLngs: availableTranslations,
     initAsync: false,
     ns: ["index"],

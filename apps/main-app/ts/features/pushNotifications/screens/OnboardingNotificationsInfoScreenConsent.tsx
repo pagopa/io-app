@@ -4,15 +4,14 @@ import {
   FooterActions,
   H2,
   H6,
-  IconButton,
   IOVisualCostants,
+  IconButton,
   ListItemInfo,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+} from "@io-app/design-system";
 import { useCallback, useEffect, useMemo } from "react";
 import { AppState, FlatList, Platform, StyleSheet, View } from "react-native";
-
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   pushNotificationPreviewEnabledSelector,
@@ -183,21 +182,21 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
     <>
       <View style={styles.header}>
         <IconButton
-          accessibilityLabel={I18n.t("global.buttons.close")}
-          color="neutral"
           icon="closeLarge"
+          color="neutral"
           onPress={goNext}
           testID="continue-btn"
+          accessibilityLabel={I18n.t("global.buttons.close")}
         />
       </View>
       <FlatList
-        contentContainerStyle={styles.listContainer}
         data={instructions}
-        ItemSeparatorComponent={() => <Divider />}
-        ListHeaderComponent={ListHeader}
         renderItem={({ item, index }) => (
           <ListItemInfo {...item} label={`${item.label} ${index + 1}`} />
         )}
+        contentContainerStyle={styles.listContainer}
+        ItemSeparatorComponent={() => <Divider />}
+        ListHeaderComponent={ListHeader}
       />
       <FooterActions
         actions={{

@@ -1,15 +1,9 @@
-import {
-  IOColors,
-  IOVisualCostants,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+import { IOColors, IOVisualCostants, useIOTheme } from "@io-app/design-system";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-
+import I18n from "i18next";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
-import { formatStringToSpacedString } from "../../../utils/accessibility.ts";
 import {
   ShowMoreListItem,
   ShowMoreSection
@@ -19,8 +13,9 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
-import { NeedHelp } from "./NeedHelp";
+import { formatStringToSpacedString } from "../../../utils/accessibility.ts";
 import { TimelineListItem } from "./TimelineListItem";
+import { NeedHelp } from "./NeedHelp";
 
 const styles = StyleSheet.create({
   container: {

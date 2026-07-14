@@ -1,13 +1,13 @@
-import { ContentWrapper, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { ContentWrapper, IOVisualCostants } from "@io-app/design-system";
+
 import { ReactNode } from "react";
 import { ScrollView, View } from "react-native";
-
 import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
 
 type Props = {
+  title: string;
   children: ReactNode;
   noMargin?: boolean;
-  title: string;
 };
 
 export const DesignSystemScreen = ({ children, noMargin = false }: Props) => {

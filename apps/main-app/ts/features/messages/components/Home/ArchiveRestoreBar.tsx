@@ -1,28 +1,27 @@
-import { IOButton } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import { IOButton } from "@io-app/design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import { useBottomTabNavigatorStyle } from "../../../../hooks/useBottomTabNavigatorStyle";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
-import { useIOTabNavigation } from "../../../../navigation/params/AppParamsList";
+import I18n from "i18next";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
 import {
-  resetMessageArchivingAction,
-  startProcessingMessageArchivingAction
-} from "../../store/actions/archiving";
-import { shownMessageCategorySelector } from "../../store/reducers/allPaginated";
-import {
   areThereEntriesForShownMessageListCategorySelector,
   isArchivingDisabledSelector,
   isArchivingInProcessingModeSelector
 } from "../../store/reducers/archiving";
+import { useIOTabNavigation } from "../../../../navigation/params/AppParamsList";
+import { shownMessageCategorySelector } from "../../store/reducers/allPaginated";
+import {
+  resetMessageArchivingAction,
+  startProcessingMessageArchivingAction
+} from "../../store/actions/archiving";
 import { MessageListCategory } from "../../types/messageListCategory";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { useBottomTabNavigatorStyle } from "../../../../hooks/useBottomTabNavigatorStyle";
 
 const styles = StyleSheet.create({
   container: {
@@ -94,21 +93,21 @@ const ArchiveRestoreCTAs = ({ category }: ArchiveRestoreCTAsProps) => {
       <View style={styles.startButtonContainer}>
         <IOButton
           fullWidth
+          variant="outline"
           label={I18n.t("global.buttons.cancel")}
           onPress={() => dispatch(resetMessageArchivingAction(undefined))}
-          variant="outline"
         />
       </View>
       <View style={styles.endButtonContainer}>
         <IOButton
-          disabled={!archiveRestoreCTAEnabled}
           fullWidth
+          variant="solid"
+          disabled={!archiveRestoreCTAEnabled}
           label={I18n.t(
             `messages.cta.${category === "ARCHIVE" ? "unarchive" : "archive"}`
           )}
           loading={isProcessing}
           onPress={() => dispatch(startProcessingMessageArchivingAction())}
-          variant="solid"
         />
       </View>
     </View>

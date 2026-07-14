@@ -3,7 +3,7 @@ import {
   ListItemHeader,
   ListItemInfoCopy,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   PaymentNoticeNumberFromString,
   RptIdFromString

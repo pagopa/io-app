@@ -1,4 +1,4 @@
-import { ListItemInfo, ListItemInfoCopy } from "@pagopa/io-app-design-system";
+import { ListItemInfo, ListItemInfoCopy } from "@io-app/design-system";
 import I18n from "i18next";
 
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";

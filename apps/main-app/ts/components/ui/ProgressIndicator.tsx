@@ -1,4 +1,4 @@
-import { ProgressLoader, useIOTheme } from "@pagopa/io-app-design-system";
+import { ProgressLoader, useIOTheme } from "@io-app/design-system";
 import { ComponentProps } from "react";
 
 export type ProgressIndicator = Exclude<

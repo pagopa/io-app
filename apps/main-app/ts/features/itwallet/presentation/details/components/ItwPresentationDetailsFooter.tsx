@@ -1,4 +1,4 @@
-import { ListItemAction } from "@pagopa/io-app-design-system";
+import { ListItemAction } from "@io-app/design-system";
 import I18n from "i18next";
 import { memo, ReactNode, useMemo } from "react";
 import { View } from "react-native";

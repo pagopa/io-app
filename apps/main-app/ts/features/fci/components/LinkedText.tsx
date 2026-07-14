@@ -1,4 +1,4 @@
-import { Body, H4, H6, WithTestID } from "@pagopa/io-app-design-system";
+import { Body, H4, H6, WithTestID } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import { Fragment } from "react";
 

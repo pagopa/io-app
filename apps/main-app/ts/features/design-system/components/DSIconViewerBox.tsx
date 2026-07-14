@@ -1,6 +1,6 @@
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { View, StyleSheet, Text } from "react-native";
+import { IOColors, useIOTheme } from "@io-app/design-system";
 import { ReactNode } from "react";
-import { StyleSheet, Text, View } from "react-native";
 
 export const iconItemGutter = 8;
 
@@ -61,12 +61,12 @@ const styles = StyleSheet.create({
 });
 
 type DSIconViewerBoxProps = {
+  name: string;
+  image: ReactNode;
+  size?: "small" | "medium" | "large" | undefined;
+  withDot?: boolean;
   /** When true, the wrapper fills its parent width instead of using the size-based percentage. */
   fullWidth?: boolean;
-  image: ReactNode;
-  name: string;
-  size?: "large" | "medium" | "small" | undefined;
-  withDot?: boolean;
 };
 
 const sizeMap = {
@@ -119,8 +119,8 @@ export const DSIconViewerBox = ({
       <View style={styles.nameWrapper}>
         {name && (
           <Text
-            ellipsizeMode="tail"
             numberOfLines={1}
+            ellipsizeMode="tail"
             style={[
               { color: IOColors[theme["textBody-secondary"]] },
               size ? sizeMap[size].label : styles.iconLabelMedium

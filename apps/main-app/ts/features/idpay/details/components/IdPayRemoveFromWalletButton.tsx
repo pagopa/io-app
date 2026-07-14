@@ -1,12 +1,7 @@
-import { ListItemAction } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+import { ListItemAction } from "@io-app/design-system";
 import { useEffect } from "react";
 import { Alert, Platform } from "react-native";
-
-import {
-  InitiativeDTO,
-  VoucherStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IdPayUnsubscriptionRoutes } from "../../unsubscription/navigation/routes";
@@ -15,6 +10,10 @@ import {
   isFailureSelector,
   isUnsubscriptionSuccessSelector
 } from "../../unsubscription/store/selectors";
+import {
+  InitiativeDTO,
+  VoucherStatusEnum
+} from "../../../../../definitions/idpay/InitiativeDTO";
 
 const IdPayRemoveFromWalletButton = (initiative: InitiativeDTO) => {
   const dispatch = useIODispatch();
@@ -67,11 +66,11 @@ const IdPayRemoveFromWalletButton = (initiative: InitiativeDTO) => {
   return (
     show && (
       <ListItemAction
-        accessibilityLabel={I18n.t("cardComponent.removeCta")}
-        icon="trashcan"
-        label={I18n.t("cardComponent.removeCta")}
-        onPress={showAlert}
         testID="idpay-remove-from-wallet"
+        label={I18n.t("cardComponent.removeCta")}
+        accessibilityLabel={I18n.t("cardComponent.removeCta")}
+        onPress={showAlert}
+        icon="trashcan"
         variant="danger"
       />
     )

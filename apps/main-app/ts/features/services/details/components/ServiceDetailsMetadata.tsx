@@ -5,7 +5,7 @@ import {
   ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";

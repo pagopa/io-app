@@ -1,4 +1,4 @@
-import { ListItemInfo } from "@pagopa/io-app-design-system";
+import { ListItemInfo } from "@io-app/design-system";
 import { ComponentProps } from "react";
 
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";

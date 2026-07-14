@@ -6,7 +6,7 @@ import {
   IOButton,
   IOVisualCostants,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ComponentProps, useState } from "react";
 import { Alert } from "react-native";
 
@@ -48,10 +48,11 @@ export const DSForceScrollDownView = () => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel="Scroll to bottom"
+      footerActions={footerActions}
       contentContainerStyle={{
         paddingTop: IOVisualCostants.appMarginDefault
       }}
-      footerActions={footerActions}
     >
       <ContentWrapper>
         <VStack space={24}>
@@ -69,18 +70,18 @@ export const DSForceScrollDownView = () => {
           </VStack>
           <VStack space={16} style={{ alignItems: "flex-start" }}>
             <IOButton
+              variant="outline"
               label="Change button configuration"
               onPress={() => {
                 setFooterActions(alternativeFooterActions);
               }}
-              variant="outline"
             />
             <IOButton
+              variant="link"
               label="Reset button configuration"
               onPress={() => {
                 setFooterActions(defaultFooterActions);
               }}
-              variant="link"
             />
           </VStack>
           <VStack space={8}>

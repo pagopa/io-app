@@ -4,7 +4,7 @@ import {
   H2,
   IOMarkdownLite,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
@@ -97,6 +97,7 @@ const ContentView = () => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       footerActions={{
         actions: {
           type: "TwoButtons",

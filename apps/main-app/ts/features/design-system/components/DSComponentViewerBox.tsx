@@ -1,6 +1,6 @@
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { View, StyleSheet, Text } from "react-native";
+import { IOColors, useIOTheme } from "@io-app/design-system";
 import { ReactNode } from "react";
-import { StyleSheet, Text, View } from "react-native";
 
 const styles = StyleSheet.create({
   componentWrapperFullWidth: {
@@ -26,11 +26,11 @@ const styles = StyleSheet.create({
 });
 
 type DSComponentViewerBoxProps = {
-  children: ReactNode;
+  name: string;
   colorMode?: "dark" | "light";
   fullWidth?: boolean;
-  name: string;
   reverse?: boolean;
+  children: ReactNode;
 };
 
 export const DSComponentViewerBox = ({
@@ -62,8 +62,8 @@ export const DSComponentViewerBox = ({
           ]}
         >
           <Text
-            ellipsizeMode="tail"
             numberOfLines={1}
+            ellipsizeMode="tail"
             style={[
               styles.componentLabel,
               colorMode === "light"

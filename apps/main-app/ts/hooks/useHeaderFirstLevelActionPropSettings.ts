@@ -1,9 +1,8 @@
-import { HeaderActionProps } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+import { HeaderActionProps } from "@io-app/design-system";
 import { useCallback } from "react";
-
-import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
+import I18n from "i18next";
 import { useIONavigation } from "../navigation/params/AppParamsList";
+import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 
 export const useNavigateToSettingMainScreen = () => {
   const navigation = useIONavigation();

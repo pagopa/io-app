@@ -6,7 +6,7 @@ import {
   IOVisualCostants,
   ListItemSwitch,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useState } from "react";
 import {

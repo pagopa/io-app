@@ -6,13 +6,12 @@ import {
   IOMarkdownLite,
   Pictogram,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+} from "@io-app/design-system";
 import { useCallback } from "react";
 import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-
+import I18n from "i18next";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
 import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
@@ -56,8 +55,8 @@ const RootedDeviceModal = () => {
           <VSpacer size={8} />
           <View accessible style={{ alignItems: "center" }}>
             <BodySmall
-              color="grey-650"
               style={{ textAlign: "center" }}
+              color="grey-650"
               weight="Regular"
             >
               {I18n.t("rooted.body")}
@@ -66,18 +65,18 @@ const RootedDeviceModal = () => {
           <VSpacer size={24} />
           <View style={{ alignSelf: "center" }}>
             <IOButton
+              variant="link"
               label={I18n.t("rooted.learnMoreButton.title")}
               onPress={presentLearnMoreBottomSheet}
-              variant="link"
             />
           </View>
           <VSpacer size={24} />
           <View style={{ alignSelf: "center" }}>
             <IOButton
+              variant="solid"
               color="danger"
               label={I18n.t("global.buttons.continue")}
               onPress={handleContinueWithRootOrJailbreak}
-              variant="solid"
             />
           </View>
         </ContentWrapper>

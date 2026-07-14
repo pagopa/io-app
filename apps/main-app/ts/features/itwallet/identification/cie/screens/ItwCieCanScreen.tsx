@@ -4,7 +4,7 @@ import {
   H2,
   OTPInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
@@ -18,7 +18,6 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
@@ -86,8 +85,8 @@ export const ItwCieCanScreen = () => {
           android: undefined
         })}
         contentContainerStyle={{ flex: 1 }}
-        keyboardVerticalOffset={headerHeight}
         style={{ flex: 1 }}
+        keyboardVerticalOffset={headerHeight}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <ContentWrapper>
@@ -101,19 +100,25 @@ export const ItwCieCanScreen = () => {
             <VSpacer size={24} />
             <View style={{ flex: 1 }}>
               <OTPInput
-                accessibilityHint={I18n.t(
-                  "authentication.cie.pin.accessibility.hint"
-                )}
-                accessibilityLabel={I18n.t(
-                  "authentication.cie.pin.accessibility.label"
-                )}
-                autoFocus={isFocused}
-                key={isFocused ? "focused" : "unfocused"}
-                length={CIE_CAN_LENGTH}
-                onValueChange={onCanChanged}
                 ref={canPadViewRef}
                 secret
                 value={can}
+                accessibilityValueText={({ valueLength, length }) =>
+                  I18n.t("global.accessibility.inputDigitCounter", {
+                    valueLength,
+                    length
+                  })
+                }
+                accessibilityLabel={I18n.t(
+                  "authentication.cie.pin.accessibility.label"
+                )}
+                accessibilityHint={I18n.t(
+                  "authentication.cie.pin.accessibility.hint"
+                )}
+                onValueChange={onCanChanged}
+                length={CIE_CAN_LENGTH}
+                autoFocus={isFocused}
+                key={isFocused ? "focused" : "unfocused"}
               />
             </View>
           </ContentWrapper>

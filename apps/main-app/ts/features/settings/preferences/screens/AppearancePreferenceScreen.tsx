@@ -1,13 +1,13 @@
 import {
-  IOColors,
-  IOThemeDark,
-  IOThemeLight,
   ListItemHeader,
   RadioGroup,
   useIONewTypeface,
   useIOThemeContext,
-  VStack
-} from "@pagopa/io-app-design-system";
+  VStack,
+  IOColors,
+  IOThemeLight,
+  IOThemeDark
+} from "@io-app/design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { constVoid } from "fp-ts/lib/function";
@@ -15,12 +15,11 @@ import I18n from "i18next";
 import { ReactElement, useState } from "react";
 import {
   Appearance,
-  NativeModules,
-  Platform,
   useColorScheme,
-  View
+  View,
+  NativeModules,
+  Platform
 } from "react-native";
-
 import { FONT_PERSISTENCE_KEY } from "../../../../common/context/DSTypefaceContext";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
@@ -157,12 +156,12 @@ const AppearancePreferenceScreen = (): ReactElement => {
 
   return (
     <IOScrollViewWithLargeHeader
-      description={I18n.t("profile.preferences.list.appearance.subtitle")}
-      headerActionsProp={{ showHelp: true }}
-      includeContentMargins
       title={{
         label: I18n.t("profile.preferences.list.appearance.title")
       }}
+      description={I18n.t("profile.preferences.list.appearance.subtitle")}
+      headerActionsProp={{ showHelp: true }}
+      includeContentMargins
     >
       <VStack space={24}>
         <View>
@@ -173,15 +172,17 @@ const AppearancePreferenceScreen = (): ReactElement => {
             )}
           />
           <RadioGroup<TypefaceChoice>
-            items={typefaceOptions}
-            onPress={handleTypefaceChange}
-            selectedItem={selectedTypeface}
             type="radioListItem"
+            items={typefaceOptions}
+            selectedItem={selectedTypeface}
+            onPress={handleTypefaceChange}
           />
         </View>
 
         <View>
           <ListItemHeader
+            iconName="theme"
+            label={I18n.t("profile.preferences.list.appearance.theme.title")}
             endElement={{
               type: "badge",
               componentProps: {
@@ -189,14 +190,12 @@ const AppearancePreferenceScreen = (): ReactElement => {
                 variant: "highlight"
               }
             }}
-            iconName="theme"
-            label={I18n.t("profile.preferences.list.appearance.theme.title")}
           />
           <RadioGroup<ColorModeChoice>
-            items={colorModeOptions}
-            onPress={handleColorModeChange}
-            selectedItem={selectedColorMode}
             type="radioListItem"
+            items={colorModeOptions}
+            selectedItem={selectedColorMode}
+            onPress={handleColorModeChange}
           />
         </View>
       </VStack>

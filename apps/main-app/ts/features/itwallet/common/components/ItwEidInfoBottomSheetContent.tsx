@@ -5,13 +5,12 @@ import {
   Icon,
   IOButton,
   VStack
-} from "@pagopa/io-app-design-system";
-import { constNull, pipe } from "fp-ts/lib/function";
+} from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { Fragment, memo, useEffect } from "react";
 import { View } from "react-native";
-
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -42,7 +41,7 @@ export const ItwEidInfoBottomSheetTitle = ({
 
   return (
     <HStack space={8} style={{ alignItems: "center" }}>
-      <Icon color={iconColor} name="legalValue" />
+      <Icon name="legalValue" color={iconColor} />
       <H4>
         {I18n.t(
           isExpired
@@ -55,8 +54,8 @@ export const ItwEidInfoBottomSheetTitle = ({
 };
 
 type ItwEidInfoBottomSheetContentProps = {
-  currentScreenName?: string;
   navigation: ReturnType<typeof useIONavigation>;
+  currentScreenName?: string;
 };
 
 const ItwEidInfoBottomSheetContent = ({
@@ -100,8 +99,8 @@ const ItwEidInfoBottomSheetContent = ({
           )}
         />
         <ItwEidLifecycleAlert
-          currentScreenName={currentScreenName}
           navigation={navigation}
+          currentScreenName={currentScreenName}
           skipViewTracking={true}
         />
         <View>
@@ -118,11 +117,11 @@ const ItwEidInfoBottomSheetContent = ({
           )}
         />
         <IOButton
-          color="danger"
           fullWidth
+          variant="solid"
+          color="danger"
           label={I18n.t("features.itWallet.walletRevocation.cta")}
           onPress={navigateToWalletRevocationScreen}
-          variant="solid"
         />
       </VStack>
     );

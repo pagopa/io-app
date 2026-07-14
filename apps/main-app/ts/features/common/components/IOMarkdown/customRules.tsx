@@ -5,7 +5,7 @@ import {
   MdH1,
   MdH2,
   MdH3
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   TxtHeaderNode,
   TxtHtmlNode,

@@ -1,12 +1,10 @@
-import type { ComponentProps } from "react";
-
-import { Divider } from "@pagopa/io-app-design-system";
+import { Divider } from "@io-app/design-system";
 import { render } from "@testing-library/react-native";
-
+import type { ComponentProps } from "react";
 import { FimsClaimsList } from "../FimsClaims";
 
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual("@pagopa/io-app-design-system"),
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual("@io-app/design-system"),
   Divider: jest.fn(() => <></>)
 }));
 

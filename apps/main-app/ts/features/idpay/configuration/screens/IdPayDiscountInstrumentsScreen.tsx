@@ -1,4 +1,4 @@
-import { Divider } from "@pagopa/io-app-design-system";
+import { Divider } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   RouteProp,

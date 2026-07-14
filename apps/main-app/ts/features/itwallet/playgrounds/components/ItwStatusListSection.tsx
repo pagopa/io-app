@@ -6,7 +6,7 @@ import {
   ListItemInfoCopy,
   useIOToast,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { format } from "date-fns";
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";

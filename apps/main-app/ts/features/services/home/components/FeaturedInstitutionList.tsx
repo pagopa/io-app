@@ -1,8 +1,7 @@
-import { BannerErrorState, ListItemHeader } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useCallback, useMemo } from "react";
+import { BannerErrorState, ListItemHeader } from "@io-app/design-system";
+import I18n from "i18next";
 import { View } from "react-native";
-
 import { Institution } from "../../../../../definitions/services/Institution";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -81,11 +80,11 @@ export const FeaturedInstitutionList = () => {
     if (isError) {
       return (
         <BannerErrorState
-          actionText={I18n.t(
-            "services.home.featured.institutions.error.banner.cta"
-          )}
           label={I18n.t(
             "services.home.featured.institutions.error.banner.label"
+          )}
+          actionText={I18n.t(
+            "services.home.featured.institutions.error.banner.cta"
           )}
           onPress={fetchFeaturedInstitutions}
           testID="featured-institution-list-error"

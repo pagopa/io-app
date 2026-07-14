@@ -1,8 +1,4 @@
-import {
-  Banner,
-  IOVisualCostants,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Banner, IOVisualCostants, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { useCallback } from "react";

@@ -1,4 +1,4 @@
-import { FeatureInfo, RadioGroup, VSpacer } from "@pagopa/io-app-design-system";
+import { FeatureInfo, RadioGroup, VSpacer } from "@io-app/design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useCallback, useEffect, useState } from "react";

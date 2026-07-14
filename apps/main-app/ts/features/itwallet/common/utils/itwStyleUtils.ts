@@ -1,4 +1,4 @@
-import { IOColors, useIOThemeContext } from "@pagopa/io-app-design-system";
+import { IOColors, useIOThemeContext } from "@io-app/design-system";
 import Color from "color";
 import { useMemo } from "react";
 import { ColorSchemeName, StatusBarStyle } from "react-native";

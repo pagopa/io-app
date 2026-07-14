@@ -3,7 +3,7 @@ import {
   ListItemSwitch,
   TextInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   CieManager,
   InternalAuthResponse,

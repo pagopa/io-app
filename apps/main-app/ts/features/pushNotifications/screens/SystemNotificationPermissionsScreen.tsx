@@ -1,16 +1,15 @@
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useCallback, useEffect } from "react";
-
-import { IOScrollViewCentredContent } from "../../../components/ui/IOScrollViewCentredContent";
+import { HeaderSecondLevel } from "@io-app/design-system";
+import I18n from "i18next";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { openSystemNotificationSettingsScreen } from "../utils";
 import { useIODispatch } from "../../../store/hooks";
 import {
   trackSystemNotificationPermissionScreenOutcome,
   trackSystemNotificationPermissionScreenShown
 } from "../analytics";
+import { IOScrollViewCentredContent } from "../../../components/ui/IOScrollViewCentredContent";
 import { setEngagementScreenShown } from "../store/actions/environment";
-import { openSystemNotificationSettingsScreen } from "../utils";
 
 export const SystemNotificationPermissionsScreen = () => {
   const dispatch = useIODispatch();
@@ -30,14 +29,14 @@ export const SystemNotificationPermissionsScreen = () => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
+          ignoreSafeAreaMargin={true}
+          title={""}
+          type="singleAction"
           firstAction={{
             icon: "closeMedium",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: onDismiss
           }}
-          ignoreSafeAreaMargin={true}
-          title={""}
-          type="singleAction"
         />
       )
     });
@@ -52,6 +51,9 @@ export const SystemNotificationPermissionsScreen = () => {
 
   return (
     <IOScrollViewCentredContent
+      pictogram="reactivate"
+      title={I18n.t("notifications.modal.title")}
+      description={I18n.t("notifications.modal.content")}
       actions={{
         type: "TwoButtons",
         primary: {
@@ -74,9 +76,6 @@ export const SystemNotificationPermissionsScreen = () => {
           testID: "notifications-modal-not-now-button"
         }
       }}
-      description={I18n.t("notifications.modal.content")}
-      pictogram="reactivate"
-      title={I18n.t("notifications.modal.title")}
     />
   );
 };

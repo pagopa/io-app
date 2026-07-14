@@ -2,7 +2,7 @@ import {
   IOSkeleton,
   IOVisualCostants,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 import { ListItemMessageStandardHeight } from "./ListItemMessage";

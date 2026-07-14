@@ -1,27 +1,26 @@
-import { IOToast } from "@pagopa/io-app-design-system";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as TE from "fp-ts/lib/TaskEither";
-import I18n from "i18next";
 import { useCallback } from "react";
 import { Alert } from "react-native";
 import { Calendar } from "react-native-calendar-events";
-
+import { pipe } from "fp-ts/lib/function";
+import * as E from "fp-ts/lib/Either";
+import * as TE from "fp-ts/lib/TaskEither";
+import { IOToast } from "@io-app/design-system";
+import I18n from "i18next";
 import {
-  addCalendarEvent,
-  AddCalendarEventPayload,
-  removeCalendarEvent
-} from "../../../store/actions/calendarEvents";
-import { preferredCalendarSaveSuccess } from "../../../store/actions/persistedPreferences";
+  searchEventInCalendar,
+  convertLocalCalendarName,
+  saveEventToDeviceCalendarTask,
+  removeEventFromDeviceCalendarTask
+} from "../../../utils/calendar";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { CalendarEvent } from "../../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
 import { preferredCalendarSelector } from "../../../store/reducers/persistedPreferences";
 import {
-  convertLocalCalendarName,
-  removeEventFromDeviceCalendarTask,
-  saveEventToDeviceCalendarTask,
-  searchEventInCalendar
-} from "../../../utils/calendar";
+  AddCalendarEventPayload,
+  addCalendarEvent,
+  removeCalendarEvent
+} from "../../../store/actions/calendarEvents";
+import { preferredCalendarSaveSuccess } from "../../../store/actions/persistedPreferences";
 
 export const useMessageCalendar = (messageId: string) => {
   const dispatch = useIODispatch();

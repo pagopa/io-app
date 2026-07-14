@@ -3,15 +3,14 @@ import {
   TabItem,
   TabNavigation,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
-
+import I18n from "i18next";
 import { ReceiptsCategoryFilter, receiptsCategoryFilters } from "../types";
 
 type Props = {
-  onCategorySelected?: (category: ReceiptsCategoryFilter) => void;
   selectedCategory: ReceiptsCategoryFilter;
+  onCategorySelected?: (category: ReceiptsCategoryFilter) => void;
 };
 
 const ReceiptFilterTabs = ({ selectedCategory, onCategorySelected }: Props) => {
@@ -28,23 +27,23 @@ const ReceiptFilterTabs = ({ selectedCategory, onCategorySelected }: Props) => {
   return (
     <View style={styles.container}>
       <TabNavigation
+        tabAlignment="start"
         onItemPress={handleFilterSelected}
         selectedIndex={selectedIndexOfCategory}
-        tabAlignment="start"
       >
         {receiptsCategoryFilters.map((category, index) => (
           <TabItem
+            testID={`CategoryTabTestID-${category}`}
+            key={category}
+            label={I18n.t(
+              `features.payments.transactions.filters.tabs.${category}`
+            )}
             accessibilityLabel={`${I18n.t(
               `features.payments.transactions.filters.tabs.${category}`
             )}, ${I18n.t("global.accessibility.progressTracker", {
               index: index + 1,
               total: receiptsCategoryFilters.length
             })}`}
-            key={category}
-            label={I18n.t(
-              `features.payments.transactions.filters.tabs.${category}`
-            )}
-            testID={`CategoryTabTestID-${category}`}
           />
         ))}
       </TabNavigation>

@@ -1,7 +1,6 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+import { useIOToast } from "@io-app/design-system";
 import { useCallback } from "react";
-
+import I18n from "i18next";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
@@ -13,7 +12,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
  * @param fn The function to be wrapped
  */
 export const useNotAvailableToastGuard = (
-  fn: (...args: Array<any>) => Promise<void> | void
+  fn: (...args: Array<any>) => void | Promise<void>
 ) => {
   const toast = useIOToast();
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);

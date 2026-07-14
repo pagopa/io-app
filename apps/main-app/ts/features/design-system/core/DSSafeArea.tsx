@@ -1,12 +1,12 @@
 import {
   Body,
   H4,
-  hexToRgba,
   IOColors,
-  IOVisualCostants
-} from "@pagopa/io-app-design-system";
-import { ScrollView, Text, View } from "react-native";
+  IOVisualCostants,
+  hexToRgba
+} from "@io-app/design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView, Text, View } from "react-native";
 
 export const DSSafeArea = () => (
   <View style={{ flex: 1 }}>

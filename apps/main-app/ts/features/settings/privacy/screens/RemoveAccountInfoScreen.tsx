@@ -3,16 +3,15 @@ import {
   ContentWrapper,
   IOMarkdownLite,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+} from "@io-app/design-system";
 import { useMemo } from "react";
-
-import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
-import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import I18n from "i18next";
 import { loadBonusBeforeRemoveAccount } from "../../common/store/actions";
+import { useIODispatch } from "../../../../store/hooks";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 /**
  * A screen to explain how the account removal works.
@@ -44,20 +43,20 @@ const RemoveAccountInfo = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      actions={actions}
-      description={I18n.t(
-        "profile.main.privacy.removeAccount.info.description"
-      )}
       title={{
         label: I18n.t("profile.main.privacy.removeAccount.info.title")
       }}
+      description={I18n.t(
+        "profile.main.privacy.removeAccount.info.description"
+      )}
+      actions={actions}
     >
       <VSpacer size={8} />
       <ContentWrapper>
         <Banner
           color="neutral"
-          content={I18n.t("profile.main.privacy.removeAccount.info.banner")}
           pictogramName="attention"
+          content={I18n.t("profile.main.privacy.removeAccount.info.banner")}
         />
         <VSpacer size={24} />
         <IOMarkdownLite

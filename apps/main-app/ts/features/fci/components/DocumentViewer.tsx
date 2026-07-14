@@ -3,7 +3,7 @@ import {
   FooterActionsInline,
   IOColors,
   IOToast
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as S from "fp-ts/lib/string";
 import I18n from "i18next";

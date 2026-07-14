@@ -2,7 +2,7 @@ import {
   IOColors,
   IOFontWeight,
   makeFontStyleObject
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { FunctionComponent, PropsWithChildren, useContext } from "react";
 import { Text, TextStyle, useWindowDimensions } from "react-native";
 

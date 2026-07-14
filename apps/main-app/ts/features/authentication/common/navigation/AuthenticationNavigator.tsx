@@ -1,44 +1,43 @@
-import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import {
-  createStackNavigator,
-  TransitionPresets
+  TransitionPresets,
+  createStackNavigator
 } from "@react-navigation/stack";
+import { IOVisualCostants } from "@io-app/design-system";
 import { Platform } from "react-native";
-
-import CloseButton from "../../../../navigation/components/CloseButton";
-import RootedDeviceModal from "../../../../screens/modal/RootedDeviceModal";
-import { isGestureEnabled } from "../../../../utils/navigation";
-import { ActiveSessionLandingScreen } from "../../activeSessionLogin/screens/ActiveSessionLandingScreen";
-import ActiveSessionLoginCieCardReaderScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieCardReaderScreen";
-import ActiveSessionLoginCieConsentDataUsageScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieConsentDataUsageScreen";
-import ActiveSessionCieIdLoginScreen from "../../activeSessionLogin/screens/cieId/ActiveSessionCieIdLoginScreen";
-import ActiveSessionIdpLoginScreen from "../../activeSessionLogin/screens/spid/ActiveSessionIdpLoginScreen";
-import AuthErrorScreen from "../../login/authError/screens/AuthErrorScreen";
-import ActivateNfcScreen from "../../login/cie/screens/ActivateNfcScreen";
-import { CieCardReaderScreenWrapper } from "../../login/cie/screens/CieCardReaderScreenWrapper";
-import CieConsentDataUsageScreen from "../../login/cie/screens/CieConsentDataUsageScreen";
-import CieExpiredOrInvalidScreen from "../../login/cie/screens/CieExpiredOrInvalidScreen";
-import CieExtendedApduNotSupportedScreen from "../../login/cie/screens/CieExtendedApduNotSupportedScreen";
-import CieIdAuthUrlError from "../../login/cie/screens/CieIdAuthUrlError";
-import CieIdErrorScreen from "../../login/cie/screens/CieIdErrorScreen";
-import CieIdLoginScreen from "../../login/cie/screens/CieIdLoginScreen";
-import CieIdNotInstalledScreen from "../../login/cie/screens/CieIdNotInstalledScreen";
 import CieLoginConfigScreen from "../../login/cie/screens/CieLoginConfigScreen";
-import CiePinScreen from "../../login/cie/screens/CiePinScreen";
-import CieUnexpectedErrorScreen from "../../login/cie/screens/CieUnexpectedErrorScreen";
-import CieWrongCardScreen from "../../login/cie/screens/CieWrongCardScreen";
-import CieWrongCiePinScreen from "../../login/cie/screens/CieWrongCiePinScreen";
-import CieIdWizard from "../../login/cie/screens/wizards/CieIdWizard";
-import CiePinWizard from "../../login/cie/screens/wizards/CiePinWizard";
-import IDActivationWizard from "../../login/cie/screens/wizards/IDActivationWizard";
-import SpidWizard from "../../login/cie/screens/wizards/SpidWizard";
 import IdpLoginScreen from "../../login/idp/screens/IdpLoginScreen";
 import IdpSelectionScreen from "../../login/idp/screens/IdpSelectionScreen";
 import { LandingScreen } from "../../login/landing/screens/LandingScreen";
-import OptInScreen from "../../login/optIn/screens/OptInScreen";
 import TestAuthenticationScreen from "../screens/TestAuthenticationScreen";
-import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
+import { CieCardReaderScreenWrapper } from "../../login/cie/screens/CieCardReaderScreenWrapper";
+import CieConsentDataUsageScreen from "../../login/cie/screens/CieConsentDataUsageScreen";
+import CieExpiredOrInvalidScreen from "../../login/cie/screens/CieExpiredOrInvalidScreen";
+import CiePinScreen from "../../login/cie/screens/CiePinScreen";
+import CieWrongCiePinScreen from "../../login/cie/screens/CieWrongCiePinScreen";
+import RootedDeviceModal from "../../../../screens/modal/RootedDeviceModal";
+import { isGestureEnabled } from "../../../../utils/navigation";
+import CieUnexpectedErrorScreen from "../../login/cie/screens/CieUnexpectedErrorScreen";
+import CieExtendedApduNotSupportedScreen from "../../login/cie/screens/CieExtendedApduNotSupportedScreen";
+import CieWrongCardScreen from "../../login/cie/screens/CieWrongCardScreen";
+import ActivateNfcScreen from "../../login/cie/screens/ActivateNfcScreen";
+import AuthErrorScreen from "../../login/authError/screens/AuthErrorScreen";
+import OptInScreen from "../../login/optIn/screens/OptInScreen";
+import CieIdWizard from "../../login/cie/screens/wizards/CieIdWizard";
+import CiePinWizard from "../../login/cie/screens/wizards/CiePinWizard";
+import SpidWizard from "../../login/cie/screens/wizards/SpidWizard";
+import IDActivationWizard from "../../login/cie/screens/wizards/IDActivationWizard";
+import CieIdErrorScreen from "../../login/cie/screens/CieIdErrorScreen";
+import CieIdLoginScreen from "../../login/cie/screens/CieIdLoginScreen";
+import CieIdNotInstalledScreen from "../../login/cie/screens/CieIdNotInstalledScreen";
+import CieIdAuthUrlError from "../../login/cie/screens/CieIdAuthUrlError";
+import CloseButton from "../../../../navigation/components/CloseButton";
+import { ActiveSessionLandingScreen } from "../../activeSessionLogin/screens/ActiveSessionLandingScreen";
+import ActiveSessionCieIdLoginScreen from "../../activeSessionLogin/screens/cieId/ActiveSessionCieIdLoginScreen";
+import ActiveSessionLoginCieCardReaderScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieCardReaderScreen";
+import ActiveSessionLoginCieConsentDataUsageScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieConsentDataUsageScreen";
+import ActiveSessionIdpLoginScreen from "../../activeSessionLogin/screens/spid/ActiveSessionIdpLoginScreen";
 import { AUTHENTICATION_ROUTES } from "./routes";
+import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 
 const Stack = createStackNavigator<AuthenticationParamsList>();
 
@@ -48,8 +47,8 @@ const AuthenticationStackNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
-      component={LandingScreen}
       name={AUTHENTICATION_ROUTES.LANDING}
+      component={LandingScreen}
       options={{
         headerShown: true,
         // The title is set to an empty string to prevent the default title from being shown in the header (Android glitch).
@@ -58,8 +57,8 @@ const AuthenticationStackNavigator = () => (
     />
 
     <Stack.Screen
-      component={ActiveSessionLandingScreen}
       name={AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN}
+      component={ActiveSessionLandingScreen}
       options={{ headerShown: true }}
     />
 
@@ -71,95 +70,95 @@ const AuthenticationStackNavigator = () => (
       }}
     >
       <Stack.Screen
-        component={RootedDeviceModal}
         name={AUTHENTICATION_ROUTES.ROOTED_DEVICE}
+        component={RootedDeviceModal}
       />
     </Stack.Group>
     <Stack.Group screenOptions={{ headerShown: true }}>
       <Stack.Screen
-        component={CieIdWizard}
         name={AUTHENTICATION_ROUTES.CIE_ID_WIZARD}
+        component={CieIdWizard}
       />
       <Stack.Screen
-        component={CiePinWizard}
         name={AUTHENTICATION_ROUTES.CIE_PIN_WIZARD}
+        component={CiePinWizard}
       />
       <Stack.Screen
-        component={SpidWizard}
         name={AUTHENTICATION_ROUTES.SPID_WIZARD}
+        component={SpidWizard}
       />
       <Stack.Screen
-        component={IDActivationWizard}
         name={AUTHENTICATION_ROUTES.ID_ACTIVATION_WIZARD}
+        component={IDActivationWizard}
       />
       <Stack.Screen
-        component={CieLoginConfigScreen}
         name={AUTHENTICATION_ROUTES.CIE_LOGIN_CONFIG_SCREEN}
+        component={CieLoginConfigScreen}
       />
     </Stack.Group>
     <Stack.Screen
-      component={OptInScreen}
       name={AUTHENTICATION_ROUTES.OPT_IN}
+      component={OptInScreen}
       options={{ headerShown: true }}
     />
 
     <Stack.Screen
-      component={IdpSelectionScreen}
+      options={{ headerShown: true }}
       name={AUTHENTICATION_ROUTES.IDP_SELECTION}
-      options={{ headerShown: true }}
+      component={IdpSelectionScreen}
     />
 
     <Stack.Screen
-      component={IdpLoginScreen}
       name={AUTHENTICATION_ROUTES.IDP_LOGIN}
+      component={IdpLoginScreen}
     />
     <Stack.Screen
-      component={ActiveSessionIdpLoginScreen}
       name={AUTHENTICATION_ROUTES.IDP_LOGIN_ACTIVE_SESSION_LOGIN}
+      component={ActiveSessionIdpLoginScreen}
     />
 
     <Stack.Screen
-      component={TestAuthenticationScreen}
       name={AUTHENTICATION_ROUTES.IDP_TEST}
+      component={TestAuthenticationScreen}
     />
 
     <Stack.Screen
-      component={CiePinScreen}
       name={AUTHENTICATION_ROUTES.CIE_PIN_SCREEN}
+      component={CiePinScreen}
       options={{ headerShown: true }}
     />
 
     <Stack.Screen
-      component={CieIdLoginScreen}
       name={AUTHENTICATION_ROUTES.CIE_ID_LOGIN}
+      component={CieIdLoginScreen}
       options={{ headerShown: false }}
     />
 
     <Stack.Screen
-      component={ActiveSessionCieIdLoginScreen}
       name={AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN}
+      component={ActiveSessionCieIdLoginScreen}
       options={{ headerShown: false }}
     />
 
     <Stack.Screen
-      component={CieCardReaderScreenWrapper}
       name={AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN}
+      component={CieCardReaderScreenWrapper}
     />
 
     <Stack.Screen
-      component={ActiveSessionLoginCieCardReaderScreen}
       name={AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN_ACTIVE_SESSION_LOGIN}
+      component={ActiveSessionLoginCieCardReaderScreen}
     />
 
     <Stack.Screen
-      component={CieConsentDataUsageScreen}
       name={AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE}
+      component={CieConsentDataUsageScreen}
       options={{ headerShown: true }}
     />
 
     <Stack.Screen
-      component={ActiveSessionLoginCieConsentDataUsageScreen}
       name={AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN}
+      component={ActiveSessionLoginCieConsentDataUsageScreen}
       options={{ headerShown: true }}
     />
 
@@ -174,45 +173,45 @@ const AuthenticationStackNavigator = () => (
       }}
     >
       <Stack.Screen
-        component={CieWrongCiePinScreen}
         name={AUTHENTICATION_ROUTES.CIE_WRONG_PIN_SCREEN}
+        component={CieWrongCiePinScreen}
       />
 
       <Stack.Screen
-        component={CieUnexpectedErrorScreen}
         name={AUTHENTICATION_ROUTES.CIE_UNEXPECTED_ERROR}
+        component={CieUnexpectedErrorScreen}
       />
 
       <Stack.Screen
-        component={CieExtendedApduNotSupportedScreen}
         name={AUTHENTICATION_ROUTES.CIE_EXTENDED_APDU_NOT_SUPPORTED_SCREEN}
+        component={CieExtendedApduNotSupportedScreen}
       />
 
       <Stack.Screen
-        component={CieWrongCardScreen}
         name={AUTHENTICATION_ROUTES.CIE_WRONG_CARD_SCREEN}
+        component={CieWrongCardScreen}
       />
 
       <Stack.Screen
-        component={AuthErrorScreen}
         name={AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN}
+        component={AuthErrorScreen}
       />
 
       <Stack.Screen
-        component={CieExpiredOrInvalidScreen}
         name={AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN}
+        component={CieExpiredOrInvalidScreen}
       />
       <Stack.Screen
-        component={CieIdErrorScreen}
         name={AUTHENTICATION_ROUTES.CIE_ID_ERROR}
+        component={CieIdErrorScreen}
       />
       <Stack.Screen
-        component={CieIdAuthUrlError}
         name={AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL}
+        component={CieIdAuthUrlError}
       />
       <Stack.Screen
-        component={CieIdNotInstalledScreen}
         name={AUTHENTICATION_ROUTES.CIE_NOT_INSTALLED}
+        component={CieIdNotInstalledScreen}
       />
     </Stack.Group>
 
@@ -232,9 +231,9 @@ const AuthenticationStackNavigator = () => (
       }}
     >
       <Stack.Screen
-        component={ActivateNfcScreen}
-        name={AUTHENTICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN}
         options={{ headerShown: true }}
+        name={AUTHENTICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN}
+        component={ActivateNfcScreen}
       />
     </Stack.Group>
   </Stack.Navigator>

@@ -1,27 +1,26 @@
 import {
-  BodySmall,
   H3,
   HeaderSecondLevel,
   IOAppMargin,
   IOColors,
-  IOVisualCostants
-} from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
-import { memo, useCallback, useLayoutEffect } from "react";
+  IOVisualCostants,
+  BodySmall
+} from "@io-app/design-system";
+import { useLayoutEffect, memo, useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
+import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import {
   selectFiscalCodeFromEid,
   selectNameSurnameFromEid
 } from "../../../credentials/store/selectors";
 import { trackCredentialCardModal } from "../analytics";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 
 /**
  * This magic number is the lenght of the encoded fiscal code in a CODE39 barcode.
@@ -87,13 +86,13 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
+          title={""}
+          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: () => navigation.goBack()
           }}
-          title={""}
-          type="singleAction"
         />
       )
     });
@@ -111,16 +110,16 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
         ]}
       >
         <View style={styles.container}>
-          <BodySmall style={styles.text} weight="Semibold">
+          <BodySmall weight="Semibold" style={styles.text}>
             {nameSurname}
           </BodySmall>
           <Barcode
-            background={IOColors.white}
-            format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
-            height={barcodeWidth} // and the width as height
-            lineColor={IOColors.black}
             value={fiscalCode}
             width={barcodeHeigth} // Since it is rotated by 90 degrees, we use the height as width
+            height={barcodeWidth} // and the width as height
+            format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
+            background={IOColors.white}
+            lineColor={IOColors.black}
           />
           <H3 style={styles.text}>{fiscalCode}</H3>
         </View>

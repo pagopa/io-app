@@ -2,25 +2,24 @@ import {
   H2,
   H3,
   H4,
-  hexToRgba,
   HStack,
-  IconButton,
-  IconButtonSolid,
   IOButton,
   IOButtonColor,
   IOButtonVariant,
   IOColors,
   IOIcons,
+  IconButton,
+  IconButtonSolid,
   ListItemSwitch,
-  useIOTheme,
   VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
+  VStack,
+  hexToRgba,
+  useIOTheme
+} from "@io-app/design-system";
 import { Fragment, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
   primaryBlock: {
@@ -43,7 +42,7 @@ const onButtonPress = () => {
 
 const buttonColors: Array<IOButtonColor> = ["primary", "danger", "contrast"];
 
-const buttonVariants: Array<Extract<IOButtonVariant, "outline" | "solid">> = [
+const buttonVariants: Array<Extract<IOButtonVariant, "solid" | "outline">> = [
   "solid",
   "outline"
 ];
@@ -109,105 +108,105 @@ const renderSolidOutlineButton = () => (
                 <View style={isContrast ? styles.primaryBlock : {}}>
                   <VStack space={buttonBlockMargin}>
                     <DSComponentViewerBox
-                      colorMode={isContrast ? "dark" : undefined}
                       name={titleComponentViewerBox}
+                      colorMode={isContrast ? "dark" : undefined}
                     >
                       <VStack
                         space={buttonBlockInnerSpacing}
                         style={{ alignItems: "flex-start" }}
                       >
                         <IOButton
-                          accessibilityHint="Tap to trigger test alert"
                           color={color}
+                          variant={variant}
+                          accessibilityHint="Tap to trigger test alert"
                           label={buttonLabel}
                           onPress={onButtonPress}
-                          variant={variant}
                         />
                         <IOButton
-                          accessibilityHint="Tap to trigger test alert"
                           color={color}
+                          variant={variant}
+                          accessibilityHint="Tap to trigger test alert"
+                          label={buttonLabel}
                           icon={colorsIconMap[color]}
-                          label={buttonLabel}
                           onPress={onButtonPress}
-                          variant={variant}
                         />
                         <IOButton
-                          accessibilityHint="Tap to trigger test alert"
                           color={color}
+                          variant={variant}
+                          accessibilityHint="Tap to trigger test alert"
+                          label={buttonLabel}
                           icon={colorsIconMap[color]}
                           iconPosition="end"
-                          label={buttonLabel}
                           onPress={onButtonPress}
-                          variant={variant}
                         />
                         <View style={{ alignSelf: "center" }}>
                           <IOButton
-                            accessibilityHint="Tap to trigger test alert"
                             color={color}
+                            variant={variant}
+                            accessibilityHint="Tap to trigger test alert"
                             label={`${buttonLabel} (centered)`}
                             onPress={onButtonPress}
-                            variant={variant}
                           />
                         </View>
                       </VStack>
                     </DSComponentViewerBox>
                     <DSComponentViewerBox
-                      colorMode={isContrast ? "dark" : undefined}
                       name={`${titleComponentViewerBox}, full width`}
+                      colorMode={isContrast ? "dark" : undefined}
                     >
                       {/* Let's force `alignItems: "flex-start"` to
                       test if `fullWidth`is managed correctly */}
                       <IOButton
-                        accessibilityHint="Tap to trigger test alert"
                         color={color}
+                        variant={variant}
                         fullWidth
+                        accessibilityHint="Tap to trigger test alert"
                         label={`${buttonLabel} (full width)`}
                         onPress={onButtonPress}
-                        variant={variant}
                       />
                     </DSComponentViewerBox>
                     <DSComponentViewerBox
-                      colorMode={isContrast ? "dark" : undefined}
                       name={`${titleComponentViewerBox}, loading state`}
+                      colorMode={isContrast ? "dark" : undefined}
                     >
                       {isContrast ? (
                         <IOButton
-                          accessibilityHint="Tap to trigger test alert"
-                          color="contrast"
                           fullWidth
-                          label={`${buttonLabel} (loading state)`}
                           loading
-                          onPress={onButtonPress}
                           variant={variant}
+                          color="contrast"
+                          label={`${buttonLabel} (loading state)`}
+                          onPress={onButtonPress}
+                          accessibilityHint="Tap to trigger test alert"
                         />
                       ) : (
-                        <LoadingButtonExample color={color} variant={variant} />
+                        <LoadingButtonExample variant={variant} color={color} />
                       )}
                     </DSComponentViewerBox>
                     <DSComponentViewerBox
-                      colorMode={isContrast ? "dark" : undefined}
                       name={`${titleComponentViewerBox}, disabled`}
+                      colorMode={isContrast ? "dark" : undefined}
                     >
                       <VStack
                         space={buttonBlockInnerSpacing}
                         style={{ alignItems: "flex-start" }}
                       >
                         <IOButton
-                          accessibilityHint="Tap to trigger test alert"
                           color={color}
+                          variant={variant}
                           disabled
+                          accessibilityHint="Tap to trigger test alert"
                           label={`${buttonLabel} (disabled)`}
                           onPress={onButtonPress}
-                          variant={variant}
                         />
                         <IOButton
-                          accessibilityHint="Tap to trigger test alert"
                           color={color}
-                          disabled
-                          icon={colorsIconMap[color]}
-                          label={`${buttonLabel} (disabled)`}
-                          onPress={onButtonPress}
                           variant={variant}
+                          disabled
+                          accessibilityHint="Tap to trigger test alert"
+                          label={`${buttonLabel} (disabled)`}
+                          icon={colorsIconMap[color]}
+                          onPress={onButtonPress}
                         />
                       </VStack>
                     </DSComponentViewerBox>
@@ -226,8 +225,8 @@ const LoadingButtonExample = ({
   variant,
   color
 }: {
+  variant: Extract<IOButtonVariant, "solid" | "outline">;
   color: IOButtonColor;
-  variant: Extract<IOButtonVariant, "outline" | "solid">;
 }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -235,13 +234,13 @@ const LoadingButtonExample = ({
   return (
     <>
       <IOButton
-        accessibilityHint="Tap to trigger test alert"
+        variant={variant}
         color={color}
         fullWidth
-        label={`${capitalize(variant)} button, loading state`}
         loading={isEnabled}
+        accessibilityHint="Tap to trigger test alert"
+        label={`${capitalize(variant)} button, loading state`}
         onPress={() => setIsEnabled(true)}
-        variant={variant}
       />
       <ListItemSwitch
         label="Abilita lo stato di caricamento"
@@ -266,86 +265,86 @@ const renderLinkButton = () => (
               <View style={isContrast ? styles.primaryBlock : {}}>
                 <VStack space={buttonBlockMargin}>
                   <DSComponentViewerBox
-                    colorMode={isContrast ? "dark" : undefined}
                     name={`IOButton · Link variant, ${color} color`}
+                    colorMode={isContrast ? "dark" : undefined}
                   >
                     <VStack space={buttonBlockInnerSpacing}>
                       <IOButton
-                        accessibilityHint="Tap to trigger test alert"
                         color={color}
+                        variant="link"
+                        accessibilityHint="Tap to trigger test alert"
                         label={"Link button"}
                         onPress={onButtonPress}
-                        variant="link"
                       />
                       <IOButton
-                        accessibilityHint="Tap to trigger test alert"
                         color={color}
+                        variant="link"
+                        accessibilityHint="Tap to trigger test alert"
+                        label={"Link button"}
                         icon="starEmpty"
-                        label={"Link button"}
                         onPress={onButtonPress}
-                        variant="link"
                       />
                       <IOButton
-                        accessibilityHint="Tap to trigger test alert"
                         color={color}
+                        variant="link"
+                        accessibilityHint="Tap to trigger test alert"
+                        label={"Link button"}
                         icon="starEmpty"
                         iconPosition="end"
-                        label={"Link button"}
                         onPress={onButtonPress}
-                        variant="link"
                       />
                       <View style={{ alignSelf: "center" }}>
                         <IOButton
-                          accessibilityHint="Tap to trigger test alert"
                           color={color}
+                          variant="link"
+                          accessibilityHint="Tap to trigger test alert"
                           label={"Link button (centered)"}
                           onPress={onButtonPress}
-                          variant="link"
                         />
                       </View>
                     </VStack>
                   </DSComponentViewerBox>
                   <DSComponentViewerBox
-                    colorMode={isContrast ? "dark" : undefined}
                     name="IOButton · Link variant, stress test"
+                    colorMode={isContrast ? "dark" : undefined}
                   >
                     <View style={{ alignSelf: "center" }}>
                       <IOButton
-                        accessibilityHint="Tap to trigger test alert"
                         color={color}
+                        variant="link"
+                        textAlign="center"
+                        /* Don't set limits on maximum number of lines */
+                        numberOfLines={0}
+                        accessibilityHint="Tap to trigger test alert"
                         label={
                           "Link button (centered) with a very long loooooong text"
                         }
-                        /* Don't set limits on maximum number of lines */
-                        numberOfLines={0}
                         onPress={onButtonPress}
-                        textAlign="center"
-                        variant="link"
                       />
                     </View>
                   </DSComponentViewerBox>
                   <DSComponentViewerBox
-                    colorMode={isContrast ? "dark" : undefined}
                     name={`IOButton · Link variant, ${color} color, disabled`}
+                    colorMode={isContrast ? "dark" : undefined}
                   >
                     <VStack space={buttonBlockInnerSpacing}>
                       <IOButton
-                        accessibilityHint="Tap to trigger test alert"
                         color={color}
+                        variant="link"
                         disabled
+                        accessibilityHint="Tap to trigger test alert"
                         label={"Link button (disabled)"}
                         onPress={onButtonPress}
-                        variant="link"
                       />
                       <IOButton
-                        accessibilityHint="Tap to trigger test alert"
                         color={color}
+                        variant="link"
                         disabled
+                        accessibilityHint="Tap to trigger test alert"
+                        label={"Link button (disabled)"}
                         icon="starEmpty"
                         iconPosition="end"
-                        label={"Link button (disabled)"}
                         onPress={onButtonPress}
-                        variant="link"
                       />
                     </VStack>
                   </DSComponentViewerBox>
@@ -377,8 +376,8 @@ const renderIconButton = () => (
 
         <IconButton
           accessibilityLabel="Tap to trigger test alert"
-          disabled
           icon="help"
+          disabled
           onPress={onButtonPress}
         />
       </HStack>
@@ -386,53 +385,53 @@ const renderIconButton = () => (
     <DSComponentViewerBox name="IconButton · Neutral variant">
       <HStack space={buttonBlockInnerSpacing}>
         <IconButton
-          accessibilityLabel="Tap to trigger test alert"
           color="neutral"
+          accessibilityLabel="Tap to trigger test alert"
           icon="search"
           onPress={onButtonPress}
         />
 
         <IconButton
-          accessibilityLabel="Tap to trigger test alert"
           color="neutral"
+          accessibilityLabel="Tap to trigger test alert"
           icon="help"
           onPress={onButtonPress}
         />
 
         <IconButton
-          accessibilityLabel="Tap to trigger test alert"
           color="neutral"
-          disabled
+          accessibilityLabel="Tap to trigger test alert"
           icon="help"
+          disabled
           onPress={onButtonPress}
         />
       </HStack>
     </DSComponentViewerBox>
     <View style={styles.primaryBlock}>
       <DSComponentViewerBox
-        colorMode="dark"
         name="IconButton · Contrast variant"
+        colorMode="dark"
       >
         <HStack space={buttonBlockInnerSpacing}>
           <IconButton
-            accessibilityLabel="Tap to trigger test alert"
             color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
             icon="search"
             onPress={onButtonPress}
           />
 
           <IconButton
-            accessibilityLabel="Tap to trigger test alert"
             color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
             icon="help"
             onPress={onButtonPress}
           />
 
           <IconButton
-            accessibilityLabel="Tap to trigger test alert"
             color="contrast"
-            disabled
+            accessibilityLabel="Tap to trigger test alert"
             icon="help"
+            disabled
             onPress={onButtonPress}
           />
         </HStack>
@@ -443,31 +442,31 @@ const renderIconButton = () => (
       <View style={styles.neutralBlock}>
         <HStack space={buttonBlockInnerSpacing}>
           <IconButton
-            accessibilityHint="Tap to trigger test alert"
-            accessibilityLabel="Search"
+            persistentColorMode
             color="neutral"
+            accessibilityLabel="Search"
+            accessibilityHint="Tap to trigger test alert"
             icon="search"
             onPress={onButtonPress}
-            persistentColorMode
           />
 
           <IconButton
-            accessibilityHint="Tap to trigger test alert"
-            accessibilityLabel="Help"
+            persistentColorMode
             color="neutral"
+            accessibilityLabel="Help"
+            accessibilityHint="Tap to trigger test alert"
             icon="help"
             onPress={onButtonPress}
-            persistentColorMode
           />
 
           <IconButton
-            accessibilityHint="Tap to trigger test alert"
-            accessibilityLabel="Help"
+            persistentColorMode
             color="neutral"
+            accessibilityLabel="Help"
+            accessibilityHint="Tap to trigger test alert"
+            icon="help"
             disabled
-            icon="help"
             onPress={onButtonPress}
-            persistentColorMode
           />
         </HStack>
       </View>
@@ -480,39 +479,39 @@ const renderIconButtonSolid = () => (
     <DSComponentViewerBox name="IconButtonSolid · Primary variant, large">
       <HStack space={buttonBlockInnerSpacing}>
         <IconButtonSolid
-          accessibilityLabel="Tap to trigger test alert"
           color="primary"
+          accessibilityLabel="Tap to trigger test alert"
           icon="arrowBottom"
           onPress={onButtonPress}
         />
 
         <IconButtonSolid
-          accessibilityLabel="Tap to trigger test alert"
           color="primary"
-          disabled
+          accessibilityLabel="Tap to trigger test alert"
           icon="arrowBottom"
+          disabled
           onPress={onButtonPress}
         />
       </HStack>
     </DSComponentViewerBox>
     <View style={styles.primaryBlock}>
       <DSComponentViewerBox
-        colorMode="dark"
         name="IconButtonSolid · Contrast variant, large"
+        colorMode="dark"
       >
         <HStack space={buttonBlockInnerSpacing}>
           <IconButtonSolid
-            accessibilityLabel="Tap to trigger test alert"
             color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
             icon="arrowBottom"
             onPress={onButtonPress}
           />
 
           <IconButtonSolid
-            accessibilityLabel="Tap to trigger test alert"
             color="contrast"
-            disabled
+            accessibilityLabel="Tap to trigger test alert"
             icon="arrowBottom"
+            disabled
             onPress={onButtonPress}
           />
         </HStack>

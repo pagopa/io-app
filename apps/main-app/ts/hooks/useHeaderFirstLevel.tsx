@@ -1,4 +1,4 @@
-import { HeaderFirstLevel } from "@pagopa/io-app-design-system";
+import { HeaderFirstLevel } from "@io-app/design-system";
 import { useLayoutEffect, useMemo } from "react";
 
 import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";

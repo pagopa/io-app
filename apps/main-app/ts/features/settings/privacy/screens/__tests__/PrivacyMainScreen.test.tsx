@@ -125,7 +125,7 @@ describe("PrivacyMainScreen", () => {
       [UserDataProcessingChoiceEnum.DELETE]: pot.none
     });
 
-    const IOToast = require("@pagopa/io-app-design-system").IOToast;
+    const IOToast = require("@io-app/design-system").IOToast;
     const toastSpy = jest.spyOn(IOToast, "error").mockImplementation(jest.fn());
 
     renderComponentMockStore({

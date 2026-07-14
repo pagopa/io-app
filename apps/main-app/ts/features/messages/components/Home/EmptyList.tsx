@@ -1,4 +1,4 @@
-import { IOPictograms } from "@pagopa/io-app-design-system";
+import { IOPictograms } from "@io-app/design-system";
 import * as B from "fp-ts/lib/boolean";
 import { constUndefined, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";

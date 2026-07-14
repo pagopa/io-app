@@ -1,10 +1,9 @@
-import { Divider, ListItemHeader } from "@pagopa/io-app-design-system";
-import { useRoute } from "@react-navigation/native";
+import { Divider, ListItemHeader } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo, useState } from "react";
 import { View } from "react-native";
 import { Fragment } from "react/jsx-runtime";
-
+import { useRoute } from "@react-navigation/native";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
@@ -50,18 +49,18 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
   return (
     <View>
       <ItwEidLifecycleAlert
+        navigation={navigation}
         currentScreenName={currentScreenName}
         lifecycleStatus={["jwtExpiring", "jwtExpired"]}
-        navigation={navigation}
         skipViewTracking={false}
       />
       {claims.length > 0 && (
-        <ListItemHeader endElement={endElement} label={listItemHeaderLabel} />
+        <ListItemHeader label={listItemHeaderLabel} endElement={endElement} />
       )}
       {claims.map((claim, index) => (
         <Fragment key={claim.id}>
           {index !== 0 && <Divider />}
-          <ItwCredentialClaim claim={claim} hidden={claimsHidden} isPreview />
+          <ItwCredentialClaim claim={claim} isPreview hidden={claimsHidden} />
         </Fragment>
       ))}
       {claims.length > 0 && <Divider />}

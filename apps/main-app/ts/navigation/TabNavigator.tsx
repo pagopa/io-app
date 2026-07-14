@@ -2,7 +2,7 @@ import {
   IOColors,
   makeFontStyleObject,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import I18n from "i18next";
 

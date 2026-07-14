@@ -4,7 +4,7 @@ import {
   hexToRgba,
   IOColors,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import { ComponentProps, useLayoutEffect, useMemo } from "react";
 import { ColorValue } from "react-native";

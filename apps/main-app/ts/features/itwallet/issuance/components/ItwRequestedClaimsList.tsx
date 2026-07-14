@@ -1,24 +1,23 @@
 import {
-  BodySmall,
   Divider,
   H6,
-  HStack,
   Icon,
   IOColors,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
+  BodySmall,
+  useIOTheme,
+  HStack
+} from "@io-app/design-system";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import I18n from "i18next";
+import { pipe } from "fp-ts/lib/function";
 import { StyleSheet, View } from "react-native";
-
-import { isStringNullyOrEmpty } from "../../../../utils/strings";
+import I18n from "i18next";
 import {
   ClaimDisplayFormat,
   DisclosureClaim,
   getClaimDisplayValue,
   getSafeText
 } from "../../common/utils/itwClaimsUtils";
+import { isStringNullyOrEmpty } from "../../../../utils/strings";
 
 type ItwRequiredClaimsListProps = {
   items: ReadonlyArray<DisclosureClaim>;
@@ -46,16 +45,16 @@ const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => {
             >
               <View>
                 <ClaimText claim={claim} />
-                <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+                <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
                   {I18n.t("features.itWallet.generic.dataSource.single", {
                     credentialSource: source
                   })}
                 </BodySmall>
               </View>
               <Icon
-                color={theme["icon-decorative"]}
                 name="checkTickBig"
                 size={24}
+                color={theme["icon-decorative"]}
               />
             </HStack>
           </View>

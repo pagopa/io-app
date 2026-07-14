@@ -1,4 +1,4 @@
-import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VStack } from "@io-app/design-system";
 import { useFocusEffect, useLinkTo } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";

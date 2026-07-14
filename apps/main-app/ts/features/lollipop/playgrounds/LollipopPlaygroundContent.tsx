@@ -5,7 +5,7 @@ import {
   IOButton,
   IOColors,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";

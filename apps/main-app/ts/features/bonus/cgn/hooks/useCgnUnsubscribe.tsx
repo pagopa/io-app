@@ -1,8 +1,7 @@
-import { IOToast } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+import { IOToast } from "@io-app/design-system";
 import { useEffect, useRef } from "react";
 import { Alert } from "react-native";
-
+import I18n from "i18next";
 import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

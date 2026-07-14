@@ -2,7 +2,7 @@ import {
   IOSkeleton,
   ListItemTransaction,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { View } from "react-native";
 
 import { ReceiptFadeInOutAnimationView } from "./ReceiptFadeInOutAnimationView";

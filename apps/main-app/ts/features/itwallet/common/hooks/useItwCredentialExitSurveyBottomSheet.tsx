@@ -1,4 +1,4 @@
-import { Body, IOButton, VStack } from "@pagopa/io-app-design-system";
+import { Body, IOButton, VStack } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";

@@ -4,15 +4,14 @@ import {
   H4,
   IOButton,
   IOColors,
+  VStack,
   useFooterActionsMeasurements,
-  useIOTheme,
-  VStack
-} from "@pagopa/io-app-design-system";
+  useIOTheme
+} from "@io-app/design-system";
 import { ModalBottomSheet } from "@swmansion/react-native-bottom-sheet";
 import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
-
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
@@ -82,35 +81,35 @@ export const BottomSheetPlayground = () => {
           </Body>
 
           <IOButton
-            accessibilityLabel="Open modal sheet"
             fullWidth
+            variant="solid"
             label="Open modal sheet"
+            accessibilityLabel="Open modal sheet"
             onPress={() => setModalIndex(FIRST_OPEN_INDEX)}
-            variant="solid"
           />
 
           <IOButton
-            accessibilityLabel="Open long scrollable sheet"
             fullWidth
+            variant="solid"
             label="Open long (scrollable) sheet"
+            accessibilityLabel="Open long scrollable sheet"
             onPress={() => setLongModalIndex(FIRST_OPEN_INDEX)}
-            variant="solid"
           />
 
           <IOButton
-            accessibilityLabel="Open 60 percent height sheet"
             fullWidth
-            label="Open 60% sheet"
-            onPress={() => setPercentModalIndex(FIRST_OPEN_INDEX)}
             variant="solid"
+            label="Open 60% sheet"
+            accessibilityLabel="Open 60 percent height sheet"
+            onPress={() => setPercentModalIndex(FIRST_OPEN_INDEX)}
           />
         </VStack>
       </IOScrollView>
 
       {/* Modal sheet: auto-sizes to its content height, with a scrim. */}
       <ModalBottomSheet
-        detents={[0, "content"]}
         index={modalIndex}
+        detents={[0, "content"]}
         onIndexChange={setModalIndex}
         scrimColor="rgba(0, 0, 0, 0.4)"
         surface={surface}
@@ -124,6 +123,8 @@ export const BottomSheetPlayground = () => {
           </Body>
         </View>
         <FooterActions
+          onMeasure={handleFooterActionsMeasurements}
+          fixed={false}
           actions={{
             type: "SingleButton",
             primary: {
@@ -132,8 +133,6 @@ export const BottomSheetPlayground = () => {
               onPress: () => setModalIndex(CLOSED_INDEX)
             }
           }}
-          fixed={false}
-          onMeasure={handleFooterActionsMeasurements}
         />
       </ModalBottomSheet>
 
@@ -145,8 +144,8 @@ export const BottomSheetPlayground = () => {
         collapses the sheet.
       */}
       <ModalBottomSheet
-        detents={[0, "content"]}
         index={longModalIndex}
+        detents={[0, "content"]}
         onIndexChange={setLongModalIndex}
         scrimColor="rgba(0, 0, 0, 0.4)"
         surface={surface}
@@ -176,6 +175,8 @@ export const BottomSheetPlayground = () => {
             margin.
           */}
         <FooterActions
+          onMeasure={handleFooterActionsMeasurements}
+          fixed={true}
           actions={{
             type: "SingleButton",
             primary: {
@@ -184,8 +185,6 @@ export const BottomSheetPlayground = () => {
               onPress: () => setLongModalIndex(CLOSED_INDEX)
             }
           }}
-          fixed={true}
-          onMeasure={handleFooterActionsMeasurements}
         />
       </ModalBottomSheet>
 
@@ -198,8 +197,8 @@ export const BottomSheetPlayground = () => {
         be dragged up to the full content height.
       */}
       <ModalBottomSheet
-        detents={[0, frame.height * PERCENT_DETENT_RATIO, "content"]}
         index={percentModalIndex}
+        detents={[0, frame.height * PERCENT_DETENT_RATIO, "content"]}
         onIndexChange={setPercentModalIndex}
         scrimColor="rgba(0, 0, 0, 0.4)"
         surface={surface}
@@ -225,6 +224,8 @@ export const BottomSheetPlayground = () => {
         </ScrollView>
         {/* Fixed footer, pinned at the bottom of the 60% sheet. */}
         <FooterActions
+          onMeasure={handleFooterActionsMeasurements}
+          fixed={true}
           actions={{
             type: "SingleButton",
             primary: {
@@ -233,8 +234,6 @@ export const BottomSheetPlayground = () => {
               onPress: () => setPercentModalIndex(CLOSED_INDEX)
             }
           }}
-          fixed={true}
-          onMeasure={handleFooterActionsMeasurements}
         />
       </ModalBottomSheet>
     </>

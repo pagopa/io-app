@@ -5,7 +5,7 @@ import {
   useIOTheme,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { FlatList, ListRenderItemInfo, View } from "react-native";
 
 import { DesignSystemScreen } from "../components/DesignSystemScreen";

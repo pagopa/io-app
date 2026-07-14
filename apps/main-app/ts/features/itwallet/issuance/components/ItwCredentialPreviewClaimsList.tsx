@@ -1,4 +1,4 @@
-import { Divider } from "@pagopa/io-app-design-system";
+import { Divider } from "@io-app/design-system";
 import { memo } from "react";
 import { View } from "react-native";
 

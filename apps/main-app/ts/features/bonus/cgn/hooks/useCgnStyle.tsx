@@ -3,7 +3,7 @@ import {
   IOColors,
   useIOTheme,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ColorValue } from "react-native";
 
 type CgnStyleProps = {

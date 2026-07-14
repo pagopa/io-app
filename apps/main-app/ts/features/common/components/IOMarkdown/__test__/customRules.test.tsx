@@ -1,4 +1,4 @@
-import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
+import { Body, IOToast, MdH1, MdH2, MdH3 } from "@io-app/design-system";
 import I18n from "i18next";
 import { Linking } from "react-native";
 

@@ -1,20 +1,15 @@
-import {
-  IOColors,
-  IOVisualCostants,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
-import { useLinkTo } from "@react-navigation/native";
 import { memo, ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
-
-import IOMarkdown from "../../../../components/IOMarkdown";
+import { useLinkTo } from "@react-navigation/native";
+import { IOColors, IOVisualCostants, useIOTheme } from "@io-app/design-system";
 import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
-import { Markdown } from "../../../../components/ui/Markdown/Markdown";
-import { useIOSelector } from "../../../../store/hooks";
-import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { trackAppCaughtError } from "../../../../utils/analytics";
-import { unknownToString } from "../../../../utils/errors";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
+import { useIOSelector } from "../../../../store/hooks";
+import { Markdown } from "../../../../components/ui/Markdown/Markdown";
+import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { unknownToString } from "../../../../utils/errors";
+import { trackAppCaughtError } from "../../../../utils/analytics";
 
 const CSS_STYLE = `
   body {
@@ -67,6 +62,7 @@ const CardWithMarkdownContent = memo(
         return (
           <IOMarkdown
             content={content}
+            rules={generateMessagesAndServicesRules(linkTo)}
             onError={(error, _stack) => {
               const errorString = unknownToString(error);
               trackAppCaughtError(
@@ -75,7 +71,6 @@ const CardWithMarkdownContent = memo(
                 errorString
               );
             }}
-            rules={generateMessagesAndServicesRules(linkTo)}
           />
         );
       }

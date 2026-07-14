@@ -1,4 +1,4 @@
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme } from "@io-app/design-system";
 import { ColorValue, StyleSheet, View } from "react-native";
 import { Circle, ClipPath, Defs, Path, Rect, Svg } from "react-native-svg";
 

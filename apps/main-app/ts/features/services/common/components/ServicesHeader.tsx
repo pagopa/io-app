@@ -8,7 +8,7 @@ import {
   IOVisualCostants,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;

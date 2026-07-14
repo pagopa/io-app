@@ -3,7 +3,7 @@ import {
   ForceScrollDownView,
   H2,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -140,6 +140,7 @@ const ContentView = ({ credential }: ContentViewProps) => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       contentContainerStyle={{ flexGrow: 1 }}
       footerActions={{
         actions: {

@@ -1,4 +1,4 @@
-import { H4, IOButton, useIOTheme, VStack } from "@pagopa/io-app-design-system";
+import { IOButton, H4, VStack, useIOTheme } from "@io-app/design-system";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
@@ -26,10 +26,10 @@ export const DSHapticFeedback = () => {
           {hapticFeedbacks.map(feedback => (
             <IOButton
               fullWidth
+              variant="solid"
               key={feedback}
               label={feedback}
               onPress={() => ReactNativeHapticFeedback.trigger(feedback)}
-              variant="solid"
             />
           ))}
         </VStack>

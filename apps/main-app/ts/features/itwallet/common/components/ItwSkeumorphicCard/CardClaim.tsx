@@ -1,4 +1,4 @@
-import { WithTestID } from "@pagopa/io-app-design-system";
+import { WithTestID } from "@io-app/design-system";
 import * as E from "fp-ts/lib/Either";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";

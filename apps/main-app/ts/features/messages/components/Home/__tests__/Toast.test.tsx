@@ -13,8 +13,8 @@ import { Toasts } from "../Toasts";
 
 const mockToastSuccess = jest.fn();
 const mockToastError = jest.fn();
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual("@pagopa/io-app-design-system"),
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual("@io-app/design-system"),
   useIOToast: () => ({
     show: (_message: string, _options?: unknown) => jest.fn(),
     error: mockToastError,

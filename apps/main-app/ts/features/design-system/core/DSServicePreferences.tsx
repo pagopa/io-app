@@ -8,7 +8,7 @@ import {
   ListItemSwitch,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ComponentProps, useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 import Animated, {

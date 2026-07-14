@@ -29,8 +29,8 @@ jest.mock("../../../../utils/url", () => ({
 
 const mockToastError = jest.fn();
 
-jest.mock("@pagopa/io-app-design-system", () => {
-  const actual = jest.requireActual("@pagopa/io-app-design-system");
+jest.mock("@io-app/design-system", () => {
+  const actual = jest.requireActual("@io-app/design-system");
   return {
     ...actual,
     IOToast: {

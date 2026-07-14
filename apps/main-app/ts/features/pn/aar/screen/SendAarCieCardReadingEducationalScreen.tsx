@@ -1,4 +1,4 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import i18n from "i18next";
 import { useCallback, useEffect } from "react";

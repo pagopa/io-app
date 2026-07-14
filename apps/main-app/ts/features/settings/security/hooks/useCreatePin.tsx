@@ -1,22 +1,21 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
-import { useCallback, useMemo } from "react";
+import { useMemo, useCallback } from "react";
+import { useIOToast } from "@io-app/design-system";
 import { AccessibilityInfo, Platform } from "react-native";
-
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import I18n from "i18next";
+import { createPinSuccess } from "../store/actions/pinset";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { PinString } from "../../../../types/PinString";
-import { getFlowType } from "../../../../utils/analytics";
 import { setPin } from "../../../../utils/keychain";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../utils/supportAssistance";
-import { trackCreatePinSuccess } from "../../common/analytics";
-import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { isProfileFirstOnBoardingSelector } from "../../common/store/selectors";
-import { createPinSuccess } from "../store/actions/pinset";
+import { getFlowType } from "../../../../utils/analytics";
+import { trackCreatePinSuccess } from "../../common/analytics";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 /**
  *

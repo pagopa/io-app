@@ -1,4 +1,4 @@
-import { Body } from "@pagopa/io-app-design-system";
+import { Body } from "@io-app/design-system";
 import { ComponentProps } from "react";
 import { createStore } from "redux";
 

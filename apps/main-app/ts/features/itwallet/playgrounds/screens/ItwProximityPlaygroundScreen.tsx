@@ -1,9 +1,4 @@
-import {
-  Body,
-  IOButton,
-  ListItemSwitch,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { Body, IOButton, ListItemSwitch, VStack } from "@io-app/design-system";
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";

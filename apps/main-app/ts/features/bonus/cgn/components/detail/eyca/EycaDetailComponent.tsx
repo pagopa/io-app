@@ -1,14 +1,10 @@
-import {
-  Alert,
-  ListItemHeader,
-  LoadingSpinner
-} from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
-import { JSX, useCallback, useEffect } from "react";
-import { View } from "react-native";
 
+import { JSX, useCallback, useEffect } from "react";
+import { Alert, ListItemHeader, LoadingSpinner } from "@io-app/design-system";
+import I18n from "i18next";
+import { View } from "react-native";
 import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 import { isLoading } from "../../../../../../common/model/RemoteValue";
@@ -54,11 +50,11 @@ const EycaDetailComponent = () => {
 
   const errorComponent = (
     <Alert
-      action={I18n.t("global.buttons.retry")}
       content={I18n.t("bonus.cgn.detail.status.eycaError")}
-      onPress={requestEycaActivation}
       testID="eyca-error-component"
       variant="error"
+      onPress={requestEycaActivation}
+      action={I18n.t("global.buttons.retry")}
     />
   );
 
@@ -67,8 +63,8 @@ const EycaDetailComponent = () => {
   ): JSX.Element | null => {
     switch (eycaCard.status) {
       case "ACTIVATED":
-      case "EXPIRED":
       case "REVOKED":
+      case "EXPIRED":
         return <EycaStatusDetailsComponent eycaCard={eycaCard} />;
       case "PENDING":
         return pipe(
@@ -81,9 +77,9 @@ const EycaDetailComponent = () => {
                 errorComponent
               ) : (
                 <Alert
-                  content={I18n.t("bonus.cgn.detail.status.eycaPending")}
                   testID="eyca-pending-component"
                   variant="info"
+                  content={I18n.t("bonus.cgn.detail.status.eycaPending")}
                 />
               )
           )
@@ -100,6 +96,7 @@ const EycaDetailComponent = () => {
       ) : (
         <>
           <ListItemHeader
+            label={I18n.t("bonus.cgn.detail.status.eyca")}
             endElement={{
               type: "iconButton",
               componentProps: {
@@ -108,7 +105,6 @@ const EycaDetailComponent = () => {
                 accessibilityLabel: "Apri bottom sheet"
               }
             }}
-            label={I18n.t("bonus.cgn.detail.status.eyca")}
           />
           {pipe(
             eyca,

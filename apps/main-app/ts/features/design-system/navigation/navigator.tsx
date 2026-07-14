@@ -5,7 +5,7 @@ import {
   useIOExperimentalDesign,
   useIOTheme,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform } from "react-native";

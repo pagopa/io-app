@@ -1,7 +1,4 @@
-import {
-  HeaderActionProps,
-  HeaderSecondLevel
-} from "@pagopa/io-app-design-system";
+import { HeaderActionProps, HeaderSecondLevel } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useCallback, useLayoutEffect, useMemo } from "react";

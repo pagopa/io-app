@@ -3,7 +3,7 @@ import {
   IOColors,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";

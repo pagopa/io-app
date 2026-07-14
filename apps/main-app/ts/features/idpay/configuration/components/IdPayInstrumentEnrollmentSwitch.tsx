@@ -3,7 +3,7 @@ import {
   IOIcons,
   IOLogoPaymentType,
   ListItemSwitch
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";

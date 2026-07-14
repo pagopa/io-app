@@ -2,7 +2,7 @@
  * A screen to show the app Terms of Service.
  * This screen is used as Privacy screen From Profile section.
  */
-import { ContentWrapper, H2 } from "@pagopa/io-app-design-system";
+import { ContentWrapper, H2 } from "@io-app/design-system";
 import I18n from "i18next";
 import { useState } from "react";
 

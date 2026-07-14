@@ -1,13 +1,12 @@
 import {
   Body,
-  H2,
   IOButton,
+  H2,
   IOColors,
-  useIOTheme,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+  VSpacer,
+  useIOTheme
+} from "@io-app/design-system";
 import { Alert, View } from "react-native";
-
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 
 export const DSIOScrollView = () => {
@@ -15,6 +14,7 @@ export const DSIOScrollView = () => {
 
   return (
     <IOScrollView
+      debugMode
       actions={{
         type: "ThreeButtons",
         primary: {
@@ -30,7 +30,6 @@ export const DSIOScrollView = () => {
           onPress: () => Alert.alert("Tertiary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")
         }
       }}
-      debugMode
     >
       <H2 color={theme["textHeading-default"]}>Start</H2>
       {[...Array(50)].map((_el, i) => (
@@ -47,9 +46,9 @@ export const DSIOScrollView = () => {
       />
       <VSpacer />
       <IOButton
+        variant="outline"
         label="Test"
         onPress={() => Alert.alert("Test button")}
-        variant="outline"
       />
       {[...Array(2)].map((_el, i) => (
         <Body key={`body-${i}`}>Repeated text</Body>

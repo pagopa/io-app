@@ -3,13 +3,12 @@ import {
   IOAppMargin,
   IOColors,
   useScaleAnimation
-} from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+} from "@io-app/design-system";
 import { memo } from "react";
 import { Dimensions, Pressable, StyleSheet } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import Animated from "react-native-reanimated";
-
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { selectFiscalCodeFromEid } from "../../../credentials/store/selectors";
@@ -55,26 +54,26 @@ const ItwPresentationFiscalCode = () => {
 
   return (
     <Pressable
+      accessible={true}
+      accessibilityRole="button"
       accessibilityHint={I18n.t(
         "features.itWallet.presentation.credentialDetails.fiscalCode.action"
       )}
       accessibilityLabel={I18n.t(
         "features.itWallet.presentation.credentialDetails.fiscalCode.label"
       )}
-      accessibilityRole="button"
-      accessible={true}
-      onPress={handleOnPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      onPress={handleOnPress}
     >
       <Animated.View style={[styles.button, scaleAnimatedStyle]}>
         <Barcode
-          background={IOColors.white}
-          format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
-          height={80}
-          lineColor={IOColors.black}
           value={fiscalCode}
           width={barcodeWidth}
+          height={80}
+          format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
+          background={IOColors.white}
+          lineColor={IOColors.black}
         />
         <H3 style={styles.text}>{fiscalCode}</H3>
       </Animated.View>

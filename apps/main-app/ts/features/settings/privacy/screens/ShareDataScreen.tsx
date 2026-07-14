@@ -1,4 +1,4 @@
-import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
+import { ContentWrapper, useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { AccessibilityInfo, View } from "react-native";

@@ -1,15 +1,12 @@
-import { Body, HeaderSecondLevel } from "@pagopa/io-app-design-system";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import i18next from "i18next";
+import { Body, HeaderSecondLevel } from "@io-app/design-system";
 import { useCallback, useEffect } from "react";
-
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { WhatsNewScreenContent } from "../../../components/screens/WhatsNewScreenContent";
 import {
   AppParamsList,
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../store/hooks";
-import { setSecurityAdviceReadyToShow } from "../../authentication/fastLogin/store/actions/securityAdviceActions";
 import {
   NotificationModalFlow,
   SendOpeningSource,
@@ -17,8 +14,10 @@ import {
   trackSystemNotificationPermissionScreenOutcome,
   trackSystemNotificationPermissionScreenShown
 } from "../analytics";
-import { usePushNotificationEngagement } from "../hooks/usePushNotificationEngagement";
 import { NOTIFICATIONS_ROUTES } from "../navigation/routes";
+import { usePushNotificationEngagement } from "../hooks/usePushNotificationEngagement";
+import { useIODispatch } from "../../../store/hooks";
+import { setSecurityAdviceReadyToShow } from "../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 export type PushNotificationEngagementScreenNavigationParams = {
   flow: NotificationModalFlow;
@@ -66,10 +65,10 @@ export const PushNotificationEngagementScreen = ({
   );
 };
 
-type Props = PushNotificationEngagementScreenNavigationParams & {
+type Props = {
   onPressActivate: () => void;
   shouldSetSecurityAdviceUponLeaving: boolean;
-};
+} & PushNotificationEngagementScreenNavigationParams;
 
 const PushNotificationEngagementScreenContent = ({
   flow,
@@ -105,15 +104,15 @@ const PushNotificationEngagementScreenContent = ({
     setOptions({
       header: () => (
         <HeaderSecondLevel
+          title=""
+          ignoreSafeAreaMargin={false}
+          type="singleAction"
           firstAction={{
             icon: "closeMedium",
             onPress: handleCloseScreen,
             accessibilityLabel: i18next.t("global.buttons.close"),
             testID: "header-close"
           }}
-          ignoreSafeAreaMargin={false}
-          title=""
-          type="singleAction"
         />
       )
     });
@@ -121,6 +120,8 @@ const PushNotificationEngagementScreenContent = ({
 
   return (
     <WhatsNewScreenContent
+      pictogram="notification"
+      title={i18next.t("features.pushNotifications.engagementScreen.title")}
       action={{
         fullWidth: true,
         label: i18next.t("features.pushNotifications.engagementScreen.cta"),
@@ -131,8 +132,6 @@ const PushNotificationEngagementScreenContent = ({
         variant: "highlight",
         text: i18next.t("features.pushNotifications.engagementScreen.badge")
       }}
-      pictogram="notification"
-      title={i18next.t("features.pushNotifications.engagementScreen.title")}
     >
       <Body style={{ textAlign: "center" }}>
         {i18next.t("features.pushNotifications.engagementScreen.body")}

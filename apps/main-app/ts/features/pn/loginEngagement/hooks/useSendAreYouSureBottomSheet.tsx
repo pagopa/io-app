@@ -1,27 +1,26 @@
+import { View } from "react-native";
 import {
+  VStack,
   FeatureInfo,
   IOButton,
   IOMarkdownLite,
-  VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
+  VSpacer
+} from "@io-app/design-system";
 import i18n from "i18next";
+import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useRef } from "react";
-import { View } from "react-native";
-
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { setSendEngagementScreenHasBeenDismissed } from "../store/actions";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
-import { NotificationModalFlow } from "../../../pushNotifications/analytics";
 import {
   trackSendActivationAccepted,
   trackSendActivationDeclined,
   trackSendNurturingDialogClosure
 } from "../../analytics/send";
-import { setSendEngagementScreenHasBeenDismissed } from "../store/actions";
+import { NotificationModalFlow } from "../../../pushNotifications/analytics";
 import { useSendActivationFlow } from "./useSendActivationFlow";
 
 export const flow: NotificationModalFlow = "access";
@@ -43,6 +42,7 @@ export const useSendAreYouSureBottomSheet = () => {
     component: (
       <VStack space={24}>
         <FeatureInfo
+          pictogramProps={{ name: "savingMoney", pictogramStyle: "default" }}
           body={
             <IOMarkdownLite
               content={i18n.t(
@@ -50,9 +50,9 @@ export const useSendAreYouSureBottomSheet = () => {
               )}
             />
           }
-          pictogramProps={{ name: "savingMoney", pictogramStyle: "default" }}
         />
         <FeatureInfo
+          pictogramProps={{ name: "message", pictogramStyle: "default" }}
           body={
             <IOMarkdownLite
               content={i18n.t(
@@ -60,7 +60,6 @@ export const useSendAreYouSureBottomSheet = () => {
               )}
             />
           }
-          pictogramProps={{ name: "message", pictogramStyle: "default" }}
         />
         <IOMarkdownLite
           content={i18n.t(
@@ -70,24 +69,27 @@ export const useSendAreYouSureBottomSheet = () => {
         />
         <VStack space={16} style={{ alignItems: "center" }}>
           <IOButton
-            fullWidth
+            testID="sendActivationID"
             label={i18n.t(
               "features.pn.loginEngagement.send.areYouSureBottomSheet.action"
             )}
-            loading={isActivating}
+            fullWidth
             onPress={() => {
               // eslint-disable-next-line functional/immutable-data
               ctaPressed.current = true;
               trackSendActivationAccepted("nurturing_bottomsheet", flow);
               requestSendActivation();
             }}
-            testID="sendActivationID"
+            loading={isActivating}
           />
           <View>
             <IOButton
+              testID="sendDismissalID"
               label={i18n.t(
                 "features.pn.loginEngagement.send.areYouSureBottomSheet.secondaryAction"
               )}
+              variant="link"
+              textAlign="center"
               onPress={() => {
                 // eslint-disable-next-line functional/immutable-data
                 ctaPressed.current = true;
@@ -96,9 +98,6 @@ export const useSendAreYouSureBottomSheet = () => {
                 dispatch(setSecurityAdviceReadyToShow(true));
                 pop();
               }}
-              testID="sendDismissalID"
-              textAlign="center"
-              variant="link"
             />
           </View>
           <VSpacer size={8} />

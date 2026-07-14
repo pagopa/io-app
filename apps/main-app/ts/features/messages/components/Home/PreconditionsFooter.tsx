@@ -1,21 +1,20 @@
-import { FooterActions } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useCallback } from "react";
 import { View } from "react-native";
-
+import { FooterActions } from "@io-app/design-system";
+import I18n from "i18next";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
-import { openAppStoreUrl } from "../../../../utils/url";
-import { trackNotificationRejected, trackUxConversion } from "../../analytics";
 import {
   preconditionsCategoryTagSelector,
   preconditionsFooterSelector,
   preconditionsMessageIdSelector
 } from "../../store/reducers/messagePrecondition";
+import { openAppStoreUrl } from "../../../../utils/url";
+import { trackNotificationRejected, trackUxConversion } from "../../analytics";
 
 export type PreconditionsFooterProps = {
+  onNavigation: (messageId: string) => void;
   onDismiss: () => void;
   onFooterHeightAvailable: (height: number) => void;
-  onNavigation: (messageId: string) => void;
 };
 
 export const PreconditionsFooter = ({
@@ -28,9 +27,9 @@ export const PreconditionsFooter = ({
     case "content":
       return (
         <PreconditionsFooterContent
+          onNavigation={onNavigation}
           onDismiss={onDismiss}
           onFooterHeightAvailable={onFooterHeightAvailable}
-          onNavigation={onNavigation}
         />
       );
     case "update":

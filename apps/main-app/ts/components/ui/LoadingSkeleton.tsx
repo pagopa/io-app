@@ -1,6 +1,6 @@
-import { IOSkeleton, VStack } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+import { IOSkeleton, VStack } from "@io-app/design-system";
 import { DimensionValue, View } from "react-native";
+import I18n from "i18next";
 
 type LoadingSkeletonProps = {
   lines?: number;
@@ -24,23 +24,23 @@ export const LoadingSkeleton = ({
   testID
 }: LoadingSkeletonProps) => (
   <View
-    accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
-    accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
     accessible={true}
+    accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
+    accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
     testID={testID}
   >
     <View
-      accessibilityElementsHidden={true}
       importantForAccessibility="no-hide-descendants"
+      accessibilityElementsHidden={true}
     >
       <VStack space={8}>
         {[...Array(lines)].map((_, i) => (
           <IOSkeleton
-            height={21}
             key={`MD_SK_PB_${i}`}
-            radius={4}
             shape="rectangle"
             width={skeletonLineWidths[i % skeletonLineWidths.length]}
+            height={21}
+            radius={4}
           />
         ))}
       </VStack>

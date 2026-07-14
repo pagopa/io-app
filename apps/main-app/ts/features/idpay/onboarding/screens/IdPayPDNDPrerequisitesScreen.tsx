@@ -1,13 +1,8 @@
-import {
-  IOMarkdownLite,
-  ModuleSummary,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
+import { IOMarkdownLite, ModuleSummary, VSpacer } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { Fragment, useState } from "react";
-
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -75,6 +70,15 @@ const IdPayPDNDPrerequisitesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      topElement={<IdPayOnboardingStepper />}
+      includeContentMargins
+      title={{
+        label: I18n.t("idpay.onboarding.PDNDPrerequisites.title"),
+        section: I18n.t("idpay.onboarding.navigation.header")
+      }}
+      description={I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
+        service: initiativeName
+      })}
       actions={{
         type: "SingleButton",
         primary: {
@@ -82,27 +86,18 @@ const IdPayPDNDPrerequisitesScreen = () => {
           onPress: continueOnPress
         }
       }}
-      contextualHelp={emptyContextualHelp}
-      description={I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
-        service: initiativeName
-      })}
       goBack={goBackOnPress}
+      contextualHelp={emptyContextualHelp}
       headerActionsProp={{ showHelp: true }}
-      includeContentMargins
-      title={{
-        label: I18n.t("idpay.onboarding.PDNDPrerequisites.title"),
-        section: I18n.t("idpay.onboarding.navigation.header")
-      }}
-      topElement={<IdPayOnboardingStepper />}
     >
       {pdndCriteria?.map((criteria, index) => (
         <Fragment key={index}>
           {criteria.code && (
             <ModuleSummary
-              description={getPDNDCriteriaDescription(criteria)}
               label={I18n.t(
                 `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
               )}
+              description={getPDNDCriteriaDescription(criteria)}
               onPress={() => {
                 setAuthority(criteria.authority);
                 present();
@@ -115,11 +110,11 @@ const IdPayPDNDPrerequisitesScreen = () => {
       {familyUnitCriteria && (
         <>
           <ModuleSummary
-            description={I18n.t(
-              `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.description`
-            )}
             label={I18n.t(
               `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.title`
+            )}
+            description={I18n.t(
+              `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.description`
             )}
             onPress={() => {
               setAuthority(

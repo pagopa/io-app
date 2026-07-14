@@ -4,7 +4,7 @@ import {
   IOBadgeVSpacing,
   IOColors,
   makeFontStyleObject
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   Canvas,
   LinearGradient,

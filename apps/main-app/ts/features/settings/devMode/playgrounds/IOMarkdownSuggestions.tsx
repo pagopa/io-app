@@ -1,15 +1,15 @@
-import { HSpacer, IOButton, VSpacer } from "@pagopa/io-app-design-system";
-import { Fragment } from "react";
 import { View } from "react-native";
+import { Fragment } from "react";
+import { HSpacer, IOButton, VSpacer } from "@io-app/design-system";
 
 export type Suggestion = {
-  content: string;
   label: string;
+  content: string;
 };
 
 type Props = {
-  setContent: (content: string) => void;
   suggestions: Array<[Suggestion, Suggestion]>;
+  setContent: (content: string) => void;
 };
 
 const IOMarkdownSuggestions = ({ suggestions, setContent }: Props) => (
@@ -20,22 +20,22 @@ const IOMarkdownSuggestions = ({ suggestions, setContent }: Props) => (
           <View style={{ flex: 1 }}>
             <IOButton
               fullWidth
+              variant="solid"
               label={first.label}
               onPress={() => {
                 setContent(first.content);
               }}
-              variant="solid"
             />
           </View>
           <HSpacer />
           <View style={{ flex: 1 }}>
             <IOButton
               fullWidth
+              variant="solid"
               label={second.label}
               onPress={() => {
                 setContent(second.content);
               }}
-              variant="solid"
             />
           </View>
         </View>
@@ -46,11 +46,11 @@ const IOMarkdownSuggestions = ({ suggestions, setContent }: Props) => (
       <View style={{ flex: 1 }}>
         <IOButton
           fullWidth
+          variant="outline"
           label="Clear"
           onPress={() => {
             setContent("");
           }}
-          variant="outline"
         />
       </View>
     </View>

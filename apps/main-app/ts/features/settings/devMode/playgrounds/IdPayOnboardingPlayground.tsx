@@ -8,7 +8,7 @@ import {
   PressableListItemBase,
   TextInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Button, ScrollView, View } from "react-native";

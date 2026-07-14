@@ -4,10 +4,10 @@ import {
   H2,
   IOVisualCostants,
   ListItemNav,
-  useIOTheme,
   VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
+  VStack,
+  useIOTheme
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import {
   NativeStackNavigationOptions,
@@ -16,19 +16,18 @@ import {
 import { useLayoutEffect, useMemo, useState } from "react";
 import { Platform, SectionList } from "react-native";
 import { isSearchBarAvailableForCurrentPlatform } from "react-native-screens";
-
 import { useScreenEndMargin } from "../../hooks/useScreenEndMargin";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { DesignSystemParamsList } from "./navigation/params";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
 
-type RoutesProps = Array<SingleSectionProps>;
-
 type SingleSectionProps = {
+  title: string;
   description?: string;
   route: string;
-  title: string;
 };
+
+type RoutesProps = Array<SingleSectionProps>;
 
 const DATA_ROUTES_FOUNDATION: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.FOUNDATION
@@ -50,9 +49,9 @@ const DATA_ROUTES_SCREENS: RoutesProps = Object.values(
 );
 
 type SectionDataProps = {
-  data: RoutesProps;
-  description?: string;
   title: string;
+  description?: string;
+  data: RoutesProps;
 };
 
 const DESIGN_SYSTEM_SECTION_DATA: Array<SectionDataProps> = [
@@ -126,26 +125,26 @@ export const DesignSystem = () => {
   const renderDSNavItem = ({
     item: { title, route }
   }: {
-    item: { route: string; title: string };
+    item: { title: string; route: string };
   }) => (
     <ListItemNav
       accessibilityLabel={`Go to the ${title} page`}
-      onPress={() => navigation.navigate(route as any)}
       value={title}
+      onPress={() => navigation.navigate(route as any)}
     />
   );
 
   const renderDSSection = ({
     section: { title, description }
   }: {
-    section: { description?: string; title: string };
+    section: { title: string; description?: string };
   }) => (
     <VStack space={4}>
-      <H2 color={theme["textHeading-default"]} weight="Bold">
+      <H2 weight="Bold" color={theme["textHeading-default"]}>
         {title}
       </H2>
       {description && (
-        <BodySmall color={theme["textBody-tertiary"]} weight={"Regular"}>
+        <BodySmall weight={"Regular"} color={theme["textBody-tertiary"]}>
           {description}
         </BodySmall>
       )}
@@ -178,7 +177,7 @@ export const DesignSystem = () => {
 
   const renderListEmpty = () => (
     <VStack space={8}>
-      <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+      <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
         No components found.
       </BodySmall>
     </VStack>
@@ -186,22 +185,22 @@ export const DesignSystem = () => {
 
   return (
     <SectionList
+      ListHeaderComponent={Platform.OS === "ios" ? <VSpacer size={8} /> : null}
+      keyExtractor={(item, index) => `${item.route}-${index}`}
+      stickySectionHeadersEnabled={false}
       contentContainerStyle={{
         paddingHorizontal: IOVisualCostants.appMarginDefault,
         paddingTop: IOVisualCostants.appMarginDefault,
         paddingBottom: screenEndMargin
       }}
       contentInsetAdjustmentBehavior="automatic"
-      ItemSeparatorComponent={() => <Divider />}
-      keyExtractor={(item, index) => `${item.route}-${index}`}
       ListEmptyComponent={renderListEmpty}
-      ListHeaderComponent={Platform.OS === "ios" ? <VSpacer size={8} /> : null}
-      renderItem={renderDSNavItem}
-      renderSectionFooter={renderDSSectionFooter}
       renderSectionHeader={renderDSSection}
-      sections={sectionsToRender}
+      renderSectionFooter={renderDSSectionFooter}
       SectionSeparatorComponent={() => <VSpacer size={8} />}
-      stickySectionHeadersEnabled={false}
+      renderItem={renderDSNavItem}
+      ItemSeparatorComponent={() => <Divider />}
+      sections={sectionsToRender}
     />
   );
 };

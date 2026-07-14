@@ -1,13 +1,12 @@
-import { Body, IOButton, VSpacer } from "@pagopa/io-app-design-system";
-
+import { Body, IOButton, VSpacer } from "@io-app/design-system";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { useAppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
 import { clearFeedbackDatas } from "../../../appReviews/store/actions";
 import {
   appReviewNegativeFeedbackLogSelector,
   appReviewPositiveFeedbackLogSelector
 } from "../../../appReviews/store/selectors";
+import { useAppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
 
 export const AppFeedbackPlayground = () => {
   const { requestFeedback } = useAppFeedbackContext();
@@ -27,8 +26,8 @@ export const AppFeedbackPlayground = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      includeContentMargins
       title={{ label: "App Feedback Playground" }}
+      includeContentMargins
     >
       <Body>{`Ultimo feedback positivo: ${appReviewPositiveFeedbackLog}`}</Body>
       <VSpacer />
@@ -39,28 +38,28 @@ export const AppFeedbackPlayground = () => {
       <Body>{`Ultimo feedback positivo (generale): ${appReviewNegativeFeedbackLogGeneral}`}</Body>
       <VSpacer />
       <IOButton
+        variant="solid"
         color="danger"
-        label="Rimuovi log sui feedback"
         onPress={() => dispatch(clearFeedbackDatas())}
-        variant="solid"
+        label="Rimuovi log sui feedback"
       />
       <VSpacer />
       <IOButton
-        label="Richiedi feedback pagamenti"
+        variant="solid"
         onPress={() => requestFeedback("payments")}
-        variant="solid"
+        label="Richiedi feedback pagamenti"
       />
       <VSpacer />
       <IOButton
-        label="Richiedi feedback ITW"
+        variant="solid"
         onPress={() => requestFeedback("itw")}
-        variant="solid"
+        label="Richiedi feedback ITW"
       />
       <VSpacer />
       <IOButton
-        label="Richiedi feedback generale"
-        onPress={() => requestFeedback("general")}
         variant="solid"
+        onPress={() => requestFeedback("general")}
+        label="Richiedi feedback generale"
       />
     </IOScrollViewWithLargeHeader>
   );

@@ -1,14 +1,14 @@
 import {
-  H3,
-  hexToRgba,
   IOButton,
+  H3,
   IOColors,
+  hexToRgba,
   useIOTheme
-} from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+} from "@io-app/design-system";
+
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
-
+import I18n from "i18next";
 import BoxedRefreshIndicator from "./ui/BoxedRefreshIndicator";
 import { Overlay } from "./ui/Overlay";
 
@@ -47,28 +47,28 @@ const LoadingSpinnerOverlay = ({
       foreground={
         isLoading && (
           <BoxedRefreshIndicator
-            action={
-              onCancel && (
-                <View style={{ alignSelf: "center" }}>
-                  <IOButton
-                    label={I18n.t("global.buttons.cancel")}
-                    onPress={onCancel}
-                    testID="loadingSpinnerOverlayCancelButton"
-                    variant="outline"
-                  />
-                </View>
-              )
-            }
             caption={
               <View style={styles.textCaption}>
                 <H3
-                  accessible={true}
                   color={theme["textHeading-secondary"]}
+                  accessible={true}
                   style={{ textAlign: "center" }}
                 >
                   {loadingCaption || I18n.t("global.remoteStates.wait")}
                 </H3>
               </View>
+            }
+            action={
+              onCancel && (
+                <View style={{ alignSelf: "center" }}>
+                  <IOButton
+                    variant="outline"
+                    label={I18n.t("global.buttons.cancel")}
+                    onPress={onCancel}
+                    testID="loadingSpinnerOverlayCancelButton"
+                  />
+                </View>
+              )
             }
           />
         )

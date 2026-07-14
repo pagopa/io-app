@@ -1,4 +1,4 @@
-import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, VSpacer } from "@io-app/design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { useRef } from "react";
 import { View } from "react-native";

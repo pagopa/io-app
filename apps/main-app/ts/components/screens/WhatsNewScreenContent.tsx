@@ -8,41 +8,40 @@ import {
   Pictogram,
   VStack,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { PropsWithChildren, Ref } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import {
   AnimatedPictogram,
   IOAnimatedPictograms
 } from "../ui/AnimatedPictogram";
 
-export type WhatsNewScreenContentProps = WithTestID<
-  GraphicAssetProps & {
-    action?: ButtonProps<"fullWidth">;
-    badge?: Badge;
-    ref?: Ref<View>;
-    secondaryAction?: ButtonProps;
-    title: string;
-  }
->;
-
 type ButtonProps<ExtraProps extends keyof IOButtonProps | never = never> = Pick<
   IOButtonProps,
-  "accessibilityLabel" | "icon" | "label" | "onPress" | "testID" | ExtraProps
+  "label" | "accessibilityLabel" | "onPress" | "testID" | "icon" | ExtraProps
+>;
+
+export type WhatsNewScreenContentProps = WithTestID<
+  {
+    ref?: Ref<View>;
+    title: string;
+    badge?: Badge;
+    action?: ButtonProps<"fullWidth">;
+    secondaryAction?: ButtonProps;
+  } & GraphicAssetProps
 >;
 
 type GraphicAssetProps =
   | {
       enableAnimatedPictogram: true;
-      loop?: AnimatedPictogram["loop"];
       pictogram: IOAnimatedPictograms;
+      loop?: AnimatedPictogram["loop"];
     }
   | {
       enableAnimatedPictogram?: false;
-      loop?: never;
       pictogram?: IOPictograms;
+      loop?: never;
     };
 
 export const WhatsNewScreenContent = ({
@@ -57,7 +56,7 @@ export const WhatsNewScreenContent = ({
   children,
   testID
 }: PropsWithChildren<WhatsNewScreenContentProps>) => (
-  <SafeAreaView ref={ref} style={{ flexGrow: 1 }} testID={testID}>
+  <SafeAreaView style={{ flexGrow: 1 }} testID={testID} ref={ref}>
     <ScrollView
       alwaysBounceVertical={false}
       centerContent={true}
@@ -67,7 +66,7 @@ export const WhatsNewScreenContent = ({
         {pictogram && (
           <View style={styles.centeredItems}>
             {enableAnimatedPictogram ? (
-              <AnimatedPictogram loop={loop} name={pictogram} size={120} />
+              <AnimatedPictogram name={pictogram} size={120} loop={loop} />
             ) : (
               <Pictogram name={pictogram} size={120} />
             )}

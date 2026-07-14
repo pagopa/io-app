@@ -44,20 +44,17 @@ jest.mock("react-native-gesture-handler", () => {
   };
 });
 
-jest.mock(
-  "@pagopa/io-app-design-system/src/hooks/useAccordionAnimation",
-  () => ({
-    useAccordionAnimation: () => ({
-      expanded: false,
-      toggleAccordion: jest.fn(),
-      onBodyLayout: jest.fn(),
-      iconAnimatedStyle: {},
-      bodyAnimatedStyle: {},
-      bodyInnerStyle: {},
-      progress: { value: 0 }
-    })
+jest.mock("@io-app/design-system/src/hooks/useAccordionAnimation", () => ({
+  useAccordionAnimation: () => ({
+    expanded: false,
+    toggleAccordion: jest.fn(),
+    onBodyLayout: jest.fn(),
+    iconAnimatedStyle: {},
+    bodyAnimatedStyle: {},
+    bodyInnerStyle: {},
+    progress: { value: 0 }
   })
-);
+}));
 
 describe("ItwClaimsSelector", () => {
   const items: Array<ClaimDisplayFormat> = [

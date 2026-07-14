@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 
@@ -18,7 +19,10 @@ import {
   selectPaymentOnboardingSelectedMethod
 } from "../../store/selectors";
 import { WalletOnboardingOutcomeEnum } from "../../types/OnboardingOutcomeEnum";
-import { PaymentsOnboardingFeedbackScreen } from "../PaymentsOnboardingFeedbackScreen";
+import {
+  PaymentsOnboardingFeedbackScreen,
+  subtitleKeyByOutcome
+} from "../PaymentsOnboardingFeedbackScreen";
 
 jest.mock("../../analytics");
 const ASSISTANCE_URL =
@@ -153,4 +157,43 @@ describe("PaymentsOnboardingFeedbackScreen", () => {
     });
     expect(mockBottomSheet.present).toHaveBeenCalled();
   });
+
+  const outcomeScenarios = Object.entries(subtitleKeyByOutcome).map(
+    ([name, subtitleKey]) => ({
+      name,
+      subtitleKey,
+      outcome:
+        WalletOnboardingOutcomeEnum[
+          name as keyof typeof WalletOnboardingOutcomeEnum
+        ]
+    })
+  );
+
+  const withSubtitle = outcomeScenarios.flatMap(
+    ({ name, outcome, subtitleKey }) =>
+      subtitleKey !== undefined ? [{ name, outcome, subtitleKey }] : []
+  );
+  const withoutSubtitle = outcomeScenarios.filter(
+    ({ subtitleKey }) => subtitleKey === undefined
+  );
+
+  it.each(withSubtitle)(
+    "should render the subtitle for outcome $name",
+    ({ outcome, subtitleKey }) => {
+      const { queryByText } = renderComponent(outcome);
+
+      expect(queryByText(I18n.t(subtitleKey))).toBeTruthy();
+    }
+  );
+
+  it.each(withoutSubtitle)(
+    "should render no subtitle for outcome $name",
+    ({ outcome }) => {
+      const { queryByText } = renderComponent(outcome);
+
+      // i18next echoes a missing key back as its own path: no translation key
+      // must ever surface on screen
+      expect(queryByText(/^wallet\.onboarding\.outcome\./)).toBeNull();
+    }
+  );
 });

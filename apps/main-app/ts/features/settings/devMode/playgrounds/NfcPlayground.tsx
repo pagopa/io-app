@@ -3,7 +3,7 @@ import {
   ListItemHeader,
   ListItemInfo,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useState } from "react";
 import { Platform, View } from "react-native";
 

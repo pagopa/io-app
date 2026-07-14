@@ -3,7 +3,7 @@ import {
   IOMaxFontSizeMultiplier,
   IOVisualCostants,
   ListItemAction
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo, useState } from "react";
 import { Dimensions, useWindowDimensions, View } from "react-native";

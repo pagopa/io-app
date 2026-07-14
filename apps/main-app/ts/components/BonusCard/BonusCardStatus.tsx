@@ -1,18 +1,19 @@
-import { IOSkeleton } from "@pagopa/io-app-design-system";
+import { IOSkeleton } from "@io-app/design-system";
+
 import { ReactNode } from "react";
 import { ColorValue, StyleSheet, View } from "react-native";
-
-export type BonusCardStatus = BaseProps | LoadingProps;
-
-type BaseProps = {
-  children: ReactNode;
-  isLoading?: never;
-};
 
 type LoadingProps = {
   isLoading: true;
   skeletonColor: ColorValue;
 };
+
+type BaseProps = {
+  isLoading?: never;
+  children: ReactNode;
+};
+
+export type BonusCardStatus = LoadingProps | BaseProps;
 
 export const BonusCardStatus = (props: BonusCardStatus) =>
   props.isLoading ? (
@@ -33,10 +34,10 @@ const BonusCardStatusSkeleton = ({
   <View style={styles.container} testID="BonusCardStatusSkeletonTestID">
     <IOSkeleton
       color={skeletonColor}
-      height={16}
-      radius={16}
       shape="rectangle"
+      height={16}
       width={278}
+      radius={16}
     />
   </View>
 );

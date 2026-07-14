@@ -1,25 +1,24 @@
-import { Banner, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+import { Banner, ContentWrapper, VSpacer } from "@io-app/design-system";
 import { ReactElement, useCallback, useMemo } from "react";
-
-import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
-import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
+import I18n from "i18next";
 import { setMixpanelEnabled } from "../../../store/actions/mixpanel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../../settings/common/store/selectors";
 import { getFlowType } from "../../../utils/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { trackMixpanelScreen } from "../../settings/common/analytics";
 import {
   TrackingInfo,
+  trackMixPanelTrackingInfo,
   trackMixpanelDeclined,
   trackMixpanelNotNowSelected,
-  trackMixpanelSetEnabled,
-  trackMixPanelTrackingInfo
+  trackMixpanelSetEnabled
 } from "../../settings/common/analytics/mixpanel/mixpanelAnalytics";
-import { isProfileFirstOnBoardingSelector } from "../../settings/common/store/selectors";
-import { ShareDataComponent } from "../../settings/privacy/shared/components/ShareDataComponent";
 import { useConfirmOptOutBottomSheet } from "../../settings/privacy/shared/hooks/useConfirmOptOutBottomSheet";
+import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { useOnboardingAbortAlert } from "../hooks/useOnboardingAbortAlert";
+import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
+import { ShareDataComponent } from "../../settings/privacy/shared/components/ShareDataComponent";
 
 const OnboardingShareDataScreen = (): ReactElement => {
   const dispatch = useIODispatch();
@@ -84,26 +83,26 @@ const OnboardingShareDataScreen = (): ReactElement => {
 
   return (
     <IOScrollViewWithLargeHeader
-      actions={actions}
-      description={I18n.t("profile.main.privacy.shareData.screen.description")}
       goBack={showAlert}
-      testID="OnboardingShareDataScreen"
       title={{
         label: I18n.t("profile.main.privacy.shareData.screen.title"),
         testID: "share-data-component-title"
       }}
+      description={I18n.t("profile.main.privacy.shareData.screen.description")}
+      actions={actions}
+      testID="OnboardingShareDataScreen"
     >
       <ContentWrapper style={{ flexGrow: 1 }}>
         <ShareDataComponent trackAction={handleTrackingAction} />
         <VSpacer size={32} />
         <Banner
+          content={I18n.t(
+            "profile.main.privacy.shareData.screen.profileSettings"
+          )}
           accessibilityLabel={I18n.t(
             "profile.main.privacy.shareData.screen.profileSettings"
           )}
           color="neutral"
-          content={I18n.t(
-            "profile.main.privacy.shareData.screen.profileSettings"
-          )}
           pictogramName="settings"
         />
       </ContentWrapper>

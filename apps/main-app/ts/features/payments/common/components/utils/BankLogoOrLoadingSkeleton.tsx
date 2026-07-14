@@ -1,4 +1,4 @@
-import { IOColors, IOSkeleton } from "@pagopa/io-app-design-system";
+import { IOColors, IOSkeleton } from "@io-app/design-system";
 import { useEffect, useState } from "react";
 import { Image } from "react-native";
 

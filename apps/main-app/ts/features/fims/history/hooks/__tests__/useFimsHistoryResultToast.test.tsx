@@ -1,13 +1,13 @@
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual("@pagopa/io-app-design-system"),
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual("@io-app/design-system"),
   IOToast: {
-    ...jest.requireActual("@pagopa/io-app-design-system").IOToast,
+    ...jest.requireActual("@io-app/design-system").IOToast,
     success: jest.fn(),
     error: jest.fn()
   }
 }));
 
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { Alert } from "react-native";
 import { createStore } from "redux";
 

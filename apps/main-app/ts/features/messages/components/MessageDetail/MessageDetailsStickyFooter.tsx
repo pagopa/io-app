@@ -1,4 +1,4 @@
-import { FooterActions, useIOToast } from "@pagopa/io-app-design-system";
+import { FooterActions, useIOToast } from "@io-app/design-system";
 import { useLinkTo } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useCallback } from "react";

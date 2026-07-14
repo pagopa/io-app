@@ -1,9 +1,9 @@
 import {
   FooterActions,
   IOColors,
-  useIOTheme,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+  VSpacer,
+  useIOTheme
+} from "@io-app/design-system";
 import { Fragment } from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -33,6 +33,7 @@ export const DSFooterActionsNotFixed = () => {
           </Fragment>
         ))}
         <FooterActions
+          fixed={false}
           actions={{
             type: "TwoButtons",
             primary: {
@@ -48,7 +49,6 @@ export const DSFooterActionsNotFixed = () => {
             //   onPress: onButtonPress
             // }
           }}
-          fixed={false}
         />
       </ScrollView>
     </View>

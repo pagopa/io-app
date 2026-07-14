@@ -1,4 +1,4 @@
-import { LabelMini } from "@pagopa/io-app-design-system";
+import { LabelMini } from "@io-app/design-system";
 import { render } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Provider } from "react-redux";

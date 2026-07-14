@@ -2,7 +2,7 @@ import {
   AlertEdgeToEdgeProps,
   AlertEdgeToEdgeWrapper,
   IOColors
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { StatusBar } from "react-native";
 

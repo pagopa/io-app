@@ -1,8 +1,7 @@
 /* eslint-disable functional/immutable-data */
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
+import { useRef, useEffect, useCallback } from "react";
 import I18n from "i18next";
-import { useCallback, useEffect, useRef } from "react";
-
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -29,7 +28,7 @@ export const FimsHistoryScreen = () => {
   const historyErrorState = useIOSelector(fimsHistoryErrorSelector);
   const isHistoryLoading = useIOSelector(isFimsHistoryLoadingSelector);
 
-  const lastErrorToastDate = useRef<null | number>(null);
+  const lastErrorToastDate = useRef<number | null>(null);
 
   const shouldShowErrorToast = historyErrorState === "ALERT_ONLY";
   // ---------- HOOKS

@@ -1,11 +1,11 @@
-import { IOButton } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+import { IOButton } from "@io-app/design-system";
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 
 type ItwPresentationCredentialCardHideValuesButtonProps = {
-  handleOnPress: () => void;
   valuesHidden: boolean;
+  handleOnPress: () => void;
 };
 
 /**
@@ -16,24 +16,24 @@ const ItwPresentationCredentialCardHideValuesButton = ({
   handleOnPress
 }: ItwPresentationCredentialCardHideValuesButtonProps) => (
   <View
+    style={styles.button}
+    accessible={true}
     accessibilityLabel={I18n.t(
       "features.itWallet.presentation.credentialDetails.card.showValues"
     )}
     accessibilityRole="switch"
     accessibilityState={{ checked: !valuesHidden }}
-    accessible={true}
-    style={styles.button}
   >
     <IOButton
-      icon={valuesHidden ? "eyeShow" : "eyeHide"}
-      iconPosition="end"
+      variant="link"
       label={I18n.t(
         `features.itWallet.presentation.credentialDetails.card.${
           valuesHidden ? "showValues" : "hideValues"
         }`
       )}
       onPress={handleOnPress}
-      variant="link"
+      icon={valuesHidden ? "eyeShow" : "eyeHide"}
+      iconPosition="end"
     />
   </View>
 );

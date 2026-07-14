@@ -2,7 +2,7 @@ import {
   IOVisualCostants,
   TabItem,
   TabNavigation
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";

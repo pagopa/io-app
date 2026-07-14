@@ -16,7 +16,7 @@ import {
   useIOToast,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
@@ -173,6 +173,9 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
     <>
       <View style={styles.container} testID="itwDiscoveryInfoComponentTestID">
         <ForceScrollDownView
+          buttonAccessibilityLabel={I18n.t(
+            "global.accessibility.scrollToBottom"
+          )}
           footerActions={{
             actions: {
               type: "TwoButtons",

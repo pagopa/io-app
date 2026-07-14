@@ -3,7 +3,7 @@ import {
   IOPictogramSizeScale,
   Pictogram,
   useIOThemeContext
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   Canvas,
   Group,

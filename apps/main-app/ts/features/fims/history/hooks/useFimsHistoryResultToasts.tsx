@@ -1,5 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { constVoid } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useEffect, useRef } from "react";

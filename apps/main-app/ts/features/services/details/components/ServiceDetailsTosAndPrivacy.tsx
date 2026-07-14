@@ -3,7 +3,7 @@ import {
   IOVisualCostants,
   ListItemAction,
   ListItemHeader
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";

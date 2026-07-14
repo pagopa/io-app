@@ -1,4 +1,4 @@
-import { Body, ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper, VStack } from "@io-app/design-system";
 import I18n from "i18next";
 
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";

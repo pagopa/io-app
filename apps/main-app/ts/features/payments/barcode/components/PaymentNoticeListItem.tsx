@@ -1,4 +1,4 @@
-import { ListItemTransaction } from "@pagopa/io-app-design-system";
+import { ListItemTransaction } from "@io-app/design-system";
 import { AmountInEuroCents } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";

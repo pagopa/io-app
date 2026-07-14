@@ -10,12 +10,12 @@ import {
   IOButton,
   IOColors,
   IOPictograms,
-  useIOTheme,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+  VSpacer,
+  useIOTheme
+} from "@io-app/design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
-import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
+import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   AccessibilityInfo,
@@ -24,27 +24,19 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import HapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { SafeAreaView } from "react-native-safe-area-context";
-
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { isDevEnv } from "../../../../../utils/environment";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
-import {
-  trackLoginCieCardReaderScreen,
-  trackLoginCieCardReadingError,
-  trackLoginCieCardReadingSuccess
-} from "../../../common/analytics/cieAnalytics";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import CieCardReadingAnimation, {
@@ -57,18 +49,25 @@ import {
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { getCieUatEndpoint } from "../../../login/cie/utils/endpoints";
 import {
-  accessibityTimeout,
   analyticActions,
-  getTextForState,
-  TextForState,
+  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY,
   WAIT_TIMEOUT_NAVIGATION,
-  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
+  accessibityTimeout,
+  getTextForState,
+  TextForState
 } from "../../shared/utils";
+import {
+  trackLoginCieCardReaderScreen,
+  trackLoginCieCardReadingError,
+  trackLoginCieCardReadingSuccess
+} from "../../../common/analytics/cieAnalytics";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { ReauthLoginType } from "../analytics";
 
 export type ActiveSessionCieCardReaderScreenNavigationParams = {
-  authorizationUri: string;
   ciePin: string;
+  authorizationUri: string;
   loginType: ReauthLoginType;
 };
 
@@ -185,8 +184,8 @@ const ActiveSessionLoginCieCardReaderScreen = ({
       errorDescription,
       navigation: navAction
     }: {
-      errorDescription?: string;
       eventReason: CieAuthenticationErrorReason;
+      errorDescription?: string;
       navigation?: () => void;
     }) => {
       trackLoginCieCardReadingError(loginType);
@@ -239,11 +238,18 @@ const ActiveSessionLoginCieCardReaderScreen = ({
     async (event: CEvent) => {
       handleSendAssistanceLog(choosenTool, event.event);
       switch (event.event) {
+        // Reading starts
+        case "ON_TAG_DISCOVERED":
+          if (readingStateRef.current !== ReadingState.reading) {
+            setReadingState(ReadingState.reading);
+            HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
+          }
+          break;
         // "Function not supported" seems to be TAG_ERROR_NFC_NOT_SUPPORTED
         // for the iOS SDK
         case "Function not supported" as unknown:
-        case "ON_TAG_DISCOVERED_NOT_CIE":
         case "TAG_ERROR_NFC_NOT_SUPPORTED":
+        case "ON_TAG_DISCOVERED_NOT_CIE":
           setError({
             eventReason: event.event,
             navigation: () =>
@@ -262,17 +268,6 @@ const ActiveSessionLoginCieCardReaderScreen = ({
               })
           });
           break;
-        // CIE is Expired or Revoked
-        case "CERTIFICATE_EXPIRED":
-        case "CERTIFICATE_REVOKED":
-          setError({
-            eventReason: event.event,
-            navigation: () =>
-              navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-                screen: AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN
-              })
-          });
-          break;
         case "EXTENDED_APDU_NOT_SUPPORTED":
           setError({
             eventReason: event.event,
@@ -283,10 +278,14 @@ const ActiveSessionLoginCieCardReaderScreen = ({
               })
           });
           break;
+        case "Transmission Error":
+        case "ON_TAG_LOST":
+          setError({ eventReason: event.event });
+          break;
         // The card is temporarily locked. Unlock is available by CieID app
+        case "PIN Locked":
         case "ON_CARD_PIN_LOCKED":
         case "ON_PIN_ERROR":
-        case "PIN Locked":
           setError({
             eventReason: event.event,
             navigation: () =>
@@ -301,16 +300,16 @@ const ActiveSessionLoginCieCardReaderScreen = ({
               })
           });
           break;
-        // Reading starts
-        case "ON_TAG_DISCOVERED":
-          if (readingStateRef.current !== ReadingState.reading) {
-            setReadingState(ReadingState.reading);
-            HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
-          }
-          break;
-        case "ON_TAG_LOST":
-        case "Transmission Error":
-          setError({ eventReason: event.event });
+        // CIE is Expired or Revoked
+        case "CERTIFICATE_EXPIRED":
+        case "CERTIFICATE_REVOKED":
+          setError({
+            eventReason: event.event,
+            navigation: () =>
+              navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+                screen: AUTHENTICATION_ROUTES.CIE_EXPIRED_SCREEN
+              })
+          });
           break;
         default:
           break;
@@ -381,9 +380,9 @@ const ActiveSessionLoginCieCardReaderScreen = ({
           <View style={{ alignItems: "center" }}>
             <View>
               <IOButton
+                variant="link"
                 label={I18n.t("global.buttons.close")}
                 onPress={navigation.popToTop}
-                variant="link"
               />
             </View>
           </View>
@@ -392,17 +391,17 @@ const ActiveSessionLoginCieCardReaderScreen = ({
           <View style={{ alignItems: "center" }}>
             <View>
               <IOButton
+                variant="solid"
                 label={I18n.t("authentication.cie.nfc.retry")}
                 onPress={() => startCie(isCieUatEnabled)}
-                variant="solid"
               />
             </View>
             <VSpacer size={24} />
             <View>
               <IOButton
+                variant="link"
                 label={I18n.t("global.buttons.close")}
                 onPress={navigation.popToTop}
-                variant="link"
               />
             </View>
           </View>
@@ -420,18 +419,18 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         >
           <ContentWrapper>
             <CieCardReadingAnimation
-              circleColor={IOColors[theme["interactiveElem-default"]]}
               pictogramName={getPictogramName(readingState)}
               readingState={readingState}
+              circleColor={IOColors[theme["interactiveElem-default"]]}
             />
             <VSpacer size={32} />
             <Title
+              text={textState.title}
               accessibilityLabel={
                 textState.subtitle
                   ? `${textState.title}. ${textState.subtitle}`
                   : textState.title
               }
-              text={textState.title}
             />
             <VSpacer size={8} />
             {textState.subtitle && (
@@ -446,7 +445,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
   );
 };
 
-const Title = (props: { accessibilityLabel: string; text: string }) => {
+const Title = (props: { text: string; accessibilityLabel: string }) => {
   const titleRef = useRef<View>(null);
 
   useFocusEffect(

@@ -3,7 +3,7 @@ import {
   hexToRgba,
   IOColors,
   IOVisualCostants
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";

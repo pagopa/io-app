@@ -2,24 +2,23 @@ import {
   IOLogoPaymentType,
   IOPaymentLogos,
   ListItemTransactionBadge
-} from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
+} from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
+import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
-
-import { LevelEnum } from "../../../../../definitions/content/SectionStatus";
-import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import I18n from "i18next";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { contentRepoUrl } from "../../../../config";
 import { getDateFromExpiryDate, isExpiredDate } from "../../../../utils/dates";
-import { findFirstCaseInsensitive } from "../../../../utils/object";
-import { WalletCard } from "../../../wallet/types";
 import { WalletPaymentPspSortType } from "../../checkout/types";
 import { PaymentCardProps } from "../components/PaymentCard";
 import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import { findFirstCaseInsensitive } from "../../../../utils/object";
+import { WalletCard } from "../../../wallet/types";
+import { contentRepoUrl } from "../../../../config";
+import { LevelEnum } from "../../../../../definitions/content/SectionStatus";
 import { AlertVariant, ListItemTransactionStatus } from "./types";
 
 const TRANSACTION_LOGO_CDN = `${contentRepoUrl}/logos/organizations`;
@@ -33,25 +32,25 @@ export const getBadgePropsByTransactionStatus = (
   transactionStatus: ListItemTransactionStatus
 ): ListItemTransactionBadge => {
   switch (transactionStatus) {
-    case "cancelled":
-      return {
-        text: I18n.t("global.badges.cancelled"),
-        variant: "default"
-      };
     case "failure":
       return {
         text: I18n.t("global.badges.failed"),
         variant: "error"
       };
-    case "pending":
+    case "cancelled":
       return {
-        text: I18n.t("global.badges.onGoing"),
-        variant: "highlight"
+        text: I18n.t("global.badges.cancelled"),
+        variant: "default"
       };
     case "reversal":
       return {
         text: I18n.t("global.badges.reversal"),
         variant: "default"
+      };
+    case "pending":
+      return {
+        text: I18n.t("global.badges.onGoing"),
+        variant: "highlight"
       };
     default:
       return {
@@ -84,7 +83,7 @@ export const isPaymentMethodExpired = (
  * @param walletFunction
  */
 const hasApplicationEnabled = (
-  paymentMethod: undefined | WalletInfo,
+  paymentMethod: WalletInfo | undefined,
   walletApplication: string
 ): boolean =>
   paymentMethod !== undefined &&
@@ -108,14 +107,14 @@ export const getSortedPspList = (
   sortType: WalletPaymentPspSortType
 ) => {
   switch (sortType) {
+    case "name":
+      return _.orderBy(pspList, psp => psp.pspBusinessName);
     case "amount":
       return _.orderBy(
         pspList,
         ["taxPayerFee", "pspBusinessName"],
         ["asc", "asc"]
       );
-    case "name":
-      return _.orderBy(pspList, psp => psp.pspBusinessName);
     case "default":
     default:
       return _.orderBy(

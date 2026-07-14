@@ -5,7 +5,7 @@ import {
   IOSpacingScale,
   IOVisualCostants,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useCallback, useRef, useState } from "react";
 import {
   Image,

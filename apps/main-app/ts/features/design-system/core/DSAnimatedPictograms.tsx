@@ -6,7 +6,7 @@ import {
   IOVisualCostants,
   RadioGroup,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useCallback, useState } from "react";
 import { ScrollView, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
