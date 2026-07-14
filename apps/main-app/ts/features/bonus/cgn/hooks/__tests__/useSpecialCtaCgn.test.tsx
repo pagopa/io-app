@@ -1,4 +1,4 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { fireEvent, render } from "@testing-library/react-native";
 import { Alert, Pressable, Text } from "react-native";
 import {
@@ -12,8 +12,8 @@ import { cgnActivationStart } from "../../store/actions/activation";
 import { cgnUnsubscribe } from "../../store/actions/unsubscribe";
 import { useSpecialCtaCgn } from "../useSpecialCtaCgn";
 
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual("@pagopa/io-app-design-system"),
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual("@io-app/design-system"),
   IOToast: {
     success: jest.fn(),
     error: jest.fn()

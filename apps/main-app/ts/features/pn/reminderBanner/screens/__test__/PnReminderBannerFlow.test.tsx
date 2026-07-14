@@ -236,7 +236,7 @@ function* mockSaga(sagaSuccess: boolean) {
   );
 }
 
-const renderComponent = (sagaSuccess: boolean = true) => {
+const renderComponent = (sagaSuccess = true) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const saga = createSagaMiddleware();
   const store = createStore(

@@ -6,7 +6,7 @@ import {
   Icon,
   BodySmall,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 import I18n from "i18next";
 import { TranslationKeys } from "../../../i18n";

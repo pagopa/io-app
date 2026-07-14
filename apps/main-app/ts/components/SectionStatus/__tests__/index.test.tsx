@@ -1,4 +1,4 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors } from "@io-app/design-system";
 import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";

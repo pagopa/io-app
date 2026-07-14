@@ -1,4 +1,4 @@
-import { Banner, IOToast } from "@pagopa/io-app-design-system";
+import { Banner, IOToast } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";

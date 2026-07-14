@@ -1,9 +1,5 @@
 import { JSX, useCallback, useEffect } from "react";
-import {
-  Alert,
-  ListItemHeader,
-  LoadingSpinner
-} from "@pagopa/io-app-design-system";
+import { Alert, ListItemHeader, LoadingSpinner } from "@io-app/design-system";
 import I18n from "i18next";
 import { View } from "react-native";
 import { CardPending } from "../../../../../../../definitions/cgn/CardPending";

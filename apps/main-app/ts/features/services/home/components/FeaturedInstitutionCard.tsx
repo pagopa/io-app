@@ -5,7 +5,7 @@ import {
   IOSpacingScale,
   IOVisualCostants,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { WithTestID } from "../../../../types/WithTestID";
 import { CardPressableBase } from "../../common/components/CardPressableBase";
@@ -24,7 +24,7 @@ export const CARD_WIDTH =
   Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
 
 const cardPaddingHorizontal: IOSpacingScale = 12;
-const cardBorderRadius: number = 8;
+const cardBorderRadius = 8;
 const cardAvatarMargin: IOSpacingScale = 8;
 
 const styles = StyleSheet.create({

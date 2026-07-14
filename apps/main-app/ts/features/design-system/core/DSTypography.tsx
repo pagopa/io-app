@@ -21,7 +21,7 @@ import {
   VSpacer,
   VStack,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Alert, View } from "react-native";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 

@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Optional } from "@pagopa/io-app-design-system";
+import { Optional } from "@io-app/design-system";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   isLoggedIn,

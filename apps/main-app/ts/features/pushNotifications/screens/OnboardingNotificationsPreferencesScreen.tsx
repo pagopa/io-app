@@ -8,7 +8,7 @@ import {
   H1,
   Body,
   IOButton
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "i18next";
 import { PushNotificationsContentTypeEnum } from "../../../../definitions/identity/PushNotificationsContentType";

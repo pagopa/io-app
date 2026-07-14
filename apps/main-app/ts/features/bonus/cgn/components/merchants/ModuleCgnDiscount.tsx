@@ -8,7 +8,7 @@ import {
   VStack,
   useIOTheme,
   useScaleAnimation
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 import I18n from "i18next";

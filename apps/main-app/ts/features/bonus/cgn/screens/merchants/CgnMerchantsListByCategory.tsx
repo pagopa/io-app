@@ -7,7 +7,7 @@ import {
   IOVisualCostants,
   Icon,
   hexToRgba
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, RefreshControl, View } from "react-native";

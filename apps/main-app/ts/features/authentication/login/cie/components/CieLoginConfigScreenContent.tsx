@@ -1,4 +1,4 @@
-import { ListItemCheckbox } from "@pagopa/io-app-design-system";
+import { ListItemCheckbox } from "@io-app/design-system";
 import { CieEntityIds } from "../components/CieRequestAuthenticationOverlay";
 import { cieLoginDisableUat, cieLoginEnableUat } from "../store/actions";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";

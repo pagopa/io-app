@@ -3,7 +3,7 @@ import {
   FooterActionsInline,
   ListItemCheckbox,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useEffect } from "react";
 import { View } from "react-native";

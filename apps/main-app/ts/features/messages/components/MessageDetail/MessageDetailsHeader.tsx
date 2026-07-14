@@ -1,4 +1,4 @@
-import { BodySmall, H3, VStack } from "@pagopa/io-app-design-system";
+import { BodySmall, H3, VStack } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";

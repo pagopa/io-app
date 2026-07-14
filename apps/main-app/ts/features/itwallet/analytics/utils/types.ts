@@ -24,8 +24,10 @@ export type MixPanelCredentialVersion = "V2" | "V3";
  * ITW_RES: Residency (obtained with IT Wallet)
  * ITW_EDIP: Education Diploma (obtained with IT Wallet)
  * ITW_EDAT: Education Attendance (obtained with IT Wallet)
+ * ITW_AV: Age Verification (obtained with IT Wallet)
  * UNKNOWN: placeholder used when a credential exists in the app but is not yet tracked on Mixpanel
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const mixPanelCredentials = [
   "ITW_ID_V2",
   "ITW_PG_V2",
@@ -40,6 +42,7 @@ const mixPanelCredentials = [
   "ITW_RES",
   "ITW_EDIP",
   "ITW_EDAT",
+  "ITW_AV",
   "UNKNOWN"
 ] as const;
 
@@ -65,7 +68,8 @@ export const CREDENTIALS_MAP: Record<
   education_enrollment: "ITW_EE",
   residency: "ITW_RES",
   education_diploma: "ITW_EDIP",
-  education_attendance: "ITW_EDAT"
+  education_attendance: "ITW_EDAT",
+  proof_of_age: "ITW_AV"
 };
 
 export type CredentialStatusAssertionFailure = {
@@ -190,7 +194,11 @@ export type ItwDismissalAction = {
   user_action: string;
 };
 
-type QualtricsSurveyId = "confirm_eid_flow_success" | "confirm_eid_flow_exit";
+type QualtricsSurveyId =
+  | "confirm_eid_flow_success"
+  | "confirm_eid_flow_exit"
+  | "itw_eid_activation_exit"
+  | "itw_credential_exit";
 
 export type TrackQualtricsSurvey = {
   survey_id: QualtricsSurveyId;

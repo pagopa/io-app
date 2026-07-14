@@ -3,7 +3,7 @@ import {
   IOColors,
   IOSpacing,
   useFooterActionsInlineMeasurements
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   RouteProp,
   StackActions,

@@ -1,4 +1,4 @@
-import { Body, H4 } from "@pagopa/io-app-design-system";
+import { Body, H4 } from "@io-app/design-system";
 import { Alert } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { IOScrollView } from "../../../components/ui/IOScrollView";

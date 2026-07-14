@@ -5,7 +5,7 @@ import {
   IOColors,
   IOVisualCostants,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Platform, ScrollView, Text, View } from "react-native";
 import {
   SafeAreaView,
@@ -14,7 +14,7 @@ import {
 
 export const DSSafeAreaCentered = () => {
   const insets = useSafeAreaInsets();
-  const fixedBottomBarHeight: number = 70;
+  const fixedBottomBarHeight = 70;
 
   return (
     <SafeAreaView

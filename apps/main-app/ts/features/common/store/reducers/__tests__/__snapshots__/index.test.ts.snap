@@ -193,6 +193,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "landingBanners": {
     "CGN_ENGAGEMENT_BANNER": true,
+    "FSE_ENGAGEMENT_BANNER": true,
     "ITW_DISCOVERY": true,
     "IT_WALLET_DISCOVERY": true,
     "LV_EXPIRATION_REMINDER": true,
@@ -384,6 +385,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "favouriteServices": {
       "dataById": {},
       "sortType": "addedAt_desc",
+    },
+    "fseDiscoveryBanner": {
+      "isDismissed": false,
     },
     "home": {
       "featuredInstitutions": {

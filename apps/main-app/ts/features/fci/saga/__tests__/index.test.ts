@@ -1,3 +1,5 @@
+/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect*", "testSaga*"] }] */
+
 import { testSaga, expectSaga } from "redux-saga-test-plan";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
@@ -7,6 +9,7 @@ import NavigationService from "../../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../../navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 import { identificationSuccess } from "../../../identification/store/actions";
+import { appCurrentStateSelector } from "../../../../store/reducers/appState";
 import {
   fciClearStateRequest,
   fciStartRequest,
@@ -250,7 +253,8 @@ describe("FCI Saga Tests", () => {
           [
             matchers.select(fciDocumentSignaturesSelector),
             mockDocumentSignatures
-          ]
+          ],
+          [matchers.select(appCurrentStateSelector), "active"]
         ])
         .put.like({
           action: {
@@ -264,15 +268,166 @@ describe("FCI Saga Tests", () => {
           }
         })
         .run());
+
+    it("should create signature immediately when app is in active state", () =>
+      expectSaga(watchFciSigningRequestSaga)
+        .provide([
+          [
+            matchers.select(fciQtspClausesMetadataSelector),
+            pot.some(mockQtspClauses)
+          ],
+          [
+            matchers.select(fciSignatureRequestSelector),
+            pot.some(mockSignatureRequest)
+          ],
+          [
+            matchers.select(fciQtspFilledDocumentUrlSelector),
+            mockFilledDocumentUrl
+          ],
+          [matchers.select(fciQtspNonceSelector), mockNonce],
+          [
+            matchers.select(fciDocumentSignaturesSelector),
+            mockDocumentSignatures
+          ],
+          [matchers.select(appCurrentStateSelector), "active"]
+        ])
+        .put.like({
+          action: {
+            type: "IDENTIFICATION_REQUEST"
+          }
+        })
+        .dispatch(identificationSuccess({ isBiometric: false }))
+        .put.like({
+          action: {
+            type: "FCI_SIGNING_REQUEST"
+          }
+        })
+        .run());
+
+    it("should wait for app to become active before creating signature when app is inactive", () => {
+      // eslint-disable-next-line functional/no-let
+      let pollCount = 0;
+      return expectSaga(watchFciSigningRequestSaga)
+        .provide([
+          [
+            matchers.select(fciQtspClausesMetadataSelector),
+            pot.some(mockQtspClauses)
+          ],
+          [
+            matchers.select(fciSignatureRequestSelector),
+            pot.some(mockSignatureRequest)
+          ],
+          [
+            matchers.select(fciQtspFilledDocumentUrlSelector),
+            mockFilledDocumentUrl
+          ],
+          [matchers.select(fciQtspNonceSelector), mockNonce],
+          [
+            matchers.select(fciDocumentSignaturesSelector),
+            mockDocumentSignatures
+          ],
+
+          {
+            call(effect: any) {
+              if (effect.fn === NavigationService.dispatchNavigationAction) {
+                return undefined;
+              }
+              return undefined;
+            },
+            select(selector: any) {
+              if (selector === appCurrentStateSelector) {
+                pollCount++;
+                return pollCount === 1 ? "inactive" : "active";
+              }
+              return undefined;
+            },
+            delay() {
+              return undefined;
+            }
+          } as any
+        ])
+        .put.like({
+          action: {
+            type: "IDENTIFICATION_REQUEST"
+          }
+        })
+        .dispatch(identificationSuccess({ isBiometric: false }))
+        .put.like({
+          action: {
+            type: "FCI_SIGNING_REQUEST"
+          }
+        })
+        .run();
+    });
+
+    it("should wait for app to become active before creating signature when app is in background", () => {
+      // eslint-disable-next-line functional/no-let
+      let pollCount = 0;
+      return expectSaga(watchFciSigningRequestSaga)
+        .provide([
+          [
+            matchers.select(fciQtspClausesMetadataSelector),
+            pot.some(mockQtspClauses)
+          ],
+          [
+            matchers.select(fciSignatureRequestSelector),
+            pot.some(mockSignatureRequest)
+          ],
+          [
+            matchers.select(fciQtspFilledDocumentUrlSelector),
+            mockFilledDocumentUrl
+          ],
+          [matchers.select(fciQtspNonceSelector), mockNonce],
+          [
+            matchers.select(fciDocumentSignaturesSelector),
+            mockDocumentSignatures
+          ],
+
+          {
+            call(effect: any) {
+              if (effect.fn === NavigationService.dispatchNavigationAction) {
+                return undefined;
+              }
+              return undefined;
+            },
+            select(selector: any) {
+              if (selector === appCurrentStateSelector) {
+                pollCount++;
+                return pollCount === 1 ? "background" : "active";
+              }
+              return undefined;
+            },
+            delay() {
+              return undefined;
+            }
+          } as any
+        ])
+        .put.like({
+          action: {
+            type: "IDENTIFICATION_REQUEST"
+          }
+        })
+        .dispatch(identificationSuccess({ isBiometric: false }))
+        .put.like({
+          action: {
+            type: "FCI_SIGNING_REQUEST"
+          }
+        })
+        .run();
+    });
   });
 
   describe("clearAllFciFiles", () => {
     const testPath = FciDownloadPreviewDirectoryPath;
 
-    it("should delete the specified path", () => {
+    it("should delete the specified path", async () => {
       const action = fciClearAllFiles({ path: testPath });
+      const RNFS = require("react-native-fs");
 
-      return expectSaga(clearAllFciFiles, action).run();
+      await expectSaga(clearAllFciFiles, action).run();
+
+      expect(RNFS.exists).toHaveBeenCalledWith(testPath);
+      expect(RNFS.unlink).toHaveBeenCalledWith(testPath);
     });
   });
 
