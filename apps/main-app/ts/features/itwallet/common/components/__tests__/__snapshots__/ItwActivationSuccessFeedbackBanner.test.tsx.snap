@@ -343,7 +343,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                       <View
                         style={
                           {
-                            "marginTop": 8,
+                            "marginTop": 24,
                           }
                         }
                       >
@@ -1244,7 +1244,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                       <View
                         style={
                           {
-                            "marginTop": 8,
+                            "marginTop": 24,
                           }
                         }
                       >
@@ -2145,7 +2145,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                       <View
                         style={
                           {
-                            "marginTop": 8,
+                            "marginTop": 24,
                           }
                         }
                       >

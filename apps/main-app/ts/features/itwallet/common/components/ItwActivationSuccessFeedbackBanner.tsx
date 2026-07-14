@@ -51,7 +51,7 @@ const ItwActivationSuccessFeedbackBanner = ({
   }
 
   return (
-    <View style={{ marginTop: 8 }}>
+    <View style={{ marginTop: 24 }}>
       <Banner
         testID="itwActivationSuccessFeedbackBannerTestID"
         title={I18n.t(
