@@ -1,4 +1,4 @@
-import type { IOPictograms } from "@pagopa/io-app-design-system";
+import type { IOPictograms } from "@io-app/design-system";
 import { fireEvent, render } from "@testing-library/react-native";
 import * as _ from "lodash";
 import { Provider } from "react-redux";

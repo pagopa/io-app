@@ -8,7 +8,6 @@ import {
   RequestObject,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
-import { DigitalCredentialMetadata } from "../../common/utils/itwCredentialsCatalogueUtils";
 import { CredentialIssuanceFailure } from "./failure";
 
 /**
@@ -68,10 +67,6 @@ export type Context = {
    * The failure that occurred during the credential issuance process, if any.
    */
   failure: CredentialIssuanceFailure | undefined;
-  /**
-   * The credentials catalogue as a dictionary, with an entry for each credential type.
-   */
-  credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
 
   credentialOfferUri: string | undefined;
   resolvedCredentialOffer: CredentialOfferResolved | undefined;
@@ -102,7 +97,6 @@ export const InitialContext: Context = {
   responseMode: undefined,
   credentials: undefined,
   failure: undefined,
-  credentialsCatalogue: undefined,
   credentialOfferUri: undefined,
   resolvedCredentialOffer: undefined,
   accessToken: undefined

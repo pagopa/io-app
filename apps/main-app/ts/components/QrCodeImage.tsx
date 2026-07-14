@@ -1,4 +1,4 @@
-import { IOColors, IOSkeleton } from "@pagopa/io-app-design-system";
+import { IOColors, IOSkeleton } from "@io-app/design-system";
 import { memo, useMemo } from "react";
 import { useWindowDimensions, View } from "react-native";
 import QRCode, { QRCodeProps } from "react-native-qrcode-svg";

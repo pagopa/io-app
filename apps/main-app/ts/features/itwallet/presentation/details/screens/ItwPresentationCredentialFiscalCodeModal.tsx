@@ -5,7 +5,7 @@ import {
   IOColors,
   IOVisualCostants,
   BodySmall
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useLayoutEffect, memo, useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";

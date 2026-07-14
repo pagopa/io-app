@@ -31,8 +31,8 @@ jest.mock("../../../analytics/activationReminderBanner", () => ({
 
 const mockToastSuccess = jest.fn();
 const mockToastError = jest.fn();
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual("@pagopa/io-app-design-system"),
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual("@io-app/design-system"),
   useIOToast: () => ({
     show: (_message: string, _options?: unknown) => jest.fn(),
     error: mockToastError,
@@ -267,7 +267,7 @@ describe("SendEngagementScreen", () => {
 });
 
 const renderScreen = (
-  systemNotificationsEnabled: boolean = false,
+  systemNotificationsEnabled = false,
   sendOpeningSource: SendOpeningSource = DEFAULT_OPENING_SOURCE,
   sendUserType: SendUserType = DEFAULT_USER_TYPE
 ) => {

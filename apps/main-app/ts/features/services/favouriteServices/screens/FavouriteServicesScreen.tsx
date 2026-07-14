@@ -4,7 +4,7 @@ import {
   IOVisualCostants,
   ListItemHeader,
   ListItemNav
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Alert, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";

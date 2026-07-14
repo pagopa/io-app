@@ -18,7 +18,7 @@ import { name as appName } from "./app.json";
 import { initializePushNotifications } from "./ts/features/pushNotifications/utils/configurePushNotification";
 
 // Registers the TaskManager.defineTask handler required by Expo headless runs.
-import "./ts/features/itwallet/statusList/tasks";
+// TODO [SIW-4084] import "./ts/features/itwallet/statusList/tasks";
 
 void initializePushNotifications();
 

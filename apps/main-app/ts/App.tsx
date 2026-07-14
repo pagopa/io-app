@@ -5,7 +5,7 @@ import {
   IONewTypefaceContextProvider,
   IOThemeContextProvider,
   ToastProvider
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { JSX } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";

@@ -1,4 +1,4 @@
-import { Banner, IOToast } from "@pagopa/io-app-design-system";
+import { Banner, IOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { openWebUrl } from "../../../../../utils/url";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";

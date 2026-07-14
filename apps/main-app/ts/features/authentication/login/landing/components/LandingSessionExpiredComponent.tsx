@@ -11,7 +11,7 @@ import {
   IOPictograms,
   Pictogram,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Ref } from "react";
 import { ScrollView, useWindowDimensions, View } from "react-native";
 

@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { ZendeskSubCategoriesMap } from "../../../../../definitions/content/ZendeskSubCategoriesMap";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentMethodManagementTypeEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";

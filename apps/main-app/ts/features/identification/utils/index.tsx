@@ -1,4 +1,4 @@
-import { BiometricsValidType, Body } from "@pagopa/io-app-design-system";
+import { BiometricsValidType, Body } from "@io-app/design-system";
 import { BackHandler, Platform, View } from "react-native";
 import { TxtParagraphNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
@@ -23,7 +23,7 @@ export const getBiometryIconName = (
 
 export const getAccessibiliyIdentificationInstructions = (
   biometricType: BiometricsValidType | undefined,
-  isBimoetricIdentificatoinFailed: boolean = false
+  isBimoetricIdentificatoinFailed = false
 ) => {
   if (isBimoetricIdentificatoinFailed) {
     return I18n.t("identification.instructions.useUnlockCodeA11y");

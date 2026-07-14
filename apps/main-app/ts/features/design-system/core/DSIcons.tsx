@@ -14,7 +14,7 @@ import {
   SVGIconProps,
   VStack,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { JSX, useCallback } from "react";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";

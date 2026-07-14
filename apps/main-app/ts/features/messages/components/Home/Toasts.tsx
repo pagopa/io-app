@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import {

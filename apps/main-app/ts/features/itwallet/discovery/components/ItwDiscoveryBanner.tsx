@@ -1,4 +1,4 @@
-import { Banner, IOSkeleton } from "@pagopa/io-app-design-system";
+import { Banner, IOSkeleton } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useCallback, useMemo } from "react";
@@ -97,13 +97,6 @@ export const ItwDiscoveryBanner = ({
     });
   };
 
-  const navigateToDocumentOnboardingScreen = () => {
-    trackItwDiscoveryBannerTap(trackBannerProperties);
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.L3_ONBOARDING
-    });
-  };
-
   const handleOnDismiss = () => {
     trackItwDiscoveryBannerClosure(trackBannerProperties);
     onDismiss?.();
@@ -131,7 +124,7 @@ export const ItwDiscoveryBanner = ({
         color="turquoise"
         onClose={handleOnDismiss}
         labelClose={I18n.t("global.buttons.close")}
-        onPress={navigateToDocumentOnboardingScreen}
+        onPress={navigateToDiscoveryScreen}
       />
     );
   }

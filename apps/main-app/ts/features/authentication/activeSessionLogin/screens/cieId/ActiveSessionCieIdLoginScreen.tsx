@@ -4,7 +4,6 @@ import { openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { Linking, Platform, StyleSheet } from "react-native";
 import WebView, { type WebViewNavigation } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
-import _isEqual from "lodash/isEqual";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
@@ -99,7 +98,7 @@ const ActiveSessionCieIdLoginWebView = ({
           // Redirects the user to the error screen
           navigateToCieIdAuthUrlError(url);
         }
-      } catch (error) {
+      } catch {
         // Redirects the user to the error screen
         navigateToCieIdAuthUrlError(url);
       }

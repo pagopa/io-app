@@ -7,9 +7,9 @@ import {
   IOVisualCostants,
   Body,
   H4
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
-const bottomBarHeight: number = 70;
+const bottomBarHeight = 70;
 
 export const DSFullScreenModal = () => {
   const insets = useSafeAreaInsets();

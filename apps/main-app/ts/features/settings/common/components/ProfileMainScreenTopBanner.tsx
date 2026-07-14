@@ -1,9 +1,4 @@
-import {
-  Alert,
-  Banner,
-  ContentWrapper,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Alert, Banner, ContentWrapper, VSpacer } from "@io-app/design-system";
 import { useCallback, useEffect } from "react";
 import I18n from "i18next";
 import { setShowAppearanceSettingsBanner } from "../../../appearanceSettings/store/actions";

@@ -1,4 +1,4 @@
-import { BodySmall, useIOTheme } from "@pagopa/io-app-design-system";
+import { BodySmall, useIOTheme } from "@io-app/design-system";
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import I18n from "i18next";
 import { WithTestID } from "../types/WithTestID";

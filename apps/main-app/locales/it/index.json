@@ -44,9 +44,12 @@
       "moreInfo": "Vuoi saperne di più?"
     },
     "accessibility": {
+      "inputDigitCounter": "{{valueLength}} di {{length}} numeri inseriti",
       "minusSymbol": "meno",
       "reload": "Ricarica",
       "search": "Cerca",
+      "scrollToBottom": "Scorri fino in fondo",
+      "togglePasswordVisibility": "Mostra o nascondi la password",
       "expanded": "Espanso",
       "collapsed": "Compresso",
       "cieReadingProgress": "Lettura {{percentage}}% completata",
@@ -2294,6 +2297,11 @@
     }
   },
   "features": {
+    "fseDiscoveryBanner": {
+      "title": "Il tuo Fascicolo Sanitario Elettronico è già disponibile!",
+      "body": "Accedi e consulta referti, prescrizioni e servizi in un unico spazio digitale. È semplice e sicuro. Con te, per la tua salute.",
+      "cta": "Vai al tuo Fascicolo"
+    },
     "messages": {
       "pushNotifications": {
         "banner": {
@@ -3303,10 +3311,14 @@
                 "content": "IT-Wallet si integrerà al Portafoglio Digitale Europeo: potrai usare i tuoi documenti con pieno valore legale in tutta Europa."
               }
             },
-            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
+            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso.]({{privacyUrl}})",
             "actions": {
               "primary": "Continua",
-              "anchor": "Scopri tutti i vantaggi"
+              "secondary": "Scopri di più su IT-Wallet"
+            },
+            "detailsBottomSheet": {
+              "title": "IT-Wallet su IO: il nuovo portafoglio digitale pubblico",
+              "action": "Ho capito"
             },
             "dismissalDialog": {
               "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
@@ -3718,8 +3730,11 @@
         },
         "notMatchingIdentityError": {
           "title": "Identità non riconosciuta",
-          "body": "Attiva Documenti su IO con la stessa identità utilizzata per accedere all’app IO. Verifica le credenziali di accesso e riprova.",
-          "primaryAction": "Ripeti l'accesso",
+          "body": {
+            "l2": "L’identità digitale che usi per attivare Documenti su IO deve corrispondere alla stessa persona che ha fatto accesso a IO.",
+            "l3": "L’identità digitale che usi per attivare IT-Wallet deve corrispondere alla stessa persona che ha fatto accesso a IO."
+          },
+          "primaryAction": "Riprova",
           "secondaryAction": "Chiudi"
         },
         "cieNotMatchingAuthenticationIdentityError": {
@@ -4386,6 +4401,29 @@
             "title": "Puoi dirci com’è andata?",
             "content": "Raccontaci la tua esperienza con la verifica e aiutaci a migliorare.",
             "action": "Inizia"
+          }
+        },
+        "eidActivationSuccess": {
+          "banner": {
+            "title": "Puoi dirci com’è andata?",
+            "content": "Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.",
+            "action": "Inizia"
+          }
+        },
+        "eidActivationExit": {
+          "bottomSheet": {
+            "title": "Ti va di dirci perché?",
+            "content": "Hai deciso di non continuare con IT-Wallet: facci sapere il perché, così potremo migliorare la tua esperienza in app. Ci vorrà un minuto!",
+            "primaryAction": "Dicci la tua",
+            "secondaryAction": "Non ora"
+          }
+        },
+        "credentialExit": {
+          "bottomSheet": {
+            "title": "Ti va di dirci perché?",
+            "content": "Hai deciso di non continuare: facci sapere il perché, così potremo migliorare la tua esperienza in app. Ci vorrà un minuto!",
+            "primaryAction": "Dicci la tua",
+            "secondaryAction": "Non ora"
           }
         }
       },

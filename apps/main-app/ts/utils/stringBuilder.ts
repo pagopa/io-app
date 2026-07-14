@@ -15,7 +15,7 @@ export const centsToAmount = (cents: number): number =>
 
 export const formatNumberAmount = (
   amount: number,
-  displayCurrency: boolean = false,
+  displayCurrency = false,
   currencyPosition: "left" | "right" = "left"
 ): string => {
   const formattedAmount = new Intl.NumberFormat(I18n.language, {
@@ -38,7 +38,7 @@ export const formatNumberAmount = (
  */
 export const formatNumberWithNoDigits = (
   amount: number,
-  displayCurrency: boolean = false
+  displayCurrency = false
 ): string => {
   const formattedAmount = new Intl.NumberFormat(I18n.language, {
     useGrouping: true,
@@ -51,7 +51,7 @@ export const formatNumberWithNoDigits = (
 
 export const formatNumberCentsToAmount = (
   cents: number,
-  displayCurrency: boolean = false,
+  displayCurrency = false,
   currencyPosition: "left" | "right" = "left"
 ): string =>
   formatNumberAmount(centsToAmount(cents), displayCurrency, currencyPosition);

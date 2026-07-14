@@ -1,4 +1,4 @@
-import { H4, IconButton, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { H4, IconButton, IOVisualCostants } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import {
   createRef,
