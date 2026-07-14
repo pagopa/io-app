@@ -12,15 +12,18 @@ import { IT_WALLET_SURVEY_EID_ACTIVATION_SUCCESS } from "../utils/constants";
 import { openWebUrl } from "../../../../utils/url";
 
 type Props = {
-  /** Current Documenti su IO status: active if eID was already valid before, not_active otherwise. */
+  /* Current Documenti su IO status: active if eID was already valid before, not_active otherwise. */
   docStatus: "active" | "not_active";
-  /** Authentication method used: spid | cieidL2 | cieidL3 | ciepin */
+  /* Authentication method used: spid | cieidL2 | cieidL3 | ciepin */
   authMethod: string;
+  /* Optional style for the banner container */
+  style?: React.ComponentProps<typeof View>["style"];
 };
 
 const ItwActivationSuccessFeedbackBanner = ({
   docStatus,
-  authMethod
+  authMethod,
+  style: customStyle
 }: Props) => {
   const [isVisible, setIsVisible] = useState(true);
   const { name: routeName } = useRoute();
@@ -51,7 +54,7 @@ const ItwActivationSuccessFeedbackBanner = ({
   }
 
   return (
-    <View style={{ marginTop: 24 }}>
+    <View style={customStyle}>
       <Banner
         testID="itwActivationSuccessFeedbackBannerTestID"
         title={I18n.t(

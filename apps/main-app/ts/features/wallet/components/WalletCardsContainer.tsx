@@ -74,6 +74,7 @@ const WalletCardsContainer = () => {
           <ItwActivationSuccessFeedbackBanner
             docStatus={walletActivationFeedbackBannerData.docStatus}
             authMethod={walletActivationFeedbackBannerData.authMethod}
+            style={{ marginVertical: 8 }}
           />
         )}
         <View testID="walletCardsContainerTestID" style={styles.walletContent}>
