@@ -1,5 +1,6 @@
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
+
 import * as headerFirstLevelHooks from "../../../../hooks/useHeaderFirstLevel";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -16,7 +17,7 @@ const mockToastInfo = jest.fn();
 const mockToastSuccess = jest.fn();
 
 jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual<typeof import("@pagopa/io-app-design-system")>(
+  ...jest.requireActual<typeof import("@io-app/design-system")>(
     "@pagopa/io-app-design-system"
   ),
   useIOToast: () => ({

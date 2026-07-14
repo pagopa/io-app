@@ -1,24 +1,25 @@
 import {
   AnimatedMessageCheckbox,
+  BodySmall,
   CheckboxLabel,
   Divider,
   H4,
   HSpacer,
   IOColors,
-  BodySmall,
   ListItemCheckbox,
   ListItemRadioWithAmount,
   ListItemSwitch,
   NativeSwitch,
   RadioGroup,
   RadioItem,
-  VStack,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+  useIOTheme,
+  VStack
+} from "@io-app/design-system";
 import { ComponentProps, useState } from "react";
 import { Alert, Text, View } from "react-native";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 const sectionTitleMargin = 16;
 const sectionMargin = 40;
@@ -77,7 +78,7 @@ const renderCheckboxLabel = () => (
     </DSComponentViewerBox>
     <DSComponentViewerBox name="CheckboxLabel (disabled)">
       <VStack space={componentInnerMargin}>
-        <CheckboxLabel disabled checked={true} label="This is a test" />
+        <CheckboxLabel checked={true} disabled label="This is a test" />
         <CheckboxLabel disabled label="This is a test" />
       </VStack>
     </DSComponentViewerBox>
@@ -88,73 +89,73 @@ const renderListItemCheckbox = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemCheckbox">
       <ListItemCheckbox
-        value="Usa configurazione rapida"
         accessibilityLabel={""}
+        value="Usa configurazione rapida"
       />
       <Divider />
       <ListItemCheckbox
+        accessibilityLabel={""}
         icon="coggle"
         value="Usa configurazione rapida"
-        accessibilityLabel={""}
       />
       <Divider />
       <ListItemCheckbox
+        accessibilityLabel={""}
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
         value="Usa configurazione rapida"
-        description={
-          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
-        }
-        accessibilityLabel={""}
       />
       <Divider />
       <ListItemCheckbox
+        accessibilityLabel={""}
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
         value="Questa è un'altra prova ancora più lunga per andare su due righe"
-        description={
-          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
-        }
-        accessibilityLabel={""}
       />
       <Divider />
       <ListItemCheckbox
+        accessibilityLabel={""}
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
         icon="bonus"
         value="Let's try with a loooong loooooong looooooong title + icon"
-        description={
-          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
-        }
-        accessibilityLabel={""}
       />
       <Divider />
       <ListItemCheckbox
-        icon="coggle"
-        value="Usa configurazione rapida"
+        accessibilityLabel={""}
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti."
         }
-        accessibilityLabel={""}
+        icon="coggle"
+        value="Usa configurazione rapida"
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemCheckbox (disabled)">
       <ListItemCheckbox
+        accessibilityLabel={""}
         disabled
         value="Usa configurazione rapida"
-        accessibilityLabel={""}
       />
       <Divider />
       <ListItemCheckbox
-        disabled
-        icon="coggle"
-        value="Usa configurazione rapida"
+        accessibilityLabel={""}
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti."
         }
-        accessibilityLabel={""}
+        disabled
+        icon="coggle"
+        value="Usa configurazione rapida"
       />
       <Divider />
       <ListItemCheckbox
-        disabled
-        selected={true}
-        icon="coggle"
-        value="Usa configurazione rapida"
         accessibilityLabel={""}
+        disabled
+        icon="coggle"
+        selected={true}
+        value="Usa configurazione rapida"
       />
     </DSComponentViewerBox>
   </VStack>
@@ -266,33 +267,33 @@ const RadioListItemsShowroom = () => {
     <VStack space={componentMargin}>
       <DSComponentViewerBox name="RadioListItem">
         <RadioGroup<string>
-          type="radioListItem"
-          key="check_income"
           items={mockRadioItems()}
-          selectedItem={selectedItem}
+          key="check_income"
           onPress={setSelectedItem}
+          selectedItem={selectedItem}
+          type="radioListItem"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="RadioListItem, loading states">
         <RadioGroup<string>
-          type="radioListItem"
-          key="skeleton"
           items={mockRadioItemsSkeleton()}
-          selectedItem={selectedItem}
+          key="skeleton"
           onPress={setSelectedItem}
+          selectedItem={selectedItem}
+          type="radioListItem"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name="ListItemRadioWithAmount">
         <ListItemRadioWithAmount
-          label="Banca Intesa"
           formattedAmountString={"2,50 €"}
-          suggestReason="Perché sei già cliente"
           isSuggested={true}
+          label="Banca Intesa"
+          suggestReason="Perché sei già cliente"
         />
         <Divider />
         <ListItemRadioWithAmount
-          label="Banca un po' costosa"
           formattedAmountString={"4,50 €"}
+          label="Banca un po' costosa"
         />
       </DSComponentViewerBox>
     </VStack>
@@ -322,7 +323,7 @@ const NativeSwitchShowroom = () => {
   return (
     <DSComponentViewerBox name="NativeSwitch">
       <View style={{ alignSelf: "flex-start" }}>
-        <NativeSwitch value={isEnabled} onValueChange={toggleSwitch} />
+        <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
       </View>
     </DSComponentViewerBox>
   );
@@ -330,7 +331,7 @@ const NativeSwitchShowroom = () => {
 
 type ListItemSwitchSampleProps = Pick<
   ComponentProps<typeof ListItemSwitch>,
-  "label" | "description" | "value" | "icon" | "paymentLogo" | "action"
+  "action" | "description" | "icon" | "label" | "paymentLogo" | "value"
 >;
 
 const ListItemSwitchSample = ({
@@ -349,28 +350,28 @@ const ListItemSwitchSample = ({
       {icon ? (
         <ListItemSwitch
           action={action}
+          description={description}
           icon={icon}
           label={label}
-          description={description}
-          value={isEnabled}
           onSwitchValueChange={toggleSwitch}
+          value={isEnabled}
         />
       ) : paymentLogo ? (
         <ListItemSwitch
           action={action}
-          paymentLogo={paymentLogo}
-          label={label}
           description={description}
-          value={isEnabled}
+          label={label}
           onSwitchValueChange={toggleSwitch}
+          paymentLogo={paymentLogo}
+          value={isEnabled}
         />
       ) : (
         <ListItemSwitch
           action={action}
-          label={label}
           description={description}
-          value={isEnabled}
+          label={label}
           onSwitchValueChange={toggleSwitch}
+          value={isEnabled}
         />
       )}
     </>
@@ -383,105 +384,105 @@ const ListItemSwitchShowroom = () => (
       <ListItemSwitchSample label="Testo molto breve" value={true} />
       <Divider />
       <ListItemSwitchSample
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
         label="Testo molto breve"
-        description={
-          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
-        }
       />
       <Divider />
       <ListItemSwitchSample
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
         label="Questa è un'altra prova ancora più lunga per andare su due righe"
-        description={
-          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
-        }
       />
       <Divider />
       <ListItemSwitchSample
-        icon="bonus"
-        label="Let's try with a loooong loooooong title + icon + action"
-        description={
-          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
-        }
         action={{
           label: "Action",
           onPress: () => {
             Alert.alert("Action triggered!");
           }
         }}
-      />
-      <Divider />
-      <ListItemSwitchSample
-        icon="bonus"
-        label="Let's try with a loooong loooooong title + icon"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
+        icon="bonus"
+        label="Let's try with a loooong loooooong title + icon + action"
       />
       <Divider />
       <ListItemSwitchSample
-        paymentLogo="mastercard"
-        label="5354 **** **** 0000"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+        icon="bonus"
+        label="Let's try with a loooong loooooong title + icon"
       />
       <Divider />
-      <ListItemSwitchSample paymentLogo="applePay" label="Apple Pay" />
+      <ListItemSwitchSample
+        label="5354 **** **** 0000"
+        paymentLogo="mastercard"
+      />
+      <Divider />
+      <ListItemSwitchSample label="Apple Pay" paymentLogo="applePay" />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemSwitch, loading status">
       <ListItemSwitch
+        description="Loading list item switch"
         icon="device"
+        isLoading
         label="Label"
         value={false}
-        isLoading
-        description="Loading list item switch"
       />
       <Divider />
       <ListItemSwitch
+        description="Loading list item switch"
         icon="device"
+        isLoading
         label="Loong loooooong looooooooong loooong title"
         value={false}
-        isLoading
-        description="Loading list item switch"
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemSwitch with badge">
       <ListItemSwitch
-        icon="device"
-        label="Usa l'app IO"
-        value={false}
         badge={{
           text: "Attivo",
           variant: "highlight"
         }}
         description="Inquadra il codice QR mostrato dall’esercente e segui le istruzioni in app per autorizzare la spesa."
+        icon="device"
+        label="Usa l'app IO"
+        value={false}
       />
       <Divider />
       <ListItemSwitch
-        icon="coggle"
-        label="Loong loooooong loooooooooong loooong title"
-        value={false}
         badge={{
           text: "Attivo",
           variant: "highlight"
         }}
+        icon="coggle"
+        label="Loong loooooong loooooooooong loooong title"
+        value={false}
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemSwitch, disabled">
       <ListItemSwitch disabled label="Testo molto breve" value={true} />
       <Divider />
       <ListItemSwitch
-        disabled
-        label="Testo molto breve"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
+        disabled
+        label="Testo molto breve"
       />
       <Divider />
       <ListItemSwitch
-        disabled
-        icon="bonus"
-        label="Let's try with a loooong loooooong title + icon"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
+        disabled
+        icon="bonus"
+        label="Let's try with a loooong loooooong title + icon"
       />
     </DSComponentViewerBox>
   </VStack>

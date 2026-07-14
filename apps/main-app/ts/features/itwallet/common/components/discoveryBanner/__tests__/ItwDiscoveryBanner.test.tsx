@@ -2,6 +2,7 @@ import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
+
 import ROUTES from "../../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";

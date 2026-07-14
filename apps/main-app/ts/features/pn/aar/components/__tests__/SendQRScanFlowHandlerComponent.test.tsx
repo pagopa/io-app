@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { act, fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
+
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as HOOKS from "../../../../../store/hooks";
@@ -199,8 +200,8 @@ describe("SendQRScanFlowHandlerComponent - AAR enabled", () => {
 });
 
 function renderComponent(
-  sendServiceActive: boolean = true,
-  notificationPermissionsEnabled: boolean = true
+  sendServiceActive = true,
+  notificationPermissionsEnabled = true
 ) {
   const baseState = appReducer(undefined, applicationChangeState("active"));
   const globalState = {

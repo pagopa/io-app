@@ -1,6 +1,7 @@
 import { put } from "typed-redux-saga/macro";
-import { getAppVersion } from "../../utils/appVersion";
+
 import { appVersionHistory } from "../../store/actions/installation";
+import { getAppVersion } from "../../utils/appVersion";
 
 /**
  * get the current version of the app and dispatch an action

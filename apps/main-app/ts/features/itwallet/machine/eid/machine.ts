@@ -10,15 +10,16 @@ import {
   raise,
   setup
 } from "xstate";
+
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
 import {
   CredentialAccessToken,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
+import { isMrtdPoPChallengeRequired } from "../../common/utils/mrtdUrl";
 import { ItwTags } from "../tags";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
-import { isMrtdPoPChallengeRequired } from "../../common/utils/mrtdUrl";
 import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
@@ -79,7 +80,6 @@ export const itwEidIssuanceMachine = setup({
     navigateToCieWarningScreen: notImplemented,
     navigateToCieCanScreen: notImplemented,
     navigateToCieInternalAuthAndMrtdScreen: notImplemented,
-    navigateToUpgradeCredentialsScreen: notImplemented,
     closeIssuance: notImplemented,
 
     /**
@@ -90,6 +90,7 @@ export const itwEidIssuanceMachine = setup({
     cleanupIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeAuthLevel: notImplemented,
+    storeWalletActivationFeedbackBannerData: notImplemented,
     storeCredentialUpgradeFailures: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
@@ -340,6 +341,15 @@ export const itwEidIssuanceMachine = setup({
             target: "TrustFederationVerification"
           }
         ],
+        "go-to-ipzs-privacy": {
+          actions: "navigateToIpzsPrivacyScreen"
+        },
+        "accept-ipzs-privacy": [
+          {
+            // The IPZS privacy can be opened from the Discovery screen in the L3 flow.
+            target: "TrustFederationVerification"
+          }
+        ],
         close: {
           target: "#itwEidIssuanceMachine.Idle",
           actions: "closeIssuance"
@@ -367,8 +377,8 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            // When reissuing or fallback to L2, if both integrity key tag and wallet instance attestation are valid,
-            guard: or(["isReissuance", "isL2Fallback"]),
+            // When reissuing, fallback to L2 or L3, if both integrity key tag and wallet instance attestation are valid,
+            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             target: "UserIdentification.Identification"
           },
           {
@@ -387,7 +397,7 @@ export const itwEidIssuanceMachine = setup({
       after: {
         5000: [
           {
-            guard: or(["isReissuance", "isL2Fallback"]),
+            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             actions: "navigateToIdentificationScreen"
           },
           {
@@ -473,7 +483,7 @@ export const itwEidIssuanceMachine = setup({
         }),
         onDone: [
           {
-            guard: or(["isReissuance", "isL2Fallback"]),
+            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             actions: [
               assign(({ event }) => ({
                 walletInstanceAttestation: event.output
@@ -573,6 +583,10 @@ export const itwEidIssuanceMachine = setup({
                 guard: "isL2Fallback",
                 target: "#itwEidIssuanceMachine.Idle",
                 actions: "navigateToTosScreen"
+              },
+              {
+                guard: "isL3FeaturesEnabled",
+                target: "#itwEidIssuanceMachine.TosAcceptance"
               },
               {
                 target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
@@ -1238,16 +1252,8 @@ export const itwEidIssuanceMachine = setup({
     CredentialsUpgrade: {
       description:
         "This state handles the upgrade of credentials in the wallet",
-      initial: "Intro",
+      initial: "Upgrading",
       states: {
-        Intro: {
-          entry: "navigateToUpgradeCredentialsScreen",
-          on: {
-            next: {
-              target: "Upgrading"
-            }
-          }
-        },
         Upgrading: {
           entry: "navigateToSuccessScreen",
           tags: [ItwTags.Loading],
@@ -1284,10 +1290,14 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     Success: {
-      entry: ["refreshCredentialsCatalogue", "navigateToSuccessScreen"],
+      entry: [
+        "refreshCredentialsCatalogue",
+        "navigateToSuccessScreen",
+        "storeWalletActivationFeedbackBannerData"
+      ],
       on: {
         "add-new-credential": {
-          actions: "navigateToCredentialCatalog"
+          actions: ["navigateToCredentialCatalog"]
         },
         "go-to-wallet": {
           actions: "navigateToWallet"

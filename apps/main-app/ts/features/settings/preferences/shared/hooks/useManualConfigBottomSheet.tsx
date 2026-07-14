@@ -1,6 +1,7 @@
-import { Body, FooterActionsInline } from "@pagopa/io-app-design-system";
+import { Body, FooterActionsInline } from "@io-app/design-system";
 import I18n from "i18next";
 import { ReactElement } from "react";
+
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 
 const ManualConfigConfirm = (): ReactElement => (
@@ -19,11 +20,6 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
     component: <ManualConfigConfirm />,
     footer: (
       <FooterActionsInline
-        startAction={{
-          color: "primary",
-          label: I18n.t("global.buttons.cancel"),
-          onPress: () => dismiss()
-        }}
         endAction={{
           color: "danger",
           label: I18n.t("global.buttons.confirm"),
@@ -31,6 +27,11 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
             onConfirm();
             dismiss();
           }
+        }}
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.cancel"),
+          onPress: () => dismiss()
         }}
       />
     )

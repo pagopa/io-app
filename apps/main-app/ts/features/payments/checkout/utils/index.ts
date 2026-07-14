@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { ZendeskSubCategoriesMap } from "../../../../../definitions/content/ZendeskSubCategoriesMap";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentMethodManagementTypeEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
@@ -7,7 +6,7 @@ import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/ecomm
 import { format } from "../../../../utils/dates";
 import {
   PaymentAnalyticsPhase,
-  PaymentAnalyticsSelectedPspFlag
+  PaymentAnalyticsPspFlag
 } from "../../common/types/PaymentAnalytics";
 import { WalletPaymentStepEnum } from "../types";
 
@@ -18,8 +17,8 @@ export const WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL =
 
 export const isValidPaymentMethod = (method: PaymentMethodResponse) =>
   [
-    PaymentMethodManagementTypeEnum.ONBOARDABLE,
     PaymentMethodManagementTypeEnum.NOT_ONBOARDABLE,
+    PaymentMethodManagementTypeEnum.ONBOARDABLE,
     PaymentMethodManagementTypeEnum.ONBOARDABLE_WITH_PAYMENT,
     PaymentMethodManagementTypeEnum.REDIRECT
   ].includes(method.methodManagement) &&
@@ -34,7 +33,7 @@ export const WalletPaymentStepScreenNames = {
 export const getPspFlagType = (
   psp: Bundle,
   pspList?: ReadonlyArray<Bundle>
-): PaymentAnalyticsSelectedPspFlag => {
+): PaymentAnalyticsPspFlag => {
   if (!pspList || pspList.length === 0) {
     return "none";
   }
@@ -51,16 +50,41 @@ export const getPspFlagType = (
   return psp.taxPayerFee === minFee ? "cheaper" : "none";
 };
 
+/**
+ * Flags which kind of PSP is available to the user among the whole
+ * pspList, regardless of which one is ultimately selected. Used for
+ * `preselected_psp_flag`, so it stays stable even if the user changes
+ * their selection or skips the pick-psp step entirely (single PSP).
+ */
+export const getPreselectedPspFlagType = (
+  pspList?: ReadonlyArray<Bundle>
+): PaymentAnalyticsPspFlag => {
+  if (!pspList || pspList.length === 0) {
+    return "none";
+  }
+  if (pspList.some(psp => psp.onUs)) {
+    return "customer";
+  }
+  if (pspList.length === 1) {
+    return "unique";
+  }
+  const fees = pspList
+    .map(p => p.taxPayerFee)
+    .filter((fee): fee is number => typeof fee === "number");
+  const hasCheaperPsp = new Set(fees).size > 1;
+  return hasCheaperPsp ? "cheaper" : "none";
+};
+
 export const getPaymentPhaseFromStep = (
   step: WalletPaymentStepEnum
 ): PaymentAnalyticsPhase => {
   switch (step) {
+    case WalletPaymentStepEnum.CONFIRM_TRANSACTION:
+      return "pagamento";
     case WalletPaymentStepEnum.PICK_PAYMENT_METHOD:
       return "attiva";
     case WalletPaymentStepEnum.PICK_PSP:
       return "attiva";
-    case WalletPaymentStepEnum.CONFIRM_TRANSACTION:
-      return "pagamento";
     default:
       return "verifica";
   }

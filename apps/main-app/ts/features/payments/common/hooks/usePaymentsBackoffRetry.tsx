@@ -1,13 +1,14 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { increasePaymentsBackoffRetry } from "../store/actions";
 import { paymentsBackoffRetrySelector } from "../store/selectors";
 import { PaymentsBackoffRetry } from "../types/PaymentsBackoffRetry";
 import {
   getTimeRemainingText,
   isBackoffRetryTimeElapsed
 } from "../utils/backoffRetry";
-import { increasePaymentsBackoffRetry } from "../store/actions";
 
 export const usePaymentsBackoffRetry = (id: PaymentsBackoffRetry) => {
   const toast = useIOToast();
@@ -20,7 +21,7 @@ export const usePaymentsBackoffRetry = (id: PaymentsBackoffRetry) => {
    * @param showToast If true it shows automatically a toast with the time remaining to retry
    * @returns true if the request can be retried, otherwise false
    */
-  const canRetryRequest = (showToast: boolean = true) => {
+  const canRetryRequest = (showToast = true) => {
     if (
       backoff?.allowedRetryTimestamp &&
       !isBackoffRetryTimeElapsed(backoff?.allowedRetryTimestamp)

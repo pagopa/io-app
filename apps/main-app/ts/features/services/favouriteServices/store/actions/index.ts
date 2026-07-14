@@ -1,8 +1,10 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import type {
   FavouriteServicesSortType,
   FavouriteServiceType
 } from "../../../favouriteServices/types";
+
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 export const addFavouriteServiceRequest = createStandardAction(

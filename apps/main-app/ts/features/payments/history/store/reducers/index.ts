@@ -1,15 +1,22 @@
-/* eslint-disable complexity */
-import * as O from "fp-ts/lib/Option";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
+
+import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
-import { clearCache } from "../../../../settings/common/store/actions";
 import { Action } from "../../../../../store/actions/types";
+import { createSetTransform } from "../../../../../store/transforms/setTransform";
 import { getLookUpId } from "../../../../../utils/pmLookUpId";
+import {
+  centsToAmount,
+  formatNumberAmount
+} from "../../../../../utils/stringBuilder";
+import { clearCache } from "../../../../settings/common/store/actions";
+import * as analytics from "../../../checkout/analytics";
 import {
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
@@ -23,46 +30,39 @@ import {
   selectPaymentPspAction
 } from "../../../checkout/store/actions/orchestration";
 import { WalletPaymentFailure } from "../../../checkout/types/WalletPaymentFailure";
-import { PaymentHistory } from "../../types";
-import {
-  storeNewPaymentAttemptAction,
-  storePaymentOutcomeToHistory,
-  storePaymentsBrowserTypeAction,
-  storePaymentIsOnboardedAction,
-  removeExpiredPaymentsOngoingFailedAction
-} from "../actions";
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
-import { getPaymentsWalletUserMethods } from "../../../wallet/store/actions";
 import { getPspFlagType } from "../../../checkout/utils";
-import {
-  centsToAmount,
-  formatNumberAmount
-} from "../../../../../utils/stringBuilder";
 import {
   PaymentAnalyticsData,
   PaymentsAnalyticsHomeStatus
 } from "../../../common/types/PaymentAnalytics";
+import * as receiptsAnalytics from "../../../receipts/analytics";
 import {
-  getPaymentsReceiptDetailsAction,
   getPaymentsLatestReceiptAction,
+  getPaymentsReceiptDetailsAction,
   getPaymentsReceiptDownloadAction
 } from "../../../receipts/store/actions";
-import * as receiptsAnalytics from "../../../receipts/analytics";
-import { createSetTransform } from "../../../../../store/transforms/setTransform";
-import * as analytics from "../../../checkout/analytics";
-
-type PaymentsOngoingFailedClockTime = {
-  wallClock: number;
-  appClock: number;
-};
+import { getPaymentsWalletUserMethods } from "../../../wallet/store/actions";
+import { PaymentHistory } from "../../types";
+import {
+  removeExpiredPaymentsOngoingFailedAction,
+  storeNewPaymentAttemptAction,
+  storePaymentIsOnboardedAction,
+  storePaymentOutcomeToHistory,
+  storePaymentsBrowserTypeAction
+} from "../actions";
 
 export type PaymentsHistoryState = {
   analyticsData?: PaymentAnalyticsData;
-  ongoingPayment?: PaymentHistory;
   archive: ReadonlyArray<PaymentHistory>;
-  receiptsOpened: Set<string>;
-  PDFsOpened: Set<string>;
+  ongoingPayment?: PaymentHistory;
   paymentsOngoingFailed?: Record<RptId, PaymentsOngoingFailedClockTime>;
+  PDFsOpened: Set<string>;
+  receiptsOpened: Set<string>;
+};
+
+type PaymentsOngoingFailedClockTime = {
+  appClock: number;
+  wallClock: number;
 };
 
 const INITIAL_STATE: PaymentsHistoryState = {
@@ -79,163 +79,9 @@ const reducer = (
   action: Action
 ): PaymentsHistoryState => {
   switch (action.type) {
-    case getType(initPaymentStateAction):
-      return {
-        ...state,
-        analyticsData: {
-          savedPaymentMethods: state.analyticsData?.savedPaymentMethods,
-          startOrigin: action.payload.startOrigin,
-          serviceName: action.payload.serviceName
-        },
-        ongoingPayment: {
-          startOrigin: action.payload.startOrigin,
-          startedAt: new Date(),
-          lookupId: getLookUpId()
-        }
-      };
-    case getType(paymentsGetPaymentDetailsAction.request):
-      return {
-        ...state,
-        analyticsData: {
-          ...state.analyticsData,
-          attempt: getPaymentAttemptByRptId(state, action.payload)
-        },
-        ongoingPayment: {
-          ...state.ongoingPayment,
-          rptId: action.payload,
-          attempt: getPaymentAttemptByRptId(state, action.payload)
-        }
-      };
-    case getType(paymentsGetPaymentDetailsAction.success):
-      return {
-        ...state,
-        paymentsOngoingFailed: {
-          ...state.paymentsOngoingFailed,
-          [action.payload.rptId]: undefined
-        },
-        analyticsData: {
-          ...state.analyticsData,
-          verifiedData: action.payload,
-          formattedAmount: formatNumberAmount(
-            centsToAmount(action.payload.amount),
-            true,
-            "right"
-          )
-        },
-        ongoingPayment: {
-          ...state.ongoingPayment,
-          verifiedData: action.payload
-        }
-      };
-    case getType(storeNewPaymentAttemptAction):
-      return updatePaymentHistory(state, {}, true);
-    case getType(paymentsCreateTransactionAction.success):
-    case getType(paymentsGetPaymentTransactionInfoAction.success):
-      return updatePaymentHistory(state, {
-        transaction: action.payload
-      });
-    case getType(storePaymentOutcomeToHistory):
-      return updatePaymentHistory(state, {
-        outcome: action.payload,
-        ...(action.payload === "0" ? { success: true } : {})
-      });
-    case getType(paymentsGetPaymentDetailsAction.failure):
-    case getType(paymentsCreateTransactionAction.failure): {
-      const failure = pipe(
-        WalletPaymentFailure.decode(action.payload),
-        O.fromEither,
-        O.toUndefined
-      );
-
-      const rptId = state.ongoingPayment?.rptId;
-      const isPaymentPptInProgress =
-        failure?.faultCodeDetail === "PPT_PAGAMENTO_IN_CORSO";
-
-      const failureDateEntry = {
-        wallClock: Date.now(),
-        appClock: performance.now()
-      };
-
-      const ongoingFailedUpdate =
-        rptId && isPaymentPptInProgress && !state.paymentsOngoingFailed?.[rptId]
-          ? { [rptId]: failureDateEntry }
-          : {};
-
-      return updatePaymentHistory(
-        {
-          ...state,
-          paymentsOngoingFailed: {
-            ...state.paymentsOngoingFailed,
-            ...ongoingFailedUpdate
-          }
-        },
-        { failure }
-      );
-    }
-    case getType(paymentsGetPaymentTransactionInfoAction.failure):
-      return updatePaymentHistory(state, {
-        failure: pipe(
-          WalletPaymentFailure.decode(action.payload),
-          O.fromEither,
-          O.toUndefined
-        )
-      });
-    case getType(selectPaymentMethodAction):
-      const paymentMethodName =
-        action.payload.userWallet?.details?.type ||
-        action.payload.paymentMethod?.name;
-      return {
-        ...state,
-        analyticsData: {
-          ...state.analyticsData,
-          selectedPaymentMethod: paymentMethodName
-        }
-      };
-    case getType(paymentsGetPaymentUserMethodsAction.success):
-    case getType(getPaymentsWalletUserMethods.success):
-      const unavailablePaymentMethods = action.payload.wallets?.filter(wallet =>
-        wallet.applications.find(
-          app => app.name === "PAGOPA" && app.status !== "ENABLED"
-        )
-      );
-      return {
-        ...state,
-        analyticsData: {
-          ...state.analyticsData,
-          savedPaymentMethods: action.payload.wallets,
-          savedPaymentMethodsUnavailable: unavailablePaymentMethods,
-          paymentsHomeStatus: getPaymentsHomeStatus(
-            action.payload.wallets?.length ?? 0,
-            state.analyticsData?.transactionsHomeLength ?? 0
-          )
-        }
-      };
-    case getType(paymentsCalculatePaymentFeesAction.success):
-      const bundles = action.payload.bundles;
-      const selectedPsp =
-        bundles.length === 1 ? bundles[0].pspBusinessName : undefined;
-      const selectedPspFlag = bundles.length === 1 ? "unique" : undefined;
-      return {
-        ...state,
-        analyticsData: {
-          ...state.analyticsData,
-          selectedPsp,
-          selectedPspFlag,
-          pspList: bundles
-        }
-      };
-    case getType(selectPaymentPspAction):
-      return {
-        ...state,
-        analyticsData: {
-          ...state.analyticsData,
-          selectedPsp: action.payload.pspBusinessName,
-          selectedPspFlag: getPspFlagType(
-            action.payload,
-            state.analyticsData?.pspList
-          )
-        }
-      };
+    case getType(clearCache):
+    case getType(differentProfileLoggedIn):
+      return INITIAL_STATE;
     case getType(getPaymentsLatestReceiptAction.success):
       return {
         ...state,
@@ -295,25 +141,133 @@ const reducer = (
         PDFsOpened: new Set(state.PDFsOpened).add(action.payload.transactionId)
       };
     }
-    case getType(storePaymentsBrowserTypeAction):
-      analytics.trackPaymentBrowserLanding({
-        browser_type: action.payload
+    case getType(getPaymentsWalletUserMethods.success):
+    case getType(paymentsGetPaymentUserMethodsAction.success):
+      const unavailablePaymentMethods = action.payload.wallets?.filter(wallet =>
+        wallet.applications.find(
+          app => app.name === "PAGOPA" && app.status !== "ENABLED"
+        )
+      );
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          savedPaymentMethods: action.payload.wallets,
+          savedPaymentMethodsUnavailable: unavailablePaymentMethods,
+          paymentsHomeStatus: getPaymentsHomeStatus(
+            action.payload.wallets?.length ?? 0,
+            state.analyticsData?.transactionsHomeLength ?? 0
+          )
+        }
+      };
+    case getType(initPaymentStateAction):
+      return {
+        ...state,
+        analyticsData: {
+          savedPaymentMethods: state.analyticsData?.savedPaymentMethods,
+          startOrigin: action.payload.startOrigin,
+          serviceName: action.payload.serviceName
+        },
+        ongoingPayment: {
+          startOrigin: action.payload.startOrigin,
+          startedAt: new Date(),
+          lookupId: getLookUpId()
+        }
+      };
+    case getType(paymentsCalculatePaymentFeesAction.success):
+      const bundles = action.payload.bundles;
+      const selectedPsp =
+        bundles.length === 1 ? bundles[0].pspBusinessName : undefined;
+      const selectedPspFlag = bundles.length === 1 ? "unique" : undefined;
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          selectedPsp,
+          selectedPspFlag,
+          pspList: bundles
+        }
+      };
+    case getType(paymentsCreateTransactionAction.failure):
+    case getType(paymentsGetPaymentDetailsAction.failure): {
+      const failure = pipe(
+        WalletPaymentFailure.decode(action.payload),
+        O.fromEither,
+        O.toUndefined
+      );
+
+      const rptId = state.ongoingPayment?.rptId;
+      const isPaymentPptInProgress =
+        failure?.faultCodeDetail === "PPT_PAGAMENTO_IN_CORSO";
+
+      const failureDateEntry = {
+        wallClock: Date.now(),
+        appClock: performance.now()
+      };
+
+      const ongoingFailedUpdate =
+        rptId && isPaymentPptInProgress && !state.paymentsOngoingFailed?.[rptId]
+          ? { [rptId]: failureDateEntry }
+          : {};
+
+      return updatePaymentHistory(
+        {
+          ...state,
+          paymentsOngoingFailed: {
+            ...state.paymentsOngoingFailed,
+            ...ongoingFailedUpdate
+          }
+        },
+        { failure }
+      );
+    }
+    case getType(paymentsCreateTransactionAction.success):
+    case getType(paymentsGetPaymentTransactionInfoAction.success):
+      return updatePaymentHistory(state, {
+        transaction: action.payload
       });
+    case getType(paymentsGetPaymentDetailsAction.request):
       return {
         ...state,
         analyticsData: {
           ...state.analyticsData,
-          browserType: action.payload
+          attempt: getPaymentAttemptByRptId(state, action.payload)
+        },
+        ongoingPayment: {
+          ...state.ongoingPayment,
+          rptId: action.payload,
+          attempt: getPaymentAttemptByRptId(state, action.payload)
         }
       };
-    case getType(storePaymentIsOnboardedAction):
+    case getType(paymentsGetPaymentDetailsAction.success):
       return {
         ...state,
+        paymentsOngoingFailed: {
+          ...state.paymentsOngoingFailed,
+          [action.payload.rptId]: undefined
+        },
         analyticsData: {
           ...state.analyticsData,
-          is_onboarded: action.payload
+          verifiedData: action.payload,
+          formattedAmount: formatNumberAmount(
+            centsToAmount(action.payload.amount),
+            true,
+            "right"
+          )
+        },
+        ongoingPayment: {
+          ...state.ongoingPayment,
+          verifiedData: action.payload
         }
       };
+    case getType(paymentsGetPaymentTransactionInfoAction.failure):
+      return updatePaymentHistory(state, {
+        failure: pipe(
+          WalletPaymentFailure.decode(action.payload),
+          O.fromEither,
+          O.toUndefined
+        )
+      });
     case getType(removeExpiredPaymentsOngoingFailedAction):
       if (!state.paymentsOngoingFailed) {
         return state;
@@ -326,9 +280,55 @@ const reducer = (
           )
         )
       };
-    case getType(differentProfileLoggedIn):
-    case getType(clearCache):
-      return INITIAL_STATE;
+    case getType(selectPaymentMethodAction):
+      const paymentMethodName =
+        action.payload.userWallet?.details?.type ||
+        action.payload.paymentMethod?.name;
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          selectedPaymentMethod: paymentMethodName
+        }
+      };
+    case getType(selectPaymentPspAction):
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          selectedPsp: action.payload.pspBusinessName,
+          selectedPspFlag: getPspFlagType(
+            action.payload,
+            state.analyticsData?.pspList
+          )
+        }
+      };
+    case getType(storeNewPaymentAttemptAction):
+      return updatePaymentHistory(state, {}, true);
+    case getType(storePaymentIsOnboardedAction):
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          is_onboarded: action.payload
+        }
+      };
+    case getType(storePaymentOutcomeToHistory):
+      return updatePaymentHistory(state, {
+        outcome: action.payload,
+        ...(action.payload === "0" ? { success: true } : {})
+      });
+    case getType(storePaymentsBrowserTypeAction):
+      analytics.trackPaymentBrowserLanding({
+        browser_type: action.payload
+      });
+      return {
+        ...state,
+        analyticsData: {
+          ...state.analyticsData,
+          browserType: action.payload
+        }
+      };
   }
   return state;
 };
@@ -374,7 +374,7 @@ const appendItemToArchive = (
 const updatePaymentHistory = (
   state: PaymentsHistoryState,
   data: PaymentHistory,
-  newAttempt: boolean = false
+  newAttempt = false
 ): PaymentsHistoryState => {
   const currentAttempt = state.ongoingPayment?.attempt || 0;
   const updatedOngoingPaymentHistory: PaymentHistory = {

@@ -1,18 +1,19 @@
 import * as Notifications from "expo-notifications";
 import NotificationsUtils from "react-native-notifications-utils";
 import { v4 as uuid } from "uuid";
+
 import { trackAppCaughtError } from "../../../utils/analytics";
+import { isTestEnv } from "../../../utils/environment";
 import { unknownToString } from "../../../utils/errors";
 import { isIos } from "../../../utils/platform";
-import { isTestEnv } from "../../../utils/environment";
 
 const areNotificationsEnabled = (
   permissions: Notifications.NotificationPermissionsStatus
 ) => {
   const areNotificationsDisabled = [
-    undefined,
     Notifications.IosAuthorizationStatus.DENIED,
-    Notifications.IosAuthorizationStatus.NOT_DETERMINED
+    Notifications.IosAuthorizationStatus.NOT_DETERMINED,
+    undefined
   ].includes(permissions.ios?.status);
   return permissions.granted || !areNotificationsDisabled;
 };

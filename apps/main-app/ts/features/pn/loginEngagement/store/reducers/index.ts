@@ -1,15 +1,16 @@
-import { getType } from "typesafe-actions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createMigrate,
   MigrationManifest,
   PersistConfig,
   persistReducer
 } from "redux-persist";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
-import { setSendEngagementScreenHasBeenDismissed } from "../actions";
-import { isDevEnv, isTestEnv } from "../../../../../utils/environment";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { isDevEnv, isTestEnv } from "../../../../../utils/environment";
+import { setSendEngagementScreenHasBeenDismissed } from "../actions";
 
 export type SENDLoginEngagementState = {
   hasSendEngagementScreenBeenDismissed: boolean;

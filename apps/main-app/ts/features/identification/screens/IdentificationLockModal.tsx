@@ -6,11 +6,12 @@ import {
   Pictogram,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { Modal, View } from "react-native";
+
 import {
   CountdownProvider,
   useCountdown
@@ -90,15 +91,15 @@ export const IdentificationLockModal = (props: Props) => {
             <Pictogram name="accessDenied" />
             <VSpacer size={24} />
             <H4
-              style={{ textAlign: "center" }}
               accessibilityLabel={tooManyAttemptsText}
+              style={{ textAlign: "center" }}
             >
               {tooManyAttemptsText}
             </H4>
             <VSpacer size={32} />
             <CountdownProvider
-              timerTiming={timerTiming}
               intervalDuration={TIMER_INTERVAL}
+              timerTiming={timerTiming}
             >
               <Countdown
                 onElapsedTimer={hideModal}

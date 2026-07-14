@@ -1,24 +1,25 @@
-import { call, put, select } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { never } from "io-ts";
-import {
-  withRefreshApiCall,
-  handleSessionExpiredSaga,
-  ThirdPartyTokenError,
-  withThirdPartyRefreshApiCall,
-  utilsExport
-} from "../utils";
-import {
-  refreshSessionToken,
-  savePendingAction
-} from "../../store/actions/tokenRefreshActions";
+import { call, put, select } from "typed-redux-saga/macro";
+
+import { Action } from "../../../../../store/actions/types";
 import {
   checkCurrentSession,
   logoutRequest,
   sessionExpired
 } from "../../../common/store/actions";
+import {
+  refreshSessionToken,
+  savePendingAction
+} from "../../store/actions/tokenRefreshActions";
 import { isFastLoginEnabledSelector } from "../../store/selectors";
-import { Action } from "../../../../../store/actions/types";
+import {
+  handleSessionExpiredSaga,
+  ThirdPartyTokenError,
+  utilsExport,
+  withRefreshApiCall,
+  withThirdPartyRefreshApiCall
+} from "../utils";
 
 const successResponse = E.right({ status: 200 });
 const unauthorizedResponse = E.right({ status: 401 });
@@ -161,7 +162,7 @@ describe("utils saga", () => {
     expect(result).toEqual({ type: "MOCK" });
   });
 
-  it(" waitForTheTokenRefreshToBeStartedshould throw error if timeout wins", () => {
+  it("waitForTheTokenRefreshToBeStartedshould throw error if timeout wins", () => {
     const gen =
       utilsExportNotUndefined.waitForTheTokenRefreshToBeStarted(
         "timeout error"

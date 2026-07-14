@@ -1,43 +1,42 @@
-/* eslint-disable complexity */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../../store/actions/types";
-import { NetworkError } from "../../../../../utils/errors";
 
 import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
-import {
-  getPaymentsReceiptDownloadAction,
-  getPaymentsReceiptDetailsAction,
-  getPaymentsReceiptAction,
-  getPaymentsLatestReceiptAction,
-  hidePaymentsReceiptAction,
-  setNeedsHomeListRefreshAction,
-  PaymentsTransactionReceiptInfoPayload
-} from "../actions";
+import { Action } from "../../../../../store/actions/types";
+import { NetworkError } from "../../../../../utils/errors";
+import { ReceiptDownloadFailure } from "../../types";
 import {
   filterTransactionsByIdAndGetIndex,
   restoreTransactionsToOriginalOrder
 } from "../../utils";
-import { ReceiptDownloadFailure } from "../../types";
-
-type CancelTransactionRecord = {
-  removedItems: Array<NoticeListItem>;
-  removedIndices: Array<number>;
-  cancelType: "transactions" | "latestTransactions";
-};
+import {
+  getPaymentsLatestReceiptAction,
+  getPaymentsReceiptAction,
+  getPaymentsReceiptDetailsAction,
+  getPaymentsReceiptDownloadAction,
+  hidePaymentsReceiptAction,
+  PaymentsTransactionReceiptInfoPayload,
+  setNeedsHomeListRefreshAction
+} from "../actions";
 
 export type ReceiptTransactionState = {
-  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
+  cancelTransactionRecord: pot.Pot<CancelTransactionRecord, NetworkError>;
+  details: pot.Pot<NoticeDetailResponse, NetworkError>;
   latestTransactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
   latestTransactionsContinuationToken?: string;
-  details: pot.Pot<NoticeDetailResponse, NetworkError>;
+  needsHomeListRefresh: boolean;
   receiptDocument: pot.Pot<
     PaymentsTransactionReceiptInfoPayload,
     NetworkError | ReceiptDownloadFailure
   >;
-  cancelTransactionRecord: pot.Pot<CancelTransactionRecord, NetworkError>;
-  needsHomeListRefresh: boolean;
+  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
+};
+
+type CancelTransactionRecord = {
+  cancelType: "latestTransactions" | "transactions";
+  removedIndices: Array<number>;
+  removedItems: Array<NoticeListItem>;
 };
 
 const INITIAL_STATE: ReceiptTransactionState = {
@@ -55,6 +54,19 @@ const reducer = (
   action: Action
 ): ReceiptTransactionState => {
   switch (action.type) {
+    case getType(getPaymentsLatestReceiptAction.cancel):
+      return {
+        ...state,
+        latestTransactions: pot.none
+      };
+    case getType(getPaymentsLatestReceiptAction.failure):
+      return {
+        ...state,
+        latestTransactions: pot.toError(
+          state.latestTransactions,
+          action.payload
+        )
+      };
     // GET LATEST TRANSACTIONS LIST
     case getType(getPaymentsLatestReceiptAction.request):
       return {
@@ -67,18 +79,15 @@ const reducer = (
         latestTransactions: pot.some(action.payload.data || []),
         latestTransactionsContinuationToken: action.payload.continuationToken
       };
-    case getType(getPaymentsLatestReceiptAction.failure):
+    case getType(getPaymentsReceiptAction.cancel):
       return {
         ...state,
-        latestTransactions: pot.toError(
-          state.latestTransactions,
-          action.payload
-        )
+        transactions: pot.none
       };
-    case getType(getPaymentsLatestReceiptAction.cancel):
+    case getType(getPaymentsReceiptAction.failure):
       return {
         ...state,
-        latestTransactions: pot.none
+        transactions: pot.toError(state.transactions, action.payload)
       };
     // GET TRANSACTIONS LIST
     case getType(getPaymentsReceiptAction.request):
@@ -99,15 +108,15 @@ const reducer = (
           : pot.some(maybeTransactions),
         needsHomeListRefresh: false
       };
-    case getType(getPaymentsReceiptAction.failure):
+    case getType(getPaymentsReceiptDetailsAction.cancel):
       return {
         ...state,
-        transactions: pot.toError(state.transactions, action.payload)
+        details: pot.none
       };
-    case getType(getPaymentsReceiptAction.cancel):
+    case getType(getPaymentsReceiptDetailsAction.failure):
       return {
         ...state,
-        transactions: pot.none
+        details: pot.toError(state.details, action.payload)
       };
     // GET BIZ-EVENTS TRANSACTION DETAILS
     case getType(getPaymentsReceiptDetailsAction.request):
@@ -120,15 +129,15 @@ const reducer = (
         ...state,
         details: pot.some(action.payload)
       };
-    case getType(getPaymentsReceiptDetailsAction.failure):
+    case getType(getPaymentsReceiptDownloadAction.cancel):
       return {
         ...state,
-        details: pot.toError(state.details, action.payload)
+        receiptDocument: pot.none
       };
-    case getType(getPaymentsReceiptDetailsAction.cancel):
+    case getType(getPaymentsReceiptDownloadAction.failure):
       return {
         ...state,
-        details: pot.none
+        receiptDocument: pot.toError(state.receiptDocument, action.payload)
       };
     // GET BIZ-EVENTS TRANSACTION RECEIPT PDF
     case getType(getPaymentsReceiptDownloadAction.request):
@@ -141,56 +150,6 @@ const reducer = (
         ...state,
         receiptDocument: pot.some(action.payload)
       };
-    case getType(getPaymentsReceiptDownloadAction.failure):
-      return {
-        ...state,
-        receiptDocument: pot.toError(state.receiptDocument, action.payload)
-      };
-    case getType(getPaymentsReceiptDownloadAction.cancel):
-      return {
-        ...state,
-        receiptDocument: pot.none
-      };
-    case getType(hidePaymentsReceiptAction.request): {
-      const { filteredTransactions, removedIndices: transactionIndices } =
-        filterTransactionsByIdAndGetIndex(
-          state.transactions,
-          action.payload.transactionId
-        );
-
-      const {
-        filteredTransactions: filteredLatestTransactions,
-        removedIndices: latestTransactionIndices
-      } = filterTransactionsByIdAndGetIndex(
-        state.latestTransactions,
-        action.payload.transactionId
-      );
-
-      const hasTransactionRemovals = transactionIndices.length > 0;
-      const cancelType: "transactions" | "latestTransactions" =
-        hasTransactionRemovals ? "transactions" : "latestTransactions";
-      const removedIndices = hasTransactionRemovals
-        ? transactionIndices
-        : latestTransactionIndices;
-      const removedItems = hasTransactionRemovals
-        ? removedIndices.map(
-            index => pot.getOrElse(state.transactions, [])[index]
-          )
-        : removedIndices.map(
-            index => pot.getOrElse(state.latestTransactions, [])[index]
-          );
-
-      return {
-        ...state,
-        cancelTransactionRecord: pot.some({
-          removedItems,
-          removedIndices,
-          cancelType
-        }),
-        transactions: pot.some(filteredTransactions),
-        latestTransactions: pot.some(filteredLatestTransactions)
-      };
-    }
     case getType(hidePaymentsReceiptAction.failure): {
       const restoreValue = pot.getOrElse(state.cancelTransactionRecord, null);
       if (!restoreValue) {
@@ -227,6 +186,46 @@ const reducer = (
         transactions: pot.some(restoredTransactions),
         latestTransactions: pot.some(restoredLatestTransactions),
         cancelTransactionRecord: pot.none
+      };
+    }
+    case getType(hidePaymentsReceiptAction.request): {
+      const { filteredTransactions, removedIndices: transactionIndices } =
+        filterTransactionsByIdAndGetIndex(
+          state.transactions,
+          action.payload.transactionId
+        );
+
+      const {
+        filteredTransactions: filteredLatestTransactions,
+        removedIndices: latestTransactionIndices
+      } = filterTransactionsByIdAndGetIndex(
+        state.latestTransactions,
+        action.payload.transactionId
+      );
+
+      const hasTransactionRemovals = transactionIndices.length > 0;
+      const cancelType: "latestTransactions" | "transactions" =
+        hasTransactionRemovals ? "transactions" : "latestTransactions";
+      const removedIndices = hasTransactionRemovals
+        ? transactionIndices
+        : latestTransactionIndices;
+      const removedItems = hasTransactionRemovals
+        ? removedIndices.map(
+            index => pot.getOrElse(state.transactions, [])[index]
+          )
+        : removedIndices.map(
+            index => pot.getOrElse(state.latestTransactions, [])[index]
+          );
+
+      return {
+        ...state,
+        cancelTransactionRecord: pot.some({
+          removedItems,
+          removedIndices,
+          cancelType
+        }),
+        transactions: pot.some(filteredTransactions),
+        latestTransactions: pot.some(filteredLatestTransactions)
       };
     }
     case getType(setNeedsHomeListRefreshAction): {

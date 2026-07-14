@@ -1,12 +1,13 @@
+import I18n from "i18next";
 import { Alert, Platform } from "react-native";
 import FingerprintScanner, {
   AuthenticateAndroid,
   AuthenticateIOS,
   Biometrics,
-  FingerprintScannerError,
-  Errors
+  Errors,
+  FingerprintScannerError
 } from "react-native-fingerprint-scanner";
-import I18n from "i18next";
+
 import { isDebugBiometricIdentificationEnabled } from "../config";
 import { mixpanelTrack } from "../mixpanel";
 
@@ -28,11 +29,11 @@ const biometricErrors = [
 
 export type BiometricsErrorType = (typeof biometricErrors)[number];
 
+export type BiometricsType = BiometricsErrorType | BiometricsValidType;
+
 export type BiometricsValidType =
   // happy path
   "BIOMETRICS" | "FACE_ID" | "TOUCH_ID";
-
-export type BiometricsType = BiometricsErrorType | BiometricsValidType;
 
 /**
  * Retrieve biometric settings from the base system. This function wraps the basic
@@ -44,17 +45,17 @@ export type BiometricsType = BiometricsErrorType | BiometricsValidType;
  * @param shouldTrackError - If true, tracks BIOMETRIC_ERROR event on Mixpanel when biometrics are unavailable. Default: true
  */
 export const getBiometricsType = (
-  shouldTrackError: boolean = true
+  shouldTrackError = true
 ): Promise<BiometricsType> =>
   FingerprintScanner.isSensorAvailable()
     .then((biometryType: Biometrics) => {
       switch (biometryType) {
-        case "Touch ID":
-          return "TOUCH_ID";
-        case "Face ID":
-          return "FACE_ID";
         case "Biometrics":
           return "BIOMETRICS";
+        case "Face ID":
+          return "FACE_ID";
+        case "Touch ID":
+          return "TOUCH_ID";
         default:
           return "UNKNOWN";
       }

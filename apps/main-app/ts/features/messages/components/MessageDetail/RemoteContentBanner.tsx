@@ -1,5 +1,6 @@
-import { Banner, IOMarkdownLite, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, IOMarkdownLite, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
+
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { trackRemoteContentInfo } from "../../analytics";
 
@@ -15,14 +16,14 @@ export const RemoteContentBanner = () => {
     <>
       <VSpacer size={16} />
       <Banner
-        color="turquoise"
-        pictogramName="message"
-        content={I18n.t("messageDetails.banner.content")}
         action={`${I18n.t("messageDetails.banner.action")}`}
+        color="turquoise"
+        content={I18n.t("messageDetails.banner.content")}
         onPress={() => {
           trackRemoteContentInfo();
           present();
         }}
+        pictogramName="message"
       />
       {bottomSheet}
     </>
