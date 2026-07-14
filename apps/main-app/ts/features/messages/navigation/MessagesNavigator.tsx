@@ -1,13 +1,14 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
-import { MessageCalendarScreen } from "../screens/MessageCalendarScreen";
-import { MessageRouterScreen } from "../screens/MessageRouterScreen";
-import { PnStackNavigator } from "../../pn/navigation/navigator";
-import PN_ROUTES from "../../pn/navigation/routes";
+
 import { useIOSelector } from "../../../store/hooks";
 import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { PnStackNavigator } from "../../pn/navigation/navigator";
+import PN_ROUTES from "../../pn/navigation/routes";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
+import { MessageCalendarScreen } from "../screens/MessageCalendarScreen";
+import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { MessageGreenPassScreen } from "../screens/MessageGreenPassScreen";
+import { MessageRouterScreen } from "../screens/MessageRouterScreen";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
 
@@ -26,23 +27,23 @@ export const MessagesStackNavigator = () => {
     >
       <Stack.Group>
         <Stack.Screen
-          name={MESSAGES_ROUTES.MESSAGE_ROUTER}
           component={MessageRouterScreen}
+          name={MESSAGES_ROUTES.MESSAGE_ROUTER}
         />
 
         <Stack.Screen
-          name={MESSAGES_ROUTES.MESSAGE_DETAIL}
           component={MessageDetailsScreen}
+          name={MESSAGES_ROUTES.MESSAGE_DETAIL}
         />
 
         <Stack.Screen
-          name={MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT}
           component={MessageAttachmentScreen}
+          name={MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT}
         />
 
         <Stack.Screen
-          name={MESSAGES_ROUTES.MESSAGE_GREEN_PASS}
           component={MessageGreenPassScreen}
+          name={MESSAGES_ROUTES.MESSAGE_GREEN_PASS}
           options={{
             animationEnabled: false
           }}
@@ -50,8 +51,8 @@ export const MessagesStackNavigator = () => {
 
         {isPnEnabled && (
           <Stack.Screen
-            name={PN_ROUTES.MAIN}
             component={PnStackNavigator}
+            name={PN_ROUTES.MAIN}
             options={{
               gestureEnabled: false,
               headerShown: false
@@ -62,8 +63,8 @@ export const MessagesStackNavigator = () => {
 
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
-          name={MESSAGES_ROUTES.MESSAGE_DETAIL_CALENDAR}
           component={MessageCalendarScreen}
+          name={MESSAGES_ROUTES.MESSAGE_DETAIL_CALENDAR}
           options={{
             gestureEnabled: false,
             headerShown: false

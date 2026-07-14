@@ -4,21 +4,22 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
 import { View } from "react-native";
+
 import { useIOSelector } from "../../../../../store/hooks";
-import { trackCredentialDetail } from "../analytics";
 import { mapPIDStatusToMixpanel } from "../../../analytics/utils";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText";
+import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../../credentials/store/selectors";
+import { trackCredentialDetail } from "../analytics";
+import { ItwDiscoveryInfoBanner } from "../components/ItwDiscoveryInfoBanner";
 import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader";
 import { ItwPresentationDetailsScreenBase } from "../components/ItwPresentationDetailsScreenBase";
 import { ItwPresentationPidDetail } from "../components/ItwPresentationPidDetail";
 import { ItwPresentationPidDetailFooter } from "../components/ItwPresentationPidDetailFooter";
-import { ItwDiscoveryInfoBanner } from "../components/ItwDiscoveryInfoBanner";
-import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners";
 
 export const ItwPresentationPidDetailScreen = () => {
   const pidOption = useIOSelector(itwCredentialsEidSelector);
@@ -43,7 +44,7 @@ export const ItwPresentationPidDetailScreen = () => {
     <ItwPresentationDetailsScreenBase credential={credential} headerTransparent>
       <ItwPresentationDetailsHeader credential={credential} />
       <ContentWrapper>
-        <VStack style={{ paddingVertical: 16 }} space={24}>
+        <VStack space={24} style={{ paddingVertical: 16 }}>
           {!isItwDiscoveryInfoBannerHidden && <ItwDiscoveryInfoBanner />}
           <ItwPresentationPidDetail credential={credential} />
           <ItwPresentationPidDetailFooter credential={credential} />

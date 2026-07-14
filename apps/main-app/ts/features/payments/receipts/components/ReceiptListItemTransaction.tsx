@@ -1,9 +1,10 @@
 import { Avatar, IOIcons, ListItemTransaction } from "@io-app/design-system";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { memo, RefObject, useMemo } from "react";
 import { Alert } from "react-native";
-import I18n from "i18next";
+
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import ListItemSwipeAction, {
   SwipeControls
@@ -21,9 +22,9 @@ import { hidePaymentsReceiptAction } from "../store/actions";
 import { formatAmountText } from "../utils";
 
 type Props = {
-  transaction: NoticeListItem;
   onPress?: () => void;
   openedItemRef?: RefObject<(() => void) | null>;
+  transaction: NoticeListItem;
 };
 
 const ReceiptListItemTransaction = memo(
@@ -135,12 +136,12 @@ const ReceiptListItemTransaction = memo(
         openedItemRef={openedItemRef}
       >
         <ListItemTransaction
-          paymentLogoIcon={transactionLogo}
-          onPress={onPress}
-          title={recipient}
-          accessible
           accessibilityLabel={accessibilityLabel}
+          accessible
+          onPress={onPress}
+          paymentLogoIcon={transactionLogo}
           subtitle={datetime}
+          title={recipient}
           transaction={{
             amount: amountText,
             amountAccessibilityLabel: accessibleAmountText

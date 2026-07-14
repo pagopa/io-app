@@ -1,22 +1,23 @@
 import { StyleSheet, View } from "react-native";
+
 import { IOColors, IOVisualCostants } from "../../core";
-import { IOIcons, Icon } from "./Icon";
+import { Icon, IOIcons } from "./Icon";
 
 type IconContained = {
-  variant: "tonal";
   color: "neutral";
   icon: IOIcons;
-};
-
-type IconContainedVisualAttrs = {
-  background: IOColors;
-  foreground: IOColors;
+  variant: "tonal";
 };
 
 type IconContainedColorVariants = Record<
   IconContained["color"],
   IconContainedVisualAttrs
 >;
+
+type IconContainedVisualAttrs = {
+  background: IOColors;
+  foreground: IOColors;
+};
 
 const tonalColorMap: IconContainedColorVariants = {
   neutral: {
@@ -62,7 +63,7 @@ export const IconContained = ({ variant, color, icon }: IconContained) => {
         { backgroundColor: IOColors[backgroundColor] }
       ]}
     >
-      <Icon name={icon} color={foregroundColor} />
+      <Icon color={foregroundColor} name={icon} />
     </View>
   );
 };

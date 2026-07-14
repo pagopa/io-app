@@ -1,13 +1,14 @@
-import * as O from "fp-ts/lib/Option";
 import { act } from "@testing-library/react-native";
-import configureMockStore from "redux-mock-store";
+import * as O from "fp-ts/lib/Option";
 import { Store } from "redux";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../store/reducers";
+import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { CardWithMarkdownContent } from "../CardWithMarkdownContent";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { trackAppCaughtError } from "../../../../../utils/analytics";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { CardWithMarkdownContent } from "../CardWithMarkdownContent";
 
 // eslint-disable-next-line functional/no-let
 let capturedOnError:

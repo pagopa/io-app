@@ -5,34 +5,35 @@ import Animated, {
   useAnimatedStyle,
   useReducedMotion
 } from "react-native-reanimated";
+
 import {
   AnimatedIcon,
   AnimatedIconWithColorTransition,
   IOIcons
 } from "../../components/icons";
-import { IOColors, IOIconButtonStyles, hexToRgba } from "../../core";
+import { hexToRgba, IOColors, IOIconButtonStyles } from "../../core";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 
 export type IconButtonContained = WithTestID<{
-  icon: IOIcons;
-  color?: "primary" | "neutral" | "contrast";
-  disabled?: boolean;
-  accessibilityLabel: string;
   accessibilityHint?: string;
+  accessibilityLabel: string;
+  color?: "contrast" | "neutral" | "primary";
+  disabled?: boolean;
+  icon: IOIcons;
   onPress: (event: GestureResponderEvent) => void;
 }>;
 
 type ColorStates = {
   background: {
     default: string;
-    pressed: string;
     disabled: string;
+    pressed: string;
   };
   icon: {
     default: string;
-    pressed: string;
     disabled: string;
+    pressed: string;
   };
 };
 
@@ -116,17 +117,17 @@ export const IconButtonContained = ({
 
   return (
     <Pressable
-      accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
+      accessibilityLabel={accessibilityLabel}
       accessibilityRole={"button"}
       accessibilityState={{ disabled }}
-      testID={testID}
+      accessible={true}
+      disabled={disabled}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      accessible={true}
-      disabled={disabled}
       style={{ alignSelf: "flex-start" }}
+      testID={testID}
     >
       <Animated.View
         style={[
@@ -138,14 +139,14 @@ export const IconButtonContained = ({
       >
         {!disabled ? (
           <AnimatedIconWithColorTransition
-            name={icon}
             animatedProps={iconColorAnimationStyle}
             color={mapColorStates[color]?.icon?.default}
+            name={icon}
           />
         ) : (
           <AnimatedIcon
-            name={icon}
             color={mapColorStates[color]?.icon?.disabled}
+            name={icon}
           />
         )}
       </Animated.View>

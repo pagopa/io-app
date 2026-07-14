@@ -2,10 +2,11 @@
  * A screen to alert the user about the number of attempts remains
  */
 import I18n from "i18next";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const CieWrongCardScreen = () => {
   const navigation = useIONavigation();
@@ -30,11 +31,11 @@ const CieWrongCardScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="cardQuestion"
-      title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
-      subtitle={I18n.t("authentication.cie.card.error.unknownCardContent")}
       action={action}
+      pictogram="cardQuestion"
       secondaryAction={secondaryAction}
+      subtitle={I18n.t("authentication.cie.card.error.unknownCardContent")}
+      title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
     />
   );
 };

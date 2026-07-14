@@ -1,7 +1,32 @@
 import { RemotePresentation } from "@pagopa/io-react-native-wallet";
+
 import { ClaimDisplayFormat } from "../../../common/utils/itwClaimsUtils";
 
-type RemotePresentationApi = RemotePresentation.RemotePresentationApi;
+/**
+ * Type that defines the structure of the body expected by the `sendAuthorizationErrorResponse`
+ */
+export type AuthErrorResponseBody = Parameters<
+  RemotePresentationApi["sendAuthorizationErrorResponse"]
+>[1];
+
+/**
+ * Type that defines a query conforming to the Digital Credentials Query Language
+ */
+export type DcqlQuery = Parameters<
+  RemotePresentationApi["evaluateDcqlQuery"]
+>[0];
+
+/**
+ * Type representing the presentation details with localized claims
+ */
+export type EnrichedPresentationDetails = Array<
+  PresentationDetails[number] & { claimsToDisplay: Array<ClaimDisplayFormat> }
+>;
+
+/**
+ * Type that defines the possible flows for the remote presentation, which can be either "same-device" or "cross-device".
+ */
+export type ItwRemoteFlowType = "cross-device" | "same-device";
 
 /**
  * Type for the raw parameters extracted from the QR code or the deep link.
@@ -17,11 +42,6 @@ export type ItwRemoteQrRawPayload = Parameters<
 export type ItwRemoteRequestPayload = RemotePresentation.PresentationParams;
 
 /**
- * Alias for the Relying Party's Entity Configuration type
- */
-export type RelyingPartyConfiguration = RemotePresentation.RelyingPartyConfig;
-
-/**
  * Type representing the parsed DCQL query with the presentation details
  */
 export type PresentationDetails = Awaited<
@@ -29,27 +49,8 @@ export type PresentationDetails = Awaited<
 >;
 
 /**
- * Type representing the presentation details with localized claims
+ * Alias for the Relying Party's Entity Configuration type
  */
-export type EnrichedPresentationDetails = Array<
-  PresentationDetails[number] & { claimsToDisplay: Array<ClaimDisplayFormat> }
->;
+export type RelyingPartyConfiguration = RemotePresentation.RelyingPartyConfig;
 
-/**
- * Type that defines a query conforming to the Digital Credentials Query Language
- */
-export type DcqlQuery = Parameters<
-  RemotePresentationApi["evaluateDcqlQuery"]
->[0];
-
-/**
- * Type that defines the structure of the body expected by the `sendAuthorizationErrorResponse`
- */
-export type AuthErrorResponseBody = Parameters<
-  RemotePresentationApi["sendAuthorizationErrorResponse"]
->[1];
-
-/**
- * Type that defines the possible flows for the remote presentation, which can be either "same-device" or "cross-device".
- */
-export type ItwRemoteFlowType = "same-device" | "cross-device";
+type RemotePresentationApi = RemotePresentation.RemotePresentationApi;

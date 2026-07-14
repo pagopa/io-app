@@ -9,19 +9,20 @@ import {
   IOAppMargin,
   IOColors,
   IOSpacer,
-  VStack,
-  useIOTheme
+  useIOTheme,
+  VStack
 } from "@io-app/design-system";
 import { View } from "react-native";
+
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSLayout = () => {
   const sectionMargin = 40;
 
   return (
-    <DesignSystemScreen title={"Layout"} noMargin>
+    <DesignSystemScreen noMargin title={"Layout"}>
       <VStack space={sectionMargin}>
         <Grid />
         <Spacing />
@@ -59,9 +60,9 @@ const Grid = () => {
               >
                 <Body color={theme["textBody-secondary"]}>Content example</Body>
                 <BodySmall
+                  color={theme["textBody-tertiary"]}
                   style={{ position: "absolute", right: 4, top: 4 }}
                   weight="Regular"
-                  color={theme["textBody-tertiary"]}
                 >
                   {value}
                 </BodySmall>
@@ -204,8 +205,8 @@ const VStackBlocks = () => {
           }}
         >
           <BodySmall
-            weight="Regular"
             color={theme["textBody-tertiary"]}
+            weight="Regular"
           >{`Block n.${i + 1}`}</BodySmall>
         </View>
       ))}
@@ -218,7 +219,7 @@ const VStackBlocks = () => {
           backgroundColor: IOColors[theme["appBackground-tertiary"]]
         }}
       >
-        <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+        <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
           Different height
         </BodySmall>
       </View>
@@ -242,7 +243,7 @@ const HStackBlocks = () => {
             backgroundColor: IOColors[theme["appBackground-tertiary"]]
           }}
         >
-          <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>{`${
+          <BodySmall color={theme["textBody-tertiary"]} weight="Regular">{`${
             i + 1
           }`}</BodySmall>
         </View>
@@ -256,7 +257,7 @@ const HStackBlocks = () => {
           backgroundColor: IOColors[theme["appBackground-tertiary"]]
         }}
       >
-        <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+        <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
           Growing block
         </BodySmall>
       </View>

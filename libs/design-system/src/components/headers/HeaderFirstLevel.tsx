@@ -13,6 +13,7 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { useIOTheme } from "../../context";
 import {
   alertEdgeToEdgeInsetTransitionConfig,
@@ -25,22 +26,22 @@ import { HStack } from "../layout";
 import { H2 } from "../typography";
 import { HeaderActionProps } from "./common";
 
-type HeaderActionsProp =
-  | readonly [] // No actions
-  | readonly [HeaderActionProps] // Single action
-  | readonly [HeaderActionProps, HeaderActionProps] // Two actions
-  | readonly [HeaderActionProps, HeaderActionProps, HeaderActionProps]; // Three actions
-
-type Variant = "primary" | "contrast";
-
 export type HeaderFirstLevel = WithTestID<{
-  title: string;
   actions: HeaderActionsProp;
-  animatedRef?: AnimatedRef<Animated.ScrollView>;
   animatedFlatListRef?: AnimatedRef<Animated.FlatList<any>>;
+  animatedRef?: AnimatedRef<Animated.ScrollView>;
   ignoreSafeAreaMargin?: boolean;
+  title: string;
   variant?: Variant;
 }>;
+
+type HeaderActionsProp =
+  | readonly [] // No actions
+  | readonly [HeaderActionProps, HeaderActionProps, HeaderActionProps] // Three actions
+  | readonly [HeaderActionProps, HeaderActionProps] // Two actions
+  | readonly [HeaderActionProps]; // Single action
+
+type Variant = "contrast" | "primary";
 
 const styles = StyleSheet.create({
   headerInner: {
@@ -108,6 +109,7 @@ export const HeaderFirstLevel = ({
 
   return (
     <Animated.View
+      accessibilityRole="header"
       style={[
         {
           backgroundColor: isPrimary
@@ -116,7 +118,6 @@ export const HeaderFirstLevel = ({
         },
         animatedStyle
       ]}
-      accessibilityRole="header"
       testID={testID}
     >
       {/* Divider */}
@@ -133,17 +134,17 @@ export const HeaderFirstLevel = ({
       )}
 
       <View style={styles.headerInner}>
-        <View ref={titleRef} accessible accessibilityRole="header">
+        <View accessibilityRole="header" accessible ref={titleRef}>
           <H2
-            weight="Bold"
-            style={{ flexShrink: 1 }}
-            numberOfLines={1}
             color={
               isPrimary
                 ? theme["textHeading-default"]
                 : theme["textHeading-constrast"]
             }
             maxFontSizeMultiplier={1.25}
+            numberOfLines={1}
+            style={{ flexShrink: 1 }}
+            weight="Bold"
           >
             {title}
           </H2>

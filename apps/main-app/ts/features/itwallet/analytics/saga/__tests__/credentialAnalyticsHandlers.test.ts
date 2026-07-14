@@ -1,12 +1,15 @@
-import * as matchers from "redux-saga-test-plan/matchers";
-import { expectSaga } from "redux-saga-test-plan";
-import { select } from "typed-redux-saga";
-import { DeepPartial } from "redux";
 import * as O from "fp-ts/Option";
+import { DeepPartial } from "redux";
+import { expectSaga } from "redux-saga-test-plan";
+import * as matchers from "redux-saga-test-plan/matchers";
+import { select } from "typed-redux-saga";
+
 import { GlobalState } from "../../../../../store/reducers/types";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
-  itwCredentialsStore,
-  itwCredentialsRemove
+  itwCredentialsRemove,
+  itwCredentialsStore
 } from "../../../credentials/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import {
@@ -14,11 +17,9 @@ import {
   updateItwStatusAndPIDProperties
 } from "../../properties/propertyUpdaters";
 import {
-  handleCredentialStoredAnalytics,
-  handleCredentialRemovedAnalytics
+  handleCredentialRemovedAnalytics,
+  handleCredentialStoredAnalytics
 } from "../credentialAnalyticsHandlers";
-import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 jest.mock("../../properties/propertyUpdaters", () => ({
   updateCredentialProperties: jest.fn(),

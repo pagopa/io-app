@@ -2,6 +2,7 @@ import { VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useEffect } from "react";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { capitalize } from "../../../../utils/strings";
@@ -12,12 +13,12 @@ import { getPaymentCardPropsFromWalletInfo } from "../../common/utils";
 import { PaymentsMethodDetailsBaseScreenComponent } from "../components/PaymentsMethodDetailsBaseScreenComponent";
 import { PaymentsMethodDetailsDeleteButton } from "../components/PaymentsMethodDetailsDeleteButton";
 import { PaymentsMethodDetailsErrorContent } from "../components/PaymentsMethodDetailsErrorContent";
+import { PaymentsMethodDetailsUpdateDataButton } from "../components/PaymentsMethodDetailsUpdateDataButton";
 import { PaymentsMethodPspDetailsAlert } from "../components/PaymentsMethodPspDetailsAlert";
 import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPaymentMethodFeatures";
 import { PaymentsMethodDetailsParamsList } from "../navigation/params";
 import { paymentsGetMethodDetailsAction } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
-import { PaymentsMethodDetailsUpdateDataButton } from "../components/PaymentsMethodDetailsUpdateDataButton";
 
 export type PaymentsMethodDetailsScreenNavigationParams = Readonly<{
   walletId: string;

@@ -1,31 +1,26 @@
 import { ReactNode } from "react";
 import { AccessibilityRole, GestureResponderEvent } from "react-native";
+
 import {
   Body,
   HStack,
-  IOIconSizeScale,
+  Icon,
   IOIcons,
+  IOIconSizeScale,
   IOPictogramSizeScale,
   IOPictogramsProps,
-  Icon,
   Pictogram,
   VStack
 } from "../../components";
 import { useIOTheme } from "../../context";
 import { IOColors } from "../../core/IOColors";
 
-type PartialFeatureInfo = {
-  // Necessary to render main body with different formatting
-  body?: string | ReactNode;
-  variant?: "neutral" | "contrast";
-};
-
 type FeatureInfoActionProps =
   | {
       action: {
+        accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
         label: string;
         onPress: (event: GestureResponderEvent) => void;
-        accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
       };
     }
   | {
@@ -33,15 +28,21 @@ type FeatureInfoActionProps =
     };
 
 type FeatureInfoGraphicProps =
+  | { iconName: IOIcons; pictogramProps?: never }
   | {
       iconName?: never;
       pictogramProps: Pick<IOPictogramsProps, "name" | "pictogramStyle">;
-    }
-  | { iconName: IOIcons; pictogramProps?: never };
+    };
 
-type FeatureInfoProps = FeatureInfoGraphicProps &
-  PartialFeatureInfo &
-  FeatureInfoActionProps;
+type FeatureInfoProps = FeatureInfoActionProps &
+  FeatureInfoGraphicProps &
+  PartialFeatureInfo;
+
+type PartialFeatureInfo = {
+  // Necessary to render main body with different formatting
+  body?: ReactNode | string;
+  variant?: "contrast" | "neutral";
+};
 
 const DEFAULT_ICON_SIZE: IOIconSizeScale = 24;
 const DEFAULT_PICTOGRAM_SIZE: IOPictogramSizeScale = 48;
@@ -88,13 +89,13 @@ export const FeatureInfo = ({
   };
 
   return (
-    <HStack style={{ alignItems: "center" }} space={24}>
+    <HStack space={24} style={{ alignItems: "center" }}>
       {iconName && (
         <Icon
           allowFontScaling
+          color={theme["icon-decorative"]}
           name={iconName}
           size={DEFAULT_ICON_SIZE}
-          color={theme["icon-decorative"]}
         />
       )}
       {pictogramProps && (
@@ -108,14 +109,14 @@ export const FeatureInfo = ({
         <FeatureInfoContent />
         {action && (
           <Body
-            asLink
-            weight="Semibold"
-            onPress={action.onPress}
-            color={actionColor}
-            accessible
-            importantForAccessibility={"yes"}
             accessibilityElementsHidden={false}
             accessibilityRole={accessibilityRole}
+            accessible
+            asLink
+            color={actionColor}
+            importantForAccessibility={"yes"}
+            onPress={action.onPress}
+            weight="Semibold"
           >
             {action.label}
           </Body>

@@ -15,6 +15,7 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+
 import { useIsScreenFocused } from "../../hooks/useIsScreenFocused";
 import { useLayoutSize } from "../../hooks/useLayoutSize";
 import { useCachedImage } from "../../utils/imageCache";
@@ -41,16 +42,16 @@ export const CardBackground = memo(({ background, color, overlay }: Props) => {
 
   return (
     <View
+      onLayout={onLayout}
       style={[
         StyleSheet.absoluteFillObject,
         { backgroundColor: IOColors.white }
       ]}
-      onLayout={onLayout}
     >
       <Canvas
         key={isFocused ? "focused" : "unfocused"}
-        style={StyleSheet.absoluteFillObject}
         pointerEvents="none"
+        style={StyleSheet.absoluteFillObject}
       >
         <SkiaGradientBackground bg={background} {...size} />
         {overlay?.showCornerOverlay && (
@@ -86,8 +87,8 @@ const legacyCredentialGradientColors: { [type: string]: Array<string> } = {
 };
 
 type LegacyProps = {
-  credentialType: string;
   colorScheme: CardColorScheme;
+  credentialType: string;
 };
 
 /**
@@ -126,11 +127,11 @@ export const LegacyCardBackground = ({
 
   return (
     <View
+      onLayout={onLayout}
       style={[
         StyleSheet.absoluteFillObject,
         { backgroundColor: IOColors.white }
       ]}
-      onLayout={onLayout}
     >
       <Animated.View
         style={[
@@ -142,11 +143,11 @@ export const LegacyCardBackground = ({
       <Canvas key={isFocused ? "focused" : "unfocused"} style={{ flex: 1 }}>
         {image ? (
           <SkiaImage
-            image={image}
             fit="fill"
-            width={size.width}
             height={size.height}
+            image={image}
             opacity={colorScheme === "default" ? 1 : 0.4}
+            width={size.width}
           >
             {colorScheme === "greyscale" && (
               <BlendColor color="white" mode="color" />
@@ -154,16 +155,16 @@ export const LegacyCardBackground = ({
           </SkiaImage>
         ) : (
           <RoundedRect
-            x={0}
-            y={0}
-            width={size.width}
             height={size.height}
             r={16}
+            width={size.width}
+            x={0}
+            y={0}
           >
             <LinearGradient
-              start={vec(0, 0)}
-              end={vec(size.width, size.height)}
               colors={gradientColors}
+              end={vec(size.width, size.height)}
+              start={vec(0, 0)}
             />
           </RoundedRect>
         )}

@@ -1,8 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import {
-  setSpidLoginRequestState,
+  resetSpidLoginState,
   setSpidLoginInLoadingState,
-  resetSpidLoginState
+  setSpidLoginRequestState
 } from "../actions";
 import { spidLoginReducer, SpidLoginState } from "../reducers";
 import { ErrorType } from "../types";
