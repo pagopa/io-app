@@ -1,5 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import { H6, IOColors, VSpacer, hexToRgba } from "@io-app/design-system";
+import { H6, hexToRgba, IOColors, VSpacer } from "@io-app/design-system";
 import {
   Canvas,
   Color,
@@ -7,16 +7,15 @@ import {
   Image,
   LinearGradient,
   Mask,
+  rect,
   RoundedRect,
+  rrect,
   Circle as SkiaCircle,
   Group as SkiaGroup,
   RadialGradient as SkiaRadialGradient,
-  rect,
-  rrect,
   useImage,
   vec
 } from "@shopify/react-native-skia";
-
 import { useState } from "react";
 import {
   ColorValue,
@@ -29,8 +28,8 @@ import {
 } from "react-native";
 import Animated, {
   Extrapolation,
-  SensorType,
   interpolate,
+  SensorType,
   useAnimatedReaction,
   useAnimatedSensor,
   useAnimatedStyle,
@@ -41,8 +40,8 @@ import Animated, {
 import Svg, { Circle, Defs, RadialGradient, Stop } from "react-native-svg";
 
 type CardSize = {
-  width: LayoutRectangle["width"];
   height: LayoutRectangle["height"];
+  width: LayoutRectangle["width"];
 };
 
 type LightSize = {
@@ -88,8 +87,8 @@ export const DSDynamicCardRotation = () => {
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
 
   // Store initial values on first sensor reading
-  const initialRoll = useSharedValue<number | null>(null);
-  const initialPitch = useSharedValue<number | null>(null);
+  const initialRoll = useSharedValue<null | number>(null);
+  const initialPitch = useSharedValue<null | number>(null);
   const skiaTranslateX = useSharedValue(0);
   const skiaTranslateY = useSharedValue(0);
 
@@ -198,19 +197,19 @@ export const DSDynamicCardRotation = () => {
   // Inner card (border excluded)
   const CardInnerMask = () => (
     <RoundedRect
-      x={cardBorderWidth}
-      y={cardBorderWidth}
-      width={(cardSize?.width ?? 0) - cardBorderWidth * 2}
+      color={IOColors.black}
       height={(cardSize?.height ?? 0) - cardBorderWidth * 2}
       r={cardBorderRadius - cardBorderWidth}
-      color={IOColors.black}
+      width={(cardSize?.width ?? 0) - cardBorderWidth * 2}
+      x={cardBorderWidth}
+      y={cardBorderWidth}
     />
   );
 
   const CardLight = () => (
     <SkiaGroup
-      opacity={lightSkiaOpacity}
       blendMode={"hardLight"}
+      opacity={lightSkiaOpacity}
       origin={vec((cardSize?.width ?? 0) / 2, (cardSize?.height ?? 0) / 2)}
     >
       <SkiaCircle
@@ -221,12 +220,6 @@ export const DSDynamicCardRotation = () => {
       >
         <SkiaRadialGradient
           c={vec((cardSize?.width ?? 0) / 2, (cardSize?.height ?? 0) / 2)}
-          r={(lightSize?.value ?? 0) / 2}
-          /* There are many stops because it's an easing gradient. */
-          positions={[
-            0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
-            0.647, 0.71, 0.775, 0.845, 0.919, 1
-          ]}
           colors={[
             "rgba(255,255,255,1)",
             "rgba(255,255,255,0.987)",
@@ -245,6 +238,12 @@ export const DSDynamicCardRotation = () => {
             "rgba(255,255,255,0.01)",
             "rgba(255,255,255,0)"
           ]}
+          /* There are many stops because it's an easing gradient. */
+          positions={[
+            0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
+            0.647, 0.71, 0.775, 0.845, 0.919, 1
+          ]}
+          r={(lightSize?.value ?? 0) / 2}
         />
       </SkiaCircle>
     </SkiaGroup>
@@ -276,10 +275,10 @@ export const DSDynamicCardRotation = () => {
 
     return (
       <DiffRect
-        inner={innerRect}
-        outer={outerRect}
         color={color}
+        inner={innerRect}
         opacity={opacity}
+        outer={outerRect}
       />
     );
   };
@@ -293,62 +292,62 @@ export const DSDynamicCardRotation = () => {
       <Mask mask={<CardInnerMask />}>
         {/* eslint-disable react-native-a11y/has-valid-accessibility-ignores-invert-colors */}
         <Image
-          x={0}
-          y={0}
           fit="cover"
+          height={cardSize?.height ?? 0}
           image={cardPattern}
           width={cardSize?.width ?? 0}
-          height={cardSize?.height ?? 0}
+          x={0}
+          y={0}
         />
       </Mask>
     );
   };
 
   const CardBorderMask = () => (
-    <Mask mode="alpha" mask={<CardLight />}>
+    <Mask mask={<CardLight />} mode="alpha">
       <CardBorder color={cardBorderHighlighted} opacity={0.8} />
     </Mask>
   );
 
   return (
     <View style={styles.container}>
-      <View style={styles.box} onLayout={getCardSize}>
+      <View onLayout={getCardSize} style={styles.box}>
         <Animated.View
-          style={[styles.light, lightAnimatedStyle]}
           onLayout={getLightSize}
+          style={[styles.light, lightAnimatedStyle]}
         >
           <Svg height={"100%"} width={"100%"}>
             <Defs>
               <RadialGradient
-                id="grad"
                 cx="50%"
                 cy="50%"
-                rx="50%"
-                ry="50%"
                 fx="50%"
                 fy="50%"
+                id="grad"
+                rx="50%"
+                ry="50%"
               >
                 {/* There are many stops because it's an easing gradient.
                   To learn more: https://larsenwork.com/easing-gradients/ */}
-                <Stop stopColor="#ffffff" offset="0%" stopOpacity={1} />
-                <Stop stopColor="#ffffff" offset="8.1%" stopOpacity={0.987} />
-                <Stop stopColor="#ffffff" offset="15.5%" stopOpacity={0.95} />
-                <Stop stopColor="#ffffff" offset="22.5%" stopOpacity={0.89} />
-                <Stop stopColor="#ffffff" offset="29%" stopOpacity={0.825} />
-                <Stop stopColor="#ffffff" offset="35.3%" stopOpacity={0.74} />
-                <Stop stopColor="#ffffff" offset="41.2%" stopOpacity={0.65} />
-                <Stop stopColor="#ffffff" offset="47.1%" stopOpacity={0.55} />
-                <Stop stopColor="#ffffff" offset="52.9%" stopOpacity={0.45} />
-                <Stop stopColor="#ffffff" offset="58.8%" stopOpacity={0.35} />
-                <Stop stopColor="#ffffff" offset="64.7%" stopOpacity={0.26} />
-                <Stop stopColor="#ffffff" offset="71%" stopOpacity={0.175} />
-                <Stop stopColor="#ffffff" offset="77.5%" stopOpacity={0.1} />
-                <Stop stopColor="#ffffff" offset="84.5%" stopOpacity={0.05} />
-                <Stop stopColor="#ffffff" offset="91.9%" stopOpacity={0.01} />
-                <Stop stopColor="#ffffff" offset="100%" stopOpacity={0} />
+                <Stop offset="0%" stopColor="#ffffff" stopOpacity={1} />
+                <Stop offset="8.1%" stopColor="#ffffff" stopOpacity={0.987} />
+                <Stop offset="15.5%" stopColor="#ffffff" stopOpacity={0.95} />
+                <Stop offset="22.5%" stopColor="#ffffff" stopOpacity={0.89} />
+                <Stop offset="29%" stopColor="#ffffff" stopOpacity={0.825} />
+                <Stop offset="35.3%" stopColor="#ffffff" stopOpacity={0.74} />
+                <Stop offset="41.2%" stopColor="#ffffff" stopOpacity={0.65} />
+                <Stop offset="47.1%" stopColor="#ffffff" stopOpacity={0.55} />
+                <Stop offset="52.9%" stopColor="#ffffff" stopOpacity={0.45} />
+                <Stop offset="58.8%" stopColor="#ffffff" stopOpacity={0.35} />
+                <Stop offset="64.7%" stopColor="#ffffff" stopOpacity={0.26} />
+                <Stop offset="71%" stopColor="#ffffff" stopOpacity={0.175} />
+                <Stop offset="77.5%" stopColor="#ffffff" stopOpacity={0.1} />
+                <Stop offset="84.5%" stopColor="#ffffff" stopOpacity={0.05} />
+                <Stop offset="91.9%" stopColor="#ffffff" stopOpacity={0.01} />
+                <Stop offset="100%" stopColor="#ffffff" stopOpacity={0} />
               </RadialGradient>
             </Defs>
-            <Circle cx={"50%"} cy={"50%"} r={"50%"} fill="url(#grad)" />
+            <Circle cx={"50%"} cy={"50%"} fill="url(#grad)" r={"50%"} />
           </Svg>
         </Animated.View>
       </View>
@@ -363,17 +362,17 @@ export const DSDynamicCardRotation = () => {
         }}
       >
         <RoundedRect
-          x={0}
-          y={0}
-          width={cardSize?.width ?? 0}
+          color={hexToRgba(IOColors["hanPurple-250"], 1)}
           height={cardSize?.height ?? 0}
           r={cardBorderRadius}
-          color={hexToRgba(IOColors["hanPurple-250"], 1)}
+          width={cardSize?.width ?? 0}
+          x={0}
+          y={0}
         >
           <LinearGradient
-            start={vec(0, cardSize?.height ?? 0)}
-            end={vec(cardSize?.width ?? 0, 0)}
             colors={cardGradient}
+            end={vec(cardSize?.width ?? 0, 0)}
+            start={vec(0, cardSize?.height ?? 0)}
           />
         </RoundedRect>
         <CardBorder color={"#D279AC"} />

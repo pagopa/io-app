@@ -1,7 +1,9 @@
 import { useLayoutEffect, useState } from "react";
 import { Dimensions, Image } from "react-native";
-import { IOVisualCostants } from "../../core";
+
 import type { MarkdownNode } from "./types";
+
+import { IOVisualCostants } from "../../core";
 
 type ImageRendererProps = {
   node: MarkdownNode;
@@ -41,12 +43,12 @@ export const ImageRenderer = ({ node }: ImageRendererProps) => {
 
   return (
     <Image
-      key={node.key}
       accessibilityIgnoresInvertColors
-      style={imageSize}
-      resizeMode="contain"
       accessibilityLabel={alt}
+      key={node.key}
+      resizeMode="contain"
       source={{ uri: src }}
+      style={imageSize}
     />
   );
 };

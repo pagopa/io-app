@@ -11,8 +11,8 @@ import {
   trackHistoryScreen,
   trackInAppBrowserOpening
 } from "..";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import * as mixpanel from "../../../../../mixpanel";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";

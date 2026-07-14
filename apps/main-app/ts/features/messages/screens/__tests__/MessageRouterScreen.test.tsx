@@ -1,19 +1,20 @@
 import { act, fireEvent } from "@testing-library/react-native";
-import { AnyAction, Dispatch, createStore } from "redux";
+import { AnyAction, createStore, Dispatch } from "redux";
+
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
+import * as IOHooks from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { MessageRouterScreen } from "../MessageRouterScreen";
+import PN_ROUTES from "../../../pn/navigation/routes";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 import {
   cancelGetMessageDataAction,
   getMessageDataAction,
   resetGetMessageDataAction
 } from "../../store/actions";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import * as IOHooks from "../../../../store/hooks";
-import { MESSAGES_ROUTES } from "../../navigation/routes";
-import ROUTES from "../../../../navigation/routes";
-import PN_ROUTES from "../../../pn/navigation/routes";
+import { MessageRouterScreen } from "../MessageRouterScreen";
 
 const mockReplace = jest.fn();
 const mockNavigate = jest.fn();
@@ -217,7 +218,7 @@ describe("MessageRouterScreen", () => {
   });
 });
 
-type TestStatus = "idle" | "loading" | "blocked" | "error" | "success";
+type TestStatus = "blocked" | "error" | "idle" | "loading" | "success";
 
 const renderScreen = (
   messageId: string,
@@ -252,11 +253,6 @@ const globalStateFromStatus = (
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   switch (status) {
-    case "loading":
-      return appReducer(
-        globalState,
-        getMessageDataAction.request({ messageId, fromPushNotification })
-      );
     case "blocked":
       return appReducer(
         globalState,
@@ -269,6 +265,11 @@ const globalStateFromStatus = (
       return appReducer(
         globalState,
         getMessageDataAction.failure({ phase: "messageDetails" })
+      );
+    case "loading":
+      return appReducer(
+        globalState,
+        getMessageDataAction.request({ messageId, fromPushNotification })
       );
     case "success":
       return appReducer(

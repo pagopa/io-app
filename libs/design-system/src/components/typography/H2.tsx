@@ -3,7 +3,7 @@ import { IOFontSize, IOFontWeight } from "../../utils/fonts";
 import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 
 type H2StyleProps = TypographicStyleProps & {
-  weight?: Extract<IOFontWeight, "Semibold" | "Bold">;
+  weight?: Extract<IOFontWeight, "Bold" | "Semibold">;
 };
 
 export const h2FontSize: IOFontSize = 26;

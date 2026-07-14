@@ -1,10 +1,10 @@
 import { WithTestID } from "@io-app/design-system";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-
+import * as O from "fp-ts/lib/Option";
 import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
+
 import { Either, Prettify } from "../../../../../types/helpers";
 import {
   ClaimValue,
@@ -17,8 +17,29 @@ import {
   SimpleDateFormat
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
-import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
 import { ClaimImage } from "./ClaimImage";
+import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
+
+export type CardClaimProps = Prettify<
+  ClaimLabelProps & {
+    // A claim that will be used to render its component
+    // Since we are passing this value by accessing the claims object by key, the value could be undefined
+    claim?: ParsedCredential[number];
+    // Optional format for dates contained in the claim component
+    dateFormat?: SimpleDateFormat;
+    // Claim dimensions
+    dimensions?: ClaimDimensions;
+    // Absolute position expressed in percentages from top-left corner
+    position?: ClaimPosition;
+  }
+>;
+
+export type ClaimDimensions = Prettify<
+  Partial<Record<"height" | "width", PercentPosition>> &
+    Pick<ViewStyle, "aspectRatio">
+>;
+
+export type ClaimPosition = HorizontalClaimPosition & VerticalClaimPosition;
 
 export type PercentPosition = `${number}%`;
 
@@ -32,27 +53,6 @@ type HorizontalClaimPosition = Either<
 type VerticalClaimPosition = Either<
   { top: PercentPosition },
   { bottom: PercentPosition }
->;
-
-export type ClaimPosition = HorizontalClaimPosition & VerticalClaimPosition;
-
-export type ClaimDimensions = Prettify<
-  Partial<Record<"width" | "height", PercentPosition>> &
-    Pick<ViewStyle, "aspectRatio">
->;
-
-export type CardClaimProps = Prettify<
-  {
-    // A claim that will be used to render its component
-    // Since we are passing this value by accessing the claims object by key, the value could be undefined
-    claim?: ParsedCredential[number];
-    // Absolute position expressed in percentages from top-left corner
-    position?: ClaimPosition;
-    // Claim dimensions
-    dimensions?: ClaimDimensions;
-    // Optional format for dates contained in the claim component
-    dateFormat?: SimpleDateFormat;
-  } & ClaimLabelProps
 >;
 
 /**
@@ -108,9 +108,9 @@ const CardClaim = ({
 
   return (
     <CardClaimContainer
-      testID={testID}
-      position={position}
       dimensions={dimensions}
+      position={position}
+      testID={testID}
     >
       {claimContent}
     </CardClaimContainer>
@@ -121,10 +121,10 @@ export type CardClaimRendererProps<T> = {
   // A claim that will be used to render a component
   // Since we are passing this value by accessing the claims object by key, the value could be undefined
   claim?: ParsedCredential[number];
+  // Function that renders a component with the decoded provided claim
+  component: (decoded: T) => Iterable<ReactElement> | ReactElement;
   // Function that check that the proviced claim is of the correct type
   is: (value: unknown) => value is T;
-  // Function that renders a component with the decoded provided claim
-  component: (decoded: T) => ReactElement | Iterable<ReactElement>;
 };
 
 /**
@@ -147,9 +147,9 @@ const CardClaimRenderer = <T,>({
 // O.filter(is), O.fold(constNull, component)
 
 export type CardClaimContainerProps = WithTestID<{
-  position?: ClaimPosition;
-  dimensions?: ClaimDimensions;
   children?: ReactNode;
+  dimensions?: ClaimDimensions;
+  position?: ClaimPosition;
 }>;
 
 /**
@@ -161,7 +161,7 @@ const CardClaimContainer = ({
   children,
   testID
 }: CardClaimContainerProps) => (
-  <View testID={testID} style={[styles.container, position, dimensions]}>
+  <View style={[styles.container, position, dimensions]} testID={testID}>
     {children}
   </View>
 );

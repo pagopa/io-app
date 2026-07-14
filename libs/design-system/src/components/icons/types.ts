@@ -1,12 +1,12 @@
 import { ColorValue, StyleProp, ViewProps } from "react-native";
 
 export type SVGIconProps = {
-  size: number | "100%";
-  style?: StyleProp<any>;
-  color: ColorValue;
-  accessible: boolean;
   accessibilityElementsHidden: boolean;
   accessibilityLabel: string;
+  accessible: boolean;
+  color: ColorValue;
   importantForAccessibility: ViewProps["importantForAccessibility"];
   pointerEvents?: ViewProps["pointerEvents"];
+  size: "100%" | number;
+  style?: StyleProp<any>;
 };

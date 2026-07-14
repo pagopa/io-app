@@ -1,20 +1,21 @@
-import { View } from "react-native";
 import { act, fireEvent } from "@testing-library/react-native";
+import { View } from "react-native";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
-import * as analytics from "../../analytics";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
-import { WalletPaymentDetailScreen } from "../WalletPaymentDetailScreen";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { PaymentsCheckoutRoutes } from "../../navigation/routes";
-import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+
 import { FaultCodeCategoryEnum } from "../../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
-import { paymentsGetPaymentDetailsAction } from "../../store/actions/networking";
+import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import { Store } from "../../../../../store/actions/types";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as analytics from "../../analytics";
+import { PaymentsCheckoutRoutes } from "../../navigation/routes";
+import { paymentsGetPaymentDetailsAction } from "../../store/actions/networking";
+import { WalletPaymentDetailScreen } from "../WalletPaymentDetailScreen";
 
 jest.mock("../../analytics");
 jest.mock("../../../../../utils/hooks/bottomSheet");

@@ -16,6 +16,7 @@ import Animated, {
   LayoutAnimationConfig,
   useReducedMotion
 } from "react-native-reanimated";
+
 import {
   enterTransitionInnerContent,
   enterTransitionInnerContentSmall,
@@ -26,8 +27,8 @@ import { WithTestID } from "../../../utils/types";
 import {
   AnimatedIcon,
   AnimatedIconWithColorTransition,
-  IOIconSizeScale,
-  IOIcons
+  IOIcons,
+  IOIconSizeScale
 } from "../../icons";
 import { LoadingSpinner } from "../../loadingSpinner";
 import { AnimatedIOText } from "../../typography";
@@ -37,74 +38,75 @@ import {
 } from "../../typography/ButtonText";
 import { useButtonAnimatedStyles, useButtonColorMap } from "./styles";
 
-export type IOButtonColor = "primary" | "danger" | "contrast";
-export type IOButtonVariant = "solid" | "outline" | "link";
-
 export type IOButtonBlockSpecificProps = Omit<
   ComponentProps<typeof IOButton>,
   "numberOfLines" | "textAlign"
 >;
+export type IOButtonColor = "contrast" | "danger" | "primary";
 
 export type IOButtonLinkSpecificProps = Omit<
   ComponentProps<typeof IOButton>,
   "fullWidth" | "loading"
 >;
 
+export type IOButtonProps = WithTestID<
+  IOButtonSpecificProps &
+    Pick<
+      ComponentProps<typeof Pressable>,
+      "accessibilityHint" | "accessibilityLabel" | "disabled"
+    > & {
+      /**
+       * @default button
+       */
+      accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
+      /**
+       * @default primary
+       */
+      color?: IOButtonColor;
+      /**
+       * @default false
+       */
+      fullWidth?: boolean;
+      icon?: IOIcons;
+      /**
+       * @default start
+       */
+      iconPosition?: "end" | "start";
+      label: string;
+      /**
+       * @default false
+       */
+      loading?: boolean;
+      /**
+       * @default 1
+       */
+      numberOfLines?: number;
+      onPress: (event: GestureResponderEvent) => void;
+      ref?: Ref<View>;
+      /**
+       * @default auto
+       */
+      textAlign?: TextStyle["textAlign"];
+    }
+>;
+
+export type IOButtonVariant = "link" | "outline" | "solid";
+
 type IOButtonSpecificProps =
   | {
-      variant?: "link";
-      numberOfLines?: TextProps["numberOfLines"];
-      textAlign?: TextStyle["textAlign"];
-      fullWidth?: never;
-      loading?: never;
-    }
-  | {
-      variant?: "solid" | "outline";
       fullWidth?: boolean;
       loading?: boolean;
       numberOfLines?: never;
       textAlign?: never;
+      variant?: "outline" | "solid";
+    }
+  | {
+      fullWidth?: never;
+      loading?: never;
+      numberOfLines?: TextProps["numberOfLines"];
+      textAlign?: TextStyle["textAlign"];
+      variant?: "link";
     };
-
-export type IOButtonProps = WithTestID<
-  IOButtonSpecificProps & {
-    ref?: Ref<View>;
-    /**
-     * @default primary
-     */
-    color?: IOButtonColor;
-    label: string;
-    icon?: IOIcons;
-    /**
-     * @default false
-     */
-    fullWidth?: boolean;
-    /**
-     * @default false
-     */
-    loading?: boolean;
-    /**
-     * @default start
-     */
-    iconPosition?: "start" | "end";
-    /**
-     * @default 1
-     */
-    numberOfLines?: number;
-    /**
-     * @default auto
-     */
-    textAlign?: TextStyle["textAlign"];
-    onPress: (event: GestureResponderEvent) => void;
-    /**
-     * @default button
-     */
-    accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
-  } & Pick<
-      ComponentProps<typeof Pressable>,
-      "disabled" | "accessibilityLabel" | "accessibilityHint"
-    >
->;
 
 export const IOButton = ({
   variant = "solid",
@@ -218,11 +220,11 @@ export const IOButton = ({
       {loading && (
         <LayoutAnimationConfig skipExiting>
           <Animated.View
-            style={styles.buttonInner}
             entering={
               isMounted.current ? enterTransitionInnerContentSmall : undefined
             }
             exiting={exitTransitionInnerContent}
+            style={styles.buttonInner}
           >
             <LoadingSpinner color={foregroundColor} />
           </Animated.View>
@@ -231,38 +233,37 @@ export const IOButton = ({
 
       {!loading && (
         <Animated.View
+          entering={isMounted.current ? enterTransitionInnerContent : undefined}
           style={[
             styles.buttonInner,
             { columnGap: ICON_MARGIN },
             iconPosition === "end" && { flexDirection: "row-reverse" }
           ]}
-          entering={isMounted.current ? enterTransitionInnerContent : undefined}
         >
           {icon &&
             (!disabled ? (
               <AnimatedIconWithColorTransition
                 allowFontScaling
-                name={icon}
                 animatedProps={iconColorAnimatedStyle}
+                name={icon}
                 size={btnIconSize}
               />
             ) : (
               <AnimatedIcon
                 allowFontScaling
-                name={icon}
                 color={mapColorStates[color]?.foreground?.disabled}
+                name={icon}
                 size={btnIconSize}
               />
             ))}
           <AnimatedIOText
-            weight={"Semibold"}
-            size={buttonTextFontSize}
-            lineHeight={isLinkButton ? buttonTextLineHeight : undefined}
-            accessible={false}
             accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-            numberOfLines={numberOfLines}
+            accessible={false}
             ellipsizeMode="tail"
+            importantForAccessibility="no-hide-descendants"
+            lineHeight={isLinkButton ? buttonTextLineHeight : undefined}
+            numberOfLines={numberOfLines}
+            size={buttonTextFontSize}
             style={[
               { textAlign },
               disabled
@@ -270,6 +271,7 @@ export const IOButton = ({
                 : { color: mapColorStates[color]?.foreground?.default },
               !disabled && labelAnimatedStyle
             ]}
+            weight={"Semibold"}
           >
             {label}
           </AnimatedIOText>
@@ -280,21 +282,21 @@ export const IOButton = ({
 
   return (
     <Pressable
-      ref={ref}
-      accessible={true}
+      accessibilityHint={accessibilityHint}
       // Using || operator because empty string is not an accepted value
       accessibilityLabel={accessibilityLabel || label}
-      accessibilityHint={accessibilityHint}
       accessibilityRole={accessibilityRole}
       accessibilityState={{
         busy: loading,
         disabled: disabled || false
       }}
+      accessible={true}
+      disabled={disabled}
+      hitSlop={isLinkButton ? btnLinkHitSlop : undefined}
       onPress={handleOnPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      disabled={disabled}
-      hitSlop={isLinkButton ? btnLinkHitSlop : undefined}
+      ref={ref}
       style={
         isLinkButton
           ? { alignSelf: "flex-start" }

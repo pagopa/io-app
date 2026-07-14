@@ -1,5 +1,6 @@
 import { ComponentProps, useState } from "react";
 import { Pressable, View } from "react-native";
+
 import { useIOTheme } from "../../context";
 import { IOSelectionTickVisualParams } from "../../core";
 import { triggerHaptic } from "../../functions/haptic-feedback/hapticFeedback";
@@ -15,12 +16,15 @@ type Props = {
 
 const DISABLED_OPACITY = 0.5;
 
-type RadioButtonLabelProps = Props &
-  Pick<ComponentProps<typeof AnimatedRadio>, "disabled" | "checked"> &
+type RadioButtonLabelProps = Pick<
+  ComponentProps<typeof AnimatedRadio>,
+  "checked" | "disabled"
+> &
   Pick<
     ComponentProps<typeof Pressable>,
-    "onPress" | "accessibilityLabel" | "accessibilityHint"
-  >;
+    "accessibilityHint" | "accessibilityLabel" | "onPress"
+  > &
+  Props;
 
 /**
  * A radio button with the automatic state management that uses a {@link AnimatedRadio}
@@ -52,19 +56,19 @@ export const RadioButtonLabel = ({
 
   return (
     <Pressable
-      onPress={toggleRadioButton}
-      style={{
-        alignSelf: "flex-start",
-        opacity: disabled ? DISABLED_OPACITY : 1
-      }}
-      disabled={disabled}
+      accessibilityHint={accessibilityHint}
+      accessibilityLabel={accessibilityLabel}
       accessibilityRole="radio"
       accessibilityState={{
         checked: checked ?? toggleValue,
         disabled: !!disabled
       }}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
+      disabled={disabled}
+      onPress={toggleRadioButton}
+      style={{
+        alignSelf: "flex-start",
+        opacity: disabled ? DISABLED_OPACITY : 1
+      }}
       testID="AnimatedRadioButton"
     >
       <View
@@ -77,16 +81,16 @@ export const RadioButtonLabel = ({
         }}
       >
         <View
-          pointerEvents="none"
           accessibilityElementsHidden
           importantForAccessibility="no-hide-descendants"
+          pointerEvents="none"
         >
           <AnimatedRadio
-            size={IOSelectionTickVisualParams.size * dynamicFontScale}
             checked={checked ?? toggleValue}
+            size={IOSelectionTickVisualParams.size * dynamicFontScale}
           />
         </View>
-        <H6 style={{ flexShrink: 1 }} color={theme["textBody-default"]}>
+        <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
           {label}
         </H6>
       </View>

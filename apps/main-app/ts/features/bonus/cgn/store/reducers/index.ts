@@ -1,5 +1,6 @@
 import { Action, combineReducers } from "redux";
 import { PersistPartial } from "redux-persist";
+
 import cgnActivationReducer, { ActivationState } from "./activation";
 import { cgnBannersPersistent, CgnBannersState } from "./banners";
 import cgnBucketReducer, { CgnBucketState } from "./bucket";
@@ -13,12 +14,12 @@ import cgnUnsubscribeReducer, { CgnUnsubscribeState } from "./unsubscribe";
 export type CgnState = {
   activation: ActivationState;
   banners: CgnBannersState & PersistPartial;
+  bucket: CgnBucketState;
+  categories: CgnCategoriesState;
   detail: CgnDetailsState;
   eyca: EycaState;
   merchants: CgnMerchantsState;
-  categories: CgnCategoriesState;
   otp: CgnOtpState;
-  bucket: CgnBucketState;
   unsubscribe: CgnUnsubscribeState;
 };
 

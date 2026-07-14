@@ -75,14 +75,14 @@ export const fontWeights: Record<IOFontWeight, IOFontWeightNumeric> = {
 };
 
 type FontStyleObject = {
-  fontSize: IOFontSize | number;
+  boldEnabled?: boolean;
   /* We also accept `string` because Android needs a composed 
   fontFamily name, like `TitilliumSansPro-Regular` */
-  fontFamily: string | IOFontFamily;
+  fontFamily: IOFontFamily | string;
+  fontSize: IOFontSize | number;
+  fontStyle?: TextStyle["fontStyle"];
   fontWeight?: IOFontWeightNumeric;
   lineHeight?: TextStyle["lineHeight"];
-  fontStyle?: TextStyle["fontStyle"];
-  boldEnabled?: boolean;
 };
 
 /* Function that, given a certain weight, returns the next

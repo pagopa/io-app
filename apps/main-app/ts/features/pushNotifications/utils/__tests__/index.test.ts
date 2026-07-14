@@ -1,5 +1,6 @@
 import * as Notifications from "expo-notifications";
 import NotificationsUtils from "react-native-notifications-utils";
+
 import {
   checkNotificationPermissions,
   generateInstallationId,

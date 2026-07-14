@@ -1,13 +1,14 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
-import { cgnEycaActivation } from "../../../../../store/actions/eyca/activation";
-import { getActivation } from "../getEycaActivationSaga";
-import { getEycaActivationStatusSaga } from "../getEycaActivationStatus";
+
 import {
   getGenericError,
   getNetworkError
 } from "../../../../../../../../utils/errors";
+import { cgnEycaActivation } from "../../../../../store/actions/eyca/activation";
 import { CgnEycaActivationStatus } from "../../../../../store/reducers/eyca/activation";
+import { getActivation } from "../getEycaActivationSaga";
+import { getEycaActivationStatusSaga } from "../getEycaActivationStatus";
 
 describe("getEycaActivationStatus", () => {
   const getEycaActivation = jest.fn();

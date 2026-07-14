@@ -4,27 +4,28 @@ import Animated, {
   useAnimatedStyle,
   useReducedMotion
 } from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import { IOIconButtonStyles } from "../../core";
-import { IOColors, hexToRgba } from "../../core/IOColors";
+import { hexToRgba, IOColors } from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import { AnimatedIcon, IOIcons } from "../icons";
 
 export type IconButtonSolid = WithTestID<{
-  icon: IOIcons;
-  color?: "primary" | "contrast";
-  disabled?: boolean;
-  accessibilityLabel: string;
   accessibilityHint?: string;
+  accessibilityLabel: string;
+  color?: "contrast" | "primary";
+  disabled?: boolean;
+  icon: IOIcons;
   onPress: (event: GestureResponderEvent) => void;
 }>;
 
 type ColorStates = {
   background: {
     default: string;
-    pressed: string;
     disabled: string;
+    pressed: string;
   };
   icon: {
     default: string;
@@ -88,17 +89,17 @@ export const IconButtonSolid = ({
 
   return (
     <Pressable
-      accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
+      accessibilityLabel={accessibilityLabel}
       accessibilityRole={"button"}
       accessibilityState={{ disabled }}
-      testID={testID}
+      accessible={true}
+      disabled={disabled}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      accessible={true}
-      disabled={disabled}
       style={{ alignSelf: "flex-start" }}
+      testID={testID}
     >
       <Animated.View
         style={[
@@ -113,12 +114,12 @@ export const IconButtonSolid = ({
       >
         <AnimatedIcon
           allowFontScaling
-          name={icon}
           color={
             !disabled
               ? mapColorStates[color]?.icon?.default
               : mapColorStates[color]?.icon?.disabled
           }
+          name={icon}
         />
       </Animated.View>
     </Pressable>
