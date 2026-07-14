@@ -37,10 +37,6 @@ export type PaymentAnalyticsData = {
 
 export type PaymentAnalyticsEditingType = "payment_method" | "psp";
 
-export type PaymentAnalyticsEditingType = "payment_method" | "psp";
-
-export type PaymentAnalyticsPhase = "attiva" | "pagamento" | "verifica";
-
 export type PaymentAnalyticsPhase = "attiva" | "pagamento" | "verifica";
 
 export type PaymentAnalyticsPreselectedPspFlag =
