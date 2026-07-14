@@ -1,6 +1,6 @@
-import { IOToast } from "@pagopa/io-app-design-system";
-import { Linking, Platform } from "react-native";
+import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
+import { Linking, Platform } from "react-native";
 
 export function openMaps(
   streetName: string,

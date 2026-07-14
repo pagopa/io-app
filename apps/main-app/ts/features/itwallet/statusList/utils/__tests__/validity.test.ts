@@ -1,4 +1,5 @@
 import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
+
 import { isStale } from "../validity";
 
 const makePayload = (

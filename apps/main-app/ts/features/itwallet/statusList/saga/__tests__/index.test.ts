@@ -1,5 +1,5 @@
-/* eslint-disable jest/expect-expect */
 import { testSaga } from "redux-saga-test-plan";
+
 import { watchItwStatusListSaga } from "..";
 import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";

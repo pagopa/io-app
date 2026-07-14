@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { FunctionComponent } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../../store/hooks";
@@ -38,7 +39,7 @@ export const CgnMerchantDiscountItem: FunctionComponent<Props> = ({
 
   return (
     <View style={styles.container}>
-      <ModuleCgnDiscount onPress={onDiscountPress} discount={discount} />
+      <ModuleCgnDiscount discount={discount} onPress={onDiscountPress} />
     </View>
   );
 };

@@ -1,9 +1,26 @@
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
+import { IdentificationContext } from "../../machine/eid/context";
 import {
-  ItwAnalyticsCredential,
-  ITW_ANALYTICS_CREDENTIALS
+  ITW_ANALYTICS_CREDENTIALS,
+  ItwAnalyticsCredential
 } from "../properties/propertyTypes";
-import { ItwPIDStatus, MixPanelCredential, CREDENTIALS_MAP } from "./types";
+import { CREDENTIALS_MAP, ItwPIDStatus, MixPanelCredential } from "./types";
+
+/** Maps the machine identification context to the Qualtrics `auth_method` UTM parameter. */
+export const toSurveyAuthMethod = (
+  identification: IdentificationContext | undefined
+): string => {
+  if (!identification) {
+    return "";
+  }
+  if (identification.mode === "cieId") {
+    return identification.level === "L3" ? "cieidL3" : "cieidL2";
+  }
+  if (identification.mode === "ciePin") {
+    return "ciepin";
+  }
+  return "spid";
+};
 
 /**
  * Maps an PID status to its corresponding Mixpanel tracking status.
@@ -12,12 +29,12 @@ export const mapPIDStatusToMixpanel = (
   status: ItwJwtCredentialStatus | undefined
 ): ItwPIDStatus => {
   switch (status) {
-    case "valid":
-      return "valid";
     case "jwtExpired":
       return "expired";
     case "jwtExpiring":
       return "expiring";
+    case "valid":
+      return "valid";
     default:
       return "not_available";
   }

@@ -1,4 +1,5 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
+
 import { TrustmarkEvents } from "./events";
 
 const { isWalletProviderResponseError } = Errors;
@@ -9,8 +10,8 @@ export enum TrustmarkFailureType {
 }
 
 export type TrustmarkFailure = {
-  type: TrustmarkFailureType;
   reason: unknown;
+  type: TrustmarkFailureType;
 };
 
 export const mapEventToFailure = (event: TrustmarkEvents): TrustmarkFailure => {

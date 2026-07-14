@@ -1,4 +1,4 @@
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
@@ -22,11 +22,11 @@ export const TourStepIndicator = ({ stepIndex, totalSteps }: Props) => {
 
   return (
     <View
-      accessible
       accessibilityLabel={I18n.t("features.tour.stepIndicator", {
         current: stepIndex + 1,
         total: totalSteps
       })}
+      accessible
       style={styles.container}
     >
       {Array.from({ length: totalSteps }).map((_, index) => {

@@ -44,9 +44,12 @@
       "moreInfo": "Vuoi saperne di più?"
     },
     "accessibility": {
+      "inputDigitCounter": "{{valueLength}} di {{length}} numeri inseriti",
       "minusSymbol": "meno",
       "reload": "Ricarica",
       "search": "Cerca",
+      "scrollToBottom": "Scorri fino in fondo",
+      "togglePasswordVisibility": "Mostra o nascondi la password",
       "expanded": "Espanso",
       "collapsed": "Compresso",
       "cieReadingProgress": "Lettura {{percentage}}% completata",
@@ -66,10 +69,10 @@
       "list": {
         "counter": "Elemento {{index}} di {{total}}"
       },
-      "progressTracker": "{{index}} di {{total}}"
-    },
-    "symbols": {
-      "question": "?"
+      "progressTracker": "{{index}} di {{total}}",
+      "otpInput": {
+        "valueText": "Hai inserito {{valueLength}} di {{length}} cifre"
+      }
     },
     "date": {
       "invalid": "data non valida"
@@ -85,7 +88,6 @@
       "title": "Si è verificato un errore imprevisto"
     },
     "markdown": {
-      "reference": "[demo]I am a custom demo tag at the beginning of the markdown[/demo]\n\n# Titolo h1: Lorem ipsum dolor sit amet, consectetur adipisici elit\n\nTesto semplice\n\n## Titolo h2: sed eiusmod tempor incidunt ut labore et dolore magna aliqua\n\ntesto semplice\n\n### Titolo h3: Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.\n\ntesto semplice\n\nLorem **ipsum dolor** sit amet, *consectetur* adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Unam incolunt Belgae, aliam Aquitani, tertiam.\n\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Magna pars studiorum, prodita quaerimus. Phasellus laoreet lorem vel dolor tempus vehicula. Fabio vel iudice vincam, sunt in culpa qui officia. Idque Caesaris facere voluntate liceret: sese habere. Tu quoque, Brute, fili mi, nihil timor populi, nihil!  \nNec dubitamus multa iter quae et nos invenerat. Cum sociis natoque penatibus et magnis dis parturient. Donec sed odio operae, eu vulputate felis rhoncus. Tityre, tu patulae recubans sub tegmine fagi dolor. At nos hinc posthac, sitientis piros Afros. Non equidem invideo, miror magis posuere velit aliquet.  \nHi omnes lingua, institutis, legibus inter se differunt. Quae vero auctorem tractata ab fiducia dicuntur. Plura mihi bona sunt, inclinet, amari petere vellent. Sed haec quis possit intrepidus aestimare tellus. Curabitur blandit tempus ardua ridiculus sed magna.\n\n[demo]I am a custom demo tag in the middle of the markdown[/demo]\n\nLorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Fabio vel iudice vincam, sunt in culpa qui officia.\n\n\n> Quote o indent\n\nLista:\n\n- uno\n- due\n- tre\n\nLista numerata:\n\n1. uno\n2. due\n3. tre\n\n\nLink\n\n[esempio di link](https://ioapp.it/)\n\n\nEsempio link interni\n\n[home preferenze](ioit://PREFERENCES_HOME),\n[elenco servizi](ioit://SERVICES_HOME),\n[profilo](ioit://PROFILE_MAIN),\n[portafoglio](ioit://WALLET_HOME),\n[privacy](ioit://PROFILE_PRIVACY_MAIN),\n[Termini e condizioni d'uso](ioit://PROFILE_TOS),\n[privacy policy](ioit://PROFILE_PRIVACY)\n[lista messaggi](ioit://MESSAGES_LIST)\n\n\nhttps://help.github.com/articles/basic-writing-and-formatting-syntax/\n",
       "decodeError": "Il messaggio non può essere decodificato"
     },
     "buttons": {
@@ -107,14 +109,10 @@
       "edit": "Modifica",
       "info": "Info",
       "activate": "Attiva",
-      "activate2": "Attiva",
       "show": "Mostra",
-      "update": "Aggiorna",
       "updateIO": "Aggiorna IO",
       "findOutMore": "Scopri di più",
       "choose": "Scegli",
-      "selectAll": "Seleziona tutto",
-      "deselectAll": "Deseleziona tutto",
       "whatCanYouDo": "Cosa puoi fare?",
       "visitWebsite": "Vai al sito"
     },
@@ -201,9 +199,6 @@
     "copyIntoClipboard": "copia negli appunti",
     "copyFeedback": "Copiato negli appunti"
   },
-  "errors": {
-    "profileUpdateError": "Si è verificato un errore durante l'aggiornamento del tuo profilo."
-  },
   "permissionRationale": {
     "calendar": {
       "title": "Consenti l’accesso al calendario",
@@ -252,7 +247,6 @@
       "fiscalCode": "Codice fiscale",
       "description": "Usa il codice a barre per comunicare il tuo codice fiscale quando ti viene richiesto.",
       "help": "Qui è visualizzato un fac-simile del tuo codice fiscale. \nIl fac-simile non sostituisce il documento fisico ma ne permette la lettura dei dati e del codice a barre sul retro. \nIn caso di omocodia, i dati generati nel fac-simile potrebbero non corrispondere ai dati anagrafici.\n",
-      "facSimile": "FAC-SIMILE",
       "copyCode": "Copia codice fiscale",
       "codeCopied": "Codice copiato!"
     },
@@ -363,9 +357,7 @@
           "updated": "Abbiamo aggiornato la nostra Informativa e i Termini e condizioni d’uso.",
           "infobox": "È necessario prendere visione e accettare l'Informativa ed i Termini e condizioni d'uso",
           "contextualHelpTitlePolicy": "Informativa sul trattamento dei dati personali e condizioni d'uso del servizio",
-          "contextualHelpContentPolicy": "### Cosa sono l'informativa e i termini d'uso?\n\nSecondo quanto stabilito dall'art. 13 del Regolamento UE n. 2016/679 (comunemente GDPR), nell'informativa puoi trovare la descrizione completa di come l'app IO gestisce i tuoi dati personali. I termini e condizioni d'uso invece stabiliscono i tuoi diritti e obblighi nell'utilizzo dell'app e dei suoi servizi. <br/> <br/> <br/> <br/> \n\n\n",
-          "contextualHelpTitle": "Le tue impostazioni di privacy",
-          "contextualHelpContent": "**Qui trovi le informazioni legate alla privacy del tuo profilo**, in particolare puoi consultare l'informativa sul trattamento dei dai personali, eliminare il tuo account ed esportare i dati personali associati al tuo profilo. \n"
+          "contextualHelpContentPolicy": "### Cosa sono l'informativa e i termini d'uso?\n\nSecondo quanto stabilito dall'art. 13 del Regolamento UE n. 2016/679 (comunemente GDPR), nell'informativa puoi trovare la descrizione completa di come l'app IO gestisce i tuoi dati personali. I termini e condizioni d'uso invece stabiliscono i tuoi diritti e obblighi nell'utilizzo dell'app e dei suoi servizi. <br/> <br/> <br/> <br/> \n\n\n"
         },
         "shareData": {
           "listItem": {
@@ -427,9 +419,6 @@
         "alertConfirmTitle": "Vuoi usare l'ambiente di test pagoPA?",
         "alertConfirmMessage": "Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.",
         "alertMessage": "È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto."
-      },
-      "pnEnvironment": {
-        "pnEnv": "SEND (PN)"
       },
       "idpay": {
         "idpayTest": "IDPay",
@@ -555,9 +544,6 @@
             "success": {
               "title": "Fatto!"
             }
-          },
-          "banner": {
-            "button": "Scopri di più"
           }
         },
         "notifications": {
@@ -600,9 +586,6 @@
         "error": "Si è verificato un errore con la tua richiesta"
       }
     }
-  },
-  "cie": {
-    "title": "Appoggia la carta"
   },
   "authentication": {
     "landing": {
@@ -955,7 +938,6 @@
       }
     },
     "insert": {
-      "alert": "Stai già usando questa email",
       "help": {
         "title": "Email",
         "content": "Questa pagina viene utilizzata per inserire o modificare l'indirizzo **e-mail**. L'email inserita deve essere convalidata.\n"
@@ -988,7 +970,6 @@
       "subtitle": "Per confermare il tuo indirizzo, segui le istruzioni che abbiamo inviato a",
       "link": "Modifica email",
       "countdowntext": "Richiedi una nuova email tra",
-      "buttonlabelsent": "Email inviata!",
       "buttonlabelsentagain": "Invia di nuovo l’email",
       "toast": "Fatto! Controlla la tua casella di posta."
     },
@@ -1126,8 +1107,6 @@
   },
   "payment": {
     "IUV": "IUV",
-    "IUV_extended": "Identificativo Univoco di Versamento",
-    "notice": "Avviso",
     "noticeCode": "Codice Avviso",
     "confirm": {
       "a11y": {
@@ -1158,11 +1137,6 @@
         }
       },
       "expired": "Il metodo è scaduto e non puoi più usarlo per fare pagamenti in app.",
-      "isSupportedBanner": {
-        "title": "Vuoi pagare in app?",
-        "content": "Scopri quali sono i metodi che puoi aggiungere al tuo portafoglio.",
-        "cta": "Scopri di più"
-      },
       "error": {
         "title": "Questo metodo di pagamento non è disponibile",
         "subtitle": "Chiudi l’app e riaprila per aggiornare il portafoglio",
@@ -1193,9 +1167,7 @@
       "outcome": {
         "SUCCESS": {
           "title": "Il metodo è stato aggiunto",
-          "subtitle": "",
-          "primaryAction": "Vedi dettagli",
-          "secondaryAction": "Continua"
+          "primaryAction": "Vedi dettagli"
         },
         "GENERIC_ERROR": {
           "title": "Si è verificato un errore imprevisto",
@@ -1219,7 +1191,6 @@
         },
         "CANCELED_BY_USER": {
           "title": "L'operazione è stata annullata",
-          "subtitle": "",
           "primaryAction": "Chiudi"
         },
         "INVALID_SESSION": {
@@ -1229,7 +1200,6 @@
         },
         "ALREADY_ONBOARDED": {
           "title": "Hai già aggiunto questo metodo",
-          "subtitle": "",
           "primaryAction": "Chiudi"
         },
         "BPAY_NOT_FOUND": {
@@ -1281,14 +1251,7 @@
       "entityCode": "Codice Fiscale Ente",
       "amountInfo": {
         "title": "L’importo è diverso da quello riportato sull’avviso pagoPA?",
-        "message": "Quando l'importo cambia, significa che è stato aggiornato automaticamente.\n\nSe è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nSe l’avviso pagoPA riguarda una comunicazione a valore legale, l’aumento dell’importo da pagare può dipendere da diversi fattori, per esempio:\n- se hai ricevuto la comunicazione tramite  raccomandata (i cui costi di stampa e invio possono essere a carico del destinatario); \n- il numero di tentativi di recapito. \nPer ulteriori dettagli contatta l'ente creditore.",
-        "cta": "Ok, va bene"
-      },
-      "errorDetails": {
-        "title": "Dettagli errore",
-        "errorCode": "Codice errore",
-        "messageId": "ID messaggio",
-        "copyToClipboard": "Copia dati per l'assistenza"
+        "message": "Quando l'importo cambia, significa che è stato aggiornato automaticamente.\n\nSe è più alto, potrebbero esserci interessi, sanzioni o costi di notifica.\n\nSe l’avviso pagoPA riguarda una comunicazione a valore legale, l’aumento dell’importo da pagare può dipendere da diversi fattori, per esempio:\n- se hai ricevuto la comunicazione tramite  raccomandata (i cui costi di stampa e invio possono essere a carico del destinatario); \n- il numero di tentativi di recapito. \nPer ulteriori dettagli contatta l'ente creditore."
       }
     },
     "errorTransaction": {
@@ -1432,8 +1395,7 @@
             "countdownExpiredTitle": "C’è già un’operazione in corso, riprova più tardi",
             "subtitle": "Se il problema persiste, contatta l'assistenza."
           },
-          "title": "C’è già un’operazione in corso, riprova più tardi",
-          "subtitle": "Se il problema persiste, puoi aprire una segnalazione."
+          "title": "C’è già un’operazione in corso, riprova più tardi"
         },
         "PAYMENT_EXPIRED": {
           "title": "L’avviso è scaduto e non è più possibile pagarlo",
@@ -1473,12 +1435,7 @@
         "SUCCESS": {
           "title": "Hai pagato {{amount}}",
           "subtitle": "La ricevuta è nella sezione Pagamenti.",
-          "button": "Ok, chiudi",
-          "banner": {
-            "title": "Puoi dirci com’è andata?",
-            "content": "Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.",
-            "action": "Vai al sondaggio"
-          }
+          "button": "Ok, chiudi"
         },
         "GENERIC_ERROR": {
           "title": "Si è verificato un errore imprevisto",
@@ -1529,8 +1486,7 @@
         "PAYMENT_REVERSED": {
           "title": "Il pagamento non è andato a buon fine",
           "subtitle": "L’importo autorizzato è stato rimborsato sul tuo metodo di pagamento. Il trasferimento di denaro potrebbe richiedere del tempo.",
-          "primaryAction": "Scopri di più",
-          "secondaryAction": "Chiudi"
+          "primaryAction": "Scopri di più"
         },
         "PAYPAL_REMOVED_ERROR": {
           "title": "Autorizzazione negata",
@@ -1773,9 +1729,6 @@
       "title": "Non perderti i messaggi importanti!"
     }
   },
-  "biometric_recognition": {
-    "needed_to_disable": "Riconoscimento richiesto per disabilitare"
-  },
   "send_email_messages": {
     "title": "Inoltro dei messaggi via email",
     "subtitle": "Vuoi che IO inoltri un’anteprima dei messaggi all’indirizzo **{{email}}**?",
@@ -2014,14 +1967,10 @@
   "titleUpdateApp": "Aggiorna IO!",
   "msgErrorUpdateApp": "Si è verificato un errore durante l'apertura dello store delle app",
   "messageUpdateApp": "IO introduce spesso piccole migliorie e nuove funzioni: per continuare a usare l'app è necessario aggiornarla all'ultima versione.",
-  "openStore": "Apri {{storeName}}",
   "btnUpdateApp": "Aggiorna l'app",
   "systemsOff": {
     "title": "C'è un problema sui nostri sistemi",
     "closeApp": "Chiudi l'app e riprova tra qualche minuto."
-  },
-  "contextualHelp": {
-    "title": "IO ti aiuto"
   },
   "bottomSheets": {
     "ciePin": {
@@ -2071,8 +2020,7 @@
       }
     },
     "bonusVacanze": {
-      "advice": "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso la ",
-      "name": "Bonus Vacanze"
+      "advice": "Cliccando su “Richiedi il Bonus Vacanze” dichiari di avere letto e compreso la "
     },
     "validity_interval": "dal {{from}} fino al {{to}}",
     "termsAndConditionFooter": "Premendo \"{{ctaText}}\" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l'[Informativa Privacy]({{tosUrl}})",
@@ -2114,7 +2062,6 @@
           "a11y": "Filtra {{label}}, {{index}} di {{total}}"
         },
         "categoriesList": {
-          "a11y": "{{name}}, {{count}} nuove opportunità trovate",
           "bottomSheet": {
             "cta": "Come vengono ordinate le categorie?",
             "title": "Come vengono ordinate le categorie?",
@@ -2627,7 +2574,6 @@
         "badge": {
           "legalValue": "Valore legale"
         },
-        "title": "Dettaglio del messaggio",
         "noticeCode": "Codice avviso",
         "loadError": {
           "title": "Qualcosa è andato storto",
@@ -2635,9 +2581,7 @@
         },
         "cancelledMessage": {
           "body": "Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto.",
-          "unpaidPayments": "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente.",
-          "unpaidPaymentsNew": "Per l'eventuale rimborso di pagamenti, rivolgiti all'ente.",
-          "payments": "Pagamenti"
+          "unpaidPaymentsNew": "Per l'eventuale rimborso di pagamenti, rivolgiti all'ente."
         },
         "paymentSection": {
           "title": "Avvisi pagoPA",
@@ -2665,7 +2609,6 @@
           }
         },
         "infoSection": {
-          "title": "Informazioni sulla notifica",
           "iun": "Codice IUN",
           "iunAccessibility": "Codice IUN : {{iun}}, copia",
           "iunSectionTitle": "Notifica"
@@ -2674,7 +2617,6 @@
           "goToSend": "Accedi a SEND",
           "menuTitle": "Stato della notifica",
           "newInfo": "Accedi a SEND dal tuo browser per avere tutti i dettagli, le ricevute e le attestazioni opponibili a terzi.",
-          "title": "STATO DELLA NOTIFICA",
           "status": {
             "ACCEPTED": "Depositata",
             "CANCELLED": "Annullata",
@@ -2686,10 +2628,7 @@
             "PAID": "Pagata",
             "REFUSED": "REFUSED",
             "IN_VALIDATION": "IN VALIDATION"
-          },
-          "expand": "mostra gli stati precedenti",
-          "info": "Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio",
-          "cta": "Accedi alla versione web"
+          }
         },
         "help": {
           "needHelp": "Serve aiuto?",
@@ -2927,11 +2866,6 @@
         "toast": {
           "newMethod": "Metodo aggiunto!"
         },
-        "paymentsBanner": {
-          "title": "Vuoi pagare un avviso?",
-          "action": "Vai alla sezione Pagamenti",
-          "close": "Chiudi"
-        },
         "otherMethods": {
           "error": {
             "banner": {
@@ -3023,9 +2957,6 @@
           "title": "Qui vedrai le tue ricevute pagoPA",
           "content": "Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA."
         },
-        "status": {
-          "failure": "FALLITA"
-        },
         "receipt": {
           "a11y": {
             "preview": "Anteprima ricevuta in formato PDF"
@@ -3109,9 +3040,6 @@
           "explainationContent": "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “PayPal pagamento veloce”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
         }
       },
-      "errors": {
-        "transactionCreationError": "C’è un problema con i sistemi di pagamento."
-      },
       "checkout": {
         "bottomSheet": {
           "PAYMENT_REVERSED": {
@@ -3138,20 +3066,10 @@
         "edip": "Diplomi",
         "edat": "Frequenza scolastica"
       },
-      "wallet": {
-        "active": "Attivo",
-        "inactive": "Non attivo",
-        "header": "Mostra identità"
-      },
-      "walletId": {
-        "title": "IT-Wallet ID",
-        "show": "Mostra"
-      },
       "card": {
         "status": {
           "expired": "Scaduta",
           "expiring": "In scadenza",
-          "pending": "In lavorazione",
           "invalid": "Non valido",
           "verificationExpiring": "Azione richiesta",
           "verificationExpired": "Azione richiesta",
@@ -3163,8 +3081,6 @@
       "support": {
         "button": "Mostra dettagli",
         "supportTitle": "Contatta l'assistenza",
-        "supportDescription": "Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.",
-        "helpCenter": "Visita il centro assistenza",
         "phone": "Chiama {{phoneNumber}}",
         "landline": "Da telefono fisso",
         "chat": "Chiedi aiuto in chat",
@@ -3186,13 +3102,10 @@
           "cancel": "No, riprendi"
         },
         "dataSource": {
-          "multi": "Forniti da {{credentialSource}}",
           "single": "Fornito da {{credentialSource}}"
         },
         "placeholders": {
-          "claimNotAvailable": "Attributo non riconosciuto",
-          "claimLabelNotAvailable": "Etichetta attributo non presente",
-          "organizationName": "Nome ente non disponibile"
+          "claimNotAvailable": "Attributo non riconosciuto"
         },
         "walletNotAvailable": {
           "message": "Abbiamo avuto un problema nel recuperare i tuoi documenti.",
@@ -3238,12 +3151,10 @@
             "action": "Inizia"
           },
           "onboarding": {
-            "content": "Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti!",
             "action": "Inizia"
           },
           "onboardingActive": {
-            "content": "Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio.",
-            "action": "Inizia"
+            "content": "Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio."
           }
         },
         "screen": {
@@ -3251,9 +3162,6 @@
             "title": "La versione digitale dei tuoi documenti, su IO",
             "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **8 Milioni** di persone stanno già usando i **Documenti su IO**!",
             "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
-            "actions": {
-              "primary": "Continua"
-            },
             "dismissalDialog": {
               "title": "Vuoi rinunciare ai documenti digitali su IO?",
               "body": "Potrai attivarli in qualsiasi altro momento, se cambi idea.",
@@ -3324,11 +3232,6 @@
               "cancel": "No, continua"
             }
           }
-        },
-        "upcomingWalletBanner": {
-          "title": "Novità in arrivo: i tuoi Documenti su IO",
-          "content": "Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!",
-          "action": "Scopri di più"
         },
         "alreadyActive": {
           "title": "Documenti su IO è già attiva",
@@ -3470,13 +3373,11 @@
             "nfc": {
               "title": "Posiziona la tua CIE su una superficie stabile per la lettura",
               "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
-              "cta": "Inizia lettura CIE",
-              "buttonLink": "Cos’è la CIE?"
+              "cta": "Inizia lettura CIE"
             },
             "can": {
               "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
               "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
-              "buttonLink": "Cos’è il PIN della CIE?",
               "cta": "Continua"
             },
             "card": {
@@ -3496,17 +3397,14 @@
           "readingCard": {
             "android": {
               "idle": {
-                "title": "Poggia il retro del telefono sulla CIE.",
-                "action": "Annulla"
+                "title": "Poggia il retro del telefono sulla CIE."
               },
               "reading": {
                 "title": "La lettura è in corso...",
-                "subtitle": "Non muovere il telefono.",
-                "action": "Annulla"
+                "subtitle": "Non muovere il telefono."
               },
               "completed": {
-                "title": "Lettura completata!",
-                "action": "Chiudi"
+                "title": "Lettura completata!"
               }
             },
             "ios": {
@@ -3613,18 +3511,6 @@
               "subtitle": "Se riscontri più volte il problema, attendi qualche minuto e riprova."
             }
           }
-        },
-        "cieId": {
-          "loading": {
-            "title": "Connessione con la tua app CieID in corso...",
-            "subtitle": "Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione",
-            "cancel": "Annulla connessione"
-          }
-        },
-        "updateCredential": {
-          "title": "I tuoi documenti saranno aggiornati",
-          "description": "Continuando, otterrai una versione digitale aggiornata dei tuoi documenti presenti nel Portafoglio di IO",
-          "button": "Continua"
         }
       },
       "issuance": {
@@ -3727,8 +3613,11 @@
         },
         "notMatchingIdentityError": {
           "title": "Identità non riconosciuta",
-          "body": "Attiva Documenti su IO con la stessa identità utilizzata per accedere all’app IO. Verifica le credenziali di accesso e riprova.",
-          "primaryAction": "Ripeti l'accesso",
+          "body": {
+            "l2": "L’identità digitale che usi per attivare Documenti su IO deve corrispondere alla stessa persona che ha fatto accesso a IO.",
+            "l3": "L’identità digitale che usi per attivare IT-Wallet deve corrispondere alla stessa persona che ha fatto accesso a IO."
+          },
+          "primaryAction": "Riprova",
           "secondaryAction": "Chiudi"
         },
         "cieNotMatchingAuthenticationIdentityError": {
@@ -3793,12 +3682,6 @@
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
         },
-        "invalidWallet": {
-          "title": "Ottieni IT-Wallet per continuare",
-          "subtitle": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti bastano la Carta di Identità Elettronica (CIE) e il suo PIN.",
-          "primaryAction": "Inizia",
-          "secondaryAction": "Non ora"
-        },
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
           "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
@@ -3825,8 +3708,6 @@
         }
       },
       "unsupportedDevice": {
-        "text": "Starting from 02.07.2024 your device may no longer be compatible with IO.",
-        "moreInfo": "More info",
         "error": {
           "title": "Il tuo dispositivo non supporta Documenti su IO",
           "subtitle": "Per conoscere i requisiti di sicurezza necessari per questa funzionalità premi **[Scopri di più]({{faqUrl}})**",
@@ -3865,12 +3746,8 @@
           "ehc": {
             "content": "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
           },
-          "edc": {
-            "content": "Puoi usare la tua Carta Europea della Disabilità su IO per accedere ai servizi sul territorio italiano, negli stessi contesti d’uso del tuo documento fisico."
-          },
           "expired": {
-            "content": "Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio",
-            "action": "Aggiorna il documento"
+            "content": "Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio"
           },
           "expiring": {
             "content": "Mancano {{days}} giorni alla scadenza del documento."
@@ -3960,8 +3837,7 @@
           "status": {
             "valid": "Valida",
             "invalid": "Non valida",
-            "expired": "Scaduta",
-            "expiring": "In scadenza"
+            "expired": "Scaduta"
           },
           "actions": {
             "removeFromWallet": "Rimuovi dal Portafoglio",
@@ -3979,11 +3855,6 @@
           },
           "toast": {
             "removed": "Fatto!"
-          },
-          "verificationExpired": {
-            "title": "Verifica la versione digitale del documento",
-            "content": "È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.",
-            "primaryAction": "Inizia"
           },
           "mdl": {
             "walletUpgradeBanner": {
@@ -4008,7 +3879,7 @@
           "trustmark": "Mostra certificato di autenticità",
           "openPdf": "Mostra documento",
           "shareButton": "Salva o condividi",
-          "present": "Mostra codice QR"
+          "present": "Avvia verifica"
         },
         "eid": {
           "verificationExpired": {
@@ -4031,9 +3902,7 @@
           "subtitle": "Saranno condivisi con **{{relyingParty}}** solo per il tempo necessario all'accesso ai servizi richiesti.",
           "requiredClaims": "Dati necessari",
           "optionalClaims": "Dati facoltativi",
-          "claimUnavailable": "Non disponibile",
           "optionalClaimsAlert": "I dati facoltativi ti offrono servizi più completi.",
-          "missingClaimsAlert": "Alcuni dati facoltativi non sono disponibili nel tuo Portafoglio.",
           "tos": "I tuoi dati saranno trattati in sicurezza. Se prosegui, dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{privacyUrl}}).",
           "alert": {
             "message": "Non potrai completare l'accesso ai servizi online."
@@ -4074,7 +3943,6 @@
           "deepLinkValidationErrorScreen": {
             "title": "Il link sembra non funzionare",
             "subtitle": "Ti suggeriamo di riprovare.\nSe il problema persiste, contatta l'assistenza.",
-            "primaryAction": "Mostra dettagli",
             "secondaryAction": "Chiudi"
           },
           "eidExpiredScreen": {
@@ -4222,16 +4090,6 @@
               }
             }
           },
-          "mdl": {
-            "bottomSheet": {
-              "title": "Patente di guida",
-              "body": "Mostra il QR Code in caso di controlli o altre necessità.",
-              "error": {
-                "message": "Abbiamo avuto un problema nel generare il QR Code.",
-                "action": "Prova di nuovo"
-              }
-            }
-          },
           "connectionLoading": {
             "title": "In attesa di connessione per la verifica...",
             "subtitle": "Attendi qualche secondo..."
@@ -4303,8 +4161,7 @@
             "banner": {
               "title": "Come funziona il QR Code?",
               "content": "Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.",
-              "action": "Scopri di più",
-              "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
+              "action": "Scopri di più"
             },
             "nfc": {
               "or": "oppure",
@@ -4321,14 +4178,12 @@
           }
         },
         "itWalletId": {
-          "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
           "listItemHeader": "Dati del mio IT-Wallet ID",
           "banner": {
             "title": "Cos'è IT-Wallet ID?",
             "content": "È il cuore del tuo Portafoglio IT-Wallet: ti consente di ottenere i documenti digitali, dimostrare chi sei e accedere ai servizi online"
           },
           "cta": {
-            "info": "Parte di IT-Wallet",
             "revoke": "Disattiva IT-Wallet"
           },
           "dialog": {
@@ -4338,11 +4193,6 @@
               "confirm": "Sì, disattiva",
               "cancel": "No, torna indietro"
             }
-          },
-          "status": {
-            "expiringPrefix": "Conferma la tua identità entro il ",
-            "expired": "Conferma la tua identità per continuare con i tuoi documenti",
-            "action": "Inizia"
           }
         }
       },
@@ -4375,14 +4225,6 @@
           "subtitle": "Non è stato possibile disattivare il servizio. Riprova."
         }
       },
-      "eidDetail": {
-        "title": "La mia identità",
-        "content": "Hai ottenuto IT-Wallet verificando i dati della tua identità con CIE. Ti consente di autenticarti ai servizi online.",
-        "header": {
-          "title": "I dati della mia identità"
-        },
-        "cta": "Disattiva IT-Wallet"
-      },
       "feedback": {
         "reissuance": {
           "bottomSheet": {
@@ -4395,6 +4237,29 @@
             "title": "Puoi dirci com’è andata?",
             "content": "Raccontaci la tua esperienza con la verifica e aiutaci a migliorare.",
             "action": "Inizia"
+          }
+        },
+        "eidActivationSuccess": {
+          "banner": {
+            "title": "Puoi dirci com’è andata?",
+            "content": "Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.",
+            "action": "Inizia"
+          }
+        },
+        "eidActivationExit": {
+          "bottomSheet": {
+            "title": "Ti va di dirci perché?",
+            "content": "Hai deciso di non continuare con IT-Wallet: facci sapere il perché, così potremo migliorare la tua esperienza in app. Ci vorrà un minuto!",
+            "primaryAction": "Dicci la tua",
+            "secondaryAction": "Non ora"
+          }
+        },
+        "credentialExit": {
+          "bottomSheet": {
+            "title": "Ti va di dirci perché?",
+            "content": "Hai deciso di non continuare: facci sapere il perché, così potremo migliorare la tua esperienza in app. Ci vorrà un minuto!",
+            "primaryAction": "Dicci la tua",
+            "secondaryAction": "Non ora"
           }
         }
       },
@@ -4455,11 +4320,6 @@
           "alert": {
             "content": "Hai bisogno di tornare alla versione completa di IO?",
             "action": "Ricarica l’app IO"
-          },
-          "modal": {
-            "title": "",
-            "content": "",
-            "footerAction": ""
           }
         },
         "back_online": {
@@ -4480,7 +4340,6 @@
             "primaryAction": "Ricarica l’app"
           }
         },
-        "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
       },
       "engagementBanner": {
@@ -4503,12 +4362,6 @@
           "title": "Dimostra chi sei col tuo dispositivo",
           "description": "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!",
           "action": "Inizia"
-        },
-        "dismissAlert": {
-          "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
-          "description": "Potrai ottenere IT-Wallet in qualsiasi altro momento, andando in Impostazioni > IT-Wallet.",
-          "confirm": "Sì, rinuncia",
-          "cancel": "Indietro"
         },
         "l2_banner": {
           "title": "I tuoi documenti digitali appariranno qui",
@@ -4560,13 +4413,6 @@
             "title": "Ambiente di test IT-Wallet",
             "content": "Se avevi attivato Documenti su IO, la funzionalità è stata disattivata automaticamente.\nPer riattivarla, esci dall’ambiente di test e attiva di nuovo Documenti su IO.",
             "action": "Esci dall'ambiente di test"
-          }
-        },
-        "itwSpecsVersion": {
-          "description": "Cambia la versione delle specifiche tecniche. Questa azione reimposta lo stato di IT-Wallet.",
-          "alert": {
-            "title": "IT-Wallet v{{itwVersion}}",
-            "content": "Stai per cambiare la versione delle specifiche tecniche utilizzate.\nQuesta funzionalità è sperimentale e potrebbe causare malfunzionamenti di IT-Wallet."
           }
         },
         "walletL3": {
@@ -4714,7 +4560,6 @@
         "success": {
           "header": "Ecco il codice sconto!",
           "body": "Il codice ha durata limitata. Una volta scaduto, potrai generare un nuovo codice.",
-          "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice è valido per ",
           "copyCodeCta": "Copia codice",
           "expired": {
@@ -4801,8 +4646,6 @@
         "initiativeCard": {
           "availableAmount": "Disponibile",
           "refundRequestedAmount": "Rimborso richiesto",
-          "validUntil": "Fino al {{expiryDate}}",
-          "expiresOn": "Scade il {{expiryDate}}",
           "toRefund": "Da rimborsare",
           "statusLabels": {
             "REFUNDABLE": "Attivo",
@@ -4855,7 +4698,6 @@
             },
             "startConfigurationCTA": "Inizia",
             "operationsList": {
-              "header": "Tutte le operazioni",
               "title": "Lista operazioni",
               "lastUpdated": "Ultimo aggiornamento: ",
               "operationDescriptions": {
@@ -4911,8 +4753,7 @@
           "rulesButton": "Leggi il regolamento"
         },
         "infoModal": {
-          "title": "Regole dell'iniziativa",
-          "button": "Ok, ho capito"
+          "title": "Regole dell'iniziativa"
         },
         "spentUntilNow": "Speso",
         "summary": "Riepilogo",
@@ -4929,11 +4770,8 @@
         "spendValue": "Importo riconosciuto",
         "enrollmentDetails": "Dettagli dell'adesione",
         "enrollmentDate": "Bonus emesso il",
-        "protocolNumber": "Numero di protocollo",
-        "lastUpdate": "Saldo aggiornato al {{dateString}}",
         "buttons": {
           "privacy": "Preferenze e Privacy",
-          "unsubscribe": "Rimuovi {{initiativeName}}",
           "requestHelp": "Chiedi aiuto",
           "staticCode": "Genera codice statico"
         },
@@ -4957,7 +4795,6 @@
           },
           "details": {
             "alerts": {
-              "AUTHORIZED": "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente.",
               "CANCELLED": "Questa transazione è stata annullata dall’esercente."
             },
             "labels": {
@@ -4976,7 +4813,6 @@
           "REJECTED_REFUND": "Dettaglio del rimborso"
         },
         "transaction": {
-          "instrument": "Metodo di pagamento",
           "maskedPan": "•••• {{lastDigits}}",
           "amountLabel": "Importo transazione",
           "accruedAmountLabel": "Importo rimborsabile",
@@ -4999,8 +4835,7 @@
             "text": "Se non l’hai già fatto, inserisci un nuovo IBAN per ricevere il rimborso.",
             "editIban": "Modifica IBAN"
           },
-          "period": "Periodo di riferimento",
-          "date": "Data rimborso"
+          "period": "Periodo di riferimento"
         },
         "errorBody": "Impossibile caricare il dettaglio"
       },
@@ -5228,9 +5063,6 @@
             "actionItem": "Come funziona?"
           }
         },
-        "title": "Metodi di pagamento",
-        "header": "Scegli quali metodi di pagamento associare",
-        "body": "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}.",
         "footer": "Modifica queste scelte o aggiungi altri metodi in qualsiasi momento dalla sezione Portafoglio",
         "instrumentStatus": {
           "active": "Attivo",
@@ -5264,7 +5096,6 @@
         }
       },
       "iban": {
-        "title": "IBAN associato",
         "landing": {
           "header": "Aggiungi un IBAN al tuo Profilo",
           "body": "Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.\n\n**[Scopri di più](info://details)**",
@@ -5277,7 +5108,6 @@
         "onboarding": {
           "header": "Qual è il tuo IBAN?",
           "body": "Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del",
-          "bodyLink": "Dpr 28 dicembre 2000 n. 445 art 46 e 47",
           "nameAssignInput": "Assegna un nome",
           "bottomLabel": "Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app",
           "error": {
@@ -5297,7 +5127,6 @@
       }
     },
     "unsubscription": {
-      "headerTitle": "Rimuovi l'iniziativa",
       "title": "Vuoi rimuovere {{initiativeName}}?",
       "subtitle": "Per proseguire, seleziona tutte le informazioni riportate di seguito.",
       "checks": {
@@ -5348,7 +5177,6 @@
         "businessName": "Richiesto da",
         "dateTime": "Data e ora",
         "initiativeName": "Iniziativa",
-        "availableAmount": "Credito disponibile",
         "error": "C’è stato un errore, riprova",
         "deny": "Annulla l'operazione"
       },
@@ -5413,10 +5241,6 @@
       "chat": "Chiedi aiuto in chat",
       "additionalDataTitle": "Dati aggiuntivi",
       "copyAll": "Copia tutti"
-    },
-    "slowdowns_results_screen": {
-      "title": "Sembra che le cose vadano un po' a rilento",
-      "subtitle": "Potreste essere in tanti in questo momento.\nPuoi riprovare tra qualche minuto, o puoi richiedere il bonus dal sito dedicato."
     }
   },
   "barcodeScan": {
@@ -5508,9 +5332,7 @@
   "bonusCard": {
     "validUntil": "Valida fino al {{endDate}}",
     "expiring": "Scade il {{endDate}}",
-    "expired": "Scaduta il {{endDate}}",
     "paused": "In pausa",
-    "removed": "Rimossa",
     "used": "Utilizzato"
   },
   "transaction": {
@@ -5535,16 +5357,12 @@
         "authCode": "Codice autorizzativo",
         "rrn": "RRN",
         "executedBy": "Eseguita da",
-        "headedTo": "Metodo intestato a",
-        "alert": {
-          "content": "Rivolgiti all’Ente Creditore se hai bisogno della ricevuta."
-        }
+        "headedTo": "Metodo intestato a"
       },
       "operation": {
         "amount": "Importo",
         "creditor": "Ente creditore",
         "debtor": "Debitore",
-        "subject": "Oggetto del pagamento",
         "noticeCode": "Codice avviso/IUV",
         "noticeCodeAccessible": "Codice avviso/Identificativo Univoco Versamento",
         "taxCode": "Codice Fiscale Ente"
@@ -5624,7 +5442,6 @@
       "title": "Per accedere al servizio, consenti la condivisione dei seguenti dati",
       "subtitle": "IO condividerà con ",
       "subtitle2": " i dati necessari alla tua autenticazione su ",
-      "requiredData": "Dati richiesti",
       "privacy": "Per maggiori informazioni, leggi **[l’Informativa sulla Privacy]({{privacyUrl}})**",
       "bottomSheet": {
         "title": "Servizi di terze parti tramite IO: come funziona",

@@ -4,9 +4,9 @@ import { CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { StatusListRepository } from "./repository";
+import { storeLastStatusListCheckTimestamp } from "./storage";
 import { StatusListContext } from "./types";
 import { isStale } from "./validity";
-import { storeLastStatusListCheckTimestamp } from "./storage";
 
 /** Maximum number of concurrent refresh operations. */
 const MAX_CONCURRENT_REFRESHES = 3;

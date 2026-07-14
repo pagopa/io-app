@@ -1,22 +1,11 @@
 import { ErrorActorEvent } from "xstate";
+
+import { MixPanelCredential } from "../../analytics/utils/types";
+import { CredentialExitStep } from "../../common/hooks/useItwCredentialExitSurveyBottomSheet";
 import { CredentialIssuanceMode } from "./context";
-
-export type SelectCredential = {
-  type: "select-credential";
-  credentialType: string;
-  mode: CredentialIssuanceMode;
-};
-
-export type ConfirmTrustData = {
-  type: "confirm-trust-data";
-};
 
 export type AddToWallet = {
   type: "add-to-wallet";
-};
-
-export type Retry = {
-  type: "retry";
 };
 
 export type Back = {
@@ -24,35 +13,52 @@ export type Back = {
 };
 
 export type Close = {
+  surveyCredential?: MixPanelCredential;
+  /** Step and credential at which the user exited, used to show the Qualtrics survey in WALLET_HOME. */
+  surveyStep?: CredentialExitStep;
   type: "close";
-};
-
-export type Continue = {
-  type: "continue";
-};
-
-export type StartCredentialOffer = {
-  type: "start-credential-offer";
-  itwCredentialOfferUri: string;
 };
 
 export type ConfirmCredentialOffer = {
   type: "confirm-credential-offer";
 };
 
-type SessionRefreshComplete = {
-  type: "session-refresh-complete";
+export type ConfirmTrustData = {
+  type: "confirm-trust-data";
+};
+
+export type Continue = {
+  type: "continue";
 };
 
 export type CredentialIssuanceEvents =
-  | SelectCredential
-  | ConfirmTrustData
   | AddToWallet
-  | Retry
   | Back
   | Close
+  | ConfirmCredentialOffer
+  | ConfirmTrustData
   | Continue
-  | SessionRefreshComplete
   | ErrorActorEvent
-  | StartCredentialOffer
-  | ConfirmCredentialOffer;
+  | Retry
+  | SelectCredential
+  | SessionRefreshComplete
+  | StartCredentialOffer;
+
+export type Retry = {
+  type: "retry";
+};
+
+export type SelectCredential = {
+  credentialType: string;
+  mode: CredentialIssuanceMode;
+  type: "select-credential";
+};
+
+export type StartCredentialOffer = {
+  itwCredentialOfferUri: string;
+  type: "start-credential-offer";
+};
+
+type SessionRefreshComplete = {
+  type: "session-refresh-complete";
+};

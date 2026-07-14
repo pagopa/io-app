@@ -2,9 +2,9 @@ import {
   FooterActions,
   FooterActionsMeasurements,
   IOColors,
-  VSpacer,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+  useIOTheme,
+  VSpacer
+} from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { Fragment, useMemo, useState } from "react";
 import {

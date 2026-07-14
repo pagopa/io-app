@@ -1,43 +1,21 @@
-import { EnabledChannels } from "../../../../utils/profile";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { EnabledChannels } from "../../../../utils/profile";
 
-export type ServicePreference = { settings_version: number } & EnabledChannels;
-
-/**
- * Type representing service preference successfully loaded
- */
-type ServicePreferenceResponseSuccess = {
-  kind: "success";
-  value: ServicePreference;
-};
+export type ServicePreference = EnabledChannels & { settings_version: number };
 
 /**
- * The required service is not found (404)
+ * Type representing all handled responses from backend
  */
-type ServicePreferenceNotFound = {
-  kind: "notFound";
-};
-
-/**
- * The Service Preference has a different version on remote (409)
- */
-type ServicePreferenceConflict = {
-  kind: "conflictingVersion";
-};
-
-/**
- * Too many requests has been sent for the Service Preference (429)
- */
-type ServicePreferenceTooManyRequests = {
-  kind: "tooManyRequests";
-};
+export type ServicePreferenceResponse = WithServiceID<
+  ServicePreferenceResponseFailure | ServicePreferenceResponseSuccess
+>;
 
 /**
  * Type representing all failures provided by API responses
  */
 export type ServicePreferenceResponseFailure =
-  | ServicePreferenceNotFound
   | ServicePreferenceConflict
+  | ServicePreferenceNotFound
   | ServicePreferenceTooManyRequests;
 
 /**
@@ -48,11 +26,33 @@ export type WithServiceID<T> = T & {
 };
 
 /**
- * Type representing all handled responses from backend
+ * The Service Preference has a different version on remote (409)
  */
-export type ServicePreferenceResponse = WithServiceID<
-  ServicePreferenceResponseSuccess | ServicePreferenceResponseFailure
->;
+type ServicePreferenceConflict = {
+  kind: "conflictingVersion";
+};
+
+/**
+ * The required service is not found (404)
+ */
+type ServicePreferenceNotFound = {
+  kind: "notFound";
+};
+
+/**
+ * Type representing service preference successfully loaded
+ */
+type ServicePreferenceResponseSuccess = {
+  kind: "success";
+  value: ServicePreference;
+};
+
+/**
+ * Too many requests has been sent for the Service Preference (429)
+ */
+type ServicePreferenceTooManyRequests = {
+  kind: "tooManyRequests";
+};
 
 export const isServicePreferenceResponseSuccess = (
   sp: ServicePreferenceResponse

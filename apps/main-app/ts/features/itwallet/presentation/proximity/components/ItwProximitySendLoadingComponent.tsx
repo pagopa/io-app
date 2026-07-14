@@ -1,6 +1,7 @@
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { HeaderSecondLevel } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect, useLayoutEffect, useState } from "react";
+
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
@@ -26,12 +27,12 @@ export const ItwProximitySendLoadingComponent = () => {
 
   return (
     <LoadingScreenContent
+      subtitle={I18n.t(
+        `features.itWallet.presentation.proximity.sendDocumentsLoading.${step}.subtitle`
+      )}
       testID="loader"
       title={I18n.t(
         `features.itWallet.presentation.proximity.sendDocumentsLoading.${step}.title`
-      )}
-      subtitle={I18n.t(
-        `features.itWallet.presentation.proximity.sendDocumentsLoading.${step}.subtitle`
       )}
     />
   );

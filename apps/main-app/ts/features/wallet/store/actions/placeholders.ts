@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { WalletCard } from "../../types";
 
 export const walletToggleLoadingState = createStandardAction(
@@ -10,5 +11,5 @@ export const walletResetPlaceholders = createStandardAction(
 )<ReadonlyArray<WalletCard>>();
 
 export type WalletPlaceholdersActions =
-  | ActionType<typeof walletToggleLoadingState>
-  | ActionType<typeof walletResetPlaceholders>;
+  | ActionType<typeof walletResetPlaceholders>
+  | ActionType<typeof walletToggleLoadingState>;

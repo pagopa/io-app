@@ -1,6 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Action, createStore } from "redux";
+import I18n from "i18next";
 import { Text } from "react-native";
+import { Action, createStore } from "redux";
+
 import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
@@ -10,8 +12,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as preferencesSelectors from "../../../common/store/selectors/preferences";
-import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
+import * as credentialStatusUtils from "../../../common/utils/itwCredentialStatusUtils";
+import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as catalogSelectors from "../../../credentialsCatalogue/store/selectors";
+import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
@@ -89,6 +93,59 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     expect(onDiscoveryParams).not.toHaveBeenCalled();
     expect(machineSend).not.toHaveBeenCalledWith({ type: "close" });
   });
+
+  it("auto-confirms the offer when the credential is not in the wallet and there is no introduction content", () => {
+    const { queryByText } = renderComponent(jest.fn());
+
+    expect(
+      queryByText(
+        I18n.t("features.itWallet.issuance.credentialAlreadyAdded.title")
+      )
+    ).toBeNull();
+    expect(machineSend).toHaveBeenCalledWith({
+      type: "confirm-credential-offer"
+    });
+  });
+
+  it("blocks the flow when the offered credential is already in the wallet and valid", () => {
+    jest
+      .spyOn(credentialsSelectors, "itwCredentialSelector")
+      .mockReturnValue((() => someOption({})) as any);
+    jest
+      .spyOn(credentialStatusUtils, "getCredentialStatus")
+      .mockReturnValue("valid");
+
+    const { queryByText } = renderComponent(jest.fn());
+
+    expect(
+      queryByText(
+        I18n.t("features.itWallet.issuance.credentialAlreadyAdded.title")
+      )
+    ).not.toBeNull();
+    expect(machineSend).not.toHaveBeenCalledWith({
+      type: "confirm-credential-offer"
+    });
+  });
+
+  it("continues the flow when the stored credential is no longer valid", () => {
+    jest
+      .spyOn(credentialsSelectors, "itwCredentialSelector")
+      .mockReturnValue((() => someOption({})) as any);
+    jest
+      .spyOn(credentialStatusUtils, "getCredentialStatus")
+      .mockReturnValue("expired");
+
+    const { queryByText } = renderComponent(jest.fn());
+
+    expect(
+      queryByText(
+        I18n.t("features.itWallet.issuance.credentialAlreadyAdded.title")
+      )
+    ).toBeNull();
+    expect(machineSend).toHaveBeenCalledWith({
+      type: "confirm-credential-offer"
+    });
+  });
 });
 
 const renderComponent = (
@@ -110,9 +167,9 @@ const renderComponent = (
     () => (
       <Stack.Navigator screenOptions={{ animationEnabled: false }}>
         <Stack.Screen
-          name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO}
           component={ItwIssuanceCredentialOfferIntroScreen}
           initialParams={{ itwCredentialOfferUri: T_CREDENTIAL_OFFER_URI }}
+          name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO}
         />
         <Stack.Screen name={ITW_ROUTES.DISCOVERY.INFO}>
           {({ route }) => {

@@ -12,26 +12,26 @@ import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 
 export type PaymentAnalyticsProps = {
-  data_entry: string;
-  first_time_opening: string;
-  organization_name: string;
-  organization_fiscal_code: string;
-  service_name: string;
-  saved_payment_method: number;
   amount: string;
-  expiration_date: string;
-  payment_phase: PaymentAnalyticsPhase;
   attempt: number;
-  saved_payment_method_unavailable: number;
+  browser_type: PaymentAnalyticsBrowserType;
+  data_entry: string;
+  editing: PaymentAnalyticsEditingType;
+  expiration_date: string;
+  first_time_opening: string;
+  is_onboarded: boolean;
   last_used_payment_method: string;
+  organization_fiscal_code: string;
+  organization_name: string;
   payment_method_selected: string;
   payment_method_selected_flag: PaymentAnalyticsSelectedMethodFlag;
+  payment_phase: PaymentAnalyticsPhase;
   preselected_psp_flag: PaymentAnalyticsPreselectedPspFlag;
-  selected_psp_flag: PaymentAnalyticsSelectedPspFlag;
   psp_selected: string;
-  editing: PaymentAnalyticsEditingType;
-  browser_type: PaymentAnalyticsBrowserType;
-  is_onboarded: boolean;
+  saved_payment_method: number;
+  saved_payment_method_unavailable: number;
+  selected_psp_flag: PaymentAnalyticsSelectedPspFlag;
+  service_name: string;
 };
 
 const MYBANK_PSP_BANNER_ID = "mybank_psp_selection";
@@ -42,54 +42,54 @@ const getPaymentAnalyticsEventFromFailureOutcome = (
   switch (outcome) {
     case WalletPaymentOutcomeEnum.AUTH_ERROR:
       return "PAYMENT_AUTHORIZATION_DENIED_ERROR";
-    case WalletPaymentOutcomeEnum.INVALID_DATA:
-      return "PAYMENT_INVALID_DATA_ERROR";
-    case WalletPaymentOutcomeEnum.TIMEOUT:
-      return "PAYMENT_SESSION_TIMEOUT";
-    case WalletPaymentOutcomeEnum.CIRCUIT_ERROR:
-      return "PAYMENT_CIRCUIT_ERROR";
-    case WalletPaymentOutcomeEnum.MISSING_FIELDS:
-      return "PAYMENT_MISSING_FIELDS_ERROR";
-    case WalletPaymentOutcomeEnum.INVALID_CARD:
-      return "PAYMENT_INVALID_CARD_ERROR";
+    case WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR:
+      return "PAYMENT_500_ERROR";
+    case WalletPaymentOutcomeEnum.BE_NODE_KO:
+      return "PAYMENT_99_ERROR";
     case WalletPaymentOutcomeEnum.CANCELED_BY_USER:
       return "PAYMENT_USER_CANCELLATION";
+    case WalletPaymentOutcomeEnum.CIRCUIT_ERROR:
+      return "PAYMENT_CIRCUIT_ERROR";
+    case WalletPaymentOutcomeEnum.CVV_ERROR:
+      return "PAYMENT_CVV_ERROR";
+    case WalletPaymentOutcomeEnum.DUPLICATE_ORDER:
+      return "PAYMENT_DUPLICATE_ORDER";
     case WalletPaymentOutcomeEnum.EXCESSIVE_AMOUNT:
       return "PAYMENT_EXCESSIVE_AMOUNT_ERROR";
+    case WalletPaymentOutcomeEnum.GENERIC_ERROR:
+      return "PAYMENT_GENERIC_ERROR";
+    case WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER:
+      return "PAYMENT_WEBVIEW_USER_CANCELLATION";
+    case WalletPaymentOutcomeEnum.INSUFFICIENT_AVAILABILITY_ERROR:
+      return "PAYMENT_INSUFFICIENT_AVAILABILITY_ERROR";
+    case WalletPaymentOutcomeEnum.INVALID_CARD:
+      return "PAYMENT_INVALID_CARD_ERROR";
+    case WalletPaymentOutcomeEnum.INVALID_DATA:
+      return "PAYMENT_INVALID_DATA_ERROR";
     case WalletPaymentOutcomeEnum.INVALID_METHOD:
       return "PAYMENT_INVALID_METHOD_ERROR";
     case WalletPaymentOutcomeEnum.INVALID_SESSION:
       return "PAYMENT_UNKNOWN_OUTCOME_ERROR";
-    case WalletPaymentOutcomeEnum.METHOD_NOT_ENABLED:
-      return "PAYMENT_TURNED_OFF_METHOD_ERROR";
-    case WalletPaymentOutcomeEnum.GENERIC_ERROR:
-      return "PAYMENT_GENERIC_ERROR";
-    case WalletPaymentOutcomeEnum.WAITING_CONFIRMATION_EMAIL:
-      return "PAYMENT_UNKNOWN_OUTCOME_ERROR";
-    case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
-      return "PAYMENT_REVERSAL_ERROR";
-    case WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER:
-      return "PAYMENT_WEBVIEW_USER_CANCELLATION";
-    case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
-      return "PAYMENT_METHOD_AUTHORIZATION_ERROR";
-    case WalletPaymentOutcomeEnum.BE_NODE_KO:
-      return "PAYMENT_99_ERROR";
-    case WalletPaymentOutcomeEnum.INSUFFICIENT_AVAILABILITY_ERROR:
-      return "PAYMENT_INSUFFICIENT_AVAILABILITY_ERROR";
-    case WalletPaymentOutcomeEnum.CVV_ERROR:
-      return "PAYMENT_CVV_ERROR";
-    case WalletPaymentOutcomeEnum.PLAFOND_LIMIT_ERROR:
-      return "PAYMENT_PLAFOND_LIMIT_ERROR";
     case WalletPaymentOutcomeEnum.KO_RETRIABLE:
       return "PAYMENT_KO_RETRIABLE";
+    case WalletPaymentOutcomeEnum.METHOD_NOT_ENABLED:
+      return "PAYMENT_TURNED_OFF_METHOD_ERROR";
+    case WalletPaymentOutcomeEnum.MISSING_FIELDS:
+      return "PAYMENT_MISSING_FIELDS_ERROR";
     case WalletPaymentOutcomeEnum.ORDER_NOT_PRESENT:
       return "PAYMENT_ORDER_NOT_PRESENT";
-    case WalletPaymentOutcomeEnum.DUPLICATE_ORDER:
-      return "PAYMENT_DUPLICATE_ORDER";
+    case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
+      return "PAYMENT_REVERSAL_ERROR";
+    case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
+      return "PAYMENT_METHOD_AUTHORIZATION_ERROR";
+    case WalletPaymentOutcomeEnum.PLAFOND_LIMIT_ERROR:
+      return "PAYMENT_PLAFOND_LIMIT_ERROR";
     case WalletPaymentOutcomeEnum.PSP_ERROR:
       return "PAYMENT_PSP_ERROR";
-    case WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR:
-      return "PAYMENT_500_ERROR";
+    case WalletPaymentOutcomeEnum.TIMEOUT:
+      return "PAYMENT_SESSION_TIMEOUT";
+    case WalletPaymentOutcomeEnum.WAITING_CONFIRMATION_EMAIL:
+      return "PAYMENT_UNKNOWN_OUTCOME_ERROR";
     default:
       return outcome;
   }
@@ -99,31 +99,31 @@ const getPaymentAnalyticsEventFromRequestFailure = (
   failure: WalletPaymentFailure
 ) => {
   switch (failure.faultCodeCategory) {
-    case "PAYMENT_UNAVAILABLE":
-      return "PAYMENT_TECHNICAL_ERROR";
-    case "PAYMENT_DATA_ERROR":
-      return "PAYMENT_DATA_ERROR";
     case "DOMAIN_UNKNOWN":
       return "PAYMENT_ORGANIZATION_ERROR";
+    case "GENERIC_ERROR":
+    case "PAYMENT_VERIFY_GENERIC_ERROR":
+      return "PAYMENT_502_ERROR";
+    case "PAYMENT_CANCELED":
+      return "PAYMENT_CANCELED_ERROR";
+    case "PAYMENT_DATA_ERROR":
+      return "PAYMENT_DATA_ERROR";
+    case "PAYMENT_DUPLICATED":
+      return "PAYMENT_ALREADY_PAID_ERROR";
+    case "PAYMENT_EXPIRED":
+      return "PAYMENT_EXPIRED_ERROR";
+    case "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION":
+      return "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION";
     case "PAYMENT_ONGOING":
       return failure.faultCodeDetail
         ? `PAYMENT_${failure.faultCodeDetail}`
         : "PAYMENT_ONGOING_ERROR";
-    case "PAYMENT_EXPIRED":
-      return "PAYMENT_EXPIRED_ERROR";
-    case "PAYMENT_CANCELED":
-      return "PAYMENT_CANCELED_ERROR";
-    case "PAYMENT_DUPLICATED":
-      return "PAYMENT_ALREADY_PAID_ERROR";
-    case "PAYMENT_UNKNOWN":
-      return "PAYMENT_NOT_FOUND_ERROR";
-    case "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION":
-      return "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION";
-    case "GENERIC_ERROR":
-    case "PAYMENT_VERIFY_GENERIC_ERROR":
-      return "PAYMENT_502_ERROR";
     case "PAYMENT_SLOWDOWN_ERROR":
       return "PAYMENT_SLOWDOWN_ERROR";
+    case "PAYMENT_UNAVAILABLE":
+      return "PAYMENT_TECHNICAL_ERROR";
+    case "PAYMENT_UNKNOWN":
+      return "PAYMENT_NOT_FOUND_ERROR";
     default:
       return "PAYMENT_NOT_MAPPED_CATEGORY_ERROR";
   }

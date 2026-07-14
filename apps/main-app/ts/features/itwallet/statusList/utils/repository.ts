@@ -1,5 +1,6 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CredentialStatus } from "@pagopa/io-react-native-wallet";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { STORAGE_PREFIX } from "./consts";
 
 export const STORAGE_ENTRY_PREFIX = `${STORAGE_PREFIX}:entry:`;

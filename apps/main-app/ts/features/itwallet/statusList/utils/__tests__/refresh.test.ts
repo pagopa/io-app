@@ -1,11 +1,12 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
-import { StatusListRepository } from "../repository";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   refreshStaleEntries,
   refreshStatusListToken,
   refreshWithBoundedParallelism
 } from "../refresh";
+import { StatusListRepository } from "../repository";
 import { STORAGE_KEY_LAST_CHECK_TIME } from "../storage";
 import { type StatusListContext } from "../types";
 

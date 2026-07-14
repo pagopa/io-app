@@ -1,16 +1,14 @@
-import {
-  HeaderSecondLevel,
-  useIOTheme,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { HeaderSecondLevel, useIOTheme, VSpacer } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { memo, useCallback, useLayoutEffect, useState } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { getMixPanelCredential } from "../../../analytics/utils";
 import {
   ItwSkeumorphicCard,
@@ -60,7 +58,7 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const dispatch = useIODispatch();
 
-  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
+  usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
   useFocusEffect(
@@ -75,13 +73,13 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          title={""}
-          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: () => navigation.goBack()
           }}
+          title={""}
+          type="singleAction"
         />
       )
     });
@@ -103,8 +101,8 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
     >
       {/* Card area fills the space between header and footer, centering the card */}
       <View
-        style={styles.cardArea}
         onLayout={e => setCardAreaHeight(e.nativeEvent.layout.height)}
+        style={styles.cardArea}
       >
         {cardAreaHeight > 0 && (
           <View
@@ -114,14 +112,14 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
             }}
           >
             <FlipGestureDetector
+              direction={"leftright"}
               isFlipped={isFlipped}
               setIsFlipped={setFlipped}
-              direction={"leftright"}
             >
               <ItwSkeumorphicCard
                 credential={credential}
-                status={status}
                 isFlipped={isFlipped}
+                status={status}
                 valuesHidden={valuesHidden}
               />
             </FlipGestureDetector>
@@ -129,9 +127,9 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
         )}
       </View>
       <ItwPresentationCredentialCardFlipButton
-        isFlipped={isFlipped}
-        handleOnPress={() => setFlipped(_ => !_)}
         fullScreen={true}
+        handleOnPress={() => setFlipped(_ => !_)}
+        isFlipped={isFlipped}
       />
       <VSpacer size={12} />
       <ItwPresentationCredentialCardHideValuesButton

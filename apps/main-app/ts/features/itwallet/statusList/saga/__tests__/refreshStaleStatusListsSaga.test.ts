@@ -1,5 +1,5 @@
-/* eslint-disable jest/expect-expect */
 import { testSaga } from "redux-saga-test-plan";
+
 import { selectItwSpecsVersion } from "../../../common/store/selectors/environment";
 import { refreshStaleEntries } from "../../utils/refresh";
 import { refreshStaleStatusListsSaga } from "../refreshStaleStatusListsSaga";
