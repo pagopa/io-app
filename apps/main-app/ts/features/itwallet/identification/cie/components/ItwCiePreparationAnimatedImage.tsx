@@ -1,7 +1,8 @@
-import { IconButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
+import { IconButtonSolid, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
 import { useReducedMotion } from "react-native-reanimated";
+
 import { useCiePreparationAnimationPlayback } from "../hooks/useCiePreparationAnimationPlayback";
 
 /**
@@ -14,9 +15,9 @@ import { useCiePreparationAnimationPlayback } from "../hooks/useCiePreparationAn
 
 type ItwCiePreparationAnimatedImageProps = {
   animatedSource: ImageSourcePropType;
-  staticSource: ImageSourcePropType;
   autoPlay?: boolean;
   maxDurationMs?: number;
+  staticSource: ImageSourcePropType;
   testID?: string;
 };
 
@@ -40,24 +41,24 @@ export const ItwCiePreparationAnimatedImage = ({
       <View style={styles.imageWrapper}>
         <Image
           accessibilityIgnoresInvertColors
-          source={isPlaying ? animatedSource : staticSource}
-          resizeMode="contain"
-          style={styles.image}
           // Changing the key forces GIF restart when playback starts again.
           key={imageKey}
+          resizeMode="contain"
+          source={isPlaying ? animatedSource : staticSource}
+          style={styles.image}
         />
       </View>
       <VSpacer size={16} />
       <View style={styles.buttonContainer}>
         <IconButtonSolid
-          color="primary"
           accessibilityLabel={I18n.t(
             isPlaying
               ? "features.itWallet.identification.cie.prepare.animation.pause"
               : "features.itWallet.identification.cie.prepare.animation.play"
           )}
-          icon={isPlaying ? "stop" : "play"}
+          color="primary"
           disabled={reduceMotion}
+          icon={isPlaying ? "stop" : "play"}
           onPress={togglePlayback}
         />
       </View>
