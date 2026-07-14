@@ -1,15 +1,16 @@
 import {
+  hexToRgba,
+  Icon,
   IOColors,
   IOSkeleton,
-  Icon,
   LabelMini,
-  VSpacer,
-  hexToRgba,
   useIOTheme,
-  useIOThemeContext
+  useIOThemeContext,
+  VSpacer
 } from "@io-app/design-system";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import { WithTestID } from "../../../../types/WithTestID";
 import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
@@ -17,9 +18,9 @@ import { PaymentCardProps } from "./PaymentCard";
 
 export type PaymentCardSmallProps = WithTestID<
   PaymentCardProps & {
+    accessibilityLabel?: string;
     bankName?: string;
     onPress?: () => void;
-    accessibilityLabel?: string;
   }
 >;
 
@@ -96,9 +97,9 @@ const PaymentCardSmall = ({
 
   return (
     <WalletCardPressableBase
+      accessibilityLabel={accessibilityLabel}
       onPress={onPress}
       testID={`${testID}-pressable`}
-      accessibilityLabel={accessibilityLabel}
     >
       <View
         style={[
@@ -121,19 +122,19 @@ const PaymentCardSmall = ({
           <LogoPaymentWithFallback brand={iconName} size={24} />
           {props.isExpired && (
             <Icon
-              testID={`${testID}-errorIcon`}
+              color={textColorError}
               name="errorFilled"
               size={16}
-              color={textColorError}
+              testID={`${testID}-errorIcon`}
             />
           )}
         </View>
         <VSpacer size={8} />
         <LabelMini
-          weight="Regular"
+          color={props.isExpired ? textColorError : textColorDefault}
           ellipsizeMode="tail"
           numberOfLines={1}
-          color={props.isExpired ? textColorError : textColorDefault}
+          weight="Regular"
         >
           {labelText}
         </LabelMini>
@@ -150,14 +151,14 @@ const PaymentCardSmallSkeleton = ({ testID }: WithTestID<unknown>) => {
       style={[styles.card, { backgroundColor: backgroundColorDefault }]}
       testID={`${testID}-skeleton`}
     >
-      <IOSkeleton color={skeletonColor} shape="square" size={24} radius={12} />
+      <IOSkeleton color={skeletonColor} radius={12} shape="square" size={24} />
       <VSpacer size={8} />
       <IOSkeleton
         color={skeletonColor}
-        shape="rectangle"
-        width={"100%"}
         height={16}
         radius={8}
+        shape="rectangle"
+        width={"100%"}
       />
     </View>
   );

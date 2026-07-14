@@ -1,24 +1,25 @@
+import { Body } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import { createStore } from "redux";
-import { Body } from "@io-app/design-system";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { ServiceDetailsScreenPn } from "../ServiceDetailsScreenPn";
+
 import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
-import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
-import { applicationChangeState } from "../../../../../store/actions/application";
 import { Config } from "../../../../../../definitions/content/Config";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { getNetworkError, NetworkError } from "../../../../../utils/errors";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import {
   ServicePreferenceResponse,
   WithServiceID
 } from "../../types/ServicePreferenceResponse";
-import { getNetworkError, NetworkError } from "../../../../../utils/errors";
+import { ServiceDetailsScreenPn } from "../ServiceDetailsScreenPn";
 
 const backendStatus: BackendStatus = {
   ...baseRawBackendStatus

@@ -24,8 +24,8 @@ export const DSForceScrollDownViewTitleTransition = () => {
 
   return (
     <ForceScrollDownView
-      buttonAccessibilityLabel="Scroll to bottom"
       animatedRef={animatedScrollViewRef}
+      buttonAccessibilityLabel="Scroll to bottom"
       contentContainerStyle={{
         paddingTop: IOVisualCostants.appMarginDefault
       }}

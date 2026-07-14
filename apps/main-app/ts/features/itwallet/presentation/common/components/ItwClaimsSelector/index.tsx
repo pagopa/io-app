@@ -5,8 +5,8 @@ import {
   IOAccordionRadius,
   IOColors,
   IOSpacingScale,
-  useIOThemeContext,
-  useAccordionAnimation
+  useAccordionAnimation,
+  useIOThemeContext
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment } from "react";
