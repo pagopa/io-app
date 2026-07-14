@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.37.0-canary.8226](https://github.com/pagopa/io-app/compare/3.37.0-rc.4...3.37.0-canary.8226) (2026-07-14)
+
+
+### Chores
+
+* [[IOPLT-1927](https://pagopa.atlassian.net/browse/IOPLT-1927)] Enable `perfectionist` rules included in `@pagopa/eslint-config` ([#8210](https://github.com/pagopa/io-app/issues/8210)) ([b3d1414](https://github.com/pagopa/io-app/commit/b3d141427de7f8d917e37b2c378505bd8bb989d3))
+* [[SIW-3657](https://pagopa.atlassian.net/browse/SIW-3657)] `@pagopa/io-app-design-system` bump 8.1.0 + fix OTPInput value accessibility across the app ([#8231](https://github.com/pagopa/io-app/issues/8231)) ([74fd0a3](https://github.com/pagopa/io-app/commit/74fd0a3a45d88a4fda059d9a4a615db794e699cf))
+* increase task period ([770e4b2](https://github.com/pagopa/io-app/commit/770e4b2427ce165e078ddac559bc0a0748c6101e))
+* move consts ([1f6b80a](https://github.com/pagopa/io-app/commit/1f6b80ab7457e207a906f0e947662b418adcb86f))
+* persist last 10 timestamps ([92a0a0c](https://github.com/pagopa/io-app/commit/92a0a0c68406d5218aa31cedf1b3328041bac815))
+* wire itw bg task ([00f893e](https://github.com/pagopa/io-app/commit/00f893e55231b4027389db0519c89a40e591ce89))
+
 ## [3.37.0-rc.4](https://github.com/pagopa/io-app/compare/3.37.0-rc.3...3.37.0-rc.4) (2026-07-14)
 
 
