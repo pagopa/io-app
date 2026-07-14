@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { Alert } from "react-native";
 import i18n from "i18next";
-import { ListItemInfo } from "@pagopa/io-app-design-system";
+import { ListItemInfo } from "@io-app/design-system";
 import { IOScrollViewWithListItems } from "../../../../components/ui/IOScrollViewWithListItems";
 import { useIsNfcFeatureEnabled } from "../hooks/useIsNfcFeatureEnabled";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

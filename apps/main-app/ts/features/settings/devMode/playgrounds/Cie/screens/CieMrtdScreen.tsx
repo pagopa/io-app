@@ -4,7 +4,7 @@ import {
   ListItemSwitch,
   OTPInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   CieManager,
   MrtdResponse,

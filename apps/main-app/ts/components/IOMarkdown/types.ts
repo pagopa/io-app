@@ -1,4 +1,4 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@io-app/design-system";
 import {
   TxtHeaderNode,
   TxtListNode,

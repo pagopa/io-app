@@ -1,9 +1,10 @@
+import I18n from "i18next";
 import {
   IOButton,
   ListItemHeader,
   OTPInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useState } from "react";
@@ -117,6 +118,12 @@ export const CieCertificateReadingScreen = () => {
           <ListItemHeader label="Insert card PIN" />
           <OTPInput
             secret
+            accessibilityValueText={({ valueLength, length }) =>
+              I18n.t("global.accessibility.inputDigitCounter", {
+                valueLength,
+                length
+              })
+            }
             value={code}
             length={CIE_PIN_LENGTH}
             onValueChange={onPinChanged}

@@ -7,7 +7,7 @@ import {
   LoadingSpinner,
   TabItem,
   TabNavigation
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   useFocusEffect,
   useIsFocused,

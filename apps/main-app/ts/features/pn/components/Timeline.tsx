@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
-import { Caption, H6, IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { Caption, H6, IOColors, VSpacer } from "@io-app/design-system";
 
 type ColorStates = {
   background: string;

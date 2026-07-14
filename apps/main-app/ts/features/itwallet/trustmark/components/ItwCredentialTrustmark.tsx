@@ -5,7 +5,7 @@ import {
   useIOThemeContext,
   useScaleAnimation,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   Canvas,
   ColorMatrix,

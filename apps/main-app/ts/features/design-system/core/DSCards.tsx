@@ -6,7 +6,7 @@ import {
   TabNavigation,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useState } from "react";
 import { Alert, Pressable, ScrollView } from "react-native";
 import { CgnCard } from "../../bonus/cgn/components/CgnCard";

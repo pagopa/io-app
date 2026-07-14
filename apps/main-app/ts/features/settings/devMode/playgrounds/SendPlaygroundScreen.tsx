@@ -17,7 +17,7 @@ import {
   ListItemSwitch,
   useIOToast,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";

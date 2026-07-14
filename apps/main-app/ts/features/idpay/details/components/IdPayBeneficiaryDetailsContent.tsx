@@ -7,7 +7,7 @@ import {
   ListItemTransaction,
   VSpacer,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";

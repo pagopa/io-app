@@ -3,7 +3,7 @@ import {
   FooterActionsMeasurements,
   IOColors,
   useIOToast
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useCallback, useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";

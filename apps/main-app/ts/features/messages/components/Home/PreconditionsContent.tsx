@@ -1,4 +1,4 @@
-import { IOSkeleton, VStack } from "@pagopa/io-app-design-system";
+import { IOSkeleton, VStack } from "@io-app/design-system";
 import { useLinkTo } from "@react-navigation/native";
 import { useCallback } from "react";
 import { View } from "react-native";

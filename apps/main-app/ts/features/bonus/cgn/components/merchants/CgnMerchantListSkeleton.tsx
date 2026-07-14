@@ -1,8 +1,4 @@
-import {
-  Divider,
-  IOSkeleton,
-  IOVisualCostants
-} from "@pagopa/io-app-design-system";
+import { Divider, IOSkeleton, IOVisualCostants } from "@io-app/design-system";
 import { View } from "react-native";
 
 type Props = {

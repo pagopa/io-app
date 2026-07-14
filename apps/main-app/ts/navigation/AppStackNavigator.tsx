@@ -1,9 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import {
-  IOColors,
-  useIOTheme,
-  useIOThemeContext
-} from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme, useIOThemeContext } from "@io-app/design-system";
 import {
   LinkingOptions,
   NavigationContainer,

@@ -1,4 +1,4 @@
-import { IOPictograms } from "@pagopa/io-app-design-system";
+import { IOPictograms } from "@io-app/design-system";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import I18n from "i18next";
 import { Linking } from "react-native";

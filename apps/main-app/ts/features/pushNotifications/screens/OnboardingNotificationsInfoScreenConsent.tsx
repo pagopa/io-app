@@ -8,7 +8,7 @@ import {
   IconButton,
   ListItemInfo,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useCallback, useEffect, useMemo } from "react";
 import { AppState, FlatList, Platform, StyleSheet, View } from "react-native";
 import I18n from "i18next";

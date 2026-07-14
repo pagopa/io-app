@@ -1,5 +1,5 @@
 import i18n from "i18next";
-import { Body } from "@pagopa/io-app-design-system";
+import { Body } from "@io-app/design-system";
 import { useEffect } from "react";
 import { useSendActivationBottomSheet } from "../hooks/useSendActivationBottomSheet";
 import { useSendAreYouSureBottomSheet } from "../hooks/useSendAreYouSureBottomSheet";

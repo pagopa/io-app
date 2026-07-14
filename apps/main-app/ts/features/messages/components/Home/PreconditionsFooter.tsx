@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { View } from "react-native";
-import { FooterActions } from "@pagopa/io-app-design-system";
+import { FooterActions } from "@io-app/design-system";
 import I18n from "i18next";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import {

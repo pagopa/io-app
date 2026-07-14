@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Divider } from "@pagopa/io-app-design-system";
+import { Divider } from "@io-app/design-system";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils.ts";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";

@@ -1,4 +1,4 @@
-import { Body, OTPInput, VSpacer, VStack } from "@pagopa/io-app-design-system";
+import { Body, OTPInput, VSpacer, VStack } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
@@ -189,6 +189,12 @@ export const SendAarCieCanInsertionScreen = ({
         >
           <VSpacer size={8} />
           <OTPInput
+            accessibilityValueText={({ valueLength, length }) =>
+              i18n.t("global.accessibility.otpInput.valueText", {
+                valueLength,
+                length
+              })
+            }
             ref={canPadViewRef}
             secret
             length={CIE_CAN_LENGTH}

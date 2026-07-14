@@ -6,7 +6,7 @@ import {
   ListItemHeader,
   useFooterActionsMeasurements,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { isEqual } from "lodash";
 import { Route, StackActions, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";

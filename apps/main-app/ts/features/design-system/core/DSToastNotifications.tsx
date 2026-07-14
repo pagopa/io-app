@@ -5,7 +5,7 @@ import {
   ToastNotification,
   VStack,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const sectionTitleMargin = 16;

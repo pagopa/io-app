@@ -3,7 +3,7 @@ import {
   FooterActions,
   useIOToast,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import I18n from "i18next";
 import {

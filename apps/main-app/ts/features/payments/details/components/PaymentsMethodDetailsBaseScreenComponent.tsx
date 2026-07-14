@@ -5,7 +5,7 @@ import {
   IOVisualCostants,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 import { PropsWithChildren, useState } from "react";
 import {

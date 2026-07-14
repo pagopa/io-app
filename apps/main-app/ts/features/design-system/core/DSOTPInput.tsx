@@ -8,12 +8,14 @@ import {
   IOVisualCostants,
   IconButton,
   OTPInput,
+  OTPInputProps,
   RadioGroup,
   RadioItem,
   VStack,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
+import I18n from "i18next";
 
 import { RefObject, useCallback, useMemo, useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
@@ -83,28 +85,41 @@ const OTPWrapper = ({
     [validation, otpCompare]
   );
 
-  return useMemo(
-    () => (
+  return useMemo(() => {
+    const commonProps: OTPInputProps = {
+      value,
+      accessibilityLabel: "OTP Input",
+      onValueChange,
+      length: otpLength,
+      onValidate,
+      errorMessage: "Wrong OTP",
+      autoFocus
+    };
+
+    return (
       <VStack space={16}>
-        <OTPInput
-          value={value}
-          accessibilityLabel={"OTP Input"}
-          onValueChange={onValueChange}
-          length={otpLength}
-          secret={secret}
-          onValidate={onValidate}
-          errorMessage={"Wrong OTP"}
-          autoFocus={autoFocus}
-        />
+        {secret ? (
+          <OTPInput
+            {...commonProps}
+            secret
+            accessibilityValueText={({ valueLength, length }) =>
+              I18n.t("global.accessibility.otpInput.valueText", {
+                valueLength,
+                length
+              })
+            }
+          />
+        ) : (
+          <OTPInput {...commonProps} />
+        )}
         <IOButton
           variant="solid"
           onPress={() => setValue("")}
           label={"Pulisci valore"}
         />
       </VStack>
-    ),
-    [value, onValueChange, secret, onValidate, autoFocus, otpLength]
-  );
+    );
+  }, [value, onValueChange, secret, onValidate, autoFocus, otpLength]);
 };
 
 const scrollVerticallyToView = (
