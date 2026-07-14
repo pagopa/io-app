@@ -46,7 +46,7 @@ export const ItwPresentationPidDetailScreen = () => {
         <VStack style={{ paddingVertical: 16 }} space={24}>
           {!isItwDiscoveryInfoBannerHidden && <ItwDiscoveryInfoBanner />}
           <ItwPresentationPidDetail credential={credential} />
-          <ItwPresentationPidDetailFooter credential={credential} />
+          <ItwPresentationPidDetailFooter />
           <View style={{ alignItems: "center" }}>
             <PoweredByItWalletText />
           </View>

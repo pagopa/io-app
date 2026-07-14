@@ -8,6 +8,7 @@ import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
 import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
@@ -23,8 +24,12 @@ type IPatenteListItemActionProps = {
 const ItwPresentationDetailsFooter = ({
   credential
 }: ItwPresentationDetailFooterProps) => {
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const startAndTrackSupportRequest = useOfflineToastGuard(
     useItwStartCredentialSupportRequest(credential)
+  );
+  const handleSupportRequest = useNotAvailableToastGuard(
+    startAndTrackSupportRequest
   );
   const { confirmAndRemoveCredential } = useItwRemoveCredentialWithConfirm(
     credential,
@@ -38,18 +43,20 @@ const ItwPresentationDetailsFooter = ({
   return (
     <View>
       {credentialActions}
-      <ListItemAction
-        testID="requestAssistanceActionTestID"
-        variant="primary"
-        icon="message"
-        label={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
-        )}
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
-        )}
-        onPress={useNotAvailableToastGuard(startAndTrackSupportRequest)}
-      />
+      {!isItwL3 && (
+        <ListItemAction
+          testID="requestAssistanceActionTestID"
+          variant="primary"
+          icon="message"
+          label={I18n.t(
+            "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+          )}
+          accessibilityLabel={I18n.t(
+            "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+          )}
+          onPress={handleSupportRequest}
+        />
+      )}
       <ListItemAction
         testID="removeCredentialActionTestID"
         variant="danger"

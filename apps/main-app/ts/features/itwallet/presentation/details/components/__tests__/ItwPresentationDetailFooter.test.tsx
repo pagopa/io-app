@@ -15,6 +15,7 @@ import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credent
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
 import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter.tsx";
 import * as credentialSelectors from "../../../../credentials/store/selectors";
+import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 
 const mockTrackItwCredentialDelete = jest.fn();
 
@@ -54,6 +55,16 @@ describe("ItwPresentationDetailsFooter", () => {
     expect(queryByTestId("requestAssistanceActionTestID")).not.toBeNull();
     expect(queryByTestId("removeCredentialActionTestID")).not.toBeNull();
     expect(queryByTestId("openIPatenteActionTestID")).not.toBeNull();
+  });
+
+  it("should not render the assistance action for IT-Wallet", () => {
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+      .mockReturnValue(true);
+
+    const { queryByTestId } = renderComponent(CredentialType.DRIVING_LICENSE);
+
+    expect(queryByTestId("requestAssistanceActionTestID")).toBeNull();
   });
 
   it("tracks credential deletion from the detail screen with status and position", () => {
