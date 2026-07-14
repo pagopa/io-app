@@ -5,21 +5,24 @@ import {
   RadioGroup,
   RadioItemWithAmount,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import I18n from "i18next";
+
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { getSortedPspList } from "../../common/utils";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import * as analytics from "../analytics";
+import { WalletPaymentPspBanner } from "../components/WalletPaymentPspBanner";
 import { WalletPspListSkeleton } from "../components/WalletPspListSkeleton";
 import { useSortPspBottomSheet } from "../hooks/useSortPspBottomSheet";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
@@ -35,8 +38,6 @@ import {
 import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
 import { FaultCodeCategoryEnum } from "../types/PspPaymentMethodNotAvailableProblemJson";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
-import { WalletPaymentPspBanner } from "../components/WalletPaymentPspBanner";
 
 const WalletPaymentPickPspScreen = () => {
   const dispatch = useIODispatch();
@@ -181,9 +182,9 @@ const WalletPaymentPickPspScreen = () => {
         </Body>
         <VSpacer size={16} />
         <ListItemHeader
-          label={I18n.t("wallet.payment.psp.pspTitle")}
           accessibilityLabel={I18n.t("wallet.payment.psp.pspTitle")}
           endElement={sortButtonProps}
+          label={I18n.t("wallet.payment.psp.pspTitle")}
         />
       </>
     ),
@@ -209,16 +210,16 @@ const WalletPaymentPickPspScreen = () => {
     >
       <WalletPaymentPspBanner />
       <Animated.View
-        style={{ flex: 1 }}
         layout={LinearTransition.duration(200)}
+        style={{ flex: 1 }}
       >
         <SelectPspHeadingContent />
         {!isLoading && (
           <RadioGroup<string>
-            onPress={handlePspSelection}
-            type="radioListItemWithAmount"
-            selectedItem={pspSelected?.idBundle}
             items={getRadioItemsFromPspList(sortedPspList, showFeaturedPsp)}
+            onPress={handlePspSelection}
+            selectedItem={pspSelected?.idBundle}
+            type="radioListItemWithAmount"
           />
         )}
         {isLoading && <WalletPspListSkeleton />}

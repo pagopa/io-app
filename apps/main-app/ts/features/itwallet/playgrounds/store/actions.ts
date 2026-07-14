@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import {
   CredentialMetadata,
   ItwCredentialStatus
@@ -19,7 +20,7 @@ export const itwDebugSaveOriginalCredentials = createStandardAction(
 export const itwDebugReset = createStandardAction("ITW_DEBUG_RESET")();
 
 export type ItwDebugActions =
-  | ActionType<typeof itwDebugSetCredentialStatusOverride>
   | ActionType<typeof itwDebugClearCredentialStatusOverride>
+  | ActionType<typeof itwDebugReset>
   | ActionType<typeof itwDebugSaveOriginalCredentials>
-  | ActionType<typeof itwDebugReset>;
+  | ActionType<typeof itwDebugSetCredentialStatusOverride>;

@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@pagopa/io-app-design-system";
+import { IOVisualCostants } from "@io-app/design-system";
 import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

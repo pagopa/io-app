@@ -1,4 +1,4 @@
-import { IOColors, IOFontWeightNumeric } from "@pagopa/io-app-design-system";
+import { IOColors, IOFontWeightNumeric } from "@io-app/design-system";
 import { Platform } from "react-native";
 import * as RNFS from "react-native-fs";
 

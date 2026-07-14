@@ -1,8 +1,9 @@
-import { Body, IOButton, VStack } from "@pagopa/io-app-design-system";
+import { Body, IOButton, VStack } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
@@ -16,11 +17,11 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { IT_WALLET_SURVEY_EID_ACTIVATION_EXIT } from "../utils/constants";
 
 export type EidActivationExitStep =
+  | "cie_preparation"
   | "disambiguation"
   | "intro"
-  | "select_method"
-  | "cie_preparation"
-  | "pid_preview";
+  | "pid_preview"
+  | "select_method";
 
 /**
  * Module-level flag: the survey is shown at most once per app session.
@@ -74,7 +75,6 @@ export const useItwActivationExitSurveyBottomSheet = ({
         <View style={{ marginBottom: 16 }}>
           <VStack space={16}>
             <IOButton
-              variant="solid"
               fullWidth
               label={I18n.t(
                 "features.itWallet.feedback.eidActivationExit.bottomSheet.primaryAction"
@@ -86,15 +86,16 @@ export const useItwActivationExitSurveyBottomSheet = ({
                 openWebUrl(surveyUrl);
                 dismiss();
               }}
+              variant="solid"
             />
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
-                variant="link"
-                textAlign="center"
                 label={I18n.t(
                   "features.itWallet.feedback.eidActivationExit.bottomSheet.secondaryAction"
                 )}
                 onPress={() => dismiss()}
+                textAlign="center"
+                variant="link"
               />
             </View>
           </VStack>

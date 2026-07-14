@@ -6,17 +6,17 @@ import {
   IOPictograms,
   Pictogram,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 type Props = {
-  title: string;
-  body: string;
   action: Pick<
     IOButtonBlockSpecificProps,
-    "label" | "accessibilityLabel" | "onPress"
+    "accessibilityLabel" | "label" | "onPress"
   >;
+  body: string;
   pictogram: IOPictograms;
+  title: string;
 };
 
 const CameraPermissionView = (props: Props) => (
@@ -27,16 +27,16 @@ const CameraPermissionView = (props: Props) => (
       {props.title}
     </H6>
     <VSpacer size={8} />
-    <BodySmall weight="Regular" color="white" style={styles.text}>
+    <BodySmall color="white" style={styles.text} weight="Regular">
       {props.body}
     </BodySmall>
     <VSpacer size={32} />
     <IOButton
-      fullWidth
-      variant="solid"
       color="contrast"
+      fullWidth
       label={props.action.label}
       onPress={props.action.onPress}
+      variant="solid"
     />
   </View>
 );

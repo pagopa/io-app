@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { z } from "zod";
+
 import { STORAGE_KEY_LAST_CHECK_TIME } from "./consts";
 
 const LastStatusListCheckTimestampsSchema = z

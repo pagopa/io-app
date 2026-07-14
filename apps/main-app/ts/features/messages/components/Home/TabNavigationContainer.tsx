@@ -1,9 +1,9 @@
+import { TabItem, TabNavigation } from "@io-app/design-system";
+import I18n from "i18next";
 import { MutableRefObject, useCallback } from "react";
-
 import { StyleSheet, View } from "react-native";
 import PagerView from "react-native-pager-view";
-import { TabItem, TabNavigation } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { shownMessageCategorySelector } from "../../store/reducers/allPaginated";
 import { messageListCategoryToViewPageIndex } from "./homeUtils";
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 export const TabNavigationContainer = ({
   pagerViewRef
 }: {
-  pagerViewRef: MutableRefObject<PagerView | null>;
+  pagerViewRef: MutableRefObject<null | PagerView>;
 }) => {
   const shownMessageCategory = useIOSelector(shownMessageCategorySelector);
   const shownPageIndex =
@@ -37,8 +37,8 @@ export const TabNavigationContainer = ({
     <View style={styles.tabContainer}>
       <TabNavigation
         onItemPress={onTabNavigationItemPressed}
-        tabAlignment="start"
         selectedIndex={shownPageIndex}
+        tabAlignment="start"
       >
         <TabItem
           accessibilityLabel={I18n.t(`messages.tab.inbox`)}

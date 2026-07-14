@@ -1,7 +1,8 @@
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
-import { storeLastStatusListCheckTimestamp } from "../utils/storage";
+
 import { ITW_STATUS_LIST_FETCH_TASK } from "../utils/consts";
+import { storeLastStatusListCheckTimestamp } from "../utils/storage";
 
 /**
  * Register the ITW Status List fetch task handler with expo-task-manager.
