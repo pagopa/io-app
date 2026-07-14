@@ -4,7 +4,7 @@ import {
   IOButton,
   OTPInput,
   VSpacer
-} from "@io-app/design-system";
+} from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
@@ -118,15 +118,15 @@ export const ItwCiePinScreen = () => {
             <VSpacer size={24} />
             <View style={{ flex: 1 }}>
               <OTPInput
-                ref={pinPadViewRef}
-                secret
-                value={pin}
                 accessibilityValueText={({ valueLength, length }) =>
-                  I18n.t("global.accessibility.inputDigitCounter", {
+                  I18n.t("global.accessibility.otpInput.valueText", {
                     valueLength,
                     length
                   })
                 }
+                ref={pinPadViewRef}
+                secret
+                value={pin}
                 accessibilityLabel={I18n.t(
                   "authentication.cie.pin.accessibility.label"
                 )}
