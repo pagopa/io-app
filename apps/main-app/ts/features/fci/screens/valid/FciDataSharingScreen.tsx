@@ -1,15 +1,16 @@
 import { Banner, Divider, ListItemInfo, VStack } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-
 import I18n from "i18next";
 import { ComponentProps, ReactElement } from "react";
+
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
+import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { capitalize } from "../../../../utils/strings";
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 import {
@@ -26,7 +27,6 @@ import {
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const FciDataSharingScreen = (): ReactElement => {
   const profile = useIOSelector(profileSelector);
@@ -72,44 +72,44 @@ const FciDataSharingScreen = (): ReactElement => {
 
   return (
     <IOScrollViewWithLargeHeader
+      actions={actions}
+      contextualHelp={emptyContextualHelp}
+      description={I18n.t("features.fci.shareDataScreen.content")}
+      headerActionsProp={{ showHelp: true }}
+      includeContentMargins={true}
+      testID={"FciDataSharingScreenListTestID"}
       title={{
         label: I18n.t("features.fci.shareDataScreen.title")
       }}
-      includeContentMargins={true}
-      description={I18n.t("features.fci.shareDataScreen.content")}
-      testID={"FciDataSharingScreenListTestID"}
-      actions={actions}
-      contextualHelp={emptyContextualHelp}
-      headerActionsProp={{ showHelp: true }}
     >
       {name && (
         <ListItemInfo
-          testID="FciDataSharingScreenNameTestID"
           label={I18n.t("features.fci.shareDataScreen.name")}
+          testID="FciDataSharingScreenNameTestID"
           value={name}
         />
       )}
       <Divider />
       {familyName && (
         <ListItemInfo
-          testID="FciDataSharingScreenFamilyNameTestID"
           label={I18n.t("features.fci.shareDataScreen.familyName")}
+          testID="FciDataSharingScreenFamilyNameTestID"
           value={familyName}
         />
       )}
       <Divider />
       {birthDate && (
         <ListItemInfo
-          testID="FciDataSharingScreenBirthDateTestID"
           label={I18n.t("features.fci.shareDataScreen.birthDate")}
+          testID="FciDataSharingScreenBirthDateTestID"
           value={formatFiscalCodeBirthdayAsShortFormat(birthDate)}
         />
       )}
       <Divider />
       {fiscalCode && (
         <ListItemInfo
-          testID="FciDataSharingScreenFiscalCodeTestID"
           label={I18n.t("profile.fiscalCode.fiscalCode")}
+          testID="FciDataSharingScreenFiscalCodeTestID"
           value={fiscalCode}
         />
       )}
@@ -117,17 +117,15 @@ const FciDataSharingScreen = (): ReactElement => {
       {O.isSome(email) && (
         <VStack space={16}>
           <ListItemInfo
-            testID="FciDataSharingScreenEmailTestID"
             label={I18n.t("profile.data.list.email")}
+            testID="FciDataSharingScreenEmailTestID"
             value={email.value}
           />
 
           <Banner
-            testID="FciDataSharingScreenAlertTextTestID"
-            pictogramName="emailDotNotif"
+            action={I18n.t("features.fci.shareDataScreen.alertLink")}
             color="neutral"
             content={I18n.t("features.fci.shareDataScreen.alertText")}
-            action={I18n.t("features.fci.shareDataScreen.alertLink")}
             onPress={() => {
               trackFciChangeEmail();
               navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -138,6 +136,8 @@ const FciDataSharingScreen = (): ReactElement => {
                 }
               });
             }}
+            pictogramName="emailDotNotif"
+            testID="FciDataSharingScreenAlertTextTestID"
           />
         </VStack>
       )}

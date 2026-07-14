@@ -2,14 +2,15 @@
  * Action types and action creator related to the Profile.
  */
 
-import * as O from "fp-ts/lib/Option";
 import { Omit } from "@pagopa/ts-commons/lib/types";
+import * as O from "fp-ts/lib/Option";
 import {
   ActionType,
   createAction,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
 import { ProfileError } from "../types";
 
@@ -30,8 +31,8 @@ export const profileLoadFailure = createAction(
 type ProfileUpsertPayload = Partial<Omit<InitializedProfile, "version">>;
 
 type UpsertProfileSuccessPayload = {
-  value: InitializedProfile;
   newValue: InitializedProfile;
+  value: InitializedProfile;
 };
 
 export const profileUpsert = createAsyncAction(
@@ -67,11 +68,11 @@ export const loadBonusBeforeRemoveAccount = createStandardAction(
 )<void>();
 
 export enum RemoveAccountMotivationEnum {
-  "UNDEFINED" = "undefined",
-  "NOT_UTILS" = "notUtils",
-  "NOT_SAFE" = "notSafe",
   "NEVER_USED" = "neverUsed",
-  "OTHERS" = "others"
+  "NOT_SAFE" = "notSafe",
+  "NOT_UTILS" = "notUtils",
+  "OTHERS" = "others",
+  "UNDEFINED" = "undefined"
 }
 
 export type RemoveAccountMotivationPayload = {
@@ -90,17 +91,17 @@ export const emailValidationPollingStop = createAction(
 );
 
 export type ProfileActions =
-  | ActionType<typeof resetProfileState>
-  | ActionType<typeof profileLoadSuccess>
-  | ActionType<typeof profileLoadRequest>
-  | ActionType<typeof profileLoadFailure>
-  | ActionType<typeof profileUpsert>
-  | ActionType<typeof startEmailValidation>
   | ActionType<typeof acknowledgeOnEmailValidation>
-  | ActionType<typeof profileFirstLogin>
   | ActionType<typeof clearCache>
-  | ActionType<typeof removeAccountMotivation>
-  | ActionType<typeof setEmailCheckAtStartupFailure>
   | ActionType<typeof emailValidationPollingStart>
   | ActionType<typeof emailValidationPollingStop>
-  | ActionType<typeof loadBonusBeforeRemoveAccount>;
+  | ActionType<typeof loadBonusBeforeRemoveAccount>
+  | ActionType<typeof profileFirstLogin>
+  | ActionType<typeof profileLoadFailure>
+  | ActionType<typeof profileLoadRequest>
+  | ActionType<typeof profileLoadSuccess>
+  | ActionType<typeof profileUpsert>
+  | ActionType<typeof removeAccountMotivation>
+  | ActionType<typeof resetProfileState>
+  | ActionType<typeof setEmailCheckAtStartupFailure>
+  | ActionType<typeof startEmailValidation>;

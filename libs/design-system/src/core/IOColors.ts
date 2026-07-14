@@ -1,10 +1,17 @@
 import type { ComponentProps } from "react";
-import { ColorValue } from "react-native";
 import type LinearGradient from "react-native-linear-gradient"; // Used by `getGradientColorValues` function
+
+import { ColorValue } from "react-native";
 
 /*
 TYPESCRIPT FUNCTIONS
 */
+
+function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
+  arg: T
+): T {
+  return arg;
+}
 
 // Ensure the Type for IOColor without losing the inferred types
 function asIOColors<T extends { [key: string]: ColorValue }>(arg: T): T {
@@ -12,12 +19,6 @@ function asIOColors<T extends { [key: string]: ColorValue }>(arg: T): T {
 }
 
 function asIOThemeColors<T extends { [key: string]: IOColors }>(arg: T): T {
-  return arg;
-}
-
-function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
-  arg: T
-): T {
   return arg;
 }
 
@@ -179,13 +180,13 @@ export const IOColorsStatus = asIOColors({
 
 export type IOColorsStatus = keyof typeof IOColorsStatus;
 
-export type IOColorsStatusForeground = Extract<
-  IOColorsStatus,
-  "error-850" | "warning-850" | "info-850" | "success-850"
->;
 export type IOColorsStatusBackground = Extract<
   IOColorsStatus,
-  "error-100" | "warning-100" | "info-100" | "success-100"
+  "error-100" | "info-100" | "success-100" | "warning-100"
+>;
+export type IOColorsStatusForeground = Extract<
+  IOColorsStatus,
+  "error-850" | "info-850" | "success-850" | "warning-850"
 >;
 
 export const IOColorsExtra = {

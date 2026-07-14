@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.37.0-rc.4](https://github.com/pagopa/io-app/compare/3.37.0-rc.3...3.37.0-rc.4) (2026-07-14)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Fix Proximity QR Code shadow and header transparency ([#8287](https://github.com/pagopa/io-app/issues/8287)) ([e6bb933](https://github.com/pagopa/io-app/commit/e6bb9337856e33dbd181b09b2503372f7962c171))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4649](https://pagopa.atlassian.net/browse/SIW-4649)] Remove credentials upgrade intro screen ([#8288](https://github.com/pagopa/io-app/issues/8288)) ([a0fb5b8](https://github.com/pagopa/io-app/commit/a0fb5b848a9bae73914b7bae8a1ac48594a4c9ed)), closes [/#diff-51baad308d36cfff5a54403fee378b30d8886031cf6e5944c51ada74c2d06564L1-L33](https://github.com/pagopa///issues/diff-51baad308d36cfff5a54403fee378b30d8886031cf6e5944c51ada74c2d06564L1-L33) [/#diff-e40748eed356fcfe6f43356df2bbac0e95ddaea0857592522dddaa024699ba31L37](https://github.com/pagopa///issues/diff-e40748eed356fcfe6f43356df2bbac0e95ddaea0857592522dddaa024699ba31L37) [/#diff-e40748eed356fcfe6f43356df2bbac0e95ddaea0857592522dddaa024699ba31L267-L271](https://github.com/pagopa///issues/diff-e40748eed356fcfe6f43356df2bbac0e95ddaea0857592522dddaa024699ba31L267-L271) [/#diff-a06ba13a569e2140cabcceebc1459929f03aed9e80dbcb74926b81518ad0bf39L238-L243](https://github.com/pagopa///issues/diff-a06ba13a569e2140cabcceebc1459929f03aed9e80dbcb74926b81518ad0bf39L238-L243) [/#diff-b8d89305174de50846c7251d432e3526cf61727e2c23ef5b4c7125219855278cL82](https://github.com/pagopa///issues/diff-b8d89305174de50846c7251d432e3526cf61727e2c23ef5b4c7125219855278cL82)
+* [[IOPLT-1937](https://pagopa.atlassian.net/browse/IOPLT-1937)] Remove unused keys via `py` script, prevent empty ones via new test ([#8227](https://github.com/pagopa/io-app/issues/8227)) ([0d5096e](https://github.com/pagopa/io-app/commit/0d5096e80cfd51817f705b6dbda2b8c29b2958b3))
+* **IT-Wallet:** [[SIW-4668](https://pagopa.atlassian.net/browse/SIW-4668)] Update proximity CTA label ([#8286](https://github.com/pagopa/io-app/issues/8286)) ([7e58a08](https://github.com/pagopa/io-app/commit/7e58a08f442cf2ac1ce56c54469099a05890cb23))
+* **IT-Wallet:** [[SIW-4669](https://pagopa.atlassian.net/browse/SIW-4669)] Temporarily disable PRE env status banner ([#8284](https://github.com/pagopa/io-app/issues/8284)) ([55a7469](https://github.com/pagopa/io-app/commit/55a7469d2624f05efbce31ac1df6652bcae482d9))
+
+## [3.37.0-rc.3](https://github.com/pagopa/io-app/compare/3.37.0-rc.2...3.37.0-rc.3) (2026-07-13)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4267](https://pagopa.atlassian.net/browse/SIW-4267),[SIW-4268](https://pagopa.atlassian.net/browse/SIW-4268),[SIW-4604](https://pagopa.atlassian.net/browse/SIW-4604)] Add Mixpanel tracking for Age Verification credential ([#8249](https://github.com/pagopa/io-app/issues/8249)) ([ffa7e75](https://github.com/pagopa/io-app/commit/ffa7e7575111ddb80e5ed99e667afcdd87295cbc))
+* **IT-Wallet:** [[SIW-4639](https://pagopa.atlassian.net/browse/SIW-4639)] Add loading indicator to continue button in credential offer intro screen ([#8282](https://github.com/pagopa/io-app/issues/8282)) ([128187e](https://github.com/pagopa/io-app/commit/128187e1ac8a30df3009c822a2eb5cb8670873c0))
+
+
+### Bug Fixes
+
+* [[IEL-685](https://pagopa.atlassian.net/browse/IEL-685)] Added logic to poll the app's status in the FCI flow ([#8260](https://github.com/pagopa/io-app/issues/8260)) ([b4490c6](https://github.com/pagopa/io-app/commit/b4490c62bcf901a672e21d8f89257e3069518912))
+
 ## [3.37.0-rc.2](https://github.com/pagopa/io-app/compare/3.37.0-rc.1...3.37.0-rc.2) (2026-07-13)
 
 

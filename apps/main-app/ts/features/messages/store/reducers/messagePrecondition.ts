@@ -1,6 +1,11 @@
 import { getType } from "typesafe-actions";
+
+import { MessageCategory } from "../../../../../definitions/communication/MessageCategory";
+import { TagEnum as SENDTagEnum } from "../../../../../definitions/communication/MessageCategoryPN";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/communication/ThirdPartyMessagePrecondition";
 import { Action } from "../../../../store/actions/types";
+import { isPnAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
@@ -10,40 +15,6 @@ import {
   shownPreconditionStatusAction,
   updateRequiredPreconditionStatusAction
 } from "../actions/preconditions";
-import { GlobalState } from "../../../../store/reducers/types";
-import { isPnAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { TagEnum as SENDTagEnum } from "../../../../../definitions/communication/MessageCategoryPN";
-import { MessageCategory } from "../../../../../definitions/communication/MessageCategory";
-
-type MessagePreconditionData = {
-  messageId: string;
-  categoryTag: MessageCategory["tag"];
-};
-
-type ErrorPreconditionStatus = MessagePreconditionData & {
-  state: "error";
-  reason: string;
-};
-type IdlePreconditionStatus = {
-  state: "idle";
-};
-type LoadingContentPreconditionStatus = MessagePreconditionData & {
-  state: "loadingContent";
-  content: ThirdPartyMessagePrecondition;
-};
-type RetrievingDataPreconditionStatus = MessagePreconditionData & {
-  state: "retrievingData";
-};
-type ScheduledPreconditionStatus = MessagePreconditionData & {
-  state: "scheduled";
-};
-type ShownPreconditionStatus = MessagePreconditionData & {
-  state: "shown";
-  content: ThirdPartyMessagePrecondition;
-};
-type UpdateRequiredPreconditionStatus = {
-  state: "updateRequired";
-};
 
 export type MessagePreconditionStatus =
   | ErrorPreconditionStatus
@@ -54,21 +25,51 @@ export type MessagePreconditionStatus =
   | ShownPreconditionStatus
   | UpdateRequiredPreconditionStatus;
 
-type MessagePreconditionState = MessagePreconditionStatus["state"];
 type ContentPreconditionStatus =
   | LoadingContentPreconditionStatus
   | ShownPreconditionStatus;
+type ErrorPreconditionStatus = MessagePreconditionData & {
+  reason: string;
+  state: "error";
+};
+type IdlePreconditionStatus = {
+  state: "idle";
+};
+type LoadingContentPreconditionStatus = MessagePreconditionData & {
+  content: ThirdPartyMessagePrecondition;
+  state: "loadingContent";
+};
+type MessagePreconditionData = {
+  categoryTag: MessageCategory["tag"];
+  messageId: string;
+};
+type MessagePreconditionState = MessagePreconditionStatus["state"];
 type MessagePreconditionStatusWithData = Exclude<
   MessagePreconditionStatus,
   IdlePreconditionStatus | UpdateRequiredPreconditionStatus
 >;
-type PreconditionTitleContent = "empty" | "header" | "loading";
+
 type PreconditionContent = "content" | "error" | "loading" | "update";
-type PreconditionFooter = "content" | "update" | "view";
+
 type PreconditionContentLayout = {
-  title: PreconditionTitleContent;
   content: PreconditionContent;
   footer: PreconditionFooter;
+  title: PreconditionTitleContent;
+};
+type PreconditionFooter = "content" | "update" | "view";
+type PreconditionTitleContent = "empty" | "header" | "loading";
+type RetrievingDataPreconditionStatus = MessagePreconditionData & {
+  state: "retrievingData";
+};
+type ScheduledPreconditionStatus = MessagePreconditionData & {
+  state: "scheduled";
+};
+type ShownPreconditionStatus = MessagePreconditionData & {
+  content: ThirdPartyMessagePrecondition;
+  state: "shown";
+};
+type UpdateRequiredPreconditionStatus = {
+  state: "updateRequired";
 };
 
 const INITIAL_STATE: IdlePreconditionStatus = {

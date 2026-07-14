@@ -1,7 +1,11 @@
 import { ActionType } from "typesafe-actions";
+
+import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
 import { TagEnum } from "../../../../../../definitions/communication/MessageCategoryBase";
 import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/communication/MessageCategoryPayment";
 import { TagEnum as SENDTagEnum } from "../../../../../../definitions/communication/MessageCategoryPN";
+import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { GlobalState } from "../../../../../store/reducers/types";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
@@ -31,9 +35,6 @@ import {
   preconditionsTitleSelector,
   shouldPresentPreconditionsBottomSheetSelector
 } from "../messagePrecondition";
-import { GlobalState } from "../../../../../store/reducers/types";
-import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
 
 const messageId = "01J1FJADCJ53SN4A11J3TBSKQE";
 const categoryTag = TagEnum.GENERIC;
@@ -43,10 +44,27 @@ const content = {
   markdown: "A markdown"
 };
 
+type ChangeStatusAction = ActionType<
+  | typeof errorPreconditionStatusAction
+  | typeof idlePreconditionStatusAction
+  | typeof loadingContentPreconditionStatusAction
+  | typeof retrievingDataPreconditionStatusAction
+  | typeof scheduledPreconditionStatusAction
+  | typeof shownPreconditionStatusAction
+  | typeof updateRequiredPreconditionStatusAction
+>;
+
 type PreconditionContent = Extract<
   MessagePreconditionStatus,
   { state: "loadingContent" }
 >["content"];
+
+type ReducerScenario = {
+  action: ChangeStatusAction;
+  expectedStatus: MessagePreconditionStatus;
+  initialStatus: MessagePreconditionStatus;
+  name: string;
+};
 
 const toErrorMPS = (
   inputMessageId: string,
@@ -119,147 +137,179 @@ const messagePreconditionStatusesGenerator = (
   toUpdateRequiredMPS()
 ];
 
-const computeExpectedOutput = (
-  fromStatus: MessagePreconditionStatus,
-  withAction: ActionType<
-    | typeof errorPreconditionStatusAction
-    | typeof idlePreconditionStatusAction
-    | typeof loadingContentPreconditionStatusAction
-    | typeof retrievingDataPreconditionStatusAction
-    | typeof scheduledPreconditionStatusAction
-    | typeof shownPreconditionStatusAction
-    | typeof updateRequiredPreconditionStatusAction
-  >
-) => {
-  switch (fromStatus.state) {
-    case "error":
-      switch (withAction.type) {
-        case "TO_IDLE_PRECONDITION_STATUS":
-          return toIdleMPS();
-        case "TO_RETRIEVING_DATA_PRECONDITION_STATUS":
-          return toRetrievingDataMPS(
-            fromStatus.messageId,
-            fromStatus.categoryTag
-          );
-      }
-      break;
-    case "idle":
-      switch (withAction.type) {
-        case "TO_SCHEDULED_PRECONDITION_STATUS":
-          return toScheduledMPS(
-            withAction.payload.messageId,
-            withAction.payload.categoryTag
-          );
-      }
-      break;
-    case "loadingContent":
-      switch (withAction.type) {
-        case "TO_IDLE_PRECONDITION_STATUS":
-          return toIdleMPS();
-        case "TO_ERROR_PRECONDITION_STATUS":
-          return toErrorMPS(
-            fromStatus.messageId,
-            fromStatus.categoryTag,
-            withAction.payload.reason
-          );
-        case "TO_SHOWN_PRECONDITION_STATUS":
-          return toShownMPS(
-            fromStatus.messageId,
-            fromStatus.categoryTag,
-            fromStatus.content
-          );
-      }
-      break;
-    case "retrievingData":
-      switch (withAction.type) {
-        case "TO_IDLE_PRECONDITION_STATUS":
-          return toIdleMPS();
-        case "TO_ERROR_PRECONDITION_STATUS":
-          return toErrorMPS(
-            fromStatus.messageId,
-            fromStatus.categoryTag,
-            withAction.payload.reason
-          );
-        case "TO_LOADING_CONTENT_PRECONDITION_STATUS":
-          if (withAction.payload.skipLoading) {
-            return toShownMPS(
-              fromStatus.messageId,
-              fromStatus.categoryTag,
-              withAction.payload.content
-            );
-          }
-          return toLoadingContentMPS(
-            fromStatus.messageId,
-            fromStatus.categoryTag,
-            withAction.payload.content
-          );
-      }
-      break;
-    case "scheduled":
-      switch (withAction.type) {
-        case "TO_RETRIEVING_DATA_PRECONDITION_STATUS":
-          return toRetrievingDataMPS(
-            fromStatus.messageId,
-            fromStatus.categoryTag
-          );
-        case "TO_UPDATE_REQUIRED_PRECONDITION_STATUS":
-          return toUpdateRequiredMPS();
-      }
-      break;
-    case "shown":
-      switch (withAction.type) {
-        case "TO_IDLE_PRECONDITION_STATUS":
-          return toIdleMPS();
-        case "TO_ERROR_PRECONDITION_STATUS":
-          return toErrorMPS(
-            fromStatus.messageId,
-            fromStatus.categoryTag,
-            withAction.payload.reason
-          );
-      }
-      break;
-    case "updateRequired":
-      switch (withAction.type) {
-        case "TO_IDLE_PRECONDITION_STATUS":
-          return toIdleMPS();
-      }
-      break;
-  }
-  return fromStatus;
-};
-
 describe("messagePrecondition reducer", () => {
-  const changeStatusActions = [
-    errorPreconditionStatusAction(toErrorPayload(errorReason)),
-    idlePreconditionStatusAction(toIdlePayload()),
-    loadingContentPreconditionStatusAction(
-      toLoadingContentPayload(content, false)
-    ),
-    loadingContentPreconditionStatusAction(
-      toLoadingContentPayload(content, true)
-    ),
-    retrievingDataPreconditionStatusAction(toRetrievingDataPayload()),
-    scheduledPreconditionStatusAction(
-      toScheduledPayload(messageId, categoryTag)
-    ),
-    shownPreconditionStatusAction(toShownPayload()),
-    updateRequiredPreconditionStatusAction(toUpdateRequiredPayload())
-  ];
-  messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(initialStatus =>
-    changeStatusActions.forEach(changeStatusAction => {
-      const expectedStatus = computeExpectedOutput(
-        initialStatus,
-        changeStatusAction
-      );
-      it(`should output '${expectedStatus.state}', starting from '${initialStatus.state}', after receiving action '${changeStatusAction.type}'`, () => {
-        const preconditionStatus = preconditionReducer(
-          initialStatus,
-          changeStatusAction
-        );
-        expect(preconditionStatus).toStrictEqual(expectedStatus);
-      });
-    })
+  const errorAction = errorPreconditionStatusAction(
+    toErrorPayload(errorReason)
   );
+  const idleAction = idlePreconditionStatusAction(toIdlePayload());
+  const loadingContentAction = loadingContentPreconditionStatusAction(
+    toLoadingContentPayload(content, false)
+  );
+  const retrievingDataAction = retrievingDataPreconditionStatusAction(
+    toRetrievingDataPayload()
+  );
+  const scheduledAction = scheduledPreconditionStatusAction(
+    toScheduledPayload(messageId, categoryTag)
+  );
+  const shownAction = shownPreconditionStatusAction(toShownPayload());
+  const skipLoadingContentAction = loadingContentPreconditionStatusAction(
+    toLoadingContentPayload(content, true)
+  );
+  const updateRequiredAction = updateRequiredPreconditionStatusAction(
+    toUpdateRequiredPayload()
+  );
+
+  const errorStatus = toErrorMPS(messageId, categoryTag, errorReason);
+  const idleStatus = toIdleMPS();
+  const loadingContentStatus = toLoadingContentMPS(
+    messageId,
+    categoryTag,
+    content
+  );
+  const retrievingDataStatus = toRetrievingDataMPS(messageId, categoryTag);
+  const scheduledStatus = toScheduledMPS(messageId, categoryTag);
+  const shownStatus = toShownMPS(messageId, categoryTag, content);
+  const updateRequiredStatus = toUpdateRequiredMPS();
+
+  const changeStatusActions: ReadonlyArray<ChangeStatusAction> = [
+    errorAction,
+    idleAction,
+    loadingContentAction,
+    skipLoadingContentAction,
+    retrievingDataAction,
+    scheduledAction,
+    shownAction,
+    updateRequiredAction
+  ];
+  const changeStatusScenarios: ReadonlyArray<ReducerScenario> = [
+    {
+      action: idleAction,
+      expectedStatus: idleStatus,
+      initialStatus: errorStatus,
+      name: "error to idle"
+    },
+    {
+      action: retrievingDataAction,
+      expectedStatus: retrievingDataStatus,
+      initialStatus: errorStatus,
+      name: "error to retrieving data"
+    },
+    {
+      action: scheduledAction,
+      expectedStatus: scheduledStatus,
+      initialStatus: idleStatus,
+      name: "idle to scheduled"
+    },
+    {
+      action: errorAction,
+      expectedStatus: errorStatus,
+      initialStatus: loadingContentStatus,
+      name: "loading content to error"
+    },
+    {
+      action: idleAction,
+      expectedStatus: idleStatus,
+      initialStatus: loadingContentStatus,
+      name: "loading content to idle"
+    },
+    {
+      action: shownAction,
+      expectedStatus: shownStatus,
+      initialStatus: loadingContentStatus,
+      name: "loading content to shown"
+    },
+    {
+      action: errorAction,
+      expectedStatus: errorStatus,
+      initialStatus: retrievingDataStatus,
+      name: "retrieving data to error"
+    },
+    {
+      action: idleAction,
+      expectedStatus: idleStatus,
+      initialStatus: retrievingDataStatus,
+      name: "retrieving data to idle"
+    },
+    {
+      action: loadingContentAction,
+      expectedStatus: loadingContentStatus,
+      initialStatus: retrievingDataStatus,
+      name: "retrieving data to loading content"
+    },
+    {
+      action: skipLoadingContentAction,
+      expectedStatus: shownStatus,
+      initialStatus: retrievingDataStatus,
+      name: "retrieving data to shown when loading is skipped"
+    },
+    {
+      action: retrievingDataAction,
+      expectedStatus: retrievingDataStatus,
+      initialStatus: scheduledStatus,
+      name: "scheduled to retrieving data"
+    },
+    {
+      action: updateRequiredAction,
+      expectedStatus: updateRequiredStatus,
+      initialStatus: scheduledStatus,
+      name: "scheduled to update required"
+    },
+    {
+      action: errorAction,
+      expectedStatus: errorStatus,
+      initialStatus: shownStatus,
+      name: "shown to error"
+    },
+    {
+      action: idleAction,
+      expectedStatus: idleStatus,
+      initialStatus: shownStatus,
+      name: "shown to idle"
+    },
+    {
+      action: idleAction,
+      expectedStatus: idleStatus,
+      initialStatus: updateRequiredStatus,
+      name: "update required to idle"
+    }
+  ];
+  const unchangedStatusScenarios: ReadonlyArray<ReducerScenario> = [
+    errorStatus,
+    idleStatus,
+    loadingContentStatus,
+    retrievingDataStatus,
+    scheduledStatus,
+    shownStatus,
+    updateRequiredStatus
+  ].flatMap(initialStatus =>
+    changeStatusActions
+      .filter(
+        action =>
+          !changeStatusScenarios.some(
+            scenario =>
+              scenario.initialStatus === initialStatus &&
+              scenario.action === action
+          )
+      )
+      .map(action => ({
+        action,
+        expectedStatus: initialStatus,
+        initialStatus,
+        name: `${initialStatus.state} ignores ${action.type}`
+      }))
+  );
+
+  test.each(changeStatusScenarios)("$name", scenario => {
+    expect(
+      preconditionReducer(scenario.initialStatus, scenario.action)
+    ).toEqual(scenario.expectedStatus);
+  });
+
+  test.each(unchangedStatusScenarios)("$name", scenario => {
+    expect(
+      preconditionReducer(scenario.initialStatus, scenario.action)
+    ).toStrictEqual(scenario.expectedStatus);
+  });
 });
 
 describe("shouldPresentPreconditionsBottomSheetSelector", () => {

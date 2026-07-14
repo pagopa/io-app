@@ -1,6 +1,7 @@
 import { useIOToast } from "@io-app/design-system";
-import { useCallback } from "react";
 import I18n from "i18next";
+import { useCallback } from "react";
+
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -8,8 +9,8 @@ import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import { resetOfflineAccessReason } from "../../../ingress/store/actions";
 import {
-  trackItwOfflineRicaricaAppIO,
-  trackItwOfflineReloadFailure
+  trackItwOfflineReloadFailure,
+  trackItwOfflineRicaricaAppIO
 } from "../analytics";
 import { ItwOfflineRicaricaAppIOSource } from "../analytics/types";
 

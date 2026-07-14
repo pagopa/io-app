@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { ColorValue, DimensionValue, ViewStyle } from "react-native";
 import Animated, { useReducedMotion } from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import { IOColors, IOEasingCurves } from "../../core";
 import { WithTestID } from "../../utils/types";
@@ -14,27 +15,27 @@ const pulseKeyframes = {
   "50%": { opacity: OPACITY_MIN }
 };
 
-type IOSkeletonSquare = {
-  shape: "square";
-  size: number;
-  radius?: number;
-  width?: never;
-  height?: never;
-};
-
-type IOSkeletonRectangle = {
-  shape: "rectangle";
-  width: DimensionValue;
-  height: number;
-  radius?: number;
-  size?: never;
-};
-
 export type IOSkeleton = WithTestID<
-  (IOSkeletonSquare | IOSkeletonRectangle) & {
+  (IOSkeletonRectangle | IOSkeletonSquare) & {
     color?: ColorValue;
   }
 >;
+
+type IOSkeletonRectangle = {
+  height: number;
+  radius?: number;
+  shape: "rectangle";
+  size?: never;
+  width: DimensionValue;
+};
+
+type IOSkeletonSquare = {
+  height?: never;
+  radius?: number;
+  shape: "square";
+  size: number;
+  width?: never;
+};
 
 export const IOSkeleton = ({
   shape,
@@ -63,7 +64,6 @@ export const IOSkeleton = ({
 
   return (
     <Animated.View
-      testID={testID}
       style={[
         baseStyle,
         reduceMotion
@@ -75,6 +75,7 @@ export const IOSkeleton = ({
               animationTimingFunction: IOEasingCurves.easeInOutSine
             }
       ]}
+      testID={testID}
     />
   );
 };

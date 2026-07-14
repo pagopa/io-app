@@ -1,15 +1,16 @@
 import { ListItemInfo } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback } from "react";
 import { Alert } from "react-native";
-import I18n from "i18next";
+
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import { useIOSelector } from "../../../../../store/hooks";
+import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { isNfcEnabledSelector } from "../store/selectors";
 import * as cieUtils from "../utils/cie";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 import { CieCardReaderScreenNavigationParams } from "./CieCardReaderScreen";
 
 const ActivateNfcScreen = () => {
@@ -74,11 +75,6 @@ const ActivateNfcScreen = () => {
 
   return (
     <IOScrollViewWithListItems
-      isHeaderVisible={true}
-      title={I18n.t("authentication.cie.nfc.title")}
-      subtitle={I18n.t("authentication.cie.nfc.subtitle")}
-      listItemHeaderLabel={I18n.t("authentication.cie.nfc.listItemTitle")}
-      renderItems={renderItems}
       actions={{
         type: "TwoButtons",
         primary: {
@@ -90,6 +86,11 @@ const ActivateNfcScreen = () => {
           onPress: onContinue
         }
       }}
+      isHeaderVisible={true}
+      listItemHeaderLabel={I18n.t("authentication.cie.nfc.listItemTitle")}
+      renderItems={renderItems}
+      subtitle={I18n.t("authentication.cie.nfc.subtitle")}
+      title={I18n.t("authentication.cie.nfc.title")}
     />
   );
 };

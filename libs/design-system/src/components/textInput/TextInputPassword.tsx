@@ -1,4 +1,5 @@
 import { ComponentProps, useCallback, useState } from "react";
+
 import { IconButton } from "../buttons";
 import { TextInputBase } from "./TextInputBase";
 
@@ -22,10 +23,10 @@ export const TextInputPassword = ({
 
   const rightElement = (
     <IconButton
-      icon={showPassword ? "eyeShow" : "eyeHide"}
-      disabled={disabled}
-      onPress={() => setShowPassword(v => !v)}
       accessibilityLabel={buttonAccessibilityLabel}
+      disabled={disabled}
+      icon={showPassword ? "eyeShow" : "eyeHide"}
+      onPress={() => setShowPassword(v => !v)}
     />
   );
 
@@ -37,9 +38,9 @@ export const TextInputPassword = ({
   return (
     <TextInputBase
       {...props}
+      isPassword={!showPassword}
       onBlur={onBlurHandler}
       rightElement={rightElement}
-      isPassword={!showPassword}
     />
   );
 };

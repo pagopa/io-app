@@ -1,12 +1,13 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
+
 import SignatureFieldItem from "../SignatureFieldItem";
 
 type Props = {
-  title: string;
-  value?: boolean;
   onChange: (_: boolean) => void;
   onPressDetail: () => void;
+  title: string;
+  value?: boolean;
 };
 
 describe("Test SignatureFieldItem component", () => {

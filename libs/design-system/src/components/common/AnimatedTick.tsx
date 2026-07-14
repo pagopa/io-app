@@ -9,9 +9,9 @@ import Svg, { Path, PathProps } from "react-native-svg";
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 interface AnimatedTickProps extends PathProps {
-  size?: number;
-  progress: SharedValue<number>;
   onLayout?: () => void;
+  progress: SharedValue<number>;
+  size?: number;
 }
 
 // Tick is designed to be within a 24x24 box
@@ -46,15 +46,15 @@ export const AnimatedTick = ({
   return (
     <Svg viewBox={`0 0 24 24`} {...(size ? { width: size, height: size } : {})}>
       <AnimatedPath
-        ref={ref}
-        onLayout={onLayout}
-        d={TickSVGPath}
         animatedProps={animatedProps}
+        d={TickSVGPath}
+        fill="none"
+        onLayout={onLayout}
+        ref={ref}
         strokeDasharray={length}
-        strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"
-        fill="none"
+        strokeWidth={2}
         {...pathProps}
       />
     </Svg>

@@ -1,28 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { MessageListCategory } from "../../../types/messageListCategory";
+
 import { UIMessage } from "../../../types";
-
-export type MessagePage = {
-  page: ReadonlyArray<UIMessage>;
-  previous?: string;
-  next?: string;
-};
-
-export type MessageError = {
-  reason: string;
-  time: Date;
-};
-
-export type MessagePagePot = pot.Pot<MessagePage, MessageError>;
-
-export type LastRequestValues = "previous" | "next" | "all";
-
-export type Collection = {
-  data: MessagePagePot;
-  /** persist the last action type occurred */
-  lastRequest?: LastRequestValues;
-  lastUpdateTime: Date;
-};
+import { MessageListCategory } from "../../../types/messageListCategory";
 
 /**
  * A list of messages and pagination inbox.
@@ -32,3 +11,25 @@ export type AllPaginated = {
   inbox: Collection;
   shownCategory: MessageListCategory;
 };
+
+export type Collection = {
+  data: MessagePagePot;
+  /** persist the last action type occurred */
+  lastRequest?: LastRequestValues;
+  lastUpdateTime: Date;
+};
+
+export type LastRequestValues = "all" | "next" | "previous";
+
+export type MessageError = {
+  reason: string;
+  time: Date;
+};
+
+export type MessagePage = {
+  next?: string;
+  page: ReadonlyArray<UIMessage>;
+  previous?: string;
+};
+
+export type MessagePagePot = pot.Pot<MessagePage, MessageError>;

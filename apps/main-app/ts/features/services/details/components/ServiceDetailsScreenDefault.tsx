@@ -1,9 +1,10 @@
 import { IOColors, useIOTheme } from "@io-app/design-system";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { getServiceActionsProps } from "../utils";
 import { ServiceDetailsScreenBase } from "../types";
+import { getServiceActionsProps } from "../utils";
 
 export type ServiceDetailsScreenDefaultProps = ServiceDetailsScreenBase;
 

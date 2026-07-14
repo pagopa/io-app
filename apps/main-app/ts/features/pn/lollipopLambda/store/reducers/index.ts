@@ -1,31 +1,32 @@
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../../store/actions/types";
+
 import { ErrorResponse } from "../../../../../../definitions/pn/lollipop-lambda/ErrorResponse";
 import { SuccessResponse } from "../../../../../../definitions/pn/lollipop-lambda/SuccessResponse";
+import { Action } from "../../../../../store/actions/types";
 import { sendLollipopLambdaAction } from "../actions";
 
+export type SENDLollipopLambdaState =
+  | SENDLollipopLambdaFailure
+  | SENDLollipopLambdaIdle
+  | SENDLollipopLambdaLoading
+  | SENDLollipopLambdaResponseReceived;
+type SENDLollipopLambdaFailure = {
+  reason: string;
+  type: "failure" | "invalidInput";
+};
 type SENDLollipopLambdaIdle = {
   type: "idle";
 };
 type SENDLollipopLambdaLoading = {
-  type: "loading";
   body: string;
   httpVerb: "Get" | "Post";
-};
-type SENDLollipopLambdaFailure = {
-  type: "invalidInput" | "failure";
-  reason: string;
+  type: "loading";
 };
 type SENDLollipopLambdaResponseReceived = {
-  type: "responseReceived";
+  responseBody: ErrorResponse | SuccessResponse | undefined;
   statusCode: number;
-  responseBody: SuccessResponse | ErrorResponse | undefined;
+  type: "responseReceived";
 };
-export type SENDLollipopLambdaState =
-  | SENDLollipopLambdaIdle
-  | SENDLollipopLambdaLoading
-  | SENDLollipopLambdaFailure
-  | SENDLollipopLambdaResponseReceived;
 
 export const INITIAL_LOLLIPOP_LAMBDA_STATE: SENDLollipopLambdaState = {
   type: "idle"

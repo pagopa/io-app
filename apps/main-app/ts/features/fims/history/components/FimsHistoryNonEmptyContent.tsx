@@ -6,6 +6,7 @@ import {
 } from "@io-app/design-system";
 import { FlashList } from "@shopify/flash-list";
 import I18n from "i18next";
+
 import { AccessHistoryPage } from "../../../../../definitions/fims_history/AccessHistoryPage";
 import { useIOSelector } from "../../../../store/hooks";
 import { useFimsHistoryExport } from "../hooks/useFimsHistoryResultToasts";
@@ -46,23 +47,21 @@ export const FimsHistoryNonEmptyContent = ({
   return (
     <>
       <FlashList
-        ListHeaderComponent={FimsHistoryHeaderComponent}
-        data={accesses?.data}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault,
           paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
         }}
+        data={accesses?.data}
         ItemSeparatorComponent={Divider}
         keyExtractor={item => item.id}
-        renderItem={item => <FimsHistoryListItemPicker item={item.item} />}
-        onEndReached={fetchMore}
         ListFooterComponent={LoadingFooter}
+        ListHeaderComponent={FimsHistoryHeaderComponent}
+        onEndReached={fetchMore}
+        renderItem={item => <FimsHistoryListItemPicker item={item.item} />}
       />
 
       {!shouldHideFooter && (
         <FooterActions
-          onMeasure={handleFooterActionsMeasurements}
-          testID="export-footer"
           actions={{
             type: "SingleButton",
             primary: {
@@ -72,6 +71,8 @@ export const FimsHistoryNonEmptyContent = ({
               testID: "export-button"
             }
           }}
+          onMeasure={handleFooterActionsMeasurements}
+          testID="export-footer"
         />
       )}
     </>

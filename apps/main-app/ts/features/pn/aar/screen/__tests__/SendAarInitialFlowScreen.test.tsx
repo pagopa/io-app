@@ -1,5 +1,7 @@
 import { act, waitFor } from "@testing-library/react-native";
+import _ from "lodash";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";

@@ -1,6 +1,7 @@
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+
 import { getGenericError } from "../../../../../../../utils/errors";
 import { cgnCategories } from "../../../../store/actions/categories";
 import { cgnCategoriesSaga } from "../cgnCategoriesSaga";

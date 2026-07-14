@@ -1,16 +1,17 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
 import * as USEIO from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as STORE_HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
 import * as MIXPANEL from "../../../analytics/activationReminderBanner";
 import PN_ROUTES from "../../../navigation/routes";
 import { dismissPnActivationReminderBanner } from "../../../store/actions";
 import { PNActivationReminderBanner } from "../PNActivationReminderBanner";
-import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
 
 jest.mock("rn-qr-generator", () => ({}));
 jest.mock("expo-screen-capture", () => ({}));

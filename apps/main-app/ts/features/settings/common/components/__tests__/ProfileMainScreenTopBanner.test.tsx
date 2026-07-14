@@ -3,16 +3,17 @@ import I18n from "i18next";
 import { PropsWithChildren, ReactElement } from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import { setShowAppearanceSettingsBanner } from "../../../../appearanceSettings/store/actions";
-import * as profileBannerImport from "../../../../appearanceSettings/store/selectors";
-import * as analytics from "../../../../pushNotifications/analytics";
-import * as settingsNavigate from "../../../../pushNotifications/utils";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
-import { ProfileMainScreenTopBanner } from "../ProfileMainScreenTopBanner";
+import { setShowAppearanceSettingsBanner } from "../../../../appearanceSettings/store/actions";
+import * as profileBannerImport from "../../../../appearanceSettings/store/selectors";
+import * as analytics from "../../../../pushNotifications/analytics";
+import * as settingsNavigate from "../../../../pushNotifications/utils";
 import { SETTINGS_ROUTES } from "../../navigation/routes";
+import { ProfileMainScreenTopBanner } from "../ProfileMainScreenTopBanner";
 
 jest.spyOn(settingsNavigate, "openSystemNotificationSettingsScreen");
 const mockNavigate = jest.fn();
