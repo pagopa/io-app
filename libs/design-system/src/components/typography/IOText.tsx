@@ -6,6 +6,7 @@ import {
   TextStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
+
 import { useIONewTypeface } from "../../context";
 import { IOColors } from "../../core";
 import { useBoldTextEnabled } from "../../utils/accessibility";
@@ -16,6 +17,8 @@ import {
   makeFontStyleObject
 } from "../../utils/fonts";
 
+export type IOTextProps = IOTextBaseProps & IOTextExcludedProps;
+
 /**
  * We exclude all of the following props when we define a new
  * typographic style in which all of these visual attributes
@@ -23,34 +26,8 @@ import {
  */
 export type IOTextStyle = Omit<
   TextStyle,
-  "fontFamily" | "fontSize" | "fontWeight" | "lineHeight" | "fontStyle"
+  "fontFamily" | "fontSize" | "fontStyle" | "fontWeight" | "lineHeight"
 >;
-
-export type TypographicStyleProps = Omit<
-  IOTextProps,
-  "style" | "font" | "size" | "weight" | "color" | "lineHeight" | "fontStyle"
-> & { textStyle?: IOTextStyle; style?: IOTextStyle } & {
-  color?: IOTextBaseProps["color"];
-};
-
-/**
- * The specific properties needed to calculate the font style using {@link makeFontStyleObject} (these information
- * cannot be included in the default StyleProp<TextStyle>
- */
-type IOTextBaseProps = {
-  size?: number;
-  weight?: IOFontWeight;
-  color?: IOColors;
-  font?: IOFontFamily;
-  lineHeight?: TextStyle["lineHeight"];
-  fontStyle?: TextStyle["fontStyle"];
-  textStyle?: IOTextStyle;
-  style?: IOTextStyle;
-};
-
-type IOTextExcludedProps = Omit<ComponentPropsWithRef<typeof Text>, "style">;
-
-export type IOTextProps = IOTextBaseProps & IOTextExcludedProps;
 
 /**
  * Extend `TypographicStyleProps` with extra props for styles that
@@ -58,13 +35,37 @@ export type IOTextProps = IOTextBaseProps & IOTextExcludedProps;
  */
 export type TypographicStyleAsLinkProps =
   | {
-      color?: IOColors;
+      accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
       asLink: true;
       avoidPressable?: true;
+      color?: IOColors;
       onPress: (event: GestureResponderEvent) => void;
-      accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
     }
-  | { color?: IOColors; asLink?: false; avoidPressable?: false };
+  | { asLink?: false; avoidPressable?: false; color?: IOColors };
+
+export type TypographicStyleProps = Omit<
+  IOTextProps,
+  "color" | "font" | "fontStyle" | "lineHeight" | "size" | "style" | "weight"
+> & {
+  color?: IOTextBaseProps["color"];
+} & { style?: IOTextStyle; textStyle?: IOTextStyle };
+
+/**
+ * The specific properties needed to calculate the font style using {@link makeFontStyleObject} (these information
+ * cannot be included in the default StyleProp<TextStyle>
+ */
+type IOTextBaseProps = {
+  color?: IOColors;
+  font?: IOFontFamily;
+  fontStyle?: TextStyle["fontStyle"];
+  lineHeight?: TextStyle["lineHeight"];
+  size?: number;
+  style?: IOTextStyle;
+  textStyle?: IOTextStyle;
+  weight?: IOFontWeight;
+};
+
+type IOTextExcludedProps = Omit<ComponentPropsWithRef<typeof Text>, "style">;
 
 /**
  * Decorate the function {@link makeFontStyleObject} with the additional color calculation.

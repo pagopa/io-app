@@ -3,6 +3,7 @@ import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
+
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import {
@@ -25,8 +26,8 @@ export type CredentialExitStep = "data_share" | "doc_preview";
 const credentialExitSurveyShownInSession = new Set<MixPanelCredential>();
 
 type Props = {
-  step?: CredentialExitStep;
   credential?: MixPanelCredential;
+  step?: CredentialExitStep;
 };
 
 /**
@@ -68,7 +69,6 @@ export const useItwCredentialExitSurveyBottomSheet = ({
         <View style={{ marginBottom: 16 }}>
           <VStack space={16}>
             <IOButton
-              variant="solid"
               fullWidth
               label={I18n.t(
                 "features.itWallet.feedback.credentialExit.bottomSheet.primaryAction"
@@ -80,15 +80,16 @@ export const useItwCredentialExitSurveyBottomSheet = ({
                 openWebUrl(surveyUrl);
                 dismiss();
               }}
+              variant="solid"
             />
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
-                variant="link"
-                textAlign="center"
                 label={I18n.t(
                   "features.itWallet.feedback.credentialExit.bottomSheet.secondaryAction"
                 )}
                 onPress={() => dismiss()}
+                textAlign="center"
+                variant="link"
               />
             </View>
           </VStack>

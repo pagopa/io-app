@@ -1,6 +1,6 @@
 import { ListItemAction } from "@io-app/design-system";
-
 import I18n from "i18next";
+
 import { useCgnUnsubscribe } from "../../hooks/useCgnUnsubscribe";
 
 const CgnUnsubscribe = () => {
@@ -8,11 +8,11 @@ const CgnUnsubscribe = () => {
   return (
     <ListItemAction
       accessibilityLabel={I18n.t("bonus.cgn.cta.deactivateBonus")}
-      variant="danger"
-      label={I18n.t("bonus.cgn.cta.deactivateBonus")}
-      testID="service-cgn-deactivate-bonus-button"
-      onPress={requestUnsubscription}
       icon="trashcan"
+      label={I18n.t("bonus.cgn.cta.deactivateBonus")}
+      onPress={requestUnsubscription}
+      testID="service-cgn-deactivate-bonus-button"
+      variant="danger"
     />
   );
 };

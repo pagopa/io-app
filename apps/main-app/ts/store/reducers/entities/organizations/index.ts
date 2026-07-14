@@ -2,6 +2,7 @@
  * Organizations reducer
  */
 import { combineReducers } from "redux";
+
 import { Action } from "../../../actions/types";
 import organizationsAllReducer, {
   OrganizationsAllState

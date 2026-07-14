@@ -1,10 +1,11 @@
 import { useEffect } from "react";
+
 import { useIOSelector, useIOStore } from "../../../store/hooks";
+import { trackPushNotificationBannerStillHidden } from "../analytics";
 import {
   isForceDismissAndNotUnreadMessagesHiddenSelector,
   unreadMessagesCountAfterForceDismissionSelector
 } from "../store/selectors/notificationsBannerDismissed";
-import { trackPushNotificationBannerStillHidden } from "../analytics";
 
 export const usePushNotificationsBannerTracking = () => {
   const store = useIOStore();

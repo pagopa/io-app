@@ -9,14 +9,15 @@ import {
   ViewStyle
 } from "react-native";
 import Animated, { AnimatedStyle } from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import {
+  buttonSolidHeight,
+  hexToRgba,
   IOColors,
   IOSpacer,
   IOSpacing,
-  IOVisualCostants,
-  buttonSolidHeight,
-  hexToRgba
+  IOVisualCostants
 } from "../../core";
 import { WithTestID } from "../../utils/types";
 import {
@@ -24,35 +25,8 @@ import {
   IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps
 } from "../buttons";
-import { VSpacer } from "./Spacer";
 import { useBottomMargins } from "./hooks/useBottomMargins";
-
-type IOButtonBlockProps = Omit<
-  IOButtonBlockSpecificProps,
-  "variant" | "fullWidth"
->;
-type IOButtonLinkProps = Omit<IOButtonLinkSpecificProps, "variant">;
-
-type FooterSingleButton = {
-  type: "SingleButton";
-  primary: IOButtonBlockProps;
-  secondary?: never;
-  tertiary?: never;
-};
-
-type FooterTwoButtons = {
-  type: "TwoButtons";
-  primary: IOButtonBlockProps;
-  secondary: IOButtonLinkProps;
-  tertiary?: never;
-};
-
-type FooterThreeButtons = {
-  type: "ThreeButtons";
-  primary: IOButtonBlockProps;
-  secondary: IOButtonBlockProps;
-  tertiary: IOButtonLinkProps;
-};
+import { VSpacer } from "./Spacer";
 
 export type FooterActionsMeasurements = {
   // Height of the "Actions" block
@@ -67,33 +41,60 @@ export type FooterActionsMeasurements = {
   */
   safeBottomAreaHeight: number;
 };
-
-type FooterActions = FooterSingleButton | FooterTwoButtons | FooterThreeButtons;
-
-type FooterAnimatedStyles = {
-  /* Apply object returned by `useAnimatedStyle` to the main block */
-  mainBlock?: AnimatedStyle<ViewStyle>;
-  /* Apply object returned by `useAnimatedStyle` to the background */
-  background?: AnimatedStyle<ViewStyle>;
-};
+type FooterActions = FooterSingleButton | FooterThreeButtons | FooterTwoButtons;
 
 type FooterActionsProps = WithTestID<
   PropsWithChildren<{
     actions?: FooterActions;
-    onMeasure?: (measurements: FooterActionsMeasurements) => void;
     animatedStyles?: FooterAnimatedStyles;
-    /* Make the background transparent */
-    transparent?: boolean;
-    /* Don't include safe area insets */
-    excludeSafeAreaMargins?: boolean;
-    /* Fixed at the bottom of the screen */
-    fixed?: boolean;
     /* Show the following elements:
        - Opaque red background to show the component boundaries
        - Height of the component */
     debugMode?: boolean;
+    /* Don't include safe area insets */
+    excludeSafeAreaMargins?: boolean;
+    /* Fixed at the bottom of the screen */
+    fixed?: boolean;
+    onMeasure?: (measurements: FooterActionsMeasurements) => void;
+    /* Make the background transparent */
+    transparent?: boolean;
   }>
 >;
+
+type FooterAnimatedStyles = {
+  /* Apply object returned by `useAnimatedStyle` to the background */
+  background?: AnimatedStyle<ViewStyle>;
+  /* Apply object returned by `useAnimatedStyle` to the main block */
+  mainBlock?: AnimatedStyle<ViewStyle>;
+};
+
+type FooterSingleButton = {
+  primary: IOButtonBlockProps;
+  secondary?: never;
+  tertiary?: never;
+  type: "SingleButton";
+};
+
+type FooterThreeButtons = {
+  primary: IOButtonBlockProps;
+  secondary: IOButtonBlockProps;
+  tertiary: IOButtonLinkProps;
+  type: "ThreeButtons";
+};
+
+type FooterTwoButtons = {
+  primary: IOButtonBlockProps;
+  secondary: IOButtonLinkProps;
+  tertiary?: never;
+  type: "TwoButtons";
+};
+
+type IOButtonBlockProps = Omit<
+  IOButtonBlockSpecificProps,
+  "fullWidth" | "variant"
+>;
+
+type IOButtonLinkProps = Omit<IOButtonLinkSpecificProps, "variant">;
 
 /* Margin between `solid` and `variant` variant */
 const spaceBetweenActions: IOSpacer = 16;
@@ -188,6 +189,7 @@ export const FooterActions = ({
           quickly, the content below is visible for about 100ms. Without this
           block, the content scrolls underneath. */}
       <Animated.View
+        pointerEvents="none"
         style={[
           {
             ...(fixed && {
@@ -203,13 +205,12 @@ export const FooterActions = ({
           },
           animatedStyles?.background
         ]}
-        pointerEvents="none"
       />
 
       <View
-        style={styles.buttonContainer}
         onLayout={getActionBlockMeasurements}
         pointerEvents="box-none"
+        style={styles.buttonContainer}
       >
         {debugMode && (
           <Text style={styles.debugText}>{`Height: ${actionBlockHeight}`}</Text>
@@ -237,7 +238,7 @@ const renderActions = (
   return (
     <Fragment>
       {primaryAction && (
-        <IOButton variant="solid" fullWidth {...primaryAction} />
+        <IOButton fullWidth variant="solid" {...primaryAction} />
       )}
       {type === "TwoButtons" && secondaryAction && (
         <View style={{ alignSelf: "center", marginBottom: extraBottomMargin }}>
@@ -250,7 +251,7 @@ const renderActions = (
           {secondaryAction && (
             <>
               <VSpacer size={spaceBetweenActions} />
-              <IOButton variant="outline" fullWidth {...secondaryAction} />
+              <IOButton fullWidth variant="outline" {...secondaryAction} />
             </>
           )}
           {tertiaryAction && (

@@ -8,15 +8,16 @@ import {
   ViewStyle
 } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+
 import { useIOTheme, useIOThemeContext } from "../../context";
 import { IOBannerBigSpacing, IOBannerRadius } from "../../core";
 import { hexToRgba, IOColors } from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
+import { IOButton } from "../buttons";
 import { Icon, IOIcons } from "../icons";
 import { VSpacer } from "../layout";
 import { Body } from "../typography";
-import { IOButton } from "../buttons";
 
 const styles = StyleSheet.create({
   container: {
@@ -31,29 +32,29 @@ const styles = StyleSheet.create({
 
 /* Component Types */
 
-type BaseBannerErrorStateProps = WithTestID<{
-  icon?: IOIcons;
-  label: string;
-  viewRef?: RefObject<View>;
-  // A11y related props
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
-}>;
+export type BannerErrorStateProps = BannerErrorStateActionProps &
+  BaseBannerErrorStateProps;
 
 type BannerErrorStateActionProps =
   | {
-      actionText?: string;
-      onPress: (event: GestureResponderEvent) => void;
-      accessibilityRole?: never;
-    }
-  | {
+      accessibilityRole?: AccessibilityRole;
       actionText?: never;
       onPress?: never;
-      accessibilityRole?: AccessibilityRole;
+    }
+  | {
+      accessibilityRole?: never;
+      actionText?: string;
+      onPress: (event: GestureResponderEvent) => void;
     };
 
-export type BannerErrorStateProps = BaseBannerErrorStateProps &
-  BannerErrorStateActionProps;
+type BaseBannerErrorStateProps = WithTestID<{
+  accessibilityHint?: string;
+  // A11y related props
+  accessibilityLabel?: string;
+  icon?: IOIcons;
+  label: string;
+  viewRef?: RefObject<View>;
+}>;
 
 export const BannerErrorState = ({
   viewRef,
@@ -84,14 +85,14 @@ export const BannerErrorState = ({
 
   const renderMainBlock = () => (
     <View
-      style={{ flex: 1, alignItems: "center", gap: 8 }}
-      accessible={true}
+      accessibilityHint={accessibilityHint}
       // A11y related props
       accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
       accessibilityRole={actionText !== undefined ? "button" : undefined}
+      accessible={true}
+      style={{ flex: 1, alignItems: "center", gap: 8 }}
     >
-      {icon && <Icon name={icon} size={24} color={foregroundColor} />}
+      {icon && <Icon color={foregroundColor} name={icon} size={24} />}
       {label && (
         <Body color={foregroundColor} style={{ textAlign: "center" }}>
           {label}
@@ -101,16 +102,16 @@ export const BannerErrorState = ({
         /* Disable pointer events to avoid
             pressed state on the button */
         <View
-          pointerEvents="none"
           accessibilityElementsHidden
           importantForAccessibility="no-hide-descendants"
+          pointerEvents="none"
         >
           <VSpacer size={4} />
           <IOButton
-            variant="link"
             color="primary"
-            onPress={onPress}
             label={actionText}
+            onPress={onPress}
+            variant="link"
           />
         </View>
       )}
@@ -119,12 +120,12 @@ export const BannerErrorState = ({
 
   const PressableContent = () => (
     <Pressable
-      ref={viewRef}
-      testID={testID}
+      accessible={false}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      accessible={false}
+      ref={viewRef}
+      testID={testID}
     >
       <Animated.View
         style={[styles.container, dynamicContainerStyles, scaleAnimatedStyle]}
@@ -136,14 +137,14 @@ export const BannerErrorState = ({
 
   const StaticComponent = () => (
     <View
-      ref={viewRef}
-      testID={testID}
-      style={[styles.container, dynamicContainerStyles]}
-      // A11y related props
-      accessible={false}
       accessibilityHint={accessibilityHint}
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={"text"}
+      // A11y related props
+      accessible={false}
+      ref={viewRef}
+      style={[styles.container, dynamicContainerStyles]}
+      testID={testID}
     >
       {renderMainBlock()}
     </View>

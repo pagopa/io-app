@@ -1,7 +1,12 @@
 import { Alert } from "@io-app/design-system";
 import I18n from "i18next";
+
 import { NewCredential } from "../../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+
+type Props = {
+  credentialType: ValidityAlertCredential;
+};
 
 /**
  * proof_of_age is a new credential but shows its own usage banner instead of this generic
@@ -11,10 +16,6 @@ type ValidityAlertCredential = Exclude<
   NewCredential,
   CredentialType.PROOF_OF_AGE
 >;
-
-type Props = {
-  credentialType: ValidityAlertCredential;
-};
 
 // Validity alert content locale key per credential type. Kept as explicit
 // literals (instead of a dynamically composed key) so they remain statically
@@ -41,6 +42,6 @@ export const ItwPresentationNewCredentialValidityAlert = ({
   const content = I18n.t(validityAlertContentKeys[credentialType]);
 
   return (
-    <Alert testID="newCredentialAlertTestID" variant="info" content={content} />
+    <Alert content={content} testID="newCredentialAlertTestID" variant="info" />
   );
 };

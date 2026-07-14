@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
-import { Action } from "../actions/types";
+
 import zendeskReducer, {
   ZendeskState
 } from "../../features/zendesk/store/reducers";
@@ -8,6 +8,7 @@ import {
   assistanceToolRemoteConfig,
   canShowHelp
 } from "../../utils/supportAssistance";
+import { Action } from "../actions/types";
 import { assistanceToolConfigSelector } from "./backendStatus/remoteConfig";
 
 export type AssistanceToolsState = {

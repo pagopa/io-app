@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
+
 import { IOColors, IOVisualCostants } from "../../core";
 import { IconButton } from "../buttons";
 import { H4 } from "../typography";
@@ -22,9 +23,9 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  title: string | ReactNode;
-  onClose: () => void;
   closeAccessibilityLabel: string;
+  onClose: () => void;
+  title: ReactNode | string;
 };
 
 /**
@@ -50,24 +51,24 @@ export const ModalBSHeader = ({
   }, []);
 
   return (
-    <View style={styles.container} ref={headerRef}>
+    <View ref={headerRef} style={styles.container}>
       {isValidElement(title) ? (
         title
       ) : (
         <View
-          style={{ flex: 1 }}
-          accessible={true}
-          accessibilityRole={"header"}
           accessibilityLabel={typeof title === "string" ? title : undefined}
+          accessibilityRole={"header"}
+          accessible={true}
+          style={{ flex: 1 }}
         >
           <H4>{title}</H4>
         </View>
       )}
       <IconButton
-        color="neutral"
-        onPress={onClose}
-        icon="closeMedium"
         accessibilityLabel={closeAccessibilityLabel}
+        color="neutral"
+        icon="closeMedium"
+        onPress={onClose}
       />
     </View>
   );

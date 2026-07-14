@@ -1,26 +1,22 @@
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect } from "react";
+
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import {
-  trackAddFirstCredential,
-  trackBackToWallet,
-  trackItwCredentialReissuingFailed
-} from "../analytics";
 import {
   getMixPanelCredential,
   toSurveyAuthMethod
 } from "../../analytics/utils";
 import ItwActivationSuccessFeedbackBanner from "../../common/components/ItwActivationSuccessFeedbackBanner";
 import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
-import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { selectHasResolvedCredentialOffer } from "../../machine/credential/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
@@ -32,6 +28,11 @@ import {
   selectIssuanceMode,
   selectUpgradeFailedCredentials
 } from "../../machine/eid/selectors";
+import {
+  trackAddFirstCredential,
+  trackBackToWallet,
+  trackItwCredentialReissuingFailed
+} from "../analytics";
 
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();
@@ -134,23 +135,23 @@ export const ItwIssuanceEidResultScreen = () => {
   if (!isL3IssuanceFlow) {
     return (
       <OperationResultScreenContent
-        pictogram="success"
-        title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
-        subtitle={I18n.t(
-          "features.itWallet.issuance.eidResult.success.subtitle"
-        )}
         action={{
           label: I18n.t(
             "features.itWallet.issuance.eidResult.success.primaryAction"
           ),
           onPress: handleAddCredential
         }}
+        pictogram="success"
         secondaryAction={{
           label: I18n.t(
             "features.itWallet.issuance.eidResult.success.secondaryAction"
           ),
           onPress: handleGoToWalletWithTracking
         }}
+        subtitle={I18n.t(
+          "features.itWallet.issuance.eidResult.success.subtitle"
+        )}
+        title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
       />
     );
   }
@@ -178,10 +179,10 @@ const ItwEidSuccessResultContent = ({
   docStatus = "not_active",
   showBanner = true
 }: {
+  docStatus?: "active" | "not_active";
   isWalletEmpty: boolean;
   onAddDocument: () => void;
   onGoToWallet: () => void;
-  docStatus?: "active" | "not_active";
   showBanner?: boolean;
 }) => {
   const route = useRoute();
@@ -192,22 +193,22 @@ const ItwEidSuccessResultContent = ({
   if (isWalletEmpty) {
     return (
       <OperationResultScreenContent
-        pictogram="success"
-        title={I18n.t("features.itWallet.issuance.eidResult.success.itw.title")}
-        subtitle={I18n.t(
-          "features.itWallet.issuance.eidResult.success.itw.withoutDocuments.subtitle"
-        )}
         action={{
           label: I18n.t(
             "features.itWallet.issuance.eidResult.success.itw.withoutDocuments.primaryAction"
           ),
           onPress: onGoToWallet
         }}
+        pictogram="success"
+        subtitle={I18n.t(
+          "features.itWallet.issuance.eidResult.success.itw.withoutDocuments.subtitle"
+        )}
+        title={I18n.t("features.itWallet.issuance.eidResult.success.itw.title")}
       >
         {showBanner && (
           <ItwActivationSuccessFeedbackBanner
-            docStatus={docStatus}
             authMethod={authMethod}
+            docStatus={docStatus}
           />
         )}
       </OperationResultScreenContent>
@@ -217,12 +218,12 @@ const ItwEidSuccessResultContent = ({
   return (
     <ItwIssuanceEidIssuanceResultContent
       docStatus={docStatus}
-      showBanner={showBanner}
       onAddCredential={onAddDocument}
       onBackToWallet={() => {
         onGoToWallet();
         trackBackToWallet({ exit_page: route.name, credential: "ITW_ID_V2" });
       }}
+      showBanner={showBanner}
     />
   );
 };
@@ -247,11 +248,6 @@ const ItwIssuanceEidIssuanceResultContent = ({
 
   return (
     <OperationResultScreenContent
-      pictogram="success"
-      title={I18n.t("features.itWallet.issuance.eidResult.success.itw.title")}
-      subtitle={I18n.t(
-        "features.itWallet.issuance.eidResult.success.itw.withDocuments.subtitle"
-      )}
       action={{
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.itw.withDocuments.primaryAction"
@@ -260,17 +256,22 @@ const ItwIssuanceEidIssuanceResultContent = ({
         icon: "addSmall",
         iconPosition: "end"
       }}
+      pictogram="success"
       secondaryAction={{
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.secondaryAction"
         ),
         onPress: onBackToWallet
       }}
+      subtitle={I18n.t(
+        "features.itWallet.issuance.eidResult.success.itw.withDocuments.subtitle"
+      )}
+      title={I18n.t("features.itWallet.issuance.eidResult.success.itw.title")}
     >
       {showBanner && (
         <ItwActivationSuccessFeedbackBanner
-          docStatus={docStatus}
           authMethod={authMethod}
+          docStatus={docStatus}
           style={{ marginVertical: 24 }}
         />
       )}
@@ -309,8 +310,8 @@ const ItwIssuanceEidUpgradeResultContent = ({
   if (isLoading) {
     return (
       <LoadingScreenContent
-        title={I18n.t("features.itWallet.issuance.upgrade.loading.title")}
         subtitle={I18n.t("features.itWallet.issuance.upgrade.loading.subtitle")}
+        title={I18n.t("features.itWallet.issuance.upgrade.loading.title")}
       />
     );
   }
@@ -325,15 +326,15 @@ const ItwIssuanceEidUpgradeResultContent = ({
 
     return (
       <OperationResultScreenContent
-        pictogram="success"
-        title={title}
-        subtitle={I18n.t("features.itWallet.issuance.upgrade.failure.subtitle")}
         action={{
           label: I18n.t(
             "features.itWallet.issuance.upgrade.failure.primaryAction"
           ),
           onPress: handleBackToWallet
         }}
+        pictogram="success"
+        subtitle={I18n.t("features.itWallet.issuance.upgrade.failure.subtitle")}
+        title={title}
       />
     );
   }
@@ -342,10 +343,10 @@ const ItwIssuanceEidUpgradeResultContent = ({
   // The survey banner is shown in WalletHome (via Redux) instead of here.
   return (
     <ItwEidSuccessResultContent
+      docStatus="active"
       isWalletEmpty={isWalletEmpty}
       onAddDocument={handleAddCredential}
       onGoToWallet={handleGoToWalletWithTracking}
-      docStatus="active"
       showBanner={false}
     />
   );
@@ -362,13 +363,6 @@ const ItwIssuanceEidReissuanceResultContent = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="success"
-      title={I18n.t(
-        "features.itWallet.issuance.eidResult.success.reissuance.title"
-      )}
-      subtitle={I18n.t(
-        "features.itWallet.issuance.eidResult.success.reissuance.subtitle"
-      )}
       action={{
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.reissuance.primaryAction"
@@ -381,6 +375,13 @@ const ItwIssuanceEidReissuanceResultContent = () => {
           });
         }
       }}
+      pictogram="success"
+      subtitle={I18n.t(
+        "features.itWallet.issuance.eidResult.success.reissuance.subtitle"
+      )}
+      title={I18n.t(
+        "features.itWallet.issuance.eidResult.success.reissuance.title"
+      )}
     >
       <ItwReissuanceFeedbackBanner />
     </OperationResultScreenContent>

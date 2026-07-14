@@ -69,7 +69,10 @@
       "list": {
         "counter": "Elemento {{index}} di {{total}}"
       },
-      "progressTracker": "{{index}} di {{total}}"
+      "progressTracker": "{{index}} di {{total}}",
+      "otpInput": {
+        "valueText": "Hai inserito {{valueLength}} di {{length}} cifre"
+      }
     },
     "date": {
       "invalid": "data non valida"

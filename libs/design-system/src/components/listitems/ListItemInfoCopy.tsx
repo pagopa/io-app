@@ -1,25 +1,26 @@
 import { ComponentProps, ReactNode } from "react";
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
-import { IOListItemStyles, IOListItemVisualParams } from "../../core";
+
 import { useIOTheme } from "../../context";
+import { IOListItemStyles, IOListItemVisualParams } from "../../core";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
-import { IOIcons, Icon } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { BodySmall, H6 } from "../typography";
 
-export type ListItemInfoCopy = WithTestID<{
-  label: string;
-  value: string | ReactNode;
-  numberOfLines?: number;
-  onPress: (event: GestureResponderEvent) => void;
-  icon?: IOIcons;
-}> &
-  Pick<
-    ComponentProps<typeof Pressable>,
-    "accessibilityLabel" | "accessibilityHint"
-  >;
+export type ListItemInfoCopy = Pick<
+  ComponentProps<typeof Pressable>,
+  "accessibilityHint" | "accessibilityLabel"
+> &
+  WithTestID<{
+    icon?: IOIcons;
+    label: string;
+    numberOfLines?: number;
+    onPress: (event: GestureResponderEvent) => void;
+    value: ReactNode | string;
+  }>;
 
 export const ListItemInfoCopy = ({
   label,
@@ -47,7 +48,7 @@ export const ListItemInfoCopy = ({
 
   const listItemInfoCopyContent = (
     <>
-      <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+      <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
         {label}
       </BodySmall>
       {/* Let developer using a custom component (e.g: skeleton) */}
@@ -63,19 +64,19 @@ export const ListItemInfoCopy = ({
 
   return (
     <Pressable
+      accessibilityHint={accessibilityHint}
+      accessibilityLabel={listItemAccessibilityLabel}
+      accessibilityRole="button"
+      accessible={true}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
-      accessible={true}
-      accessibilityLabel={listItemAccessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole="button"
       testID={testID}
     >
       <Animated.View
-        importantForAccessibility="no-hide-descendants"
         accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
         style={[IOListItemStyles.listItem, backgroundAnimatedStyle]}
       >
         <Animated.View
@@ -93,16 +94,16 @@ export const ListItemInfoCopy = ({
           {icon && !hugeFontEnabled && (
             <Icon
               allowFontScaling
-              name={icon}
               color={theme["icon-decorative"]}
+              name={icon}
               size={IOListItemVisualParams.iconSize}
             />
           )}
           <View style={{ flex: 1 }}>{listItemInfoCopyContent}</View>
           <Icon
             allowFontScaling
-            name="copy"
             color={foregroundColor}
+            name="copy"
             size={IOListItemVisualParams.chevronSize}
           />
         </Animated.View>

@@ -48,14 +48,14 @@ export const fontWeights: Record<IOFontWeight, FontWeightValue> = {
 };
 
 export enum FontStyle {
-  "normal" = "normal",
-  "italic" = "italic"
+  "italic" = "italic",
+  "normal" = "normal"
 }
 
 type FontStyleObject = {
   fontFamily: string;
-  fontWeight?: FontWeightValue;
   fontStyle?: FontStyle;
+  fontWeight?: FontWeightValue;
 };
 
 /**

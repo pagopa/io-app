@@ -10,15 +10,16 @@ import {
   raise,
   setup
 } from "xstate";
+
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
 import {
   CredentialAccessToken,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
+import { isMrtdPoPChallengeRequired } from "../../common/utils/mrtdUrl";
 import { ItwTags } from "../tags";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
-import { isMrtdPoPChallengeRequired } from "../../common/utils/mrtdUrl";
 import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,

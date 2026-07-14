@@ -8,6 +8,7 @@ import {
   StateFrom,
   waitFor as waitForActor
 } from "xstate";
+
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
@@ -15,7 +16,9 @@ import {
   CredentialMetadata,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
+import { CieWarningType } from "../../../identification/cie/utils/types";
 import { ItwTags } from "../../tags";
+import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
 import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
@@ -35,10 +38,8 @@ import {
   InitialContext,
   MrtdPoPContext
 } from "../context";
-import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
-import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
-import { CieWarningType } from "../../../identification/cie/utils/types";
 import { IssuanceFailureType } from "../failure";
+import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 

@@ -4,6 +4,7 @@ import I18n from "i18next";
 import { useCallback } from "react";
 import { Dimensions, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import { useGuidedTourRegion } from "../../../tour/components/useGuidedTourRegion";

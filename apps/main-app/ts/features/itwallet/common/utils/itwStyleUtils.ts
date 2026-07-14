@@ -2,6 +2,7 @@ import { IOColors, useIOThemeContext } from "@io-app/design-system";
 import Color from "color";
 import { useMemo } from "react";
 import { ColorSchemeName, StatusBarStyle } from "react-native";
+
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
@@ -11,8 +12,8 @@ import { CredentialType } from "./itwMocksUtils";
 
 export type CredentialTheme = {
   backgroundColor: string;
-  textColor: string;
   statusBarStyle: StatusBarStyle;
+  textColor: string;
   variant: HeaderSecondLevelHookProps["variant"];
 };
 
@@ -30,19 +31,9 @@ const getLegacyThemeColorByCredentialType = (
         backgroundColor: "#744C63",
         textColor: "#652035"
       };
-    case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
-      return {
-        backgroundColor: "#B3DCF9",
-        textColor: "#032D5C"
-      };
-    case CredentialType.EUROPEAN_DISABILITY_CARD:
-      return {
-        backgroundColor: "#315B76",
-        textColor: "#17406F"
-      };
+    case CredentialType.EDUCATION_ATTENDANCE:
     case CredentialType.EDUCATION_DEGREE:
     case CredentialType.EDUCATION_DIPLOMA:
-    case CredentialType.EDUCATION_ATTENDANCE:
       return {
         backgroundColor: "#F2F1CE",
         textColor: IOColors.black
@@ -51,6 +42,16 @@ const getLegacyThemeColorByCredentialType = (
       return {
         backgroundColor: "#E0F2CE",
         textColor: IOColors.black
+      };
+    case CredentialType.EUROPEAN_DISABILITY_CARD:
+      return {
+        backgroundColor: "#315B76",
+        textColor: "#17406F"
+      };
+    case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
+      return {
+        backgroundColor: "#B3DCF9",
+        textColor: "#032D5C"
       };
     case CredentialType.RESIDENCY:
       return {

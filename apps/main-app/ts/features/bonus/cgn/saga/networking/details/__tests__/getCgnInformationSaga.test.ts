@@ -1,12 +1,12 @@
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { getGenericError } from "../../../../../../../utils/errors";
 
-import { cgnGetInformationSaga } from "../getCgnInformationSaga";
-import { cgnDetails } from "../../../../store/actions/details";
 import { Card } from "../../../../../../../../definitions/cgn/Card";
+import { getGenericError } from "../../../../../../../utils/errors";
 import { walletAddCards } from "../../../../../../wallet/store/actions/cards";
+import { cgnDetails } from "../../../../store/actions/details";
+import { cgnGetInformationSaga } from "../getCgnInformationSaga";
 
 const card = {
   activation_date: new Date("2024-01-01"),

@@ -1,12 +1,13 @@
 import { fireEvent, render } from "@testing-library/react-native";
+import _ from "lodash";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import configureMockStore, { MockStoreEnhanced } from "redux-mock-store";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import _ from "lodash";
-import { IdentificationModal } from "../IdentificationModal";
-import { appReducer } from "../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
+import { IdentificationModal } from "../IdentificationModal";
 
 jest.mock("react-native-safe-area-context", () => ({
   useSafeAreaInsets: jest.fn()

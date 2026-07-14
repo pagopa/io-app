@@ -1,8 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { isGestureEnabled } from "../../../utils/navigation";
-import ValidateEmailScreen from "../screens/ValidateEmailScreen";
-import EmailAlreadyTakenScreen from "../screens/EmailAlreadyTakenScreen";
+
 import ROUTES from "../../../navigation/routes";
+import { isGestureEnabled } from "../../../utils/navigation";
+import EmailAlreadyTakenScreen from "../screens/EmailAlreadyTakenScreen";
+import ValidateEmailScreen from "../screens/ValidateEmailScreen";
 
 const Stack = createStackNavigator();
 /**
@@ -14,14 +15,14 @@ const CheckEmailNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
-      options={{ headerShown: true }}
-      name={ROUTES.CHECK_EMAIL_NOT_VERIFIED}
       component={ValidateEmailScreen}
+      name={ROUTES.CHECK_EMAIL_NOT_VERIFIED}
+      options={{ headerShown: true }}
     />
     <Stack.Screen
-      options={{ headerShown: true }}
-      name={ROUTES.CHECK_EMAIL_ALREADY_TAKEN}
       component={EmailAlreadyTakenScreen}
+      name={ROUTES.CHECK_EMAIL_ALREADY_TAKEN}
+      options={{ headerShown: true }}
     />
   </Stack.Navigator>
 );

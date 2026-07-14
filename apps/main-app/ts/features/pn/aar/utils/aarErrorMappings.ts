@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { ComponentType } from "react";
+
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { isTestEnv } from "../../../../utils/environment";
 import {
@@ -70,8 +71,8 @@ export const getAarErrorBehaviour = (
 };
 
 type AarErrorBehaviour = {
-  track: (reason: string) => void;
   Component: ComponentType;
+  track: (reason: string) => void;
 };
 
 const specificBehavioursByStatus: {

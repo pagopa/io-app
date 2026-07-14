@@ -1,11 +1,12 @@
 import { Divider, H3, H6, IOSkeleton, useIOTheme } from "@io-app/design-system";
-import { View } from "react-native";
 import I18n from "i18next";
+import { View } from "react-native";
+
 import { formatNumberCurrencyCentsOrDefault } from "../../../idpay/common/utils/strings";
 
 type TotalAmountSectionProps = {
-  totalAmount?: number;
   loading?: boolean;
+  totalAmount?: number;
 };
 
 export const WalletPaymentTotalAmount = ({
@@ -30,7 +31,7 @@ export const WalletPaymentTotalAmount = ({
         </H6>
         {loading && (
           <View>
-            <IOSkeleton shape="rectangle" width={72} height={34} radius={8} />
+            <IOSkeleton height={34} radius={8} shape="rectangle" width={72} />
           </View>
         )}
         {!loading && <H3>{formatNumberCurrencyCentsOrDefault(totalAmount)}</H3>}
