@@ -11,24 +11,16 @@ const locales = Object.entries(supportedLangs).map(([name, { index }]) => ({
  * Collects the dotted path of every empty string value and of every object with
  * no children.
  */
-const findEmptyEntries = (node: unknown): ReadonlyArray<string> => {
-  if (typeof node === "string") {
-    return [];
-  }
+const findEmptyEntries = (node: unknown, path = ""): ReadonlyArray<string> => {
   if (typeof node !== "object" || node === null) {
-    return [];
+    return node === "" ? [path] : [];
   }
-  return Object.entries(node).flatMap(([key, value]) => {
-    if (typeof value === "string") {
-      return value === "" ? [key] : [];
-    }
-    if (typeof value === "object" && value !== null) {
-      return Object.keys(value).length === 0
-        ? [key]
-        : findEmptyEntries(value).map(path => `${key}.${path}`);
-    }
-    return [];
-  });
+  const entries = Object.entries(node);
+  return entries.length === 0
+    ? [path]
+    : entries.flatMap(([key, value]) =>
+        findEmptyEntries(value, path === "" ? key : `${path}.${key}`)
+      );
 };
 
 describe("locales", () => {
