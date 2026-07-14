@@ -2,6 +2,7 @@ import { format as dateFnsFormat } from "date-fns";
 import dfns_de from "date-fns/locale/de";
 import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
+import dfns_sl from "date-fns/locale/sl";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -17,7 +18,12 @@ type DateFnsLocale = typeof import("date-fns/locale/it");
 
 type DFNSLocales = Record<Locales, DateFnsLocale>;
 
-const locales: DFNSLocales = { it: dfns_it, en: dfns_en, de: dfns_de };
+const locales: DFNSLocales = {
+  it: dfns_it,
+  en: dfns_en,
+  de: dfns_de,
+  sl: dfns_sl
+};
 
 export const pad = (n: number) => n.toString().padStart(2, "0");
 
