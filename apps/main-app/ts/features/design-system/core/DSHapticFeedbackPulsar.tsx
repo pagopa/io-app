@@ -1,4 +1,4 @@
-import { IOButton, H4, VStack, useIOTheme } from "@pagopa/io-app-design-system";
+import { IOButton, H4, VStack, useIOTheme } from "@io-app/design-system";
 import { Presets } from "react-native-pulsar";
 
 import { DesignSystemScreen } from "../components/DesignSystemScreen";

@@ -1,7 +1,6 @@
-import { Body, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper, VSpacer, IOButton } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
-import { IOButton } from "@pagopa/io-app-design-system/src/components/buttons";
 import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";

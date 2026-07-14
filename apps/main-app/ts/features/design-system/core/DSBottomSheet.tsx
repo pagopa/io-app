@@ -8,7 +8,7 @@ import {
   VSpacer,
   VStack,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";

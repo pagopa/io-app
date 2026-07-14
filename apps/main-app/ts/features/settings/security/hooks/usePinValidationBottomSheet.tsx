@@ -1,4 +1,4 @@
-import { IOMarkdown, VSpacer } from "@pagopa/io-app-design-system";
+import { IOMarkdown, VSpacer } from "@io-app/design-system";
 import { memo } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

@@ -1,6 +1,6 @@
 import { ColorValue, View } from "react-native";
 import { memo } from "react";
-import { AnimatedIcon, IONavIcons } from "@pagopa/io-app-design-system";
+import { AnimatedIcon, IONavIcons } from "@io-app/design-system";
 
 type TabIconComponent = {
   focused: boolean;

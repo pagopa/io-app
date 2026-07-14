@@ -1,4 +1,4 @@
-import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, VSpacer } from "@io-app/design-system";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   fallbackForLocalizedMessageKeys,

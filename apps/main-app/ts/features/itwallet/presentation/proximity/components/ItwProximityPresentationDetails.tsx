@@ -1,4 +1,4 @@
-import { VStack } from "@pagopa/io-app-design-system";
+import { VStack } from "@io-app/design-system";
 import { memo } from "react";
 import { View } from "react-native";
 import { ItwClaimsSelector } from "../../common/components/ItwClaimsSelector";

@@ -1,4 +1,4 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";

@@ -1,8 +1,4 @@
-import {
-  ContentWrapper,
-  Divider,
-  ListItemInfo
-} from "@pagopa/io-app-design-system";
+import { ContentWrapper, Divider, ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { formatDateAsShortFormat } from "../../../../../../utils/dates";

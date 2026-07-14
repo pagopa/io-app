@@ -2,7 +2,7 @@ import {
   IOColors,
   IOVisualCostants,
   ListItemHeader
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 
 import { PropsWithChildren } from "react";
 import { View } from "react-native";

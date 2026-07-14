@@ -3,7 +3,7 @@
  */
 import { useCallback, useMemo } from "react";
 import { Route, useRoute } from "@react-navigation/native";
-import { IOPictograms } from "@pagopa/io-app-design-system";
+import { IOPictograms } from "@io-app/design-system";
 import { Linking } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";

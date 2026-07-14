@@ -4,7 +4,7 @@ import { Calendar } from "react-native-calendar-events";
 import { pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import {
   searchEventInCalendar,

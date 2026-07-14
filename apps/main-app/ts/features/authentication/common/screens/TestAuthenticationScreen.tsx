@@ -5,7 +5,7 @@ import {
   TextInputPassword,
   TextInputValidation,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { useFocusEffect } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
@@ -179,6 +179,9 @@ const TestAuthenticationScreen = () => {
       />
       <VSpacer size={16} />
       <TextInputPassword
+        buttonAccessibilityLabel={I18n.t(
+          "global.accessibility.togglePasswordVisibility"
+        )}
         placeholder={I18n.t("global.password")}
         value={password}
         onChangeText={setPassword}

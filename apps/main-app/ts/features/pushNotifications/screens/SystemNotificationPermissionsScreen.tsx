@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { HeaderSecondLevel } from "@io-app/design-system";
 import I18n from "i18next";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { openSystemNotificationSettingsScreen } from "../utils";

@@ -4,7 +4,7 @@ import {
   H2,
   OTPInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
@@ -103,6 +103,12 @@ export const ItwCieCanScreen = () => {
                 ref={canPadViewRef}
                 secret
                 value={can}
+                accessibilityValueText={({ valueLength, length }) =>
+                  I18n.t("global.accessibility.inputDigitCounter", {
+                    valueLength,
+                    length
+                  })
+                }
                 accessibilityLabel={I18n.t(
                   "authentication.cie.pin.accessibility.label"
                 )}

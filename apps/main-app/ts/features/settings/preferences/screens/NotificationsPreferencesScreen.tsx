@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
+import { ContentWrapper, useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { PushNotificationsContentTypeEnum } from "../../../../../definitions/identity/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../definitions/identity/ReminderStatus";

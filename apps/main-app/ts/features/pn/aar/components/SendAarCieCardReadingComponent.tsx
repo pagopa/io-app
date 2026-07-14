@@ -1,4 +1,4 @@
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme } from "@io-app/design-system";
 import i18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { Platform } from "react-native";

@@ -4,7 +4,7 @@ import {
   ListItemSwitch,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import { useState } from "react";

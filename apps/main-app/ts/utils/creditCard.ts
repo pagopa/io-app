@@ -2,7 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as AR from "fp-ts/lib/Array";
 import { ImageURISource } from "react-native";
-import { IOIcons } from "@pagopa/io-app-design-system";
+import { IOIcons } from "@io-app/design-system";
 
 export type IconSource = ImageURISource | IOIcons | undefined;
 
