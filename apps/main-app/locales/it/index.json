@@ -3927,14 +3927,6 @@
               "body": "Non potrai completare l'accesso ai servizi online."
             }
           },
-          "missingCredentialsScreen": {
-            "title_one": "Manca un documento per continuare",
-            "title_other": "Mancano alcuni documenti per continuare",
-            "subtitle": "Aggiungi {{credentialNames}} al Portafoglio e poi riprova.",
-            "primaryAction_one": "Aggiungi documento al Portafoglio",
-            "primaryAction_other": "Aggiungi documenti al Portafoglio",
-            "secondaryAction": "Non ora"
-          },
           "invalidCredentialsScreen": {
             "title_one": "Non puoi continuare con la richiesta perché {{credentialName}} non è valida",
             "title_other": "Non puoi continuare con la richiesta perché alcuni documenti non risultano validi",
@@ -4194,6 +4186,25 @@
               "message": "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare IT-Wallet in futuro.",
               "confirm": "Sì, disattiva",
               "cancel": "No, torna indietro"
+            }
+          }
+        },
+        "missingCredentials": {
+          "one": {
+            "title": "Non puoi continuare perché manca un documento",
+            "subtitle": "È richiesta la verifica del seguente documento che non è presente nel tuo Portafoglio IT-Wallet.",
+            "primaryAction": "Aggiungi documento",
+            "secondaryAction": "Chiudi"
+          },
+          "other": {
+            "title": "Non puoi continuare perché mancano alcuni documenti",
+            "subtitle": "Scopri i documenti mancanti necessari per questa verifica. ",
+            "primaryAction": "Mostra documenti",
+            "secondaryAction": "Chiudi",
+            "bottomSheet": {
+              "title": "Documenti mancanti",
+              "subtitle": "I seguenti documenti non sono presenti nel tuo Portafoglio IT-Wallet. ",
+              "primaryAction": "Aggiungi documento"
             }
           }
         }

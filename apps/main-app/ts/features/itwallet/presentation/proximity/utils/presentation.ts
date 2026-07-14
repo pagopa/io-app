@@ -5,7 +5,11 @@ import {
 } from "../../../common/utils/itwClaimsUtils";
 import { getRepresentativeVaultId } from "../../../common/utils/itwCredentialUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import { TimeoutError, UntrustedRpError } from "./errors";
+import {
+  TimeoutError,
+  UntrustedRpError,
+  MissingCredentialError
+} from "./errors";
 import type {
   AcceptedFields,
   ProximityDetails,
@@ -99,10 +103,13 @@ export const getProximityDetails: GetProximityDetails = ({
         throw new UntrustedRpError("Untrusted RP");
       }
 
+      const credential = credentialsByType[docType];
+      if (!credential) {
+        throw new MissingCredentialError([docType]);
+      }
+
       const rpId = getVerifierIdentity(certificateData, requireAuthenticated);
 
-      const credential = credentialsByType[docType];
-      assert(credential, `Credential not found for docType: ${docType}`);
       // Extract required fields from the verifier request.
       // Each field is formatted as "namespace:field" to match the structure
       // of parsedCredential, which uses colon-separated keys.
