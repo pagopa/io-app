@@ -3,7 +3,7 @@ import {
   Divider,
   IOVisualCostants,
   ListItemHeader
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { LayoutChangeEvent, SectionList, SectionListData } from "react-native";

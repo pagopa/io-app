@@ -5,7 +5,7 @@ import {
   IOSpacingScale,
   IOVisualCostants,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { WithTestID } from "../../../../types/WithTestID";
 import { CardPressableBase } from "../../common/components/CardPressableBase";

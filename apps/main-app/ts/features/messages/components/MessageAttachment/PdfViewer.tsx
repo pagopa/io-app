@@ -2,7 +2,7 @@ import { ComponentProps, useState } from "react";
 
 import { StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 

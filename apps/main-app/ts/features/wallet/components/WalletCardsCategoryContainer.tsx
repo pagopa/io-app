@@ -1,4 +1,4 @@
-import { WithTestID } from "@pagopa/io-app-design-system";
+import { WithTestID } from "@io-app/design-system";
 import { Platform, StyleSheet } from "react-native";
 import Animated, {
   FadeInDown,

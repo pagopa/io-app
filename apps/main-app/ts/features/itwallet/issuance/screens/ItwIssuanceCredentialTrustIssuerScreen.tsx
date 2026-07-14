@@ -5,7 +5,7 @@ import {
   ListItemHeader,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
@@ -201,6 +201,7 @@ const ContentView = ({
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       onThresholdCrossed={trackScrollToBottom}
       footerActions={{
         actions: {

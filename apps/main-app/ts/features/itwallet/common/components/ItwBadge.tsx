@@ -6,7 +6,7 @@ import {
   RoundedRect,
   vec
 } from "@shopify/react-native-skia";
-import { Caption, IOColors } from "@pagopa/io-app-design-system";
+import { Caption, IOColors } from "@io-app/design-system";
 import {
   Easing,
   Extrapolation,

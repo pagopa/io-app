@@ -8,7 +8,7 @@ import {
   Pictogram,
   VSpacer,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   cloneElement,
   isValidElement,

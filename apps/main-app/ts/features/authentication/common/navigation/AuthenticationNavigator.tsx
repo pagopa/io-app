@@ -2,7 +2,7 @@ import {
   TransitionPresets,
   createStackNavigator
 } from "@react-navigation/stack";
-import { IOVisualCostants } from "@pagopa/io-app-design-system";
+import { IOVisualCostants } from "@io-app/design-system";
 import { Platform } from "react-native";
 import CieLoginConfigScreen from "../../login/cie/screens/CieLoginConfigScreen";
 import IdpLoginScreen from "../../login/idp/screens/IdpLoginScreen";

@@ -6,7 +6,8 @@
     "prepare": "husky install",
     "validate": "nx affected --targets=lint,test,tsc-noemit --configuration=ci",
     "prettify": "prettier --write \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
-    "prettier:check": "prettier --check \"**/(src|ts|locales)/**/*.(ts|tsx|json)\""
+    "prettier:check": "prettier --check \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
+    "postinstall": "nx prepack io-app-design-system"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -61,8 +62,10 @@
     "onlyBuiltDependencies": [
       "unrs-resolver",
       "@shopify/react-native-skia",
-      "core-js",
-      "postinstall-postinstall"
+      "core-js"
     ]
+  },
+  "resolutions": {
+    "arktype": "1.0.25"
   }
 }

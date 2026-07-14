@@ -16,7 +16,7 @@ import {
   IOToast,
   ContentWrapper,
   IOButton
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
 import _ from "lodash";

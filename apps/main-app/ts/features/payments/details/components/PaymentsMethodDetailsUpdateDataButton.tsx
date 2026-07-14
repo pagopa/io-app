@@ -1,4 +1,4 @@
-import { FooterActions, VSpacer } from "@pagopa/io-app-design-system";
+import { FooterActions, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
