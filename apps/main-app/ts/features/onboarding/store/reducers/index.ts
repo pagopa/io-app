@@ -3,9 +3,10 @@
  * @flow
  */
 import { getType } from "typesafe-actions";
-import { fingerprintAcknowledged } from "../actions";
+
 import { Action } from "../../../../store/actions/types";
 import { sessionExpired } from "../../../authentication/common/store/actions";
+import { fingerprintAcknowledged } from "../actions";
 
 export type OnboardingState = Readonly<{
   isFingerprintAcknowledged: boolean;

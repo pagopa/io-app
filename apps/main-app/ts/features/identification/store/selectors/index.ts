@@ -1,4 +1,5 @@
 import * as O from "fp-ts/lib/Option";
+
 import { GlobalState } from "../../../../store/reducers/types";
 
 export const identificationFailSelector = (state: GlobalState) =>

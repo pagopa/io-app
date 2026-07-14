@@ -1,13 +1,14 @@
-import { View } from "react-native";
-import { Body, VSpacer } from "@pagopa/io-app-design-system";
-import { useEffect } from "react";
+import { Body, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
+import { useEffect } from "react";
+import { View } from "react-native";
+
 import { useCountdown } from "../../../../components/countdown/CountdownProvider";
 import { ProgressIndicator } from "../../../../components/ui/ProgressIndicator";
 
 type CountdownProps = {
-  visible: boolean;
   onContdownCompleted?: () => void;
+  visible: boolean;
 };
 
 const Countdown = (props: CountdownProps) => {
@@ -37,9 +38,9 @@ const Countdown = (props: CountdownProps) => {
         {/* Adding this due to https://github.com/facebook/react-native/issues/47635 */}
         <ProgressIndicator progress={Math.floor((timerCount / 60) * 100)} />
         <VSpacer size={8} />
-        <Body weight="Regular" style={{ textAlign: "center" }} color="black">
+        <Body color="black" style={{ textAlign: "center" }} weight="Regular">
           {I18n.t("email.newvalidate.countdowntext")}{" "}
-          <Body weight="Semibold" color="black">
+          <Body color="black" weight="Semibold">
             {timerCount}s
           </Body>
         </Body>

@@ -8,8 +8,8 @@ import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
 export type CalendarEvent = {
-  messageId: string;
   eventId: string;
+  messageId: string;
 };
 
 export type CalendarEventsByMessageIdState = {

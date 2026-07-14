@@ -30,3 +30,7 @@ jobs:
         additional_params: |
           indentation: 2sp
           placeholder_format: i18n
+          filter_langs:
+            - it
+            - en
+          replace_breaks: false

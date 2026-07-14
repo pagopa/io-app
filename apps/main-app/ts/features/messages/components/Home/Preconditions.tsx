@@ -1,16 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import { Keyboard } from "react-native";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import {
-  preconditionsCategoryTagSelector,
-  preconditionsRequireAppUpdateSelector,
-  shouldPresentPreconditionsBottomSheetSelector
-} from "../../store/reducers/messagePrecondition";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { trackDisclaimerOpened } from "../../analytics";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 import {
   idlePreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
@@ -19,12 +18,14 @@ import {
   toUpdateRequiredPayload,
   updateRequiredPreconditionStatusAction
 } from "../../store/actions/preconditions";
-import { MESSAGES_ROUTES } from "../../navigation/routes";
-import { trackDisclaimerOpened } from "../../analytics";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { PreconditionsTitle } from "./PreconditionsTitle";
+import {
+  preconditionsCategoryTagSelector,
+  preconditionsRequireAppUpdateSelector,
+  shouldPresentPreconditionsBottomSheetSelector
+} from "../../store/reducers/messagePrecondition";
 import { PreconditionsContent } from "./PreconditionsContent";
 import { PreconditionsFooter } from "./PreconditionsFooter";
+import { PreconditionsTitle } from "./PreconditionsTitle";
 
 export const Preconditions = () => {
   const [footerHeight, setFooterHeight] = useState<number>(0);
@@ -53,8 +54,8 @@ export const Preconditions = () => {
     footer: (
       <PreconditionsFooter
         onDismiss={() => modal.dismiss()}
-        onNavigation={onNavigationCallback}
         onFooterHeightAvailable={setFooterHeight}
+        onNavigation={onNavigationCallback}
       />
     ),
     onDismiss: onDismissCallback

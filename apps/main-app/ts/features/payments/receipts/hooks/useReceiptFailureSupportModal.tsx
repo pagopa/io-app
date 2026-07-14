@@ -3,13 +3,14 @@ import {
   ListItemHeader,
   ListItemInfoCopy,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   addTicketCustomField,
   resetCustomFields
 } from "@pagopa/io-react-native-zendesk";
 import I18n from "i18next";
 import { JSX } from "react";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { NetworkError } from "../../../../utils/errors";
@@ -17,8 +18,8 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   defaultZendeskBonusesCategory,
   defaultZendeskIDPayCategory,
-  zendeskCategoryId,
-  zendeskBonusAndInitiativeCategoryId
+  zendeskBonusAndInitiativeCategoryId,
+  zendeskCategoryId
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -89,19 +90,18 @@ const useReceiptFailureSupportModal = (
           testID="receipt-failure-support-modal-header"
         />
         <ListItemAction
-          testID="receipt-failure-support-modal-contact-support-button"
-          label={I18n.t("wallet.payment.support.chat")}
           accessibilityLabel={I18n.t("wallet.payment.support.chat")}
+          icon="chat"
+          label={I18n.t("wallet.payment.support.chat")}
           onPress={() => {
             dismiss();
             zendeskAssistanceLogAndStart();
           }}
+          testID="receipt-failure-support-modal-contact-support-button"
           variant="primary"
-          icon="chat"
         />
         <VSpacer size={24} />
         <ListItemHeader
-          label={I18n.t("wallet.payment.support.additionalDataTitle")}
           endElement={{
             type: "buttonLink",
             componentProps: {
@@ -110,27 +110,28 @@ const useReceiptFailureSupportModal = (
               testID: "receipt-failure-support-modal-copy-all-button"
             }
           }}
+          label={I18n.t("wallet.payment.support.additionalDataTitle")}
         />
         {faultCodeDetail !== "" && (
           <ListItemInfoCopy
-            testID="receipt-failure-support-modal-fault-code"
-            label={I18n.t("wallet.payment.support.errorCode")}
             accessibilityLabel={I18n.t("wallet.payment.support.errorCode")}
             icon="ladybug"
-            value={faultCodeDetail}
+            label={I18n.t("wallet.payment.support.errorCode")}
             onPress={() => clipboardSetStringWithFeedback(faultCodeDetail)}
+            testID="receipt-failure-support-modal-fault-code"
+            value={faultCodeDetail}
           />
         )}
         {receiptEventId && (
           <ListItemInfoCopy
-            testID="receipt-failure-support-modal-transaction-id"
-            label={I18n.t("transaction.details.info.transactionId")}
             accessibilityLabel={I18n.t(
               "transaction.details.info.transactionId"
             )}
             icon="transactions"
-            value={receiptEventId}
+            label={I18n.t("transaction.details.info.transactionId")}
             onPress={() => clipboardSetStringWithFeedback(receiptEventId)}
+            testID="receipt-failure-support-modal-transaction-id"
+            value={receiptEventId}
           />
         )}
         <VSpacer size={24} />

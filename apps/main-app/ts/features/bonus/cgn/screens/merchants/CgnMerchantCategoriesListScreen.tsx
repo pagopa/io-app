@@ -8,13 +8,14 @@ import {
   ListItemAction,
   ListItemNav,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -98,6 +99,14 @@ export const CgnMerchantCategoriesListScreen = () => {
     return (
       <ContentWrapper key={category.productCategory}>
         <ListItemNav
+          accessibilityLabel={accessibilityLabel}
+          icon={s.icon}
+          iconColor={theme["icon-decorative"]}
+          onPress={() => {
+            navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY, {
+              category: s.type
+            });
+          }}
           value={
             countAvailable ? (
               <View
@@ -118,14 +127,6 @@ export const CgnMerchantCategoriesListScreen = () => {
               I18n.t(s.nameKey)
             )
           }
-          accessibilityLabel={accessibilityLabel}
-          onPress={() => {
-            navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY, {
-              category: s.type
-            });
-          }}
-          iconColor={theme["icon-decorative"]}
-          icon={s.icon}
         />
       </ContentWrapper>
     );
@@ -148,13 +149,13 @@ export const CgnMerchantCategoriesListScreen = () => {
       <ContentWrapper>
         <Divider />
         <ListItemAction
-          onPress={present}
           accessibilityLabel={I18n.t(
             "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
           )}
           label={I18n.t(
             "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
           )}
+          onPress={present}
           variant="primary"
         />
         {bottomSheet}

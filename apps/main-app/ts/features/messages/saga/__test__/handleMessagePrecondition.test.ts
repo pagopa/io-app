@@ -1,16 +1,17 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
-import {
-  getMessageIdAndCategoryTag,
-  testMessagePreconditionWorker
-} from "../handleMessagePrecondition";
+
+import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import {
   loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   toLoadingContentPayload
 } from "../../store/actions/preconditions";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  getMessageIdAndCategoryTag,
+  testMessagePreconditionWorker
+} from "../handleMessagePrecondition";
 
 describe("handleMessagePrecondition", () => {
   describe("messagePreconditionWorker", () => {

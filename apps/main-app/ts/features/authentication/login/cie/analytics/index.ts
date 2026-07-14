@@ -1,10 +1,10 @@
-import { IdpCIE, IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../../utils/analytics";
-import { SpidLevel } from "../utils";
 import { LoginType } from "../../../activeSessionLogin/screens/analytics";
+import { IdpCIE, IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
+import { SpidLevel } from "../utils";
 
 export const trackCieIdNoWhitelistUrl = (
   url: string,

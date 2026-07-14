@@ -2,9 +2,8 @@ import {
   PressableBaseProps,
   useScaleAnimation,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { PropsWithChildren } from "react";
-
 import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 
@@ -24,14 +23,14 @@ export const WalletCardPressableBase = ({
 
   return (
     <Pressable
-      onPress={onPress}
-      testID={testID}
-      accessible={true}
       accessibilityLabel={accessibilityLabel}
       accessibilityRole="button"
+      accessible={true}
+      onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
+      testID={testID}
     >
       <Animated.View style={scaleAnimatedStyle}>{children}</Animated.View>
     </Pressable>

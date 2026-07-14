@@ -1,6 +1,7 @@
 import I18n from "i18next";
 import { useLayoutEffect, useMemo } from "react";
 import { Linking } from "react-native";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
@@ -13,17 +14,17 @@ import {
   selectCredentialType
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { CieWarningType } from "../utils/types";
 import {
   trackItwFallbackL2Flow,
   trackItwFallbackL2FlowExit,
   trackItwFallbackL2FlowStart,
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
+import { CieWarningType } from "../utils/types";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
-  type: CieWarningType;
   routeName: string;
+  type: CieWarningType;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -121,26 +122,26 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
 
   return (
     <OperationResultScreenContent
-      title={I18n.t(
-        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.title`
-      )}
-      subtitle={I18n.t(
-        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.subtitle`
-      )}
-      pictogram={isCieRequired ? "attention" : "cardAdd"}
       action={{
         label: I18n.t(
           `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
         ),
         onPress: handlePrimaryActionPress
       }}
+      isHeaderVisible={true}
+      pictogram={isCieRequired ? "attention" : "cardAdd"}
       secondaryAction={{
         label: I18n.t(
           `features.itWallet.identification.cie.warning.${type}.${sectionKey}.secondaryAction`
         ),
         onPress: handleSecondaryActionPress
       }}
-      isHeaderVisible={true}
+      subtitle={I18n.t(
+        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.subtitle`
+      )}
+      title={I18n.t(
+        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.title`
+      )}
     />
   );
 };

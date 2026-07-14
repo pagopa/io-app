@@ -1,15 +1,16 @@
-import { Body, ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper, VStack } from "@io-app/design-system";
 import I18n from "i18next";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
+import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwTrustmarkExpirationTimer } from "../components/ItwTrustmarkExpirationTimer";
 import { ItwTrustmarkQrCode } from "../components/ItwTrustmarkQrCode";
 import { ItwTrustmarkMachineProvider } from "../machine/provider";
-import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
-import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
-import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 
 export type ItwCredentialTrustmarkScreenNavigationParams = {
   credentialType: string;
@@ -30,10 +31,10 @@ const ItwCredentialTrustmarkScreenComponent = (params: ScreenProps) => {
   return (
     <ItwTrustmarkMachineProvider credentialType={credentialType}>
       <IOScrollViewWithLargeHeader
+        headerActionsProp={{ showHelp: true }}
         title={{
           label: credentialName
         }}
-        headerActionsProp={{ showHelp: true }}
       >
         <ContentWrapper>
           <VStack space={24}>

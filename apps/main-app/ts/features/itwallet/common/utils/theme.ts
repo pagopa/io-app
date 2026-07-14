@@ -1,4 +1,4 @@
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { useIOThemeContext } from "@io-app/design-system";
 
 export const ITW_BRAND_GRADIENT = [
   "rgba(220, 227, 252, 1)",

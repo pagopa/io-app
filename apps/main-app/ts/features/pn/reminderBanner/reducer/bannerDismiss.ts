@@ -1,13 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
+  createMigrate,
   MigrationManifest,
   PersistConfig,
   PersistedState,
-  createMigrate,
   persistReducer
 } from "redux-persist";
 import { getType } from "typesafe-actions";
+
 import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
 import { Action } from "../../../../store/actions/types";
 import {
@@ -15,9 +16,9 @@ import {
   pnMessagingServiceIdSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
+import { isDevEnv, isTestEnv } from "../../../../utils/environment";
 import { servicePreferenceByChannelPotSelector } from "../../../services/details/store/selectors";
 import { dismissPnActivationReminderBanner } from "../../store/actions";
-import { isDevEnv, isTestEnv } from "../../../../utils/environment";
 
 export type PnBannerDismissState = {
   dismissed: boolean;
@@ -31,13 +32,13 @@ const pnBannerDismissReducer = (
   action: Action
 ) => {
   switch (action.type) {
+    // the dismiss state has to be reset when, after logging out, the user logs in with a different profile
+    case getType(differentProfileLoggedIn):
+      return INITIAL_STATE;
     case getType(dismissPnActivationReminderBanner):
       return {
         dismissed: true
       };
-    // the dismiss state has to be reset when, after logging out, the user logs in with a different profile
-    case getType(differentProfileLoggedIn):
-      return INITIAL_STATE;
   }
   return state;
 };

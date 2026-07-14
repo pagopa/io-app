@@ -1,5 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -14,8 +15,8 @@ import {
   ItwDiscoveryInfoScreenProps
 } from "../ItwDiscoveryInfoScreen";
 
-jest.mock("@pagopa/io-app-design-system", () => {
-  const actual = jest.requireActual("@pagopa/io-app-design-system");
+jest.mock("@io-app/design-system", () => {
+  const actual = jest.requireActual("@io-app/design-system");
   const { View } = jest.requireActual("react-native");
 
   return {

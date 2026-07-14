@@ -1,20 +1,30 @@
-import { H2, IOToast, VSpacer } from "@pagopa/io-app-design-system";
+import { H2, IOToast, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useFocusEffect } from "@react-navigation/native";
 import { sequenceT } from "fp-ts/lib/Apply";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useState, useCallback, useEffect, useRef } from "react";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { AccessibilityInfo, View } from "react-native";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { AccessibilityInfo, View } from "react-native";
+
+import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
+import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { PaymentAnalyticsSelectedMethodFlag } from "../../common/types/PaymentAnalytics";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import {
+  useWalletOnboardingWebView,
+  WalletOnboardingOutcomeParams
+} from "../../onboarding/hooks/useWalletOnboardingWebView";
+import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
+import { WalletOnboardingOutcomeEnum } from "../../onboarding/types/OnboardingOutcomeEnum";
 import * as analytics from "../analytics";
 import {
   CheckoutPaymentMethodsList,
@@ -29,6 +39,7 @@ import {
   paymentsGetPaymentTransactionInfoAction,
   paymentsGetRecentPaymentMethodUsedAction
 } from "../store/actions/networking";
+import { paymentClearWebViewFlow } from "../store/actions/orchestration.ts";
 import {
   selectPaymentsOrderId,
   selectWalletPaymentCurrentStep,
@@ -48,18 +59,8 @@ import {
   walletPaymentIsTransactionActivatedSelector,
   walletPaymentTransactionSelector
 } from "../store/selectors/transaction";
-import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { WalletPaymentStepEnum } from "../types";
 import { PAYMENT_STEPS_TOTAL_PAGES } from "../utils";
-import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
-import {
-  useWalletOnboardingWebView,
-  WalletOnboardingOutcomeParams
-} from "../../onboarding/hooks/useWalletOnboardingWebView";
-import { WalletOnboardingOutcomeEnum } from "../../onboarding/types/OnboardingOutcomeEnum";
-import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
-import { paymentClearWebViewFlow } from "../store/actions/orchestration.ts";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();

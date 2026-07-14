@@ -5,8 +5,8 @@ import {
   IOVisualCostants,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
-
+} from "@io-app/design-system";
+import I18n from "i18next";
 import { PropsWithChildren, useState } from "react";
 import {
   AccessibilityInfo,
@@ -21,14 +21,14 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
+
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   PaymentCard,
   PaymentCardComponentProps
 } from "../../common/components/PaymentCard";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 type Props = {
   card: PaymentCardComponentProps;
@@ -87,25 +87,25 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
 
   return (
     <Animated.ScrollView
-      onScroll={scrollHandler}
-      scrollEventThrottle={8}
-      snapToOffsets={[0, titleHeight]}
-      snapToEnd={false}
-      importantForAccessibility="no"
       contentContainerStyle={{
         flexGrow: 1,
         paddingBottom: 48,
         backgroundColor
       }}
+      importantForAccessibility="no"
+      onScroll={scrollHandler}
       ref={animatedScrollViewRef}
+      scrollEventThrottle={8}
+      snapToEnd={false}
+      snapToOffsets={[0, titleHeight]}
     >
       <FocusAwareStatusBar
         backgroundColor={blueHeaderColor}
         barStyle="light-content"
       />
       <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
-        <View style={styles.cardContainer} onLayout={getTitleHeight}>
-          <View accessible accessibilityRole="summary">
+        <View onLayout={getTitleHeight} style={styles.cardContainer}>
+          <View accessibilityRole="summary" accessible>
             <PaymentCard {...card} />
           </View>
         </View>

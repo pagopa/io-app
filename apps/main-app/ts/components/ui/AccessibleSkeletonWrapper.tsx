@@ -16,9 +16,9 @@ export const AccessibleSkeletonWrapper = ({
   children
 }: Pick<ViewProps, "accessibilityLabel" | "children">) => (
   <View
-    accessible={true}
     accessibilityLabel={accessibilityLabel}
     accessibilityState={{ busy: true }}
+    accessible={true}
   >
     {children}
   </View>
