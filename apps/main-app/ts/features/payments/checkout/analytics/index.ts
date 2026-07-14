@@ -4,9 +4,8 @@ import {
   PaymentAnalyticsBrowserType,
   PaymentAnalyticsEditingType,
   PaymentAnalyticsPhase,
-  PaymentAnalyticsPreselectedPspFlag,
-  PaymentAnalyticsSelectedMethodFlag,
-  PaymentAnalyticsSelectedPspFlag
+  PaymentAnalyticsPspFlag,
+  PaymentAnalyticsSelectedMethodFlag
 } from "../../common/types/PaymentAnalytics";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
@@ -26,11 +25,11 @@ export type PaymentAnalyticsProps = {
   payment_method_selected: string;
   payment_method_selected_flag: PaymentAnalyticsSelectedMethodFlag;
   payment_phase: PaymentAnalyticsPhase;
-  preselected_psp_flag: PaymentAnalyticsPreselectedPspFlag;
+  preselected_psp_flag: PaymentAnalyticsPspFlag;
   psp_selected: string;
   saved_payment_method: number;
   saved_payment_method_unavailable: number;
-  selected_psp_flag: PaymentAnalyticsSelectedPspFlag;
+  selected_psp_flag: PaymentAnalyticsPspFlag;
   service_name: string;
 };
 
