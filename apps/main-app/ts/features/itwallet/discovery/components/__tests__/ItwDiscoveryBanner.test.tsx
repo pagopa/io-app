@@ -32,7 +32,7 @@ jest.mock("@react-navigation/native", () => {
 });
 
 jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual<typeof import("@pagopa/io-app-design-system")>(
+  ...jest.requireActual<typeof import("@io-app/design-system")>(
     "@pagopa/io-app-design-system"
   ),
   useIOToast: () => ({
