@@ -1,5 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+
 import { PaymentNetworkEnum } from "../../definitions/pagopa/walletv2/PaymentInstrument";
 import defaultCardIcon from "../../img/wallet/cards-icons/unknown.png";
 

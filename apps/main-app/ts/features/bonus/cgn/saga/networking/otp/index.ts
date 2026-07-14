@@ -1,13 +1,14 @@
-import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
+
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
-import { BackendCGN } from "../../../api/backendCgn";
-import { cgnGenerateOtp as cgnGenerateOtpAction } from "../../../store/actions/otp";
 import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
+import { BackendCGN } from "../../../api/backendCgn";
 import { setMerchantDiscountCode } from "../../../store/actions/merchants";
+import { cgnGenerateOtp as cgnGenerateOtpAction } from "../../../store/actions/otp";
 
 // handle the request for CGN Otp code generation
 export function* cgnGenerateOtp(

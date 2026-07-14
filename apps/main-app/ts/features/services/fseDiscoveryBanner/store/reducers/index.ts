@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
+
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import { Action } from "../../../../../store/actions/types";
 import { persistedDismissFseDiscoveryBanner } from "../actions";
@@ -18,12 +19,12 @@ export const fseDiscoveryBannerReducer = (
   action: Action
 ): FseDiscoveryBannerState => {
   switch (action.type) {
+    case getType(differentProfileLoggedIn):
+      return fseDiscoveryBannerInitialState;
     case getType(persistedDismissFseDiscoveryBanner):
       return {
         isDismissed: true
       };
-    case getType(differentProfileLoggedIn):
-      return fseDiscoveryBannerInitialState;
   }
   return state;
 };

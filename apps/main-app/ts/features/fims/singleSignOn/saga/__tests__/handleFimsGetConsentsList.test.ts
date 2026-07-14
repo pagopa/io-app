@@ -1,5 +1,5 @@
-import { testable } from "../handleFimsGetConsentsList";
 import * as analytics from "../../../../../utils/analytics";
+import { testable } from "../handleFimsGetConsentsList";
 
 // Mock the analytics module
 jest.mock("../../../../../utils/analytics");

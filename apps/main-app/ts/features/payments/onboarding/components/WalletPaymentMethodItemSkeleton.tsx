@@ -2,7 +2,7 @@ import {
   IOListItemVisualParams,
   IOSkeleton,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { View } from "react-native";
 
 export const WalletPaymentMethodItemSkeleton = () => (
@@ -11,13 +11,13 @@ export const WalletPaymentMethodItemSkeleton = () => (
     <View style={{ flexDirection: "row" }}>
       <View>
         <IOSkeleton
+          radius={8}
           shape="square"
           size={IOListItemVisualParams.iconSize}
-          radius={8}
         />
       </View>
       <View style={{ flex: 1, paddingLeft: IOListItemVisualParams.iconMargin }}>
-        <IOSkeleton shape="rectangle" radius={8} width={"100%"} height={24} />
+        <IOSkeleton height={24} radius={8} shape="rectangle" width={"100%"} />
       </View>
     </View>
     <VSpacer />

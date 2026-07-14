@@ -1,6 +1,7 @@
-import { BodySmall, H3, VStack } from "@pagopa/io-app-design-system";
+import { BodySmall, H3, VStack } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { logosForService } from "../../../services/common/utils";
@@ -31,11 +32,11 @@ const messageTimeFormatter = new Intl.DateTimeFormat("it", {
 });
 
 export type MessageDetailsHeaderProps = PropsWithChildren<{
+  canNavigateToServiceDetails?: boolean;
   createdAt: Date | undefined;
   messageId: string;
   serviceId: ServiceId;
   subject: string;
-  canNavigateToServiceDetails?: boolean;
   thirdPartySenderDenomination?: string;
 }>;
 
@@ -48,7 +49,7 @@ const MessageDetailsHeaderContent = ({
       {subject}
     </H3>
     {createdAt && (
-      <BodySmall weight="Regular" testID="date">
+      <BodySmall testID="date" weight="Regular">
         {`${messageDateFormatter.format(
           createdAt
         )}, ${messageTimeFormatter.format(createdAt)}`}
@@ -75,13 +76,13 @@ export const MessageDetailsHeader = ({
       <MessageDetailsHeaderContent {...rest} />
       {service && (
         <OrganizationHeader
-          messageId={messageId}
+          canNavigateToServiceDetails={canNavigateToServiceDetails}
           logoUri={logosForService(service) as ImageSourcePropType}
+          messageId={messageId}
           organizationName={service.organization.name}
           serviceId={serviceId}
           serviceName={service.name}
           thirdPartySenderDenomination={thirdPartySenderDenomination}
-          canNavigateToServiceDetails={canNavigateToServiceDetails}
         />
       )}
     </VStack>

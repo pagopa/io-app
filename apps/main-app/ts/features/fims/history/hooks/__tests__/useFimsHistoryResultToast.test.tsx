@@ -1,15 +1,16 @@
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual("@pagopa/io-app-design-system"),
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual("@io-app/design-system"),
   IOToast: {
-    ...jest.requireActual("@pagopa/io-app-design-system").IOToast,
+    ...jest.requireActual("@io-app/design-system").IOToast,
     success: jest.fn(),
     error: jest.fn()
   }
 }));
 
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { Alert } from "react-native";
 import { createStore } from "redux";
+
 import {
   remoteError,
   remoteLoading,
@@ -21,14 +22,14 @@ import * as USEIO from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as ANALYTICS from "../../../common/analytics";
+import { FIMS_ROUTES } from "../../../common/navigation";
 import {
   fimsHistoryExport,
   resetFimsHistoryExportState
 } from "../../store/actions";
 import { FimsHistoryState } from "../../store/reducer";
 import { useFimsHistoryExport } from "../useFimsHistoryResultToasts";
-import { FIMS_ROUTES } from "../../../common/navigation";
-import * as ANALYTICS from "../../../common/analytics";
 
 // eslint-disable-next-line functional/no-let
 let testingHandleExportOnPress = () => {

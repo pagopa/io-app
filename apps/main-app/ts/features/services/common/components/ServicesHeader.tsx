@@ -8,7 +8,7 @@ import {
   IOVisualCostants,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
 
 export type ServicesHeaderProps = {
   logoUri: ImageSourcePropType;
-  title: string;
   subTitle: string;
+  title: string;
 };
 
 export const ServicesHeader = ({
@@ -46,8 +46,8 @@ export const ServicesHeader = ({
       testID="services-header"
     >
       <View
-        accessible={false}
         accessibilityElementsHidden={true}
+        accessible={false}
         importantForAccessibility="no-hide-descendants"
         style={styles.itemAvatar}
       >
@@ -57,7 +57,7 @@ export const ServicesHeader = ({
         <H3 accessibilityRole="header" color={theme["textHeading-secondary"]}>
           {title}
         </H3>
-        <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+        <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
           {subTitle}
         </BodySmall>
       </View>
@@ -67,40 +67,40 @@ export const ServicesHeader = ({
 
 export const ServicesHeaderSkeleton = () => (
   <View
-    accessible={true}
     accessibilityState={{ busy: true }}
+    accessible={true}
     style={styles.container}
     testID="services-header-skeleton"
   >
     <View style={styles.itemAvatar}>
       <IOSkeleton
         color={IOColors["grey-200"]}
+        radius={IOVisualCostants.avatarRadiusSizeMedium}
         shape="square"
         size={IOVisualCostants.avatarSizeMedium}
-        radius={IOVisualCostants.avatarRadiusSizeMedium}
       />
     </View>
     <VStack space={8} style={{ flex: 1 }}>
       <IOSkeleton
         color={IOColors["grey-200"]}
+        height={16}
+        radius={8}
         shape="rectangle"
         width={"100%"}
-        height={16}
-        radius={8}
       />
       <IOSkeleton
         color={IOColors["grey-200"]}
+        height={16}
+        radius={8}
         shape="rectangle"
         width={"80%"}
-        height={16}
-        radius={8}
       />
       <IOSkeleton
         color={IOColors["grey-200"]}
-        shape="rectangle"
-        width={"60%"}
         height={8}
         radius={8}
+        shape="rectangle"
+        width={"60%"}
       />
     </VStack>
   </View>

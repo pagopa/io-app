@@ -1,8 +1,9 @@
 import { ActionArgs, assertEvent } from "xstate";
+
 import { useIOStore } from "../../../../store/hooks";
+import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwWalletUnitAttestationsStore } from "../../walletInstance/store/actions";
-import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { Context } from "./context";
 import { CredentialUpgradeEvents } from "./events";
 

@@ -1,31 +1,32 @@
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { MessageBodyMarkdown } from "../../../../../../definitions/communication/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../../definitions/communication/MessageSubject";
+import { MandateCreationResponse } from "../../../../../../definitions/pn/aar/MandateCreationResponse";
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { AarFlowState, AarFlowStateName } from "../../utils/stateUtils";
-import { MandateCreationResponse } from "../../../../../../definitions/pn/aar/MandateCreationResponse";
 
 export type EphemeralAarMessageDataActionPayload = {
-  iun: NonEmptyString;
-  thirdPartyMessage: ThirdPartyMessage;
   fiscalCode: string;
-  pnServiceID: NonEmptyString;
-  markdown: MessageBodyMarkdown;
-  subject: MessageSubject;
+  iun: NonEmptyString;
   mandateId?: string;
-};
-export type TerminateAarFlowPayload = {
-  messageId?: string;
-  currentFlowState?: AarFlowStateName;
+  markdown: MessageBodyMarkdown;
+  pnServiceID: NonEmptyString;
+  subject: MessageSubject;
+  thirdPartyMessage: ThirdPartyMessage;
 };
 export type InitiateAarFlowPayload = {
   aarUrl: string;
+};
+export type TerminateAarFlowPayload = {
+  currentFlowState?: AarFlowStateName;
+  messageId?: string;
 };
 
 export const initiateAarFlow =
@@ -56,11 +57,11 @@ export const testAarClearData = createStandardAction(
 )<void>();
 
 export type AarFlowStateActions = ActionType<
+  | typeof initiateAarFlow
+  | typeof populateStoresWithEphemeralAarMessageData
   | typeof setAarFlowState
   | typeof terminateAarFlow
-  | typeof populateStoresWithEphemeralAarMessageData
-  | typeof initiateAarFlow
-  | typeof testAarCreateMandate
   | typeof testAarAcceptMandate
   | typeof testAarClearData
+  | typeof testAarCreateMandate
 >;

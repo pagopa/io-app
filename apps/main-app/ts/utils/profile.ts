@@ -1,19 +1,20 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import { Municipality } from "../../definitions/content/Municipality";
 import { FiscalCode } from "../../definitions/identity/FiscalCode";
 import { pad } from "./dates";
-
-type GenderType = "M" | "F" | undefined;
 
 /**
  * Generic utilities for profile
  */
 type FiscalCodeDerivedData = Readonly<{
-  gender?: GenderType;
   birthDate?: Date;
   denominazione: string;
+  gender?: GenderType;
   siglaProvincia: string;
 }>;
+
+type GenderType = "F" | "M" | undefined;
 
 const months: { [k: string]: number } = {
   ["A"]: 1,
@@ -29,6 +30,18 @@ const months: { [k: string]: number } = {
   ["S"]: 11,
   ["T"]: 12
 };
+
+/**
+ * The enabled/disabled state of each channel.
+ *
+ * Consider generating this map from the API specs.
+ */
+export interface EnabledChannels {
+  can_access_message_read_status: boolean;
+  email: boolean;
+  inbox: boolean;
+  push: boolean;
+}
 
 // Generate object including data expressed into the given fiscal code
 export function extractFiscalCodeData(
@@ -84,16 +97,4 @@ export function extractFiscalCodeData(
     siglaProvincia,
     denominazione
   };
-}
-
-/**
- * The enabled/disabled state of each channel.
- *
- * Consider generating this map from the API specs.
- */
-export interface EnabledChannels {
-  inbox: boolean;
-  email: boolean;
-  push: boolean;
-  can_access_message_read_status: boolean;
 }

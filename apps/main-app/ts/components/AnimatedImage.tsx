@@ -36,9 +36,9 @@ export const AnimatedImage = ({ style, ...props }: AnimatedImageProps) => {
   return (
     <Animated.Image
       {...props}
-      style={[opacityTransition, style]}
-      onLoad={handleOnLoad}
       accessibilityIgnoresInvertColors={false}
+      onLoad={handleOnLoad}
+      style={[opacityTransition, style]}
     />
   );
 };

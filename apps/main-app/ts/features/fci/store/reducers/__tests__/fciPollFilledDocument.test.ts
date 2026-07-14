@@ -1,8 +1,9 @@
-import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getNetworkError } from "../../../../../utils/errors";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { getNetworkError } from "../../../../../utils/errors";
 import { fciClearStateRequest, fciPollFilledDocument } from "../../actions";
 
 const genericError = getNetworkError("Generic Error");

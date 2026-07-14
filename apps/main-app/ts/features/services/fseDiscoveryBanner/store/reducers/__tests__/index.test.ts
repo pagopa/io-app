@@ -1,11 +1,11 @@
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { differentProfileLoggedIn } from "../../../../../../store/actions/crossSessions";
-import { persistedDismissFseDiscoveryBanner } from "../../actions";
 import {
   fseDiscoveryBannerInitialState,
   fseDiscoveryBannerReducer,
   FseDiscoveryBannerState
 } from "..";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { differentProfileLoggedIn } from "../../../../../../store/actions/crossSessions";
+import { persistedDismissFseDiscoveryBanner } from "../../actions";
 
 describe("fseDiscoveryBannerReducer", () => {
   it("should return the initial state", () => {
