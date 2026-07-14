@@ -6,7 +6,7 @@ import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/ecomm
 import { format } from "../../../../utils/dates";
 import {
   PaymentAnalyticsPhase,
-  PaymentAnalyticsSelectedPspFlag
+  PaymentAnalyticsPspFlag
 } from "../../common/types/PaymentAnalytics";
 import { WalletPaymentStepEnum } from "../types";
 
@@ -33,7 +33,7 @@ export const WalletPaymentStepScreenNames = {
 export const getPspFlagType = (
   psp: Bundle,
   pspList?: ReadonlyArray<Bundle>
-): PaymentAnalyticsSelectedPspFlag => {
+): PaymentAnalyticsPspFlag => {
   if (!pspList || pspList.length === 0) {
     return "none";
   }
@@ -48,6 +48,31 @@ export const getPspFlagType = (
     .filter((fee): fee is number => typeof fee === "number");
   const minFee = Math.min(...fees);
   return psp.taxPayerFee === minFee ? "cheaper" : "none";
+};
+
+/**
+ * Flags which kind of PSP is available to the user among the whole
+ * pspList, regardless of which one is ultimately selected. Used for
+ * `preselected_psp_flag`, so it stays stable even if the user changes
+ * their selection or skips the pick-psp step entirely (single PSP).
+ */
+export const getPreselectedPspFlagType = (
+  pspList?: ReadonlyArray<Bundle>
+): PaymentAnalyticsPspFlag => {
+  if (!pspList || pspList.length === 0) {
+    return "none";
+  }
+  if (pspList.some(psp => psp.onUs)) {
+    return "customer";
+  }
+  if (pspList.length === 1) {
+    return "unique";
+  }
+  const fees = pspList
+    .map(p => p.taxPayerFee)
+    .filter((fee): fee is number => typeof fee === "number");
+  const hasCheaperPsp = new Set(fees).size > 1;
+  return hasCheaperPsp ? "cheaper" : "none";
 };
 
 export const getPaymentPhaseFromStep = (
