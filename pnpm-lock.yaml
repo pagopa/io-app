@@ -226,9 +226,6 @@ importers:
       '@io-app/design-system':
         specifier: workspace:@pagopa/io-app-design-system@*
         version: link:../../libs/design-system
-      '@pagopa/io-app-design-system':
-        specifier: 8.1.0
-        version: 8.1.0(4d6611a0eeeb54182354198ab35a7370)
       '@pagopa/io-pagopa-commons':
         specifier: ^3.1.0
         version: 3.1.0
@@ -2708,21 +2705,6 @@ packages:
     peerDependenciesMeta:
       eslint-plugin-jest:
         optional: true
-
-  '@pagopa/io-app-design-system@8.1.0':
-    resolution: {integrity: sha512-k2nKOHJN4shz+CRb1zaf97DGo7MiKztai9JLEXEGVlSCE+ezDyzt+5uOeBBeeL2tUQPQygYlGNl4fy1MRmsHiw==}
-    engines: {node: '>= 20'}
-    peerDependencies:
-      react: ^19.0.0
-      react-native: '*'
-      react-native-easing-gradient: '*'
-      react-native-gesture-handler: '*'
-      react-native-haptic-feedback: '*'
-      react-native-linear-gradient: '*'
-      react-native-reanimated: '>=4.0.0'
-      react-native-safe-area-context: '*'
-      react-native-svg: '*'
-      react-native-worklets: '*'
 
   '@pagopa/io-pagopa-commons@3.1.0':
     resolution: {integrity: sha512-66J209evyHvIoI0d5MCMhWQSQhfX6gLhSm1em+ZfJKZXQEsqTJO+bzkNsDeX9svpRHgGn+Dk3kfvp96ofCb1ag==}
@@ -14080,23 +14062,6 @@ snapshots:
       - '@typescript-eslint/eslint-plugin'
       - supports-color
       - vitest
-
-  '@pagopa/io-app-design-system@8.1.0(4d6611a0eeeb54182354198ab35a7370)':
-    dependencies:
-      auto-changelog: 2.4.0
-      markdown-it: 14.1.1
-      react: 19.2.0
-      react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
-      react-native-easing-gradient: 1.1.1(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
-      react-native-gesture-handler: 2.31.0(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
-      react-native-haptic-feedback: 2.3.3(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))
-      react-native-linear-gradient: 2.8.3(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
-      react-native-reanimated: 4.3.1(react-native-worklets@0.8.3(@babel/core@7.29.0)(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
-      react-native-safe-area-context: 5.7.0(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
-      react-native-svg: 15.15.4(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
-      react-native-worklets: 0.8.3(@babel/core@7.29.0)(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
-    transitivePeerDependencies:
-      - encoding
 
   '@pagopa/io-pagopa-commons@3.1.0':
     dependencies:
