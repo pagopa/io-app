@@ -67,7 +67,7 @@ describe("FingerprintScreen", () => {
     (biometrics.mayUserActivateBiometric as jest.Mock).mockResolvedValue(true);
 
     const { getByLabelText } = renderComponent();
-    const activateButton = getByLabelText(I18n.t("global.buttons.activate2"));
+    const activateButton = getByLabelText(I18n.t("global.buttons.activate"));
 
     fireEvent.press(activateButton);
 
@@ -90,7 +90,7 @@ describe("FingerprintScreen", () => {
     );
 
     const { getByLabelText } = renderComponent();
-    const activateButton = getByLabelText(I18n.t("global.buttons.activate2"));
+    const activateButton = getByLabelText(I18n.t("global.buttons.activate"));
 
     fireEvent.press(activateButton);
 

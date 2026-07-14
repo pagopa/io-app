@@ -150,8 +150,13 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
   const localeFallback = fallbackForLocalizedMessageKeys(locale);
 
   // Bottom sheets
+  // `TIMEOUT` has no detail modal: its alert restarts the app directly. Like a
+  // missing reason, it falls back to a modal that is never presented.
   const itwOfflineModal = useOfflineAlertDetailModal(
-    offlineAccessReason ?? OfflineAccessReasonEnum.DEVICE_OFFLINE
+    offlineAccessReason !== undefined &&
+      offlineAccessReason !== OfflineAccessReasonEnum.TIMEOUT
+      ? offlineAccessReason
+      : OfflineAccessReasonEnum.DEVICE_OFFLINE
   );
   const commonOfflineModal = useIOBottomSheetModal({
     title: I18n.t("global.offline.bottomSheet.title"),
