@@ -1,8 +1,9 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+
 import {
   IOScrollView,
   IOScrollViewActions
@@ -22,8 +23,8 @@ import {
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
-import { MixPanelCredential } from "../../itwallet/analytics/utils/types";
 import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors";
+import { MixPanelCredential } from "../../itwallet/analytics/utils/types";
 import {
   EidActivationExitStep,
   useItwActivationExitSurveyBottomSheet
@@ -51,17 +52,17 @@ import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { isWalletScreenRefreshingSelector } from "../store/selectors";
 
 export type WalletHomeNavigationParams = Readonly<{
-  // Triggers the "New element added" toast display once the user returns to this screen
-  newMethodAdded?: boolean;
-  // Triggers the "Required EID feedback" bottom sheet display once the user returns to this screen
-  requiredEidFeedback?: boolean;
   // Triggers the activation exit survey bottom sheet once the user returns to this screen
   activationExitSurvey?: { step: EidActivationExitStep };
   // Triggers the credential exit survey bottom sheet once the user returns to this screen
   credentialExitSurvey?: {
-    step: CredentialExitStep;
     credential: MixPanelCredential;
+    step: CredentialExitStep;
   };
+  // Triggers the "New element added" toast display once the user returns to this screen
+  newMethodAdded?: boolean;
+  // Triggers the "Required EID feedback" bottom sheet display once the user returns to this screen
+  requiredEidFeedback?: boolean;
 }>;
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -242,6 +243,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   return (
     <>
       <IOScrollView
+        actions={
+          proximityActionProps
+            ? { type: "SingleButton", primary: proximityActionProps }
+            : undefined
+        }
         animatedRef={scrollViewContentRef}
         centerContent={true}
         excludeSafeAreaMargins={true}
@@ -250,11 +256,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
           refreshing: isRefreshing,
           onRefresh: handleRefreshWallet
         }}
-        actions={
-          proximityActionProps
-            ? { type: "SingleButton", primary: proximityActionProps }
-            : undefined
-        }
       >
         <WalletCategoryFilterTabs />
         <WalletCardsContainer />

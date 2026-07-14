@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react-native";
+
 import { SpidMethodModule } from "../SpidMethodModule";
 
 jest.mock("../../../../machine/eid/provider", () => ({

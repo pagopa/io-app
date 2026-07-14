@@ -1,4 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import {
   IdPayPaymentMachineContext,
   IdPayPaymentMachineProvider
@@ -6,7 +8,6 @@ import {
 import { IDPayPaymentAuthorizationScreen } from "../screens/IDPayPaymentAuthorizationScreen";
 import { IDPayPaymentCodeInputScreen } from "../screens/IDPayPaymentCodeInputScreen";
 import { IDPayPaymentResultScreen } from "../screens/IDPayPaymentResultScreen";
-import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import { IdPayPaymentParamsList } from "./params";
 import { IdPayPaymentRoutes } from "./routes";
 
@@ -27,7 +28,6 @@ const InnerNavigation = () => {
     <IdPayPaymentMachineProvider>
       <Stack.Navigator
         initialRouteName={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}
-        screenOptions={{ gestureEnabled: false }}
         screenListeners={{
           beforeRemove: () => {
             // Read more on https://reactnavigation.org/docs/preventing-going-back/
@@ -36,19 +36,20 @@ const InnerNavigation = () => {
             idPayPaymentMachineRef.send({ type: "back" });
           }
         }}
+        screenOptions={{ gestureEnabled: false }}
       >
         <Stack.Screen
-          name={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}
           component={IDPayPaymentCodeInputScreen}
+          name={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}
           options={{ gestureEnabled: true }}
         />
         <Stack.Screen
-          name={IdPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION}
           component={IDPayPaymentAuthorizationScreen}
+          name={IdPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION}
         />
         <Stack.Screen
-          name={IdPayPaymentRoutes.IDPAY_PAYMENT_RESULT}
           component={IDPayPaymentResultScreen}
+          name={IdPayPaymentRoutes.IDPAY_PAYMENT_RESULT}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -1,12 +1,8 @@
-import {
-  Body,
-  IOButton,
-  ListItemSwitch,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { Body, IOButton, ListItemSwitch, VStack } from "@io-app/design-system";
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
@@ -19,8 +15,8 @@ import {
 import { MDL_BASE64, MDL_BASE64URL } from "../mocks/proximity";
 
 export const START_FLOW_OPTIONS: ReadonlyArray<{
-  label: string;
   engagementModes: ReadonlyArray<ISO18013_5.EngagementMode>;
+  label: string;
   retrievalMethods: ReadonlyArray<ISO18013_5.RetrievalMethod>;
 }> = [
   {
@@ -98,14 +94,14 @@ export const ItwProximityPlaygroundScreen = () => {
       loadingOpacity={1}
     >
       <IOScrollView
-        contentContainerStyle={styles.container}
         centerContent={true}
+        contentContainerStyle={styles.container}
       >
         {/* Top section */}
 
         <View style={{ flex: 1, alignItems: "center" }}>
           {status === PROXIMITY_STATUS.ENGAGEMENT && qrCode && (
-            <QrCodeImage value={qrCode} size={"80%"} />
+            <QrCodeImage size={"80%"} value={qrCode} />
           )}
           {status === PROXIMITY_STATUS.ENGAGEMENT && isNfcEnabled && (
             <>
@@ -123,10 +119,10 @@ export const ItwProximityPlaygroundScreen = () => {
           {status === PROXIMITY_STATUS.READY && (
             <>
               <ListItemSwitch
-                label="Skip consent"
                 description="Documents will be shared as soon as a valid request is received"
-                value={skipConsent}
+                label="Skip consent"
                 onSwitchValueChange={() => setSkipConsent(v => !v)}
+                value={skipConsent}
               />
               {START_FLOW_OPTIONS.map(
                 ({ label, engagementModes, retrievalMethods }) => (

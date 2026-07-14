@@ -4,17 +4,18 @@ import {
   H6,
   HSpacer,
   ListItemNav
-} from "@pagopa/io-app-design-system";
-import { ListRenderItem, View } from "react-native";
+} from "@io-app/design-system";
 import I18n from "i18next";
+import { ListRenderItem, View } from "react-native";
+
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 
 type Props = {
-  onItemPress: (id: Merchant["id"]) => void;
   count: number;
+  onItemPress: (id: Merchant["id"]) => void;
 };
 
 export const CgnMerchantListViewRenderItem =
@@ -28,6 +29,7 @@ export const CgnMerchantListViewRenderItem =
     return (
       <ContentWrapper>
         <ListItemNav
+          accessibilityLabel={accessibilityLabel}
           onPress={() => props.onItemPress(item.id)}
           value={
             <View
@@ -45,14 +47,13 @@ export const CgnMerchantListViewRenderItem =
                 >
                   <Badge
                     accessible={false}
-                    variant="cgn"
                     text={I18n.t("bonus.cgn.merchantsList.news")}
+                    variant="cgn"
                   />
                 </View>
               )}
             </View>
           }
-          accessibilityLabel={accessibilityLabel}
         />
       </ContentWrapper>
     );

@@ -3,32 +3,36 @@ import {
   FooterActionsMeasurements,
   IOColors,
   useIOToast
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
+import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
 import Share from "react-native-share";
-import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
+
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
+import { useIOSelector } from "../../../../../store/hooks";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { ItwGenericErrorContent } from "../../../common/components/ItwGenericErrorContent.tsx";
 import {
   getClaimsFullLocale,
   PdfClaim
 } from "../../../common/utils/itwClaimsUtils.ts";
 import { ParsedCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { trackWalletCredentialFAC_SIMILE } from "../analytics";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { useIOSelector } from "../../../../../store/hooks";
-
-// We currently only support PDF files, extend this if needed
-type SupportedAttachmentType = "application/pdf";
 
 export type ItwPresentationCredentialAttachmentNavigationParams = {
   attachmentClaim: ParsedCredential[string];
+};
+
+type AttachmentData = {
+  fileName: string;
+  type: SupportedAttachmentType;
+  uri: string;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -36,11 +40,8 @@ type ScreenProps = IOStackNavigationRouteProps<
   "ITW_PRESENTATION_CREDENTIAL_ATTACHMENT"
 >;
 
-type AttachmentData = {
-  fileName: string;
-  type: SupportedAttachmentType;
-  uri: string;
-};
+// We currently only support PDF files, extend this if needed
+type SupportedAttachmentType = "application/pdf";
 
 export const ItwPresentationCredentialAttachmentScreen = ({
   route
@@ -115,14 +116,13 @@ export const ItwPresentationCredentialAttachmentScreen = ({
       <Pdf
         enablePaging
         fitPolicy={0}
-        style={styles.pdfContainer}
         source={{
           uri: attachmentData.uri,
           cache: true
         }}
+        style={styles.pdfContainer}
       />
       <FooterActions
-        onMeasure={handleFooterActionsMeasurements}
         actions={{
           type: "SingleButton",
           primary: {
@@ -130,6 +130,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
             onPress: handleOnShare(attachmentData)
           }
         }}
+        onMeasure={handleFooterActionsMeasurements}
       />
     </View>
   );

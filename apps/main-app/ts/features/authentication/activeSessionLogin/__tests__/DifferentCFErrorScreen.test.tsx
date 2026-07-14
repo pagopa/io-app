@@ -1,10 +1,11 @@
 import { fireEvent } from "@testing-library/react-native";
-import { createStore } from "redux";
 import I18n from "i18next";
-import { DifferentCFErrorScreen } from "../screens/DifferentCFErrorScreen";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { DifferentCFErrorScreen } from "../screens/DifferentCFErrorScreen";
 
 const mockNavigate = jest.fn();
 

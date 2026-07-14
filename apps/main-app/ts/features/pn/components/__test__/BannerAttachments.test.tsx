@@ -1,13 +1,14 @@
+import { fireEvent } from "@testing-library/react-native";
 import { View } from "react-native";
 import { createStore } from "redux";
-import { fireEvent } from "@testing-library/react-native";
+
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { BannerAttachments } from "../BannerAttachments";
-import * as bottomSheet from "../../../../utils/hooks/bottomSheet";
-import * as urlUtils from "../../../../utils/url";
 import * as remoteConfigSelectors from "../../../../store/reducers/backendStatus/remoteConfig";
+import * as bottomSheet from "../../../../utils/hooks/bottomSheet";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import * as urlUtils from "../../../../utils/url";
+import { BannerAttachments } from "../BannerAttachments";
 
 describe("BannerAttachments", () => {
   describe("BannerAttachments component", () => {

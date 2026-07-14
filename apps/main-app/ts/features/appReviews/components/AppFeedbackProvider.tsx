@@ -3,7 +3,7 @@ import {
   FooterActions,
   useIOToast,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import I18n from "i18next";
 import {
@@ -14,6 +14,7 @@ import {
   useState
 } from "react";
 import { Alert } from "react-native";
+
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   appFeedbackEnabledSelector,

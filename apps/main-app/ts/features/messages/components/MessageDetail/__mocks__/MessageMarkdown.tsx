@@ -1,4 +1,5 @@
 import WebView from "react-native-webview";
+
 import { MarkdownProps } from "../../../../../components/ui/Markdown/Markdown";
 
 type Props = Omit<MarkdownProps, "cssStyle">;

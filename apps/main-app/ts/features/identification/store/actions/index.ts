@@ -6,8 +6,8 @@ import {
 
 import { PinString } from "../../../../types/PinString";
 import {
-  IdentificationCancelData,
   IdentificationBackActionType,
+  IdentificationCancelData,
   IdentificationGenericData,
   IdentificationSuccessData
 } from "../reducers";
@@ -82,12 +82,12 @@ export const identificationHideLockModal = createAction(
 );
 
 export type IdentificationActions =
-  | ActionType<typeof identificationStart>
-  | ActionType<typeof identificationRequest>
   | ActionType<typeof identificationCancel>
-  | ActionType<typeof identificationSuccess>
   | ActionType<typeof identificationFailure>
-  | ActionType<typeof identificationPinReset>
   | ActionType<typeof identificationForceLogout>
+  | ActionType<typeof identificationHideLockModal>
+  | ActionType<typeof identificationPinReset>
+  | ActionType<typeof identificationRequest>
   | ActionType<typeof identificationReset>
-  | ActionType<typeof identificationHideLockModal>;
+  | ActionType<typeof identificationStart>
+  | ActionType<typeof identificationSuccess>;

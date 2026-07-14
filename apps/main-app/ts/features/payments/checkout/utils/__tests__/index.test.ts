@@ -1,9 +1,9 @@
 import {
+  formatAndValidateDueDate,
   getPaymentPhaseFromStep,
   getPreselectedPspFlagType,
   getPspFlagType,
   getSubCategoryFromFaultCode,
-  formatAndValidateDueDate,
   trimAndLimitValue
 } from "..";
 import { ZendeskSubCategoriesMap } from "../../../../../../definitions/content/ZendeskSubCategoriesMap";

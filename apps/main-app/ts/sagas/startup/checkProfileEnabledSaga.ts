@@ -1,9 +1,9 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
+
 import { InitializedProfile } from "../../../definitions/identity/InitializedProfile";
-import { startApplicationInitialization } from "../../store/actions/application";
 import {
   profileFirstLogin,
   profileUpsert
@@ -12,24 +12,16 @@ import {
   hasProfileEmail,
   isProfileFirstOnBoarding
 } from "../../features/settings/common/store/utils/guards";
+import { startApplicationInitialization } from "../../store/actions/application";
 import { ReduxSagaEffect } from "../../types/utils";
-
-function* enableProfileInboxWebhook() {
-  yield* put(
-    profileUpsert.request({
-      is_inbox_enabled: true,
-      is_webhook_enabled: true
-    })
-  );
-}
 
 export function* checkProfileEnabledSaga(
   profile: InitializedProfile
 ): Generator<
   ReduxSagaEffect,
   void,
-  | ActionType<(typeof profileUpsert)["success"]>
   | ActionType<(typeof profileUpsert)["failure"]>
+  | ActionType<(typeof profileUpsert)["success"]>
 > {
   const atv = pipe(
     profile.accepted_tos_version,
@@ -52,7 +44,7 @@ export function* checkProfileEnabledSaga(
     // Upsert the user profile to enable inbox and webhook
     yield* call(enableProfileInboxWebhook);
     const action = yield* take<
-      ActionType<typeof profileUpsert.success | typeof profileUpsert.failure>
+      ActionType<typeof profileUpsert.failure | typeof profileUpsert.success>
     >([profileUpsert.success, profileUpsert.failure]);
     // We got an error
     if (action.type === getType(profileUpsert.failure)) {
@@ -66,4 +58,13 @@ export function* checkProfileEnabledSaga(
       }
     }
   }
+}
+
+function* enableProfileInboxWebhook() {
+  yield* put(
+    profileUpsert.request({
+      is_inbox_enabled: true,
+      is_webhook_enabled: true
+    })
+  );
 }

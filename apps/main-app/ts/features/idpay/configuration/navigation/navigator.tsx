@@ -1,17 +1,18 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { isGestureEnabled } from "../../../../utils/navigation";
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import {
   IdPayConfigurationMachineContext,
   IDPayConfigurationMachineProvider
 } from "../machine/provider";
 import { IdPayConfigurationSuccessScreen } from "../screens/IdPayConfigurationSuccessScreen";
+import { IdPayDiscountInstrumentsScreen } from "../screens/IdPayDiscountInstrumentsScreen";
 import { IdPayIbanConfigurationLandingScreen } from "../screens/IdPayIbanConfigurationLandingScreen";
 import { IdPayIbanEnrollmentScreen } from "../screens/IdPayIbanEnrollmentScreen";
 import { IdPayIbanOnboardingScreen } from "../screens/IdPayIbanOnboardingScreen";
-import { IdPayDiscountInstrumentsScreen } from "../screens/IdPayDiscountInstrumentsScreen";
 import { IdPayInitiativeConfigurationIntroScreen } from "../screens/IdPayInitiativeConfigurationIntroScreen";
 import { IdPayInstrumentsEnrollmentScreen } from "../screens/IdPayInstrumentsEnrollmentScreen";
-import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import { IdPayConfigurationParamsList } from "./params";
 import { IdPayConfigurationRoutes } from "./routes";
 
@@ -32,7 +33,6 @@ const InnerNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO}
-      screenOptions={{ gestureEnabled: isGestureEnabled }}
       screenListeners={{
         beforeRemove: () => {
           // Read more on https://reactnavigation.org/docs/preventing-going-back/
@@ -41,42 +41,43 @@ const InnerNavigator = () => {
           idPayConfigurationMachineRef.send({ type: "back" });
         }
       }}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
       <Stack.Screen
-        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO}
         component={IdPayInitiativeConfigurationIntroScreen}
+        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO}
       />
 
       <Stack.Screen
-        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT}
         component={IdPayIbanEnrollmentScreen}
+        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT}
       />
 
       <Stack.Screen
+        component={IdPayInstrumentsEnrollmentScreen}
         name={
           IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT
         }
-        component={IdPayInstrumentsEnrollmentScreen}
       />
 
       <Stack.Screen
-        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING}
         component={IdPayIbanConfigurationLandingScreen}
+        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING}
       />
 
       <Stack.Screen
-        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING}
         component={IdPayIbanOnboardingScreen}
+        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING}
       />
 
       <Stack.Screen
-        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS}
         component={IdPayConfigurationSuccessScreen}
+        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS}
       />
 
       <Stack.Screen
-        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_DISCOUNT_INSTRUMENTS}
         component={IdPayDiscountInstrumentsScreen}
+        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_DISCOUNT_INSTRUMENTS}
       />
     </Stack.Navigator>
   );

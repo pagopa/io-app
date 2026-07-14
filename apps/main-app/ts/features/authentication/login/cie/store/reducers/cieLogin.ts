@@ -1,5 +1,5 @@
-import { getType } from "typesafe-actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { omit } from "lodash";
 import {
   createMigrate,
   MigrationManifest,
@@ -7,22 +7,23 @@ import {
   PersistedState,
   persistReducer
 } from "redux-persist";
-import { omit } from "lodash";
+import { getType } from "typesafe-actions";
+
+import { Action } from "../../../../../../store/actions/types";
+import { isDevEnv } from "../../../../../../utils/environment";
+import { consolidateActiveSessionLoginData } from "../../../../activeSessionLogin/store/actions";
+import { SpidLevel } from "../../utils";
 import {
   cieIDDisableTourGuide,
   cieIDSetSelectedSecurityLevel,
   cieLoginDisableUat,
   cieLoginEnableUat
 } from "../actions";
-import { Action } from "../../../../../../store/actions/types";
-import { isDevEnv } from "../../../../../../utils/environment";
-import { SpidLevel } from "../../utils";
-import { consolidateActiveSessionLoginData } from "../../../../activeSessionLogin/store/actions";
 
 export type CieLoginState = {
-  useUat: boolean;
-  isCieIDTourGuideEnabled: boolean;
   cieIDSelectedSecurityLevel?: SpidLevel;
+  isCieIDTourGuideEnabled: boolean;
+  useUat: boolean;
 };
 
 export const cieLoginInitialState = {
@@ -35,16 +36,6 @@ const cieLoginReducer = (
   action: Action
 ): CieLoginState => {
   switch (action.type) {
-    case getType(cieLoginEnableUat):
-      return {
-        ...state,
-        useUat: true
-      };
-    case getType(cieLoginDisableUat):
-      return {
-        ...state,
-        useUat: false
-      };
     case getType(cieIDDisableTourGuide):
       return {
         ...state,
@@ -54,6 +45,16 @@ const cieLoginReducer = (
       return {
         ...state,
         cieIDSelectedSecurityLevel: action.payload
+      };
+    case getType(cieLoginDisableUat):
+      return {
+        ...state,
+        useUat: false
+      };
+    case getType(cieLoginEnableUat):
+      return {
+        ...state,
+        useUat: true
       };
     case getType(consolidateActiveSessionLoginData):
       return {

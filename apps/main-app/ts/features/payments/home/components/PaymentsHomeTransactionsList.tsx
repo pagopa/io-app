@@ -4,25 +4,26 @@ import {
   Divider,
   ListItemHeader,
   ListItemTransaction
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
-import { useEffect, useCallback, Fragment, useRef } from "react";
+import { Fragment, useCallback, useEffect, useRef } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
-import { walletLatestReceiptListPotSelector } from "../../receipts/store/selectors";
-import * as analytics from "../analytics";
-import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { usePaymentsBackoffRetry } from "../../common/hooks/usePaymentsBackoffRetry";
 import { clearPaymentsBackoffRetry } from "../../common/store/actions";
 import { PaymentsBackoffRetry } from "../../common/types/PaymentsBackoffRetry";
 import { ReceiptListItemTransaction } from "../../receipts/components/ReceiptListItemTransaction";
 import { PaymentsReceiptRoutes } from "../../receipts/navigation/routes";
+import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
+import { walletLatestReceiptListPotSelector } from "../../receipts/store/selectors";
+import * as analytics from "../analytics";
+import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
 import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
 
 type Props = {
@@ -109,8 +110,8 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
                 onPress={() =>
                   handleNavigateToTransactionDetails(latestTransaction)
                 }
-                transaction={latestTransaction}
                 openedItemRef={openedItemRef}
+                transaction={latestTransaction}
               />
               {index < latestTransactionsPot.value.length - 1 && <Divider />}
             </Fragment>
@@ -123,13 +124,13 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       return (
         <ContentWrapper>
           <BannerErrorState
-            testID="PaymentsHomeTransactionsListTestID-error"
-            label="Il caricamento delle ricevute è fallito."
-            icon="warningFilled"
             actionText={I18n.t(
               "features.payments.transactions.error.banner.retryButton"
             )}
+            icon="warningFilled"
+            label="Il caricamento delle ricevute è fallito."
             onPress={handleOnRetry}
+            testID="PaymentsHomeTransactionsListTestID-error"
           />
         </ContentWrapper>
       );
@@ -141,12 +142,12 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
           <ListItemTransaction
             isLoading={true}
             key={index}
+            subtitle=""
+            title=""
             transaction={{
               amount: "",
               amountAccessibilityLabel: ""
             }}
-            title=""
-            subtitle=""
           />
         ))}
       </ContentWrapper>
@@ -158,10 +159,9 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   }
 
   return (
-    <Animated.View style={{ flex: 1 }} layout={LinearTransition.duration(200)}>
+    <Animated.View layout={LinearTransition.duration(200)} style={{ flex: 1 }}>
       <ContentWrapper>
         <ListItemHeader
-          label={I18n.t("features.payments.transactions.title")}
           accessibilityLabel={I18n.t("features.payments.transactions.title")}
           endElement={
             !isLoading && !pot.isError(latestTransactionsPot)
@@ -177,6 +177,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
                 }
               : undefined
           }
+          label={I18n.t("features.payments.transactions.title")}
         />
       </ContentWrapper>
       {renderLatestNoticesItems()}
