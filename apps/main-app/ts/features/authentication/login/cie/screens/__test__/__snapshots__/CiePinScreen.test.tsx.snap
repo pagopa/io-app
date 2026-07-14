@@ -556,7 +556,7 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                         accessibilityLabel="Campo di inserimento per pin della Carta di Identità elettronica"
                                         accessibilityValue={
                                           {
-                                            "text": "0 di 8 numeri inseriti",
+                                            "text": "Hai inserito 0 di 8 cifre",
                                           }
                                         }
                                         accessible={true}

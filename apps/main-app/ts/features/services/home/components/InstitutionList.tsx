@@ -9,25 +9,26 @@ import {
   VSpacer,
   VStack
 } from "@io-app/design-system";
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { ListRenderItemInfo, View } from "react-native";
 import Animated, {
   AnimatedRef,
   LinearTransition
 } from "react-native-reanimated";
-import I18n from "i18next";
+
 import { Institution } from "../../../../../definitions/services/Institution";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
+import { IdPayInitiativeWaitingList } from "../../../idpay/wallet/components/IdPayInitiativeWaitingList";
+import * as analytics from "../../common/analytics";
 import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
-import * as analytics from "../../common/analytics";
-import { IdPayInitiativeWaitingList } from "../../../idpay/wallet/components/IdPayInitiativeWaitingList";
+import { EmailNotificationBanner } from "./EmailNotificationBanner";
 import { FeaturedInstitutionList } from "./FeaturedInstitutionList";
 import { FeaturedServiceList } from "./FeaturedServiceList";
-import { EmailNotificationBanner } from "./EmailNotificationBanner";
 import { InstitutionListItem } from "./InstitutionListItem";
 
 export type InstitutionListProps = {
@@ -72,8 +73,8 @@ export const InstitutionList = ({
     if (isError) {
       return (
         <BannerErrorState
-          label={I18n.t("services.home.institutions.error.banner.label")}
           actionText={I18n.t("services.home.institutions.error.banner.cta")}
+          label={I18n.t("services.home.institutions.error.banner.label")}
           onPress={retry}
         />
       );
@@ -132,12 +133,12 @@ export const InstitutionList = ({
           }}
         >
           <IOButton
-            variant="link"
             label={I18n.t("services.home.searchLink")}
             onPress={() => {
               analytics.trackSearchStart({ source: "bottom_link" });
               navigateToSearch();
             }}
+            variant="link"
           />
         </View>
       );
@@ -189,15 +190,15 @@ export const InstitutionList = ({
 
   return (
     <Animated.FlatList
-      ItemSeparatorComponent={Divider}
-      ListEmptyComponent={ListEmptyComponent}
-      ListFooterComponent={ListFooterComponent}
-      ListHeaderComponent={ListHeaderComponent}
       contentContainerStyle={{
         flexGrow: 1,
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
       data={data?.institutions}
+      ItemSeparatorComponent={Divider}
+      ListEmptyComponent={ListEmptyComponent}
+      ListFooterComponent={ListFooterComponent}
+      ListHeaderComponent={ListHeaderComponent}
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.1}
       onRefresh={handleRefresh}

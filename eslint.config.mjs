@@ -59,8 +59,7 @@ export default defineConfig([
 
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
   // eslint-plugin-prettier, perfectionist.
-  // Perfectionist block is excluded — sorting rules are deferred to a follow-up PR.
-  ...pagopaConfig.filter(config => !config.plugins?.perfectionist),
+  ...pagopaConfig,
 
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -88,8 +87,8 @@ export default defineConfig([
     },
 
     plugins: {
-      // Remove `import` plugin once we adopt
-      // `perfectionist/sort-imports` rules
+      // `import` plugin is retained for `import/no-extraneous-dependencies`;
+      // import ordering is handled by `perfectionist/sort-imports`.
       import: importPlugin,
       functional,
       sonarjs,
@@ -177,9 +176,7 @@ export default defineConfig([
       "no-caller": "error",
       "no-void": "off",
       "no-duplicate-imports": "error",
-      // Remove the following `import` rule
-      // once we adopt `perfectionist/sort-imports`
-      "import/order": "error",
+      // Import ordering is handled by `perfectionist/sort-imports`
 
       // TYPESCRIPT
       // Downgraded to warn — existing shadows are widespread and non-critical

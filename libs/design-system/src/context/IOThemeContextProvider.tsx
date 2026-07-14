@@ -7,6 +7,7 @@ import {
   useState
 } from "react";
 import { Appearance, ColorSchemeName } from "react-native";
+
 import { IOTheme, IOThemeDark, IOThemeLight } from "../core/IOColors";
 
 export const IOThemes = {
@@ -15,9 +16,9 @@ export const IOThemes = {
 };
 
 type IOThemeContextType = {
-  themeType: ColorSchemeName;
-  theme: IOTheme;
   setTheme: (theme: ColorSchemeName) => void;
+  theme: IOTheme;
+  themeType: ColorSchemeName;
 };
 
 export const IOThemeContext: Context<IOThemeContextType> =

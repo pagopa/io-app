@@ -5,12 +5,13 @@ import {
   IOMarkdownLite,
   VSpacer
 } from "@io-app/design-system";
-import { useCallback } from "react";
 import I18n from "i18next";
+import { useCallback } from "react";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { openWebUrl } from "../../../../utils/url";
 import { useIOSelector } from "../../../../store/hooks";
 import { absolutePortalLinksSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { openWebUrl } from "../../../../utils/url";
 
 const ProfileAboutApp = () => {
   const absolutePortalLinks = useIOSelector(absolutePortalLinksSelector);
@@ -22,11 +23,11 @@ const ProfileAboutApp = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      description={I18n.t("profile.main.appInfo.subtitle")}
+      headerActionsProp={{ showHelp: false }}
       title={{
         label: I18n.t("profile.main.appInfo.title")
       }}
-      description={I18n.t("profile.main.appInfo.subtitle")}
-      headerActionsProp={{ showHelp: false }}
     >
       <ContentWrapper>
         <VSpacer size={16} />
@@ -37,11 +38,11 @@ const ProfileAboutApp = () => {
         />
         <VSpacer size={32} />
         <Banner
+          action={I18n.t("profile.main.appInfo.bannerButton")}
           color="neutral"
           content={I18n.t("profile.main.appInfo.bannerBody")}
-          pictogramName="charity"
           onPress={onNavigateToIOSite}
-          action={I18n.t("profile.main.appInfo.bannerButton")}
+          pictogramName="charity"
         />
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>

@@ -2,6 +2,7 @@ import { IOToast } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ActionArgs, assertEvent, assign } from "xstate";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOStore } from "../../../../store/hooks";
@@ -232,12 +233,6 @@ export const createEidIssuanceActionsImplementation = (
         type: event.warning,
         routeName: event.routeName
       }
-    });
-  },
-
-  navigateToUpgradeCredentialsScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS
     });
   },
 

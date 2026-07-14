@@ -1,11 +1,12 @@
 import { ListItemHeader, ListItemNav } from "@io-app/design-system";
+import { IntegrityError } from "@pagopa/io-react-native-integrity";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Alert, View } from "react-native";
-import { IntegrityError } from "@pagopa/io-react-native-integrity";
+
 import { EidIssuanceLevel } from "../../machine/eid/context";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { IssuanceFailureType } from "../../machine/eid/failure";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 
 export const ItwPidIssuanceSection = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -66,18 +67,17 @@ export const ItwPidIssuanceSection = () => {
     <View>
       <ListItemHeader label="PID issuance" />
       <ListItemNav
-        value="Start L2 issuance"
         description="Start L2 PID (Documenti su IO) issuance"
         onPress={startIssuance("l2")}
+        value="Start L2 issuance"
       />
       <ListItemNav
-        value="Start L3 issuance"
         description="Start L3 PID (IT Wallet) issuance"
         onPress={startIssuance("l3")}
+        value="Start L3 issuance"
       />
       <ListItemHeader label="PID issuance from add credential" />
       <ListItemNav
-        value="Start credential-triggered issuance"
         description="Simulate PID issuance triggered by selecting mDL (skips catalog)"
         onPress={() =>
           machineRef.send({
@@ -87,29 +87,30 @@ export const ItwPidIssuanceSection = () => {
             credentialType: "mDL"
           })
         }
+        value="Start credential-triggered issuance"
       />
       <ListItemHeader label="PID upgrade" />
       <ListItemNav
-        value="Start L3 upgrade"
         description="Start L3 PID (IT Wallet) upgrade from L2"
         onPress={startUpgrade("l3")}
+        value="Start L3 upgrade"
       />
       <ListItemHeader label="PID reissuance" />
       <ListItemNav
-        value="Start L2 reissuance"
         description="Start L2 PID (Documenti su IO) reissuance"
         onPress={startReissuance("l2")}
+        value="Start L2 reissuance"
       />
       <ListItemNav
-        value="Start L3 reissuance"
         description="Start L3 PID (IT Wallet) reissuance"
         onPress={startReissuance("l3")}
+        value="Start L3 reissuance"
       />
       <ListItemHeader label="Failure simulation" />
       <ListItemNav
-        value="Simulate hardware key invalid error"
         description="Simulate GENERATION_ASSERTION_FAILED"
         onPress={simulateHardwareKeyInvalidError}
+        value="Simulate hardware key invalid error"
       />
     </View>
   );

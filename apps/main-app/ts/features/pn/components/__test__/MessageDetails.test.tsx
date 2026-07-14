@@ -1,21 +1,22 @@
 import { ComponentProps } from "react";
 import configureMockStore from "redux-mock-store";
+
+import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as MSG_DETAILS_HEADER from "../../../messages/components/MessageDetail/MessageDetailsHeader";
-import { thirdPartyMessage } from "../../__mocks__/pnMessage";
-import { toSENDMessage } from "../../store/types/transformers";
-import { PNMessage } from "../../store/types/types";
-import { MessageDetails } from "../MessageDetails";
-import PN_ROUTES from "../../navigation/routes";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { thirdPartyMessage } from "../../__mocks__/pnMessage";
+import PN_ROUTES from "../../navigation/routes";
+import { toSENDMessage } from "../../store/types/transformers";
+import { PNMessage } from "../../store/types/types";
+import { MessageDetails } from "../MessageDetails";
 
 jest.mock("../MessageCancelledContent");
 jest.mock("../MessageDetailsContent");

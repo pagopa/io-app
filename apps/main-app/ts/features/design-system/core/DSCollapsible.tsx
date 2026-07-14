@@ -7,6 +7,7 @@ import {
   VStack
 } from "@io-app/design-system";
 import { FlatList, ListRenderItemInfo, View } from "react-native";
+
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const assistanceData: Array<AccordionItem> = [
@@ -50,7 +51,7 @@ export const DSCollapsible = () => {
   );
 
   const renderItem = ({ item }: ListRenderItemInfo<AccordionItem>) => (
-    <AccordionItem title={item.title} body={item.body} />
+    <AccordionItem body={item.body} title={item.title} />
   );
 
   return (
@@ -58,15 +59,15 @@ export const DSCollapsible = () => {
       <VStack space={48}>
         {/* Accordion */}
         <FlatList
-          scrollEnabled={false}
-          data={assistanceData}
           contentContainerStyle={{
             flexGrow: 1
           }}
-          ListHeaderComponent={renderAccordionHeader}
+          data={assistanceData}
           ItemSeparatorComponent={() => <VSpacer size={8} />}
           keyExtractor={(item, index) => `${item.title}-${index}`}
+          ListHeaderComponent={renderAccordionHeader}
           renderItem={renderItem}
+          scrollEnabled={false}
         />
       </VStack>
     </DesignSystemScreen>

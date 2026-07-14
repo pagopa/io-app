@@ -7,6 +7,7 @@ import {
   View
 } from "react-native";
 import { SvgProps } from "react-native-svg";
+
 import { useIOTheme } from "../../context";
 import {
   IOColors,
@@ -17,7 +18,7 @@ import {
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
-import { IOIconSizeScale, IOIcons, Icon } from "../icons";
+import { Icon, IOIcons, IOIconSizeScale } from "../icons";
 import { HStack, VStack } from "../layout";
 import { LoadingSpinner } from "../loadingSpinner";
 import { IOSkeleton } from "../skeleton";
@@ -27,30 +28,30 @@ import {
   PressableModuleBase,
   PressableModuleBaseProps
 } from "./PressableModuleBase";
-type LoadingProps = {
-  isLoading: true;
-  loadingAccessibilityLabel?: string;
-};
+type BaseProps = ImageProps &
+  PressableModuleBaseProps & {
+    badge?: Badge;
+    iconColor?: IOColors;
+    isFetching?: boolean;
+    isLoading?: false;
+    rightIcon?: IOIcons;
+    subtitle?: string;
+    title: string;
+  };
 
 type ImageProps =
   | { icon: IOIcons; image?: never }
   | {
       icon?: never;
-      image: ImageURISource | ImageSourcePropType | ReactElement<SvgProps>;
+      image: ImageSourcePropType | ImageURISource | ReactElement<SvgProps>;
     };
 
-type BaseProps = {
-  isLoading?: false;
-  title: string;
-  subtitle?: string;
-  badge?: Badge;
-  isFetching?: boolean;
-  rightIcon?: IOIcons;
-  iconColor?: IOColors;
-} & ImageProps &
-  PressableModuleBaseProps;
+type LoadingProps = {
+  isLoading: true;
+  loadingAccessibilityLabel?: string;
+};
 
-type ModuleNavigationAltProps = LoadingProps | BaseProps;
+type ModuleNavigationAltProps = BaseProps | LoadingProps;
 
 export const ModuleNavigationAlt = (
   props: WithTestID<ModuleNavigationAltProps>
@@ -83,7 +84,7 @@ export const ModuleNavigationAlt = (
   } = props;
 
   const iconComponent = icon && (
-    <Icon name={icon} size={32} color={iconColor} />
+    <Icon color={iconColor} name={icon} size={32} />
   );
 
   const imageComponent = () => {
@@ -97,9 +98,9 @@ export const ModuleNavigationAlt = (
       return (
         <View>
           <Image
+            accessibilityIgnoresInvertColors={true}
             source={image as ImageSourcePropType}
             style={styles.image}
-            accessibilityIgnoresInvertColors={true}
           />
         </View>
       );
@@ -117,10 +118,10 @@ export const ModuleNavigationAlt = (
     if (onPress) {
       return (
         <Icon
-          testID={testID ? `${testID}_icon` : undefined}
-          name={rightIcon ?? "chevronRightListItem"}
           color={theme["interactiveElem-default"]}
+          name={rightIcon ?? "chevronRightListItem"}
           size={IOListItemVisualParams.chevronSize}
+          testID={testID ? `${testID}_icon` : undefined}
         />
       );
     }
@@ -128,7 +129,7 @@ export const ModuleNavigationAlt = (
   };
 
   return (
-    <PressableModuleBase {...pressableProps} testID={testID} onPress={onPress}>
+    <PressableModuleBase {...pressableProps} onPress={onPress} testID={testID}>
       <HStack space={8} style={{ alignItems: "center" }}>
         <HStack
           space={IOVisualCostants.iconMargin as IOSpacer}
@@ -152,15 +153,15 @@ export const ModuleNavigationAlt = (
             <View>
               <BodySmall
                 color={theme["interactiveElem-default"]}
-                weight="Semibold"
-                numberOfLines={2}
                 lineBreakMode="middle"
+                numberOfLines={2}
                 style={{ flexShrink: 1 }}
+                weight="Semibold"
               >
                 {title}
               </BodySmall>
               {subtitle && (
-                <LabelMini weight="Regular" color={theme["textBody-tertiary"]}>
+                <LabelMini color={theme["textBody-tertiary"]} weight="Regular">
                   {subtitle}
                 </LabelMini>
               )}
@@ -177,24 +178,24 @@ const ModuleNavigationAltSkeleton = ({
   loadingAccessibilityLabel
 }: Pick<LoadingProps, "loadingAccessibilityLabel">) => (
   <ModuleStatic
-    accessible={true}
     accessibilityLabel={loadingAccessibilityLabel}
     accessibilityState={{ busy: true }}
+    accessible={true}
+    endBlock={
+      <IOSkeleton height={24} radius={16} shape="rectangle" width={64} />
+    }
     startBlock={
       <HStack
-        style={{ alignItems: "center" }}
         space={IOVisualCostants.iconMargin as IOSpacer}
+        style={{ alignItems: "center" }}
       >
-        <IOSkeleton shape="square" size={32} radius={8} />
+        <IOSkeleton radius={8} shape="square" size={32} />
         <VStack space={4}>
-          <IOSkeleton shape="rectangle" width={52} height={12} radius={8} />
-          <IOSkeleton shape="rectangle" width={96} height={16} radius={8} />
-          <IOSkeleton shape="rectangle" width={160} height={12} radius={8} />
+          <IOSkeleton height={12} radius={8} shape="rectangle" width={52} />
+          <IOSkeleton height={16} radius={8} shape="rectangle" width={96} />
+          <IOSkeleton height={12} radius={8} shape="rectangle" width={160} />
         </VStack>
       </HStack>
-    }
-    endBlock={
-      <IOSkeleton shape="rectangle" width={64} height={24} radius={16} />
     }
   />
 );

@@ -1,4 +1,5 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
+
 import { TransactionInfo } from "../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { TransactionStatusEnum } from "../../../../../definitions/pagopa/ecommerce/TransactionStatus";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -11,7 +12,7 @@ const MAX_TRIES = 3;
 
 type EffectCallback = (
   transaction: TransactionInfo
-) => void | (() => void | undefined);
+) => (() => undefined | void) | void;
 
 /**
  * This custom hook manages the transition of a transaction's status from ACTIVATION_REQUESTED to ACTIVATED.

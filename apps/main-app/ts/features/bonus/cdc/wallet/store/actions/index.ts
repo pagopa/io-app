@@ -1,4 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
+
 import { CitizenStatus } from "../../../../../../../definitions/cdc/CitizenStatus";
 import { NetworkError } from "../../../../../../utils/errors";
 

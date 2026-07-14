@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { put, select } from "typed-redux-saga/macro";
+
 import { lollipopSetSupportedDevice } from "../store/actions/lollipop";
 import { lollipopPublicKeySelector } from "../store/reducers/lollipop";
 

@@ -1,13 +1,13 @@
+import { GlobalState } from "../../../../../../../store/reducers/types";
 import { ConsentData } from "../../types";
 import { generateConsentKey } from "../../utils";
 import {
-  itwProximityConsentsSelector,
-  itwProximityConsentsEntriesSelector,
-  itwProximityConsentsByCredentialTypeSelector,
   itwProximityConsentExistsSelector,
-  itwProximityConsentsByRpIdSelector
+  itwProximityConsentsByCredentialTypeSelector,
+  itwProximityConsentsByRpIdSelector,
+  itwProximityConsentsEntriesSelector,
+  itwProximityConsentsSelector
 } from "../consents";
-import { GlobalState } from "../../../../../../../store/reducers/types";
 
 const mdlConsent: ConsentData = {
   rpId: "rp-001",

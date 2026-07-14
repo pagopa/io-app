@@ -1,4 +1,5 @@
 import { Platform, StyleSheet, View, ViewStyle } from "react-native";
+
 import { useIOTheme } from "../../context";
 import {
   IOColors,
@@ -11,7 +12,7 @@ import {
 } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
-import { IOIconSizeScale, IOIcons, Icon } from "../icons";
+import { Icon, IOIcons, IOIconSizeScale } from "../icons";
 import { IOText } from "../typography";
 
 const IconColorsMap: Record<string, keyof IOTheme> = {
@@ -24,44 +25,45 @@ const IconColorsMap: Record<string, keyof IOTheme> = {
   lightGrey: "icon-decorative"
 };
 
+export type Tag = TextProps &
+  WithTestID<
+    | {
+        icon: VariantProps;
+        variant: "custom";
+      }
+    | {
+        icon?: never;
+        iconName?: never;
+        variant:
+          | "attachment"
+          | "error"
+          | "info"
+          | "legalMessage"
+          | "noIcon"
+          | "qrCode"
+          | "success"
+          | "warning";
+      }
+  > & {
+    allowFontScaling?: boolean;
+  } & { forceLightMode?: boolean };
+
 type IconColorVariant = keyof typeof IconColorsMap;
+
+type TextProps =
+  | {
+      iconAccessibilityLabel: string;
+      text?: never;
+    }
+  | {
+      iconAccessibilityLabel?: string;
+      text: string;
+    };
 
 type VariantProps = {
   color: IconColorVariant;
   name: IOIcons;
 };
-
-type TextProps =
-  | {
-      text: string;
-      iconAccessibilityLabel?: string;
-    }
-  | {
-      text?: never;
-      iconAccessibilityLabel: string;
-    };
-
-export type Tag = TextProps & { forceLightMode?: boolean } & WithTestID<
-    | {
-        variant:
-          | "qrCode"
-          | "legalMessage"
-          | "info"
-          | "warning"
-          | "error"
-          | "success"
-          | "attachment"
-          | "noIcon";
-        iconName?: never;
-        icon?: never;
-      }
-    | {
-        variant: "custom";
-        icon: VariantProps;
-      }
-  > & {
-    allowFontScaling?: boolean;
-  };
 
 const IOTagIconMargin: IOSpacingScale = 6;
 const IOTagIconSize: IOIconSizeScale = 16;
@@ -96,48 +98,48 @@ const styles = StyleSheet.create({
 const getVariantProps = (
   variant: NonNullable<Tag["variant"]>,
   customIcon?: VariantProps
-): VariantProps | undefined => {
+): undefined | VariantProps => {
   if (variant === "custom" && customIcon) {
     return customIcon;
   }
   switch (variant) {
-    case "qrCode":
-      return {
-        color: "primary",
-        name: "qrCode"
-      };
     case "attachment":
       return {
         color: "grey",
         name: "attachment"
-      };
-    case "legalMessage":
-      return {
-        color: "primary",
-        name: "legalValue"
-      };
-    case "info":
-      return {
-        color: "info",
-        name: "infoFilled"
-      };
-    case "warning":
-      return {
-        color: "warning",
-        name: "warningFilled"
       };
     case "error":
       return {
         color: "error",
         name: "errorFilled"
       };
+    case "info":
+      return {
+        color: "info",
+        name: "infoFilled"
+      };
+    case "legalMessage":
+      return {
+        color: "primary",
+        name: "legalValue"
+      };
+    case "noIcon":
+      return undefined;
+    case "qrCode":
+      return {
+        color: "primary",
+        name: "qrCode"
+      };
     case "success":
       return {
         color: "success",
         name: "success"
       };
-    case "noIcon":
-      return undefined;
+    case "warning":
+      return {
+        color: "warning",
+        name: "warningFilled"
+      };
     default:
       return undefined;
   }
@@ -177,48 +179,48 @@ export const Tag = ({
 
   return (
     <View
-      testID={testID}
       style={[
         styles.tag,
         allowFontScaling ? tagDynamic : styles.tagStatic,
         { borderColor, backgroundColor }
       ]}
+      testID={testID}
     >
       {variantProps && (
         <View style={styles.iconWrapper}>
           <Icon
+            accessibilityLabel={iconAccessibilityLabel}
+            accessible={!!iconAccessibilityLabel}
             allowFontScaling={allowFontScaling}
-            name={variantProps.name}
             color={
               forceLightMode
                 ? IOThemeLight[IconColorsMap[variantProps.color]]
                 : theme[IconColorsMap[variantProps.color]]
             }
+            name={variantProps.name}
             size={IOTagIconSize}
-            accessible={!!iconAccessibilityLabel}
-            accessibilityLabel={iconAccessibilityLabel}
           />
         </View>
       )}
       {text && (
         <IOText
           allowFontScaling={allowFontScaling}
-          weight={"Semibold"}
-          size={12}
-          lineHeight={16}
           color={
             forceLightMode
               ? IOThemeLight["textBody-tertiary"]
               : theme["textBody-tertiary"]
           }
-          numberOfLines={1}
           ellipsizeMode="tail"
+          lineHeight={16}
+          numberOfLines={1}
+          size={12}
           style={{
             alignSelf: "center",
             textTransform: "uppercase",
             letterSpacing: 0.5,
             flexShrink: 1
           }}
+          weight={"Semibold"}
         >
           {text}
         </IOText>

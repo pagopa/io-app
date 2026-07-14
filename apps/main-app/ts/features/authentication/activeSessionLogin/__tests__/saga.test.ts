@@ -1,27 +1,28 @@
 import { expectSaga, testSaga } from "redux-saga-test-plan";
-import { select, race, take, fork } from "typed-redux-saga/macro";
+import { fork, race, select, take } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
+
+import { analyticsAuthenticationStarted } from "../../../../store/actions/analytics";
+import { startApplicationInitialization } from "../../../../store/actions/application";
+import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
 import {
-  activeSessionLoginSuccess,
+  handleActiveSessionLoginSaga,
+  watchActiveSessionLoginSaga
+} from "../saga";
+import {
   activeSessionLoginFailure,
+  activeSessionLoginSuccess,
   consolidateActiveSessionLoginData,
   setRetryActiveSessionLogin,
   setStartActiveSessionLogin
 } from "../store/actions";
 import {
-  isActiveSessionFastLoginEnabledSelector,
-  idpSelectedActiveSessionLoginSelector,
-  newTokenActiveSessionLoginSelector,
   cieIDSelectedSecurityLevelActiveSessionLoginSelector,
-  cieLoginFlowSelector
+  cieLoginFlowSelector,
+  idpSelectedActiveSessionLoginSelector,
+  isActiveSessionFastLoginEnabledSelector,
+  newTokenActiveSessionLoginSelector
 } from "../store/selectors";
-import { startApplicationInitialization } from "../../../../store/actions/application";
-import { analyticsAuthenticationStarted } from "../../../../store/actions/analytics";
-import {
-  handleActiveSessionLoginSaga,
-  watchActiveSessionLoginSaga
-} from "../saga";
-import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
 
 const mockToken = "mock-token";
 const mockIdp = {

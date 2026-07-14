@@ -1,14 +1,15 @@
+import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { render } from "@testing-library/react-native";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { appReducer } from "../../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
-import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
-import * as tourSelectors from "../../../../tour/store/selectors";
-import * as ingressSelectors from "../../../../ingress/store/selectors";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
+import * as ingressSelectors from "../../../../ingress/store/selectors";
 import { startTourAction } from "../../../../tour/store/actions";
+import * as tourSelectors from "../../../../tour/store/selectors";
+import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_TOUR_GROUP_ID } from "../../utils/constants";
 import { useItwGuidedTour } from "../useItwGuidedTour";
 
@@ -102,8 +103,8 @@ describe("useItwGuidedTour", () => {
 });
 
 type Params = {
-  isItWalletValid: boolean;
   isCompleted: boolean;
+  isItWalletValid: boolean;
   offlineAccessReason: OfflineAccessReasonEnum | undefined;
 };
 

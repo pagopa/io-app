@@ -69,7 +69,10 @@
       "list": {
         "counter": "Elemento {{index}} di {{total}}"
       },
-      "progressTracker": "{{index}} di {{total}}"
+      "progressTracker": "{{index}} di {{total}}",
+      "otpInput": {
+        "valueText": "Hai inserito {{valueLength}} di {{length}} cifre"
+      }
     },
     "date": {
       "invalid": "data non valida"
@@ -3504,11 +3507,6 @@
               "subtitle": "Se riscontri più volte il problema, attendi qualche minuto e riprova."
             }
           }
-        },
-        "updateCredential": {
-          "title": "I tuoi documenti saranno aggiornati",
-          "description": "Continuando, otterrai una versione digitale aggiornata dei tuoi documenti presenti nel Portafoglio di IO",
-          "button": "Continua"
         }
       },
       "issuance": {
