@@ -1,15 +1,15 @@
+import {
+  Body,
+  H4,
+  hexToRgba,
+  IOColors,
+  IOVisualCostants
+} from "@io-app/design-system";
 import { ScrollView, Text, View } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
-import {
-  Body,
-  H4,
-  IOColors,
-  IOVisualCostants,
-  hexToRgba
-} from "@io-app/design-system";
 
 const bottomBarHeight = 70;
 const topBarHeight = 55;
@@ -24,7 +24,7 @@ export const DSEdgeToEdgeArea = () => {
         backgroundColor: IOColors.white
       }}
     >
-      <SafeAreaView style={{ flex: 1 }} edges={["left", "right"]}>
+      <SafeAreaView edges={["left", "right"]} style={{ flex: 1 }}>
         <ScrollView
           contentContainerStyle={{
             paddingTop: insets.top + topBarHeight,

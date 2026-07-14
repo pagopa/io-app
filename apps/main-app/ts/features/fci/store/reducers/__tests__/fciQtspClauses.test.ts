@@ -1,10 +1,11 @@
-import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getTimeoutError } from "../../../../../utils/errors";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { fciLoadQtspClauses, fciClearStateRequest } from "../../actions";
+import { getTimeoutError } from "../../../../../utils/errors";
 import { mockQtspClausesMetadata } from "../../../types/__mocks__/QtspClausesMetadata.mock";
+import { fciClearStateRequest, fciLoadQtspClauses } from "../../actions";
 
 const genericError = getTimeoutError();
 

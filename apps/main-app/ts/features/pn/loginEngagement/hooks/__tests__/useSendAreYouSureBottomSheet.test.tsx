@@ -1,18 +1,19 @@
 import { useFocusEffect } from "@react-navigation/native";
 import {
-  renderHook,
   act,
+  fireEvent,
   render,
-  fireEvent
+  renderHook
 } from "@testing-library/react-native";
 import i18n from "i18next";
+
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import { useSendAreYouSureBottomSheet } from "../useSendAreYouSureBottomSheet";
 import {
   trackSendActivationAccepted,
   trackSendActivationDeclined,
   trackSendNurturingDialogClosure
 } from "../../../analytics/send";
+import { useSendAreYouSureBottomSheet } from "../useSendAreYouSureBottomSheet";
 
 const mockRequestSendActivation = jest.fn();
 

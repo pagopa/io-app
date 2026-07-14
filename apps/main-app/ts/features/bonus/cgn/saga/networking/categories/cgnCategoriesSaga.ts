@@ -1,7 +1,8 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
-import { ActionType } from "typesafe-actions";
 import { call, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
+
 import { PublishedProductCategories } from "../../../../../../../definitions/cgn/merchants/PublishedProductCategories";
 import { PublishedProductCategoriesWithNewDiscountsCount } from "../../../../../../../definitions/cgn/merchants/PublishedProductCategoriesWithNewDiscountsCount";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -9,14 +10,14 @@ import {
   getGenericError,
   getNetworkError
 } from "../../../../../../utils/errors";
+import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 import { cgnCategories } from "../../../store/actions/categories";
-import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 
 const checkIsCategoriesWithCount = (
   cl:
-    | PublishedProductCategoriesWithNewDiscountsCount
     | PublishedProductCategories
+    | PublishedProductCategoriesWithNewDiscountsCount
 ): cl is PublishedProductCategoriesWithNewDiscountsCount =>
   PublishedProductCategoriesWithNewDiscountsCount.is(cl);
 

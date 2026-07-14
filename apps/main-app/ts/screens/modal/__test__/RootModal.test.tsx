@@ -1,8 +1,8 @@
-import DeviceInfo from "react-native-device-info";
-
-import { createStore } from "redux";
 import { act } from "@testing-library/react-native";
 import I18n from "i18next";
+import DeviceInfo from "react-native-device-info";
+import { createStore } from "redux";
+
 import {
   versionInfoLoadFailure,
   versionInfoLoadSuccess

@@ -1,65 +1,68 @@
 import { ComponentProps, ReactNode } from "react";
 import { AccessibilityRole, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import { IOListItemStyles, IOListItemVisualParams } from "../../core";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
-import { IOButton, IOButtonLinkSpecificProps, IconButton } from "../buttons";
+import { IconButton, IOButton, IOButtonLinkSpecificProps } from "../buttons";
 import { LogoPaymentWithFallback } from "../common/LogoPaymentWithFallback";
-import { IOIconSizeScale, IOIcons, Icon } from "../icons";
+import { Icon, IOIcons, IOIconSizeScale } from "../icons";
 import { VSpacer } from "../layout";
 import { IOLogoPaymentType } from "../logos";
 import { BodySmall, H6 } from "../typography";
 
-type ButtonLinkActionProps = {
-  type: "buttonLink";
-  componentProps: Omit<IOButtonLinkSpecificProps, "variant">;
-};
-
-type IconButtonActionProps = {
-  type: "iconButton";
-  componentProps: ComponentProps<typeof IconButton>;
-};
+export type ListItemInfo = GraphicProps &
+  InteractiveProps &
+  WithTestID<{
+    accessibilityLabel?: string;
+    accessibilityRole?: AccessibilityRole;
+    endElement?: EndElementProps;
+    label?: string;
+    numberOfLines?: number;
+    reversed?: boolean;
+    topElement?: BadgeProps;
+    value: ReactNode | string;
+  }>;
 
 type BadgeProps = {
-  type: "badge";
   componentProps: ComponentProps<typeof Badge>;
+  type: "badge";
+};
+
+type ButtonLinkActionProps = {
+  componentProps: Omit<IOButtonLinkSpecificProps, "variant">;
+  type: "buttonLink";
 };
 
 type EndElementProps =
+  | BadgeProps
   | ButtonLinkActionProps
-  | IconButtonActionProps
-  | BadgeProps;
+  | IconButtonActionProps;
 
 type GraphicProps =
-  | { paymentLogoIcon?: IOLogoPaymentType; icon?: never }
-  | { paymentLogoIcon?: never; icon?: IOIcons };
+  | { icon?: IOIcons; paymentLogoIcon?: never }
+  | { icon?: never; paymentLogoIcon?: IOLogoPaymentType };
+
+type IconButtonActionProps = {
+  componentProps: ComponentProps<typeof IconButton>;
+  type: "iconButton";
+};
 
 type InteractiveProps = Pick<
   ComponentProps<typeof Pressable>,
-  "onLongPress" | "accessibilityActions" | "onAccessibilityAction"
+  "accessibilityActions" | "onAccessibilityAction" | "onLongPress"
 >;
-
-export type ListItemInfo = WithTestID<{
-  value: string | ReactNode;
-  label?: string;
-  numberOfLines?: number;
-  endElement?: EndElementProps;
-  topElement?: BadgeProps;
-  accessibilityLabel?: string;
-  accessibilityRole?: AccessibilityRole;
-  reversed?: boolean;
-}> &
-  GraphicProps &
-  InteractiveProps;
 
 const PAYMENT_LOGO_SIZE: IOIconSizeScale = 24;
 
 const EndElementComponent = ({ type, componentProps }: EndElementProps) => {
   switch (type) {
+    case "badge":
+      return <Badge {...componentProps} />;
     case "buttonLink":
       return (
         <IOButton
@@ -77,8 +80,6 @@ const EndElementComponent = ({ type, componentProps }: EndElementProps) => {
           accessibilityLabel={componentProps.accessibilityLabel}
         />
       );
-    case "badge":
-      return <Badge {...componentProps} />;
     default:
       return null;
   }
@@ -97,14 +98,14 @@ const ListItemInfoContent = ({
   listItemAccessibilityLabel
 }: Pick<
   ListItemInfo,
+  | "endElement"
   | "icon"
-  | "paymentLogoIcon"
   | "label"
-  | "value"
   | "numberOfLines"
+  | "paymentLogoIcon"
   | "reversed"
   | "topElement"
-  | "endElement"
+  | "value"
 > & {
   hasInteractiveElements: boolean;
   listItemAccessibilityLabel?: string;
@@ -117,8 +118,8 @@ const ListItemInfoContent = ({
       {icon && !hugeFontEnabled && (
         <Icon
           allowFontScaling
-          name={icon}
           color={theme["icon-decorative"]}
+          name={icon}
           size={IOListItemVisualParams.iconSize}
         />
       )}
@@ -132,10 +133,10 @@ const ListItemInfoContent = ({
 
       <View style={{ flex: 1 }}>
         <View
-          accessible={hasInteractiveElements}
           accessibilityLabel={
             hasInteractiveElements ? listItemAccessibilityLabel : undefined
           }
+          accessible={hasInteractiveElements}
           importantForAccessibility={
             hasInteractiveElements ? "yes" : "no-hide-descendants"
           }
@@ -149,7 +150,7 @@ const ListItemInfoContent = ({
           )}
 
           {label && (
-            <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+            <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
               {label}
             </BodySmall>
           )}
@@ -280,16 +281,16 @@ export const ListItemInfo = ({
   if (onLongPress) {
     return (
       <Pressable
-        onLongPress={onLongPress}
-        testID={testID}
-        accessible
-        accessibilityRole="button"
-        accessibilityLabel={listItemAccessibilityLabel}
         accessibilityActions={accessibilityActions}
+        accessibilityLabel={listItemAccessibilityLabel}
+        accessibilityRole="button"
+        accessible
         onAccessibilityAction={onAccessibilityAction}
+        onLongPress={onLongPress}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
         onTouchEnd={onPressOut}
+        testID={testID}
       >
         <Animated.View
           style={[IOListItemStyles.listItem, backgroundAnimatedStyle]}
@@ -315,13 +316,13 @@ export const ListItemInfo = ({
 
   return (
     <View
-      style={IOListItemStyles.listItem}
-      testID={testID}
-      accessible={!hasInteractiveElements}
       accessibilityLabel={
         hasInteractiveElements ? undefined : listItemAccessibilityLabel
       }
       accessibilityRole={hasInteractiveElements ? undefined : accessibilityRole}
+      accessible={!hasInteractiveElements}
+      style={IOListItemStyles.listItem}
+      testID={testID}
     >
       <View
         style={[

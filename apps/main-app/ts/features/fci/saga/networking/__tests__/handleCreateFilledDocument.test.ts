@@ -1,17 +1,18 @@
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { left, right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
-import { left, right } from "fp-ts/lib/Either";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { getNetworkError } from "../../../../../utils/errors";
-import { qtspFilledDocument } from "../../../types/__mocks__/CreateFilledDocumentBody.mock";
-import { fciLoadQtspFilledDocument } from "../../../store/actions";
+
 import { CreateFilledDocument } from "../../../../../../definitions/fci/CreateFilledDocument";
+import { FilledDocumentDetailView } from "../../../../../../definitions/fci/FilledDocumentDetailView";
+import { getNetworkError } from "../../../../../utils/errors";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { fciLoadQtspFilledDocument } from "../../../store/actions";
+import { qtspFilledDocument } from "../../../types/__mocks__/CreateFilledDocumentBody.mock";
 import {
   filledDocumentPollWatcher,
   handleCreateFilledDocument
 } from "../handleCreateFilledDocument";
-import { FilledDocumentDetailView } from "../../../../../../definitions/fci/FilledDocumentDetailView";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 
 const mockedPayload: CreateFilledDocument = {
   document_url: "https://mockedUrl" as NonEmptyString

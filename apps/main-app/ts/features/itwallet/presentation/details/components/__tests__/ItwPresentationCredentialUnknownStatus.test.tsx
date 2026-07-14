@@ -2,6 +2,7 @@ import { act, fireEvent, render } from "@testing-library/react-native";
 import { PropsWithChildren, ReactElement } from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";

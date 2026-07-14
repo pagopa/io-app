@@ -1,10 +1,11 @@
-import { useEffect } from "react";
 import I18n from "i18next";
+import { useEffect } from "react";
+
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useItwDisableGestureNavigation } from "../hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import { useItwDisableGestureNavigation } from "../hooks/useItwDisableGestureNavigation";
 
 const ItwCredentialNotFound = ({
   credentialType
@@ -39,22 +40,22 @@ const ItwCredentialNotFound = ({
 
   return (
     <OperationResultScreenContent
-      pictogram="cie"
-      title={I18n.t("features.itWallet.issuance.credentialNotFound.title")}
-      subtitle={I18n.t(
-        "features.itWallet.issuance.credentialNotFound.subtitle"
-      )}
-      isHeaderVisible={false}
       action={{
         label: I18n.t("global.buttons.continue"),
         accessibilityLabel: I18n.t("global.buttons.continue"),
         onPress: navigateToCredential
       }}
+      isHeaderVisible={false}
+      pictogram="cie"
       secondaryAction={{
         label: I18n.t("global.buttons.cancel"),
         accessibilityLabel: I18n.t("global.buttons.cancel"),
         onPress: handleClose
       }}
+      subtitle={I18n.t(
+        "features.itWallet.issuance.credentialNotFound.subtitle"
+      )}
+      title={I18n.t("features.itWallet.issuance.credentialNotFound.title")}
     />
   );
 };

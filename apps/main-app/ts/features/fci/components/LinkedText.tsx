@@ -3,9 +3,9 @@ import * as O from "fp-ts/lib/Option";
 import { Fragment } from "react";
 
 type Props = WithTestID<{
-  text: string;
-  replacementUrl: string;
   onPress: (holder: string) => void;
+  replacementUrl: string;
+  text: string;
 }>;
 
 // a regex to match markdown links
@@ -64,13 +64,13 @@ const LinkedText = (props: Props) => {
       const url = splitted[2];
       return (
         <Body
-          weight="Semibold"
           asLink
           avoidPressable
           key={index}
           onPress={() =>
             onPress(getOrReplaceTagWithLink(url, props.replacementUrl))
           }
+          weight="Semibold"
         >
           {textToBeLinked}
         </Body>

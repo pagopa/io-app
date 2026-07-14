@@ -1,16 +1,17 @@
-import { createStore } from "redux";
-import { waitFor, act } from "@testing-library/react-native";
+import { act, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
-import { IngressScreen } from "../screens/IngressScreen";
-import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../store/actions/application";
+import * as ioHook from "../../../store/hooks";
 import { appReducer } from "../../../store/reducers";
 import * as backendStatusSelectors from "../../../store/reducers/backendStatus/remoteConfig";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import * as selectors from "../../connectivity/store/selectors";
-import * as itwSelectors from "../../itwallet/common/store/selectors";
-import * as ioHook from "../../../store/hooks";
 import { identificationRequest } from "../../identification/store/actions";
 import { IdentificationBackActionType } from "../../identification/store/reducers";
+import * as itwSelectors from "../../itwallet/common/store/selectors";
+import { IngressScreen } from "../screens/IngressScreen";
 
 jest.useFakeTimers();
 

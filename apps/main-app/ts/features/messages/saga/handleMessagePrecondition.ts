@@ -2,11 +2,15 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
+import { MessageCategory } from "../../../../definitions/communication/MessageCategory";
 import { CommunicationClient } from "../../../api/CommunicationClientManager";
-import { convertUnknownToError } from "../../../utils/errors";
-import { isTestEnv } from "../../../utils/environment";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
+import { isTestEnv } from "../../../utils/environment";
+import { convertUnknownToError } from "../../../utils/errors";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import {
   trackDisclaimerLoadError,
   trackUndefinedBearerToken,
@@ -20,14 +24,26 @@ import {
   toErrorPayload,
   toLoadingContentPayload
 } from "../store/actions/preconditions";
-import { MessageCategory } from "../../../../definitions/communication/MessageCategory";
 import {
   preconditionsCategoryTagSelector,
   preconditionsMessageIdSelector
 } from "../store/reducers/messagePrecondition";
-import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { getCommunicationClient } from "./commons";
+
+export function* getMessageIdAndCategoryTag(): Generator<
+  ReduxSagaEffect,
+  undefined | { categoryTag: MessageCategory["tag"]; messageId: string },
+  any
+> {
+  const messageId = yield* select(preconditionsMessageIdSelector);
+  const categoryTag = yield* select(preconditionsCategoryTagSelector);
+  return messageId && categoryTag
+    ? {
+        messageId,
+        categoryTag
+      }
+    : undefined;
+}
 
 export function* handleMessagePrecondition(
   action: ActionType<typeof retrievingDataPreconditionStatusAction>
@@ -104,21 +120,6 @@ function* messagePreconditionWorker(
       )
     );
   }
-}
-
-export function* getMessageIdAndCategoryTag(): Generator<
-  ReduxSagaEffect,
-  { messageId: string; categoryTag: MessageCategory["tag"] } | undefined,
-  any
-> {
-  const messageId = yield* select(preconditionsMessageIdSelector);
-  const categoryTag = yield* select(preconditionsCategoryTagSelector);
-  return messageId && categoryTag
-    ? {
-        messageId,
-        categoryTag
-      }
-    : undefined;
 }
 
 export const testMessagePreconditionWorker = isTestEnv

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+
 import { IOIconSizeScale } from "../components/icons";
 import { IOColors } from "./IOColors";
 import { IOModuleIDPRadius } from "./IOShapes";
@@ -16,17 +17,17 @@ import {
 
 interface IOVisualCostants {
   appMarginDefault: IOAppMargin;
-  // Header
-  headerHeight: number;
+  avatarRadiusSizeMedium: number;
+  avatarRadiusSizeSmall: number;
+  avatarSizeMedium: number;
   // Dimensions
   avatarSizeSmall: number;
-  avatarSizeMedium: number;
-  avatarRadiusSizeSmall: number;
-  avatarRadiusSizeMedium: number;
+  // Header
+  headerHeight: number;
   iconContainedSizeDefault: number;
-  scrollDownButtonRight: number;
-  scrollDownButtonBottom: number;
   iconMargin: IOSpacingScale;
+  scrollDownButtonBottom: number;
+  scrollDownButtonRight: number;
 }
 
 export const IOVisualCostants: IOVisualCostants = {
@@ -163,12 +164,12 @@ export const IOIconButtonStyles = StyleSheet.create({
  */
 
 interface IOListItemVisualParams {
-  paddingVertical: IOSpacingScale;
-  paddingHorizontal: IOAppMargin;
-  iconMargin: IOSpacingScale;
   actionMargin: IOSpacingScale;
-  iconSize: IOIconSizeScale;
   chevronSize: IOIconSizeScale;
+  iconMargin: IOSpacingScale;
+  iconSize: IOIconSizeScale;
+  paddingHorizontal: IOAppMargin;
+  paddingVertical: IOSpacingScale;
 }
 
 export const IOListItemVisualParams: IOListItemVisualParams = {
@@ -212,8 +213,8 @@ export const IOModuleStyles = StyleSheet.create({
  */
 
 interface IOSelectionTickVisualParams {
-  size: IOIconSizeScale;
   borderWidth: number;
+  size: IOIconSizeScale;
 }
 
 export const IOSelectionTickVisualParams: IOSelectionTickVisualParams = {
@@ -222,12 +223,12 @@ export const IOSelectionTickVisualParams: IOSelectionTickVisualParams = {
 };
 
 interface IOSelectionListItemVisualParams {
-  paddingVertical: IOSpacingScale;
-  paddingHorizontal: IOAppMargin;
-  iconMargin: IOSpacingScale;
   actionMargin: IOSpacer;
-  iconSize: IOIconSizeScale;
   descriptionMargin: IOSpacer;
+  iconMargin: IOSpacingScale;
+  iconSize: IOIconSizeScale;
+  paddingHorizontal: IOAppMargin;
+  paddingVertical: IOSpacingScale;
 }
 
 export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =
