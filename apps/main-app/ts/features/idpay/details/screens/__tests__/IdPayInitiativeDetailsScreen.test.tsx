@@ -14,6 +14,10 @@ import {
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
+jest.mock("../../../../../components/helpers/withAppRequiredUpdate", () => ({
+  useAppRequiredUpdate: () => false
+}));
+
 const mockedInitiative = {
   voucherEndDate: new Date(2023, 1, 1),
   initiativeId: "ABC123",
