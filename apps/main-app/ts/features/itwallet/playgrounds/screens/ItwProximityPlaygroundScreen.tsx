@@ -84,7 +84,6 @@ export const ItwProximityPlaygroundScreen = () => {
     if (skipConsent && request) {
       // If NFC retrieval mode we send documents immediately after receiving the request, without waiting for user interaction
       void sendDocument(request, MDL_BASE64);
-      return;
     }
   }, [skipConsent, request, sendDocument]);
 
@@ -104,12 +103,10 @@ export const ItwProximityPlaygroundScreen = () => {
             <QrCodeImage size={"80%"} value={qrCode} />
           )}
           {status === PROXIMITY_STATUS.ENGAGEMENT && isNfcEnabled && (
-            <>
-              <Body>
-                NFC engagement active, tap the back of both devices toward each
-                other and hold them together
-              </Body>
-            </>
+            <Body>
+              NFC engagement active, tap the back of both devices toward each
+              other and hold them together
+            </Body>
           )}
         </View>
 
@@ -130,7 +127,9 @@ export const ItwProximityPlaygroundScreen = () => {
                     fullWidth
                     key={label}
                     label={label}
-                    onPress={() => startFlow(engagementModes, retrievalMethods)}
+                    onPress={() =>
+                      void startFlow(engagementModes, retrievalMethods)
+                    }
                   />
                 )
               )}
@@ -140,30 +139,34 @@ export const ItwProximityPlaygroundScreen = () => {
             <>
               <IOButton
                 label="Send document (base64)"
-                onPress={() => sendDocument(request, MDL_BASE64)}
+                onPress={() => void sendDocument(request, MDL_BASE64)}
               />
               <IOButton
                 label="Send document (base64url)"
-                onPress={() => sendDocument(request, MDL_BASE64URL)}
+                onPress={() => void sendDocument(request, MDL_BASE64URL)}
               />
               <IOButton
                 label="Send broken document"
-                onPress={() => sendDocument(request, MDL_BASE64.slice(0, -10))}
+                onPress={() =>
+                  void sendDocument(request, MDL_BASE64.slice(0, -10))
+                }
               />
               <IOButton
                 label={`Send error ${ISO18013_5.ErrorCode.CBOR_DECODING} (${ISO18013_5.ErrorCode[ISO18013_5.ErrorCode.CBOR_DECODING]})`}
-                onPress={() => sendError(ISO18013_5.ErrorCode.CBOR_DECODING)}
+                onPress={() =>
+                  void sendError(ISO18013_5.ErrorCode.CBOR_DECODING)
+                }
               />
               <IOButton
                 label={`Send error ${ISO18013_5.ErrorCode.SESSION_ENCRYPTION} (${ISO18013_5.ErrorCode[ISO18013_5.ErrorCode.SESSION_ENCRYPTION]})`}
                 onPress={() =>
-                  sendError(ISO18013_5.ErrorCode.SESSION_ENCRYPTION)
+                  void sendError(ISO18013_5.ErrorCode.SESSION_ENCRYPTION)
                 }
               />
               <IOButton
                 label={`Send error ${ISO18013_5.ErrorCode.SESSION_TERMINATED} (${ISO18013_5.ErrorCode[ISO18013_5.ErrorCode.SESSION_TERMINATED]})`}
                 onPress={() =>
-                  sendError(ISO18013_5.ErrorCode.SESSION_TERMINATED)
+                  void sendError(ISO18013_5.ErrorCode.SESSION_TERMINATED)
                 }
               />
             </>
@@ -174,7 +177,9 @@ export const ItwProximityPlaygroundScreen = () => {
             status === PROXIMITY_STATUS.ERROR) && (
             <IOButton
               label={"Close Engagement"}
-              onPress={() => closeFlow(status === PROXIMITY_STATUS.PRESENTING)}
+              onPress={() =>
+                void closeFlow(status === PROXIMITY_STATUS.PRESENTING)
+              }
             />
           )}
         </VStack>
