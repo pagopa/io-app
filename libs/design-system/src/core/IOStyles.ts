@@ -41,9 +41,7 @@ export const IOVisualCostants: IOVisualCostants = {
   iconMargin: 12
 };
 
-/**
- * Shared footer `boxShadow`
- */
+/** Shared footer `boxShadow` */
 export const footerBoxShadow = {
   offsetX: 0,
   offsetY: 0,
