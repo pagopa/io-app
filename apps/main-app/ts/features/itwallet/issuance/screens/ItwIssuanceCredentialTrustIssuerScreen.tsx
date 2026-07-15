@@ -15,7 +15,6 @@ import { useCallback, useRef } from "react";
 
 import type { CredentialIssuanceMode } from "../../machine/credential/context";
 
-import { OfflineFailureComponent } from "../../../../components/error/OfflineFailure";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -30,7 +29,7 @@ import { trackOpenItwTos } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import { useOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { RequiresConnectivity } from "../../common/components/RequiresConnectivity";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -264,10 +263,8 @@ const ContentView = ({
   );
 };
 
-export const ItwIssuanceCredentialTrustIssuerScreen = (props: ScreenProps) => {
-  const isOffline = useOfflineFailureScreen();
-  if (isOffline) {
-    return <OfflineFailureComponent isHeaderVisible={true} />;
-  }
-  return <ItwIssuanceCredentialTrustIssuer {...props} />;
-};
+export const ItwIssuanceCredentialTrustIssuerScreen = (props: ScreenProps) => (
+  <RequiresConnectivity>
+    <ItwIssuanceCredentialTrustIssuer {...props} />
+  </RequiresConnectivity>
+);

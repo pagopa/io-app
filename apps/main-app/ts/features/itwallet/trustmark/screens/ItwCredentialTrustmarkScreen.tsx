@@ -1,12 +1,11 @@
 import { Body, ContentWrapper, VStack } from "@io-app/design-system";
 import I18n from "i18next";
 
-import { OfflineFailureComponent } from "../../../../components/error/OfflineFailure";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
-import { useOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { RequiresConnectivity } from "../../common/components/RequiresConnectivity";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwTrustmarkExpirationTimer } from "../components/ItwTrustmarkExpirationTimer";
@@ -49,10 +48,8 @@ const ItwCredentialTrustmarkScreenComponent = (params: ScreenProps) => {
   );
 };
 
-export const ItwCredentialTrustmarkScreen = (props: ScreenProps) => {
-  const isOffline = useOfflineFailureScreen();
-  if (isOffline) {
-    return <OfflineFailureComponent isHeaderVisible={true} />;
-  }
-  return <ItwCredentialTrustmarkScreenComponent {...props} />;
-};
+export const ItwCredentialTrustmarkScreen = (props: ScreenProps) => (
+  <RequiresConnectivity>
+    <ItwCredentialTrustmarkScreenComponent {...props} />
+  </RequiresConnectivity>
+);
