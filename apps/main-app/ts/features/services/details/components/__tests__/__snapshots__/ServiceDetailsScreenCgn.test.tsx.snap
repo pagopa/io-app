@@ -495,7 +495,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -519,7 +518,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1658,7 +1656,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1682,7 +1679,6 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",

@@ -40,7 +40,7 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
-import { getPaymentPhaseFromStep } from "../utils";
+import { getPaymentPhaseFromStep, getPreselectedPspFlagType } from "../utils";
 
 type WalletPaymentOutcomeRouteProps = RouteProp<
   PaymentsCheckoutParamsList,
@@ -208,6 +208,9 @@ const WalletPaymentOutcomeScreen = () => {
         saved_payment_method:
           paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
+        preselected_psp_flag: getPreselectedPspFlagType(
+          paymentAnalyticsData?.pspList
+        ),
         data_entry: paymentAnalyticsData?.startOrigin,
         browser_type: paymentAnalyticsData?.browserType,
         is_onboarded: paymentAnalyticsData?.is_onboarded
