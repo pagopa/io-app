@@ -1,9 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
-import { TransactionStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/TransactionStatus";
+
 import { selectPaymentsCheckoutState } from ".";
+import { TransactionStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/TransactionStatus";
 
 export const walletPaymentTransactionSelector = createSelector(
   selectPaymentsCheckoutState,

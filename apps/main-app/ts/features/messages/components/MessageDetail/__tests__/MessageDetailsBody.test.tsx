@@ -1,16 +1,17 @@
-import * as O from "fp-ts/lib/Option";
 import { act, fireEvent } from "@testing-library/react-native";
+import * as O from "fp-ts/lib/Option";
+import { ScrollView } from "react-native";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
-import { ScrollView } from "react-native";
+
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { trackAppCaughtError } from "../../../../../utils/analytics";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { MessageDetailsBody } from "../MessageDetailsBody";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { trackAppCaughtError } from "../../../../../utils/analytics";
 
 jest.mock("../MessageMarkdown");
 

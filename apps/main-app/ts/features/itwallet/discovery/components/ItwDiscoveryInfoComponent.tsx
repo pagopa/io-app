@@ -8,18 +8,19 @@ import {
   H4,
   HStack,
   Icon,
-  IOMarkdownLite,
   IOColors,
   IOIcons,
+  IOMarkdownLite,
   useIOTheme,
   useIOThemeContext,
   useIOToast,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
+
 import Feature1Image from "../../../../../img/features/itWallet/discovery/feature_1.svg";
 import Feature2Image from "../../../../../img/features/itWallet/discovery/feature_2.svg";
 import Feature3Image from "../../../../../img/features/itWallet/discovery/feature_3.svg";
@@ -33,9 +34,7 @@ import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { trackOpenItwTos } from "../../analytics";
-import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
-import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
@@ -75,37 +74,13 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
     }, [machineRef, isWalletValid, credentialType])
   );
 
-  const dismissalDialog = useItwDismissalDialog({
-    customLabels: {
-      title: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.title"
-      ),
-      body: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.body"
-      ),
-      confirmLabel: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.confirm"
-      ),
-      cancelLabel: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.cancel"
-      )
-    },
-    handleDismiss: () => {
-      machineRef.send({ type: "close" });
-    },
-    dismissalContext: {
-      screen_name: ITW_SCREENVIEW_EVENTS.ITW_INTRO,
-      itw_flow: "L3"
-    }
-  });
-
   useHeaderSecondLevel({
     contextualHelp: emptyContextualHelp,
     supportRequest: true,
     title: "",
     goBack: () => {
       trackItwIntroBack("L3");
-      dismissalDialog.show();
+      machineRef.send({ type: "close", surveyStep: "intro" });
     },
     onStartSupportRequest: () => {
       toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
@@ -134,43 +109,43 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
     component: (
       <>
         <DetailBlock
-          title={I18n.t(
-            "features.itWallet.discovery.screen.itw.details.1.title"
-          )}
           content={I18n.t(
             "features.itWallet.discovery.screen.itw.details.1.content"
           )}
           icon="security"
+          title={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.1.title"
+          )}
         />
         <Divider />
         <DetailBlock
-          title={I18n.t(
-            "features.itWallet.discovery.screen.itw.details.2.title"
-          )}
           content={I18n.t(
             "features.itWallet.discovery.screen.itw.details.2.content"
           )}
           icon="fiscalCodeIndividual"
+          title={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.2.title"
+          )}
         />
         <Divider />
         <DetailBlock
-          title={I18n.t(
-            "features.itWallet.discovery.screen.itw.details.3.title"
-          )}
           content={I18n.t(
             "features.itWallet.discovery.screen.itw.details.3.content"
           )}
           icon="navQrWallet"
+          title={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.3.title"
+          )}
         />
         <Divider />
         <DetailBlock
-          title={I18n.t(
-            "features.itWallet.discovery.screen.itw.details.4.title"
-          )}
           content={I18n.t(
             "features.itWallet.discovery.screen.itw.details.4.content"
           )}
           icon="euStars"
+          title={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.4.title"
+          )}
         />
       </>
     ),
@@ -198,6 +173,9 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
     <>
       <View style={styles.container} testID="itwDiscoveryInfoComponentTestID">
         <ForceScrollDownView
+          buttonAccessibilityLabel={I18n.t(
+            "global.accessibility.scrollToBottom"
+          )}
           footerActions={{
             actions: {
               type: "TwoButtons",
@@ -231,34 +209,34 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
             <VSpacer size={24} />
             <VStack space={16}>
               <FeatureBlock
-                image={<Feature1Image width={48} height={48} />}
                 content={I18n.t(
                   "features.itWallet.discovery.screen.itw.features.1"
                 )}
+                image={<Feature1Image height={48} width={48} />}
               />
               <FeatureBlock
-                image={<Feature2Image width={48} height={48} />}
                 content={I18n.t(
                   "features.itWallet.discovery.screen.itw.features.2"
                 )}
+                image={<Feature2Image height={48} width={48} />}
               />
               <FeatureBlock
-                image={<Feature3Image width={48} height={48} />}
                 content={I18n.t(
                   "features.itWallet.discovery.screen.itw.features.3"
                 )}
+                image={<Feature3Image height={48} width={48} />}
               />
               <FeatureBlock
-                image={<Feature4Image width={48} height={48} />}
                 content={I18n.t(
                   "features.itWallet.discovery.screen.itw.features.4"
                 )}
+                image={<Feature4Image height={48} width={48} />}
               />
               <FeatureBlock
-                image={<Feature5Image width={48} height={48} />}
                 content={I18n.t(
                   "features.itWallet.discovery.screen.itw.features.5"
                 )}
+                image={<Feature5Image height={48} width={48} />}
               />
             </VStack>
             <VSpacer size={32} />
@@ -266,8 +244,8 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
               content={I18n.t("features.itWallet.discovery.screen.itw.tos", {
                 privacyUrl: "itw-privacy-and-terms"
               })}
-              small
               onLinkPress={handlePrivacyAndTermsPress}
+              small
             />
           </ContentWrapper>
         </ForceScrollDownView>
@@ -314,9 +292,9 @@ const FeatureBlock = (props: {
 };
 
 const DetailBlock = (props: {
-  title: string;
   content: string;
   icon: IOIcons;
+  title: string;
 }) => {
   const theme = useIOTheme();
 
@@ -325,9 +303,9 @@ const DetailBlock = (props: {
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <H4>{props.title}</H4>
         <Icon
+          color={theme["interactiveElem-default"]}
           name={props.icon}
           size={24}
-          color={theme["interactiveElem-default"]}
         />
       </View>
       <IOMarkdown content={props.content} />

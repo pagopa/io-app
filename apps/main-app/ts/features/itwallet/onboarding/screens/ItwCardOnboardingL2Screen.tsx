@@ -3,10 +3,11 @@ import {
   IOButton,
   IOVisualCostants,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks";
@@ -14,25 +15,25 @@ import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { trackShowCredentialsList } from "../../analytics";
 import { isL2Credential } from "../../common/utils/itwCredentialUtils.ts";
 import { makeItwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
-import { ITW_ROUTES } from "../../navigation/routes.ts";
-import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
-import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors/index.ts";
+import { ITW_ROUTES } from "../../navigation/routes.ts";
+import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
+import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
 
 const ItwCardOnboardingL2Screen = () => {
   useFocusEffect(trackShowCredentialsList);
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("features.itWallet.onboarding.restrictedMode.title")
-      }}
+      contextualHelp={emptyContextualHelp}
       description={I18n.t(
         "features.itWallet.onboarding.restrictedMode.description"
       )}
-      contextualHelp={emptyContextualHelp}
       faqCategories={["wallet", "wallet_methods"]}
       headerActionsProp={{ showHelp: true }}
+      title={{
+        label: I18n.t("features.itWallet.onboarding.restrictedMode.title")
+      }}
     >
       <View style={styles.wrapper}>
         <ItwL2CredentialOnboardingSection />
@@ -66,17 +67,17 @@ const ItwL2CredentialOnboardingSection = () => {
         </AsyncCredentialsCatalogue>
         <Divider />
         <IOButton
-          testID="add-bonus-action-testID"
-          variant="link"
-          label={I18n.t("features.wallet.onboarding.cta.addBonus")}
           accessibilityLabel={I18n.t("features.wallet.onboarding.cta.addBonus")}
+          label={I18n.t("features.wallet.onboarding.cta.addBonus")}
+          numberOfLines={2}
           onPress={() => {
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.L3_ONBOARDING,
               params: { page: 1 }
             });
           }}
-          numberOfLines={2}
+          testID="add-bonus-action-testID"
+          variant="link"
         />
       </VStack>
     </View>

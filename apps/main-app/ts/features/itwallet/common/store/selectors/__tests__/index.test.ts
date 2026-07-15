@@ -4,8 +4,8 @@ import {
   itwOfflineAccessAvailableSelector,
   itwShouldRenderDiscoveryBannerSelector,
   itwShouldRenderInboxDiscoveryBannerSelector,
-  itwShouldRenderL2EngagementBannerSelector,
   itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
+  itwShouldRenderL2EngagementBannerSelector,
   itwShouldRenderL3UpgradeBannerSelector,
   itwShouldRenderWalletDiscoveryBannerSelector,
   itwShouldRenderWalletReadyBannerSelector,
@@ -16,10 +16,10 @@ import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
 import * as ingressSelectors from "../../../../../ingress/store/selectors";
 import * as credentialsSelectors from "../../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
-import * as walletInstanceSelectors from "../../../../walletInstance/store/selectors";
 import * as proximityCredentialsSelectors from "../../../../presentation/proximity/store/selectors/credentials";
-import * as preferencesSelectors from "../preferences";
+import * as walletInstanceSelectors from "../../../../walletInstance/store/selectors";
 import * as bannersSelectors from "../banners";
+import * as preferencesSelectors from "../preferences";
 import * as remoteConfigSelectors from "../remoteConfig";
 
 describe("isItwDiscoveryBannerRenderableSelector", () => {

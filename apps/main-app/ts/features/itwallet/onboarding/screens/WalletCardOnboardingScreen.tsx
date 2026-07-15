@@ -4,11 +4,12 @@ import {
   ListItemHeader,
   ModuleCredential,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -25,17 +26,17 @@ import {
   trackStartAddNewCredential
 } from "../../analytics";
 import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
-import { selectItwEnv } from "../../common/store/selectors/environment";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors";
+import { selectItwEnv } from "../../common/store/selectors/environment";
 import { isItwEnabledSelector } from "../../common/store/selectors/remoteConfig";
 import {
   isL2Credential,
   isUpcomingCredential
 } from "../../common/utils/itwCredentialUtils";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
-import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
+import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
 
 const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
@@ -53,12 +54,12 @@ const WalletCardOnboardingScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("features.wallet.onboarding.title")
-      }}
       contextualHelp={emptyContextualHelp}
       faqCategories={["wallet", "wallet_methods"]}
       headerActionsProp={{ showHelp: true }}
+      title={{
+        label: I18n.t("features.wallet.onboarding.title")
+      }}
     >
       <View style={styles.wrapper}>
         <ItwDiscoveryBannerOnboarding />
@@ -131,14 +132,14 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
     };
 
     return isCgnLoading ? (
-      <ModuleCredential testID="cgnModuleLoadingTestID" isLoading={true} />
+      <ModuleCredential isLoading={true} testID="cgnModuleLoadingTestID" />
     ) : (
       <ModuleCredential
-        testID="cgnModuleTestID"
+        badge={isCgnActive ? activeBadge : undefined}
         image={require("../../../../../img/bonus/cgn/cgn_logo.png")}
         label={I18n.t("features.wallet.onboarding.options.cgn")}
         onPress={!isCgnActive ? startCgnActivation : undefined}
-        badge={isCgnActive ? activeBadge : undefined}
+        testID="cgnModuleTestID"
       />
     );
   }, [isCgnActive, isCgnLoading, startCgnActivation]);
@@ -153,10 +154,10 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
       <VStack space={8}>
         {cgnModule}
         <ModuleCredential
-          testID="paymentsModuleTestID"
           icon="creditCard"
           label={I18n.t("features.wallet.onboarding.options.payments")}
           onPress={navigateToPaymentMethodOnboarding}
+          testID="paymentsModuleTestID"
         />
       </VStack>
     </View>

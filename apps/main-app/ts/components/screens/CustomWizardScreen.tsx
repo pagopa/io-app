@@ -8,23 +8,23 @@ import {
   IOVisualCostants,
   Pictogram,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-type ButtonProps = Pick<
-  IOButtonProps,
-  "label" | "accessibilityLabel" | "onPress" | "testID"
->;
-
 export type CustomWizardScreenProps = {
-  title: string;
+  actionButton?: ButtonProps;
+  buttonLink?: ButtonProps;
   description?: string;
   pictogram: IOPictograms;
   primaryButton: ButtonProps;
-  actionButton?: ButtonProps;
-  buttonLink?: ButtonProps;
+  title: string;
 };
+
+type ButtonProps = Pick<
+  IOButtonProps,
+  "accessibilityLabel" | "label" | "onPress" | "testID"
+>;
 
 /**
  * A common screen used in a wizard flow to show a pictogram, a title, a description and one or two buttons.
@@ -40,13 +40,13 @@ const CustomWizardScreen = ({
 }: CustomWizardScreenProps) => (
   <SafeAreaView style={{ flex: 1 }}>
     <WizardBody
+      buttonLink={buttonLink}
+      description={description}
       pictogram={pictogram}
       title={title}
-      description={description}
-      buttonLink={buttonLink}
     />
     <ContentWrapper>
-      <IOButton variant="solid" fullWidth {...primaryButton} />
+      <IOButton fullWidth variant="solid" {...primaryButton} />
       {actionButton && (
         <>
           <VSpacer size={24} />
@@ -61,13 +61,13 @@ const CustomWizardScreen = ({
 );
 
 type CustomWizardBodyProps = {
-  title: string;
-  description?: string;
-  pictogram: IOPictograms;
   buttonLink?: Pick<
     IOButtonProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
+    "accessibilityLabel" | "label" | "onPress" | "testID"
   >;
+  description?: string;
+  pictogram: IOPictograms;
+  title: string;
 };
 
 const WizardBody = ({

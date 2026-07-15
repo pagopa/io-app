@@ -1,12 +1,13 @@
-import { useEffect, useMemo } from "react";
+import { Nullable } from "@io-app/design-system";
 import { constNull } from "fp-ts/lib/function";
-import { Nullable } from "@pagopa/io-app-design-system";
-import { AuthErrorResponseBody } from "../utils/itwRemoteTypeUtils";
-import { RemoteFailure, RemoteFailureType } from "../machine/failure";
-import { selectUnverifiedRequestObject } from "../machine/selectors";
-import { ItwRemoteMachineContext } from "../machine/provider";
+import { useEffect, useMemo } from "react";
+
 import { OperationResultScreenContentProps } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIoWallet } from "../../../common/utils/itwIoWallet";
+import { RemoteFailure, RemoteFailureType } from "../machine/failure";
+import { ItwRemoteMachineContext } from "../machine/provider";
+import { selectUnverifiedRequestObject } from "../machine/selectors";
+import { AuthErrorResponseBody } from "../utils/itwRemoteTypeUtils";
 
 type Props = {
   failure: RemoteFailure;

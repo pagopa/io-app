@@ -1,5 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { call, fork, select, takeEvery } from "typed-redux-saga/macro";
+
 import { registerSuperProperties } from "../../../../mixpanel.ts";
 import { GlobalState } from "../../../../store/reducers/types";
 import { getNfcAntennaInfo, isHceSupported } from "../../../../utils/nfc";
@@ -13,14 +14,6 @@ import {
   handleCredentialStoredAnalytics
 } from "./credentialAnalyticsHandlers";
 
-export function* watchItwAnalyticsSaga(): SagaIterator {
-  // Aligns Mixpanel with current IT-Wallet state
-  yield* fork(syncItwAnalyticsProperties);
-
-  // Keep analytics in sync with store changes
-  yield* fork(watchItwCredentialsAnalyticsSaga);
-}
-
 /**
  * Saga that performs a full sync of all ITW analytics properties
  * (Profile + Super) using the current state.
@@ -28,11 +21,6 @@ export function* watchItwAnalyticsSaga(): SagaIterator {
 export function* syncItwAnalyticsProperties() {
   const state: GlobalState = yield* select();
   updateItwAnalyticsProperties(state);
-}
-
-export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
-  yield* takeEvery(itwCredentialsStore, handleCredentialStoredAnalytics);
-  yield* takeEvery(itwCredentialsRemove, handleCredentialRemovedAnalytics);
 }
 
 /**
@@ -70,4 +58,17 @@ export function* updateNfcInfoTrackingProperties() {
       NFC_HCE_READ_FAILURE: errorName
     });
   }
+}
+
+export function* watchItwAnalyticsSaga(): SagaIterator {
+  // Aligns Mixpanel with current IT-Wallet state
+  yield* fork(syncItwAnalyticsProperties);
+
+  // Keep analytics in sync with store changes
+  yield* fork(watchItwCredentialsAnalyticsSaga);
+}
+
+export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
+  yield* takeEvery(itwCredentialsStore, handleCredentialStoredAnalytics);
+  yield* takeEvery(itwCredentialsRemove, handleCredentialRemovedAnalytics);
 }

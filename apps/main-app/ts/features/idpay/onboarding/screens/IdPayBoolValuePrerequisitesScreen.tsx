@@ -3,11 +3,12 @@ import {
   IOToast,
   ListItemSwitch,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
+} from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { View } from "react-native";
+
 import { _typeEnum as SelfConsentBoolTypeEnum } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
 import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -94,14 +95,6 @@ const IdPayBoolValuePrerequisitesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      topElement={<IdPayOnboardingStepper />}
-      title={{
-        label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
-        section: I18n.t("idpay.onboarding.navigation.header")
-      }}
-      goBack={goBackOnPress}
-      contextualHelp={emptyContextualHelp}
-      headerActionsProp={{ showHelp: true }}
       actions={{
         type: "SingleButton",
         primary: {
@@ -109,7 +102,15 @@ const IdPayBoolValuePrerequisitesScreen = () => {
           onPress: continueOnPress
         }
       }}
+      contextualHelp={emptyContextualHelp}
+      goBack={goBackOnPress}
+      headerActionsProp={{ showHelp: true }}
       includeContentMargins
+      title={{
+        label: I18n.t("idpay.onboarding.boolPrerequisites.header"),
+        section: I18n.t("idpay.onboarding.navigation.header")
+      }}
+      topElement={<IdPayOnboardingStepper />}
     >
       <LoadingSpinnerOverlay isLoading={isLoading}>
         {selfCriteriaBoolSubtitle && (

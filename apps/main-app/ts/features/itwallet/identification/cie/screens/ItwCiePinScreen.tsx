@@ -4,7 +4,7 @@ import {
   IOButton,
   OTPInput,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
@@ -18,15 +18,17 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { isCieLoginUatEnabledSelector } from "../../../../authentication/login/cie/store/selectors";
-import { trackItWalletCiePinEnter } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { trackItWalletCiePinEnter } from "../../analytics";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
 const CIE_PIN_LENGTH = 8;
@@ -37,7 +39,7 @@ const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
 });
 
 export const ItwCiePinScreen = () => {
-  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
+  usePreventScreenCapture();
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -85,7 +87,6 @@ export const ItwCiePinScreen = () => {
       machineRef.send({ type: "cie-pin-entered", pin: value });
     }
   };
-
   return (
     <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
       <KeyboardAvoidingView
@@ -94,8 +95,8 @@ export const ItwCiePinScreen = () => {
           android: undefined
         })}
         contentContainerStyle={{ flex: 1 }}
-        style={{ flex: 1 }}
         keyboardVerticalOffset={headerHeight}
+        style={{ flex: 1 }}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <ContentWrapper>
@@ -104,33 +105,39 @@ export const ItwCiePinScreen = () => {
             </H2>
             <VSpacer size={8} />
             <IOButton
-              variant="link"
-              label={I18n.t(
+              accessibilityLabel={I18n.t(
                 "features.itWallet.identification.cie.inputPin.buttonLink"
               )}
-              accessibilityLabel={I18n.t(
+              label={I18n.t(
                 "features.itWallet.identification.cie.inputPin.buttonLink"
               )}
               onPress={() => {
                 pinInfoBottomSheet.present();
               }}
+              variant="link"
             />
             <VSpacer size={24} />
             <View style={{ flex: 1 }}>
               <OTPInput
-                ref={pinPadViewRef}
-                secret
-                value={pin}
-                accessibilityLabel={I18n.t(
-                  "authentication.cie.pin.accessibility.label"
-                )}
                 accessibilityHint={I18n.t(
                   "authentication.cie.pin.accessibility.hint"
                 )}
-                onValueChange={onPinChanged}
-                length={CIE_PIN_LENGTH}
+                accessibilityLabel={I18n.t(
+                  "authentication.cie.pin.accessibility.label"
+                )}
+                accessibilityValueText={({ valueLength, length }) =>
+                  I18n.t("global.accessibility.otpInput.valueText", {
+                    valueLength,
+                    length
+                  })
+                }
                 autoFocus={isFocused}
                 key={isFocused ? "focused" : "unfocused"}
+                length={CIE_PIN_LENGTH}
+                onValueChange={onPinChanged}
+                ref={pinPadViewRef}
+                secret
+                value={pin}
               />
             </View>
           </ContentWrapper>

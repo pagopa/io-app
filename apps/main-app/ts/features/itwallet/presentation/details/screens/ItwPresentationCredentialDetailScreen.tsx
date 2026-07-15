@@ -3,12 +3,13 @@ import {
   IOButton,
   Optional,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import React, { useCallback, useMemo } from "react";
 import { View } from "react-native";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -16,6 +17,7 @@ import {
   useIONavigation
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { identificationRequest } from "../../../../identification/store/actions";
 import { trackCredentialRenewStart } from "../../../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils";
@@ -23,8 +25,9 @@ import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText.tsx";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
-import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
+import { isItwProximityEnabledSelector } from "../../../common/store/selectors";
 import { itwIsL3EnabledSelector } from "../../../common/store/selectors/index.ts";
+import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
@@ -39,7 +42,6 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
-import { isItwProximityEnabledSelector } from "../../../common/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
@@ -122,25 +124,6 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   if (!isWalletValid) {
     return (
       <OperationResultScreenContent
-        title={
-          isL3
-            ? I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.itWallet.title"
-              )
-            : I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.title"
-              )
-        }
-        subtitle={
-          isL3
-            ? I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.itWallet.subtitle"
-              )
-            : I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.subtitle"
-              )
-        }
-        pictogram="itWallet"
         action={{
           label: I18n.t(
             "features.itWallet.issuance.walletInstanceNotActive.primaryAction"
@@ -153,12 +136,31 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
               }
             })
         }}
+        pictogram="itWallet"
         secondaryAction={{
           label: I18n.t(
             "features.itWallet.issuance.walletInstanceNotActive.secondaryAction"
           ),
           onPress: () => navigation.popToTop()
         }}
+        subtitle={
+          isL3
+            ? I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.itWallet.subtitle"
+              )
+            : I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.subtitle"
+              )
+        }
+        title={
+          isL3
+            ? I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.itWallet.title"
+              )
+            : I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.title"
+              )
+        }
       />
     );
   }
@@ -217,7 +219,7 @@ export const ItwPresentationCredentialDetail = ({
   );
 
   useDebugInfo(credential);
-  // TODO: [SIW-4622] re-enable usePreventScreenCapture();
+  usePreventScreenCapture();
 
   useFocusEffect(
     useCallback(() => {
@@ -370,13 +372,13 @@ export const ItwPresentationCredentialDetail = ({
         {showInlineCta && (
           <View style={{ alignSelf: "center", paddingVertical: 8 }}>
             <IOButton
-              variant="link"
+              icon="creditCard"
+              iconPosition="start"
               label={I18n.t(
                 "features.itWallet.presentation.credentialDetails.openCardDocument"
               )}
-              icon="creditCard"
-              iconPosition="start"
               onPress={handleOpenCard}
+              variant="link"
             />
           </View>
         )}

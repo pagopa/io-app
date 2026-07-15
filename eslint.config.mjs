@@ -56,8 +56,7 @@ export default defineConfig([
 
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
   // eslint-plugin-prettier, perfectionist.
-  // Perfectionist block is excluded — sorting rules are deferred to a follow-up PR.
-  ...pagopaConfig.filter(config => !config.plugins?.perfectionist),
+  ...pagopaConfig,
 
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -85,8 +84,8 @@ export default defineConfig([
     },
 
     plugins: {
-      // Remove `import` plugin once we adopt
-      // `perfectionist/sort-imports` rules
+      // `import` plugin is retained for `import/no-extraneous-dependencies`;
+      // import ordering is handled by `perfectionist/sort-imports`.
       import: importPlugin,
       functional,
       sonarjs,
@@ -173,9 +172,7 @@ export default defineConfig([
       "no-caller": "error",
       "no-void": "off",
       "no-duplicate-imports": "error",
-      // Remove the following `import` rule
-      // once we adopt `perfectionist/sort-imports`
-      "import/order": "error",
+      // Import ordering is handled by `perfectionist/sort-imports`
 
       // TYPESCRIPT
       // Downgraded to warn — existing shadows are widespread and non-critical
@@ -351,6 +348,15 @@ export default defineConfig([
         {
           ignoreTypeOfDescribeName: true,
           ignoreTypeOfTestName: true
+        }
+      ],
+      // Saga tests assert through redux-saga-test-plan's chainable APIs
+      // (`testSaga(...).next()`, `expectSaga(...).run()`) rather than a bare
+      // `expect`, so teach the rule to treat those as assertion helpers.
+      "jest/expect-expect": [
+        "warn",
+        {
+          assertFunctionNames: ["expect", "expectSaga", "testSaga"]
         }
       ]
     }

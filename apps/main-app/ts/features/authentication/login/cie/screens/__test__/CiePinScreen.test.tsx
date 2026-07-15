@@ -1,16 +1,16 @@
-import { fireEvent } from "@testing-library/react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
-import { createStore } from "redux";
+import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
-import { appReducer } from "../../../../../../store/reducers";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import CiePinScreen from "../../screens/CiePinScreen";
 import * as hooks from "../../../../../../store/hooks";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
+import { appReducer } from "../../../../../../store/reducers";
 import * as accessibilityUtils from "../../../../../../utils/accessibility";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import * as cieAnalytics from "../../../../common/analytics/cieAnalytics";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import CiePinScreen from "../../screens/CiePinScreen";
 
 jest.mock("../../../../../../store/hooks", () => ({
   useIOSelector: jest.fn(),

@@ -3,12 +3,13 @@ import {
   FeatureInfo,
   FooterActionsInline,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { ComponentProps, useCallback, useEffect, useState } from "react";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+import { ComponentProps, useCallback, useEffect, useState } from "react";
+
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -127,6 +128,13 @@ export const IdPayInstrumentsEnrollmentScreen = () => {
     title: I18n.t("idpay.configuration.instruments.enrollmentSheet.header"),
     footer: (
       <FooterActionsInline
+        endAction={{
+          color: "primary",
+          label: I18n.t(
+            "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
+          ),
+          onPress: handleEnrollConfirm
+        }}
         startAction={{
           color: "primary",
           label: I18n.t(
@@ -135,13 +143,6 @@ export const IdPayInstrumentsEnrollmentScreen = () => {
           onPress: () => {
             enrollmentBottomSheetModal.dismiss();
           }
-        }}
-        endAction={{
-          color: "primary",
-          label: I18n.t(
-            "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
-          ),
-          onPress: handleEnrollConfirm
         }}
       />
     ),
@@ -208,34 +209,34 @@ export const IdPayInstrumentsEnrollmentScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      includeContentMargins
-      title={{
-        label: I18n.t("idpay.configuration.instruments.paymentMethods.header")
-      }}
+      actions={renderFooterActionProps()}
+      contextualHelp={emptyContextualHelp}
       description={I18n.t(
         "idpay.configuration.instruments.paymentMethods.body",
         {
           initiativeName
         }
       )}
-      headerActionsProp={{ showHelp: true }}
-      contextualHelp={emptyContextualHelp}
       goBack={handleBackPress}
-      actions={renderFooterActionProps()}
+      headerActionsProp={{ showHelp: true }}
+      includeContentMargins
+      title={{
+        label: I18n.t("idpay.configuration.instruments.paymentMethods.header")
+      }}
     >
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
         {walletInstruments.map(walletInstrument => (
           <IdPayInstrumentEnrollmentSwitch
-            key={walletInstrument.idWallet}
-            wallet={walletInstrument}
             isStaged={stagedWalletId === walletInstrument.idWallet}
+            key={walletInstrument.idWallet}
             onValueChange={handleInstrumentValueChange(walletInstrument)}
+            wallet={walletInstrument}
           />
         ))}
         <VSpacer size={16} />
         <FeatureInfo
-          iconName="navWallet"
           body={I18n.t("idpay.configuration.instruments.footer")}
+          iconName="navWallet"
         />
       </LoadingSpinnerOverlay>
       {enrollmentBottomSheetModal.bottomSheet}

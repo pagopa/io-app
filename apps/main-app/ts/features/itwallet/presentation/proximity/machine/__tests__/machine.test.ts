@@ -1,12 +1,13 @@
 import _ from "lodash";
 import {
-  StateFrom,
   assign,
   createActor,
   fromCallback,
   fromPromise,
+  StateFrom,
   waitFor
 } from "xstate";
+
 import {
   CredentialMetadata,
   WalletInstanceAttestations
@@ -15,9 +16,9 @@ import {
   generateConsentKey,
   getConsentDataFromProximityDetails
 } from "../../store/utils";
+import { ProximityDetails, VerifierRequest } from "../../utils/types";
 import { ProximityFailureType } from "../failure";
 import { ItwProximityMachine, itwProximityMachine } from "../machine";
-import { ProximityDetails, VerifierRequest } from "../../utils/types";
 
 type MachineSnapshot = StateFrom<ItwProximityMachine>;
 

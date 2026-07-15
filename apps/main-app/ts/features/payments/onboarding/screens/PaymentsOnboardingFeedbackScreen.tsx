@@ -1,14 +1,16 @@
-import { IOPictograms } from "@pagopa/io-app-design-system";
+import { IOPictograms } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { useEffect, useRef } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOAnimatedPictograms,
   IOAnimatedPictogramsAssets
 } from "../../../../components/ui/AnimatedPictogram";
+import { TranslationKeys } from "../../../../i18n";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import {
   AppParamsList,
@@ -20,6 +22,7 @@ import {
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
+import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../utils/url";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
@@ -36,7 +39,6 @@ import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
-import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -50,7 +52,7 @@ type PaymentsOnboardingFeedbackScreenRouteProps = RouteProp<
 
 const pictogramByOutcome: Record<
   WalletOnboardingOutcome,
-  IOPictograms | IOAnimatedPictograms
+  IOAnimatedPictograms | IOPictograms
 > = {
   [WalletOnboardingOutcomeEnum.SUCCESS]: "success",
   [WalletOnboardingOutcomeEnum.GENERIC_ERROR]: "umbrella",
@@ -62,6 +64,28 @@ const pictogramByOutcome: Record<
   [WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention",
   [WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING]: "attention",
   [WalletOnboardingOutcomeEnum.BE_KO]: "umbrella"
+};
+
+/**
+ * Subtitle shown under the outcome title, if any.
+ * `undefined` marks the outcomes whose title is self-explanatory and that are
+ * therefore rendered without a subtitle.
+ */
+export const subtitleKeyByOutcome: Record<
+  keyof typeof WalletOnboardingOutcomeEnum,
+  TranslationKeys | undefined
+> = {
+  SUCCESS: undefined,
+  CANCELED_BY_USER: undefined,
+  ALREADY_ONBOARDED: undefined,
+  GENERIC_ERROR: "wallet.onboarding.outcome.GENERIC_ERROR.subtitle",
+  AUTH_ERROR: "wallet.onboarding.outcome.AUTH_ERROR.subtitle",
+  TIMEOUT: "wallet.onboarding.outcome.TIMEOUT.subtitle",
+  INVALID_SESSION: "wallet.onboarding.outcome.INVALID_SESSION.subtitle",
+  BPAY_NOT_FOUND: "wallet.onboarding.outcome.BPAY_NOT_FOUND.subtitle",
+  PSP_ERROR_ONBOARDING:
+    "wallet.onboarding.outcome.PSP_ERROR_ONBOARDING.subtitle",
+  BE_KO: "wallet.onboarding.outcome.BE_KO.subtitle"
 };
 
 const PAYMENT_AUTHORIZATION_DENIED_ERROR = "PAYMENT_AUTHORIZATION_DENIED_ERROR";
@@ -90,6 +114,8 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[
     Object.values(WalletOnboardingOutcomeEnum).indexOf(outcome)
   ] as keyof typeof WalletOnboardingOutcomeEnum;
+
+  const subtitleKey = subtitleKeyByOutcome[outcomeEnumKey];
 
   useOnFirstRender(() => {
     const payment_method_selected = availablePaymentMethods?.find(
@@ -192,7 +218,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
     return undefined;
   };
 
-  const hasAnimation = (value: IOPictograms | IOAnimatedPictograms): boolean =>
+  const hasAnimation = (value: IOAnimatedPictograms | IOPictograms): boolean =>
     value in IOAnimatedPictogramsAssets;
 
   const animationProps = hasAnimation(pictogramByOutcome[outcome])
@@ -211,10 +237,6 @@ const PaymentsOnboardingFeedbackScreen = () => {
     <View style={{ flex: 1 }}>
       <OperationResultScreenContent
         {...animationProps}
-        title={I18n.t(`wallet.onboarding.outcome.${outcomeEnumKey}.title`)}
-        subtitle={I18n.t(
-          `wallet.onboarding.outcome.${outcomeEnumKey}.subtitle`
-        )}
         action={{
           label: I18n.t(
             `wallet.onboarding.outcome.${outcomeEnumKey}.primaryAction`
@@ -226,6 +248,8 @@ const PaymentsOnboardingFeedbackScreen = () => {
           testID: "wallet-onboarding-continue-button"
         }}
         secondaryAction={renderSecondaryAction()}
+        subtitle={subtitleKey !== undefined ? I18n.t(subtitleKey) : undefined}
+        title={I18n.t(`wallet.onboarding.outcome.${outcomeEnumKey}.title`)}
       />
       {supportModal.bottomSheet}
     </View>

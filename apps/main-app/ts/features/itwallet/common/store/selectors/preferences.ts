@@ -53,3 +53,23 @@ export const itwIdentificationModeSelector = (state: GlobalState) =>
  */
 export const itwIsActivationDisabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isItwActivationDisabled ?? false;
+
+const WALLET_ACTIVATION_FEEDBACK_BANNER_VALIDITY_DAYS = 7;
+
+/**
+ * Returns the wallet activation feedback banner data if it was stored within the last 7 days,
+ * otherwise returns undefined. Used to show the survey banner in WALLET_HOME.
+ */
+export const itwWalletActivationFeedbackBannerSelector = (
+  state: GlobalState
+) => {
+  const data =
+    state.features.itWallet.preferences.walletActivationFeedbackBannerData;
+  if (!data) {
+    return undefined;
+  }
+  const addedAtMs = new Date(data.date).getTime();
+  const validityMs =
+    WALLET_ACTIVATION_FEEDBACK_BANNER_VALIDITY_DAYS * 24 * 60 * 60 * 1000;
+  return Date.now() - addedAtMs <= validityMs ? data : undefined;
+};
