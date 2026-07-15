@@ -116,6 +116,7 @@ export const useIOBottomSheetModal = ({
         <>
           <VSpacer size={48} />
           <VSpacer size={48} />
+          <VSpacer size={48} />
         </>
       ) : (
         <View style={{ height: insets.bottom }} />
