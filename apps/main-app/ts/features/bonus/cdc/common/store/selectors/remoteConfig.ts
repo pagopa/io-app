@@ -1,7 +1,8 @@
 import { createSelector } from "reselect";
-import { GlobalState } from "../../../../../../store/reducers/types";
+
 import { remoteConfigSelector } from "../../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPropertyWithMinAppVersionEnabled } from "../../../../../../store/reducers/featureFlagWithMinAppVersionStatus";
+import { GlobalState } from "../../../../../../store/reducers/types";
 
 const cdcRemoteConfigSelector = (state: GlobalState) => {
   const remoteConfig = state.remoteConfig;
