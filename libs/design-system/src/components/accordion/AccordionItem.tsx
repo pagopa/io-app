@@ -2,18 +2,19 @@ import { ReactNode } from "react";
 import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Animated from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import { IOAccordionRadius, type IOSpacingScale } from "../../core";
-import { IOColors, hexToRgba } from "../../core/IOColors";
+import { hexToRgba, IOColors } from "../../core/IOColors";
 import { useAccordionAnimation } from "../../hooks/useAccordionAnimation";
-import { IOIconSizeScale, IOIcons, Icon } from "../icons/Icon";
+import { Icon, IOIcons, IOIconSizeScale } from "../icons/Icon";
 import { Body, H6 } from "../typography";
 
 export type AccordionItem = {
-  title: string;
-  body: string | ReactNode;
   accessibilityLabel?: string;
+  body: ReactNode | string;
   icon?: IOIcons;
+  title: string;
 };
 
 const accordionBodySpacing: IOSpacingScale = 16;
@@ -56,10 +57,10 @@ export const AccordionItem = ({
       ]}
     >
       <TouchableWithoutFeedback
-        accessible={true}
+        accessibilityLabel={accessibilityLabel ?? title}
         accessibilityRole="button"
         accessibilityState={{ expanded }}
-        accessibilityLabel={accessibilityLabel ?? title}
+        accessible={true}
         onPress={toggleAccordion}
       >
         <View style={styles.textContainer}>
@@ -73,31 +74,31 @@ export const AccordionItem = ({
           >
             {icon && (
               <View style={{ marginRight: accordionIconMargin }}>
-                <Icon name={icon} size={iconSize} color={accordionIconColor} />
+                <Icon color={accordionIconColor} name={icon} size={iconSize} />
               </View>
             )}
             <View
-              style={{ flexShrink: 1 }}
               accessibilityElementsHidden
               importantForAccessibility="no-hide-descendants"
+              style={{ flexShrink: 1 }}
             >
               <H6 color={theme["textBody-default"]}>{title}</H6>
             </View>
           </View>
           <Animated.View style={iconAnimatedStyle}>
             <Icon
-              name="chevronBottom"
               color={theme["interactiveElem-default"]}
+              name="chevronBottom"
             />
           </Animated.View>
         </View>
       </TouchableWithoutFeedback>
 
       <Animated.View
-        style={bodyAnimatedStyle}
         importantForAccessibility={expanded ? "auto" : "no-hide-descendants"}
+        style={bodyAnimatedStyle}
       >
-        <View style={bodyInnerStyle} onLayout={onBodyLayout}>
+        <View onLayout={onBodyLayout} style={bodyInnerStyle}>
           {typeof body === "string" ? <Body>{body}</Body> : body}
         </View>
       </Animated.View>
@@ -106,6 +107,10 @@ export const AccordionItem = ({
       the content will be cut sharply during the height transition. */}
       <LinearGradient
         accessible={false}
+        colors={[
+          hexToRgba(IOColors[accordionBackground], 0),
+          IOColors[accordionBackground]
+        ]}
         style={{
           height: accordionBodySpacing,
           position: "absolute",
@@ -115,10 +120,6 @@ export const AccordionItem = ({
           left: accordionBodySpacing,
           right: accordionBodySpacing
         }}
-        colors={[
-          hexToRgba(IOColors[accordionBackground], 0),
-          IOColors[accordionBackground]
-        ]}
       />
     </View>
   );

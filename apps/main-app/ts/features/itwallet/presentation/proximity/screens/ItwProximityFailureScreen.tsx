@@ -1,5 +1,6 @@
 import { Body, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -28,7 +29,6 @@ type ContentViewProps = { failure: ProximityFailure };
 
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwProximityMachineContext.useActorRef();
-  const i18nNs = "features.itWallet.presentation.proximity"; // Common i18n namespace
 
   useDebugInfo({
     failure: serializeFailureReason(failure)
@@ -38,12 +38,16 @@ const ContentView = ({ failure }: ContentViewProps) => {
     component: (
       <>
         <Body>
-          {I18n.t(`${i18nNs}.relyingParty.untrustedRp.bottomSheet.content`)}
+          {I18n.t(
+            "features.itWallet.presentation.proximity.relyingParty.untrustedRp.bottomSheet.content"
+          )}
         </Body>
         <VSpacer size={24} />
       </>
     ),
-    title: I18n.t(`${i18nNs}.relyingParty.untrustedRp.bottomSheet.title`)
+    title: I18n.t(
+      "features.itWallet.presentation.proximity.relyingParty.untrustedRp.bottomSheet.title"
+    )
   });
 
   const getOperationResultScreenContentProps =
@@ -51,23 +55,33 @@ const ContentView = ({ failure }: ContentViewProps) => {
       switch (failure.type) {
         case ProximityFailureType.RELYING_PARTY_GENERIC:
           return {
-            title: I18n.t(`${i18nNs}.relyingParty.genericError.title`),
-            subtitle: I18n.t(`${i18nNs}.relyingParty.genericError.subtitle`),
+            title: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.genericError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.genericError.subtitle"
+            ),
             pictogram: "umbrella",
             action: {
               label: I18n.t(
-                `${i18nNs}.relyingParty.genericError.primaryAction`
+                "features.itWallet.presentation.proximity.relyingParty.genericError.primaryAction"
               ),
               onPress: () => machineRef.send({ type: "close" })
             }
           };
         case ProximityFailureType.TIMEOUT:
           return {
-            title: I18n.t(`${i18nNs}.relyingParty.timeout.title`),
-            subtitle: I18n.t(`${i18nNs}.relyingParty.timeout.subtitle`),
+            title: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.timeout.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.timeout.subtitle"
+            ),
             pictogram: "umbrella",
             action: {
-              label: I18n.t(`${i18nNs}.relyingParty.timeout.primaryAction`),
+              label: I18n.t(
+                "features.itWallet.presentation.proximity.relyingParty.timeout.primaryAction"
+              ),
               onPress: () => machineRef.send({ type: "close" })
             }
           };
@@ -83,16 +97,22 @@ const ContentView = ({ failure }: ContentViewProps) => {
           };
         case ProximityFailureType.UNTRUSTED_RP:
           return {
-            title: I18n.t(`${i18nNs}.relyingParty.untrustedRp.title`),
-            subtitle: I18n.t(`${i18nNs}.relyingParty.untrustedRp.subtitle`),
+            title: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.untrustedRp.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.untrustedRp.subtitle"
+            ),
             pictogram: "stopSecurity",
             action: {
-              label: I18n.t(`${i18nNs}.relyingParty.untrustedRp.primaryAction`),
+              label: I18n.t(
+                "features.itWallet.presentation.proximity.relyingParty.untrustedRp.primaryAction"
+              ),
               onPress: () => machineRef.send({ type: "close" })
             },
             secondaryAction: {
               label: I18n.t(
-                `${i18nNs}.relyingParty.untrustedRp.secondaryAction`
+                "features.itWallet.presentation.proximity.relyingParty.untrustedRp.secondaryAction"
               ),
               onPress: () => {
                 trackItwProximityUnofficialVerifierBottomSheet();

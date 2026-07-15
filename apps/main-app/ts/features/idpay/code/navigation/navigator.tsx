@@ -1,9 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import { IdPayCodeDisplayScreen } from "../screens/IdPayCodeDisplayScreen";
 import { IdPayCodeOnboardingScreen } from "../screens/IdPayCodeOnboardingScreen";
 import { IdPayCodeRenewScreen } from "../screens/IdPayCodeRenewScreen";
 import { IdPayCodeResultScreen } from "../screens/IdPayCodeResultScreen";
-import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import { IdPayCodeParamsList } from "./params";
 import { IdPayCodeRoutes } from "./routes";
 
@@ -16,22 +17,22 @@ export const IdPayCodeNavigator = () => (
       screenOptions={{ gestureEnabled: false }}
     >
       <Stack.Screen
-        name={IdPayCodeRoutes.IDPAY_CODE_ONBOARDING}
         component={IdPayCodeOnboardingScreen}
+        name={IdPayCodeRoutes.IDPAY_CODE_ONBOARDING}
         options={{ gestureEnabled: true }}
       />
       <Stack.Screen
-        name={IdPayCodeRoutes.IDPAY_CODE_DISPLAY}
         component={IdPayCodeDisplayScreen}
+        name={IdPayCodeRoutes.IDPAY_CODE_DISPLAY}
       />
       <Stack.Screen
-        name={IdPayCodeRoutes.IDPAY_CODE_RENEW}
         component={IdPayCodeRenewScreen}
+        name={IdPayCodeRoutes.IDPAY_CODE_RENEW}
       />
       <Stack.Screen
-        options={{ headerShown: false }}
-        name={IdPayCodeRoutes.IDPAY_CODE_RESULT}
         component={IdPayCodeResultScreen}
+        name={IdPayCodeRoutes.IDPAY_CODE_RESULT}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   </IdPayFeatureFlagGuard>

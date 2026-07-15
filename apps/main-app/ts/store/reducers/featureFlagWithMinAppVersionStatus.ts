@@ -1,24 +1,29 @@
-import { Platform } from "react-native";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
-import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import { Platform } from "react-native";
+
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { Config } from "../../../definitions/content/Config";
 import { VersionPerPlatform } from "../../../definitions/content/VersionPerPlatform";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 
-type ObjectWithMinAppVersion =
-  | { min_app_version?: VersionPerPlatform }
-  | undefined;
-
-// This type extracts all keys that have a structure with min_app_version
-type KeysWithMinAppVersion<T> = Extract<
-  keyof T,
-  {
-    [K in keyof T]: T[K] extends ObjectWithMinAppVersion ? K : never;
-  }[keyof T]
->;
+// This type defines the parameters for a function so that the name of the parameter must
+// be specified and that any optional configuration of a FF is present in whole, not in part
+type CheckPropertyWithMinAppVersionParameters<
+  T extends KeysWithMinAppVersion<Config>
+> = {
+  configPropertyName: T;
+  mainLocalFlag: boolean;
+  remoteConfig: O.Option<Config>;
+} & (
+  | {
+      optionalConfig: ExtractSecondLevelKeyWithMinAppVersion<Config, T>;
+      optionalLocalFlag: boolean;
+    }
+  | { optionalConfig?: undefined; optionalLocalFlag?: undefined }
+);
 
 // This type extracts all keys that have a structure with min_app_version, nested in another type
 type ExtractSecondLevelKeyWithMinAppVersion<
@@ -30,21 +35,17 @@ type ExtractSecondLevelKeyWithMinAppVersion<
     : never
   : never;
 
-// This type defines the parameters for a function so that the name of the parameter must
-// be specified and that any optional configuration of a FF is present in whole, not in part
-type CheckPropertyWithMinAppVersionParameters<
-  T extends KeysWithMinAppVersion<Config>
-> = {
-  remoteConfig: O.Option<Config>;
-  mainLocalFlag: boolean;
-  configPropertyName: T;
-} & (
-  | { optionalConfig?: undefined; optionalLocalFlag?: undefined }
-  | {
-      optionalLocalFlag: boolean;
-      optionalConfig: ExtractSecondLevelKeyWithMinAppVersion<Config, T>;
-    }
-);
+// This type extracts all keys that have a structure with min_app_version
+type KeysWithMinAppVersion<T> = Extract<
+  keyof T,
+  {
+    [K in keyof T]: T[K] extends ObjectWithMinAppVersion ? K : never;
+  }[keyof T]
+>;
+
+type ObjectWithMinAppVersion =
+  | undefined
+  | { min_app_version?: VersionPerPlatform };
 
 /**
 * This function checks that a feature flag is enabled by checking the local option and the minimum
@@ -105,6 +106,8 @@ export const isPropertyWithMinAppVersionEnabled = <
       )
   );
 
+type RemoteConfigMinAppVersion = O.Option<ObjectWithMinAppVersion>;
+
 function getObjectWithMinAppVersion<T extends KeysWithMinAppVersion<Config>>(
   remoteConfig: O.Option<BackendStatus["config"]>,
   mainLocalFlag: boolean,
@@ -136,8 +139,6 @@ function getObjectWithMinAppVersion<T extends KeysWithMinAppVersion<Config>>(
     )
   );
 }
-
-type RemoteConfigMinAppVersion = O.Option<ObjectWithMinAppVersion>;
 
 export const isMinAppVersionSupported = (
   minAppVersionOption: RemoteConfigMinAppVersion

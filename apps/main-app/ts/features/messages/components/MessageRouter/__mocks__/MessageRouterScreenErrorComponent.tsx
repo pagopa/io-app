@@ -6,25 +6,25 @@ export const MessageRouterScreenErrorComponent = ({
   onCancel,
   messageId
 }: {
-  onRetry: () => void;
-  onCancel: () => void;
   messageId: string;
+  onCancel: () => void;
+  onRetry: () => void;
 }) => (
   <>
     <View testID="mock-msgRouterErrorComponent">
       {`Message Id: ${messageId}`}
     </View>
     <IOButton
-      variant="solid"
       label="Mock retry button"
-      testID="messageRouterError-retry-button"
       onPress={onRetry}
+      testID="messageRouterError-retry-button"
+      variant="solid"
     />
     <IOButton
-      variant="solid"
       label="Mock cancel button"
-      testID="messageRouterError-cancel-button"
       onPress={onCancel}
+      testID="messageRouterError-cancel-button"
+      variant="solid"
     />
   </>
 );

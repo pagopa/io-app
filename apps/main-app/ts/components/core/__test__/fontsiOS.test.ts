@@ -1,4 +1,5 @@
 import { Platform } from "react-native";
+
 import { fontWeightsMocks, italics } from "../__mock__/fontMocks";
 import { FontStyle, fontWeights, makeFontStyleObject } from "../fonts";
 

@@ -1,17 +1,18 @@
 import { generate } from "@pagopa/io-react-native-crypto";
+
+import { Env } from "../environment";
+import { getWalletUnitAttestation } from "../itwAttestationUtils";
 import {
   generateKeysWithWalletUnitAttestation,
   requestCredential
 } from "../itwCredentialIssuanceUtils";
+import { getIoWallet } from "../itwIoWallet";
 import {
   CredentialAccessToken,
   CredentialBundle,
   CredentialFormat,
   CredentialOfferResolved
 } from "../itwTypesUtils";
-import { Env } from "../environment";
-import { getWalletUnitAttestation } from "../itwAttestationUtils";
-import { getIoWallet } from "../itwIoWallet";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({ generate: jest.fn() }));
 jest.mock("@pagopa/io-react-native-wallet", () => ({
@@ -126,9 +127,9 @@ describe("requestCredential", () => {
   } as unknown as Env;
 
   const buildResolvedCredentialOffer = (authorizationCodeGrant: {
-    scope: string;
     authorizationServer?: string;
     issuerState?: string;
+    scope: string;
   }): CredentialOfferResolved => ({
     offer: {
       credential_issuer: offerCredentialIssuer,

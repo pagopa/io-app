@@ -1,6 +1,7 @@
 import { ComponentProps, ReactNode } from "react";
 import { GestureResponderEvent, Image, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import {
   IOColors,
@@ -15,38 +16,12 @@ import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Avatar } from "../avatar";
 import { Badge } from "../badge";
-import { IOIcons, Icon } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer } from "../layout";
 import { LoadingSpinner } from "../loadingSpinner";
 import { BodySmall, Caption, H6 } from "../typography";
 
-type ListItemTopElementProps =
-  | {
-      badgeProps: ComponentProps<typeof Badge>;
-      dateValue?: never;
-    }
-  | {
-      badgeProps?: never;
-      dateValue: string;
-    };
-
-type ListItemNavPartialProps = WithTestID<
-  {
-    value: string | ReactNode;
-    /**
-     * The maximum number of lines to display for the value.
-     */
-    numberOfLines?: number;
-    description?: string | ReactNode;
-    loading?: boolean;
-    onPress: (event: GestureResponderEvent) => void;
-    hideChevron?: boolean;
-    topElement?: ListItemTopElementProps;
-  } & Pick<
-    ComponentProps<typeof Pressable>,
-    "accessibilityLabel" | "accessibilityHint"
-  >
->;
+export type ListItemNav = ListItemNavGraphicProps & ListItemNavPartialProps;
 
 export type ListItemNavGraphicProps =
   | {
@@ -54,12 +29,6 @@ export type ListItemNavGraphicProps =
       icon?: never;
       iconColor?: never;
       paymentLogoUri?: never;
-    }
-  | {
-      avatarProps?: never;
-      icon?: never;
-      iconColor?: never;
-      paymentLogoUri: string;
     }
   | {
       avatarProps?: never;
@@ -71,10 +40,42 @@ export type ListItemNavGraphicProps =
       avatarProps?: never;
       icon?: never;
       iconColor?: never;
+      paymentLogoUri: string;
+    }
+  | {
+      avatarProps?: never;
+      icon?: never;
+      iconColor?: never;
       paymentLogoUri?: never;
     };
 
-export type ListItemNav = ListItemNavPartialProps & ListItemNavGraphicProps;
+type ListItemNavPartialProps = WithTestID<
+  Pick<
+    ComponentProps<typeof Pressable>,
+    "accessibilityHint" | "accessibilityLabel"
+  > & {
+    description?: ReactNode | string;
+    hideChevron?: boolean;
+    loading?: boolean;
+    /**
+     * The maximum number of lines to display for the value.
+     */
+    numberOfLines?: number;
+    onPress: (event: GestureResponderEvent) => void;
+    topElement?: ListItemTopElementProps;
+    value: ReactNode | string;
+  }
+>;
+
+type ListItemTopElementProps =
+  | {
+      badgeProps: ComponentProps<typeof Badge>;
+      dateValue?: never;
+    }
+  | {
+      badgeProps?: never;
+      dateValue: string;
+    };
 
 export const ListItemNav = ({
   value,
@@ -118,9 +119,9 @@ export const ListItemNav = ({
               <View style={{ alignSelf: "flex-start", flexDirection: "row" }}>
                 <Icon
                   allowFontScaling
+                  color="grey-300"
                   name="calendar"
                   size={16}
-                  color="grey-300"
                 />
                 <HSpacer size={4} />
                 <Caption color={theme["textBody-tertiary"]}>
@@ -143,7 +144,7 @@ export const ListItemNav = ({
       {description && (
         <>
           {typeof description === "string" ? (
-            <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+            <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
               {description}
             </BodySmall>
           ) : (
@@ -162,15 +163,15 @@ export const ListItemNav = ({
 
   return (
     <Pressable
+      accessibilityHint={accessibilityHint}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      accessibilityState={{ busy: loading }}
+      accessible={true}
       onPress={handleOnPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
-      accessible={true}
-      accessibilityState={{ busy: loading }}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole="button"
       testID={testID}
     >
       <Animated.View
@@ -188,8 +189,8 @@ export const ListItemNav = ({
             <>
               <Icon
                 allowFontScaling
-                name={icon}
                 color={defaultIconColor}
+                name={icon}
                 size={IOListItemVisualParams.iconSize}
               />
               <HSpacer
@@ -233,8 +234,8 @@ export const ListItemNav = ({
           {!loading && !hideChevron && (
             <Icon
               allowFontScaling
-              name="chevronRightListItem"
               color={interactiveColor}
+              name="chevronRightListItem"
               size={IOListItemVisualParams.chevronSize}
             />
           )}

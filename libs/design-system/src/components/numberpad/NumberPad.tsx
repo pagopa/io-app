@@ -1,13 +1,18 @@
 import { ComponentProps, JSX, ReactNode, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { BiometricsValidType, Optional } from "../../utils/types";
 import { IconButton } from "../buttons";
-import { IOIconSizeScale, IOIcons } from "../icons";
+import { IOIcons, IOIconSizeScale } from "../icons";
 import { ContentWrapper, VStack } from "../layout";
 import { NumberButton, numberButtonStyles } from "./NumberButton";
 
 type BiometricAuthProps =
   | {
+      /**
+       * This label will be read from ScreenReaders and give informations about biometric button.
+       */
+      biometricAccessibilityLabel: string;
       /**
        * Type of device biometric.
        */
@@ -17,28 +22,24 @@ type BiometricAuthProps =
        * @returns void
        */
       onBiometricPress: () => void;
-      /**
-       * This label will be read from ScreenReaders and give informations about biometric button.
-       */
-      biometricAccessibilityLabel: string;
     }
   | {
+      biometricAccessibilityLabel?: never;
       biometricType?: never;
       onBiometricPress?: never;
-      biometricAccessibilityLabel?: never;
     };
 
-type NumberPadProps = {
-  /**
-   * Used to choose the component color variant between `dark` and `light`.
-   *
-   * The default value is `dark`.
-   */
-  variant?: ComponentProps<typeof NumberButton>["variant"];
+type NumberPadProps = BiometricAuthProps & {
   /**
    * This label will be read  from ScreenReaders and give informations about delete button.
    */
   deleteAccessibilityLabel: string;
+  /**
+   * This function is passed to the delete button to handle the action to trigger when it's pressed.
+   *
+   * @returns void
+   */
+  onDeletePress: () => void;
   /**
    * This function is passed to all numeric buttons to handle their press action.
    * @param value
@@ -46,12 +47,12 @@ type NumberPadProps = {
    */
   onNumberPress: (value: number) => void;
   /**
-   * This function is passed to the delete button to handle the action to trigger when it's pressed.
+   * Used to choose the component color variant between `dark` and `light`.
    *
-   * @returns void
+   * The default value is `dark`.
    */
-  onDeletePress: () => void;
-} & BiometricAuthProps;
+  variant?: ComponentProps<typeof NumberButton>["variant"];
+};
 
 const mapIconSpecByBiometric: Record<
   BiometricsValidType,
@@ -99,10 +100,10 @@ export const NumberPad = ({
           return (
             <ButtonWrapper key={item}>
               <IconButton
-                icon="cancel"
-                color={variant === "primary" ? "contrast" : "primary"}
-                onPress={onDeletePress}
                 accessibilityLabel={deleteAccessibilityLabel}
+                color={variant === "primary" ? "contrast" : "primary"}
+                icon="cancel"
+                onPress={onDeletePress}
               />
             </ButtonWrapper>
           );
@@ -111,11 +112,11 @@ export const NumberPad = ({
           return (
             <ButtonWrapper key={item}>
               <IconButton
+                accessibilityLabel={biometricAccessibilityLabel}
+                color={variant === "primary" ? "contrast" : "primary"}
                 icon={mapIconSpecByBiometric[biometricType].icon}
                 iconSize={mapIconSpecByBiometric[biometricType].size}
-                color={variant === "primary" ? "contrast" : "primary"}
                 onPress={onBiometricPress}
-                accessibilityLabel={biometricAccessibilityLabel}
               />
             </ButtonWrapper>
           );

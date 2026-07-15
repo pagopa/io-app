@@ -1,28 +1,29 @@
 import { CommonActions, StackActions } from "@react-navigation/native";
 import { testSaga } from "redux-saga-test-plan";
-import NavigationService from "../../../../navigation/NavigationService";
-import ROUTES from "../../../../navigation/routes";
-import { requestNotificationPermissions } from "../../utils";
-import { notificationsInfoScreenConsent } from "../../store/actions/profileNotificationPermissions";
-import { profileAndSystemNotificationsPermissions } from "../profileAndSystemNotificationsPermissions";
+
 import { InitializedProfile } from "../../../../../definitions/identity/InitializedProfile";
-import { ServicesPreferencesModeEnum } from "../../../../../definitions/identity/ServicesPreferencesMode";
-import { profileUpsert } from "../../../settings/common/store/actions";
 import { PushNotificationsContentTypeEnum } from "../../../../../definitions/identity/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../definitions/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "../../../../../definitions/identity/ServicesPreferencesMode";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
+import NavigationService from "../../../../navigation/NavigationService";
+import ROUTES from "../../../../navigation/routes";
+import { profileUpsert } from "../../../settings/common/store/actions";
 import {
   trackNotificationsOptInPreviewStatus,
   trackNotificationsOptInReminderStatus,
   trackPushNotificationSystemPopupShown
 } from "../../analytics";
-import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
-import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
+import { setPushPermissionsRequestDuration } from "../../store/actions/environment";
+import { notificationsInfoScreenConsent } from "../../store/actions/profileNotificationPermissions";
+import { hasUserSeenSystemNotificationsPromptSelector } from "../../store/selectors";
+import { requestNotificationPermissions } from "../../utils";
 import {
   checkAndUpdateNotificationPermissionsIfNeeded,
   updateNotificationPermissionsIfNeeded
 } from "../common";
-import { setPushPermissionsRequestDuration } from "../../store/actions/environment";
-import { hasUserSeenSystemNotificationsPromptSelector } from "../../store/selectors";
+import { profileAndSystemNotificationsPermissions } from "../profileAndSystemNotificationsPermissions";
 
 const generateUserProfile = (
   hasDoneNotificationOptIn: boolean,

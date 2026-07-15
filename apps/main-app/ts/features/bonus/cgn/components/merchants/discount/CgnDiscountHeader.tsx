@@ -6,9 +6,10 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import I18n from "i18next";
 import { useEffect, useRef } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
 import { useCgnStyle } from "../../../hooks/useCgnStyle";
@@ -50,28 +51,28 @@ export const CgnDiscountHeader = ({
             <View style={{ flexDirection: "row", gap: 8 }}>
               {isNew && (
                 <Badge
-                  variant="cgn"
                   text={I18n.t("bonus.cgn.merchantsList.news")}
+                  variant="cgn"
                 />
               )}
               {isValidDiscount(discount) && (
                 <Badge
-                  variant="cgn"
                   outline
                   text={`-${normalizedDiscountPercentage(discount)}%`}
+                  variant="cgn"
                 />
               )}
             </View>
             <VSpacer size={12} />
           </>
         )}
-        <H3 accessible ref={ref} color={foreground}>
+        <H3 accessible color={foreground} ref={ref}>
           {name}
         </H3>
         <VSpacer size={12} />
         <HStack space={4} style={{ flexWrap: "wrap" }}>
           {productCategories.map(categoryKey => (
-            <CategoryTag key={categoryKey} category={categoryKey} />
+            <CategoryTag category={categoryKey} key={categoryKey} />
           ))}
         </HStack>
       </View>

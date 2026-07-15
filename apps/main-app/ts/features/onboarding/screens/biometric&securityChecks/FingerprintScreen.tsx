@@ -1,6 +1,7 @@
 import { Banner, Body, H2, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
+
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
@@ -10,8 +11,8 @@ import {
   BiometriActivationUserType,
   mayUserActivateBiometric
 } from "../../../../utils/biometrics";
-import { FAQsCategoriesType } from "../../../../utils/faq";
 import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
+import { FAQsCategoriesType } from "../../../../utils/faq";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
 import {
@@ -59,8 +60,8 @@ const FingerprintScreen = () => {
     () => ({
       type: "TwoButtons",
       primary: {
-        label: I18n.t("global.buttons.activate2"),
-        accessibilityLabel: I18n.t("global.buttons.activate2"),
+        label: I18n.t("global.buttons.activate"),
+        accessibilityLabel: I18n.t("global.buttons.activate"),
         onPress: () => {
           mayUserActivateBiometric()
             .then(_ => {
@@ -112,8 +113,8 @@ const FingerprintScreen = () => {
       <Body>{I18n.t("onboarding.biometric.available.body.text")}</Body>
       <VSpacer size={24} />
       <Banner
-        content={I18n.t("onboarding.biometric.available.settings")}
         color="neutral"
+        content={I18n.t("onboarding.biometric.available.settings")}
         pictogramName="settings"
       />
     </IOScrollView>

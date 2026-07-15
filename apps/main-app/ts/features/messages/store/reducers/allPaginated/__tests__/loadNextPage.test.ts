@@ -1,8 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+
 import {
-  defaultRequestPayload,
   defaultRequestError,
+  defaultRequestPayload,
   successLoadNextPageMessagesPayload
 } from "../../../../__mocks__/messages";
 import { loadNextPageMessages } from "../../../actions";

@@ -6,11 +6,12 @@ import {
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { View } from "react-native";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { sendVisitTheWebsiteUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
-import { trackSendAarNotificationClosureExit } from "../analytics";
 import { SendUserType } from "../../../pushNotifications/analytics";
+import { trackSendAarNotificationClosureExit } from "../analytics";
 import { SendAArFeedbackBanner } from "./SendAarFeedbackBanner";
 
 export type SendAarMessageDetailBottomSheetProps = {
@@ -78,12 +79,12 @@ export const SendAarMessageDetailBottomSheet = ({
         }}
       >
         <IOButton
-          variant="link"
           label={I18n.t(
             "features.pn.aar.flow.closeNotification.secondaryAction"
           )}
           onPress={onSecondaryActionPress}
           testID="secondary_button"
+          variant="link"
         />
       </View>
       <VSpacer size={24} />

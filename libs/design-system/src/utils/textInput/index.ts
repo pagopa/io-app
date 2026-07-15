@@ -1,26 +1,27 @@
 import { ComponentProps } from "react";
 import { TextInputProps } from "react-native";
+
 import { TextInputBase } from "../../components/textInput/TextInputBase";
 import { InputType } from "../types";
 
 export type RNTextInputProps = Pick<
   TextInputProps,
-  | "keyboardType"
-  | "inputMode"
-  | "textContentType"
-  | "autoComplete"
-  | "returnKeyType"
   | "autoCapitalize"
+  | "autoComplete"
   | "autoCorrect"
   | "inputAccessoryViewID"
+  | "inputMode"
+  | "keyboardType"
+  | "returnKeyType"
+  | "textContentType"
 >;
 
 type InputProps = Pick<
   ComponentProps<typeof TextInputBase>,
   "textInputProps"
 > & {
-  valueFormat?: (value: string) => string;
   textInputProps?: RNTextInputProps;
+  valueFormat?: (value: string) => string;
 };
 
 export const getInputPropsByType = (

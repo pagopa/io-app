@@ -2,14 +2,15 @@
 import {
   Body,
   H6,
+  hexToRgba,
+  HStack,
   IconButton,
   IOButton,
-  hexToRgba,
   IOColors,
-  HStack,
   useIOTheme,
   VStack
 } from "@io-app/design-system";
+import I18n from "i18next";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, {
   SharedValue,
@@ -17,7 +18,7 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
+
 import { TourStepIndicator } from "./TourStepIndicator";
 
 const TOOLTIP_MARGIN = 16;
@@ -30,18 +31,18 @@ const CLOSE_BUTTON_OPACITY = 0.7;
 const TOOLTIP_TITLE_SAFE_PADDING = 32;
 
 type Props = {
+  cutoutH: SharedValue<number>;
+  cutoutW: SharedValue<number>;
   cutoutX: SharedValue<number>;
   cutoutY: SharedValue<number>;
-  cutoutW: SharedValue<number>;
-  cutoutH: SharedValue<number>;
-  title: string;
   description: string;
-  stepIndex: number;
-  totalSteps: number;
-  opacity: SharedValue<number>;
-  onNext: () => void;
   onBack: () => void;
+  onNext: () => void;
   onSkip: () => void;
+  opacity: SharedValue<number>;
+  stepIndex: number;
+  title: string;
+  totalSteps: number;
 };
 
 export const TourTooltip = ({
@@ -132,11 +133,11 @@ export const TourTooltip = ({
 
   return (
     <Animated.View
-      style={[styles.container, containerAnimatedStyle]}
       onLayout={e => {
         tooltipHeight.value = e.nativeEvent.layout.height;
       }}
       pointerEvents="box-none"
+      style={[styles.container, containerAnimatedStyle]}
     >
       <Animated.View
         style={[
@@ -161,17 +162,16 @@ export const TourTooltip = ({
               style={isFirstStep && { opacity: 0, pointerEvents: "box-none" }}
             >
               <IconButton
-                iconSize={24}
-                icon="arrowLeft"
-                color="primary"
                 accessibilityLabel={I18n.t("features.tour.back")}
+                color="primary"
+                icon="arrowLeft"
+                iconSize={24}
                 onPress={onBack}
               />
             </View>
             <TourStepIndicator stepIndex={stepIndex} totalSteps={totalSteps} />
             <View style={{ alignSelf: "center" }}>
               <IOButton
-                variant="link"
                 color="primary"
                 label={
                   isLastStep
@@ -179,15 +179,16 @@ export const TourTooltip = ({
                     : I18n.t("features.tour.next")
                 }
                 onPress={onNext}
+                variant="link"
               />
             </View>
           </HStack>
         </VStack>
         <View style={styles.closeIconButton}>
           <IconButton
-            icon="closeSmall"
-            color="neutral"
             accessibilityLabel={I18n.t("features.tour.skip")}
+            color="neutral"
+            icon="closeSmall"
             onPress={onSkip}
           />
         </View>
