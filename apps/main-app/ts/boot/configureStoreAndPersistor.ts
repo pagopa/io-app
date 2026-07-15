@@ -2,7 +2,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as O from "fp-ts/lib/Option";
 import _, { merge, omit } from "lodash";
-import { AppState, type AppStateStatus } from "react-native";
 import {
   applyMiddleware,
   compose,
@@ -677,20 +676,10 @@ const logger = createLogger({
 export const RTron = isDevEnv ? configureReactotron() : undefined;
 const sagaMiddleware = createSagaMiddleware();
 
-const assertAppIsForeground = (appState: AppStateStatus | null): void => {
-  if (appState !== "active" && appState !== "inactive") {
-    throw new Error(
-      "Redux store cannot be initialized outside a foreground app state"
-    );
-  }
-};
-
 function configureStoreAndPersistor(): {
   persistor: Persistor;
   store: Store;
 } {
-  assertAppIsForeground(AppState.currentState);
-
   const composeEnhancers =
     // eslint-disable-next-line no-underscore-dangle
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -725,5 +714,5 @@ function configureStoreAndPersistor(): {
 
 export const { store, persistor } = configureStoreAndPersistor();
 export const testable = isTestEnv
-  ? { CURRENT_REDUX_STORE_VERSION, assertAppIsForeground, migrations }
+  ? { CURRENT_REDUX_STORE_VERSION, migrations }
   : undefined;

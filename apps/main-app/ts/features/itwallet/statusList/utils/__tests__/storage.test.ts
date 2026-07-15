@@ -10,11 +10,6 @@ jest.mock("@react-native-async-storage/async-storage", () =>
   require("@react-native-async-storage/async-storage/jest/async-storage-mock")
 );
 
-beforeEach(async () => {
-  jest.restoreAllMocks();
-  await AsyncStorage.clear();
-});
-
 describe("storeLastStatusListCheckTimestamp", () => {
   it("stores the timestamp list under the expected key", async () => {
     await storeLastStatusListCheckTimestamp(1700000000000);

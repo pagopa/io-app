@@ -2,10 +2,6 @@ import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
 
 import {
-  trackItwStatusListFetchRegistered,
-  trackItwStatusListFetchRegisterFailure
-} from "../analytics";
-import {
   ITW_STATUS_LIST_FETCH_TASK,
   ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES
 } from "../utils/consts";
