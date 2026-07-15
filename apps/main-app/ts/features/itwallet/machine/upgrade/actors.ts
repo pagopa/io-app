@@ -139,12 +139,13 @@ export const createCredentialUpgradeActorsImplementation = (
 
   /**
    * Handles both upgrading and reissuing credentials depending on issuanceMode.
-   * - upgrade → performs credential upgrade (skipMdocIssuance = false)
-   * - reissuance → performs credential reissuing (skipMdocIssuance = true)
+   * - upgrade → performs credential upgrade (skipMdocIssuance = false) -
+   * reissuance → performs credential reissuing (skipMdocIssuance = true)
    *
-   * To ensure a smooth experience when the session token expires, it is important to keep this actor
-   * retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
-   * rejected for session expired, so it can be reentered and retried from where it failed.
+   * To ensure a smooth experience when the session token expires, it is
+   * important to keep this actor retriable: it must fail as early as possible
+   * when `generateKeysWithWalletUnitAttestation` is rejected for session
+   * expired, so it can be reentered and retried from where it failed.
    */
   upgradeCredential: fromPromise<
     UpgradeCredentialOutput,

@@ -169,8 +169,8 @@ export const ItwIssuanceEidResultScreen = () => {
  * IT-Wallet (L3) success TYP shown after the PID has been obtained (both in the
  * standard issuance flow and at the end of the "Documenti su IO" → IT-Wallet
  * upgrade flow). Two versions are shown depending on whether the wallet already
- * contains at least one digital document (the eID/PID is not counted, regardless
- * of "Documenti su IO" activation)
+ * contains at least one digital document (the eID/PID is not counted,
+ * regardless of "Documenti su IO" activation)
  */
 const ItwEidSuccessResultContent = ({
   isWalletEmpty,
@@ -389,9 +389,9 @@ const ItwIssuanceEidReissuanceResultContent = () => {
 };
 
 /**
- * Transitional screen shown right after the eID issuance is completed.
- * Its only purpose is to display a loading indicator while navigation
- * proceeds toward the credential issuance flow.
+ * Transitional screen shown right after the eID issuance is completed. Its only
+ * purpose is to display a loading indicator while navigation proceeds toward
+ * the credential issuance flow.
  */
 const ItwIssuanceEidCredentialTriggerContent = () => (
   <LoadingScreenContent title={I18n.t("global.genericWaiting")} />

@@ -1,7 +1,4 @@
-/* eslint-disable no-underscore-dangle */
-/**
- * Aggregates all defined reducers
- */
+/** Aggregates all defined reducers */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, Reducer } from "redux";
 import {
@@ -110,13 +107,11 @@ export const identificationPersistConfig: PersistConfig = {
 };
 
 /**
- * Here we combine all the reducers.
- * We use the best practice of separating UI state from the DATA state.
- * UI state is mostly used to check what to show hide in the screens (ex.
- * errors/spinners).
- * DATA state is where we store real data fetched from the API (ex.
- * profile/messages).
- * More at
+ * Here we combine all the reducers. We use the best practice of separating UI
+ * state from the DATA state. UI state is mostly used to check what to show hide
+ * in the screens (ex. errors/spinners). DATA state is where we store real data
+ * fetched from the API (ex. profile/messages). More at
+ *
  * @https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1
  */
 export const appReducer: Reducer<GlobalState, Action> = combineReducers<
@@ -285,9 +280,10 @@ export function createRootReducer(
                 _persist: state.features.appearanceSettings._persist
               },
               /**
-               * IT Wallet state persists across sessions and is explicitly reset on session changes
-               * via the itwLifecycleStoresReset action to ensure proper cleanup.
-               * We can avoid to replicate the _persist property because itWallet already is a persisted
+               * IT Wallet state persists across sessions and is explicitly
+               * reset on session changes via the itwLifecycleStoresReset action
+               * to ensure proper cleanup. We can avoid to replicate the
+               * _persist property because itWallet already is a persisted
                * reducer.
                */
               itWallet: {

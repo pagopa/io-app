@@ -1,6 +1,4 @@
-/**
- * Utility functions for working with credential claims.
- */
+/** Utility functions for working with credential claims. */
 
 import { addPadding } from "@pagopa/io-react-native-jwt";
 import { NonEmptyString, PatternString } from "@pagopa/ts-commons/lib/strings";
@@ -16,92 +14,72 @@ import { Locales } from "../../../../i18n";
 import { JsonFromString } from "./ItwCodecUtils";
 import { CredentialMetadata, ParsedCredential } from "./itwTypesUtils";
 
-/**
- *
- *
- *
- * CLAIMS MANIPULATION UTILS
- *
- *
- *
- */
+/** CLAIMS MANIPULATION UTILS */
 
 /**
- * We strongly discourage direct claim manipulation, but some special cases must be addressed with direct access
+ * We strongly discourage direct claim manipulation, but some special cases must
+ * be addressed with direct access
  */
 export enum WellKnownClaim {
   /**
-   * Claim used to display the attachments of a credential (currently used for the European Health Insurance Card)
+   * Claim used to display the attachments of a credential (currently used for
+   * the European Health Insurance Card)
    */
   content = "content",
   date_of_expiry = "date_of_expiry",
-  /**
-   * Claims that contains the document number, if applicable for the credential
-   */
+  /** Claims that contains the document number, if applicable for the credential */
   document_number = "document_number",
-  /**
-   * Claim that contains the driving privilege within the new nested structure
-   */
+  /** Claim that contains the driving privilege within the new nested structure */
   driving_privileges = "driving_privileges",
   /**
-   * Claim used to extract expiry date from a credential. This is used to display how many days are left for
-   * the credential expiration or to know if the credential is expired
+   * Claim used to extract expiry date from a credential. This is used to
+   * display how many days are left for the credential expiration or to know if
+   * the credential is expired
    */
   expiry_date = "expiry_date",
-  /**
-   * Claim that contains the family name, if applicable for the credential
-   */
+  /** Claim that contains the family name, if applicable for the credential */
   family_name = "family_name",
-  /**
-   * Claim that contains the first name, if applicable for the credential
-   */
+  /** Claim that contains the first name, if applicable for the credential */
   given_name = "given_name",
   /**
-   * Claim used to display a QR Code for the Disability Card. It must be excluded from the common claims list
-   * and rendered using a {@link QRCodeImage} (currently used for the European Disability Card)
+   * Claim used to display a QR Code for the Disability Card. It must be
+   * excluded from the common claims list and rendered using a
+   * {@link QRCodeImage} (currently used for the European Disability Card)
    */
   link_qr_code = "link_qr_code",
-  /**
-   * Claim that contains the portrait image
-   */
+  /** Claim that contains the portrait image */
   portrait = "portrait",
   /**
-   * Claim that contains the fiscal code, used for checks based on the user's identity.
+   * Claim that contains the fiscal code, used for checks based on the user's
+   * identity.
    */
   tax_id_code = "tax_id_code",
   /**
-   * Unique ID must be excluded from every credential and should not rendered in the claims list
+   * Unique ID must be excluded from every credential and should not rendered in
+   * the claims list
    */
   unique_id = "unique_id"
 }
 
-/**
- * Union type for claim display format, either flat or nested
- */
+/** Union type for claim display format, either flat or nested */
 export type ClaimDisplayFormat =
   | FlatClaimDisplayFormat
   | NestedArrayClaimDisplayFormat;
 
-/**
- * Type for disclosable claims.
- */
+/** Type for disclosable claims. */
 export type DisclosureClaim = {
   claim: ClaimDisplayFormat;
   source: string;
 };
 
-/**
- * Flat claim that contains a primitive value or an array of primitives
- */
+/** Flat claim that contains a primitive value or an array of primitives */
 export type FlatClaimDisplayFormat = {
   id: string;
   label: string;
   value: unknown;
 };
 
-/**
- * Nested claim that contains an array of objects (ParsedCredential)
- */
+/** Nested claim that contains an array of objects (ParsedCredential) */
 export type NestedArrayClaimDisplayFormat = {
   id: string;
   label: string;
@@ -109,17 +87,22 @@ export type NestedArrayClaimDisplayFormat = {
 };
 
 /**
- * Parses the claims from the credential, including nested claims.
- * For each Record entry, it maps the key and the attribute value to a label and a value.
+ * Parses the claims from the credential, including nested claims. For each
+ * Record entry, it maps the key and the attribute value to a label and a value.
  * If a claim's value is an array of objects, it recursively parses each object.
- * The label is taken from the attribute name which is either a string or a record of locale and string.
- * If the type of the attribute name is string then we take its value because locales have not been set.
- * If the type of the attribute name is a record then we take the value of the locale that matches the current locale.
- * If there's no locale that matches the current locale then we take the attribute key as the name.
- * The value is taken from the attribute value.
- * @param parsedCredential - the parsed credential.
- * @param options.exclude - an array of keys to exclude from the claims. TODO [SIW-1383]: remove this dirty hack
- * @returns the array of {@link ClaimDisplayFormat} of the credential contained in its configuration schema.
+ * The label is taken from the attribute name which is either a string or a
+ * record of locale and string. If the type of the attribute name is string then
+ * we take its value because locales have not been set. If the type of the
+ * attribute name is a record then we take the value of the locale that matches
+ * the current locale. If there's no locale that matches the current locale then
+ * we take the attribute key as the name. The value is taken from the attribute
+ * value.
+ *
+ * @param parsedCredential - The parsed credential.
+ * @param options.exclude - An array of keys to exclude from the claims. TODO
+ *   [SIW-1383]: remove this dirty hack
+ * @returns The array of {@link ClaimDisplayFormat} of the credential contained
+ *   in its configuration schema.
  */
 export const parseClaims = (
   parsedCredential: ParsedCredential,
@@ -143,15 +126,7 @@ export const parseClaims = (
     });
 };
 
-/**
- *
- *
- *
- * CLAIMS LOCALE UTILS
- *
- *
- *
- */
+/** CLAIMS LOCALE UTILS */
 
 export const SimpleDateFormat = {
   DDMMYYYY: "DD/MM/YYYY",
@@ -159,9 +134,8 @@ export const SimpleDateFormat = {
 } as const;
 
 /**
- * Enum for the claims locales.
- * This is used to get the correct locale for the claims.
- * Currently the only supported locales are it-IT and en-US.
+ * Enum for the claims locales. This is used to get the correct locale for the
+ * claims. Currently the only supported locales are it-IT and en-US.
  */
 export enum ClaimsLocales {
   en = "en-US",
@@ -172,13 +146,14 @@ export type SimpleDateFormat =
   (typeof SimpleDateFormat)[keyof typeof SimpleDateFormat];
 
 /**
- * A simpler Date class with day, month and year properties
- * It simplifies dates handling by removing Date overhead
- * @property year - the year
- * @property month - the month (0-11)
- * @property day - the day (1-31)
- * @function toDate - returns a Date object
- * @function toString - returns a string in the format "DD/MM/YYYY"
+ * A simpler Date class with day, month and year properties It simplifies dates
+ * handling by removing Date overhead
+ *
+ * @function toDate - Returns a Date object
+ * @function toString - Returns a string in the format "DD/MM/YYYY"
+ * @property year - The year
+ * @property month - The month (0-11)
+ * @property day - The day (1-31)
  */
 export class SimpleDate {
   private day: number;
@@ -191,30 +166,22 @@ export class SimpleDate {
     this.day = day;
   }
 
-  /**
-   * Returns the day (1-31)
-   */
+  /** Returns the day (1-31) */
   getDate(): number {
     return this.day;
   }
 
-  /**
-   * Returns the year
-   */
+  /** Returns the year */
   getFullYear(): number {
     return this.year;
   }
 
-  /**
-   * Returns the month (0-11)
-   */
+  /** Returns the month (0-11) */
   getMonth(): number {
     return this.month;
   }
 
-  /**
-   * Returns a Date object
-   */
+  /** Returns a Date object */
   toDate(): Date {
     return new Date(this.year, this.month, this.day);
   }
@@ -223,9 +190,7 @@ export class SimpleDate {
     return new Date(Date.UTC(this.year, this.month, this.day));
   }
 
-  /**
-   * Returns a string in the format specified by the format parameter
-   */
+  /** Returns a string in the format specified by the format parameter */
   toString(format: SimpleDateFormat = "DD/MM/YYYY"): string {
     const dayString = this.day.toString().padStart(2, "0");
     const monthString = (this.month + 1).toString().padStart(2, "0");
@@ -239,8 +204,8 @@ export class SimpleDate {
 }
 
 /**
- * Map from the app locales to the claims locales.
- * Currently en is mapped to en-US and it to it-IT.
+ * Map from the app locales to the claims locales. Currently en is mapped to
+ * en-US and it to it-IT.
  */
 const localeToClaimsLocales = new Map<Locales, ClaimsLocales>([
   ["en", ClaimsLocales.en],
@@ -248,54 +213,48 @@ const localeToClaimsLocales = new Map<Locales, ClaimsLocales>([
 ]);
 
 /**
- * Helper function to get a full claims locale locale from the current app locale.
- * @returns a enum value for the claims locale.
+ * Helper function to get a full claims locale locale from the current app
+ * locale.
+ *
+ * @returns A enum value for the claims locale.
  */
 export const getClaimsFullLocale = (): ClaimsLocales =>
   localeToClaimsLocales.get(I18n.language as Locales) ?? ClaimsLocales.it;
 
-/**
- *
- *
- *
- * IO-TS DECODER FOR THE CLAIMS
- *
- *
- *
- */
+/** IO-TS DECODER FOR THE CLAIMS */
 
 /**
- * Regex for the date format which is used to validate the date claim as ISO 8601:2004 YYYY-MM-DD format.
+ * Regex for the date format which is used to validate the date claim as ISO
+ * 8601:2004 YYYY-MM-DD format.
  */
 const DATE_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2}$";
 
 /**
- * Regex for the picture URL format which is used to validate the image claim as a base64 encoded png image.
+ * Regex for the picture URL format which is used to validate the image claim as
+ * a base64 encoded png image.
  */
 const PICTURE_URL_REGEX = "^data:image\\/(png|jpg|jpeg|bmp);base64,";
 
 /**
- * Regex for the PDF data format which is used to validate the PDF file claim as a base64 encoded PDF.
+ * Regex for the PDF data format which is used to validate the PDF file claim as
+ * a base64 encoded PDF.
  */
 const PDF_DATA_REGEX = "^data:application/pdf;base64,";
 
-/**
- * Regex for a generic URL
- */
+/** Regex for a generic URL */
 const URL_REGEX = "^https?://";
 
-/**
- * Regex for the fiscal code
- */
+/** Regex for the fiscal code */
 const FISCAL_CODE_WITH_PREFIX =
   "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
 
 const LocaleName = t.union([t.string, t.record(t.string, t.string)]);
 
 /**
- * Decoder for a nested array of claims.
- * Each object in the array is a record of string keys and ParsedAttribute values.
- * The ParsedAttribute is an object with a value and a name, where the name can be either a string or a record of locale and string.
+ * Decoder for a nested array of claims. Each object in the array is a record of
+ * string keys and ParsedAttribute values. The ParsedAttribute is an object with
+ * a value and a name, where the name can be either a string or a record of
+ * locale and string.
  */
 
 const ParsedAttribute = t.type({
@@ -304,11 +263,12 @@ const ParsedAttribute = t.type({
 });
 
 /**
- * io-ts decoder for the date claim field of the credential.
- * The date format is checked against the regex dateFormatRegex, which is currenlty mocked.
- * This is needed because a generic date decoder would accept invalid dates like numbers,
- * thus decoding properly and returning a wrong claim item to be displayed.
- * The returned date is a SimpleDate object, which is a simpler date class with day, month and year properties.
+ * Io-ts decoder for the date claim field of the credential. The date format is
+ * checked against the regex dateFormatRegex, which is currenlty mocked. This is
+ * needed because a generic date decoder would accept invalid dates like
+ * numbers, thus decoding properly and returning a wrong claim item to be
+ * displayed. The returned date is a SimpleDate object, which is a simpler date
+ * class with day, month and year properties.
  */
 export const SimpleDateClaim = new t.Type<SimpleDate, string, unknown>(
   "SimpleDateClaim",
@@ -335,18 +295,14 @@ export const SimpleDateClaim = new t.Type<SimpleDate, string, unknown>(
     )}-${String(date.getDate()).padStart(2, "0")}`
 );
 
-/**
- * io-ts decoder for the place of birth claim field of the credential.
- */
+/** Io-ts decoder for the place of birth claim field of the credential. */
 export const PlaceOfBirthClaim = t.type({
   country: t.string,
   locality: t.string
 });
 export type PlaceOfBirthClaimType = t.TypeOf<typeof PlaceOfBirthClaim>;
 
-/**
- * io-ts decoder for the mDL driving privileges
- */
+/** Io-ts decoder for the mDL driving privileges */
 const DrivingPrivilegeClaim = t.type({
   driving_privilege: t.string,
   issue_date: SimpleDateClaim,
@@ -365,7 +321,8 @@ export type DrivingPrivilegesClaimType = t.TypeOf<
 >;
 
 /**
- * Decoder for the raw driving privileges array used to parse the mdoc claim format of the mDL driving privileges.
+ * Decoder for the raw driving privileges array used to parse the mdoc claim
+ * format of the mDL driving privileges.
  */
 const DrivingPrivilegesItemFlatRaw = t.type({
   vehicle_category_code: t.string,
@@ -404,8 +361,9 @@ const DrivingPrivilegesFromFlatRaw = new t.Type<
 );
 
 /**
- * Decoder for the raw driving privileges array, used to parse the new format of the mDL driving privileges.
- * This is needed to support the new format of the mDL driving privileges, which is an array of objects with
+ * Decoder for the raw driving privileges array, used to parse the new format of
+ * the mDL driving privileges. This is needed to support the new format of the
+ * mDL driving privileges, which is an array of objects with
  * vehicle_category_code, issue_date and expiry_date fields.
  */
 const DrivingPrivilegesItemRaw = t.intersection([
@@ -432,9 +390,7 @@ const DrivingPrivilegesItemRaw = t.intersection([
   })
 ]);
 
-/**
- * Array of driving privileges in the raw format
- */
+/** Array of driving privileges in the raw format */
 export const DrivingPrivilegesValueRaw = t.array(DrivingPrivilegesItemRaw);
 
 export type DrivingPrivilegesValueRawType = t.TypeOf<
@@ -492,23 +448,18 @@ export const DrivingPrivilegesCustomClaim = t.union([
 ]);
 
 /**
- * Decoder for the fiscal code. This is needed since we have to remove the INIT prefix when rendering it.
+ * Decoder for the fiscal code. This is needed since we have to remove the INIT
+ * prefix when rendering it.
  */
 export const FiscalCodeClaim = PatternString(FISCAL_CODE_WITH_PREFIX);
 
-/**
- * Decoder for a generic URL
- */
+/** Decoder for a generic URL */
 export const UrlClaim = PatternString(URL_REGEX);
 
-/**
- * Alias for a boolean claim
- */
+/** Alias for a boolean claim */
 export const BoolClaim = t.boolean;
 
-/**
- * Empty string fallback of the claim field of the credential.
- */
+/** Empty string fallback of the claim field of the credential. */
 export const EmptyStringClaim = new t.Type<string, string, unknown>(
   "EmptyString",
   (input: unknown): input is string => input === "", // Type guard
@@ -519,45 +470,37 @@ export const EmptyStringClaim = new t.Type<string, string, unknown>(
   t.identity
 );
 
-/**
- * Alias for the string claim field of the credential.
- */
+/** Alias for the string claim field of the credential. */
 export const StringClaim = NonEmptyString;
 
-/**
- * Decoder for an URL image in base64 format
- */
+/** Decoder for an URL image in base64 format */
 export const ImageClaim = PatternString(PICTURE_URL_REGEX);
 
 export const PdfClaim = PatternString(PDF_DATA_REGEX);
 
-/**
- * Decoder for a simple list of string claims (for instance, nationality codes)
- */
+/** Decoder for a simple list of string claims (for instance, nationality codes) */
 export const SimpleListClaim = t.array(t.string);
 
 /**
- * Record of string keys and ParsedAttribute values.
- * This is used to parse nested claims.
+ * Record of string keys and ParsedAttribute values. This is used to parse
+ * nested claims.
  */
 export const NestedObjectClaim = t.record(t.string, ParsedAttribute);
 
 /**
- * Array of records of string keys and ParsedAttribute values.
- * This is used to parse nested claims.
+ * Array of records of string keys and ParsedAttribute values. This is used to
+ * parse nested claims.
  */
 export const NestedArrayClaim = t.array(NestedObjectClaim);
 
-/**
- * Union type for nested claims, either an object or an array of objects.
- */
+/** Union type for nested claims, either an object or an array of objects. */
 export const NestedClaim = t.union([NestedObjectClaim, NestedArrayClaim]);
 
 /**
- * Decoder type for the claim field of the credential.
- * It includes all the possible types of claims and fallbacks to string.
- * To add more custom objects to the union:
- * t.string.pipe(JsonFromString).pipe(t.union([PlaceOfBirthClaim, PlaceOfBirthClaim]))
+ * Decoder type for the claim field of the credential. It includes all the
+ * possible types of claims and fallbacks to string. To add more custom objects
+ * to the union: t.string.pipe(JsonFromString).pipe(t.union([PlaceOfBirthClaim,
+ * PlaceOfBirthClaim]))
  */
 export const ClaimValue = t.union([
   // Parse an object representing the place of birth
@@ -590,18 +533,13 @@ export const ClaimValue = t.union([
   EmptyStringClaim
 ]);
 
-/**
- *
- *
- * Expiration date and status
- *
- *
- */
+/** Expiration date and status */
 
 /**
  * Returns the expiration date from a {@see ParsedCredential}, if present
- * @param credential the parsed credential claims
- * @returns a Date if found, undefined if not
+ *
+ * @param credential The parsed credential claims
+ * @returns A Date if found, undefined if not
  */
 export const getCredentialExpireDate = (
   credential: ParsedCredential
@@ -621,8 +559,10 @@ export const getCredentialExpireDate = (
 
 /**
  * Returns the remaining days until the expiration a {@see ParsedCredential}
- * @param credential the parsed credential claims
- * @returns the number of days until the expiration date, undefined if no expire date is found
+ *
+ * @param credential The parsed credential claims
+ * @returns The number of days until the expiration date, undefined if no expire
+ *   date is found
  */
 export const getCredentialExpireDays = (
   credential: ParsedCredential
@@ -641,34 +581,29 @@ const FISCAL_CODE_REGEX =
 
 /**
  * Extract a fiscal code from any string.
- * @param s - the input string
+ *
+ * @param s - The input string
  * @returns An option with the extracted fiscal code
  */
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
 
-/**
- * Truncate long strings to avoid performance issues when rendering claims.
- */
+/** Truncate long strings to avoid performance issues when rendering claims. */
 export const getSafeText = (text: string) => truncate(text, { length: 128 });
 
 export const isExpirationDateClaim = (claim: ClaimDisplayFormat) =>
   claim.id === WellKnownClaim.expiry_date ||
   claim.id === WellKnownClaim.date_of_expiry;
 
-/**
- *
- *
- * Claim extractors
- *
- *
- */
+/** Claim extractors */
 
 /**
  * Function that extracts a claim from a credential.
- * @param claimId - the claim id / name to extract
- * @param decoder - optional decoder for the claim value, defaults to decoding a string
- * @returns a function that extracts a claim from a credential
+ *
+ * @param claimId - The claim id / name to extract
+ * @param decoder - Optional decoder for the claim value, defaults to decoding a
+ *   string
+ * @returns A function that extracts a claim from a credential
  */
 export const extractClaim =
   <T = string>(
@@ -688,8 +623,9 @@ export const extractClaim =
 
 /**
  * Returns the fiscal code from a credential (if applicable)
- * @param credential - the credential
- * @returns the fiscal code
+ *
+ * @param credential - The credential
+ * @returns The fiscal code
  */
 export const getFiscalCodeFromCredential = (
   credential: CredentialMetadata | undefined
@@ -703,8 +639,9 @@ export const getFiscalCodeFromCredential = (
 
 /**
  * Returns the first name from a credential (if applicable)
- * @param credential - the credential
- * @returns the first name
+ *
+ * @param credential - The credential
+ * @returns The first name
  */
 export const getFirstNameFromCredential = (
   credential: CredentialMetadata | undefined
@@ -717,8 +654,9 @@ export const getFirstNameFromCredential = (
 
 /**
  * Returns the family name from a credential (if applicable)
- * @param credential - the credential
- * @returns the family name
+ *
+ * @param credential - The credential
+ * @returns The family name
  */
 export const getFamilyNameFromCredential = (
   credential: CredentialMetadata | undefined
@@ -747,8 +685,9 @@ type ClaimDisplayValue =
   | { renderAs: "text"; value: string };
 
 /**
- * Converts a driving privilege claim into a list of displayable claims.
- * This is used to present detailed information in the claim details bottom sheet.
+ * Converts a driving privilege claim into a list of displayable claims. This is
+ * used to present detailed information in the claim details bottom sheet.
+ *
  * @param drivingPrivilege - The driving privilege claim to convert.
  * @returns A list of claims formatted for display purposes.
  */
@@ -783,9 +722,12 @@ export const drivingPrivilegeToClaims = (
 ];
 
 /**
- * Get the display value of a claim without being coupled to a specific UI component
+ * Get the display value of a claim without being coupled to a specific UI
+ * component
+ *
  * @param claim - The claim to resolve, in {@link ClaimDisplayFormat}.
- * @returns A {@link ClaimDisplayValue} describing how the claim should be displayed.
+ * @returns A {@link ClaimDisplayValue} describing how the claim should be
+ *   displayed.
  */
 export const getClaimDisplayValue = (
   claim: ClaimDisplayFormat

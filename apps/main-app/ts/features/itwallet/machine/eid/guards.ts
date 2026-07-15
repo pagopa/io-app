@@ -19,8 +19,8 @@ export const createEidIssuanceGuardsImplementation = (
   options?: GuardsImplementationOptions
 ) => ({
   /**
-   * Guard to check whether the user for whom the eID was issued
-   * is the same that is currently authenticated in app.
+   * Guard to check whether the user for whom the eID was issued is the same
+   * that is currently authenticated in app.
    */
   issuedEidMatchesAuthenticatedUser: ({ context }: { context: Context }) => {
     if (options?.bypassIdentityMatch) {

@@ -16,9 +16,9 @@ import { isArchivingInProcessingModeSelector } from "../../messages/store/reduce
 import { updateNotificationsPendingMessage } from "../store/actions/pendingMessage";
 
 /**
- * Messages' feature logic linked to push notifications interactions
- * if the notification includes a messageId in its payload, it will reload
- * the messages list, else no logic will be ran.
+ * Messages' feature logic linked to push notifications interactions if the
+ * notification includes a messageId in its payload, it will reload the messages
+ * list, else no logic will be ran.
  */
 export const handleMessageNotificationInteraction = (
   response: Notifications.NotificationResponse,
@@ -51,8 +51,8 @@ export const handleMessageNotificationInteraction = (
 };
 
 /**
- * Decides how to refresh the messages based on pagination.
- * It only reloads Inbox since Archive is never changed server-side.
+ * Decides how to refresh the messages based on pagination. It only reloads
+ * Inbox since Archive is never changed server-side.
  */
 const handleForegroundMessageReload = (store: Store) => {
   const state = store.getState();

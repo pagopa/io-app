@@ -43,6 +43,11 @@
       "cache": true,
       "inputs": ["typecheck"],
       "outputs": []
+    },
+    "lint": {
+      "cache": true,
+      "inputs": ["default", "{workspaceRoot}/apps/main-app/.oxlintrc.jsonc"],
+      "outputs": []
     }
   },
   "plugins": [
@@ -50,12 +55,6 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
-      }
-    },
-    {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
       }
     }
   ]

@@ -3,9 +3,7 @@ import { AppStateStatus } from "react-native";
 import { ActionPattern } from "redux-saga/effects";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-/**
- * Action types and action creator related to the Application.
- */
+/** Action types and action creator related to the Application. */
 type ApplicationInitializationPayload = void | {
   handleSessionExpiration?: boolean;
   isActiveLoginSuccess?: boolean;

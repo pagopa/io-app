@@ -194,6 +194,7 @@ const WalletPaymentOutcomeScreen = () => {
     trackOutcomeScreen();
   });
 
+  // oxlint-disable-next-line complexity
   const trackOutcomeScreen = () => {
     if (outcome === WalletPaymentOutcomeEnum.SUCCESS) {
       analytics.trackPaymentOutcomeSuccess({
@@ -233,6 +234,7 @@ const WalletPaymentOutcomeScreen = () => {
     });
   };
 
+  // oxlint-disable-next-line complexity
   const getPropsForOutcome = (): OperationResultScreenContentProps => {
     switch (outcome) {
       case WalletPaymentOutcomeEnum.AUTH_ERROR:

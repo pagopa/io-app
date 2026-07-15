@@ -2,9 +2,7 @@ import { useIOTheme } from "../../context";
 import { bodyFontSize, bodyLineHeight } from "./Body";
 import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 
-/**
- * `BodyMonospace` typographic style
- */
+/** `BodyMonospace` typographic style */
 export const BodyMonospace = ({
   color: customColor,
   ...props

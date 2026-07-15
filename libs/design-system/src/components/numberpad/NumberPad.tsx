@@ -10,16 +10,16 @@ import { NumberButton, numberButtonStyles } from "./NumberButton";
 type BiometricAuthProps =
   | {
       /**
-       * This label will be read from ScreenReaders and give informations about biometric button.
+       * This label will be read from ScreenReaders and give informations about
+       * biometric button.
        */
       biometricAccessibilityLabel: string;
-      /**
-       * Type of device biometric.
-       */
+      /** Type of device biometric. */
       biometricType: BiometricsValidType;
       /**
        * Function to be executed when the biometric button is pressed.
-       * @returns void
+       *
+       * @returns Void
        */
       onBiometricPress: () => void;
     }
@@ -31,19 +31,23 @@ type BiometricAuthProps =
 
 type NumberPadProps = BiometricAuthProps & {
   /**
-   * This label will be read  from ScreenReaders and give informations about delete button.
+   * This label will be read from ScreenReaders and give informations about
+   * delete button.
    */
   deleteAccessibilityLabel: string;
   /**
-   * This function is passed to the delete button to handle the action to trigger when it's pressed.
+   * This function is passed to the delete button to handle the action to
+   * trigger when it's pressed.
    *
-   * @returns void
+   * @returns Void
    */
   onDeletePress: () => void;
   /**
-   * This function is passed to all numeric buttons to handle their press action.
+   * This function is passed to all numeric buttons to handle their press
+   * action.
+   *
    * @param value
-   * @returns void
+   * @returns Void
    */
   onNumberPress: (value: number) => void;
   /**
@@ -66,7 +70,10 @@ const mapIconSpecByBiometric: Record<
 /**
  * This component displays a custom numeric keyboard.
  *
- * It accepts an optional `biometricType` prop which enables an extra keyboard button that accepts a `onBiometricPress` prop used to handle the action to be executed when it's pressed.
+ * It accepts an optional `biometricType` prop which enables an extra keyboard
+ * button that accepts a `onBiometricPress` prop used to handle the action to be
+ * executed when it's pressed.
+ *
  * @returns {JSX.Element} The rendered numeric keyboard component.
  */
 export const NumberPad = ({
@@ -78,9 +85,7 @@ export const NumberPad = ({
   onBiometricPress,
   onDeletePress
 }: NumberPadProps): JSX.Element => {
-  /**
-   * Renders the buttons row from a given array.
-   */
+  /** Renders the buttons row from a given array. */
 
   const renderButtonsRow = useCallback(
     (row: Array<Optional<number | string>>) =>

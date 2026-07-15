@@ -17,9 +17,7 @@ const itwRemoteConfigSelector = (state: GlobalState) =>
     O.map(config => config.itw)
   );
 
-/**
- * Returns the remote config for IT-WALLET
- */
+/** Returns the remote config for IT-WALLET */
 export const isItwEnabledSelector = createSelector(
   itwRemoteConfigSelector,
   (itwConfig): boolean =>
@@ -39,8 +37,8 @@ export const isItwEnabledSelector = createSelector(
 );
 
 /**
- * Returns the authentication methods that are disabled.
- * If there is no data, an empty array is returned as the default value.
+ * Returns the authentication methods that are disabled. If there is no data, an
+ * empty array is returned as the default value.
  */
 export const itwDisabledIdentificationMethodsSelector = createSelector(
   itwRemoteConfigSelector,
@@ -52,9 +50,7 @@ export const itwDisabledIdentificationMethodsSelector = createSelector(
     )
 );
 
-/**
- * Return whether the IT Wallet feedback banner is remotely enabled.
- */
+/** Return whether the IT Wallet feedback banner is remotely enabled. */
 export const isItwFeedbackBannerEnabledSelector = createSelector(
   itwRemoteConfigSelector,
   itwConfig =>
@@ -66,9 +62,9 @@ export const isItwFeedbackBannerEnabledSelector = createSelector(
 );
 
 /**
- * Return whether the Wallet activation is disabled.
- * This is purely a "cosmetic" configuration to disable UI elements,
- * it does not disable the entire IT Wallet feature.
+ * Return whether the Wallet activation is disabled. This is purely a "cosmetic"
+ * configuration to disable UI elements, it does not disable the entire IT
+ * Wallet feature.
  */
 export const itwIsActivationDisabledSelector = createSelector(
   itwRemoteConfigSelector,
@@ -80,9 +76,7 @@ export const itwIsActivationDisabledSelector = createSelector(
     )
 );
 
-/**
- * Return IT Wallet credentials that have been disabled remotely.
- */
+/** Return IT Wallet credentials that have been disabled remotely. */
 export const itwDisabledCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
   itwConfig =>
@@ -93,9 +87,7 @@ export const itwDisabledCredentialsSelector = createSelector(
     )
 );
 
-/**
- * Return the remote config content for the iPatente CTA's visibility.
- */
+/** Return the remote config content for the iPatente CTA's visibility. */
 export const itwIsIPatenteCtaEnabledSelector = createSelector(
   itwRemoteConfigSelector,
   itwConfig =>
@@ -107,7 +99,8 @@ export const itwIsIPatenteCtaEnabledSelector = createSelector(
 );
 
 /**
- * Return the remote config about iPatente CTA inside the MDL credential details screen.
+ * Return the remote config about iPatente CTA inside the MDL credential details
+ * screen.
  */
 export const itwIPatenteCtaConfigSelector = createSelector(
   itwRemoteConfigSelector,
@@ -119,9 +112,7 @@ export const itwIPatenteCtaConfigSelector = createSelector(
     )
 );
 
-/**
- * Return the remote config about ipzs privacy url for the IPZS privacy screen.
- */
+/** Return the remote config about ipzs privacy url for the IPZS privacy screen. */
 export const itwIpzsPrivacyUrlSelector = createSelector(
   itwRemoteConfigSelector,
   itwConfig =>
@@ -143,8 +134,8 @@ export const itwPinnedCredentialsSelector = createSelector(
 );
 
 /**
- * Return the credential types that are marked as new in the catalogue list.
- * New credentials are displayed first with a "NOVITÀ" badge.
+ * Return the credential types that are marked as new in the catalogue list. New
+ * credentials are displayed first with a "NOVITÀ" badge.
  */
 export const itwNewCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
@@ -152,9 +143,7 @@ export const itwNewCredentialsSelector = createSelector(
     O.toUndefined(itwConfig)?.new_credentials ?? emptyArray
 );
 
-/**
- * Return the credential types that are hidden from the catalogue list.
- */
+/** Return the credential types that are hidden from the catalogue list. */
 export const itwHiddenCredentialsSelector = createSelector(
   itwRemoteConfigSelector,
   (itwConfig): ReadonlyArray<string> =>

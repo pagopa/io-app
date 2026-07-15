@@ -15,10 +15,10 @@ import { CircularProgress } from "../../../../../components/ui/CircularProgress"
 import { isDevEnv } from "../../../../../utils/environment";
 
 export enum ReadingState {
-  "completed" = "completed",
-  "error" = "error",
-  "reading" = "reading",
-  "waiting_card" = "waiting_card"
+  completed = "completed",
+  error = "error",
+  reading = "reading",
+  waiting_card = "waiting_card"
 }
 
 type CieCardReadingAnimationProps = Readonly<{

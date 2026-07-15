@@ -1,9 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createTransform } from "redux-persist";
 
-/**
- * If the value is a Pot object removes the loading and error states.
- */
+/** If the value is a Pot object removes the loading and error states. */
 const potReviver = (_: any, value: any) => {
   if (value !== undefined && pot.isPot(value)) {
     return pot.fold<any, any, pot.Pot<any, any>>(
@@ -23,9 +21,9 @@ const potReviver = (_: any, value: any) => {
 };
 
 /**
- * A redux-persist transformer that removes the loading and error states from Pot values.
- * `noneLoading` and `noneError` become `none`
- * `someLoading` and `someError` become `some`
+ * A redux-persist transformer that removes the loading and error states from
+ * Pot values. `noneLoading` and `noneError` become `none` `someLoading` and
+ * `someError` become `some`
  */
 export const PotTransform = createTransform(
   // We only care about rehydrated so we do not apply any transformation

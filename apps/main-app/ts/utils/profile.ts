@@ -10,9 +10,7 @@ import { ServiceId } from "../../definitions/services/ServiceId";
 import { ProfileState } from "../features/settings/common/store/reducers";
 import { pad } from "./dates";
 
-/**
- * Generic utilities for profile
- */
+/** Generic utilities for profile */
 type FiscalCodeDerivedData = Readonly<{
   birthDate?: Date;
   denominazione: string;
@@ -128,9 +126,7 @@ export function getChannelsforServicesList(
   );
 }
 
-/**
- * Finds out which channels are enabled in the profile for the provided service
- */
+/** Finds out which channels are enabled in the profile for the provided service */
 export function getEnabledChannelsForService(
   potProfile: ProfileState,
   serviceId: ServiceId
@@ -158,11 +154,10 @@ export function getEnabledChannelsForService(
 }
 
 /**
- * Provide new BlockedInboxOrChannels object to disable
- * or enable (if enableListedServices is true)
- * a list of services (listed as servicesId).
- * If not declared, the enabled/disabled channel is the INBOX,
- * otherwise it is updated the channel expressed as channelOfInterest
+ * Provide new BlockedInboxOrChannels object to disable or enable (if
+ * enableListedServices is true) a list of services (listed as servicesId). If
+ * not declared, the enabled/disabled channel is the INBOX, otherwise it is
+ * updated the channel expressed as channelOfInterest
  */
 export function getProfileChannelsforServicesList(
   servicesId: ReadonlyArray<string>,
@@ -206,8 +201,8 @@ export function getProfileChannelsforServicesList(
 }
 
 /**
- * Returns a function that generates updated blocked channels from the
- * enabled channels of one service
+ * Returns a function that generates updated blocked channels from the enabled
+ * channels of one service
  */
 export const getBlockedChannels =
   (potProfile: ProfileState, serviceId: ServiceId) =>

@@ -48,9 +48,11 @@ const getOutdatedSymbol = (outdated: OutdatedPackage): string => {
 };
 
 /**
- * Generate a slack message from stats.
- * The message shows a table with the outdated dependencies type and severity, followed by a list of the most outdated dependencies.
- * The returned message is split in chunk, in order to avoid the slack API limit
+ * Generate a slack message from stats. The message shows a table with the
+ * outdated dependencies type and severity, followed by a list of the most
+ * outdated dependencies. The returned message is split in chunk, in order to
+ * avoid the slack API limit
+ *
  * @param stats
  */
 export const generateSlackMessage = (

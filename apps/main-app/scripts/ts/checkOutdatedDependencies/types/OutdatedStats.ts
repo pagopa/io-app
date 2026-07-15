@@ -2,9 +2,7 @@ import * as semver from "semver";
 
 import { GroupByType } from "./GroupByType";
 
-/**
- * Represent an outdated package with all the relevant information
- */
+/** Represent an outdated package with all the relevant information */
 export type OutdatedPackage = {
   currentVersion: string;
   latestVersion: string;
@@ -14,9 +12,9 @@ export type OutdatedPackage = {
 };
 
 /**
- * The stats representing all the outdated library
- * groupByType: all the outdated dependencies, grouped by type and by severity
- * mostOutdated: a list of the most outdated libraries
+ * The stats representing all the outdated library groupByType: all the outdated
+ * dependencies, grouped by type and by severity mostOutdated: a list of the
+ * most outdated libraries
  */
 export type OutdatedStats = {
   groupByType: GroupByType;
@@ -24,7 +22,9 @@ export type OutdatedStats = {
 };
 
 /**
- * Convert a raw row extracted from pnpm outdated --json to {@link OutdatedPackage}
+ * Convert a raw row extracted from pnpm outdated --json to
+ * {@link OutdatedPackage}
+ *
  * @param row
  */
 export const toOutdatedPackage = (
@@ -39,6 +39,7 @@ export const toOutdatedPackage = (
 
 /**
  * Return the distance between two OutdatedPackage major version
+ *
  * @param outdated
  */
 export const getDeltaMajorVersion = (outdated: OutdatedPackage): number =>
@@ -46,6 +47,7 @@ export const getDeltaMajorVersion = (outdated: OutdatedPackage): number =>
 
 /**
  * Sort two {@OutdatedPackage} returning first the most outdated dependency
+ *
  * @param a
  * @param b
  */

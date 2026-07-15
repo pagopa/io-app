@@ -1,7 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-/**
- * A reducer for the Search
- */
+/** A reducer for the Search */
 import { getType } from "typesafe-actions";
 
 import {

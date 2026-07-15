@@ -1,6 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 /**
  * Return true if function is enabled for the wallet (aka payment method)
+ *
  * @param wallet
  */
 import * as O from "fp-ts/lib/Option";
@@ -24,7 +25,8 @@ import {
 } from "./input";
 
 /**
- * true if the given paymentMethod supports the given walletFunction
+ * True if the given paymentMethod supports the given walletFunction
+ *
  * @param paymentMethod
  * @param walletFunction
  */
@@ -97,7 +99,8 @@ export const fromPatchedWalletV2ToRawBPay = (
   );
 
 /**
- * inject walletV2 into walletV1 structure
+ * Inject walletV2 into walletV1 structure
+ *
  * @param walletV2
  */
 export const convertWalletV2toWalletV1 = (

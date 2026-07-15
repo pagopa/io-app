@@ -1,7 +1,6 @@
 /**
- * A screen to guide the user to proper read the CIE
- * TODO: isolate cie event listener as saga
- * TODO: when 100% is reached, the animation end
+ * A screen to guide the user to proper read the CIE TODO: isolate cie event
+ * listener as saga TODO: when 100% is reached, the animation end
  */
 import {
   Body,
@@ -126,9 +125,7 @@ const getPictogramName = (state: ReadingState): IOPictograms => {
   }
 };
 
-/**
- *  This screen shown while reading the card
- */
+/** This screen shown while reading the card */
 class CieCardReaderScreen extends PureComponent<Props, State> {
   get cieAuthorizationUri(): string {
     return this.props.route.params.authorizationUri;

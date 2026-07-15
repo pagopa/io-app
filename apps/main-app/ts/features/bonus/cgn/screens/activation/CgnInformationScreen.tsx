@@ -14,7 +14,8 @@ import {
 } from "../../store/actions/activation";
 
 /**
- * This Screen shows all the information about the cgn program, with the rules and t&c.
+ * This Screen shows all the information about the cgn program, with the rules
+ * and t&c.
  */
 const CgnInformationScreen: FunctionComponent = () => {
   const dispatch = useIODispatch();

@@ -1,6 +1,4 @@
-/**
- * An handler for application internal links
- */
+/** An handler for application internal links */
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -22,11 +20,11 @@ import {
 import { extractPathFromURL } from "./url";
 
 /**
- * This handling is used to convert old CTAs and links to current internal linking config
- * of react-navigation ≥ v5.
+ * This handling is used to convert old CTAs and links to current internal
+ * linking config of react-navigation ≥ v5.
  *
- * This object should not be edited anymore.
- * To add new routes consider to add a new path only on AppStackNavigator linking config.
+ * This object should not be edited anymore. To add new routes consider to add a
+ * new path only on AppStackNavigator linking config.
  */
 // TODO: string should be replaced with a strong type that express all the allowed routes
 const routesToNavigationLink: Record<string, string> = {
@@ -85,8 +83,9 @@ export const testableALLOWED_ROUTE_NAMES = isTestEnv
   : undefined;
 
 /**
- * Extracts the internal route from href. If it is defined and allowed (white listed)
- * returns the internal route, otherwise returns the href
+ * Extracts the internal route from href. If it is defined and allowed (white
+ * listed) returns the internal route, otherwise returns the href
+ *
  * @param href
  * @returns
  */
@@ -114,8 +113,10 @@ export function getInternalRoute(href: string): string {
 }
 
 /**
- * try to extract the internal route from href. If it is defined and allowed (white listed)
- * dispatch the navigation params (to store into the store) and dispatch the navigation action
+ * Try to extract the internal route from href. If it is defined and allowed
+ * (white listed) dispatch the navigation params (to store into the store) and
+ * dispatch the navigation action
+ *
  * @param linkTo
  * @param href
  */

@@ -33,8 +33,9 @@ export type CredentialsListEntry = {
 const EMPTY_ARRAY: ReadonlyArray<CredentialsListEntry> = [];
 
 /**
- * Hardcoded list of all obtainable credentials. When the credentials catalogue is not enabled,
- * this list is used as the source of truth for displaying credentials in the UI.
+ * Hardcoded list of all obtainable credentials. When the credentials catalogue
+ * is not enabled, this list is used as the source of truth for displaying
+ * credentials in the UI.
  */
 const hardcodedCredentialsList: ReadonlyArray<CredentialsListEntry> = [
   ...l2Credentials,
@@ -46,12 +47,16 @@ const hardcodedCredentialsList: ReadonlyArray<CredentialsListEntry> = [
 }));
 
 /**
- * Select the last fetched credentials catalogue. **Note:** the catalogue may be stale.
+ * Select the last fetched credentials catalogue. **Note:** the catalogue may be
+ * stale.
  *
- * The catalogue credentials are mapped to replace the legacy "PersonIdentificationData" credential type with the new "pid".
- * This ensures the PID can always be identified with the same type, avoiding the need to keep separate values for the same credential.
+ * The catalogue credentials are mapped to replace the legacy
+ * "PersonIdentificationData" credential type with the new "pid". This ensures
+ * the PID can always be identified with the same type, avoiding the need to
+ * keep separate values for the same credential.
  *
- * The original credential_type can still be found in the raw persisted catalogue, before any transformation.
+ * The original credential_type can still be found in the raw persisted
+ * catalogue, before any transformation.
  */
 export const itwCredentialsCatalogueSelector = createSelector(
   (state: GlobalState) =>
@@ -74,8 +79,9 @@ export const itwCredentialsCatalogueSelector = createSelector(
 /**
  * Select whether the credentials catalogue is stale, i.e. the JWT is expired.
  *
- * Normally, the catalogue is fetched every 24 hours according to the `expires` HTTP header.
- * If the fetch fails, it is still possible to select the persisted catalogue, but it may be stale.
+ * Normally, the catalogue is fetched every 24 hours according to the `expires`
+ * HTTP header. If the fetch fails, it is still possible to select the persisted
+ * catalogue, but it may be stale.
  */
 export const itwIsCredentialsCatalogueStale = (state: GlobalState) =>
   pipe(
@@ -86,7 +92,8 @@ export const itwIsCredentialsCatalogueStale = (state: GlobalState) =>
   );
 
 /**
- * Return a dictionary that maps each credential type to its metadata in the catalogue.
+ * Return a dictionary that maps each credential type to its metadata in the
+ * catalogue.
  */
 export const itwCredentialsCatalogueByTypesSelector = createSelector(
   itwCredentialsCatalogueSelector,
@@ -113,15 +120,15 @@ export const itwIsCredentialsCatalogueUnavailable = (state: GlobalState) =>
   pot.isNone(state.features.itWallet.credentialsCatalogue.catalogue);
 
 /**
- * Return whether the list of obtainable credentials is built
- * from the catalogue and does not use hardcoded values.
+ * Return whether the list of obtainable credentials is built from the catalogue
+ * and does not use hardcoded values.
  */
 export const itwIsCatalogueEnabledForCredentialsList = (state: GlobalState) =>
   state.features.itWallet.credentialsCatalogue.isEnabledForCredentialsList;
 
 /**
- * Select the raw catalogue translations pot (all locales).
- * Only populated for IT-Wallet spec v1.3.3.
+ * Select the raw catalogue translations pot (all locales). Only populated for
+ * IT-Wallet spec v1.3.3.
  */
 export const itwCatalogueTranslationsSelector = (state: GlobalState) => {
   const translations =
@@ -135,8 +142,8 @@ export const itwCatalogueTranslationsSelector = (state: GlobalState) => {
 };
 
 /**
- * Select the catalogue translations for the current app locale.
- * Returns a flat `l10n_id → string` map, or `undefined` when unavailable.
+ * Select the catalogue translations for the current app locale. Returns a flat
+ * `l10n_id → string` map, or `undefined` when unavailable.
  */
 export const itwCatalogueTranslationsByLocaleSelector = createSelector(
   [itwCatalogueTranslationsSelector, persistedPreferencesSelector],
@@ -150,14 +157,15 @@ export const itwCatalogueTranslationsByLocaleSelector = createSelector(
 );
 
 /**
- * Returns a resolver function that resolves a credential display name.
- * When the credentials catalogue feature flag is enabled, names are resolved using
- * catalogue translations (v1.3.3+) when available, falling back to the catalogue
- * static name. When the FF is disabled, always falls back to the hardcoded i18n string.
+ * Returns a resolver function that resolves a credential display name. When the
+ * credentials catalogue feature flag is enabled, names are resolved using
+ * catalogue translations (v1.3.3+) when available, falling back to the
+ * catalogue static name. When the FF is disabled, always falls back to the
+ * hardcoded i18n string.
  *
- * This is the single source of truth for credential name resolution across the app.
- * Use `useItwCredentialName` hook for component use, or call this selector directly
- * when resolving names for multiple credential types at once.
+ * This is the single source of truth for credential name resolution across the
+ * app. Use `useItwCredentialName` hook for component use, or call this selector
+ * directly when resolving names for multiple credential types at once.
  */
 export const itwCredentialNameResolverSelector = createSelector(
   [
@@ -187,13 +195,16 @@ export const itwCredentialNameResolverSelector = createSelector(
 );
 
 /**
- * Select the list of all obtainable credentials that are available in the catalogue (if enabled),
- * or the hardcoded list otherwise.
+ * Select the list of all obtainable credentials that are available in the
+ * catalogue (if enabled), or the hardcoded list otherwise.
  *
- * When the catalogue is enabled, credentials are ordered and filtered according to remote config:
+ * When the catalogue is enabled, credentials are ordered and filtered according
+ * to remote config:
+ *
  * - Credentials in `hidden_credentials` are excluded.
  * - Credentials in `new_credentials` appear first (in array order).
- * - Credentials in `pinned_credentials` (not already new) appear next (in array order).
+ * - Credentials in `pinned_credentials` (not already new) appear next (in array
+ *   order).
  * - Remaining credentials follow default order.
  */
 export const itwAvailableCredentialsListSelector = createSelector(
@@ -255,8 +266,10 @@ export const itwAvailableCredentialsListSelector = createSelector(
 );
 
 /**
- * Select the optional introduction content from the catalogue. The content is set by the
- * Authentic Source and is a markdown text with additional information on the credential.
+ * Select the optional introduction content from the catalogue. The content is
+ * set by the Authentic Source and is a markdown text with additional
+ * information on the credential.
+ *
  * @param credentialType The credential type to get the content
  * @returns The translated markdown text or undefined
  */

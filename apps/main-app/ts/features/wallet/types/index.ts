@@ -69,16 +69,17 @@ export type WalletCardPlaceholder = {
 export type WalletCardType = WalletCard["type"];
 
 /**
- * Base type definition for all wallet cards.
- * Every card in the wallet must implement these essential properties
- * to ensure proper identification, categorization, and lifecycle management.
+ * Base type definition for all wallet cards. Every card in the wallet must
+ * implement these essential properties to ensure proper identification,
+ * categorization, and lifecycle management.
  */
 type WalletCardBase = {
   /** Classification of the card (e.g., itw, cgn, bonus, payment) */
   category: WalletCardCategory;
   /**
    * Marks a card as hidden. Hidden cards are not displayed in the wallet UI
-   * Usefull when we need to remove card without deleting its data from the wallet
+   * Usefull when we need to remove card without deleting its data from the
+   * wallet
    */
   hidden?: true;
   /** Unique identifier used to track and reference individual cards */

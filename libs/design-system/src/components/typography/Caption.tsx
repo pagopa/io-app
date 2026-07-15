@@ -4,9 +4,7 @@ import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 
 export const captionFontSize: IOFontSize = 12;
 
-/**
- * `Caption` typographic style
- */
+/** `Caption` typographic style */
 export const Caption = ({
   color: customColor,
   ...props

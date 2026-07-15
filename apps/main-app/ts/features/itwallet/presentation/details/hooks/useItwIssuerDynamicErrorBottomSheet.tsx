@@ -36,14 +36,14 @@ type UseItwIssuerDynamicErrorBottomSheetParams = {
 };
 
 /**
- * Maps the issuer dynamic error state to the additional mDL-only content/actions
- * shown in the bottom sheet.
+ * Maps the issuer dynamic error state to the additional mDL-only
+ * content/actions shown in the bottom sheet.
  *
- * - non-mDL credentials never render extra CTAs here
- * - expired mDL credentials show both update and remove actions
- * - invalid mDL credentials show both update and remove actions only when
- *   the issuer error code is `credential_invalid`
- * - any other mDL status falls back to the single remove action
+ * - Non-mDL credentials never render extra CTAs here
+ * - Expired mDL credentials show both update and remove actions
+ * - Invalid mDL credentials show both update and remove actions only when the
+ *   issuer error code is `credential_invalid`
+ * - Any other mDL status falls back to the single remove action
  */
 export const getIssuerDynamicErrorBottomSheetContentConfig = (
   credential: CredentialMetadata,

@@ -34,15 +34,11 @@ export const itwCredentialIssuanceMachine = setup({
     onInit: notImplemented,
     handleSessionExpired: notImplemented,
 
-    /**
-     * Context manipulation actions
-     */
+    /** Context manipulation actions */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
 
-    /**
-     * Navigation actions
-     */
+    /** Navigation actions */
 
     navigateToCredentialIntroductionScreen: notImplemented,
     navigateToTrustIssuerScreen: notImplemented,
@@ -54,16 +50,12 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToCardOnboardingScreen: notImplemented,
     navigateToCredentialOfferDiscoveryScreen: notImplemented,
 
-    /**
-     * Store actions
-     */
+    /** Store actions */
 
     storeWalletInstanceAttestation: notImplemented,
     storeCredential: notImplemented,
 
-    /**
-     * Analytics actions
-     */
+    /** Analytics actions */
 
     trackStartAddCredential: notImplemented,
     trackStartCredentialReissuing: notImplemented,

@@ -6,24 +6,22 @@ import { STORAGE_PREFIX } from "./consts";
 export const STORAGE_ENTRY_PREFIX = `${STORAGE_PREFIX}:entry:`;
 
 /**
- * Encodes a raw URI into a safe AsyncStorage key.
- * Keeps encoding internal so callers always use the raw URI.
+ * Encodes a raw URI into a safe AsyncStorage key. Keeps encoding internal so
+ * callers always use the raw URI.
  */
 const entryKey = (uri: string): string =>
   `${STORAGE_ENTRY_PREFIX}${encodeURIComponent(uri)}`;
 
 /**
- * Reads all cached Status List entry keys.
- * Other feature keys sharing the same storage prefix are ignored.
+ * Reads all cached Status List entry keys. Other feature keys sharing the same
+ * storage prefix are ignored.
  */
 const readEntryKeys = async (): Promise<Array<string>> => {
   const keys = await AsyncStorage.getAllKeys();
   return keys.filter(key => key.startsWith(STORAGE_ENTRY_PREFIX));
 };
 
-/**
- * Lists all cached Status List Token payloads.
- */
+/** Lists all cached Status List Token payloads. */
 const list = async (): Promise<Array<CredentialStatus.StatusList>> => {
   const keys = await readEntryKeys();
   if (keys.length === 0) {
@@ -36,8 +34,8 @@ const list = async (): Promise<Array<CredentialStatus.StatusList>> => {
 };
 
 /**
- * Retrieves a single cached Status List Token payload by its URI.
- * Returns `undefined` if not found or if validation fails.
+ * Retrieves a single cached Status List Token payload by its URI. Returns
+ * `undefined` if not found or if validation fails.
  */
 const get = async (
   uri: string
@@ -53,9 +51,7 @@ const get = async (
   }
 };
 
-/**
- * Persists a Status List Token payload, validating it before writing.
- */
+/** Persists a Status List Token payload, validating it before writing. */
 const upsert = async (
   uri: string,
   payload: CredentialStatus.StatusList
@@ -64,16 +60,12 @@ const upsert = async (
   await AsyncStorage.setItem(entryKey(uri), JSON.stringify(payload));
 };
 
-/**
- * Removes a single cached Status List Token by its URI.
- */
+/** Removes a single cached Status List Token by its URI. */
 const remove = async (uri: string): Promise<void> => {
   await AsyncStorage.removeItem(entryKey(uri));
 };
 
-/**
- * Removes multiple cached Status List Tokens by their URIs.
- */
+/** Removes multiple cached Status List Tokens by their URIs. */
 const removeMany = async (uris: Array<string>): Promise<void> => {
   if (uris.length === 0) {
     return;
@@ -83,9 +75,7 @@ const removeMany = async (uris: Array<string>): Promise<void> => {
   await AsyncStorage.multiRemove(keys);
 };
 
-/**
- * Removes all cached Status List Token entries.
- */
+/** Removes all cached Status List Token entries. */
 const clear = async (): Promise<void> => {
   const keys = await readEntryKeys();
   if (keys.length > 0) {

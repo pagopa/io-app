@@ -2,9 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import { GlobalState } from "../../../../../store/reducers/types";
 
-/**
- * Selector to get the wallet instance attestation
- */
+/** Selector to get the wallet instance attestation */
 export const itwWalletInstanceAttestationSelector = (state: GlobalState) =>
   state.features.itWallet.walletInstance.attestation;
 
@@ -13,8 +11,9 @@ export const itwWalletInstanceStatusSelector = (state: GlobalState) =>
   pot.toUndefined(state.features.itWallet.walletInstance.status);
 
 /**
- * Returns true when it was not possible to retrieve the wallet instance status because of unexpected errors,
- * hence we cannot know whether the wallet instance is valid or has been revoked.
+ * Returns true when it was not possible to retrieve the wallet instance status
+ * because of unexpected errors, hence we cannot know whether the wallet
+ * instance is valid or has been revoked.
  */
 export const itwIsWalletInstanceStatusFailureSelector = (state: GlobalState) =>
   pot.isError(state.features.itWallet.walletInstance.status);
@@ -26,15 +25,15 @@ export const itwIsWalletInstanceStatusFailureSelector = (state: GlobalState) =>
 export const itwWalletInstanceRenewalErrorSelector = (state: GlobalState) =>
   state.features.itWallet.walletInstance.renewalError;
 
-/**
- * Selector that returns all the Wallet Unit Attestations in the store.
- */
+/** Selector that returns all the Wallet Unit Attestations in the store. */
 export const itwWalletUnitAttestationsSelector = (state: GlobalState) =>
   state.features.itWallet.walletInstance.walletUnitAttestations;
 
 /**
- * Returns whether the user has an already active wallet instance but the actual local wallet is not active.
- * @param state the application global state
+ * Returns whether the user has an already active wallet instance but the actual
+ * local wallet is not active.
+ *
+ * @param state The application global state
  */
 export const itwIsRemotelyActiveSelector = (state: GlobalState) =>
   state.features.itWallet.walletInstance.isRemotelyActive;

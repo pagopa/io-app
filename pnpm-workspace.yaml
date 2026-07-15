@@ -5,12 +5,11 @@ packages:
 catalog:
   # --- Nx ---
   nx: "22.7.2"
-  "@nx/eslint": "22.7.2"
   "@nx/jest": "22.7.2"
   "@nx/js": "22.7.2"
   # --- TypeScript ---
   typescript: "^5.8.3"
-  prettier: "^3.8.1"
+  oxfmt: "latest"
   eslint: "^9.39.4"
   jest: "~30.3.0"
   "@types/jest": "^30.0.0"
@@ -18,7 +17,6 @@ catalog:
   
   # --- React Native ---
   "@react-native/typescript-config": "0.83.6"
-  "@react-native/eslint-config": "0.85.0-rc.7"
   react: "19.2.0"
   react-native: "0.83.6"
   react-test-renderer: "19.2.0"

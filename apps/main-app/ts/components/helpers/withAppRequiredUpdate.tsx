@@ -35,13 +35,18 @@ const featureUpdateSelectorMap: Record<
 };
 
 /**
- * HOC that shows UpdateAppModal if the feature requires an app update, otherwise shows the wrapped component.
+ * HOC that shows UpdateAppModal if the feature requires an app update,
+ * otherwise shows the wrapped component.
+ *
  * @param WrappedComponent - The component to wrap
  * @param featureKey - The key of the feature to check
- * @param mixPanelTracking - Optional MixPanel tracking function to be called when the update modal is shown it must be an object with two properties:
- *  - onConfirm: function to be called when the user confirms to update the app
- *  - onLanding: function to be called when the user lands on the update screen
- * @returns The wrapped component or the UpdateAppModal if the feature requires an app update
+ * @param mixPanelTracking - Optional MixPanel tracking function to be called
+ *   when the update modal is shown it must be an object with two properties:
+ *
+ *   - onConfirm: function to be called when the user confirms to update the app
+ *   - onLanding: function to be called when the user lands on the update screen
+ * @returns The wrapped component or the UpdateAppModal if the feature requires
+ *   an app update
  */
 export function withAppRequiredUpdate<P>(
   WrappedComponent: ComponentType<P>,

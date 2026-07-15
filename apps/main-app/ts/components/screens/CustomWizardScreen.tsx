@@ -27,8 +27,11 @@ type ButtonProps = Pick<
 >;
 
 /**
- * A common screen used in a wizard flow to show a pictogram, a title, a description and one or two buttons.
- * @deprecated This component is deprecated. Use `IOScrollViewCentredContent` instead.
+ * A common screen used in a wizard flow to show a pictogram, a title, a
+ * description and one or two buttons.
+ *
+ * @deprecated This component is deprecated. Use `IOScrollViewCentredContent`
+ *   instead.
  */
 const CustomWizardScreen = ({
   title,

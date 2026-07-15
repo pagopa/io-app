@@ -48,9 +48,7 @@ type OperationResultScreenContentProps = WithTestID<{
   topElement?: ReactNode;
 }>;
 
-/**
- * Check if a pictogram has an animated version or not
- */
+/** Check if a pictogram has an animated version or not */
 const hasAnimatedVersion = (
   pictogram: IOAnimatedPictograms | IOPictograms
 ): pictogram is IOAnimatedPictograms => pictogram in IOAnimatedPictogramsAssets;

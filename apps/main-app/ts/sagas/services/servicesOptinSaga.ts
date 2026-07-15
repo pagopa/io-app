@@ -8,8 +8,9 @@ import NavigationService from "../../navigation/NavigationService";
 import { navigateToServicesPreferenceModeSelectionScreen } from "../../store/actions/navigation";
 
 /**
- * if the current profile has not services preference mode set
- * navigate to a screen where he/she can make a choice
+ * If the current profile has not services preference mode set navigate to a
+ * screen where he/she can make a choice
+ *
  * @param isFirstOnboarding
  */
 export function* askServicesPreferencesModeOptin(isFirstOnboarding: boolean) {

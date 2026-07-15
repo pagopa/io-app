@@ -19,9 +19,7 @@ type BodyStyleProps = Omit<TypographicStyleProps, "ref"> &
 export const bodyFontSize = 16;
 export const bodyLineHeight = 24;
 
-/**
- * `Body` typographic style
- */
+/** `Body` typographic style */
 export const Body = ({
   ref,
   weight: customWeight,

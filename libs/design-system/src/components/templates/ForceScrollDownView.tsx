@@ -29,22 +29,21 @@ export type ForceScrollDownView = ForceScrollDownViewSlot &
     "contentContainerStyle" | "scrollEnabled" | "style" | "testID"
   > & {
     /**
-     * Optional Animated ref to be used with `useScrollOffset`
-     * (outside this component)
+     * Optional Animated ref to be used with `useScrollOffset` (outside this
+     * component)
      */
     animatedRef?: AnimatedRef<Animated.ScrollView>;
     /**
-     * Announced by screen readers for the "scroll to bottom" button.
-     * Required because this package has no i18n layer: the consumer owns the copy.
+     * Announced by screen readers for the "scroll to bottom" button. Required
+     * because this package has no i18n layer: the consumer owns the copy.
      */
     buttonAccessibilityLabel: string;
-    /**
-     * The content to display inside the scroll view.
-     */
+    /** The content to display inside the scroll view. */
     children: ReactNode;
     /**
-     * A callback that will be called whenever the scroll view crosses the threshold. The callback
-     * is passed a boolean indicating whether the threshold has been crossed (`true`) or not (`false`).
+     * A callback that will be called whenever the scroll view crosses the
+     * threshold. The callback is passed a boolean indicating whether the
+     * threshold has been crossed (`true`) or not (`false`).
      */
     onThresholdCrossed?: (crossed: boolean) => void;
   };
@@ -55,7 +54,8 @@ type ForceScrollDownViewActions = {
     "fixed" | "onMeasure"
   >;
   /**
-   * The distance from the bottom is computed automatically based on the actions.
+   * The distance from the bottom is computed automatically based on the
+   * actions.
    */
   threshold?: never;
 };
@@ -63,8 +63,8 @@ type ForceScrollDownViewActions = {
 type ForceScrollDownViewCustomSlot = {
   footerActions?: never;
   /**
-   * The distance from the bottom of the scrollable content at which the "scroll to bottom" button
-   * should become hidden.
+   * The distance from the bottom of the scrollable content at which the "scroll
+   * to bottom" button should become hidden.
    */
   threshold: number;
 };
@@ -74,10 +74,11 @@ type ForceScrollDownViewSlot =
   | ForceScrollDownViewCustomSlot;
 
 /**
- * A React Native component that displays a scroll view with a button that scrolls to the bottom of the content
- * when pressed. The button is hidden when the scroll view reaches a certain threshold from the bottom, which is
- * configurable by the `threshold` prop. The button, and the scrolling, can also be disabled by setting the
- * `scrollEnabled` prop to `false`.
+ * A React Native component that displays a scroll view with a button that
+ * scrolls to the bottom of the content when pressed. The button is hidden when
+ * the scroll view reaches a certain threshold from the bottom, which is
+ * configurable by the `threshold` prop. The button, and the scrolling, can also
+ * be disabled by setting the `scrollEnabled` prop to `false`.
  */
 const ForceScrollDownView = ({
   footerActions,
@@ -104,8 +105,8 @@ const ForceScrollDownView = ({
     : customThreshold;
 
   /**
-   * Whether or not the "scroll to bottom" button should be visible. This is controlled by the threshold
-   * and the current scroll position.
+   * Whether or not the "scroll to bottom" button should be visible. This is
+   * controlled by the threshold and the current scroll position.
    */
   // const [isButtonVisible, setButtonVisible] = useState(true);
 
@@ -133,8 +134,8 @@ const ForceScrollDownView = ({
   );
 
   /**
-   * A callback that is called whenever the size of the scrollable content changes. It updates the
-   * state with the new content height.
+   * A callback that is called whenever the size of the scrollable content
+   * changes. It updates the state with the new content height.
    */
   const handleContentSizeChange = useCallback(
     // eslint-disable-next-line functional/immutable-data
@@ -143,8 +144,8 @@ const ForceScrollDownView = ({
   );
 
   /**
-   * A callback that is called whenever the size of the scroll view changes. It updates the state
-   * with the new scroll view height.
+   * A callback that is called whenever the size of the scroll view changes. It
+   * updates the state with the new scroll view height.
    */
   const handleLayout = useCallback(
     (event: LayoutChangeEvent) =>
@@ -154,8 +155,8 @@ const ForceScrollDownView = ({
   );
 
   /**
-   * A callback that is called when the "scroll to bottom" button is pressed. It scrolls the
-   * scroll view to the bottom and hides the button.
+   * A callback that is called when the "scroll to bottom" button is pressed. It
+   * scrolls the scroll view to the bottom and hides the button.
    */
   const handleScrollDownPress = useCallback(() => {
     scheduleOnUI(() => {

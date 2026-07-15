@@ -7,8 +7,9 @@ import { itwSetReviewPending } from "../store/actions/preferences";
 import { itwIsPendingReviewSelector } from "../store/selectors/preferences";
 
 /**
- * Hook to monitor isPendingReview state and request an app review if needed.
- * If isPendingReview is true, request an app review and then set isPendingReview to false.
+ * Hook to monitor isPendingReview state and request an app review if needed. If
+ * isPendingReview is true, request an app review and then set isPendingReview
+ * to false.
  */
 export const useItwPendingReviewRequest = () => {
   const { requestFeedback } = useAppFeedbackContext();

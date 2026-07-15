@@ -4,9 +4,7 @@ type IONewTypefaceContextType = {
   newTypefaceEnabled: boolean;
   setNewTypefaceEnabled: (newTypefaceEnabled: boolean) => void;
 };
-/**
- * Experimental Context for new UI Representations
- */
+/** Experimental Context for new UI Representations */
 export const IONewTypefaceContext = createContext<IONewTypefaceContextType>({
   newTypefaceEnabled: true,
   setNewTypefaceEnabled: () => void 0

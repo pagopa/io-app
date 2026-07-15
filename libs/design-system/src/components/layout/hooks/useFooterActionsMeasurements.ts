@@ -8,12 +8,12 @@ type UseFooterActionsMeasurementsProps = {
 };
 /**
  * Custom hook to handle the `FooterActions` measurements
- * @returns
- *   - `footerActionsMeasurements`
- *      Object containing the `FooterActions` measurements
- *   - `handleFooterActionsMeasurements`
- *      Function to update the footer actions measurements
- *      (to be applied to `onMeasure` prop of `FooterActions`)
+ *
+ * @returns - `footerActionsMeasurements` Object containing the `FooterActions`
+ *   measurements
+ *
+ *   - `handleFooterActionsMeasurements` Function to update the footer actions
+ *     measurements (to be applied to `onMeasure` prop of `FooterActions`)
  */
 export const useFooterActionsMeasurements =
   (): UseFooterActionsMeasurementsProps => {

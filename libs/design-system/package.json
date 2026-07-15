@@ -29,7 +29,8 @@
   "scripts": {
     "test": "jest --config='./jest.config.js'",
     "tsc-noemit": "tsc --noEmit",
-    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint": "oxlint .",
+    "lint-autofix": "oxlint . --fix",
     "prettify": "prettier --write \"src/**/*.{ts,tsx}\"",
     "prettier:check": "prettier --check \"src/**/*.{ts,tsx}\"",
     "prepack": "bob build",
@@ -53,7 +54,6 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
     "@release-it/conventional-changelog": "^5.0.0",
-    "@stylistic/eslint-plugin": "^2.12.1",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
@@ -66,15 +66,13 @@
     "babel-plugin-module-resolver": "^5.0.2",
     "commitlint": "^17.0.2",
     "del-cli": "^5.0.0",
-    "eslint": "catalog:",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-delegate-effects": "file:../../apps/main-app/scripts/eslint",
     "eslint-plugin-functional": "^5.0.8",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jest": "^28.11.0",
-    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react-native-a11y": "^3.3.0",
     "fs-extra": "^11.1.1",
     "jest": "catalog:",
+    "oxlint": "^1.58.0",
+    "oxlint-tsgolint": "^0.23.0",
     "react": "catalog:",
     "react-native": "catalog:",
     "react-native-builder-bob": "^0.38.0",
@@ -120,15 +118,6 @@
     },
     "plugins": {}
   },
-  "eslintIgnore": [
-    "node_modules/",
-    "lib/",
-    "example/webpack.config.js",
-    "example/metro.config.js",
-    "babel.config.js",
-    "scripts/",
-    ".eslintrc.js"
-  ],
   "prettier": {
     "trailingComma": "none",
     "arrowParens": "avoid",

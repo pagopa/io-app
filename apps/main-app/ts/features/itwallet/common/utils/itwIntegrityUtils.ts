@@ -18,8 +18,9 @@ import { v4 as uuidv4 } from "uuid";
 import { Env } from "./environment";
 
 /**
- * Type returned by the getHardwareSignatureWithAuthData function of {@link IntegrityContext}.
- * It contains the signature and the authenticator data.
+ * Type returned by the getHardwareSignatureWithAuthData function of
+ * {@link IntegrityContext}. It contains the signature and the authenticator
+ * data.
  */
 export type HardwareSignatureWithAuthData = {
   authenticatorData: string;
@@ -27,10 +28,14 @@ export type HardwareSignatureWithAuthData = {
 };
 
 /**
- * Generates the hardware signature with the authentication data. The implementation differs between iOS and Android.
- * This will later be used to verify the signature on the server side.
- * @param hardwareKeyTag - the hardware key tag to use for the signature.
- * @returns a function that takes the client data as string and returns a promise that resolves with the signature and the authenticator data or rejects with an error.
+ * Generates the hardware signature with the authentication data. The
+ * implementation differs between iOS and Android. This will later be used to
+ * verify the signature on the server side.
+ *
+ * @param hardwareKeyTag - The hardware key tag to use for the signature.
+ * @returns A function that takes the client data as string and returns a
+ *   promise that resolves with the signature and the authenticator data or
+ *   rejects with an error.
  */
 const getHardwareSignatureWithAuthData = (
   hardwareKeyTag: string,
@@ -55,8 +60,11 @@ const getHardwareSignatureWithAuthData = (
   })();
 
 /**
- * Generates the hardware backed key for the current platform. iOS or Android are supported.
- * @returns a promise that resolves with the key tag as string or rejects with an error.
+ * Generates the hardware backed key for the current platform. iOS or Android
+ * are supported.
+ *
+ * @returns A promise that resolves with the key tag as string or rejects with
+ *   an error.
  */
 const generateIntegrityHardwareKeyTag = () =>
   Platform.select({
@@ -72,8 +80,10 @@ const generateIntegrityHardwareKeyTag = () =>
 
 /**
  * Ensures the integrity service is ready on the device.
+ *
  * @param env - The environment to use for the Google Cloud Project Number
- * @returns a promise with resolves with a boolean value indicating whether the integrity service is available.
+ * @returns A promise with resolves with a boolean value indicating whether the
+ *   integrity service is available.
  */
 const ensureIntegrityServiceIsReady = ({ GOOGLE_CLOUD_PROJECT_NUMBER }: Env) =>
   Platform.select({
@@ -90,7 +100,8 @@ const ensureIntegrityServiceIsReady = ({ GOOGLE_CLOUD_PROJECT_NUMBER }: Env) =>
   })();
 
 /**
- * Ensures that the hardwareKeyTag as padding added before calling {@see getAttestationIntegrity}
+ * Ensures that the hardwareKeyTag as padding added before calling
+ * {@see getAttestationIntegrity}
  */
 const getAttestation = (challenge: string, hardwareKeyTag: string) =>
   Platform.select({

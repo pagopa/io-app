@@ -101,8 +101,8 @@ export const appendLog = ZendDesk.appendLog;
 export const hasOpenedTickets = ZendDesk.hasOpenedTickets;
 export const addTicketTag = ZendDesk.addTicketTag;
 /**
- * Only iOS: close the current Zendesk UI (ticket creation or tickets list)
- * On Android this function has no effect
+ * Only iOS: close the current Zendesk UI (ticket creation or tickets list) On
+ * Android this function has no effect
  */
 export const dismissSupport = ZendDesk.dismiss;
 export const zendeskCategoryId = "1900004702053";

@@ -1,9 +1,7 @@
 import { useIOTheme } from "../../../context";
 import { IOText, IOTextProps, TypographicStyleProps } from "../IOText";
 
-/**
- * `MdH1` typographic style
- */
+/** `MdH1` typographic style */
 export const MdH1 = ({
   color: customColor,
   ...props

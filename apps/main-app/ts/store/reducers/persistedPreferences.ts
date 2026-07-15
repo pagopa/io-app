@@ -1,7 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-/**
- * A reducer for persisted preferences.
- */
+/** A reducer for persisted preferences. */
 import * as O from "fp-ts/lib/Option";
 import { Calendar } from "react-native-calendar-events";
 import { createSelector } from "reselect";

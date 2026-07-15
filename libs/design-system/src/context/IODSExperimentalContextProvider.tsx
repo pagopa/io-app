@@ -4,9 +4,7 @@ type IOExperimentalContextType = {
   isExperimental: boolean;
   setExperimental: (isExperimental: boolean) => void;
 };
-/**
- * Experimental Context for new UI Representations
- */
+/** Experimental Context for new UI Representations */
 export const IOExperimentalDesignContext =
   createContext<IOExperimentalContextType>({
     isExperimental: false,

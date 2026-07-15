@@ -23,12 +23,11 @@ const eycaStatusMap: Record<number, EycaDetailKOStatus> = {
 };
 
 /**
- * Retrieve dispatch the actual status of EYCA card:
- * - 200 -> success - FOUND + EycaCard (CardPending | EycaCardActivated | EycaCardRevoked | EycaCardExpired)
- * - 403 -> success - INELIGIBLE
- * - 404 -> success - NOT FOUND
- * - 409 -> success - ERROR
- * - 401 / 500 -> failure
+ * Retrieve dispatch the actual status of EYCA card: - 200 -> success - FOUND +
+ * EycaCard (CardPending | EycaCardActivated | EycaCardRevoked |
+ * EycaCardExpired) - 403 -> success - INELIGIBLE - 404 -> success - NOT FOUND -
+ * 409 -> success - ERROR - 401 / 500 -> failure
+ *
  * @param getEycaStatus
  */
 export function* handleGetEycaStatus(

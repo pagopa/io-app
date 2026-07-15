@@ -25,9 +25,8 @@ import { checkIntegrityServiceReadySaga } from "./checkIntegrityServiceReadySaga
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
 /**
- * Saga responsible for checking wallet instance inconsistency.
- * If an eID is present but the integrity key tag is missing,
- * the wallet instance is reset.
+ * Saga responsible for checking wallet instance inconsistency. If an eID is
+ * present but the integrity key tag is missing, the wallet instance is reset.
  */
 export function* checkWalletInstanceInconsistencySaga(): Generator<
   ReduxSagaEffect,
@@ -46,8 +45,8 @@ export function* checkWalletInstanceInconsistencySaga(): Generator<
 }
 
 /**
- * Saga responsible to check whether the wallet instance has not been revoked
- * or deleted. When this happens, the wallet is reset on the users's device.
+ * Saga responsible to check whether the wallet instance has not been revoked or
+ * deleted. When this happens, the wallet is reset on the users's device.
  */
 export function* checkWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,

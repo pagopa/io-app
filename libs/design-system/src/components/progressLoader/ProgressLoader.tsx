@@ -17,8 +17,10 @@ export type ProgressLoader = {
 
 /**
  * ProgressLoader component
- * @param progress - the progress percentage
- * @param color - IOColors value or undefined to define the color of the progress bar
+ *
+ * @param progress - The progress percentage
+ * @param color - IOColors value or undefined to define the color of the
+ *   progress bar
  */
 export const ProgressLoader = ({
   progress,

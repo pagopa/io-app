@@ -7,9 +7,7 @@ type ItwQrCodeClaimImageProps = {
   claim: ClaimDisplayFormat;
 };
 
-/**
- * This component allows to render the content of a claim in form of a QR Code
- */
+/** This component allows to render the content of a claim in form of a QR Code */
 export const ItwQrCodeClaimImage = ({ claim }: ItwQrCodeClaimImageProps) => {
   if (claim.value === undefined || typeof claim.value !== "string") {
     return null;

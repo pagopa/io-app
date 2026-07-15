@@ -64,50 +64,40 @@ type CloseWithBackgroundTapDisabled = {
   allowCloseOnBackgroundTap?: false;
 };
 type CloseWithTapOnBackground = {
-  /**
-   * Allows closing the tooltip by tapping outside of it.
-   */
+  /** Allows closing the tooltip by tapping outside of it. */
   allowCloseOnBackgroundTap: true;
-  /**
-   * Accessibility label for the tooltip background mask.
-   */
+  /** Accessibility label for the tooltip background mask. */
   backgroundAccessibilityLabel: string;
 };
 type CommonProps = {
   /**
-   * Determines whether interactions with the tooltip's children are allowed when `isVisible` is set to true.
+   * Determines whether interactions with the tooltip's children are allowed
+   * when `isVisible` is set to true.
+   *
    * @default false
    */
   childrenInteractionsEnabled?: boolean;
-  /**
-   * Accessibility label for the close icon button.
-   */
+  /** Accessibility label for the close icon button. */
   closeIconAccessibilityLabel: string;
-  /**
-   * The tooltip text content.
-   */
+  /** The tooltip text content. */
   content: string;
   /**
    * Insets for adjusting tooltip position within screen boundaries.
+   *
    * @default {}
    */
   displayInsets?: Partial<DisplayInsets>;
-  /**
-   * Controls the visibility of the tooltip.
-   */
+  /** Controls the visibility of the tooltip. */
   isVisible: boolean;
-  /**
-   *  Callback function triggered when the tooltip is closed.
-   */
+  /** Callback function triggered when the tooltip is closed. */
   onClose: () => void;
   /**
    * Initial tooltip position; can be 'top', 'bottom', 'left', or 'right'.
+   *
    * @default top
    */
   placement?: Placement;
-  /**
-   * The title text displayed at the top of the tooltip.
-   */
+  /** The title text displayed at the top of the tooltip. */
   title: string;
 };
 type Props = (CloseWithBackgroundTapDisabled | CloseWithTapOnBackground) &
@@ -153,12 +143,13 @@ const getChildrenPosition = (childrenCoords: ChildrenCoords) => ({
 });
 
 /**
- * Tooltip component that displays a contextual tooltip around its children.
- * The tooltip position is controlled by the `placement` prop and can adjust
+ * Tooltip component that displays a contextual tooltip around its children. The
+ * tooltip position is controlled by the `placement` prop and can adjust
  * dynamically if there is insufficient space.
- * @param {Props} props - The component props
  *
- * @returns {ReactElement} A tooltip component rendered around the specified children.
+ * @param {Props} props - The component props
+ * @returns {ReactElement} A tooltip component rendered around the specified
+ *   children.
  */
 export const Tooltip = ({
   children,
@@ -201,9 +192,7 @@ export const Tooltip = ({
   const isTooltipMeasurementCompleted = isDefined(tooltipLayout);
   const tooltipVisibility = { opacity: isTooltipMeasurementCompleted ? 1 : 0 };
 
-  /**
-   * This function sets the `Tooltip` children coordinates
-   */
+  /** This function sets the `Tooltip` children coordinates */
   const measureChildrenCoords = useCallback(() => {
     if (childRef.current && typeof childRef.current.measure === "function") {
       childRef.current.measure((_, __, width, height, px, py) => {
@@ -239,8 +228,9 @@ export const Tooltip = ({
   }, [isVisible, initialPlacement, measureChildrenCoords]);
 
   /**
-   * This function works with `top` and `bottom` placement and sets the current placement to their opposite value
-   * if in the selected one there is no space to prompt the tooltip
+   * This function works with `top` and `bottom` placement and sets the current
+   * placement to their opposite value if in the selected one there is no space
+   * to prompt the tooltip
    */
   const invertPlacementIfNeeded = useCallback(
     (nativeEvent: LayoutChangeEvent["nativeEvent"]) => {

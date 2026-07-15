@@ -10,12 +10,13 @@ type UseFooterActionsInlineMeasurementsProps = {
 };
 /**
  * Custom hook to handle the `FooterActions` measurements
- * @returns
- *   - `footerActionsInlineMeasurements`
- *      Object containing the `FooterActionsInline` measurements
- *   - `handleFooterActionsInlineMeasurements`
- *      Function to update the footer actions measurements
- *      (to be applied to `onMeasure` prop of `FooterActionsInline`)
+ *
+ * @returns - `footerActionsInlineMeasurements` Object containing the
+ *   `FooterActionsInline` measurements
+ *
+ *   - `handleFooterActionsInlineMeasurements` Function to update the footer
+ *     actions measurements (to be applied to `onMeasure` prop of
+ *     `FooterActionsInline`)
  */
 export const useFooterActionsInlineMeasurements =
   (): UseFooterActionsInlineMeasurementsProps => {

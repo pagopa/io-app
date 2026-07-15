@@ -13,11 +13,12 @@ import {
 } from "../../settings/common/store/utils/guards";
 
 /**
- * Launch email saga that consists of:
- * If user have an existing email:
- * - acknowledgement screen if the email address is validated (eg SPID login) and this if the first onboarding
- * - if the email address is not validated, promt a screen to inform and remember about validation
- * - if the user has not an email address (eg CIE login), a screen will be prompt to insert his own email address
+ * Launch email saga that consists of: If user have an existing email: -
+ * acknowledgement screen if the email address is validated (eg SPID login) and
+ * this if the first onboarding - if the email address is not validated, promt a
+ * screen to inform and remember about validation - if the user has not an email
+ * address (eg CIE login), a screen will be prompt to insert his own email
+ * address
  */
 export function* checkAcknowledgedEmailSaga(
   userProfile: InitializedProfile

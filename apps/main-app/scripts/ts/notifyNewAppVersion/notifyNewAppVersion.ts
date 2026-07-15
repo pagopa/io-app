@@ -6,9 +6,7 @@ import { slackPostMessage } from "../common/slack/postMessage";
 const destinationChannel = "#prod_io";
 const packagePath = "apps/main-app/package.json";
 
-/**
- * Send a Slack message to notify the release of a new app version in beta
- */
+/** Send a Slack message to notify the release of a new app version in beta */
 const main = async () => {
   const packageJson = JSON.parse(fs.readFileSync(packagePath).toString("utf8"));
   const appVersion = (packageJson.version as string).replace("-rc", "");

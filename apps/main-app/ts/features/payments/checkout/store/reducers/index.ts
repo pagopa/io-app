@@ -99,6 +99,7 @@ const INITIAL_STATE: PaymentsCheckoutState = {
   }
 };
 
+// oxlint-disable-next-line complexity
 const reducer = (
   state: PaymentsCheckoutState = INITIAL_STATE,
   action: Action
