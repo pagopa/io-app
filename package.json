@@ -2,9 +2,6 @@
   "name": "@io-app/source",
   "version": "0.0.0",
   "private": true,
-  "workspaces": [
-    "scripts/check_urls"
-  ],
   "scripts": {
     "prepare": "husky install",
     "validate": "nx affected --targets=lint,test,tsc-noemit --configuration=ci",
