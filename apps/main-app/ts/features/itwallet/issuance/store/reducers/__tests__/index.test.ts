@@ -1,13 +1,14 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../store/reducers";
 import { Action } from "../../../../../../store/actions/types";
+import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 import {
-  itwSetIntegrityServiceStatus,
   itwRemoveIntegrityKeyTag,
+  itwSetIntegrityServiceStatus,
   itwStoreIntegrityKeyTag
 } from "../../actions";
 

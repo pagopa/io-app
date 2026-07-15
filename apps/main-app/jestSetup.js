@@ -142,8 +142,8 @@ jest.mock("@gorhom/bottom-sheet", () => {
   };
 });
 
-jest.mock("@pagopa/io-app-design-system", () => {
-  const actual = jest.requireActual("@pagopa/io-app-design-system");
+jest.mock("@io-app/design-system", () => {
+  const actual = jest.requireActual("@io-app/design-system");
   const React = require("react");
   const { Text } = require("react-native");
   return {

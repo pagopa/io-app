@@ -8,6 +8,7 @@ import {
   StateFrom,
   waitFor as waitForActor
 } from "xstate";
+
 import {
   ItwStatusAssertionMocks,
   ItwStoredCredentialsMocks
@@ -15,8 +16,8 @@ import {
 import {
   CredentialAccessToken,
   CredentialBundle,
-  EvaluatedDcqlQueryResult,
   CredentialMetadata,
+  EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject
 } from "../../../common/utils/itwTypesUtils";
@@ -42,7 +43,7 @@ import {
 
 type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;
 
-const T_WIA: string = "abcdefg";
+const T_WIA = "abcdefg";
 const T_WUA = { wua1: "wua-jwt" };
 const T_CLIENT_ID = "clientId";
 const T_CODE_VERIFIER = "codeVerifier";

@@ -1,4 +1,5 @@
 import { Action, createStore } from "redux";
+
 import {
   isErrorPaginatedServicesSelector,
   isLoadingPaginatedServicesSelector,
@@ -8,12 +9,12 @@ import {
   paginatedServicesSelector
 } from "..";
 import { InstitutionServicesResource } from "../../../../../../../definitions/services/InstitutionServicesResource";
+import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
-import { WithInstitutionID, paginatedServicesGet } from "../../actions";
-import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
+import { paginatedServicesGet, WithInstitutionID } from "../../actions";
 
 const MOCK_INSTITUTION_ID = "1";
 

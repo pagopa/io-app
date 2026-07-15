@@ -1,15 +1,11 @@
-import I18n from "i18next";
 import { RouteProp, useRoute } from "@react-navigation/native";
+import I18n from "i18next";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  fciEndRequest,
-  fciSignatureRequestRetryFromId
-} from "../../store/actions";
-import { fciSignatureRequestIdSelector } from "../../store/reducers/fciSignatureRequest.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import {
   trackFciDocOpeningFailure,
@@ -17,6 +13,11 @@ import {
 } from "../../analytics";
 import { FciParamsList } from "../../navigation/params";
 import { FCI_ROUTES } from "../../navigation/routes";
+import {
+  fciEndRequest,
+  fciSignatureRequestRetryFromId
+} from "../../store/actions";
+import { fciSignatureRequestIdSelector } from "../../store/reducers/fciSignatureRequest.ts";
 
 const FciDocumentUnavailableScreen = () => {
   const dispatch = useIODispatch();
@@ -77,10 +78,10 @@ const FciDocumentUnavailableScreen = () => {
   return (
     <OperationResultScreenContent
       isHeaderVisible={false}
-      title={I18n.t("features.fci.documentUnavailablePage.title")}
-      subtitle={I18n.t("features.fci.documentUnavailablePage.subtitle")}
       pictogram={"umbrella"}
+      subtitle={I18n.t("features.fci.documentUnavailablePage.subtitle")}
       testID={"FciDocUnavailableTestID"}
+      title={I18n.t("features.fci.documentUnavailablePage.title")}
       {...operationResultActions()}
     />
   );

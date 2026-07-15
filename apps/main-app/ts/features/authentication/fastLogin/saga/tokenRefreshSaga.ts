@@ -1,53 +1,60 @@
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { RequestResponseTypes } from "@pagopa/ts-commons/lib/requests";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { ValidationError } from "io-ts";
 import { SagaIterator } from "redux-saga";
 import { call, delay, put, take, takeLatest } from "typed-redux-saga/macro";
-import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { ValidationError } from "io-ts";
 import { getType } from "typesafe-actions";
-import { RequestResponseTypes } from "@pagopa/ts-commons/lib/requests";
+
+import { FastLoginT } from "../../../../../definitions/session_manager/requestTypes";
+import { apiUrlPrefix, fastLoginMaxRetries } from "../../../../config";
+import NavigationService from "../../../../navigation/NavigationService";
+import ROUTES from "../../../../navigation/routes";
+import { startApplicationInitialization } from "../../../../store/actions/application";
+import { SagaCallReturnType } from "../../../../types/utils";
+import { isDevEnv } from "../../../../utils/environment";
+import { getPin } from "../../../../utils/keychain";
+import { dismissSupport } from "../../../../utils/supportAssistance";
 import {
   logoutRequest,
   sessionExpired
 } from "../../../authentication/common/store/actions";
-import { startApplicationInitialization } from "../../../../store/actions/application";
+import {
+  identificationFailure,
+  identificationRequest,
+  identificationSuccess
+} from "../../../identification/store/actions";
+import { LollipopConfig } from "../../../lollipop";
+import { getKeyInfo } from "../../../lollipop/saga";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import {
   createFastLoginClient,
   createNonceClient,
   performFastLogin,
   performGetNonce
 } from "../backend";
-import { apiUrlPrefix, fastLoginMaxRetries } from "../../../../config";
-import { SagaCallReturnType } from "../../../../types/utils";
-import { LollipopConfig } from "../../../lollipop";
-import { getKeyInfo } from "../../../lollipop/saga";
 import {
   NonceBaseResponseType,
   NonceResponse
 } from "../backend/mockedFunctionsAndTypes";
 import {
-  identificationFailure,
-  identificationRequest,
-  identificationSuccess
-} from "../../../identification/store/actions";
-import NavigationService from "../../../../navigation/NavigationService";
-import { FastLoginT } from "../../../../../definitions/session_manager/requestTypes";
-import {
   askUserToRefreshSessionToken,
-  showRefreshTokenLoader,
   refreshSessionToken,
+  refreshTokenNoPinError,
   refreshTokenTransientError,
-  refreshTokenNoPinError
+  showRefreshTokenLoader
 } from "../store/actions/tokenRefreshActions";
-import { getPin } from "../../../../utils/keychain";
-import { dismissSupport } from "../../../../utils/supportAssistance";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import ROUTES from "../../../../navigation/routes";
-import { isDevEnv } from "../../../../utils/environment";
 
 const RETRY_TIMEOUT_MS = 1000;
 const RETRY_TIMEOUT_MS_ON_429 = 3000;
+
+type RequestStateType = {
+  counter: number;
+  error: string | undefined;
+  status: "in-progress" | "max-retries" | "session-expired" | "success";
+};
 
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
@@ -100,12 +107,6 @@ function* handleRefreshSessionToken(
     yield* put(identificationRequest());
   }
 }
-
-type RequestStateType = {
-  counter: number;
-  status: "in-progress" | "success" | "max-retries" | "session-expired";
-  error: string | undefined;
-};
 
 const MAX_RETRIES = fastLoginMaxRetries;
 
@@ -167,7 +168,7 @@ function* doRefreshTokenSaga(
       } else {
         if (E.isLeft(nonceResponse)) {
           const status = Array.isArray(nonceResponse.left)
-            ? (nonceResponse.left[0]?.value as { status?: number } | undefined)
+            ? (nonceResponse.left[0]?.value as undefined | { status?: number })
                 ?.status
             : undefined;
           yield* delay(
@@ -178,7 +179,7 @@ function* doRefreshTokenSaga(
         }
         handleRequestError(requestState, nonceResponse);
       }
-    } catch (e) {
+    } catch {
       yield* delay(RETRY_TIMEOUT_MS);
       handleRequestError(requestState);
     }
@@ -198,7 +199,7 @@ const handleRequestError = (
   requestState: RequestStateType,
   response?: E.Either<
     ReadonlyArray<ValidationError>,
-    RequestResponseTypes<FastLoginT> | NonceBaseResponseType<NonceResponse>
+    NonceBaseResponseType<NonceResponse> | RequestResponseTypes<FastLoginT>
   >
 ) => {
   const errorDescription: FastLoginTokenRefreshError = pipe(
@@ -247,8 +248,8 @@ const handleRequestError = (
 };
 
 type FastLoginTokenRefreshError = {
-  status?: number;
   description: string;
+  status?: number;
 };
 
 export const testableTokenRefreshSaga = isDevEnv

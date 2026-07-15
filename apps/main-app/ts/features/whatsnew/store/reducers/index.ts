@@ -1,16 +1,17 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PersistConfig, persistReducer } from "redux-persist";
+import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { disableWhatsNew } from "../actions";
-import { ACTIVE_VERSION } from "../../versions";
 import {
   logoutFailure,
   logoutSuccess
 } from "../../../authentication/common/store/actions";
+import { ACTIVE_VERSION } from "../../versions";
+import { disableWhatsNew } from "../actions";
 
 export type WhatsNewState = {
   lastVisualizedVersion?: number;
@@ -37,13 +38,13 @@ export const whatsNewReducer = (
   action: Action
 ): WhatsNewState => {
   switch (action.type) {
-    case getType(logoutSuccess):
-    case getType(logoutFailure):
-      return whatsNewInitialState;
     case getType(disableWhatsNew):
       return {
         lastVisualizedVersion: action.payload.whatsNewVersion
       };
+    case getType(logoutFailure):
+    case getType(logoutSuccess):
+      return whatsNewInitialState;
   }
   return state;
 };

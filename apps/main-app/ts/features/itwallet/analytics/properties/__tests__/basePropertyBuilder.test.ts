@@ -1,10 +1,10 @@
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import {
   buildItwBaseProperties,
   computeItwStatus
 } from "../basePropertyBuilder";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 
 describe("buildItwBaseProperties", () => {
   afterEach(() => {

@@ -1,16 +1,16 @@
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../store/reducers";
-import { itwStoreIntegrityKeyTag } from "../../../../issuance/store/actions";
 import {
   itwLifecycleIsInstalledSelector,
   itwLifecycleIsOperationalSelector,
   itwLifecycleIsValidSelector
 } from "..";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwCredentialsStore } from "../../../../credentials/store/actions";
-import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
-import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import { reproduceSequence } from "../../../../../../utils/tests";
+import { CredentialType } from "../../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
+import { itwCredentialsStore } from "../../../../credentials/store/actions";
+import { itwStoreIntegrityKeyTag } from "../../../../issuance/store/actions";
 
 describe("IT Wallet lifecycle selectors", () => {
   it("should define the INSTALLED state", () => {

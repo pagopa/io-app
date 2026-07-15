@@ -1,5 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { Alert, Platform } from "react-native";
+
 import {
   InitiativeDTO,
   StatusEnum,

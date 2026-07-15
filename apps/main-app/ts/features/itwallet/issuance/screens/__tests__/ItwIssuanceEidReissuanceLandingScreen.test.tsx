@@ -1,13 +1,14 @@
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as commonSelectors from "../../../common/store/selectors/preferences";
+import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceEidReissuanceLandingScreen } from "../ItwIssuanceEidReissuanceLandingScreen";
-import * as commonSelectors from "../../../common/store/selectors/preferences";
-import * as credentialsSelectors from "../../../credentials/store/selectors";
 
 describe("ItwIssuanceEidReissuanceLandingScreen", () => {
   it.each`

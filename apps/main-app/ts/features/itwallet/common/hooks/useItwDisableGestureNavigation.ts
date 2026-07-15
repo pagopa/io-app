@@ -1,5 +1,6 @@
 import { useFocusEffect } from "@react-navigation/core";
 import { useCallback } from "react";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 /**
@@ -9,7 +10,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
  * If true, the gesture navigation will be disabled, if false it will be enabled.
  * Default is true.
  */
-export const useItwDisableGestureNavigation = (disabled: boolean = true) => {
+export const useItwDisableGestureNavigation = (disabled = true) => {
   const navigation = useIONavigation();
   useFocusEffect(
     useCallback(() => {

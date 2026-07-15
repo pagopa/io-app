@@ -1,9 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
+
+import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
+import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -11,7 +13,6 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PaymentsHomeScreen } from "../PaymentsHomeScreen";
-import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
 
 const validTransaction: NoticeListItem = {
   eventId: "0e208420-19dc-490c-8f3f-5772b7249643",
@@ -156,9 +157,9 @@ const renderComponent = ({
   userMethods = pot.none,
   shouldShowAddMethodsBanner = true
 }: {
+  shouldShowAddMethodsBanner?: boolean;
   transactions?: pot.Pot<ReadonlyArray<NoticeListItem>, Error>;
   userMethods?: pot.Pot<Wallets, NetworkError>;
-  shouldShowAddMethodsBanner?: boolean;
 }) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 

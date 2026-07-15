@@ -1,18 +1,17 @@
 /* eslint-disable functional/immutable-data */
 import {
   HeaderSecondLevel,
+  hexToRgba,
   IOButton,
   IOButtonLinkSpecificProps,
   IOColors,
   IOSpacer,
   IOSpacingScale,
   IOVisualCostants,
-  VSpacer,
-  hexToRgba,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+  useIOTheme,
+  VSpacer
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
-
 import {
   ComponentProps,
   Fragment,
@@ -21,7 +20,6 @@ import {
   useMemo,
   useState
 } from "react";
-
 import {
   ColorValue,
   LayoutChangeEvent,
@@ -43,6 +41,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue
 } from "react-native-reanimated";
+
 import { GuidedTour } from "../../features/tour/components/GuidedTour";
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 import { WithTestID } from "../../types/WithTestID";
@@ -52,53 +51,53 @@ import {
   ButtonBlockWithTourGuideProps
 } from "./utils/buttons";
 
-type ButtonLinkProps = Omit<IOButtonLinkSpecificProps, "color" | "variant">;
-
 export type IOScrollViewActions =
   | {
-      type: "SingleButton";
-      primary: ButtonBlockWithTourGuideProps;
-      secondary?: never;
-      tertiary?: never;
-    }
-  | {
-      type: "TwoButtons";
-      primary: ButtonBlockWithTourGuideProps;
-      secondary: ButtonLinkProps;
-      tertiary?: never;
-    }
-  | {
-      type: "ThreeButtons";
       primary: ButtonBlockWithTourGuideProps;
       secondary: ButtonBlockProps;
       tertiary: ButtonLinkProps;
+      type: "ThreeButtons";
+    }
+  | {
+      primary: ButtonBlockWithTourGuideProps;
+      secondary: ButtonLinkProps;
+      tertiary?: never;
+      type: "TwoButtons";
+    }
+  | {
+      primary: ButtonBlockWithTourGuideProps;
+      secondary?: never;
+      tertiary?: never;
+      type: "SingleButton";
     };
+
+export type IOScrollViewProps = WithTestID<
+  PropsWithChildren<{
+    actions?: WithTestID<IOScrollViewActions>;
+    alwaysBounceVertical?: boolean;
+    animatedRef?: AnimatedRef<Animated.ScrollView>;
+    /* Center content in iOS without inertial scrolling */
+    centerContent?: boolean;
+    contentContainerStyle?: ViewStyle;
+    debugMode?: boolean;
+    /* Don't include end content margin */
+    excludeEndContentMargin?: boolean;
+    /* Don't include safe area insets */
+    excludeSafeAreaMargins?: boolean;
+    headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
+    /* Include page margins */
+    includeContentMargins?: boolean;
+    refreshControlProps?: RefreshControlProps;
+    snapOffset?: number;
+    topElement?: React.ReactNode;
+  }>
+>;
+
+type ButtonLinkProps = Omit<IOButtonLinkSpecificProps, "color" | "variant">;
 
 type IOSCrollViewHeaderScrollValues = ComponentProps<
   typeof HeaderSecondLevel
 >["scrollValues"];
-
-export type IOScrollViewProps = WithTestID<
-  PropsWithChildren<{
-    headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
-    actions?: WithTestID<IOScrollViewActions>;
-    debugMode?: boolean;
-    animatedRef?: AnimatedRef<Animated.ScrollView>;
-    snapOffset?: number;
-    /* Don't include safe area insets */
-    excludeSafeAreaMargins?: boolean;
-    /* Don't include end content margin */
-    excludeEndContentMargin?: boolean;
-    /* Include page margins */
-    includeContentMargins?: boolean;
-    /* Center content in iOS without inertial scrolling */
-    centerContent?: boolean;
-    refreshControlProps?: RefreshControlProps;
-    contentContainerStyle?: ViewStyle;
-    topElement?: React.ReactNode;
-    alwaysBounceVertical?: boolean;
-  }>
->;
 
 /* Percentage of scrolled content that triggers
    the gradient opaciy transition */
@@ -291,20 +290,8 @@ export const IOScrollView = ({
   return (
     <Fragment>
       <Animated.ScrollView
-        ref={animatedRef}
-        testID={testID}
-        onScroll={handleScroll}
-        scrollEventThrottle={8}
-        snapToOffsets={
-          // If there is a refresh control, don't snap to offsets
-          // This is a react-native bug: https://github.com/facebook/react-native/issues/27324
-          RefreshControlComponent ? undefined : [0, snapOffset || 0]
-        }
-        snapToEnd={false}
-        decelerationRate="normal"
-        refreshControl={RefreshControlComponent}
-        centerContent={centerContent}
         alwaysBounceVertical={alwaysBounceVertical}
+        centerContent={centerContent}
         contentContainerStyle={[
           {
             paddingBottom: excludeEndContentMargin
@@ -321,12 +308,25 @@ export const IOScrollView = ({
           `OperationResultScreenContent` component */
           centerContent ? styles.centerContentWrapper : {}
         ]}
+        decelerationRate="normal"
+        onScroll={handleScroll}
+        ref={animatedRef}
+        refreshControl={RefreshControlComponent}
+        scrollEventThrottle={8}
+        snapToEnd={false}
+        snapToOffsets={
+          // If there is a refresh control, don't snap to offsets
+          // This is a react-native bug: https://github.com/facebook/react-native/issues/27324
+          RefreshControlComponent ? undefined : [0, snapOffset || 0]
+        }
+        testID={testID}
       >
         {topElement}
         {children}
       </Animated.ScrollView>
       {actions && (
         <View
+          pointerEvents="box-none"
           style={[
             styles.gradientBottomActions,
             {
@@ -334,17 +334,16 @@ export const IOScrollView = ({
               paddingBottom: bottomMargin
             }
           ]}
-          pointerEvents="box-none"
           {...(testID && { testID: `${testID}-actions` })}
         >
           <Animated.View
+            pointerEvents="none"
             style={[
               styles.gradientContainer,
               debugMode && {
                 backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
               }
             ]}
-            pointerEvents="none"
           >
             <Animated.View
               style={[
@@ -357,11 +356,11 @@ export const IOScrollView = ({
               ]}
             >
               <LinearGradient
+                colors={colors}
+                locations={locations}
                 style={{
                   height: gradientAreaHeight - safeBackgroundBlockHeight
                 }}
-                locations={locations}
-                colors={colors}
               />
             </Animated.View>
 
@@ -377,9 +376,9 @@ export const IOScrollView = ({
             />
           </Animated.View>
           <View
-            style={styles.buttonContainer}
             onLayout={getActionBlockHeight}
             pointerEvents="box-none"
+            style={styles.buttonContainer}
           >
             {renderActionButtons(actions, extraBottomMargin)}
           </View>
@@ -405,10 +404,10 @@ export const renderActionButtons = (
       {primaryAction &&
         (primaryAction.tourGuideProps ? (
           <GuidedTour {...primaryAction.tourGuideProps}>
-            <IOButton variant="solid" fullWidth {...primaryAction} />
+            <IOButton fullWidth variant="solid" {...primaryAction} />
           </GuidedTour>
         ) : (
-          <IOButton variant="solid" fullWidth {...primaryAction} />
+          <IOButton fullWidth variant="solid" {...primaryAction} />
         ))}
 
       {type === "TwoButtons" && (
@@ -419,14 +418,14 @@ export const renderActionButtons = (
           }}
         >
           <VSpacer size={spaceBetweenActionAndLink} />
-          <IOButton variant="link" color="primary" {...secondaryAction} />
+          <IOButton color="primary" variant="link" {...secondaryAction} />
         </View>
       )}
 
       {type === "ThreeButtons" && (
         <Fragment>
           <VSpacer size={spaceBetweenActions} />
-          <IOButton variant="outline" color="primary" {...secondaryAction} />
+          <IOButton color="primary" variant="outline" {...secondaryAction} />
 
           <View
             style={{
@@ -435,7 +434,7 @@ export const renderActionButtons = (
             }}
           >
             <VSpacer size={spaceBetweenActionAndLink} />
-            <IOButton variant="link" color="primary" {...tertiaryAction} />
+            <IOButton color="primary" variant="link" {...tertiaryAction} />
           </View>
         </Fragment>
       )}
