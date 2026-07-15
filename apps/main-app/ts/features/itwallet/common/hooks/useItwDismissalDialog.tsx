@@ -2,6 +2,7 @@ import { useIsFocused } from "@react-navigation/core";
 import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
+
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
@@ -12,15 +13,15 @@ import { ItwScreenFlowContext } from "../../analytics/utils/types";
 import { useItwDisableGestureNavigation } from "./useItwDisableGestureNavigation";
 
 type ItwDismissalDialogProps = {
-  handleDismiss?: () => void;
+  customLabels?: {
+    body?: string;
+    cancelLabel?: string;
+    confirmLabel?: string;
+    title?: string;
+  };
   dismissalContext?: ItwScreenFlowContext;
   enabled?: boolean;
-  customLabels?: {
-    title?: string;
-    body?: string;
-    confirmLabel?: string;
-    cancelLabel?: string;
-  };
+  handleDismiss?: () => void;
 };
 
 /**

@@ -1,5 +1,3 @@
-import { ComponentProps, useCallback, useEffect } from "react";
-import { FlatList, ListRenderItemInfo } from "react-native";
 import {
   Divider,
   IOToast,
@@ -8,6 +6,9 @@ import {
   ListItemSwitch
 } from "@io-app/design-system";
 import I18n from "i18next";
+import { ComponentProps, useCallback, useEffect } from "react";
+import { FlatList, ListRenderItemInfo } from "react-native";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPremiumMessagesOptInOutEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -23,12 +24,12 @@ import {
   servicePreferenceResponseSuccessByIdSelector
 } from "../store/selectors";
 
-type PreferenceSwitchListItem = {
-  condition?: boolean;
-} & ComponentProps<typeof ListItemSwitch>;
-
 export type ServiceDetailsPreferencesProps = {
   serviceId: ServiceId;
+};
+
+type PreferenceSwitchListItem = ComponentProps<typeof ListItemSwitch> & {
+  condition?: boolean;
 };
 
 export const ServiceDetailsPreferences = ({
@@ -153,15 +154,15 @@ export const ServiceDetailsPreferences = ({
 
   return (
     <FlatList
-      ListHeaderComponent={
-        <ListItemHeader label={I18n.t("services.details.preferences.title")} />
-      }
-      ItemSeparatorComponent={() => <Divider />}
       contentContainerStyle={{
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
       data={filteredPreferenceListItems}
+      ItemSeparatorComponent={() => <Divider />}
       keyExtractor={item => item.label}
+      ListHeaderComponent={
+        <ListItemHeader label={I18n.t("services.details.preferences.title")} />
+      }
       renderItem={renderItem}
       scrollEnabled={false}
     />

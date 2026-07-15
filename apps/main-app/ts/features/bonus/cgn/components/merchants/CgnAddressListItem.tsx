@@ -1,11 +1,12 @@
 import { ListItemInfo, ListItemInfoCopy } from "@io-app/design-system";
 import I18n from "i18next";
+
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 
 type CgnAddressListItemProps = {
-  item: Address;
   isAllNationalAddress: boolean;
+  item: Address;
 };
 
 export const CgnAddressListItem = ({
@@ -15,9 +16,9 @@ export const CgnAddressListItem = ({
   if (isAllNationalAddress) {
     return (
       <ListItemInfo
+        icon="mapPin"
         label={I18n.t("bonus.cgn.merchantDetail.information.address")}
         value={I18n.t("bonus.cgn.merchantDetail.information.allNational")}
-        icon="mapPin"
       />
     );
   }
@@ -26,10 +27,10 @@ export const CgnAddressListItem = ({
       accessibilityLabel={`${I18n.t(
         "bonus.cgn.merchantDetail.information.address"
       )}: ${item.full_address}`}
-      label={I18n.t("bonus.cgn.merchantDetail.information.address")}
-      value={item.full_address}
       icon="mapPin"
+      label={I18n.t("bonus.cgn.merchantDetail.information.address")}
       onPress={() => clipboardSetStringWithFeedback(item.full_address)}
+      value={item.full_address}
     />
   );
 };

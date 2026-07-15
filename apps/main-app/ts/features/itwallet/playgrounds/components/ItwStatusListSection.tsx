@@ -12,6 +12,7 @@ import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
 import { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
+
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isDevEnv } from "../../../../utils/environment";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -50,20 +51,20 @@ export const ItwStatusListSection = () => {
       <ListItemInfo label="Age" value={formatAge(lastCheckTime)} />
       <VSpacer size={8} />
       <IOButton
-        variant="solid"
-        label="Refresh Status List"
-        onPress={() => null}
-        loading={false}
         disabled={true}
+        label="Refresh Status List"
+        loading={false}
+        onPress={() => null}
+        variant="solid"
       />
       <VSpacer size={8} />
       <IOButton
-        variant="solid"
         color="danger"
-        label="Clear Status List"
-        onPress={() => null}
-        loading={false}
         disabled={true}
+        label="Clear Status List"
+        loading={false}
+        onPress={() => null}
+        variant="solid"
       />
       <VSpacer size={16} />
       <BackgroundTaskSection />
@@ -119,21 +120,21 @@ const BackgroundTaskSection = () => {
       <Divider />
       <ListItemInfoCopy
         label="Task name"
-        value={ITW_STATUS_LIST_FETCH_TASK}
         onPress={() =>
           clipboardSetStringWithFeedback(ITW_STATUS_LIST_FETCH_TASK)
         }
+        value={ITW_STATUS_LIST_FETCH_TASK}
       />
       {isDevEnv && (
         <>
           <VSpacer size={16} />
           <IOButton
-            variant="solid"
+            disabled={isTaskRegistered !== true}
             label="Trigger background task worker"
             onPress={() => {
               void triggerTaskWorker();
             }}
-            disabled={isTaskRegistered !== true}
+            variant="solid"
           />
         </>
       )}

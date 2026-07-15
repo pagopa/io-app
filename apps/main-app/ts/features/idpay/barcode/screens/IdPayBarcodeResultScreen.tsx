@@ -11,13 +11,14 @@ import {
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -38,12 +39,15 @@ import { IDPayDetailsRoutes } from "../../details/navigation";
 import { idpayInitiativeDetailsSelector } from "../../details/store";
 import { IdPayBarcodeExpireProgressBar } from "../components/IdPayBarcodeExpireProgressBar";
 import { IdPayBarcodeParamsList } from "../navigation/params";
-
 import { idPayGenerateBarcode } from "../store/actions";
 import { idPayBarcodeByInitiativeIdSelector } from "../store/selectors";
 
 // -------------------- types --------------------
 
+type BarcodeExpiredContentProps = {
+  initiativeId: string;
+  initiativeName?: string;
+};
 type IdPayBarcodeResultRouteParams = {
   initiativeId: string;
 };
@@ -53,10 +57,6 @@ type IdPayBarcodeResultRouteProps = RouteProp<
 >;
 type SuccessContentProps = {
   barcode: TransactionBarCodeResponse;
-  initiativeId: string;
-  initiativeName?: string;
-};
-type BarcodeExpiredContentProps = {
   initiativeId: string;
   initiativeName?: string;
 };
@@ -130,13 +130,13 @@ const FailureContent = ({
 
   return (
     <OperationResultScreenContent
-      pictogram="umbrella"
-      title={I18n.t("idpay.barCode.resultScreen.error.generic.body")}
       action={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: navigateToInitiativeDetails
       }}
+      pictogram="umbrella"
+      title={I18n.t("idpay.barCode.resultScreen.error.generic.body")}
     />
   );
 };
@@ -178,7 +178,6 @@ const SuccessContent = ({
 
   return (
     <IOScrollViewWithLargeHeader
-      includeContentMargins
       actions={{
         type: "SingleButton",
         primary: {
@@ -197,10 +196,11 @@ const SuccessContent = ({
           }
         }
       }}
+      description={I18n.t("idpay.barCode.resultScreen.success.body")}
+      includeContentMargins
       title={{
         label: I18n.t("idpay.barCode.resultScreen.success.header")
       }}
-      description={I18n.t("idpay.barCode.resultScreen.success.body")}
     >
       <View style={styles.barcodeContainer}>
         <VSpacer size={4} />
@@ -209,8 +209,8 @@ const SuccessContent = ({
           <IOText
             color={theme["textBody-default"]}
             font="FiraCode"
-            size={h3FontSize}
             lineHeight={h3LineHeight}
+            size={h3FontSize}
             weight="Medium"
           >
             {trx}
@@ -245,8 +245,6 @@ const BarcodeExpiredContent = ({
 
   return (
     <OperationResultScreenContent
-      isHeaderVisible
-      title={I18n.t("idpay.barCode.resultScreen.success.expired.header")}
       action={{
         label: I18n.t("idpay.barCode.resultScreen.success.expired.CTA"),
         accessibilityLabel: I18n.t(
@@ -254,12 +252,14 @@ const BarcodeExpiredContent = ({
         ),
         onPress: ctaClickHandler
       }}
+      isHeaderVisible
+      pictogram="timing"
       secondaryAction={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: goBack
       }}
-      pictogram="timing"
+      title={I18n.t("idpay.barCode.resultScreen.success.expired.header")}
     />
   );
 };

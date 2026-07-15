@@ -2,20 +2,20 @@ import {
   ContentWrapper,
   Divider,
   H3,
+  hexToRgba,
   HSpacer,
-  IOColors,
-  IOVisualCostants,
   Icon,
-  hexToRgba
+  IOColors,
+  IOVisualCostants
 } from "@io-app/design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, RefreshControl, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import I18n from "i18next";
+
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import {
@@ -185,21 +185,21 @@ const CgnMerchantsListByCategory = () => {
               }}
             >
               <Icon
+                color={categorySpecs.textColor}
                 name={categorySpecs.icon}
                 size={32}
-                color={categorySpecs.textColor}
               />
             </View>
             <HSpacer size={16} />
             <View style={{ flex: 1 }}>
               <H3
-                color={categorySpecs.textColor}
                 accessibilityLabel={I18n.t(
                   "bonus.cgn.merchantsList.a11yTitle",
                   {
                     categoryName: I18n.t(categorySpecs.nameKey)
                   }
                 )}
+                color={categorySpecs.textColor}
               >
                 {I18n.t(categorySpecs.nameKey)}
               </H3>
@@ -211,13 +211,13 @@ const CgnMerchantsListByCategory = () => {
   );
   const refreshControl = (
     <RefreshControl
-      style={{ zIndex: 1 }}
-      tintColor={IOColors[categorySpecs?.textColor ?? "black"]}
-      refreshing={isListRefreshing}
       onRefresh={() => {
         initLoadingLists();
         setIsPullRefresh(true);
       }}
+      refreshing={isListRefreshing}
+      style={{ zIndex: 1 }}
+      tintColor={IOColors[categorySpecs?.textColor ?? "black"]}
     />
   );
 
@@ -230,32 +230,32 @@ const CgnMerchantsListByCategory = () => {
       />
       {isError(onlineMerchants) && isError(offlineMerchants) ? (
         <OperationResultScreenContent
-          pictogram="umbrella"
-          title={I18n.t("wallet.errors.GENERIC_ERROR")}
-          subtitle={I18n.t("wallet.errorTransaction.submitBugText")}
           action={{
             label: I18n.t("global.buttons.retry"),
             accessibilityLabel: I18n.t("global.buttons.retry"),
             onPress: initLoadingLists
           }}
+          pictogram="umbrella"
+          subtitle={I18n.t("wallet.errorTransaction.submitBugText")}
+          title={I18n.t("wallet.errors.GENERIC_ERROR")}
         />
       ) : (
         <Animated.FlatList
-          ref={animatedFlatListRef}
-          style={{ flexGrow: 1 }}
-          scrollEventThrottle={8}
-          snapToEnd={false}
           contentContainerStyle={{
             flexGrow: 1,
             paddingBottom: IOVisualCostants.appMarginDefault
           }}
-          refreshControl={refreshControl}
           data={merchantsAll}
+          ItemSeparatorComponent={() => <Divider />}
           keyExtractor={item => item.id}
           ListEmptyComponent={CgnMerchantListSkeleton}
-          renderItem={renderItem}
-          ItemSeparatorComponent={() => <Divider />}
           ListHeaderComponent={header}
+          ref={animatedFlatListRef}
+          refreshControl={refreshControl}
+          renderItem={renderItem}
+          scrollEventThrottle={8}
+          snapToEnd={false}
+          style={{ flexGrow: 1 }}
         />
       )}
     </>

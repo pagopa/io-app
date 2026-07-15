@@ -1,35 +1,36 @@
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
+import { GlobalState } from "../../../../../store/reducers/types";
 import {
   loginFailure,
   loginSuccess,
   testLoginCleanUp,
   testLoginRequest
 } from "../actions";
-import { GlobalState } from "../../../../../store/reducers/types";
+
+export type TestLoginFailedState = {
+  errorMessage: string;
+  kind: "failed";
+};
 
 export type TestLoginInitialState = {
   kind: "idle";
-};
-
-export type TestLoginSuccessState = {
-  kind: "succedeed";
 };
 
 export type TestLoginRequestedState = {
   kind: "requested";
 };
 
-export type TestLoginFailedState = {
-  kind: "failed";
-  errorMessage: string;
-};
-
 export type TestLoginState =
+  | TestLoginFailedState
   | TestLoginInitialState
-  | TestLoginSuccessState
   | TestLoginRequestedState
-  | TestLoginFailedState;
+  | TestLoginSuccessState;
+
+export type TestLoginSuccessState = {
+  kind: "succedeed";
+};
 
 export const testLoginSelector = (state: GlobalState): TestLoginState =>
   state.features.loginFeatures.testLogin;
@@ -39,14 +40,13 @@ export const testLoginReducer = (
   action: Action
 ): TestLoginState => {
   switch (action.type) {
-    case getType(testLoginCleanUp):
+    case getType(loginFailure):
+      if (action.payload.idp !== "test") {
+        return state;
+      }
       return {
-        kind: "idle"
-      };
-
-    case getType(testLoginRequest):
-      return {
-        kind: "requested"
+        kind: "failed",
+        errorMessage: action.payload.error.message
       };
 
     case getType(loginSuccess):
@@ -57,13 +57,14 @@ export const testLoginReducer = (
         kind: "succedeed"
       };
 
-    case getType(loginFailure):
-      if (action.payload.idp !== "test") {
-        return state;
-      }
+    case getType(testLoginCleanUp):
       return {
-        kind: "failed",
-        errorMessage: action.payload.error.message
+        kind: "idle"
+      };
+
+    case getType(testLoginRequest):
+      return {
+        kind: "requested"
       };
 
     default:

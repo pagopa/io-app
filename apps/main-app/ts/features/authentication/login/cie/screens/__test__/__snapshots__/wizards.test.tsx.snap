@@ -187,7 +187,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 {
                   "alignItems": "center",
                   "borderCurve": "continuous",
-                  "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "overflow": "hidden",
@@ -211,7 +210,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 {
                   "alignItems": "center",
                   "borderCurve": "continuous",
-                  "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "overflow": "hidden",
@@ -582,7 +580,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
               {
                 "alignItems": "center",
                 "borderCurve": "continuous",
-                "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "overflow": "hidden",
@@ -606,7 +603,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
               {
                 "alignItems": "center",
                 "borderCurve": "continuous",
-                "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "overflow": "hidden",
@@ -821,7 +817,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 {
                   "alignItems": "center",
                   "borderCurve": "continuous",
-                  "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "overflow": "hidden",
@@ -845,7 +840,6 @@ Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, dev
                 {
                   "alignItems": "center",
                   "borderCurve": "continuous",
-                  "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "overflow": "hidden",
@@ -1164,7 +1158,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 {
                   "alignItems": "center",
                   "borderCurve": "continuous",
-                  "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "overflow": "hidden",
@@ -1188,7 +1181,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 {
                   "alignItems": "center",
                   "borderCurve": "continuous",
-                  "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "overflow": "hidden",
@@ -1410,7 +1402,6 @@ Mettile insieme e inseriscile in quest’ordine.
                   {
                     "alignItems": "center",
                     "borderCurve": "continuous",
-                    "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -1434,7 +1425,6 @@ Mettile insieme e inseriscile in quest’ordine.
                   {
                     "alignItems": "center",
                     "borderCurve": "continuous",
-                    "elevation": 0,
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -1813,7 +1803,6 @@ Mettile insieme e inseriscile in quest’ordine.
               {
                 "alignItems": "center",
                 "borderCurve": "continuous",
-                "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "overflow": "hidden",
@@ -1837,7 +1826,6 @@ Mettile insieme e inseriscile in quest’ordine.
               {
                 "alignItems": "center",
                 "borderCurve": "continuous",
-                "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "overflow": "hidden",
@@ -2052,7 +2040,6 @@ Mettile insieme e inseriscile in quest’ordine.
                 {
                   "alignItems": "center",
                   "borderCurve": "continuous",
-                  "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "overflow": "hidden",
@@ -2076,7 +2063,6 @@ Mettile insieme e inseriscile in quest’ordine.
                 {
                   "alignItems": "center",
                   "borderCurve": "continuous",
-                  "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "overflow": "hidden",
@@ -3272,7 +3258,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               {
                 "alignItems": "center",
                 "borderCurve": "continuous",
-                "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "overflow": "hidden",
@@ -3296,7 +3281,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               {
                 "alignItems": "center",
                 "borderCurve": "continuous",
-                "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "overflow": "hidden",
@@ -3767,7 +3751,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
               {
                 "alignItems": "center",
                 "borderCurve": "continuous",
-                "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "overflow": "hidden",
@@ -3791,7 +3774,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
               {
                 "alignItems": "center",
                 "borderCurve": "continuous",
-                "elevation": 0,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "overflow": "hidden",
@@ -4006,7 +3988,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 {
                   "alignItems": "center",
                   "borderCurve": "continuous",
-                  "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "overflow": "hidden",
@@ -4030,7 +4011,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 {
                   "alignItems": "center",
                   "borderCurve": "continuous",
-                  "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "overflow": "hidden",

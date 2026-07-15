@@ -1,4 +1,5 @@
 import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
+
 import {
   fimsAcceptConsentsAction,
   fimsAcceptConsentsFailureAction,

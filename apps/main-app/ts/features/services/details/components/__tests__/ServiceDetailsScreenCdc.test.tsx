@@ -1,6 +1,7 @@
 import { Body } from "@io-app/design-system";
 import _ from "lodash";
 import { createStore } from "redux";
+
 import { Config } from "../../../../../../definitions/content/Config";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";

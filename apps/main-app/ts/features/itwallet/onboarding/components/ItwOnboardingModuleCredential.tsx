@@ -1,22 +1,23 @@
 import { Badge, IOIcons, ModuleCredential } from "@io-app/design-system";
 import I18n from "i18next";
 import { memo, useMemo } from "react";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 type Props = {
-  type: string;
-  onPress: (type: string) => void;
-  showIcon?: boolean;
+  credentialName: string;
   isActive?: boolean;
-  isDisabled?: boolean;
   isCredentialIssuancePending?: boolean;
+  isDisabled?: boolean;
+  isNew?: boolean;
   isRequested?: boolean;
   isSelectedCredential?: boolean;
   isUpcoming?: boolean;
-  isNew?: boolean;
-  credentialName: string;
+  onPress: (type: string) => void;
+  showIcon?: boolean;
+  type: string;
 };
 
 const credentialIconByType: Record<string, IOIcons> = {

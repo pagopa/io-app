@@ -1,3 +1,5 @@
+import type { MarkdownNode } from "../types";
+
 import {
   collectRawText,
   extractPictogramName,
@@ -6,7 +8,6 @@ import {
   isBrTag,
   stripPictogramPrefix
 } from "../utils";
-import type { MarkdownNode } from "../types";
 
 describe("markdown utils", () => {
   describe("getUnorderedListBullet", () => {

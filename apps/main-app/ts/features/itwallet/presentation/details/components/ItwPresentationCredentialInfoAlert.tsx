@@ -1,6 +1,7 @@
 import { Alert } from "@io-app/design-system";
 import I18n from "i18next";
 import { memo } from "react";
+
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
@@ -37,12 +38,12 @@ const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
   if (credentialType === CredentialType.DRIVING_LICENSE) {
     return (
       <Alert
-        testID="itwMdlBannerTestID"
         content={
           withL3Design
             ? I18n.t("features.itWallet.presentation.alerts.mdl.contentL3")
             : I18n.t("features.itWallet.presentation.alerts.mdl.content")
         }
+        testID="itwMdlBannerTestID"
         variant="info"
       />
     );
@@ -51,8 +52,8 @@ const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
   if (credentialType === CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD) {
     return (
       <Alert
-        testID="itwEhcBannerTestID"
         content={I18n.t("features.itWallet.presentation.alerts.ehc.content")}
+        testID="itwEhcBannerTestID"
         variant="info"
       />
     );

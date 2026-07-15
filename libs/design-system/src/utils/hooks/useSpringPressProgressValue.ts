@@ -6,14 +6,15 @@ import {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+
 import { IOSpringValues } from "../../core";
 
 export const useSpringPressProgressValue = (
   springValue: IOSpringValues = "button"
 ): {
-  progress: SharedValue<number>;
   onPressIn: (event: GestureResponderEvent) => void;
   onPressOut: (event: GestureResponderEvent) => void;
+  progress: SharedValue<number>;
 } => {
   const isPressed: SharedValue<number> = useSharedValue(0);
 

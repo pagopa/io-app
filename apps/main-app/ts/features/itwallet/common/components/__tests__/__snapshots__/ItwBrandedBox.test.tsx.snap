@@ -11,6 +11,7 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
         "overflow": "hidden",
         "padding": 16,
       },
+      undefined,
       {
         "backgroundColor": "#F2F9FF",
         "borderRadius": 16,
@@ -348,6 +349,7 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
         "overflow": "hidden",
         "padding": 16,
       },
+      undefined,
       {
         "backgroundColor": "#F2F9FF",
         "borderRadius": 16,
@@ -685,6 +687,7 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
         "overflow": "hidden",
         "padding": 16,
       },
+      undefined,
       {
         "backgroundColor": "#F2F9FF",
         "borderRadius": 16,

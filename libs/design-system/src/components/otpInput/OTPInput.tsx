@@ -1,4 +1,4 @@
-import { Ref, createRef, useEffect, useMemo, useRef, useState } from "react";
+import { createRef, Ref, useEffect, useMemo, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   Platform,
@@ -9,6 +9,7 @@ import {
   View
 } from "react-native";
 import Animated from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import { triggerHaptic } from "../../functions";
 import { useErrorShakeAnimation } from "../../utils/hooks/useErrorShakeAnimation";
@@ -19,36 +20,36 @@ import { BoxedInput } from "./BoxedInput";
 const OTP_ITEMS_GAP = 8;
 
 export type OTPInputAccessibilityValueText = (params: {
-  valueLength: number;
   length: number;
+  valueLength: number;
 }) => string;
 
-type Props = {
-  ref?: Ref<View>;
-  value: string;
-  onValueChange: (value: string) => void;
-  length: number;
-  autocomplete?: boolean;
-  onValidate?: (value: string) => boolean;
-  errorMessage?: string;
-  accessibilityLabel?: string;
-  deleteButtonAccessibilityLabel?: string;
-  accessibilityHint?: string;
-  inputAccessoryViewID?: string;
-  autoFocus?: boolean;
-};
+export type OTPInputProps = OTPInputSecretProps & Props;
 
 export type OTPInputSecretProps =
   | {
-      secret: true;
       accessibilityValueText: OTPInputAccessibilityValueText;
+      secret: true;
     }
   | {
-      secret?: false;
       accessibilityValueText?: OTPInputAccessibilityValueText;
+      secret?: false;
     };
 
-export type OTPInputProps = Props & OTPInputSecretProps;
+type Props = {
+  accessibilityHint?: string;
+  accessibilityLabel?: string;
+  autocomplete?: boolean;
+  autoFocus?: boolean;
+  deleteButtonAccessibilityLabel?: string;
+  errorMessage?: string;
+  inputAccessoryViewID?: string;
+  length: number;
+  onValidate?: (value: string) => boolean;
+  onValueChange: (value: string) => void;
+  ref?: Ref<View>;
+  value: string;
+};
 
 /**
  * `OTPInput` is a component that allows the user to enter a one-time password.
@@ -160,41 +161,43 @@ export const OTPInput = ({
   return (
     <Animated.View style={[{ flexGrow: 1 }, animatedStyle]}>
       <Pressable
+        accessible={false}
         onPress={() => {
           inputRef.current?.focus();
           setHasFocus(true);
         }}
         ref={ref}
-        accessible={false}
       >
         <TextInput
-          value={value}
+          accessibilityHint={accessibilityHint}
+          accessibilityLabel={accessibilityLabel}
+          // Keep secret values out of the screen reader output.
+          accessibilityValue={{ text: accessibilityValueText }}
+          accessible={true}
+          autoComplete={autocomplete ? "sms-otp" : undefined}
+          autoFocus={autoFocus}
+          caretHidden={Platform.OS === "ios"}
+          inputAccessoryViewID={inputAccessoryViewID}
+          inputMode="numeric"
+          keyboardType="numeric"
+          maxLength={length}
+          onBlur={() => setHasFocus(false)}
           onChangeText={handleChange}
           onKeyPress={handleKeyPress}
-          caretHidden={Platform.OS === "ios"}
+          ref={inputRef}
+          returnKeyType="done"
+          secureTextEntry={isSecret}
           style={[
             StyleSheet.absoluteFillObject,
             // Keep the hidden TextInput minimally visible so native focus still works.
             { opacity: 0.01 }
           ]}
-          maxLength={length}
-          ref={inputRef}
-          onBlur={() => setHasFocus(false)}
-          keyboardType="numeric"
-          inputMode="numeric"
-          returnKeyType="done"
           textContentType="oneTimeCode"
-          autoComplete={autocomplete ? "sms-otp" : undefined}
-          inputAccessoryViewID={inputAccessoryViewID}
-          accessible={true}
-          accessibilityLabel={accessibilityLabel}
-          accessibilityHint={accessibilityHint}
-          // Keep secret values out of the screen reader output.
-          accessibilityValue={{ text: accessibilityValueText }}
-          autoFocus={autoFocus}
-          secureTextEntry={isSecret}
+          value={value}
         />
         <View
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no-hide-descendants"
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
@@ -202,12 +205,11 @@ export const OTPInput = ({
             flexGrow: 1,
             zIndex: 10
           }}
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no-hide-descendants"
         >
           {cells.map((_, i) => (
             <BoxedInput
               key={i}
+              secret={isSecret}
               status={
                 hasError
                   ? "error"
@@ -215,7 +217,6 @@ export const OTPInput = ({
                     ? "focus"
                     : "default"
               }
-              secret={isSecret}
               value={value[i]}
             />
           ))}
@@ -224,9 +225,9 @@ export const OTPInput = ({
       <VSpacer size={4} />
       {hasError && errorMessage && (
         <BodySmall
-          weight="Semibold"
           color={theme.errorText}
           style={{ textAlign: "center" }}
+          weight="Semibold"
         >
           {errorMessage}
         </BodySmall>

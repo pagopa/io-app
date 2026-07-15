@@ -1,4 +1,5 @@
 import { ComponentType } from "react";
+
 import { useIOSelector } from "../../store/hooks";
 import {
   fimsRequiresAppUpdateSelector,
@@ -12,8 +13,8 @@ import { UpdateAppAlert } from "../UpdateAppAlert";
 // Keys accepted by the HOC, add new keys here if you need to check for app update on a specific feature
 export type AppUpdateFeatureKey =
   | "fims"
-  | "idpay.onboarding"
   | "idpay.initiative_details"
+  | "idpay.onboarding"
   | "send";
 
 export type RequiredUpdateMixPanelTracking = {

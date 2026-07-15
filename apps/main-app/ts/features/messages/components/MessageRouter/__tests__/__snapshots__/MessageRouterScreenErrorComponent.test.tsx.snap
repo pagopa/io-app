@@ -702,7 +702,6 @@ exports[`variant: genericError MessageRouterScreenErrorComponent matches snapsho
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -726,7 +725,6 @@ exports[`variant: genericError MessageRouterScreenErrorComponent matches snapsho
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -943,7 +941,6 @@ exports[`variant: genericError MessageRouterScreenErrorComponent matches snapsho
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -967,7 +964,6 @@ exports[`variant: genericError MessageRouterScreenErrorComponent matches snapsho
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1733,7 +1729,6 @@ exports[`variant: messageNotFound MessageRouterScreenErrorComponent matches snap
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1757,7 +1752,6 @@ exports[`variant: messageNotFound MessageRouterScreenErrorComponent matches snap
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2573,7 +2567,6 @@ exports[`variant: thirdPartyError MessageRouterScreenErrorComponent matches snap
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2597,7 +2590,6 @@ exports[`variant: thirdPartyError MessageRouterScreenErrorComponent matches snap
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2814,7 +2806,6 @@ exports[`variant: thirdPartyError MessageRouterScreenErrorComponent matches snap
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2838,7 +2829,6 @@ exports[`variant: thirdPartyError MessageRouterScreenErrorComponent matches snap
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",

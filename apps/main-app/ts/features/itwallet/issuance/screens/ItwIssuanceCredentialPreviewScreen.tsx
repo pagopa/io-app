@@ -9,6 +9,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
+
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -141,7 +142,6 @@ const ContentView = ({ credential }: ContentViewProps) => {
     <ForceScrollDownView
       buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       contentContainerStyle={{ flexGrow: 1 }}
-      onThresholdCrossed={trackScrollToBottom}
       footerActions={{
         actions: {
           type: "TwoButtons",
@@ -161,6 +161,7 @@ const ContentView = ({ credential }: ContentViewProps) => {
           }
         }
       }}
+      onThresholdCrossed={trackScrollToBottom}
     >
       <ContentWrapper style={{ flexGrow: 1 }}>
         <H2>
