@@ -14,9 +14,9 @@ export type ItwBaseProperties = {
   ITW_PG_V3: ItwCredentialMixpanelStatus;
   ITW_PID: ItwPIDStatus;
   ITW_STATUS_V2: ItwStatus;
+  ITW_THIRD_PARTY_CREDENTIAL: ItwThirdPartyCredentials;
   ITW_TS_V2?: ItwCredentialMixpanelStatus;
   ITW_TS_V3: ItwCredentialMixpanelStatus;
-  ITW_THIRD_PARTY_CREDENTIAL: ItwThirdPartyCredentials;
   ITW_WALLET_LIST_CREDENTIAL: ItwWalletListCredential;
 };
 

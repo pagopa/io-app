@@ -25,14 +25,6 @@ export function* syncItwAnalyticsProperties() {
   updateItwAnalyticsProperties(state);
 }
 
-export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
-  yield* takeEvery(itwCredentialsStore, handleCredentialStoredAnalytics);
-  yield* takeEvery(itwCredentialsRemove, handleCredentialRemovedAnalytics);
-  yield* takeEvery(
-    itwFetchCredentialsCatalogue.success,
-    handleCredentialsCatalogueLoadedAnalytics
-  );
-}
 /**
  * Tracks NFC information for discovery and debugging purposes.
  * TODO remove this function when NFC info tracking is not needed anymore
@@ -69,11 +61,19 @@ export function* updateNfcInfoTrackingProperties() {
     });
   }
 }
-
 export function* watchItwAnalyticsSaga(): SagaIterator {
   // Aligns Mixpanel with current IT-Wallet state
   yield* fork(syncItwAnalyticsProperties);
 
   // Keep analytics in sync with store changes
   yield* fork(watchItwCredentialsAnalyticsSaga);
+}
+
+export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
+  yield* takeEvery(itwCredentialsStore, handleCredentialStoredAnalytics);
+  yield* takeEvery(itwCredentialsRemove, handleCredentialRemovedAnalytics);
+  yield* takeEvery(
+    itwFetchCredentialsCatalogue.success,
+    handleCredentialsCatalogueLoadedAnalytics
+  );
 }
