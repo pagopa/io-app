@@ -23,4 +23,4 @@ jobs:
       - name: Check for manual value changes
         env:
           BASE_REF: origin/${{ github.base_ref }}
-        run: node scripts/locales/check-locale-value-changes.mjs
+        run: node apps/main-app/scripts/locale/check-locale-value-changes.mjs
