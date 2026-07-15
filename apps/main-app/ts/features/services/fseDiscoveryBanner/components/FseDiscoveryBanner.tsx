@@ -2,6 +2,7 @@ import { Banner, IOVisualCostants } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   fseDiscoveryBannerWebUrlSelector,
@@ -39,13 +40,13 @@ export const FseDiscoveryBanner = ({
   return (
     <View style={styles.margins}>
       <Banner
-        testID="fseDiscoveryBanner"
-        title={I18n.t("features.fseDiscoveryBanner.title")}
-        content={I18n.t("features.fseDiscoveryBanner.body")}
         action={I18n.t("features.fseDiscoveryBanner.cta")}
         color="turquoise"
-        pictogramName="itWallet"
+        content={I18n.t("features.fseDiscoveryBanner.body")}
         onPress={handlePress}
+        pictogramName="itWallet"
+        testID="fseDiscoveryBanner"
+        title={I18n.t("features.fseDiscoveryBanner.title")}
         {...maybeCloseProps}
       />
     </View>

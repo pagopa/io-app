@@ -1,5 +1,6 @@
-import { testSaga } from "redux-saga-test-plan";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { testSaga } from "redux-saga-test-plan";
+
 import { getGenericError } from "../../../../../../../utils/errors";
 import { cgnCategories } from "../../../../store/actions/categories";
 import { cgnCategoriesSaga } from "../cgnCategoriesSaga";

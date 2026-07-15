@@ -1,10 +1,11 @@
 /* eslint-disable arrow-body-style */
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga-test-plan/matchers";
-import { handleWalletUnitAttestationsCleanUp } from "../handleWalletUnitAttestationsCleanUp";
+
 import { itwWalletUnitAttestationsRemoveById } from "../../../walletInstance/store/actions";
 import { itwWalletUnitAttestationsSelector } from "../../../walletInstance/store/selectors";
 import { itwCredentialsByTypeSelector } from "../../store/selectors";
+import { handleWalletUnitAttestationsCleanUp } from "../handleWalletUnitAttestationsCleanUp";
 
 describe("handleWalletUnitAttestationsCleanUp", () => {
   const credentialsByType = {

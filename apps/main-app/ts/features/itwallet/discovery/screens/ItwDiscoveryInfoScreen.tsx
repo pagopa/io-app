@@ -8,13 +8,13 @@ import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
 import { ItwDiscoveryInfoFallbackComponent } from "../components/ItwDiscoveryInfoFallbackComponent.tsx";
 import { ItwDiscoveryInfoLegacyComponent } from "../components/ItwDiscoveryInfoLegacyComponent.tsx";
-import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
 import { ItwL2FallbackComponent } from "../components/ItwL2FallbackComponent.tsx";
+import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
-  level?: EidIssuanceLevel;
   animationEnabled?: boolean;
   credentialType?: string;
+  level?: EidIssuanceLevel;
 };
 
 export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<

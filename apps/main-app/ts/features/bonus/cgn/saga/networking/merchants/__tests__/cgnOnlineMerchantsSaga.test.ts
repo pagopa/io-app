@@ -1,12 +1,13 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
-import { getGenericError } from "../../../../../../../utils/errors";
-import { cgnOnlineMerchantsSaga } from "../cgnOnlineMerchantsSaga";
-import { cgnOnlineMerchants } from "../../../../store/actions/merchants";
+
+import { DiscountCodeTypeEnum } from "../../../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { OnlineMerchants } from "../../../../../../../../definitions/cgn/merchants/OnlineMerchants";
 import { ProductCategoryEnum } from "../../../../../../../../definitions/cgn/merchants/ProductCategory";
-import { DiscountCodeTypeEnum } from "../../../../../../../../definitions/cgn/merchants/DiscountCodeType";
+import { getGenericError } from "../../../../../../../utils/errors";
+import { cgnOnlineMerchants } from "../../../../store/actions/merchants";
+import { cgnOnlineMerchantsSaga } from "../cgnOnlineMerchantsSaga";
 
 const items: OnlineMerchants["items"] = [
   {

@@ -1,6 +1,7 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
+
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { ProductCategoryEnum } from "../../../../../../../definitions/cgn/merchants/ProductCategory";
 import { CategoryTag, ModuleCgnDiscount } from "../ModuleCgnDiscount";
@@ -26,7 +27,7 @@ describe("ModuleCgnDiscount", () => {
 
   it("should render correctly", () => {
     const { getByText } = render(
-      <ModuleCgnDiscount onPress={onPressMock} discount={discount} />
+      <ModuleCgnDiscount discount={discount} onPress={onPressMock} />
     );
 
     expect(getByText(I18n.t("bonus.cgn.merchantsList.news"))).toBeTruthy();
@@ -36,7 +37,7 @@ describe("ModuleCgnDiscount", () => {
 
   it("should call onPress when pressed", () => {
     const { getByRole } = render(
-      <ModuleCgnDiscount onPress={onPressMock} discount={discount} />
+      <ModuleCgnDiscount discount={discount} onPress={onPressMock} />
     );
     fireEvent.press(getByRole("button"));
     expect(onPressMock).toHaveBeenCalled();
@@ -50,7 +51,7 @@ describe("ModuleCgnDiscount", () => {
     } as Discount;
 
     const { queryByText } = render(
-      <ModuleCgnDiscount onPress={onPressMock} discount={noBadgeDiscount} />
+      <ModuleCgnDiscount discount={noBadgeDiscount} onPress={onPressMock} />
     );
 
     expect(queryByText(I18n.t("bonus.cgn.merchantsList.news"))).toBeNull();

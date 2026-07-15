@@ -5,6 +5,7 @@ import {
 } from "@io-app/design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import I18n from "i18next";
+
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -59,38 +60,37 @@ export const MainTabNavigator = () => {
         }}
       >
         <Tab.Screen
-          name={MESSAGES_ROUTES.MESSAGES_HOME}
           component={MessagesHomeScreen}
+          name={MESSAGES_ROUTES.MESSAGES_HOME}
           options={{
             title: I18n.t("global.navigator.messages"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName={"navMessages"}
-                iconNameFocused={"navMessagesFocused"}
                 color={color}
                 focused={focused}
+                iconName={"navMessages"}
+                iconNameFocused={"navMessagesFocused"}
               />
             )
           }}
         />
         <Tab.Screen
-          name={ROUTES.WALLET_HOME}
           component={WalletHomeScreen}
+          name={ROUTES.WALLET_HOME}
           options={{
             title: I18n.t("global.navigator.wallet"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName={"navWallet"}
-                iconNameFocused={"navWalletFocused"}
                 color={color}
                 focused={focused}
+                iconName={"navWallet"}
+                iconNameFocused={"navWalletFocused"}
               />
             )
           }}
         />
 
         <Tab.Screen
-          name={ROUTES.BARCODE_SCAN_TAB_EMPTY}
           component={EmptyComponent}
           listeners={{
             tabPress: ({ preventDefault }) => {
@@ -98,46 +98,47 @@ export const MainTabNavigator = () => {
               navigateToBarcodeScanScreen();
             }
           }}
+          name={ROUTES.BARCODE_SCAN_TAB_EMPTY}
           options={{
             title: I18n.t("global.navigator.scan"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName={"navScan"}
-                iconNameFocused={"navScan"}
                 color={color}
                 focused={focused}
+                iconName={"navScan"}
+                iconNameFocused={"navScan"}
               />
             )
           }}
         />
 
         <Tab.Screen
-          name={ROUTES.PAYMENTS_HOME}
           component={PaymentsHomeScreen}
+          name={ROUTES.PAYMENTS_HOME}
           options={{
             title: I18n.t("global.navigator.payments"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName={"navPsp"}
-                iconNameFocused={"navPsp"}
                 color={color}
                 focused={focused}
+                iconName={"navPsp"}
+                iconNameFocused={"navPsp"}
               />
             )
           }}
         />
 
         <Tab.Screen
-          name={SERVICES_ROUTES.SERVICES_HOME}
           component={ServicesHomeScreen}
+          name={SERVICES_ROUTES.SERVICES_HOME}
           options={{
             title: I18n.t("global.navigator.services"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName="navServices"
-                iconNameFocused="navServicesFocused"
                 color={color}
                 focused={focused}
+                iconName="navServices"
+                iconNameFocused="navServicesFocused"
               />
             )
           }}

@@ -1,4 +1,5 @@
 import { ImageURISource, Platform } from "react-native";
+
 import { addCacheTimestampToUri } from "../image";
 
 describe("addCacheTimestampToUri", () => {

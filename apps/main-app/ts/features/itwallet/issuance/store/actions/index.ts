@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { IntegrityServiceStatus } from "../reducers";
 
 export const itwStoreIntegrityKeyTag = createStandardAction(
@@ -14,6 +15,6 @@ export const itwSetIntegrityServiceStatus = createStandardAction(
 )<IntegrityServiceStatus>();
 
 export type ItwIssuanceActions =
-  | ActionType<typeof itwStoreIntegrityKeyTag>
   | ActionType<typeof itwRemoveIntegrityKeyTag>
-  | ActionType<typeof itwSetIntegrityServiceStatus>;
+  | ActionType<typeof itwSetIntegrityServiceStatus>
+  | ActionType<typeof itwStoreIntegrityKeyTag>;

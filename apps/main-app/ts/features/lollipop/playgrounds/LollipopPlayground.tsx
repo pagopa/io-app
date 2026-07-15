@@ -3,8 +3,15 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useState } from "react";
 import { ScrollView } from "react-native";
+
+import { LollipopContentDigest } from "../../../../definitions/identity/LollipopContentDigest";
+import { LollipopMethodEnum } from "../../../../definitions/identity/LollipopMethod";
+import { LollipopOriginalURL } from "../../../../definitions/identity/LollipopOriginalURL";
+import { LollipopSignature } from "../../../../definitions/identity/LollipopSignature";
+import { LollipopSignatureInput } from "../../../../definitions/identity/LollipopSignatureInput";
 import { ProblemJson } from "../../../../definitions/identity/ProblemJson";
 import { SignMessageResponse } from "../../../../definitions/identity/SignMessageResponse";
+import { identityClientManager } from "../../../api/IdentityClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../store/hooks";
@@ -14,12 +21,6 @@ import {
   lollipopPublicKeySelector
 } from "../store/reducers/lollipop";
 import { toThumbprint } from "../utils/crypto";
-import { identityClientManager } from "../../../api/IdentityClientManager";
-import { LollipopOriginalURL } from "../../../../definitions/identity/LollipopOriginalURL";
-import { LollipopContentDigest } from "../../../../definitions/identity/LollipopContentDigest";
-import { LollipopSignatureInput } from "../../../../definitions/identity/LollipopSignatureInput";
-import { LollipopSignature } from "../../../../definitions/identity/LollipopSignature";
-import { LollipopMethodEnum } from "../../../../definitions/identity/LollipopMethod";
 import LollipopPlaygroundContent from "./LollipopPlaygroundContent";
 
 export type LollipopPlaygroundState = {
@@ -111,7 +112,6 @@ const LollipopPlayground = () => {
     <ScrollView>
       <ContentWrapper>
         <LollipopPlaygroundContent
-          onSignButtonPress={onSignButtonPress}
           onCheckBoxPress={v => {
             setState({
               ...state,
@@ -121,6 +121,7 @@ const LollipopPlayground = () => {
           onClearButtonPress={() => {
             setState(INITIAL_STATE);
           }}
+          onSignButtonPress={onSignButtonPress}
           playgroundState={state}
         />
       </ContentWrapper>

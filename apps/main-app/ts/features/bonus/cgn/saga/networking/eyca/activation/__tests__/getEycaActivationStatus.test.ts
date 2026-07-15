@@ -1,9 +1,10 @@
 import { testSaga } from "redux-saga-test-plan";
+
+import { getNetworkError } from "../../../../../../../../utils/errors";
 import { cgnEycaActivation } from "../../../../../store/actions/eyca/activation";
+import { CgnEycaActivationStatus } from "../../../../../store/reducers/eyca/activation";
 import { getActivation } from "../getEycaActivationSaga";
 import { getEycaActivationStatusSaga } from "../getEycaActivationStatus";
-import { getNetworkError } from "../../../../../../../../utils/errors";
-import { CgnEycaActivationStatus } from "../../../../../store/reducers/eyca/activation";
 
 describe("getEycaActivationStatus", () => {
   const getEycaActivation = jest.fn();

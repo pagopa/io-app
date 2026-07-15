@@ -1,1 +1,1 @@
-export type MessageListCategory = "INBOX" | "ARCHIVE";
+export type MessageListCategory = "ARCHIVE" | "INBOX";

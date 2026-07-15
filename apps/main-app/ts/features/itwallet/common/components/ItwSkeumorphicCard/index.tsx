@@ -4,10 +4,9 @@ import {
   Tag,
   useScaleAnimation
 } from "@io-app/design-system";
-import { ReactNode, useMemo } from "react";
-
 import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
+import { ReactNode, useMemo } from "react";
 import {
   AccessibilityProps,
   Pressable,
@@ -17,6 +16,7 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
+
 import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { useLayoutSize } from "../../hooks/useLayoutSize";
 import {
@@ -40,10 +40,10 @@ import { FlippableCard } from "./FlippableCard";
 
 export type ItwSkeumorphicCardProps = {
   credential: CredentialMetadata;
-  status: ItwCredentialStatus;
-  valuesHidden: boolean;
   isFlipped?: boolean;
   onPress?: () => void;
+  status: ItwCredentialStatus;
+  valuesHidden: boolean;
 };
 
 export const ItwSkeumorphicCard = ({
@@ -59,7 +59,7 @@ export const ItwSkeumorphicCard = ({
 
   const FrontSide = useMemo(
     () => (
-      <CardSideBase status={status} isItw={isItw}>
+      <CardSideBase isItw={isItw} status={status}>
         <CardBackground
           credentialType={credential.credentialType}
           side="front"
@@ -76,7 +76,7 @@ export const ItwSkeumorphicCard = ({
 
   const BackSide = useMemo(
     () => (
-      <CardSideBase status={status} isItw={isItw}>
+      <CardSideBase isItw={isItw} status={status}>
         <CardBackground
           credentialType={credential.credentialType}
           side="back"
@@ -115,9 +115,9 @@ export const ItwSkeumorphicCard = ({
 
   const card = (
     <FlippableCard
+      BackComponent={BackSide}
       containerStyle={[styles.card]}
       FrontComponent={FrontSide}
-      BackComponent={BackSide}
       isFlipped={isFlipped}
     />
   );
@@ -162,9 +162,9 @@ const gradientVariantByStatus: Record<
 };
 
 type CardSideBaseProps = {
-  status: ItwCredentialStatus;
   children: ReactNode;
   isItw: boolean;
+  status: ItwCredentialStatus;
 };
 
 const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
@@ -212,11 +212,11 @@ const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
           >
             {/* Animated gradient border */}
             <ItwBrandedSkiaBorder
-              width={size.width}
-              height={size.height}
-              variant={gradientVariantByStatus[status]}
-              thickness={4}
               borderRadius={8}
+              height={size.height}
+              thickness={4}
+              variant={gradientVariantByStatus[status]}
+              width={size.width}
             />
           </Canvas>
         )}

@@ -1,10 +1,11 @@
 import { call, put } from "typed-redux-saga/macro";
+
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
+import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 import { cgnCodeFromBucket } from "../../../store/actions/bucket";
-import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 import { setMerchantDiscountCode } from "../../../store/actions/merchants";
 
 // handle the request for CGN bucket consumption

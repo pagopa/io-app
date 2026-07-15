@@ -2,16 +2,17 @@ import {
   Badge,
   H6,
   HStack,
-  IOModuleStyles,
   Icon,
+  IOModuleStyles,
   Tag,
-  VStack,
   useIOTheme,
-  useScaleAnimation
+  useScaleAnimation,
+  VStack
 } from "@io-app/design-system";
+import I18n from "i18next";
 import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
-import I18n from "i18next";
+
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { useCgnStyle } from "../../hooks/useCgnStyle";
@@ -23,8 +24,8 @@ import {
 } from "./utils";
 
 export type ModuleCgnDiscount = {
-  onPress: () => void;
   discount: Discount;
+  onPress: () => void;
 };
 
 type CategoryTagProps = {
@@ -36,12 +37,12 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
 
   return categorySpecs ? (
     <Tag
-      text={I18n.t(categorySpecs.nameKey)}
-      variant="custom"
       icon={{
         name: categorySpecs.icon,
         color: "lightGrey"
       }}
+      text={I18n.t(categorySpecs.nameKey)}
+      variant="custom"
     />
   ) : null;
 };
@@ -57,13 +58,13 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
 
   return (
     <Pressable
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      accessible
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
-      accessibilityRole="button"
-      accessible
-      accessibilityLabel={accessibilityLabel}
     >
       <Animated.View
         style={[
@@ -87,18 +88,18 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
                 {discount.isNew && (
                   <Badge
                     accessible={false}
-                    variant="cgn"
                     text={I18n.t("bonus.cgn.merchantsList.news")}
+                    variant="cgn"
                   />
                 )}
                 {isValidDiscount(discount.discount) && (
                   <Badge
                     accessible={false}
-                    variant="cgn"
                     outline
                     text={`-${normalizedDiscountPercentage(
                       discount.discount
                     )}%`}
+                    variant="cgn"
                   />
                 )}
               </HStack>
@@ -107,13 +108,13 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
             <H6 color={theme["textHeading-secondary"]}>{discount.name}</H6>
             <HStack space={4} style={{ flexWrap: "wrap" }}>
               {discount.productCategories.map(categoryKey => (
-                <CategoryTag key={categoryKey} category={categoryKey} />
+                <CategoryTag category={categoryKey} key={categoryKey} />
               ))}
             </HStack>
           </VStack>
           <Icon
-            name="chevronRightListItem"
             color={theme["interactiveElem-default"]}
+            name="chevronRightListItem"
             size={24}
           />
         </View>

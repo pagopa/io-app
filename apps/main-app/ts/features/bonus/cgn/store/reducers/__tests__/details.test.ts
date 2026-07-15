@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import { Card } from "../../../../../../../definitions/cgn/Card";
 import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
 import { GlobalState } from "../../../../../../store/reducers/types";

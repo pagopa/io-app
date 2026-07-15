@@ -1,9 +1,9 @@
-import { IOButton, H4, VStack, useIOTheme } from "@io-app/design-system";
+import { H4, IOButton, useIOTheme, VStack } from "@io-app/design-system";
 import { Presets } from "react-native-pulsar";
 
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-const hapticFeedbacks: Array<{ label: string; fn: () => void }> = [
+const hapticFeedbacks: Array<{ fn: () => void; label: string }> = [
   { label: "impactLight", fn: Presets.System.impactLight },
   { label: "impactMedium", fn: Presets.System.impactMedium },
   { label: "impactHeavy", fn: Presets.System.impactHeavy },
@@ -24,10 +24,10 @@ export const DSHapticFeedbackPulsar = () => {
           {hapticFeedbacks.map(({ label, fn }) => (
             <IOButton
               fullWidth
-              variant="solid"
               key={label}
               label={label}
               onPress={fn}
+              variant="solid"
             />
           ))}
         </VStack>

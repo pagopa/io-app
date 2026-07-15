@@ -1,5 +1,6 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { testSaga } from "redux-saga-test-plan";
+
 import { CountResult } from "../../../../../../../../definitions/cgn/merchants/CountResult";
 import { getGenericError } from "../../../../../../../utils/errors";
 import {

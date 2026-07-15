@@ -1,17 +1,17 @@
 import { fireEvent } from "@testing-library/react-native";
 import { constUndefined } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { createStore } from "redux";
 
-import I18n from "i18next";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as analytics from "../../analytics";
 import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
+import { setEngagementScreenShown } from "../../store/actions/environment";
 import * as utils from "../../utils";
 import { SystemNotificationPermissionsScreen } from "../SystemNotificationPermissionsScreen";
-import { setEngagementScreenShown } from "../../store/actions/environment";
 
 const mockGoBack = jest.fn();
 const mockSetNavigationOptions = jest.fn();

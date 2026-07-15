@@ -1,15 +1,16 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { act, fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import configureMockStore, { MockStoreEnhanced } from "redux-mock-store";
-import * as pot from "@pagopa/ts-commons/lib/pot";
+
+import mockedProfile from "../../../../__mocks__/initializedProfile";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { setFastLoginOptSessionLogin } from "../../../authentication/activeSessionLogin/store/actions";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { LoginOptInScreen } from "../loginL3/LoginOptInScreen";
-import mockedProfile from "../../../../__mocks__/initializedProfile";
-import { setFastLoginOptSessionLogin } from "../../../authentication/activeSessionLogin/store/actions";
 
 const mockPresentBottomSheet = jest.fn();
 

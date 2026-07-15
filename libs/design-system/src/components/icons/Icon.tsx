@@ -1,6 +1,7 @@
+import { Component } from "react";
 import { ColorValue } from "react-native";
 import Animated from "react-native-reanimated";
-import { Component } from "react";
+
 import { IOColors } from "../../core/IOColors";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 /* Icons */
@@ -74,7 +75,6 @@ import IconDocumentAdd from "./svg/IconDocumentAdd";
 import IconDocumentAttachment from "./svg/IconDocumentAttachment";
 import IconDocumentAttachmentPDF from "./svg/IconDocumentAttachmentPDF";
 import IconDotMenu from "./svg/IconDotMenu";
-import IconEUStars from "./svg/IconEUStars";
 import IconEdit from "./svg/IconEdit";
 import IconEmail from "./svg/IconEmail";
 import IconEmailFill from "./svg/IconEmailFill";
@@ -82,6 +82,7 @@ import IconEmojiHappy from "./svg/IconEmojiHappy";
 import IconEmojiSad from "./svg/IconEmojiSad";
 import IconEntityCode from "./svg/IconEntityCode";
 import IconErrorFilled from "./svg/IconErrorFilled";
+import IconEUStars from "./svg/IconEUStars";
 import IconExternalLink from "./svg/IconExternalLink";
 import IconExternalLinkSmall from "./svg/IconExternalLinkSmall";
 import IconEyeHide from "./svg/IconEyeHide";
@@ -117,8 +118,8 @@ import IconKeyboardDown from "./svg/IconKeyboardDown";
 import IconLadybug from "./svg/IconLadybug";
 import IconLegalValue from "./svg/IconLegalValue";
 import IconLight from "./svg/IconLight";
-import IconLightFilled from "./svg/IconLightFilled";
 import IconLightbulb from "./svg/IconLightbulb";
+import IconLightFilled from "./svg/IconLightFilled";
 import IconLocationAndroid from "./svg/IconLocationAndroid";
 import IconLocationiOS from "./svg/IconLocationiOS";
 import IconLocationiOSFilled from "./svg/IconLocationiOSFilled";
@@ -150,7 +151,6 @@ import IconNotification from "./svg/IconNotification";
 import IconOk from "./svg/IconOk";
 import IconOption from "./svg/IconOption";
 import IconPEC from "./svg/IconPEC";
-import IconPSP from "./svg/IconPSP";
 import IconPhone from "./svg/IconPhone";
 import IconPinOff from "./svg/IconPinOff";
 import IconPinOn from "./svg/IconPinOn";
@@ -162,6 +162,7 @@ import IconProductITWallet from "./svg/IconProductITWallet";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconProfile from "./svg/IconProfile";
 import IconProfileRegistered from "./svg/IconProfileRegistered";
+import IconPSP from "./svg/IconPSP";
 import IconQrCode from "./svg/IconQrCode";
 import IconQuestion from "./svg/IconQuestion";
 import IconRead from "./svg/IconRead";
@@ -426,13 +427,13 @@ export type IOIconSizeScale = 16 | 20 | 24 | 32 | 48;
 export type IOIconSizeScaleCheckbox = 14 | 18;
 
 export type IOIconsProps = {
-  name: IOIcons;
-  color?: IOColors;
-  size?: IOIconSizeScale | IOIconSizeScaleCheckbox | "100%";
-  testID?: string;
-  accessible?: boolean;
   accessibilityLabel?: string;
+  accessible?: boolean;
   allowFontScaling?: boolean;
+  color?: IOColors;
+  name: IOIcons;
+  size?: "100%" | IOIconSizeScale | IOIconSizeScaleCheckbox;
+  testID?: string;
 };
 
 /*
@@ -460,13 +461,13 @@ export const Icon = ({
   return (
     <IconElement
       {...props}
-      color={IOColors[color]}
-      size={iconSize}
-      accessible={isAccessible}
       accessibilityElementsHidden={!isAccessible}
       accessibilityLabel={accessibilityLabel}
+      accessible={isAccessible}
+      color={IOColors[color]}
       importantForAccessibility={isAccessible ? "auto" : "no-hide-descendants"}
       pointerEvents="none"
+      size={iconSize}
     />
   );
 };
@@ -477,11 +478,11 @@ transition between different states.
 */
 
 type IOAnimatedIconsProps = {
-  name: IOIcons;
-  color?: ColorValue;
-  size?: IOIconSizeScale | "100%";
   accessible?: boolean;
   allowFontScaling?: boolean;
+  color?: ColorValue;
+  name: IOIcons;
+  size?: "100%" | IOIconSizeScale;
 };
 
 export const AnimatedIcon = ({
@@ -503,13 +504,13 @@ export const AnimatedIcon = ({
   return (
     <IconElement
       {...props}
-      color={color}
-      size={iconSize}
-      accessible={accessible}
       accessibilityElementsHidden={true}
       accessibilityLabel={""}
+      accessible={accessible}
+      color={color}
       importantForAccessibility={"no-hide-descendants"}
       pointerEvents="none"
+      size={iconSize}
     />
   );
 };

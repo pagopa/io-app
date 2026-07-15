@@ -1,6 +1,7 @@
 import { IOToast } from "@io-app/design-system";
 import { fireEvent, render } from "@testing-library/react-native";
 import { Alert, Pressable, Text } from "react-native";
+
 import {
   remoteLoading,
   remoteReady,
@@ -75,10 +76,10 @@ describe("useSpecialCtaCgn", () => {
           </Text>
           {action ? (
             <Pressable
-              accessibilityRole="button"
               accessibilityLabel="special-cgn-cta"
-              testID={action.testID}
+              accessibilityRole="button"
               onPress={action.onPress}
+              testID={action.testID}
             />
           ) : null}
         </>

@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react-native";
-
 import { Alert } from "react-native";
+
 import { renderWithExperimentalEnabledContextProvider } from "../../../utils/testing";
 import { IconButton } from "../IconButton";
 import { IconButtonContained } from "../IconButtonContained";
@@ -15,10 +15,10 @@ describe("Test Buttons Components", () => {
   it("ButtonSolid Snapshot", () => {
     const { toJSON } = render(
       <IOButton
-        variant="solid"
-        label={"label"}
         accessibilityLabel={"accessibilityLabel"}
+        label={"label"}
         onPress={onButtonPress}
+        variant="solid"
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -26,7 +26,7 @@ describe("Test Buttons Components", () => {
 
   it("ButtonLink Snapshot", () => {
     const { toJSON } = render(
-      <IOButton variant="link" label={"label"} onPress={onButtonPress} />
+      <IOButton label={"label"} onPress={onButtonPress} variant="link" />
     );
     expect(toJSON()).toMatchSnapshot();
   });
@@ -34,10 +34,10 @@ describe("Test Buttons Components", () => {
   it("ButtonOutline Snapshot", () => {
     const { toJSON } = render(
       <IOButton
-        variant="outline"
-        label={"label"}
         accessibilityLabel={"accessibilityLabel"}
+        label={"label"}
         onPress={onButtonPress}
+        variant="outline"
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -48,10 +48,10 @@ describe("Test Buttons Components - Experimental Enabled", () => {
   it("ButtonSolid Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <IOButton
-        variant="solid"
-        label={"label"}
         accessibilityLabel={"accessibilityLabel"}
+        label={"label"}
         onPress={onButtonPress}
+        variant="solid"
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -59,7 +59,7 @@ describe("Test Buttons Components - Experimental Enabled", () => {
 
   it("ButtonLink Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
-      <IOButton variant="link" label={"label"} onPress={onButtonPress} />
+      <IOButton label={"label"} onPress={onButtonPress} variant="link" />
     );
     expect(toJSON()).toMatchSnapshot();
   });
@@ -67,10 +67,10 @@ describe("Test Buttons Components - Experimental Enabled", () => {
   it("ButtonOutline Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <IOButton
-        variant="outline"
-        label={"label"}
         accessibilityLabel={"accessibilityLabel"}
+        label={"label"}
         onPress={onButtonPress}
+        variant="outline"
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -79,9 +79,9 @@ describe("Test Buttons Components - Experimental Enabled", () => {
   it("IconButtonSolid Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <IconButtonSolid
-        onPress={onButtonPress}
-        icon={"spid"}
         accessibilityLabel={"accessibilityLabel"}
+        icon={"spid"}
+        onPress={onButtonPress}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -90,9 +90,9 @@ describe("Test Buttons Components - Experimental Enabled", () => {
   it("IconButton Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <IconButton
-        onPress={onButtonPress}
-        icon={"spid"}
         accessibilityLabel={"accessibilityLabel"}
+        icon={"spid"}
+        onPress={onButtonPress}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -101,9 +101,9 @@ describe("Test Buttons Components - Experimental Enabled", () => {
   it("IconButtonContained Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <IconButtonContained
-        onPress={onButtonPress}
-        icon={"spid"}
         accessibilityLabel={"accessibilityLabel"}
+        icon={"spid"}
+        onPress={onButtonPress}
       />
     );
     expect(toJSON()).toMatchSnapshot();

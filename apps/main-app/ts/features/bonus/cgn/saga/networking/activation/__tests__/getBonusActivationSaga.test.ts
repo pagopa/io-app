@@ -1,4 +1,5 @@
 import { testSaga } from "redux-saga-test-plan";
+
 import { StatusEnum } from "../../../../../../../../definitions/cgn/CgnActivationDetail";
 import { InstanceId } from "../../../../../../../../definitions/cgn/InstanceId";
 import { readablePrivacyReport } from "../../../../../../../utils/reporters";

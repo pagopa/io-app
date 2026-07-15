@@ -3,10 +3,10 @@ import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { useIOSelector } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { trackItWalletCieCardReading } from "../../analytics";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
@@ -15,6 +15,7 @@ import {
   selectCiePin,
   selectIdentification
 } from "../../../machine/eid/selectors";
+import { trackItWalletCieCardReading } from "../../analytics";
 import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
 import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
 import {
@@ -100,9 +101,9 @@ export const ItwCieAuthenticationScreen = () => {
   if (authorizationUrl === undefined) {
     return (
       <CieManagerComponent
+        onAuthorizationUrlReceived={setAuthorizationUrl}
         pin={pin}
         serviceProviderUrl={serviceProviderUrl}
-        onAuthorizationUrlReceived={setAuthorizationUrl}
       />
     );
   }
@@ -121,9 +122,9 @@ export const ItwCieAuthenticationScreen = () => {
 };
 
 type CieManagerComponentProps = {
+  onAuthorizationUrlReceived: (url: string) => void;
   pin: string;
   serviceProviderUrl: string;
-  onAuthorizationUrlReceived: (url: string) => void;
 };
 
 const CieManagerComponent = ({

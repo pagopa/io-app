@@ -1,9 +1,9 @@
-export type DisplayInsets = Record<Placement, number>;
-export type Placement = "top" | "bottom" | "left" | "right";
 export type ChildrenCoords = {
+  height: number;
+  width: number;
   x: number;
   y: number;
-  width: number;
-  height: number;
 };
+export type DisplayInsets = Record<Placement, number>;
+export type Placement = "bottom" | "left" | "right" | "top";
 export type TooltipLayout = ChildrenCoords;

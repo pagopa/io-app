@@ -23,36 +23,8 @@ exports[`stateUtils snapshots flowStates 1`] = `
 
 exports[`stateUtils snapshots validTransitions 1`] = `
 Map {
-  "none" => Set {
-    "displayingAarToS",
-  },
-  "displayingAarToS" => Set {
-    "fetchingQRData",
-  },
-  "fetchingQRData" => Set {
-    "fetchingNotificationData",
-    "notAddresseeFinal",
-    "notAddressee",
-    "ko",
-  },
-  "fetchingNotificationData" => Set {
-    "displayingNotificationData",
-    "ko",
-  },
-  "displayingNotificationData" => Set {},
-  "notAddresseeFinal" => Set {},
-  "ko" => Set {
-    "fetchingQRData",
-    "fetchingNotificationData",
-    "cieCanAdvisory",
-  },
-  "notAddressee" => Set {
-    "creatingMandate",
-    "nfcNotSupportedFinal",
-  },
-  "creatingMandate" => Set {
-    "cieCanAdvisory",
-    "ko",
+  "androidNFCActivation" => Set {
+    "cieScanning",
   },
   "cieCanAdvisory" => Set {
     "cieCanInsertion",
@@ -61,22 +33,50 @@ Map {
     "cieCanAdvisory",
     "cieScanningAdvisory",
   },
-  "cieScanningAdvisory" => Set {
-    "cieCanInsertion",
-    "androidNFCActivation",
-    "cieScanning",
-  },
-  "androidNFCActivation" => Set {
-    "cieScanning",
-  },
   "cieScanning" => Set {
-    "cieScanningAdvisory",
     "cieCanAdvisory",
+    "cieScanningAdvisory",
     "validatingMandate",
   },
-  "validatingMandate" => Set {
+  "cieScanningAdvisory" => Set {
+    "androidNFCActivation",
+    "cieCanInsertion",
+    "cieScanning",
+  },
+  "creatingMandate" => Set {
+    "cieCanAdvisory",
     "ko",
+  },
+  "displayingAarToS" => Set {
+    "fetchingQRData",
+  },
+  "displayingNotificationData" => Set {},
+  "fetchingNotificationData" => Set {
+    "displayingNotificationData",
+    "ko",
+  },
+  "fetchingQRData" => Set {
     "fetchingNotificationData",
+    "ko",
+    "notAddressee",
+    "notAddresseeFinal",
+  },
+  "ko" => Set {
+    "cieCanAdvisory",
+    "fetchingNotificationData",
+    "fetchingQRData",
+  },
+  "none" => Set {
+    "displayingAarToS",
+  },
+  "notAddressee" => Set {
+    "creatingMandate",
+    "nfcNotSupportedFinal",
+  },
+  "notAddresseeFinal" => Set {},
+  "validatingMandate" => Set {
+    "fetchingNotificationData",
+    "ko",
   },
 }
 `;

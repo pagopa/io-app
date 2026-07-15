@@ -1,18 +1,18 @@
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 import { isTestEnv } from "../../../utils/environment";
-import { IOBarcode, IOBarcodeOrigin } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
+import { IOBarcode, IOBarcodeOrigin } from "../types/IOBarcode";
 
-export type BarcodeAnalyticsFlow = "home" | "avviso" | "idpay"; // Should be extended for every feature
 export type BarcodeAnalyticsCode =
   | "avviso"
   | "data_matrix"
+  | "firma con IO" // Should be extended for every feature
   | "idpay"
-  | "SEND"
   | "ITW presentazione remota"
-  | "firma con IO"; // Should be extended for every feature
-export type BarcodeAnalyticsDataEntry = "qr code" | "file";
+  | "SEND";
+export type BarcodeAnalyticsDataEntry = "file" | "qr code";
+export type BarcodeAnalyticsFlow = "avviso" | "home" | "idpay"; // Should be extended for every feature
 
 const getEventCodeFromBarcode = (
   barcode: IOBarcode
@@ -137,15 +137,15 @@ export const trackBarcodeScanFailure = (
   };
 
   switch (failure.reason) {
-    case "UNSUPPORTED_FORMAT":
+    case "BARCODE_NOT_FOUND":
+      trackBarcodeNotFound();
+      break;
     case "INVALID_FILE":
+    case "UNSUPPORTED_FORMAT":
       trackFn(flow, "qr code non valido");
       break;
     case "UNKNOWN_CONTENT":
       trackFn(flow, "qr code flusso sbagliato");
-      break;
-    case "BARCODE_NOT_FOUND":
-      trackBarcodeNotFound();
       break;
   }
 };

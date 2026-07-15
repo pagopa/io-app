@@ -1,5 +1,6 @@
 import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { IOSpacingScale, IOVisualCostants } from "../../../core";
 
 /* Extra bottom margin for iPhone bottom handle because

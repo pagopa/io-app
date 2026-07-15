@@ -1,18 +1,19 @@
-import { useCallback } from "react";
 import { useRoute } from "@react-navigation/native";
+import { useCallback } from "react";
+
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
+  addTicketCustomField,
+  appendLog,
   assistanceToolRemoteConfig,
   resetCustomFields,
   resetLog,
-  addTicketCustomField,
-  appendLog,
   zendeskCategoryId,
   zendeskItWalletCategory,
-  zendeskItWalletSubcategoryId,
-  zendeskItWalletFailureCode
+  zendeskItWalletFailureCode,
+  zendeskItWalletSubcategoryId
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -20,16 +21,16 @@ import {
 } from "../../../zendesk/store/actions";
 
 export enum ZendeskSubcategoryValue {
-  IT_WALLET_PRESENTAZIONE_REMOTA = "it_wallet_presentazione_remota",
-  IT_WALLET_AGGIUNTA_DOCUMENTI = "it_wallet_aggiunta_documenti"
+  IT_WALLET_AGGIUNTA_DOCUMENTI = "it_wallet_aggiunta_documenti",
+  IT_WALLET_PRESENTAZIONE_REMOTA = "it_wallet_presentazione_remota"
 }
 
 export type ItwZendeskSupportParams = {
-  subcategory: ZendeskSubcategoryValue;
   /** When provided, sets the `zendeskItWalletFailureCode` custom field. */
   errorCode?: string;
   /** When provided, appended to the Zendesk ticket log. */
   logData?: string;
+  subcategory: ZendeskSubcategoryValue;
 };
 
 /**
