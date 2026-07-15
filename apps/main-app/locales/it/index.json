@@ -2262,6 +2262,9 @@
       },
       "attachmentDownloadFeedback": "Download in corso",
       "attachments": "Allegati",
+      "attachmentsExpirationAlert": {
+        "body": "I documenti sono disponibili online per un periodo limitato. Salvali sul tuo dispositivo!"
+      },
       "updateBottomSheet": {
         "title": "Aggiorna l'app IO",
         "subtitle": "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
