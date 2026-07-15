@@ -147,7 +147,7 @@ const useIOBarcodeFileReader = ({
           },
           {
             text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
-            onPress: Linking.openSettings
+            onPress: () => void Linking.openSettings()
           }
         ],
         { cancelable: false }
@@ -264,14 +264,14 @@ const useIOBarcodeFileReader = ({
       <ListItemNav
         accessibilityLabel={I18n.t("barcodeScan.upload.image")}
         icon="gallery"
-        onPress={handleImageUploadPressed}
+        onPress={() => void handleImageUploadPressed()}
         value={I18n.t("barcodeScan.upload.image")}
       />
       <Divider />
       <ListItemNav
         accessibilityLabel={I18n.t("barcodeScan.upload.file")}
         icon="docAttach"
-        onPress={handleFileUploadPressed}
+        onPress={() => void handleFileUploadPressed()}
         value={I18n.t("barcodeScan.upload.file")}
       />
       <VSpacer size={16} />
@@ -291,8 +291,8 @@ const useIOBarcodeFileReader = ({
   };
 
   return {
-    showImagePicker,
-    showDocumentPicker,
+    showImagePicker: () => void showImagePicker(),
+    showDocumentPicker: () => void showDocumentPicker(),
     filePickerBottomSheet: filePickerModal.bottomSheet,
     showFilePicker: handleShowFilePickerPressed,
     isLoading,
