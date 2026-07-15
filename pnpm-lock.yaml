@@ -704,6 +704,9 @@ importers:
       eslint-plugin-i18next:
         specifier: 6.1.4
         version: 6.1.4
+      eslint-plugin-perfectionist:
+        specifier: ^5.10.0
+        version: 5.10.0(eslint@9.39.4)(typescript@5.9.3)
       eslint-plugin-react-native:
         specifier: ^5.0.0
         version: 5.0.0(eslint@9.39.4)
@@ -6094,6 +6097,12 @@ packages:
       jest:
         optional: true
 
+  eslint-plugin-perfectionist@5.10.0:
+    resolution: {integrity: sha512-HiqpDrUDbGrMC6iHQbemgDyHJ0366Vyz/qRWmxQcSAkmG25cXr8BdRgx8yAhOKhEfBXn8Rnf/mTCsV4EqUJSxg==}
+    engines: {node: ^20.0.0 || >=22.0.0}
+    peerDependencies:
+      eslint: ^8.45.0 || ^9.0.0 || ^10.0.0
+
   eslint-plugin-prettier@4.2.5:
     resolution: {integrity: sha512-9Ni+xgemM2IWLq6aXEpP2+V/V30GeA/46Ar629vcMqVPodFFWC9skHu/D1phvuqtS8bJCFnNf01/qcmqYEwNfg==}
     engines: {node: '>=12.0.0'}
@@ -8726,6 +8735,10 @@ packages:
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
+
+  natural-orderby@5.0.0:
+    resolution: {integrity: sha512-kKHJhxwpR/Okycz4HhQKKlhWe4ASEfPgkSWNmKFHd7+ezuQlxkA5cM3+XkBPvm1gmHen3w53qsYAv+8GwRrBlg==}
+    engines: {node: '>=18'}
 
   negotiator@0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
@@ -14432,9 +14445,9 @@ snapshots:
       execa: 5.1.1
       node-stream-zip: 1.11.2
       ora: 5.4.1
-      semver: 7.7.4
+      semver: 7.8.5
       wcwidth: 1.0.1
-      yaml: 2.8.3
+      yaml: 2.9.0
     transitivePeerDependencies:
       - typescript
 
@@ -14543,7 +14556,7 @@ snapshots:
       mime: 2.4.6
       ora: 5.4.1
       prompts: 2.4.2
-      semver: 7.7.4
+      semver: 7.8.5
 
   '@react-native-community/cli-tools@20.0.0':
     dependencies:
@@ -14582,7 +14595,7 @@ snapshots:
       fs-extra: 8.1.0
       graceful-fs: 4.2.11
       prompts: 2.4.2
-      semver: 7.7.4
+      semver: 7.8.5
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -14644,7 +14657,7 @@ snapshots:
       ora: 3.4.0
       prompts: 2.4.2
       react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
-      semver: 7.7.4
+      semver: 7.8.5
       shelljs: 0.8.5
       username: 5.1.0
       xml-formatter: 2.6.1
@@ -14786,7 +14799,7 @@ snapshots:
       metro: 0.82.5
       metro-config: 0.82.5
       metro-core: 0.82.5
-      semver: 7.7.4
+      semver: 7.8.5
     optionalDependencies:
       '@react-native-community/cli': 17.0.0(typescript@5.9.3)
     transitivePeerDependencies:
@@ -18252,6 +18265,15 @@ snapshots:
     optionalDependencies:
       '@typescript-eslint/eslint-plugin': 8.62.1(@typescript-eslint/parser@8.62.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3)
       jest: 30.3.0(@types/node@20.5.1)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@20.5.1)(typescript@5.9.3))
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  eslint-plugin-perfectionist@5.10.0(eslint@9.39.4)(typescript@5.9.3):
+    dependencies:
+      '@typescript-eslint/utils': 8.62.1(eslint@9.39.4)(typescript@5.9.3)
+      eslint: 9.39.4
+      natural-orderby: 5.0.0
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -21891,6 +21913,8 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
+  natural-orderby@5.0.0: {}
+
   negotiator@0.6.3: {}
 
   negotiator@0.6.4: {}
@@ -23254,7 +23278,7 @@ snapshots:
       react-refresh: 0.14.2
       regenerator-runtime: 0.13.7
       scheduler: 0.26.0
-      semver: 7.7.4
+      semver: 7.8.5
       source-map-support: 0.5.21
       stacktrace-parser: 0.1.10
       whatwg-fetch: 3.3.1

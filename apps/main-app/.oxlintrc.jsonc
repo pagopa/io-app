@@ -366,7 +366,18 @@
         "typescript/no-floating-promises": "error",
         "typescript/prefer-function-type": "error",
         "typescript/restrict-plus-operands": "error",
-        "typescript/unified-signatures": "error"
+        "typescript/unified-signatures": "error",
+        // Curated perfectionist sorts (natural order), a subset of master's
+        // `recommended-natural` preset covering the highest-value cases.
+        // `sort-objects` is intentionally left off, matching master, since its
+        // auto-fix corrupts multi-line property values.
+        "perfectionist/sort-imports": ["error", { "type": "natural" }],
+        "perfectionist/sort-named-imports": ["error", { "type": "natural" }],
+        "perfectionist/sort-jsx-props": ["error", { "type": "natural" }],
+        "perfectionist/sort-interfaces": ["error", { "type": "natural" }],
+        "perfectionist/sort-object-types": ["error", { "type": "natural" }],
+        "perfectionist/sort-union-types": ["error", { "type": "natural" }],
+        "perfectionist/sort-enums": ["error", { "type": "natural" }]
       },
       "plugins": ["typescript", "unicorn", "react", "jest"],
       "jsPlugins": [
@@ -380,7 +391,8 @@
         // Local plugin exposing the custom delegate-effects rule (no native oxlint equivalent)
         // Source: scripts/eslint/delegate-effects-plugin.js (installed as a local package)
         "eslint-plugin-delegate-effects",
-        "eslint-plugin-i18next"
+        "eslint-plugin-i18next",
+        "eslint-plugin-perfectionist"
       ],
       "env": {
         "es2026": true
