@@ -301,7 +301,12 @@
                 "type", // discriminant fields (e.g. "TwoButtons" | "SingleButton")
                 "pictogram", // icon identifier strings
                 "position", // analytics / layout config strings
-                "color" // color variant config strings
+                "color", // color variant config strings
+                "weight", // typography weight tokens (e.g. "Semibold")
+                "fontStyle", // typography style tokens (e.g. "italic")
+                "accessibilityRole", // RN a11y role literals (e.g. "link")
+                "textDecorationLine", // RN style literals (e.g. "underline")
+                "importantForAccessibility" // RN a11y config literals (e.g. "no-hide-descendants")
               ]
             },
             // callees.exclude overrides the plugin defaults (lodash _.defaults is

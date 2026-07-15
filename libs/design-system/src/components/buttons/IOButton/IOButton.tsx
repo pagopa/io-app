@@ -94,6 +94,7 @@ type IOButtonSpecificProps =
       variant?: "link";
     };
 
+// oxlint-disable-next-line complexity -- multi-variant button that predates complexity enforcement; refactor tracked separately
 export const IOButton = ({
   variant = "solid",
   color = "primary",
