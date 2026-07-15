@@ -1,4 +1,5 @@
 import { StateFrom } from "xstate";
+
 import { ProximityFlow } from "../analytics/types";
 import { ItwProximityMachine } from "./machine";
 import { ItwPresentationTags } from "./tags";
