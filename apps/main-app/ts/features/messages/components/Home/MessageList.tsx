@@ -1,0 +1,152 @@
+import { Divider } from "@io-app/design-system";
+import I18n from "i18next";
+import { Ref, useCallback, useMemo } from "react";
+import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import {
+  useSafeAreaFrame,
+  useSafeAreaInsets
+} from "react-native-safe-area-context";
+
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
+import { LandingScreenBannerPicker } from "../../../landingScreenMultiBanner/components/LandingScreenBannerPicker";
+import { trackPullToRefresh } from "../../analytics";
+import {
+  messageListForCategorySelector,
+  shouldShowRefreshControllOnListSelector
+} from "../../store/reducers/allPaginated";
+import { UIMessage } from "../../types";
+import { MessageListCategory } from "../../types/messageListCategory";
+import {
+  ListItemMessageSkeleton,
+  SkeletonHeight
+} from "./DS/ListItemMessageSkeleton";
+import { EmptyList } from "./EmptyList";
+import { Footer } from "./Footer";
+import {
+  generateMessageListLayoutInfo,
+  getLoadNextPageMessagesActionIfAllowed,
+  getReloadAllMessagesActionForRefreshIfAllowed,
+  LayoutInfo,
+  trackMessageListEndReachedIfAllowed
+} from "./homeUtils";
+import { WrappedListItemMessage } from "./WrappedListItemMessage";
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    flexGrow: 1
+  }
+});
+
+type MessageListProps = {
+  category: MessageListCategory;
+  ref?: Ref<FlatList>;
+};
+
+const topBarHeight = 108;
+const bottomTabHeight = 54;
+
+export const MessageList = ({ ref, category }: MessageListProps) => {
+  const store = useIOStore();
+  const dispatch = useIODispatch();
+  const safeAreaFrame = useSafeAreaFrame();
+  const safeAreaInsets = useSafeAreaInsets();
+
+  const messageList = useIOSelector(state =>
+    messageListForCategorySelector(state, category)
+  );
+  const isRefreshing = useIOSelector(state =>
+    shouldShowRefreshControllOnListSelector(state, category)
+  );
+  const loadingList = useMemo(() => {
+    const listHeight =
+      safeAreaFrame.height -
+      safeAreaInsets.top -
+      safeAreaInsets.bottom -
+      topBarHeight -
+      bottomTabHeight;
+    const count = Math.floor(listHeight / SkeletonHeight);
+    return [...Array(count).keys()];
+  }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
+
+  const layoutInfo: ReadonlyArray<LayoutInfo> = useMemo(
+    () =>
+      generateMessageListLayoutInfo(loadingList, messageList, store.getState()),
+    [loadingList, messageList, store]
+  );
+  const getItemLayoutCallback = useCallback(
+    (_: ArrayLike<number | UIMessage> | null | undefined, index: number) =>
+      layoutInfo[index],
+    [layoutInfo]
+  );
+
+  const onRefreshCallback = useCallback(() => {
+    trackPullToRefresh(category);
+    const state = store.getState();
+    const reloadAllMessagesAction =
+      getReloadAllMessagesActionForRefreshIfAllowed(state, category);
+    if (reloadAllMessagesAction) {
+      dispatch(reloadAllMessagesAction);
+    }
+  }, [category, dispatch, store]);
+  const onEndReachedCallback = useCallback(() => {
+    const state = store.getState();
+    const loadNextPageMessages = getLoadNextPageMessagesActionIfAllowed(
+      state,
+      category,
+      new Date()
+    );
+    trackMessageListEndReachedIfAllowed(
+      category,
+      !!loadNextPageMessages,
+      state
+    );
+    if (loadNextPageMessages) {
+      dispatch(loadNextPageMessages);
+    }
+  }, [category, dispatch, store]);
+  return (
+    <FlatList
+      contentContainerStyle={styles.contentContainer}
+      data={(messageList ?? loadingList) as Readonly<Array<number | UIMessage>>}
+      getItemLayout={getItemLayoutCallback}
+      ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
+      ListEmptyComponent={<EmptyList category={category} />}
+      ListFooterComponent={<Footer category={category} />}
+      ListHeaderComponent={
+        category === "INBOX" ? <LandingScreenBannerPicker /> : undefined
+      }
+      onEndReached={onEndReachedCallback}
+      onEndReachedThreshold={0.1}
+      ref={ref}
+      refreshControl={
+        <RefreshControl
+          onRefresh={onRefreshCallback}
+          refreshing={isRefreshing}
+          testID={`custom_refresh_control_${category.toLowerCase()}`}
+        />
+      }
+      renderItem={({ index, item }) => {
+        if (typeof item === "number") {
+          return (
+            <ListItemMessageSkeleton
+              accessibilityLabel={I18n.t("messages.loading")}
+            />
+          );
+        } else {
+          return (
+            <WrappedListItemMessage
+              index={index}
+              message={item}
+              source={category}
+            />
+          );
+        }
+      }}
+      testID={`message_list_${category.toLowerCase()}`}
+    />
+  );
+};

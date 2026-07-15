@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`FimsHistorySharedStyles should match snapshot 1`] = `
+{
+  "fixedHeightListItem": {
+    "height": 117,
+    "justifyContent": "center",
+  },
+}
+`;

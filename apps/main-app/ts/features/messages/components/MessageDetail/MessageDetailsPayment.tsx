@@ -1,0 +1,51 @@
+import { ListItemHeader, useIOTheme, VSpacer } from "@io-app/design-system";
+import I18n from "i18next";
+
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { useIOSelector } from "../../../../store/hooks";
+import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
+import { getRptIdStringFromPaymentData } from "../../utils";
+import { MessagePaymentItem } from "./MessagePaymentItem";
+
+type MessageDetailsPaymentProps = {
+  messageId: string;
+  serviceId: ServiceId;
+};
+
+export const MessageDetailsPayment = ({
+  messageId,
+  serviceId
+}: MessageDetailsPaymentProps) => {
+  const theme = useIOTheme();
+
+  const paymentData = useIOSelector(state =>
+    messagePaymentDataSelector(state, messageId)
+  );
+
+  if (!paymentData) {
+    return null;
+  }
+
+  const rptId = getRptIdStringFromPaymentData(paymentData);
+
+  return (
+    <>
+      <VSpacer size={16} />
+      <ListItemHeader
+        iconColor={theme["italyBrand-default"]}
+        iconName={"productPagoPA"}
+        label={I18n.t("features.messages.payments.title")}
+      />
+      <MessagePaymentItem
+        hideExpirationDate
+        messageId={messageId}
+        noSpaceOnTop
+        noticeNumber={paymentData.noticeNumber}
+        rptId={rptId}
+        sendOpeningSource={"not_set"}
+        sendUserType={"not_set"}
+        serviceId={serviceId}
+      />
+    </>
+  );
+};

@@ -1,0 +1,131 @@
+/**
+ * An ingress screen to choose the real first screen the user must navigate to.
+ */
+import {
+  Banner,
+  ContentWrapper,
+  H3,
+  IOButton,
+  IOButtonProps,
+  IOColors,
+  IOMarkdownLite,
+  useIOTheme,
+  VSpacer,
+  VStack
+} from "@io-app/design-system";
+import { ComponentProps, useEffect } from "react";
+import { AccessibilityInfo, Platform, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
+import { WithTestID } from "../../types/WithTestID";
+import {
+  AnimatedPictogram,
+  IOAnimatedPictograms
+} from "../ui/AnimatedPictogram";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center"
+  }
+});
+
+type ButtonProps = Pick<
+  IOButtonProps,
+  "accessibilityLabel" | "icon" | "label" | "onPress" | "testID"
+>;
+
+const SPACE_BETWEEN_SPINNER_AND_TEXT = 24;
+
+type LoadingScreenContentProps = WithTestID<{
+  action?: ButtonProps;
+  animatedPictogramSource?: IOAnimatedPictograms;
+  banner?: ComponentProps<typeof Banner>;
+  headerVisible?: boolean;
+  subtitle?: string;
+  title: string;
+}>;
+
+export const LoadingScreenContent = ({
+  title,
+  subtitle,
+  action,
+  headerVisible,
+  testID,
+  animatedPictogramSource,
+  banner
+}: LoadingScreenContentProps) => {
+  const theme = useIOTheme();
+
+  useEffect(() => {
+    // Since the screen is shown for a very short time,
+    // we prefer to announce the content to the screen reader,
+    // instead of focusing the first element.
+    if (Platform.OS === "android") {
+      // We use it only on Android, because on iOS the screen reader
+      // stops reading the content when the ingress screen is unmounted
+      // and the focus is moved to another element.
+      AccessibilityInfo.announceForAccessibility(title);
+    }
+  }, [title]);
+
+  return (
+    <SafeAreaView
+      edges={headerVisible ? ["bottom"] : undefined}
+      style={[
+        styles.container,
+        { backgroundColor: IOColors[theme["appBackground-primary"]] }
+      ]}
+      testID={testID}
+    >
+      <ContentWrapper style={{ flex: 1 }}>
+        <VStack
+          space={SPACE_BETWEEN_SPINNER_AND_TEXT}
+          style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
+        >
+          <View
+            accessibilityElementsHidden={true}
+            accessible={false}
+            importantForAccessibility={"no-hide-descendants"}
+          >
+            {animatedPictogramSource ? (
+              <AnimatedPictogram
+                loop={true}
+                name={animatedPictogramSource}
+                size={120}
+              />
+            ) : (
+              <LoadingIndicator />
+            )}
+          </View>
+          <VStack space={8} style={{ alignItems: "center" }}>
+            <H3
+              accessibilityLabel={title}
+              color={theme["textHeading-secondary"]}
+              style={{ textAlign: "center" }}
+            >
+              {title}
+            </H3>
+            {subtitle && (
+              <IOMarkdownLite content={subtitle} textAlign="center" />
+            )}
+            {action && (
+              <View>
+                <VSpacer size={16} />
+                <IOButton variant="link" {...action} />
+              </View>
+            )}
+          </VStack>
+        </VStack>
+      </ContentWrapper>
+      {banner && (
+        <ContentWrapper style={{ marginBottom: 16 }}>
+          <Banner {...banner} />
+        </ContentWrapper>
+      )}
+    </SafeAreaView>
+  );
+};
+
+export default LoadingScreenContent;

@@ -1,0 +1,62 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { createStore } from "redux";
+
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { getNetworkError } from "../../../../../utils/errors";
+import { fciClearStateRequest, fciPollFilledDocument } from "../../actions";
+
+const genericError = getNetworkError("Generic Error");
+
+describe("FciPollFilledDocumentReducer", () => {
+  it("should be a pot.some with initial value", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    expect(globalState.features.fci.pollFilledDocument).toStrictEqual(
+      pot.some({
+        isReady: false
+      })
+    );
+  });
+  it("should be pot.some with isReady equal to false if the fciPollFilledDocumentRequest is dispatched", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(fciPollFilledDocument.request());
+    expect(store.getState().features.fci.pollFilledDocument).toStrictEqual(
+      pot.some({
+        isReady: false
+      })
+    );
+  });
+  it("should be pot.some with payload as value if the fciPollFilledDocumentSuccess is dispatched", () => {
+    const payload = { isReady: true };
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(fciPollFilledDocument.success(payload));
+    expect(store.getState().features.fci.pollFilledDocument).toStrictEqual(
+      pot.some(payload)
+    );
+  });
+  it("should be pot.noneError and isReady equal to false if the fciPollFilledDocumentFailure is dispatched", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(fciPollFilledDocument.failure(genericError));
+    expect(store.getState().features.fci.pollFilledDocument).toEqual(
+      pot.someError(
+        {
+          isReady: false
+        },
+        genericError
+      )
+    );
+  });
+  it("should be pot.some and isReady equal to false if the fciClearStateRequest is dispatched", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(fciClearStateRequest());
+    expect(store.getState().features.fci.pollFilledDocument).toStrictEqual(
+      pot.some({
+        isReady: false
+      })
+    );
+  });
+});

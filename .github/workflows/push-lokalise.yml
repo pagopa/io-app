@@ -1,0 +1,31 @@
+name: Push locales to Lokalise
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - 'apps/main-app/locales/it/**'
+concurrency:
+  group: lokalise-push-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: false
+permissions: 
+  contents: read
+jobs:
+  push-locale:
+    runs-on: ubuntu-latest
+    environment: lokalise
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Push to Lokalise
+      uses: lokalise/lokalise-push-action@bb67ba45a739acf22e3c00f05dc50a55737fa5c8 #v5.3.1
+      with:
+        api_token: ${{ secrets.LOKALISE_API_TOKEN }}
+        project_id: ${{ secrets.LOKALISE_PROJECT_ID }}
+        base_lang: it
+        translations_path: |
+          apps/main-app/locales
+        file_ext: json
+        additional_params: |
+          cleanup_mode: true

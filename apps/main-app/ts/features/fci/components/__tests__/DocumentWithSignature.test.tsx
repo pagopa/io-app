@@ -1,0 +1,107 @@
+import "react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
+import { Provider } from "react-redux";
+import { createStore, Store } from "redux";
+
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { FCI_ROUTES } from "../../navigation/routes";
+import { fciSignatureRequestFromId } from "../../store/actions";
+import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
+import DocumentWithSignature, {
+  SignatureFieldAttrType
+} from "../DocumentWithSignature";
+
+type Props = {
+  attrs: SignatureFieldAttrType;
+  currentDoc: number;
+  onClose: () => void;
+  onError: () => void;
+};
+
+describe("Test DocumentWithSignature", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+  it("with all props should render a DocumentWithSignature correctly", () => {
+    const props: Props = {
+      attrs: { unique_name: "Signature1" as NonEmptyString },
+      currentDoc: 0,
+      onClose: jest.fn(),
+      onError: jest.fn()
+    };
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(
+      fciSignatureRequestFromId.success(mockSignatureRequestDetailView)
+    );
+    expect(store.getState().features.fci.signatureRequest).toStrictEqual(
+      pot.some(mockSignatureRequestDetailView)
+    );
+    const component = renderComponent({ ...props }, store);
+    expect(component).toBeTruthy();
+  });
+  it("with all props should render a FooterActions correctly", () => {
+    const props = {
+      attrs: { unique_name: "Signature1" as NonEmptyString },
+      currentDoc: 0,
+      onClose: jest.fn(),
+      onError: jest.fn()
+    };
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(
+      fciSignatureRequestFromId.success(mockSignatureRequestDetailView)
+    );
+    const component = renderComponent({ ...props }, store);
+    expect(component).toBeTruthy();
+    const leftButton = component.queryByText(
+      I18n.t("features.fci.documents.footer.backToSignFieldsList")
+    );
+    expect(leftButton).not.toBeNull();
+  });
+  it("with all props the close button should be render correctly", () => {
+    const onPress = jest.fn();
+    const onError = jest.fn();
+    const props = {
+      attrs: { unique_name: "Signature1" as NonEmptyString },
+      currentDoc: 0,
+      onClose: onPress,
+      onError
+    };
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(
+      fciSignatureRequestFromId.success(mockSignatureRequestDetailView)
+    );
+    const component = renderComponent({ ...props }, store);
+    expect(component).toBeTruthy();
+    const leftButton = component.getByTestId(
+      "FciDocumentWithSignatureTopRightButtonTestID"
+    );
+    expect(leftButton).not.toBeNull();
+    fireEvent.press(leftButton);
+    fireEvent.press(leftButton);
+    expect(onPress).toHaveBeenCalledTimes(2);
+  });
+});
+
+const renderComponent = (props: Props, store: Store<GlobalState>) => {
+  const Component = (
+    <Provider store={store}>
+      <DocumentWithSignature {...props} />
+    </Provider>
+  );
+
+  return renderScreenWithNavigationStoreContext<GlobalState>(
+    () => Component,
+    FCI_ROUTES.ROUTER,
+    {},
+    store
+  );
+};

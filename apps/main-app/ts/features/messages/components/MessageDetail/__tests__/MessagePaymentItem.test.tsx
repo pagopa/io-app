@@ -1,0 +1,158 @@
+import { createStore } from "redux";
+
+import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
+import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
+import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { updatePaymentForMessage } from "../../../store/actions";
+import { toSpecificMessagePaymentError } from "../../../types/paymentErrors";
+import { MessagePaymentItem } from "../MessagePaymentItem";
+
+describe("MessagePaymentItem component", () => {
+  it("Should match the snapshot for a loading item", () => {
+    const messageId = "m1";
+    const notificationPaymentInfo = {
+      creditorTaxId: "",
+      noticeCode: ""
+    } as NotificationPaymentInfo;
+    const component = renderComponent(messageId, notificationPaymentInfo);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("Should match the snapshot for a payable item", () => {
+    const messageId = "m1";
+    const notificationPaymentInfo = {
+      creditorTaxId: "c1",
+      noticeCode: "n1"
+    } as NotificationPaymentInfo;
+    const component = renderComponent(
+      messageId,
+      notificationPaymentInfo,
+      "payable"
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("Should match the snapshot for a payable-without-expiration item", () => {
+    const messageId = "m1";
+    const notificationPaymentInfo = {
+      creditorTaxId: "c1",
+      noticeCode: "n1"
+    } as NotificationPaymentInfo;
+    const component = renderComponent(
+      messageId,
+      notificationPaymentInfo,
+      "payable-without-expiration"
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("Should match the snapshot for a processed item", () => {
+    const messageId = "m1";
+    const notificationPaymentInfo = {
+      creditorTaxId: "c1",
+      noticeCode: "n1"
+    } as NotificationPaymentInfo;
+    const component = renderComponent(
+      messageId,
+      notificationPaymentInfo,
+      "processed"
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+});
+
+const appStateByPaymentStatus = {
+  payable: (
+    globalState: GlobalState,
+    messageId: string,
+    rptId: string,
+    payment: NotificationPaymentInfo
+  ) =>
+    appReducer(
+      globalState,
+      updatePaymentForMessage.success({
+        messageId,
+        paymentId: rptId,
+        paymentData: {
+          rptId: `${payment.noticeCode}`,
+          amount: 99,
+          description: "Causale",
+          dueDate: new Date(2023, 10, 23, 10, 30)
+        } as PaymentInfoResponse,
+        serviceId: "01J5X5NP84QE3T3P604MWP9TKC" as ServiceId
+      })
+    ),
+  "payable-without-expiration": (
+    globalState: GlobalState,
+    messageId: string,
+    rptId: string,
+    payment: NotificationPaymentInfo
+  ) =>
+    appReducer(
+      globalState,
+      updatePaymentForMessage.success({
+        messageId,
+        paymentId: rptId,
+        paymentData: {
+          rptId: `${payment.noticeCode}`,
+          amount: 99,
+          description: "Causale",
+          dueDate: new Date(2099, 10, 23, 10, 30)
+        } as PaymentInfoResponse,
+        serviceId: "01J5X5NP84QE3T3P604MWP9TKC" as ServiceId
+      })
+    ),
+  processed: (globalState: GlobalState, messageId: string, rptId: string) =>
+    appReducer(
+      globalState,
+      updatePaymentForMessage.failure({
+        messageId,
+        paymentId: rptId,
+        reason: toSpecificMessagePaymentError(
+          PaymentFaultV2Enum.PAA_PAGAMENTO_ANNULLATO
+        ),
+        serviceId: "01J5X5NP84QE3T3P604MWP9TKC" as ServiceId
+      })
+    )
+};
+
+const renderComponent = (
+  messageId: string,
+  payment: NotificationPaymentInfo,
+  paymentStatus:
+    | "payable"
+    | "payable-without-expiration"
+    | "processed"
+    | undefined = undefined
+) => {
+  const rptId = `${payment.creditorTaxId}${payment.noticeCode}`;
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const modifiedState = paymentStatus
+    ? appStateByPaymentStatus[paymentStatus](
+        globalState,
+        messageId,
+        rptId,
+        payment
+      )
+    : globalState;
+  const store = createStore(appReducer, modifiedState as any);
+
+  return renderScreenWithNavigationStoreContext(
+    () => (
+      <MessagePaymentItem
+        index={0}
+        messageId={messageId}
+        noticeNumber={payment.noticeCode}
+        rptId={rptId}
+        sendOpeningSource={"not_set"}
+        sendUserType={"not_set"}
+        serviceId={"01J5X34VA7H1726CQNTG14GNDH" as ServiceId}
+      />
+    ),
+    "DUMMY",
+    {},
+    store
+  );
+};

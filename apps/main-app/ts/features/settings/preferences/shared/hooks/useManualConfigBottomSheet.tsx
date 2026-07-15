@@ -1,0 +1,41 @@
+import { Body, FooterActionsInline } from "@io-app/design-system";
+import I18n from "i18next";
+import { ReactElement } from "react";
+
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+
+const ManualConfigConfirm = (): ReactElement => (
+  <Body>
+    {I18n.t("services.optIn.preferences.manualConfig.bottomSheet.body")}
+  </Body>
+);
+
+export const useManualConfigBottomSheet = (onConfirm: () => void) => {
+  const {
+    present,
+    bottomSheet: manualConfigBottomSheet,
+    dismiss
+  } = useIOBottomSheetModal({
+    title: I18n.t("services.optIn.preferences.manualConfig.bottomSheet.title"),
+    component: <ManualConfigConfirm />,
+    footer: (
+      <FooterActionsInline
+        endAction={{
+          color: "danger",
+          label: I18n.t("global.buttons.confirm"),
+          onPress: () => {
+            onConfirm();
+            dismiss();
+          }
+        }}
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.cancel"),
+          onPress: () => dismiss()
+        }}
+      />
+    )
+  });
+
+  return { present, manualConfigBottomSheet, dismiss };
+};

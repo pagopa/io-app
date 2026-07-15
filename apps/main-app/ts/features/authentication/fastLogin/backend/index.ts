@@ -1,0 +1,49 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+
+import { LollipopMethodEnum } from "../../../../../definitions/identity/LollipopMethod";
+import { LollipopOriginalURL } from "../../../../../definitions/identity/LollipopOriginalURL";
+import { LollipopSignature } from "../../../../../definitions/identity/LollipopSignature";
+import { LollipopSignatureInput } from "../../../../../definitions/identity/LollipopSignatureInput";
+import { createClient } from "../../../../../definitions/session_manager/client";
+import { fetchMaxRetries, fetchTimeout } from "../../../../config";
+import { defaultRetryingFetch } from "../../../../utils/fetch";
+import { LollipopConfig } from "../../../lollipop";
+import { KeyInfo } from "../../../lollipop/utils/crypto";
+import { lollipopFetch } from "../../../lollipop/utils/fetch";
+
+const FAST_LOGIN_TIMEOUT_MS = 9000 as Millisecond;
+
+// fastLogin call
+export const performFastLogin = async (fastLoginClient: FastLoginClient) =>
+  await fastLoginClient.fastLogin({
+    "x-pagopa-lollipop-original-method": LollipopMethodEnum.POST,
+    "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
+    "signature-input": "" as LollipopSignatureInput,
+    signature: "" as LollipopSignature
+  });
+
+type FastLoginClient = ReturnType<typeof createFastLoginClient>;
+
+export const createFastLoginClient = (
+  baseUrl: string,
+  keyInfo: KeyInfo = {},
+  lollipopConfig: LollipopConfig
+) =>
+  createClient({
+    baseUrl,
+    fetchApi: lollipopFetch(lollipopConfig, keyInfo, 1, FAST_LOGIN_TIMEOUT_MS)
+  });
+
+// getNonce call
+export const performGetNonce = async (nonceClient: GetNonceClient) =>
+  await nonceClient.lvGenerateNonce({} as never);
+
+type GetNonceClient = ReturnType<typeof createNonceClient>;
+
+export const createNonceClient = (baseUrl: string) =>
+  createClient({
+    baseUrl,
+    // In this case, error 999 has been added so that for nonce requests,
+    // the retries are limited to 3 attempts.
+    fetchApi: defaultRetryingFetch(fetchTimeout, fetchMaxRetries, 999)
+  });

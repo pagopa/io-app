@@ -1,0 +1,56 @@
+import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+
+import {
+  EphemeralAarMessageDataActionPayload,
+  initiateAarFlow,
+  populateStoresWithEphemeralAarMessageData,
+  setAarFlowState,
+  terminateAarFlow
+} from "..";
+import { MessageBodyMarkdown } from "../../../../../../../definitions/communication/MessageBodyMarkdown";
+import { MessageSubject } from "../../../../../../../definitions/communication/MessageSubject";
+import { ThirdPartyMessage } from "../../../../../../../definitions/pn/ThirdPartyMessage";
+import { AarFlowState, sendAarFlowStates } from "../../../utils/stateUtils";
+
+describe("AarFlowStateActions", () => {
+  const payload: AarFlowState = {
+    type: sendAarFlowStates.displayingAarToS,
+    qrCode: "https://www.google.com"
+  };
+  it(`Should have correct type="SET_AAR_FLOW_STATE" and payload: ${JSON.stringify(
+    payload
+  )}`, () => {
+    const action = setAarFlowState(payload);
+    expect(action.type).toBe("SET_AAR_FLOW_STATE");
+    expect(action.payload).toEqual(payload);
+  });
+
+  it(`Should have correct type="TERMINATE_AAR_FLOW", no messageID`, () => {
+    const action = terminateAarFlow({ messageId: undefined });
+    expect(action.type).toBe("TERMINATE_AAR_FLOW");
+  });
+  it(`Should have correct type="TERMINATE_AAR_FLOW", with messageID`, () => {
+    const action = terminateAarFlow({ messageId: "SOME_MSG_ID" });
+    expect(action.type).toBe("TERMINATE_AAR_FLOW");
+  });
+
+  it('tryInitiateAarFlow action should have correct type="TRY_INITIATE_AAR_FLOW"', () => {
+    const aarUrl = "https://example.com/aar";
+    const action = initiateAarFlow({ aarUrl });
+    expect(action).toMatchSnapshot();
+  });
+
+  it("should match snapshot for populateStoresWithEphemeralAarMessageData", () => {
+    const params = {
+      iun: "some-iun" as NonEmptyString,
+      thirdPartyMessage: {} as ThirdPartyMessage,
+      fiscalCode: "1209381023813098123" as FiscalCode,
+      pnServiceID: "some-Sid" as NonEmptyString,
+      markdown: {} as MessageBodyMarkdown,
+      subject: "" as MessageSubject,
+      mandateId: ""
+    } as unknown as EphemeralAarMessageDataActionPayload;
+    const action = populateStoresWithEphemeralAarMessageData(params);
+    expect(action).toMatchSnapshot();
+  });
+});

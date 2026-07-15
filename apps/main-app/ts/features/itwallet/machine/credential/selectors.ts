@@ -1,0 +1,56 @@
+import * as O from "fp-ts/lib/Option";
+import { StateFrom } from "xstate";
+
+import { CredentialFormat } from "../../common/utils/itwTypesUtils";
+import { ItwTags } from "../tags";
+import { ItwCredentialIssuanceMachine } from "./machine";
+
+type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;
+
+export const selectIsLoading = (snapshot: MachineSnapshot) =>
+  snapshot.hasTag(ItwTags.Loading);
+
+export const selectIsIssuing = (snapshot: MachineSnapshot) =>
+  snapshot.hasTag(ItwTags.Issuing);
+
+export const selectCredentialTypeOption = (snapshot: MachineSnapshot) =>
+  O.fromNullable(snapshot.context.credentialType);
+
+export const selectIssuerConfigurationOption = (snapshot: MachineSnapshot) =>
+  O.fromNullable(snapshot.context.issuerConf);
+
+export const selectRequestedCredentialOption = (snapshot: MachineSnapshot) =>
+  O.fromNullable(snapshot.context.requestedCredential);
+
+export const selectEvaluatedDcqlQueryOption = (snapshot: MachineSnapshot) =>
+  O.fromNullable(snapshot.context.evaluatedDcqlQuery);
+
+export const selectRequiredClaimsOption = (snapshot: MachineSnapshot) =>
+  O.fromNullable(
+    snapshot.context.evaluatedDcqlQuery?.flatMap(({ requiredDisclosures }) =>
+      requiredDisclosures.map(({ name }) => name)
+    )
+  );
+
+export const selectCredentialOption = (snapshot: MachineSnapshot) => {
+  // At this stage the retrieval flow targets credentials under the same `scope` in multiple formats:
+  // prefer the SD-JWT format to display credential details, but fall back to the first available
+  // credential for mso_mdoc-only credentials (e.g. proof of age obtained in batch), which have no
+  // SD-JWT copy and would otherwise leave the preview stuck on loading.
+  const credentials = snapshot.context.credentials;
+  return O.fromNullable(
+    credentials?.find(
+      ({ metadata }) => metadata.format !== CredentialFormat.MDOC
+    ) ?? credentials?.[0]
+  );
+};
+
+export const selectFailureOption = (snapshot: MachineSnapshot) =>
+  O.fromNullable(snapshot.context.failure);
+
+export const selectResolvedCredentialOfferOption = (
+  snapshot: MachineSnapshot
+) => O.fromNullable(snapshot.context.resolvedCredentialOffer);
+
+export const selectHasResolvedCredentialOffer = (snapshot: MachineSnapshot) =>
+  snapshot.context.resolvedCredentialOffer !== undefined;

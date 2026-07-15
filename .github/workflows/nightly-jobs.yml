@@ -11,13 +11,13 @@ jobs:
     environment: dev
     steps:
       - name: checkout repo content
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: setup python
-        uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b #v4.6.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: '3.8'
       - name: check api specs alignment
-        run: ./scripts/pagopa_api_check.sh
+        run: ./apps/main-app/scripts/pagopa_api_check.sh
         shell: bash
   io_check_uris:
     name: Check URIs validity in app
@@ -25,31 +25,34 @@ jobs:
     environment: dev
     steps:
       - name: checkout repo content
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
-      - name: setup node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: setup python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           node-version-file: ".node-version"    
       - name: install dependencies
         run: yarn install
       - name: check uris validity on static texts
-        run: node scripts/check_urls/check_urls.js
+        run: |
+          cd apps/main-app/scripts/check_urls
+          pipenv install
+          pipenv run python3 check_urls.py
   io_check_cie_button_exists_ios:
     name: Check that CIE button exists on iOS
     runs-on: ubuntu-latest
     environment: dev
     steps:
       - name: checkout repo content
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: setup python
-        uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b #v4.6.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: '3.8'
       - name: install pipenv
         run: pip install pipenv
       - name: check cie button exists on ios
         run: |
-          cd scripts/check_cie_button_exists
+          cd apps/main-app/scripts/check_cie_button_exists
           pipenv install
           pipenv run python3 check_cie_button_exists_ios.py
         shell: bash

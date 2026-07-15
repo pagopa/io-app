@@ -1,0 +1,94 @@
+import {
+  Body,
+  FeatureInfo,
+  IOMarkdownLite,
+  VSpacer
+} from "@io-app/design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { View } from "react-native";
+
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { SpidIdp } from "../../../../../utils/idps";
+import { SpidLoginRequestInfo } from "../store/types";
+
+type Props = {
+  requestState: SpidLoginRequestInfo["requestState"];
+  selectedIdp?: SpidIdp;
+};
+
+export const usePosteIDApp2AppEducational = ({
+  selectedIdp,
+  requestState
+}: Props) => {
+  const presentedRef = useRef(false);
+  const bottomSheetContent = useMemo(
+    () => (
+      <View>
+        <Body>
+          {I18n.t("authentication.idp_login.poste_id.bottom_sheet.description")}
+        </Body>
+        <VSpacer size={24} />
+        <FeatureInfo
+          body={
+            <IOMarkdownLite
+              content={I18n.t(
+                "authentication.idp_login.poste_id.bottom_sheet.feature_1"
+              )}
+            />
+          }
+          iconName="logout"
+        />
+        <VSpacer size={24} />
+        <FeatureInfo
+          body={
+            <IOMarkdownLite
+              content={I18n.t(
+                "authentication.idp_login.poste_id.bottom_sheet.feature_2"
+              )}
+            />
+          }
+          iconName="fingerprint"
+        />
+        <VSpacer size={24} />
+        <FeatureInfo
+          body={
+            <IOMarkdownLite
+              content={I18n.t(
+                "authentication.idp_login.poste_id.bottom_sheet.feature_3"
+              )}
+            />
+          }
+          iconName="change"
+        />
+        <VSpacer size={24} />
+      </View>
+    ),
+    []
+  );
+
+  const handleOnDismiss = useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    presentedRef.current = true;
+  }, []);
+
+  const { bottomSheet, present } = useIOBottomSheetModal({
+    title: I18n.t("authentication.idp_login.poste_id.bottom_sheet.title"),
+    component: bottomSheetContent,
+    onDismiss: handleOnDismiss
+  });
+
+  useEffect(() => {
+    if (
+      selectedIdp?.id === "posteid" &&
+      !pot.isError(requestState) &&
+      !pot.isLoading(requestState) &&
+      !presentedRef.current
+    ) {
+      present();
+    }
+  }, [selectedIdp?.id, present, requestState]);
+
+  return bottomSheet;
+};

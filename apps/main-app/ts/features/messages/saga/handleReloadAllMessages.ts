@@ -1,0 +1,84 @@
+import { call, put, select } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
+
+import { PaginatedPublicMessagesCollection } from "../../../../definitions/communication/PaginatedPublicMessagesCollection";
+import { SagaCallReturnType } from "../../../types/utils";
+import { getError } from "../../../utils/errors";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import {
+  trackReloadAllMessagesFailure,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../analytics";
+import {
+  reloadAllMessages,
+  reloadAllMessages as reloadAllMessagesAction
+} from "../store/actions";
+import { toUIMessage } from "../store/reducers/transformers";
+import { errorToReason, unknownToReason } from "../utils";
+import { handleResponse } from "../utils/responseHandling";
+import { getCommunicationClient } from "./commons";
+
+export function* handleReloadAllMessages(
+  action: ActionType<typeof reloadAllMessages.request>
+) {
+  const { filter, pageSize, fromUserAction } = action.payload;
+
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    trackUndefinedBearerToken(
+      UndefinedBearerTokenPhase.reloadAllMessagesLoading
+    );
+    return;
+  }
+
+  const { getUserMessages: getMessages } = yield* call(
+    getCommunicationClient,
+    sessionToken
+  );
+
+  try {
+    const response: SagaCallReturnType<typeof getMessages> = (yield* call(
+      withRefreshApiCall,
+      getMessages({
+        enrich_result_data: true,
+        page_size: pageSize,
+        archived: filter.getArchived
+      }),
+      action
+    )) as unknown as SagaCallReturnType<typeof getMessages>;
+    const nextAction = handleResponse<PaginatedPublicMessagesCollection>(
+      response,
+      ({ items, next, prev }: PaginatedPublicMessagesCollection) =>
+        reloadAllMessagesAction.success({
+          messages: items.map(toUIMessage),
+          pagination: { previous: prev, next },
+          filter,
+          fromUserAction
+        }),
+      error => {
+        const reason = errorToReason(error);
+        trackReloadAllMessagesFailure(reason);
+        return reloadAllMessagesAction.failure({
+          error: getError(error),
+          filter
+        });
+      }
+    );
+
+    if (nextAction) {
+      yield* put(nextAction);
+    }
+  } catch (error) {
+    const reason = unknownToReason(error);
+    trackReloadAllMessagesFailure(reason);
+    yield* put(
+      reloadAllMessagesAction.failure({
+        error: getError(error),
+        filter
+      })
+    );
+  }
+}

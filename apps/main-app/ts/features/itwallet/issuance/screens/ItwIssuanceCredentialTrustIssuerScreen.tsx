@@ -1,0 +1,269 @@
+import {
+  ContentWrapper,
+  ForceScrollDownView,
+  H2,
+  ListItemHeader,
+  useIOTheme,
+  VSpacer
+} from "@io-app/design-system";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { sequenceS } from "fp-ts/lib/Apply";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
+import { useCallback, useRef } from "react";
+
+import type { CredentialIssuanceMode } from "../../machine/credential/context";
+
+import IOMarkdown from "../../../../components/IOMarkdown";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { trackOpenItwTos } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
+import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
+import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import {
+  selectCredentialTypeOption,
+  selectIsIssuing,
+  selectIsLoading,
+  selectRequiredClaimsOption
+} from "../../machine/credential/selectors";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../navigation/routes";
+import {
+  trackIssuanceCredentialScrollToBottom,
+  trackItwExit
+} from "../analytics";
+import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
+
+export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
+  animationEnabled?: boolean;
+  credentialType?: string;
+  isUpgrade?: boolean;
+  mode?: CredentialIssuanceMode;
+};
+
+type ScreenProps =
+  // Props received when used inside a <Stack.Screen>
+  | IOStackNavigationRouteProps<
+      ItwParamsList,
+      "ITW_ISSUANCE_CREDENTIAL_TRUST_ISSUER"
+    >
+  // Props for standalone usage, outside a <Stack.Screen>
+  | ItwIssuanceCredentialTrustIssuerNavigationParams;
+
+const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
+  const { credentialType, isUpgrade, mode } =
+    ("route" in props ? props.route.params : props) ?? {};
+
+  const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const isLoading =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
+  const requiredClaimsOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectRequiredClaimsOption
+  );
+  const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectCredentialTypeOption
+  );
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+
+  usePreventScreenCapture();
+  useItwDisableGestureNavigation();
+  useAvoidHardwareBackButton();
+
+  // Send the requested credential type to the machine when the issuance flow
+  // directly starts from this screen and not from the credentials catalog.
+  useFocusEffect(
+    useCallback(() => {
+      if (credentialType) {
+        machineRef.send({
+          type: "select-credential",
+          credentialType,
+          mode: mode ?? (isUpgrade ? "upgrade" : "issuance")
+        });
+      }
+    }, [credentialType, machineRef, isUpgrade, mode])
+  );
+
+  if (isLoading) {
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
+  }
+
+  return pipe(
+    sequenceS(O.Monad)({
+      credentialType: credentialTypeOption,
+      requiredClaimNames: requiredClaimsOption,
+      eid: eidOption
+    }),
+    O.fold(
+      () => <ItwGenericErrorContent />,
+      innerProps => <ContentView {...innerProps} />
+    )
+  );
+};
+
+type ContentViewProps = {
+  credentialType: string;
+  eid: CredentialMetadata;
+  requiredClaimNames: ReadonlyArray<string>;
+};
+
+/**
+ * Renders the content of the screen
+ */
+const ContentView = ({
+  credentialType,
+  requiredClaimNames,
+  eid
+}: ContentViewProps) => {
+  const route = useRoute();
+  const hasScrolledToBottom = useRef(false);
+  const privacyUrl = useIOSelector(state =>
+    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
+  );
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const isIssuing =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
+  const theme = useIOTheme();
+  const eidCredentialName = useItwCredentialName(eid.credentialType);
+  const credentialName = useItwCredentialName(credentialType);
+
+  const handleContinuePress = () => {
+    machineRef.send({ type: "confirm-trust-data" });
+  };
+
+  const mixPanelCredential = getMixPanelCredential(credentialType, isItwL3);
+
+  const dismissDialog = useItwDismissalDialog({
+    handleDismiss: () => {
+      trackItwExit({
+        exit_page: route.name,
+        credential: mixPanelCredential
+      });
+      machineRef.send({
+        type: "close",
+        surveyStep: isItwL3 ? "data_share" : undefined,
+        surveyCredential: isItwL3 ? mixPanelCredential : undefined
+      });
+    }
+  });
+
+  useHeaderSecondLevel({
+    title: "",
+    goBack: dismissDialog.show,
+    supportRequest: true
+  });
+
+  useDebugInfo({
+    parsedCredential: eid.parsedCredential
+  });
+
+  const claims = parseClaims(eid.parsedCredential, {
+    exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
+  });
+  const requiredClaims = requiredClaimNames.flatMap(name => {
+    const claim = claims.find(({ id }) => id === name);
+    return claim ? [{ claim, source: eidCredentialName }] : [];
+  });
+
+  // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens
+  const trackScrollToBottom = (crossed: boolean) => {
+    if (crossed && !hasScrolledToBottom.current) {
+      // eslint-disable-next-line functional/immutable-data
+      hasScrolledToBottom.current = true;
+      trackIssuanceCredentialScrollToBottom(
+        mixPanelCredential,
+        ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
+      );
+    } else if (!crossed && hasScrolledToBottom.current) {
+      // eslint-disable-next-line functional/immutable-data
+      hasScrolledToBottom.current = false;
+    }
+  };
+
+  return (
+    <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
+      footerActions={{
+        actions: {
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t("global.buttons.continue"),
+            onPress: handleContinuePress,
+            loading: isIssuing
+          },
+          secondary: {
+            label: I18n.t("global.buttons.cancel"),
+            onPress: dismissDialog.show
+          }
+        }
+      }}
+      onThresholdCrossed={trackScrollToBottom}
+    >
+      <ContentWrapper>
+        <VSpacer size={24} />
+        <ItwDataExchangeIcons
+          requesterLogoUri={require("../../../../../img/features/itWallet/issuer/IPZS.png")}
+        />
+        <VSpacer size={24} />
+        <H2>
+          {I18n.t("features.itWallet.issuance.credentialAuth.title", {
+            credentialName
+          })}
+        </H2>
+        <VSpacer size={16} />
+        <IOMarkdown
+          content={I18n.t(
+            "features.itWallet.issuance.credentialAuth.subtitle",
+            {
+              organization: ISSUER_MOCK_NAME
+            }
+          )}
+        />
+        <VSpacer size={24} />
+        <ListItemHeader
+          iconColor={theme["icon-default"]}
+          iconName="security"
+          label={I18n.t(
+            "features.itWallet.issuance.credentialAuth.requiredClaims"
+          )}
+        />
+        <ItwRequestedClaimsList items={requiredClaims} />
+        <VSpacer size={32} />
+        <IOMarkdown
+          content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
+            privacyUrl
+          })}
+          rules={generateItwIOMarkdownRules({
+            linkCallback: trackOpenItwTos
+          })}
+        />
+      </ContentWrapper>
+    </ForceScrollDownView>
+  );
+};
+
+// Offline failure screen HOC
+export const ItwIssuanceCredentialTrustIssuerScreen = withOfflineFailureScreen(
+  ItwIssuanceCredentialTrustIssuer
+);

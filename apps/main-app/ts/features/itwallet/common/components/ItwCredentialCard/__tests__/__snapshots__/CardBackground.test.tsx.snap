@@ -1,0 +1,3713 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`CardBackground with three-color gradient with explicit positions background renders with a fixed card overlay 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    pointerEvents="none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <skRect
+      height={0}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#FADCF5",
+            "#FFECFC",
+            "#FADCF5",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        positions={
+          [
+            0,
+            0.5,
+            1,
+          ]
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRect>
+    <skImage
+      fit="cover"
+      height={0}
+      image={null}
+      opacity={"0"}
+      width={0}
+      x={0}
+      y={0}
+    />
+  </View>
+</View>
+`;
+
+exports[`CardBackground with three-color gradient with explicit positions background renders with a pattern overlay 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    pointerEvents="none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <skRect
+      height={0}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#FADCF5",
+            "#FFECFC",
+            "#FADCF5",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        positions={
+          [
+            0,
+            0.5,
+            1,
+          ]
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRect>
+    <skRect
+      blendMode="softLight"
+      height={0}
+      opacity={"0"}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skImageShader
+        fit="contain"
+        image={null}
+        rect={
+          {
+            "height": 20,
+            "width": 20,
+            "x": 0,
+            "y": 0,
+          }
+        }
+        transform={[]}
+        tx="repeat"
+        ty="repeat"
+      />
+    </skRect>
+  </View>
+</View>
+`;
+
+exports[`CardBackground with three-color gradient with explicit positions background renders with a pattern overlay and corner overlay 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    pointerEvents="none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <skRect
+      height={0}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#FADCF5",
+            "#FFECFC",
+            "#FADCF5",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        positions={
+          [
+            0,
+            0.5,
+            1,
+          ]
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRect>
+    <skImage
+      fit="fill"
+      height={0}
+      image={null}
+      opacity={"0"}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skBlendColorFilter
+        color="#FADCF5"
+        mode="srcIn"
+      />
+    </skImage>
+    <skRect
+      blendMode="softLight"
+      height={0}
+      opacity={"0"}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skImageShader
+        fit="contain"
+        image={null}
+        rect={
+          {
+            "height": 20,
+            "width": 20,
+            "x": 0,
+            "y": 0,
+          }
+        }
+        transform={[]}
+        tx="repeat"
+        ty="repeat"
+      />
+    </skRect>
+  </View>
+</View>
+`;
+
+exports[`CardBackground with three-color gradient with explicit positions background renders without overlay 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    pointerEvents="none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <skRect
+      height={0}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#FADCF5",
+            "#FFECFC",
+            "#FADCF5",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        positions={
+          [
+            0,
+            0.5,
+            1,
+          ]
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRect>
+  </View>
+</View>
+`;
+
+exports[`CardBackground with two-color gradient background renders with a fixed card overlay 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    pointerEvents="none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <skRect
+      height={0}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#EAF6FF",
+            "#F9F9F9",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRect>
+    <skImage
+      fit="cover"
+      height={0}
+      image={null}
+      opacity={"0"}
+      width={0}
+      x={0}
+      y={0}
+    />
+  </View>
+</View>
+`;
+
+exports[`CardBackground with two-color gradient background renders with a pattern overlay 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    pointerEvents="none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <skRect
+      height={0}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#EAF6FF",
+            "#F9F9F9",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRect>
+    <skRect
+      blendMode="softLight"
+      height={0}
+      opacity={"0"}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skImageShader
+        fit="contain"
+        image={null}
+        rect={
+          {
+            "height": 20,
+            "width": 20,
+            "x": 0,
+            "y": 0,
+          }
+        }
+        transform={[]}
+        tx="repeat"
+        ty="repeat"
+      />
+    </skRect>
+  </View>
+</View>
+`;
+
+exports[`CardBackground with two-color gradient background renders with a pattern overlay and corner overlay 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    pointerEvents="none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <skRect
+      height={0}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#EAF6FF",
+            "#F9F9F9",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRect>
+    <skImage
+      fit="fill"
+      height={0}
+      image={null}
+      opacity={"0"}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skBlendColorFilter
+        color="#EAF6FF"
+        mode="srcIn"
+      />
+    </skImage>
+    <skRect
+      blendMode="softLight"
+      height={0}
+      opacity={"0"}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skImageShader
+        fit="contain"
+        image={null}
+        rect={
+          {
+            "height": 20,
+            "width": 20,
+            "x": 0,
+            "y": 0,
+          }
+        }
+        transform={[]}
+        tx="repeat"
+        ty="repeat"
+      />
+    </skRect>
+  </View>
+</View>
+`;
+
+exports[`CardBackground with two-color gradient background renders without overlay 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    pointerEvents="none"
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <skRect
+      height={0}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#EAF6FF",
+            "#F9F9F9",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with dedicated card images credentialType = EuropeanDisabilityCard renders correctly in default color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#E8EBF1",
+            "#D2D6E3",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with dedicated card images credentialType = EuropeanDisabilityCard renders correctly in faded color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#E8EBF1",
+            "#D2D6E3",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with dedicated card images credentialType = EuropeanDisabilityCard renders correctly in greyscale color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#E8EBF1",
+            "#D2D6E3",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with dedicated card images credentialType = EuropeanHealthInsuranceCard renders correctly in default color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#E8EBF1",
+            "#D2D6E3",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with dedicated card images credentialType = EuropeanHealthInsuranceCard renders correctly in faded color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#E8EBF1",
+            "#D2D6E3",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with dedicated card images credentialType = EuropeanHealthInsuranceCard renders correctly in greyscale color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#E8EBF1",
+            "#D2D6E3",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with dedicated card images credentialType = mDL renders correctly in default color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#E8EBF1",
+            "#D2D6E3",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with dedicated card images credentialType = mDL renders correctly in faded color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#E8EBF1",
+            "#D2D6E3",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with dedicated card images credentialType = mDL renders correctly in greyscale color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#E8EBF1",
+            "#D2D6E3",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with gradient fallback (no image) credentialType = education_degree renders gradient fallback in default color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#F2F1CE",
+            "#ECECEC",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with gradient fallback (no image) credentialType = education_degree renders gradient fallback in faded color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#F2F1CE",
+            "#ECECEC",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with gradient fallback (no image) credentialType = education_degree renders gradient fallback in greyscale color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#F2F1CE",
+            "#ECECEC",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with gradient fallback (no image) credentialType = education_enrollment renders gradient fallback in default color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#E0F2CE",
+            "#ECECEC",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with gradient fallback (no image) credentialType = education_enrollment renders gradient fallback in faded color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#E0F2CE",
+            "#ECECEC",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with gradient fallback (no image) credentialType = education_enrollment renders gradient fallback in greyscale color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#E0F2CE",
+            "#ECECEC",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with gradient fallback (no image) credentialType = residency renders gradient fallback in default color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#F2E4CE",
+            "#ECECEC",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with gradient fallback (no image) credentialType = residency renders gradient fallback in faded color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#F2E4CE",
+            "#ECECEC",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;
+
+exports[`LegacyCardBackground credential types with gradient fallback (no image) credentialType = residency renders gradient fallback in greyscale color scheme 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {
+          "opacity": 1,
+        },
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#E8EBF1",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <skRRect
+      height={0}
+      r={16}
+      width={0}
+      x={0}
+      y={0}
+    >
+      <skLinearGradient
+        colors={
+          [
+            "#F2E4CE",
+            "#ECECEC",
+          ]
+        }
+        end={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+        start={
+          JsiSkPoint {
+            "CanvasKit": {
+              "MakeBlendMode": [MockFunction],
+              "MakeCanvas": [MockFunction],
+              "MakeColor": [MockFunction],
+              "MakeColorFilter": [MockFunction],
+              "MakeFont": [MockFunction],
+              "MakeImage": [MockFunction],
+              "MakeImageFilter": [MockFunction],
+              "MakeManagedAnimation": [MockFunction],
+              "MakeMatrix": [MockFunction],
+              "MakePaint": [MockFunction],
+              "MakePath": [MockFunction],
+              "MakePicture": [MockFunction],
+              "MakeRuntimeEffect": [MockFunction],
+              "MakeShader": [MockFunction],
+              "MakeSkottieAnimation": [MockFunction],
+              "MakeTextBlob": [MockFunction],
+              "MakeTypeface": [MockFunction],
+              "MakeVertices": [MockFunction],
+            },
+            "__typename__": "Point",
+            "ref": Float32Array [
+              0,
+              0,
+            ],
+          }
+        }
+      />
+    </skRRect>
+  </View>
+</View>
+`;

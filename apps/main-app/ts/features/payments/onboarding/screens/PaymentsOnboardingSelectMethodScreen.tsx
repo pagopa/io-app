@@ -1,0 +1,91 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
+
+import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
+import WalletOnboardingPaymentMethodsList from "../components/WalletOnboardingPaymentMethodsList";
+import { useWalletOnboardingWebView } from "../hooks/useWalletOnboardingWebView";
+import { PaymentsOnboardingRoutes } from "../navigation/routes";
+import { paymentsOnboardingGetMethodsAction } from "../store/actions";
+import { selectPaymentOnboardingMethods } from "../store/selectors";
+
+const PaymentsOnboardingSelectMethodScreen = () => {
+  usePreventScreenCapture();
+
+  const navigation = useIONavigation();
+  const dispatch = useIODispatch();
+
+  const paymentMethodsPot = useIOSelector(selectPaymentOnboardingMethods);
+  const isLoadingPaymentMethods = pot.isLoading(paymentMethodsPot);
+  const availablePaymentMethods = pot.toUndefined(paymentMethodsPot);
+
+  const { startOnboarding, isLoading, isPendingOnboarding } =
+    useWalletOnboardingWebView({
+      onOnboardingOutcome: ({ outcome, walletId }) => {
+        navigation.replace(
+          PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
+          {
+            screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK,
+            params: {
+              outcome,
+              walletId
+            }
+          }
+        );
+      }
+    });
+
+  useOnFirstRender(() => {
+    dispatch(paymentsOnboardingGetMethodsAction.request());
+  });
+
+  const handleSelectedPaymentMethod = (
+    selectedPaymentMethod: PaymentMethodResponse
+  ) => {
+    startOnboarding(selectedPaymentMethod.id);
+  };
+
+  if (pot.isError(paymentMethodsPot)) {
+    return (
+      <OperationResultScreenContent
+        action={{
+          label: I18n.t("global.genericRetry"),
+          accessibilityLabel: I18n.t("global.genericRetry"),
+          onPress: () => dispatch(paymentsOnboardingGetMethodsAction.request())
+        }}
+        pictogram="umbrella"
+        subtitle={I18n.t("global.genericError")}
+        title={I18n.t("genericError")}
+      />
+    );
+  }
+
+  return (
+    <IOScrollViewWithLargeHeader
+      description={I18n.t(
+        "wallet.onboarding.paymentMethodsList.header.subtitle"
+      )}
+      faqCategories={["wallet", "wallet_methods"]}
+      headerActionsProp={{
+        showHelp: true
+      }}
+      title={{
+        label: I18n.t("wallet.onboarding.paymentMethodsList.header.title")
+      }}
+    >
+      <WalletOnboardingPaymentMethodsList
+        isLoadingMethods={isLoadingPaymentMethods}
+        isLoadingWebView={isLoading || isPendingOnboarding}
+        onSelectPaymentMethod={handleSelectedPaymentMethod}
+        paymentMethods={availablePaymentMethods ?? []}
+      />
+    </IOScrollViewWithLargeHeader>
+  );
+};
+
+export { PaymentsOnboardingSelectMethodScreen };

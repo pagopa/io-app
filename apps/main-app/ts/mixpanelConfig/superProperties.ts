@@ -1,0 +1,125 @@
+import { Appearance, ColorSchemeName } from "react-native";
+
+import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
+import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
+import { isConnectedSelector } from "../features/connectivity/store/selectors";
+import { checkNotificationPermissions } from "../features/pushNotifications/utils";
+import {
+  getNotificationPermissionType,
+  NotificationPermissionType,
+  NotificationPreferenceConfiguration,
+  ServiceConfigurationTrackingType
+} from "../features/settings/common/analytics";
+import {
+  isMixpanelInstanceInitialized,
+  registerSuperProperties
+} from "../mixpanel.ts";
+import { GlobalState } from "../store/reducers/types";
+import { isScreenReaderEnabled } from "../utils/accessibility";
+import { trackAppCaughtError } from "../utils/analytics.ts";
+import { getAppVersion } from "../utils/appVersion";
+import { BiometricsType, getBiometricsType } from "../utils/biometrics";
+import {
+  getFontScale,
+  isScreenLockSet as isScreenLockSetFunc
+} from "../utils/device";
+import { unknownToString } from "../utils/errors.ts";
+import {
+  cdcStatusHandler,
+  cgnStatusHandler,
+  loginSessionConfigHandler,
+  notificationConfigurationHandler,
+  paymentMethodsHandler,
+  Property,
+  PropertyToUpdate,
+  serviceConfigHandler,
+  welfareStatusHandler
+} from "./mixpanelPropertyUtils";
+
+type ConnectivityStatus = "offline" | "online";
+
+type SuperProperties = {
+  appReadableVersion: string;
+  biometricTechnology: BiometricsType;
+  CDC_STATUS: number;
+  CGN_STATUS: TrackCgnStatus;
+  colorScheme: ColorSchemeName | null | undefined;
+  CONNECTION_STATUS: ConnectivityStatus;
+  fontScale: number;
+  isScreenLockSet: boolean;
+  isScreenReaderEnabled: boolean;
+  LOGIN_SESSION: LoginSessionDuration;
+  NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
+  NOTIFICATION_PERMISSION: NotificationPermissionType;
+  SAVED_PAYMENT_METHOD?: number;
+  SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
+  WELFARE_STATUS: ReadonlyArray<string>;
+};
+
+export const updateMixpanelSuperProperties = async (
+  state: GlobalState,
+  forceUpdateFor?: PropertyToUpdate<SuperProperties>
+) => {
+  try {
+    if (!isMixpanelInstanceInitialized()) {
+      return;
+    }
+    const screenReaderEnabled: boolean = await isScreenReaderEnabled();
+    const fontScale = await getFontScale();
+    const biometricTechnology = await getBiometricsType(false);
+    const isScreenLockSet = await isScreenLockSetFunc();
+    const LOGIN_SESSION = loginSessionConfigHandler(state);
+    const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
+    const notificationsEnabled = await checkNotificationPermissions();
+    const SERVICE_CONFIGURATION = serviceConfigHandler(state);
+    const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
+    const CGN_STATUS = cgnStatusHandler(state);
+    const CDC_STATUS = cdcStatusHandler(state);
+    const WELFARE_STATUS = welfareStatusHandler(state);
+    const CONNECTION_STATUS = offlineStatusHandler(state);
+
+    const superPropertiesObject: SuperProperties = {
+      isScreenReaderEnabled: screenReaderEnabled,
+      fontScale,
+      appReadableVersion: getAppVersion(),
+      colorScheme: Appearance.getColorScheme(),
+      biometricTechnology,
+      isScreenLockSet,
+      LOGIN_SESSION,
+      NOTIFICATION_CONFIGURATION,
+      NOTIFICATION_PERMISSION:
+        getNotificationPermissionType(notificationsEnabled),
+      SERVICE_CONFIGURATION,
+      SAVED_PAYMENT_METHOD,
+      CGN_STATUS,
+      CDC_STATUS,
+      WELFARE_STATUS,
+      CONNECTION_STATUS
+    };
+
+    if (forceUpdateFor) {
+      forceUpdate<keyof SuperProperties>(superPropertiesObject, forceUpdateFor);
+    }
+
+    registerSuperProperties(superPropertiesObject);
+  } catch (e) {
+    trackAppCaughtError(
+      "updateMixpanelSuperProperties",
+      undefined,
+      unknownToString(e)
+    );
+  }
+};
+
+const forceUpdate = <T extends keyof SuperProperties>(
+  superPropertiesObject: SuperProperties,
+  toUpdate: Property<SuperProperties, T>
+) => {
+  // eslint-disable-next-line functional/immutable-data
+  superPropertiesObject[toUpdate.property] = toUpdate.value;
+};
+
+const offlineStatusHandler = (state: GlobalState): ConnectivityStatus => {
+  const isConnected = isConnectedSelector(state);
+  return isConnected ? "online" : "offline";
+};

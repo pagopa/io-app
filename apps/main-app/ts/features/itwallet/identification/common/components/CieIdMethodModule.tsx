@@ -1,0 +1,78 @@
+import { ModuleNavigationAlt } from "@io-app/design-system";
+import I18n from "i18next";
+import { useCallback } from "react";
+
+import { trackItWalletIDMethodSelected } from "../../../analytics";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
+
+type Props = {
+  isL3: boolean;
+  isReissuanceMode?: boolean;
+};
+
+export const CieIdMethodModule = ({
+  isL3,
+  isReissuanceMode = false
+}: Props) => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+
+  const handleOnPress = useCallback(() => {
+    machineRef.send({ type: "select-identification-mode", mode: "cieId" });
+  }, [machineRef]);
+
+  const cieIdBottomSheet = useContinueWithBottomSheet({
+    type: "cieId",
+    onPrimaryAction: handleOnPress,
+    isL3
+  });
+
+  if (isL3) {
+    return (
+      <>
+        <ModuleNavigationAlt
+          icon="cie"
+          onPress={() => {
+            trackItWalletIDMethodSelected({
+              ITW_ID_method: "cieId",
+              itw_flow: "L3"
+            });
+            cieIdBottomSheet.present();
+          }}
+          subtitle={
+            isReissuanceMode
+              ? undefined
+              : I18n.t(
+                  `features.itWallet.identification.modeSelection.mode.cieId.subtitle.l3`
+                )
+          }
+          testID="CieIDMethodModuleTestIDL3"
+          title={I18n.t(
+            `features.itWallet.identification.modeSelection.mode.cieId.title.l3`
+          )}
+        />
+        {cieIdBottomSheet.bottomSheet}
+      </>
+    );
+  }
+
+  return (
+    <ModuleNavigationAlt
+      icon="cie"
+      onPress={handleOnPress}
+      subtitle={I18n.t(
+        `features.itWallet.identification.modeSelection.mode.cieId.subtitle.default`
+      )}
+      testID="CieIDMethodModuleTestIDL2"
+      title={
+        isReissuanceMode
+          ? I18n.t(
+              `features.itWallet.identification.modeSelection.mode.cieId.title.default_reissuance`
+            )
+          : I18n.t(
+              `features.itWallet.identification.modeSelection.mode.cieId.title.default`
+            )
+      }
+    />
+  );
+};

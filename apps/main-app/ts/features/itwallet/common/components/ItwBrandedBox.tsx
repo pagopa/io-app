@@ -1,0 +1,208 @@
+/* eslint-disable functional/immutable-data */
+import { useIOThemeContext } from "@io-app/design-system";
+import {
+  Canvas,
+  Circle as SkiaCircle,
+  Group as SkiaGroup,
+  RadialGradient as SkiaRadialGradient,
+  vec
+} from "@shopify/react-native-skia";
+import { PropsWithChildren } from "react";
+import { LayoutRectangle, StyleSheet, View } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+import {
+  Extrapolation,
+  interpolate,
+  SensorType,
+  useAnimatedReaction,
+  useAnimatedSensor,
+  useDerivedValue,
+  useSharedValue
+} from "react-native-reanimated";
+
+import { useLayoutSize } from "../hooks/useLayoutSize";
+import { useItWalletTheme } from "../utils/theme";
+import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
+import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
+
+type ItwIridescentBorderProps = {
+  backgroundVariant?: "gradient" | "solid";
+  borderRadius?: number;
+  borderThickness?: number;
+  style?: React.ComponentProps<typeof View>["style"];
+  variant?: ItwSkiaBrandedGradientVariant;
+};
+
+const brandedBoxGradientColors = ["#FFFFFF", "#FBFDFF", "#F6FBFF", "#F2F9FF"];
+
+/* Light */
+const lightScaleMultiplier = 1;
+const lightSize: LayoutRectangle["width"] = 250;
+const visibleLightPercentage = 0.25; // Visible light when it's near box boundaries
+
+/**
+ * Renders a box with IT-Wallet branded animated border and light effect.
+ */
+export const ItwBrandedBox = ({
+  borderThickness = 3,
+  borderRadius = 16,
+  backgroundVariant = "solid",
+  variant = "default",
+  children,
+  style: customStyle
+}: PropsWithChildren<ItwIridescentBorderProps>) => {
+  const theme = useItWalletTheme();
+  const { themeType } = useIOThemeContext();
+  const isLightMode = themeType === "light";
+  const shouldUseGradientBackground =
+    isLightMode && backgroundVariant === "gradient";
+
+  const { size, onLayout } = useLayoutSize();
+
+  /* Styles */
+  const lightSkiaOpacity = isLightMode ? 0.4 : 0.05;
+
+  /* Sensors */
+  const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
+  const currentRoll = useSharedValue(0);
+  const initialRoll = useSharedValue(0);
+
+  useAnimatedReaction(
+    () => rotationSensor.sensor.value,
+    s => {
+      if (initialRoll.value === 0) {
+        initialRoll.value = s.roll;
+      }
+      currentRoll.value = s.roll;
+    },
+    []
+  );
+
+  /* Not all devices are in an initial flat position on a surface
+        (e.g. a table) then we use a relative rotation value,
+        not an absolute one  */
+  const relativeRoll = useDerivedValue(
+    () => initialRoll.value - currentRoll.value
+  );
+
+  /* Set translate boundaries for the main light */
+  const maxTranslateX =
+    (size.width - (lightSize ?? 0) * visibleLightPercentage) / 2;
+
+  /* We don't need to look at the whole quaternion range,
+      just a very small part of it. */
+  const quaternionRange = 0.5;
+
+  const skiaLightTranslateX = useDerivedValue(() => {
+    const translateX = interpolate(
+      relativeRoll.value,
+      [quaternionRange, -quaternionRange],
+      [maxTranslateX, -maxTranslateX],
+      Extrapolation.CLAMP
+    );
+
+    return [{ translateX }, { scale: lightScaleMultiplier }];
+  });
+
+  const SkiaLight = () => (
+    <SkiaGroup
+      opacity={lightSkiaOpacity}
+      origin={vec(size.width / 2, size.height / 2)}
+    >
+      <SkiaCircle
+        cx={(size.width ?? 0) / 2}
+        cy={(size.height ?? 0) / 2}
+        r={lightSize / 2}
+        transform={skiaLightTranslateX}
+      >
+        <SkiaRadialGradient
+          c={vec((size.width ?? 0) / 2, (size.height ?? 0) / 2)}
+          colors={[
+            "rgba(255,255,255,1)",
+            "rgba(255,255,255,0.987)",
+            "rgba(255,255,255,0.95)",
+            "rgba(255,255,255,0.89)",
+            "rgba(255,255,255,0.825)",
+            "rgba(255,255,255,0.74)",
+            "rgba(255,255,255,0.65)",
+            "rgba(255,255,255,0.55)",
+            "rgba(255,255,255,0.45)",
+            "rgba(255,255,255,0.35)",
+            "rgba(255,255,255,0.26)",
+            "rgba(255,255,255,0.175)",
+            "rgba(255,255,255,0.1)",
+            "rgba(255,255,255,0.05)",
+            "rgba(255,255,255,0.01)",
+            "rgba(255,255,255,0)"
+          ]}
+          /* There are many stops because it's an easing gradient. */
+          positions={[
+            0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
+            0.647, 0.71, 0.775, 0.845, 0.919, 1
+          ]}
+          r={lightSize / 2}
+        />
+      </SkiaCircle>
+    </SkiaGroup>
+  );
+
+  return (
+    <View
+      onLayout={onLayout}
+      style={[
+        styles.container,
+        customStyle,
+        {
+          borderRadius,
+          backgroundColor: theme["banner-background"]
+        }
+      ]}
+    >
+      {shouldUseGradientBackground && (
+        <LinearGradient
+          colors={brandedBoxGradientColors}
+          end={{ x: 0.5, y: 1 }}
+          pointerEvents="none"
+          start={{ x: 0.5, y: 0 }}
+          style={StyleSheet.absoluteFill}
+        />
+      )}
+
+      {/* Skia Canvas for border and light effect */}
+      <Canvas
+        style={{
+          position: "absolute",
+          height: size.height,
+          width: size.width
+        }}
+      >
+        {/* Animated light effect */}
+        <SkiaLight />
+
+        {/* Animated gradient border */}
+        <ItwBrandedSkiaBorder
+          borderRadius={borderRadius}
+          height={size.height}
+          themeType={themeType}
+          thickness={borderThickness}
+          variant={variant}
+          width={size.width}
+        />
+      </Canvas>
+
+      {/* Box content */}
+      {children}
+    </View>
+  );
+};
+
+export const ITW_BRANDED_BOX_PADDING = 16;
+
+const styles = StyleSheet.create({
+  container: {
+    borderCurve: "continuous",
+    padding: ITW_BRANDED_BOX_PADDING,
+    gap: 6,
+    overflow: "hidden"
+  }
+});

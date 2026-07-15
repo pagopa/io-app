@@ -1,0 +1,156 @@
+import {
+  Divider,
+  ListItemHeader,
+  ListItemInfo,
+  VStack
+} from "@io-app/design-system";
+import { useState } from "react";
+import { Platform, View } from "react-native";
+
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  getNfcAntennaInfo,
+  isHceSupported,
+  NfcAntennaInfo
+} from "../../../../utils/nfc";
+
+export const NfcPlayground = () => {
+  useHeaderSecondLevel({
+    title: "NFC Playgrounds"
+  });
+
+  if (Platform.OS === "ios") {
+    return (
+      <IOScrollView centerContent={true}>
+        <OperationResultScreenContent
+          pictogram="accessDenied"
+          subtitle="NFC information is not accessible on iOS devices."
+          title="Not available on iOS"
+        />
+      </IOScrollView>
+    );
+  }
+
+  return (
+    <IOScrollView>
+      <VStack space={16}>
+        <HostCardEmulationInfo />
+        <AntennaInfo />
+      </VStack>
+    </IOScrollView>
+  );
+};
+
+const HostCardEmulationInfo = () => {
+  const [hasHce, setHasHce] = useState<boolean>();
+  const [failure, setFailure] = useState<Error>();
+
+  useOnFirstRender(async () => {
+    isHceSupported().then(setHasHce).catch(setFailure);
+  });
+
+  useDebugInfo({
+    hasHce,
+    hasHceFailure: failure
+  });
+
+  return (
+    <View>
+      <ListItemHeader label="Host Card Emulation" />
+      <ListItemInfo
+        endElement={{
+          type: "badge",
+          componentProps: {
+            text: hasHce ? "\u{1F7E2} YES" : "\u{1F534} NO",
+            variant: hasHce ? "success" : "error"
+          }
+        }}
+        value="Supports Host Card Emulation (HCE)"
+      />
+    </View>
+  );
+};
+
+const AntennaInfo = () => {
+  const [nfcAntennaInfo, setNfcAntennaInfo] = useState<NfcAntennaInfo>();
+  const [failure, setFailure] = useState<Error>();
+
+  useOnFirstRender(async () => {
+    getNfcAntennaInfo().then(setNfcAntennaInfo).catch(setFailure);
+  });
+
+  useDebugInfo({
+    nfcAntennaInfo,
+    nfcAntennaInfoFailure: failure
+  });
+
+  if (!nfcAntennaInfo) {
+    return null;
+  }
+
+  return (
+    <>
+      <View>
+        <ListItemHeader label="Device Info" />
+        <ListItemInfo
+          endElement={{
+            type: "badge",
+            componentProps: {
+              text: nfcAntennaInfo.deviceWidth.toString(),
+              variant: "default"
+            }
+          }}
+          value="Device Width (mm)"
+        />
+        <Divider />
+        <ListItemInfo
+          endElement={{
+            type: "badge",
+            componentProps: {
+              text: nfcAntennaInfo.deviceHeight.toString(),
+              variant: "default"
+            }
+          }}
+          value="Device Height (mm)"
+        />
+        <Divider />
+        <ListItemInfo
+          endElement={{
+            type: "badge",
+            componentProps: {
+              text: nfcAntennaInfo.isDeviceFoldable
+                ? "\u{1F7E2} YES"
+                : "\u{1F534} NO",
+              variant: nfcAntennaInfo.isDeviceFoldable ? "success" : "error"
+            }
+          }}
+          value="Is Device Foldable"
+        />
+      </View>
+      <View>
+        <ListItemHeader label="Available NFC Antennas" />
+        {nfcAntennaInfo.availableNfcAntennas.map((antenna, index) => (
+          <View key={index}>
+            <ListItemInfo
+              endElement={{
+                type: "badge",
+                componentProps: {
+                  text: `X: ${antenna.locationX}, Y: ${antenna.locationY}`,
+                  variant: "default"
+                }
+              }}
+              value={`Antenna ${index + 1} Location (mm)`}
+            />
+            {index < nfcAntennaInfo.availableNfcAntennas.length - 1 && (
+              <Divider />
+            )}
+          </View>
+        ))}
+      </View>
+    </>
+  );
+};

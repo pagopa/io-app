@@ -1,0 +1,117 @@
+import {
+  FeatureInfo,
+  H6,
+  IOMarkdownLite,
+  VSpacer
+} from "@io-app/design-system";
+import I18n from "i18next";
+import { View } from "react-native";
+
+import { CustomWizardScreen } from "../../../../../components/screens/CustomWizardScreen";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../../store/hooks";
+import { absolutePortalLinksSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { openWebUrl } from "../../../../../utils/url";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+
+// A future development will allow different actions to
+// be performed if the authentication level is L3.
+// At the moment, this screen is not shown with level L3.
+// future development story: https://pagopa.atlassian.net/browse/IOPID-1228
+export type UnlockAccessProps = {
+  authLevel: "L2" | "L3";
+};
+const UnlockAccessComponent = (props: UnlockAccessProps) => {
+  const { authLevel } = props;
+  const navigation = useIONavigation();
+  const absolutePortalLinks = useIOSelector(absolutePortalLinksSelector);
+
+  const ModalContent = () => (
+    <View testID="modal-view-test">
+      <IOMarkdownLite
+        content={I18n.t("authentication.unlockmodal.description")}
+      />
+      <VSpacer size={24} />
+      <H6>{I18n.t("authentication.unlockmodal.title2")}</H6>
+      <VSpacer size={24} />
+      <FeatureInfo
+        body={I18n.t("authentication.unlockmodal.listitem1")}
+        iconName="security"
+      />
+      <VSpacer size={16} />
+      <FeatureInfo
+        action={{
+          label: I18n.t("authentication.unlockmodal.listitem2_2"),
+          onPress: () => openWebUrl(absolutePortalLinks.io_web)
+        }}
+        body={I18n.t("authentication.unlockmodal.listitem2_1")}
+        iconName="login"
+      />
+      <VSpacer size={16} />
+      <FeatureInfo
+        body={
+          <IOMarkdownLite
+            content={I18n.t("authentication.unlockmodal.listitem3")}
+          />
+        }
+        iconName="locked"
+      />
+    </View>
+  );
+
+  const {
+    present: presentVeryLongAutoresizableBottomSheetWithFooter,
+    bottomSheet: veryLongAutoResizableBottomSheetWithFooter
+  } = useIOBottomSheetModal({
+    title: I18n.t("authentication.unlockmodal.title"),
+    component: <ModalContent />
+  });
+
+  const onPressActionButton = () => {
+    if (authLevel === "L2") {
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.LANDING
+      });
+    }
+    // for the future developement: add here
+    // the navigation to continue the flow
+    // future development jira task:
+    // https://pagopa.atlassian.net/browse/IOPID-1228
+  };
+
+  return (
+    <>
+      <CustomWizardScreen
+        actionButton={{
+          testID: "button-link-test",
+          label:
+            authLevel === "L2"
+              ? I18n.t("global.buttons.close")
+              : I18n.t("authentication.unlock.loginIO"),
+          onPress: onPressActionButton
+        }}
+        buttonLink={{
+          label: I18n.t("authentication.unlock.learnmore"),
+          onPress: presentVeryLongAutoresizableBottomSheetWithFooter,
+          testID: "learn-more-link-test"
+        }}
+        description={
+          authLevel === "L2"
+            ? I18n.t("authentication.unlock.subtitlel2")
+            : I18n.t("authentication.unlock.subtitlel3")
+        }
+        pictogram="accessDenied"
+        primaryButton={{
+          testID: "button-solid-test",
+          label: I18n.t("authentication.unlock.title"),
+          onPress: () => openWebUrl(absolutePortalLinks.io_web)
+        }}
+        title={I18n.t("authentication.unlock.title")}
+      />
+      {veryLongAutoResizableBottomSheetWithFooter}
+    </>
+  );
+};
+
+export default UnlockAccessComponent;

@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`stateUtils snapshots flowStates 1`] = `
+{
+  "androidNFCActivation": "androidNFCActivation",
+  "cieCanAdvisory": "cieCanAdvisory",
+  "cieCanInsertion": "cieCanInsertion",
+  "cieScanning": "cieScanning",
+  "cieScanningAdvisory": "cieScanningAdvisory",
+  "creatingMandate": "creatingMandate",
+  "displayingAarToS": "displayingAarToS",
+  "displayingNotificationData": "displayingNotificationData",
+  "fetchingNotificationData": "fetchingNotificationData",
+  "fetchingQRData": "fetchingQRData",
+  "ko": "ko",
+  "nfcNotSupportedFinal": "nfcNotSupportedFinal",
+  "none": "none",
+  "notAddressee": "notAddressee",
+  "notAddresseeFinal": "notAddresseeFinal",
+  "validatingMandate": "validatingMandate",
+}
+`;
+
+exports[`stateUtils snapshots validTransitions 1`] = `
+Map {
+  "androidNFCActivation" => Set {
+    "cieScanning",
+  },
+  "cieCanAdvisory" => Set {
+    "cieCanInsertion",
+  },
+  "cieCanInsertion" => Set {
+    "cieCanAdvisory",
+    "cieScanningAdvisory",
+  },
+  "cieScanning" => Set {
+    "cieCanAdvisory",
+    "cieScanningAdvisory",
+    "validatingMandate",
+  },
+  "cieScanningAdvisory" => Set {
+    "androidNFCActivation",
+    "cieCanInsertion",
+    "cieScanning",
+  },
+  "creatingMandate" => Set {
+    "cieCanAdvisory",
+    "ko",
+  },
+  "displayingAarToS" => Set {
+    "fetchingQRData",
+  },
+  "displayingNotificationData" => Set {},
+  "fetchingNotificationData" => Set {
+    "displayingNotificationData",
+    "ko",
+  },
+  "fetchingQRData" => Set {
+    "fetchingNotificationData",
+    "ko",
+    "notAddressee",
+    "notAddresseeFinal",
+  },
+  "ko" => Set {
+    "cieCanAdvisory",
+    "fetchingNotificationData",
+    "fetchingQRData",
+  },
+  "none" => Set {
+    "displayingAarToS",
+  },
+  "notAddressee" => Set {
+    "creatingMandate",
+    "nfcNotSupportedFinal",
+  },
+  "notAddresseeFinal" => Set {},
+  "validatingMandate" => Set {
+    "fetchingNotificationData",
+    "ko",
+  },
+}
+`;

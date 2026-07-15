@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`environment reducer initial state should match expected values 1`] = `
+{
+  "applicationInitialized": false,
+  "engagementScreenShownThisSession": false,
+  "onboardingInstructionsShown": false,
+  "pushNotificationPermissionsRequestDuration": undefined,
+  "systemNotificationsEnabled": false,
+}
+`;

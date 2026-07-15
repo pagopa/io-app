@@ -1,0 +1,91 @@
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import { call, put, select, takeLatest } from "typed-redux-saga/macro";
+import { ActionType, getType } from "typesafe-actions";
+
+import { sessionManagerClientManager } from "../../../../api/SessionManagerClientManager";
+import { apiUrlPrefix } from "../../../../config";
+import { setMainNavigatorReady } from "../../../../navigation/NavigationService";
+import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
+import { startApplicationInitialization } from "../../../../store/actions/application";
+import { startupLoadSuccess } from "../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../store/reducers/startup";
+import { SagaCallReturnType } from "../../../../types/utils";
+import { convertUnknownToError } from "../../../../utils/errors";
+import { resetAssistanceData } from "../../../../utils/supportAssistance";
+import { deleteCurrentLollipopKeyAndGenerateNewKeyTag } from "../../../lollipop/saga";
+import {
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../../../messages/analytics";
+import { logoutFailure, logoutRequest, logoutSuccess } from "../store/actions";
+import { bareSessionTokenSelector } from "../store/selectors";
+
+export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
+  const sessionToken = yield* select(bareSessionTokenSelector);
+
+  if (!sessionToken) {
+    trackUndefinedBearerToken(UndefinedBearerTokenPhase.logoutStandard);
+    return;
+  }
+
+  const { logout } = sessionManagerClientManager.getClient(apiUrlPrefix, {
+    token: sessionToken
+  });
+
+  // Issue a logout request to the backend, asking to delete the session
+  // FIXME: if there's no connectivity to the backend, this request will
+  //        block for a while.
+  try {
+    if (payload.withApiCall) {
+      const response: SagaCallReturnType<typeof logout> = yield* call(
+        logout,
+        {}
+      );
+      if (E.isRight(response)) {
+        if (response.right.status === 200) {
+          yield* put(logoutSuccess());
+        } else {
+          // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
+          const error = Error(
+            response.right.status === 500 && response.right.value.title
+              ? response.right.value.title
+              : "Unknown error"
+          );
+          yield* put(logoutFailure({ error }));
+        }
+      } else {
+        const logoutError = {
+          error: Error(readableReport(response.left))
+        };
+        yield* put(logoutFailure(logoutError));
+      }
+    } else {
+      yield* put(logoutSuccess());
+    }
+  } catch (e) {
+    const logoutError = {
+      error: convertUnknownToError(e)
+    };
+    yield* put(logoutFailure(logoutError));
+  } finally {
+    // clean up crypto keys
+    yield* deleteCurrentLollipopKeyAndGenerateNewKeyTag();
+    // reset mixpanel
+    yield* call(resetMixpanelSaga);
+    // clean up any assistance data
+    resetAssistanceData();
+    // startApplicationInitialization is dispatched
+    // within the componentDidMount of IngressScreen
+    yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
+    yield* put(startApplicationInitialization());
+    setMainNavigatorReady(false);
+  }
+}
+
+/**
+ * Handles the logout flow
+ */
+export function* watchLogoutSaga() {
+  yield* takeLatest(getType(logoutRequest), logoutSaga);
+}

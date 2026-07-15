@@ -1,0 +1,122 @@
+import { IOToast } from "@io-app/design-system";
+import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
+import { Alert, View } from "react-native";
+import ReactNativeHapticFeedback, {
+  HapticFeedbackTypes
+} from "react-native-haptic-feedback";
+
+import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
+import {
+  BarcodeFailure,
+  BarcodeScanBaseScreenComponent,
+  IOBarcode,
+  IOBarcodeFormat,
+  IOBarcodeType,
+  useIOBarcodeFileReader
+} from "../../../barcode";
+import * as analytics from "../../../barcode/analytics";
+import { IOBarcodeOrigin } from "../../../barcode/types/IOBarcode";
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
+import { IdPayPaymentRoutes } from "../navigation/routes";
+
+const IDPayPaymentCodeScan = () => {
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const openDeepLink = useOpenDeepLink();
+
+  const barcodeFormats: Array<IOBarcodeFormat> = ["QR_CODE"];
+  const barcodeTypes: Array<IOBarcodeType> = ["IDPAY"];
+
+  const handleBarcodeSuccess = (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => {
+    if (barcodes.length > 1) {
+      Alert.alert(
+        I18n.t("barcodeScan.multipleResultsAlert.title"),
+        I18n.t("barcodeScan.multipleResultsAlert.body"),
+        [
+          {
+            text: I18n.t(`barcodeScan.multipleResultsAlert.action`),
+            style: "default"
+          }
+        ],
+        { cancelable: false }
+      );
+      return;
+    }
+
+    const barcode = barcodes[0];
+
+    ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+
+    analytics.trackBarcodeScanSuccess("idpay", barcode, origin);
+
+    if (barcode.type === "IDPAY") {
+      openDeepLink(barcode.authUrl);
+    }
+  };
+
+  const handleBarcodeError = (failure: BarcodeFailure) => {
+    IOToast.error(I18n.t("barcodeScan.error"));
+    analytics.trackBarcodeScanFailure("idpay", failure);
+  };
+
+  const navigateToCodeInputScreen = () => {
+    analytics.trackBarcodeManualEntryPath("idpay");
+    navigation.navigate(IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
+      screen: IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
+    });
+  };
+
+  const {
+    filePickerBottomSheet,
+    showFilePicker,
+    isLoading: isFileReaderLoading,
+    isFilePickerVisible
+  } = useIOBarcodeFileReader({
+    barcodeFormats,
+    barcodeTypes,
+    onBarcodeSuccess: handleBarcodeSuccess,
+    onBarcodeError: handleBarcodeError,
+    barcodeAnalyticsFlow: "idpay"
+  });
+
+  return (
+    <>
+      <View
+        importantForAccessibility={
+          isFilePickerVisible ? "no-hide-descendants" : "auto"
+        }
+        style={{ flex: 1 }}
+      >
+        <BarcodeScanBaseScreenComponent
+          barcodeAnalyticsFlow="idpay"
+          barcodeFormats={barcodeFormats}
+          barcodeTypes={barcodeTypes}
+          contextualHelp={emptyContextualHelp}
+          isDisabled={isFilePickerVisible || isFileReaderLoading}
+          isLoading={isFileReaderLoading}
+          onBarcodeError={handleBarcodeError}
+          onBarcodeSuccess={handleBarcodeSuccess}
+          onFileInputPressed={showFilePicker}
+          onManualInputPressed={navigateToCodeInputScreen}
+        />
+      </View>
+      {filePickerBottomSheet}
+    </>
+  );
+};
+
+const IDPayPaymentCodeScanScreen = () => (
+  <IdPayFeatureFlagGuard>
+    <IDPayPaymentCodeScan />
+  </IdPayFeatureFlagGuard>
+);
+
+export { IDPayPaymentCodeScanScreen };

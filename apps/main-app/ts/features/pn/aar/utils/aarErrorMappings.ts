@@ -1,0 +1,131 @@
+import _ from "lodash";
+import { ComponentType } from "react";
+
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
+import { isTestEnv } from "../../../../utils/environment";
+import {
+  trackSendAarMandateCieDataError,
+  trackSendAarMandateCieExpiredError,
+  trackSendAarMandateCieNotRelatedToDelegatorError,
+  trackSendAarMandateRetryError,
+  trackSendAarMandateTtlExpiredError
+} from "../analytics";
+import {
+  CieExpiredComponent,
+  CieValidationExpiredTtlComponent,
+  GenericCieValidationErrorComponent,
+  UnrelatedCieComponent
+} from "../components/errors/SendAarCieValidationErrorComponent";
+import { SendAarGenericErrorComponent } from "../components/errors/SendAarErrorComponent";
+import { SendAarPendingDelegationErrorComponent } from "../components/errors/SendAarPendingDelegationErrorComponent";
+
+const cieErrors = {
+  PN_MANDATE_BADREQUEST: "PN_MANDATE_BADREQUEST",
+  PN_GENERIC_INVALIDPARAMETER: "PN_GENERIC_INVALIDPARAMETER",
+  PN_MANDATE_NOTFOUND: "PN_MANDATE_NOTFOUND",
+  PN_MANDATE_INVALIDVERIFICATIONCODE: "PN_MANDATE_INVALIDVERIFICATIONCODE",
+  CIE_INVALID_INPUT: "CIE_INVALID_INPUT",
+  CIE_INTEGRITY_ERROR: "CIE_INTEGRITY_ERROR",
+  CIE_SIGNATURE_ERROR: "CIE_SIGNATURE_ERROR",
+  CIE_CHECKER_SERVER_ERROR: "CIE_CHECKER_SERVER_ERROR",
+  CIE_EXPIRED_ERROR: "CIE_EXPIRED_ERROR",
+  CIE_NOT_RELATED_TO_DELEGATOR_ERROR: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR"
+} as const;
+const mandateCreationErrors = {
+  PN_MANDATE_ALREADYEXISTS: "PN_MANDATE_ALREADYEXISTS"
+} as const;
+const deliveryErrors = {
+  PN_DELIVERY_MANDATENOTFOUND: "PN_DELIVERY_MANDATENOTFOUND"
+} as const;
+const sendAARProblemJsonErrorCodes = {
+  ...cieErrors,
+  ...deliveryErrors,
+  ...mandateCreationErrors
+} as const;
+type SendAarErrorCodes = keyof typeof sendAARProblemJsonErrorCodes;
+
+// -------------- BEHAVIOUR MAPPING LOGIC --------------
+const isCieErrorCode = (code: string): code is keyof typeof cieErrors =>
+  code in cieErrors;
+
+export const getAarErrorBehaviour = (
+  problemJson?: AARProblemJson
+): AarErrorBehaviour => {
+  if (problemJson == null) {
+    return aarGenericBehaviour;
+  }
+  const { status, errors } = problemJson;
+  const errorCode = errors?.[0]?.code.toUpperCase();
+
+  if (errorCode == null) {
+    return aarGenericBehaviour;
+  }
+
+  const isCieError = isCieErrorCode(errorCode);
+
+  return _.get(
+    specificBehavioursByStatus,
+    [status, errorCode],
+    isCieError ? cieGenericBehaviour : aarGenericBehaviour
+  );
+};
+
+type AarErrorBehaviour = {
+  Component: ComponentType;
+  track: (reason: string) => void;
+};
+
+const specificBehavioursByStatus: {
+  [status: number]: {
+    [errorCode in SendAarErrorCodes]?: AarErrorBehaviour;
+  };
+} = {
+  [404]: {
+    [sendAARProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: {
+      track: trackSendAarMandateTtlExpiredError,
+      Component: CieValidationExpiredTtlComponent
+    }
+  },
+  [409]: {
+    [sendAARProblemJsonErrorCodes.PN_MANDATE_ALREADYEXISTS]: {
+      track: trackSendAarMandateRetryError,
+      Component: SendAarPendingDelegationErrorComponent
+    }
+  },
+  [422]: {
+    [sendAARProblemJsonErrorCodes.CIE_EXPIRED_ERROR]: {
+      track: trackSendAarMandateCieExpiredError,
+      Component: CieExpiredComponent
+    },
+    [sendAARProblemJsonErrorCodes.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]: {
+      track: trackSendAarMandateCieNotRelatedToDelegatorError,
+      Component: UnrelatedCieComponent
+    }
+  }
+};
+
+const cieGenericBehaviour: AarErrorBehaviour = {
+  track: trackSendAarMandateCieDataError,
+  Component: GenericCieValidationErrorComponent
+};
+
+const aarGenericBehaviour: AarErrorBehaviour = {
+  track: () => undefined,
+  Component: SendAarGenericErrorComponent
+};
+
+// ---------------- HELPER FUNCTION FOR SPECIFIC ERROR TYPES ----------------
+
+export const isAarAttachmentTtlError = (
+  error?: string
+): error is typeof deliveryErrors.PN_DELIVERY_MANDATENOTFOUND =>
+  error === deliveryErrors.PN_DELIVERY_MANDATENOTFOUND;
+
+export const testable = isTestEnv
+  ? {
+      cieErrors,
+      sendAARProblemJsonErrorCodes,
+      specificBehavioursByStatus,
+      aarGenericBehaviour
+    }
+  : undefined;

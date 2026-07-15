@@ -1,0 +1,26 @@
+import { BodySmall } from "@io-app/design-system";
+import I18n from "i18next";
+import { StyleSheet, View } from "react-native";
+
+import { ItWalletLogo } from "./ItWalletLogo";
+
+export const PoweredByItWalletText = () => (
+  <View style={styles.poweredBy} testID="poweredByItWalletTextTestID">
+    <BodySmall>
+      {I18n.t("features.itWallet.presentation.credentialDetails.partOf")}
+    </BodySmall>
+    <ItWalletLogo
+      accessibilityLabel={I18n.t("features.itWallet.title")}
+      height={16}
+      width={80}
+    />
+  </View>
+);
+
+const styles = StyleSheet.create({
+  poweredBy: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8
+  }
+});

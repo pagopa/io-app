@@ -22,6 +22,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 **/.xcode.env.local
+*.derived-data*
 
 # Ruby / CocoaPods
 **/Pods/
@@ -47,15 +48,14 @@ Google Play Android Developer-04750d2c0cf8.json
 
 # node.js
 #
-node_modules/
+node_modules
 npm-debug.log
-yarn-error.log
 
-# Ignore package-lock since we use yarn
+# Ignore package-lock since we use pnpm
 package-lock.json
 
 # Test js
-/coverage
+coverage
 
 # App Config
 .env
@@ -107,16 +107,16 @@ GeneratedDotEnv.m
 # XState Typegen
 **/*.typegen.*
 
-# Sentry prop file
-sentry.properties
-
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
 
-# Yarn
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+# eslint cache 
+.eslintcache
+
+.nx/cache
+.nx/workspace-data
+.nx/polygraph
+.claude/worktrees
+.claude/settings.local.json
+
+*.tsbuildinfo

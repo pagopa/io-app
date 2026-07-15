@@ -1,0 +1,120 @@
+import { Banner, IOVisualCostants, useIOToast } from "@io-app/design-system";
+import { useRoute } from "@react-navigation/native";
+import I18n from "i18next";
+import { useCallback, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+
+import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../config";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
+import { openWebUrl } from "../../../../utils/url";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
+import {
+  closeSessionExpirationBanner,
+  setStartActiveSessionLogin
+} from "../../activeSessionLogin/store/actions";
+import { isActiveSessionLoginEnabledSelector } from "../../activeSessionLogin/store/selectors";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { formattedExpirationDateSelector } from "../../common/store/selectors";
+import {
+  BANNER_ID,
+  trackLoginExpirationBannerClosure,
+  trackLoginExpirationBannerPrompt,
+  trackLoginExpirationBannerTap
+} from "../analytics";
+
+type Props = {
+  handleOnClose: () => void;
+};
+/**
+ * to use in case the banner's visibility has to be handled externally
+ * (see MultiBanner feature for the landing screen)
+ */
+export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
+  const { name: routeName } = useRoute();
+  const expirationDate = useIOSelector(formattedExpirationDateSelector);
+  const isActiveSessionLoginEnabled = useIOSelector(
+    isActiveSessionLoginEnabledSelector
+  );
+  const { error } = useIOToast();
+  const dispatch = useIODispatch();
+  const navigation = useIONavigation();
+
+  const banner_landing = isActiveSessionLoginEnabled
+    ? AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+    : helpCenterHowToDoWhenSessionIsExpiredUrl;
+
+  useEffect(() => {
+    trackLoginExpirationBannerPrompt(banner_landing);
+  }, [banner_landing]);
+
+  const handleOnPress = useCallback(() => {
+    if (isActiveSessionLoginEnabled) {
+      dispatch(setStartActiveSessionLogin());
+      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+        screen: SETTINGS_ROUTES.AUTHENTICATION,
+        params: {
+          screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+        }
+      });
+      trackLoginExpirationBannerTap(
+        AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+      );
+    } else {
+      trackHelpCenterCtaTapped(
+        BANNER_ID,
+        helpCenterHowToDoWhenSessionIsExpiredUrl,
+        routeName
+      );
+      openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
+        error(I18n.t("global.jserror.title"));
+      });
+    }
+  }, [dispatch, error, isActiveSessionLoginEnabled, navigation, routeName]);
+
+  const closeHandler = useCallback(() => {
+    trackLoginExpirationBannerClosure(banner_landing);
+    dispatch(closeSessionExpirationBanner());
+    handleOnClose();
+  }, [banner_landing, dispatch, handleOnClose]);
+
+  const title = isActiveSessionLoginEnabled
+    ? I18n.t("loginFeatures.loginPreferences.expirationBannerNew.title", {
+        date: expirationDate
+      })
+    : I18n.t("loginFeatures.loginPreferences.expirationBanner.title");
+
+  const content = isActiveSessionLoginEnabled
+    ? I18n.t("loginFeatures.loginPreferences.expirationBannerNew.content")
+    : I18n.t("loginFeatures.loginPreferences.expirationBanner.content", {
+        date: expirationDate
+      });
+
+  const action = isActiveSessionLoginEnabled
+    ? I18n.t("loginFeatures.loginPreferences.expirationBannerNew.action.label")
+    : I18n.t("loginFeatures.loginPreferences.expirationBanner.action.label");
+
+  return (
+    <View style={styles.margins}>
+      <Banner
+        action={action}
+        color="neutral"
+        content={content}
+        labelClose={I18n.t("global.buttons.close")}
+        onClose={closeHandler}
+        onPress={handleOnPress}
+        pictogramName="identityCheck"
+        testID="loginExpirationBanner"
+        title={title}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  margins: {
+    marginHorizontal: IOVisualCostants.appMarginDefault,
+    marginVertical: 16
+  }
+});

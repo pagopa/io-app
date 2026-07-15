@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`AarFlowStateActions should match snapshot for populateStoresWithEphemeralAarMessageData 1`] = `
+{
+  "meta": undefined,
+  "payload": {
+    "fiscalCode": "1209381023813098123",
+    "iun": "some-iun",
+    "mandateId": "",
+    "markdown": {},
+    "pnServiceID": "some-Sid",
+    "subject": "",
+    "thirdPartyMessage": {},
+  },
+  "type": "POPULATE_STORES_WITH_EPHEMERAL_AAR_MESSAGE_DATA",
+}
+`;
+
+exports[`AarFlowStateActions tryInitiateAarFlow action should have correct type="TRY_INITIATE_AAR_FLOW" 1`] = `
+{
+  "meta": undefined,
+  "payload": {
+    "aarUrl": "https://example.com/aar",
+  },
+  "type": "INITIATE_AAR_FLOW",
+}
+`;
