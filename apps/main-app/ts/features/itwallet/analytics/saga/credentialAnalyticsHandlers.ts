@@ -1,6 +1,9 @@
 import { SagaIterator } from "redux-saga";
 import { select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
+import { GlobalState } from "../../../../store/reducers/types";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
   itwCredentialsRemove,
   itwCredentialsStore
@@ -13,37 +16,11 @@ import {
 } from "../properties/propertyUpdaters";
 import { getMixPanelCredential } from "../utils";
 import { MixPanelCredential } from "../utils/types";
-import { GlobalState } from "../../../../store/reducers/types";
-import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 
 const MIXPANEL_EID_CREDENTIALS: ReadonlySet<MixPanelCredential> = new Set([
-  "ITW_PID",
-  "ITW_ID_V2"
+  "ITW_ID_V2",
+  "ITW_PID"
 ]);
-
-/**
- * Handles analytics updates when an ITW credential is stored.
- */
-export function* handleCredentialStoredAnalytics(
-  action: ActionType<typeof itwCredentialsStore>
-): SagaIterator {
-  const state: GlobalState = yield* select();
-  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
-
-  const credential = getAnalyticsCredentialFromStored(action.payload, isItwL3);
-
-  if (!credential) {
-    return;
-  }
-
-  if (MIXPANEL_EID_CREDENTIALS.has(credential)) {
-    updateItwStatusAndPIDProperties(state);
-    return;
-  }
-
-  updateCredentialProperties(credential, "valid");
-  updateThirdPartyCredentialProperty(state);
-}
 
 /**
  * Handles analytics updates when an ITW credential is removed.
@@ -71,6 +48,30 @@ export function* handleCredentialRemovedAnalytics(
   }
 
   updateCredentialProperties(credential, "not_available");
+  updateThirdPartyCredentialProperty(state);
+}
+
+/**
+ * Handles analytics updates when an ITW credential is stored.
+ */
+export function* handleCredentialStoredAnalytics(
+  action: ActionType<typeof itwCredentialsStore>
+): SagaIterator {
+  const state: GlobalState = yield* select();
+  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+
+  const credential = getAnalyticsCredentialFromStored(action.payload, isItwL3);
+
+  if (!credential) {
+    return;
+  }
+
+  if (MIXPANEL_EID_CREDENTIALS.has(credential)) {
+    updateItwStatusAndPIDProperties(state);
+    return;
+  }
+
+  updateCredentialProperties(credential, "valid");
   updateThirdPartyCredentialProperty(state);
 }
 

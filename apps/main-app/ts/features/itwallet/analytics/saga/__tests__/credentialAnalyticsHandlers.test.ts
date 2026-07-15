@@ -1,8 +1,11 @@
-import * as matchers from "redux-saga-test-plan/matchers";
-import { expectSaga } from "redux-saga-test-plan";
-import { DeepPartial } from "redux";
 import * as O from "fp-ts/Option";
+import { DeepPartial } from "redux";
+import { expectSaga } from "redux-saga-test-plan";
+import * as matchers from "redux-saga-test-plan/matchers";
+
 import { GlobalState } from "../../../../../store/reducers/types";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
   itwCredentialsRemove,
   itwCredentialsStore
@@ -16,8 +19,6 @@ import {
   handleCredentialRemovedAnalytics,
   handleCredentialStoredAnalytics
 } from "../credentialAnalyticsHandlers";
-import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 jest.mock("../../properties/propertyUpdaters", () => ({
   updateCredentialProperties: jest.fn(),
