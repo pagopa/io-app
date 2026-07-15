@@ -4,6 +4,7 @@ import {
   PropsWithChildren,
   useCallback,
   useContext,
+  useMemo,
   useState
 } from "react";
 import { Appearance, ColorSchemeName } from "react-native";
@@ -54,15 +55,16 @@ export const IOThemeContextProvider = ({
     setCurrentTheme(newTheme);
   }, []);
 
+  const value = useMemo(
+    () => ({
+      themeType: currentTheme,
+      theme: resolvedTheme === "dark" ? IOThemes.dark : IOThemes.light,
+      setTheme: handleThemeChange
+    }),
+    [currentTheme, resolvedTheme, handleThemeChange]
+  );
+
   return (
-    <IOThemeContext.Provider
-      value={{
-        themeType: currentTheme,
-        theme: resolvedTheme === "dark" ? IOThemes.dark : IOThemes.light,
-        setTheme: handleThemeChange
-      }}
-    >
-      {children}
-    </IOThemeContext.Provider>
+    <IOThemeContext.Provider value={value}>{children}</IOThemeContext.Provider>
   );
 };

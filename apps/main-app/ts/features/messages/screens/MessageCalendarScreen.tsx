@@ -100,7 +100,7 @@ export const MessageCalendarScreen = () => {
           action={{
             label: I18n.t("global.buttons.retry"),
             accessibilityLabel: I18n.t("global.buttons.retry"),
-            onPress: fetchCalendars
+            onPress: () => void fetchCalendars()
           }}
           pictogram={"umbrella"}
           title={I18n.t("messages.cta.errors.fetchCalendars")}

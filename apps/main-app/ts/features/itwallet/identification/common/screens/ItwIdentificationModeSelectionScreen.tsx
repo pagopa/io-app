@@ -32,6 +32,7 @@ import { trackItWalletIDMethod, trackItwUserWithoutCie } from "../../analytics";
 import { CieIdMethodModule } from "../components/CieIdMethodModule";
 import { CiePinMethodModule } from "../components/CiePinMethodModule";
 import { SpidMethodModule } from "../components/SpidMethodModule";
+import { itwHasNfcFeatureSelector } from "../store/selectors";
 
 export type ItwIdentificationModeSelectionScreenProps =
   IOStackNavigationRouteProps<
@@ -64,12 +65,15 @@ export const ItwIdentificationModeSelectionScreen = ({
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
+  const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
   const isL2Active = useIOSelector(itwLifecycleIsValidSelector);
 
   const isReissuanceMode = mode === "reissuance";
 
   const isCiePinDisabled =
-    disabledIdentificationMethods.includes("CiePin") || level === "l2-fallback";
+    disabledIdentificationMethods.includes("CiePin") ||
+    level === "l2-fallback" ||
+    !hasNfcFeature;
   const isSpidDisabled = disabledIdentificationMethods.includes("SPID");
   const isCieIdDisabled = disabledIdentificationMethods.includes("CieID");
 
