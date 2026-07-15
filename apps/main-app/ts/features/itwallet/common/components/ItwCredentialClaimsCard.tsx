@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
-import Animated from "react-native-reanimated";
+import Animated, { AnimatedStyle } from "react-native-reanimated";
 
 import { useItWalletTheme } from "../utils/theme";
 
@@ -36,7 +36,7 @@ type ItwCredentialClaimsCardProps = PropsWithChildren<{
   /** Optional content displayed at the end of the header. */
   headerAccessory?: ReactNode;
   /** Additional styles for the header, including animated styles. */
-  headerStyle?: StyleProp<ViewStyle>;
+  headerStyle?: StyleProp<AnimatedStyle<ViewStyle>>;
   /** Called when the interactive card header is pressed. */
   onHeaderPress?: () => void;
   /** The title displayed in the card header. */
