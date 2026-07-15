@@ -39,7 +39,6 @@ import {
   isItwProximityEnabledSelector,
   itwIsL3EnabledSelector
 } from "../../itwallet/common/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
@@ -80,7 +79,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     itwMixPanelCredentialDetailsSelector
   );
   const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
-  const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
@@ -214,7 +212,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   }, [dispatch]);
 
   const proximityActionProps: IOScrollViewActions["primary"] | undefined =
-    itwFeaturesEnabled && isProximityEnabled
+    isProximityEnabled
       ? {
           label: I18n.t("features.itWallet.presentation.ctas.present"),
           icon: "productITWallet",
