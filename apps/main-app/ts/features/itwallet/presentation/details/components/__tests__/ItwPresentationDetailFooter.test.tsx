@@ -25,9 +25,9 @@ const mockToastError = jest.fn();
 const mockToastInfo = jest.fn();
 const mockToastSuccess = jest.fn();
 
-jest.mock("@pagopa/io-app-design-system", () => ({
+jest.mock("@io-app/design-system", () => ({
   ...jest.requireActual<typeof import("@io-app/design-system")>(
-    "@pagopa/io-app-design-system"
+    "@io-app/design-system"
   ),
   useIOToast: () => ({
     error: mockToastError,
