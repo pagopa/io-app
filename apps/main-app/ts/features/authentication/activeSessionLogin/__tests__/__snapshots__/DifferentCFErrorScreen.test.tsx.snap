@@ -612,7 +612,6 @@ exports[`DifferentCFErrorScreen should render correctly and match snapshot 1`] =
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -636,7 +635,6 @@ exports[`DifferentCFErrorScreen should render correctly and match snapshot 1`] =
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
