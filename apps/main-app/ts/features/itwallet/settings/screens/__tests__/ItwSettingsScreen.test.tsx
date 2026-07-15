@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -27,7 +28,7 @@ describe("ItwSettingsScreen", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    // By default, wallet invalid and no simplified activation
+    // By default, wallet invalid
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
       .mockReturnValue(false);

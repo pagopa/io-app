@@ -1,15 +1,16 @@
 import {
+  hexToRgba,
   HStack,
   IOColors,
   IOText,
-  VStack,
-  hexToRgba,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+  useIOTheme,
+  VStack
+} from "@io-app/design-system";
 import { FunctionComponent, useState } from "react";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { connect } from "react-redux";
+
 import { selectItwEnv } from "../../features/itwallet/common/store/selectors/environment";
 import { ReduxProps } from "../../store/actions/types";
 import { useIOSelector } from "../../store/hooks";
@@ -22,7 +23,7 @@ import PagoPATestIndicator from "../PagoPATestIndicator";
 import { DebugDataIndicator } from "./DebugDataIndicator";
 import { DebugDataOverlay } from "./DebugDataOverlay";
 
-type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
+type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
 
 const debugItemBgColor = hexToRgba(IOColors.white, 0.4);
 const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
@@ -70,24 +71,24 @@ const DebugInfoOverlay: FunctionComponent<Props> = (props: Props) => {
   return (
     <>
       <View
-        style={[styles.versionContainer, { paddingTop: insets.top }]}
         pointerEvents="box-none"
+        style={[styles.versionContainer, { paddingTop: insets.top }]}
       >
         <VStack space={4} style={{ alignItems: "center" }}>
           <HStack space={4}>
             <Pressable
-              style={styles.versionTextWrapper}
-              onPress={() => setShowRootName(prevState => !prevState)}
-              accessibilityRole="button"
-              accessibilityLabel={appVersionText}
               accessibilityHint={"Tap here to show/hide the root name"}
+              accessibilityLabel={appVersionText}
+              accessibilityRole="button"
+              onPress={() => setShowRootName(prevState => !prevState)}
+              style={styles.versionTextWrapper}
             >
               <IOText
                 color={theme["textBody-secondary"]}
                 font="TitilliumSansPro"
-                weight="Semibold"
-                size={12}
                 lineHeight={16}
+                size={12}
+                weight="Semibold"
               >
                 {appVersionText}
               </IOText>
@@ -97,22 +98,22 @@ const DebugInfoOverlay: FunctionComponent<Props> = (props: Props) => {
           </HStack>
           {showRootName && (
             <Pressable
-              style={styles.routeText}
-              accessibilityRole="button"
               accessibilityHint={"Copy the technical screen name"}
+              accessibilityRole="button"
               onPress={() =>
                 clipboardSetStringWithFeedback(props.screenNameDebug)
               }
+              style={styles.routeText}
             >
               <IOText
                 color={theme["textBody-secondary"]}
                 font="TitilliumSansPro"
-                weight="Regular"
-                size={12}
                 lineHeight={16}
+                size={12}
                 style={{
                   textAlign: "center"
                 }}
+                weight="Regular"
               >
                 {props.screenNameDebug}
               </IOText>
@@ -150,9 +151,9 @@ const ItwPreIndicator = () => {
       <IOText
         color={"error-850"}
         font="TitilliumSansPro"
-        weight="Semibold"
-        size={12}
         lineHeight={16}
+        size={12}
+        weight="Semibold"
       >
         ITW PRE
       </IOText>

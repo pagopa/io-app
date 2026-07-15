@@ -1,9 +1,11 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
+
 import { UserDataProcessing } from "../../../../../../definitions/identity/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/identity/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../../../../definitions/identity/UserDataProcessingStatus";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing,
@@ -14,7 +16,6 @@ import {
   loadUserDataProcessingSaga,
   upsertUserDataProcessingSaga
 } from "../userDataProcessing";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 
 describe("loadUserDataProcessingSaga", () => {
   const getUserDataProcessingRequest = jest.fn();
@@ -49,7 +50,7 @@ describe("loadUserDataProcessingSaga", () => {
       .isDone();
   });
 
-  it("if response is 200, the user previously submitted the kind of request specified as the payload choice ", () => {
+  it("if response is 200, the user previously submitted the kind of request specified as the payload choice", () => {
     const mokedStatus: UserDataProcessing = {
       choice: UserDataProcessingChoiceEnum.DOWNLOAD,
       status: UserDataProcessingStatusEnum.PENDING,

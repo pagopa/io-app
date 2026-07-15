@@ -1,14 +1,19 @@
-import { put, select } from "typed-redux-saga/macro";
-import { initiateAarFlow } from "../../pn/aar/store/actions";
-import { isSendAarLink } from "../../pn/aar/utils/deepLinking";
-import { clearLinkingUrl } from "../actions";
-import { storedLinkingUrlSelector } from "../reducers";
+import { CommonActions } from "@react-navigation/native";
+import { call, put, select } from "typed-redux-saga/macro";
+
+import NavigationService from "../../../navigation/NavigationService";
 import {
   isCGNLinking,
   shouldTriggerWalletUpdate
 } from "../../../utils/deepLinkUtils";
-import { walletUpdate } from "../../wallet/store/actions";
 import { cgnEycaStatus } from "../../bonus/cgn/store/actions/eyca/details";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
+import { parseCredentialOfferLink } from "../../itwallet/offer/utils";
+import { initiateAarFlow } from "../../pn/aar/store/actions";
+import { isSendAarLink } from "../../pn/aar/utils/deepLinking";
+import { walletUpdate } from "../../wallet/store/actions";
+import { clearLinkingUrl } from "../actions";
+import { storedLinkingUrlSelector } from "../reducers";
 
 export function* handleStoredLinkingUrlIfNeeded() {
   const storedLinkingUrl = yield* select(storedLinkingUrlSelector);
@@ -20,6 +25,23 @@ export function* handleStoredLinkingUrlIfNeeded() {
 
       return true;
     }
+
+    const credentialOfferLink = parseCredentialOfferLink(storedLinkingUrl);
+    if (credentialOfferLink !== undefined) {
+      yield* put(clearLinkingUrl());
+      yield* call(
+        NavigationService.dispatchNavigationAction,
+        CommonActions.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
+          params: {
+            itwCredentialOfferUri: credentialOfferLink.credentialOfferUri
+          }
+        })
+      );
+
+      return true;
+    }
+
     if (shouldTriggerWalletUpdate(storedLinkingUrl)) {
       yield* put(clearLinkingUrl());
       yield* put(walletUpdate());

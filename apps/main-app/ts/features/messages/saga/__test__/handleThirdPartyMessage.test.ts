@@ -1,23 +1,24 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+
 import {
   TagEnum,
   TagEnum as TEBASE
 } from "../../../../../definitions/communication/MessageCategoryBase";
 import { TagEnum as TEPAYMENT } from "../../../../../definitions/communication/MessageCategoryPayment";
 import { TagEnum as TESEND } from "../../../../../definitions/communication/MessageCategoryPN";
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
-import { handleThirdPartyMessage, testable } from "../handleThirdPartyMessage";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/communication/ThirdPartyMessageWithContent";
-import * as ANALYTICS from "../../analytics";
-import * as SEND_ANALYTICS from "../../../pn/analytics";
-import { loadThirdPartyMessage } from "../../store/actions";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import * as SEND_ANALYTICS from "../../../pn/analytics";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
+import * as ANALYTICS from "../../analytics";
+import { loadThirdPartyMessage } from "../../store/actions";
+import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { getCommunicationClient } from "../commons";
+import { handleThirdPartyMessage, testable } from "../handleThirdPartyMessage";
 
 jest.mock("../commons");
 

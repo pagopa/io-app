@@ -1,5 +1,5 @@
-import { testable } from "../handleFimsGetConsentsList";
 import * as analytics from "../../../../../utils/analytics";
+import { testable } from "../handleFimsGetConsentsList";
 
 // Mock the analytics module
 jest.mock("../../../../../utils/analytics");
@@ -14,9 +14,7 @@ describe("handleFimsGetConsentsList", () => {
 
     // This test will only run in test environment where testable is defined
     if (!safeParseFailureResponseBody) {
-      it.skip("testable is not available (not in test environment)", () => {
-        // Skipped when not in test env
-      });
+      it.todo("testable is not available (not in test environment)");
       return;
     }
 

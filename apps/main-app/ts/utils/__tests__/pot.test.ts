@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import {
   foldK,
   isLoadingOrUpdating,
@@ -254,7 +255,7 @@ const verifyZeroCallMock = (
   delete zeroCallMock[propertyToRemove];
   // eslint-disable-next-line functional/no-let
   let key: keyof typeof zeroCallMock;
-  // eslint-disable-next-line guard-for-in
+
   for (key in zeroCallMock) {
     const value = zeroCallMock[key];
     expect(value).not.toHaveBeenCalled();

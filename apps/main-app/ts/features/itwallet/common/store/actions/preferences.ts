@@ -1,6 +1,7 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { ItwAuthLevel, CredentialMetadata } from "../../utils/itwTypesUtils.ts";
+
 import { IdentificationContext } from "../../../machine/eid/context.ts";
+import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export const itwSetReviewPending = createStandardAction(
   "ITW_SET_REVIEW_PENDING"
@@ -17,14 +18,6 @@ export const itwSetClaimValuesHidden = createStandardAction(
 export const itwSetFiscalCodeWhitelisted = createStandardAction(
   "ITW_SET_FISCAL_CODE_WHITELISTED"
 )<boolean>();
-
-export const itwFreezeSimplifiedActivationRequirements = createStandardAction(
-  "ITW_FREEZE_SIMPLIFIED_ACTIVATION_REQUIREMENTS"
-)<void>();
-
-export const itwClearSimplifiedActivationRequirements = createStandardAction(
-  "ITW_CLEAR_SIMPLIFIED_ACTIVATION_REQUIREMENTS"
-)<void>();
 
 export const itwSetPidReissuingSurveyHidden = createStandardAction(
   "ITW_SET_PID_REISSUING_SURVEY_HIDDEN"
@@ -46,15 +39,29 @@ export const itwSetIdentificationMode = createStandardAction(
   "ITW_SET_IDENTIFICATION_MODE"
 )<IdentificationContext["mode"] | undefined>();
 
+export type ItwWalletActivationFeedbackBannerData = {
+  authMethod: string;
+  date: string;
+  docStatus: "active" | "not_active";
+};
+
+export const itwSetWalletActivationFeedbackBannerData = createStandardAction(
+  "ITW_SET_WALLET_ACTIVATION_FEEDBACK_BANNER_DATA"
+)<ItwWalletActivationFeedbackBannerData>();
+
+export const itwClearWalletActivationFeedbackBannerData = createStandardAction(
+  "ITW_CLEAR_WALLET_ACTIVATION_FEEDBACK_BANNER_DATA"
+)<void>();
+
 export type ItwPreferencesActions =
-  | ActionType<typeof itwSetReviewPending>
+  | ActionType<typeof itwClearCredentialUpgradeFailed>
+  | ActionType<typeof itwClearWalletActivationFeedbackBannerData>
+  | ActionType<typeof itwDisableItwActivation>
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
-  | ActionType<typeof itwSetFiscalCodeWhitelisted>
-  | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
-  | ActionType<typeof itwClearSimplifiedActivationRequirements>
-  | ActionType<typeof itwSetPidReissuingSurveyHidden>
   | ActionType<typeof itwSetCredentialUpgradeFailed>
-  | ActionType<typeof itwClearCredentialUpgradeFailed>
-  | ActionType<typeof itwDisableItwActivation>
-  | ActionType<typeof itwSetIdentificationMode>;
+  | ActionType<typeof itwSetFiscalCodeWhitelisted>
+  | ActionType<typeof itwSetIdentificationMode>
+  | ActionType<typeof itwSetPidReissuingSurveyHidden>
+  | ActionType<typeof itwSetReviewPending>
+  | ActionType<typeof itwSetWalletActivationFeedbackBannerData>;

@@ -1,7 +1,9 @@
 import type {
   AuthorizationDetail,
-  CredentialIssuance
+  CredentialIssuance,
+  ItwVersion
 } from "@pagopa/io-react-native-wallet";
+
 import type {
   CredentialAccessToken,
   CredentialBundle,
@@ -9,12 +11,8 @@ import type {
   IssuerConfiguration,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
-import { IssuanceFailure } from "./failure";
 
-export type IdentificationContext =
-  | { mode: "cieId"; level: "L2" | "L3" }
-  | { mode: "ciePin"; level: "L3"; pin: string }
-  | { mode: "spid"; level: "L2"; idpId: string };
+import { IssuanceFailure } from "./failure";
 
 /**
  * When authenticating with CIE + PIN the flow is interrupted
@@ -24,11 +22,11 @@ export type IdentificationContext =
  */
 export type AuthenticationContext = {
   authUrl: string;
+  callbackUrl: string;
   clientId: string;
   codeVerifier: string;
-  issuerConf: IssuerConfiguration;
   credentialDefinition: AuthorizationDetail;
-  callbackUrl: string;
+  issuerConf: IssuerConfiguration;
   redirectUri: string;
 };
 
@@ -37,46 +35,84 @@ export type AuthenticationContext = {
  * and NFC status on the device.
  */
 export type CieContext = {
-  isNFCEnabled: boolean;
   isCIEAuthenticationSupported: boolean;
+  isNFCEnabled: boolean;
 };
 
-/**
- * The MrtdPoPContext contains the parameters needed to perform
- * the Proof of Possession (PoP) flow for MRTD-based eID issuance.
- */
-export type MrtdPoPContext = {
+export type Context = {
   /**
-   * MRTD Challenge info payload
+   * The access token obtained from the Issuer. If the session with the Wallet Provider expires
+   * before requesting the credential, this token is used to retry the request.
    */
-  challenge: string;
-  mrtd_auth_session: string;
-  mrtd_pop_nonce: string;
-  validationUrl: string;
+  accessToken: CredentialAccessToken | undefined;
   /**
-   * The CIE card CAN code (6 digits)
+   * The authentication context, which contains the parameters needed to resume the authentication flow
+   * after reading the CIE card.
    */
-  can?: string | undefined;
+  authenticationContext: AuthenticationContext | undefined;
   /**
-   * IAS and MRTD payloads from the CIE MRTD PACE reading process.
+   * CIE capabilities and NFC status.
    */
-  ias?: CredentialIssuance.MRTDPoP.IasPayload | undefined;
-  mrtd?: CredentialIssuance.MRTDPoP.MrtdPayload | undefined;
+  cieContext: CieContext | undefined;
   /**
-   * The callback URL to be used after the MRTD PoP flow from which
-   * we fetch the final authorization URL.
+   * The credentials that need to be upgraded to the new format.
    */
-  callbackUrl?: string;
+  credentialsToUpgrade: ReadonlyArray<CredentialMetadata>;
+  /**
+   * The credential type that triggered the eID issuance flow.
+   */
+  credentialType: string | undefined;
+  /**
+   * The obtained PID credential
+   */
+  eid: CredentialBundle | undefined;
+  /**
+   * Credentials that failed the upgrade process.
+   */
+  failedCredentials: ReadonlyArray<CredentialMetadata> | undefined;
+  /**
+   * The failure that occurred during the issuance process, if any.
+   */
+  failure: IssuanceFailure | undefined;
+  /**
+   * The identification context, which can be either CIE ID, CIE PIN, or SPID.
+   * It is used to determine the mode and level of identification.
+   */
+  identification: IdentificationContext | undefined;
+  /**
+   * The integrity key tag used to verify the integrity of the wallet instance attestation.
+   * If this is provided the machine will skip the wallet instance attestation creation
+   */
+  integrityKeyTag: string | undefined;
+  /**
+   * IT-Wallet technical specifications version. Dependending on the particular user configuration,
+   * the issuance machine must be able to use different versions.
+   * This is a local value used only during the issuance flow.
+   */
+  itwVersion: ItwVersion;
+  /**
+   * The level of eID issuance, which determines the authentication methods allowed and
+   * the eID level that will be issued: Documenti su IO (L2) or IT Wallet (L2+, L3)
+   */
+  level: EidIssuanceLevel | undefined;
+  /**
+   * The mode of eID issuance. This determines the flow and actions available in the
+   * eID issuance process. Defaults to "issuance" if not specified.
+   */
+  mode: EidIssuanceMode | undefined;
+  /**
+   * The MRTD PoP context used during the issuance process.
+   */
+  mrtdContext: MrtdPoPContext | undefined;
+  /**
+   * The wallet instance attestation JWT used to verify the wallet instance.
+   */
+  walletInstanceAttestation: undefined | WalletInstanceAttestations;
+  /**
+   * An optional dictionary of Wallet Unit Attestations generated for the issuance.
+   */
+  walletUnitAttestations?: Record<string, string>;
 };
-
-/**
- * The EidIssuanceMode represents the different modes of eID issuance.
- * - "issuance": The user is issuing a new PID credential.
- * - "reissuance": The user is reissuing an existing PID credential.
- * - "upgrade": The user is upgrading from Documenti su IO to IT Wallet.
- * This is used to determine the flow and actions available in the eID issuance process.
- */
-export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
 
 /**
  * The EidIssuanceLevel represents the different levels of eID issuance and
@@ -87,76 +123,50 @@ export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
  */
 export type EidIssuanceLevel = "l2" | "l2-fallback" | "l3";
 
-export type Context = {
+/**
+ * The EidIssuanceMode represents the different modes of eID issuance.
+ * - "issuance": The user is issuing a new PID credential.
+ * - "reissuance": The user is reissuing an existing PID credential.
+ * - "upgrade": The user is upgrading from Documenti su IO to IT Wallet.
+ * This is used to determine the flow and actions available in the eID issuance process.
+ */
+export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
+
+export type IdentificationContext =
+  | { idpId: string; level: "L2"; mode: "spid" }
+  | { level: "L2" | "L3"; mode: "cieId" }
+  | { level: "L3"; mode: "ciePin"; pin: string };
+
+/**
+ * The MrtdPoPContext contains the parameters needed to perform
+ * the Proof of Possession (PoP) flow for MRTD-based eID issuance.
+ */
+export type MrtdPoPContext = {
   /**
-   * The mode of eID issuance. This determines the flow and actions available in the
-   * eID issuance process. Defaults to "issuance" if not specified.
+   * The callback URL to be used after the MRTD PoP flow from which
+   * we fetch the final authorization URL.
    */
-  mode: EidIssuanceMode | undefined;
+  callbackUrl?: string;
   /**
-   * The level of eID issuance, which determines the authentication methods allowed and
-   * the eID level that will be issued: Documenti su IO (L2) or IT Wallet (L2+, L3)
+   * The CIE card CAN code (6 digits)
    */
-  level: EidIssuanceLevel | undefined;
+  can?: string | undefined;
   /**
-   * The integrity key tag used to verify the integrity of the wallet instance attestation.
-   * If this is provided the machine will skip the wallet instance attestation creation
+   * MRTD Challenge info payload
    */
-  integrityKeyTag: string | undefined;
+  challenge: string;
   /**
-   * The wallet instance attestation JWT used to verify the wallet instance.
+   * IAS and MRTD payloads from the CIE MRTD PACE reading process.
    */
-  walletInstanceAttestation: WalletInstanceAttestations | undefined;
-  /**
-   * CIE capabilities and NFC status.
-   */
-  cieContext: CieContext | undefined;
-  /**
-   * The identification context, which can be either CIE ID, CIE PIN, or SPID.
-   * It is used to determine the mode and level of identification.
-   */
-  identification: IdentificationContext | undefined;
-  /**
-   * The authentication context, which contains the parameters needed to resume the authentication flow
-   * after reading the CIE card.
-   */
-  authenticationContext: AuthenticationContext | undefined;
-  /**
-   * The MRTD PoP context used during the issuance process.
-   */
-  mrtdContext: MrtdPoPContext | undefined;
-  /**
-   * The obtained PID credential
-   */
-  eid: CredentialBundle | undefined;
-  /**
-   * The failure that occurred during the issuance process, if any.
-   */
-  failure: IssuanceFailure | undefined;
-  /**
-   * The credentials that need to be upgraded to the new format.
-   */
-  credentialsToUpgrade: ReadonlyArray<CredentialMetadata>;
-  /**
-   * Credentials that failed the upgrade process.
-   */
-  failedCredentials: ReadonlyArray<CredentialMetadata> | undefined;
-  /**
-   * The credential type that triggered the eID issuance flow.
-   */
-  credentialType: string | undefined;
-  /**
-   * The access token obtained from the Issuer. If the session with the Wallet Provider expires
-   * before requesting the credential, this token is used to retry the request.
-   */
-  accessToken: CredentialAccessToken | undefined;
-  /**
-   * An optional dictionary of Wallet Unit Attestations generated for the issuance.
-   */
-  walletUnitAttestations?: Record<string, string>;
+  ias?: CredentialIssuance.MRTDPoP.IasPayload | undefined;
+  mrtd?: CredentialIssuance.MRTDPoP.MrtdPayload | undefined;
+  mrtd_auth_session: string;
+  mrtd_pop_nonce: string;
+  validationUrl: string;
 };
 
 export const InitialContext: Context = {
+  itwVersion: "1.0.0", // Initial value to satisfy type constraints. It is assigned in the `onInit` action.
   mode: undefined,
   level: undefined,
   integrityKeyTag: undefined,

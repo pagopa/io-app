@@ -1,6 +1,11 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+
+import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../../../../definitions/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import mockedProfile from "../../../../../__mocks__/initializedProfile";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { ProfileState } from "../reducers";
 import {
   isProfileEmailValidatedSelector,
@@ -10,16 +15,12 @@ import {
   pushNotificationPreviewEnabledSelector,
   pushNotificationRemindersEnabledSelector
 } from "../selectors";
-import {
-  isProfileEmailValidated,
-  isProfileFirstOnBoarding,
-  hasProfileEmail
-} from "../utils/guards";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { ReminderStatusEnum } from "../../../../../../definitions/identity/ReminderStatus";
 import { ProfileError } from "../types";
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/identity/PushNotificationsContentType";
+import {
+  hasProfileEmail,
+  isProfileEmailValidated,
+  isProfileFirstOnBoarding
+} from "../utils/guards";
 
 describe("email profile selector", () => {
   const potProfile: ProfileState = pot.some(mockedProfile);
@@ -34,7 +35,7 @@ describe("email profile selector", () => {
     ...mockedProfile,
     email: undefined
   });
-  it("should return the user's email address", () => {
+  it("should return O.none when the profile has no email address", () => {
     expect(
       profileEmailSelector.resultFunc(potProfileWithNoEmail)
     ).toStrictEqual(O.none);

@@ -1,5 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -32,11 +33,11 @@ type Variant = keyof ReturnType<typeof getMessageRouterErrorMap>;
 
 type VariantScenario = {
   name: string;
-  variant: Variant;
-  primaryTestId: string;
-  secondaryTestId: string | null;
   /** Whether the primary button dispatches `onCancel` instead of `onRetry` */
   primaryIsCancel: boolean;
+  primaryTestId: string;
+  secondaryTestId: null | string;
+  variant: Variant;
 };
 
 const variantScenarios: Array<VariantScenario> = [
@@ -134,8 +135,8 @@ const renderComponent = () => {
     () => (
       <MessageRouterScreenErrorComponent
         messageId={TEST_MESSAGE_ID}
-        onRetry={mockOnRetry}
         onCancel={mockOnCancel}
+        onRetry={mockOnRetry}
       />
     ),
     MESSAGES_ROUTES.MESSAGE_ROUTER,

@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { useIOSelector } from "../../../store/hooks";
-import { shouldShowEngagementScreenSelector } from "../store/reducers";
+
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../store/hooks";
 import { NOTIFICATIONS_ROUTES } from "../navigation/routes";
+import { shouldShowEngagementScreenSelector } from "../store/reducers";
 
 export const useEngagementScreen = () => {
   const navigation = useIONavigation();

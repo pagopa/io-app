@@ -26,7 +26,7 @@ export function areSetEqual<T>(a: O.Option<Set<T>>, b: O.Option<Set<T>>) {
 export function areStringsEqual(
   aa: O.Option<string>,
   bb: O.Option<string>,
-  caseInsensitive: boolean = false
+  caseInsensitive = false
 ): boolean {
   return pipe(
     aa,

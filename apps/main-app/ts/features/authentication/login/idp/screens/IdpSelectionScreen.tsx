@@ -1,9 +1,10 @@
-import { Banner, useIOToast, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, useIOToast, VSpacer } from "@io-app/design-system";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import _ from "lodash";
 import { createRef, ReactElement, useCallback, useEffect, useRef } from "react";
 import { View } from "react-native";
+
 import { isReady } from "../../../../../common/model/RemoteValue";
 import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -134,12 +135,10 @@ const IdpSelectionScreen = (): ReactElement => {
     return (
       <>
         <Banner
-          ref={viewRef}
-          color="neutral"
-          title={I18n.t("login.help_banner_title")}
-          content={I18n.t("login.help_banner_content")}
           accessibilityRole="link"
           action={I18n.t("login.help_banner_action")}
+          color="neutral"
+          content={I18n.t("login.help_banner_content")}
           onPress={() => {
             trackHelpCenterCtaTapped(
               "LOGIN_SPID_IDP_SELECTION",
@@ -151,6 +150,8 @@ const IdpSelectionScreen = (): ReactElement => {
             });
           }}
           pictogramName="help"
+          ref={viewRef}
+          title={I18n.t("login.help_banner_title")}
         />
         <VSpacer size={8} />
       </>
@@ -165,11 +166,11 @@ const IdpSelectionScreen = (): ReactElement => {
 
   return (
     <IdpsGrid
-      testID="idps-grid"
+      footerComponent={<VSpacer size={40} />}
+      headerComponent={headerComponent}
       idps={randomIdps.current}
       onIdpSelected={onIdpSelected}
-      headerComponent={headerComponent}
-      footerComponent={<VSpacer size={40} />}
+      testID="idps-grid"
     />
   );
 };

@@ -5,10 +5,11 @@ import {
   IOSkeleton,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
+} from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 
 type Props = {
@@ -30,11 +31,11 @@ const IdPayOnboardingServiceHeader = (props: Props) => {
       ({ initiativeName, thumbnailUrl }) => (
         <VStack>
           <IOImage
+            alt={I18n.t("idpay.onboarding.initiativeImageAltText")}
+            aspectRatio="4:3"
             imageProps={{
               source: { uri: thumbnailUrl }
             }}
-            alt={I18n.t("idpay.onboarding.initiativeImageAltText")}
-            aspectRatio="4:3"
           />
           <ContentWrapper>
             <VSpacer size={24} />
@@ -48,10 +49,10 @@ const IdPayOnboardingServiceHeader = (props: Props) => {
 
 const Skeleton = () => (
   <VStack>
-    <IOSkeleton shape="rectangle" height={270} width="auto" />
+    <IOSkeleton height={270} shape="rectangle" width="auto" />
     <ContentWrapper>
       <VSpacer size={24} />
-      <IOSkeleton shape="rectangle" width="80%" height={16} radius={4} />
+      <IOSkeleton height={16} radius={4} shape="rectangle" width="80%" />
     </ContentWrapper>
   </VStack>
 );

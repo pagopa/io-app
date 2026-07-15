@@ -4,11 +4,11 @@ import { ITW_TECH_EVENTS } from "../../analytics/enum";
 import { getLastStatusListCheckTimestamp } from "../utils/storage";
 
 export const trackItwStatusListFetchRegisterFailure = (reason: unknown) => {
-  const enventName = ITW_TECH_EVENTS.ITW_BACKGROUND_TASK_REGISTER_FAILURE;
+  const eventName = ITW_TECH_EVENTS.ITW_BACKGROUND_TASK_REGISTER_FAILURE;
   const properties = buildEventProperties("TECH", undefined, {
     reason: reason instanceof Error ? reason.message : String(reason)
   });
-  void mixpanelTrack(enventName, properties);
+  void mixpanelTrack(eventName, properties);
 };
 
 export const trackItwStatusListFetchRegistered = () => {

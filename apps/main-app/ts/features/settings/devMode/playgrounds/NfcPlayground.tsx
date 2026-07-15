@@ -3,9 +3,10 @@ import {
   ListItemHeader,
   ListItemInfo,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useState } from "react";
 import { Platform, View } from "react-native";
+
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -27,8 +28,8 @@ export const NfcPlayground = () => {
       <IOScrollView centerContent={true}>
         <OperationResultScreenContent
           pictogram="accessDenied"
-          title="Not available on iOS"
           subtitle="NFC information is not accessible on iOS devices."
+          title="Not available on iOS"
         />
       </IOScrollView>
     );
@@ -61,7 +62,6 @@ const HostCardEmulationInfo = () => {
     <View>
       <ListItemHeader label="Host Card Emulation" />
       <ListItemInfo
-        value="Supports Host Card Emulation (HCE)"
         endElement={{
           type: "badge",
           componentProps: {
@@ -69,6 +69,7 @@ const HostCardEmulationInfo = () => {
             variant: hasHce ? "success" : "error"
           }
         }}
+        value="Supports Host Card Emulation (HCE)"
       />
     </View>
   );
@@ -96,7 +97,6 @@ const AntennaInfo = () => {
       <View>
         <ListItemHeader label="Device Info" />
         <ListItemInfo
-          value="Device Width (mm)"
           endElement={{
             type: "badge",
             componentProps: {
@@ -104,10 +104,10 @@ const AntennaInfo = () => {
               variant: "default"
             }
           }}
+          value="Device Width (mm)"
         />
         <Divider />
         <ListItemInfo
-          value="Device Height (mm)"
           endElement={{
             type: "badge",
             componentProps: {
@@ -115,10 +115,10 @@ const AntennaInfo = () => {
               variant: "default"
             }
           }}
+          value="Device Height (mm)"
         />
         <Divider />
         <ListItemInfo
-          value="Is Device Foldable"
           endElement={{
             type: "badge",
             componentProps: {
@@ -128,6 +128,7 @@ const AntennaInfo = () => {
               variant: nfcAntennaInfo.isDeviceFoldable ? "success" : "error"
             }
           }}
+          value="Is Device Foldable"
         />
       </View>
       <View>
@@ -135,7 +136,6 @@ const AntennaInfo = () => {
         {nfcAntennaInfo.availableNfcAntennas.map((antenna, index) => (
           <View key={index}>
             <ListItemInfo
-              value={`Antenna ${index + 1} Location (mm)`}
               endElement={{
                 type: "badge",
                 componentProps: {
@@ -143,6 +143,7 @@ const AntennaInfo = () => {
                   variant: "default"
                 }
               }}
+              value={`Antenna ${index + 1} Location (mm)`}
             />
             {index < nfcAntennaInfo.availableNfcAntennas.length - 1 && (
               <Divider />

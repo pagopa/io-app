@@ -3,9 +3,10 @@ import {
   IOButton,
   IOVisualCostants,
   Pictogram
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
+
 import ItwDeckImage from "../../../../img/features/itWallet/brand/itw_deck_wallet.svg";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
@@ -40,15 +41,15 @@ const WalletEmptyScreenContent = () => {
         style={styles.container}
         testID="walletEmptyScreenContentItWalletTestID"
       >
-        <ItwDeckImage width={140} height={80} />
-        <Body color="grey-650" weight="Regular" style={styles.text}>
+        <ItwDeckImage height={80} width={140} />
+        <Body color="grey-650" style={styles.text} weight="Regular">
           {I18n.t("features.wallet.home.screen.emptyMessage")}
         </Body>
         <IOButton
           fullWidth
-          variant="solid"
           label={I18n.t("features.wallet.home.screen.cta")}
           onPress={handleAddToWalletButtonPress}
+          variant="solid"
         />
         <PoweredByItWalletText />
       </View>
@@ -58,16 +59,16 @@ const WalletEmptyScreenContent = () => {
   return (
     <View style={styles.container} testID="walletEmptyScreenContentTestID">
       <Pictogram name="cardAdd" />
-      <Body color="grey-650" weight="Regular" style={styles.text}>
+      <Body color="grey-650" style={styles.text} weight="Regular">
         {I18n.t("features.wallet.home.screen.legacy.emptyMessage")}
       </Body>
       <IOButton
         fullWidth
-        variant="solid"
-        label={I18n.t("features.wallet.home.screen.legacy.cta")}
-        onPress={handleAddToWalletButtonPress}
         icon="addSmall"
         iconPosition="end"
+        label={I18n.t("features.wallet.home.screen.legacy.cta")}
+        onPress={handleAddToWalletButtonPress}
+        variant="solid"
       />
     </View>
   );

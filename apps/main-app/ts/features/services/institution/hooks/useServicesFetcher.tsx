@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paginatedServicesGet } from "../store/actions";
@@ -11,7 +12,7 @@ import {
   paginatedServicesSelector
 } from "../store/selectors";
 
-const LIMIT: number = 20;
+const LIMIT = 20;
 
 export const useServicesFetcher = (institutionId: string) => {
   const dispatch = useIODispatch();

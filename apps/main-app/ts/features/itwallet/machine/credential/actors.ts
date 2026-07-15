@@ -1,6 +1,11 @@
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
+import type {
+  CredentialOffer,
+  ItwVersion
+} from "@pagopa/io-react-native-wallet";
+
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
+
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -13,6 +18,7 @@ import {
   isAssertionGenerationError
 } from "../../common/utils/itwFailureUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
@@ -28,7 +34,6 @@ import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
-import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import { createCommonActorsImplementation } from "../utils/actors";
 import { Context } from "./context";
 export type GetWalletAttestationActorOutput = Awaited<
@@ -42,14 +47,6 @@ export type ObtainAccessTokenActorInput = Partial<
   >
 >;
 
-export type RequestCredentialActorInput = Partial<
-  Parameters<credentialIssuanceUtils.RequestCredential>[0]
->;
-
-export type RequestCredentialActorOutput = Awaited<
-  ReturnType<typeof credentialIssuanceUtils.requestCredential>
->;
-
 export type ObtainCredentialActorInput = Partial<
   Parameters<credentialIssuanceUtils.ObtainCredential>[0]
 >;
@@ -60,6 +57,28 @@ export type ObtainCredentialActorOutput = {
 };
 
 export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
+
+export type ProcessCredentialOfferActorInput = {
+  credentialOfferUri: Context["credentialOfferUri"];
+};
+
+export type ProcessCredentialOfferActorOutput = {
+  grantDetails: CredentialOffer.ExtractGrantDetailsResult;
+  offer: CredentialOffer.CredentialOffer;
+};
+
+export type RequestCredentialActorInput = Partial<
+  Parameters<credentialIssuanceUtils.RequestCredential>[0]
+>;
+
+export type RequestCredentialActorOutput = Awaited<
+  ReturnType<typeof credentialIssuanceUtils.requestCredential>
+>;
+
+export type VerifyTrustFederationActorInput = Pick<
+  Context,
+  "resolvedCredentialOffer"
+>;
 
 /**
  * Builds the dictionary of Wallet Unit Attestations generated during issuance, keyed by their
@@ -92,8 +111,14 @@ export const createCredentialIssuanceActorsImplementation = (
   itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => {
-  const verifyTrustFederation = fromPromise<void>(async () => {
+  const verifyTrustFederation = fromPromise<
+    void,
+    VerifyTrustFederationActorInput
+  >(async ({ input }) => {
     const ioWallet = getIoWallet(itwVersion);
+    const credentialIssuer =
+      input.resolvedCredentialOffer?.offer.credential_issuer ??
+      env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion);
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
       await ioWallet.Trust.getTrustAnchorEntityConfiguration(
@@ -102,7 +127,7 @@ export const createCredentialIssuanceActorsImplementation = (
 
     // Create the trust chain for the PID provider
     const builtChainJwts = await ioWallet.Trust.buildTrustChain(
-      env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion),
+      credentialIssuer,
       trustAnchorEntityConfig
     );
 
@@ -192,7 +217,8 @@ export const createCredentialIssuanceActorsImplementation = (
     const {
       credentialType,
       walletInstanceAttestation,
-      skipMdocIssuance = true
+      skipMdocIssuance = true,
+      resolvedCredentialOffer
     } = input;
 
     assert(credentialType, "credentialType is undefined");
@@ -218,6 +244,7 @@ export const createCredentialIssuanceActorsImplementation = (
       credentialType,
       walletInstanceAttestation,
       skipMdocIssuance,
+      resolvedCredentialOffer,
       pid
     });
     return result;
@@ -387,6 +414,23 @@ export const createCredentialIssuanceActorsImplementation = (
     );
   });
 
+  const processCredentialOffer = fromPromise<
+    ProcessCredentialOfferActorOutput,
+    ProcessCredentialOfferActorInput
+  >(async ({ input }) => {
+    assert(input.credentialOfferUri, "credentialOfferUri is undefined");
+
+    const wallet = getIoWallet(itwVersion);
+
+    const offer = await wallet.CredentialsOffer.resolveCredentialOffer(
+      input.credentialOfferUri
+    );
+
+    const grantDetails = wallet.CredentialsOffer.extractGrantDetails(offer);
+
+    return { offer, grantDetails };
+  });
+
   return {
     verifyTrustFederation,
     getWalletAttestation,
@@ -394,6 +438,7 @@ export const createCredentialIssuanceActorsImplementation = (
     requestCredential,
     obtainCredential,
     obtainStatusAssertion,
+    processCredentialOffer,
     ...createCommonActorsImplementation(store)
   };
 };

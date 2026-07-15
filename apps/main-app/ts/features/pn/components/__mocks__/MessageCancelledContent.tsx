@@ -1,4 +1,5 @@
 import { View } from "react-native";
+
 import { MessageCancelledContentProps } from "../MessageCancelledContent";
 
 export const MessageCancelledContent = ({

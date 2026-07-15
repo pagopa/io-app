@@ -7,22 +7,23 @@ import {
   IOListItemStyles,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import { View } from "react-native";
+} from "@io-app/design-system";
 import I18n from "i18next";
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
+import { View } from "react-native";
+
 import { Access } from "../../../../../definitions/fims_history/Access";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { FimsHistorySharedStyles } from "../utils/styles";
 
 // ------- TYPES
 
-export type FimsHistorySuccessListItemProps = {
-  serviceData: ServiceDetails;
-  consent: Access;
-};
 export type FimsHistoryBaseListItemProps = {
   item: Access;
+};
+export type FimsHistorySuccessListItemProps = {
+  consent: Access;
+  serviceData: ServiceDetails;
 };
 
 // --------- LISTITEMS
@@ -36,11 +37,12 @@ export const FimsHistorySuccessListItem = ({
   return (
     <View style={defaultListItemStyles}>
       <View style={{ flexDirection: "row" }}>
-        <Icon size={16} name="calendar" />
+        <Icon name="calendar" size={16} />
         <HSpacer size={4} />
         <Caption color={theme["textBody-tertiary"]}>
           {dateToAccessibilityReadableFormat(
             consent.timestamp,
+            // eslint-disable-next-line i18next/no-literal-string -- date format token, not user-facing copy
             "DD/MM/YYYY, HH:mm"
           )}
         </Caption>
@@ -50,7 +52,7 @@ export const FimsHistorySuccessListItem = ({
 
       <H6>{serviceData.organization.name}</H6>
       {/* TODO: Dark mode: Replace with theme values */}
-      <BodySmall weight="Regular" color="grey-700">
+      <BodySmall color="grey-700" weight="Regular">
         {consent.redirect?.display_name}
       </BodySmall>
     </View>
@@ -84,21 +86,22 @@ export const FimsHistoryFailureListItem = ({
             flexDirection: "row"
           }}
         >
-          <Icon name="calendar" size={16} color="grey-300" />
+          <Icon color="grey-300" name="calendar" size={16} />
           <HSpacer size={4} />
           <Caption color={theme["textBody-tertiary"]}>
             {}
+            {/* eslint-disable-next-line i18next/no-literal-string -- date format token, not user-facing copy */}
             {dateToAccessibilityReadableFormat(item.timestamp, "DD,MM,YYYY")}
           </Caption>
         </View>
         <VSpacer size={4} />
         {/* TODO: Dark mode: Replace with theme values */}
-        <BodySmall weight="Semibold" color="error-600">
+        <BodySmall color="error-600" weight="Semibold">
           {I18n.t("FIMS.history.errorStates.dataUnavailable")}
         </BodySmall>
       </View>
       {/* TODO: Dark mode: Replace with theme values */}
-      <Icon name="errorFilled" color="error-600" />
+      <Icon color="error-600" name="errorFilled" />
     </View>
   );
 };
