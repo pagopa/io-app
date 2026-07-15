@@ -1,5 +1,6 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { createStore } from "redux";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as HOOKS from "../../../../store/hooks";
@@ -9,10 +10,10 @@ import { openAppStoreUrl } from "../../../../utils/url";
 import * as ANALYTICS from "../../analytics";
 import { useSpecialCtaPn } from "../useSpecialCtaPn";
 
-jest.mock("@pagopa/io-app-design-system", () => ({
-  ...jest.requireActual("@pagopa/io-app-design-system"),
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual("@io-app/design-system"),
   IOToast: {
-    ...jest.requireActual("@pagopa/io-app-design-system").IOToast,
+    ...jest.requireActual("@io-app/design-system").IOToast,
     success: jest.fn(),
     error: jest.fn()
   }
@@ -210,11 +211,11 @@ describe("useSpecialCtaPn", () => {
 // ----------- UTILS -------------
 
 type HookState = {
+  isLoadingPnActivation: boolean;
+  isLoadingServicePreferenceByChannel: boolean;
   isPnEnabled: boolean;
   isPnSupported: boolean;
   servicePreferenceByChannel: boolean | undefined;
-  isLoadingServicePreferenceByChannel: boolean;
-  isLoadingPnActivation: boolean;
 };
 
 const renderHook = (state: HookState, activateFlag = false) => {

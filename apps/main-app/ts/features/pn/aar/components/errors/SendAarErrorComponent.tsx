@@ -1,4 +1,5 @@
 import I18n from "i18next";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../../../store/hooks";
@@ -34,11 +35,6 @@ export const SendAarGenericErrorComponent = () => {
   return (
     <>
       <OperationResultScreenContent
-        testID="SEND_AAR_ERROR"
-        isHeaderVisible
-        pictogram="umbrella"
-        title={I18n.t("features.pn.aar.flow.ko.GENERIC.title")}
-        subtitle={I18n.t("features.pn.aar.flow.ko.GENERIC.body")}
         action={{
           label: I18n.t("features.pn.aar.flow.ko.GENERIC.primaryAction"),
           onPress: () => {
@@ -47,6 +43,8 @@ export const SendAarGenericErrorComponent = () => {
           },
           testID: "primary_button"
         }}
+        isHeaderVisible
+        pictogram="umbrella"
         secondaryAction={{
           label: I18n.t("features.pn.aar.flow.ko.GENERIC.secondaryAction"),
           onPress: () => {
@@ -55,6 +53,9 @@ export const SendAarGenericErrorComponent = () => {
           },
           testID: "secondary_button"
         }}
+        subtitle={I18n.t("features.pn.aar.flow.ko.GENERIC.body")}
+        testID="SEND_AAR_ERROR"
+        title={I18n.t("features.pn.aar.flow.ko.GENERIC.title")}
       />
       {bottomSheet}
     </>

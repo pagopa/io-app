@@ -1,10 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
-import * as O from "fp-ts/lib/Option";
-import * as RA from "fp-ts/lib/ReadonlyArray";
-import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
+
 import { HasPreconditionEnum } from "../../../../../definitions/communication/HasPrecondition";
 import { RemoteContentDetails } from "../../../../../definitions/communication/RemoteContentDetails";
 import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
@@ -43,14 +41,12 @@ export const thirdPartyByIdReducer = (
   action: Action
 ): ThirdPartyById => {
   switch (action.type) {
+    case getType(loadThirdPartyMessage.failure):
+      return toError(action.payload.id, state, action.payload.error);
     case getType(loadThirdPartyMessage.request):
       return toLoading(action.payload.id, state);
     case getType(loadThirdPartyMessage.success):
       return toSome(action.payload.id, state, action.payload.content);
-    case getType(loadThirdPartyMessage.failure):
-      return toError(action.payload.id, state, action.payload.error);
-    case getType(reloadAllMessages.request):
-      return initialState;
     case getType(populateStoresWithEphemeralAarMessageData):
       const {
         iun,
@@ -81,6 +77,8 @@ export const thirdPartyByIdReducer = (
         }
       };
       return toSome(iun, state, ephemeralMessage);
+    case getType(reloadAllMessages.request):
+      return initialState;
 
     case getType(terminateAarFlow):
       if (action.payload.messageId === undefined) {
@@ -126,20 +124,17 @@ export const messageMarkdownSelector = (
 export const hasAttachmentsSelector = (
   state: GlobalState,
   ioMessageId: string
-) => pipe(thirdPartyMessageAttachments(state, ioMessageId), RA.isNonEmpty);
+) => thirdPartyMessageAttachmentsSelector(state, ioMessageId).length > 0;
 
-export const thirdPartyMessageAttachments = (
+export const thirdPartyMessageAttachmentsSelector = (
   state: GlobalState,
   ioMessageId: string
-): ReadonlyArray<ThirdPartyAttachment> =>
-  pipe(
-    thirdPartyFromIdSelector(state, ioMessageId),
-    pot.toOption,
-    O.chainNullableK(
-      thirdPartyMessage => thirdPartyMessage.third_party_message.attachments
-    ),
-    O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => RA.empty)
-  );
+): ReadonlyArray<ThirdPartyAttachment> => {
+  const messagePot = thirdPartyFromIdSelector(state, ioMessageId);
+  const attachments =
+    pot.toUndefined(messagePot)?.third_party_message.attachments;
+  return attachments ?? [];
+};
 
 const messageContentSelector = <T>(
   state: GlobalState,

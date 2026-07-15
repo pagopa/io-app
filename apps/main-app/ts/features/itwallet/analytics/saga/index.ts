@@ -1,5 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { call, fork, select, takeEvery } from "typed-redux-saga/macro";
+
 import { registerSuperProperties } from "../../../../mixpanel.ts";
 import { GlobalState } from "../../../../store/reducers/types";
 import { getNfcAntennaInfo, isHceSupported } from "../../../../utils/nfc";
@@ -14,14 +15,6 @@ import {
   handleCredentialsCatalogueLoadedAnalytics,
   handleCredentialStoredAnalytics
 } from "./credentialAnalyticsHandlers";
-
-export function* watchItwAnalyticsSaga(): SagaIterator {
-  // Aligns Mixpanel with current IT-Wallet state
-  yield* fork(syncItwAnalyticsProperties);
-
-  // Keep analytics in sync with store changes
-  yield* fork(watchItwCredentialsAnalyticsSaga);
-}
 
 /**
  * Saga that performs a full sync of all ITW analytics properties
@@ -40,7 +33,6 @@ export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
     handleCredentialsCatalogueLoadedAnalytics
   );
 }
-
 /**
  * Tracks NFC information for discovery and debugging purposes.
  * TODO remove this function when NFC info tracking is not needed anymore
@@ -76,4 +68,12 @@ export function* updateNfcInfoTrackingProperties() {
       NFC_HCE_READ_FAILURE: errorName
     });
   }
+}
+
+export function* watchItwAnalyticsSaga(): SagaIterator {
+  // Aligns Mixpanel with current IT-Wallet state
+  yield* fork(syncItwAnalyticsProperties);
+
+  // Keep analytics in sync with store changes
+  yield* fork(watchItwCredentialsAnalyticsSaga);
 }

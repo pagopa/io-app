@@ -1,7 +1,8 @@
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { useIOThemeContext } from "@io-app/design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { Appearance, ColorSchemeName, useColorScheme } from "react-native";
+
 import { updateNavigationBarColor } from "../features/settings/preferences/screens/AppearancePreferenceScreen";
 
 export const THEME_PERSISTENCE_KEY = "selectedAppThemeConfiguration";

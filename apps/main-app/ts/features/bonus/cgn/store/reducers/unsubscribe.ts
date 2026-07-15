@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+
 import {
   remoteError,
   remoteLoading,
@@ -7,11 +8,11 @@ import {
   RemoteValue
 } from "../../../../../common/model/RemoteValue";
 import { Action } from "../../../../../store/actions/types";
-import { NetworkError } from "../../../../../utils/errors";
-import { cgnUnsubscribe } from "../actions/unsubscribe";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { cgnDetails } from "../actions/details";
+import { NetworkError } from "../../../../../utils/errors";
 import { cgnActivationComplete } from "../actions/activation";
+import { cgnDetails } from "../actions/details";
+import { cgnUnsubscribe } from "../actions/unsubscribe";
 
 export type CgnUnsubscribeState = RemoteValue<true, NetworkError>;
 /**
@@ -24,15 +25,15 @@ const reducer = (
   action: Action
 ): RemoteValue<true, NetworkError> => {
   switch (action.type) {
+    case getType(cgnActivationComplete):
+    case getType(cgnDetails.request):
+      return remoteUndefined;
+    case getType(cgnUnsubscribe.failure):
+      return remoteError(action.payload);
     case getType(cgnUnsubscribe.request):
       return remoteLoading;
     case getType(cgnUnsubscribe.success):
       return remoteReady(true);
-    case getType(cgnUnsubscribe.failure):
-      return remoteError(action.payload);
-    case getType(cgnDetails.request):
-    case getType(cgnActivationComplete):
-      return remoteUndefined;
   }
   return state;
 };

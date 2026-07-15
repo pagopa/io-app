@@ -1,26 +1,25 @@
 import {
+  trackCieIdErrorCiePinFallbackScreen,
+  trackCieIdErrorCiePinSelected,
+  trackCieIdErrorSpidFallbackScreen,
+  trackCieIdErrorSpidSelected,
+  trackCieIdNotInstalledDownloadAction,
+  trackCieIdNotInstalledScreen,
   trackCieIdNoWhitelistUrl,
   trackCieIdSecurityLevelMismatch,
   trackCieIdWizardScreen,
   trackCiePinWizardScreen,
-  trackSpidWizardScreen,
   trackIdpActivationWizardScreen,
+  trackSpidWizardScreen,
   trackWizardCieIdSelected,
-  trackWizardCiePinSelected,
   trackWizardCiePinInfoSelected,
-  trackWizardSpidSelected,
-  trackCieIdNotInstalledScreen,
-  trackCieIdNotInstalledDownloadAction,
-  trackCieIdErrorCiePinFallbackScreen,
-  trackCieIdErrorSpidFallbackScreen,
-  trackCieIdErrorCiePinSelected,
-  trackCieIdErrorSpidSelected
+  trackWizardCiePinSelected,
+  trackWizardSpidSelected
 } from "..";
-
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../../../mixpanelConfig/profileProperties";
-import { IdpCIE, IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { IdpCIE, IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 
 jest.mock("../../../../../../mixpanel", () => ({
   mixpanelTrack: jest.fn()

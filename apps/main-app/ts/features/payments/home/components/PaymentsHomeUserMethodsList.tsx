@@ -5,11 +5,12 @@ import {
   IOVisualCostants,
   ListItemHeader,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { createRef, useCallback, useEffect, useMemo } from "react";
 import { View } from "react-native";
+
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -131,11 +132,11 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     () =>
       isError ? (
         <BannerErrorState
-          label={I18n.t("features.payments.methods.error.banner.label")}
-          icon="warningFilled"
           actionText={I18n.t(
             "features.payments.methods.error.banner.retryButton"
           )}
+          icon="warningFilled"
+          label={I18n.t("features.payments.methods.error.banner.label")}
           onPress={handleOnRetry}
         />
       ) : (
@@ -155,20 +156,20 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     return (
       <View style={{ paddingVertical: IOVisualCostants.appMarginDefault }}>
         <Banner
-          testID="PaymentsHomeUserMethodsListTestID-banner"
-          pictogramName="payments"
-          title={I18n.t("features.payments.methods.banner.title")}
-          content={I18n.t("features.payments.methods.banner.content")}
           action={I18n.t("features.payments.methods.banner.action")}
+          color="neutral"
+          content={I18n.t("features.payments.methods.banner.content")}
+          labelClose={I18n.t("global.buttons.close")}
+          onClose={() => dispatch(paymentsSetAddMethodsBannerVisible(false))}
           onPress={() =>
             openWebUrl(AVAILABLE_PAYMENT_METHODS_URL, () =>
               IOToast.error(I18n.t("global.jserror.title"))
             )
           }
-          color="neutral"
+          pictogramName="payments"
           ref={bannerRef}
-          labelClose={I18n.t("global.buttons.close")}
-          onClose={() => dispatch(paymentsSetAddMethodsBannerVisible(false))}
+          testID="PaymentsHomeUserMethodsListTestID-banner"
+          title={I18n.t("features.payments.methods.banner.title")}
         />
       </View>
     );
@@ -179,7 +180,6 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   return (
     <View>
       <ListItemHeader
-        label={I18n.t("features.payments.methods.title")}
         accessibilityLabel={I18n.t("features.payments.methods.title")}
         endElement={
           showAddButton
@@ -193,6 +193,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
               }
             : undefined
         }
+        label={I18n.t("features.payments.methods.title")}
       />
       {isLoading && !pot.isError(paymentMethodsPot) ? (
         <PaymentCardsCarouselSkeleton testID="PaymentsHomeUserMethodsListTestID-loading" />

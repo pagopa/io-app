@@ -1,7 +1,6 @@
-import { IOColors, useIOThemeContext } from "@pagopa/io-app-design-system";
+import { IOColors, useIOThemeContext } from "@io-app/design-system";
 import { FunctionComponent } from "react";
-
-import { View, StyleSheet, DimensionValue } from "react-native";
+import { DimensionValue, StyleSheet, View } from "react-native";
 
 type Props = {
   // between 0 and 1
@@ -35,12 +34,12 @@ export const ProgressBar: FunctionComponent<Props> = props => {
   return (
     <View style={{ backgroundColor: IOColors["grey-100"], height: 4 }}>
       <View
-        testID={"progressBar"}
         style={{
           ...StyleSheet.absoluteFillObject,
           backgroundColor,
           width: calculateStylePercentage(props.progressPercentage)
         }}
+        testID={"progressBar"}
       />
     </View>
   );

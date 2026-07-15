@@ -4,10 +4,10 @@ import {
   IOToast,
   ListItemNav,
   ListItemSwitch
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
+import I18n from "i18next";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 
-import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { shufflePinPadOnPayment } from "../../../../config";
 import { mixpanelTrack } from "../../../../mixpanel";
@@ -23,8 +23,8 @@ import {
   isBiometricsValidType,
   mayUserActivateBiometric
 } from "../../../../utils/biometrics";
-import { FAQsCategoriesType } from "../../../../utils/faq";
 import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
+import { FAQsCategoriesType } from "../../../../utils/faq";
 import { FIMS_ROUTES } from "../../../fims/common/navigation";
 import { fimsIsHistoryEnabledSelector } from "../../../fims/history/store/selectors";
 import { identificationRequest } from "../../../identification/store/actions";
@@ -160,35 +160,35 @@ const SecurityScreen = (): ReactElement => {
 
   return (
     <IOScrollViewWithLargeHeader
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      description={I18n.t("profile.security.subtitle")}
+      faqCategories={FAQ_CATEGORIES}
+      headerActionsProp={{ showHelp: true }}
       title={{
         label: I18n.t("profile.security.title")
       }}
-      description={I18n.t("profile.security.subtitle")}
-      headerActionsProp={{ showHelp: true }}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={FAQ_CATEGORIES}
     >
       <ContentWrapper>
         {/* Ask for verification and reset unlock code */}
         <ListItemNav
-          value={I18n.t("identification.unlockCode.reset.button_short")}
           accessibilityLabel={I18n.t(
             "identification.unlockCode.reset.button_short"
           )}
           description={I18n.t("identification.unlockCode.reset.subtitle")}
           onPress={requestIdentificationAndResetPin}
           testID="reset-unlock-code"
+          value={I18n.t("identification.unlockCode.reset.button_short")}
         />
         {isIdPayCieCodeEnabled && (
           /* Reset IDPay code */
           <>
             <Divider />
             <ListItemNav
-              value={I18n.t("idpay.code.reset.title")}
               accessibilityLabel={I18n.t("idpay.code.reset.title")}
               description={I18n.t("idpay.code.reset.body")}
               onPress={idPayCodeHandler}
               testID="reset-idpay-code"
+              value={I18n.t("idpay.code.reset.title")}
             />
           </>
         )}
@@ -197,15 +197,15 @@ const SecurityScreen = (): ReactElement => {
           <>
             <Divider />
             <ListItemSwitch
-              label={I18n.t(
-                "profile.security.list.biometric_recognition.title"
-              )}
               description={I18n.t(
                 "profile.security.list.biometric_recognition.subtitle"
               )}
+              label={I18n.t(
+                "profile.security.list.biometric_recognition.title"
+              )}
               onSwitchValueChange={onSwitchValueChange}
-              value={isFingerprintEnabled}
               testID="biometric-recognition"
+              value={isFingerprintEnabled}
             />
           </>
         )}
@@ -214,10 +214,10 @@ const SecurityScreen = (): ReactElement => {
           <>
             <Divider />
             <ListItemNav
-              value={I18n.t("FIMS.history.profileCTA.title")}
               description={I18n.t("FIMS.history.profileCTA.subTitle")}
               onPress={fimsHistoryHandler}
               testID="fims-history"
+              value={I18n.t("FIMS.history.profileCTA.title")}
             />
           </>
         )}

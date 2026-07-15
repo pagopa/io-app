@@ -1,12 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import { Action } from "redux";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+
 import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
 import {
   ThirdPartyMessage,
   ThirdPartyMessageDetails
 } from "../../../../../../definitions/communication/ThirdPartyMessage";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { toSome } from "../../../../../store/reducers/IndexedByIdPot";
@@ -19,24 +20,47 @@ import {
 import { mockEphemeralAarMessageDataActionPayload } from "../../../../pn/aar/utils/testUtils";
 import { UIMessageDetails } from "../../../types";
 import {
-  ThirdPartyMessageUnion,
-  thirdPartyKind
+  thirdPartyKind,
+  ThirdPartyMessageUnion
 } from "../../../types/thirdPartyById";
-import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
+import {
+  loadMessageDetails,
+  loadThirdPartyMessage,
+  reloadAllMessages
+} from "../../actions";
 import { DetailsById } from "../detailsById";
 import {
-  ThirdPartyById,
   hasAttachmentsSelector,
   messageMarkdownSelector,
   messageTitleSelector,
   testable,
+  ThirdPartyById,
   thirdPartyByIdReducer,
   thirdPartyFromIdSelector,
-  thirdPartyMessageAttachments,
+  thirdPartyMessageAttachmentsSelector,
   thirdPartyMessageSelector
 } from "../thirdPartyById";
 
 const thirdPartyKindsMock = Object.values(thirdPartyKind);
+const cachedThirdPartyMessagePotFactories: ReadonlyArray<{
+  name: string;
+  potFactory: (
+    value: ThirdPartyMessageUnion
+  ) => pot.Pot<ThirdPartyMessageUnion, Error>;
+}> = [
+  {
+    name: "someLoading",
+    potFactory: pot.someLoading
+  },
+  {
+    name: "someUpdating",
+    potFactory: value => pot.someUpdating(value, value)
+  },
+  {
+    name: "someError",
+    potFactory: value => pot.someError(value, Error())
+  }
+];
 
 describe("thirdPartyFromIdSelector", () => {
   it("Should return pot none for an unmatching message id", () => {
@@ -386,7 +410,10 @@ describe("thirdPartyMessageAttachments", () => {
       undefined,
       applicationChangeState("active")
     );
-    const attachments = thirdPartyMessageAttachments(initialState, messageId);
+    const attachments = thirdPartyMessageAttachmentsSelector(
+      initialState,
+      messageId
+    );
     expect(attachments).toBeDefined();
     expect(attachments.length).toBe(0);
   });
@@ -403,7 +430,7 @@ describe("thirdPartyMessageAttachments", () => {
           } as ThirdPartyMessageUnion
         })
       );
-      const attachments = thirdPartyMessageAttachments(
+      const attachments = thirdPartyMessageAttachmentsSelector(
         loadedThirdPartyMessage,
         messageId
       );
@@ -426,7 +453,7 @@ describe("thirdPartyMessageAttachments", () => {
           } as ThirdPartyMessageUnion
         })
       );
-      const attachments = thirdPartyMessageAttachments(
+      const attachments = thirdPartyMessageAttachmentsSelector(
         loadedThirdPartyMessage,
         messageId
       );
@@ -453,7 +480,7 @@ describe("thirdPartyMessageAttachments", () => {
           } as ThirdPartyMessageUnion
         })
       );
-      const attachments = thirdPartyMessageAttachments(
+      const attachments = thirdPartyMessageAttachmentsSelector(
         loadedThirdPartyMessage,
         messageId
       );
@@ -462,6 +489,39 @@ describe("thirdPartyMessageAttachments", () => {
       expect(attachments[0]).toMatchObject(thirdPartyAttachment);
     })
   );
+
+  cachedThirdPartyMessagePotFactories.forEach(({ name, potFactory }) => {
+    thirdPartyKindsMock.forEach(kind =>
+      it(`should return attachments from a cached third party message pot (${name}) and kind='${kind}'`, () => {
+        const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
+        const thirdPartyAttachment = {
+          id: "1",
+          url: "https://invalid.url"
+        } as ThirdPartyAttachment;
+        const state = {
+          entities: {
+            messages: {
+              thirdPartyById: {
+                [messageId]: potFactory({
+                  kind,
+                  third_party_message: {
+                    attachments: [thirdPartyAttachment]
+                  } as ThirdPartyMessage
+                } as ThirdPartyMessageUnion)
+              } as ThirdPartyById
+            }
+          }
+        } as GlobalState;
+
+        const attachments = thirdPartyMessageAttachmentsSelector(
+          state,
+          messageId
+        );
+
+        expect(attachments).toEqual([thirdPartyAttachment]);
+      })
+    );
+  });
 });
 
 describe("hasAttachmentsSelector", () => {
@@ -663,6 +723,106 @@ describe("thirdPartyMessageSelector", () => {
 });
 
 describe("reducer", () => {
+  it("should match the initial state", () => {
+    const state = thirdPartyByIdReducer(undefined, {} as Action);
+
+    expect(state).toEqual({});
+  });
+
+  it("should handle loadThirdPartyMessage.request", () => {
+    const messageId = "01K1SMQS6ZDDAA434Y6CB85JNF";
+
+    const state = thirdPartyByIdReducer(
+      undefined,
+      loadThirdPartyMessage.request({
+        id: messageId,
+        serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId,
+        tag: "GENERIC"
+      })
+    );
+
+    expect(state[messageId]).toEqual(pot.noneLoading);
+  });
+
+  it("should handle loadThirdPartyMessage.success", () => {
+    const messageId = "01K1SMQS6ZDDAA434Y6CB85JNF";
+    const content = {
+      id: messageId,
+      kind: "TPM",
+      third_party_message: {}
+    } as ThirdPartyMessageUnion;
+
+    const state = thirdPartyByIdReducer(
+      undefined,
+      loadThirdPartyMessage.success({
+        content,
+        id: messageId
+      })
+    );
+
+    expect(state[messageId]).toEqual(pot.some(content));
+  });
+
+  it("should handle loadThirdPartyMessage.failure", () => {
+    const messageId = "01K1SMQS6ZDDAA434Y6CB85JNF";
+    const error = Error("Cannot load third party message");
+
+    const state = thirdPartyByIdReducer(
+      undefined,
+      loadThirdPartyMessage.failure({
+        error,
+        id: messageId
+      })
+    );
+
+    expect(state[messageId]).toEqual(pot.noneError(error));
+  });
+
+  it("should reset the state upon receiving reloadAllMessages.request", () => {
+    const messageId = "01K1SMQS6ZDDAA434Y6CB85JNF";
+    const content = {
+      id: messageId,
+      kind: "TPM",
+      third_party_message: {}
+    } as ThirdPartyMessageUnion;
+    const state = thirdPartyByIdReducer(
+      undefined,
+      loadThirdPartyMessage.success({
+        content,
+        id: messageId
+      })
+    );
+
+    const output = thirdPartyByIdReducer(
+      state,
+      reloadAllMessages.request({
+        filter: {},
+        fromUserAction: false,
+        pageSize: 10
+      })
+    );
+
+    expect(output).toEqual({});
+  });
+
+  it("should ignore terminateAarFlow when messageId is undefined", () => {
+    const { iun } = mockEphemeralAarMessageDataActionPayload;
+    const state = thirdPartyByIdReducer(
+      undefined,
+      populateStoresWithEphemeralAarMessageData(
+        mockEphemeralAarMessageDataActionPayload
+      )
+    );
+
+    const output = thirdPartyByIdReducer(
+      state,
+      terminateAarFlow({ messageId: undefined })
+    );
+
+    expect(output).toBe(state);
+    expect(output[iun]).toBeDefined();
+  });
+
   it("should handle populateStoresWithEphemeralAarMessageData action", () => {
     const action = populateStoresWithEphemeralAarMessageData(
       mockEphemeralAarMessageDataActionPayload

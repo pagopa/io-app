@@ -11,6 +11,6 @@ export const setEngagementScreenShown = createStandardAction(
 )<void>();
 
 export type NotificationPermissionsActions =
-  | ActionType<typeof updateSystemNotificationsEnabled>
+  | ActionType<typeof setEngagementScreenShown>
   | ActionType<typeof setPushPermissionsRequestDuration>
-  | ActionType<typeof setEngagementScreenShown>;
+  | ActionType<typeof updateSystemNotificationsEnabled>;

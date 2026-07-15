@@ -1,20 +1,26 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { identity } from "lodash";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as appVersion from "../../../../utils/appVersion";
 import { GlobalState } from "../../types";
 import {
   absolutePortalLinksSelector,
   barcodesScannerConfigSelector,
+  engagementCGNDiscoveryBannerSelector,
   fimsServiceConfiguration,
   fimsServiceIdInCookieDisabledListSelector,
+  fseDiscoveryBannerWebUrlSelector,
   generateDynamicUrlSelector,
   isAarInAppDelegationRemoteEnabledSelector,
   isAarRemoteEnabled,
+  isCGNDiscoveryBannerEnabledSelector,
+  isFseDiscoveryBannerDismissableSelector,
   isIOMarkdownEnabledForMessagesAndServicesSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
+  isSendLollipopPlaygroundEnabledSelector,
   landingScreenBannerOrderSelector,
   messageSurveyBannerUriSelector,
   pnAarQRCodeRegexSelector,
@@ -25,12 +31,7 @@ import {
   sendCustomServiceCenterUrlSelector,
   sendEstimateTimelinesUrlSelector,
   sendShowAbstractSelector,
-  sendVisitTheWebsiteUrlSelector,
-  isSendLollipopPlaygroundEnabledSelector,
-  isCGNDiscoveryBannerEnabledSelector,
-  engagementCGNDiscoveryBannerSelector,
-  fseDiscoveryBannerWebUrlSelector,
-  isFseDiscoveryBannerDismissableSelector
+  sendVisitTheWebsiteUrlSelector
 } from "../remoteConfig";
 
 describe("remoteConfig", () => {
@@ -400,9 +401,9 @@ describe("remoteConfig", () => {
         expected: surveyUri
       }
     ] as ReadonlyArray<{
+      expected: string | undefined;
       name: string;
       state: GlobalState;
-      expected: string | undefined;
     }>)('should return "$expected" when $name', ({ state, expected }) => {
       jest
         .spyOn(appVersion, "getAppVersion")

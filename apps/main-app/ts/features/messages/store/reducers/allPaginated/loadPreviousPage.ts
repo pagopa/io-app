@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { loadPreviousPageMessages } from "../../actions";
+
 import { Action } from "../../../../../store/actions/types";
+import { loadPreviousPageMessages } from "../../actions";
 import { AllPaginated, Collection } from "./types";
 
 const stateKeyFrom = (getArchived?: boolean): "archive" | "inbox" =>
@@ -25,6 +26,21 @@ export const reduceLoadPreviousPage = (
   action: Action
 ): AllPaginated => {
   switch (action.type) {
+    case getType(loadPreviousPageMessages.failure): {
+      const stateKey = stateKeyFrom(action.payload.filter.getArchived);
+      const collection = state[stateKey];
+      return {
+        ...state,
+        [stateKey]: {
+          ...collection,
+          data: pot.toError(collection.data, {
+            reason: action.payload.error.message,
+            time: new Date()
+          })
+        }
+      };
+    }
+
     case getType(loadPreviousPageMessages.request): {
       const stateKey = stateKeyFrom(action.payload.filter.getArchived);
       return {
@@ -46,21 +62,6 @@ export const reduceLoadPreviousPage = (
           data: getPreviousData(state[stateKey], action),
           lastRequest: undefined,
           lastUpdateTime: new Date()
-        }
-      };
-    }
-
-    case getType(loadPreviousPageMessages.failure): {
-      const stateKey = stateKeyFrom(action.payload.filter.getArchived);
-      const collection = state[stateKey];
-      return {
-        ...state,
-        [stateKey]: {
-          ...collection,
-          data: pot.toError(collection.data, {
-            reason: action.payload.error.message,
-            time: new Date()
-          })
         }
       };
     }

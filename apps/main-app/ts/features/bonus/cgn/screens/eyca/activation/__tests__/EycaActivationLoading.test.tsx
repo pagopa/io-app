@@ -1,5 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
 import {
   remoteError,
   remoteLoading

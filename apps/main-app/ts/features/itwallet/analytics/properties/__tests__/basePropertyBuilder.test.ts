@@ -8,6 +8,8 @@ import {
 } from "../basePropertyBuilder";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import {
   CredentialType,
@@ -54,7 +56,6 @@ const getStateWithCredentialsAndCatalogue = (credentials: {
     }
   });
 };
-
 const getMockedCredential = (
   credentialType: CredentialType,
   overrides: Partial<CredentialMetadata> = {}
@@ -209,7 +210,6 @@ describe("buildWalletListCredentialProperty", () => {
     expect(buildWalletListCredentialProperty(state)).toBe("not_available");
   });
 });
-
 describe("computeItwStatus", () => {
   it.each`
     scenario                                        | authLevel    | identificationMode | isItwL3  | expected

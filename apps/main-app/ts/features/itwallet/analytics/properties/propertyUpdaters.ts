@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+
 import {
   getPeople,
   isMixpanelInstanceInitialized,
@@ -14,9 +15,9 @@ import {
   itwAuthLevelSelector,
   itwIdentificationModeSelector
 } from "../../common/store/selectors/preferences";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { isItwAnalyticsCredential } from "../utils";
 import { MixPanelCredential } from "../utils/types";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   buildItwBaseProperties,
   buildPidProperties,
@@ -109,7 +110,7 @@ export const updatePropertiesWalletRevoked = () => {
 
 export const updateCredentialProperties = (
   credential: MixPanelCredential,
-  status: "valid" | "not_available"
+  status: "not_available" | "valid"
 ) => {
   if (!isItwAnalyticsCredential(credential)) {
     return;
@@ -130,7 +131,7 @@ export const updateCredentialProperties = (
  */
 export const updateOfflineAccessReason = (
   action: Action
-): void | ReadonlyArray<null> => {
+): ReadonlyArray<null> | void => {
   switch (action.type) {
     case getType(setOfflineAccessReason):
       forceUpdateItwSuperProperties({

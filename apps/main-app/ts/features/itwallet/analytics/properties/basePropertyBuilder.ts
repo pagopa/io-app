@@ -1,16 +1,23 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   itwAuthLevelSelector,
   itwIdentificationModeSelector
 } from "../../common/store/selectors/preferences";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
+import {
+  isL2Credential,
+  isNewCredential,
+  validCredentialStatuses
+} from "../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialsSelector
 } from "../../credentials/store/selectors";
+import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { mapPIDStatusToMixpanel } from "../utils";
 import {
@@ -153,12 +160,12 @@ export const computeItwStatus = (
   }
 
   switch (identificationMode) {
-    case "spid":
-      return "L2+ (spid_can)";
     case "cieId":
       return authLevel === "L2" ? "L3 (cieid_can)" : "L3 (cieid_pin)";
     case "ciePin":
       return "L3 (cie_pin)";
+    case "spid":
+      return "L2+ (spid_can)";
     default:
       return authLevel;
   }
@@ -212,7 +219,6 @@ export const buildWalletListCredentialProperty = (
     ? "valid"
     : "not_valid";
 };
-
 const isThirdPartyCredentialType = (
   credentialType: string,
   catalogueByType: ReturnType<typeof itwCredentialsCatalogueByTypesSelector>
@@ -221,7 +227,6 @@ const isThirdPartyCredentialType = (
   !isL2Credential(credentialType) &&
   (isNewCredential(credentialType) ||
     catalogueByType?.[credentialType] !== undefined);
-
 const isWalletListCredentialType = (
   credentialType: string,
   catalogueByType: ReturnType<typeof itwCredentialsCatalogueByTypesSelector>

@@ -3,12 +3,13 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { NetworkError } from "../../../../../utils/errors";
+
 import { Otp } from "../../../../../../definitions/cgn/Otp";
+import { NetworkError } from "../../../../../utils/errors";
 
 type CgnRequestOtpPayload = {
-  onSuccess: () => void;
   onError: () => void;
+  onSuccess: () => void;
 };
 
 /**
