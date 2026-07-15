@@ -1,6 +1,7 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -28,13 +29,6 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = () => {
   if (isCredentialValid) {
     return (
       <OperationResultScreenContent
-        title={I18n.t(
-          `features.itWallet.issuance.credentialAlreadyAdded.title`
-        )}
-        subtitle={I18n.t(
-          `features.itWallet.issuance.credentialAlreadyAdded.body`
-        )}
-        pictogram="itWallet"
         action={{
           label: I18n.t(
             `features.itWallet.issuance.credentialAlreadyAdded.primaryAction`
@@ -45,19 +39,23 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = () => {
               params: { credentialType }
             })
         }}
+        pictogram="itWallet"
         secondaryAction={{
           label: I18n.t("global.buttons.close"),
           onPress: () => navigation.popToTop()
         }}
+        subtitle={I18n.t(
+          `features.itWallet.issuance.credentialAlreadyAdded.body`
+        )}
+        title={I18n.t(
+          `features.itWallet.issuance.credentialAlreadyAdded.title`
+        )}
       />
     );
   }
 
   return (
     <OperationResultScreenContent
-      title={I18n.t("features.itWallet.issuance.mdlMessageExpired.title")}
-      subtitle={I18n.t("features.itWallet.issuance.mdlMessageExpired.subtitle")}
-      pictogram="ended"
       action={{
         label: I18n.t(
           "features.itWallet.issuance.mdlMessageExpired.primaryAction"
@@ -67,10 +65,13 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = () => {
             screen: ITW_ROUTES.ONBOARDING
           })
       }}
+      pictogram="ended"
       secondaryAction={{
         label: I18n.t("global.buttons.notNow"),
         onPress: () => navigation.popToTop()
       }}
+      subtitle={I18n.t("features.itWallet.issuance.mdlMessageExpired.subtitle")}
+      title={I18n.t("features.itWallet.issuance.mdlMessageExpired.title")}
     />
   );
 };

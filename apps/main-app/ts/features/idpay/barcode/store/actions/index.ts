@@ -1,4 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
+
 import { TransactionBarCodeResponse } from "../../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { TransactionErrorDTO } from "../../../../../../definitions/idpay/TransactionErrorDTO";
 import { NetworkError } from "../../../../../utils/errors";
@@ -15,8 +16,8 @@ export const idPayGenerateBarcode = createAsyncAction(
   IdPayGenerateBarcodePayload,
   TransactionBarCodeResponse,
   {
+    error: NetworkError | TransactionErrorDTO;
     initiativeId: string;
-    error: TransactionErrorDTO | NetworkError;
   }
 >();
 
@@ -30,8 +31,8 @@ export const idPayGenerateStaticCode = createAsyncAction(
   IdPayGenerateBarcodePayload,
   TransactionBarCodeResponse,
   {
+    error: NetworkError | TransactionErrorDTO;
     initiativeId: string;
-    error: TransactionErrorDTO | NetworkError;
   }
 >();
 

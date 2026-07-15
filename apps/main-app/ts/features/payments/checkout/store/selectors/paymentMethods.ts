@@ -1,14 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import _ from "lodash";
 import { createSelector } from "reselect";
-import { isValidPaymentMethod } from "../../utils";
+
+import { selectPaymentsCheckoutState } from ".";
+import { WalletApplicationNameEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationName";
 import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationStatus";
 import { WalletLastUsageTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletLastUsageType";
-import { WalletApplicationNameEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationName";
 import { UIWalletInfoDetails } from "../../../common/types/UIWalletInfoDetails";
 import { isPaymentMethodExpired } from "../../../common/utils";
-import { selectPaymentsCheckoutState } from ".";
+import { isValidPaymentMethod } from "../../utils";
 
 export const walletPaymentUserWalletsSelector = createSelector(
   selectPaymentsCheckoutState,

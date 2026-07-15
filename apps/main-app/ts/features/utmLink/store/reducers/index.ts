@@ -1,11 +1,12 @@
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../store/actions/types";
 import { utmLinkClearParams, utmLinkSetParams } from "../actions";
 
 export type UtmLinkState = {
-  utmSource: string | undefined;
-  utmMedium: string | undefined;
   utmCampaign: string | undefined;
+  utmMedium: string | undefined;
+  utmSource: string | undefined;
 };
 
 const utmLinkInitialState: UtmLinkState = {

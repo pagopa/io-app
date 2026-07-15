@@ -1,18 +1,19 @@
 import { act, fireEvent } from "@testing-library/react-native";
+import * as O from "fp-ts/lib/Option";
 import { EmitterSubscription, Linking } from "react-native";
 import { createStore } from "redux";
-import * as O from "fp-ts/lib/Option";
-import { appReducer } from "../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as loginHooks from "../../../lollipop/hooks/useLollipopLoginSource";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import ActiveSessionCieIdLoginScreen from "../screens/cieId/ActiveSessionCieIdLoginScreen";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
   setFinishedActiveSessionLoginFlow
 } from "../store/actions";
-import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import ActiveSessionCieIdLoginScreen from "../screens/cieId/ActiveSessionCieIdLoginScreen";
 
 const API_PREFIX_URL = "http://example.com";
 const SPID_LEVEL = "SpidL2";

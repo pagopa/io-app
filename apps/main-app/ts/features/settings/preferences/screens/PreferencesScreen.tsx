@@ -1,32 +1,29 @@
+import { Divider, IOVisualCostants, ListItemNav } from "@io-app/design-system";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 /**
  * Implements the preferences screen where the user can see and update his
  * preferences about notifications, calendar, services, messages and languages
  */
 import { ComponentProps, useCallback, useRef } from "react";
 import { Alert, FlatList, ListRenderItemInfo, View } from "react-native";
-import {
-  Divider,
-  IOVisualCostants,
-  ListItemNav
-} from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import I18n from "i18next";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { requestWriteCalendarPermission } from "../../../../utils/permission";
-import { checkAndRequestPermission } from "../../../../utils/calendar";
-import { openAppSettings } from "../../../../utils/appSettings";
-import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { openAppSettings } from "../../../../utils/appSettings";
+import { checkAndRequestPermission } from "../../../../utils/calendar";
 import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
+import { requestWriteCalendarPermission } from "../../../../utils/permission";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
-type PreferencesNavListItem = {
-  value: string;
-} & Pick<
+type PreferencesNavListItem = Pick<
   ComponentProps<typeof ListItemNav>,
-  "description" | "testID" | "onPress"
->;
+  "description" | "onPress" | "testID"
+> & {
+  value: string;
+};
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -166,35 +163,35 @@ const PreferencesScreen = () => {
   }: ListRenderItemInfo<PreferencesNavListItem>) => (
     <ListItemNav
       accessibilityLabel={`${value} ${description}`}
-      value={value}
       description={description}
       onPress={onPress}
       testID={testID}
+      value={value}
     />
   );
 
   return (
     <IOScrollViewWithLargeHeader
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      description={I18n.t("profile.preferences.subtitle")}
+      faqCategories={["profile", "privacy", "authentication_SPID"]}
+      headerActionsProp={{ showHelp: true }}
+      ref={titleRef}
       title={{
         label: I18n.t("profile.preferences.title")
       }}
-      description={I18n.t("profile.preferences.subtitle")}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      headerActionsProp={{ showHelp: true }}
-      faqCategories={["profile", "privacy", "authentication_SPID"]}
-      ref={titleRef}
     >
       <FlatList
-        scrollEnabled={false}
-        keyExtractor={(item: PreferencesNavListItem, index: number) =>
-          `${item.value}-${index}`
-        }
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
         data={preferencesNavListItems}
-        renderItem={renderPreferencesNavItem}
         ItemSeparatorComponent={() => <Divider />}
+        keyExtractor={(item: PreferencesNavListItem, index: number) =>
+          `${item.value}-${index}`
+        }
+        renderItem={renderPreferencesNavItem}
+        scrollEnabled={false}
       />
     </IOScrollViewWithLargeHeader>
   );

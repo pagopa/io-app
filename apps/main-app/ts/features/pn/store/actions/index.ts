@@ -4,24 +4,25 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
 
-type TogglePnActivationRequestPaylad = {
-  value: boolean;
-  onSuccess?: () => void;
-  onFailure?: (isRateLimitError?: boolean) => void;
+type CancelPnPaymentStatusTracking = {
+  messageId: string;
 };
 
 type PNPaymentStatusTracking = {
+  messageId: string;
   openingSource: SendOpeningSource;
   userType: SendUserType;
-  messageId: string;
 };
-type CancelPnPaymentStatusTracking = {
-  messageId: string;
+type TogglePnActivationRequestPaylad = {
+  onFailure?: (isRateLimitError?: boolean) => void;
+  onSuccess?: () => void;
+  value: boolean;
 };
 
 export const pnActivationUpsert = createAsyncAction(
@@ -41,7 +42,7 @@ export const dismissPnActivationReminderBanner = createAction(
 );
 
 export type PnActions =
-  | ActionType<typeof pnActivationUpsert>
-  | ActionType<typeof startPNPaymentStatusTracking>
   | ActionType<typeof cancelPNPaymentStatusTracking>
-  | ActionType<typeof dismissPnActivationReminderBanner>;
+  | ActionType<typeof dismissPnActivationReminderBanner>
+  | ActionType<typeof pnActivationUpsert>
+  | ActionType<typeof startPNPaymentStatusTracking>;

@@ -9,6 +9,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { ImageSourcePropType } from "react-native";
+
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
 import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
@@ -148,7 +149,20 @@ export const PatchedWalletV2 = t.intersection(
 
 export type PatchedWalletV2 = t.TypeOf<typeof PatchedWalletV2>;
 
-type WalletV2WithoutInfo = Exclude<PatchedWalletV2, "info" | "walletType">;
+export type RawBancomatPaymentMethod = WalletV2WithoutInfo & {
+  info: CardInfo;
+  kind: "Bancomat";
+};
+
+export type RawBPayPaymentMethod = WalletV2WithoutInfo & {
+  info: BPayInfoPagoPa;
+  kind: "BPay";
+};
+
+export type RawCreditCardPaymentMethod = WalletV2WithoutInfo & {
+  info: CardInfo;
+  kind: "CreditCard";
+};
 
 /**
  * RawPaymentMethod is a PatchedWalletV2 with "info" changed with one of the specific payment type info.
@@ -157,29 +171,16 @@ type WalletV2WithoutInfo = Exclude<PatchedWalletV2, "info" | "walletType">;
  */
 export type RawPaymentMethod =
   | RawBancomatPaymentMethod
-  | RawCreditCardPaymentMethod
   | RawBPayPaymentMethod
+  | RawCreditCardPaymentMethod
   | RawPayPalPaymentMethod;
 
-export type RawBancomatPaymentMethod = WalletV2WithoutInfo & {
-  kind: "Bancomat";
-  info: CardInfo;
-};
-
-export type RawCreditCardPaymentMethod = WalletV2WithoutInfo & {
-  kind: "CreditCard";
-  info: CardInfo;
-};
-
-export type RawBPayPaymentMethod = WalletV2WithoutInfo & {
-  kind: "BPay";
-  info: BPayInfoPagoPa;
-};
-
 export type RawPayPalPaymentMethod = WalletV2WithoutInfo & {
-  kind: "PayPal";
   info: PayPalInfo;
+  kind: "PayPal";
 };
+
+type WalletV2WithoutInfo = Exclude<PatchedWalletV2, "info" | "walletType">;
 
 // payment methods type guards
 export const isRawBancomat = (
@@ -198,6 +199,25 @@ export const isRawBPay = (
   pm: RawPaymentMethod | undefined
 ): pm is RawBPayPaymentMethod => pm?.kind === "BPay";
 
+// In addition to the representation, a bancomat have also the abiInfo
+export type BancomatPaymentMethod = PaymentMethodRepresentation &
+  RawBancomatPaymentMethod &
+  WithAbi;
+
+export type BPayPaymentMethod = PaymentMethodRepresentation &
+  RawBPayPaymentMethod &
+  WithAbi;
+
+export type CreditCardPaymentMethod = PaymentMethodRepresentation &
+  RawCreditCardPaymentMethod &
+  WithAbi;
+
+export type PaymentMethod =
+  | BancomatPaymentMethod
+  | BPayPaymentMethod
+  | CreditCardPaymentMethod
+  | PayPalPaymentMethod;
+
 export type PaymentMethodRepresentation = {
   // A textual representation for a payment method
   caption: string;
@@ -205,31 +225,12 @@ export type PaymentMethodRepresentation = {
   icon: ImageSourcePropType;
 };
 
+export type PayPalPaymentMethod = PaymentMethodRepresentation &
+  RawPayPalPaymentMethod;
+
 type WithAbi = {
   abiInfo?: Abi;
 };
-
-// In addition to the representation, a bancomat have also the abiInfo
-export type BancomatPaymentMethod = RawBancomatPaymentMethod &
-  PaymentMethodRepresentation &
-  WithAbi;
-
-export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
-  PaymentMethodRepresentation &
-  WithAbi;
-
-export type BPayPaymentMethod = RawBPayPaymentMethod &
-  PaymentMethodRepresentation &
-  WithAbi;
-
-export type PayPalPaymentMethod = RawPayPalPaymentMethod &
-  PaymentMethodRepresentation;
-
-export type PaymentMethod =
-  | BancomatPaymentMethod
-  | CreditCardPaymentMethod
-  | BPayPaymentMethod
-  | PayPalPaymentMethod;
 
 // payment methods type guards
 export const isBancomat = (
@@ -265,10 +266,6 @@ export const Wallet = repP(
   "Wallet"
 );
 
-export type Wallet = t.TypeOf<typeof Wallet> & {
-  paymentMethod?: RawPaymentMethod;
-};
-
 /**
  * A Wallet that has not being saved yet
  */
@@ -278,6 +275,10 @@ export type NullableWallet = ReplaceProp1<Wallet, "idWallet", undefined>;
  * A refined Transaction
  */
 export type Transaction = TTransactionPagoPA;
+
+export type Wallet = t.TypeOf<typeof Wallet> & {
+  paymentMethod?: RawPaymentMethod;
+};
 export const Transaction = TransactionPagoPA;
 
 export const isCompletedTransaction = (tx: Transaction) => tx.idStatus === 3;

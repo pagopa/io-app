@@ -1,13 +1,9 @@
-import {
-  Divider,
-  IOSkeleton,
-  IOVisualCostants
-} from "@pagopa/io-app-design-system";
+import { Divider, IOSkeleton, IOVisualCostants } from "@io-app/design-system";
 import { View } from "react-native";
 
 type Props = {
-  hasIcons?: boolean;
   count?: number;
+  hasIcons?: boolean;
 };
 
 export function CgnMerchantListSkeleton(props: Props) {
@@ -26,11 +22,11 @@ export function CgnMerchantListSkeleton(props: Props) {
             }}
           >
             <IOSkeleton
-              shape="rectangle"
               height={24}
               radius={8}
-              width="100%"
+              shape="rectangle"
               testID={`CgnMerchantListSkeleton-Placeholder-${index}`}
+              width="100%"
             />
           </View>
           <Divider />

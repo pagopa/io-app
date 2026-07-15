@@ -1,6 +1,7 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
+
 import { AppDispatch } from "../../../../App";
+import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
 
 const jwkPublicKey: PublicKey = {
   crv: "P-256",

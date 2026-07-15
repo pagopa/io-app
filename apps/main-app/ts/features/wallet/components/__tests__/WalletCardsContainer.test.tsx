@@ -1,9 +1,9 @@
 import * as O from "fp-ts/lib/Option";
-import _ from "lodash";
-
 import I18n from "i18next";
+import _ from "lodash";
 import { Alert } from "react-native";
 import configureMockStore from "redux-mock-store";
+
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";

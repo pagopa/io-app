@@ -1,17 +1,18 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { within, fireEvent } from "@testing-library/react-native";
-import configureMockStore from "redux-mock-store";
-import { Alert } from "react-native";
+import { fireEvent, within } from "@testing-library/react-native";
 import I18n from "i18next";
+import { Alert } from "react-native";
+import configureMockStore from "redux-mock-store";
+
 import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../../../../../definitions/identity/UserDataProcessingStatus";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import PrivacyMainScreen from "../PrivacyMainScreen";
-import { UserDataProcessingStatusEnum } from "../../../../../../definitions/identity/UserDataProcessingStatus";
 import * as hooks from "../../../../../utils/hooks/usePrevious";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import PrivacyMainScreen from "../PrivacyMainScreen";
 
 jest.spyOn(Alert, "alert");
 
@@ -124,7 +125,7 @@ describe("PrivacyMainScreen", () => {
       [UserDataProcessingChoiceEnum.DELETE]: pot.none
     });
 
-    const IOToast = require("@pagopa/io-app-design-system").IOToast;
+    const IOToast = require("@io-app/design-system").IOToast;
     const toastSpy = jest.spyOn(IOToast, "error").mockImplementation(jest.fn());
 
     renderComponentMockStore({

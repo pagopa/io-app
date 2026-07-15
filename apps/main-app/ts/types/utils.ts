@@ -4,19 +4,10 @@ import { Pot } from "@pagopa/ts-commons/lib/pot";
 import { Effect } from "redux-saga/effects";
 import { PayloadAC, PayloadMetaAC } from "typesafe-actions/dist/type-helpers";
 
-export type SagaCallReturnType<
-  T extends (...args: Array<any>) => any,
-  R = ReturnType<T>
-> =
-  R extends Generator<infer _, infer B0, infer _>
-    ? B0
-    : R extends Iterator<infer B | Effect>
-      ? B
-      : R extends IterableIterator<infer B1 | Effect>
-        ? B1
-        : R extends Promise<infer B2>
-          ? B2
-          : never;
+/**
+ * Ensure that the types T extends any[] are mutually exclusive
+ */
+export type OneOf<T extends Array<any>> = _OneOf<Tuplize<T>>;
 
 /**
  * Extracts the type of the payload of a typesafe action
@@ -37,28 +28,39 @@ export type PotFromActions<S, F> = Pot<
 >;
 
 /**
+ * This is a wrapper type for `Effect` used in the
+ * code for backward compatibility. In the codebase
+ * it should not be possible to import directly
+ * from `redux-saga/effects` due to the strict typing
+ * provided by `typed-redux-saga`.
+ */
+export type ReduxSagaEffect = Effect;
+
+/**
  * Ensure that all the keys of type T are required, transforming all optional field of kind T | undefined to T
  */
 export type RequiredAll<T> = { [K in keyof T]-?: T[K] };
 
-/**
- * Return a type that prohibits the use of keys that are present only in T but not in U
- */
-type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+export type SagaCallReturnType<
+  T extends (...args: Array<any>) => any,
+  R = ReturnType<T>
+> =
+  R extends Generator<infer _, infer B0, infer _>
+    ? B0
+    : R extends Iterator<Effect | infer B>
+      ? B
+      : R extends IterableIterator<Effect | infer B1>
+        ? B1
+        : R extends Promise<infer B2>
+          ? B2
+          : never;
 
 /**
  * Ensure that the types T and U are mutually exclusive
  */
 export type XOR<T, U> = T | U extends object
-  ? (Without<T, U> & U) | (Without<U, T> & T)
+  ? (T & Without<U, T>) | (U & Without<T, U>)
   : T | U;
-
-type Values<T extends {}> = T[keyof T];
-
-type Tuplize<T extends Array<any>> = Pick<
-  T,
-  Exclude<keyof T, Extract<keyof Array<any>, string> | number>
->;
 
 type _OneOf<T extends {}> = Values<{
   [K in keyof T]: T[K] & {
@@ -66,10 +68,17 @@ type _OneOf<T extends {}> = Values<{
   };
 }>;
 
+type Tuplize<T extends Array<any>> = Pick<
+  T,
+  Exclude<keyof T, Extract<keyof Array<any>, string> | number>
+>;
+
+type Values<T extends {}> = T[keyof T];
+
 /**
- * Ensure that the types T extends any[] are mutually exclusive
+ * Return a type that prohibits the use of keys that are present only in T but not in U
  */
-export type OneOf<T extends Array<any>> = _OneOf<Tuplize<T>>;
+type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
 
 /**
  * Create an object with the passed key and value, enforcing type safety.
@@ -102,12 +111,3 @@ export function computedProp<K extends PropertyKey, V>(
 ): K extends any ? { [P in K]: V } : never {
   return { [key]: value } as any;
 }
-
-/**
- * This is a wrapper type for `Effect` used in the
- * code for backward compatibility. In the codebase
- * it should not be possible to import directly
- * from `redux-saga/effects` due to the strict typing
- * provided by `typed-redux-saga`.
- */
-export type ReduxSagaEffect = Effect;

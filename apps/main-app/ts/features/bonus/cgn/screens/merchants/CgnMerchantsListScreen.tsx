@@ -4,12 +4,13 @@ import {
   H6,
   HSpacer,
   ListItemNav
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import I18n from "i18next";
+
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
@@ -21,6 +22,7 @@ import {
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
+import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnOfflineMerchants,
@@ -31,7 +33,6 @@ import {
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
 import { mixAndSortMerchants } from "../../utils/merchants";
-import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 
 export type MerchantsAll = OfflineMerchant | OnlineMerchant;
 
@@ -76,8 +77,8 @@ export const CgnMerchantsListScreen = () => {
     return (
       <ContentWrapper key={item.id}>
         <ListItemNav
-          onPress={() => onItemPress(item.id)}
           accessibilityLabel={accessibilityLabel}
+          onPress={() => onItemPress(item.id)}
           value={
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -94,8 +95,8 @@ export const CgnMerchantsListScreen = () => {
                 >
                   <Badge
                     accessible={false}
-                    variant="cgn"
                     text={I18n.t("bonus.cgn.merchantsList.news")}
+                    variant="cgn"
                   />
                 </View>
               )}
@@ -114,16 +115,16 @@ export const CgnMerchantsListScreen = () => {
   const ListEmptyComponent =
     isError(onlineMerchants) || isError(offlineMerchants) ? (
       <OperationResultScreenContent
-        title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
-        pictogram="umbrella"
         action={{
           label: I18n.t("global.buttons.retry"),
           onPress: initLoadingLists
         }}
+        pictogram="umbrella"
+        title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
       />
     ) : (
       <ContentWrapper>
-        <CgnMerchantListSkeleton hasIcons count={10} />
+        <CgnMerchantListSkeleton count={10} hasIcons />
       </ContentWrapper>
     );
 

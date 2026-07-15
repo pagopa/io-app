@@ -4,12 +4,14 @@ import {
   IOColors,
   IOMarkdown,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { Image, StyleSheet, View } from "react-native";
+
+import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
@@ -27,15 +29,15 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialSelector } from "../../credentials/store/selectors";
+import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
+  selectIsLoading,
   selectResolvedCredentialOfferOption
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
-import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
 
 const introHeroUri = Image.resolveAssetSource(introHeroSource).uri;
 
@@ -76,6 +78,8 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
+  const isLoading =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const credentialType = O.toUndefined(credentialTypeOption);
   const introductionContent = useIOSelector(
     itwCredentialIntroContentSelector(credentialType)
@@ -131,13 +135,6 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   if (isCredentialAlreadyAdded && credentialType) {
     return (
       <OperationResultScreenContent
-        pictogram="itWallet"
-        title={I18n.t(
-          "features.itWallet.issuance.credentialAlreadyAdded.title"
-        )}
-        subtitle={I18n.t(
-          "features.itWallet.issuance.credentialAlreadyAdded.body"
-        )}
         action={{
           label: I18n.t(
             "features.itWallet.issuance.credentialAlreadyAdded.primaryAction"
@@ -149,6 +146,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
             });
           }
         }}
+        pictogram="itWallet"
         secondaryAction={{
           label: I18n.t("global.buttons.close"),
           onPress: () => {
@@ -156,6 +154,12 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
             navigation.goBack();
           }
         }}
+        subtitle={I18n.t(
+          "features.itWallet.issuance.credentialAlreadyAdded.body"
+        )}
+        title={I18n.t(
+          "features.itWallet.issuance.credentialAlreadyAdded.title"
+        )}
       />
     );
   }
@@ -167,21 +171,22 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
 
   return (
     <IOScrollView
-      includeContentMargins={false}
       actions={{
         type: "SingleButton",
         primary: {
           label: I18n.t("global.buttons.continue"),
-          onPress: handleContinue
+          onPress: handleContinue,
+          loading: isLoading
         }
       }}
+      includeContentMargins={false}
     >
       <Image
         accessibilityIgnoresInvertColors
         source={{ uri: introHeroUri }}
         style={styles.hero}
       />
-      <ContentWrapper marginTop={24}>
+      <ContentWrapper style={{ marginTop: 24 }}>
         <H2>{title}</H2>
         <VSpacer size={16} />
         {introductionContent && (
