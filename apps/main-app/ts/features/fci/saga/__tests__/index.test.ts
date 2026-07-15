@@ -238,7 +238,7 @@ describe("FCI Saga Tests", () => {
             NavigationService.dispatchNavigationAction,
             StackActions.replace(FCI_ROUTES.MAIN, {
               screen: FCI_ROUTES.ROUTER,
-              params: { signatureRequestId }
+              params: { signatureRequestId, skipInitialFetch: true }
             })
           )
           .not.put(fciStartRequest())

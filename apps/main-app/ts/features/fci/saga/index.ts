@@ -344,7 +344,10 @@ function* watchFciSignatureRequestRetrySaga(
             NavigationService.dispatchNavigationAction,
             StackActions.replace(FCI_ROUTES.MAIN, {
               screen: FCI_ROUTES.ROUTER,
-              params: { signatureRequestId: action.payload }
+              params: {
+                signatureRequestId: action.payload,
+                skipInitialFetch: true
+              }
             })
           );
         }

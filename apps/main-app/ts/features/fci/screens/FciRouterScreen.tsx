@@ -34,24 +34,24 @@ import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureReque
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
+  // Used on retry only on status != WAIT_FOR_SIGNATURE
+  skipInitialFetch?: boolean;
 }>;
 
 const FciSignatureScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
 ): ReactElement => {
-  // TODO: add a check to validate signatureRequestId using io-ts
-  // https://pagopa.atlassian.net/browse/SFEQS-1705?atlOrigin=eyJpIjoiOWY2NDA4YmQ0ZTQ0NGRjZTk5MGNlZDczZGIxMDllMmIiLCJwIjoiaiJ9
-  const signatureRequestId = props.route.params.signatureRequestId;
+  const { signatureRequestId, skipInitialFetch } = props.route.params;
   const dispatch = useIODispatch();
   const fciSignatureRequest = useIOSelector(fciSignatureRequestSelector);
   const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
   const fciEnabled = isTestEnv || fciEnabledSelector;
 
   useEffect(() => {
-    if (fciEnabled) {
+    if (fciEnabled && !skipInitialFetch) {
       dispatch(fciSignatureRequestFromId.request(signatureRequestId));
     }
-  }, [dispatch, signatureRequestId, fciEnabled]);
+  }, [dispatch, signatureRequestId, fciEnabled, skipInitialFetch]);
 
   if (!fciEnabled) {
     return (
