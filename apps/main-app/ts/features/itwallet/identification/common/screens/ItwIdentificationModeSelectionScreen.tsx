@@ -20,7 +20,6 @@ import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
 import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { itwHasNfcFeatureSelector } from "../store/selectors";
 import {
   isL3FeaturesEnabledSelector,
   selectCredentialType,
@@ -33,6 +32,7 @@ import { trackItWalletIDMethod, trackItwUserWithoutCie } from "../../analytics";
 import { CieIdMethodModule } from "../components/CieIdMethodModule";
 import { CiePinMethodModule } from "../components/CiePinMethodModule";
 import { SpidMethodModule } from "../components/SpidMethodModule";
+import { itwHasNfcFeatureSelector } from "../store/selectors";
 
 export type ItwIdentificationModeSelectionScreenProps =
   IOStackNavigationRouteProps<

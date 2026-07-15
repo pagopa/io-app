@@ -14,11 +14,12 @@ import {
 import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
+import * as identificationSelectors from "../../store/selectors";
 import {
   ItwIdentificationModeSelectionScreen,
   ItwIdentificationModeSelectionScreenProps
 } from "../ItwIdentificationModeSelectionScreen.tsx";
-import * as identificationSelectors from "../../store/selectors";
+
 jest.mock("../../../../../../config", () => ({
   itwEnabled: true
 }));
