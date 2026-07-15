@@ -1,8 +1,9 @@
-import { ListItemNav } from "@pagopa/io-app-design-system";
+import { ListItemNav } from "@io-app/design-system";
 import { memo } from "react";
+
 import { Institution } from "../../../../../definitions/services/Institution";
-import { getLogoForInstitution } from "../../common/utils";
 import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
+import { getLogoForInstitution } from "../../common/utils";
 
 type InstitutionListItemProps = {
   count: number;

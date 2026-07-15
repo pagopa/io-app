@@ -1,19 +1,19 @@
 import {
   ContentWrapper,
   H2,
+  IconButton,
   IOButton,
   IOColors,
   IOPictograms,
-  IconButton,
   Pictogram,
   ToastNotification,
-  VSpacer,
   useIOFontDynamicScale,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+  useIOTheme,
+  VSpacer
+} from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import _ from "lodash";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
@@ -28,6 +28,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
+
 import { useDetectSmallScreen } from "../../../hooks/useDetectSmallScreen";
 import { useIOSelector } from "../../../store/hooks";
 import { appCurrentStateSelector } from "../../../store/reducers/appState";
@@ -56,9 +57,9 @@ import {
 } from "../store/selectors";
 import {
   FAIL_ATTEMPTS_TO_SHOW_ALERT,
-  IdentificationInstructionsComponent,
   getBiometryIconName,
-  handleAndroidBackNavigation
+  handleAndroidBackNavigation,
+  IdentificationInstructionsComponent
 } from "../utils";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
@@ -279,10 +280,10 @@ export const IdentificationModal = () => {
 
   const NumberPad = memo(() => (
     <IdentificationNumberPad
+      biometricsConfig={biometricsConfig}
+      numberPadVariant={"primary"}
       pin={pin}
       pinValidation={onPinValidated}
-      numberPadVariant={"primary"}
-      biometricsConfig={biometricsConfig}
     />
   ));
 
@@ -373,19 +374,19 @@ export const IdentificationModal = () => {
     />
   ) : (
     <Modal
-      testID="identification-modal"
-      statusBarTranslucent
-      transparent
       onRequestClose={() =>
         handleAndroidBackNavigation(
           identificationContext,
           onIdentificationCancelHandler
         )
       }
+      statusBarTranslucent
+      testID="identification-modal"
+      transparent
     >
       <StatusBar
-        barStyle={"light-content"}
         backgroundColor={"transparent"}
+        barStyle={"light-content"}
         translucent
       />
       <View
@@ -402,12 +403,12 @@ export const IdentificationModal = () => {
             <ContentWrapper>
               <VSpacer size={VERTICAL_PADDING} />
               <IconButton
-                icon={"closeLarge"}
+                accessibilityLabel={closeButtonLabel}
                 color="contrast"
+                icon={"closeLarge"}
                 onPress={() => {
                   onIdentificationCancelHandler();
                 }}
-                accessibilityLabel={closeButtonLabel}
               />
             </ContentWrapper>
           </View>
@@ -432,12 +433,12 @@ export const IdentificationModal = () => {
                   style={styles.alertContainer}
                 >
                   <ToastNotification
+                    icon="warningFilled"
                     message={
                       remainingAttemptsToShowAlert
                         ? remainingAttemptsText
                         : textTryAgain
                     }
-                    icon="warningFilled"
                     variant="warning"
                   />
                 </View>
@@ -445,8 +446,8 @@ export const IdentificationModal = () => {
                 isValidatingTask ? null : (
                 <View style={{ alignItems: "center" }}>
                   <Pictogram
-                    pictogramStyle="light-content"
                     name={pictogramKey}
+                    pictogramStyle="light-content"
                     size={64}
                   />
                 </View>
@@ -469,15 +470,15 @@ export const IdentificationModal = () => {
               <VSpacer size={isDeviceScreenSmall ? 16 : 32} />
               <View style={{ alignSelf: "center" }}>
                 <IOButton
-                  variant="link"
-                  textAlign="center"
+                  accessibilityLabel={forgotCodeLabel}
                   color="contrast"
+                  label={forgotCodeLabel}
                   /* Don't limit number of lines
                     when larger text is enabled */
                   numberOfLines={0}
-                  accessibilityLabel={forgotCodeLabel}
-                  label={forgotCodeLabel}
                   onPress={confirmResetAlert}
+                  textAlign="center"
+                  variant="link"
                 />
                 <VSpacer size={VERTICAL_PADDING} />
               </View>

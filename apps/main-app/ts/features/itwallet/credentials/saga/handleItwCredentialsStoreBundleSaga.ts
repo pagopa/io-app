@@ -1,4 +1,5 @@
 import { call, put } from "typed-redux-saga/macro";
+
 import {
   CredentialBundle,
   CredentialMetadata
@@ -10,7 +11,7 @@ import {
 } from "../store/actions";
 import { CredentialsVault } from "../utils/vault";
 
-type VaultWrite = { vaultId: string; credential: string };
+type VaultWrite = { credential: string; vaultId: string };
 
 /**
  * Groups the obtained bundles by credentialId and produces, for each credentialId:
@@ -28,8 +29,8 @@ const collapseBundles = (bundles: ReadonlyArray<CredentialBundle>) => {
   );
 
   return Object.entries(groups).reduce<{
-    writes: Array<VaultWrite>;
     metadata: Array<CredentialMetadata>;
+    writes: Array<VaultWrite>;
   }>(
     (acc, [credentialId, group]) => {
       if (group.length === 1) {

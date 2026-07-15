@@ -1,7 +1,9 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
-import { PersistPartial, PersistedState } from "redux-persist";
+import { PersistedState, PersistPartial } from "redux-persist";
+
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -9,10 +11,9 @@ import {
   loginSuccess,
   logoutSuccess
 } from "../../../../authentication/common/store/actions";
+import { ServicesState } from "../../../../services/common/store/reducers";
 import { dismissPnActivationReminderBanner } from "../../../store/actions";
 import * as bannerDismiss from "../bannerDismiss";
-import { ServicesState } from "../../../../services/common/store/reducers";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 type PnBannerDismissState = bannerDismiss.PnBannerDismissState & PersistPartial;
 

@@ -3,25 +3,25 @@ import {
   FooterActionsInline,
   IOColors,
   IOToast
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as S from "fp-ts/lib/string";
+import I18n from "i18next";
 import { ComponentProps, ReactElement, useEffect, useState } from "react";
-
 import { StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
-import I18n from "i18next";
+
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isIos } from "../../../utils/platform";
 import { share } from "../../../utils/share";
+import { trackFciTosDocPreviewSuccess } from "../analytics";
 import { FciDownloadPreviewDirectoryPath } from "../saga/networking/handleDownloadDocument";
 import { fciDownloadPreview } from "../store/actions";
 import {
   fciDownloadPathSelector,
   fciDownloadPreviewSelector
 } from "../store/reducers/fciDownloadPreview";
-import { trackFciTosDocPreviewSuccess } from "../analytics";
 import LoadingComponent from "./LoadingComponent";
 
 const styles = StyleSheet.create({
@@ -91,8 +91,8 @@ const renderFooter = (url: string, filePath: string) => {
     />
   ) : (
     <FooterActionsInline
-      startAction={saveButtonProps}
       endAction={shareButtonProps}
+      startAction={saveButtonProps}
     />
   );
 };
@@ -133,13 +133,13 @@ export const DocumentViewer = (props: Props): ReactElement => {
            * onPageChanged, which is called to report that the first page
            * has loaded */}
           <Pdf
-            source={{ uri: fciDownloadPath, cache: true }}
-            style={styles.pdf}
+            enablePaging
             onError={_ => {
               setIsError(true);
             }}
             onLoadComplete={() => trackFciTosDocPreviewSuccess()}
-            enablePaging
+            source={{ uri: fciDownloadPath, cache: true }}
+            style={styles.pdf}
           />
           {renderFooter(documentUrl, fciDownloadPath)}
         </>

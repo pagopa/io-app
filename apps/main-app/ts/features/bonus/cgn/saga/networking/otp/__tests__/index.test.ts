@@ -1,13 +1,13 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
-import { getGenericError } from "../../../../../../../utils/errors";
 
 import { cgnGenerateOtp } from "..";
 import { Otp } from "../../../../../../../../definitions/cgn/Otp";
 import { OtpCode } from "../../../../../../../../definitions/cgn/OtpCode";
-import { cgnGenerateOtp as cgnGenerateOtpAction } from "../../../../store/actions/otp";
+import { getGenericError } from "../../../../../../../utils/errors";
 import { setMerchantDiscountCode } from "../../../../store/actions/merchants";
+import { cgnGenerateOtp as cgnGenerateOtpAction } from "../../../../store/actions/otp";
 
 describe("cgnGenerateOtp", () => {
   const otpResult: Otp = {

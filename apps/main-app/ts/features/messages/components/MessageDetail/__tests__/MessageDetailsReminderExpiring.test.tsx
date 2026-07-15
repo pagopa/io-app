@@ -1,12 +1,13 @@
-import { createStore } from "redux";
 import { fireEvent, waitFor } from "@testing-library/react-native";
-import { MessageDetailsReminderExpiring } from "../MessageDetailsReminderExpiring";
-import { appReducer } from "../../../../../store/reducers";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import * as accessibility from "../../../../../utils/accessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import * as accessibility from "../../../../../utils/accessibility";
 import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../utils/__tests__/testUtils.test";
+import { MessageDetailsReminderExpiring } from "../MessageDetailsReminderExpiring";
 
 const messageId = "01HSG6GR1JT2E23AJ5RBTAMZZP";
 

@@ -8,11 +8,12 @@ import {
   IOMarkdownLite,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback } from "react";
+
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -20,6 +21,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { identificationRequest } from "../../../identification/store/actions";
+import { toItwIdMethod } from "../../analytics/utils/types";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { isItwCredential } from "../../common/utils/itwCredentialUtils";
@@ -38,7 +40,6 @@ import {
   trackItwRequestSuccess,
   trackSaveCredentialToWallet
 } from "../analytics";
-import { toItwIdMethod } from "../../analytics/utils/types";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceEidPreviewScreen = () => {
@@ -164,6 +165,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
       <ForceScrollDownView
+        buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
         contentContainerStyle={{ flexGrow: 1 }}
         footerActions={{
           actions: {
@@ -191,8 +193,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
             <HStack space={8} style={{ alignItems: "center" }}>
               {!isL3 && (
                 <Icon
-                  name="legalValue"
                   color={theme["interactiveElem-default"]}
+                  name="legalValue"
                 />
               )}
               <H2>

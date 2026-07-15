@@ -2,8 +2,9 @@ import {
   IOVisualCostants,
   ListItemHeader,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { View } from "react-native";
+
 import { ItwCredentialDetailCard } from "../../common/components/ItwCredentialDetailCard";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";

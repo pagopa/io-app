@@ -1,12 +1,13 @@
-import { testSaga } from "redux-saga-test-plan";
 import { CommonActions } from "@react-navigation/native";
+import { testSaga } from "redux-saga-test-plan";
+
 import { handleStoredLinkingUrlIfNeeded } from "..";
+import NavigationService from "../../../../navigation/NavigationService";
+import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import { initiateAarFlow } from "../../../pn/aar/store/actions";
 import { isSendAarLink } from "../../../pn/aar/utils/deepLinking";
 import { clearLinkingUrl } from "../../actions";
 import { storedLinkingUrlSelector } from "../../reducers";
-import NavigationService from "../../../../navigation/NavigationService";
-import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 
 describe("handleStoredLinkingUrlIfNeeded", () => {
   const aarUrl = "https://example.com/aar";
