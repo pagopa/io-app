@@ -70,7 +70,6 @@ exports[`Test Buttons Components IOButton Snapshot · Link variant 1`] = `
         {
           "alignItems": "center",
           "borderCurve": "continuous",
-          "elevation": 0,
           "flexDirection": "row",
           "justifyContent": "center",
           "overflow": "hidden",
@@ -94,7 +93,6 @@ exports[`Test Buttons Components IOButton Snapshot · Link variant 1`] = `
         {
           "alignItems": "center",
           "borderCurve": "continuous",
-          "elevation": 0,
           "flexDirection": "row",
           "justifyContent": "center",
           "overflow": "hidden",
@@ -289,7 +287,6 @@ exports[`Test Buttons Components IOButton Snapshot · Outline variant 1`] = `
         {
           "alignItems": "center",
           "borderCurve": "continuous",
-          "elevation": 0,
           "flexDirection": "row",
           "justifyContent": "center",
           "overflow": "hidden",
@@ -313,7 +310,6 @@ exports[`Test Buttons Components IOButton Snapshot · Outline variant 1`] = `
         {
           "alignItems": "center",
           "borderCurve": "continuous",
-          "elevation": 0,
           "flexDirection": "row",
           "justifyContent": "center",
           "overflow": "hidden",
@@ -510,7 +506,6 @@ exports[`Test Buttons Components IOButton Snapshot · Solid variant 1`] = `
         {
           "alignItems": "center",
           "borderCurve": "continuous",
-          "elevation": 0,
           "flexDirection": "row",
           "justifyContent": "center",
           "overflow": "hidden",
@@ -534,7 +529,6 @@ exports[`Test Buttons Components IOButton Snapshot · Solid variant 1`] = `
         {
           "alignItems": "center",
           "borderCurve": "continuous",
-          "elevation": 0,
           "flexDirection": "row",
           "justifyContent": "center",
           "overflow": "hidden",

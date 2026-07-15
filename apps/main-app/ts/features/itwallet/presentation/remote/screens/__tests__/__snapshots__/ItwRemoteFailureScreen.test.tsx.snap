@@ -647,7 +647,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -671,7 +670,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -887,7 +885,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -911,7 +908,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2170,7 +2166,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2194,7 +2189,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -3496,7 +3490,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -3520,7 +3513,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -4904,7 +4896,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -4928,7 +4919,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -5914,7 +5904,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -5938,7 +5927,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -6154,7 +6142,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -6178,7 +6165,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -7459,7 +7445,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -7483,7 +7468,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -7699,7 +7683,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -7723,7 +7706,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -9066,7 +9048,6 @@ Genera un nuovo QR Code e riprova.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -9090,7 +9071,6 @@ Genera un nuovo QR Code e riprova.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -9306,7 +9286,6 @@ Genera un nuovo QR Code e riprova.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -9330,7 +9309,6 @@ Genera un nuovo QR Code e riprova.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -10356,7 +10334,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -10380,7 +10357,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -10596,7 +10572,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -10620,7 +10595,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -11915,7 +11889,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -11939,7 +11912,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -12155,7 +12127,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -12179,7 +12150,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -13215,7 +13185,6 @@ continuare
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -13239,7 +13208,6 @@ continuare
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -13455,7 +13423,6 @@ continuare
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -13479,7 +13446,6 @@ continuare
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",

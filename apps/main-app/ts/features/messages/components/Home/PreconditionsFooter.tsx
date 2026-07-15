@@ -103,7 +103,7 @@ const PreconditionsFooterUpdate = ({
       type: "TwoButtons",
       primary: {
         label: I18n.t("global.buttons.updateIO"),
-        onPress: () => openAppStoreUrl(),
+        onPress: () => void openAppStoreUrl(),
         testID: "message_preconditions_footer_update"
       },
       secondary: {

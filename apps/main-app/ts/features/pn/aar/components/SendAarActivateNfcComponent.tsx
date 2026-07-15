@@ -116,7 +116,7 @@ export const SendAarActivateNfcComponent = () => {
           label: i18n.t(
             "features.pn.aar.flow.androidNfcActivation.secondaryAction"
           ),
-          onPress: onContinue
+          onPress: () => void onContinue()
         }
       }}
       listItemHeaderLabel={i18n.t(
