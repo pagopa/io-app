@@ -11,9 +11,9 @@ import LogoPaymentExtPayPal from "./svg/LogoPaymentExtPayPal";
 import LogoPaymentExtPostepay from "./svg/LogoPaymentExtPostepay";
 import LogoPaymentExtSatispay from "./svg/LogoPaymentExtSatispay";
 import LogoPaymentExtUnionPay from "./svg/LogoPaymentExtUnionPay";
-import LogoPaymentExtVPay from "./svg/LogoPaymentExtVPay";
 import LogoPaymentExtVisa from "./svg/LogoPaymentExtVisa";
 import LogoPaymentExtVisaElectron from "./svg/LogoPaymentExtVisaElectron";
+import LogoPaymentExtVPay from "./svg/LogoPaymentExtVPay";
 
 export const IOPaymentExtLogos = {
   maestro: LogoPaymentExtMaestro,
@@ -37,7 +37,7 @@ export type IOLogoPaymentExtType = keyof typeof IOPaymentExtLogos;
 
 type IOPaymentLogos = {
   name: IOLogoPaymentExtType;
-  size?: number | "100%";
+  size?: "100%" | number;
 };
 
 const LogoPaymentExt = ({ name, size = 24, ...props }: IOPaymentLogos) => {

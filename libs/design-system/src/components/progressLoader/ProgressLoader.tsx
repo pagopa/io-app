@@ -5,13 +5,14 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import { IOColors, IOSpringValues } from "../../core";
 
 export type ProgressLoader = {
-  progress: number;
   accessibilityLabel?: string;
   color?: IOColors;
+  progress: number;
 };
 
 /**
@@ -45,23 +46,23 @@ export const ProgressLoader = ({
 
   return (
     <View
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="progressbar"
+      accessibilityValue={{
+        min: 0,
+        max: 100,
+        now: progress
+      }}
+      accessible={true}
       focusable
+      importantForAccessibility="yes"
+      onLayout={e => setWidth(e.nativeEvent.layout.width)}
       /* We set a fixed height to make the component focusable on Android */
       style={{
         width: "100%",
         height: 16,
         justifyContent: "center",
         backgroundColor
-      }}
-      onLayout={e => setWidth(e.nativeEvent.layout.width)}
-      importantForAccessibility="yes"
-      accessibilityLabel={accessibilityLabel}
-      accessible={true}
-      accessibilityRole="progressbar"
-      accessibilityValue={{
-        min: 0,
-        max: 100,
-        now: progress
       }}
     >
       <Animated.View

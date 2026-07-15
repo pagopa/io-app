@@ -1,5 +1,3 @@
-import { ComponentProps } from "react";
-import { Dimensions, View } from "react-native";
 import {
   ContentWrapper,
   IOColors,
@@ -7,18 +5,21 @@ import {
   VSpacer,
   WithTestID
 } from "@io-app/design-system";
+import { ComponentProps } from "react";
+import { Dimensions, View } from "react-native";
+
 import { ServicesHeader, ServicesHeaderSkeleton } from "./ServicesHeader";
 
 const WINDOW_HEIGHT = Dimensions.get("window").height;
 
 export type ServicesHeaderSectionProps = WithTestID<
-  | ({
+  | (ComponentProps<typeof ServicesHeader> & {
+      extraBottomPadding?: number;
       isLoading?: false;
-      extraBottomPadding?: number;
-    } & ComponentProps<typeof ServicesHeader>)
+    })
   | {
-      isLoading: true;
       extraBottomPadding?: number;
+      isLoading: true;
     }
 >;
 

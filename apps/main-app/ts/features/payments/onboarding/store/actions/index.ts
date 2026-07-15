@@ -3,16 +3,17 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { NetworkError } from "../../../../../utils/errors";
-import { WalletCreateResponse } from "../../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
+
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { WalletCreateResponse } from "../../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
+import { NetworkError } from "../../../../../utils/errors";
 import { WalletOnboardingOutcomeEnum } from "../../types/OnboardingOutcomeEnum";
 
 export type ContextualOnboardingWebViewPayload = {
-  url: string;
-  onSuccess?: (url: string) => void;
   onCancel?: (outcome?: WalletOnboardingOutcomeEnum) => void;
   onError?: (outcome?: WalletOnboardingOutcomeEnum) => void;
+  onSuccess?: (url: string) => void;
+  url: string;
 };
 
 export const paymentsOnboardingGetMethodsAction = createAsyncAction(
@@ -34,6 +35,6 @@ export const contextualOnboardingStartWebViewFlow = createStandardAction(
 )<ContextualOnboardingWebViewPayload>();
 
 export type PaymentsOnboardingActions =
-  | ActionType<typeof paymentsStartOnboardingAction>
+  | ActionType<typeof contextualOnboardingStartWebViewFlow>
   | ActionType<typeof paymentsOnboardingGetMethodsAction>
-  | ActionType<typeof contextualOnboardingStartWebViewFlow>;
+  | ActionType<typeof paymentsStartOnboardingAction>;

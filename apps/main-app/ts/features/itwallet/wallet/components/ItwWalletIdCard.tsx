@@ -1,5 +1,6 @@
 import I18n from "i18next";
 import { useCallback } from "react";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { GuidedTour } from "../../../tour/components/GuidedTour";
@@ -28,19 +29,19 @@ export const ItwWalletIdCard = ({ isStacked }: any) => {
 
   return (
     <GuidedTour
+      description={I18n.t("features.itWallet.tour.id.description")}
       groupId={ITW_TOUR_GROUP_ID}
       index={ITW_TOUR_STEP_ID}
       title={I18n.t("features.itWallet.tour.id.title")}
-      description={I18n.t("features.itWallet.tour.id.description")}
     >
       <ItwCredentialWalletCard
-        isStacked={isStacked}
         cardProps={{
           credentialType: CredentialType.PID,
           credentialStatus: eidStatus,
           issuedAt: eidIssuedAt,
           onPress: handlePress
         }}
+        isStacked={isStacked}
       />
     </GuidedTour>
   );

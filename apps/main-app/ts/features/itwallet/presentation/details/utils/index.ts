@@ -1,9 +1,9 @@
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialMetadata,
   ItwCredentialStatus,
   ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
   "expired",

@@ -1,4 +1,5 @@
 import { Platform } from "react-native";
+
 import { isAuthenticationUrl } from "..";
 import { getCieUatEndpoint } from "../endpoints";
 

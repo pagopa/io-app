@@ -3,32 +3,33 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
-import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
 import { ZendeskSubcategoriesErrors } from "../../../../../definitions/content/ZendeskSubcategoriesErrors";
-import { NetworkError } from "../../../../utils/errors";
-import { FAQsCategoriesType } from "../../../../utils/faq";
+import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "../../../../utils/contextualHelp";
+import { NetworkError } from "../../../../utils/errors";
+import { FAQsCategoriesType } from "../../../../utils/faq";
 
 export type ZendeskAssistanceType = Partial<{
-  payment: boolean;
   card: boolean;
   fci: boolean;
-  itWallet: boolean;
   idPay: boolean;
+  itWallet: boolean;
+  payment: boolean;
   send: boolean;
 }>;
 
 export type ZendeskStartPayload = {
+  assistanceType: ZendeskAssistanceType;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   startingRoute: string;
-  assistanceType: ZendeskAssistanceType;
 };
 /**
  * The user chooses to start the workflow to open a support request
@@ -132,17 +133,17 @@ export const zendeskRequestTicketNumber = createAsyncAction(
 )<void, number, Error>();
 
 export type ZendeskSupportActions =
-  | ActionType<typeof zendeskSupportStart>
-  | ActionType<typeof zendeskSupportCompleted>
-  | ActionType<typeof zendeskStopPolling>
-  | ActionType<typeof zendeskPollingIteration>
-  | ActionType<typeof zendeskStartPolling>
-  | ActionType<typeof zendeskSupportCancel>
-  | ActionType<typeof zendeskSupportBack>
-  | ActionType<typeof zendeskSupportFailure>
-  | ActionType<typeof getZendeskToken>
   | ActionType<typeof getZendeskConfig>
-  | ActionType<typeof zendeskSelectedCategory>
+  | ActionType<typeof getZendeskPaymentConfig>
+  | ActionType<typeof getZendeskToken>
+  | ActionType<typeof zendeskPollingIteration>
   | ActionType<typeof zendeskRequestTicketNumber>
+  | ActionType<typeof zendeskSelectedCategory>
   | ActionType<typeof zendeskSelectedSubcategory>
-  | ActionType<typeof getZendeskPaymentConfig>;
+  | ActionType<typeof zendeskStartPolling>
+  | ActionType<typeof zendeskStopPolling>
+  | ActionType<typeof zendeskSupportBack>
+  | ActionType<typeof zendeskSupportCancel>
+  | ActionType<typeof zendeskSupportCompleted>
+  | ActionType<typeof zendeskSupportFailure>
+  | ActionType<typeof zendeskSupportStart>;

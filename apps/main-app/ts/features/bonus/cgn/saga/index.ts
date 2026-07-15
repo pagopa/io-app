@@ -1,19 +1,22 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
+
+import { apiUrlPrefix } from "../../../../config";
+import { BackendCGN } from "../api/backendCgn";
+import { BackendCgnMerchants } from "../api/backendCgnMerchants";
 import {
   cgnActivationStart,
   cgnRequestActivation
 } from "../store/actions/activation";
-import { apiUrlPrefix } from "../../../../config";
-import { BackendCGN } from "../api/backendCgn";
+import { cgnCodeFromBucket } from "../store/actions/bucket";
+import { cgnCategories } from "../store/actions/categories";
 import { cgnDetails } from "../store/actions/details";
-import { cgnEycaStatus } from "../store/actions/eyca/details";
-import { cgnGenerateOtp as cgnGenerateOtpAction } from "../store/actions/otp";
 import {
   cgnEycaActivation,
   cgnEycaActivationStatusRequest
 } from "../store/actions/eyca/activation";
+import { cgnEycaStatus } from "../store/actions/eyca/details";
 import {
   cgnMerchantsCount,
   cgnOfflineMerchants,
@@ -21,29 +24,27 @@ import {
   cgnSearchMerchants,
   cgnSelectedMerchant
 } from "../store/actions/merchants";
-import { BackendCgnMerchants } from "../api/backendCgnMerchants";
-import { cgnCodeFromBucket } from "../store/actions/bucket";
+import { cgnGenerateOtp as cgnGenerateOtpAction } from "../store/actions/otp";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
-import { cgnCategories } from "../store/actions/categories";
-import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
-import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
 import {
   cgnActivationSaga,
   handleCgnStatusPolling
 } from "./networking/activation/getBonusActivationSaga";
+import { cgnBucketConsuption } from "./networking/bucket";
+import { cgnCategoriesSaga } from "./networking/categories/cgnCategoriesSaga";
 import { cgnGetInformationSaga } from "./networking/details/getCgnInformationSaga";
-import { handleGetEycaStatus } from "./networking/eyca/details/getEycaStatus";
-import { cgnGenerateOtp } from "./networking/otp";
 import { getEycaActivationStatusSaga } from "./networking/eyca/activation/getEycaActivationStatus";
-import { eycaActivationSaga } from "./orchestration/eyca/eycaActivationSaga";
+import { handleGetEycaStatus } from "./networking/eyca/details/getEycaStatus";
+import { cgnGetMerchantsCountSaga } from "./networking/merchants/cgnGetMerchantsCountSaga";
 import { cgnMerchantDetail } from "./networking/merchants/cgnMerchantDetail";
 import { cgnOfflineMerchantsSaga } from "./networking/merchants/cgnOfflineMerchantsSaga";
 import { cgnOnlineMerchantsSaga } from "./networking/merchants/cgnOnlineMerchantsSaga";
 import { cgnSearchMerchantsSaga } from "./networking/merchants/cgnSearchMerchantsSaga";
-import { cgnGetMerchantsCountSaga } from "./networking/merchants/cgnGetMerchantsCountSaga";
-import { cgnBucketConsuption } from "./networking/bucket";
+import { cgnGenerateOtp } from "./networking/otp";
 import { cgnUnsubscriptionHandler } from "./networking/unsubscribe";
-import { cgnCategoriesSaga } from "./networking/categories/cgnCategoriesSaga";
+import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
+import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
+import { eycaActivationSaga } from "./orchestration/eyca/eycaActivationSaga";
 
 export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs

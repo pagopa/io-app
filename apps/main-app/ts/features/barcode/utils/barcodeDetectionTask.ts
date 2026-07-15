@@ -3,6 +3,7 @@ import RNQRGenerator, {
   QRCodeDetectOptions,
   QRCodeScanResult
 } from "rn-qr-generator";
+
 import { BarcodeFailure } from "../types/failure";
 
 /**

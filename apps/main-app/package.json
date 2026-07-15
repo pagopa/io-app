@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.37.0-rc.3",
+  "version": "3.37.0-rc.5",
   "private": true,
   "scripts": {
     "start": "react-native start",

@@ -12,8 +12,8 @@ import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
-  EvaluatedDcqlQueryResult,
   CredentialMetadata,
+  EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject
 } from "../../../common/utils/itwTypesUtils";

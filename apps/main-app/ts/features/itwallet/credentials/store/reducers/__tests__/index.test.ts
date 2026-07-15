@@ -1,19 +1,19 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { Action } from "../../../../../../store/actions/types";
 import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../../utils/tests";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
-  ParsedStatusAssertion,
-  CredentialMetadata
+  CredentialMetadata,
+  ParsedStatusAssertion
 } from "../../../../common/utils/itwTypesUtils";
+import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 import {
   itwCredentialsRemove,
   itwCredentialsStore,
   itwCredentialsVaultMigrationComplete
 } from "../../actions";
-import { Action } from "../../../../../../store/actions/types";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
-import { reproduceSequence } from "../../../../../../utils/tests";
 
 const mockedEid: CredentialMetadata = {
   credentialType: CredentialType.PID,

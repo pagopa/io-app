@@ -1,10 +1,11 @@
 import { addDays, subDays } from "date-fns";
+
 import { SimpleDate, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
+  CredentialMetadata,
   ItwCredentialStatus,
-  ItwJwtCredentialStatus,
-  CredentialMetadata
+  ItwJwtCredentialStatus
 } from "../../common/utils/itwTypesUtils";
 
 const EXPIRING_DAYS = 15;
@@ -50,26 +51,6 @@ export const applyStatusToCredential = (
   const now = new Date();
 
   switch (status) {
-    case "jwtExpired":
-      return {
-        ...credential,
-        validity: undefined,
-        jwt: {
-          ...credential.jwt,
-          expiration: subDays(now, 1).toISOString()
-        }
-      };
-
-    case "jwtExpiring":
-      return {
-        ...credential,
-        validity: undefined,
-        jwt: {
-          ...credential.jwt,
-          expiration: addDays(now, EXPIRING_DAYS).toISOString()
-        }
-      };
-
     case "expired":
       return {
         ...credential,
@@ -121,6 +102,26 @@ export const applyStatusToCredential = (
           type: "status_assertion",
           status: "invalid",
           errorCode: "credential_revoked"
+        }
+      };
+
+    case "jwtExpired":
+      return {
+        ...credential,
+        validity: undefined,
+        jwt: {
+          ...credential.jwt,
+          expiration: subDays(now, 1).toISOString()
+        }
+      };
+
+    case "jwtExpiring":
+      return {
+        ...credential,
+        validity: undefined,
+        jwt: {
+          ...credential.jwt,
+          expiration: addDays(now, EXPIRING_DAYS).toISOString()
         }
       };
 

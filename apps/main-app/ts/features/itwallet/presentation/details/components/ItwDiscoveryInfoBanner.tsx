@@ -2,6 +2,7 @@ import { Banner, IOToast } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
+
 import { useIODispatch } from "../../../../../store/hooks";
 import { openWebUrl } from "../../../../../utils/url";
 import {
@@ -46,17 +47,17 @@ const ItwDiscoveryInfoBanner = () => {
 
   return (
     <Banner
-      testID="itwDiscoveryInfoBannerTestID"
+      action={I18n.t("global.buttons.findOutMore")}
       color="neutral"
-      pictogramName="help"
-      title={I18n.t("features.itWallet.presentation.itWalletId.banner.title")}
       content={I18n.t(
         "features.itWallet.presentation.itWalletId.banner.content"
       )}
-      action={I18n.t("global.buttons.findOutMore")}
-      onPress={handleOnPress}
       labelClose={I18n.t("global.buttons.close")}
       onClose={handleOnClose}
+      onPress={handleOnPress}
+      pictogramName="help"
+      testID="itwDiscoveryInfoBannerTestID"
+      title={I18n.t("features.itWallet.presentation.itWalletId.banner.title")}
     />
   );
 };

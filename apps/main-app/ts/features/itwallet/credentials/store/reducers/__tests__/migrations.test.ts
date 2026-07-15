@@ -1,5 +1,6 @@
-import _ from "lodash";
 import { Mdoc, SdJwt } from "@pagopa/io-react-native-wallet";
+import _ from "lodash";
+
 import issuerECv0_7 from "../../../../__mocks__/issuerECv0_7.json";
 import issuerECv1_0 from "../../../../__mocks__/issuerECv1_0.json";
 import { itwCredentialsStateMigrations } from "../migrations";

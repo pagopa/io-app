@@ -620,7 +620,6 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -644,7 +643,6 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -861,7 +859,6 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -885,7 +882,6 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",

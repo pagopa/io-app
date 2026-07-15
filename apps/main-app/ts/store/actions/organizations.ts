@@ -2,6 +2,7 @@
  * Action types and action creator related to Organizations.
  */
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { ServiceDetails } from "../../../definitions/services/ServiceDetails";
 
 export const setSelectedOrganizations = createStandardAction(
