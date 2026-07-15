@@ -29,7 +29,7 @@ const WalletPaymentFeebackBanner = () => {
     if (!feedbackBannerConfig?.action) {
       return;
     }
-    void mixpanelTrack("VOC_USER_EXIT", {
+    mixpanelTrack("VOC_USER_EXIT", {
       screen_name: "PAYMENT_OUTCOMECODE_MESSAGE"
     });
     return openAuthenticationSession(feedbackBannerConfig.action.url, "");
@@ -48,7 +48,7 @@ const WalletPaymentFeebackBanner = () => {
         action={feedbackBannerConfig.action?.label[localeFallback] ?? ""}
         color="neutral"
         content={feedbackBannerConfig.description[localeFallback]}
-        onPress={handleBannerPress}
+        onPress={() => void handleBannerPress()}
         pictogramName="feedback"
         ref={bannerViewRef}
         title={feedbackBannerConfig.title?.[localeFallback]}

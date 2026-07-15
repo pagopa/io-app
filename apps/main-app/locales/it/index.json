@@ -822,7 +822,7 @@
         "subtitleCTA": "Dove lo trovo?",
         "bottomSheetCTA": "Hai dimenticato il PIN?",
         "contextualHelpTitle": "Dove trovo i codici PIN e PUK?",
-        "contextualHelpBody": "Il codice **PIN** è composto da 8 cifre:  \n• le prime 4 cifre ti sono state consegnate all'anagrafe;  \n• le ultime 4 cifre ti sono state spedite a casa, insieme alla carta d'identità elettronica.  \n  \nMettile insieme e inseriscile in quest'ordine.  \nIl codice PUK è necessario invece per sbloccare il **PIN** a seguito di tre tentativi errati. È composto da 8 cifre, e viene rilasciato insieme al **PIN**."
+        "contextualHelpBody": "Il codice **PIN** è composto da 8 cifre: \n• le prime 4 cifre ti sono state consegnate all'anagrafe;  \n• le ultime 4 cifre ti sono state spedite a casa, insieme alla carta d'identità elettronica.  \n  \nMettile insieme e inseriscile in quest'ordine.  \nIl codice PUK è necessario invece per sbloccare il **PIN** a seguito di tre tentativi errati. È composto da 8 cifre, e viene rilasciato insieme al **PIN**."
       },
       "card": {
         "title": "Appoggia la CIE sul retro del dispositivo",

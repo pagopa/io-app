@@ -1104,7 +1104,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1128,7 +1127,6 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2868,7 +2866,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2892,7 +2889,6 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",

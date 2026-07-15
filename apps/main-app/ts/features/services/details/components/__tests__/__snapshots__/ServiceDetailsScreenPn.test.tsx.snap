@@ -494,7 +494,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -518,7 +517,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1656,7 +1654,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1680,7 +1677,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -3585,7 +3581,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -3609,7 +3604,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
