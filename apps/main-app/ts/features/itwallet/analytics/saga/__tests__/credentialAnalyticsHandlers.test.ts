@@ -61,6 +61,7 @@ const mockedMdl: CredentialMetadata = {
 };
 
 const store: DeepPartial<GlobalState> = {
+  remoteConfig: O.none,
   features: {
     itWallet: {
       issuance: { integrityKeyTag: O.some("key-tag") },
