@@ -27,12 +27,6 @@ import {
   ItwThirdPartyCredentials,
   ItwWalletListCredential
 } from "../utils/types";
-import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
-import {
-  isL2Credential,
-  isNewCredential,
-  validCredentialStatuses
-} from "../../common/utils/itwCredentialUtils.ts";
 import { ItwBaseProperties } from "./propertyTypes";
 
 /**

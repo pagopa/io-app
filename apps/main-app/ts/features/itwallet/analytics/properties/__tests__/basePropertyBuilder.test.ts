@@ -1,21 +1,20 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
+
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import {
+  CredentialType,
+  ItwCredentialFromCatalogueMocks
+} from "../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import {
   buildItwBaseProperties,
   buildThirdPartyCredentialProperty,
   buildWalletListCredentialProperty,
   computeItwStatus
 } from "../basePropertyBuilder";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
-import {
-  CredentialType,
-  ItwCredentialFromCatalogueMocks
-} from "../../../common/utils/itwMocksUtils";
-import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 
 const expirationClaim = { value: "2100-09-04", name: "exp" };
 const jwtExpiration = "2100-09-04T00:00:00.000Z";

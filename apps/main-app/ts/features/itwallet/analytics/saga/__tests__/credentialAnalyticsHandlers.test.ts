@@ -1,6 +1,3 @@
-import * as matchers from "redux-saga-test-plan/matchers";
-import { expectSaga } from "redux-saga-test-plan";
-import { DeepPartial } from "redux";
 import * as O from "fp-ts/Option";
 import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
