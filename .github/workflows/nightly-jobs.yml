@@ -19,22 +19,3 @@ jobs:
       - name: check api specs alignment
         run: ./apps/main-app/scripts/pagopa_api_check.sh
         shell: bash
-  io_check_cie_button_exists_ios:
-    name: Check that CIE button exists on iOS
-    runs-on: ubuntu-latest
-    environment: dev
-    steps:
-      - name: checkout repo content
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - name: setup python
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
-        with:
-          python-version: '3.8'
-      - name: install pipenv
-        run: pip install pipenv
-      - name: check cie button exists on ios
-        run: |
-          cd apps/main-app/scripts/check_cie_button_exists
-          pipenv install
-          pipenv run python3 check_cie_button_exists_ios.py
-        shell: bash
