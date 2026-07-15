@@ -370,7 +370,7 @@ exports[`BannerAttachments BannerAttachments component should match snapshot 1`]
                         onResponderTerminate={[Function]}
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
-                        testID="banner-attachment-banner"
+                        testID="SEND-attachments-alert"
                       >
                         <View
                           collapsable={false}
