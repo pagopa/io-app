@@ -795,7 +795,6 @@ Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova regist
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -819,7 +818,6 @@ Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova regist
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",

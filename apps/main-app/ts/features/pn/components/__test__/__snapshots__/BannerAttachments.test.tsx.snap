@@ -790,7 +790,6 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -814,7 +813,6 @@ Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
