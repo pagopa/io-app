@@ -1,31 +1,32 @@
-import { useMemo, useState } from "react";
-import { Dimensions, useWindowDimensions, View } from "react-native";
 import {
   Alert,
   IOMaxFontSizeMultiplier,
   IOVisualCostants,
   ListItemAction
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useMemo, useState } from "react";
+import { Dimensions, useWindowDimensions, View } from "react-native";
+
 import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
-import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
-import {
-  getNotificationStatusAccessibilityLabel,
-  getNotificationStatusInfo,
-  notificationStatusToTimelineStatus
-} from "../utils";
-import { trackPNShowTimeline, trackPNTimelineExternal } from "../analytics";
-import { handleItemOnPress } from "../../../utils/url";
 import { useIOSelector } from "../../../store/hooks";
 import {
   isAarInAppDelegationRemoteEnabledSelector,
   pnFrontendUrlSelector
 } from "../../../store/reducers/backendStatus/remoteConfig";
+import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { handleItemOnPress } from "../../../utils/url";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
+import { trackPNShowTimeline, trackPNTimelineExternal } from "../analytics";
+import {
+  getNotificationStatusAccessibilityLabel,
+  getNotificationStatusInfo,
+  notificationStatusToTimelineStatus
+} from "../utils";
 import { Timeline, TimelineItemProps } from "./Timeline";
 
 const topBottomSheetMargin = 122;
@@ -98,13 +99,12 @@ export const TimelineListItem = ({
         style={{ padding: IOVisualCostants.appMarginDefault }}
       >
         <Alert
-          variant="info"
-          content={`${I18n.t("features.pn.details.timeline.newInfo")}`}
           action={
             sendExternalUrl
               ? I18n.t("features.pn.details.timeline.goToSend")
               : undefined
           }
+          content={`${I18n.t("features.pn.details.timeline.newInfo")}`}
           onPress={() => {
             if (sendExternalUrl) {
               trackPNTimelineExternal(sendOpeningSource, sendUserType);
@@ -112,6 +112,7 @@ export const TimelineListItem = ({
             }
           }}
           testID="timeline_listitem_bottom_menu_alert"
+          variant="info"
         />
       </View>
     ) : (
@@ -130,8 +131,8 @@ export const TimelineListItem = ({
           trackPNShowTimeline(sendOpeningSource, sendUserType);
           present();
         }}
-        variant="primary"
         testID="timeline_listitem_bottom_menu"
+        variant="primary"
       />
       {bottomSheet}
     </>

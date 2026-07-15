@@ -1,11 +1,12 @@
+import * as E from "fp-ts/lib/Either";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import * as E from "fp-ts/lib/Either";
-import { paymentsStartOnboardingAction } from "../store/actions";
-import { readablePrivacyReport } from "../../../../utils/reporters";
+
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../utils/reporters";
 import { WalletClient } from "../../common/api/client";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
+import { paymentsStartOnboardingAction } from "../store/actions";
 
 /**
  * Handle the remote call to start Wallet onboarding

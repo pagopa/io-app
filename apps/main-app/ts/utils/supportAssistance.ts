@@ -1,22 +1,23 @@
 import * as ZendDesk from "@pagopa/io-react-native-zendesk";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { getValueOrElse } from "../common/model/RemoteValue";
 import { zendeskEnabled } from "../config";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";
 
+export type AnonymousIdentity = ZendDesk.AnonymousIdentity;
+export type JwtIdentity = ZendDesk.JwtIdentity;
 export type ZendeskAppConfig = {
-  key: string;
   appId: string;
   clientId: string;
-  url: string;
+  key: string;
   logId: string;
   token?: string;
+  url: string;
 };
-export type JwtIdentity = ZendDesk.JwtIdentity;
-export type AnonymousIdentity = ZendDesk.AnonymousIdentity;
 
 // Id of the log customField
 const logId = "4413845142673";
@@ -70,7 +71,7 @@ export const getZendeskIdentity = (zendeskToken: string | undefined) =>
   pipe(
     zendeskToken,
     O.fromNullable,
-    O.map((zT: string): JwtIdentity | AnonymousIdentity => ({
+    O.map((zT: string): AnonymousIdentity | JwtIdentity => ({
       token: zT
     })),
     O.getOrElseW(() => ({}))
@@ -201,12 +202,12 @@ export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
 // help can be shown only when remote FF is  zendesk + local FF + emailValidated
 export const canShowHelp = (assistanceTool: ToolEnum): boolean => {
   switch (assistanceTool) {
+    case ToolEnum.instabug:
+    case ToolEnum.none:
+    case ToolEnum.web:
+      return false;
     case ToolEnum.zendesk:
       return zendeskEnabled;
-    case ToolEnum.instabug:
-    case ToolEnum.web:
-    case ToolEnum.none:
-      return false;
   }
 };
 // Send a log based on

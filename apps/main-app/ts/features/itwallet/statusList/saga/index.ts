@@ -1,10 +1,9 @@
 import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
+
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { checkStatusListCoherenceSaga } from "./checkStatusListCoherenceSaga";
-import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
-
-export { registerStatusListFetchTaskSaga };
+// TODO [SIW-4084]  import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
 
 export function* watchItwStatusListSaga(): SagaIterator {
   const isWhitelisted = yield* select(itwIsL3EnabledSelector);
@@ -16,7 +15,7 @@ export function* watchItwStatusListSaga(): SagaIterator {
   }
 
   // Register the background task for Status List fetch only for active wallet instances
-  yield* fork(registerStatusListFetchTaskSaga);
+  //  TODO [SIW-4084] yield* fork(registerStatusListFetchTaskSaga);
   // Run startup coherence for the Status List Token cache
   yield* fork(checkStatusListCoherenceSaga);
 

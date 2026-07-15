@@ -80,9 +80,7 @@
       "exit": "Beenden",
       "edit": "Ändern",
       "activate": "Aktivieren",
-      "activate2": "Aktivieren",
       "show": "Anzeigen",
-      "update": "Aktualisieren",
       "updateIO": "IO aktualisieren",
       "findOutMore": "Mehr erfahren",
       "choose": "Auswählen"
@@ -129,9 +127,6 @@
     "copyIntoClipboard": "in die Zwischenablage kopieren",
     "copyFeedback": "In die Zwischenablage kopiert"
   },
-  "errors": {
-    "profileUpdateError": "Beim Aktualisieren deines Profils ist ein Fehler aufgetreten."
-  },
   "permissionRationale": {
     "calendar": {
       "title": "Zugriff auf den Kalender gewähren",
@@ -165,7 +160,6 @@
       "title": "Deine persönlichen Dokumente",
       "fiscalCode": "Steuernummer",
       "description": "Verwende den Strichcode, um deine Steuernummer mitzuteilen, wenn du dazu aufgefordert wirst.",
-      "facSimile": "Faksimile",
       "copyCode": "Steuernummer kopieren",
       "codeCopied": "Steuernummer kopiert"
     },
@@ -267,8 +261,7 @@
           "description": "Sieh die Datenschutzbestimmungen und Nutzungsbedingungen der IO-App an",
           "updated": "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert.",
           "infobox": "Es ist notwendig, die Datenschutzbestimmungen und die Nutzungsbedingungen zu lesen und zu akzeptieren",
-          "contextualHelpTitlePolicy": "Informationen über die Datenschutzbestimmungen und die Nutzungsbedingungen des Dienstes",
-          "contextualHelpTitle": "Deine Datenschutzeinstellungen"
+          "contextualHelpTitlePolicy": "Informationen über die Datenschutzbestimmungen und die Nutzungsbedingungen des Dienstes"
         },
         "shareData": {
           "listItem": {
@@ -397,9 +390,6 @@
             "success": {
               "title": "Sprache geändert"
             }
-          },
-          "banner": {
-            "button": "Mehr erfahren"
           }
         },
         "notifications": {
@@ -439,9 +429,6 @@
         "error": "Bei deiner Anfrage ist ein Fehler aufgetreten"
       }
     }
-  },
-  "cie": {
-    "title": "Karte berühren"
   },
   "authentication": {
     "landing": {
@@ -739,7 +726,6 @@
       }
     },
     "insert": {
-      "alert": "Du verwendest bereits diese E-Mail-Adresse",
       "help": {
         "title": "E-Mail"
       },
@@ -769,7 +755,6 @@
       "subtitle": "Um deine E-Mail-Adresse zu bestätigen, folge den Anweisungen der E-Mail an",
       "link": "Ist sie nicht korrekt?",
       "countdowntext": "Eine neue E-Mail anfordern in ",
-      "buttonlabelsent": "E-Mail gesendet",
       "buttonlabelsentagain": "E-Mail erneut senden",
       "toast": "Erledigt! Prüf deinen Posteingang."
     },
@@ -904,8 +889,6 @@
     "notValid": "Ungültiges Datum"
   },
   "payment": {
-    "IUV_extended": "Einheitlicher Zahlungskodex (IUV)",
-    "notice": "Zahlungsmitteilung",
     "noticeCode": "Zahlungsmitteilungskodex",
     "confirm": {
       "totalAmount": "Zu zahlender Gesamtbetrag",
@@ -935,12 +918,7 @@
           "owner": "lautend auf: {{fullOwnerName}}"
         }
       },
-      "expired": "Die Zahlungsmethode ist abgelaufen und kann nicht mehr für In-App-Zahlungen verwendet werden.",
-      "isSupportedBanner": {
-        "title": "Möchtest du in der App bezahlen?",
-        "content": "Finde heraus, welche Zahlungsmethoden du in dein Konto aufnehmen kannst.",
-        "cta": "Mehr erfahren"
-      }
+      "expired": "Die Zahlungsmethode ist abgelaufen und kann nicht mehr für In-App-Zahlungen verwendet werden."
     },
     "wallet": "Konto",
     "creditCard": {
@@ -959,8 +937,7 @@
       "outcome": {
         "SUCCESS": {
           "title": "Die Karte wurde hinzugefügt!",
-          "primaryAction": "Details anzeigen",
-          "secondaryAction": "Weiter"
+          "primaryAction": "Details anzeigen"
         },
         "GENERIC_ERROR": {
           "title": "Es ist ein unerwarteter Fehler aufgetreten",
@@ -1040,14 +1017,7 @@
       "entityCode": "Steuernummer Körperschaft",
       "amountInfo": {
         "title": "Ist der Betrag anders als auf der pagoPA-Benachrichtigung?",
-        "message": "Wenn sich der Betrag ändert, bedeutet das, dass er automatisch aktualisiert wurde.\n\nFalls er höher ist, können Zinsen, Strafen oder Benachrichtigungskosten anfallen.\n\nHandelt es sich bei der pagoPA-Mitteilung um eine rechtlich relevante Kommunikation, kann die Erhöhung des zu zahlenden Betrags verschiedene Gründe haben, zum Beispiel:\n- wenn du die Mitteilung per Einschreiben erhalten hast (die Druck- und Versandkosten können zu deinen Lasten gehen);\n- die Anzahl der Zustellversuche.\nFür weitere Details wende dich bitte an die  Gläubigerinstitution.\n\nFür weitere Details wende dich bitte an die Gläubigerinstitution, da pagoPA die Gründe für die Aktualisierung nicht kennt.",
-        "cta": "OK, habe verstanden"
-      },
-      "errorDetails": {
-        "title": "Details zum Fehler",
-        "errorCode": "Fehlercode",
-        "messageId": "ID der Nachricht",
-        "copyToClipboard": "Daten für die Assistenz kopieren"
+        "message": "Wenn sich der Betrag ändert, bedeutet das, dass er automatisch aktualisiert wurde.\n\nFalls er höher ist, können Zinsen, Strafen oder Benachrichtigungskosten anfallen.\n\nHandelt es sich bei der pagoPA-Mitteilung um eine rechtlich relevante Kommunikation, kann die Erhöhung des zu zahlenden Betrags verschiedene Gründe haben, zum Beispiel:\n- wenn du die Mitteilung per Einschreiben erhalten hast (die Druck- und Versandkosten können zu deinen Lasten gehen);\n- die Anzahl der Zustellversuche.\nFür weitere Details wende dich bitte an die  Gläubigerinstitution.\n\nFür weitere Details wende dich bitte an die Gläubigerinstitution, da pagoPA die Gründe für die Aktualisierung nicht kennt."
       }
     },
     "errorTransaction": {
@@ -1172,8 +1142,7 @@
           "subtitle": "Bitte versuche es später noch einmal. Wenn das Problem weiterhin besteht, wende dich bitte an den Support."
         },
         "PAYMENT_ONGOING": {
-          "title": "Es ist bereits eine Zahlung im Gange, bitte versuche es später noch einmal",
-          "subtitle": "Wenn das Problem weiterhin besteht, kannst du ein Ticket erstellen."
+          "title": "Es ist bereits eine Zahlung im Gange, bitte versuche es später noch einmal"
         },
         "PAYMENT_EXPIRED": {
           "title": "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr bezahlt werden",
@@ -1213,12 +1182,7 @@
         "SUCCESS": {
           "title": "Du hast {{amount}} bezahlt",
           "subtitle": "Die Quittung ist im Abschnitt 'Zahlungen'. verfügbar",
-          "button": "OK, schließen",
-          "banner": {
-            "title": "Kannst du uns sagen, wie es lief?",
-            "content": "Erzähl uns von deinen Erfahrungen mit der Zahlung und hilf uns, uns zu verbessern.",
-            "action": "Zur Umfrage"
-          }
+          "button": "OK, schließen"
         },
         "GENERIC_ERROR": {
           "title": "Es ist ein unerwarteter Fehler aufgetreten",
@@ -1269,8 +1233,7 @@
         "PAYMENT_REVERSED": {
           "title": "Die Zahlung ist fehlgeschlagen",
           "subtitle": "Der autorisierte Betrag wurde auf deine Zahlungsmethode zurücküberwiesen. Die Überweisung kann einige Zeit dauern.",
-          "primaryAction": "Mehr erfahren",
-          "secondaryAction": "Schließen"
+          "primaryAction": "Mehr erfahren"
         },
         "PAYPAL_REMOVED_ERROR": {
           "title": "Autorisierung abgelehnt",
@@ -1490,9 +1453,6 @@
       "title": "Verpasse keine wichtigen Mitteilungen!"
     }
   },
-  "biometric_recognition": {
-    "needed_to_disable": "Bestätigung zur Deaktivierung erforderlich"
-  },
   "send_email_messages": {
     "title": "Mitteilungen mittels E-Mail weiterleiten",
     "subtitle": "Möchtest du, dass IO eine Vorschau der Mitteilung an die E-Mail-Adresse **{{email}}** sendet?",
@@ -1673,14 +1633,10 @@
   "titleUpdateApp": "Aktualisiere IO!",
   "msgErrorUpdateApp": "Beim Öffnen des App-Stores ist ein Fehler aufgetreten",
   "messageUpdateApp": "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können, ist es notwendig, sie auf die neueste Version zu aktualisieren.",
-  "openStore": "Öffne {{storeName}}",
   "btnUpdateApp": "Aktualisiere IO",
   "systemsOff": {
     "title": "Es gibt ein Problem mit unseren Systemen",
     "closeApp": "Schließe die App und versuche es in ein paar Minuten erneut."
-  },
-  "contextualHelp": {
-    "title": "IO hilft dir"
   },
   "bottomSheets": {
     "ciePin": {
@@ -1736,8 +1692,7 @@
             "cta": "Wie sind die Kategorien angeordnet?",
             "title": "Wie sind die Kategorien angeordnet?",
             "content": "Um deine Suche zu erleichtern und deine Erfahrung zu verbessern, haben wir die Kategorien nach der Häufigkeit der Nutzung geordnet. Diese Informationen sind nicht mit deinem Profil verknüpft, sondern beruhen auf den Gesamtdaten aller Nutzer, die die Nationale Jugendkarte nutzen und der Verarbeitung ihrer Daten zugestimmt haben."
-          },
-          "a11y": "{{name}}, {{count}} Neue Möglichkeiten gefunden"
+          }
         },
         "filter": {
           "categories": "Kategorien"
@@ -1932,7 +1887,6 @@
         "badge": {
           "legalValue": "Rechtsgültig"
         },
-        "title": "Details der Mitteilung",
         "noticeCode": "Zahlungsmitteilungskodex",
         "loadError": {
           "title": "Etwas ist schief gelaufen",
@@ -1940,9 +1894,7 @@
         },
         "cancelledMessage": {
           "body": "Diese Zustellung wurde vom Absender gelöscht. Du kannst dessen Inhalt ignorieren.",
-          "unpaidPayments": "Für die Erstattung von Zahlungen im Zusammenhang mit diesem Bescheid wende dich bitte an den Absender.",
-          "unpaidPaymentsNew": "Für die Erstattung von Zahlungen wende dich bitte an die Körperschaft.",
-          "payments": "Zahlungen"
+          "unpaidPaymentsNew": "Für die Erstattung von Zahlungen wende dich bitte an die Körperschaft."
         },
         "paymentSection": {
           "title": "pagoPA-Zahlungsmitteilungen",
@@ -1961,7 +1913,6 @@
           }
         },
         "infoSection": {
-          "title": "Informationen zur Zustellung",
           "iun": "IUN-Code",
           "iunAccessibility": "IUN-Code : {{iun}}, kopieren",
           "iunSectionTitle": "Zustellung"
@@ -1970,7 +1921,6 @@
           "goToSend": "Zugang zu SEND",
           "menuTitle": "Status der Zustellung",
           "newInfo": "In der Web-Version findest du weitere Einzelheiten, Quittungen und Bescheinigungen, die gegenüber Dritten vollstreckbar sind.",
-          "title": "STATUS DER ZUSTELLUNG",
           "status": {
             "ACCEPTED": "Hinterlegt",
             "CANCELLED": "Annulliert",
@@ -1982,10 +1932,7 @@
             "PAID": "Bezahlt",
             "REFUSED": "VERWEIGERT",
             "IN_VALIDATION": "IN VALIDIERUNG"
-          },
-          "expand": "Vorherigen Status anzeigen",
-          "info": "Über die Web-Version des Dienstes kannst du die Details zu jedem Status, die Annahmebestätigung und den Zustellnachweis, die gegenüber Dritten geltend gemacht werden können, einsehen",
-          "cta": "Zugang zur Webversion"
+          }
         }
       }
     },
@@ -1999,11 +1946,6 @@
         },
         "toast": {
           "newMethod": "Element hinzugefügt!"
-        },
-        "paymentsBanner": {
-          "title": "Möchtest du eine Aufforderung bezahlen?",
-          "action": "Geh zum Bereich Zahlungen",
-          "close": "Schließen"
         },
         "otherMethods": {
           "error": {
@@ -2080,9 +2022,6 @@
           "title": "Hier siehst du deine pagoPA-Quittungen",
           "content": "Bezahle eine Zahlungsmitteilung in der App oder mittels jedem pagoPA-fähigen Kanal."
         },
-        "status": {
-          "failure": "FEHLGESCHLAGEN"
-        },
         "receipt": {
           "title": "pagoPA-Quittung",
           "shareButton": "Speichern oder teilen",
@@ -2138,9 +2077,6 @@
           "explainationContent": "Wenn du diese Methode gespeichert hast, hast du {{pspBusinessName}} autorisiert, Transaktionen über 'PayPal-Schnellzahlung' abzuwickeln.\n\nWenn du einen anderen Anbieter verwenden möchtest, füge die Methode erneut zu deinem Konto hinzu.\n\nUm die Autorisierung zu widerrufen, entferne die Methode aus deinem Konto.\n\nVerwende die PayPal-App, um die Karte oder das Bankkonto zu ändern, von der/dem du die Gebühren abbuchen möchtest."
         }
       },
-      "errors": {
-        "transactionCreationError": "Es gibt ein Problem mit den Bezahlsystemen."
-      },
       "checkout": {
         "bottomSheet": {
           "PAYMENT_REVERSED": {
@@ -2159,15 +2095,10 @@
         "dc": "Europäische Behindertenkarte",
         "ts": "Gesundheitskarte - Europäische Krankenversicherungskarte"
       },
-      "wallet": {
-        "active": "Aktiv",
-        "inactive": "Nicht aktiv"
-      },
       "card": {
         "status": {
           "expired": "Abgelaufen",
           "expiring": "Ablaufend",
-          "pending": "In Bearbeitung",
           "invalid": "Ungültig",
           "verificationExpiring": "Überprüfen",
           "verificationExpired": "Überprüfen"
@@ -2186,13 +2117,10 @@
           "cancel": "Nein, fortfahren"
         },
         "dataSource": {
-          "multi": "Bereitgestellt von {{credentialSource}}",
           "single": "Bereitgestellt von {{credentialSource}}"
         },
         "placeholders": {
-          "claimNotAvailable": "Eigenschaft nicht erkannt",
-          "claimLabelNotAvailable": "Eigenschaft nicht vorhanden",
-          "organizationName": "Körperschaft nicht verfügbar"
+          "claimNotAvailable": "Eigenschaft nicht erkannt"
         }
       },
       "verifiableCredentials": {
@@ -2225,14 +2153,8 @@
             "action": "Start"
           },
           "onboarding": {
-            "content": "Aktiviere Dokumente in IO, um die digitale Version deiner Dokumente zum Konto hinzuzufügen",
             "action": "Start"
           }
-        },
-        "upcomingWalletBanner": {
-          "title": "Demnächst: deine Dokumente in IO",
-          "content": "Bald kannst du digitale Versionen deiner persönlichen Dokumente wie Führerschein und Gesundheitskarte in dein IO-Konto einfügen!",
-          "action": "Mehr erfahren"
         },
         "alreadyActive": {
           "title": "Dokumente in IO ist bereits aktiv",
@@ -2260,13 +2182,6 @@
           },
           "primaryAction": "Einstellungen öffnen",
           "secondaryAction": "Weiter"
-        },
-        "cieId": {
-          "loading": {
-            "title": "Verbindung mit der CieID-App läuft...",
-            "subtitle": "Bestätige den Zugang in der CieID-App, um die Verbindung fortzusetzen oder abzubrechen",
-            "cancel": "Verbindung abbrechen"
-          }
         }
       },
       "issuance": {
@@ -2355,8 +2270,6 @@
         }
       },
       "unsupportedDevice": {
-        "text": "Ab dem 02.07.2024 ist dein Gerät möglicherweise nicht mehr mit IO kompatibel.",
-        "moreInfo": "Mehr erfahren",
         "error": {
           "title": "Dein Gerät unterstützt Dokumente in IO nicht",
           "subtitle": "Dein Gerät verfügt nicht über die erforderlichen Sicherheitsanforderungen für diese Funktion. **[Schließen]({{faqUrl}})**",
@@ -2372,12 +2285,8 @@
           "ehc": {
             "content": "Du kannst deine Gesundheitskarte - Europäische Krankenversicherungskarte auf IO verwenden, um Dienstleistungen des nationalen Gesundheitsdienstes in Anspruch zu nehmen."
           },
-          "edc": {
-            "content": "Du kannst deinen Europäischen Behindertenausweis auf IO verwenden, um Dienstleistungen auf italienischem Gebiet in Anspruch zu nehmen, und zwar in denselben Verwendungszusammenhängen wie dein physisches Dokument."
-          },
           "expired": {
-            "content": "Das Dokument ist nicht mehr gültig. Wenn du das neue gültige Dokument bereits hast, kannst du die digitale Version im Konto aktualisieren",
-            "action": "Dokument aktualisieren"
+            "content": "Das Dokument ist nicht mehr gültig. Wenn du das neue gültige Dokument bereits hast, kannst du die digitale Version im Konto aktualisieren"
           },
           "expiring": {
             "content": "Es verbleiben noch {{days}} Tage, bevor das Dokument abläuft."
@@ -2437,8 +2346,7 @@
           "status": {
             "valid": "Gültig",
             "invalid": "Ungültig",
-            "expired": "Abgelaufen",
-            "expiring": "Ablaufend"
+            "expired": "Abgelaufen"
           },
           "actions": {
             "removeFromWallet": "Vom Konto entfernen",
@@ -2454,11 +2362,6 @@
           },
           "toast": {
             "removed": "Erledigt!"
-          },
-          "verificationExpired": {
-            "title": "Überprüfe die digitale Version des Dokuments",
-            "content": "Dies ist ein notwendiger Sicherheitsschritt, um das Dokument '{{credentialName}}' in IO weiter zu verwenden.",
-            "primaryAction": "Start"
           }
         },
         "ctas": {
@@ -2660,9 +2563,7 @@
   "bonusCard": {
     "validUntil": "Gültig bis {{endDate}}",
     "expiring": "Verfällt am {{endDate}}",
-    "expired": "Abgelaufen am {{endDate}}",
-    "paused": "In Pause",
-    "removed": "Entfernt"
+    "paused": "In Pause"
   },
   "transaction": {
     "details": {
@@ -2685,16 +2586,12 @@
         "paymentMethod": "Zahlungsmethode",
         "authCode": "Autorisierungscode",
         "executedBy": "Ausgeführt von",
-        "headedTo": "Zahlungsmethode, ausgestellt auf",
-        "alert": {
-          "content": "Wende dich an den Gläubiger, wenn du die Quittung benötigst."
-        }
+        "headedTo": "Zahlungsmethode, ausgestellt auf"
       },
       "operation": {
         "amount": "Betrag",
         "creditor": "Gläubiger",
         "debtor": "Schuldner",
-        "subject": "Zahlungsgrund",
         "noticeCode": "Kodex der Zahlungsmitteilung/IUV",
         "taxCode": "Steuernummer Körperschaft"
       }
@@ -2773,7 +2670,6 @@
       "title": "Um auf den Dienst zugreifen zu können, müssen die folgenden Daten freigegeben werden",
       "subtitle": "IO wird die erforderlichen Daten an ",
       "subtitle2": " weitergeben für deine Authentifizierung bei ",
-      "requiredData": "Erforderliche Daten",
       "privacy": "Für weitere Informationen lies bitte die **[Datenschutzrichtlinie]({{privacyUrl}})**",
       "bottomSheet": {
         "title": "Dienste von Drittanbietern über IO: So funktioniert es",

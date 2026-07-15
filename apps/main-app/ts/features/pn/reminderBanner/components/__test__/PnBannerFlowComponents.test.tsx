@@ -1,6 +1,7 @@
-import { RenderAPI, fireEvent } from "@testing-library/react-native";
+import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import * as React from "react";
 import { createStore } from "redux";
+
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";

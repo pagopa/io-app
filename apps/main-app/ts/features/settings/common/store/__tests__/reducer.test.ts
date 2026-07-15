@@ -1,4 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
+import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
+import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
+import { PreferredLanguageEnum } from "../../../../../../definitions/identity/PreferredLanguage";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import {
   profileLoadFailure,
   profileLoadRequest,
@@ -6,12 +11,8 @@ import {
   profileUpsert,
   resetProfileState
 } from "../actions";
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
-import { ProfileError } from "../types";
-import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
-import { PreferredLanguageEnum } from "../../../../../../definitions/identity/PreferredLanguage";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import reducer, { exported } from "../reducers";
+import { ProfileError } from "../types";
 
 const testableModule = exported!;
 
