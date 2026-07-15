@@ -1,6 +1,7 @@
 import {
   formatAndValidateDueDate,
   getPaymentPhaseFromStep,
+  getPreselectedPspFlagType,
   getPspFlagType,
   getSubCategoryFromFaultCode,
   trimAndLimitValue
@@ -129,6 +130,55 @@ describe("getPspFlagType", () => {
     ];
     const result = getPspFlagType(psp, pspList);
     expect(result).toBe("none");
+  });
+});
+
+describe("getPreselectedPspFlagType", () => {
+  it("should return 'none' when pspList is undefined", () => {
+    expect(getPreselectedPspFlagType(undefined)).toBe("none");
+  });
+
+  it("should return 'none' when pspList is empty", () => {
+    expect(getPreselectedPspFlagType([])).toBe("none");
+  });
+
+  it("should return 'unique' when pspList has only one non-onUs element", () => {
+    expect(getPreselectedPspFlagType([{ onUs: false, idBundle: "1" }])).toBe(
+      "unique"
+    );
+  });
+
+  it("should return 'customer' when an onUs psp is present, even alone", () => {
+    expect(getPreselectedPspFlagType([{ onUs: true, idBundle: "1" }])).toBe(
+      "customer"
+    );
+  });
+
+  it("should return 'customer' when an onUs psp is present among many", () => {
+    expect(
+      getPreselectedPspFlagType([
+        { onUs: false, idBundle: "1", taxPayerFee: 1 },
+        { onUs: true, idBundle: "2", taxPayerFee: 2 }
+      ])
+    ).toBe("customer");
+  });
+
+  it("should return 'cheaper' when there are multiple non-onUs psps with different fees", () => {
+    expect(
+      getPreselectedPspFlagType([
+        { onUs: false, idBundle: "1", taxPayerFee: 1 },
+        { onUs: false, idBundle: "2", taxPayerFee: 2 }
+      ])
+    ).toBe("cheaper");
+  });
+
+  it("should return 'none' when there are multiple non-onUs psps with the same fee", () => {
+    expect(
+      getPreselectedPspFlagType([
+        { onUs: false, idBundle: "1", taxPayerFee: 1 },
+        { onUs: false, idBundle: "2", taxPayerFee: 1 }
+      ])
+    ).toBe("none");
   });
 });
 
