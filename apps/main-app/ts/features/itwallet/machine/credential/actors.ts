@@ -1,6 +1,6 @@
 import type {
-  CredentialOffer,
   CredentialIssuance,
+  CredentialOffer,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 

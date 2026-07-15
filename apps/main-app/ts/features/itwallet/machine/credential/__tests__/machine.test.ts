@@ -8,6 +8,7 @@ import {
   StateFrom,
   waitFor as waitForActor
 } from "xstate";
+
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,

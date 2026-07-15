@@ -203,29 +203,28 @@ export const isMultiLevelCredential = (
   );
 };
 
+/**
+ * Validity information for v1.3+ credentials that support status list.
+ */
+type CredentialValidity = {
+  rawStatus?: string;
+  status?: string;
+  statusList: { idx: number; uri: string };
+  type: "status_list";
+};
 
 /**
  * Validity information for legacy credentials that support status assertion.
  */
 type LegacyCredentialValidity =
   | {
-    type: "status_assertion";
-    status: "valid";
-    statusAssertion: ParsedStatusAssertion;
-  }
+      // Error code that might contain more details on the invalid status, provided by the issuer
+      errorCode?: string;
+      status: "invalid" | "unknown";
+      type: "status_assertion";
+    }
   | {
-    type: "status_assertion";
-    status: "invalid" | "unknown";
-    // Error code that might contain more details on the invalid status, provided by the issuer
-    errorCode?: string;
-  };
-
-/**
- * Validity information for v1.3+ credentials that support status list.
- */
-type CredentialValidity = {
-  type: "status_list";
-  statusList: { idx: number; uri: string };
-  rawStatus?: string;
-  status?: string;
-};
+      status: "valid";
+      statusAssertion: ParsedStatusAssertion;
+      type: "status_assertion";
+    };

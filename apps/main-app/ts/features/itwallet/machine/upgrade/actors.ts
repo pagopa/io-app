@@ -1,4 +1,5 @@
 import type { ItwVersion } from "@pagopa/io-react-native-wallet";
+
 import * as O from "fp-ts/Option";
 import { fromPromise } from "xstate";
 
