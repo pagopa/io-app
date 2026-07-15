@@ -1,4 +1,4 @@
-import { Body, FooterActions, VStack } from "@io-app/design-system";
+import { Body, FooterActions, VSpacer, VStack } from "@io-app/design-system";
 import I18n from "i18next";
 
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -25,26 +25,29 @@ export const useItwSomethingWrongBottomSheet = ({ credential }: Props) => {
       "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.title"
     ),
     component: (
-      <VStack space={16}>
-        <Body>
-          {I18n.t(
-            "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.body"
-          )}
-        </Body>
-        {authSource && (
+      <>
+        <VStack space={16}>
           <Body>
             {I18n.t(
-              "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyAuthSource",
-              { authSource }
+              "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.body"
             )}
           </Body>
-        )}
-        <Body>
-          {I18n.t(
-            "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyFooter"
+          {authSource && (
+            <Body>
+              {I18n.t(
+                "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyAuthSource",
+                { authSource }
+              )}
+            </Body>
           )}
-        </Body>
-      </VStack>
+          <Body>
+            {I18n.t(
+              "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyFooter"
+            )}
+          </Body>
+        </VStack>
+        <VSpacer size={48} />
+      </>
     ),
     footer: (
       <FooterActions
