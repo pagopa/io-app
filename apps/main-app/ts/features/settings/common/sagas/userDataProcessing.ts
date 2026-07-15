@@ -3,16 +3,64 @@ import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { UserDataProcessingChoiceEnum } from "../../../../../definitions/identity/UserDataProcessingChoice";
 import { IdentityClient } from "../../../../api/IdentityClientManager";
+import { SagaCallReturnType } from "../../../../types/utils";
+import { convertUnknownToError, getError } from "../../../../utils/errors";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing,
   upsertUserDataProcessing
 } from "../store/actions/userDataProcessing";
-import { SagaCallReturnType } from "../../../../types/utils";
-import { convertUnknownToError, getError } from "../../../../utils/errors";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+
+export function* deleteUserDataProcessingSaga(
+  deleteUserDataProcessingRequest: IdentityClient["abortUserDataProcessing"],
+  action: ActionType<(typeof deleteUserDataProcessing)["request"]>
+): SagaIterator {
+  const choice = action.payload;
+
+  try {
+    const response = (yield* call(
+      withRefreshApiCall,
+      deleteUserDataProcessingRequest({
+        choice
+      }),
+      action
+    )) as unknown as SagaCallReturnType<typeof deleteUserDataProcessingRequest>;
+
+    if (E.isRight(response)) {
+      if (response.right.status === 401) {
+        return;
+      }
+      if (response.right.status === 202) {
+        yield* put(
+          deleteUserDataProcessing.success({
+            choice
+          })
+        );
+        // reload user data processing
+        yield* put(
+          loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
+        );
+      } else {
+        throw new Error(
+          `response status ${response.right.status} with choice ${choice}`
+        );
+      }
+    } else {
+      throw new Error(readableReport(response.left));
+    }
+  } catch (e) {
+    yield* put(
+      deleteUserDataProcessing.failure({
+        choice,
+        error: getError(e)
+      })
+    );
+  }
+}
 
 /**
  * The following logic: - checks if there are updates on the processing of a
@@ -96,53 +144,6 @@ export function* upsertUserDataProcessingSaga(
       })
     );
     return E.left(e);
-  }
-}
-
-export function* deleteUserDataProcessingSaga(
-  deleteUserDataProcessingRequest: IdentityClient["abortUserDataProcessing"],
-  action: ActionType<(typeof deleteUserDataProcessing)["request"]>
-): SagaIterator {
-  const choice = action.payload;
-
-  try {
-    const response = (yield* call(
-      withRefreshApiCall,
-      deleteUserDataProcessingRequest({
-        choice
-      }),
-      action
-    )) as unknown as SagaCallReturnType<typeof deleteUserDataProcessingRequest>;
-
-    if (E.isRight(response)) {
-      if (response.right.status === 401) {
-        return;
-      }
-      if (response.right.status === 202) {
-        yield* put(
-          deleteUserDataProcessing.success({
-            choice
-          })
-        );
-        // reload user data processing
-        yield* put(
-          loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
-        );
-      } else {
-        throw new Error(
-          `response status ${response.right.status} with choice ${choice}`
-        );
-      }
-    } else {
-      throw new Error(readableReport(response.left));
-    }
-  } catch (e) {
-    yield* put(
-      deleteUserDataProcessing.failure({
-        choice,
-        error: getError(e)
-      })
-    );
   }
 }
 /**

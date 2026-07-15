@@ -1,8 +1,13 @@
-import { createSelector } from "reselect";
+import { Optional } from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Optional } from "@pagopa/io-app-design-system";
+import { createSelector } from "reselect";
+
+import { SpidLevel } from "../../../../../../definitions/session_manager/SpidLevel";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { format } from "../../../../../utils/dates";
+import { SpidIdp } from "../../../../../utils/idps";
+import { AuthenticationState, AuthenticationStateWithIdp } from "../models";
 import {
   isLoggedIn,
   isLoggedInWithSessionInfo,
@@ -11,10 +16,6 @@ import {
   isSessionCorrupted,
   isSessionExpired
 } from "../utils/guards";
-import { SpidIdp } from "../../../../../utils/idps";
-import { format } from "../../../../../utils/dates";
-import { AuthenticationState, AuthenticationStateWithIdp } from "../models";
-import { SpidLevel } from "../../../../../../definitions/session_manager/SpidLevel";
 
 export type SpidLevelShort = "L1" | "L2" | "L3";
 

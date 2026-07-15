@@ -1,4 +1,5 @@
 import { and, assign, fromCallback, fromPromise, not, setup } from "xstate";
+
 import {
   CredentialAccessToken,
   CredentialBundle
@@ -239,7 +240,10 @@ export const itwCredentialIssuanceMachine = setup({
         },
         back: {
           target: "Idle",
-          actions: "navigateToCardOnboardingScreen"
+          actions: [
+            assign({ credentialType: undefined }),
+            "navigateToCardOnboardingScreen"
+          ]
         }
       }
     },

@@ -1,24 +1,25 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
+import I18n from "i18next";
 import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import I18n from "i18next";
+
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { TransactionClient } from "../../common/api/client";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import * as analytics from "../analytics";
 import {
-  hidePaymentsReceiptAction,
   getPaymentsLatestReceiptAction,
+  hidePaymentsReceiptAction,
   setNeedsHomeListRefreshAction
 } from "../store/actions";
 import {
-  walletLatestReceiptListPotSelector,
-  latestTransactionsContinuationTokenSelector
+  latestTransactionsContinuationTokenSelector,
+  walletLatestReceiptListPotSelector
 } from "../store/selectors";
-import * as analytics from "../analytics";
 /**
  * Handle the remote call to hide the transaction receipt
  *

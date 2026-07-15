@@ -3,16 +3,15 @@
  * supported yet
  */
 
-import { FC, useCallback, useEffect, useRef, useState } from "react";
-
 import {
   Dismissable,
   IOColors,
   IOVisualCostants,
   ToastNotification,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, Modal, StyleSheet, View } from "react-native";
 import Animated, {
   Easing,
@@ -21,6 +20,7 @@ import Animated, {
   SlideOutUp
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import { openAppStoreUrl } from "../../utils/url";
@@ -68,14 +68,14 @@ const UpdateAppModal: FC = () => {
   return (
     <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
-        pictogram="updateOS"
-        title={title}
-        subtitle={subtitle}
         action={{
           label: actionLabel,
           accessibilityLabel: actionLabel,
           onPress: openAppStore
         }}
+        pictogram="updateOS"
+        subtitle={subtitle}
+        title={title}
       />
       {/* Temporary, to be replaced after this Jira task (IOPID-1799) has been closed  */}
       {isError && (
@@ -88,8 +88,8 @@ const UpdateAppModal: FC = () => {
           >
             <Dismissable onDismiss={handleCloseError}>
               <ToastNotification
-                message={errorMessage}
                 icon="errorFilled"
+                message={errorMessage}
                 variant="error"
               />
             </Dismissable>

@@ -1,8 +1,9 @@
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { useIOThemeContext } from "@io-app/design-system";
 import { DataSourceParam } from "@shopify/react-native-skia";
 import Color from "color";
 import { useMemo } from "react";
 import { ColorSchemeName } from "react-native";
+
 import { useIOSelector } from "../../../../../store/hooks";
 import { XOR } from "../../../../../types/utils";
 import { fnv1a } from "../../../../../utils/hash";
@@ -34,44 +35,67 @@ export const CREDENTIAL_CARD_PATTERN_OVERLAYS = {
   EMPLOYMENT: require("../../../../../../img/features/itWallet/cards/overlay/pattern/work.png")
 } as const;
 
-export type CredentialCardBackground<L extends number = 1 | 2 | 3 | 4 | 5> = {
-  /**
-   * Up to 5 color stops, distributed evenly along the gradient line. At least 2
-   * colors are required for a meaningful gradient.
-   */
-  colors: [string, ...Array<string>] & { length: L };
-  /**
-   * Optional positions for each color stop, as values between 0 and 1. When
-   * omitted the stops are distributed evenly (equivalent to CSS behaviour).
-   * Must have the same length as `colors` when provided.
-   */
-  positions?: [number, ...Array<number>] & { length: L };
-} & XOR<
-  {
-    /** Type of the gradient, either linearor radial. */
-    type: "linear";
-    /**
-     * Angle in degrees following the CSS convention: 0° = bottom → top, 90° =
-     * left → right, 135° = top-left → bottom-right.
-     */
-    angle: number;
-  },
-  {
-    /** Type of the gradient, either linear (default) or radial. */
-    type: "radial";
-    /**
-     * Center of the gradient expressed in percentage values between 0 and 1,
-     * where [0.5, 0.5] corresponds to the center of the card.
-     */
-    center: [number, number];
+export type CredentialCardBackground<L extends number = 1 | 2 | 3 | 4 | 5> =
+  XOR<
+    {
+      /**
+       * Angle in degrees following the CSS convention: 0° = bottom → top, 90° =
+       * left → right, 135° = top-left → bottom-right.
+       */
+      angle: number;
+      /** Type of the gradient, either linearor radial. */
+      type: "linear";
+    },
+    {
+      /**
+       * Center of the gradient expressed in percentage values between 0 and 1,
+       * where [0.5, 0.5] corresponds to the center of the card.
+       */
+      center: [number, number];
+      /**
+       * Radius of the gradient, expressed as a percentage of the card width,
+       * between 0 and 1.
+       */
+      radius: number;
 
+      /** Type of the gradient, either linear (default) or radial. */
+      type: "radial";
+    }
+  > & {
     /**
-     * Radius of the gradient, expressed as a percentage of the card width,
-     * between 0 and 1.
+     * Up to 5 color stops, distributed evenly along the gradient line. At least
+     * 2 colors are required for a meaningful gradient.
      */
-    radius: number;
-  }
->;
+    colors: [string, ...Array<string>] & { length: L };
+    /**
+     * Optional positions for each color stop, as values between 0 and 1. When
+     * omitted the stops are distributed evenly (equivalent to CSS behaviour).
+     * Must have the same length as `colors` when provided.
+     */
+    positions?: [number, ...Array<number>] & { length: L };
+  };
+
+export type CredentialCardConfig = {
+  /**
+   * Card background: either a solid colour or a gradient (angle + up to 5
+   * stops).
+   */
+  background: CredentialCardBackground;
+  /** Color used for the card border when the credential is valid. */
+  borderColor: string;
+  /**
+   * Base color for the credential, defined by the AS or in static
+   * configurations.
+   */
+  color: string;
+  /**
+   * Overlay configuration for the credential card, either a fixed image or a
+   * pattern
+   */
+  overlay?: CredentialCardOverlay;
+  /** Color used for the credential title text. */
+  titleColor: string;
+};
 
 export type CredentialCardOverlay = XOR<
   {
@@ -91,34 +115,12 @@ export type CredentialCardOverlay = XOR<
   }
 >;
 
-export type CredentialCardConfig = {
-  /**
-   * Base color for the credential, defined by the AS or in static
-   * configurations.
-   */
-  color: string;
-  /** Color used for the credential title text. */
-  titleColor: string;
-  /** Color used for the card border when the credential is valid. */
-  borderColor: string;
-  /**
-   * Card background: either a solid colour or a gradient (angle + up to 5
-   * stops).
-   */
-  background: CredentialCardBackground;
-  /**
-   * Overlay configuration for the credential card, either a fixed image or a
-   * pattern
-   */
-  overlay?: CredentialCardOverlay;
-};
-
 /**
  * A credential card configuration that varies based on the app color scheme
  * (light/dark).
  */
 export type ThemeAwareCredentialCardConfig = Record<
-  "light" | "dark",
+  "dark" | "light",
   CredentialCardConfig
 >;
 

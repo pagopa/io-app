@@ -1,15 +1,15 @@
+import {
+  Body,
+  ContentWrapper,
+  H4,
+  hexToRgba,
+  IOColors,
+  IOVisualCostants
+} from "@io-app/design-system";
 import { ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  IOColors,
-  hexToRgba,
-  ContentWrapper,
-  IOVisualCostants,
-  Body,
-  H4
-} from "@pagopa/io-app-design-system";
 
-const bottomBarHeight: number = 70;
+const bottomBarHeight = 70;
 
 export const DSFullScreenModal = () => {
   const insets = useSafeAreaInsets();

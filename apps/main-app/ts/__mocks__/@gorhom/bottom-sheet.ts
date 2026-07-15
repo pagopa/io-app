@@ -18,32 +18,32 @@ const BottomSheetBackdrop = NOOP;
 
 const BottomSheetComponent = (props: PropsWithChildren) => props.children;
 
-class BottomSheetModal extends Component<PropsWithChildren> {
-  snapToIndex() {}
-  snapToPosition() {}
-  expand() {}
-  collapse() {}
+class BottomSheet extends Component<PropsWithChildren> {
   close() {}
+  collapse() {}
+  expand() {}
   forceClose() {}
-  present() {}
-  dismiss() {}
-
   render() {
     return this.props.children;
   }
+  snapToIndex() {}
+
+  snapToPosition() {}
 }
 
-class BottomSheet extends Component<PropsWithChildren> {
-  snapToIndex() {}
-  snapToPosition() {}
-  expand() {}
-  collapse() {}
+class BottomSheetModal extends Component<PropsWithChildren> {
   close() {}
+  collapse() {}
+  dismiss() {}
+  expand() {}
   forceClose() {}
-
+  present() {}
   render() {
     return this.props.children;
   }
+  snapToIndex() {}
+
+  snapToPosition() {}
 }
 
 const useBottomSheet = () => ({
@@ -99,26 +99,26 @@ const useBottomSheetDynamicSnapPoints = () => ({
 
 export default BottomSheet;
 export {
-  BottomSheetComponent as BottomSheetView,
-  BottomSheetModalProvider,
-  BottomSheetModal,
   BottomSheetBackdrop,
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetComponent as BottomSheetView,
   useBottomSheet,
-  useBottomSheetModal,
-  useBottomSheetAnimationConfigs as useBottomSheetSpringConfigs,
-  useBottomSheetAnimationConfigs as useBottomSheetTimingConfigs,
+  useBottomSheetDynamicSnapPoints,
   useBottomSheetInternal,
+  useBottomSheetModal,
   useBottomSheetModalInternal,
-  useBottomSheetDynamicSnapPoints
+  useBottomSheetAnimationConfigs as useBottomSheetSpringConfigs,
+  useBottomSheetAnimationConfigs as useBottomSheetTimingConfigs
 };
 export {
-  TextInput as BottomSheetTextInput,
+  FlatList as BottomSheetFlashList,
+  FlatList as BottomSheetFlatList,
   ScrollView as BottomSheetScrollView,
   SectionList as BottomSheetSectionList,
-  FlatList as BottomSheetFlatList,
-  FlatList as BottomSheetFlashList,
+  TextInput as BottomSheetTextInput,
   VirtualizedList as BottomSheetVirtualizedList,
-  TouchableOpacity,
   TouchableHighlight,
+  TouchableOpacity,
   TouchableWithoutFeedback
 } from "react-native";

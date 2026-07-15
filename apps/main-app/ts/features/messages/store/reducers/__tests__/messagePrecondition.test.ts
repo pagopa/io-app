@@ -1,7 +1,11 @@
 import { ActionType } from "typesafe-actions";
+
+import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
 import { TagEnum } from "../../../../../../definitions/communication/MessageCategoryBase";
 import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/communication/MessageCategoryPayment";
 import { TagEnum as SENDTagEnum } from "../../../../../../definitions/communication/MessageCategoryPN";
+import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { GlobalState } from "../../../../../store/reducers/types";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
@@ -19,8 +23,8 @@ import {
   updateRequiredPreconditionStatusAction
 } from "../../actions/preconditions";
 import {
-  MessagePreconditionStatus,
   foldPreconditionStatus,
+  MessagePreconditionStatus,
   preconditionReducer,
   preconditionsCategoryTagSelector,
   preconditionsContentMarkdownSelector,
@@ -39,9 +43,6 @@ import {
   toShownMPS,
   toUpdateRequiredMPS
 } from "../messagePrecondition";
-import { GlobalState } from "../../../../../store/reducers/types";
-import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
 
 const messageId = "01J1FJADCJ53SN4A11J3TBSKQE";
 const categoryTag = TagEnum.GENERIC;
@@ -98,14 +99,14 @@ const computeExpectedOutput = (
       break;
     case "loadingContent":
       switch (withAction.type) {
-        case "TO_IDLE_PRECONDITION_STATUS":
-          return toIdleMPS();
         case "TO_ERROR_PRECONDITION_STATUS":
           return toErrorMPS(
             fromStatus.messageId,
             fromStatus.categoryTag,
             withAction.payload.reason
           );
+        case "TO_IDLE_PRECONDITION_STATUS":
+          return toIdleMPS();
         case "TO_SHOWN_PRECONDITION_STATUS":
           return toShownMPS(
             fromStatus.messageId,
@@ -116,14 +117,14 @@ const computeExpectedOutput = (
       break;
     case "retrievingData":
       switch (withAction.type) {
-        case "TO_IDLE_PRECONDITION_STATUS":
-          return toIdleMPS();
         case "TO_ERROR_PRECONDITION_STATUS":
           return toErrorMPS(
             fromStatus.messageId,
             fromStatus.categoryTag,
             withAction.payload.reason
           );
+        case "TO_IDLE_PRECONDITION_STATUS":
+          return toIdleMPS();
         case "TO_LOADING_CONTENT_PRECONDITION_STATUS":
           return toLoadingContentMPS(
             fromStatus.messageId,
@@ -145,14 +146,14 @@ const computeExpectedOutput = (
       break;
     case "shown":
       switch (withAction.type) {
-        case "TO_IDLE_PRECONDITION_STATUS":
-          return toIdleMPS();
         case "TO_ERROR_PRECONDITION_STATUS":
           return toErrorMPS(
             fromStatus.messageId,
             fromStatus.categoryTag,
             withAction.payload.reason
           );
+        case "TO_IDLE_PRECONDITION_STATUS":
+          return toIdleMPS();
       }
       break;
     case "updateRequired":

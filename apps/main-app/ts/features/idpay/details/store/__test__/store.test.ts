@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
+
 import {
   idPayBeneficiaryDetailsSelector,
   idpayInitiativeDetailsSelector,
@@ -9,9 +10,10 @@ import {
   idpayTimelineLastUpdateSelector
 } from "..";
 import {
-  InitiativeDTO,
-  StatusEnum as InitativeStatusEnum
+  StatusEnum as InitativeStatusEnum,
+  InitiativeDTO
 } from "../../../../../../definitions/idpay/InitiativeDTO";
+import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import {
   StatusEnum,
@@ -22,7 +24,6 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../actions";
-import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 
 const mockResponseSuccess = {
   initiativeId: "123",
@@ -238,7 +239,7 @@ describe("test idpay timeline pagination reducer and selectors", () => {
       ...mockTimelineResponseSuccess.operationList
     ]);
   });
-  it("should reset the timeline after the idpayTimelineGet.request action for page 0 ", () => {
+  it("should reset the timeline after the idpayTimelineGet.request action for page 0", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 

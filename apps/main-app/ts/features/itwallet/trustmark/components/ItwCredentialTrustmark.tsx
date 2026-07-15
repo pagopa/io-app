@@ -5,7 +5,7 @@ import {
   useIOThemeContext,
   useScaleAnimation,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   Canvas,
   ColorMatrix,
@@ -43,20 +43,21 @@ import Animated, {
   useReducedMotion,
   useSharedValue
 } from "react-native-reanimated";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
 
+type ButtonSize = {
+  height: LayoutRectangle["height"];
+  width: LayoutRectangle["width"];
+};
+
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: CredentialMetadata;
   onPress?: () => void;
 }>;
-
-type ButtonSize = {
-  width: LayoutRectangle["width"];
-  height: LayoutRectangle["height"];
-};
 
 /* VISUAL PARAMETERS */
 
@@ -112,7 +113,7 @@ export const ItwCredentialTrustmark = ({
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
 
   // Store initial roll value on first sensor reading
-  const initialRoll = useSharedValue<number | null>(null);
+  const initialRoll = useSharedValue<null | number>(null);
 
   /* Not all devices are in an initial flat position on a surface
     (e.g. a table) then we use a relative rotation value,
@@ -136,7 +137,7 @@ export const ItwCredentialTrustmark = ({
 
   /* We don't need to look at the whole quaternion range,
   just a very small part of it. */
-  const quaternionRange: number = 0.1;
+  const quaternionRange = 0.1;
 
   const skiaLightTranslateX = useDerivedValue(() => {
     const translateX = interpolate(
@@ -173,12 +174,6 @@ export const ItwCredentialTrustmark = ({
       >
         <SkiaRadialGradient
           c={vec((buttonSize?.width ?? 0) / 2, (buttonSize?.height ?? 0) / 2)}
-          r={lightSize / 2}
-          /* There are many stops because it's an easing gradient. */
-          positions={[
-            0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
-            0.647, 0.71, 0.775, 0.845, 0.919, 1
-          ]}
           colors={[
             "rgba(255,255,255,1)",
             "rgba(255,255,255,0.987)",
@@ -197,6 +192,12 @@ export const ItwCredentialTrustmark = ({
             "rgba(255,255,255,0.01)",
             "rgba(255,255,255,0)"
           ]}
+          /* There are many stops because it's an easing gradient. */
+          positions={[
+            0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
+            0.647, 0.71, 0.775, 0.845, 0.919, 1
+          ]}
+          r={lightSize / 2}
         />
       </SkiaCircle>
     </SkiaGroup>
@@ -205,16 +206,13 @@ export const ItwCredentialTrustmark = ({
   const TrustmarkRainbowGradient = () => (
     <SkiaGroup blendMode={"colorDodge"}>
       <Rect
-        x={0}
-        y={0}
-        width={buttonSize?.width ?? 0}
         height={TRUSTMARK_GRADIENT_HEIGHT}
         transform={skiaGradientRainbowTranslateY}
+        width={buttonSize?.width ?? 0}
+        x={0}
+        y={0}
       >
         <SkiaLinearGradient
-          mode="decal"
-          start={vec(0, 0)}
-          end={vec(0, TRUSTMARK_GRADIENT_HEIGHT)}
           colors={[
             "rgba(255, 119, 115,1)",
             "rgba(255, 237, 95, 1)",
@@ -224,7 +222,10 @@ export const ItwCredentialTrustmark = ({
             "rgba(216, 117, 255, 1)",
             "rgba(255, 119, 115, 1)"
           ]}
+          end={vec(0, TRUSTMARK_GRADIENT_HEIGHT)}
+          mode="decal"
           positions={[0, 0.2, 0.4, 0.6, 0.8, 0.9, 1]}
+          start={vec(0, 0)}
         />
       </Rect>
     </SkiaGroup>
@@ -253,12 +254,12 @@ export const ItwCredentialTrustmark = ({
       </SkiaGroup>
 
       <Mask
-        mode="alpha"
         mask={
           <SkiaGroup blendMode={"colorDodge"} opacity={0.8}>
             <TrustmarkRainbowGradient />
           </SkiaGroup>
         }
+        mode="alpha"
       >
         <Group
           layer={
@@ -268,11 +269,11 @@ export const ItwCredentialTrustmark = ({
           }
         >
           <ImageSVG
+            height={TRUSTMARK_STAMP_SIZE}
             svg={trustMarkStampSVG}
+            width={TRUSTMARK_STAMP_SIZE}
             x={(buttonSize?.width ?? 0) - TRUSTMARK_HEIGHT - 24}
             y={-TRUSTMARK_STAMP_SIZE * 0.18}
-            width={TRUSTMARK_STAMP_SIZE}
-            height={TRUSTMARK_STAMP_SIZE}
           />
         </Group>
       </Mask>
@@ -288,31 +289,31 @@ export const ItwCredentialTrustmark = ({
 
   return (
     <Pressable
-      onPress={onPress}
-      testID={testID}
-      accessible={true}
       accessibilityLabel={I18n.t(
         "features.itWallet.presentation.ctas.trustmark"
       )}
       accessibilityRole="button"
+      accessible={true}
+      onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
+      testID={testID}
     >
       <Animated.View
-        style={[styles.container, scaleAnimatedStyle]}
         onLayout={getButtonSize}
+        style={[styles.container, scaleAnimatedStyle]}
       >
         <LinearGradient
-          useAngle
           angle={1}
           angleCenter={buttonBackgroundGradient.center}
-          locations={buttonBackgroundGradient.locations}
           colors={buttonBackgroundGradient.colors}
+          locations={buttonBackgroundGradient.locations}
           style={[
             styles.gradientView,
             { opacity: buttonBackgroundGradientOpacity }
           ]}
+          useAngle
         />
         <View
           style={[
@@ -328,12 +329,12 @@ export const ItwCredentialTrustmark = ({
           </Caption>
           {!enableIridescence && (
             <Image
+              accessibilityIgnoresInvertColors
+              source={require("../../../../../img/features/itWallet/credential/trustmark.png")}
               style={{
                 ...styles.trustmarkAsset,
                 opacity: isLightMode ? 1 : 0.7
               }}
-              source={require("../../../../../img/features/itWallet/credential/trustmark.png")}
-              accessibilityIgnoresInvertColors
             />
           )}
         </View>

@@ -5,6 +5,7 @@ import {
   StackNavigationProp
 } from "@react-navigation/stack";
 import { useEffect } from "react";
+
 import { isGestureEnabled } from "../../../../../../utils/navigation";
 import { CieAttributesScreen } from "../screens/CieAttributesScreen";
 import { CieAuthenticationScreen } from "../screens/CieAuthenticationScreen";
@@ -37,36 +38,36 @@ export const CiePlaygroundsNavigator = () => {
       screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
     >
       <Stack.Screen
-        name={CIE_PLAYGROUNDS_ROUTES.MAIN}
         component={CiePlaygrounds}
+        name={CIE_PLAYGROUNDS_ROUTES.MAIN}
       />
       <Stack.Screen
-        name={CIE_PLAYGROUNDS_ROUTES.ATTRIBUTES}
         component={CieAttributesScreen}
+        name={CIE_PLAYGROUNDS_ROUTES.ATTRIBUTES}
       />
       <Stack.Screen
-        name={CIE_PLAYGROUNDS_ROUTES.CERTIFICATE_READING}
         component={CieCertificateReadingScreen}
+        name={CIE_PLAYGROUNDS_ROUTES.CERTIFICATE_READING}
       />
       <Stack.Screen
-        name={CIE_PLAYGROUNDS_ROUTES.AUTHENTICATION}
         component={CieAuthenticationScreen}
+        name={CIE_PLAYGROUNDS_ROUTES.AUTHENTICATION}
       />
       <Stack.Screen
-        name={CIE_PLAYGROUNDS_ROUTES.INTERNAL_AUTH}
         component={CieInternalAuthScreen}
+        name={CIE_PLAYGROUNDS_ROUTES.INTERNAL_AUTH}
       />
       <Stack.Screen
-        name={CIE_PLAYGROUNDS_ROUTES.MRTD}
         component={CieMrtdScreen}
+        name={CIE_PLAYGROUNDS_ROUTES.MRTD}
       />
       <Stack.Screen
-        name={CIE_PLAYGROUNDS_ROUTES.INTERNAL_AUTH_MRTD}
         component={CieInternalAuthMrtdScreen}
+        name={CIE_PLAYGROUNDS_ROUTES.INTERNAL_AUTH_MRTD}
       />
       <Stack.Screen
-        name={CIE_PLAYGROUNDS_ROUTES.RESULT}
         component={CieResultScreen}
+        name={CIE_PLAYGROUNDS_ROUTES.RESULT}
       />
     </Stack.Navigator>
   );

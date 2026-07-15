@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 
 /** Selector to get the wallet instance attestation */

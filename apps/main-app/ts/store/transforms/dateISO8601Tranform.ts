@@ -1,7 +1,8 @@
-import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
-import { createTransform, TransformIn, TransformOut } from "redux-persist";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { createTransform, TransformIn, TransformOut } from "redux-persist";
+
 import { DateFromISOString } from "../../utils/dates";
 
 /**
@@ -30,8 +31,8 @@ import { DateFromISOString } from "../../utils/dates";
 const dateFieldsTransformable = new Set<string>([
   "created_at",
   "due_date",
-  "nextLegalAttempt",
-  "lastUsage"
+  "lastUsage",
+  "nextLegalAttempt"
 ]);
 
 /** If value is a Date object, a string in ISO8601 format is returned */

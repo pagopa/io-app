@@ -1,8 +1,8 @@
 /* eslint-disable functional/immutable-data */
 import {
+  type CryptoError,
   deleteKey,
-  generate,
-  type CryptoError
+  generate
 } from "@pagopa/io-react-native-crypto";
 import {
   CBOR,
@@ -19,8 +19,9 @@ import {
   requestMultiple,
   RESULTS
 } from "react-native-permissions";
-import { KEYTAG, WELL_KNOWN_CREDENTIALS } from "../mocks/proximity";
+
 import { getEnv } from "../../common/utils/environment";
+import { KEYTAG, WELL_KNOWN_CREDENTIALS } from "../mocks/proximity";
 
 interface NestedBooleanMap {
   [key: string]: boolean | NestedBooleanMap;
@@ -107,11 +108,11 @@ const requestBlePermissions = async (): Promise<boolean> => {
 
 const parseAndPrintError = (
   schema:
-    | typeof ISO18013_5.ModuleErrorSchema
-    | typeof ISO18013_7.ModuleErrorSchema
     | typeof CBOR.ModuleErrorSchema
     | typeof COSE.ModuleErrorSchema
-    | typeof ISO18013_5.OnErrorPayloadSchema,
+    | typeof ISO18013_5.ModuleErrorSchema
+    | typeof ISO18013_5.OnErrorPayloadSchema
+    | typeof ISO18013_7.ModuleErrorSchema,
   error: unknown,
   prefix?: string
 ) => {
@@ -132,16 +133,16 @@ const parseAndPrintError = (
  * document. - ERROR: An error occurred.
  */
 export enum PROXIMITY_STATUS {
-  IDLE = "IDLE",
-  READY = "READY",
   ENGAGEMENT = "ENGAGEMENT",
+  ERROR = "ERROR",
+  IDLE = "IDLE",
   PRESENTING = "PRESENTING",
-  ERROR = "ERROR"
+  READY = "READY"
 }
 
 export const useItwProximityFlow = () => {
   const [status, setStatus] = useState<PROXIMITY_STATUS>(PROXIMITY_STATUS.IDLE);
-  const [qrCode, setQrCode] = useState<string | null>(null);
+  const [qrCode, setQrCode] = useState<null | string>(null);
   const [request, setRequest] = useState<
     ISO18013_5.VerifierRequest["request"] | null
   >(null);
@@ -217,7 +218,7 @@ export const useItwProximityFlow = () => {
     [env]
   );
 
-  const closeFlow = useCallback(async (sendError: boolean = false) => {
+  const closeFlow = useCallback(async (sendError = false) => {
     try {
       if (sendError) {
         await ISO18013_5.sendErrorResponse(

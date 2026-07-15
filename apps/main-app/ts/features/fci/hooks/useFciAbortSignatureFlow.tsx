@@ -2,10 +2,12 @@ import {
   FooterActions,
   IOMarkdownLite,
   useIOExperimentalDesign
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { Alert } from "react-native";
+
+import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton.ts";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -13,7 +15,6 @@ import { trackFciUserExit } from "../analytics";
 import { fciEndRequest } from "../store/actions";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
-import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton.ts";
 
 /**
  * `showDialogOnBack` — when `true` (default), pressing back shows the abort
@@ -22,8 +23,8 @@ import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBack
  * custom back handler used when `showDialogOnBack` is `false`.
  */
 type Props = {
-  showDialogOnBack?: boolean;
   onBackPress?: () => void;
+  showDialogOnBack?: boolean;
 };
 
 /**

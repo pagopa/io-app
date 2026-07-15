@@ -8,12 +8,12 @@ const keyOfGroupByType = [
   "resolutionDependencies",
   "others"
 ] as const;
-type KeyGroupByType = (typeof keyOfGroupByType)[number];
-
 /** Represents the grouping of outdated dependencies by type */
 export type GroupByType = {
   [k in KeyGroupByType]: GroupBySeverity;
 };
+
+type KeyGroupByType = (typeof keyOfGroupByType)[number];
 
 /**
  * Iterate through groupByType and generate a total count {@link GroupBySeverity}

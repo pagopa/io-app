@@ -14,6 +14,25 @@ import { PinString } from "../types/PinString";
 
 const PIN_KEY = "PIN";
 
+/** Removes the unlock code from the Keychain */
+export async function deletePin(): Promise<boolean> {
+  return await Keychain.resetGenericPassword();
+}
+
+/**
+ * Returns the unlock code from the Keychain.
+ *
+ * The promise fails when there is no valid unlock code stored.
+ */
+export async function getPin(): Promise<O.Option<PinString>> {
+  const credentials = await Keychain.getGenericPassword();
+  if (typeof credentials !== "boolean" && credentials.password.length > 0) {
+    return O.fromEither(PinString.decode(credentials.password));
+  } else {
+    return O.none;
+  }
+}
+
 /**
  * Wrapper that sets default accessible option.
  *
@@ -44,23 +63,4 @@ export async function setPin(pin: PinString): Promise<boolean> {
     pin
   );
   return typeof result !== "boolean";
-}
-
-/** Removes the unlock code from the Keychain */
-export async function deletePin(): Promise<boolean> {
-  return await Keychain.resetGenericPassword();
-}
-
-/**
- * Returns the unlock code from the Keychain.
- *
- * The promise fails when there is no valid unlock code stored.
- */
-export async function getPin(): Promise<O.Option<PinString>> {
-  const credentials = await Keychain.getGenericPassword();
-  if (typeof credentials !== "boolean" && credentials.password.length > 0) {
-    return O.fromEither(PinString.decode(credentials.password));
-  } else {
-    return O.none;
-  }
 }

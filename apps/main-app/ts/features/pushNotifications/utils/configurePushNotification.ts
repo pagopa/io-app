@@ -1,5 +1,6 @@
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
+
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { Store } from "../../../store/actions/types";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
@@ -118,7 +119,7 @@ const onNotificationResponse = (
   void Notifications.dismissNotificationAsync(identifier);
 };
 const onPushNotificationTokenReceived =
-  (store: Store) => (token: { data?: string | null }) => {
+  (store: Store) => (token: { data?: null | string }) => {
     if (!token || !token.data) {
       trackAppCaughtError(
         "onPushNotificationTokenAvailable",

@@ -1,7 +1,8 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ActionArgs, assertEvent, assign } from "xstate";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOStore } from "../../../../store/hooks";
@@ -15,15 +16,19 @@ import {
   trackItwIdVerifiedDocument,
   trackSaveCredentialSuccess
 } from "../../analytics";
-import { toItwIdMethod } from "../../analytics/utils/types";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
+import { toSurveyAuthMethod } from "../../analytics/utils";
+import { toItwIdMethod } from "../../analytics/utils/types";
 import {
   itwSetAuthLevel,
   itwSetCredentialUpgradeFailed,
-  itwSetIdentificationMode
+  itwSetIdentificationMode,
+  itwSetWalletActivationFeedbackBannerData
 } from "../../common/store/actions/preferences";
+import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
@@ -34,8 +39,6 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
-import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -233,14 +236,9 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToUpgradeCredentialsScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS
-    });
-  },
-
   closeIssuance: ({
-    context
+    context,
+    event
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     const isWalletInNavigationState = isRouteInNavigationState(
       navigation.getState(),
@@ -257,9 +255,14 @@ export const createEidIssuanceActionsImplementation = (
     );
     const isReissuance = context.mode === "reissuance";
 
+    const surveyStep = event.type === "close" ? event.surveyStep : undefined;
+
     navigation.navigate(ROUTES.MAIN, {
       screen: ROUTES.WALLET_HOME,
-      params: { requiredEidFeedback: isReissuance && !isSurveyHidden }
+      params: {
+        requiredEidFeedback: isReissuance && !isSurveyHidden,
+        activationExitSurvey: surveyStep ? { step: surveyStep } : undefined
+      }
     });
   },
 
@@ -303,6 +306,27 @@ export const createEidIssuanceActionsImplementation = (
     // Save the auth level in the preferences
     store.dispatch(itwSetAuthLevel(context.identification?.level));
     store.dispatch(itwSetIdentificationMode(context.identification?.mode));
+  },
+
+  storeWalletActivationFeedbackBannerData: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    // Store banner data only for:
+    // - credential-triggered activation (credentialType set): user skips success page
+    // - upgrade flow (mode === "upgrade")
+    // Regular issuance with "Add document" CTA keeps the banner on the success page directly.
+    if (!context.credentialType && context.mode !== "upgrade") {
+      return;
+    }
+    const docStatus = context.mode === "upgrade" ? "active" : "not_active";
+    const authMethod = toSurveyAuthMethod(context.identification);
+    store.dispatch(
+      itwSetWalletActivationFeedbackBannerData({
+        date: new Date().toISOString(),
+        docStatus,
+        authMethod
+      })
+    );
   },
 
   storeCredentialUpgradeFailures: ({

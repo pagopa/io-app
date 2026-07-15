@@ -1,11 +1,11 @@
 import {
+  hexToRgba,
+  Icon,
   IOColors,
   IOSpacingScale,
   IOVisualCostants,
-  Icon,
-  hexToRgba,
   useIOTheme
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useCallback, useRef, useState } from "react";
 import {
   Image,
@@ -14,6 +14,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
+
 import { addCacheTimestampToUri } from "../../../../../utils/image";
 
 type AvatarDoubleProps = {
@@ -21,8 +22,8 @@ type AvatarDoubleProps = {
 };
 
 const avatarContainerSize = 30;
-const avatarDoubleRadiusSizeSmall: number = 6;
-const internalSpaceDefaultSize: number = 3;
+const avatarDoubleRadiusSizeSmall = 6;
+const internalSpaceDefaultSize = 3;
 const internalSpacePlaceholderDefaultSize: IOSpacingScale = 6;
 const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);
 
@@ -122,8 +123,8 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
       >
         {imageSource === undefined ? (
           <Icon
-            name="institution"
             color={theme["icon-decorative"]}
+            name="institution"
             size={"100%"}
           />
         ) : (
@@ -138,9 +139,9 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
           >
             <Image
               accessibilityIgnoresInvertColors
+              onError={onError}
               source={imageSource}
               style={styles.avatarImage}
-              onError={onError}
             />
           </View>
         )}
@@ -170,7 +171,7 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
             }
           ]}
         >
-          <Icon name="productPagoPA" color="blueItalia-500" size={20} />
+          <Icon color="blueItalia-500" name="productPagoPA" size={20} />
         </View>
       </View>
     </View>

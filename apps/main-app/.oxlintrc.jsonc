@@ -79,7 +79,18 @@
         "no-unsafe-optional-chaining": "error",
         "no-unused-labels": "error",
         "no-unused-private-class-members": "error",
-        "no-unused-vars": "off",
+        // Allow `_`-prefixed throwaways and rest-sibling destructuring omits,
+        // matching tsc's noUnusedLocals.
+        "no-unused-vars": [
+          "error",
+          {
+            "argsIgnorePattern": "^_",
+            "varsIgnorePattern": "^_",
+            "ignoreRestSiblings": true
+          }
+        ],
+        // Disabled for test files below, where empty stubs are common.
+        "no-empty-function": "error",
         "no-useless-backreference": "error",
         "no-useless-catch": "error",
         "no-useless-escape": "warn",
@@ -98,6 +109,7 @@
         "typescript/no-misused-new": "error",
         "typescript/no-namespace": "error",
         "typescript/no-non-null-asserted-optional-chain": "error",
+        "typescript/no-non-null-assertion": "error",
         "typescript/no-require-imports": [
           "error",
           {
@@ -244,12 +256,12 @@
         ],
         "sonarjs/no-small-switch": "off",
         "sonarjs/no-duplicate-string": "off",
-        "sonarjs/no-nested-template-literals": "warn",
+        "sonarjs/no-nested-template-literals": "error",
         "react-native/no-unused-styles": "error",
         "react-native/split-platform-components": "off",
         "react-native/no-color-literals": "error",
         "react-native/no-raw-text": "off",
-        "react-native/no-single-element-style-arrays": "warn",
+        "react-native/no-single-element-style-arrays": "error",
         // NOTE: oxlint's jsPlugin bridge does not expose TypeScript parserServices
         // (esTreeNodeToTSNodeMap / program) to ESLint plugins. The i18next rule
         // normally uses the TypeScript type checker to skip string literals that
@@ -342,7 +354,7 @@
           }
         ],
         "typescript/explicit-module-boundary-types": "off",
-        "typescript/no-inferrable-types": "off",
+        "typescript/no-inferrable-types": "error",
         "typescript/array-type": [
           "error",
           {
@@ -422,6 +434,7 @@
       "rules": {
         "no-restricted-imports": "off",
         "no-shadow": "off",
+        "no-empty-function": "off",
         "typescript/no-non-null-assertion": "off",
         "typescript/no-require-imports": "off",
         "typescript/unbound-method": "off",
@@ -429,6 +442,29 @@
         "i18next/no-literal-string": "off"
       },
       "plugins": ["typescript"]
+    },
+    {
+      // Scoped to `.ts` test files only: data-driven tests derive titles
+      // dynamically (loop variables, `fn.name`, ternaries), and saga tests
+      // assert through redux-saga-test-plan's chainable APIs rather than a bare
+      // `expect`.
+      "files": ["**/*.test.ts", "**/__tests__/**/*.ts"],
+      "rules": {
+        "jest/valid-title": [
+          "error",
+          {
+            "ignoreTypeOfDescribeName": true,
+            "ignoreTypeOfTestName": true
+          }
+        ],
+        "jest/expect-expect": [
+          "warn",
+          {
+            "assertFunctionNames": ["expect", "expectSaga", "testSaga"]
+          }
+        ]
+      },
+      "plugins": ["jest"]
     },
     {
       "files": [
@@ -439,7 +475,9 @@
         "**/__mocks__/**/*.{ts,tsx}"
       ],
       "rules": {
-        "i18next/no-literal-string": "off"
+        "i18next/no-literal-string": "off",
+        // Mocks, playgrounds and dev tooling legitimately use empty stubs.
+        "no-empty-function": "off"
       },
       "jsPlugins": ["eslint-plugin-i18next"]
     }

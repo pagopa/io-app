@@ -1,6 +1,6 @@
 import {
-  IOColors,
   Icon,
+  IOColors,
   IOIconSizeScale,
   IOLogoPaymentExtType,
   IOLogoPaymentType,
@@ -9,20 +9,21 @@ import {
   LogoPayment,
   LogoPaymentExt,
   useIOTheme
-} from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
+} from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 
-export type LogoPaymentWithFallback = {
-  brand?: string;
-  fallbackIconColor?: IOColors;
-  size?: IOIconSizeScale;
-  isExtended?: boolean;
-};
 export type LogoPaymentExtOrDefaultIconProps = {
   cardIcon?: IOLogoPaymentExtType;
   fallbackIconColor?: IOColors;
+  size?: IOIconSizeScale;
+};
+export type LogoPaymentWithFallback = {
+  brand?: string;
+  fallbackIconColor?: IOColors;
+  isExtended?: boolean;
   size?: IOIconSizeScale;
 };
 /**
@@ -54,9 +55,9 @@ export const LogoPaymentWithFallback = ({
     O.fold(
       () => (
         <Icon
+          color={fallbackIconColor ?? theme["icon-default"]}
           name="creditCard"
           size={size}
-          color={fallbackIconColor ?? theme["icon-default"]}
         />
       ),
       brand =>

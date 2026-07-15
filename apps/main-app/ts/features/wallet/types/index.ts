@@ -11,8 +11,62 @@ export type WalletCardCategory = (typeof walletCardCategories)[number];
 
 // Used for the filtering logic in the wallet screen
 export const walletCardCategoryFilters = ["itw", "other"] as const;
+// Base WalletCard type, which includes all card types
+export type WalletCard = WalletCardBase &
+  (
+    | WalletCardBonus
+    | WalletCardCdc
+    | WalletCardCgn
+    | WalletCardItw
+    | WalletCardPayment
+    | WalletCardPlaceholder
+  );
+
+// Specific type for ID Pay bonus cards
+export type WalletCardBonus = Prettify<
+  IdPayWalletCardProps & {
+    type: "idPay";
+  }
+>;
+
 export type WalletCardCategoryFilter =
   (typeof walletCardCategoryFilters)[number];
+
+// Specific type for CDC bonus cards
+export type WalletCardCdc = Prettify<
+  CdcCardProps & {
+    type: "cdc";
+  }
+>;
+
+// Specific type for CGN bonus cards
+export type WalletCardCgn = Prettify<
+  CgnWalletCardProps & {
+    type: "cgn";
+  }
+>;
+
+// IT Wallet
+export type WalletCardItw = Prettify<
+  ItwCredentialCard & {
+    type: "itw";
+  }
+>;
+
+// Specific type for payment cards
+export type WalletCardPayment = Prettify<
+  PaymentWalletCardProps & {
+    type: "payment";
+  }
+>;
+
+// This card type renders a loading skeleton, used as a placeholder for other cards
+export type WalletCardPlaceholder = {
+  type: "placeholder";
+};
+
+// Used to map the card to the specific component that will render the card.
+export type WalletCardType = WalletCard["type"];
 
 /**
  * Base type definition for all wallet cards. Every card in the wallet must
@@ -20,8 +74,6 @@ export type WalletCardCategoryFilter =
  * categorization, and lifecycle management.
  */
 type WalletCardBase = {
-  /** Unique identifier used to track and reference individual cards */
-  key: string;
   /** Classification of the card (e.g., itw, cgn, bonus, payment) */
   category: WalletCardCategory;
   /**
@@ -30,58 +82,6 @@ type WalletCardBase = {
    * wallet
    */
   hidden?: true;
+  /** Unique identifier used to track and reference individual cards */
+  key: string;
 };
-
-// Specific type for ID Pay bonus cards
-export type WalletCardBonus = Prettify<
-  {
-    type: "idPay";
-  } & IdPayWalletCardProps
->;
-
-// Specific type for CGN bonus cards
-export type WalletCardCgn = Prettify<
-  {
-    type: "cgn";
-  } & CgnWalletCardProps
->;
-
-// Specific type for payment cards
-export type WalletCardPayment = Prettify<
-  {
-    type: "payment";
-  } & PaymentWalletCardProps
->;
-
-// IT Wallet
-export type WalletCardItw = Prettify<
-  {
-    type: "itw";
-  } & ItwCredentialCard
->;
-
-// Specific type for CDC bonus cards
-export type WalletCardCdc = Prettify<
-  {
-    type: "cdc";
-  } & CdcCardProps
->;
-
-// This card type renders a loading skeleton, used as a placeholder for other cards
-export type WalletCardPlaceholder = {
-  type: "placeholder";
-};
-
-// Base WalletCard type, which includes all card types
-export type WalletCard = WalletCardBase &
-  (
-    | WalletCardBonus
-    | WalletCardCdc
-    | WalletCardCgn
-    | WalletCardPayment
-    | WalletCardItw
-    | WalletCardPlaceholder
-  );
-
-// Used to map the card to the specific component that will render the card.
-export type WalletCardType = WalletCard["type"];

@@ -1,8 +1,9 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import { constNull } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Alert } from "react-native";
-import I18n from "i18next";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   fold,

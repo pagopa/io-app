@@ -11,9 +11,11 @@ import {
   purgeStoredState
 } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
+
 import { versionInfoReducer } from "../../common/versionInfo/store/reducers/versionInfo";
 import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
 import { appFeedbackInitialState } from "../../features/appReviews/store/reducers";
+import { activeSessionLoginInitialState } from "../../features/authentication/activeSessionLogin/store/reducer";
 import {
   logoutFailure,
   logoutSuccess,
@@ -26,7 +28,6 @@ import authenticationReducer, {
 import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
-import { activeSessionLoginInitialState } from "../../features/authentication/activeSessionLogin/store/reducer";
 import bonusReducer from "../../features/bonus/common/store/reducers";
 import { featuresPersistor } from "../../features/common/store/reducers";
 import {

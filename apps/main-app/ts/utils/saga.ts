@@ -1,6 +1,6 @@
+import * as E from "fp-ts/lib/Either";
 import { put, take } from "typed-redux-saga/macro";
 import { AsyncActionCreator, getType, PayloadAction } from "typesafe-actions";
-import * as E from "fp-ts/lib/Either";
 
 /**
  * Execute an async action dispatching request and wait for the result. If the
@@ -18,7 +18,7 @@ export function* getAsyncResult<T, I>(
   yield* put(action.request(requestInput));
   const successType = getType(action.success);
   const failureType = getType(action.failure);
-  const result = yield* take<PayloadAction<any, T> | PayloadAction<any, Error>>(
+  const result = yield* take<PayloadAction<any, Error> | PayloadAction<any, T>>(
     [successType, failureType]
   );
   if (result.type === successType) {

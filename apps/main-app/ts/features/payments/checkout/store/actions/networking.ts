@@ -1,32 +1,33 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
+
 import { AmountEuroCents } from "../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
 import { NewTransactionRequest } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionRequest";
 import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
+import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { RedirectUrlResponse } from "../../../../../../definitions/pagopa/ecommerce/RedirectUrlResponse";
 import { RequestAuthorizationResponse } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationResponse";
-import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
+import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
+import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
-import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
-import { RedirectUrlResponse } from "../../../../../../definitions/pagopa/ecommerce/RedirectUrlResponse";
 
-type NotFound = { kind: "notFound" };
-
-type CalculateFeeResponseWithOrderId = {
+type CalculateFeeResponseWithOrderId = CalculateFeeResponse & {
   orderId?: string;
-} & CalculateFeeResponse;
+};
 
 type GetPaymentTransactionInfoPayload = {
   transactionId: string;
   walletId?: string;
 };
+
+type NotFound = { kind: "notFound" };
 
 export const paymentsGetPaymentDetailsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_DETAILS_REQUEST",
@@ -61,16 +62,16 @@ export const paymentsGetRecentPaymentMethodUsedAction = createAsyncAction(
 )<undefined, UserLastPaymentMethodResponse, NetworkError>();
 
 type CalculateFeePayload = {
+  idPsp?: string;
   orderId?: string;
   paymentMethodId: string;
-  idPsp?: string;
 };
 
 type GetContextualOnboardingUrlPayload = {
-  paymentMethodId: string;
-  rptId: RptId;
   amount: AmountEuroCents;
   onSuccess?: (redirectUrl: string) => void;
+  paymentMethodId: string;
+  rptId: RptId;
 };
 
 export const paymentsCalculatePaymentFeesAction = createAsyncAction(
@@ -79,7 +80,7 @@ export const paymentsCalculatePaymentFeesAction = createAsyncAction(
   "PAYMENTS_CALCULATE_PAYMENT_FEES_FAILURE",
   "PAYMENTS_CALCULATE_PAYMENT_FEES_CANCEL"
 )<
-  CalculateFeeRequest & CalculateFeePayload,
+  CalculateFeePayload & CalculateFeeRequest,
   CalculateFeeResponseWithOrderId,
   NetworkError | NotFound,
   undefined
@@ -87,8 +88,8 @@ export const paymentsCalculatePaymentFeesAction = createAsyncAction(
 
 export type WalletPaymentCreateTransactionPayload = {
   data: NewTransactionRequest;
-  orderId?: string;
   onError?: () => void;
+  orderId?: string;
 };
 
 export const paymentsCreateTransactionAction = createAsyncAction(
@@ -114,15 +115,15 @@ export const paymentsDeleteTransactionAction = createAsyncAction(
 )<string, undefined, NetworkError>();
 
 export type WalletPaymentAuthorizePayload = {
-  transactionId: string;
-  orderId?: string;
-  walletId?: string;
-  paymentMethodId: string;
-  pspId: string;
   isAllCCP: boolean;
+  orderId?: string;
   paymentAmount: AmountEuroCents;
   paymentFees: AmountEuroCents;
+  paymentMethodId: string;
   paymentMethodManagement?: PaymentMethodManagementTypeEnum;
+  pspId: string;
+  transactionId: string;
+  walletId?: string;
 };
 
 export const paymentsStartPaymentAuthorizationAction = createAsyncAction(
@@ -144,13 +145,13 @@ export const paymentsGetContextualOnboardingUrlAction = createAsyncAction(
 )<GetContextualOnboardingUrlPayload, RedirectUrlResponse, NetworkError>();
 
 export type PaymentsCheckoutNetworkingActions =
-  | ActionType<typeof paymentsGetPaymentDetailsAction>
-  | ActionType<typeof paymentsGetPaymentMethodsAction>
-  | ActionType<typeof paymentsGetPaymentUserMethodsAction>
   | ActionType<typeof paymentsCalculatePaymentFeesAction>
   | ActionType<typeof paymentsCreateTransactionAction>
-  | ActionType<typeof paymentsGetPaymentTransactionInfoAction>
   | ActionType<typeof paymentsDeleteTransactionAction>
+  | ActionType<typeof paymentsGetContextualOnboardingUrlAction>
+  | ActionType<typeof paymentsGetPaymentDetailsAction>
+  | ActionType<typeof paymentsGetPaymentMethodsAction>
+  | ActionType<typeof paymentsGetPaymentTransactionInfoAction>
+  | ActionType<typeof paymentsGetPaymentUserMethodsAction>
   | ActionType<typeof paymentsGetRecentPaymentMethodUsedAction>
-  | ActionType<typeof paymentsStartPaymentAuthorizationAction>
-  | ActionType<typeof paymentsGetContextualOnboardingUrlAction>;
+  | ActionType<typeof paymentsStartPaymentAuthorizationAction>;

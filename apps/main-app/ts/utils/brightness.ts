@@ -14,10 +14,10 @@ const ANDROID_MAX_BRIGHTNESS = 255;
 const DEFAULT_TRANSITION_DURATION = 1500;
 
 type UseMaxBrightnessOptions = {
-  /** Whether to use a smooth transition to the maximum brightness */
-  useSmoothTransition?: boolean;
   /** The duration of the smooth transition */
   transitionDuration?: number;
+  /** Whether to use a smooth transition to the maximum brightness */
+  useSmoothTransition?: boolean;
 };
 
 /**
@@ -51,7 +51,7 @@ export function useMaxBrightness({
 }: UseMaxBrightnessOptions = {}) {
   const currentAppState = useRef<AppStateStatus | null>(null);
   // Store the initial brightness
-  const initialBrightness = useRef<number | null>(null);
+  const initialBrightness = useRef<null | number>(null);
   // Only for Android, store if the app was using auto brightness mode
   const autoBrightness = useRef<boolean | null>(null);
 
@@ -234,7 +234,7 @@ export function useMaxBrightness({
           "change",
           handleAppStateChange
         );
-      } catch (error) {
+      } catch {
         // Ignore
       }
     };

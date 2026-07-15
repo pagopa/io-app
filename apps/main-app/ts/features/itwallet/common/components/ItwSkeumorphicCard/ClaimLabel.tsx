@@ -2,17 +2,18 @@ import {
   IOColors,
   IOFontWeight,
   makeFontStyleObject
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { FunctionComponent, PropsWithChildren, useContext } from "react";
 import { Text, TextStyle, useWindowDimensions } from "react-native";
+
 import { HIDDEN_CLAIM_TEXT } from "../../utils/constants.ts";
 import { CardWidthContext } from "./CardWidthContext";
 
 export type ClaimLabelProps = {
   fontSize?: number;
   fontWeight?: IOFontWeight;
-  textTransform?: TextStyle["textTransform"];
   hidden?: boolean;
+  textTransform?: TextStyle["textTransform"];
 };
 
 /**
@@ -41,12 +42,12 @@ export const ClaimLabel: FunctionComponent<
   return (
     <Text
       {...props}
-      allowFontScaling={false}
-      lineBreakMode="head"
-      numberOfLines={1}
       // This text should not be read by the voiceover.
       // If you want to make it accessible use the parent components
       accessible={false}
+      allowFontScaling={false}
+      lineBreakMode="head"
+      numberOfLines={1}
       style={{
         ...makeFontStyleObject(
           fontSize * fontScale,

@@ -28,6 +28,6 @@ export const itwLifecycleIdentityCheckCompleted = createStandardAction(
 
 /** Type for the wallet lifecycle related actions. */
 export type ItwLifecycleActions =
+  | ActionType<typeof itwLifecycleIdentityCheckCompleted>
   | ActionType<typeof itwLifecycleStoresReset>
-  | ActionType<typeof itwLifecycleWalletReset>
-  | ActionType<typeof itwLifecycleIdentityCheckCompleted>;
+  | ActionType<typeof itwLifecycleWalletReset>;

@@ -1,3 +1,5 @@
+import { Alert, IOColors } from "@io-app/design-system";
+import I18n from "i18next";
 import {
   ComponentProps,
   RefObject,
@@ -5,12 +7,13 @@ import {
   useEffect,
   useRef
 } from "react";
-
 import { AccessibilityInfo, View } from "react-native";
-import { Alert, IOColors } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
+
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
+import { isMixpanelInitializedSelector } from "../../../features/mixpanel/store/selectors";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../store/hooks";
 import {
   isSectionVisibleSelector,
   levelForSectionSelector,
@@ -18,25 +21,22 @@ import {
   SectionStatusKey,
   webUrlForSectionSelector
 } from "../../../store/reducers/backendStatus/sectionStatus";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { getFullLocale } from "../../../utils/locale";
 import { openWebUrl } from "../../../utils/url";
-import { useIOSelector } from "../../../store/hooks";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { isMixpanelInitializedSelector } from "../../../features/mixpanel/store/selectors";
-import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 
 type Props = {
+  onSectionRef?: (ref: RefObject<null | View>) => void;
   sectionKey: SectionStatusKey;
-  onSectionRef?: (ref: RefObject<View | null>) => void;
-  trackingAction?: () => void;
   sticky?: boolean;
+  trackingAction?: () => void;
 };
 
 const statusVariantMap: Record<
   LevelEnum,
   {
-    variant: ComponentProps<typeof Alert>["variant"];
     background: IOColors;
+    variant: ComponentProps<typeof Alert>["variant"];
   }
 > = {
   [LevelEnum.normal]: {
@@ -150,13 +150,13 @@ const ModalSectionStatusComponent = ({
       ]}
     >
       <Alert
-        testID={testId}
-        fullWidth
-        content={message ?? ""}
-        variant={variant}
         action={action}
+        content={message ?? ""}
+        fullWidth
         onPress={onPressCallback}
         ref={viewRef}
+        testID={testId}
+        variant={variant}
       />
     </View>
   );

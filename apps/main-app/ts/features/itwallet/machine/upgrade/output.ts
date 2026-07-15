@@ -6,8 +6,8 @@ export type Output = {
     CredentialMetadata & {
       /** Error message in case of failure retriving the credential */
       failure?: {
-        type: string;
         reason: unknown;
+        type: string;
       };
     }
   >;

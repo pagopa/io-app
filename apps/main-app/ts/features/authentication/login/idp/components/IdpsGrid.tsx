@@ -5,6 +5,13 @@
  */
 
 import {
+  IOSpacingScale,
+  IOVisualCostants,
+  ModuleIDP,
+  VSpacer
+} from "@io-app/design-system";
+import { ComponentProps, FunctionComponent, ReactElement } from "react";
+import {
   FlatList,
   ListRenderItemInfo,
   StyleProp,
@@ -12,20 +19,13 @@ import {
   ViewStyle
 } from "react-native";
 
-import {
-  IOSpacingScale,
-  IOVisualCostants,
-  ModuleIDP,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { ComponentProps, FunctionComponent, ReactElement } from "react";
 import { SpidIdp } from "../../../../../utils/idps";
 
 type OwnProps = {
   contentContainerStyle?: StyleProp<ViewStyle>;
   footerComponent?: ComponentProps<typeof FlatList>["ListFooterComponent"];
-  headerComponentStyle?: StyleProp<ViewStyle>;
   headerComponent?: ComponentProps<typeof FlatList>["ListHeaderComponent"];
+  headerComponentStyle?: StyleProp<ViewStyle>;
   // Array of Identity Provider to show in the grid.
   idps: ReadonlyArray<SpidIdp>;
   // A callback function called when an Identity Provider is selected
@@ -58,11 +58,11 @@ const renderItem =
     return (
       <ModuleIDP
         key={id}
-        name={name}
         logo={{
           light,
           dark
         }}
+        name={name}
         onPress={onPress}
         testID={`idp-${item.id}-button`}
       />
@@ -71,16 +71,16 @@ const renderItem =
 
 const IdpsGrid: FunctionComponent<Props> = (props: Props) => (
   <FlatList
-    testID={props.testID}
-    data={props.idps}
-    numColumns={1}
-    horizontal={false}
-    keyExtractor={keyExtractor}
-    renderItem={renderItem(props)}
-    ItemSeparatorComponent={() => <VSpacer size={GRID_GUTTER} />}
     contentContainerStyle={styles.contentContainer}
-    ListHeaderComponent={props.headerComponent}
+    data={props.idps}
+    horizontal={false}
+    ItemSeparatorComponent={() => <VSpacer size={GRID_GUTTER} />}
+    keyExtractor={keyExtractor}
     ListFooterComponent={props.footerComponent}
+    ListHeaderComponent={props.headerComponent}
+    numColumns={1}
+    renderItem={renderItem(props)}
+    testID={props.testID}
   />
 );
 

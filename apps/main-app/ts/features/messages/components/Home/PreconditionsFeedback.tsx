@@ -1,11 +1,11 @@
 import {
+  BodySmall,
   H3,
   IOPictograms,
-  BodySmall,
   Pictogram,
   useIOTheme,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 const styles = StyleSheet.create({
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
 
 type Props = {
   pictogram: IOPictograms;
-  title: string;
   subtitle?: string;
+  title: string;
 };
 
 export const PreconditionsFeedback = ({
@@ -45,8 +45,8 @@ export const PreconditionsFeedback = ({
         <>
           <VSpacer size={8} />
           <BodySmall
-            style={{ textAlign: "center" }}
             color={theme["textBody-tertiary"]}
+            style={{ textAlign: "center" }}
             weight="Regular"
           >
             {subtitle}

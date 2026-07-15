@@ -1,4 +1,4 @@
-import { useIONewTypeface } from "@pagopa/io-app-design-system";
+import { useIONewTypeface } from "@io-app/design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLayoutEffect } from "react";
 

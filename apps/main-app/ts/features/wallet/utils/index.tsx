@@ -1,6 +1,8 @@
 import { ComponentType } from "react";
+
 import { useIOSelector } from "../../../store/hooks";
 import { GlobalState } from "../../../store/reducers/types";
+import { CdcWalletCard } from "../../bonus/cdc/wallet/components/CdcWalletCard";
 import { CgnWalletCard } from "../../bonus/cgn/components/CgnWalletCard";
 import { IdPayWalletCard } from "../../idpay/wallet/components/IdPayWalletCard";
 import { ItwCredentialWalletCard } from "../../itwallet/wallet/components/ItwCredentialWalletCard";
@@ -9,7 +11,6 @@ import { WalletCardBaseComponent } from "../components/WalletCardBaseComponent";
 import { WalletCardSkeleton } from "../components/WalletCardSkeleton";
 import { shouldRenderWalletCategorySelector } from "../store/selectors";
 import { WalletCard, WalletCardCategoryFilter, WalletCardType } from "../types";
-import { CdcWalletCard } from "../../bonus/cdc/wallet/components/CdcWalletCard";
 
 /**
  * Wallet card component mapper which translates a WalletCardType to a component
@@ -19,7 +20,7 @@ import { CdcWalletCard } from "../../bonus/cdc/wallet/components/CdcWalletCard";
  */
 export const walletCardComponentMapper: Record<
   WalletCardType,
-  WalletCardBaseComponent<any> | undefined
+  undefined | WalletCardBaseComponent<any>
 > = {
   cgn: CgnWalletCard,
   idPay: IdPayWalletCard,
@@ -37,18 +38,15 @@ export const walletCardComponentMapper: Record<
  * @param stacked - Whether the card is stacked or not
  * @returns The rendered card or null if the card is not found
  */
-export const renderWalletCardFn = (
-  card: WalletCard,
-  stacked: boolean = false
-) => {
+export const renderWalletCardFn = (card: WalletCard, stacked = false) => {
   const { key, category, type, ...cardProps } = card;
   const Component = walletCardComponentMapper[type];
   return Component ? (
     <Component
-      key={key}
-      testID={`walletCardTestID_${category}_${type}_${key}`}
       cardProps={cardProps}
       isStacked={stacked}
+      key={key}
+      testID={`walletCardTestID_${category}_${type}_${key}`}
     />
   ) : null;
 };

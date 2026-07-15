@@ -1,7 +1,8 @@
 import { put, select } from "typed-redux-saga/macro";
-import { itwWalletUnitAttestationsSelector } from "../../walletInstance/store/selectors";
-import { itwWalletUnitAttestationsRemoveById } from "../../walletInstance/store/actions";
+
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import { itwWalletUnitAttestationsRemoveById } from "../../walletInstance/store/actions";
+import { itwWalletUnitAttestationsSelector } from "../../walletInstance/store/selectors";
 import { itwCredentialsByTypeSelector } from "../store/selectors";
 
 /**

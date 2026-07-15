@@ -3,8 +3,9 @@ import {
   IOToast,
   IOVisualCostants,
   ListItemNav
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 import {
   ComponentProps,
   useCallback,
@@ -14,22 +15,22 @@ import {
   useState
 } from "react";
 import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
-import I18n from "i18next";
+
 import { UserDataProcessingChoiceEnum } from "../../../../../definitions/identity/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../../../definitions/identity/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import { SettingsParamsList } from "../../common/navigation/params/SettingsParamsList";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing
 } from "../../common/store/actions/userDataProcessing";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { userDataProcessingSelector } from "../../common/store/selectors/userDataProcessing";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { usePrevious } from "../../../../utils/hooks/usePrevious";
-import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 type Props = {
   navigation: IOStackNavigationProp<SettingsParamsList, "PROFILE_PRIVACY_MAIN">;
@@ -45,12 +46,12 @@ const getRequestProcessingAlertSubtitle = () => ({
   DELETE: I18n.t("profile.main.privacy.removeAccount.alert.oldRequestSubtitle")
 });
 
-type PrivacyNavListItem = {
-  value: string;
-} & Pick<
+type PrivacyNavListItem = Pick<
   ComponentProps<typeof ListItemNav>,
-  "description" | "testID" | "onPress" | "topElement"
->;
+  "description" | "onPress" | "testID" | "topElement"
+> & {
+  value: string;
+};
 
 /**
  * A screen to show the main screen of the Privacy section. Here the user can: -
@@ -295,11 +296,11 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
               topElement.badgeProps?.text
             : ""
         }`}
-        value={value}
         description={description}
         onPress={onPress}
-        topElement={topElement}
         testID={testID}
+        topElement={topElement}
+        value={value}
       />
     ),
     []
@@ -312,26 +313,26 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
 
   return (
     <IOScrollViewWithLargeHeader
+      description={I18n.t("profile.main.privacy.subtitle")}
+      headerActionsProp={{ showHelp: true }}
       title={{
         label: I18n.t("profile.main.privacy.title")
       }}
-      description={I18n.t("profile.main.privacy.subtitle")}
-      headerActionsProp={{ showHelp: true }}
     >
       <LoadingSpinnerOverlay
         isLoading={isLoading}
-        loadingOpacity={0.9}
         loadingCaption={I18n.t("profile.main.privacy.loading")}
+        loadingOpacity={0.9}
       >
         <FlatList
-          scrollEnabled={false}
-          data={privacyNavListItems}
-          keyExtractor={extractKey}
-          renderItem={renderPrivacyNavItem}
-          ItemSeparatorComponent={Divider}
           contentContainerStyle={{
             paddingHorizontal: IOVisualCostants.appMarginDefault
           }}
+          data={privacyNavListItems}
+          ItemSeparatorComponent={Divider}
+          keyExtractor={extractKey}
+          renderItem={renderPrivacyNavItem}
+          scrollEnabled={false}
         />
       </LoadingSpinnerOverlay>
     </IOScrollViewWithLargeHeader>

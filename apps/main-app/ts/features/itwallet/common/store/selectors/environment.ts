@@ -1,6 +1,7 @@
-import { createSelector } from "reselect";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
+import { createSelector } from "reselect";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 import { itwCredentialsEidSelector } from "../../../credentials/store/selectors";
 import { itwIsL3EnabledSelector } from "./preferences";

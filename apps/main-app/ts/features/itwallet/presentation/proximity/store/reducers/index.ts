@@ -1,15 +1,16 @@
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
-import createSecureStorage from "../../../../../../store/storages/secureStorage";
+
 import { Action } from "../../../../../../store/actions/types";
+import createSecureStorage from "../../../../../../store/storages/secureStorage";
+import { itwCredentialsRemoveByType } from "../../../../credentials/store/actions";
+import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 import {
   itwGrantProximityConsent,
   itwRevokeProximityConsentByKey,
-  itwRevokeProximityConsentsByRpId,
-  itwRevokeProximityConsentsByCredentialType
+  itwRevokeProximityConsentsByCredentialType,
+  itwRevokeProximityConsentsByRpId
 } from "../actions";
-import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
-import { itwCredentialsRemoveByType } from "../../../../credentials/store/actions";
 import { ConsentData, ProximityConsents } from "../types";
 import { generateConsentKey } from "../utils";
 
@@ -26,6 +27,13 @@ const reducer = (
   action: Action
 ): ItwProximityState => {
   switch (action.type) {
+    case getType(itwCredentialsRemoveByType): {
+      return {
+        ...state,
+        consents: filterConsentsByCredentialType(state.consents, action.payload)
+      };
+    }
+
     case getType(itwGrantProximityConsent): {
       const consentData = action.payload;
       const key = generateConsentKey(consentData);
@@ -44,18 +52,14 @@ const reducer = (
       };
     }
 
+    case getType(itwLifecycleStoresReset):
+      return itwProximityInitialState;
+
     case getType(itwRevokeProximityConsentByKey): {
       const { [action.payload]: _, ...remaining } = state.consents;
       return {
         ...state,
         consents: remaining
-      };
-    }
-
-    case getType(itwRevokeProximityConsentsByRpId): {
-      return {
-        ...state,
-        consents: filterConsentsByRpId(state.consents, action.payload)
       };
     }
 
@@ -66,15 +70,12 @@ const reducer = (
       };
     }
 
-    case getType(itwCredentialsRemoveByType): {
+    case getType(itwRevokeProximityConsentsByRpId): {
       return {
         ...state,
-        consents: filterConsentsByCredentialType(state.consents, action.payload)
+        consents: filterConsentsByRpId(state.consents, action.payload)
       };
     }
-
-    case getType(itwLifecycleStoresReset):
-      return itwProximityInitialState;
 
     default:
       return state;

@@ -1,17 +1,18 @@
 /** Utility functions for working with credential claims. */
 
+import { addPadding } from "@pagopa/io-react-native-jwt";
 import { NonEmptyString, PatternString } from "@pagopa/ts-commons/lib/strings";
 import { differenceInCalendarDays, isValid } from "date-fns";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import * as t from "io-ts";
 import { truncate } from "lodash";
-import I18n from "i18next";
-import { addPadding } from "@pagopa/io-react-native-jwt";
+
 import { Locales } from "../../../../i18n";
 import { JsonFromString } from "./ItwCodecUtils";
-import { ParsedCredential, CredentialMetadata } from "./itwTypesUtils";
+import { CredentialMetadata, ParsedCredential } from "./itwTypesUtils";
 
 /** CLAIMS MANIPULATION UTILS */
 
@@ -21,44 +22,49 @@ import { ParsedCredential, CredentialMetadata } from "./itwTypesUtils";
  */
 export enum WellKnownClaim {
   /**
-   * Unique ID must be excluded from every credential and should not rendered in
-   * the claims list
+   * Claim used to display the attachments of a credential (currently used for
+   * the European Health Insurance Card)
    */
-  unique_id = "unique_id",
+  content = "content",
+  date_of_expiry = "date_of_expiry",
+  /** Claims that contains the document number, if applicable for the credential */
+  document_number = "document_number",
+  /** Claim that contains the driving privilege within the new nested structure */
+  driving_privileges = "driving_privileges",
   /**
    * Claim used to extract expiry date from a credential. This is used to
    * display how many days are left for the credential expiration or to know if
    * the credential is expired
    */
   expiry_date = "expiry_date",
-  date_of_expiry = "date_of_expiry",
+  /** Claim that contains the family name, if applicable for the credential */
+  family_name = "family_name",
+  /** Claim that contains the first name, if applicable for the credential */
+  given_name = "given_name",
   /**
    * Claim used to display a QR Code for the Disability Card. It must be
    * excluded from the common claims list and rendered using a
    * {@link QRCodeImage} (currently used for the European Disability Card)
    */
   link_qr_code = "link_qr_code",
-  /**
-   * Claim used to display the attachments of a credential (currently used for
-   * the European Health Insurance Card)
-   */
-  content = "content",
+  /** Claim that contains the portrait image */
+  portrait = "portrait",
   /**
    * Claim that contains the fiscal code, used for checks based on the user's
    * identity.
    */
   tax_id_code = "tax_id_code",
-  /** Claims that contains the document number, if applicable for the credential */
-  document_number = "document_number",
-  /** Claim that contains the first name, if applicable for the credential */
-  given_name = "given_name",
-  /** Claim that contains the family name, if applicable for the credential */
-  family_name = "family_name",
-  /** Claim that contains the portrait image */
-  portrait = "portrait",
-  /** Claim that contains the driving privilege within the new nested structure */
-  driving_privileges = "driving_privileges"
+  /**
+   * Unique ID must be excluded from every credential and should not rendered in
+   * the claims list
+   */
+  unique_id = "unique_id"
 }
+
+/** Union type for claim display format, either flat or nested */
+export type ClaimDisplayFormat =
+  | FlatClaimDisplayFormat
+  | NestedArrayClaimDisplayFormat;
 
 /** Type for disclosable claims. */
 export type DisclosureClaim = {
@@ -79,11 +85,6 @@ export type NestedArrayClaimDisplayFormat = {
   label: string;
   value: Array<ParsedCredential>;
 };
-
-/** Union type for claim display format, either flat or nested */
-export type ClaimDisplayFormat =
-  | FlatClaimDisplayFormat
-  | NestedArrayClaimDisplayFormat;
 
 /**
  * Parses the claims from the credential, including nested claims. For each
@@ -132,6 +133,15 @@ export const SimpleDateFormat = {
   DDMMYY: "DD/MM/YY"
 } as const;
 
+/**
+ * Enum for the claims locales. This is used to get the correct locale for the
+ * claims. Currently the only supported locales are it-IT and en-US.
+ */
+export enum ClaimsLocales {
+  en = "en-US",
+  it = "it-IT"
+}
+
 export type SimpleDateFormat =
   (typeof SimpleDateFormat)[keyof typeof SimpleDateFormat];
 
@@ -146,14 +156,38 @@ export type SimpleDateFormat =
  * @property day - The day (1-31)
  */
 export class SimpleDate {
-  private year: number;
-  private month: number;
   private day: number;
+  private month: number;
+  private year: number;
 
   constructor(year: number, month: number, day: number) {
     this.year = year;
     this.month = month;
     this.day = day;
+  }
+
+  /** Returns the day (1-31) */
+  getDate(): number {
+    return this.day;
+  }
+
+  /** Returns the year */
+  getFullYear(): number {
+    return this.year;
+  }
+
+  /** Returns the month (0-11) */
+  getMonth(): number {
+    return this.month;
+  }
+
+  /** Returns a Date object */
+  toDate(): Date {
+    return new Date(this.year, this.month, this.day);
+  }
+
+  toDateWithoutTimezone(): Date {
+    return new Date(Date.UTC(this.year, this.month, this.day));
   }
 
   /** Returns a string in the format specified by the format parameter */
@@ -167,39 +201,6 @@ export class SimpleDate {
       .replace("YYYY", yearString)
       .replace("YY", yearString.slice(-2));
   }
-
-  /** Returns a Date object */
-  toDate(): Date {
-    return new Date(this.year, this.month, this.day);
-  }
-
-  toDateWithoutTimezone(): Date {
-    return new Date(Date.UTC(this.year, this.month, this.day));
-  }
-
-  /** Returns the year */
-  getFullYear(): number {
-    return this.year;
-  }
-
-  /** Returns the month (0-11) */
-  getMonth(): number {
-    return this.month;
-  }
-
-  /** Returns the day (1-31) */
-  getDate(): number {
-    return this.day;
-  }
-}
-
-/**
- * Enum for the claims locales. This is used to get the correct locale for the
- * claims. Currently the only supported locales are it-IT and en-US.
- */
-export enum ClaimsLocales {
-  it = "it-IT",
-  en = "en-US"
 }
 
 /**
@@ -207,8 +208,8 @@ export enum ClaimsLocales {
  * en-US and it to it-IT.
  */
 const localeToClaimsLocales = new Map<Locales, ClaimsLocales>([
-  ["it", ClaimsLocales.it],
-  ["en", ClaimsLocales.en]
+  ["en", ClaimsLocales.en],
+  ["it", ClaimsLocales.it]
 ]);
 
 /**
@@ -347,7 +348,7 @@ const DrivingPrivilegesFromFlatRaw = new t.Type<
           restrictions_conditions: null
         }))
       );
-    } catch (e) {
+    } catch {
       return t.failure(input, c);
     }
   },
@@ -414,7 +415,7 @@ export const DrivingPrivilegesFromRaw = new t.Type<
             item.codes?.value.map(({ code }) => code.value).join(", ") ?? null
         }))
       );
-    } catch (e) {
+    } catch {
       return t.failure(input, c);
     }
   },
@@ -667,13 +668,12 @@ export const getFamilyNameFromCredential = (
   );
 
 type ClaimDisplayValue =
-  | { renderAs: "text"; value: string }
-  | { renderAs: "list"; value: Array<string> }
-  | { renderAs: "image"; value: string }
   | {
       renderAs: "drivingPrivileges";
       value: Array<DrivingPrivilegeClaimType>;
     }
+  | { renderAs: "image"; value: string }
+  | { renderAs: "list"; value: Array<string> }
   | {
       renderAs: "nestedObject";
       value: Array<ClaimDisplayFormat>;
@@ -681,7 +681,8 @@ type ClaimDisplayValue =
   | {
       renderAs: "nestedObjectArray";
       value: Array<Array<ClaimDisplayFormat>>;
-    };
+    }
+  | { renderAs: "text"; value: string };
 
 /**
  * Converts a driving privilege claim into a list of displayable claims. This is

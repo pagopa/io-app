@@ -3,7 +3,7 @@ import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 
 const defaultActiveOpacity = 1.0;
 export type TouchableDefaultOpacityProps = ComponentPropsWithRef<
-  typeof TouchableOpacity & TouchableOpacityProps
+  TouchableOpacityProps & typeof TouchableOpacity
 >;
 /**
  * Return TouchableOpacity component where the activeOpacity is 1.0 by default

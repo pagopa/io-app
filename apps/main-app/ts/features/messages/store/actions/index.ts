@@ -4,14 +4,15 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { UIMessage, UIMessageDetails } from "../../types";
 import { MessageListCategory } from "../../types/messageListCategory";
+import { MessagePaymentError } from "../../types/paymentErrors";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
-import { MessagePaymentError } from "../../types/paymentErrors";
 import {
   interruptMessageArchivingProcessingAction,
   removeScheduledMessageArchivingAction,
@@ -30,16 +31,16 @@ import {
 } from "./preconditions";
 
 export type RequestGetMessageDataActionType = {
-  messageId: string;
   fromPushNotification: boolean;
+  messageId: string;
 };
 
 export type SuccessGetMessageDataActionType = {
   containsAttachments: boolean;
   containsPayment?: boolean;
   createdAt: Date;
-  fciMessageType: "request" | "result" | "not_set";
-  fciResult: "success" | "failure" | "not_set";
+  fciMessageType: "not_set" | "request" | "result";
+  fciResult: "failure" | "not_set" | "success";
   firstTimeOpening: boolean;
   hasFIMSCTA: boolean;
   hasRemoteContent: boolean;
@@ -74,8 +75,8 @@ export const loadThirdPartyMessage = createAsyncAction(
   "THIRD_PARTY_MESSAGE_LOAD_FAILURE"
 )<
   { id: string; serviceId: ServiceId; tag: string },
-  { id: string; content: ThirdPartyMessageUnion },
-  { id: string; error: Error }
+  { content: ThirdPartyMessageUnion; id: string },
+  { error: Error; id: string }
 >();
 
 export const resetGetMessageDataAction = createAction(
@@ -95,7 +96,7 @@ export const loadMessageById = createAsyncAction(
 )<
   { id: string },
   UIMessage,
-  { id: string; error: Error; kind: LoadMessageByIdFailureKind }
+  { error: Error; id: string; kind: LoadMessageByIdFailureKind }
 >();
 
 /** Load a single message's details given its ID */
@@ -103,9 +104,14 @@ export const loadMessageDetails = createAsyncAction(
   "MESSAGE_DETAILS_LOAD_REQUEST",
   "MESSAGE_DETAILS_LOAD_SUCCESS",
   "MESSAGE_DETAILS_LOAD_FAILURE"
-)<{ id: string }, UIMessageDetails, { id: string; error: Error }>();
+)<{ id: string }, UIMessageDetails, { error: Error; id: string }>();
 
-type Filter = { getArchived?: boolean };
+export type LoadMessagesRequestPayload = {
+  cursor?: string;
+  filter: Filter;
+  fromUserAction: boolean;
+  pageSize: number;
+};
 
 // generic error used by all pagination actions
 export type MessagesFailurePayload = {
@@ -113,23 +119,18 @@ export type MessagesFailurePayload = {
   filter: Filter;
 };
 
-export type LoadMessagesRequestPayload = {
-  pageSize: number;
-  cursor?: string;
-  filter: Filter;
-  fromUserAction: boolean;
-};
-
-type PaginatedMessagesSuccessPayload = {
-  messages: ReadonlyArray<UIMessage>;
-  filter: Filter;
-  fromUserAction: boolean;
-};
-
 // The data is appended to the state
 export type NextPageMessagesSuccessPayload = PaginatedMessagesSuccessPayload & {
-  pagination: { next?: string };
   filter: Filter;
+  pagination: { next?: string };
+};
+
+type Filter = { getArchived?: boolean };
+
+type PaginatedMessagesSuccessPayload = {
+  filter: Filter;
+  fromUserAction: boolean;
+  messages: ReadonlyArray<UIMessage>;
 };
 
 export const loadNextPageMessages = createAsyncAction(
@@ -145,8 +146,8 @@ export const loadNextPageMessages = createAsyncAction(
 // The data is prepended to the state
 export type PreviousPageMessagesSuccessPayload =
   PaginatedMessagesSuccessPayload & {
-    pagination: { previous?: string };
     filter: Filter;
+    pagination: { previous?: string };
   };
 
 export const loadPreviousPageMessages = createAsyncAction(
@@ -161,7 +162,7 @@ export const loadPreviousPageMessages = createAsyncAction(
 
 // Forces a refresh of the internal state
 export type ReloadMessagesPayload = PaginatedMessagesSuccessPayload & {
-  pagination: { previous?: string; next?: string };
+  pagination: { next?: string; previous?: string };
 };
 
 export const reloadAllMessages = createAsyncAction(
@@ -169,7 +170,7 @@ export const reloadAllMessages = createAsyncAction(
   "MESSAGES_RELOAD_SUCCESS",
   "MESSAGES_RELOAD_FAILURE"
 )<
-  Pick<LoadMessagesRequestPayload, "pageSize" | "filter" | "fromUserAction">,
+  Pick<LoadMessagesRequestPayload, "filter" | "fromUserAction" | "pageSize">,
   ReloadMessagesPayload,
   MessagesFailurePayload
 >();
@@ -177,9 +178,9 @@ export const reloadAllMessages = createAsyncAction(
 export type UpsertMessageStatusAttributesPayload = {
   message: UIMessage;
   update:
-    | { tag: "archiving"; isArchived: boolean }
-    | { tag: "reading" }
-    | { tag: "bulk"; isArchived: boolean };
+    | { isArchived: boolean; tag: "archiving" }
+    | { isArchived: boolean; tag: "bulk" }
+    | { tag: "reading" };
 };
 
 export const upsertMessageStatusAttributes = createAsyncAction(
@@ -192,17 +193,9 @@ export const upsertMessageStatusAttributes = createAsyncAction(
   { error: Error; payload: UpsertMessageStatusAttributesPayload }
 >();
 
-export type DownloadAttachmentRequest = {
+export type DownloadAttachmentCancel = {
   attachment: ThirdPartyAttachment;
   messageId: string;
-  skipMixpanelTrackingOnFailure: boolean;
-  serviceId: ServiceId;
-};
-
-export type DownloadAttachmentSuccess = {
-  attachment: ThirdPartyAttachment;
-  messageId: string;
-  path: string;
 };
 
 export type DownloadAttachmentError = {
@@ -211,9 +204,17 @@ export type DownloadAttachmentError = {
   messageId: string;
 };
 
-export type DownloadAttachmentCancel = {
+export type DownloadAttachmentRequest = {
   attachment: ThirdPartyAttachment;
   messageId: string;
+  serviceId: ServiceId;
+  skipMixpanelTrackingOnFailure: boolean;
+};
+
+export type DownloadAttachmentSuccess = {
+  attachment: ThirdPartyAttachment;
+  messageId: string;
+  path: string;
 };
 
 /** The user requests an attachment download. */
@@ -242,6 +243,13 @@ export const removeCachedAttachment = createStandardAction(
   "REMOVE_CACHED_ATTACHMENT"
 )<DownloadAttachmentSuccess>();
 
+export type UpdatePaymentForMessageFailure = {
+  messageId: string;
+  paymentId: string;
+  reason: MessagePaymentError;
+  serviceId: ServiceId;
+};
+
 export type UpdatePaymentForMessageRequest = {
   messageId: string;
   paymentId: string;
@@ -250,15 +258,8 @@ export type UpdatePaymentForMessageRequest = {
 
 export type UpdatePaymentForMessageSuccess = {
   messageId: string;
-  paymentId: string;
   paymentData: PaymentInfoResponse;
-  serviceId: ServiceId;
-};
-
-export type UpdatePaymentForMessageFailure = {
-  messageId: string;
   paymentId: string;
-  reason: MessagePaymentError;
   serviceId: ServiceId;
 };
 
@@ -300,38 +301,38 @@ export const setMessageSagasRegisteredAction = createStandardAction(
 )();
 
 export type MessagesActions = ActionType<
-  | typeof reloadAllMessages
+  | typeof addUserSelectedPaymentRptId
+  | typeof cancelGetMessageDataAction
+  | typeof cancelPaymentStatusTracking
+  | typeof cancelPreviousAttachmentDownload
+  | typeof cancelQueuedPaymentUpdates
+  | typeof clearRequestedAttachmentDownload
+  | typeof downloadAttachment
+  | typeof errorPreconditionStatusAction
+  | typeof getMessageDataAction
+  | typeof idlePreconditionStatusAction
+  | typeof interruptMessageArchivingProcessingAction
+  | typeof loadingContentPreconditionStatusAction
+  | typeof loadMessageById
+  | typeof loadMessageDetails
   | typeof loadNextPageMessages
   | typeof loadPreviousPageMessages
-  | typeof loadMessageDetails
-  | typeof upsertMessageStatusAttributes
-  | typeof loadMessageById
   | typeof loadThirdPartyMessage
-  | typeof downloadAttachment
-  | typeof cancelPreviousAttachmentDownload
-  | typeof clearRequestedAttachmentDownload
+  | typeof reloadAllMessages
   | typeof removeCachedAttachment
-  | typeof errorPreconditionStatusAction
-  | typeof idlePreconditionStatusAction
-  | typeof loadingContentPreconditionStatusAction
+  | typeof removeScheduledMessageArchivingAction
+  | typeof requestAutomaticMessagesRefresh
+  | typeof resetGetMessageDataAction
+  | typeof resetMessageArchivingAction
   | typeof retrievingDataPreconditionStatusAction
   | typeof scheduledPreconditionStatusAction
-  | typeof shownPreconditionStatusAction
-  | typeof updateRequiredPreconditionStatusAction
-  | typeof getMessageDataAction
-  | typeof cancelGetMessageDataAction
-  | typeof resetGetMessageDataAction
-  | typeof updatePaymentForMessage
-  | typeof cancelQueuedPaymentUpdates
-  | typeof addUserSelectedPaymentRptId
-  | typeof setShownMessageCategoryAction
-  | typeof toggleScheduledMessageArchivingAction
-  | typeof resetMessageArchivingAction
-  | typeof startProcessingMessageArchivingAction
-  | typeof removeScheduledMessageArchivingAction
-  | typeof interruptMessageArchivingProcessingAction
-  | typeof requestAutomaticMessagesRefresh
-  | typeof startPaymentStatusTracking
-  | typeof cancelPaymentStatusTracking
   | typeof setMessageSagasRegisteredAction
+  | typeof setShownMessageCategoryAction
+  | typeof shownPreconditionStatusAction
+  | typeof startPaymentStatusTracking
+  | typeof startProcessingMessageArchivingAction
+  | typeof toggleScheduledMessageArchivingAction
+  | typeof updatePaymentForMessage
+  | typeof updateRequiredPreconditionStatusAction
+  | typeof upsertMessageStatusAttributes
 >;

@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
 import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
 } from "../../../actions";
-import { reduceUpsertMessageStatusAttributes } from "../upsertMessageStatusAttributes";
 import { AllPaginated } from "../types";
+import { reduceUpsertMessageStatusAttributes } from "../upsertMessageStatusAttributes";
 
 const baseState: AllPaginated = {
   inbox: {

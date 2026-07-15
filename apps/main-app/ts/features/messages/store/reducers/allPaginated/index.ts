@@ -1,5 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+
+import type {
+  AllPaginated,
+  Collection,
+  LastRequestValues,
+  MessagePage,
+  MessagePagePot
+} from "./types.ts";
+
 import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory.ts";
 import { Action } from "../../../../../store/actions/types";
 import { paymentsByRptIdSelector } from "../../../../../store/reducers/entities/payments";
@@ -24,13 +33,6 @@ import { reduceAutomaticMessageRefreshRequest } from "./automaticMessagesRefresh
 import { reduceLoadNextPage } from "./loadNextPage.ts";
 import { reduceLoadPreviousPage } from "./loadPreviousPage.ts";
 import { reduceReloadAll } from "./reloadAll.ts";
-import type {
-  AllPaginated,
-  Collection,
-  LastRequestValues,
-  MessagePage,
-  MessagePagePot
-} from "./types.ts";
 import { reduceUpsertMessageStatusAttributes } from "./upsertMessageStatusAttributes.ts";
 const ALL_PAGINATED_INITIAL_STATE: AllPaginated = {
   archive: {
@@ -52,39 +54,39 @@ const reducer = (
   action: Action
 ): AllPaginated => {
   switch (action.type) {
-    case getType(setShownMessageCategoryAction):
-      return {
-        ...state,
-        shownCategory: action.payload
-      };
-    case getType(reloadAllMessages.request):
-    case getType(reloadAllMessages.success):
-    case getType(reloadAllMessages.failure):
-      return reduceReloadAll(state, action);
-
-    case getType(loadNextPageMessages.request):
-    case getType(loadNextPageMessages.success):
-    case getType(loadNextPageMessages.failure):
-      return reduceLoadNextPage(state, action);
-
-    case getType(loadPreviousPageMessages.request):
-    case getType(loadPreviousPageMessages.success):
-    case getType(loadPreviousPageMessages.failure):
-      return reduceLoadPreviousPage(state, action);
-
-    case getType(upsertMessageStatusAttributes.request):
-    case getType(upsertMessageStatusAttributes.success):
-    case getType(upsertMessageStatusAttributes.failure):
-      return reduceUpsertMessageStatusAttributes(state, action);
-
-    case getType(requestAutomaticMessagesRefresh):
-      return reduceAutomaticMessageRefreshRequest(state, action);
-
     case getType(clearCache):
       return {
         ...ALL_PAGINATED_INITIAL_STATE,
         shownCategory: state.shownCategory
       };
+    case getType(loadNextPageMessages.failure):
+    case getType(loadNextPageMessages.request):
+    case getType(loadNextPageMessages.success):
+      return reduceLoadNextPage(state, action);
+
+    case getType(loadPreviousPageMessages.failure):
+    case getType(loadPreviousPageMessages.request):
+    case getType(loadPreviousPageMessages.success):
+      return reduceLoadPreviousPage(state, action);
+
+    case getType(reloadAllMessages.failure):
+    case getType(reloadAllMessages.request):
+    case getType(reloadAllMessages.success):
+      return reduceReloadAll(state, action);
+
+    case getType(requestAutomaticMessagesRefresh):
+      return reduceAutomaticMessageRefreshRequest(state, action);
+    case getType(setShownMessageCategoryAction):
+      return {
+        ...state,
+        shownCategory: action.payload
+      };
+    case getType(upsertMessageStatusAttributes.failure):
+
+    case getType(upsertMessageStatusAttributes.request):
+
+    case getType(upsertMessageStatusAttributes.success):
+      return reduceUpsertMessageStatusAttributes(state, action);
 
     default:
       return state;
@@ -137,7 +139,7 @@ export const messageCountForCategorySelector = (
 export const emptyListReasonSelector = (
   state: GlobalState,
   category: MessageListCategory
-): "noData" | "error" | "notEmpty" => {
+): "error" | "noData" | "notEmpty" => {
   const categoryPot = messagePagePotFromCategorySelector(category, state);
   if (pot.isSome(categoryPot)) {
     return reasonFromMessagePageContainer(categoryPot.value);
@@ -217,10 +219,10 @@ const messageCollectionFromCategory = (
 ) => {
   const allPaginated = state.entities.messages.allPaginated;
   switch (category) {
-    case "INBOX":
-      return allPaginated.inbox;
     case "ARCHIVE":
       return allPaginated.archive;
+    case "INBOX":
+      return allPaginated.inbox;
   }
 };
 

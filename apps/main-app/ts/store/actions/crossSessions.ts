@@ -3,8 +3,8 @@
  * across multiple users sessions
  */
 
-import { ActionType, createStandardAction } from "typesafe-actions";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
+import { ActionType, createStandardAction } from "typesafe-actions";
 
 type DifferentProfileLoggedInType = {
   isNewInstall: boolean;
@@ -23,5 +23,5 @@ export const differentProfileLoggedIn = createStandardAction(
 )<DifferentProfileLoggedInType | void>();
 
 export type CrossSessionsActions =
-  | ActionType<typeof setProfileHashedFiscalCode>
-  | ActionType<typeof differentProfileLoggedIn>;
+  | ActionType<typeof differentProfileLoggedIn>
+  | ActionType<typeof setProfileHashedFiscalCode>;

@@ -1,10 +1,11 @@
 import { type IntegrityError } from "@pagopa/io-react-native-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
+
+import { WithCredentialMetadata } from "../../common/utils/ItwFailureTypes.ts";
 import {
   isAssertionGenerationError,
   isFederationError
 } from "../../common/utils/itwFailureUtils.ts";
-import { WithCredentialMetadata } from "../../common/utils/ItwFailureTypes.ts";
 import { CredentialIssuanceEvents } from "./events";
 
 const {
@@ -14,39 +15,39 @@ const {
 } = Errors;
 
 export enum CredentialIssuanceFailureType {
-  UNEXPECTED = "UNEXPECTED",
+  HARDWARE_KEY_INVALID = "HARDWARE_KEY_INVALID",
   INVALID_STATUS = "INVALID_STATUS",
   ISSUER_GENERIC = "ISSUER_GENERIC",
+  UNEXPECTED = "UNEXPECTED",
   UNTRUSTED_ISS = "UNTRUSTED_ISS",
-  WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC",
-  HARDWARE_KEY_INVALID = "HARDWARE_KEY_INVALID"
+  WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC"
 }
-
-/**
- * Type that maps known reasons with the corresponding failure, in order to
- * avoid unknowns as much as possible.
- */
-export type ReasonTypeByFailure = {
-  [CredentialIssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
-  [CredentialIssuanceFailureType.INVALID_STATUS]: WithCredentialMetadata<Errors.IssuerResponseError>;
-  [CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
-  [CredentialIssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
-  [CredentialIssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
-  [CredentialIssuanceFailureType.UNEXPECTED]: unknown;
-};
-
-type TypedCredentialIssuanceFailures = {
-  [K in CredentialIssuanceFailureType]: {
-    type: K;
-    reason?: ReasonTypeByFailure[K];
-  };
-};
 
 /*
  * Union type of failures with the reason properly typed.
  */
 export type CredentialIssuanceFailure =
   TypedCredentialIssuanceFailures[keyof TypedCredentialIssuanceFailures];
+
+/**
+ * Type that maps known reasons with the corresponding failure, in order to
+ * avoid unknowns as much as possible.
+ */
+export type ReasonTypeByFailure = {
+  [CredentialIssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
+  [CredentialIssuanceFailureType.INVALID_STATUS]: WithCredentialMetadata<Errors.IssuerResponseError>;
+  [CredentialIssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
+  [CredentialIssuanceFailureType.UNEXPECTED]: unknown;
+  [CredentialIssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
+  [CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
+};
+
+type TypedCredentialIssuanceFailures = {
+  [K in CredentialIssuanceFailureType]: {
+    reason?: ReasonTypeByFailure[K];
+    type: K;
+  };
+};
 
 /**
  * Maps an event dispatched by the credential issuance machine to a failure

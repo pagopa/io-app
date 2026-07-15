@@ -3,8 +3,9 @@ import {
   IOSkeleton,
   ListItemTransaction,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { View } from "react-native";
+
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { formatAmountText } from "../utils";
@@ -29,15 +30,15 @@ export const ReceiptCartList = ({ carts, loading, onPress }: Props) => {
       {carts.map((cartItem, index) => (
         <ListItemTransaction
           key={`${cartItem.refNumberValue}${index}`}
-          title={cartItem.subject ?? ""}
+          onPress={() => onPress(cartItem)}
+          showChevron
           subtitle={cartItem.payee?.name ?? ""}
+          title={cartItem.subject ?? ""}
           transaction={{
             amount: formatAmountText(cartItem.amount),
             amountAccessibilityLabel:
               getAccessibleAmountText(formatAmountText(cartItem.amount)) ?? ""
           }}
-          showChevron
-          onPress={() => onPress(cartItem)}
         />
       ))}
     </>
@@ -46,23 +47,23 @@ export const ReceiptCartList = ({ carts, loading, onPress }: Props) => {
 
 const SkeletonTransactionDetailsList = () => (
   <View
-    testID="skeleton-transaction-details-list"
     style={{
       flex: 1,
       alignItems: "center",
       flexDirection: "row",
       justifyContent: "space-between"
     }}
+    testID="skeleton-transaction-details-list"
   >
     <View style={{ paddingVertical: 12 }}>
       <VStack space={8} style={{ flex: 1 }}>
-        <IOSkeleton shape="rectangle" width="90%" height={16} radius={4} />
-        <IOSkeleton shape="rectangle" width="30%" height={16} radius={4} />
+        <IOSkeleton height={16} radius={4} shape="rectangle" width="90%" />
+        <IOSkeleton height={16} radius={4} shape="rectangle" width="30%" />
       </VStack>
     </View>
     <HStack space={16} style={{ alignItems: "center" }}>
-      <IOSkeleton shape="rectangle" width={48} height={16} radius={4} />
-      <IOSkeleton shape="square" size={16} radius={4} />
+      <IOSkeleton height={16} radius={4} shape="rectangle" width={48} />
+      <IOSkeleton radius={4} shape="square" size={16} />
     </HStack>
   </View>
 );

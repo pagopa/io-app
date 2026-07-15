@@ -1,8 +1,8 @@
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { StateFrom } from "xstate";
-import { ItwTags } from "../tags";
+
 import { CredentialFormat } from "../../common/utils/itwTypesUtils";
+import { ItwTags } from "../tags";
 import { ItwCredentialIssuanceMachine } from "./machine";
 
 type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;
@@ -47,24 +47,6 @@ export const selectCredentialOption = (snapshot: MachineSnapshot) => {
 
 export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
-
-/**
- * Select the optional introduction content from the catalogue. The content is
- * set by the Authentic Source and is a markdown text with additional
- * information on the credential.
- *
- * @returns The optional content as Option
- */
-export const selectCredentialIntroContentOption = ({
-  context
-}: MachineSnapshot) =>
-  pipe(
-    O.fromNullable(context.credentialType),
-    O.chainNullableK(type => context.credentialsCatalogue?.[type]),
-    O.chainNullableK(
-      metadata => metadata.authentic_sources[0]?.user_information
-    )
-  );
 
 export const selectResolvedCredentialOfferOption = (
   snapshot: MachineSnapshot

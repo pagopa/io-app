@@ -6,14 +6,14 @@ import { WalletPaymentOutcomeEnum } from "../../checkout/types/PaymentOutcomeEnu
 import { WalletPaymentFailure } from "../../checkout/types/WalletPaymentFailure";
 
 export type PaymentHistory = {
-  startOrigin?: PaymentStartOrigin;
+  attempt?: number;
+  failure?: WalletPaymentFailure;
+  lookupId?: string;
+  outcome?: WalletPaymentOutcomeEnum;
   rptId?: RptId;
   startedAt?: Date;
-  lookupId?: string;
-  verifiedData?: PaymentRequestsGetResponse;
-  transaction?: NewTransactionResponse;
-  outcome?: WalletPaymentOutcomeEnum;
-  failure?: WalletPaymentFailure;
+  startOrigin?: PaymentStartOrigin;
   success?: true;
-  attempt?: number;
+  transaction?: NewTransactionResponse;
+  verifiedData?: PaymentRequestsGetResponse;
 };

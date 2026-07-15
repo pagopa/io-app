@@ -1,9 +1,10 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+
+import { DiscountCodeTypeEnum } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
 import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
-import { mixAndSortMerchants } from "../merchants";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
-import { DiscountCodeTypeEnum } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
+import { mixAndSortMerchants } from "../merchants";
 
 describe("mixAndSortMerchants", () => {
   const onlineMerchants: OnlineMerchants["items"] = [

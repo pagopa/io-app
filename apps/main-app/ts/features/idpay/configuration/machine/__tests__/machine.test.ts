@@ -1,6 +1,7 @@
 import { waitFor } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { createActor, fromCallback, fromPromise } from "xstate";
+
 import {
   CheckIbanStatusEnum,
   IbanDTO
@@ -19,16 +20,15 @@ import { TypeEnum } from "../../../../../../definitions/pagopa/Wallet";
 import { Wallet } from "../../../../../types/pagopa";
 import { IdPayTags } from "../../../common/machine/tags";
 import { ConfigurationMode } from "../../types";
+import { InitiativeFailureType } from "../../types/failure";
 import { Context, InitialContext } from "../context";
 import { IdPayConfigurationEvents } from "../events";
 import { idPayConfigurationMachine } from "../machine";
-import { InitiativeFailureType } from "../../types/failure";
 
-export const T_INITIATIVE_ID = "123456";
-export const T_IBAN = "IT60X0542811101000000123456";
-export const T_INSTRUMENT_ID = "123456";
+const T_INITIATIVE_ID = "123456";
+const T_IBAN = "IT60X0542811101000000123456";
 
-export const T_WALLET: Wallet = {
+const T_WALLET: Wallet = {
   idWallet: 123,
   type: TypeEnum.CREDIT_CARD,
   favourite: false,
@@ -42,27 +42,27 @@ export const T_WALLET: Wallet = {
   saved: true
 };
 
-export const T_INSTRUMENT_DTO: InstrumentDTO = {
+const T_INSTRUMENT_DTO: InstrumentDTO = {
   instrumentId: "1234",
   idWallet: "12345",
   instrumentType: InstrumentTypeEnum.CARD
 };
 
-export const T_NOT_REFUNDABLE_INITIATIVE_DTO = {
+const T_NOT_REFUNDABLE_INITIATIVE_DTO = {
   initiativeId: T_INITIATIVE_ID,
   status: StatusEnum.NOT_REFUNDABLE,
   voucherEndDate: new Date("2023-01-25T13:00:25.477Z"),
   nInstr: 1
 } as InitiativeDTO;
 
-export const T_REFUNDABLE_INITIATIVE_DTO = {
+const T_REFUNDABLE_INITIATIVE_DTO = {
   initiativeId: T_INITIATIVE_ID,
   status: StatusEnum.REFUNDABLE,
   voucherEndDate: new Date("2023-01-25T13:00:25.477Z"),
   nInstr: 1
 } as InitiativeDTO;
 
-export const T_IBAN_LIST = [
+const T_IBAN_LIST = [
   {
     channel: "IO",
     checkIbanStatus: CheckIbanStatusEnum.OK,
@@ -71,7 +71,7 @@ export const T_IBAN_LIST = [
   }
 ] as IbanListDTO["ibanList"];
 
-export const T_PAGOPA_INSTRUMENTS = [T_WALLET];
+const T_PAGOPA_INSTRUMENTS = [T_WALLET];
 
 const T_IBAN_ENROLL: IbanDTO = {
   channel: "IO",
@@ -119,7 +119,7 @@ describe("IDPay configuration machine", () => {
       getIbanList: fromPromise<IbanListDTO>(getIbanList),
       enrollIban: fromPromise<
         undefined,
-        { initiativeId: string; iban: IbanDTO | IbanPutDTO }
+        { iban: IbanDTO | IbanPutDTO; initiativeId: string }
       >(enrollIban),
       getWalletInstruments:
         fromPromise<ReadonlyArray<Wallet>>(getWalletInstruments),

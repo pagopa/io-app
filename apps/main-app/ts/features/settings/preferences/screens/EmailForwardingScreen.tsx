@@ -1,11 +1,12 @@
 /** A screens to express the preferences related to email forwarding. */
-import { ListItemSwitch, useIOToast } from "@pagopa/io-app-design-system";
+import { ListItemSwitch, useIOToast } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import _ from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { customEmailChannelSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -113,19 +114,19 @@ const EmailForwardingScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      includeContentMargins
-      title={{ label: I18n.t("send_email_messages.title") }}
+      canGoback={true}
+      contextualHelpMarkdown={contextualHelpMarkdown}
       description={description}
       headerActionsProp={{ showHelp: true }}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      canGoback={true}
+      includeContentMargins
+      title={{ label: I18n.t("send_email_messages.title") }}
     >
       <ListItemSwitch
-        label={I18n.t("send_email_messages.switch.title")}
         description={I18n.t("send_email_messages.switch.subtitle")}
+        isLoading={isLoading}
+        label={I18n.t("send_email_messages.switch.title")}
         onSwitchValueChange={handleSwitchValueChange}
         value={isEmailEnabled}
-        isLoading={isLoading}
       />
     </IOScrollViewWithLargeHeader>
   );

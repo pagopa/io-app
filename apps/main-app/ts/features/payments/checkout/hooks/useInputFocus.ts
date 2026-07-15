@@ -1,5 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import { TextInputValidationRefProps } from "@pagopa/io-app-design-system";
+import { TextInputValidationRefProps } from "@io-app/design-system";
 import { useIsFocused } from "@react-navigation/native";
 import { RefObject, useEffect, useRef } from "react";
 import { TextInput } from "react-native";
@@ -16,9 +16,9 @@ import { TextInput } from "react-native";
  *   true)
  */
 const useInputFocus = (
-  inputRef: RefObject<TextInput | TextInputValidationRefProps | null>,
-  delayMs: number = 500,
-  canAutoFocus: boolean = true
+  inputRef: RefObject<null | TextInput | TextInputValidationRefProps>,
+  delayMs = 500,
+  canAutoFocus = true
 ) => {
   const hasFocused = useRef(false);
   const isFocused = useIsFocused();

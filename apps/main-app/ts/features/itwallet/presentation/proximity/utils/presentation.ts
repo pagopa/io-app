@@ -1,3 +1,10 @@
+import type {
+  AcceptedFields,
+  ProximityDetails,
+  RequestedDocument,
+  VerifierRequest
+} from "./types";
+
 import { assert } from "../../../../../utils/assert";
 import {
   parseClaims,
@@ -6,12 +13,6 @@ import {
 import { getRepresentativeVaultId } from "../../../common/utils/itwCredentialUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { TimeoutError, UntrustedRpError } from "./errors";
-import type {
-  AcceptedFields,
-  ProximityDetails,
-  RequestedDocument,
-  VerifierRequest
-} from "./types";
 
 const WIA_DOC_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";
 
@@ -29,8 +30,8 @@ export const promiseWithTimeout = <T>(
 };
 
 type GetProximityDetails = (params: {
-  request: VerifierRequest["request"];
   credentials: Record<string, CredentialMetadata>;
+  request: VerifierRequest["request"];
   requireAuthenticated?: boolean;
 }) => ProximityDetails;
 
@@ -86,7 +87,6 @@ export const getProximityDetails: GetProximityDetails = ({
 }) => {
   // Exclude the WIA document type from the request
   const { [WIA_DOC_TYPE]: _, ...rest } = request;
-
   assert(
     Object.keys(rest).length > 0,
     "No requested documents found in the Verifier request"

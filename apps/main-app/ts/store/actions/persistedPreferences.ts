@@ -1,6 +1,7 @@
 /** Action types and action creator related to persisted preferences */
 import { Calendar } from "react-native-calendar-events";
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
 import { Locales } from "../../i18n";
 
@@ -59,17 +60,17 @@ export const preferencesThemeSet = createStandardAction(
 )<ColorModeChoice>();
 
 export type PersistedPreferencesActions = ActionType<
-  | typeof preferenceFingerprintIsEnabledSaveSuccess
-  | typeof preferredCalendarSaveSuccess
-  | typeof preferredCalendarRemoveSuccess
-  | typeof preferredLanguageSaveSuccess
-  | typeof serviceAlertDisplayedOnceSuccess
-  | typeof preferencesPagoPaTestEnvironmentSetEnabled
-  | typeof customEmailChannelSetEnabled
   | typeof continueWithRootOrJailbreak
-  | typeof preferencesPnTestEnvironmentSetEnabled
-  | typeof preferencesIdPayTestSetEnabled
+  | typeof customEmailChannelSetEnabled
+  | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferencesExperimentalDesignEnabled
   | typeof preferencesFontSet
+  | typeof preferencesIdPayTestSetEnabled
+  | typeof preferencesPagoPaTestEnvironmentSetEnabled
+  | typeof preferencesPnTestEnvironmentSetEnabled
   | typeof preferencesThemeSet
+  | typeof preferredCalendarRemoveSuccess
+  | typeof preferredCalendarSaveSuccess
+  | typeof preferredLanguageSaveSuccess
+  | typeof serviceAlertDisplayedOnceSuccess
 >;

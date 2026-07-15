@@ -7,26 +7,27 @@ import {
   IOVisualCostants,
   ListItemNav,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
+} from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { FlatList } from "react-native";
+
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { useIOSelector } from "../../../../store/hooks";
 import { selectPaymentOnboardingSelectedMethod } from "../store/selectors";
 import { WalletPaymentMethodItemSkeleton } from "./WalletPaymentMethodItemSkeleton";
 
 type OwnProps = Readonly<{
-  paymentMethods: ReadonlyArray<PaymentMethodResponse>;
-  onSelectPaymentMethod: (paymentMethod: PaymentMethodResponse) => void;
   isLoadingMethods?: boolean;
   isLoadingWebView?: boolean;
+  onSelectPaymentMethod: (paymentMethod: PaymentMethodResponse) => void;
+  paymentMethods: ReadonlyArray<PaymentMethodResponse>;
 }>;
 
 type PaymentMethodItemProps = {
-  paymentMethod: PaymentMethodResponse;
   isLoading?: boolean;
   onPress: () => void;
+  paymentMethod: PaymentMethodResponse;
 };
 
 const PaymentMethodItem = ({
@@ -72,22 +73,22 @@ const WalletOnboardingPaymentMethodsList = ({
 
   return (
     <FlatList
-      scrollEnabled={false}
-      removeClippedSubviews={false}
       contentContainerStyle={{
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
       data={paymentMethods}
+      ItemSeparatorComponent={() => <Divider />}
       keyExtractor={item => item.id}
       ListFooterComponent={<ListFooter />}
-      ItemSeparatorComponent={() => <Divider />}
+      removeClippedSubviews={false}
       renderItem={({ item }) => (
         <PaymentMethodItem
-          paymentMethod={item}
           isLoading={isMethodLoading(item.id)}
           onPress={() => onSelectPaymentMethod(item)}
+          paymentMethod={item}
         />
       )}
+      scrollEnabled={false}
     />
   );
 };

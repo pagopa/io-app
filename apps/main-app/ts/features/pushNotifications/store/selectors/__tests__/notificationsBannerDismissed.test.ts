@@ -1,7 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as ALL_PAGINATED from "../../../../messages/store/reducers/allPaginated";
 import { UIMessage } from "../../../../messages/types";
+import { UserBehaviourState } from "../../reducers/userBehaviour";
 import {
   isForceDismissAndNotUnreadMessagesHiddenSelector,
   pushNotificationsBannerForceDismissionDateSelector,
@@ -9,12 +11,11 @@ import {
   timesPushNotificationBannerDismissedSelector,
   unreadMessagesCountAfterForceDismissionSelector
 } from "../notificationsBannerDismissed";
-import { UserBehaviourState } from "../../reducers/userBehaviour";
 
 type TestStateProps = {
-  timesDismissed?: number;
   forceDismissionDate?: number;
   messages?: Array<UIMessage>;
+  timesDismissed?: number;
 };
 const getTestState = ({
   timesDismissed,
@@ -124,7 +125,7 @@ describe("unreadMessagesCountAfterForceDismissionSelector, isForceDismissAndNotU
         )
       ).toBe(false);
     });
-    it("shouldResetNotificationBannerDismissStateSelector should return 'false' ", () => {
+    it("shouldResetNotificationBannerDismissStateSelector should return 'false'", () => {
       expect(
         shouldResetNotificationBannerDismissStateSelector(
           noForceDismissDateTestState

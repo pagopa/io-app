@@ -1,4 +1,5 @@
 import RNFS from "react-native-fs";
+
 import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
 import { apiUrlPrefix } from "../../../config";
 
@@ -48,7 +49,7 @@ export const attachmentDownloadUrl = (
 // It also prevents a retry-after that is too long for the user
 export const restrainRetryAfterIntervalInMilliseconds = (
   input: number,
-  upperBoundSeconds: number = 24
+  upperBoundSeconds = 24
 ) => {
   if (input >= 0 && input <= upperBoundSeconds) {
     return 1000 * input;

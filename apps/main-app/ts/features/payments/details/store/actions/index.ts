@@ -3,8 +3,9 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { NetworkError } from "../../../../../utils/errors";
+
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { NetworkError } from "../../../../../utils/errors";
 
 export const paymentsGetMethodDetailsAction = createAsyncAction(
   "PAYMENTS_GET_METHOD_DETAILS_REQUEST",
@@ -14,9 +15,9 @@ export const paymentsGetMethodDetailsAction = createAsyncAction(
 )<{ walletId: string }, WalletInfo, NetworkError, void>();
 
 type DeleteMethodPayload = {
-  walletId: string;
-  onSuccess?: () => void;
   onFailure?: () => void;
+  onSuccess?: () => void;
+  walletId: string;
 };
 
 export const paymentsDeleteMethodAction = createAsyncAction(
@@ -27,9 +28,9 @@ export const paymentsDeleteMethodAction = createAsyncAction(
 )<DeleteMethodPayload, string, NetworkError, void>();
 
 type TogglePagoPaCapabilityPayload = {
-  walletId: string;
-  onSuccess?: () => void;
   onFailure?: () => void;
+  onSuccess?: () => void;
+  walletId: string;
 };
 
 export const paymentsTogglePagoPaCapabilityAction = createAsyncAction(
@@ -48,7 +49,7 @@ export const paymentsPayPalBannerSetIsClosedAction = createStandardAction(
 )<boolean>();
 
 export type PaymentsMethodDetailsActions =
-  | ActionType<typeof paymentsGetMethodDetailsAction>
   | ActionType<typeof paymentsDeleteMethodAction>
-  | ActionType<typeof paymentsTogglePagoPaCapabilityAction>
-  | ActionType<typeof paymentsPayPalBannerSetIsClosedAction>;
+  | ActionType<typeof paymentsGetMethodDetailsAction>
+  | ActionType<typeof paymentsPayPalBannerSetIsClosedAction>
+  | ActionType<typeof paymentsTogglePagoPaCapabilityAction>;

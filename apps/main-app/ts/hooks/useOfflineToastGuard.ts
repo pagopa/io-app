@@ -1,11 +1,12 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
-import { useCallback } from "react";
+import { useIOToast } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
+import { useCallback } from "react";
+
+import { isConnectedSelector } from "../features/connectivity/store/selectors";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
 import { useIOSelector } from "../store/hooks";
 import { trackOfflineActionNotAllowed } from "../utils/analytics.ts";
-import { isConnectedSelector } from "../features/connectivity/store/selectors";
 
 /**
  * A hook that checks for a general offline or error state before executing a

@@ -1,11 +1,12 @@
 import * as semver from "semver";
+
 import { GroupByType } from "./GroupByType";
 
 /** Represent an outdated package with all the relevant information */
 export type OutdatedPackage = {
-  name: string;
   currentVersion: string;
   latestVersion: string;
+  name: string;
   type: string;
   url: string;
 };

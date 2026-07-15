@@ -1,12 +1,13 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@io-app/design-system";
 import { differenceInSeconds } from "date-fns";
 import * as O from "fp-ts/lib/Option";
-import { ActionArgs, assign } from "xstate";
 import I18n from "i18next";
+import { ActionArgs, assign } from "xstate";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
+import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";

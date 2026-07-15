@@ -1,11 +1,12 @@
-import { getType } from "typesafe-actions";
-import { createSelector } from "reselect";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fciLoadQtspClauses, fciClearStateRequest } from "../actions";
-import { Action } from "../../../../store/actions/types";
-import { NetworkError } from "../../../../utils/errors";
+import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
+
 import { QtspClausesMetadataDetailView } from "../../../../../definitions/fci/QtspClausesMetadataDetailView";
+import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
+import { NetworkError } from "../../../../utils/errors";
+import { fciClearStateRequest, fciLoadQtspClauses } from "../actions";
 
 export type FciQtspClausesState = pot.Pot<
   QtspClausesMetadataDetailView,
@@ -19,14 +20,14 @@ const reducer = (
   action: Action
 ): FciQtspClausesState => {
   switch (action.type) {
+    case getType(fciClearStateRequest):
+      return emptyState;
+    case getType(fciLoadQtspClauses.failure):
+      return pot.toError(state, action.payload);
     case getType(fciLoadQtspClauses.request):
       return pot.toLoading(state);
     case getType(fciLoadQtspClauses.success):
       return pot.some(action.payload);
-    case getType(fciLoadQtspClauses.failure):
-      return pot.toError(state, action.payload);
-    case getType(fciClearStateRequest):
-      return emptyState;
   }
 
   return state;

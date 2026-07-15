@@ -2,16 +2,17 @@ import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+
 import { PreferredLanguageEnum } from "../../definitions/identity/PreferredLanguage";
+import { LanguageEnum } from "../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
 import {
   availableTranslations,
   localeFallback,
+  Locales,
   localeToLocalizedMessageKey,
   localeToPreferredLanguageMapping,
-  LocalizedMessageKeys,
-  Locales
+  LocalizedMessageKeys
 } from "../i18n";
-import { LanguageEnum } from "../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
 /** Helpers for handling locales */
 
 /**
@@ -28,7 +29,7 @@ export const getFullLocale = (): LocalizedMessageKeys =>
  */
 export function getLocalePrimary(
   locale: string,
-  separator: string = "-"
+  separator = "-"
 ): O.Option<string> {
   return pipe(
     O.some(locale.split(separator)),

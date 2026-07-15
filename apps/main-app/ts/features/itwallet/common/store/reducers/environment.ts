@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
 import { EnvType } from "../../utils/environment.ts";
 import { itwResetEnv, itwSetEnv } from "../actions/environment.ts";
@@ -17,17 +18,17 @@ const reducer = (
   action: Action
 ): ItwEnvironmentState => {
   switch (action.type) {
-    case getType(itwSetEnv): {
-      return {
-        ...state,
-        env: action.payload
-      };
-    }
-
     case getType(itwResetEnv): {
       return {
         ...state,
         env: initialState.env
+      };
+    }
+
+    case getType(itwSetEnv): {
+      return {
+        ...state,
+        env: action.payload
       };
     }
 

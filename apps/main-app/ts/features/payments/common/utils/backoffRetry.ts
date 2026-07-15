@@ -12,7 +12,7 @@ export const SECONDS_TO_MILLISECONDS = 1000;
  *
  * @returns A string with the time remaining in seconds or minutes.
  */
-export const getTimeRemainingText = (targetDate: number | Date): string => {
+export const getTimeRemainingText = (targetDate: Date | number): string => {
   const now = new Date().getTime();
 
   const targetTime =

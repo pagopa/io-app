@@ -1,6 +1,7 @@
 import { call, put, select } from "typed-redux-saga/macro";
-import { persistedPreferencesSelector } from "../../../../store/reducers/persistedPreferences";
+
 import { Locales } from "../../../../i18n";
+import { persistedPreferencesSelector } from "../../../../store/reducers/persistedPreferences";
 import { getNetworkError } from "../../../../utils/errors";
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { fetchCatalogueTranslations } from "../../common/utils/itwCredentialsCatalogueUtils";

@@ -1,10 +1,11 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { ReactNode } from "react";
 import Animated, {
   useAnimatedRef,
   useSharedValue
 } from "react-native-reanimated";
+
 import {
   IOScrollView,
   IOScrollViewActions
@@ -20,13 +21,13 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 export type CredentialCtaProps = ButtonBlockProps;
 
 export type ItwPresentationDetailsScreenBaseProps = {
-  credential: CredentialMetadata;
   children?: ReactNode;
+  credential: CredentialMetadata;
   ctaProps?: CredentialCtaProps;
   headerTransparent?: boolean;
 };
 
-const scrollTriggerOffsetValue: number = 88;
+const scrollTriggerOffsetValue = 88;
 
 const ItwPresentationDetailsScreenBase = ({
   credential,
@@ -72,9 +73,9 @@ const ItwPresentationDetailsScreenBase = ({
 
   return (
     <IOScrollView
+      actions={actions}
       animatedRef={animatedScrollViewRef}
       includeContentMargins={false}
-      actions={actions}
     >
       {children}
     </IOScrollView>

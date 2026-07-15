@@ -1,7 +1,10 @@
-import { createStore, Store } from "redux";
-import configureMockStore from "redux-mock-store";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { act } from "@testing-library/react-native";
+import { createStore, Store } from "redux";
+import configureMockStore from "redux-mock-store";
+
+import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
+import mockedProfile from "../../../../__mocks__/initializedProfile";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -12,13 +15,11 @@ import {
   fciSignatureRequestFromId,
   fciStartRequest
 } from "../../store/actions";
-import FciRouterScreen from "../FciRouterScreen";
 import {
   mockedError,
   mockSignatureRequestDetailView
 } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import mockedProfile from "../../../../__mocks__/initializedProfile";
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
+import FciRouterScreen from "../FciRouterScreen";
 
 const now = new Date();
 

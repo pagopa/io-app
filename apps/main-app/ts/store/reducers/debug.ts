@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+
 import {
   resetDebugData,
   setDebugData,
@@ -11,8 +12,8 @@ import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 type DebugState = Readonly<{
-  isDebugModeEnabled: boolean;
   debugData: Record<string, unknown>;
+  isDebugModeEnabled: boolean;
 }>;
 
 const INITIAL_STATE: DebugState = {
@@ -25,11 +26,14 @@ function debugReducer(
   action: Action
 ): DebugState {
   switch (action.type) {
-    case getType(setDebugModeEnabled):
+    case getType(resetDebugData):
       return {
         ...state,
-        isDebugModeEnabled: action.payload,
-        debugData: {}
+        debugData: Object.fromEntries(
+          Object.entries(state.debugData).filter(
+            ([key]) => !action.payload.includes(key)
+          )
+        )
       };
 
     /** Debug data to be displayed in DebugInfoOverlay */
@@ -41,14 +45,11 @@ function debugReducer(
           ...action.payload
         }
       };
-    case getType(resetDebugData):
+    case getType(setDebugModeEnabled):
       return {
         ...state,
-        debugData: Object.fromEntries(
-          Object.entries(state.debugData).filter(
-            ([key]) => !action.payload.includes(key)
-          )
-        )
+        isDebugModeEnabled: action.payload,
+        debugData: {}
       };
   }
 

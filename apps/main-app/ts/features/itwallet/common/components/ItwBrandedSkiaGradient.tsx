@@ -1,6 +1,5 @@
 /* eslint-disable functional/immutable-data */
 import {
-  Canvas,
   Rect,
   LinearGradient as SkiaLinearGradient,
   vec
@@ -15,18 +14,19 @@ import {
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
+
 import {
   ITW_BRAND_GRADIENT,
   ITW_BRAND_GRADIENT_ERROR,
   ITW_BRAND_GRADIENT_WARNING
 } from "../utils/theme";
 
-export type ItwSkiaBrandedGradientVariant = "default" | "warning" | "error";
+export type ItwSkiaBrandedGradientVariant = "default" | "error" | "warning";
 
 type ItwIridescentBorderProps = {
-  width: LayoutRectangle["width"];
   height: LayoutRectangle["height"];
   variant?: ItwSkiaBrandedGradientVariant;
+  width: LayoutRectangle["width"];
 };
 
 /**
@@ -80,7 +80,7 @@ export const ItwBrandedSkiaGradient = ({
    * We don't need to look at the whole quaternion range, just a very small part
    * of it.
    */
-  const quaternionRange: number = 0.5;
+  const quaternionRange = 0.5;
 
   const skiaGradientTransform = useDerivedValue(() => [
     {
@@ -95,17 +95,17 @@ export const ItwBrandedSkiaGradient = ({
 
   return (
     <Rect
-      x={0}
-      y={gradientY}
-      width={width}
       height={gradientHeight}
       transform={skiaGradientTransform}
+      width={width}
+      x={0}
+      y={gradientY}
     >
       <SkiaLinearGradient
+        colors={gradientByVariant[variant]}
+        end={vec(width / 3, width)}
         mode="mirror"
         start={vec(0, 0)}
-        end={vec(width / 3, width)}
-        colors={gradientByVariant[variant]}
       />
     </Rect>
   );

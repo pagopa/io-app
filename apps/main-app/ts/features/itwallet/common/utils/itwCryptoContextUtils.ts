@@ -1,11 +1,11 @@
-import { Platform } from "react-native";
 import { deleteKey, generate } from "@pagopa/io-react-native-crypto";
+import { getAttestation as getAttestationIntegrity } from "@pagopa/io-react-native-integrity";
 import {
   createCryptoContextFor,
   KeyAttestationCryptoContext
 } from "@pagopa/io-react-native-wallet";
-import { getAttestation as getAttestationIntegrity } from "@pagopa/io-react-native-integrity";
 import { constNull } from "fp-ts/lib/function";
+import { Platform } from "react-native";
 
 // Key tags
 export const WIA_KEYTAG = "WIA_KEYTAG";

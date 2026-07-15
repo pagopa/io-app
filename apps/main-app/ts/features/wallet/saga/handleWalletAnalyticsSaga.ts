@@ -1,5 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { all, call, select, take } from "typed-redux-saga/macro";
+
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import { isIdPayEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
@@ -32,12 +33,9 @@ export function* handleWalletAnalyticsSaga() {
   void updateMixpanelSuperProperties(state);
 }
 
-/** Wait for payment methods request to complete (success or failure) */
-function* waitForPaymentMethods(): SagaIterator {
-  yield* take([
-    getPaymentsWalletUserMethods.success,
-    getPaymentsWalletUserMethods.failure
-  ]);
+/** Wait for CGN details request to complete (success or failure) */
+function* waitForCgnDetails(): SagaIterator {
+  yield* take([cgnDetails.success, cgnDetails.failure]);
 }
 
 /** Wait for IDPay wallet request to complete (success or failure) */
@@ -45,7 +43,10 @@ function* waitForIdPay(): SagaIterator {
   yield* take([idPayWalletGet.success, idPayWalletGet.failure]);
 }
 
-/** Wait for CGN details request to complete (success or failure) */
-function* waitForCgnDetails(): SagaIterator {
-  yield* take([cgnDetails.success, cgnDetails.failure]);
+/** Wait for payment methods request to complete (success or failure) */
+function* waitForPaymentMethods(): SagaIterator {
+  yield* take([
+    getPaymentsWalletUserMethods.success,
+    getPaymentsWalletUserMethods.failure
+  ]);
 }

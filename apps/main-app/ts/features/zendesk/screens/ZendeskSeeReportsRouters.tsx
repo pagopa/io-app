@@ -1,8 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 
-import I18n from "i18next";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import {
@@ -11,7 +11,6 @@ import {
   IOStackNavigationRouteProps
 } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { zendeskTokenSelector } from "../../authentication/common/store/selectors";
 import { isStrictSome } from "../../../utils/pot";
 import {
   getZendeskConfig,
@@ -20,6 +19,7 @@ import {
   setUserIdentity,
   showSupportTickets
 } from "../../../utils/supportAssistance";
+import { zendeskTokenSelector } from "../../authentication/common/store/selectors";
 import { ZendeskParamsList } from "../navigation/params";
 import {
   ZendeskAssistanceType,
@@ -98,18 +98,18 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   if (pot.isError(ticketNumber)) {
     return (
       <OperationResultScreenContent
-        pictogram={"umbrella"}
-        title={I18n.t("global.genericError")}
         action={{
           label: I18n.t("global.buttons.retry"),
           onPress: () => {
             dispatch(zendeskRequestTicketNumber.request());
           }
         }}
+        pictogram={"umbrella"}
         secondaryAction={{
           label: I18n.t("global.buttons.back"),
           onPress: () => props.navigation.goBack()
         }}
+        title={I18n.t("global.genericError")}
       />
     );
   }
@@ -118,20 +118,20 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   if (pot.isNone(ticketNumber) || ticketNumber.value === 0) {
     return (
       <OperationResultScreenContent
-        testID={"emptyTicketsComponent"}
-        pictogram={"help"}
-        title={I18n.t("support.ticketList.noTicket.title")}
-        subtitle={I18n.t("support.ticketList.noTicket.body")}
         action={{
           label: I18n.t("support.helpCenter.cta.contactSupport"),
           onPress: handleContactSupportPress,
           testID: "continueButtonId"
         }}
+        pictogram={"help"}
         secondaryAction={{
           label: I18n.t("global.buttons.back"),
           onPress: () => navigation.goBack(),
           testID: "cancelButtonId"
         }}
+        subtitle={I18n.t("support.ticketList.noTicket.body")}
+        testID={"emptyTicketsComponent"}
+        title={I18n.t("support.ticketList.noTicket.title")}
       />
     );
   }

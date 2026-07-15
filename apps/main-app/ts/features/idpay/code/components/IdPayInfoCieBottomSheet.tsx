@@ -1,6 +1,7 @@
-import { View } from "react-native";
-import { FeatureInfo, H4, VSpacer } from "@pagopa/io-app-design-system";
+import { FeatureInfo, H4, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
+import { View } from "react-native";
+
 import {
   IOBottomSheetModal,
   useIOBottomSheetModal
@@ -15,18 +16,18 @@ const useIdPayInfoCieBottomSheet = (): IOBottomSheetModal => {
   const getModalContent = () => (
     <View>
       <FeatureInfo
-        iconName="contactless"
         body={I18n.t("idpay.initiative.cie.bottomSheet.featureOne")}
+        iconName="contactless"
       />
       <VSpacer size={24} />
       <FeatureInfo
-        iconName="keyboard"
         body={I18n.t("idpay.initiative.cie.bottomSheet.featureTwo")}
+        iconName="keyboard"
       />
       <VSpacer size={24} />
       <FeatureInfo
-        iconName="change"
         body={I18n.t("idpay.initiative.cie.bottomSheet.featureThree")}
+        iconName="change"
       />
       <VSpacer size={24} />
     </View>

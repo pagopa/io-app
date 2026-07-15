@@ -1,6 +1,7 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { ItwAuthLevel, CredentialMetadata } from "../../utils/itwTypesUtils.ts";
+
 import { IdentificationContext } from "../../../machine/eid/context.ts";
+import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export const itwSetReviewPending = createStandardAction(
   "ITW_SET_REVIEW_PENDING"
@@ -38,13 +39,29 @@ export const itwSetIdentificationMode = createStandardAction(
   "ITW_SET_IDENTIFICATION_MODE"
 )<IdentificationContext["mode"] | undefined>();
 
+export type ItwWalletActivationFeedbackBannerData = {
+  authMethod: string;
+  date: string;
+  docStatus: "active" | "not_active";
+};
+
+export const itwSetWalletActivationFeedbackBannerData = createStandardAction(
+  "ITW_SET_WALLET_ACTIVATION_FEEDBACK_BANNER_DATA"
+)<ItwWalletActivationFeedbackBannerData>();
+
+export const itwClearWalletActivationFeedbackBannerData = createStandardAction(
+  "ITW_CLEAR_WALLET_ACTIVATION_FEEDBACK_BANNER_DATA"
+)<void>();
+
 export type ItwPreferencesActions =
-  | ActionType<typeof itwSetReviewPending>
+  | ActionType<typeof itwClearCredentialUpgradeFailed>
+  | ActionType<typeof itwClearWalletActivationFeedbackBannerData>
+  | ActionType<typeof itwDisableItwActivation>
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
-  | ActionType<typeof itwSetFiscalCodeWhitelisted>
-  | ActionType<typeof itwSetPidReissuingSurveyHidden>
   | ActionType<typeof itwSetCredentialUpgradeFailed>
-  | ActionType<typeof itwClearCredentialUpgradeFailed>
-  | ActionType<typeof itwDisableItwActivation>
-  | ActionType<typeof itwSetIdentificationMode>;
+  | ActionType<typeof itwSetFiscalCodeWhitelisted>
+  | ActionType<typeof itwSetIdentificationMode>
+  | ActionType<typeof itwSetPidReissuingSurveyHidden>
+  | ActionType<typeof itwSetReviewPending>
+  | ActionType<typeof itwSetWalletActivationFeedbackBannerData>;

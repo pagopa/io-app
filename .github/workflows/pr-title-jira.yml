@@ -21,10 +21,16 @@ jobs:
       TITLE: ${{ github.event.pull_request.title }}
       REPO: ${{ github.repository }}
       PR_NUMBER: ${{ github.event.pull_request.number }}
+      BRANCH_NAME: ${{ github.head_ref }}
     steps:
       - name: Validate PR Title Format
         id: lint
         run: |
+          BRANCH_NAME="$BRANCH_NAME"
+          if [[ "$BRANCH_NAME" =~ ^lok_master_ ]]; then
+            echo "Branch created from lokalise pull action, skipping PR title validation."
+            exit 0
+          fi
           PR_TITLE="$TITLE"
           if [[ "$PR_TITLE" =~ \[(#?[A-Z]*-[0-9]*,?){1,}\] ]]; then
             echo "PR title is valid."

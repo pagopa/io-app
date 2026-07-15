@@ -1,4 +1,5 @@
 import { Appearance, StyleSheet, View } from "react-native";
+
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
 
@@ -16,9 +17,9 @@ export const ItwQrCodeClaimImage = ({ claim }: ItwQrCodeClaimImageProps) => {
   return (
     <View style={styles.qrCode}>
       <QrCodeImage
-        value={claim.value}
-        size={230}
         inverted={colorScheme === "dark"}
+        size={230}
+        value={claim.value}
       />
     </View>
   );

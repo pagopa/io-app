@@ -5,8 +5,9 @@ import {
   SearchInput,
   SearchInputRef,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   FlatList,
@@ -16,7 +17,7 @@ import {
   ViewStyle
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
+
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../store/hooks";
 import {
@@ -29,7 +30,7 @@ import { UIMessage } from "../types";
 import { getMessageSearchResult } from "./searchUtils";
 
 const INPUT_PADDING: IOSpacingScale = 16;
-const MIN_QUERY_LENGTH: number = 3;
+const MIN_QUERY_LENGTH = 3;
 
 export const MessagesSearchScreen = () => {
   const insets = useSafeAreaInsets();
@@ -71,8 +72,8 @@ export const MessagesSearchScreen = () => {
 
     return (
       <View
-        accessible={true}
         accessibilityLabel={I18n.t("messages.search.emptyState.a11y.noneFound")}
+        accessible={true}
         importantForAccessibility="yes"
         style={{
           minHeight: "50%"
@@ -126,19 +127,19 @@ export const MessagesSearchScreen = () => {
         />
       </ContentWrapper>
       <FlatList
-        ItemSeparatorComponent={() => <Divider />}
-        data={filteredMessages}
         contentContainerStyle={{
           flexGrow: 1,
           paddingBottom: insets.bottom
         }}
-        renderItem={renderItemCallback}
-        ListEmptyComponent={renderListEmptyComponent}
+        data={filteredMessages}
+        ItemSeparatorComponent={() => <Divider />}
         keyboardDismissMode={Platform.select({
           ios: "interactive",
           default: "on-drag"
         })}
         keyboardShouldPersistTaps="handled"
+        ListEmptyComponent={renderListEmptyComponent}
+        renderItem={renderItemCallback}
       />
     </>
   );

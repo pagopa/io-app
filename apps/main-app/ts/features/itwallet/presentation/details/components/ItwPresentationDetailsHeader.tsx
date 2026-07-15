@@ -2,13 +2,14 @@ import {
   Body,
   ContentWrapper,
   H2,
-  Tag,
   makeFontStyleObject,
+  Tag,
   useIOExperimentalDesign
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import Color from "color";
 import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
+
 import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
@@ -21,8 +22,8 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import {
-  itwCredentialStatusSelector,
-  itwCredentialsEidStatusSelector
+  itwCredentialsEidStatusSelector,
+  itwCredentialStatusSelector
 } from "../../../credentials/store/selectors";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
@@ -67,20 +68,20 @@ const ItwPresentationDetailsHeader = ({
       />
 
       <ItwCredentialDetailCard
-        credentialType={credential.credentialType}
         credentialStatus={displayStatus}
+        credentialType={credential.credentialType}
       >
-        <ItwAvatar width={48} height={48} />
+        <ItwAvatar height={48} width={48} />
         <H2
-          style={styles.nameText}
           color={isLight ? "blueItalia-850" : "white"}
+          style={styles.nameText}
         >
           {credentialName}
         </H2>
         {authSourceName && (
           <Body
-            style={styles.authSourceText}
             color={isLight ? "blueItalia-850" : "white"}
+            style={styles.authSourceText}
           >
             {authSourceName}
           </Body>
@@ -116,13 +117,13 @@ const ItwPresentationDetailsHeaderLegacy = ({
       <View style={[styles.legacyHeader, { backgroundColor }]}>
         <ContentWrapper>
           <Text
+            accessibilityRole="header"
             style={[
               isExperimental
                 ? styles.legacyHeaderLabelExperimental
                 : styles.legacyHeaderLabel,
               { color: textColor }
             ]}
-            accessibilityRole="header"
           >
             {credentialName}
           </Text>

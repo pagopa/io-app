@@ -3,8 +3,8 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 export type AddCalendarEventPayload = {
-  messageId: string;
   eventId: string;
+  messageId: string;
 };
 
 export const addCalendarEvent =

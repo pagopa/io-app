@@ -1,26 +1,27 @@
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import {
-  itwCredentialSelector,
-  itwCredentialsSelector,
-  itwCredentialsEidSelector,
-  itwCredentialsTypesSelector,
-  itwHasWalletAtLeastTwoCredentialsSelector,
-  itwIsWalletEmptySelector,
-  selectFiscalCodeFromEid,
-  selectNameSurnameFromEid,
-  itwCredentialsByTypeSelector,
-  itwCredentialsListByTypeSelector,
-  itwHasExpiringCredentialsSelector,
-  itwIsMdlPresentSelector
-} from "../index";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
-  ParsedCredential,
-  CredentialMetadata
+  CredentialMetadata,
+  ParsedCredential
 } from "../../../../common/utils/itwTypesUtils";
+import {
+  itwCredentialsByTypeSelector,
+  itwCredentialsEidSelector,
+  itwCredentialSelector,
+  itwCredentialsListByTypeSelector,
+  itwCredentialsSelector,
+  itwCredentialsTypesSelector,
+  itwHasExpiringCredentialsSelector,
+  itwHasWalletAtLeastTwoCredentialsSelector,
+  itwIsMdlPresentSelector,
+  itwIsWalletEmptySelector,
+  selectFiscalCodeFromEid,
+  selectNameSurnameFromEid
+} from "../index";
 
 const getStateWithCredentials = (credentials: {
   [key: string]: Partial<CredentialMetadata>;
@@ -123,7 +124,7 @@ describe("itwCredentialsByTypeSelector", () => {
 });
 
 describe("itwCredentialsEidSelector", () => {
-  it("returns O.some with the eid ", () => {
+  it("returns O.some with the eid", () => {
     const state = getStateWithCredentials({
       [mockedEid.credentialId]: mockedEid,
       [mockedDrivingLicense.credentialId]: mockedDrivingLicense
@@ -318,7 +319,7 @@ describe("itwHasWalletAtLeastTwoCredentialsSelector", () => {
 });
 
 describe("test legacy credentials", () => {
-  it("itwCredentialsEidSelector returns O.some with the eid ", () => {
+  it("itwCredentialsEidSelector returns O.some with the eid", () => {
     const legacyEid = { ...mockedEid, format: "vc+sd-jwt" };
     const state = getStateWithCredentials({
       [legacyEid.credentialId]: legacyEid

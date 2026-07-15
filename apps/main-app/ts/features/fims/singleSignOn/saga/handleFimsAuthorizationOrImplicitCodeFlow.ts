@@ -1,3 +1,4 @@
+import { IOToast } from "@io-app/design-system";
 import {
   HttpClientResponse,
   HttpClientSuccessResponse,
@@ -10,14 +11,14 @@ import {
 } from "@pagopa/io-react-native-login-utils";
 import * as E from "fp-ts/lib/Either";
 import { Parser as HTMLParser2 } from "htmlparser2";
+import I18n from "i18next";
 import {
   URL as PolyfillURL,
   URLSearchParams as PolyfillURLSearchParams
 } from "react-native-url-polyfill";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { IOToast } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { LollipopConfig } from "../../../lollipop";
 import { generateKeyInfo } from "../../../lollipop/saga";
@@ -27,19 +28,19 @@ import {
 } from "../../../lollipop/store/reducers/lollipop";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
+import { trackInAppBrowserOpening } from "../../common/analytics";
+import { fimsSignAndRetrieveInAppBrowserUrlAction } from "../store/actions";
 import {
   fimsCtaTextSelector,
   fimsEphemeralSessionOniOSSelector,
   relyingPartyServiceIdSelector
 } from "../store/selectors";
-import { trackInAppBrowserOpening } from "../../common/analytics";
-import { fimsSignAndRetrieveInAppBrowserUrlAction } from "../store/actions";
 import {
-  computeAndTrackAuthenticationError,
   absoluteRedirectUrlFromHttpClientResponse,
-  isRedirectStatusCode,
+  computeAndTrackAuthenticationError,
+  handleFimsBackNavigation,
   handleFimsResourcesDeallocation,
-  handleFimsBackNavigation
+  isRedirectStatusCode
 } from "./sagaUtils";
 
 // note: IAB => InAppBrowser
@@ -126,7 +127,7 @@ const getLollipopParamsFromUrlString = (url: string) => {
     const params: PolyfillURLSearchParams = constructedUrl.searchParams;
     params.forEach((value, name) => lollipopParams.set(name, value));
     return lollipopParams;
-  } catch (error) {
+  } catch {
     return undefined;
   }
 };
@@ -134,6 +135,12 @@ const getLollipopParamsFromUrlString = (url: string) => {
 export type RelyingPartyOutput = {
   relyingPartyUrl: string;
   response: HttpClientResponse;
+};
+
+type PostData = {
+  params: Map<string, string>;
+  state: string;
+  url: string;
 };
 
 export function* postToRelyingPartyWithImplicitCodeFlow(
@@ -298,12 +305,6 @@ function* generateLollipopSignature(
     return E.left(`${e}`);
   }
 }
-
-type PostData = {
-  url: string;
-  params: Map<string, string>;
-  state: string;
-};
 
 const extractFormPostDataFromHTML = (
   html: string

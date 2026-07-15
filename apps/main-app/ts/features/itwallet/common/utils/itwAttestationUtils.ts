@@ -1,10 +1,13 @@
 import {
-  type ItwVersion,
-  createCryptoContextFor
+  createCryptoContextFor,
+  type ItwVersion
 } from "@pagopa/io-react-native-wallet";
-import { createItWalletFetch } from "../../api/client";
+
 import { getAppVersion } from "../../../../utils/appVersion";
 import { assert } from "../../../../utils/assert";
+import { createItWalletFetch } from "../../api/client";
+import { WALLET_SOLUTION_ID } from "./constants";
+import { Env } from "./environment.ts";
 import {
   createKeyAttestationCryptoContextFor,
   regenerateCryptoKey,
@@ -14,10 +17,8 @@ import {
   generateIntegrityHardwareKeyTag,
   getIntegrityContext
 } from "./itwIntegrityUtils";
-import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
-import { Env } from "./environment.ts";
-import { WALLET_SOLUTION_ID } from "./constants";
 import { getIoWallet } from "./itwIoWallet";
+import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
 
 /**
  * Getter for the integrity hardware keytag to be used for an

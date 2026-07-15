@@ -1,18 +1,25 @@
 import { generate } from "@pagopa/io-react-native-crypto";
-import {
-  createCryptoContextFor,
-  RemotePresentation,
-  type ItwVersion
-} from "@pagopa/io-react-native-wallet";
-import { v4 as uuidv4 } from "uuid";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { getRedirects } from "@pagopa/io-react-native-login-utils";
+import {
+  createCryptoContextFor,
+  type ItwVersion,
+  RemotePresentation
+} from "@pagopa/io-react-native-wallet";
 import last from "lodash/last";
+import { v4 as uuidv4 } from "uuid";
+
+import { Env } from "./environment";
+import { getWalletUnitAttestation } from "./itwAttestationUtils";
+import { extractVerification } from "./itwCredentialUtils";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
+import { enrichErrorWithMetadata } from "./itwFailureUtils";
+import { getIoWallet } from "./itwIoWallet";
+import { CredentialType } from "./itwMocksUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
@@ -22,12 +29,6 @@ import {
   IssuerConfiguration,
   RequestObject
 } from "./itwTypesUtils";
-import { extractVerification } from "./itwCredentialUtils";
-import { CredentialType } from "./itwMocksUtils";
-import { Env } from "./environment";
-import { enrichErrorWithMetadata } from "./itwFailureUtils";
-import { getIoWallet } from "./itwIoWallet";
-import { getWalletUnitAttestation } from "./itwAttestationUtils";
 
 /**
  * List of credentials that cannot be issued in parallel, only sequentially.
@@ -79,29 +80,38 @@ export const getEffectiveBatchSize = (
 };
 
 export type RequestCredential = (args: {
+  credentialType: string;
   env: Env;
   itwVersion: ItwVersion;
-  credentialType: string;
-  walletInstanceAttestation: string;
-  skipMdocIssuance: boolean;
-  resolvedCredentialOffer?: CredentialOfferResolved;
   pid: CredentialBundle;
+  resolvedCredentialOffer?: CredentialOfferResolved;
+  skipMdocIssuance: boolean;
+  walletInstanceAttestation: string;
 }) => Promise<{
   clientId: string;
   codeVerifier: string;
-  requestedCredential: RequestObject;
-  issuerConf: IssuerConfiguration;
   evaluatedDcqlQuery: EvaluatedDcqlQueryResult;
+  issuerConf: IssuerConfiguration;
+  requestedCredential: RequestObject;
   responseMode?: string;
 }>;
 
 /**
  * Requests a credential from the issuer.
  *
+ * When issuance starts from a Credential Offer, the `authorization_code` grant
+ * details drive the flow: the offer's `authorization_server` is validated
+ * against the issuer metadata during trust evaluation, while `scope` and
+ * `issuer_state` are forwarded to the Pushed Authorization Request.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
  * @param walletInstanceAttestation - The wallet instance attestation
+ * @param skipMdocIssuance - Whether mDoc credential configurations must be
+ *   excluded from the request
+ * @param resolvedCredentialOffer - The resolved Credential Offer with its grant
+ *   details, when issuance starts from an offer
  * @param pid - The PID credential to evaluate the issuer DCQL query before
  *   showing the trust issuer screen
  * @returns The credential request object
@@ -120,12 +130,18 @@ export const requestCredential: RequestCredential = async ({
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
-  // Evaluate issuer trust
+  const authorizationCodeGrant =
+    resolvedCredentialOffer?.grantDetails.authorizationCodeGrant;
+
+  // Evaluate issuer trust. The authorization server declared by the offer
+  // must match one of the issuer metadata `authorization_servers`.
   const credentialIssuer =
     resolvedCredentialOffer?.offer.credential_issuer ??
     env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion);
-  const { issuerConf } =
-    await ioWallet.CredentialIssuance.evaluateIssuerTrust(credentialIssuer);
+  const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
+    credentialIssuer,
+    { authorizationServer: authorizationCodeGrant?.authorizationServer }
+  );
 
   const credentialIds = resolvedCredentialOffer?.offer
     .credential_configuration_ids
@@ -156,7 +172,10 @@ export const requestCredential: RequestCredential = async ({
       {
         walletInstanceAttestation,
         redirectUri: env.ISSUANCE_REDIRECT_URI,
-        wiaCryptoContext
+        wiaCryptoContext,
+        // Offer flow only: forwarded to the PAR, omitted in the catalogue flow
+        scope: authorizationCodeGrant?.scope,
+        issuerState: authorizationCodeGrant?.issuerState
       }
     );
 
@@ -183,14 +202,14 @@ export const requestCredential: RequestCredential = async ({
 };
 
 export type CompleteAuthFlow = (args: {
-  env: Env;
-  itwVersion: ItwVersion;
-  walletInstanceAttestation: string;
-  requestedCredential: RequestObject;
-  evaluatedDcqlQuery: EvaluatedDcqlQueryResult;
   codeVerifier: string;
+  env: Env;
+  evaluatedDcqlQuery: EvaluatedDcqlQueryResult;
   issuerConf: IssuerConfiguration;
+  itwVersion: ItwVersion;
+  requestedCredential: RequestObject;
   responseMode?: string;
+  walletInstanceAttestation: string;
 }) => Promise<{ accessToken: CredentialAccessToken }>;
 
 /**
@@ -264,13 +283,13 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
 };
 
 export type ObtainCredential = (args: {
-  env: Env;
-  itwVersion: ItwVersion;
-  credentialType: string;
+  accessToken: CredentialAccessToken;
   authorizedCredentials: ReadonlyArray<AuthorizedCredentialMetadata>;
   clientId: string;
+  credentialType: string;
+  env: Env;
   issuerConf: IssuerConfiguration;
-  accessToken: CredentialAccessToken;
+  itwVersion: ItwVersion;
 }) => Promise<ReadonlyArray<CredentialBundle>>;
 
 /**
@@ -351,19 +370,19 @@ const getCredentialConfigurationIds = (
   return supportedConfigurationsByScope[credentialType] || [];
 };
 
+type RequestAndParseCredential = (
+  args: AuthorizedCredentialMetadata & RequestAndParseCredentialParams
+) => Promise<CredentialBundle>;
+
 type RequestAndParseCredentialParams = {
-  issuerConf: IssuerConfiguration;
-  credentialType: string;
   accessToken: CredentialAccessToken;
   clientId: string;
-  env: Env;
-  itwVersion: ItwVersion;
+  credentialType: string;
   dPopCryptoContext: CryptoContext;
+  env: Env;
+  issuerConf: IssuerConfiguration;
+  itwVersion: ItwVersion;
 };
-
-type RequestAndParseCredential = (
-  args: RequestAndParseCredentialParams & AuthorizedCredentialMetadata
-) => Promise<CredentialBundle>;
 
 /**
  * Utility function that requests and parses an already authorized credential.
@@ -426,16 +445,16 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
 };
 
 type VerifyAndBuildCredentialBundleParams = {
-  ioWallet: ReturnType<typeof getIoWallet>;
-  issuerConf: IssuerConfiguration;
   credential: string;
-  format: string;
   credentialConfigurationId: string;
   credentialCryptoContext: CryptoContext;
-  keyTag: string;
   credentialType: string;
-  walletUnitAttestationId?: string;
   env: Env;
+  format: string;
+  ioWallet: ReturnType<typeof getIoWallet>;
+  issuerConf: IssuerConfiguration;
+  keyTag: string;
+  walletUnitAttestationId?: string;
 };
 
 /**
@@ -468,7 +487,7 @@ const verifyAndBuildCredentialBundle = async ({
       credentialConfigurationId,
       {
         credentialCryptoContext,
-        ignoreMissingAttributes: format === CredentialFormat.SD_JWT
+        ignoreMissingAttributes: true
       },
       env.X509_CERT_ROOT
     );
@@ -498,8 +517,8 @@ const verifyAndBuildCredentialBundle = async ({
 };
 
 export type AuthorizedCredentialMetadata = {
-  keyTag: string;
   authDetails: CredentialAccessToken["authorization_details"][number];
+  keyTag: string;
   walletUnitAttestation?: string;
   walletUnitAttestationId?: string;
 };
@@ -508,8 +527,8 @@ type GenerateKeysWithWalletUnitAttestation = (
   accessToken: CredentialAccessToken,
   params: {
     env: Env;
-    itwVersion: ItwVersion;
     hardwareKeyTag: string;
+    itwVersion: ItwVersion;
     sessionToken: string;
   }
 ) => Promise<ReadonlyArray<AuthorizedCredentialMetadata>>;
@@ -571,12 +590,12 @@ export const generateKeysWithWalletUnitAttestation: GenerateKeysWithWalletUnitAt
   };
 
 export type AuthorizedBatchCredentialMetadata = {
+  authDetails: CredentialAccessToken["authorization_details"][number];
   /**
    * One key per credential copy to obtain in the batch. All keys are attested
    * by the same WUA.
    */
   keyTags: ReadonlyArray<string>;
-  authDetails: CredentialAccessToken["authorization_details"][number];
   walletUnitAttestation?: string;
   walletUnitAttestationId?: string;
 };
@@ -586,8 +605,8 @@ type GenerateBatchKeysWithWalletUnitAttestation = (
   batchSize: number,
   params: {
     env: Env;
-    itwVersion: ItwVersion;
     hardwareKeyTag: string;
+    itwVersion: ItwVersion;
     sessionToken: string;
   }
 ) => Promise<ReadonlyArray<AuthorizedBatchCredentialMetadata>>;
@@ -648,13 +667,13 @@ export const generateBatchKeysWithWalletUnitAttestation: GenerateBatchKeysWithWa
   };
 
 export type ObtainCredentialsBatch = (args: {
-  env: Env;
-  itwVersion: ItwVersion;
-  credentialType: string;
+  accessToken: CredentialAccessToken;
   authorizedCredentials: ReadonlyArray<AuthorizedBatchCredentialMetadata>;
   clientId: string;
+  credentialType: string;
+  env: Env;
   issuerConf: IssuerConfiguration;
-  accessToken: CredentialAccessToken;
+  itwVersion: ItwVersion;
 }) => Promise<ReadonlyArray<CredentialBundle>>;
 
 /**

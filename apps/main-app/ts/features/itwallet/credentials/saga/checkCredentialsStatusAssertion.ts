@@ -3,6 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { all, call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { trackItwStatusCredentialAssertionFailure } from "../../analytics";
 import { syncItwAnalyticsProperties } from "../../analytics/saga";
@@ -22,9 +23,9 @@ import {
   shouldRequestStatusAssertion,
   StatusAssertionError
 } from "../../common/utils/itwCredentialStatusAssertionUtils";
-import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { getRepresentativeVaultId } from "../../common/utils/itwCredentialUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
@@ -40,73 +41,6 @@ import {
 import { CredentialsVault } from "../utils/vault";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
-
-export function* updateCredentialStatusAssertionSaga(
-  metadata: CredentialMetadata
-): Generator<ReduxSagaEffect, CredentialMetadata> {
-  const env = yield* select(selectItwEnv);
-  const itwVersion = yield* select(selectItwSpecsVersion);
-  const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
-  const mixpanelCredential = getMixPanelCredential(
-    metadata.credentialType,
-    isItwL3
-  );
-  try {
-    const credential = yield* call(() =>
-      CredentialsVault.get(getRepresentativeVaultId(metadata))
-    );
-    if (!credential) {
-      throw new Error(
-        `Credential with id ${metadata.credentialId} not found in secure storage`
-      );
-    }
-
-    const { parsedStatusAssertion, statusAssertion } = yield* call(
-      getCredentialStatusAssertion,
-      { metadata, credential },
-      getEnv(env),
-      itwVersion
-    );
-    return {
-      ...metadata,
-      storedStatusAssertion: {
-        credentialStatus: "valid",
-        statusAssertion,
-        parsedStatusAssertion
-      }
-    };
-  } catch (e) {
-    if (isIssuerResponseError(e, Codes.CredentialInvalidStatus)) {
-      const errorCode = pipe(
-        StatusAssertionError.decode(e.reason),
-        O.fromEither,
-        O.map(x => x.error),
-        O.toUndefined
-      );
-
-      trackItwStatusCredentialAssertionFailure({
-        credential: mixpanelCredential,
-        credential_status: errorCode || "invalid"
-      });
-
-      return {
-        ...metadata,
-        storedStatusAssertion: { credentialStatus: "invalid", errorCode }
-      };
-    }
-    // We do not have enough information on the status, the error was unexpected
-    trackItwStatusCredentialAssertionFailure({
-      credential: mixpanelCredential,
-      credential_status: "unknown",
-      reason: e instanceof Error ? e.message : e
-    });
-
-    return {
-      ...metadata,
-      storedStatusAssertion: { credentialStatus: "unknown" }
-    };
-  }
-}
 
 /**
  * This saga is responsible to check the status assertion for each credential in
@@ -187,5 +121,72 @@ export function* handleCredentialStatusAssertionRetry(
       credential.value
     );
     yield* put(itwCredentialsStore([updatedCredential]));
+  }
+}
+
+export function* updateCredentialStatusAssertionSaga(
+  metadata: CredentialMetadata
+): Generator<ReduxSagaEffect, CredentialMetadata> {
+  const env = yield* select(selectItwEnv);
+  const itwVersion = yield* select(selectItwSpecsVersion);
+  const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
+  const mixpanelCredential = getMixPanelCredential(
+    metadata.credentialType,
+    isItwL3
+  );
+  try {
+    const credential = yield* call(() =>
+      CredentialsVault.get(getRepresentativeVaultId(metadata))
+    );
+    if (!credential) {
+      throw new Error(
+        `Credential with id ${metadata.credentialId} not found in secure storage`
+      );
+    }
+
+    const { parsedStatusAssertion, statusAssertion } = yield* call(
+      getCredentialStatusAssertion,
+      { metadata, credential },
+      getEnv(env),
+      itwVersion
+    );
+    return {
+      ...metadata,
+      storedStatusAssertion: {
+        credentialStatus: "valid",
+        statusAssertion,
+        parsedStatusAssertion
+      }
+    };
+  } catch (e) {
+    if (isIssuerResponseError(e, Codes.CredentialInvalidStatus)) {
+      const errorCode = pipe(
+        StatusAssertionError.decode(e.reason),
+        O.fromEither,
+        O.map(x => x.error),
+        O.toUndefined
+      );
+
+      trackItwStatusCredentialAssertionFailure({
+        credential: mixpanelCredential,
+        credential_status: errorCode || "invalid"
+      });
+
+      return {
+        ...metadata,
+        storedStatusAssertion: { credentialStatus: "invalid", errorCode }
+      };
+    }
+    // We do not have enough information on the status, the error was unexpected
+    trackItwStatusCredentialAssertionFailure({
+      credential: mixpanelCredential,
+      credential_status: "unknown",
+      reason: e instanceof Error ? e.message : e
+    });
+
+    return {
+      ...metadata,
+      storedStatusAssertion: { credentialStatus: "unknown" }
+    };
   }
 }

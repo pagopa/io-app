@@ -3,12 +3,13 @@ import {
   IOButton,
   Optional,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import React, { useCallback, useMemo } from "react";
 import { View } from "react-native";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -47,6 +48,7 @@ import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
 import { trackItwProximityShowQrCode } from "../../proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../proximity/navigation/routes";
+import { isPresentableCredentialSelector } from "../../proximity/store/selectors/credentials";
 import {
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE,
@@ -121,25 +123,6 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   if (!isWalletValid) {
     return (
       <OperationResultScreenContent
-        title={
-          isL3
-            ? I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.itWallet.title"
-              )
-            : I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.title"
-              )
-        }
-        subtitle={
-          isL3
-            ? I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.itWallet.subtitle"
-              )
-            : I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.subtitle"
-              )
-        }
-        pictogram="itWallet"
         action={{
           label: I18n.t(
             "features.itWallet.issuance.walletInstanceNotActive.primaryAction"
@@ -152,12 +135,31 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
               }
             })
         }}
+        pictogram="itWallet"
         secondaryAction={{
           label: I18n.t(
             "features.itWallet.issuance.walletInstanceNotActive.secondaryAction"
           ),
           onPress: () => navigation.popToTop()
         }}
+        subtitle={
+          isL3
+            ? I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.itWallet.subtitle"
+              )
+            : I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.subtitle"
+              )
+        }
+        title={
+          isL3
+            ? I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.itWallet.title"
+              )
+            : I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.title"
+              )
+        }
       />
     );
   }
@@ -191,6 +193,9 @@ export const ItwPresentationCredentialDetail = ({
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
+  );
+  const isPresentableCredential = useIOSelector(
+    isPresentableCredentialSelector(credential.credentialType)
   );
   const displayStatus = useItwDisplayCredentialStatus(status);
   const contentClaim = credential.parsedCredential[WellKnownClaim.content];
@@ -273,10 +278,7 @@ export const ItwPresentationCredentialDetail = ({
       };
     }
 
-    if (
-      credentialType === CredentialType.DRIVING_LICENSE &&
-      itwFeaturesEnabled
-    ) {
+    if (itwFeaturesEnabled && isPresentableCredential) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.present"),
         icon: "productITWallet",
@@ -318,6 +320,7 @@ export const ItwPresentationCredentialDetail = ({
     shouldShowMdlUpdateCta,
     itwFeaturesEnabled,
     isL3Credential,
+    isPresentableCredential,
     contentClaim,
     navigation,
     mixPanelCredential,
@@ -363,13 +366,13 @@ export const ItwPresentationCredentialDetail = ({
         {showInlineCta && (
           <View style={{ alignSelf: "center", paddingVertical: 8 }}>
             <IOButton
-              variant="link"
+              icon="creditCard"
+              iconPosition="start"
               label={I18n.t(
                 "features.itWallet.presentation.credentialDetails.openCardDocument"
               )}
-              icon="creditCard"
-              iconPosition="start"
               onPress={handleOpenCard}
+              variant="link"
             />
           </View>
         )}

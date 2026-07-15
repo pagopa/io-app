@@ -1,6 +1,7 @@
-import MockDate from "mockdate";
-import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import MockDate from "mockdate";
+
 import {
   DrivingPrivilegesCustomClaim,
   DrivingPrivilegesValueRaw,
@@ -14,8 +15,8 @@ import {
   SimpleDateClaim,
   SimpleListClaim
 } from "../itwClaimsUtils";
-import { CredentialMetadata } from "../itwTypesUtils";
 import { ItwStoredCredentialsMocks } from "../itwMocksUtils";
+import { CredentialMetadata } from "../itwTypesUtils";
 
 describe("getCredentialExpireDate", () => {
   it("should return undefined", () => {

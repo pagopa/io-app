@@ -8,10 +8,11 @@ import {
   IOListItemVisualParams,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useRef } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
@@ -21,7 +22,7 @@ import {
 } from "../../analytics";
 import { TrackIdMethodBottomsheetProperties } from "../../analytics/types";
 
-type ModeType = "ciePin" | "cieId" | "spid";
+type ModeType = "cieId" | "ciePin" | "spid";
 
 const firstIconMap: Record<ModeType, IOIcons> = {
   ciePin: "fiscalCodeIndividual",
@@ -36,9 +37,9 @@ const secondIconMap: Record<ModeType, IOIcons> = {
 };
 
 type Props = {
-  type: "ciePin" | "cieId" | "spid";
   isL3: boolean;
   onPrimaryAction: () => void;
+  type: "cieId" | "ciePin" | "spid";
 };
 
 /**
@@ -87,10 +88,10 @@ export const useContinueWithBottomSheet = ({
         />
         {type === "spid" && (
           <Alert
-            variant="warning"
             content={I18n.t(
               `features.itWallet.identification.modeSelection.mode.spid.bottomSheet.warning`
             )}
+            variant="warning"
           />
         )}
         <View>
@@ -140,8 +141,8 @@ const ListItem = (props: { content: string; icon: IOIcons }) => {
     <HStack space={16} style={styles.listItem}>
       <Icon
         allowFontScaling
-        name={props.icon}
         color={theme["icon-decorative"]}
+        name={props.icon}
         size={IOListItemVisualParams.iconSize}
       />
       <Body style={{ flex: 1, flexWrap: "wrap" }}>{props.content}</Body>

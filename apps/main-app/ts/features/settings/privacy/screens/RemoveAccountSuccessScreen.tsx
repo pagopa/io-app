@@ -1,9 +1,10 @@
-import { useMemo } from "react";
 import I18n from "i18next";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
-import { logoutRequest } from "../../../authentication/common/store/actions";
-import { useIODispatch } from "../../../../store/hooks";
+import { useMemo } from "react";
+
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { useIODispatch } from "../../../../store/hooks";
+import { logoutRequest } from "../../../authentication/common/store/actions";
 
 /**
  * A screen to explain how the account removal works. Here user can ask to
@@ -29,10 +30,10 @@ const RemoveAccountSuccess = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="ended"
-      title={I18n.t("profile.main.privacy.removeAccount.success.title")}
-      subtitle={I18n.t("profile.main.privacy.removeAccount.success.body")}
       action={actions}
+      pictogram="ended"
+      subtitle={I18n.t("profile.main.privacy.removeAccount.success.body")}
+      title={I18n.t("profile.main.privacy.removeAccount.success.title")}
     />
   );
 };

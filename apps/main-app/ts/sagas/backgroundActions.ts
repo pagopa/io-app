@@ -1,4 +1,5 @@
 import { call } from "typed-redux-saga/macro";
+
 import { handleStoredLinkingUrlIfNeeded } from "../features/linking/sagas";
 import { handlePushNotificationIfNeeded } from "../features/pushNotifications/sagas/common";
 
@@ -12,7 +13,7 @@ import { handlePushNotificationIfNeeded } from "../features/pushNotifications/sa
  * need to be handled once the app has finished loading/initializing.
  */
 export function* maybeHandlePendingBackgroundActions(
-  shouldResetToMainNavigator: boolean = false
+  shouldResetToMainNavigator = false
 ) {
   // check if we have a stored linking URL to process
   if (yield* call(handleStoredLinkingUrlIfNeeded)) {

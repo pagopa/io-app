@@ -1,14 +1,15 @@
-import { createStore, Store } from "redux";
 import { fireEvent } from "@testing-library/react-native";
-import { appReducer } from "../../../../store/reducers";
+import { createStore, Store } from "redux";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import FciDocumentUnavailableScreen from "../failure/FciDocumentUnavailableScreen";
-import { FCI_ROUTES } from "../../navigation/routes";
-import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import { fciSignatureRequestFromId } from "../../store/actions";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FciDocumentUnavailableScreenNavigationParams } from "../../navigation/params";
+import { FCI_ROUTES } from "../../navigation/routes";
+import { fciSignatureRequestFromId } from "../../store/actions";
+import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
+import FciDocumentUnavailableScreen from "../failure/FciDocumentUnavailableScreen";
 
 const createTestStore = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));

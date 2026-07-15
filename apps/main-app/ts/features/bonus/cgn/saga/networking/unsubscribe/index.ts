@@ -1,16 +1,17 @@
-import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
+
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import {
   getGenericError,
   getNetworkError
 } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters"; // handle the request for CGN unsubscription
-import { BackendCGN } from "../../../api/backendCgn";
-import { cgnUnsubscribe } from "../../../store/actions/unsubscribe";
 import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 import { walletRemoveCardsByType } from "../../../../../wallet/store/actions/cards";
+import { BackendCGN } from "../../../api/backendCgn";
+import { cgnUnsubscribe } from "../../../store/actions/unsubscribe";
 
 // handle the request for CGN unsubscription
 export function* cgnUnsubscriptionHandler(

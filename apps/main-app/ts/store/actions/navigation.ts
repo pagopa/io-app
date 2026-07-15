@@ -1,12 +1,13 @@
 import { CommonActions } from "@react-navigation/native";
-import NavigationService from "../../navigation/NavigationService";
-import ROUTES from "../../navigation/routes";
+
+import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes";
+import { CieCardReaderScreenNavigationParams } from "../../features/authentication/login/cie/screens/CieCardReaderScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../features/onboarding/screens/OnboardingServicesPreferenceScreen";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { ServiceDetailsScreenRouteParams } from "../../features/services/details/screens/ServiceDetailsScreen";
-import { CieCardReaderScreenNavigationParams } from "../../features/authentication/login/cie/screens/CieCardReaderScreen";
-import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes";
 import { SETTINGS_ROUTES } from "../../features/settings/common/navigation/routes";
+import NavigationService from "../../navigation/NavigationService";
+import ROUTES from "../../navigation/routes";
 
 /** @deprecated */
 export const resetToAuthenticationRoute = () =>

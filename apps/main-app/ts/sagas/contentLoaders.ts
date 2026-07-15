@@ -6,6 +6,7 @@ import * as t from "io-ts";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
+
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { ContentClient } from "../api/content";
@@ -21,14 +22,34 @@ import { convertUnknownToError } from "../utils/errors";
 
 const contentClient = ContentClient();
 
-/** Retrieves idps text data from the static content repository */
-function getContextualHelpData(): Promise<
-  t.Validation<BasicResponseType<ContextualHelp>>
-> {
-  return new Promise((resolve, _) =>
-    contentClient
-      .getContextualHelp()
-      .then(resolve, e => resolve(E.left([{ context: [], value: e }])))
+export function* watchContentSaga() {
+  // watch municipality loading request
+  yield* takeEvery(
+    getType(contentMunicipalityLoad.request),
+    watchContentMunicipalityLoadSaga
+  );
+
+  // Watch contextual help text data loading request
+  yield* takeLatest(
+    getType(loadContextualHelpData.request),
+    watchLoadContextualHelp
+  );
+
+  // Watch idps data loading request
+  yield* takeLatest(
+    getType(loadIdps.request),
+    watchLoadIdps,
+    contentClient.getIdps
+  );
+
+  // Load content related to the contextual help body
+  yield* put(loadContextualHelpData.request());
+
+  // available bonus list request
+  yield* takeLatest(
+    getType(loadAvailableBonuses.request),
+    handleLoadAvailableBonus,
+    contentClient.getBonusAvailable
   );
 }
 
@@ -56,6 +77,38 @@ function* fetchMunicipalityMetadata(
     return E.right<Error, MunicipalityMedadata>(response.right.value);
   } catch (error) {
     return E.left<Error, MunicipalityMedadata>(convertUnknownToError(error));
+  }
+}
+
+/** Retrieves idps text data from the static content repository */
+function getContextualHelpData(): Promise<
+  t.Validation<BasicResponseType<ContextualHelp>>
+> {
+  return new Promise((resolve, _) =>
+    contentClient
+      .getContextualHelp()
+      .then(resolve, e => resolve(E.left([{ context: [], value: e }])))
+  );
+}
+
+// handle available list loading
+function* handleLoadAvailableBonus(
+  getBonusAvailable: ReturnType<typeof ContentClient>["getBonusAvailable"]
+): SagaIterator {
+  try {
+    const bonusListReponse: SagaCallReturnType<typeof getBonusAvailable> =
+      yield* call(getBonusAvailable, {});
+    if (E.isRight(bonusListReponse)) {
+      if (bonusListReponse.right.status === 200) {
+        yield* put(loadAvailableBonuses.success(bonusListReponse.right.value));
+        return;
+      }
+      throw Error(`response status ${bonusListReponse.right.status}`);
+    } else {
+      throw Error(readableReport(bonusListReponse.left));
+    }
+  } catch (e) {
+    yield* put(loadAvailableBonuses.failure(convertUnknownToError(e)));
   }
 }
 
@@ -132,56 +185,4 @@ function* watchLoadIdps(
   } catch (e) {
     yield* put(loadIdps.failure(convertUnknownToError(e)));
   }
-}
-
-// handle available list loading
-function* handleLoadAvailableBonus(
-  getBonusAvailable: ReturnType<typeof ContentClient>["getBonusAvailable"]
-): SagaIterator {
-  try {
-    const bonusListReponse: SagaCallReturnType<typeof getBonusAvailable> =
-      yield* call(getBonusAvailable, {});
-    if (E.isRight(bonusListReponse)) {
-      if (bonusListReponse.right.status === 200) {
-        yield* put(loadAvailableBonuses.success(bonusListReponse.right.value));
-        return;
-      }
-      throw Error(`response status ${bonusListReponse.right.status}`);
-    } else {
-      throw Error(readableReport(bonusListReponse.left));
-    }
-  } catch (e) {
-    yield* put(loadAvailableBonuses.failure(convertUnknownToError(e)));
-  }
-}
-
-export function* watchContentSaga() {
-  // watch municipality loading request
-  yield* takeEvery(
-    getType(contentMunicipalityLoad.request),
-    watchContentMunicipalityLoadSaga
-  );
-
-  // Watch contextual help text data loading request
-  yield* takeLatest(
-    getType(loadContextualHelpData.request),
-    watchLoadContextualHelp
-  );
-
-  // Watch idps data loading request
-  yield* takeLatest(
-    getType(loadIdps.request),
-    watchLoadIdps,
-    contentClient.getIdps
-  );
-
-  // Load content related to the contextual help body
-  yield* put(loadContextualHelpData.request());
-
-  // available bonus list request
-  yield* takeLatest(
-    getType(loadAvailableBonuses.request),
-    handleLoadAvailableBonus,
-    contentClient.getBonusAvailable
-  );
 }
