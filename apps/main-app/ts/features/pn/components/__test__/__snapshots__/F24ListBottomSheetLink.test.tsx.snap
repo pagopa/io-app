@@ -410,7 +410,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -434,7 +433,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -1028,7 +1026,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -1052,7 +1049,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -1646,7 +1642,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -1670,7 +1665,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -2264,7 +2258,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -2288,7 +2281,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -2882,7 +2874,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -2906,7 +2897,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -3500,7 +3490,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -3524,7 +3513,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -4118,7 +4106,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -4142,7 +4129,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -4736,7 +4722,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -4760,7 +4745,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -5354,7 +5338,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -5378,7 +5361,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -5972,7 +5954,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -5996,7 +5977,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -6843,7 +6823,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -6867,7 +6846,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -7714,7 +7692,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -7738,7 +7715,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -8585,7 +8561,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -8609,7 +8584,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -9456,7 +9430,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -9480,7 +9453,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -10327,7 +10299,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -10351,7 +10322,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -11198,7 +11168,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -11222,7 +11191,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -12069,7 +12037,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -12093,7 +12060,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -12940,7 +12906,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -12964,7 +12929,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -13811,7 +13775,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -13835,7 +13798,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -14942,7 +14904,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -14966,7 +14927,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -16073,7 +16033,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -16097,7 +16056,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -17204,7 +17162,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -17228,7 +17185,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -18335,7 +18291,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -18359,7 +18314,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -19466,7 +19420,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -19490,7 +19443,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -20597,7 +20549,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -20621,7 +20572,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -21728,7 +21678,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -21752,7 +21701,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -22859,7 +22807,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",
@@ -22883,7 +22830,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                               {
                                 "alignItems": "center",
                                 "borderCurve": "continuous",
-                                "elevation": 0,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
                                 "overflow": "hidden",

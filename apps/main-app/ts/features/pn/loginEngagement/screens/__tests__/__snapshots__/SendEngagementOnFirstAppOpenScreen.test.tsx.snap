@@ -439,7 +439,6 @@ exports[`SendEngagementOnFirstAppOpenScreen should match the snapshot 1`] = `
                     {
                       "alignItems": "center",
                       "borderCurve": "continuous",
-                      "elevation": 0,
                       "flexDirection": "row",
                       "justifyContent": "center",
                       "overflow": "hidden",
@@ -463,7 +462,6 @@ exports[`SendEngagementOnFirstAppOpenScreen should match the snapshot 1`] = `
                     {
                       "alignItems": "center",
                       "borderCurve": "continuous",
-                      "elevation": 0,
                       "flexDirection": "row",
                       "justifyContent": "center",
                       "overflow": "hidden",
@@ -671,7 +669,6 @@ exports[`SendEngagementOnFirstAppOpenScreen should match the snapshot 1`] = `
                     {
                       "alignItems": "center",
                       "borderCurve": "continuous",
-                      "elevation": 0,
                       "flexDirection": "row",
                       "justifyContent": "center",
                       "overflow": "hidden",
@@ -695,7 +692,6 @@ exports[`SendEngagementOnFirstAppOpenScreen should match the snapshot 1`] = `
                     {
                       "alignItems": "center",
                       "borderCurve": "continuous",
-                      "elevation": 0,
                       "flexDirection": "row",
                       "justifyContent": "center",
                       "overflow": "hidden",
