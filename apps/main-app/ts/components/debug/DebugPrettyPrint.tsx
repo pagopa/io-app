@@ -18,7 +18,7 @@ import Share from "react-native-share";
 import { Prettify } from "../../types/helpers";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { debugInfoReplacer } from "./utils";
-import { useDebugEnabled } from "./withDebugEnabled";
+import { WithDebugEnabled } from "./withDebugEnabled";
 
 type ExpandableProps =
   | {
@@ -48,7 +48,6 @@ export const DebugPrettyPrint = ({
   expandable = true,
   isExpanded = false
 }: Props) => {
-  const isDebug = useDebugEnabled();
   const toast = useIOToast();
   const [expanded, setExpanded] = useState(isExpanded);
 
@@ -76,10 +75,6 @@ export const DebugPrettyPrint = ({
     );
   }, [data, expandable, expanded]);
 
-  if (!isDebug) {
-    return null;
-  }
-
   const shareData = async () => {
     try {
       // Create a temporary file path
@@ -104,41 +99,43 @@ export const DebugPrettyPrint = ({
   };
 
   return (
-    <View style={styles.container} testID="DebugPrettyPrintTestID">
-      <View style={styles.header}>
-        <BodySmall color="white" weight="Semibold">
-          {title}
-        </BodySmall>
-        <HStack space={16}>
-          <IconButton
-            accessibilityLabel="share"
-            color="contrast"
-            icon={"shareiOs"}
-            iconSize={20}
-            onPress={shareData}
-          />
-          <IconButton
-            accessibilityLabel="copy"
-            color="contrast"
-            icon={"copy"}
-            iconSize={20}
-            onPress={() =>
-              clipboardSetStringWithFeedback(JSON.stringify(data, null, 2))
-            }
-          />
-          {expandable && (
+    <WithDebugEnabled>
+      <View style={styles.container} testID="DebugPrettyPrintTestID">
+        <View style={styles.header}>
+          <BodySmall color="white" weight="Semibold">
+            {title}
+          </BodySmall>
+          <HStack space={16}>
             <IconButton
-              accessibilityLabel="show"
+              accessibilityLabel="share"
               color="contrast"
-              icon={expanded ? "eyeHide" : "eyeShow"}
-              iconSize={24}
-              onPress={() => setExpanded(_ => !_)}
+              icon={"shareiOs"}
+              iconSize={20}
+              onPress={shareData}
             />
-          )}
-        </HStack>
+            <IconButton
+              accessibilityLabel="copy"
+              color="contrast"
+              icon={"copy"}
+              iconSize={20}
+              onPress={() =>
+                clipboardSetStringWithFeedback(JSON.stringify(data, null, 2))
+              }
+            />
+            {expandable && (
+              <IconButton
+                accessibilityLabel="show"
+                color="contrast"
+                icon={expanded ? "eyeHide" : "eyeShow"}
+                iconSize={24}
+                onPress={() => setExpanded(_ => !_)}
+              />
+            )}
+          </HStack>
+        </View>
+        {content}
       </View>
-      {content}
-    </View>
+    </WithDebugEnabled>
   );
 };
 

@@ -6,7 +6,7 @@ import {
 import { PropsWithChildren } from "react";
 import { View } from "react-native";
 
-import { useDebugEnabled } from "./withDebugEnabled";
+import { WithDebugEnabled } from "./withDebugEnabled";
 
 export type DebugViewProps = {
   ignoreHorizontalMargins?: boolean;
@@ -20,12 +20,8 @@ export const DebugView = ({
   children,
   title = "Debug",
   ignoreHorizontalMargins = false
-}: PropsWithChildren<DebugViewProps>) => {
-  const isDebug = useDebugEnabled();
-  if (!isDebug) {
-    return null;
-  }
-  return (
+}: PropsWithChildren<DebugViewProps>) => (
+  <WithDebugEnabled>
     <View
       style={{
         paddingHorizontal: 24,
@@ -40,5 +36,5 @@ export const DebugView = ({
       <ListItemHeader iconName="ladybug" label={title} />
       {children}
     </View>
-  );
-};
+  </WithDebugEnabled>
+);
