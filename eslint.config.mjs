@@ -201,7 +201,13 @@ export default defineConfig([
       "@typescript-eslint/no-floating-promises": "error",
       "@typescript-eslint/restrict-plus-operands": "error",
       "@typescript-eslint/no-misused-promises": "error",
-      "@typescript-eslint/strict-boolean-expressions": "warn",
+      "@typescript-eslint/strict-boolean-expressions": [
+        "warn",
+        {
+          allowNullableBoolean: true,
+          allowNullableString: true
+        }
+      ],
 
       // REACT
       "react/jsx-uses-react": "off",
