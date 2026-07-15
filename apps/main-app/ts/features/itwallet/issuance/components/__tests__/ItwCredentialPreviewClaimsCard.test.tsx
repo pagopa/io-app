@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -25,8 +26,8 @@ function renderComponent() {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwCredentialPreviewClaimsCard
-        title="Tessera Sanitaria"
         data={ItwStoredCredentialsMocks.ts}
+        title="Tessera Sanitaria"
       />
     ),
     ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW,
