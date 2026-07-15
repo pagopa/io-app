@@ -1,21 +1,22 @@
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
+import * as TE from "fp-ts/lib/TaskEither";
 import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
 import URLParse from "url-parse";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentsCheckoutRoutes } from "../../checkout/navigation/routes";
+import { storePaymentIsOnboardedAction } from "../../history/store/actions";
 import * as analytics from "../analytics";
 import {
   contextualOnboardingStartWebViewFlow,
   paymentsStartOnboardingAction
 } from "../store/actions";
 import { selectPaymentOnboardingRequestResult } from "../store/selectors";
-import { storePaymentIsOnboardedAction } from "../../history/store/actions";
 import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
@@ -23,22 +24,22 @@ import {
 import { ONBOARDING_CALLBACK_URL_SCHEMA } from "../utils";
 
 export type WalletOnboardingOutcomeParams = {
-  outcome: WalletOnboardingOutcome;
-  walletId?: string;
   orderId?: string;
+  outcome: WalletOnboardingOutcome;
   transactionId?: string;
+  walletId?: string;
+};
+
+type WalletOnboardingWebView = {
+  isError: boolean;
+  isLoading: boolean;
+  isPendingOnboarding: boolean;
+  startContextualOnboarding: (url: string) => void;
+  startOnboarding: (paymentMethodId: string) => void;
 };
 
 type WalletOnboardingWebViewProps = {
   onOnboardingOutcome: (params: WalletOnboardingOutcomeParams) => void;
-};
-
-type WalletOnboardingWebView = {
-  isLoading: boolean;
-  isError: boolean;
-  isPendingOnboarding: boolean;
-  startOnboarding: (paymentMethodId: string) => void;
-  startContextualOnboarding: (url: string) => void;
 };
 
 /**
@@ -77,7 +78,7 @@ export const useWalletOnboardingWebView = ({
   );
 
   const handleOnboardingResult = useCallback(
-    (resultUrl: string, isContextual: boolean = false) => {
+    (resultUrl: string, isContextual = false) => {
       const url = new URLParse(resultUrl, true);
 
       const outcome = pipe(
@@ -110,7 +111,7 @@ export const useWalletOnboardingWebView = ({
   );
 
   const openBrowserSessionOnboarding = useCallback(
-    async (url: string, isContextual: boolean = false) => {
+    async (url: string, isContextual = false) => {
       try {
         const result =
           Platform.OS === "ios"

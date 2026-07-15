@@ -592,7 +592,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -616,7 +615,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -1277,7 +1275,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -1301,7 +1298,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -1462,7 +1458,7 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                             Parte di
                           </Text>
                           <SvgMock
-                            accessibilityLabel="IT Wallet"
+                            accessibilityLabel="IT-Wallet"
                             height={16}
                             width={80}
                           />

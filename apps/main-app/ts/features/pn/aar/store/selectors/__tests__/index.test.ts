@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import {
   aarAdresseeDenominationSelector,
   currentAarFlowData,
+  currentAarFlowIunSelector,
   currentAarFlowStateAssistanceErrorCode,
   currentAarFlowStateErrorDebugInfoSelector,
   currentAarFlowStateType,
-  currentAarFlowIunSelector,
   thirdPartySenderDenominationSelector
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -84,8 +85,8 @@ describe("thirdPartySenderDenominationSelector", () => {
     expect(result).toBeUndefined();
   });
 });
-describe(" currentAarFlowData and currentAarFlowStateType", () => {
-  it(" should return the correct AAR flow state from the global state", () => {
+describe("currentAarFlowData and currentAarFlowStateType", () => {
+  it("should return the correct AAR flow state from the global state", () => {
     const mockFetchingState =
       sendAarMockStateFactory.fetchingNotificationData();
 
@@ -120,11 +121,11 @@ describe(" currentAarFlowData and currentAarFlowStateType", () => {
 });
 describe("currentAarFlowStateAssistanceErrorCode", () => {
   const testCases: Array<{
-    description: string;
-    traceId?: string;
-    errors?: Array<{ code: string }>;
     aarFlowType?: string;
+    description: string;
+    errors?: Array<{ code: string }>;
     expected: string | undefined;
+    traceId?: string;
   }> = [
     {
       description: "should return traceId if present, regardless of errors",

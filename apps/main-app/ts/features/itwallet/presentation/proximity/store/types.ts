@@ -3,8 +3,8 @@
  * within a proximity presentation consent.
  */
 export type ConsentCredentialInfo = {
-  credentialType: string;
   claimNames: Array<string>;
+  credentialType: string;
 };
 
 /**
@@ -14,8 +14,8 @@ export type ConsentCredentialInfo = {
  * and claim names requested.
  */
 export type ConsentData = {
-  rpId: string;
   credentials: Array<ConsentCredentialInfo>;
+  rpId: string;
 };
 
 /**

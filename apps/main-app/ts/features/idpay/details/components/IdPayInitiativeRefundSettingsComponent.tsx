@@ -3,12 +3,13 @@ import {
   ListItemHeader,
   ListItemNav,
   ListItemNavAlert
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/core";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { View } from "react-native";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+import { View } from "react-native";
+
 import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
@@ -59,16 +60,16 @@ const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
     O.fold(
       () => (
         <ListItemNav
-          value={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-          )}
           accessibilityLabel={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           )}
           description={
-            <IOSkeleton shape="rectangle" width={100} height={21} radius={4} />
+            <IOSkeleton height={21} radius={4} shape="rectangle" width={100} />
           }
           onPress={() => null}
+          value={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+          )}
         />
       ),
       ({ initiativeId, nInstr, status }) => {
@@ -97,14 +98,14 @@ const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
         return areActionsRequired ? (
           <ListItemNavAlert
             {...listItemOptions}
-            description={I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
-            )}
             accessibilityLabel={`${
               listItemOptions.accessibilityLabel
             }, ${I18n.t(
               "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
             )}`}
+            description={I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+            )}
           />
         ) : (
           <ListItemNav {...listItemOptions} />
@@ -119,16 +120,16 @@ const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
     O.fold(
       () => (
         <ListItemNav
-          value={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
-          )}
-          description={
-            <IOSkeleton shape="rectangle" width={270} height={21} radius={4} />
-          }
           accessibilityLabel={`${I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
           )}, ${I18n.t("global.remoteStates.loading")}`}
+          description={
+            <IOSkeleton height={21} radius={4} shape="rectangle" width={270} />
+          }
           onPress={() => null}
+          value={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
+          )}
         />
       ),
       ({ initiativeId, iban, status }) => {
@@ -148,14 +149,14 @@ const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
         return areActionsRequired ? (
           <ListItemNavAlert
             {...listItemOptions}
-            description={I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
-            )}
             accessibilityLabel={`${
               listItemOptions.accessibilityLabel
             }, ${I18n.t(
               "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
             )}`}
+            description={I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+            )}
           />
         ) : (
           <ListItemNav

@@ -1,9 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import reducer, {
   FimsExportSuccessStates,
   FimsHistoryState,
   INITIAL_STATE
 } from "..";
+import { Access } from "../../../../../../../definitions/fims_history/Access";
+import { AccessHistoryPage } from "../../../../../../../definitions/fims_history/AccessHistoryPage";
 import {
   isError,
   isReady,
@@ -21,8 +24,6 @@ import {
   resetFimsHistoryExportState,
   resetFimsHistoryState
 } from "../../actions";
-import { AccessHistoryPage } from "../../../../../../../definitions/fims_history/AccessHistoryPage";
-import { Access } from "../../../../../../../definitions/fims_history/Access";
 
 describe("INITIAL_STATE", () => {
   it("Should match snapshot", () => {
@@ -296,7 +297,7 @@ const generateHistoryExportInitialStatuses = (): ReadonlyArray<
   remoteError(null)
 ];
 
-describe("fimsHistoryReducer, receiving 'fimsHistoryExport.request'", () =>
+describe("fimsHistoryReducer, receiving 'fimsHistoryExport.request'", () => {
   generateHistoryExportInitialStatuses().forEach(historyExportInitialState => {
     it(`Given initial 'historyExportState' of type '${
       historyExportInitialState.kind
@@ -314,9 +315,10 @@ describe("fimsHistoryReducer, receiving 'fimsHistoryExport.request'", () =>
       expect(historyState.consentsList).toEqual(initialState.consentsList);
       expect(historyState.historyExportState).toBe(remoteLoading);
     });
-  }));
+  });
+});
 
-describe("fimsHistoryReducer, receiving 'fimsHistoryExport.success'", () =>
+describe("fimsHistoryReducer, receiving 'fimsHistoryExport.success'", () => {
   generateHistoryExportInitialStatuses().forEach(historyExportInitialState => {
     const initialState = {
       consentsList: generateInitialConsentsList(),
@@ -350,9 +352,10 @@ describe("fimsHistoryReducer, receiving 'fimsHistoryExport.success'", () =>
         expect(historyExportState.value).toBe(exportState);
       })
     );
-  }));
+  });
+});
 
-describe("fimsHistoryReducer, receiving 'fimsHistoryExport.failure'", () =>
+describe("fimsHistoryReducer, receiving 'fimsHistoryExport.failure'", () => {
   generateHistoryExportInitialStatuses().forEach(historyExportInitialState => {
     const initialState = {
       consentsList: generateInitialConsentsList(),
@@ -380,9 +383,10 @@ describe("fimsHistoryReducer, receiving 'fimsHistoryExport.failure'", () =>
 
       expect(historyExportState.error).toBeNull();
     });
-  }));
+  });
+});
 
-describe("fimsHistoryReducer, receiving 'resetFimsHistoryExportState'", () =>
+describe("fimsHistoryReducer, receiving 'resetFimsHistoryExportState'", () => {
   generateHistoryExportInitialStatuses().forEach(historyExportInitialState => {
     const initialState = {
       consentsList: generateInitialConsentsList(),
@@ -403,7 +407,8 @@ describe("fimsHistoryReducer, receiving 'resetFimsHistoryExportState'", () =>
       expect(isUndefined(historyState.historyExportState)).toBe(true);
       expect(historyState.consentsList).toEqual(initialState.consentsList);
     });
-  }));
+  });
+});
 
 describe("fimsHistoryReducer, receiving 'resetFimsHistoryState'", () => {
   const consentsData = {

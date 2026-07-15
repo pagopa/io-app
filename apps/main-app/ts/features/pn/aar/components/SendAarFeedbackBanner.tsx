@@ -1,13 +1,14 @@
-import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, VSpacer } from "@io-app/design-system";
+
 import { useIOSelector } from "../../../../store/hooks";
-import {
-  fallbackForLocalizedMessageKeys,
-  getFullLocale
-} from "../../../../utils/locale";
 import {
   isPnFeedbackBannerEnabledSelector,
   pnFeedbackBannerConfigSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  fallbackForLocalizedMessageKeys,
+  getFullLocale
+} from "../../../../utils/locale";
 import { openWebUrl } from "../../../../utils/url";
 
 export const SendAArFeedbackBanner = () => {
@@ -23,17 +24,17 @@ export const SendAArFeedbackBanner = () => {
   return (
     <>
       <Banner
-        color="turquoise"
-        pictogramName="feedback"
-        title={feedbackBannerConfig.title?.[localeFallback]}
-        content={feedbackBannerConfig.description[localeFallback]}
         action={feedbackBannerConfig.action?.label[localeFallback] ?? ""}
+        color="turquoise"
+        content={feedbackBannerConfig.description[localeFallback]}
         onPress={() => {
           if (!feedbackBannerConfig.action) {
             return;
           }
           return openWebUrl(feedbackBannerConfig.action.url);
         }}
+        pictogramName="feedback"
+        title={feedbackBannerConfig.title?.[localeFallback]}
       />
       <VSpacer size={24} />
     </>

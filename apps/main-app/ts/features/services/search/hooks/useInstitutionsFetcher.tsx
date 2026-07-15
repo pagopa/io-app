@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { searchPaginatedInstitutionsGet } from "../store/actions";
 import {
@@ -11,7 +12,7 @@ import {
   paginatedInstitutionsSelector
 } from "../store/selectors";
 
-const LIMIT: number = 20;
+const LIMIT = 20;
 
 export const useInstitutionsFetcher = () => {
   const dispatch = useIODispatch();

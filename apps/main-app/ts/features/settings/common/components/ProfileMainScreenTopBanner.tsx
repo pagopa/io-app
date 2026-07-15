@@ -1,11 +1,9 @@
-import {
-  Alert,
-  Banner,
-  ContentWrapper,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { useCallback, useEffect } from "react";
+import { Alert, Banner, ContentWrapper, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
+import { useCallback, useEffect } from "react";
+
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setShowAppearanceSettingsBanner } from "../../../appearanceSettings/store/actions";
 import { settingsBannerToShowSelector } from "../../../appearanceSettings/store/selectors";
 import {
@@ -13,8 +11,6 @@ import {
   trackPushNotificationsBannerVisualized
 } from "../../../pushNotifications/analytics";
 import { openSystemNotificationSettingsScreen } from "../../../pushNotifications/utils";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { SETTINGS_ROUTES } from "../navigation/routes";
 
 export const ProfileMainScreenTopBanner = () => {
@@ -46,32 +42,32 @@ export const ProfileMainScreenTopBanner = () => {
   }, [bannerToShow]);
 
   switch (bannerToShow) {
-    case "NOTIFICATIONS":
-      return (
-        <ContentWrapper>
-          <VSpacer size={16} />
-          <Alert
-            content={I18n.t("notifications.profileBanner.title")}
-            action={I18n.t("notifications.profileBanner.cta")}
-            onPress={onPressNotifications}
-            variant="error"
-            testID="notifications-banner"
-          />
-        </ContentWrapper>
-      );
     case "APPEARANCE_SETTINGS_BANNER":
       return (
         <ContentWrapper>
           <VSpacer size={16} />
           <Banner
-            title={I18n.t("profile.main.appearanceBanner.title")}
             action={I18n.t("profile.main.appearanceBanner.action")}
-            pictogramName={"help"}
             color={"neutral"}
-            onPress={navigateToAppearance}
-            onClose={handleCloseBanner}
             labelClose={I18n.t("profile.main.banner.close")}
+            onClose={handleCloseBanner}
+            onPress={navigateToAppearance}
+            pictogramName={"help"}
             testID={"appearance-settings-banner"}
+            title={I18n.t("profile.main.appearanceBanner.title")}
+          />
+        </ContentWrapper>
+      );
+    case "NOTIFICATIONS":
+      return (
+        <ContentWrapper>
+          <VSpacer size={16} />
+          <Alert
+            action={I18n.t("notifications.profileBanner.cta")}
+            content={I18n.t("notifications.profileBanner.title")}
+            onPress={onPressNotifications}
+            testID="notifications-banner"
+            variant="error"
           />
         </ContentWrapper>
       );

@@ -22,10 +22,10 @@ import {
   updatePaymentForMessage,
   upsertMessageStatusAttributes
 } from "..";
-import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
 import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
 import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { UIMessage, UIMessageDetails } from "../../../types";
 import {
   MessagePaymentError,
@@ -55,7 +55,7 @@ describe("index", () => {
   const timeoutError: MessagePaymentError = toTimeoutMessagePaymentError();
   const paymentId = "00123456789001122334455667788";
 
-  describe("getMessageDataAction.request", () =>
+  describe("getMessageDataAction.request", () => {
     [false, true].forEach(fromPushNotification =>
       it(`should construt the action with proper type and payload (fromPushNotification ${fromPushNotification})`, () => {
         const requestAction = getMessageDataAction.request({
@@ -68,9 +68,10 @@ describe("index", () => {
           fromPushNotification
         });
       })
-    ));
+    );
+  });
 
-  describe("getMessageDataAction.success", () =>
+  describe("getMessageDataAction.success", () => {
     [false, true].forEach(containsAttachments =>
       [undefined, false, true].forEach(containsPayment =>
         [false, true].forEach(firstTimeOpening =>
@@ -125,9 +126,10 @@ describe("index", () => {
           )
         )
       )
-    ));
+    );
+  });
 
-  describe("getMessageDataAction.failure", () =>
+  describe("getMessageDataAction.failure", () => {
     (
       [
         "none",
@@ -152,7 +154,8 @@ describe("index", () => {
           });
         })
       )
-    ));
+    );
+  });
 
   describe("loadThirdPartyMessage.request", () => {
     it("should match expected type and payload", () => {

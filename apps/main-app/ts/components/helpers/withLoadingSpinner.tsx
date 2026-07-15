@@ -1,6 +1,6 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
-
 import { Component, ComponentType } from "react";
+
 import LoadingSpinnerOverlay from "../LoadingSpinnerOverlay";
 
 /**

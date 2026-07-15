@@ -7,6 +7,27 @@ import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 
 /**
+ * return the same text with each token has the first char in uppercase.
+ * tokens are retrieved by splitting the text with the provided separator
+ * ex capitalize("Hello World") -> "Hello Word"
+ * ex capitalize("hello,world",",") -> "Hello,Word"
+ * @param text
+ * @param separator
+ */
+export function capitalize(text: string, separator = " ") {
+  return text
+    .split(separator)
+    .reduce(
+      (acc: string, curr: string, index: number) =>
+        `${acc}${index === 0 ? "" : separator}${curr.replace(
+          new RegExp(curr.trimLeft(), "ig"),
+          _.capitalize(curr.trimLeft())
+        )}`,
+      ""
+    );
+}
+
+/**
  * Check if the source includes searchText.
  * To make a case-insensitive check both the source and the searchText are
  * converted to lower-case.
@@ -22,32 +43,11 @@ export function isTextIncludedCaseInsensitive(
 }
 
 /**
- * return the same text with each token has the first char in uppercase.
- * tokens are retrieved by splitting the text with the provided separator
- * ex capitalize("Hello World") -> "Hello Word"
- * ex capitalize("hello,world",",") -> "Hello,Word"
- * @param text
- * @param separator
- */
-export function capitalize(text: string, separator: string = " ") {
-  return text
-    .split(separator)
-    .reduce(
-      (acc: string, curr: string, index: number) =>
-        `${acc}${index === 0 ? "" : separator}${curr.replace(
-          new RegExp(curr.trimLeft(), "ig"),
-          _.capitalize(curr.trimLeft())
-        )}`,
-      ""
-    );
-}
-
-/**
  * determine if the text is undefined or empty (or composed only by blanks)
  * @param text
  */
 export const isStringNullyOrEmpty = (
-  text: string | null | undefined
+  text: null | string | undefined
 ): boolean =>
   pipe(
     text,
@@ -63,7 +63,7 @@ export const isStringNullyOrEmpty = (
  * @param text
  */
 export const maybeNotNullyString = (
-  text: string | null | undefined
+  text: null | string | undefined
 ): O.Option<string> =>
   pipe(
     O.fromPredicate((t: string) => t.trim().length > 0)(
@@ -96,7 +96,7 @@ export const splitAndTakeFirst = (text: string, splitter: string) =>
 
 export const withTrailingPoliceCarLightEmojii = (
   text: string,
-  visible: boolean = true
+  visible = true
 ) => {
   if (visible) {
     return `${text} \u{1F6A8}`;
@@ -139,10 +139,7 @@ export const formatBytesWithUnit = (bytes: number) => {
  * capitalizeTextName("d'angelo"); //returns "D'Angelo"
  */
 
-export const capitalizeTextName = (
-  text: string,
-  separator: string = " "
-): string => {
+export const capitalizeTextName = (text: string, separator = " "): string => {
   // Match leading and trailing spaces
   const leadingSpacesMatch = /^\s*/.exec(text);
   const trailingSpacesMatch = /\s*$/.exec(text);

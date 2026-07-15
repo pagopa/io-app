@@ -1,6 +1,7 @@
-import * as O from "fp-ts/lib/Option";
 import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+
 import {
   cleanTransactionDescription,
   decodePosteDataMatrix,
@@ -121,7 +122,9 @@ describe("getTransactionIUV", () => {
     Tuple2("RFC/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION", O.none),
     Tuple2("RFB/", O.none)
   ].forEach(tuple => {
-    expect(getTransactionIUV(tuple.e1)).toEqual(tuple.e2);
+    it(`should extract the IUV from "${tuple.e1}"`, () => {
+      expect(getTransactionIUV(tuple.e1)).toEqual(tuple.e2);
+    });
   });
 });
 

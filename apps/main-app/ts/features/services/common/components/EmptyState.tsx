@@ -6,7 +6,7 @@ import {
   VSpacer,
   VStack,
   WithTestID
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 const styles = StyleSheet.create({
@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
 
 export type EmptyStateProps = WithTestID<{
   pictogram: IOPictograms;
-  title: string;
   subtitle?: string;
+  title: string;
 }>;
 
 export const EmptyState = ({
@@ -28,7 +28,7 @@ export const EmptyState = ({
   testID
 }: EmptyStateProps) => (
   <View testID={testID}>
-    <VStack style={{ alignItems: "center" }} space={24}>
+    <VStack space={24} style={{ alignItems: "center" }}>
       <Pictogram name={pictogram} size={120} />
       <H6 accessibilityRole="header" style={styles.text}>
         {title}

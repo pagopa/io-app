@@ -6,13 +6,19 @@ import {
   hexToRgba,
   IOButton,
   IOColors,
+  IOVisualCostants,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect, useLayoutEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import Animated, { LinearTransition } from "react-native-reanimated";
+import Animated, {
+  LinearTransition,
+  useAnimatedRef
+} from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -50,7 +56,10 @@ export const ItwProximityPresentmentScreen = ({
 }: ItwProximityPresentmentScreenProps) => {
   const { source } = route.params;
 
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
+
   const navigation = useIONavigation();
+  const safeAreaInsets = useSafeAreaInsets();
 
   const machineRef = ItwProximityMachineContext.useActorRef();
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
@@ -86,17 +95,21 @@ export const ItwProximityPresentmentScreen = ({
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          title={""}
-          type="singleAction"
+          animatedRef={animatedScrollViewRef}
+          enableDiscreteTransition={true}
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: () => machineRef.send({ type: "close" })
           }}
+          title={""}
+          transparent={true}
+          type="singleAction"
         />
-      )
+      ),
+      headerTransparent: true
     });
-  }, [navigation, machineRef]);
+  }, [navigation, machineRef, animatedScrollViewRef]);
 
   const handleContactlessPress = () => {
     trackItwProximityNfcStart();
@@ -117,51 +130,55 @@ export const ItwProximityPresentmentScreen = ({
   };
 
   return (
-    <IOScrollView>
+    <IOScrollView
+      animatedRef={animatedScrollViewRef}
+      contentContainerStyle={{
+        marginTop: safeAreaInsets.top + IOVisualCostants.headerHeight
+      }}
+    >
       {shouldShowExpiredCredentialsBanner && (
         <Animated.View
           layout={LinearTransition.duration(200)}
           style={styles.expiredBanner}
         >
           <Alert
-            testID="itwExpiredBannerTestID"
-            variant="error"
-            content={I18n.t(
-              "features.itWallet.presentation.proximity.engagement.invalidBanner.content"
-            )}
             action={I18n.t(
               "features.itWallet.presentation.proximity.engagement.invalidBanner.action"
             )}
+            content={I18n.t(
+              "features.itWallet.presentation.proximity.engagement.invalidBanner.content"
+            )}
             onPress={handleReissuePress}
+            testID="itwExpiredBannerTestID"
+            variant="error"
           />
         </Animated.View>
       )}
 
-      <View style={styles.qrCodeShadow}>
-        <ItwBrandedBox
-          variant={isFailure ? "error" : "default"}
-          backgroundVariant={"gradient"}
-        >
-          <VStack space={16}>
-            {!isFailure && (
-              <VStack space={8} style={{ marginHorizontal: 16 }}>
-                <H6 style={{ textAlign: "center" }}>
-                  {I18n.t(
-                    "features.itWallet.presentation.proximity.engagement.title"
-                  )}
-                </H6>
-                <BodySmall style={{ textAlign: "center" }}>
-                  {I18n.t(
-                    "features.itWallet.presentation.proximity.engagement.instruction"
-                  )}
-                </BodySmall>
-              </VStack>
-            )}
+      <ItwBrandedBox
+        backgroundVariant={"gradient"}
+        style={styles.qrCodeShadow}
+        variant={isFailure ? "error" : "default"}
+      >
+        <VStack space={16}>
+          {!isFailure && (
+            <VStack space={8} style={{ marginHorizontal: 16 }}>
+              <H6 style={{ textAlign: "center" }}>
+                {I18n.t(
+                  "features.itWallet.presentation.proximity.engagement.title"
+                )}
+              </H6>
+              <BodySmall style={{ textAlign: "center" }}>
+                {I18n.t(
+                  "features.itWallet.presentation.proximity.engagement.instruction"
+                )}
+              </BodySmall>
+            </VStack>
+          )}
 
-            <ItwProximityQrCodeImage source={source} />
-          </VStack>
-        </ItwBrandedBox>
-      </View>
+          <ItwProximityQrCodeImage source={source} />
+        </VStack>
+      </ItwBrandedBox>
 
       <View
         style={{ alignSelf: "center", marginTop: 32, marginBottom: 24, gap: 8 }}
@@ -170,13 +187,13 @@ export const ItwProximityPresentmentScreen = ({
           {I18n.t("features.itWallet.presentation.proximity.engagement.nfc.or")}
         </BodySmall>
         <IOButton
-          variant="link"
+          icon="contactless"
+          iconPosition="end"
           label={I18n.t(
             "features.itWallet.presentation.proximity.engagement.nfc.action"
           )}
           onPress={handleContactlessPress}
-          icon="contactless"
-          iconPosition="end"
+          variant="link"
         />
       </View>
 

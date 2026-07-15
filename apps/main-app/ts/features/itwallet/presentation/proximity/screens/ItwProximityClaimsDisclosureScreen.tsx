@@ -9,6 +9,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useLayoutEffect } from "react";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { generateDynamicUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig.ts";
@@ -104,13 +105,13 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
       headerShown: true,
       header: () => (
         <HeaderSecondLevel
-          title={""}
-          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: dismissalDialog.show
           }}
+          title={""}
+          type="singleAction"
         />
       )
     });
@@ -143,6 +144,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
 
   return (
     <ForceScrollDownView
+      buttonAccessibilityLabel={I18n.t("global.accessibility.scrollToBottom")}
       footerActions={{
         actions: {
           type: "SingleButton",

@@ -3,6 +3,7 @@ import * as O from "fp-ts/Option";
 import { SagaIterator } from "redux-saga";
 import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import {
   syncItwAnalyticsProperties,
   updateNfcInfoTrackingProperties,
@@ -24,7 +25,7 @@ import {
   checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
-import { watchItwTasksSaga } from "../../statusList/saga";
+import { watchItwStatusListSaga } from "../../statusList/saga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
 import {
   itwSetAuthLevel,
@@ -33,39 +34,6 @@ import {
 import { isItwCredential } from "../utils/itwCredentialUtils";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess";
-
-export function* watchItwSaga(): SagaIterator {
-  yield* takeLatest(
-    itwSetFiscalCodeWhitelisted,
-    handleAuthLevelSanitizationSaga
-  );
-
-  yield* fork(warmUpIntegrityServiceSaga);
-  yield* fork(watchItwLifecycleSaga);
-  // Fetch and process the Digital Credentials Catalogue
-  yield* fork(watchItwCredentialsCatalogueSaga);
-  // Check if the fiscal code is enabled, to enable the L3
-  yield* fork(checkFiscalCodeEnabledSaga);
-  // Registers and watches background tasks
-  yield* fork(watchItwTasksSaga);
-  // Watch ITW analytics lifecycle (initial sync and reactive updates)
-  yield* fork(watchItwAnalyticsSaga);
-
-  const isWalletInstanceConsistent = yield* call(
-    checkWalletInstanceInconsistencySaga
-  );
-
-  // If the wallet instance is inconsistent, we cannot proceed further.
-  if (!isWalletInstanceConsistent) {
-    return;
-  }
-
-  // Status assertions of credentials are checked only in case of a valid wallet instance.
-  // For this reason, these sagas must be called sequentially.
-  yield* call(checkWalletInstanceStateSaga);
-  yield* call(checkCurrentWalletInstanceStateSaga);
-  yield* call(checkCredentialsStatusAssertion);
-}
 
 /**
  * Watcher for ITW sagas that do not require internet connection or a valid session
@@ -94,6 +62,39 @@ export function* watchItwOfflineSaga(): SagaIterator {
 
   // TODO remove this fork when NFC antenna info tracking is not needed anymore
   yield* fork(updateNfcInfoTrackingProperties);
+}
+
+export function* watchItwSaga(): SagaIterator {
+  yield* takeLatest(
+    itwSetFiscalCodeWhitelisted,
+    handleAuthLevelSanitizationSaga
+  );
+
+  yield* fork(warmUpIntegrityServiceSaga);
+  yield* fork(watchItwLifecycleSaga);
+  // Fetch and process the Digital Credentials Catalogue
+  yield* fork(watchItwCredentialsCatalogueSaga);
+  // Check if the fiscal code is enabled, to enable the L3
+  yield* fork(checkFiscalCodeEnabledSaga);
+  // Registers and watches background tasks
+  yield* fork(watchItwStatusListSaga);
+  // Watch ITW analytics lifecycle (initial sync and reactive updates)
+  yield* fork(watchItwAnalyticsSaga);
+
+  const isWalletInstanceConsistent = yield* call(
+    checkWalletInstanceInconsistencySaga
+  );
+
+  // If the wallet instance is inconsistent, we cannot proceed further.
+  if (!isWalletInstanceConsistent) {
+    return;
+  }
+
+  // Status assertions of credentials are checked only in case of a valid wallet instance.
+  // For this reason, these sagas must be called sequentially.
+  yield* call(checkWalletInstanceStateSaga);
+  yield* call(checkCurrentWalletInstanceStateSaga);
+  yield* call(checkCredentialsStatusAssertion);
 }
 
 /**

@@ -1,5 +1,7 @@
-import { useCallback, useEffect } from "react";
 import I18n from "i18next";
+import { useCallback, useEffect } from "react";
+
+import SecuritySuggestions from "../features/authentication/fastLogin/components/SecuritySuggestions";
 import {
   isFastLoginFFEnabledSelector,
   isSecurityAdviceAcknowledgedEnabled,
@@ -7,7 +9,6 @@ import {
 } from "../features/authentication/fastLogin/store/selectors";
 import { useIOSelector } from "../store/hooks";
 import { useIOBottomSheetModal } from "../utils/hooks/bottomSheet";
-import SecuritySuggestions from "../features/authentication/fastLogin/components/SecuritySuggestions";
 
 /**
  * @param useManualBottomsheetOpening if true the caller must use the methods exported by
@@ -15,7 +16,7 @@ import SecuritySuggestions from "../features/authentication/fastLogin/components
  */
 
 export const useSecuritySuggestionsBottomSheet = (
-  useManualBottomsheetOpening: boolean = true
+  useManualBottomsheetOpening = true
 ) => {
   const isFastLoginFFEnabled = useIOSelector(isFastLoginFFEnabledSelector);
   const securityAdviceAcknowledged = useIOSelector(

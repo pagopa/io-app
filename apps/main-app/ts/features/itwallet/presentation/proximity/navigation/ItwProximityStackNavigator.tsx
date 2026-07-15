@@ -2,6 +2,7 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
+
 import { isGestureEnabled } from "../../../../../utils/navigation";
 import { ItwProximityMachineProvider } from "../machine/provider";
 import { ItwBluetoothActivationScreen } from "../screens/ItwBluetoothActivationScreen.tsx";
@@ -32,47 +33,47 @@ const InnerNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <Stack.Screen
-      name={ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS}
       component={ItwBluetoothPermissionsScreen}
+      name={ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS}
       options={hiddenHeader}
     />
     <Stack.Screen
-      name={ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION}
       component={ItwBluetoothActivationScreen}
+      name={ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION}
       options={hiddenHeader}
     />
     <Stack.Screen
-      name={ITW_PROXIMITY_ROUTES.NFC_ACTIVATION}
       component={ItwNfcActivationScreen}
+      name={ITW_PROXIMITY_ROUTES.NFC_ACTIVATION}
       options={hiddenHeader}
     />
     <Stack.Screen
-      name={ITW_PROXIMITY_ROUTES.PRESENTMENT}
       component={ItwProximityPresentmentScreen}
+      name={ITW_PROXIMITY_ROUTES.PRESENTMENT}
       options={TransitionPresets.ModalSlideFromBottomIOS}
     />
     <Stack.Screen
-      name={ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT}
       component={ItwProximityNfcPresentmentScreen}
+      name={ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT}
       options={hiddenHeader}
     />
     <Stack.Screen
-      name={ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE}
       component={ItwProximityClaimsDisclosureScreen}
+      name={ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE}
     />
     <Stack.Screen
-      name={ITW_PROXIMITY_ROUTES.STORE_CONSENT}
       component={ItwProximityStoreConsentScreen}
+      name={ITW_PROXIMITY_ROUTES.STORE_CONSENT}
       options={hiddenHeader}
     />
     <Stack.Screen
-      name={ITW_PROXIMITY_ROUTES.SUCCESS}
       component={ItwProximitySuccessScreen}
+      name={ITW_PROXIMITY_ROUTES.SUCCESS}
       options={hiddenHeader}
     />
     <Stack.Screen
-      name={ITW_PROXIMITY_ROUTES.FAILURE}
       component={ItwProximityFailureScreen}
+      name={ITW_PROXIMITY_ROUTES.FAILURE}
       options={hiddenHeader}
     />
   </Stack.Navigator>

@@ -5,7 +5,7 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
+
 import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
@@ -13,6 +13,8 @@ import { BancomatPayConfig } from "../../../../definitions/content/BancomatPayCo
 import { Banner } from "../../../../definitions/content/Banner";
 import { BarcodesScannerConfig } from "../../../../definitions/content/BarcodesScannerConfig";
 import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
+import { OSPerPlatform } from "../../../../definitions/content/OSPerPlatform";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
@@ -30,7 +32,6 @@ import {
 } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
-import { OSPerPlatform } from "../../../../definitions/content/OSPerPlatform";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -582,7 +583,7 @@ export const generateDynamicUrlSelector = createSelector(
 
       // Append the provided path to the base URL.
       return `${baseUrl}${path}`;
-    } catch (error) {
+    } catch {
       // In case of an error (e.g., missing key or invalid path), return the base URL key as a fallback.
       return baseUrlKey;
     }
@@ -1003,4 +1004,24 @@ export const isSendLollipopPlaygroundEnabledSelector = (
   }
   const remoteConfig = remoteConfigOption.value;
   return !!remoteConfig.pn.lollipopPlaygroundEnabled;
+};
+
+export const fseDiscoveryBannerWebUrlSelector = (
+  state: GlobalState
+): string | undefined => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    return undefined;
+  }
+  return remoteConfigOption.value.fse?.landingBanner?.engagement_url;
+};
+export const isFseDiscoveryBannerDismissableSelector = (
+  state: GlobalState
+): boolean => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    return false;
+  }
+
+  return remoteConfigOption.value.fse?.landingBanner?.is_dismissable ?? false;
 };

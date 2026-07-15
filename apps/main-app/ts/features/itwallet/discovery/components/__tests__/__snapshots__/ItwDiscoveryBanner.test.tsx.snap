@@ -765,6 +765,7 @@ Inizia"
                                 "overflow": "hidden",
                                 "padding": 16,
                               },
+                              undefined,
                               {
                                 "backgroundColor": "#F2F9FF",
                                 "borderRadius": 8,
@@ -1356,7 +1357,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT Wallet"
+                                accessibilityLabel="IT-Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -1433,7 +1434,6 @@ Inizia"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1457,7 +1457,6 @@ Inizia"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1960,6 +1959,7 @@ Inizia"
                                 "overflow": "hidden",
                                 "padding": 16,
                               },
+                              undefined,
                               {
                                 "backgroundColor": "#F2F9FF",
                                 "borderRadius": 8,
@@ -2551,7 +2551,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT Wallet"
+                                accessibilityLabel="IT-Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -2628,7 +2628,6 @@ Inizia"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2652,7 +2651,6 @@ Inizia"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -3155,6 +3153,7 @@ Inizia"
                                 "overflow": "hidden",
                                 "padding": 16,
                               },
+                              undefined,
                               {
                                 "backgroundColor": "#F2F9FF",
                                 "borderRadius": 8,
@@ -3746,7 +3745,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT Wallet"
+                                accessibilityLabel="IT-Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -3823,7 +3822,6 @@ Inizia"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -3847,7 +3845,6 @@ Inizia"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -4350,6 +4347,7 @@ Inizia"
                                 "overflow": "hidden",
                                 "padding": 16,
                               },
+                              undefined,
                               {
                                 "backgroundColor": "#F2F9FF",
                                 "borderRadius": 8,
@@ -4783,7 +4781,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT Wallet"
+                                accessibilityLabel="IT-Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -4860,7 +4858,6 @@ Inizia"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -4884,7 +4881,6 @@ Inizia"
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",

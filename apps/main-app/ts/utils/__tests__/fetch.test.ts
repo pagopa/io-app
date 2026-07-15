@@ -1,15 +1,15 @@
+import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
 import { MaxRetries, RetryAborted } from "@pagopa/ts-commons/lib/tasks";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
+import * as Mockttp from "mockttp";
+import { CompletedRequest, MaybePromise } from "mockttp";
 import {
   CallbackResponseMessageResult,
   CallbackResponseResult
 } from "mockttp/dist/rules/requests/request-handlers";
-import * as Mockttp from "mockttp";
-import { CompletedRequest, MaybePromise } from "mockttp";
 
-import { constantPollingFetch, defaultRetryingFetch } from "../fetch";
 import { fetchMaxRetries } from "../../config";
+import { constantPollingFetch, defaultRetryingFetch } from "../fetch";
 const mockServer = Mockttp.getLocal();
 
 const TEST_PATH = "/transient-error";
@@ -113,7 +113,7 @@ describe("constantPollingFetch function", () => {
 
     describe("and the timeout is shorter than the response time", () => {
       // it never aborts
-      const DEFAULT_SHOULD_ABORT: Promise<boolean> = new Promise(_ => void 0);
+      const DEFAULT_SHOULD_ABORT = new Promise<boolean>(_ => void 0);
 
       // need to use different values to avoid going above the 5000ms timeout in Jest
       const REQUEST_TIMEOUT = 10;
