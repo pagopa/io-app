@@ -59,6 +59,9 @@ const getCategoryRows = (
   categories: ReadonlyArray<RenderableCategory>
 ): ReadonlyArray<CategoryRow> =>
   categories.reduce<ReadonlyArray<CategoryRow>>((rows, renderable, index) => {
+    // Keep the two-column layout local to this screen: the parent FlatList is shared
+    // with the merchants tab, so using numColumns={2} would force the container to
+    // remount or specialize the list whenever the selected tab changes.
     if (index % CATEGORY_CARDS_PER_ROW !== 0) {
       return rows;
     }
