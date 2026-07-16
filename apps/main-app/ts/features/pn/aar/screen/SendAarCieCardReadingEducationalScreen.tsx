@@ -117,7 +117,7 @@ export const SendAarCieCardReadingEducationalScreen = ({
               "features.pn.aar.flow.cieScanningAdvisory.primaryAction"
             ),
             loading: isChecking,
-            onPress: handleGoNext
+            onPress: () => void handleGoNext()
           }
         }}
         alwaysBounceVertical={false}

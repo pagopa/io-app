@@ -2739,10 +2739,6 @@
         }
       },
       "requestL3": {
-        "localFlag": {
-          "title": "Attivazione check L3 per il flusso di firma",
-          "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"
-        },
         "landingPage": {
           "title": "Prepara la tua Carta di Identità Elettronica e il PIN",
           "subtitle": "Prima di firmare dobbiamo verificare la tua identità. Questo passaggio protegge la tua firma e ne garantisce la validità."
