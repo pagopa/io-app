@@ -363,7 +363,7 @@ const CieCardReaderScreen = () => {
       cieManager
         .start()
         .then(async () => {
-          cieManager.onEvent(handleCieEvent);
+          cieManager.onEvent(event => void handleCieEvent(event));
           cieManager.onError(handleCieError);
           cieManager.onSuccess(handleCieSuccess);
           await cieManager.setPin(ciePin);
@@ -389,7 +389,7 @@ const CieCardReaderScreen = () => {
   const startCieiOS = useCallback(
     async (useCieUat: boolean) => {
       cieManager.removeAllListeners();
-      cieManager.onEvent(handleCieEvent);
+      cieManager.onEvent(event => void handleCieEvent(event));
       cieManager.onError(handleCieError);
       cieManager.onSuccess(handleCieSuccess);
       cieManager.enableLog(isDevEnv);
