@@ -1,6 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
 import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
@@ -127,8 +125,9 @@ export const downloadsReducer = (
           )
         }
       };
+    default:
+      return state;
   }
-  return state;
 };
 
 export const isRequestedAttachmentDownloadSelector = (
@@ -146,14 +145,15 @@ export const isDownloadingMessageAttachmentSelector = (
   state: GlobalState,
   messageId: string,
   attachmentId: string
-) =>
-  pipe(
-    state.entities.messages.downloads.statusById[messageId],
-    O.fromNullable,
-    O.chainNullableK(messageDownloads => messageDownloads[attachmentId]),
-    O.getOrElseW(() => pot.none),
-    pot.isLoading
-  );
+) => {
+  const messageDownloads =
+    state.entities.messages.downloads.statusById[messageId]?.[attachmentId];
+
+  if (messageDownloads == null) {
+    return false;
+  }
+  return pot.isLoading(messageDownloads);
+};
 
 export const requestedDownloadErrorSelector = (
   state: GlobalState,
@@ -183,15 +183,12 @@ export const downloadedMessageAttachmentSelector = (
   state: GlobalState,
   messageId: string,
   attachmentId: string
-) =>
-  pipe(
-    state.entities.messages.downloads.statusById[messageId],
-    O.fromNullable,
-    O.chainNullableK(messageDownloads => messageDownloads[attachmentId]),
-    O.map(pot.toOption),
-    O.flatten,
-    O.toUndefined
-  );
+) => {
+  const messageDownloads =
+    state.entities.messages.downloads.statusById[messageId]?.[attachmentId] ??
+    pot.none;
+  return pot.toUndefined(messageDownloads);
+};
 
 const isRequestedDownloadMatch = (
   requestedDownload: RequestedDownload | undefined,
