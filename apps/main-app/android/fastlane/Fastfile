@@ -11,7 +11,7 @@
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
-fastlane_version "2.28.5"
+fastlane_version "2.233.1"
 
 default_platform :android
 
@@ -36,11 +36,6 @@ platform :android do
     end
 
     UI.message("CURRENT_CANARY_VERSION_CODE=#{current_code}")
-  end
-
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
   end
 
   desc "Build the App in debug mode"
@@ -114,12 +109,6 @@ platform :android do
   desc "Promote the internal version to alpha"
   lane :promote_internal_to_alpha do
     upload_to_play_store(track: "internal", track_promote_to: "alpha")
-  end
-
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "assembleRelease")
-    supply
   end
 
   desc "Download universal APK file from Google Play"

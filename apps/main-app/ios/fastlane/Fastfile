@@ -11,51 +11,11 @@
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
-fastlane_version "2.28.5"
+fastlane_version "2.233.1"
 
 default_platform :ios
 
 platform :ios do
-  desc 'Fetch certificates and provisioning profiles'
-  lane :certificates do
-    # match(type: 'development')
-    match(type: 'appstore')
-  end
-
-  desc "Runs all the tests"
-  lane :test do
-    scan
-  end
-
-  # Builds the app for TestFlight releases
-  lane :do_testflight_build do
-    sync_code_signing(type: "appstore")
-
-    # Install pods
-    cocoapods
-    
-        # Temporary disables automatic code signing to avoid issues during build
-    update_code_signing_settings(
-      use_automatic_signing: false,
-      path: "IO.xcodeproj",
-      team_id: "M2X5YQ4BJ7",
-      profile_name: "match AppStore it.pagopa.app.io",
-      targets: ["IO"],
-      build_configurations: ["Release"],
-      code_sign_identity: "iPhone Distribution",
-      sdk: "iphoneos*",
-    )
-
-    # build the app
-    gym(
-      scheme: "IO",
-      clean: true,
-      export_method: "app-store",
-      workspace: "IO.xcworkspace",
-      include_symbols: false
-    )
-  end
-
   desc "Submit a new Beta Build to TestFlight"
   lane :beta_circleci_testflight do |options|
 
