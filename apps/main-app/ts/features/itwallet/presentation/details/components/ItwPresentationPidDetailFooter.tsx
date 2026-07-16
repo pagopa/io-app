@@ -4,27 +4,13 @@ import I18n from "i18next";
 import { memo } from "react";
 import { Alert, View } from "react-native";
 
-import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { trackItwStartDeactivation } from "../../../analytics";
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
-import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../analytics/enum";
-import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest";
 
-type Props = {
-  credential: CredentialMetadata;
-};
-
-const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
+const ItwPresentationPidDetailFooter = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const startAndTrackSupportRequest = useOfflineToastGuard(
-    useItwStartCredentialSupportRequest(credential)
-  );
-
-  const requestAssistanceLabel = I18n.t(
-    "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
-  );
 
   const handleRevokePress = () => {
     trackItwStartDeactivation({
@@ -61,12 +47,6 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
           "features.itWallet.presentation.credentialDetails.discoverItWallet"
         )}
         onPress={useNotAvailableToastGuard(constVoid)}
-        variant="primary"
-      />
-      <ListItemAction
-        icon="message"
-        label={requestAssistanceLabel}
-        onPress={useNotAvailableToastGuard(startAndTrackSupportRequest)}
         variant="primary"
       />
       <ListItemAction
