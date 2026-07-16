@@ -21,55 +21,56 @@ import {
 import LinearGradient from "react-native-linear-gradient";
 import Animated, {
   Easing,
-  WithTimingConfig,
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
-  withTiming
+  withTiming,
+  WithTimingConfig
 } from "react-native-reanimated";
+
 import { useIONewTypeface, useIOTheme } from "../../context";
-import { IOColors, IOSpacingScale, hexToRgba } from "../../core";
+import { hexToRgba, IOColors, IOSpacingScale } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import {
   IOFontSize,
   IOMaxFontSizeMultiplier,
   makeFontStyleObject
 } from "../../utils/fonts";
-import { RNTextInputProps, getInputPropsByType } from "../../utils/textInput";
+import { getInputPropsByType, RNTextInputProps } from "../../utils/textInput";
 import { InputType, WithTestID } from "../../utils/types";
-import { IOIconSizeScale, IOIcons, Icon } from "../icons";
+import { Icon, IOIcons, IOIconSizeScale } from "../icons";
 import { HSpacer } from "../layout";
 import { BodySmall } from "../typography";
 
-type InputStatus = "initial" | "focused" | "disabled" | "error";
+type InputStatus = "disabled" | "error" | "focused" | "initial";
 
 type InputTextProps = WithTestID<{
-  placeholder: string;
-  value: string;
-  onChangeText: (value: string) => void;
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
-  textInputProps?: RNTextInputProps;
-  inputType?: InputType;
-  status?: InputStatus;
-  icon?: IOIcons;
-  rightElement?: ReactNode;
-  counterLimit?: number;
-  showCounterOnlyWhenLimitReached?: boolean;
   accessibilityAnnounceLimitReached?: string;
+  accessibilityHint?: string;
+  accessibilityLabel?: string;
   bottomMessage?: string;
   bottomMessageColor?: IOColors;
+  counterLimit?: number;
   disabled?: boolean;
-  isPassword?: boolean;
-  onBlur?: () => void;
-  onFocus?: () => void;
+  icon?: IOIcons;
   // autoFocus?: boolean; --- Ignore since this bug is open https://github.com/react-navigation/react-navigation/issues/11643 ---
   /**
    * Optional external ref to the underlying React Native `TextInput`. When
    * provided, the consumer can imperatively call `focus()` / `blur()` on the
    * input. Useful to work around autoFocus issues on React Navigation v7.
    */
-  inputRef?: React.RefObject<TextInput | null>;
+  inputRef?: React.RefObject<null | TextInput>;
+  inputType?: InputType;
+  isPassword?: boolean;
+  onBlur?: () => void;
+  onChangeText: (value: string) => void;
+  onFocus?: () => void;
+  placeholder: string;
+  rightElement?: ReactNode;
+  showCounterOnlyWhenLimitReached?: boolean;
+  status?: InputStatus;
+  textInputProps?: RNTextInputProps;
+  value: string;
 }>;
 
 const inputMarginTop: IOSpacingScale = 16;
@@ -128,13 +129,13 @@ const styles = StyleSheet.create({
 
 type InputTextHelperRow = Pick<
   InputTextProps,
-  | "value"
-  | "counterLimit"
-  | "showCounterOnlyWhenLimitReached"
   | "bottomMessage"
   | "bottomMessageColor"
+  | "counterLimit"
   | "inputType"
+  | "showCounterOnlyWhenLimitReached"
   | "textInputProps"
+  | "value"
 >;
 
 const HelperRow = ({
@@ -187,6 +188,11 @@ const HelperRow = ({
 
   return (
     <View
+      // in case of error message the element should be ignored by VO or Talkback
+      accessibilityElementsHidden={bottomMessageColor === "error-600"}
+      importantForAccessibility={
+        bottomMessageColor === "error-600" ? "no-hide-descendants" : "auto"
+      }
       style={[
         {
           flexDirection: "row",
@@ -195,23 +201,18 @@ const HelperRow = ({
         },
         helperRowStyle
       ]}
-      // in case of error message the element should be ignored by VO or Talkback
-      accessibilityElementsHidden={bottomMessageColor === "error-600"}
-      importantForAccessibility={
-        bottomMessageColor === "error-600" ? "no-hide-descendants" : "auto"
-      }
     >
       {bottomMessage && (
-        <BodySmall weight="Regular" color={bottomMessageColorValue}>
+        <BodySmall color={bottomMessageColorValue} weight="Regular">
           {bottomMessage}
         </BodySmall>
       )}
       {shouldShowCounter && (
         <BodySmall
-          accessibilityLiveRegion="polite"
-          weight="Regular"
           accessibilityLabel={helperAccessibilityLabel}
+          accessibilityLiveRegion="polite"
           color={bottomMessageColorValue}
+          weight="Regular"
         >{`${valueCount} / ${counterLimit}`}</BodySmall>
       )}
     </View>
@@ -422,6 +423,9 @@ export const TextInputBase = ({
   return (
     <>
       <Pressable
+        accessibilityRole={"none"}
+        accessible={false}
+        importantForAccessibility="no"
         onPress={onTextInputPress}
         style={[
           inputStatus === "disabled" ? { opacity: inputDisabledOpacity } : {},
@@ -431,9 +435,6 @@ export const TextInputBase = ({
               inputPaddingHorizontal * dynamicFontScale * spacingScaleMultiplier
           }
         ]}
-        accessible={false}
-        accessibilityRole={"none"}
-        importantForAccessibility="no"
       >
         {/* Fake border managed with Animated.View to avoid
             little jumps when the border is animated */}
@@ -454,8 +455,8 @@ export const TextInputBase = ({
           <>
             <Icon
               allowFontScaling
-              name={icon}
               color={iconColor}
+              name={icon}
               size={iconSize}
             />
             <HSpacer allowScaleSpacing size={iconMargin} />
@@ -467,24 +468,25 @@ export const TextInputBase = ({
           {...(derivedInputProps
             ? derivedInputProps.textInputProps
             : textInputProps)}
-          accessible
-          importantForAccessibility="yes"
           accessibilityElementsHidden={false}
-          editable={!disabled}
-          secureTextEntry={isSecretInput}
-          disableFullscreenUI={true}
-          accessibilityState={{ disabled }}
-          accessibilityLabel={accessibilityLabel ?? placeholder}
           accessibilityHint={accessibilityHint}
+          accessibilityLabel={accessibilityLabel ?? placeholder}
           accessibilityLiveRegion="polite"
-          selectionColor={IOColors[theme["interactiveElem-default"]]} // Caret on iOS
-          cursorColor={IOColors[theme["interactiveElem-default"]]} // Caret Android
-          maxLength={adjustedMaxLength}
-          maxFontSizeMultiplier={IOMaxFontSizeMultiplier}
-          onBlur={onBlurHandler}
-          onFocus={onFocusHandler}
+          accessibilityState={{ disabled }}
+          accessible
+          autoFocus={false}
           blurOnSubmit={true}
+          cursorColor={IOColors[theme["interactiveElem-default"]]} // Caret Android
+          disableFullscreenUI={true}
+          editable={!disabled}
+          importantForAccessibility="yes"
+          maxFontSizeMultiplier={IOMaxFontSizeMultiplier}
+          maxLength={adjustedMaxLength}
+          onBlur={onBlurHandler}
           onChangeText={onChangeTextHandler}
+          onFocus={onFocusHandler}
+          secureTextEntry={isSecretInput}
+          selectionColor={IOColors[theme["interactiveElem-default"]]} // Caret on iOS
           style={[
             {
               ...makeFontStyleObject(
@@ -499,7 +501,6 @@ export const TextInputBase = ({
               ? { color: inputTextColor }
               : { color: inputDisabledTextColor }
           ]}
-          autoFocus={false}
           value={inputValue}
         />
         {/* We translate the label to the right if icon is present
@@ -525,10 +526,10 @@ export const TextInputBase = ({
           ]}
         >
           <Animated.Text
-            onLayout={getLabelWidth}
-            numberOfLines={1}
             accessible={false}
             maxFontSizeMultiplier={IOMaxFontSizeMultiplier}
+            numberOfLines={1}
+            onLayout={getLabelWidth}
             style={[
               {
                 ...makeFontStyleObject(
@@ -554,8 +555,8 @@ export const TextInputBase = ({
             }}
           >
             <LinearGradient
-              useAngle={true}
               angle={90}
+              colors={[hexToRgba(appBackground, 0), appBackground]}
               style={{
                 width: inputRightElementMargin * 3,
                 position: "absolute",
@@ -563,7 +564,7 @@ export const TextInputBase = ({
                 top: 0,
                 bottom: 0
               }}
-              colors={[hexToRgba(appBackground, 0), appBackground]}
+              useAngle={true}
             />
             <HSpacer size={inputRightElementMargin} />
             {rightElement}
@@ -573,13 +574,13 @@ export const TextInputBase = ({
 
       {(bottomMessage || counterLimit) && (
         <HelperRow
-          value={inputValue}
           bottomMessage={bottomMessage}
           bottomMessageColor={bottomMessageColor}
           counterLimit={counterLimit}
-          showCounterOnlyWhenLimitReached={showCounterOnlyWhenLimitReached}
           inputType={inputType}
+          showCounterOnlyWhenLimitReached={showCounterOnlyWhenLimitReached}
           textInputProps={textInputProps}
+          value={inputValue}
         />
       )}
     </>

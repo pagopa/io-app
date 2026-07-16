@@ -1,5 +1,6 @@
 import I18n from "i18next";
 import { Alert, Platform } from "react-native";
+
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { ItwProximityMachineContext } from "../machine/provider";
@@ -53,12 +54,23 @@ export const ItwNfcActivationScreen = () => {
 
   return (
     <IOScrollViewWithListItems
-      title={I18n.t(
-        "features.itWallet.presentation.proximity.nfc.activation.title"
-      )}
-      subtitle={I18n.t(
-        "features.itWallet.presentation.proximity.nfc.activation.subtitle"
-      )}
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          label: I18n.t(
+            "features.itWallet.presentation.proximity.nfc.activation.actions.primary"
+          ),
+          onPress: () => {
+            void openNfcPreferences();
+          }
+        },
+        secondary: {
+          label: I18n.t(
+            "features.itWallet.presentation.proximity.nfc.activation.actions.secondary"
+          ),
+          onPress: () => void handleContinue()
+        }
+      }}
       listItemHeaderLabel={I18n.t(
         "features.itWallet.presentation.proximity.nfc.activation.listItems.title"
       )}
@@ -94,23 +106,12 @@ export const ItwNfcActivationScreen = () => {
           icon: "systemToggleInstructions"
         }
       ]}
-      actions={{
-        type: "TwoButtons",
-        primary: {
-          label: I18n.t(
-            "features.itWallet.presentation.proximity.nfc.activation.actions.primary"
-          ),
-          onPress: () => {
-            void openNfcPreferences();
-          }
-        },
-        secondary: {
-          label: I18n.t(
-            "features.itWallet.presentation.proximity.nfc.activation.actions.secondary"
-          ),
-          onPress: handleContinue
-        }
-      }}
+      subtitle={I18n.t(
+        "features.itWallet.presentation.proximity.nfc.activation.subtitle"
+      )}
+      title={I18n.t(
+        "features.itWallet.presentation.proximity.nfc.activation.title"
+      )}
     />
   );
 };

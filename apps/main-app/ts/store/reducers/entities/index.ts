@@ -11,22 +11,23 @@ import {
   PersistedState,
   PersistPartial
 } from "redux-persist";
+
+import messagesReducer, {
+  MessagesState
+} from "../../../features/messages/store/reducers";
 import { isDevEnv } from "../../../utils/environment";
 import { Action } from "../../actions/types";
 import { DateISO8601Transform } from "../../transforms/dateISO8601Tranform";
 import { PotTransform } from "../../transforms/potTransform";
-import messagesReducer, {
-  MessagesState
-} from "../../../features/messages/store/reducers";
 import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import organizationsReducer, { OrganizationsState } from "./organizations";
 import { paymentByRptIdReducer, PaymentByRptIdState } from "./payments";
 
 export type EntitiesState = Readonly<{
+  calendarEvents: CalendarEventsState;
   messages: MessagesState;
   organizations: OrganizationsState;
   paymentByRptId: PaymentByRptIdState;
-  calendarEvents: CalendarEventsState;
 }>;
 
 export type PersistedEntitiesState = EntitiesState & PersistPartial;

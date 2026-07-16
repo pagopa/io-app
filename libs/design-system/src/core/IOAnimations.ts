@@ -1,6 +1,6 @@
 import {
-  cubicBezier,
-  type CSSAnimationTimingFunction
+  type CSSAnimationTimingFunction,
+  cubicBezier
 } from "react-native-reanimated";
 
 /**

@@ -1,17 +1,18 @@
 import { useMemo } from "react";
 import { View } from "react-native";
+
 import { hexToRgba, IOColors, IOSpacer } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 
 type BaseSpacerProps = {
-  orientation: "vertical" | "horizontal";
-  size: IOSpacer;
   allowScaleSpacing?: boolean;
+  orientation: "horizontal" | "vertical";
+  size: IOSpacer;
 };
 
 type SpacerProps = {
-  size?: IOSpacer;
   allowScaleSpacing?: boolean;
+  size?: IOSpacer;
 };
 
 const DEFAULT_SIZE: IOSpacer = 16;

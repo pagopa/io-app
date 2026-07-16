@@ -1,22 +1,30 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   itwAuthLevelSelector,
   itwIdentificationModeSelector
 } from "../../common/store/selectors/preferences";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
+import {
+  isL2Credential,
+  isNewCredential,
+  validCredentialStatuses
+} from "../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialsSelector
 } from "../../credentials/store/selectors";
+import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { mapPIDStatusToMixpanel } from "../utils";
 import {
   CREDENTIAL_STATUS_MAP,
   ItwCredentialMixpanelStatus,
-  ItwStatus
+  ItwStatus,
+  ItwThirdPartyCredentials
 } from "../utils/types";
 import { ItwBaseProperties } from "./propertyTypes";
 
@@ -35,6 +43,7 @@ export const buildItwBaseProperties = (
       itwIdentificationModeSelector(state),
       itwLifecycleIsITWalletValidSelector(state)
     ),
+    ITW_THIRD_PARTY_CREDENTIAL: buildThirdPartyCredentialProperty(state),
     ...pidProps,
     ...credentialProps
   };
@@ -143,13 +152,49 @@ export const computeItwStatus = (
   }
 
   switch (identificationMode) {
-    case "spid":
-      return "L2+ (spid_can)";
     case "cieId":
       return authLevel === "L2" ? "L3 (cieid_can)" : "L3 (cieid_pin)";
     case "ciePin":
       return "L3 (cie_pin)";
+    case "spid":
+      return "L2+ (spid_can)";
     default:
       return authLevel;
   }
 };
+
+/**
+ * Builds the aggregate Mixpanel status for third-party credentials.
+ * The property ignores PID and historical L2 credentials because it tracks only
+ * credentials obtained through the third-party/catalogue channel.
+ */
+export const buildThirdPartyCredentialProperty = (
+  state: GlobalState
+): ItwThirdPartyCredentials => {
+  const catalogueByType = itwCredentialsCatalogueByTypesSelector(state);
+
+  const thirdPartyCredentials = Object.values(
+    itwCredentialsSelector(state)
+  ).filter(({ credentialType }) =>
+    isThirdPartyCredentialType(credentialType, catalogueByType)
+  );
+
+  if (thirdPartyCredentials.length === 0) {
+    return "not_available";
+  }
+
+  return thirdPartyCredentials.some(credential =>
+    validCredentialStatuses.includes(getCredentialStatus(credential))
+  )
+    ? "valid"
+    : "not_valid";
+};
+
+const isThirdPartyCredentialType = (
+  credentialType: string,
+  catalogueByType: ReturnType<typeof itwCredentialsCatalogueByTypesSelector>
+) =>
+  credentialType !== CredentialType.PID &&
+  !isL2Credential(credentialType) &&
+  (isNewCredential(credentialType) ||
+    catalogueByType?.[credentialType] !== undefined);

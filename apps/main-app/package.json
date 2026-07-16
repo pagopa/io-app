@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.37.0-rc.3",
+  "version": "3.37.0-rc.6",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -29,8 +29,8 @@
     "tsc-noemit": "tsc --noemit",
     "lint": "eslint . --cache",
     "lint-autofix": "eslint . --fix --cache",
-    "check_urls": "python3 scripts/check_urls.py",
     "locale-audit": "python3 scripts/locale/locale_audit.py",
+    "unused-locales": "python3 scripts/locale/find_unused_locales.py",
     "cie-ios-prod": "mv ../../node_modules/@pagopa/react-native-cie/.ios ../../node_modules/@pagopa/react-native-cie/ios && mv ../../node_modules/@pagopa/react-native-cie/.react-native-cie.podspec ../../node_modules/@pagopa/react-native-cie/react-native-cie.podspec && cd ios && bundle exec pod install && cd ..",
     "cie-ios-dev": "mv ../../node_modules/@pagopa/react-native-cie/ios ../../node_modules/@pagopa/react-native-cie/.ios && mv ../../node_modules/@pagopa/react-native-cie/react-native-cie.podspec ../../node_modules/@pagopa/react-native-cie/.react-native-cie.podspec && cd ios && rm -rf Pods && NO_INTERNAL_MODULE=1 bundle exec pod install && cd ..",
     "cie-ios-ci": "mv ../../node_modules/@pagopa/react-native-cie/.ios ../../node_modules/@pagopa/react-native-cie/ios && mv ../../node_modules/@pagopa/react-native-cie/.react-native-cie.podspec ../../node_modules/@pagopa/react-native-cie/react-native-cie.podspec",

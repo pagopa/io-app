@@ -1,11 +1,12 @@
 import { useCallback, useState } from "react";
-import { StyleSheet, type LayoutChangeEvent } from "react-native";
+import { type LayoutChangeEvent, StyleSheet } from "react-native";
 import {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+
 import { IOSpacingScale, IOSpringValues } from "../core";
 
 const accordionBodySpacing: IOSpacingScale = 16;

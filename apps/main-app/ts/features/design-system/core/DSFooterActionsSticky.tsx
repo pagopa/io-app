@@ -1,9 +1,10 @@
 import {
   FooterActions,
   FooterActionsMeasurements,
+  footerBoxShadow,
   IOColors,
-  VSpacer,
-  useIOTheme
+  useIOTheme,
+  VSpacer
 } from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { Fragment, useMemo, useState } from "react";
@@ -19,6 +20,7 @@ import {
 import Animated, {
   Extrapolation,
   interpolate,
+  interpolateColor,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue
@@ -90,14 +92,24 @@ export const DSFooterActionsSticky = () => {
     ]
   }));
 
-  const actionBackgroundBlockAnimatedStyle = useAnimatedStyle(() => ({
-    /* Avoid solid background overlap with the
-       system scrollbar */
-    backgroundColor:
-      actionBlockPlaceholderTopEdge < scrollY.value
+  const actionBackgroundBlockAnimatedStyle = useAnimatedStyle(() => {
+    const isStuck = actionBlockPlaceholderTopEdge < scrollY.value;
+
+    /* Avoid shadow application when the block is stuck */
+    const shadowColor = interpolateColor(
+      scrollY.value,
+      [actionBlockPlaceholderTopEdge - 24, actionBlockPlaceholderTopEdge],
+      [footerBoxShadow.color, "transparent"]
+    );
+
+    return {
+      /* Avoid solid background overlap with the system scrollbar */
+      backgroundColor: isStuck
         ? "transparent"
-        : IOColors[theme["appBackground-primary"]]
-  }));
+        : IOColors[theme["appBackground-primary"]],
+      boxShadow: [{ ...footerBoxShadow, color: shadowColor }]
+    };
+  });
 
   return (
     <View style={styles.container}>

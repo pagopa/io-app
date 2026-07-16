@@ -1,5 +1,6 @@
 import { ComponentProps, memo, useMemo } from "react";
 import { GestureResponderEvent, Platform, Switch, View } from "react-native";
+
 import { useIOTheme } from "../../context";
 import {
   IOSelectionListItemStyles,
@@ -8,32 +9,32 @@ import {
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
-import { IOIcons, Icon } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer } from "../layout";
 import { LoadingSpinner } from "../loadingSpinner";
 import { IOLogoPaymentType, LogoPayment } from "../logos";
 import { NativeSwitch } from "../switch/NativeSwitch";
 import { BodySmall, H6, LabelMini } from "../typography";
 
-type PartialProps = WithTestID<{
-  label: string;
-  onSwitchValueChange?: (newValue: boolean) => void;
-  description?: string;
-  action?: SwitchAction;
-  isLoading?: boolean;
-  badge?: Badge;
-  switchTestID?: string;
-}>;
+export type ListItemSwitchGraphicProps =
+  | { icon: IOIcons; paymentLogo?: never }
+  | { icon?: never; paymentLogo: IOLogoPaymentType }
+  | { icon?: never; paymentLogo?: never };
 
 export type SwitchAction = {
   label: string;
   onPress: (event: GestureResponderEvent) => void;
 };
 
-export type ListItemSwitchGraphicProps =
-  | { icon?: never; paymentLogo: IOLogoPaymentType }
-  | { icon: IOIcons; paymentLogo?: never }
-  | { icon?: never; paymentLogo?: never };
+type PartialProps = WithTestID<{
+  action?: SwitchAction;
+  badge?: Badge;
+  description?: string;
+  isLoading?: boolean;
+  label: string;
+  onSwitchValueChange?: (newValue: boolean) => void;
+  switchTestID?: string;
+}>;
 
 const DISABLED_OPACITY = 0.5;
 
@@ -41,9 +42,9 @@ const DISABLED_OPACITY = 0.5;
 both on iOS & Android */
 const ESTIMATED_SWITCH_HEIGHT = 32;
 
-export type ListItemSwitchProps = PartialProps &
-  ListItemSwitchGraphicProps &
-  Pick<ComponentProps<typeof Switch>, "value" | "disabled">;
+export type ListItemSwitchProps = ListItemSwitchGraphicProps &
+  PartialProps &
+  Pick<ComponentProps<typeof Switch>, "disabled" | "value">;
 
 export const ListItemSwitch = memo(
   ({
@@ -73,25 +74,26 @@ export const ListItemSwitch = memo(
 
     return (
       <View
-        testID={testID ?? "ListItemSwitch"}
+        accessible={false}
+        needsOffscreenAlphaCompositing={true}
+        pointerEvents={disabled ? "none" : "auto"}
         style={[
           IOSelectionListItemStyles.listItem,
           {
             opacity: disabled ? DISABLED_OPACITY : 1
           }
         ]}
-        pointerEvents={disabled ? "none" : "auto"}
-        needsOffscreenAlphaCompositing={true}
-        accessible={false}
+        testID={testID ?? "ListItemSwitch"}
       >
         <View
+          accessible={false}
           style={[
             IOSelectionListItemStyles.listItemInner,
             { alignItems: "center" }
           ]}
-          accessible={false}
         >
           <View
+            accessible={!canRenderSwitch}
             style={{
               flex: 1,
               flexDirection: "row",
@@ -101,7 +103,6 @@ export const ListItemSwitch = memo(
                 dynamicFontScale *
                 spacingScaleMultiplier
             }}
-            accessible={!canRenderSwitch}
             {...Platform.select({
               android: {
                 importantForAccessibility: !canRenderSwitch
@@ -114,8 +115,8 @@ export const ListItemSwitch = memo(
             {icon && !hugeFontEnabled && (
               <Icon
                 allowFontScaling
-                name={icon}
                 color={theme["icon-decorative"]}
+                name={icon}
                 size={IOSelectionListItemVisualParams.iconSize}
               />
             )}
@@ -127,12 +128,12 @@ export const ListItemSwitch = memo(
             )}
 
             <H6
-              color={theme["textBody-default"]}
-              style={{ flex: 1 }}
               accessible={!canRenderSwitch}
+              color={theme["textBody-default"]}
               importantForAccessibility={
                 !canRenderSwitch ? "yes" : "no-hide-descendants"
               }
+              style={{ flex: 1 }}
             >
               {label}
             </H6>
@@ -147,19 +148,19 @@ export const ListItemSwitch = memo(
           >
             {badge && (
               <Badge
+                testID={badge.testID}
                 text={badge.text}
                 variant={badge.variant}
-                testID={badge.testID}
               />
             )}
             {isLoading && <LoadingSpinner size={24} />}
             {canRenderSwitch && (
               <NativeSwitch
-                value={value}
                 accessibilityLabel={label}
                 disabled={disabled}
                 onValueChange={onSwitchValueChange}
                 testID={switchTestID}
+                value={value}
               />
             )}
           </View>
@@ -167,7 +168,7 @@ export const ListItemSwitch = memo(
         {description && (
           <>
             <VSpacer size={IOSelectionListItemVisualParams.descriptionMargin} />
-            <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+            <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
               {description}
             </BodySmall>
           </>

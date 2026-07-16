@@ -2,6 +2,64 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.37.0-rc.6](https://github.com/pagopa/io-app/compare/3.37.0-rc.5...3.37.0-rc.6) (2026-07-15)
+
+
+### Features
+
+* [[IOCOM-3243](https://pagopa.atlassian.net/browse/IOCOM-3243)] FP-TS removal from messages' reducers ([#8234](https://github.com/pagopa/io-app/issues/8234)) ([172e9e3](https://github.com/pagopa/io-app/commit/172e9e30e116045033127568268227b8c2a5346b))
+* **IT-Wallet:** [[SIW-4177](https://pagopa.atlassian.net/browse/SIW-4177)] Track third channel credentials ([#8082](https://github.com/pagopa/io-app/issues/8082)) ([faf2847](https://github.com/pagopa/io-app/commit/faf2847a4c2f0b61b8f6e28dc71dad9eb9bd57c1))
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] remove @ChrisMattew from codeowners ([#8225](https://github.com/pagopa/io-app/issues/8225)) ([be024cd](https://github.com/pagopa/io-app/commit/be024cdbb33b79168a051e128a6b416b31d4803b))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] fix margin ([#8309](https://github.com/pagopa/io-app/issues/8309)) ([935a516](https://github.com/pagopa/io-app/commit/935a516a596297267bc566798f320a35ab6b71d1))
+* **IT-Wallet:** [[SIW-4556](https://pagopa.atlassian.net/browse/SIW-4556)] Handle NFC presence in identification mode selection ([#8239](https://github.com/pagopa/io-app/issues/8239)) ([716c778](https://github.com/pagopa/io-app/commit/716c778142b757a8ac36b9e758702a83c842aadd))
+* **IT-Wallet:** [[SIW-4606](https://pagopa.atlassian.net/browse/SIW-4606)] Prevent blank Skia background on screen transition by remounting Canvas ([#8285](https://github.com/pagopa/io-app/issues/8285)) ([2db62a6](https://github.com/pagopa/io-app/commit/2db62a6cf8bec9665cbc3ed3d3a7244bf940c7e9))
+
+
+### Chores
+
+* [[IOAPPX-519](https://pagopa.atlassian.net/browse/IOAPPX-519)] Remove cie button check script ([#8301](https://github.com/pagopa/io-app/issues/8301)) ([dc89673](https://github.com/pagopa/io-app/commit/dc8967384383edf83d1d00fba5edec684ffc884c))
+* [[IOCOM-3245](https://pagopa.atlassian.net/browse/IOCOM-3245)] messagePrecondition reducer FP-TS removal ([#8226](https://github.com/pagopa/io-app/issues/8226)) ([e008ad9](https://github.com/pagopa/io-app/commit/e008ad9a99a9c2292a1de4c14a0786704d8b9747))
+* [[IOPLT-1777](https://pagopa.atlassian.net/browse/IOPLT-1777)] Add new `eslint` rules ([#8038](https://github.com/pagopa/io-app/issues/8038)) ([793327c](https://github.com/pagopa/io-app/commit/793327cd2105a4c9bc4f045bb08cce005b1e41b5))
+* [[IOPLT-1906](https://pagopa.atlassian.net/browse/IOPLT-1906)] Replace legacy shadow with `boxShadow` in the DS components ([#8221](https://github.com/pagopa/io-app/issues/8221)) ([2503879](https://github.com/pagopa/io-app/commit/2503879783df6513fe36f38622cb646b71404321))
+
+## [3.37.0-rc.5](https://github.com/pagopa/io-app/compare/3.37.0-rc.4...3.37.0-rc.5) (2026-07-14)
+
+
+### Features
+
+* [[IOPID-4088](https://pagopa.atlassian.net/browse/IOPID-4088)] Add Alessandra Lerteri to codeowners ([#8295](https://github.com/pagopa/io-app/issues/8295)) ([ee4dafb](https://github.com/pagopa/io-app/commit/ee4dafb689bba44913e16c9cf36887d201f9bac9))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Adjust IT-Wallet activation feedback banner margins in success screen ([#8291](https://github.com/pagopa/io-app/issues/8291)) ([b2fb671](https://github.com/pagopa/io-app/commit/b2fb6713ed312649c097086947b45e1659235d26))
+* [[IEL-679](https://pagopa.atlassian.net/browse/IEL-679)] MP tracking for PAYMENT_FEE_SELECTION and PAYMENT_FEE_SELECTED events ([#8265](https://github.com/pagopa/io-app/issues/8265)) ([84b9530](https://github.com/pagopa/io-app/commit/84b953046c6666ce0299749ebddc68ae0442ca99))
+
+
+### Chores
+
+* [[IOPLT-1927](https://pagopa.atlassian.net/browse/IOPLT-1927)] Enable `perfectionist` rules included in `@pagopa/eslint-config` ([#8210](https://github.com/pagopa/io-app/issues/8210)) ([b3d1414](https://github.com/pagopa/io-app/commit/b3d141427de7f8d917e37b2c378505bd8bb989d3))
+* [[SIW-3657](https://pagopa.atlassian.net/browse/SIW-3657)] `@pagopa/io-app-design-system` bump 8.1.0 + fix OTPInput value accessibility across the app ([#8231](https://github.com/pagopa/io-app/issues/8231)) ([74fd0a3](https://github.com/pagopa/io-app/commit/74fd0a3a45d88a4fda059d9a4a615db794e699cf))
+
+## [3.37.0-rc.4](https://github.com/pagopa/io-app/compare/3.37.0-rc.3...3.37.0-rc.4) (2026-07-14)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Fix Proximity QR Code shadow and header transparency ([#8287](https://github.com/pagopa/io-app/issues/8287)) ([e6bb933](https://github.com/pagopa/io-app/commit/e6bb9337856e33dbd181b09b2503372f7962c171))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4649](https://pagopa.atlassian.net/browse/SIW-4649)] Remove credentials upgrade intro screen ([#8288](https://github.com/pagopa/io-app/issues/8288)) ([a0fb5b8](https://github.com/pagopa/io-app/commit/a0fb5b848a9bae73914b7bae8a1ac48594a4c9ed)), closes [/#diff-51baad308d36cfff5a54403fee378b30d8886031cf6e5944c51ada74c2d06564L1-L33](https://github.com/pagopa///issues/diff-51baad308d36cfff5a54403fee378b30d8886031cf6e5944c51ada74c2d06564L1-L33) [/#diff-e40748eed356fcfe6f43356df2bbac0e95ddaea0857592522dddaa024699ba31L37](https://github.com/pagopa///issues/diff-e40748eed356fcfe6f43356df2bbac0e95ddaea0857592522dddaa024699ba31L37) [/#diff-e40748eed356fcfe6f43356df2bbac0e95ddaea0857592522dddaa024699ba31L267-L271](https://github.com/pagopa///issues/diff-e40748eed356fcfe6f43356df2bbac0e95ddaea0857592522dddaa024699ba31L267-L271) [/#diff-a06ba13a569e2140cabcceebc1459929f03aed9e80dbcb74926b81518ad0bf39L238-L243](https://github.com/pagopa///issues/diff-a06ba13a569e2140cabcceebc1459929f03aed9e80dbcb74926b81518ad0bf39L238-L243) [/#diff-b8d89305174de50846c7251d432e3526cf61727e2c23ef5b4c7125219855278cL82](https://github.com/pagopa///issues/diff-b8d89305174de50846c7251d432e3526cf61727e2c23ef5b4c7125219855278cL82)
+* [[IOPLT-1937](https://pagopa.atlassian.net/browse/IOPLT-1937)] Remove unused keys via `py` script, prevent empty ones via new test ([#8227](https://github.com/pagopa/io-app/issues/8227)) ([0d5096e](https://github.com/pagopa/io-app/commit/0d5096e80cfd51817f705b6dbda2b8c29b2958b3))
+* **IT-Wallet:** [[SIW-4668](https://pagopa.atlassian.net/browse/SIW-4668)] Update proximity CTA label ([#8286](https://github.com/pagopa/io-app/issues/8286)) ([7e58a08](https://github.com/pagopa/io-app/commit/7e58a08f442cf2ac1ce56c54469099a05890cb23))
+* **IT-Wallet:** [[SIW-4669](https://pagopa.atlassian.net/browse/SIW-4669)] Temporarily disable PRE env status banner ([#8284](https://github.com/pagopa/io-app/issues/8284)) ([55a7469](https://github.com/pagopa/io-app/commit/55a7469d2624f05efbce31ac1df6652bcae482d9))
+
 ## [3.37.0-rc.3](https://github.com/pagopa/io-app/compare/3.37.0-rc.2...3.37.0-rc.3) (2026-07-13)
 
 

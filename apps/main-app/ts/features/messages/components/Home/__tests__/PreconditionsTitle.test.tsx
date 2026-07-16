@@ -1,12 +1,13 @@
 import { constUndefined } from "fp-ts/lib/function";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { PreconditionsTitle } from "../PreconditionsTitle";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as messagePreconditions from "../../../store/reducers/messagePrecondition";
-import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
+import { PreconditionsTitle } from "../PreconditionsTitle";
 
 describe("PreconditionsTitle", () => {
   afterEach(() => {

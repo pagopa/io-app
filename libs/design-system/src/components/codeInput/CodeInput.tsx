@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ColorValue, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
+
 import { useIOThemeContext } from "../../context";
 import { hexToRgba, IOColors } from "../../core/IOColors";
 import { triggerHaptic } from "../../functions";
@@ -8,11 +9,11 @@ import { useErrorShakeAnimation } from "../../utils/hooks/useErrorShakeAnimation
 import { HStack } from "../layout";
 
 type CodeInputProps = {
-  value: string;
-  onValueChange: (value: string) => void;
   length: number;
   onValidate: (value: string) => boolean;
-  variant?: "primary" | "neutral";
+  onValueChange: (value: string) => void;
+  value: string;
+  variant?: "neutral" | "primary";
 };
 
 const DOT_SIZE = 16;
@@ -115,9 +116,9 @@ export const CodeInput = ({
       <HStack space={DOT_SIZE}>
         {[...Array(length)].map((_, i) =>
           value[i] ? (
-            <FilledDot key={i} color={filledDotColor} />
+            <FilledDot color={filledDotColor} key={i} />
           ) : (
-            <EmptyDot key={i} color={emptyDotColor} />
+            <EmptyDot color={emptyDotColor} key={i} />
           )
         )}
       </HStack>

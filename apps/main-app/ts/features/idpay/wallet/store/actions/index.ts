@@ -3,23 +3,24 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { InitiativesWithInstrumentDTO } from "../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
+import { ListUsersOnboardingStatusDTO } from "../../../../../../definitions/idpay/ListUsersOnboardingStatusDTO";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { NetworkError } from "../../../../../utils/errors";
-import { ListUsersOnboardingStatusDTO } from "../../../../../../definitions/idpay/ListUsersOnboardingStatusDTO";
 
 export type IdPayInitiativesFromInstrumentPayloadType = {
   idWallet: string;
   isRefreshing?: boolean;
 };
 
-export type IdpayInitiativesInstrumentEnrollPayloadType = {
-  idWallet: string;
+export type IdpayInitiativesInstrumentDeletePayloadType = {
   initiativeId: string;
+  instrumentId: string;
 };
 
-export type IdpayInitiativesInstrumentDeletePayloadType = {
-  instrumentId: string;
+export type IdpayInitiativesInstrumentEnrollPayloadType = {
+  idWallet: string;
   initiativeId: string;
 };
 
@@ -84,11 +85,11 @@ export const idPayInitiativeWaitingListGet = createAsyncAction(
 )<void, ListUsersOnboardingStatusDTO, NetworkError>();
 
 export type IdPayWalletActions =
-  | ActionType<typeof idPayWalletGet>
   | ActionType<typeof idPayInitiativesFromInstrumentGet>
-  | ActionType<typeof idpayInitiativesInstrumentEnroll>
-  | ActionType<typeof idpayInitiativesInstrumentDelete>
   | ActionType<typeof idPayInitiativesFromInstrumentRefreshStart>
   | ActionType<typeof idPayInitiativesFromInstrumentRefreshStop>
-  | ActionType<typeof setIdPayOnboardingSucceeded>
-  | ActionType<typeof idPayInitiativeWaitingListGet>;
+  | ActionType<typeof idpayInitiativesInstrumentDelete>
+  | ActionType<typeof idpayInitiativesInstrumentEnroll>
+  | ActionType<typeof idPayInitiativeWaitingListGet>
+  | ActionType<typeof idPayWalletGet>
+  | ActionType<typeof setIdPayOnboardingSucceeded>;

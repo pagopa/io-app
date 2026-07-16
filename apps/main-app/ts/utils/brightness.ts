@@ -4,7 +4,7 @@ import { AppState, AppStateStatus, Platform } from "react-native";
 import ScreenBrightness from "react-native-screen-brightness";
 
 // The maximum brightness
-const HIGH_BRIGHTNESS = 1.0;
+const HIGH_BRIGHTNESS = 1;
 
 // The maximum brightness for Android
 // Read more: https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS
@@ -15,13 +15,13 @@ const DEFAULT_TRANSITION_DURATION = 1500;
 
 type UseMaxBrightnessOptions = {
   /**
-   * Whether to use a smooth transition to the maximum brightness
-   */
-  useSmoothTransition?: boolean;
-  /**
    * The duration of the smooth transition
    */
   transitionDuration?: number;
+  /**
+   * Whether to use a smooth transition to the maximum brightness
+   */
+  useSmoothTransition?: boolean;
 };
 
 /**
@@ -54,7 +54,7 @@ export function useMaxBrightness({
 }: UseMaxBrightnessOptions = {}) {
   const currentAppState = useRef<AppStateStatus | null>(null);
   // Store the initial brightness
-  const initialBrightness = useRef<number | null>(null);
+  const initialBrightness = useRef<null | number>(null);
   // Only for Android, store if the app was using auto brightness mode
   const autoBrightness = useRef<boolean | null>(null);
 
@@ -163,7 +163,7 @@ export function useMaxBrightness({
 
         if (progress < 1) {
           // Continue animation
-          requestAnimationFrame(animate);
+          requestAnimationFrame(() => void animate());
         }
       };
 
@@ -230,7 +230,7 @@ export function useMaxBrightness({
         // Listen for app state changes
         appStateSubscription = AppState.addEventListener(
           "change",
-          handleAppStateChange
+          nextAppState => void handleAppStateChange(nextAppState)
         );
       } catch {
         // Ignore

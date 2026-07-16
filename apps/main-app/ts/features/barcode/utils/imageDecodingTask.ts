@@ -1,14 +1,15 @@
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as A from "fp-ts/lib/Array";
-import * as O from "fp-ts/lib/Option";
-import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Eq } from "fp-ts/lib/string";
+import * as TE from "fp-ts/lib/TaskEither";
 import { QRCodeDetectOptions, CodeType as RNQRCodeType } from "rn-qr-generator";
+
 import { GlobalState } from "../../../store/reducers/types";
-import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { decodeMultipleIOBarcodes } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
+import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { barcodeDetectionTask } from "./barcodeDetectionTask";
 
 /**

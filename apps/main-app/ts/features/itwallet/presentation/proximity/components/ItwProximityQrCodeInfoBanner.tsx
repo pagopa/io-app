@@ -47,20 +47,20 @@ const ItwProximityQrCodeInfoBanner = () => {
 
   return (
     <Banner
+      action={I18n.t(
+        "features.itWallet.presentation.proximity.engagement.banner.action"
+      )}
       color="neutral"
+      content={I18n.t(
+        "features.itWallet.presentation.proximity.engagement.banner.content"
+      )}
+      labelClose={I18n.t("global.buttons.close")}
+      onClose={handleOnClose}
+      onPress={handleOnPress}
       pictogramName="help"
       title={I18n.t(
         "features.itWallet.presentation.proximity.engagement.banner.title"
       )}
-      content={I18n.t(
-        "features.itWallet.presentation.proximity.engagement.banner.content"
-      )}
-      action={I18n.t(
-        "features.itWallet.presentation.proximity.engagement.banner.action"
-      )}
-      onPress={handleOnPress}
-      labelClose={I18n.t("global.buttons.close")}
-      onClose={handleOnClose}
     />
   );
 };
