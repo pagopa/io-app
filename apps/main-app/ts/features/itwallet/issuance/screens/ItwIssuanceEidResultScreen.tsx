@@ -209,6 +209,7 @@ const ItwEidSuccessResultContent = ({
           <ItwActivationSuccessFeedbackBanner
             authMethod={authMethod}
             docStatus={docStatus}
+            style={{ marginVertical: 24 }}
           />
         )}
       </OperationResultScreenContent>
@@ -272,6 +273,7 @@ const ItwIssuanceEidIssuanceResultContent = ({
         <ItwActivationSuccessFeedbackBanner
           authMethod={authMethod}
           docStatus={docStatus}
+          style={{ marginVertical: 24 }}
         />
       )}
     </OperationResultScreenContent>

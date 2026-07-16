@@ -66,7 +66,7 @@ export function handleItemOnPress(
     case "MAP":
       return () => openMaps(value);
     default:
-      return () => Linking.openURL(value).then(onSuccess).catch(onError);
+      return () => void Linking.openURL(value).then(onSuccess).catch(onError);
   }
 }
 
