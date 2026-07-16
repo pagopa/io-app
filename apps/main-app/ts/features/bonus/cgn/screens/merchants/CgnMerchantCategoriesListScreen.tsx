@@ -1,19 +1,17 @@
 import {
-  Badge,
   Body,
   ContentWrapper,
   Divider,
-  H6,
+  HSpacer,
   IOToast,
   ListItemAction,
-  ListItemNav,
-  useIOTheme
+  VSpacer
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
-import { useEffect, useMemo, useState } from "react";
-import { View } from "react-native";
+import { Fragment, useEffect, useMemo, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
@@ -22,14 +20,28 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { cgnMerchantsModalSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { CgnMerchantCard } from "../../components/merchants/CgnMerchantCard";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
 
+type CategoryRow = {
+  categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount>;
+  id: string;
+};
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row"
+  },
+  cardWrapper: {
+    flex: 1
+  }
+});
+
 export const CgnMerchantCategoriesListScreen = () => {
-  const theme = useIOTheme();
   const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const [isPullRefresh, setIsPullRefresh] = useState(false);
@@ -78,7 +90,7 @@ export const CgnMerchantCategoriesListScreen = () => {
     }
   }, [potCategories]);
 
-  const renderItem = (
+  const renderCategoryCard = (
     category: ProductCategoryWithNewDiscountsCount,
     index: number
   ) => {
@@ -97,38 +109,20 @@ export const CgnMerchantCategoriesListScreen = () => {
       getListItemAccessibilityLabelCount(categoriesToArray.length, index);
 
     return (
-      <ContentWrapper key={category.productCategory}>
-        <ListItemNav
-          accessibilityLabel={accessibilityLabel}
-          icon={s.icon}
-          iconColor={theme["icon-decorative"]}
-          onPress={() => {
-            navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY, {
-              category: s.type
-            });
-          }}
-          value={
-            countAvailable ? (
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center"
-                }}
-              >
-                <H6>{I18n.t(s.nameKey)}</H6>
-                <Badge
-                  accessible={false}
-                  text={I18n.t("bonus.cgn.merchantsList.news")}
-                  variant="cgn"
-                />
-              </View>
-            ) : (
-              I18n.t(s.nameKey)
-            )
-          }
-        />
-      </ContentWrapper>
+      <CgnMerchantCard
+        accessibilityLabel={accessibilityLabel}
+        icon={s.icon}
+        iconBackgroundColor={s.colors}
+        iconColor={s.textColor}
+        isNew={countAvailable}
+        name={I18n.t(s.nameKey)}
+        onPress={() => {
+          navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY, {
+            category: s.type
+          });
+        }}
+        testID={`cgn-category-card-${category.productCategory}`}
+      />
     );
   };
 
@@ -137,10 +131,60 @@ export const CgnMerchantCategoriesListScreen = () => {
       () => [...(pot.isSome(potCategories) ? potCategories.value : [])],
       [potCategories]
     );
+  const renderCategoryRow = (categoryRow: CategoryRow, index: number) => (
+    <ContentWrapper key={categoryRow.id}>
+      <View style={styles.row}>
+        {categoryRow.categories.map((category, columnIndex) => (
+          <Fragment key={category.productCategory}>
+            {columnIndex > 0 && <HSpacer size={16} />}
+            <View style={styles.cardWrapper}>
+              {renderCategoryCard(category, index * 2 + columnIndex)}
+            </View>
+          </Fragment>
+        ))}
+        {categoryRow.categories.length === 1 && (
+          <>
+            <HSpacer size={16} />
+            <View style={styles.cardWrapper} />
+          </>
+        )}
+      </View>
+    </ContentWrapper>
+  );
+
+  const categoriesRows = useMemo(
+    () =>
+      categoriesToArray.reduce<ReadonlyArray<CategoryRow>>(
+        (rows, category, index) => {
+          if (index % 2 === 0) {
+            return [
+              ...rows,
+              {
+                categories: [category],
+                id: `category-row-${category.productCategory}`
+              }
+            ];
+          }
+
+          const previousRows = rows.slice(0, -1);
+          const currentRow = rows[rows.length - 1];
+          return [
+            ...previousRows,
+            {
+              ...currentRow,
+              categories: [...currentRow.categories, category]
+            }
+          ];
+        },
+        []
+      ),
+    [categoriesToArray]
+  );
 
   return {
-    data: categoriesToArray,
-    renderItem,
+    data: categoriesRows,
+    renderItem: renderCategoryRow,
+    ItemSeparatorComponent: () => <VSpacer size={16} />,
     refreshControlProps: {
       refreshing: isPullRefresh,
       onRefresh: onPullRefresh

@@ -68,7 +68,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     renderItem,
     refreshControlProps,
     ListFooterComponent,
-    ListEmptyComponent
+    ListEmptyComponent,
+    ItemSeparatorComponent
   } =
     selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES
       ? categoriesScreen
@@ -182,8 +183,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
         paddingBottom: IOVisualCostants.appMarginDefault + bottom
       }}
       data={[...data]}
-      ItemSeparatorComponent={() => <Divider />}
-      keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
+      ItemSeparatorComponent={ItemSeparatorComponent ?? (() => <Divider />)}
+      keyExtractor={item => item.id}
       ListEmptyComponent={ListEmptyComponent}
       ListFooterComponent={ListFooterComponent}
       ListHeaderComponent={ListHeaderComponent}
