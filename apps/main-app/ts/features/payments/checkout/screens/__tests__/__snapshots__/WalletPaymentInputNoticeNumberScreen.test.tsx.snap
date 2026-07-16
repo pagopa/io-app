@@ -995,7 +995,6 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1019,7 +1018,6 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",

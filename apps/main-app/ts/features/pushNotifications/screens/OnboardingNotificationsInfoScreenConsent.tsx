@@ -129,18 +129,16 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener(
-      "change",
-      async nextAppState => {
-        if (nextAppState === "active") {
-          const authorizationStatus = await checkNotificationPermissions();
-
-          if (authorizationStatus) {
-            closeModalAndScreen();
-          }
-        }
+    const subscription = AppState.addEventListener("change", nextAppState => {
+      if (nextAppState !== "active") {
+        return;
       }
-    );
+      void checkNotificationPermissions().then(authorizationStatus => {
+        if (authorizationStatus) {
+          closeModalAndScreen();
+        }
+      });
+    });
     return () => {
       subscription.remove();
     };
