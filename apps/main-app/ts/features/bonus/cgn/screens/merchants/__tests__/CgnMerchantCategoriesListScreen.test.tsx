@@ -72,7 +72,7 @@ const renderScreen = (state: GlobalState) => {
     return (
       <FlatList
         data={screen.data}
-        keyExtractor={(item: any) => item.productCategory}
+        keyExtractor={(item: any) => item.id}
         ListEmptyComponent={screen.ListEmptyComponent}
         ListFooterComponent={screen.ListFooterComponent}
         renderItem={({ item, index }: { index: number; item: any }) =>

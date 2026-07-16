@@ -28,16 +28,37 @@ import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
 
 type CategoryRow = {
-  categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount>;
+  categories: ReadonlyArray<RenderableCategory>;
   id: string;
+};
+
+type CategorySpecs = Extract<
+  ReturnType<typeof getCategorySpecs>,
+  { value: unknown }
+>["value"];
+
+type RenderableCategory = {
+  category: ProductCategoryWithNewDiscountsCount;
+  specs: CategorySpecs;
 };
 
 const CATEGORY_CARDS_PER_ROW = 2;
 
-const getCategoryRows = (
+const getRenderableCategories = (
   categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount>
+): ReadonlyArray<RenderableCategory> =>
+  categories.flatMap(category => {
+    const specsOption = getCategorySpecs(category.productCategory);
+
+    return "value" in specsOption
+      ? [{ category, specs: specsOption.value }]
+      : [];
+  });
+
+const getCategoryRows = (
+  categories: ReadonlyArray<RenderableCategory>
 ): ReadonlyArray<CategoryRow> =>
-  categories.reduce<ReadonlyArray<CategoryRow>>((rows, category, index) => {
+  categories.reduce<ReadonlyArray<CategoryRow>>((rows, renderable, index) => {
     if (index % CATEGORY_CARDS_PER_ROW !== 0) {
       return rows;
     }
@@ -46,7 +67,7 @@ const getCategoryRows = (
       ...rows,
       {
         categories: categories.slice(index, index + CATEGORY_CARDS_PER_ROW),
-        id: `category-row-${category.productCategory}`
+        id: `category-row-${renderable.category.productCategory}`
       }
     ];
   }, []);
@@ -110,34 +131,30 @@ export const CgnMerchantCategoriesListScreen = () => {
   }, [potCategories]);
 
   const renderCategoryCard = (
-    category: ProductCategoryWithNewDiscountsCount,
-    index: number
+    renderable: RenderableCategory,
+    index: number,
+    totalCategories: number
   ) => {
-    const specsOption = getCategorySpecs(category.productCategory);
-    if (!("value" in specsOption)) {
-      return null;
-    }
-
-    const s = specsOption.value;
+    const { category, specs } = renderable;
     const countAvailable = category.newDiscounts > 0;
 
     const accessibilityLabel =
       (countAvailable
-        ? `${I18n.t(s.nameKey)} ${I18n.t("bonus.cgn.merchantsList.news")}`
-        : `${I18n.t(s.nameKey)}`) +
-      getListItemAccessibilityLabelCount(categoriesToArray.length, index);
+        ? `${I18n.t(specs.nameKey)} ${I18n.t("bonus.cgn.merchantsList.news")}`
+        : `${I18n.t(specs.nameKey)}`) +
+      getListItemAccessibilityLabelCount(totalCategories, index);
 
     return (
       <CgnMerchantCard
         accessibilityLabel={accessibilityLabel}
-        icon={s.icon}
-        iconBackgroundColor={s.colors}
-        iconColor={s.textColor}
+        icon={specs.icon}
+        iconBackgroundColor={specs.colors}
+        iconColor={specs.textColor}
         isNew={countAvailable}
-        name={I18n.t(s.nameKey)}
+        name={I18n.t(specs.nameKey)}
         onPress={() => {
           navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY, {
-            category: s.type
+            category: specs.type
           });
         }}
         testID={`cgn-category-card-${category.productCategory}`}
@@ -150,16 +167,21 @@ export const CgnMerchantCategoriesListScreen = () => {
       () => [...(pot.isSome(potCategories) ? potCategories.value : [])],
       [potCategories]
     );
+  const renderableCategories = useMemo(
+    () => getRenderableCategories(categoriesToArray),
+    [categoriesToArray]
+  );
   const renderCategoryRow = (categoryRow: CategoryRow, index: number) => (
     <ContentWrapper key={categoryRow.id}>
       <View style={styles.row}>
-        {categoryRow.categories.map((category, columnIndex) => (
-          <Fragment key={category.productCategory}>
+        {categoryRow.categories.map((renderable, columnIndex) => (
+          <Fragment key={renderable.category.productCategory}>
             {columnIndex > 0 && <HSpacer size={16} />}
             <View style={styles.cardWrapper}>
               {renderCategoryCard(
-                category,
-                index * CATEGORY_CARDS_PER_ROW + columnIndex
+                renderable,
+                index * CATEGORY_CARDS_PER_ROW + columnIndex,
+                renderableCategories.length
               )}
             </View>
           </Fragment>
@@ -175,8 +197,8 @@ export const CgnMerchantCategoriesListScreen = () => {
   );
 
   const categoriesRows = useMemo(
-    () => getCategoryRows(categoriesToArray),
-    [categoriesToArray]
+    () => getCategoryRows(renderableCategories),
+    [renderableCategories]
   );
 
   return {
