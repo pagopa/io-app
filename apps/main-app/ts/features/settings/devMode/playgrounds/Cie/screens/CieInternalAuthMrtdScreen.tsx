@@ -229,7 +229,9 @@ export const CieInternalAuthMrtdScreen = () => {
           }
           label={status === "reading" ? "Stop" : "Start sign and reading"}
           onPress={() =>
-            status === "reading" ? handleStopReading() : handleStartReading()
+            void (status === "reading"
+              ? handleStopReading()
+              : handleStartReading())
           }
           variant="solid"
         />

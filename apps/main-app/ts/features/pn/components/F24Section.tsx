@@ -4,7 +4,7 @@ import I18n from "i18next";
 import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../store/hooks";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
-import { thirdPartyMessageAttachments } from "../../messages/store/reducers/thirdPartyById";
+import { thirdPartyMessageAttachmentsSelector } from "../../messages/store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import {
   SendOpeningSource,
@@ -28,7 +28,7 @@ export const F24Section = ({
   sendUserType
 }: F24SectionProps) => {
   const attachments = useIOSelector(state =>
-    thirdPartyMessageAttachments(state, messageId)
+    thirdPartyMessageAttachmentsSelector(state, messageId)
   );
   const f24s = attachments.filter(
     attachment => attachment.category === ATTACHMENT_CATEGORY.F24
