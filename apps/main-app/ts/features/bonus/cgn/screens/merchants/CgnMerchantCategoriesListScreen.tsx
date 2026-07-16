@@ -32,6 +32,25 @@ type CategoryRow = {
   id: string;
 };
 
+const CATEGORY_CARDS_PER_ROW = 2;
+
+const getCategoryRows = (
+  categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount>
+): ReadonlyArray<CategoryRow> =>
+  categories.reduce<ReadonlyArray<CategoryRow>>((rows, category, index) => {
+    if (index % CATEGORY_CARDS_PER_ROW !== 0) {
+      return rows;
+    }
+
+    return [
+      ...rows,
+      {
+        categories: categories.slice(index, index + CATEGORY_CARDS_PER_ROW),
+        id: `category-row-${category.productCategory}`
+      }
+    ];
+  }, []);
+
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row"
@@ -138,7 +157,10 @@ export const CgnMerchantCategoriesListScreen = () => {
           <Fragment key={category.productCategory}>
             {columnIndex > 0 && <HSpacer size={16} />}
             <View style={styles.cardWrapper}>
-              {renderCategoryCard(category, index * 2 + columnIndex)}
+              {renderCategoryCard(
+                category,
+                index * CATEGORY_CARDS_PER_ROW + columnIndex
+              )}
             </View>
           </Fragment>
         ))}
@@ -153,31 +175,7 @@ export const CgnMerchantCategoriesListScreen = () => {
   );
 
   const categoriesRows = useMemo(
-    () =>
-      categoriesToArray.reduce<ReadonlyArray<CategoryRow>>(
-        (rows, category, index) => {
-          if (index % 2 === 0) {
-            return [
-              ...rows,
-              {
-                categories: [category],
-                id: `category-row-${category.productCategory}`
-              }
-            ];
-          }
-
-          const previousRows = rows.slice(0, -1);
-          const currentRow = rows[rows.length - 1];
-          return [
-            ...previousRows,
-            {
-              ...currentRow,
-              categories: [...currentRow.categories, category]
-            }
-          ];
-        },
-        []
-      ),
+    () => getCategoryRows(categoriesToArray),
     [categoriesToArray]
   );
 
