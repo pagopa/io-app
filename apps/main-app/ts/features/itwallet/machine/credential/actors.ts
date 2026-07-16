@@ -1,5 +1,4 @@
 import type {
-  CredentialIssuance,
   CredentialOffer,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
@@ -14,6 +13,7 @@ import { Env } from "../../common/utils/environment";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { getCredentialStatusAssertion } from "../../common/utils/itwCredentialStatusAssertionUtils";
+import { getCredentialStatusFromStatusList } from "../../common/utils/itwCredentialStatusListUtils";
 import {
   enrichErrorWithMetadata,
   isAssertionGenerationError
@@ -38,6 +38,7 @@ import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/act
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { createCommonActorsImplementation } from "../utils/actors";
 import { Context } from "./context";
+
 export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getWalletInstanceAttestation>
 >;
@@ -416,35 +417,28 @@ export const createCredentialIssuanceActorsImplementation = (
   });
 
   const getStatusWithStatusList = async (
-    credential: CredentialBundle,
+    bundle: CredentialBundle,
     issuerConf: IssuerConfiguration
   ): Promise<CredentialBundle> => {
-    if (credential.metadata.format === CredentialFormat.MDOC) {
-      return credential;
+    if (bundle.metadata.format === CredentialFormat.MDOC) {
+      return bundle;
     }
-    const ioWallet = getIoWallet(itwVersion);
-    assert(
-      ioWallet.CredentialStatus.statusList.isSupported,
-      `Status List is not supported by API ${itwVersion}`
-    );
-    const { uri, idx, statusList } =
-      await ioWallet.CredentialStatus.statusList.get(
-        credential.credential,
-        credential.metadata.format as CredentialIssuance.CredentialFormat
+
+    const { status, rawStatus, uri, idx, parsedStatusList } =
+      await getCredentialStatusFromStatusList(
+        bundle,
+        itwVersion,
+        issuerConf.keys
       );
-    const parsed = await ioWallet.CredentialStatus.statusList.verifyAndParse(
-      issuerConf.keys,
-      statusList
-    );
-    const { status, rawStatus } =
-      ioWallet.CredentialStatus.statusList.getStatus(parsed.status_list, idx);
+
     return {
-      ...credential,
+      credential: bundle.credential,
+      statusList: { uri, payload: parsedStatusList },
       metadata: {
-        ...credential.metadata,
+        ...bundle.metadata,
         validity: {
           type: "status_list",
-          status: status.toLowerCase(), // TODO: [SIW-4664] Export a more accurate type from `getStatus`
+          status,
           rawStatus,
           statusList: { uri, idx }
         }
@@ -453,25 +447,25 @@ export const createCredentialIssuanceActorsImplementation = (
   };
 
   const getStatusWithStatusAssertion = async (
-    credential: CredentialBundle
+    bundle: CredentialBundle
   ): Promise<CredentialBundle> => {
-    if (credential.metadata.format === CredentialFormat.MDOC) {
-      return credential;
+    if (bundle.metadata.format === CredentialFormat.MDOC) {
+      return bundle;
     }
     const { parsedStatusAssertion } = await getCredentialStatusAssertion(
-      credential,
+      bundle,
       env,
       itwVersion
     ).catch(
       enrichErrorWithMetadata({
-        credentialId: credential.metadata.credentialId
+        credentialId: bundle.metadata.credentialId
       })
     );
 
     return {
-      ...credential,
+      credential: bundle.credential,
       metadata: {
-        ...credential.metadata,
+        ...bundle.metadata,
         validity: {
           type: "status_assertion",
           status: "valid",

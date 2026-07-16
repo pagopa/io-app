@@ -37,6 +37,13 @@ export type CredentialBundle = {
    * The credential's metadata for UI rendering and management.
    */
   metadata: CredentialMetadata;
+
+  /**
+   * Optional credential's status list to persist via the `StatusListRepository`.
+   * This field is not present when the active IT-Wallet specs do not support
+   * the status list, or when it has already been stored after the issuance.
+   */
+  statusList?: { payload: CredentialStatus.StatusList; uri: string };
 };
 
 /**
@@ -206,7 +213,7 @@ export const isMultiLevelCredential = (
 /**
  * Validity information for v1.3+ credentials that support status list.
  */
-type CredentialValidity = {
+export type CredentialValidity = {
   rawStatus?: string;
   status?: string;
   statusList: { idx: number; uri: string };

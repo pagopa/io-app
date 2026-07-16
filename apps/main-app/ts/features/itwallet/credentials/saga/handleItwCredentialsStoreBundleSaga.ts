@@ -1,9 +1,11 @@
+import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { call, put } from "typed-redux-saga/macro";
 
 import {
   CredentialBundle,
   CredentialMetadata
 } from "../../common/utils/itwTypesUtils";
+import { StatusListRepository } from "../../statusList/utils/repository";
 import { trackItwVaultCredentialStoreFailed } from "../analytics";
 import {
   itwCredentialsStore,
@@ -58,6 +60,26 @@ const collapseBundles = (bundles: ReadonlyArray<CredentialBundle>) => {
   );
 };
 
+const hasStatusList = (
+  bundle: CredentialBundle
+): bundle is Required<CredentialBundle> => Boolean(bundle.statusList);
+
+/**
+ * Collect and deduplicate all status lists available in the provided credential bundles.
+ * The output is then persisted via the {@link StatusListRepository}.
+ * @param bundles The credential bundles to collect status lists from
+ * @returns An array of status lists tuples with uri as key and the parsed list as payload
+ */
+const collectStatusLists = (
+  bundles: ReadonlyArray<CredentialBundle>
+): Array<[string, CredentialStatus.StatusList]> => [
+  ...new Map(
+    bundles
+      .filter(hasStatusList)
+      .map(b => [b.statusList.uri, b.statusList.payload])
+  )
+];
+
 /**
  * This saga handles the credential store action and ensures the consistency between
  * secure storage and redux store.
@@ -71,7 +93,13 @@ export function* handleItwCredentialsStoreBundleSaga(
   try {
     const { writes, metadata } = collapseBundles(credentials);
 
-    yield* call(() => CredentialsVault.storeAll(writes));
+    yield* call(CredentialsVault.storeAll, writes);
+
+    // Store status lists separately via the dedicated repository
+    yield* call(
+      StatusListRepository.upsertMany,
+      collectStatusLists(credentials)
+    );
 
     // If all credentials are stored successfully, we can dispatch the action to add them to the store and wallet
     yield* put(itwCredentialsStore(metadata));
