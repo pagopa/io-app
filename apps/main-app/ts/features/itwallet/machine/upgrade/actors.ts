@@ -8,6 +8,7 @@ import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { Env } from "../../common/utils/environment";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
+import { getCredentialStatusFromStatusList } from "../../common/utils/itwCredentialStatusListUtils";
 import { getRepresentativeVaultId } from "../../common/utils/itwCredentialUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
@@ -152,8 +153,14 @@ export const createCredentialUpgradeActorsImplementation = (
     UpgradeCredentialOutput,
     UpgradeCredentialParams
   >(async ({ input }) => {
-    const { accessToken, issuerConf, clientId, credential, integrityKeyTag } =
-      input;
+    const {
+      accessToken,
+      issuerConf,
+      clientId,
+      credential,
+      integrityKeyTag,
+      itwVersion
+    } = input;
 
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");
@@ -162,8 +169,10 @@ export const createCredentialUpgradeActorsImplementation = (
       "Some of the required parameters for credential upgrade are undefined"
     );
 
+    const ioWallet = getIoWallet(itwVersion);
+
     // The Wallet Unit Attestation makes use of the integrity service
-    if (getIoWallet(input.itwVersion).WalletUnitAttestation.isSupported) {
+    if (ioWallet.WalletUnitAttestation.isSupported) {
       await ensureIntegrityServiceIsStoreReadyOrThrow(store);
     }
 
@@ -172,7 +181,7 @@ export const createCredentialUpgradeActorsImplementation = (
         accessToken,
         {
           env,
-          itwVersion: input.itwVersion,
+          itwVersion,
           hardwareKeyTag: integrityKeyTag,
           sessionToken
         }
@@ -180,7 +189,7 @@ export const createCredentialUpgradeActorsImplementation = (
 
     const credentials = await credentialIssuanceUtils.obtainCredential({
       env,
-      itwVersion: input.itwVersion,
+      itwVersion,
       credentialType: credential.credentialType,
       issuerConf,
       clientId,
@@ -188,12 +197,15 @@ export const createCredentialUpgradeActorsImplementation = (
       authorizedCredentials
     });
 
+    const bundles = await enrichBundlesWithStatusList(
+      itwVersion,
+      issuerConf,
+      credentials
+    );
+
     return {
       credentialType: credential.credentialType,
-      credentials: await enrichBundlesWithStatusListReference(
-        input.itwVersion,
-        credentials
-      ),
+      credentials: bundles,
       walletUnitAttestations: authorizedCredentials.reduce(
         (acc, c) =>
           c.walletUnitAttestationId && c.walletUnitAttestation
@@ -208,37 +220,47 @@ export const createCredentialUpgradeActorsImplementation = (
 });
 
 /**
- * Enrich credential bundles with references to their status list, adding the `validity` field.
- * This function does not fetch the status list, it just stores the `uri` and `idx` for subsequent processing.
+ * For each credential bundle fetch and validate its status list, then enrich it with the
+ * extracted status in `metadata.validity` and the status list content for subsequent storage.
  * @param itwVersion The current IT-Wallet specs version
+ * @param issuerConf The Issuer Configuration to get the keys for verification
  * @param bundles The credential bundles to enrich
  * @returns The enriched credential bundles
  */
-const enrichBundlesWithStatusListReference = async (
+const enrichBundlesWithStatusList = async (
   itwVersion: ItwVersion,
+  issuerConf: IssuerConfiguration,
   bundles: ReadonlyArray<CredentialBundle>
 ): Promise<ReadonlyArray<CredentialBundle>> => {
-  const ioWallet = getIoWallet(itwVersion);
+  if (!getIoWallet(itwVersion).CredentialStatus.statusList.isSupported) {
+    return bundles;
+  }
 
   return Promise.all(
     bundles.map(async bundle => {
-      if (
-        !ioWallet.CredentialStatus.statusList.isSupported ||
-        bundle.metadata.format !== CredentialFormat.SD_JWT
-      ) {
+      if (bundle.metadata.format === CredentialFormat.MDOC) {
         return bundle;
       }
-      const statusList =
-        await ioWallet.CredentialStatus.statusList.getStatusListEntry(
-          bundle.credential,
-          bundle.metadata.format
+
+      const { status, rawStatus, uri, idx, parsedStatusList } =
+        await getCredentialStatusFromStatusList(
+          bundle,
+          itwVersion,
+          issuerConf.keys
         );
+
       return {
         credential: bundle.credential,
         metadata: {
           ...bundle.metadata,
-          validity: { type: "status_list", statusList }
-        }
+          validity: {
+            type: "status_list",
+            status,
+            rawStatus,
+            statusList: { uri, idx }
+          }
+        },
+        statusList: { uri, payload: parsedStatusList }
       };
     })
   );

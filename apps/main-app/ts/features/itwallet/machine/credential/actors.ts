@@ -433,7 +433,6 @@ export const createCredentialIssuanceActorsImplementation = (
 
     return {
       credential: bundle.credential,
-      statusList: { uri, payload: parsedStatusList },
       metadata: {
         ...bundle.metadata,
         validity: {
@@ -442,7 +441,8 @@ export const createCredentialIssuanceActorsImplementation = (
           rawStatus,
           statusList: { uri, idx }
         }
-      }
+      },
+      statusList: { uri, payload: parsedStatusList }
     };
   };
 
