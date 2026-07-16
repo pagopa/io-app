@@ -36,6 +36,10 @@ type CgnMerchantsHomeTabParamsList = {
   [CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL]: undefined;
 };
 
+type CgnMerchantsListItem = {
+  id: string;
+};
+
 type TabOption = {
   icon: IOIcons;
   title: string;
@@ -77,7 +81,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const tabRoutesKeys = Object.keys(CgnMerchantsHomeTabRoutes);
 
-  const animatedFlatListRef = useAnimatedRef<Animated.FlatList<unknown>>();
+  const animatedFlatListRef =
+    useAnimatedRef<Animated.FlatList<CgnMerchantsListItem>>();
 
   const rawScrollY = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
@@ -177,12 +182,12 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   );
 
   return (
-    <Animated.FlatList
+    <Animated.FlatList<CgnMerchantsListItem>
       contentContainerStyle={{
         flexGrow: 1,
         paddingBottom: IOVisualCostants.appMarginDefault + bottom
       }}
-      data={[...data]}
+      data={data}
       ItemSeparatorComponent={ItemSeparatorComponent ?? (() => <Divider />)}
       keyExtractor={item => item.id}
       ListEmptyComponent={ListEmptyComponent}
