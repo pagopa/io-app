@@ -52,7 +52,7 @@ const WalletPaymentPspBanner = () => {
     if (!bannerConfig?.action) {
       return;
     }
-    void mixpanelTrack("VOC_USER_EXIT", {
+    mixpanelTrack("VOC_USER_EXIT", {
       screen_name: "PAYMENT_PICK_PSP_SCREEN"
     });
     return openAuthenticationSession(bannerConfig.action.url, "");
@@ -83,7 +83,7 @@ const WalletPaymentPspBanner = () => {
           content={bannerConfig.description[localeFallback]}
           labelClose={I18n.t("global.buttons.close")}
           onClose={handleBannerClose}
-          onPress={handleBannerPress}
+          onPress={() => void handleBannerPress()}
           pictogramName="help"
           ref={bannerViewRef}
           title={bannerConfig.title?.[localeFallback]}
