@@ -196,17 +196,15 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       onScroll={scrollHandler}
       ref={animatedFlatListRef}
       refreshControl={
-        refreshControlProps && (
-          <RefreshControl
-            tintColor={Platform.OS === "ios" ? "transparent" : IOColors.black}
-            {...refreshControlProps}
-            onRefresh={() => {
-              refreshControlProps.onRefresh();
-              setIsPullRefresh(true);
-            }}
-            refreshing={isRefreshing}
-          />
-        )
+        <RefreshControl
+          tintColor={Platform.OS === "ios" ? "transparent" : IOColors.black}
+          {...refreshControlProps}
+          onRefresh={() => {
+            refreshControlProps.onRefresh();
+            setIsPullRefresh(true);
+          }}
+          refreshing={isRefreshing}
+        />
       }
       renderItem={({ item, index }) => renderItem(item as any, index)}
       scrollEventThrottle={8}
