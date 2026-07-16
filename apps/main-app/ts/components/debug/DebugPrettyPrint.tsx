@@ -106,7 +106,7 @@ export const DebugPrettyPrint = withDebugEnabled(
               color="contrast"
               icon={"shareiOs"}
               iconSize={20}
-              onPress={shareData}
+              onPress={() => void shareData()}
             />
             <IconButton
               accessibilityLabel="copy"
