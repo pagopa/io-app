@@ -2,21 +2,21 @@ import { ContentWrapper, VStack } from "@io-app/design-system";
 import { useFocusEffect, useLinkTo } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
+
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { logosForService } from "../../common/utils";
-import { getServiceCTAs, handleCtaAction } from "../../../messages/utils/ctas";
-import { useFIMSFromServiceId } from "../../../fims/common/hooks";
-import { ServiceDetailsScreenComponent } from "../components/ServiceDetailsScreenComponent";
 import { CTA } from "../../../../types/LocalizedCTAs";
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useFIMSFromServiceId } from "../../../fims/common/hooks";
+import { getServiceCTAs, handleCtaAction } from "../../../messages/utils/ctas";
 import * as analytics from "../../common/analytics";
 import { CtaCategoryType } from "../../common/analytics";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { ServicesParamsList } from "../../common/navigation/params";
+import { logosForService } from "../../common/utils";
 import {
   CardWithMarkdownContent,
   CardWithMarkdownContentSkeleton
@@ -25,6 +25,7 @@ import { FavouriteServiceButton } from "../components/FavouriteServiceButton";
 import { ServiceDetailsFailure } from "../components/ServiceDetailsFailure";
 import { ServiceDetailsMetadata } from "../components/ServiceDetailsMetadata";
 import { ServiceDetailsPreferences } from "../components/ServiceDetailsPreferences";
+import { ServiceDetailsScreenComponent } from "../components/ServiceDetailsScreenComponent";
 import { ServiceDetailsTosAndPrivacy } from "../components/ServiceDetailsTosAndPrivacy";
 import { loadServiceDetail } from "../store/actions/details";
 import { loadServicePreference } from "../store/actions/preference";
@@ -36,11 +37,11 @@ import {
 } from "../store/selectors";
 
 export type ServiceDetailsScreenRouteParams = {
-  serviceId: ServiceId;
   // if true the service should be activated automatically
   // as soon as the screen is shown (used for custom activation
   // flows like PN)
   activate?: boolean;
+  serviceId: ServiceId;
 };
 
 type ServiceDetailsScreenProps = IOStackNavigationRouteProps<
@@ -168,8 +169,8 @@ const ServiceDetailsContent = ({
       <ServicesHeaderSection
         extraBottomPadding={headerPaddingBottom}
         logoUri={logosForService(service) as ImageSourcePropType}
-        title={name}
         subTitle={organization.name}
+        title={name}
       />
       <VStack space={40}>
         <VStack

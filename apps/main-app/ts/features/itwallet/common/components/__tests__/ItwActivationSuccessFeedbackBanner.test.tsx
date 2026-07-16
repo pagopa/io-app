@@ -1,7 +1,8 @@
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import React from "react";
 import configureMockStore from "redux-mock-store";
-import I18n from "i18next";
+
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -53,8 +54,9 @@ const renderComponent = (
 
   const Component = () => (
     <ItwActivationSuccessFeedbackBanner
-      docStatus={props.docStatus ?? "not_active"}
       authMethod={props.authMethod ?? "spid"}
+      docStatus={props.docStatus ?? "not_active"}
+      style={{ marginVertical: 8 }}
     />
   );
 

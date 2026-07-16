@@ -4,33 +4,29 @@ import {
   useRoute
 } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
+import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import {
-  resetSpidLoginState,
-  setSpidLoginInLoadingState
-} from "../../idp/store/actions";
-import { UnlockAccessProps } from "../../unlockAccess/components/UnlockAccessComponent";
-import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import { SETTINGS_ROUTES } from "../../../../settings/common/navigation/routes";
 import {
   setFinishedActiveSessionLoginFlow,
   setRetryActiveSessionLogin
 } from "../../../activeSessionLogin/store/actions";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { CieIdLoginProps } from "../../cie/shared/utils";
-import ROUTES from "../../../../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import {
+  resetSpidLoginState,
+  setSpidLoginInLoadingState
+} from "../../idp/store/actions";
+import { UnlockAccessProps } from "../../unlockAccess/components/UnlockAccessComponent";
 
-type CommonAuthErrorScreenProps = {
-  errorCodeOrMessage?: string;
-} & UnlockAccessProps;
-
-type SpidProps = {
-  authMethod: "SPID";
-};
+export type AuthErrorScreenProps = (CieIdProps | CieProps | SpidProps) &
+  CommonAuthErrorScreenProps;
 
 type CieIdProps = {
   authMethod: "CIE_ID";
@@ -41,8 +37,13 @@ type CieProps = {
   authMethod: "CIE";
 };
 
-export type AuthErrorScreenProps = CommonAuthErrorScreenProps &
-  (SpidProps | CieProps | CieIdProps);
+type CommonAuthErrorScreenProps = UnlockAccessProps & {
+  errorCodeOrMessage?: string;
+};
+
+type SpidProps = {
+  authMethod: "SPID";
+};
 
 const AuthErrorScreen = () => {
   const dispatch = useIODispatch();
@@ -121,9 +122,9 @@ const AuthErrorScreen = () => {
   return (
     <AuthErrorComponent
       authLevel={authLevel}
+      errorCodeOrMessage={errorCodeOrMessage}
       onCancel={onCancel}
       onRetry={onRetry}
-      errorCodeOrMessage={errorCodeOrMessage}
     />
   );
 };

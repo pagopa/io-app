@@ -1,5 +1,13 @@
 import React, { Fragment } from "react";
 import { View } from "react-native";
+
+import type {
+  MarkdownNode,
+  MarkdownNodeType,
+  RenderContext,
+  RenderRule
+} from "./types";
+
 import { Banner } from "../banner";
 import { Divider, HSpacer, VSpacer } from "../layout";
 import { Body } from "../typography/Body";
@@ -13,12 +21,6 @@ import { H6 } from "../typography/H6";
 import { IOText } from "../typography/IOText";
 import { CodeBlock } from "./CodeBlock";
 import { ImageRenderer } from "./ImageRenderer";
-import type {
-  MarkdownNode,
-  MarkdownNodeType,
-  RenderContext,
-  RenderRule
-} from "./types";
 import {
   collectRawText,
   extractPictogramName,
@@ -38,8 +40,8 @@ type InlineStyle = {
 
 type StyledSegment = {
   key: string;
-  text: string;
   style: InlineStyle;
+  text: string;
 };
 
 /**
@@ -52,24 +54,11 @@ const flattenInlineNodes = (
 ): Array<StyledSegment> =>
   nodes.reduce<Array<StyledSegment>>((acc, node) => {
     switch (node.type) {
-      case "text":
       case "code_inline":
+      case "text":
         return [
           ...acc,
           { key: node.key, text: node.content ?? "", style: inherited }
-        ];
-
-      case "softbreak":
-      case "hardbreak":
-        return [...acc, { key: node.key, text: "\n", style: inherited }];
-
-      case "strong":
-        return [
-          ...acc,
-          ...flattenInlineNodes(node.children, {
-            ...inherited,
-            bold: true
-          })
         ];
 
       case "em":
@@ -80,6 +69,10 @@ const flattenInlineNodes = (
             italic: true
           })
         ];
+      case "hardbreak":
+
+      case "softbreak":
+        return [...acc, { key: node.key, text: "\n", style: inherited }];
 
       case "link": {
         const href = node.attributes?.href;
@@ -91,6 +84,15 @@ const flattenInlineNodes = (
           })
         ];
       }
+
+      case "strong":
+        return [
+          ...acc,
+          ...flattenInlineNodes(node.children, {
+            ...inherited,
+            bold: true
+          })
+        ];
 
       default:
         return acc;
@@ -125,8 +127,8 @@ const renderSegment = (
             textStyle: { textDecorationLine: "underline" as const }
           }
         : {})}
-      size={context.fontSize}
       lineHeight={context.lineHeight}
+      size={context.fontSize}
     >
       {segment.text}
     </IOText>
@@ -187,7 +189,7 @@ const makeHeadingRule =
     });
 
     return (
-      <View key={node.key} accessibilityRole="header">
+      <View accessibilityRole="header" key={node.key}>
         <Heading style={{ textAlign: context.textAlign }}>
           {segments.map(seg => seg.text)}
         </Heading>
@@ -211,7 +213,7 @@ const strongRule: RenderRule = (node, renderChildren) => (
 );
 
 const emRule: RenderRule = (node, renderChildren) => (
-  <IOText key={node.key} fontStyle="italic">
+  <IOText fontStyle="italic" key={node.key}>
     {renderChildren(node.children)}
   </IOText>
 );
@@ -220,10 +222,10 @@ const linkRule: RenderRule = (node, renderChildren, context) => {
   const href = node.attributes?.href;
   return (
     <IOText
-      key={node.key}
-      color={context.linkColor}
-      onPress={href ? () => context.onLinkPress?.(href) : undefined}
       accessibilityRole="link"
+      color={context.linkColor}
+      key={node.key}
+      onPress={href ? () => context.onLinkPress?.(href) : undefined}
       textStyle={{ textDecorationLine: "underline" }}
     >
       {renderChildren(node.children)}
@@ -241,9 +243,9 @@ const hardbreakRule: RenderRule = node => (
 
 const bulletListRule: RenderRule = (node, renderChildren) => (
   <View
-    key={node.key}
-    accessible={true}
     accessibilityRole="list"
+    accessible={true}
+    key={node.key}
     style={{ paddingLeft: 12 }}
   >
     <VSpacer size={8} />
@@ -262,9 +264,9 @@ const bulletListRule: RenderRule = (node, renderChildren) => (
 
 const orderedListRule: RenderRule = (node, renderChildren) => (
   <View
-    key={node.key}
-    accessible={true}
     accessibilityRole="list"
+    accessible={true}
+    key={node.key}
     style={{ paddingLeft: 12 }}
   >
     <VSpacer size={8} />
@@ -304,11 +306,11 @@ const blockquoteRule: RenderRule = node => {
 
   return (
     <Banner
+      color="neutral"
+      content={content || undefined}
       key={node.key}
       pictogramName={pictogramName}
-      color="neutral"
       title={title}
-      content={content || undefined}
     />
   );
 };
@@ -324,7 +326,7 @@ const codeInlineRule: RenderRule = node => (
 );
 
 const fenceRule: RenderRule = node => (
-  <CodeBlock key={node.key} content={(node.content ?? "").trimEnd()} />
+  <CodeBlock content={(node.content ?? "").trimEnd()} key={node.key} />
 );
 
 const hrRule: RenderRule = node => <Divider key={node.key} />;

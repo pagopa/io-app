@@ -1,28 +1,29 @@
 import { PropsWithChildren } from "react";
 import { View, ViewProps, ViewStyle } from "react-native";
+
 import { IOSpacer } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
+
+type A11YRelatedProps = Pick<
+  ViewProps,
+  "accessibilityElementsHidden" | "importantForAccessibility" | "pointerEvents"
+>;
 
 type AllowedStyleProps = Exclude<
   ViewStyle,
   "display" | "flexDirection" | "gap"
 >;
 
-type A11YRelatedProps = Pick<
-  ViewProps,
-  "pointerEvents" | "accessibilityElementsHidden" | "importantForAccessibility"
->;
-
-type Stack = PropsWithChildren<{
-  space?: IOSpacer | 0;
-  style?: AllowedStyleProps;
-  allowScaleSpacing?: boolean;
-}> &
-  A11YRelatedProps;
-
 type BaseStack = Stack & {
-  orientation: "vertical" | "horizontal";
+  orientation: "horizontal" | "vertical";
 };
+
+type Stack = A11YRelatedProps &
+  PropsWithChildren<{
+    allowScaleSpacing?: boolean;
+    space?: 0 | IOSpacer;
+    style?: AllowedStyleProps;
+  }>;
 
 /**
 Horizontal Stack component

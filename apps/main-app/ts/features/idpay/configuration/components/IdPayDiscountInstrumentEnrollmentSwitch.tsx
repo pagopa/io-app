@@ -5,31 +5,32 @@ import {
   SwitchAction
 } from "@io-app/design-system";
 import I18n from "i18next";
+
 import {
   InstrumentTypeEnum,
   StatusEnum
 } from "../../../../../definitions/idpay/InstrumentDTO";
 
-type ValidInstrumentType =
-  | InstrumentTypeEnum.IDPAYCODE
-  | InstrumentTypeEnum.APP_IO_PAYMENT;
-
-type PaymentMethodSwitchProps = {
-  onPressAction?: () => void;
-  isLoading?: boolean;
-  status?: StatusEnum;
-} & (
+type PaymentMethodSwitchProps = (
   | {
       instrumentType: InstrumentTypeEnum.APP_IO_PAYMENT;
-      value?: never;
       onValueChange?: never;
+      value?: never;
     }
   | {
       instrumentType: ValidInstrumentType;
-      value: boolean;
       onValueChange: (value: boolean) => void;
+      value: boolean;
     }
-);
+) & {
+  isLoading?: boolean;
+  onPressAction?: () => void;
+  status?: StatusEnum;
+};
+
+type ValidInstrumentType =
+  | InstrumentTypeEnum.APP_IO_PAYMENT
+  | InstrumentTypeEnum.IDPAYCODE;
 
 const getInstrumentPaymentMethodIcon = (
   paymentType: InstrumentTypeEnum
@@ -98,18 +99,18 @@ const IdPayDiscountInstrumentEnrollmentSwitch = (
 
   return (
     <ListItemSwitch
-      value={value}
-      isLoading={isLoading}
       action={renderSwitchAction()}
-      icon={getInstrumentPaymentMethodIcon(instrumentType)}
-      onSwitchValueChange={value => onValueChange?.(value)}
-      label={I18n.t(
-        `idpay.configuration.instruments.paymentMethods.${instrumentType}.title`
-      )}
       badge={getInstrumentPaymentMethodBage(instrumentType, status)}
       description={I18n.t(
         `idpay.configuration.instruments.paymentMethods.${instrumentType}.description`
       )}
+      icon={getInstrumentPaymentMethodIcon(instrumentType)}
+      isLoading={isLoading}
+      label={I18n.t(
+        `idpay.configuration.instruments.paymentMethods.${instrumentType}.title`
+      )}
+      onSwitchValueChange={value => onValueChange?.(value)}
+      value={value}
     />
   );
 };

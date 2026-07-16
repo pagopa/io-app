@@ -1,32 +1,33 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Fragment, memo, useCallback, useEffect, useState } from "react";
-import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import {
   ListItemHeader,
   RadioGroup,
-  VSpacer,
-  useIOToast
+  useIOToast,
+  VSpacer
 } from "@io-app/design-system";
-import _ from "lodash";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
+import _ from "lodash";
+import { Fragment, memo, useCallback, useEffect, useState } from "react";
+import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
+
 import { useIOSelector } from "../store/hooks";
 import { preferredCalendarSelector } from "../store/reducers/persistedPreferences";
 
 type CalendarByAccount = Readonly<{
-  title: string;
   data: ReadonlyArray<Calendar>;
+  title: string;
 }>;
 
 type CalendarsByAccount = ReadonlyArray<CalendarByAccount>;
 
-type Props = {
-  onCalendarSelected: (calendar: Calendar) => void;
-  onCalendarsLoaded: () => void;
-  onCalendarRemove?: () => void;
-};
-
 type FetchError = {
   kind: "FETCH_ERROR";
+};
+
+type Props = {
+  onCalendarRemove?: () => void;
+  onCalendarSelected: (calendar: Calendar) => void;
+  onCalendarsLoaded: () => void;
 };
 
 type ResourceError = FetchError;
@@ -136,11 +137,11 @@ const CalendarsListContainer = ({
       <Fragment key={index}>
         <ListItemHeader label={section.title} />
         <RadioGroup<string>
-          type="radioListItem"
-          key={`radio_group_${index}`}
           items={mapData(section.data)}
-          selectedItem={selectedCalendar?.id}
+          key={`radio_group_${index}`}
           onPress={onPressRadio}
+          selectedItem={selectedCalendar?.id}
+          type="radioListItem"
         />
         {/* not show the end spacer if the element is the last */}
         {index < calendarsByAccount.value.length - 1 && <VSpacer size={24} />}

@@ -1,5 +1,6 @@
 import { H3 } from "@io-app/design-system";
 import { render } from "@testing-library/react-native";
+
 import { withWalletCardBaseComponent } from "../WalletCardBaseComponent";
 
 describe("WalletCardBaseComponent", () => {

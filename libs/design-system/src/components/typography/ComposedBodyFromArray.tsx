@@ -1,9 +1,10 @@
 import { ComponentProps, ReactElement } from "react";
 import { TextStyle } from "react-native";
+
 import { Body } from "./Body";
 
 export type BodyProps = ComponentProps<typeof Body> & {
-  text: string | ReactElement;
+  text: ReactElement | string;
 };
 
 type PropsComposedBody = {

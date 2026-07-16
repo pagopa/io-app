@@ -1,6 +1,7 @@
 import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { ActionArgs, assertEvent, assign } from "xstate";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOStore } from "../../../../store/hooks";
@@ -19,16 +20,16 @@ import { getMixPanelCredential } from "../../analytics/utils";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
   itwWalletInstanceAttestationStore,
   itwWalletUnitAttestationsStore
 } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
-} from "../../lifecycle/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 

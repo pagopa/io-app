@@ -56,8 +56,7 @@ export default defineConfig([
 
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
   // eslint-plugin-prettier, perfectionist.
-  // Perfectionist block is excluded — sorting rules are deferred to a follow-up PR.
-  ...pagopaConfig.filter(config => !config.plugins?.perfectionist),
+  ...pagopaConfig,
 
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -85,8 +84,8 @@ export default defineConfig([
     },
 
     plugins: {
-      // Remove `import` plugin once we adopt
-      // `perfectionist/sort-imports` rules
+      // `import` plugin is retained for `import/no-extraneous-dependencies`;
+      // import ordering is handled by `perfectionist/sort-imports`.
       import: importPlugin,
       functional,
       sonarjs,
@@ -173,9 +172,7 @@ export default defineConfig([
       "no-caller": "error",
       "no-void": "off",
       "no-duplicate-imports": "error",
-      // Remove the following `import` rule
-      // once we adopt `perfectionist/sort-imports`
-      "import/order": "error",
+      // Import ordering is handled by `perfectionist/sort-imports`
 
       // TYPESCRIPT
       // Downgraded to warn — existing shadows are widespread and non-critical
@@ -203,11 +200,20 @@ export default defineConfig([
       "@typescript-eslint/dot-notation": "error",
       "@typescript-eslint/no-floating-promises": "error",
       "@typescript-eslint/restrict-plus-operands": "error",
+      "@typescript-eslint/no-misused-promises": "error",
+      "@typescript-eslint/strict-boolean-expressions": [
+        "warn",
+        {
+          allowNullableBoolean: true,
+          allowNullableString: true
+        }
+      ],
 
       // REACT
       "react/jsx-uses-react": "off",
       "react/prop-types": "off",
       "react/jsx-key": "error",
+      "react/jsx-no-constructed-context-values": "error",
       // Less relevant rule with contemporary React with hooks
       "react/jsx-no-bind": [
         "error",
@@ -334,7 +340,8 @@ export default defineConfig([
       "@typescript-eslint/no-require-imports": "off",
       "@typescript-eslint/no-empty-function": "off",
       "i18next/no-literal-string": "off",
-      "no-restricted-imports": "off"
+      "no-restricted-imports": "off",
+      "react/jsx-no-constructed-context-values": "off"
     }
   },
   {
