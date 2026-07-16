@@ -2,7 +2,11 @@ import { addDays, isPast } from "date-fns";
 import { createSelector } from "reselect";
 
 import { GlobalState } from "../../../../../store/reducers/types";
-import { bannerHideDurations, ItwBannerId } from "../reducers/banners";
+import {
+  bannerHideDurations,
+  bannerVisibleDurations,
+  ItwBannerId
+} from "../reducers/banners";
 
 const itwBannersSelector = (state: GlobalState) =>
   state.features.itWallet.banners;
@@ -50,6 +54,33 @@ export const itwIsBannerHiddenSelector = (id: ItwBannerId) =>
   });
 
 /**
+ * Returns whether a specific banner is still within its visibility window, i.e. it was triggered
+ * and, if a visible duration is configured for it, that duration has not yet elapsed.
+ * Banners that were never triggered (no `shownOn`) are considered not visible.
+ */
+export const itwIsBannerVisibleSelector = (id: ItwBannerId) =>
+  createSelector(itwBannersSelector, banners => {
+    const bannerState = banners[id];
+
+    if (!bannerState?.shownOn) {
+      return false;
+    }
+
+    const visibleDurationInDays = bannerVisibleDurations[id];
+    if (visibleDurationInDays === undefined) {
+      return true;
+    }
+
+    const shownDate = new Date(bannerState.shownOn);
+    if (isNaN(shownDate.getTime())) {
+      return false;
+    }
+
+    const visibleUntilDate = addDays(shownDate, visibleDurationInDays);
+    return !isPast(visibleUntilDate);
+  });
+
+/**
  * Returns if the discovery banner should be displayed or not based on the user's preferences.
  * The banner should be visible only if the user closed it more than six months ago.
  */
@@ -77,3 +108,14 @@ export const itwIsWalletDiscoveryBannerHiddenSelector =
  */
 export const itwIsInboxDiscoveryBannerHiddenSelector =
   itwIsBannerHiddenSelector("discovery_messages_inbox");
+
+/**
+ * Returns whether the eID activation success feedback banner should be displayed: it must have been
+ * triggered, still be within its 7-day visibility window, and not have been dismissed.
+ */
+export const itwIsActivationSuccessFeedbackBannerVisibleSelector =
+  createSelector(
+    itwIsBannerVisibleSelector("activationSuccessFeedback"),
+    itwIsBannerHiddenSelector("activationSuccessFeedback"),
+    (isVisible, isHidden) => isVisible && !isHidden
+  );

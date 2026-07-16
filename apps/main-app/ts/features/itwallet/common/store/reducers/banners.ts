@@ -16,6 +16,7 @@ const FOREVER = 100 * 365; // approx. 100 years
  * To add a new banner add a new id to this type
  */
 export type ItwBannerId =
+  | "activationSuccessFeedback" // Survey feedback banner shown after a successful IT-Wallet activation
   | "ageVerificationUsageDetails" // Age Verification usage banner placed in credential details screen
   | "discovery" // (Legacy) Discovery banner for Documenti su IO
   | "discovery_messages_inbox" // Discovery banner for IT Wallet placed in the messages inbox screen
@@ -35,7 +36,17 @@ export const bannerHideDurations: Record<ItwBannerId, NonEmptyArray<number>> = {
   upgradeMDLDetails: [FOREVER],
   ageVerificationUsageDetails: [FOREVER],
   itw_pid_info: [FOREVER],
-  proximity_qr_code_info: [FOREVER]
+  proximity_qr_code_info: [FOREVER],
+  activationSuccessFeedback: [FOREVER] // dismissing the banner hides it permanently
+};
+
+/**
+ * Mapping between banner identifiers and the duration (expressed in days) for which they should stay
+ * visible after being triggered, regardless of whether they were dismissed. Banners not listed here have
+ * no visibility time limit.
+ */
+export const bannerVisibleDurations: Partial<Record<ItwBannerId, number>> = {
+  activationSuccessFeedback: 7 // ~1 week
 };
 
 export type ItwBannersState = Partial<
@@ -46,6 +57,8 @@ export type ItwBannersState = Partial<
       dismissCount?: number;
       /** The last time the banner was dismissed */
       dismissedOn?: string;
+      /** When the banner was first triggered to be shown */
+      shownOn?: string;
     }
   >
 >;
@@ -81,9 +94,14 @@ const reducer = (
 
     case getType(itwShowBanner): {
       const bannerId = action.payload;
+      const current = state[bannerId];
+
       return {
         ...state,
-        [bannerId]: {}
+        [bannerId]: {
+          ...current,
+          shownOn: current?.shownOn ?? new Date().toISOString()
+        }
       };
     }
 

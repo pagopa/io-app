@@ -8,6 +8,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { itwCloseBanner } from "../../store/actions/banners";
 import { itwClearWalletActivationFeedbackBannerData } from "../../store/actions/preferences";
 import ItwActivationSuccessFeedbackBanner from "../ItwActivationSuccessFeedbackBanner";
 
@@ -28,6 +29,9 @@ describe("ItwActivationSuccessFeedbackBanner", () => {
     fireEvent.press(getByLabelText(I18n.t("global.buttons.close")));
     expect(store.getActions()).toContainEqual(
       itwClearWalletActivationFeedbackBannerData()
+    );
+    expect(store.getActions()).toContainEqual(
+      itwCloseBanner("activationSuccessFeedback")
     );
   });
 

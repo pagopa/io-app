@@ -19,6 +19,7 @@ import {
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { toSurveyAuthMethod } from "../../analytics/utils";
 import { toItwIdMethod } from "../../analytics/utils/types";
+import { itwShowBanner } from "../../common/store/actions/banners";
 import {
   itwSetAuthLevel,
   itwSetCredentialUpgradeFailed,
@@ -322,11 +323,11 @@ export const createEidIssuanceActionsImplementation = (
     const authMethod = toSurveyAuthMethod(context.identification);
     store.dispatch(
       itwSetWalletActivationFeedbackBannerData({
-        date: new Date().toISOString(),
         docStatus,
         authMethod
       })
     );
+    store.dispatch(itwShowBanner("activationSuccessFeedback"));
   },
 
   storeCredentialUpgradeFailures: ({

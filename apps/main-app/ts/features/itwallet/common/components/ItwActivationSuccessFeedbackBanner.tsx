@@ -11,6 +11,7 @@ import {
   trackItwSurveyRequestAccepted
 } from "../../analytics";
 import { TrackQualtricsSurvey } from "../../analytics/utils/types";
+import { itwCloseBanner } from "../store/actions/banners";
 import { itwClearWalletActivationFeedbackBannerData } from "../store/actions/preferences";
 import { IT_WALLET_SURVEY_EID_ACTIVATION_SUCCESS } from "../utils/constants";
 
@@ -65,6 +66,7 @@ const ItwActivationSuccessFeedbackBanner = ({
         labelClose={I18n.t("global.buttons.close")}
         onClose={() => {
           dispatch(itwClearWalletActivationFeedbackBannerData());
+          dispatch(itwCloseBanner("activationSuccessFeedback"));
         }}
         onPress={handleOnPress}
         pictogramName="feedback"

@@ -43,7 +43,7 @@ describe("IT Wallet banners reducer", () => {
     });
   });
 
-  it("should handle itwShowBanner action", () => {
+  it("should handle itwShowBanner action by setting shownOn while preserving dismiss state", () => {
     const initialState: ItwBannersState = {
       discovery: {
         dismissedOn: new Date().toISOString(),
@@ -59,8 +59,26 @@ describe("IT Wallet banners reducer", () => {
     const newState = reducer(initialState, action);
 
     expect(newState).toEqual({
-      ...newState,
-      discovery: {}
+      ...initialState,
+      discovery: {
+        ...initialState.discovery,
+        shownOn: expect.any(String)
+      }
     });
+  });
+
+  it("should not overwrite shownOn on subsequent itwShowBanner dispatches", () => {
+    const firstShow = reducer(
+      itwBannersInitialState,
+      itwShowBanner("activationSuccessFeedback")
+    );
+    const secondShow = reducer(
+      firstShow,
+      itwShowBanner("activationSuccessFeedback")
+    );
+
+    expect(secondShow.activationSuccessFeedback?.shownOn).toBe(
+      firstShow.activationSuccessFeedback?.shownOn
+    );
   });
 });

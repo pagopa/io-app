@@ -39,7 +39,7 @@ export type ItwPreferencesState = {
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
   // Set when a credential is successfully added together with an IT Wallet eID activation.
-  // Used to show the credential success survey banner in WALLET_HOME for 7 days.
+  // Holds the data needed to render the credential success survey banner in WALLET_HOME;
   walletActivationFeedbackBannerData?: ItwWalletActivationFeedbackBannerData;
 };
 
