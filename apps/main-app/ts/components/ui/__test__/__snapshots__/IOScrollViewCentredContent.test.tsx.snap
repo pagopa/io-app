@@ -392,10 +392,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -407,14 +407,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -1584,10 +1584,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -1599,14 +1599,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -3235,10 +3235,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -3250,14 +3250,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -4662,10 +4662,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -4677,14 +4677,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -5627,10 +5627,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -5642,14 +5642,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -7051,10 +7051,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -7066,14 +7066,14 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -8251,10 +8251,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -8266,14 +8266,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -9440,10 +9440,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -9455,14 +9455,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -11088,10 +11088,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -11103,14 +11103,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -12512,10 +12512,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -12527,14 +12527,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -13474,10 +13474,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -13489,14 +13489,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
@@ -14895,10 +14895,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -14910,14 +14910,14 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={
