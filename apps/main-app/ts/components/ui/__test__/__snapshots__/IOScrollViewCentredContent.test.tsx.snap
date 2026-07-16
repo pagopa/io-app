@@ -341,6 +341,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -1532,6 +1533,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -3182,6 +3184,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -4608,6 +4611,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -5572,6 +5576,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -6995,6 +7000,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -8194,6 +8200,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -9382,6 +9389,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -11029,6 +11037,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -12452,6 +12461,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -13413,6 +13423,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -14833,6 +14844,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
