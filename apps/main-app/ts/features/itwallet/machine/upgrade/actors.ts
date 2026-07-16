@@ -169,10 +169,8 @@ export const createCredentialUpgradeActorsImplementation = (
       "Some of the required parameters for credential upgrade are undefined"
     );
 
-    const ioWallet = getIoWallet(itwVersion);
-
     // The Wallet Unit Attestation makes use of the integrity service
-    if (ioWallet.WalletUnitAttestation.isSupported) {
+    if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
       await ensureIntegrityServiceIsStoreReadyOrThrow(store);
     }
 

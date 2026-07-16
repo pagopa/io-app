@@ -65,7 +65,7 @@ const hasStatusList = (
 ): bundle is Required<CredentialBundle> => Boolean(bundle.statusList);
 
 /**
- * Collect and deduplicate all status lists available in the provided credential bundles.
+ * Collect and deduplicate by `uri` all status lists available in the provided credential bundles.
  * The output is then persisted via the {@link StatusListRepository}.
  * @param bundles The credential bundles to collect status lists from
  * @returns An array of status lists tuples with uri as key and the parsed list as payload
