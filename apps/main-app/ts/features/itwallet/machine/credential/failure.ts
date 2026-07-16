@@ -1,7 +1,6 @@
 import { type IntegrityError } from "@pagopa/io-react-native-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 
-import { InvalidTslCredentialStatus } from "../../common/utils/itwCredentialStatusListUtils.ts";
 import { WithCredentialMetadata } from "../../common/utils/ItwFailureTypes.ts";
 import {
   isAssertionGenerationError,
@@ -75,10 +74,8 @@ export const mapEventToFailure = (
     };
   }
 
-  if (
-    isIssuerResponseError(error, Codes.CredentialInvalidStatus) ||
-    error instanceof InvalidTslCredentialStatus
-  ) {
+  // TODO: [SIW-4682] Handle invalid status from status list and its dynamic message
+  if (isIssuerResponseError(error, Codes.CredentialInvalidStatus)) {
     return {
       type: CredentialIssuanceFailureType.INVALID_STATUS,
       reason: error

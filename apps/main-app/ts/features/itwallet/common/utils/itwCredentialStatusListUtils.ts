@@ -4,6 +4,10 @@ import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "./itwIoWallet";
 import { CredentialBundle, IssuerConfiguration } from "./itwTypesUtils";
 
+/**
+ * Error thrown when a credential status is not valid, determined
+ * by checking the corresponding index in the token status list.
+ */
 export class InvalidTslCredentialStatus extends Error {}
 
 /**

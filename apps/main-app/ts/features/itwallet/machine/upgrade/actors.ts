@@ -238,6 +238,7 @@ const enrichBundlesWithStatusList = async (
 
   return Promise.all(
     bundles.map(async bundle => {
+      // TODO: [SIW-4681] Handle status list for mdoc credentials
       if (bundle.metadata.format === CredentialFormat.MDOC) {
         return bundle;
       }
