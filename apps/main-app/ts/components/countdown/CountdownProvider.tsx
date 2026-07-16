@@ -1,4 +1,12 @@
-import { createContext, ReactNode, useContext, useRef, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import BackgroundTimer from "react-native-background-timer";
 
 type CountdownContextType = {
@@ -22,27 +30,30 @@ export const CountdownProvider = (props: CountdownProviderProps) => {
   const [timerCount, setTimerCount] = useState<number>(timerTiming);
   const isRunningTimer = useRef<boolean>(false);
 
-  const startTimer = () => {
+  const startTimer = useCallback(() => {
     // eslint-disable-next-line functional/immutable-data
     isRunningTimer.current = true;
     BackgroundTimer.runBackgroundTimer(() => {
       setTimerCount(prevCount => (prevCount > 0 ? prevCount - 1 : 0));
     }, intervalDuration);
-  };
+  }, [intervalDuration]);
 
-  const resetTimer = () => {
+  const resetTimer = useCallback(() => {
     setTimerCount(timerTiming);
     BackgroundTimer.stopBackgroundTimer();
     // eslint-disable-next-line functional/immutable-data
     isRunningTimer.current = false;
-  };
+  }, [timerTiming]);
 
-  const isRunning = () => isRunningTimer.current;
+  const isRunning = useCallback(() => isRunningTimer.current, []);
+
+  const contextValue = useMemo(
+    () => ({ timerCount, resetTimer, startTimer, isRunning }),
+    [timerCount, resetTimer, startTimer, isRunning]
+  );
 
   return (
-    <CountdownContext.Provider
-      value={{ timerCount, resetTimer, startTimer, isRunning }}
-    >
+    <CountdownContext.Provider value={contextValue}>
       {children}
     </CountdownContext.Provider>
   );

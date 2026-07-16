@@ -635,7 +635,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -659,7 +658,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -947,7 +945,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -971,7 +968,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1738,7 +1734,6 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1762,7 +1757,6 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2523,7 +2517,6 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2547,7 +2540,6 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2764,7 +2756,6 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2788,7 +2779,6 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -3552,7 +3542,6 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -3576,7 +3565,6 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -3793,7 +3781,6 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -3817,7 +3804,6 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
