@@ -61,7 +61,7 @@ platform :ios do
   end
 
   desc "Submit a new Beta Build to TestFlight"
-  lane :beta_circleci_testflight do |options|
+  lane :beta_testflight do |options|
 
     # xCode 14.2, prevents altool to fail with error "Could not
     # determine the package’s bundle ID" during the "pilot" step
@@ -104,7 +104,7 @@ platform :ios do
   end
 
   desc "Submit a new Canary Build to TestFlight"
-  lane :canary_ci_testflight do |options|
+  lane :canary_testflight do |options|
     app_identifier = "it.pagopa.app.io.canary"
     # xCode 14.2, prevents altool to fail with error "Could not
     # determine the package’s bundle ID" during the "pilot" step

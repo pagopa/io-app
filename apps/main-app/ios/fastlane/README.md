@@ -15,18 +15,18 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios beta_circleci_testflight
+### ios beta_testflight
 
 ```sh
-[bundle exec] fastlane ios beta_circleci_testflight
+[bundle exec] fastlane ios beta_testflight
 ```
 
 Submit a new Beta Build to TestFlight
 
-### ios canary_ci_testflight
+### ios canary_testflight
 
 ```sh
-[bundle exec] fastlane ios canary_ci_testflight
+[bundle exec] fastlane ios canary_testflight
 ```
 
 Submit a new Canary Build to TestFlight
