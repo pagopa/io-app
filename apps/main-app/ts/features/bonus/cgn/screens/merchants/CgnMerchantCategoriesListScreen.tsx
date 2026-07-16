@@ -27,7 +27,7 @@ import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
 
-type CategoryRow = {
+export type CategoryRow = {
   categories: ReadonlyArray<RenderableCategory>;
   id: string;
 };

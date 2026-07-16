@@ -23,8 +23,11 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";
-import { CgnMerchantCategoriesListScreen } from "./CgnMerchantCategoriesListScreen";
-import { CgnMerchantsListScreen } from "./CgnMerchantsListScreen";
+import {
+  CategoryRow,
+  CgnMerchantCategoriesListScreen
+} from "./CgnMerchantCategoriesListScreen";
+import { CgnMerchantsListScreen, MerchantsAll } from "./CgnMerchantsListScreen";
 
 export const CgnMerchantsHomeTabRoutes = {
   CGN_CATEGORIES: "CGN_CATEGORIES",
@@ -36,9 +39,7 @@ type CgnMerchantsHomeTabParamsList = {
   [CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL]: undefined;
 };
 
-type CgnMerchantsListItem = {
-  id: string;
-};
+type CgnMerchantsListItem = CategoryRow | MerchantsAll;
 
 type TabOption = {
   icon: IOIcons;
@@ -56,6 +57,9 @@ const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
   }
 };
 
+const isCategoryRow = (item: CgnMerchantsListItem): item is CategoryRow =>
+  "categories" in item;
+
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const { navigate } = useIONavigation();
   useDisableRootNavigatorGesture();
@@ -69,7 +73,6 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const {
     data,
-    renderItem,
     refreshControlProps,
     ListFooterComponent,
     ListEmptyComponent,
@@ -206,7 +209,11 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           refreshing={isRefreshing}
         />
       }
-      renderItem={({ item, index }) => renderItem(item as any, index)}
+      renderItem={({ item, index }) =>
+        isCategoryRow(item)
+          ? categoriesScreen.renderItem(item, index)
+          : merchantsScreen.renderItem(item, index)
+      }
       scrollEventThrottle={8}
       snapToEnd={false}
       style={{ flex: 1 }}
