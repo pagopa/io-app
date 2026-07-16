@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { MutableRefObject } from "react";
+import { RefObject } from "react";
 import { Dimensions } from "react-native";
 
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
@@ -17,7 +17,7 @@ import { getRptIdStringFromPayment } from "../utils/rptId";
 export type MessagePaymentBottomSheetProps = {
   messageId: string;
   payments: ReadonlyArray<NotificationPaymentInfo>;
-  presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
+  presentPaymentsBottomSheetRef: RefObject<(() => void) | undefined>;
   sendOpeningSource: SendOpeningSource;
   sendUserType: SendUserType;
   serviceId: ServiceId;
