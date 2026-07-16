@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "validate": "nx affected --targets=lint,test,tsc-noemit --configuration=ci",
+    "validate": "nx affected --targets=lint,test,tsc-noemit --configuration=ci --nx-bail",
     "prettify": "prettier --write \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
     "prettier:check": "prettier --check \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
     "postinstall": "nx prepack io-app-design-system"
