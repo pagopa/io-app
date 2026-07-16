@@ -3,6 +3,7 @@ import {
   H4,
   Icon,
   IOCategoryIcons,
+  IOColors,
   IOSpacingScale,
   useIOTheme
 } from "@io-app/design-system";
@@ -83,8 +84,8 @@ const CgnMerchantCard = ({
         style={[
           styles.cardContainer,
           {
-            backgroundColor: theme["appBackground-primary"],
-            borderColor: theme["divider-default"]
+            backgroundColor: IOColors[theme["appBackground-secondary"]],
+            borderColor: IOColors[theme["cardBorder-default"]]
           }
         ]}
         testID={testID}
