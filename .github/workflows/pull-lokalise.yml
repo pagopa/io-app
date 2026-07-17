@@ -34,3 +34,4 @@ jobs:
             - it
             - en
           replace_breaks: false
+          add_newline_eof: true
