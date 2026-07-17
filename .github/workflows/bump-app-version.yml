@@ -1,10 +1,17 @@
+# Reusable workflow that bumps the main-app version according to the given
+# release type, pushes the resulting commit/tag, and creates the corresponding GitHub release. 
+# The supported release types correspond to the commands defined in the main-app's package.json:
+# - start-breaking-cycle: bumps the major version 
+# - start-release-cycle: bumps the minor version
+# - start-fix-cycle: bumps the patch version
+# - release-rc: bumps the build version
 name: Bump app version
 
 on:
   workflow_call:
     inputs:
       release-type:
-        description: Nx target run on main-app to bump the version (e.g. start-release-cycle, release-rc)
+        description: Type of release which refers to the command to run for bumping the app version specified in the package.json of main-app.
         required: true
         type: string
     outputs:
@@ -28,15 +35,39 @@ jobs:
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+          
       - uses: ./.github/actions/setup-pnpm
+      
+      # Validate provided release-type input against the one defined in the package.json of main-app.
+      - id: validate-release-type
+        env:
+          RELEASE_TYPE: ${{ inputs.release-type }}
+        run: |
+          case "$RELEASE_TYPE" in
+            start-breaking-cycle|start-release-cycle|start-fix-cycle|release-rc) ;;
+            *)
+              echo "::error::Invalid release-type '$RELEASE_TYPE'. Allowed values: start-breaking-cycle, start-release-cycle, start-fix-cycle, release-rc"
+              exit 1
+              ;;
+          esac
+          
+      # Runs the nx release target matching the requested release type, which
+      # bumps the version in main-app's package.json and creates a local commit + tag.
       - id: bump-version
+        env:
+          RELEASE_TYPE: ${{ inputs.release-type }}
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          pnpm nx run main-app:${{ inputs.release-type }}
+          pnpm nx run "main-app:$RELEASE_TYPE"
+          
+      # Pushes the version bump commit and its tag created above back to the triggering branch.
       - id: push-tags
         run: |
-          git push --no-verify --follow-tags origin HEAD:${GITHUB_REF#refs/heads/}
+          git push --no-verify --follow-tags origin "HEAD:${GITHUB_REF#refs/heads/}"
+          
+      # Reads the newly bumped version and publishes a GitHub release for it,
+      # exposing it as CURRENT_APP_VERSION for the job/workflow outputs.
       - id: github-release-creation
         run: |
           cd apps/main-app
