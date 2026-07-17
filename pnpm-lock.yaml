@@ -260,8 +260,8 @@ importers:
         specifier: 3.6.2
         version: 3.6.2(f8c00da11ecd768df625893adf6351ec)
       '@pagopa/io-react-native-zendesk':
-        specifier: ^0.3.30
-        version: 0.3.30(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
+        specifier: 0.3.32-4
+        version: 0.3.32-4(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/react-native-cie':
         specifier: ^1.5.0
         version: 1.5.0
@@ -2772,8 +2772,8 @@ packages:
       react-native: '*'
       react-native-quick-crypto: '*'
 
-  '@pagopa/io-react-native-zendesk@0.3.30':
-    resolution: {integrity: sha512-w6ks2Ty+EgdZoaXAVp/LeQ/BgHI0JH1lcvGjSo34Rjs64ZmRdBTQ4jN92Q/EjP5J7MkZ46+eLBybGqtOjgCQ2Q==}
+  '@pagopa/io-react-native-zendesk@0.3.32-4':
+    resolution: {integrity: sha512-4Jt1KVgkOgkHeFqgAXj1XN9WOumzUsOwfKEVNjzXx8ZQzR1DB1W9aQzssNZhCiB9ffdeQwdOOZ2w0B1pDn2uLw==}
     engines: {node: '>= 18.0.0'}
     peerDependencies:
       react: '*'
@@ -14133,7 +14133,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@pagopa/io-react-native-zendesk@0.3.30(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)':
+  '@pagopa/io-react-native-zendesk@0.3.32-4(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)':
     dependencies:
       react: 19.2.0
       react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
