@@ -15,7 +15,7 @@ import {
   isWalletCategoryFilteringEnabledSelector,
   selectWalletCategoryFilter
 } from "../store/selectors";
-import { WalletCardCategoryFilter, walletCardCategoryFilters } from "../types";
+import { walletCardCategoryFilters } from "../types";
 
 /**
  * Renders filter tabs to categorize cards on the wallet home screen.
@@ -45,13 +45,10 @@ const WalletCategoryFilterTabs = () => {
     [categoryFilter]
   );
 
-  const categoryLabels = useMemo(
-    (): Record<WalletCardCategoryFilter, string> => ({
-      itw: I18n.t("features.wallet.cards.categories.itw"),
-      other: I18n.t("features.wallet.cards.categories.other")
-    }),
-    []
-  );
+  const categoryLabels = {
+    itw: I18n.t("features.wallet.cards.categories.itw"),
+    other: I18n.t("features.wallet.cards.categories.other")
+  };
 
   if (!isFilteringEnabled) {
     return null;
