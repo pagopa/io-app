@@ -9,12 +9,13 @@ import {
   terminateAarFlow
 } from "../../../../pn/aar/store/actions";
 import { mockEphemeralAarMessageDataActionPayload } from "../../../../pn/aar/utils/testUtils";
+import { clearCache } from "../../../../settings/common/store/actions";
 import {
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails
 } from "../../../__mocks__/message";
 import { PaymentData, UIMessageDetails } from "../../../types";
-import { loadMessageDetails } from "../../actions";
+import { loadMessageDetails, reloadAllMessages } from "../../actions";
 import {
   detailsByIdReducer,
   messageDetailsByIdSelector,
@@ -116,6 +117,35 @@ describe("detailsById reducer", () => {
       expect(finalState).toEqual(stateWithStandardMessage);
     });
   });
+
+  it("should clear the state upon receiving clearCache", () => {
+    const state = detailsByIdReducer(
+      undefined,
+      loadMessageDetails.success(successLoadMessageDetails)
+    );
+
+    const output = detailsByIdReducer(state, clearCache());
+
+    expect(output).toEqual({});
+  });
+
+  it("should clear the state upon receiving reloadAllMessages.request", () => {
+    const state = detailsByIdReducer(
+      undefined,
+      loadMessageDetails.success(successLoadMessageDetails)
+    );
+
+    const output = detailsByIdReducer(
+      state,
+      reloadAllMessages.request({
+        filter: {},
+        fromUserAction: false,
+        pageSize: 10
+      })
+    );
+
+    expect(output).toEqual({});
+  });
 });
 
 describe("messageDetailsByIdSelector", () => {
@@ -207,5 +237,48 @@ describe("messagePaymentData selector", () => {
       "01HR9ZVVKPQDGQ97TT83AN1W8C"
     );
     expect(returnedPaymentData).toBe(paymentData);
+  });
+
+  [
+    {
+      name: "someLoading",
+      potFactory: pot.someLoading
+    },
+    {
+      name: "someUpdating",
+      potFactory: (value: UIMessageDetails) => pot.someUpdating(value, value)
+    },
+    {
+      name: "someError",
+      potFactory: (value: UIMessageDetails) => pot.someError(value, "Error")
+    }
+  ].forEach(({ name, potFactory }) => {
+    it(`should return payment data from a cached message pot (${name})`, () => {
+      const messageId = "01HR9ZVVKPQDGQ97TT83AN1W8C";
+      const paymentData = {} as PaymentData;
+      const appState = appReducer(undefined, applicationChangeState("active"));
+      const finalState = {
+        ...appState,
+        entities: {
+          ...appState.entities,
+          messages: {
+            ...appState.entities.messages,
+            detailsById: {
+              ...appState.entities.messages.detailsById,
+              [messageId]: potFactory({
+                paymentData
+              } as UIMessageDetails)
+            }
+          }
+        }
+      } as GlobalState;
+
+      const returnedPaymentData = messagePaymentDataSelector(
+        finalState,
+        messageId
+      );
+
+      expect(returnedPaymentData).toBe(paymentData);
+    });
   });
 });
