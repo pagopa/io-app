@@ -65,8 +65,17 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: ./.github/actions/setup-pnpm
+      - id: get-app-version
+        run: |
+          cd apps/main-app
+          APP_VERSION=$(node -p -e "require('./package.json').version" | sed 's/-rc//')
+          echo "version=$APP_VERSION" >> "$GITHUB_OUTPUT"
       - id: send-notification
-        run: 'pnpm ts-node --skip-project -O ''{"lib":["es2015"]}'' apps/main-app/scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
-        env: 
-          IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
+        uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
+          payload: |
+            channel: "#prod_io"
+            unfurl_links: false
+            text: "È disponibile la nuova versione `${{ steps.get-app-version.outputs.version }}` dell’app :io-app: in test interno.\n<https://github.com/pagopa/io-app/blob/master/apps/main-app/CHANGELOG.md|:memo: Changelog> - <https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/345932988/Release+produzione+beta#Frequenza-rilasci|:calendar: Calendario rilasci> - <https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/22020162/Beta+interna|:test_tube: Come partecipo alla beta interna?> - <https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/22020162/Beta+interna#%F0%9F%90%9E-Come-segnalo-un-bug?|:ladybug: Come segnalo un bug?>\ncc <!subteam^S02GBHCR486>"
