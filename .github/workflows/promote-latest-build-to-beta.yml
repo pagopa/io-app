@@ -78,4 +78,5 @@ jobs:
           payload: |
             channel: "CQVJ1JES2"
             unfurl_links: false
+            unfurl_media: false
             text: "È disponibile la nuova versione `${{ steps.get-app-version.outputs.version }}` dell’app :io-app: in test interno.\n<https://github.com/pagopa/io-app/blob/master/apps/main-app/CHANGELOG.md|:memo: Changelog> - <https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/345932988/Release+produzione+beta#Frequenza-rilasci|:calendar: Calendario rilasci> - <https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/22020162/Beta+interna|:test_tube: Come partecipo alla beta interna?> - <https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/22020162/Beta+interna#%F0%9F%90%9E-Come-segnalo-un-bug?|:ladybug: Come segnalo un bug?>\ncc <!subteam^S02GBHCR486>"
