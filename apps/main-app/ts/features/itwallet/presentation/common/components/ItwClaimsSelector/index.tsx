@@ -10,8 +10,7 @@ import {
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment } from "react";
-import { AccessibilityInfo, StyleSheet, View } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { AccessibilityInfo, Pressable, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
 
@@ -136,11 +135,10 @@ export const ItwClaimsSelector = ({
         }
       ]}
     >
-      <TouchableWithoutFeedback
+      <Pressable
         accessibilityLabel={accessibilityLabel ?? title}
         accessibilityRole="button"
         accessibilityState={{ expanded }}
-        accessible={true}
         onPress={onItemPress}
       >
         <Animated.View
@@ -155,7 +153,7 @@ export const ItwClaimsSelector = ({
             <Icon name="chevronBottom" />
           </Animated.View>
         </Animated.View>
-      </TouchableWithoutFeedback>
+      </Pressable>
 
       <Animated.View style={bodyAnimatedStyle}>
         <View

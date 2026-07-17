@@ -10,40 +10,6 @@ jest.mock("../../../hooks/useClaimsDetailsBottomSheet", () => ({
   })
 }));
 
-jest.mock("react-native-gesture-handler", () => {
-  const React = require("react");
-  const { Pressable } = require("react-native");
-
-  return {
-    TouchableWithoutFeedback: ({
-      children,
-      onPress,
-      accessibilityLabel,
-      accessibilityRole,
-      accessibilityState,
-      accessible
-    }: {
-      accessibilityLabel?: string;
-      accessibilityRole?: string;
-      accessibilityState?: object;
-      accessible?: boolean;
-      children: React.ReactNode;
-      onPress: () => void;
-    }) =>
-      React.createElement(
-        Pressable,
-        {
-          onPress,
-          accessibilityLabel,
-          accessibilityRole,
-          accessibilityState,
-          accessible
-        },
-        children
-      )
-  };
-});
-
 jest.mock("@io-app/design-system/src/hooks/useAccordionAnimation", () => ({
   useAccordionAnimation: () => ({
     expanded: false,
@@ -72,6 +38,7 @@ describe("ItwClaimsSelector", () => {
     );
 
     expect(component.getByLabelText("claims-selector")).toBeTruthy();
+    expect(component.getAllByRole("button")).toHaveLength(1);
     expect(component.getByText("Name")).toBeTruthy();
     expect(component.getByText("Birth date")).toBeTruthy();
   });
