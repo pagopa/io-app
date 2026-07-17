@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.37.0-rc.7](https://github.com/pagopa/io-app/compare/3.37.0-rc.6...3.37.0-rc.7) (2026-07-16)
+
+
+### Features
+
+* **CI:** [[IOAPPX-517](https://pagopa.atlassian.net/browse/IOAPPX-517)] Add ESLint plugin for i18n hygiene ([#8229](https://github.com/pagopa/io-app/issues/8229)) ([80dbf80](https://github.com/pagopa/io-app/commit/80dbf80ebada1f983f209fc98bee777aea0c8e55))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** MDL skeu card data mappings ([#8316](https://github.com/pagopa/io-app/issues/8316)) ([6582567](https://github.com/pagopa/io-app/commit/6582567397f38abbabc3cfb43d31892d0c13f946))
+
+
+### Chores
+
+* Update translations from Lokalise ([#8310](https://github.com/pagopa/io-app/issues/8310)) ([addf732](https://github.com/pagopa/io-app/commit/addf732bf9054cdbb6c785cb8c7ce90853739413))
+* **IT-Wallet:** [[SIW-4650](https://pagopa.atlassian.net/browse/SIW-4650)] Remove "Richiedi assistenza" CTA for valid IT-Wallet lifecycle ([#8293](https://github.com/pagopa/io-app/issues/8293)) ([b89ef76](https://github.com/pagopa/io-app/commit/b89ef76a8635ced3e411a0a9877d813ed99ea6f2))
+* [[IOAPPX-514](https://pagopa.atlassian.net/browse/IOAPPX-514)] Remove weekly job for outdated dependencies ([#7998](https://github.com/pagopa/io-app/issues/7998)) ([013f336](https://github.com/pagopa/io-app/commit/013f33646601af9448726ccbc888a5eccabc9f2b))
+
+## [3.37.0-rc.6](https://github.com/pagopa/io-app/compare/3.37.0-rc.5...3.37.0-rc.6) (2026-07-15)
+
+
+### Features
+
+* [[IOCOM-3243](https://pagopa.atlassian.net/browse/IOCOM-3243)] FP-TS removal from messages' reducers ([#8234](https://github.com/pagopa/io-app/issues/8234)) ([172e9e3](https://github.com/pagopa/io-app/commit/172e9e30e116045033127568268227b8c2a5346b))
+* **IT-Wallet:** [[SIW-4177](https://pagopa.atlassian.net/browse/SIW-4177)] Track third channel credentials ([#8082](https://github.com/pagopa/io-app/issues/8082)) ([faf2847](https://github.com/pagopa/io-app/commit/faf2847a4c2f0b61b8f6e28dc71dad9eb9bd57c1))
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] remove @ChrisMattew from codeowners ([#8225](https://github.com/pagopa/io-app/issues/8225)) ([be024cd](https://github.com/pagopa/io-app/commit/be024cdbb33b79168a051e128a6b416b31d4803b))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] fix margin ([#8309](https://github.com/pagopa/io-app/issues/8309)) ([935a516](https://github.com/pagopa/io-app/commit/935a516a596297267bc566798f320a35ab6b71d1))
+* **IT-Wallet:** [[SIW-4556](https://pagopa.atlassian.net/browse/SIW-4556)] Handle NFC presence in identification mode selection ([#8239](https://github.com/pagopa/io-app/issues/8239)) ([716c778](https://github.com/pagopa/io-app/commit/716c778142b757a8ac36b9e758702a83c842aadd))
+* **IT-Wallet:** [[SIW-4606](https://pagopa.atlassian.net/browse/SIW-4606)] Prevent blank Skia background on screen transition by remounting Canvas ([#8285](https://github.com/pagopa/io-app/issues/8285)) ([2db62a6](https://github.com/pagopa/io-app/commit/2db62a6cf8bec9665cbc3ed3d3a7244bf940c7e9))
+
+
+### Chores
+
+* [[IOAPPX-519](https://pagopa.atlassian.net/browse/IOAPPX-519)] Remove cie button check script ([#8301](https://github.com/pagopa/io-app/issues/8301)) ([dc89673](https://github.com/pagopa/io-app/commit/dc8967384383edf83d1d00fba5edec684ffc884c))
+* [[IOCOM-3245](https://pagopa.atlassian.net/browse/IOCOM-3245)] messagePrecondition reducer FP-TS removal ([#8226](https://github.com/pagopa/io-app/issues/8226)) ([e008ad9](https://github.com/pagopa/io-app/commit/e008ad9a99a9c2292a1de4c14a0786704d8b9747))
+* [[IOPLT-1777](https://pagopa.atlassian.net/browse/IOPLT-1777)] Add new `eslint` rules ([#8038](https://github.com/pagopa/io-app/issues/8038)) ([793327c](https://github.com/pagopa/io-app/commit/793327cd2105a4c9bc4f045bb08cce005b1e41b5))
+* [[IOPLT-1906](https://pagopa.atlassian.net/browse/IOPLT-1906)] Replace legacy shadow with `boxShadow` in the DS components ([#8221](https://github.com/pagopa/io-app/issues/8221)) ([2503879](https://github.com/pagopa/io-app/commit/2503879783df6513fe36f38622cb646b71404321))
+
 ## [3.37.0-rc.5](https://github.com/pagopa/io-app/compare/3.37.0-rc.4...3.37.0-rc.5) (2026-07-14)
 
 

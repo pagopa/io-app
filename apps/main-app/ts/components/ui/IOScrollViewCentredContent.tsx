@@ -42,9 +42,14 @@ export const IOScrollViewCentredContent = ({
   children,
   ...scrollViewProps
 }: IOScrollViewCentredContentProps) => (
-  <IOScrollView actions={actions} centerContent {...scrollViewProps}>
+  <IOScrollView
+    actions={actions}
+    alwaysBounceVertical={false}
+    centerContent
+    {...scrollViewProps}
+  >
     <VStack space={16} style={{ alignItems: "center" }}>
-      <Pictogram name={pictogram} size={180} />
+      <Pictogram name={pictogram} size={120} />
       <View style={{ paddingHorizontal: 24 }}>
         <VStack space={8} style={{ alignItems: "center" }}>
           <H3 accessibilityRole="header" style={{ textAlign: "center" }}>

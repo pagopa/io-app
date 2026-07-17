@@ -11,15 +11,11 @@
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
-fastlane_version "2.28.5"
+fastlane_version "2.233.1"
 
 default_platform :android
 
 platform :android do
-  before_all do
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-  end
-
   desc "Get current canary version code from Google Play"
   lane :current_canary_version_code do
     version_codes = google_play_track_version_codes(
@@ -36,20 +32,6 @@ platform :android do
     end
 
     UI.message("CURRENT_CANARY_VERSION_CODE=#{current_code}")
-  end
-
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
-
-  desc "Build the App in debug mode"
-  lane :build_debug do
-    gradle(
-      task: "assemble",
-      build_type: "Debug",
-      # flags: "-x bundleReleaseJsAndAssets --no-daemon"
-    )
   end
 
   desc "Build the App in release mode"
@@ -116,12 +98,6 @@ platform :android do
     upload_to_play_store(track: "internal", track_promote_to: "alpha")
   end
 
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "assembleRelease")
-    supply
-  end
-
   desc "Download universal APK file from Google Play"
   lane :download_apk do
     version_code = ENV['VERSION_CODE'].to_i
@@ -140,23 +116,6 @@ platform :android do
       destination: "io-app-canary-universal.apk",
       version_code: version_code
     )
-  end
-
-  # You can define as many lanes as you want
-
-  after_all do |lane|
-    # This block is called, only if the executed lane was successful
-
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
-  end
-
-  error do |lane, exception|
-    # slack(
-    #   message: exception.message,
-    #   success: false
-    # )
   end
 end
 
