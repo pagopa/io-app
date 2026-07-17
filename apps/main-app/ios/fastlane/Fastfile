@@ -11,69 +11,65 @@
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
-fastlane_version "2.28.5"
+fastlane_version "2.233.1"
 
 default_platform :ios
 
 platform :ios do
-  desc 'Fetch certificates and provisioning profiles'
-  lane :certificates do
-    # match(type: 'development')
-    match(type: 'appstore')
+  before_all do
+    setup_ci()
   end
 
-  desc "Runs all the tests"
-  lane :test do
-    scan
-  end
-
-  # Builds the app for TestFlight releases
-  lane :do_testflight_build do
-    sync_code_signing(type: "appstore")
-
-    # Install pods
-    cocoapods
-    
-        # Temporary disables automatic code signing to avoid issues during build
+  # Temporary disables automatic code signing so the matched profile is used.
+  # @param build_configuration [String] Xcode signing settings (e.g. "Release", "Canary").
+  # @param profile_name [String] Name of the matched provisioning profile to sign the build with (e.g. "match AppStore it.pagopa.app.io").
+  private_lane :disable_automatic_code_signing do |options|
     update_code_signing_settings(
       use_automatic_signing: false,
       path: "IO.xcodeproj",
       team_id: "M2X5YQ4BJ7",
-      profile_name: "match AppStore it.pagopa.app.io",
       targets: ["IO"],
-      build_configurations: ["Release"],
+      build_configurations: [options[:build_configuration]],
+      profile_name: options[:profile_name],
       code_sign_identity: "iPhone Distribution",
       sdk: "iphoneos*",
     )
+  end
 
-    # build the app
-    gym(
-      scheme: "IO",
-      clean: true,
-      export_method: "app-store",
-      workspace: "IO.xcworkspace",
-      include_symbols: false
+  # Generates the changelog from every commit since the last tag ending with
+  # @param tag_suffix [String] Release type which can be a release candidate or a canary (e.g. "rc", "canary").
+  private_lane :changelog_since_last_tag do |options|
+    previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-#{options[:tag_suffix]}\\\\. | sed -n '2 p' | tr -d '\n'")
+
+    changelog_from_git_commits(
+      tag_match_pattern: "*" + previous_tag + "*",
+      pretty: "- %s",
+      merge_commit_filtering: "exclude_merges"
+    )
+  end
+
+  # Authenticates with the App Store Connect API key, returning it so it can
+  # be reused by `sync_code_signing`/`pilot`. Requires `setup_ci` (run in
+  # `before_all`) so the CI keychain is ready for credential access.
+  private_lane :authenticate_app_store_connect do
+    app_store_connect_api_key(
+      key_id: "#{ENV['APP_STORE_API_KEY_ID']}",
+      issuer_id: "#{ENV['APP_STORE_API_KEY_ISSUER_ID']}",
+      key_filepath: "./fastlane/AuthKey_#{ENV['APP_STORE_API_KEY_ID']}.p8",
+      duration: 1200,
     )
   end
 
   desc "Submit a new Beta Build to TestFlight"
-  lane :beta_circleci_testflight do |options|
+  lane :beta_testflight do |options|
 
     # xCode 14.2, prevents altool to fail with error "Could not
     # determine the package’s bundle ID" during the "pilot" step
     # See https://github.com/fastlane/fastlane/issues/20741
     ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'false'
 
-    # Setup the CI environment
-    setup_ci()
-
     # use the App Store API Key to authenticate
-    api_key = app_store_connect_api_key(
-      key_id: "#{ENV['APP_STORE_API_KEY_ID']}",
-      issuer_id: "#{ENV['APP_STORE_API_KEY_ISSUER_ID']}",
-      key_filepath: "./fastlane/AuthKey_#{ENV['APP_STORE_API_KEY_ID']}.p8",
-      duration: 1200,
-    )
+    api_key = authenticate_app_store_connect
 
     sync_code_signing(type: "appstore", api_key: api_key)
 
@@ -81,15 +77,9 @@ platform :ios do
     cocoapods
 
     # Temporary disables automatic code signing to avoid issues during build
-    update_code_signing_settings(
-      use_automatic_signing: false,
-      path: "IO.xcodeproj",
-      team_id: "M2X5YQ4BJ7",
-      targets: ["IO"],
-      build_configurations: ["Release"],
-      profile_name: "match AppStore it.pagopa.app.io",
-      code_sign_identity: "iPhone Distribution",
-      sdk: "iphoneos*",
+    disable_automatic_code_signing(
+      build_configuration: "Release",
+      profile_name: "match AppStore it.pagopa.app.io"
     )
 
     # build the app
@@ -101,14 +91,8 @@ platform :ios do
       include_symbols: false
     )
 
-    previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-rc\\\\. | sed -n '2 p' | tr -d '\n'")
-
     # generate the changelog based on last commits
-    changelog = changelog_from_git_commits(
-      tag_match_pattern: "*" +previous_tag + "*" ,
-      pretty:"- %s",
-      merge_commit_filtering: "exclude_merges"
-    )
+    changelog = changelog_since_last_tag(tag_suffix: "rc")
 
     # upload to App store
     pilot(
@@ -120,23 +104,15 @@ platform :ios do
   end
 
   desc "Submit a new Canary Build to TestFlight"
-  lane :canary_ci_testflight do |options|
+  lane :canary_testflight do |options|
     app_identifier = "it.pagopa.app.io.canary"
     # xCode 14.2, prevents altool to fail with error "Could not
     # determine the package’s bundle ID" during the "pilot" step
     # See https://github.com/fastlane/fastlane/issues/20741
     ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'false'
 
-    # Setup the CI environment
-    setup_ci()
-
     # use the App Store API Key to authenticate
-    api_key = app_store_connect_api_key(
-      key_id: "#{ENV['APP_STORE_API_KEY_ID']}",
-      issuer_id: "#{ENV['APP_STORE_API_KEY_ISSUER_ID']}",
-      key_filepath: "./fastlane/AuthKey_#{ENV['APP_STORE_API_KEY_ID']}.p8",
-      duration: 1200,
-    )
+    api_key = authenticate_app_store_connect
 
     sync_code_signing(type: "appstore", app_identifier: app_identifier, api_key: api_key)
 
@@ -144,15 +120,9 @@ platform :ios do
     cocoapods
 
     # Temporary disables automatic code signing to avoid issues during build
-    update_code_signing_settings(
-      use_automatic_signing: false,
-      path: "IO.xcodeproj",
-      team_id: "M2X5YQ4BJ7",
-      targets: ["IO"],
-      build_configurations: ["Canary"],
-      profile_name: "match AppStore it.pagopa.app.io.canary",
-      code_sign_identity: "iPhone Distribution",
-      sdk: "iphoneos*",
+    disable_automatic_code_signing(
+      build_configuration: "Canary",
+      profile_name: "match AppStore it.pagopa.app.io.canary"
     )
 
     # build the app
@@ -165,14 +135,8 @@ platform :ios do
       include_symbols: false
     )
 
-    previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-canary\\\\. | sed -n '2 p' | tr -d '\n'")
-
     # generate the changelog based on last commits
-    changelog = changelog_from_git_commits(
-      tag_match_pattern: "*" +previous_tag + "*" ,
-      pretty:"- %s",
-      merge_commit_filtering: "exclude_merges"
-    )
+    changelog = changelog_since_last_tag(tag_suffix: "canary")
 
     # upload to App store
     pilot(
@@ -187,16 +151,8 @@ platform :ios do
   desc "Distribute previously uploaded beta to TestFlight, using GA"
   lane :distribute_beta_testflight do |options|
 
-    # Setup the CI environment
-    setup_ci()
-
     # use the App Store API Key to authenticate
-    api_key = app_store_connect_api_key(
-      key_id: "#{ENV['APP_STORE_API_KEY_ID']}",
-      issuer_id: "#{ENV['APP_STORE_API_KEY_ISSUER_ID']}",
-      key_filepath: "./fastlane/AuthKey_#{ENV['APP_STORE_API_KEY_ID']}.p8",
-      duration: 1200,
-    )
+    api_key = authenticate_app_store_connect
 
     # upload to App store
     pilot(
@@ -209,23 +165,6 @@ platform :ios do
       # max wait for App Store Connect processing (30 min)
       wait_processing_timeout_duration: 1800
     )
-  end
-
-  # You can define as many lanes as you want
-
-  after_all do |lane|
-    # This block is called, only if the executed lane was successful
-
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
-  end
-
-  error do |lane, exception|
-    # slack(
-    #   message: exception.message,
-    #   success: false
-    # )
   end
 end
 
