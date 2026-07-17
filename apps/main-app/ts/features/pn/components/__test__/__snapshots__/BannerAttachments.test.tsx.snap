@@ -341,6 +341,7 @@ exports[`BannerAttachments BannerAttachments component should match snapshot 1`]
                       }
                     >
                       <View
+                        accessibilityRole="button"
                         accessibilityState={
                           {
                             "busy": undefined,
@@ -358,7 +359,7 @@ exports[`BannerAttachments BannerAttachments component should match snapshot 1`]
                             "text": undefined,
                           }
                         }
-                        accessible={false}
+                        accessible={true}
                         collapsable={false}
                         focusable={true}
                         onBlur={[Function]}
@@ -370,6 +371,7 @@ exports[`BannerAttachments BannerAttachments component should match snapshot 1`]
                         onResponderTerminate={[Function]}
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
+                        onTouchEnd={[Function]}
                         testID="SEND-attachments-alert"
                       >
                         <View
@@ -393,30 +395,24 @@ exports[`BannerAttachments BannerAttachments component should match snapshot 1`]
                           jestInlineStyle={
                             [
                               {
-                                "alignContent": "center",
-                                "alignItems": "flex-start",
                                 "borderCurve": "continuous",
-                                "borderRadius": 8,
-                                "flexDirection": "row",
+                                "borderRadius": 12,
                                 "padding": 16,
                               },
                               {
-                                "backgroundColor": "#F4F5F8",
+                                "backgroundColor": "#E1F5FE",
                               },
                             ]
                           }
                           style={
                             [
                               {
-                                "alignContent": "center",
-                                "alignItems": "flex-start",
                                 "borderCurve": "continuous",
-                                "borderRadius": 8,
-                                "flexDirection": "row",
+                                "borderRadius": 12,
                                 "padding": 16,
                               },
                               {
-                                "backgroundColor": "#F4F5F8",
+                                "backgroundColor": "#E1F5FE",
                               },
                               {
                                 "transform": [
@@ -429,127 +425,30 @@ exports[`BannerAttachments BannerAttachments component should match snapshot 1`]
                           }
                         >
                           <View
-                            accessibilityLabel="Gli atti sono disponibili online per 120 giorni. Salvali sul tuo dispositivo! Scopri di più"
-                            accessibilityRole="button"
-                            accessible={true}
                             style={
                               {
-                                "alignSelf": "center",
-                                "flex": 1,
-                                "gap": 4,
+                                "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "row",
+                                "gap": 18,
                               }
-                            }
-                          >
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 14,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 21,
-                                  },
-                                ]
-                              }
-                            >
-                              Gli atti sono disponibili online per 120 giorni. Salvali sul tuo dispositivo!
-                            </Text>
-                            <View
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel="Scopri di più"
-                              accessibilityRole="button"
-                              accessibilityState={
-                                {
-                                  "busy": undefined,
-                                  "checked": undefined,
-                                  "disabled": undefined,
-                                  "expanded": undefined,
-                                  "selected": undefined,
-                                }
-                              }
-                              accessibilityValue={
-                                {
-                                  "max": undefined,
-                                  "min": undefined,
-                                  "now": undefined,
-                                  "text": undefined,
-                                }
-                              }
-                              accessible={true}
-                              collapsable={false}
-                              focusable={true}
-                              importantForAccessibility="no-hide-descendants"
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onResponderGrant={[Function]}
-                              onResponderMove={[Function]}
-                              onResponderRelease={[Function]}
-                              onResponderTerminate={[Function]}
-                              onResponderTerminationRequest={[Function]}
-                              onStartShouldSetResponder={[Function]}
-                              pointerEvents="none"
-                            >
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
-                              <Text
-                                accessibilityElementsHidden={true}
-                                accessible={false}
-                                allowFontScaling={true}
-                                ellipsizeMode="tail"
-                                importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.5}
-                                numberOfLines={1}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": undefined,
-                                    },
-                                  ]
-                                }
-                              >
-                                Scopri di più
-                              </Text>
-                            </View>
-                          </View>
-                          <View
-                            style={
-                              [
-                                {
-                                  "marginRight": -16,
-                                },
-                                {
-                                  "alignSelf": "center",
-                                },
-                              ]
                             }
                           >
                             <RNSVGSvgView
+                              accessibilityElementsHidden={true}
+                              accessibilityLabel=""
+                              accessible={false}
                               align="xMidYMid"
-                              bbHeight={80}
-                              bbWidth={80}
+                              bbHeight={36}
+                              bbWidth={36}
+                              color="#215C76"
                               focusable={false}
-                              height={80}
+                              height={36}
+                              importantForAccessibility="no-hide-descendants"
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -558,14 +457,14 @@ exports[`BannerAttachments BannerAttachments component should match snapshot 1`]
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 80,
-                                    "width": 80,
+                                    "height": 36,
+                                    "width": 36,
                                   },
                                 ]
                               }
-                              vbHeight={240}
-                              vbWidth={240}
-                              width={80}
+                              vbHeight={24}
+                              vbWidth={24}
+                              width={36}
                             >
                               <RNSVGGroup
                                 fill={
@@ -576,77 +475,84 @@ exports[`BannerAttachments BannerAttachments component should match snapshot 1`]
                                 }
                               >
                                 <RNSVGPath
-                                  d="M61.87 155.41v26.96c0 5.87 4.76 10.63 10.63 10.63h108.889c5.87 0 10.63-4.76 10.63-10.63l.002-20.32c0-11.55.979-10.076-4.521-11.55-6.9-.87-29.73-10.62-29.73-10.62-10.32-3.9-.42-12.65-.42-12.65l2.72-.43c-11.11-.83-12.76-10.37-12.76-10.37l5.79-4.03-1.41-2.87-1.83-2.48 1.09-2.71 1.38-.98s4.14-1.27 4.79-1.33 6.02.68 6.02.68l7.73.98s11.4 3.27 11.63 3.34 9.501 4.71 9.501 4.71V22c0-5.87-4.761-10.63-10.631-10.63H72.5c-5.87 0-10.63 4.76-10.63 10.63z"
+                                  clipRule={0}
+                                  d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0Zm.028 7.556a1.528 1.528 0 1 0 0-3.056 1.528 1.528 0 0 0 0 3.056Zm0 1.944c.568 0 1.029.46 1.029 1.028v8.005a1.028 1.028 0 0 1-2.057 0v-8.005c0-.568.46-1.028 1.029-1.028Z"
                                   fill={
                                     {
-                                      "payload": 4289392367,
-                                      "type": 0,
+                                      "type": 2,
                                     }
                                   }
+                                  fillRule={0}
                                   propList={
                                     [
                                       "fill",
-                                    ]
-                                  }
-                                />
-                                <RNSVGPath
-                                  d="M120.42 134.05c-.38 0-.77-.15-1.06-.44a1.49 1.49 0 0 1 0-2.12l41.69-41.69c6.81-6.81 6.81-17.89 0-24.7-3.3-3.3-7.68-5.11-12.35-5.11s-9.05 1.82-12.35 5.11l-46.09 46.09c-2.1 2.1-3.26 4.9-3.26 7.88s1.16 5.77 3.26 7.88c4.34 4.34 11.41 4.34 15.76 0l45.5-45.5a4.406 4.406 0 0 0-6.23-6.23l-39.35 39.34c-.59.59-1.54.59-2.12 0a1.49 1.49 0 0 1 0-2.12l39.35-39.34c2.89-2.89 7.59-2.89 10.47 0 2.89 2.89 2.89 7.59 0 10.47l-45.5 45.5c-5.51 5.51-14.49 5.51-20 0a14.05 14.05 0 0 1-4.14-10c0-3.78 1.47-7.33 4.14-10l46.09-46.09c7.98-7.98 20.96-7.98 28.94 0s7.98 20.96 0 28.94l-41.69 41.69c-.29.29-.68.44-1.06.44"
-                                  fill={
-                                    {
-                                      "payload": 4278240714,
-                                      "type": 0,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                                <RNSVGPath
-                                  d="M240.379 121.8c-9.7-6.57-37.08-23.63-47.18-23.63v-4.2c13.44 0 48.07 23.36 49.53 24.35l-2.36 3.48zm-63.37-1.18c-19.38-2.54-29-6.34-30.27-11.94-.78-3.43 1.93-6.24 3.66-7.36 9.65-6.19 40.15 5.89 43.59 7.29l-1.58 3.89c-12.24-4.96-33.85-11.43-39.74-7.65 0 0-2.16 1.51-1.84 2.91.21.89 2.47 5.51 26.72 8.69l-.55 4.16z"
-                                  fill={
-                                    {
-                                      "payload": 4278927075,
-                                      "type": 0,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                                <RNSVGPath
-                                  d="M176.85 134.5c-28.52-5.99-32.37-11.92-32.78-15.85-.55-5.29 6.04-8.35 6.79-8.68l1.69 3.84c-1.49.66-4.5 2.61-4.31 4.41.15 1.44 2.73 6.56 29.46 12.17l-.86 4.11z"
-                                  fill={
-                                    {
-                                      "payload": 4278927075,
-                                      "type": 0,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                                <RNSVGPath
-                                  d="M240.689 174.22c-38.99-17.68-53.2-21.59-71.19-26.54l-2.55-.7c-9.02-2.49-14.19-6.14-15.38-10.85-1.36-5.4 3.12-9.75 3.31-9.94l2.91 3.03s-2.92 2.88-2.14 5.9c.78 3.04 5.19 5.81 12.42 7.81l2.54.7c18.17 5 32.52 8.95 71.81 26.76l-1.73 3.82z"
-                                  fill={
-                                    {
-                                      "payload": 4278927075,
-                                      "type": 0,
-                                    }
-                                  }
-                                  propList={
-                                    [
-                                      "fill",
+                                      "fillRule",
                                     ]
                                   }
                                 />
                               </RNSVGGroup>
                             </RNSVGSvgView>
+                            <View
+                              style={
+                                {
+                                  "flex": 1,
+                                  "marginBottom": -6,
+                                  "marginTop": -6,
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "gap": 12,
+                                  }
+                                }
+                              >
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#215C76",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Gli atti sono disponibili online per 120 giorni. Salvali sul tuo dispositivo!
+                                </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.5}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#215C76",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 20,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Scopri di più
+                                </Text>
+                              </View>
+                            </View>
                           </View>
                         </View>
                       </View>
