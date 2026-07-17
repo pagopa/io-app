@@ -251,7 +251,6 @@
     "redux-saga-test-plan": "4.0.3",
     "rn-nodeify": "^10.0.1",
     "standard-version": "^8.0.2",
-    "ts-node": "^7.0.1",
     "typescript-eslint": "^8.58.0"
   },
   "engines": {
