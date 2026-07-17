@@ -1,4 +1,5 @@
 import {
+  Banner,
   BodySmall,
   ListItemHeader,
   RadioGroup,
@@ -26,8 +27,13 @@ import {
   fromLocaleToPreferredLanguage,
   fromPreferredLanguageToLocale
 } from "../../../../utils/locale";
+import { openWebUrl } from "../../../../utils/url";
 import { profileUpsert } from "../../common/store/actions";
 import { profileSelector } from "../../common/store/selectors";
+
+// TODO: replace with the actual Qualtrics survey URL
+const LANGUAGE_SURVEY_URL =
+  "https://pagopa.qualtrics.com/jfe/form/SV_XXXXXXXXXX";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
@@ -194,6 +200,10 @@ const LanguagesPreferencesScreen = () => {
     [selectedItem, upsertProfile]
   );
 
+  const handleSurveyPress = useCallback(() => {
+    openWebUrl(LANGUAGE_SURVEY_URL);
+  }, []);
+
   const onAppLanguageSelected = useCallback(
     (language: string) => {
       if (selectedAppLocale !== language) {
@@ -235,6 +245,24 @@ const LanguagesPreferencesScreen = () => {
       }}
     >
       <VStack space={24}>
+        <View>
+          <VSpacer size={12} />
+          <Banner
+            action={I18n.t(
+              "profile.preferences.list.preferred_language.translationFeedbackBanner.action"
+            )}
+            color="neutral"
+            content={I18n.t(
+              "profile.preferences.list.preferred_language.translationFeedbackBanner.body"
+            )}
+            onPress={handleSurveyPress}
+            pictogramName="feedback"
+            title={I18n.t(
+              "profile.preferences.list.preferred_language.translationFeedbackBanner.title"
+            )}
+          />
+        </View>
+
         <View>
           <ListItemHeader
             iconName="device"

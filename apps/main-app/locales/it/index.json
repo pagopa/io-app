@@ -4641,6 +4641,11 @@
             "success": {
               "title": "Fatto!"
             }
+          },
+          "translationFeedbackBanner": {
+            "action": "Invia una segnalazione",
+            "body": "Scrivici per segnalare una traduzione che può essere migliorata.",
+            "title": "Aiutaci a migliorare le traduzioni"
           }
         },
         "send_email_messages": {
