@@ -375,6 +375,13 @@ const PlaygroundsSection = () => {
         })
     },
     {
+      value: "Feature Rollout",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.ROLLOUT_PLAYGROUND
+        })
+    },
+    {
       value: "CIE SDK",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {

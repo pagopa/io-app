@@ -14,6 +14,7 @@ import { IdPayCodePlayGround } from "../../devMode/playgrounds/IdPayCodePlaygrou
 import IdPayOnboardingPlayground from "../../devMode/playgrounds/IdPayOnboardingPlayground";
 import { IOMarkdownPlayground } from "../../devMode/playgrounds/IOMarkdownPlayground";
 import { NfcPlayground } from "../../devMode/playgrounds/NfcPlayground";
+import { RolloutPlayground } from "../../devMode/playgrounds/RolloutPlayground";
 import { SendPlaygroundScreen } from "../../devMode/playgrounds/SendPlaygroundScreen";
 import AppearancePreferenceScreen from "../../preferences/screens/AppearancePreferenceScreen";
 import CalendarsPreferencesScreen from "../../preferences/screens/CalendarsPreferencesScreen";
@@ -137,6 +138,10 @@ const SettingsStackNavigator = () => (
     <Stack.Screen
       component={AppFeedbackPlayground}
       name={SETTINGS_ROUTES.APP_FEEDBACK_PLAYGROUND}
+    />
+    <Stack.Screen
+      component={RolloutPlayground}
+      name={SETTINGS_ROUTES.ROLLOUT_PLAYGROUND}
     />
     <Stack.Screen
       component={DesignSystemNavigator}
