@@ -11,6 +11,7 @@ on:
         - major
         - minor
         - patch
+        - build
 jobs:
   run-static-checks:
     uses: ./.github/workflows/static-checks.yaml
@@ -20,8 +21,8 @@ jobs:
     uses: ./.github/workflows/bump-app-version.yml
     secrets: inherit
     with:
-      # releaseLevel is restricted to major/minor/patch by the workflow_dispatch choice input
-      release-type: ${{ github.event.inputs.releaseLevel == 'major' && 'start-breaking-cycle' || github.event.inputs.releaseLevel == 'minor' && 'start-release-cycle' || 'start-fix-cycle' }}
+      # releaseLevel is restricted to major/minor/patch/build by the workflow_dispatch choice input
+      release-type: ${{ github.event.inputs.releaseLevel == 'major' && 'start-breaking-cycle' || github.event.inputs.releaseLevel == 'minor' && 'start-release-cycle' || github.event.inputs.releaseLevel == 'patch' && 'start-fix-cycle' || github.event.inputs.releaseLevel == 'build' && 'release-rc' }}
   release-android:
     name: Release Android app on Play Store
     needs: bump-app-version
