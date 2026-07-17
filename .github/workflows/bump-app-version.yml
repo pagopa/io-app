@@ -1,0 +1,44 @@
+name: Bump app version
+
+on:
+  workflow_call:
+    inputs:
+      release-type:
+        description: Nx target run on main-app to bump the version (e.g. start-release-cycle, release-rc)
+        required: true
+        type: string
+    outputs:
+      currentAppVersion:
+        description: The app version released on GitHub after the bump
+        value: ${{ jobs.bump-app-version.outputs.currentAppVersion }}
+
+jobs:
+  bump-app-version:
+    name: Bump app version
+    runs-on: ubuntu-24.04
+    environment: prod
+    outputs:
+      currentAppVersion: ${{ steps.github-release-creation.outputs.CURRENT_APP_VERSION }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+      - uses: ./.github/actions/setup-pnpm
+      - id: bump-version
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          pnpm nx run main-app:${{ inputs.release-type }}
+      - id: push-tags
+        run: |
+          git push --no-verify --follow-tags origin HEAD:${GITHUB_REF#refs/heads/}
+      - id: github-release-creation
+        run: |
+          cd apps/main-app
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          echo "CURRENT_APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
+          gh release create $APP_VERSION --latest --generate-notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
