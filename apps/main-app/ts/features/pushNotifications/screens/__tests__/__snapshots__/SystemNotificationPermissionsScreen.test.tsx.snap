@@ -355,6 +355,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }

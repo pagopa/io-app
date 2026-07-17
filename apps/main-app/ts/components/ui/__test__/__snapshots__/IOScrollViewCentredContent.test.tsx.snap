@@ -355,6 +355,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -1547,6 +1548,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -3198,6 +3200,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -4625,6 +4628,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -5590,6 +5594,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -7014,6 +7019,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -8214,6 +8220,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -9403,6 +9410,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -11051,6 +11059,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -12475,6 +12484,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -13437,6 +13447,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -14858,6 +14869,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }

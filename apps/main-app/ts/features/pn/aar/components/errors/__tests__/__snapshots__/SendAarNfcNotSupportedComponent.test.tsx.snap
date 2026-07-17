@@ -214,6 +214,7 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
