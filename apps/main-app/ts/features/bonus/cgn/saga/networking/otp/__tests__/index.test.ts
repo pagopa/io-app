@@ -1,5 +1,4 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 
 import { cgnGenerateOtp } from "..";
@@ -24,7 +23,7 @@ describe("cgnGenerateOtp", () => {
   it("should dispatch success action on successful API call", () => {
     testSaga(cgnGenerateOtp, fetchGenerateOtp, requestAction)
       .next()
-      .next(E.right({ status: 200, value: otpResult }))
+      .next({ _tag: "Right", right: { status: 200, value: otpResult } })
       .put(cgnGenerateOtpAction.success(otpResult))
       .next()
       .put(setMerchantDiscountCode(otpResult.code))
@@ -33,7 +32,7 @@ describe("cgnGenerateOtp", () => {
   });
 
   it("should dispatch failure action on API error", () => {
-    const leftResponse = E.left([]);
+    const leftResponse = { _tag: "Left", left: [] };
     const expectedError = new Error(readableReport([]));
 
     testSaga(cgnGenerateOtp, fetchGenerateOtp, requestAction)
@@ -47,7 +46,7 @@ describe("cgnGenerateOtp", () => {
   it("should not dispatch success or failure on 401 response", () => {
     testSaga(cgnGenerateOtp, fetchGenerateOtp, requestAction)
       .next()
-      .next(E.right({ status: 401 }))
+      .next({ _tag: "Right", right: { status: 401 } })
       .next()
       .isDone();
   });
@@ -58,7 +57,7 @@ describe("cgnGenerateOtp", () => {
 
     testSaga(cgnGenerateOtp, fetchGenerateOtp, requestAction)
       .next()
-      .next(E.right({ status }))
+      .next({ _tag: "Right", right: { status } })
       .put(cgnGenerateOtpAction.failure(getGenericError(expectedError)))
       .next()
       .isDone();

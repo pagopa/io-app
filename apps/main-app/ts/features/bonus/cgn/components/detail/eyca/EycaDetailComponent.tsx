@@ -1,6 +1,4 @@
 import { Alert, ListItemHeader, LoadingSpinner } from "@io-app/design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { JSX, useCallback, useEffect } from "react";
 import { View } from "react-native";
@@ -66,24 +64,22 @@ const EycaDetailComponent = () => {
       case "EXPIRED":
       case "REVOKED":
         return <EycaStatusDetailsComponent eycaCard={eycaCard} />;
-      case "PENDING":
-        return pipe(
-          eycaActivationStatus,
-          O.fromNullable,
-          O.fold(
-            () => errorComponent,
-            as =>
-              as === "ERROR" || as === "NOT_FOUND" ? (
-                errorComponent
-              ) : (
-                <Alert
-                  content={I18n.t("bonus.cgn.detail.status.eycaPending")}
-                  testID="eyca-pending-component"
-                  variant="info"
-                />
-              )
-          )
+      case "PENDING": {
+        if (eycaActivationStatus === undefined) {
+          return errorComponent;
+        }
+
+        return eycaActivationStatus === "ERROR" ||
+          eycaActivationStatus === "NOT_FOUND" ? (
+          errorComponent
+        ) : (
+          <Alert
+            content={I18n.t("bonus.cgn.detail.status.eycaPending")}
+            testID="eyca-pending-component"
+            variant="info"
+          />
         );
+      }
       default:
         return null;
     }
@@ -106,11 +102,9 @@ const EycaDetailComponent = () => {
             }}
             label={I18n.t("bonus.cgn.detail.status.eyca")}
           />
-          {pipe(
-            eyca,
-            O.fromNullable,
-            O.fold(() => errorComponent, renderComponentEycaStatus)
-          )}
+          {eyca === undefined
+            ? errorComponent
+            : renderComponentEycaStatus(eyca)}
         </>
       )}
       {bottomSheet}

@@ -9,8 +9,6 @@ import {
   IOVisualCostants
 } from "@io-app/design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, RefreshControl, View } from "react-native";
@@ -62,8 +60,8 @@ const CgnMerchantsListByCategory = () => {
   const offlineMerchants = useIOSelector(cgnOfflineMerchantsSelector);
 
   const categorySpecs = useMemo(
-    () => pipe(route.params.category, getCategorySpecs, O.toUndefined),
-    [route]
+    () => getCategorySpecs(route.params.category),
+    [route.params.category]
   );
 
   const { navigate } =
@@ -113,14 +111,7 @@ const CgnMerchantsListByCategory = () => {
 
   useHeaderSecondLevel({
     title: I18n.t(
-      pipe(
-        categorySpecs,
-        O.fromNullable,
-        O.fold(
-          () => "bonus.cgn.merchantsList.navigationTitle",
-          cs => cs.nameKey as any
-        )
-      )
+      categorySpecs?.nameKey ?? "bonus.cgn.merchantsList.navigationTitle"
     ),
     enableDiscreteTransition: true,
     animatedRef: animatedFlatListRef,

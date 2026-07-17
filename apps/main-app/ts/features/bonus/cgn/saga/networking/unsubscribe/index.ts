@@ -1,4 +1,3 @@
-import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -27,7 +26,7 @@ export function* cgnUnsubscriptionHandler(
       unsubscriptionRequest,
       action
     )) as unknown as SagaCallReturnType<typeof startCgnUnsubscription>;
-    if (E.isRight(unsubscriptionResult)) {
+    if ("right" in unsubscriptionResult) {
       if (
         unsubscriptionResult.right.status === 201 ||
         unsubscriptionResult.right.status === 202

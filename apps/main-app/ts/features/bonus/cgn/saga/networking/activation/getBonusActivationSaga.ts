@@ -1,5 +1,4 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as E from "fp-ts/lib/Either";
 import { call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
@@ -53,7 +52,7 @@ export const cgnActivationSaga = (
         typeof startCgnActivation
       > = yield* call(startCgnActivation, {});
 
-      if (E.isRight(startCgnActivationResult)) {
+      if ("right" in startCgnActivationResult) {
         const status = startCgnActivationResult.right.status;
         // Status is 201 request has been created -> Start Polling
         if (status === 201) {
@@ -72,10 +71,12 @@ export const cgnActivationSaga = (
             status: statusProgressRecord[status]
           });
         }
-        throw Error(`response status ${startCgnActivationResult.right.status}`);
+        throw new Error(
+          `response status ${startCgnActivationResult.right.status}`
+        );
       }
       // decoding failure
-      throw Error(readablePrivacyReport(startCgnActivationResult.left));
+      throw new Error(readablePrivacyReport(startCgnActivationResult.left));
     } catch (e) {
       return cgnActivationStatus.failure(getError(e));
     }
@@ -94,19 +95,16 @@ export const handleCgnStatusPolling = (
     ActionType<typeof cgnActivationStatus>,
     any
   > {
-    const startPollingTime = new Date().getTime();
+    const startPollingTime = Date.now();
     while (true) {
       const cgnActivationResult: SagaCallReturnType<typeof getCgnActivation> =
         yield* call(getCgnActivation, {});
       // blocking error -> stop polling
-      if (E.isLeft(cgnActivationResult)) {
+      if ("left" in cgnActivationResult) {
         throw cgnActivationResult.left;
       }
       // we got the result -> stop polling
-      else if (
-        E.isRight(cgnActivationResult) &&
-        cgnActivationResult.right.status === 200
-      ) {
+      else if (cgnActivationResult.right.status === 200) {
         switch (cgnActivationResult.right.value.status) {
           case StatusEnum.COMPLETED:
             return cgnActivationStatus.success({
@@ -114,7 +112,7 @@ export const handleCgnStatusPolling = (
               activation: cgnActivationResult.right.value
             });
           case StatusEnum.ERROR:
-            throw Error(
+            throw new Error(
               `CGN Activation status ${cgnActivationResult.right.value.status}`
             );
           // activation is still pending skip
@@ -130,7 +128,7 @@ export const handleCgnStatusPolling = (
       // sleep
       yield* call(startTimer, cgnResultPolling);
       // check if the time threshold was exceeded, if yes stop polling
-      const now = new Date().getTime();
+      const now = Date.now();
       if (now - startPollingTime >= pollingTimeThreshold) {
         return cgnActivationStatus.success({
           status: CgnActivationProgressEnum.TIMEOUT
