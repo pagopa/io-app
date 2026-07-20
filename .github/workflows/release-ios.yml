@@ -22,7 +22,7 @@ on:
 
 permissions:
   contents: write
-
+  actions: read
 jobs:
   release-ios:
     name: Release iOS app on App Store
