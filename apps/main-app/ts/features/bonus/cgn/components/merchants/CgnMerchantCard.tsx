@@ -108,11 +108,7 @@ const CgnMerchantCard = ({
           )}
         </View>
         <View style={styles.cardTitle}>
-          <H4
-            color={theme["textHeading-default"]}
-            lineBreakMode="head"
-            numberOfLines={3}
-          >
+          <H4 color={theme["textHeading-default"]} numberOfLines={3}>
             {name}
           </H4>
         </View>
