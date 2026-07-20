@@ -50,7 +50,10 @@ import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletUpdate } from "../store/actions";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
-import { isWalletScreenRefreshingSelector } from "../store/selectors";
+import {
+  isWalletScreenRefreshingSelector,
+  shouldRenderWalletEmptyStateSelector
+} from "../store/selectors";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the activation exit survey bottom sheet once the user returns to this screen
@@ -80,6 +83,12 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   );
   const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
   const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
+  const hasPresentableCredentials = useIOSelector(
+    hasPresentableCredentialsSelector
+  );
+  const shouldRenderEmptyState = useIOSelector(
+    shouldRenderWalletEmptyStateSelector
+  );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
@@ -247,7 +256,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
             : undefined
         }
         animatedRef={scrollViewContentRef}
-        centerContent={true}
+        centerContent={shouldRenderEmptyState}
         excludeSafeAreaMargins={true}
         refreshControlProps={{
           tintColor: undefined,
