@@ -180,7 +180,7 @@ jobs:
       - id: build-upload-app-store
         run: |
           cd apps/main-app/ios
-          bundle exec fastlane canary_ci_testflight
+          bundle exec fastlane canary_testflight
         env:
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
