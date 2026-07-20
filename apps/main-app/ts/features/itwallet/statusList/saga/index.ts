@@ -1,9 +1,9 @@
 import { SagaIterator } from "redux-saga";
-import { fork, select } from "typed-redux-saga/macro";
+import { call, fork, select } from "typed-redux-saga/macro";
 
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { registerStatusListProperties } from "../analytics";
 import { checkStatusListCoherenceSaga } from "./checkStatusListCoherenceSaga";
-// TODO [SIW-4084]  import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
 
 export function* watchItwStatusListSaga(): SagaIterator {
   const isWhitelisted = yield* select(itwIsL3EnabledSelector);
@@ -20,6 +20,5 @@ export function* watchItwStatusListSaga(): SagaIterator {
   yield* fork(checkStatusListCoherenceSaga);
 
   // Register Status List super properties
-  // TODO [SIW-4474] Add super property registration
-  // yield* call(registerStatusListProperties);
+  yield* call(registerStatusListProperties);
 }
