@@ -28,11 +28,10 @@ export const toBase64EncodedThumbprint = (key: PublicKey) =>
   );
 
 export const toThumbprint = (key: PublicKey | undefined) => {
-  if (key === undefined) {
-    return undefined;
+  if (key) {
+    return toBase64EncodedThumbprint(key);
   }
-  const base64EncodedThumbprint = toBase64EncodedThumbprint(key);
-  return base64EncodedThumbprint;
+  return undefined;
 };
 
 /**
