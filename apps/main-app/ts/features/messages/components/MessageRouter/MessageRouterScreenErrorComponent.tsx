@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import {
   OperationResultScreenContent,
@@ -8,6 +8,7 @@ import {
 import { useIOSelector } from "../../../../store/hooks";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isTestEnv } from "../../../../utils/environment";
+import { trackMessageNotFoundScreen } from "../../analytics";
 import {
   MessageRouterScreenErrorVariant,
   messageRouterScreenErrorVariantSelector
@@ -30,6 +31,11 @@ export const MessageRouterScreenErrorComponent = ({
     [onRetry, onCancel]
   );
   const componentProps = errorMap[errorVariant];
+  useEffect(() => {
+    if (errorVariant === "messageNotFound") {
+      trackMessageNotFoundScreen();
+    }
+  }, [errorVariant]);
 
   return <OperationResultScreenContent {...componentProps} />;
 };
