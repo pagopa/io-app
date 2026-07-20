@@ -434,8 +434,11 @@ describe("itwShouldRenderL2EngagementBannerForInactiveWalletSelector", () => {
         .mockReturnValue(isITWalletValid);
 
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
         .mockReturnValue(isL3Enabled);
+      jest
+        .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
+        .mockReturnValue(false);
 
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
@@ -493,8 +496,11 @@ describe("itwShouldRenderL2EngagementBannerSelector", () => {
         .mockReturnValue(isITWalletValid);
 
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
         .mockReturnValue(isL3Enabled);
+      jest
+        .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
+        .mockReturnValue(false);
 
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
