@@ -19,11 +19,18 @@ import { ITW_ROUTES } from "../../../../navigation/routes.ts";
 import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter.tsx";
 
 const mockTrackItwCredentialDelete = jest.fn();
+const mockTrackItwCredentialManageConsent = jest.fn();
 
 jest.mock("../../analytics", () => ({
   ...jest.requireActual("../../analytics"),
   trackItwCredentialDelete: (credential: unknown, properties: unknown) =>
     mockTrackItwCredentialDelete(credential, properties)
+}));
+
+jest.mock("../../../proximity/analytics", () => ({
+  ...jest.requireActual("../../../proximity/analytics"),
+  trackItwCredentialManageConsent: (properties: unknown) =>
+    mockTrackItwCredentialManageConsent(properties)
 }));
 
 describe("ItwPresentationDetailsFooter", () => {
@@ -40,6 +47,20 @@ describe("ItwPresentationDetailsFooter", () => {
     expect(queryByTestId("requestAssistanceActionTestID")).not.toBeNull();
     expect(queryByTestId("removeCredentialActionTestID")).not.toBeNull();
     expect(queryByTestId("openIPatenteActionTestID")).toBeNull();
+    expect(queryByTestId("manageConsentsActionTestID")).toBeNull();
+  });
+
+  it("renders and tracks consent management after a consent has been saved", () => {
+    const { getByTestId } = renderComponent(
+      CredentialType.DRIVING_LICENSE,
+      true
+    );
+
+    fireEvent.press(getByTestId("manageConsentsActionTestID"));
+
+    expect(mockTrackItwCredentialManageConsent).toHaveBeenCalledWith({
+      credential: "ITW_PG_V2"
+    });
   });
 
   it("should render iPatente action", () => {
@@ -88,8 +109,27 @@ describe("ItwPresentationDetailsFooter", () => {
   });
 });
 
-const renderComponent = (credentialType: CredentialType) => {
+const renderComponent = (
+  credentialType: CredentialType,
+  showConsentManagement = false
+) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
+  const state = showConsentManagement
+    ? {
+        ...globalState,
+        features: {
+          ...globalState.features,
+          itWallet: {
+            ...globalState.features.itWallet,
+            proximity: {
+              ...globalState.features.itWallet.proximity,
+              consentManagementCredentialTypes: { [credentialType]: true },
+              consents: {}
+            }
+          }
+        }
+      }
+    : globalState;
 
   const logic = itwCredentialIssuanceMachine.provide({
     actions: {
@@ -110,6 +150,6 @@ const renderComponent = (credentialType: CredentialType) => {
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
     {},
-    createStore(appReducer, globalState as any)
+    createStore(appReducer, state as any)
   );
 };
