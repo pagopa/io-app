@@ -83,9 +83,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   );
   const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
   const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
-  const hasPresentableCredentials = useIOSelector(
-    hasPresentableCredentialsSelector
-  );
+
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
   );
