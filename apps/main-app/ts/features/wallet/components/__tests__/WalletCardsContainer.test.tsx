@@ -1,3 +1,4 @@
+import { ListItemHeader } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import _ from "lodash";
@@ -266,6 +267,47 @@ describe("ItwWalletCardsContainer", () => {
     expect(queryByTestId(`walletCardsCategoryItwHeaderTestID`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_4`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
+  });
+
+  it("should render the eID info CTA for Documenti su IO", () => {
+    const itWalletValidSpy = jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+      .mockReturnValue(false);
+    const newItWalletSpy = jest
+      .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
+      .mockReturnValue(false);
+
+    const { queryByTestId, UNSAFE_getByType } = renderComponent(
+      <ItwWalletCardsContainer />
+    );
+
+    expect(
+      queryByTestId("walletCardsCategoryItwActiveBadgeTestID")
+    ).not.toBeNull();
+    expect(UNSAFE_getByType(ListItemHeader).props.iconName).toBe("legalValue");
+
+    itWalletValidSpy.mockRestore();
+    newItWalletSpy.mockRestore();
+  });
+
+  it("should hide the eID info CTA for the IT-Wallet L3 flow", () => {
+    const itWalletValidSpy = jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+      .mockReturnValue(true);
+    const newItWalletSpy = jest
+      .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
+      .mockReturnValue(false);
+
+    const { queryByTestId, UNSAFE_getByType } = renderComponent(
+      <ItwWalletCardsContainer />
+    );
+
+    expect(queryByTestId("walletCardsCategoryItwHeaderTestID")).not.toBeNull();
+    expect(queryByTestId("walletCardsCategoryItwActiveBadgeTestID")).toBeNull();
+    expect(UNSAFE_getByType(ListItemHeader).props.iconName).toBeUndefined();
+
+    itWalletValidSpy.mockRestore();
+    newItWalletSpy.mockRestore();
   });
 
   it("should render the new ITW id card header when new wallet is renderable", () => {
