@@ -2136,6 +2136,7 @@
             "untrustedRp": {
               "bottomSheet": {
                 "content": "IO controlla sempre chi sta richiedendo la lettura dei tuoi dati e non ti permette di continuare se non riconosce il sistema utilizzato per la verifica.\n\nL'app può condividere i tuoi dati solo con enti e soggetti autorizzati.",
+                "primaryAction": "Scopri di più",
                 "title": "Chi può leggere i tuoi dati?"
               },
               "primaryAction": "Chiudi",

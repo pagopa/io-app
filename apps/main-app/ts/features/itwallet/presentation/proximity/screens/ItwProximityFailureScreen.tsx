@@ -1,4 +1,4 @@
-import { Body, VSpacer } from "@io-app/design-system";
+import { Body, FooterActions, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 
 import {
@@ -6,7 +6,11 @@ import {
   OperationResultScreenContentProps
 } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { generateDynamicUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig.ts";
+import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../../urls.ts";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
+import { openWebUrl } from "../../../../../utils/url.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
@@ -29,6 +33,13 @@ type ContentViewProps = { failure: ProximityFailure };
 
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwProximityMachineContext.useActorRef();
+  const faqUrl = useIOSelector(state =>
+    generateDynamicUrlSelector(
+      state,
+      "io_showcase",
+      DOCUMENTS_ON_IO_FAQ_12_URL_BODY
+    )
+  );
 
   useDebugInfo({
     failure: serializeFailureReason(failure)
@@ -47,6 +58,19 @@ const ContentView = ({ failure }: ContentViewProps) => {
     ),
     title: I18n.t(
       "features.itWallet.presentation.proximity.relyingParty.untrustedRp.bottomSheet.title"
+    ),
+    footer: (
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.untrustedRp.bottomSheet.primaryAction"
+            ),
+            onPress: () => openWebUrl(faqUrl)
+          }
+        }}
+      />
     )
   });
 
