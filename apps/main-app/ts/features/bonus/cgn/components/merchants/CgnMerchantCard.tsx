@@ -78,7 +78,7 @@ const CgnMerchantCard = ({
     <CardPressableBase
       accessibilityLabel={accessibilityLabel}
       onPress={onPress}
-      testID={`${testID}-pressable`}
+      testID={testID ? `${testID}-pressable` : undefined}
     >
       <View
         style={[

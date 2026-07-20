@@ -57,23 +57,26 @@ const getRenderableCategories = (
 
 const getCategoryRows = (
   categories: ReadonlyArray<RenderableCategory>
-): ReadonlyArray<CategoryRow> =>
-  categories.reduce<ReadonlyArray<CategoryRow>>((rows, renderable, index) => {
+): ReadonlyArray<CategoryRow> => {
+  const rowsCount = Math.ceil(categories.length / CATEGORY_CARDS_PER_ROW);
+
+  return Array.from({ length: rowsCount }, (_, rowIndex) => {
+    const startIndex = rowIndex * CATEGORY_CARDS_PER_ROW;
+    const rowCategories = categories.slice(
+      startIndex,
+      startIndex + CATEGORY_CARDS_PER_ROW
+    );
+    const firstCategory = rowCategories[0];
+
     // Keep the two-column layout local to this screen: the parent FlatList is shared
     // with the merchants tab, so using numColumns={2} would force the container to
     // remount or specialize the list whenever the selected tab changes.
-    if (index % CATEGORY_CARDS_PER_ROW !== 0) {
-      return rows;
-    }
-
-    return [
-      ...rows,
-      {
-        categories: categories.slice(index, index + CATEGORY_CARDS_PER_ROW),
-        id: `category-row-${renderable.category.productCategory}`
-      }
-    ];
-  }, []);
+    return {
+      categories: rowCategories,
+      id: `category-row-${firstCategory.category.productCategory}`
+    };
+  });
+};
 
 const styles = StyleSheet.create({
   row: {
