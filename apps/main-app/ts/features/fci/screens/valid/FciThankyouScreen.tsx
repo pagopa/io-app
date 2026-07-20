@@ -78,7 +78,6 @@ const FciThankyouScreen = () => {
         label: I18n.t("features.fci.thankYouPage.cta"),
         testID: "FciTypCloseButton"
       }}
-      isHeaderVisible={false}
       pictogram={"success"}
       subtitle={I18n.t("features.fci.thankYouPage.content")}
       testID={"FciTypSuccessTestID"}

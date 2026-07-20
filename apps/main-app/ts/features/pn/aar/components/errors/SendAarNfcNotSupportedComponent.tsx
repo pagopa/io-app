@@ -46,7 +46,6 @@ export const SendAarNfcNotSupportedComponent = () => {
           label: i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.cta")
         }
       }}
-      alwaysBounceVertical={false}
       contentContainerStyle={{
         paddingHorizontal: 32
       }}
