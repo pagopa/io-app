@@ -3,6 +3,7 @@ import {
   IOColors,
   IOSkeleton,
   LabelMini,
+  useIOTheme,
   useIOThemeContext,
   VSpacer
 } from "@io-app/design-system";
@@ -44,6 +45,7 @@ type LoadingProps =
   | { isLoading: true; label?: string; skeletonColor: ColorValue };
 
 const BonusCardCounter = (props: BonusCardCounter) => {
+  const theme = useIOTheme();
   const isDark = useIOThemeContext().themeType === "dark";
 
   if (props.isLoading) {
@@ -68,7 +70,7 @@ const BonusCardCounter = (props: BonusCardCounter) => {
         {props.label}
       </LabelMini>
       <VSpacer size={4} />
-      <H3 color={isDark ? "blueIO-300" : "blueIO-500"} style={styles.value}>
+      <H3 color={theme["interactiveElem-default"]} style={styles.value}>
         {props.value}
       </H3>
       {props.type === "ValueWithProgress" && (
@@ -86,11 +88,10 @@ type BonusProgressBarProps = {
 };
 
 const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
-  const isDark = useIOThemeContext().themeType === "dark";
+  const theme = useIOTheme();
 
-  const progressBarColor: ColorValue = isDark
-    ? IOColors["blueIO-300"]
-    : IOColors["blueIO-500"];
+  const progressBarColor: ColorValue =
+    IOColors[theme["interactiveElem-default"]];
 
   const width = useSharedValue(100);
   useEffect(() => {
