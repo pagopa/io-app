@@ -1,5 +1,4 @@
 import {
-  Divider,
   IOColors,
   IOIcons,
   IOVisualCostants,
@@ -191,7 +190,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
         paddingBottom: IOVisualCostants.appMarginDefault + bottom
       }}
       data={data}
-      ItemSeparatorComponent={ItemSeparatorComponent ?? (() => <Divider />)}
+      ItemSeparatorComponent={ItemSeparatorComponent}
       keyExtractor={item => item.id}
       ListEmptyComponent={ListEmptyComponent}
       ListFooterComponent={ListFooterComponent}
