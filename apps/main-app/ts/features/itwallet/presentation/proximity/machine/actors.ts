@@ -1,4 +1,6 @@
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
+import i18n from "i18next";
+import { Platform } from "react-native";
 import { fromCallback, fromPromise } from "xstate";
 
 import type { EventsPayload } from "../utils/types";
@@ -70,6 +72,14 @@ export const createProximityActorsImplementation = (env: Env) => {
 
       // Ensure any existing session is closed before starting a new one
       await ISO18013_5.close().catch(() => null);
+
+      if (Platform.OS === "ios") {
+        ISO18013_5.setHceModalMessage(
+          i18n.t(
+            "features.itWallet.presentation.proximity.nfcEngagement.ready.hceModalMessage"
+          )
+        );
+      }
 
       await ISO18013_5.startEngagement({
         engagementModes,

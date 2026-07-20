@@ -1512,7 +1512,7 @@
         "nfc": {
           "description": "Per consentire a IO di leggere la tua CIE, attiva l'NFC dalle Impostazioni del tuo dispositivo.",
           "header": "Come fare",
-          "primaryAction": "Apri impostazioni",
+          "primaryAction": "Apri Impostazioni",
           "secondaryAction": "Continua",
           "steps": {
             "1": "Apri \"Impostazioni\"",
@@ -1999,7 +1999,7 @@
           "bluetooth": {
             "activation": {
               "actions": {
-                "primary": "Apri impostazioni",
+                "primary": "Apri Impostazioni",
                 "secondary": "Continua"
               },
               "alert": {
@@ -2027,7 +2027,7 @@
             },
             "permissions": {
               "actions": {
-                "primary": "Apri impostazioni",
+                "primary": "Apri Impostazioni",
                 "secondary": "Continua"
               },
               "alert": {
@@ -2089,10 +2089,10 @@
                 "secondary": "Continua"
               },
               "alert": {
-                "action": "Attiva NFC",
+                "action": "Ho capito",
                 "close": "Chiudi",
-                "message": "Attiva l’NFC per permettere la verifica dei tuoi documenti digitali",
-                "title": "È richiesto l’utilizzo del Bluetooth per continuare"
+                "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
+                "title": "Attiva l'NFC per continuare"
               },
               "listItems": {
                 "step1": {
@@ -2116,7 +2116,8 @@
           "nfcEngagement": {
             "ready": {
               "android": "Avvicina il telefono al lettore",
-              "ios": "Pronto per la verifica"
+              "ios": "Pronto per la verifica",
+              "hceModalMessage": "Avvicina il telefono al lettore"
             },
             "sending": "Verifica in corso",
             "success": "Verifica completata!"
