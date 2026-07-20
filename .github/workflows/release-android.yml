@@ -36,6 +36,10 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: write
+  actions: read
+
 jobs:
   release-android:
     name: Release Android app on Play Store
