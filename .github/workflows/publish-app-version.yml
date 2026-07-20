@@ -1,3 +1,6 @@
+# This workflow can be triggered manually to release a new version of the app.
+# It supports bumping the app version for major, minor, patch, and build releases.
+# It's published to the Play Store internal track and TestFlight for internal testers.
 name: Publish app version
 on:
   workflow_dispatch:

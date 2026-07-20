@@ -1,3 +1,5 @@
+# This workflow is triggered manually and releases a new canary build of the app.
+# It's published to the Play Store internal track and TestFlight for internal testers.
 name: Publish app canary
 on:
   workflow_dispatch:
