@@ -2,36 +2,26 @@ import { Alert, Body, VSpacer } from "@io-app/design-system";
 import { useLinkTo } from "@react-navigation/native";
 import I18n from "i18next";
 import { useMemo, useState } from "react";
-import { ScrollView } from "react-native";
 import Animated, { FadeInUp } from "react-native-reanimated";
 
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { useIOSelector } from "../../../../store/hooks";
-import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { trackAppCaughtError } from "../../../../utils/analytics";
 import { unknownToString } from "../../../../utils/errors";
 import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { removeCTAsFromMarkdown } from "../../utils/ctas";
-import { MessageMarkdown } from "./MessageMarkdown";
 
 export type MessageDetailsBodyProps = {
   messageMarkdown: string;
-  scrollViewRef: React.RefObject<null | ScrollView>;
   serviceId: ServiceId;
 };
 
 export const MessageDetailsBody = ({
   messageMarkdown,
-  serviceId,
-  scrollViewRef
+  serviceId
 }: MessageDetailsBodyProps) => {
   const [showRawContent, setShowRawContent] = useState<boolean>(false);
   const linkTo = useLinkTo();
-  const useIOMarkdown = useIOSelector(
-    isIOMarkdownEnabledForMessagesAndServicesSelector
-  );
   const markdownWithNoCta = useMemo(
     () => removeCTAsFromMarkdown(messageMarkdown, serviceId),
     [messageMarkdown, serviceId]
@@ -61,7 +51,7 @@ export const MessageDetailsBody = ({
       </>
     );
   }
-  return useIOMarkdown ? (
+  return (
     <IOMarkdown
       content={markdownWithNoCta}
       onError={(error, _stack) => {
@@ -74,15 +64,5 @@ export const MessageDetailsBody = ({
       }}
       rules={generateMessagesAndServicesRules(linkTo)}
     />
-  ) : (
-    <MessageMarkdown
-      onLoadEnd={() => {
-        setTimeout(() => {
-          setAccessibilityFocus(scrollViewRef);
-        }, 100);
-      }}
-    >
-      {markdownWithNoCta}
-    </MessageMarkdown>
   );
 };
