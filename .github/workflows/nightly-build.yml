@@ -5,15 +5,13 @@ on:
   schedule:
     - cron: '59 21 * * *'
 permissions:
-  contents: read
-permissions:
-  contents: read
+  contents: write
+  actions: read
   packages: read
+
 concurrency:
   group: nightly-release-master
   cancel-in-progress: false
-permissions:
-  contents: read
 jobs:
   detect-changes:
     name: Detect changes since last tag
