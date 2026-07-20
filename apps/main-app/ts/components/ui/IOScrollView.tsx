@@ -41,6 +41,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue
 } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { GuidedTour } from "../../features/tour/components/GuidedTour";
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
@@ -171,6 +172,7 @@ export const IOScrollView = ({
 }: IOScrollViewProps) => {
   const { isAlertVisible } = useIOAlertVisible();
   const theme = useIOTheme();
+  const insets = useSafeAreaInsets();
 
   /* Navigation */
   const navigation = useNavigation();
@@ -306,7 +308,13 @@ export const IOScrollView = ({
           },
           /* Apply the same logic used in the
           `OperationResultScreenContent` component */
-          centerContent ? styles.centerContentWrapper : {}
+          centerContent
+            ? {
+                ...styles.centerContentWrapper,
+                /* Without insets, the content would be centred incorrectly */
+                paddingTop: insets.top
+              }
+            : {}
         ]}
         decelerationRate="normal"
         onScroll={handleScroll}

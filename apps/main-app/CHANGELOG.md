@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.37.0-rc.8](https://github.com/pagopa/io-app/compare/3.37.0-rc.7...3.37.0-rc.8) (2026-07-17)
+
+
+### Features
+
+* [[IOCOM-3242](https://pagopa.atlassian.net/browse/IOCOM-3242)] message not found error screen tracking ([#8307](https://github.com/pagopa/io-app/issues/8307)) ([acc2ff9](https://github.com/pagopa/io-app/commit/acc2ff96beb9052e577613f638851e86904fef9e))
+* [[IOCOM-3255](https://pagopa.atlassian.net/browse/IOCOM-3255)] message attachments expiration alert ([#8304](https://github.com/pagopa/io-app/issues/8304)) ([9de013a](https://github.com/pagopa/io-app/commit/9de013ab31832823474e524369a8113f81476f8d))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** fix wallet home scroll view centering ([#8327](https://github.com/pagopa/io-app/issues/8327)) ([87672af](https://github.com/pagopa/io-app/commit/87672afe9bcb94bd2d0662cf318778d492d25ad1))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Update `io-react-native-wallet` to v3.6.3 ([#8324](https://github.com/pagopa/io-app/issues/8324)) ([97418eb](https://github.com/pagopa/io-app/commit/97418ebb9a6f46d5bbece83da934a048415839b2))
+* [[IOAPPX-520](https://pagopa.atlassian.net/browse/IOAPPX-520)] Tidy up fastlane files ([#8318](https://github.com/pagopa/io-app/issues/8318)) ([624303d](https://github.com/pagopa/io-app/commit/624303dd9074b0b470a156ba1ed42b38c8721426))
+* [[IOCOM-3268](https://pagopa.atlassian.net/browse/IOCOM-3268)] SEND messages attachments alert ([#8305](https://github.com/pagopa/io-app/issues/8305)) ([7313cc8](https://github.com/pagopa/io-app/commit/7313cc88349abf8c0c283913c891f9edf4c44100))
+* [[IOPLT-1960](https://pagopa.atlassian.net/browse/IOPLT-1960)] Consolidate screens by using the most suitable screen templates ([#8315](https://github.com/pagopa/io-app/issues/8315)) ([2267931](https://github.com/pagopa/io-app/commit/2267931cec2695b4fd5a7cd06313986ca9df2693))
+* [[IOPLT-1962](https://pagopa.atlassian.net/browse/IOPLT-1962)] removed unused `makeFontStyleObject` ([#8312](https://github.com/pagopa/io-app/issues/8312)) ([c0ce773](https://github.com/pagopa/io-app/commit/c0ce773a939bd8ab4091dcd0c1e158dcf9d1f8bf))
+
+## [3.37.0-rc.7](https://github.com/pagopa/io-app/compare/3.37.0-rc.6...3.37.0-rc.7) (2026-07-16)
+
+
+### Features
+
+* **CI:** [[IOAPPX-517](https://pagopa.atlassian.net/browse/IOAPPX-517)] Add ESLint plugin for i18n hygiene ([#8229](https://github.com/pagopa/io-app/issues/8229)) ([80dbf80](https://github.com/pagopa/io-app/commit/80dbf80ebada1f983f209fc98bee777aea0c8e55))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** MDL skeu card data mappings ([#8316](https://github.com/pagopa/io-app/issues/8316)) ([6582567](https://github.com/pagopa/io-app/commit/6582567397f38abbabc3cfb43d31892d0c13f946))
+
+
+### Chores
+
+* Update translations from Lokalise ([#8310](https://github.com/pagopa/io-app/issues/8310)) ([addf732](https://github.com/pagopa/io-app/commit/addf732bf9054cdbb6c785cb8c7ce90853739413))
+* **IT-Wallet:** [[SIW-4650](https://pagopa.atlassian.net/browse/SIW-4650)] Remove "Richiedi assistenza" CTA for valid IT-Wallet lifecycle ([#8293](https://github.com/pagopa/io-app/issues/8293)) ([b89ef76](https://github.com/pagopa/io-app/commit/b89ef76a8635ced3e411a0a9877d813ed99ea6f2))
+* [[IOAPPX-514](https://pagopa.atlassian.net/browse/IOAPPX-514)] Remove weekly job for outdated dependencies ([#7998](https://github.com/pagopa/io-app/issues/7998)) ([013f336](https://github.com/pagopa/io-app/commit/013f33646601af9448726ccbc888a5eccabc9f2b))
+
 ## [3.37.0-rc.6](https://github.com/pagopa/io-app/compare/3.37.0-rc.5...3.37.0-rc.6) (2026-07-15)
 
 
