@@ -12,6 +12,9 @@ on:
         description: The app version released on GitHub after the bump
         value: ${{ jobs.bump-app-version.outputs.currentAppVersion }}
 
+permissions:
+  contents: write
+
 jobs:
   bump-app-version:
     name: Bump app version
