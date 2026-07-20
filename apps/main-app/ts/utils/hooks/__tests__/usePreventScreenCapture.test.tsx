@@ -1,10 +1,11 @@
 import {
-  preventScreenCaptureAsync,
-  allowScreenCaptureAsync
+  allowScreenCaptureAsync,
+  preventScreenCaptureAsync
 } from "expo-screen-capture";
 import { createStore } from "redux";
-import { appReducer } from "../../../store/reducers";
+
 import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../testWrapper";
 import { usePreventScreenCapture } from "../usePreventScreenCapture";
 
