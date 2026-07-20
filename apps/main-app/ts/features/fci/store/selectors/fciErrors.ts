@@ -1,8 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
+
+import { fciPollFilledDocumentSelector } from "../reducers/fciPollFilledDocument";
 import { fciQtspClausesMetadataSelector } from "../reducers/fciQtspClauses";
 import { fciQtspFilledDocumentSelector } from "../reducers/fciQtspFilledDocument";
-import { fciPollFilledDocumentSelector } from "../reducers/fciPollFilledDocument";
 
 /**
  * Returns true when any of the three document-preparation steps has entered

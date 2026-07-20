@@ -1,15 +1,16 @@
-import { createStore, Store } from "redux";
 import { fireEvent } from "@testing-library/react-native";
-import { appReducer } from "../../../../store/reducers";
+import { createStore, Store } from "redux";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import FciQtspErrorScreen from "../failure/FciQtspErrorScreen";
-import { FCI_ROUTES } from "../../navigation/routes";
-import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import { fciSignatureRequestFromId } from "../../store/actions";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FciQtspErrorScreenNavigationParams } from "../../navigation/params";
+import { FCI_ROUTES } from "../../navigation/routes";
 import { FciQtspErrorKind } from "../../saga";
+import { fciSignatureRequestFromId } from "../../store/actions";
+import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
+import FciQtspErrorScreen from "../failure/FciQtspErrorScreen";
 
 const createTestStore = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));

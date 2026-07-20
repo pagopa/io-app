@@ -1,16 +1,17 @@
 import I18n from "i18next";
+
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import {
   trackFciPollingFailureAction,
   trackFciPollingFailureScreenView
 } from "../../analytics";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   fciEndRequest,
   fciSignatureRequestRetryFromId
 } from "../../store/actions";
 import { fciSignatureRequestIdSelector } from "../../store/reducers/fciSignatureRequest.ts";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 
 const FciQtspErrorScreen = () => {
   const dispatch = useIODispatch();
@@ -53,10 +54,10 @@ const FciQtspErrorScreen = () => {
   return (
     <OperationResultScreenContent
       isHeaderVisible={false}
-      title={I18n.t("features.fci.qtspErrorPage.title")}
-      subtitle={I18n.t("features.fci.qtspErrorPage.subtitle")}
       pictogram="umbrella"
+      subtitle={I18n.t("features.fci.qtspErrorPage.subtitle")}
       testID="FciQtspErrorTestID"
+      title={I18n.t("features.fci.qtspErrorPage.title")}
       {...operationResultActions()}
     />
   );
