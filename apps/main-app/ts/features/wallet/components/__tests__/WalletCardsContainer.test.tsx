@@ -1,3 +1,4 @@
+import { ListItemHeader } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import _ from "lodash";
@@ -276,11 +277,14 @@ describe("ItwWalletCardsContainer", () => {
       .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
       .mockReturnValue(false);
 
-    const { queryByTestId } = renderComponent(<ItwWalletCardsContainer />);
+    const { queryByTestId, UNSAFE_getByType } = renderComponent(
+      <ItwWalletCardsContainer />
+    );
 
     expect(
       queryByTestId("walletCardsCategoryItwActiveBadgeTestID")
     ).not.toBeNull();
+    expect(UNSAFE_getByType(ListItemHeader).props.iconName).toBe("legalValue");
 
     itWalletValidSpy.mockRestore();
     newItWalletSpy.mockRestore();
@@ -294,10 +298,13 @@ describe("ItwWalletCardsContainer", () => {
       .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
       .mockReturnValue(false);
 
-    const { queryByTestId } = renderComponent(<ItwWalletCardsContainer />);
+    const { queryByTestId, UNSAFE_getByType } = renderComponent(
+      <ItwWalletCardsContainer />
+    );
 
     expect(queryByTestId("walletCardsCategoryItwHeaderTestID")).not.toBeNull();
     expect(queryByTestId("walletCardsCategoryItwActiveBadgeTestID")).toBeNull();
+    expect(UNSAFE_getByType(ListItemHeader).props.iconName).toBeUndefined();
 
     itWalletValidSpy.mockRestore();
     newItWalletSpy.mockRestore();

@@ -98,21 +98,25 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   );
 
   const sectionHeader = useMemo((): React.ReactElement => {
-    const eidInfoEndElement = !isItWalletValid
+    const eidInfoProps = !isItWalletValid
       ? {
-          type: "buttonLink" as const,
-          componentProps: {
-            accessibilityLabel: I18n.t(
-              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-            ),
-            label: I18n.t(
-              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-            ),
-            onPress: eidInfoBottomSheet.present,
-            testID: "walletCardsCategoryItwActiveBadgeTestID"
-          }
+          endElement: {
+            type: "buttonLink" as const,
+            componentProps: {
+              accessibilityLabel: I18n.t(
+                "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+              ),
+              label: I18n.t(
+                "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+              ),
+              onPress: eidInfoBottomSheet.present,
+              testID: "walletCardsCategoryItwActiveBadgeTestID"
+            }
+          },
+          iconColor,
+          iconName: "legalValue" as const
         }
-      : undefined;
+      : {};
 
     if (isNewItwRenderable) {
       return (
@@ -130,9 +134,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     }
     return (
       <ListItemHeader
-        endElement={eidInfoEndElement}
-        iconColor={iconColor}
-        iconName={"legalValue"}
+        {...eidInfoProps}
         label={I18n.t("features.wallet.cards.categories.itw")}
         testID={"walletCardsCategoryItwHeaderTestID"}
       />
