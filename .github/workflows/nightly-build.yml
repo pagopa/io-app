@@ -4,6 +4,8 @@ on:
     - cron: '59 21 * * *'
 permissions:
   contents: read
+permissions:
+  contents: read
   packages: read
 concurrency:
   group: nightly-release-master
