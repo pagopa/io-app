@@ -91,11 +91,6 @@ overrides:
   '@babel/plugin-transform-typescript': ^7.23.6
   '@babel/plugin-syntax-typescript': ^7.23.3
   '@babel/types': ^7.23.6
-  '@pagopa/io-wallet-oauth2': 1.5.2
-  '@pagopa/io-wallet-oid-federation': 1.5.2
-  '@pagopa/io-wallet-oid4vci': 1.5.2
-  '@pagopa/io-wallet-oid4vp': 1.5.2
-  '@pagopa/io-wallet-utils': 1.5.2
 
 patchedDependencies:
   '@gorhom/bottom-sheet@5.2.8':
@@ -257,8 +252,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-wallet':
-        specifier: 3.6.2
-        version: 3.6.2(f8c00da11ecd768df625893adf6351ec)
+        specifier: 3.6.3
+        version: 3.6.3(f8c00da11ecd768df625893adf6351ec)
       '@pagopa/io-react-native-zendesk':
         specifier: ^0.3.30
         version: 0.3.30(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
@@ -598,7 +593,7 @@ importers:
         version: 10.0.1(eslint@9.39.4)
       '@pagopa/eslint-config':
         specifier: 6.2.0
-        version: 6.2.0(@eslint/js@10.0.1(eslint@9.39.4))(@types/eslint@8.56.10)(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint-plugin-jest@28.11.0(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(typescript@5.9.3))(eslint@9.39.4)(prettier@3.8.2)
+        version: 6.2.0(@eslint/js@10.0.1(eslint@9.39.4))(@types/eslint@8.56.10)(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint-plugin-jest@28.11.0(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)))(typescript@5.9.3))(eslint@9.39.4)(prettier@3.8.2)
       '@pagopa/openapi-codegen-ts':
         specifier: ^14.2.0
         version: 14.2.0(fp-ts@2.14.0)(io-ts@2.2.20(fp-ts@2.14.0))
@@ -613,7 +608,7 @@ importers:
         version: 20.0.0
       '@react-native/eslint-config':
         specifier: 'catalog:'
-        version: 0.85.0-rc.7(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(prettier@3.8.2)(typescript@5.9.3)
+        version: 0.85.0-rc.7(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)))(prettier@3.8.2)(typescript@5.9.3)
       '@react-native/typescript-config':
         specifier: 'catalog:'
         version: 0.83.6
@@ -622,7 +617,7 @@ importers:
         version: 2.1.0(eslint@9.39.4)
       '@testing-library/react-native':
         specifier: ^13.3
-        version: 13.3.3(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react-test-renderer@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 13.3.3(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react-test-renderer@19.2.0(react@19.2.0))(react@19.2.0)
       '@tsconfig/react-native':
         specifier: ^3.0.0
         version: 3.0.5
@@ -724,7 +719,7 @@ importers:
         version: 2.32.0(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)
       eslint-plugin-jest:
         specifier: ^28.11.0
-        version: 28.11.0(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(typescript@5.9.3)
+        version: 28.11.0(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)))(typescript@5.9.3)
       eslint-plugin-react:
         specifier: ^7.28.0
         version: 7.37.5(eslint@9.39.4)
@@ -742,7 +737,7 @@ importers:
         version: 7.0.1
       jest:
         specifier: 'catalog:'
-        version: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1)
+        version: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3))
       lint-staged:
         specifier: ^13.2.0
         version: 13.2.0(enquirer@2.3.6)
@@ -785,9 +780,6 @@ importers:
       standard-version:
         specifier: ^8.0.2
         version: 8.0.2
-      ts-node:
-        specifier: ^7.0.1
-        version: 7.0.1
       typescript-eslint:
         specifier: ^8.58.0
         version: 8.58.1(eslint@9.39.4)(typescript@5.9.3)
@@ -2740,8 +2732,8 @@ packages:
       react: '*'
       react-native: '*'
 
-  '@pagopa/io-react-native-wallet@3.6.2':
-    resolution: {integrity: sha512-hgRaAPuIL7Ev60uXKai5H7RS/NenUEncBwf7NSz6Rws0BZCj4QWfn27U00RYybUc6uVI/xRecKlfv5iPm7kB1g==}
+  '@pagopa/io-react-native-wallet@3.6.3':
+    resolution: {integrity: sha512-LyNpCCygGOXObUrXM/2tmXGfeCgxTnLMbS7B3ZoBWAb3LDvTsC4ud2OIoiTaHg2SqyyApKv//8JdyjvoZ0yRfA==}
     engines: {node: '>= 16.0.0'}
     peerDependencies:
       '@pagopa/io-react-native-crypto': '*'
@@ -2758,20 +2750,20 @@ packages:
       react: '*'
       react-native: '*'
 
-  '@pagopa/io-wallet-oauth2@1.5.2':
-    resolution: {integrity: sha512-nEmPWRaVmY70l4VDjXAOBHdjLYAlHVT6gkzpAQQ5sS9FhlScDq8qvsV35aabVzqFy+3LaCcgNMeD3LYokD+ccQ==}
+  '@pagopa/io-wallet-oauth2@1.5.4-alpha-20260717125503':
+    resolution: {integrity: sha512-9GeBrEtrscCfMzk7EFyBFRTvTN3O/wvKkyN8B49hmgs2001iy759Sl7AQOV+pgCyYV/l+jNxa/Ejc06998eSWA==}
 
-  '@pagopa/io-wallet-oid-federation@1.5.2':
-    resolution: {integrity: sha512-SRJpdXT301qFlMGYJ6hYQTG/r306C32cJtUDFv2D3BdG+xJ1vmr4h+SbuwQoZWzhhxSS4TmRsHCsvuxzNCcX/w==}
+  '@pagopa/io-wallet-oid-federation@1.5.4-alpha-20260717125503':
+    resolution: {integrity: sha512-uuhXlUodNSrKJC5FQlGjssDlVUDXVq7tfRfD5RAEZ5GOtGvpYPVN7/R5gSupTC+8oYW0Nr8t7KJHDHhSJx+tQg==}
 
-  '@pagopa/io-wallet-oid4vci@1.5.2':
-    resolution: {integrity: sha512-AwwiGKPuljq9jocT6lyb33X/tFh/wzPKGwKUY2QTIt4noYuA3tYaSb29np3j8ae5hh04dDiCFVA4Hsz9Om/nNg==}
+  '@pagopa/io-wallet-oid4vci@1.5.4-alpha-20260717125503':
+    resolution: {integrity: sha512-63D7cPWpHMtPIsyVbJxih2NIMhZCtUDkvbqhPb5MMQYdnPRLTNyOucCKWaa/qVdo0uaUccu2m9axNCIUe9VRmg==}
 
-  '@pagopa/io-wallet-oid4vp@1.5.2':
-    resolution: {integrity: sha512-Ld4+h1eXP4YPdZSEbJqgkJZEiAbCI1HwjOih/rTRl63N8onyTjOoSjlTFvwM+NvmUmYCP2TWI/ZGM0iM5O9tFQ==}
+  '@pagopa/io-wallet-oid4vp@1.5.4-alpha-20260717125503':
+    resolution: {integrity: sha512-jcvqkf5e68WpPKNjC3ZV5AhJymq6VOwV0fMlwg5+/b5c6hgcgRUcIPXHvD7cYDMMbZOBJAtua1jYLxjxo2pMig==}
 
-  '@pagopa/io-wallet-utils@1.5.2':
-    resolution: {integrity: sha512-i5Rnb+PDi+9mhifn5nVxFkeJLgIBNiLaDVqGV9slxzzYAi3InTtG+UrDb/It6kky2UvK2fHRoGENues4pD1Xfg==}
+  '@pagopa/io-wallet-utils@1.5.4-alpha-20260717125503':
+    resolution: {integrity: sha512-aY2X2WAI8KnB4OXAFflGAyoz1152X1etY32CcHtS9obUUMHKwjxQyEWx5kKgk3Ss9aYdFybQ6E7uSDuEvOyIQQ==}
 
   '@pagopa/openapi-codegen-ts@14.2.0':
     resolution: {integrity: sha512-sop1+MxfLP2Od2sxDvHxJ7poVmZKBP0REVMQDPrCpNe9Wv1vvLJN8WqonUjkLfL3fLmKM0B6AS4B67Nigm1uKA==}
@@ -5618,10 +5610,6 @@ packages:
 
   diagnostic-channel@0.3.1:
     resolution: {integrity: sha512-6eb9YRrimz8oTr5+JDzGmSYnXy5V7YnK5y/hd8AUDK1MssHjQKm9LlD6NSrHx4vMDF3+e/spI2hmWTviElgWZA==}
-
-  diff@3.5.0:
-    resolution: {integrity: sha512-A46qtFgd+g7pDZinpnwiRJtxbC1hpgf0uzP3iG89scHk0AUC7A1TGxf5OiiOUv/JMZR8GOt8hL900hV0bOy5xA==}
-    engines: {node: '>=0.3.1'}
 
   diff@4.0.4:
     resolution: {integrity: sha512-X07nttJQkwkfKfvTPG/KSnE2OMdcUCao6+eXF3wmnIQRn2aPAHH3VxDbDOdegkd6JbPsXqShpvEOHfAT+nCNwQ==}
@@ -10633,11 +10621,6 @@ packages:
       '@swc/wasm':
         optional: true
 
-  ts-node@7.0.1:
-    resolution: {integrity: sha512-BVwVbPJRspzNh2yfslyT1PSbl5uIk03EZlb493RKHN4qej/D06n1cEhjlOJG69oFsE7OT8XjpTUcYf6pKTLMhw==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-
   tsconfig-paths@3.15.0:
     resolution: {integrity: sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg==}
 
@@ -11247,10 +11230,6 @@ packages:
   yargs@17.7.2:
     resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
     engines: {node: '>=12'}
-
-  yn@2.0.0:
-    resolution: {integrity: sha512-uTv8J/wiWTgUTg+9vLTi//leUl5vDQS6uii/emeTb2ssY7vl6QWf2fFbIIGjnhjvbdKlU0ed7QPgY1htTC86jQ==}
-    engines: {node: '>=4'}
 
   yn@3.1.1:
     resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}
@@ -13063,7 +13042,7 @@ snapshots:
       jest-util: 30.3.0
       slash: 3.0.0
 
-  '@jest/core@30.3.0(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@20.5.1)(typescript@5.9.3))':
+  '@jest/core@30.3.0(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3))':
     dependencies:
       '@jest/console': 30.3.0
       '@jest/pattern': 30.0.1
@@ -13078,7 +13057,7 @@ snapshots:
       exit-x: 0.2.2
       graceful-fs: 4.2.11
       jest-changed-files: 30.3.0
-      jest-config: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@20.5.1)(typescript@5.9.3))
+      jest-config: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3))
       jest-haste-map: 30.3.0
       jest-message-util: 30.3.0
       jest-regex-util: 30.0.1
@@ -13098,7 +13077,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  '@jest/core@30.3.0(babel-plugin-macros@3.1.0)(ts-node@7.0.1)':
+  '@jest/core@30.3.0(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@20.5.1)(typescript@5.9.3))':
     dependencies:
       '@jest/console': 30.3.0
       '@jest/pattern': 30.0.1
@@ -13113,7 +13092,7 @@ snapshots:
       exit-x: 0.2.2
       graceful-fs: 4.2.11
       jest-changed-files: 30.3.0
-      jest-config: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1)
+      jest-config: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@20.5.1)(typescript@5.9.3))
       jest-haste-map: 30.3.0
       jest-message-util: 30.3.0
       jest-regex-util: 30.0.1
@@ -13756,7 +13735,7 @@ snapshots:
   '@oxc-resolver/binding-win32-x64-msvc@11.19.1':
     optional: true
 
-  '@pagopa/eslint-config@6.2.0(@eslint/js@10.0.1(eslint@9.39.4))(@types/eslint@8.56.10)(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint-plugin-jest@28.11.0(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(typescript@5.9.3))(eslint@9.39.4)(prettier@3.8.2)':
+  '@pagopa/eslint-config@6.2.0(@eslint/js@10.0.1(eslint@9.39.4))(@types/eslint@8.56.10)(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint-plugin-jest@28.11.0(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)))(typescript@5.9.3))(eslint@9.39.4)(prettier@3.8.2)':
     dependencies:
       '@eslint/js': 10.0.1(eslint@9.39.4)
       '@vitest/eslint-plugin': 1.6.20(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3)
@@ -13768,7 +13747,7 @@ snapshots:
       typescript: 5.9.3
       typescript-eslint: 8.62.1(eslint@9.39.4)(typescript@5.9.3)
     optionalDependencies:
-      eslint-plugin-jest: 28.11.0(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(typescript@5.9.3)
+      eslint-plugin-jest: 28.11.0(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)))(typescript@5.9.3)
     transitivePeerDependencies:
       - '@types/eslint'
       - '@typescript-eslint/eslint-plugin'
@@ -13833,16 +13812,16 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
 
-  '@pagopa/io-react-native-wallet@3.6.2(f8c00da11ecd768df625893adf6351ec)':
+  '@pagopa/io-react-native-wallet@3.6.3(f8c00da11ecd768df625893adf6351ec)':
     dependencies:
       '@pagopa/io-react-native-crypto': 1.2.3(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-iso18013': 0.8.4(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-jwt': 2.2.0(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
-      '@pagopa/io-wallet-oauth2': 1.5.2
-      '@pagopa/io-wallet-oid-federation': 1.5.2
-      '@pagopa/io-wallet-oid4vci': 1.5.2
-      '@pagopa/io-wallet-oid4vp': 1.5.2
-      '@pagopa/io-wallet-utils': 1.5.2
+      '@pagopa/io-wallet-oauth2': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-oid-federation': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-oid4vci': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-oid4vp': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-utils': 1.5.4-alpha-20260717125503
       '@sd-jwt/core': 0.19.0
       '@sd-jwt/crypto-nodejs': 0.19.0
       '@sd-jwt/jwt-status-list': 0.19.0
@@ -13866,43 +13845,43 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
 
-  '@pagopa/io-wallet-oauth2@1.5.2':
+  '@pagopa/io-wallet-oauth2@1.5.4-alpha-20260717125503':
     dependencies:
       '@openid4vc/oauth2': 0.4.3
       '@openid4vc/utils': 0.4.3
-      '@pagopa/io-wallet-oid-federation': 1.5.2
-      '@pagopa/io-wallet-utils': 1.5.2
+      '@pagopa/io-wallet-oid-federation': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-utils': 1.5.4-alpha-20260717125503
       js-base64: 3.7.8
       zod: 4.3.6
 
-  '@pagopa/io-wallet-oid-federation@1.5.2':
+  '@pagopa/io-wallet-oid-federation@1.5.4-alpha-20260717125503':
     dependencies:
-      '@pagopa/io-wallet-utils': 1.5.2
+      '@pagopa/io-wallet-utils': 1.5.4-alpha-20260717125503
       buffer: 6.0.3
       zod: 4.3.6
 
-  '@pagopa/io-wallet-oid4vci@1.5.2':
+  '@pagopa/io-wallet-oid4vci@1.5.4-alpha-20260717125503':
     dependencies:
       '@openid4vc/oauth2': 0.4.3
       '@openid4vc/openid4vci': 0.4.3
       '@openid4vc/utils': 0.4.3
-      '@pagopa/io-wallet-oauth2': 1.5.2
-      '@pagopa/io-wallet-oid-federation': 1.5.2
-      '@pagopa/io-wallet-oid4vp': 1.5.2
-      '@pagopa/io-wallet-utils': 1.5.2
+      '@pagopa/io-wallet-oauth2': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-oid-federation': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-oid4vp': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-utils': 1.5.4-alpha-20260717125503
       zod: 4.3.6
 
-  '@pagopa/io-wallet-oid4vp@1.5.2':
+  '@pagopa/io-wallet-oid4vp@1.5.4-alpha-20260717125503':
     dependencies:
       '@openid4vc/oauth2': 0.4.3
       '@openid4vc/openid4vp': 0.4.3
       '@openid4vc/utils': 0.4.3
-      '@pagopa/io-wallet-oauth2': 1.5.2
-      '@pagopa/io-wallet-oid-federation': 1.5.2
-      '@pagopa/io-wallet-utils': 1.5.2
+      '@pagopa/io-wallet-oauth2': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-oid-federation': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-utils': 1.5.4-alpha-20260717125503
       zod: 4.3.6
 
-  '@pagopa/io-wallet-utils@1.5.2':
+  '@pagopa/io-wallet-utils@1.5.4-alpha-20260717125503':
     dependencies:
       '@openid4vc/oauth2': 0.4.3
       '@openid4vc/utils': 0.4.3
@@ -14500,7 +14479,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@react-native/eslint-config@0.85.0-rc.7(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(prettier@3.8.2)(typescript@5.9.3)':
+  '@react-native/eslint-config@0.85.0-rc.7(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)))(prettier@3.8.2)(typescript@5.9.3)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/eslint-parser': 7.27.0(@babel/core@7.29.0)(eslint@9.39.4)
@@ -14511,7 +14490,7 @@ snapshots:
       eslint-config-prettier: 8.10.0(eslint@9.39.4)
       eslint-plugin-eslint-comments: 3.2.0(eslint@9.39.4)
       eslint-plugin-ft-flow: 2.0.3(@babel/eslint-parser@7.27.0(@babel/core@7.29.0)(eslint@9.39.4))(eslint@9.39.4)
-      eslint-plugin-jest: 29.15.2(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(typescript@5.9.3)
+      eslint-plugin-jest: 29.15.2(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)))(typescript@5.9.3)
       eslint-plugin-react: 7.37.5(eslint@9.39.4)
       eslint-plugin-react-hooks: 7.0.1(eslint@9.39.4)
       eslint-plugin-react-native: 5.0.0(eslint@9.39.4)
@@ -14976,7 +14955,7 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@testing-library/react-native@13.3.3(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react-test-renderer@19.2.0(react@19.2.0))(react@19.2.0)':
+  '@testing-library/react-native@13.3.3(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react-test-renderer@19.2.0(react@19.2.0))(react@19.2.0)':
     dependencies:
       jest-matcher-utils: 30.3.0
       picocolors: 1.1.1
@@ -14986,7 +14965,7 @@ snapshots:
       react-test-renderer: 19.2.0(react@19.2.0)
       redent: 3.0.0
     optionalDependencies:
-      jest: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1)
+      jest: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3))
 
   '@testing-library/react-native@13.3.3(jest@30.3.0(@types/node@20.5.1)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@20.5.1)(typescript@5.9.3)))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react-test-renderer@19.2.0(react@19.2.0))(react@19.2.0)':
     dependencies:
@@ -17588,8 +17567,6 @@ snapshots:
     dependencies:
       semver: 5.7.2
 
-  diff@3.5.0: {}
-
   diff@4.0.4: {}
 
   diffie-hellman@5.0.3:
@@ -18041,13 +18018,13 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-jest@28.11.0(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(typescript@5.9.3):
+  eslint-plugin-jest@28.11.0(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)))(typescript@5.9.3):
     dependencies:
       '@typescript-eslint/utils': 8.58.1(eslint@9.39.4)(typescript@5.9.3)
       eslint: 9.39.4
     optionalDependencies:
       '@typescript-eslint/eslint-plugin': 8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3)
-      jest: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1)
+      jest: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3))
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -18063,13 +18040,13 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-jest@29.15.2(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(typescript@5.9.3):
+  eslint-plugin-jest@29.15.2(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)))(typescript@5.9.3):
     dependencies:
       '@typescript-eslint/utils': 8.58.1(eslint@9.39.4)(typescript@5.9.3)
       eslint: 9.39.4
     optionalDependencies:
       '@typescript-eslint/eslint-plugin': 8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3)
-      jest: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1)
+      jest: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3))
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
@@ -19733,15 +19710,15 @@ snapshots:
       - babel-plugin-macros
       - supports-color
 
-  jest-cli@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1):
+  jest-cli@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)):
     dependencies:
-      '@jest/core': 30.3.0(babel-plugin-macros@3.1.0)(ts-node@7.0.1)
+      '@jest/core': 30.3.0(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3))
       '@jest/test-result': 30.3.0
       '@jest/types': 30.3.0
       chalk: 4.1.2
       exit-x: 0.2.2
       import-local: 3.2.0
-      jest-config: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1)
+      jest-config: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3))
       jest-util: 30.3.0
       jest-validate: 30.3.0
       yargs: 17.7.2
@@ -19771,6 +19748,38 @@ snapshots:
       - supports-color
       - ts-node
 
+  jest-config@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)):
+    dependencies:
+      '@babel/core': 7.29.0
+      '@jest/get-type': 30.1.0
+      '@jest/pattern': 30.0.1
+      '@jest/test-sequencer': 30.3.0
+      '@jest/types': 30.3.0
+      babel-jest: 30.3.0(@babel/core@7.29.0)
+      chalk: 4.1.2
+      ci-info: 4.4.0
+      deepmerge: 4.3.1
+      glob: 10.5.0
+      graceful-fs: 4.2.11
+      jest-circus: 30.3.0(babel-plugin-macros@3.1.0)
+      jest-docblock: 30.2.0
+      jest-environment-node: 30.3.0
+      jest-regex-util: 30.0.1
+      jest-resolve: 30.3.0
+      jest-runner: 30.3.0
+      jest-util: 30.3.0
+      jest-validate: 30.3.0
+      parse-json: 5.2.0
+      pretty-format: 30.3.0
+      slash: 3.0.0
+      strip-json-comments: 3.1.1
+    optionalDependencies:
+      '@types/node': 10.17.28
+      ts-node: 10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)
+    transitivePeerDependencies:
+      - babel-plugin-macros
+      - supports-color
+
   jest-config@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@20.5.1)(typescript@5.9.3)):
     dependencies:
       '@babel/core': 7.29.0
@@ -19799,38 +19808,6 @@ snapshots:
     optionalDependencies:
       '@types/node': 10.17.28
       ts-node: 10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@20.5.1)(typescript@5.9.3)
-    transitivePeerDependencies:
-      - babel-plugin-macros
-      - supports-color
-
-  jest-config@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1):
-    dependencies:
-      '@babel/core': 7.29.0
-      '@jest/get-type': 30.1.0
-      '@jest/pattern': 30.0.1
-      '@jest/test-sequencer': 30.3.0
-      '@jest/types': 30.3.0
-      babel-jest: 30.3.0(@babel/core@7.29.0)
-      chalk: 4.1.2
-      ci-info: 4.4.0
-      deepmerge: 4.3.1
-      glob: 10.5.0
-      graceful-fs: 4.2.11
-      jest-circus: 30.3.0(babel-plugin-macros@3.1.0)
-      jest-docblock: 30.2.0
-      jest-environment-node: 30.3.0
-      jest-regex-util: 30.0.1
-      jest-resolve: 30.3.0
-      jest-runner: 30.3.0
-      jest-util: 30.3.0
-      jest-validate: 30.3.0
-      parse-json: 5.2.0
-      pretty-format: 30.3.0
-      slash: 3.0.0
-      strip-json-comments: 3.1.1
-    optionalDependencies:
-      '@types/node': 10.17.28
-      ts-node: 7.0.1
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
@@ -20154,12 +20131,12 @@ snapshots:
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
-  jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1):
+  jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3)):
     dependencies:
-      '@jest/core': 30.3.0(babel-plugin-macros@3.1.0)(ts-node@7.0.1)
+      '@jest/core': 30.3.0(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3))
       '@jest/types': 30.3.0
       import-local: 3.2.0
-      jest-cli: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1)
+      jest-cli: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3))
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -24043,6 +24020,27 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
+  ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@5.9.3):
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      '@tsconfig/node10': 1.0.12
+      '@tsconfig/node12': 1.0.11
+      '@tsconfig/node14': 1.0.3
+      '@tsconfig/node16': 1.0.4
+      '@types/node': 10.17.28
+      acorn: 8.16.0
+      acorn-walk: 8.2.0
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.4
+      make-error: 1.3.6
+      typescript: 5.9.3
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
+    optionalDependencies:
+      '@swc/core': 1.15.33(@swc/helpers@0.5.21)
+    optional: true
+
   ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@20.5.1)(typescript@5.9.3):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
@@ -24062,17 +24060,6 @@ snapshots:
       yn: 3.1.1
     optionalDependencies:
       '@swc/core': 1.15.33(@swc/helpers@0.5.21)
-
-  ts-node@7.0.1:
-    dependencies:
-      arrify: 1.0.1
-      buffer-from: 1.1.1
-      diff: 3.5.0
-      make-error: 1.3.6
-      minimist: 1.2.8
-      mkdirp: 0.5.5
-      source-map-support: 0.5.21
-      yn: 2.0.0
 
   tsconfig-paths@3.15.0:
     dependencies:
@@ -24692,8 +24679,6 @@ snapshots:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 21.1.1
-
-  yn@2.0.0: {}
 
   yn@3.1.1: {}
 
