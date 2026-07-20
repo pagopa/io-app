@@ -91,11 +91,6 @@ overrides:
   '@babel/plugin-transform-typescript': ^7.23.6
   '@babel/plugin-syntax-typescript': ^7.23.3
   '@babel/types': ^7.23.6
-  '@pagopa/io-wallet-oauth2': 1.5.2
-  '@pagopa/io-wallet-oid-federation': 1.5.2
-  '@pagopa/io-wallet-oid4vci': 1.5.2
-  '@pagopa/io-wallet-oid4vp': 1.5.2
-  '@pagopa/io-wallet-utils': 1.5.2
 
 patchedDependencies:
   '@gorhom/bottom-sheet@5.2.8':
@@ -257,8 +252,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-wallet':
-        specifier: 3.6.2
-        version: 3.6.2(f8c00da11ecd768df625893adf6351ec)
+        specifier: 3.6.3
+        version: 3.6.3(f8c00da11ecd768df625893adf6351ec)
       '@pagopa/io-react-native-zendesk':
         specifier: ^0.3.30
         version: 0.3.30(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
@@ -2761,8 +2756,8 @@ packages:
       react: '*'
       react-native: '*'
 
-  '@pagopa/io-react-native-wallet@3.6.2':
-    resolution: {integrity: sha512-hgRaAPuIL7Ev60uXKai5H7RS/NenUEncBwf7NSz6Rws0BZCj4QWfn27U00RYybUc6uVI/xRecKlfv5iPm7kB1g==}
+  '@pagopa/io-react-native-wallet@3.6.3':
+    resolution: {integrity: sha512-LyNpCCygGOXObUrXM/2tmXGfeCgxTnLMbS7B3ZoBWAb3LDvTsC4ud2OIoiTaHg2SqyyApKv//8JdyjvoZ0yRfA==}
     engines: {node: '>= 16.0.0'}
     peerDependencies:
       '@pagopa/io-react-native-crypto': '*'
@@ -2779,20 +2774,20 @@ packages:
       react: '*'
       react-native: '*'
 
-  '@pagopa/io-wallet-oauth2@1.5.2':
-    resolution: {integrity: sha512-nEmPWRaVmY70l4VDjXAOBHdjLYAlHVT6gkzpAQQ5sS9FhlScDq8qvsV35aabVzqFy+3LaCcgNMeD3LYokD+ccQ==}
+  '@pagopa/io-wallet-oauth2@1.5.4-alpha-20260717125503':
+    resolution: {integrity: sha512-9GeBrEtrscCfMzk7EFyBFRTvTN3O/wvKkyN8B49hmgs2001iy759Sl7AQOV+pgCyYV/l+jNxa/Ejc06998eSWA==}
 
-  '@pagopa/io-wallet-oid-federation@1.5.2':
-    resolution: {integrity: sha512-SRJpdXT301qFlMGYJ6hYQTG/r306C32cJtUDFv2D3BdG+xJ1vmr4h+SbuwQoZWzhhxSS4TmRsHCsvuxzNCcX/w==}
+  '@pagopa/io-wallet-oid-federation@1.5.4-alpha-20260717125503':
+    resolution: {integrity: sha512-uuhXlUodNSrKJC5FQlGjssDlVUDXVq7tfRfD5RAEZ5GOtGvpYPVN7/R5gSupTC+8oYW0Nr8t7KJHDHhSJx+tQg==}
 
-  '@pagopa/io-wallet-oid4vci@1.5.2':
-    resolution: {integrity: sha512-AwwiGKPuljq9jocT6lyb33X/tFh/wzPKGwKUY2QTIt4noYuA3tYaSb29np3j8ae5hh04dDiCFVA4Hsz9Om/nNg==}
+  '@pagopa/io-wallet-oid4vci@1.5.4-alpha-20260717125503':
+    resolution: {integrity: sha512-63D7cPWpHMtPIsyVbJxih2NIMhZCtUDkvbqhPb5MMQYdnPRLTNyOucCKWaa/qVdo0uaUccu2m9axNCIUe9VRmg==}
 
-  '@pagopa/io-wallet-oid4vp@1.5.2':
-    resolution: {integrity: sha512-Ld4+h1eXP4YPdZSEbJqgkJZEiAbCI1HwjOih/rTRl63N8onyTjOoSjlTFvwM+NvmUmYCP2TWI/ZGM0iM5O9tFQ==}
+  '@pagopa/io-wallet-oid4vp@1.5.4-alpha-20260717125503':
+    resolution: {integrity: sha512-jcvqkf5e68WpPKNjC3ZV5AhJymq6VOwV0fMlwg5+/b5c6hgcgRUcIPXHvD7cYDMMbZOBJAtua1jYLxjxo2pMig==}
 
-  '@pagopa/io-wallet-utils@1.5.2':
-    resolution: {integrity: sha512-i5Rnb+PDi+9mhifn5nVxFkeJLgIBNiLaDVqGV9slxzzYAi3InTtG+UrDb/It6kky2UvK2fHRoGENues4pD1Xfg==}
+  '@pagopa/io-wallet-utils@1.5.4-alpha-20260717125503':
+    resolution: {integrity: sha512-aY2X2WAI8KnB4OXAFflGAyoz1152X1etY32CcHtS9obUUMHKwjxQyEWx5kKgk3Ss9aYdFybQ6E7uSDuEvOyIQQ==}
 
   '@pagopa/openapi-codegen-ts@14.2.0':
     resolution: {integrity: sha512-sop1+MxfLP2Od2sxDvHxJ7poVmZKBP0REVMQDPrCpNe9Wv1vvLJN8WqonUjkLfL3fLmKM0B6AS4B67Nigm1uKA==}
@@ -14105,16 +14100,16 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
 
-  '@pagopa/io-react-native-wallet@3.6.2(f8c00da11ecd768df625893adf6351ec)':
+  '@pagopa/io-react-native-wallet@3.6.3(f8c00da11ecd768df625893adf6351ec)':
     dependencies:
       '@pagopa/io-react-native-crypto': 1.2.3(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-iso18013': 0.8.4(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-jwt': 2.2.0(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
-      '@pagopa/io-wallet-oauth2': 1.5.2
-      '@pagopa/io-wallet-oid-federation': 1.5.2
-      '@pagopa/io-wallet-oid4vci': 1.5.2
-      '@pagopa/io-wallet-oid4vp': 1.5.2
-      '@pagopa/io-wallet-utils': 1.5.2
+      '@pagopa/io-wallet-oauth2': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-oid-federation': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-oid4vci': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-oid4vp': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-utils': 1.5.4-alpha-20260717125503
       '@sd-jwt/core': 0.19.0
       '@sd-jwt/crypto-nodejs': 0.19.0
       '@sd-jwt/jwt-status-list': 0.19.0
@@ -14138,43 +14133,43 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
 
-  '@pagopa/io-wallet-oauth2@1.5.2':
+  '@pagopa/io-wallet-oauth2@1.5.4-alpha-20260717125503':
     dependencies:
       '@openid4vc/oauth2': 0.4.3
       '@openid4vc/utils': 0.4.3
-      '@pagopa/io-wallet-oid-federation': 1.5.2
-      '@pagopa/io-wallet-utils': 1.5.2
+      '@pagopa/io-wallet-oid-federation': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-utils': 1.5.4-alpha-20260717125503
       js-base64: 3.7.8
       zod: 4.3.6
 
-  '@pagopa/io-wallet-oid-federation@1.5.2':
+  '@pagopa/io-wallet-oid-federation@1.5.4-alpha-20260717125503':
     dependencies:
-      '@pagopa/io-wallet-utils': 1.5.2
+      '@pagopa/io-wallet-utils': 1.5.4-alpha-20260717125503
       buffer: 6.0.3
       zod: 4.3.6
 
-  '@pagopa/io-wallet-oid4vci@1.5.2':
+  '@pagopa/io-wallet-oid4vci@1.5.4-alpha-20260717125503':
     dependencies:
       '@openid4vc/oauth2': 0.4.3
       '@openid4vc/openid4vci': 0.4.3
       '@openid4vc/utils': 0.4.3
-      '@pagopa/io-wallet-oauth2': 1.5.2
-      '@pagopa/io-wallet-oid-federation': 1.5.2
-      '@pagopa/io-wallet-oid4vp': 1.5.2
-      '@pagopa/io-wallet-utils': 1.5.2
+      '@pagopa/io-wallet-oauth2': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-oid-federation': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-oid4vp': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-utils': 1.5.4-alpha-20260717125503
       zod: 4.3.6
 
-  '@pagopa/io-wallet-oid4vp@1.5.2':
+  '@pagopa/io-wallet-oid4vp@1.5.4-alpha-20260717125503':
     dependencies:
       '@openid4vc/oauth2': 0.4.3
       '@openid4vc/openid4vp': 0.4.3
       '@openid4vc/utils': 0.4.3
-      '@pagopa/io-wallet-oauth2': 1.5.2
-      '@pagopa/io-wallet-oid-federation': 1.5.2
-      '@pagopa/io-wallet-utils': 1.5.2
+      '@pagopa/io-wallet-oauth2': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-oid-federation': 1.5.4-alpha-20260717125503
+      '@pagopa/io-wallet-utils': 1.5.4-alpha-20260717125503
       zod: 4.3.6
 
-  '@pagopa/io-wallet-utils@1.5.2':
+  '@pagopa/io-wallet-utils@1.5.4-alpha-20260717125503':
     dependencies:
       '@openid4vc/oauth2': 0.4.3
       '@openid4vc/utils': 0.4.3

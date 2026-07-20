@@ -380,17 +380,19 @@ describe("itwShouldRenderL2EngagementBannerForInactiveWalletSelector", () => {
   });
 
   it.each`
-    offlineAccessReason                       | isITWalletValid | isWalletValid | isActivationDisabled | expected
-    ${undefined}                              | ${false}        | ${false}      | ${true}              | ${true}
-    ${undefined}                              | ${true}         | ${false}      | ${true}              | ${false}
-    ${undefined}                              | ${false}        | ${true}       | ${true}              | ${false}
-    ${undefined}                              | ${false}        | ${false}      | ${false}             | ${false}
-    ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}        | ${false}      | ${true}              | ${false}
+    offlineAccessReason                       | isITWalletValid | isL3Enabled | isWalletValid | isActivationDisabled | expected
+    ${undefined}                              | ${false}        | ${true}     | ${false}      | ${true}              | ${true}
+    ${undefined}                              | ${true}         | ${true}     | ${false}      | ${true}              | ${false}
+    ${undefined}                              | ${false}        | ${true}     | ${true}       | ${true}              | ${false}
+    ${undefined}                              | ${false}        | ${true}     | ${false}      | ${false}             | ${false}
+    ${undefined}                              | ${false}        | ${false}    | ${false}      | ${true}              | ${false}
+    ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}        | ${true}     | ${false}      | ${true}              | ${false}
   `(
-    "should return $expected when offlineAccessReason=$offlineAccessReason, isITWalletValid=$isITWalletValid, isWalletValid=$isWalletValid, isActivationDisabled=$isActivationDisabled",
+    "should return $expected when offlineAccessReason=$offlineAccessReason, isITWalletValid=$isITWalletValid, isL3Enabled=$isL3Enabled, isWalletValid=$isWalletValid, isActivationDisabled=$isActivationDisabled",
     ({
       offlineAccessReason,
       isITWalletValid,
+      isL3Enabled,
       isWalletValid,
       isActivationDisabled,
       expected
@@ -410,6 +412,10 @@ describe("itwShouldRenderL2EngagementBannerForInactiveWalletSelector", () => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
         .mockReturnValue(isITWalletValid);
+
+      jest
+        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .mockReturnValue(isL3Enabled);
 
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
@@ -433,17 +439,19 @@ describe("itwShouldRenderL2EngagementBannerSelector", () => {
   });
 
   it.each`
-    offlineAccessReason                       | isITWalletValid | isWalletValid | isActivationDisabled | expected
-    ${undefined}                              | ${false}        | ${true}       | ${true}              | ${true}
-    ${undefined}                              | ${true}         | ${true}       | ${true}              | ${false}
-    ${undefined}                              | ${false}        | ${false}      | ${true}              | ${false}
-    ${undefined}                              | ${false}        | ${true}       | ${false}             | ${false}
-    ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}        | ${true}       | ${true}              | ${false}
+    offlineAccessReason                       | isITWalletValid | isL3Enabled | isWalletValid | isActivationDisabled | expected
+    ${undefined}                              | ${false}        | ${true}     | ${true}       | ${true}              | ${true}
+    ${undefined}                              | ${true}         | ${true}     | ${true}       | ${true}              | ${false}
+    ${undefined}                              | ${false}        | ${true}     | ${false}      | ${true}              | ${false}
+    ${undefined}                              | ${false}        | ${true}     | ${true}       | ${false}             | ${false}
+    ${undefined}                              | ${false}        | ${false}    | ${true}       | ${true}              | ${false}
+    ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}        | ${true}     | ${true}       | ${true}              | ${false}
   `(
-    "should return $expected when offlineAccessReason=$offlineAccessReason, isITWalletValid=$isITWalletValid, isWalletValid=$isWalletValid, isActivationDisabled=$isActivationDisabled",
+    "should return $expected when offlineAccessReason=$offlineAccessReason, isITWalletValid=$isITWalletValid, isL3Enabled=$isL3Enabled, isWalletValid=$isWalletValid, isActivationDisabled=$isActivationDisabled",
     ({
       offlineAccessReason,
       isITWalletValid,
+      isL3Enabled,
       isWalletValid,
       isActivationDisabled,
       expected
@@ -463,6 +471,10 @@ describe("itwShouldRenderL2EngagementBannerSelector", () => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
         .mockReturnValue(isITWalletValid);
+
+      jest
+        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .mockReturnValue(isL3Enabled);
 
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
