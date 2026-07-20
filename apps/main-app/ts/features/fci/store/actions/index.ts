@@ -168,18 +168,13 @@ export type FciActions =
   | ActionType<typeof fciEndRequest>
   | ActionType<typeof fciEnvironmentSet>
   | ActionType<typeof fciLoadQtspClauses>
-  | ActionType<typeof fciLoadQtspClauses>
-  | ActionType<typeof fciLoadQtspFilledDocument>
   | ActionType<typeof fciLoadQtspFilledDocument>
   | ActionType<typeof fciMetadataRequest>
   | ActionType<typeof fciPollFilledDocument>
   | ActionType<typeof fciSignatureRequestFromId>
-  | ActionType<typeof fciSignatureRequestFromId>
-  | ActionType<typeof fciSignatureRequestRetryFromId>
   | ActionType<typeof fciSignatureRequestRetryFromId>
   | ActionType<typeof fciSignatureRequestRetrySuccess>
   | ActionType<typeof fciSignaturesListRequest>
-  | ActionType<typeof fciSigningRequest>
   | ActionType<typeof fciSigningRequest>
   | ActionType<typeof fciStartRequest>
   | ActionType<typeof fciStartSigningRequest>
