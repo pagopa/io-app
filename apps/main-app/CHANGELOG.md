@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.37.0-rc.8](https://github.com/pagopa/io-app/compare/3.37.0-rc.7...3.37.0-rc.8) (2026-07-17)
+
+
+### Features
+
+* [[IOCOM-3242](https://pagopa.atlassian.net/browse/IOCOM-3242)] message not found error screen tracking ([#8307](https://github.com/pagopa/io-app/issues/8307)) ([acc2ff9](https://github.com/pagopa/io-app/commit/acc2ff96beb9052e577613f638851e86904fef9e))
+* [[IOCOM-3255](https://pagopa.atlassian.net/browse/IOCOM-3255)] message attachments expiration alert ([#8304](https://github.com/pagopa/io-app/issues/8304)) ([9de013a](https://github.com/pagopa/io-app/commit/9de013ab31832823474e524369a8113f81476f8d))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** fix wallet home scroll view centering ([#8327](https://github.com/pagopa/io-app/issues/8327)) ([87672af](https://github.com/pagopa/io-app/commit/87672afe9bcb94bd2d0662cf318778d492d25ad1))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Update `io-react-native-wallet` to v3.6.3 ([#8324](https://github.com/pagopa/io-app/issues/8324)) ([97418eb](https://github.com/pagopa/io-app/commit/97418ebb9a6f46d5bbece83da934a048415839b2))
+* [[IOAPPX-520](https://pagopa.atlassian.net/browse/IOAPPX-520)] Tidy up fastlane files ([#8318](https://github.com/pagopa/io-app/issues/8318)) ([624303d](https://github.com/pagopa/io-app/commit/624303dd9074b0b470a156ba1ed42b38c8721426))
+* [[IOCOM-3268](https://pagopa.atlassian.net/browse/IOCOM-3268)] SEND messages attachments alert ([#8305](https://github.com/pagopa/io-app/issues/8305)) ([7313cc8](https://github.com/pagopa/io-app/commit/7313cc88349abf8c0c283913c891f9edf4c44100))
+* [[IOPLT-1960](https://pagopa.atlassian.net/browse/IOPLT-1960)] Consolidate screens by using the most suitable screen templates ([#8315](https://github.com/pagopa/io-app/issues/8315)) ([2267931](https://github.com/pagopa/io-app/commit/2267931cec2695b4fd5a7cd06313986ca9df2693))
+* [[IOPLT-1962](https://pagopa.atlassian.net/browse/IOPLT-1962)] removed unused `makeFontStyleObject` ([#8312](https://github.com/pagopa/io-app/issues/8312)) ([c0ce773](https://github.com/pagopa/io-app/commit/c0ce773a939bd8ab4091dcd0c1e158dcf9d1f8bf))
+
 ## [3.37.0-rc.7](https://github.com/pagopa/io-app/compare/3.37.0-rc.6...3.37.0-rc.7) (2026-07-16)
 
 
