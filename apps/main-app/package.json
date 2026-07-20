@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.37.0-rc.4",
+  "version": "3.37.0-rc.8",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -29,7 +29,6 @@
     "tsc-noemit": "tsc --noemit",
     "lint": "eslint . --cache",
     "lint-autofix": "eslint . --fix --cache",
-    "check_urls": "python3 scripts/check_urls.py",
     "locale-audit": "python3 scripts/locale/locale_audit.py",
     "unused-locales": "python3 scripts/locale/find_unused_locales.py",
     "cie-ios-prod": "mv ../../node_modules/@pagopa/react-native-cie/.ios ../../node_modules/@pagopa/react-native-cie/ios && mv ../../node_modules/@pagopa/react-native-cie/.react-native-cie.podspec ../../node_modules/@pagopa/react-native-cie/react-native-cie.podspec && cd ios && bundle exec pod install && cd ..",
@@ -66,7 +65,7 @@
     "@pagopa/io-react-native-jwt": "^2.2.0",
     "@pagopa/io-react-native-login-utils": "1.2.0",
     "@pagopa/io-react-native-secure-storage": "^0.2.1",
-    "@pagopa/io-react-native-wallet": "3.6.2",
+    "@pagopa/io-react-native-wallet": "3.6.3",
     "@pagopa/io-react-native-zendesk": "^0.3.30",
     "@pagopa/react-native-cie": "^1.5.0",
     "@pagopa/ts-commons": "^10.15.0",
@@ -252,7 +251,6 @@
     "redux-saga-test-plan": "4.0.3",
     "rn-nodeify": "^10.0.1",
     "standard-version": "^8.0.2",
-    "ts-node": "^7.0.1",
     "typescript-eslint": "^8.58.0"
   },
   "engines": {
