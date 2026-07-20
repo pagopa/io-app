@@ -12,6 +12,9 @@ import sonarjs from "eslint-plugin-sonarjs";
 import i18Next from "eslint-plugin-i18next";
 import js from "@eslint/js";
 import delegateEffectsRule from "./scripts/eslint/delegate-effects.js";
+import noDynamicI18nKeysRule from "./scripts/eslint/no-dynamic-i18n-keys.js";
+import noUnusedI18nKeysRule from "./scripts/eslint/no-unused-i18n-keys.js";
+import jsonParser from "./scripts/eslint/json-parser.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -90,6 +93,7 @@ export default defineConfig([
       functional,
       sonarjs,
       i18next: i18Next,
+      "@io-app": { rules: { "i18n-no-dynamic-keys": noDynamicI18nKeysRule } },
       "typed-redux-saga": { rules: { "delegate-effects": delegateEffectsRule } }
     },
 
@@ -120,7 +124,6 @@ export default defineConfig([
       // Rules from tseslint.strict / pagopa config that require widespread
       // refactoring incompatible with the current codebase
       "max-lines-per-function": "off",
-      "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/no-explicit-any": "off",
 
       // Incorrectly fires on mapped types (`[P in ...]`) — only meant for
@@ -322,7 +325,10 @@ export default defineConfig([
             }
           ]
         }
-      ]
+      ],
+
+      // Disallow dynamically-built i18n keys so unused-key detection stays reliable
+      "@io-app/i18n-no-dynamic-keys": "warn"
     },
 
     settings: {
@@ -378,6 +384,20 @@ export default defineConfig([
 
     rules: {
       "i18next/no-literal-string": "off"
+    }
+  },
+  {
+    files: ["**/locales/it/index.json"],
+    languageOptions: {
+      parser: jsonParser
+    },
+    plugins: {
+      "@io-app": {
+        rules: { "i18n-no-unused-keys": noUnusedI18nKeysRule }
+      }
+    },
+    rules: {
+      "@io-app/i18n-no-unused-keys": "warn"
     }
   }
 ]);
