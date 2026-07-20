@@ -94,6 +94,17 @@ describe("ItwPresentationPidDetailScreen", () => {
     expect(mockTrackItwStartDeactivation).not.toHaveBeenCalled();
     expect(mockToastError).toHaveBeenCalledWith(I18n.t("global.offline.toast"));
   });
+  it("does not render the assistance action", () => {
+    const { queryByText } = renderComponent(false);
+
+    expect(
+      queryByText(
+        I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+        )
+      )
+    ).toBeNull();
+  });
 });
 
 const renderComponent = (isBannerHidden: boolean, isConnected = true) => {
