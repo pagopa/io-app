@@ -4,7 +4,7 @@ import {
   IOBadgeVSpacing,
   IOColors,
   makeFontStyleObject
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   Canvas,
   LinearGradient,
@@ -12,6 +12,7 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import Color from "color";
+import I18n from "i18next";
 import { memo, useState } from "react";
 import {
   LayoutChangeEvent,
@@ -20,19 +21,19 @@ import {
   Text,
   View
 } from "react-native";
-import I18n from "i18next";
+
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import { CardColorScheme } from "./types";
 
-type DigitalVersionBadgeProps = {
-  credentialType: string;
-  colorScheme: CardColorScheme;
+type CredentialTypesProps = {
+  background: Array<string> | string;
+  foreground: string;
 };
 
-type CredentialTypesProps = {
-  background: string | Array<string>;
-  foreground: string;
+type DigitalVersionBadgeProps = {
+  colorScheme: CardColorScheme;
+  credentialType: string;
 };
 
 const getColorPropsByScheme = (
@@ -94,10 +95,10 @@ const DigitalVersionBadge = ({
   colorScheme = "default"
 }: DigitalVersionBadgeProps) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
-  const [layout, setLayout] = useState<{
-    width: number;
+  const [layout, setLayout] = useState<null | {
     height: number;
-  } | null>(null);
+    width: number;
+  }>(null);
 
   const colorProps = getColorPropsByScheme(credentialType, colorScheme);
 
@@ -128,25 +129,25 @@ const DigitalVersionBadge = ({
         {isGradient && layout && (
           <Canvas style={styles.gradientCanvas}>
             <RoundedRect
-              x={0}
-              y={0}
-              width={layout.width}
               height={layout.height}
               r={IOBadgeRadius}
+              width={layout.width}
+              x={0}
+              y={0}
             >
               <LinearGradient
-                start={vec(0, 0)}
-                end={vec(layout.width, 0)}
                 colors={background}
+                end={vec(layout.width, 0)}
+                start={vec(0, 0)}
               />
             </RoundedRect>
           </Canvas>
         )}
         {colorScheme !== "default" && <View style={styles.faded} />}
         <Text
-          numberOfLines={1}
-          ellipsizeMode="tail"
           allowFontScaling={false}
+          ellipsizeMode="tail"
+          numberOfLines={1}
           style={{
             color: foreground,
             alignSelf: "center",

@@ -1,12 +1,13 @@
-import { testSaga } from "redux-saga-test-plan";
 import { left, right } from "fp-ts/lib/Either";
+import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
-import { getNetworkError } from "../../../../../utils/errors";
-import { fciSignaturesListRequest } from "../../../store/actions";
-import { handleGetSignatureRequests } from "../handleGetSignatureRequests";
-import { mockedRandomSignatureRequestList } from "../../../types/__mocks__/SignaturesList.mock";
+
 import { SignatureRequestList } from "../../../../../../definitions/fci/SignatureRequestList";
+import { getNetworkError } from "../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { fciSignaturesListRequest } from "../../../store/actions";
+import { mockedRandomSignatureRequestList } from "../../../types/__mocks__/SignaturesList.mock";
+import { handleGetSignatureRequests } from "../handleGetSignatureRequests";
 
 const successResponse = {
   status: 200,
@@ -26,7 +27,7 @@ describe("handleGetSignatureRequests", () => {
   const getSignatureRequestsCall = mockBackendFciClient({
     Bearer: "mock-token"
   });
-  it("it should dispatch fciSignaturesListRequest.success with the response payload if the response is right and the status code is 200", () => {
+  it("should dispatch fciSignaturesListRequest.success with the response payload if the response is right and the status code is 200", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
@@ -40,7 +41,7 @@ describe("handleGetSignatureRequests", () => {
       .next()
       .isDone();
   });
-  it("it should dispatch fciSignaturesListRequest.failure with the response status code as payload if the response is right and the status code is different from 200", () => {
+  it("should dispatch fciSignaturesListRequest.failure with the response status code as payload if the response is right and the status code is different from 200", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
@@ -58,7 +59,7 @@ describe("handleGetSignatureRequests", () => {
       .next()
       .isDone();
   });
-  it("it should dispatch fciSignaturesListRequest.failure with a fixed message as payload if the response left", () => {
+  it("should dispatch fciSignaturesListRequest.failure with a fixed message as payload if the response left", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
@@ -78,7 +79,7 @@ describe("handleGetSignatureRequests", () => {
       .next()
       .isDone();
   });
-  it("it should dispatch fciSignaturesListRequest.failure with the error message as payload if an exception is raised", () => {
+  it("should dispatch fciSignaturesListRequest.failure with the error message as payload if an exception is raised", () => {
     const mockedError = new Error("mockedErrorMessage");
     testSaga(
       handleGetSignatureRequests,

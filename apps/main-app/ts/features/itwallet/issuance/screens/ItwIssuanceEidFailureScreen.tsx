@@ -1,36 +1,37 @@
-import * as O from "fp-ts/lib/Option";
+import { useIOToast } from "@io-app/design-system";
 import { constNull, pipe } from "fp-ts/lib/function";
-import { useIOToast } from "@pagopa/io-app-design-system";
-import { Linking } from "react-native";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+import { Linking } from "react-native";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
+import { useIOSelector } from "../../../../store/hooks";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
+import { openWebUrl } from "../../../../utils/url";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { trackItwKoStateAction } from "../../analytics";
+import { KoState } from "../../analytics/utils/types";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
+import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 import {
   IssuanceFailure,
   IssuanceFailureType
 } from "../../machine/eid/failure";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectFailureOption,
   selectIdentification,
   selectIssuanceLevel
 } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
-import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
-import { KoState } from "../../analytics/utils/types";
-import { trackItwKoStateAction } from "../../analytics";
-import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
-import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
-import { useIOSelector } from "../../../../store/hooks";
-import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
 
 // Errors that allow a user to send a support request to Zendesk
 const zendeskAssistanceErrors = [
@@ -112,21 +113,73 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
-        case IssuanceFailureType.UNEXPECTED: // Map unexpected errors with the previous GENERIC message
-        case IssuanceFailureType.WALLET_PROVIDER_GENERIC:
+        case IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY:
           return {
-            title: I18n.t("features.itWallet.generic.error.title"),
-            subtitle: I18n.t("features.itWallet.generic.error.body"),
-            pictogram: "workInProgress",
-            action: supportModalAction, // This is a primary action because it includes the Zendesk support chat
+            title: I18n.t(
+              "features.itWallet.issuance.cieNotMatchingAuthenticationIdentityError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.cieNotMatchingAuthenticationIdentityError.body"
+            ),
+            pictogram: "attention",
+            action: {
+              label: I18n.t("global.buttons.retry"),
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure.reason,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t("global.buttons.retry")
+                });
+                machineRef.send({ type: "retry" });
+              }
+            },
             secondaryAction: {
               label: I18n.t("global.buttons.close"),
               onPress: () =>
                 closeIssuance({
                   reason: failure.reason,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t("global.buttons.close")
+                })
+            }
+          };
+        case IssuanceFailureType.CIE_NOT_REGISTERED:
+          return {
+            title: I18n.t("features.itWallet.issuance.cieNotRegistered.title"),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.cieNotRegistered.subtitle"
+            ),
+            pictogram: "attention",
+            action: {
+              label: I18n.t("global.buttons.findOutMore"),
+              // TODO: replace with the actual URL when available
+              onPress: () => void Linking.openURL("https://ioapp.it/")
+            },
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
+        case IssuanceFailureType.HARDWARE_KEY_INVALID:
+          return {
+            title: I18n.t("features.itWallet.hardwareKeyInvalid.error.title"),
+            subtitle: I18n.t("features.itWallet.hardwareKeyInvalid.error.body"),
+            pictogram: "fatalError",
+            action: {
+              label: I18n.t(
+                "features.itWallet.hardwareKeyInvalid.error.primaryAction"
+              ),
+              onPress: () => supportModal.present()
+            },
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+
+              onPress: () =>
+                closeIssuance({
+                  reason: failure.reason,
                   cta_category: "custom_1",
                   cta_id: I18n.t("global.buttons.close")
-                }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+                })
             }
           };
         case IssuanceFailureType.ISSUER_GENERIC:
@@ -148,6 +201,58 @@ const ContentView = ({ failure }: ContentViewProps) => {
                 }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
             },
             secondaryAction: supportModalAction
+          };
+        case IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR:
+          return {
+            title: I18n.t(
+              "features.itWallet.issuance.mrtdChallengeInitError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.mrtdChallengeInitError.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "retry" }) // Retry event goes to UserIdentification
+            },
+            secondaryAction: {
+              label: I18n.t("features.itWallet.support.button"),
+              onPress: () => {
+                supportModal.present();
+              }
+            }
+          };
+        case IssuanceFailureType.NOT_MATCHING_IDENTITY:
+          return {
+            title: I18n.t(
+              "features.itWallet.issuance.notMatchingIdentityError.title"
+            ),
+            subtitle: I18n.t(
+              isL3Issuance
+                ? "features.itWallet.issuance.notMatchingIdentityError.body.l3"
+                : "features.itWallet.issuance.notMatchingIdentityError.body.l2"
+            ),
+            pictogram: "attention",
+            action: {
+              label: I18n.t("global.buttons.retry"),
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure.reason,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t("global.buttons.retry")
+                });
+                machineRef.send({ type: "retry" });
+              }
+            },
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () =>
+                closeIssuance({
+                  reason: failure.reason,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t("global.buttons.close")
+                })
+            }
           };
         case IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND:
           return {
@@ -183,26 +288,21 @@ const ContentView = ({ failure }: ContentViewProps) => {
                 })
             }
           };
-        case IssuanceFailureType.HARDWARE_KEY_INVALID:
+        case IssuanceFailureType.UNEXPECTED: // Map unexpected errors with the previous GENERIC message
+        case IssuanceFailureType.WALLET_PROVIDER_GENERIC:
           return {
-            title: I18n.t("features.itWallet.hardwareKeyInvalid.error.title"),
-            subtitle: I18n.t("features.itWallet.hardwareKeyInvalid.error.body"),
-            pictogram: "fatalError",
-            action: {
-              label: I18n.t(
-                "features.itWallet.hardwareKeyInvalid.error.primaryAction"
-              ),
-              onPress: () => supportModal.present()
-            },
+            title: I18n.t("features.itWallet.generic.error.title"),
+            subtitle: I18n.t("features.itWallet.generic.error.body"),
+            pictogram: "workInProgress",
+            action: supportModalAction, // This is a primary action because it includes the Zendesk support chat
             secondaryAction: {
               label: I18n.t("global.buttons.close"),
-
               onPress: () =>
                 closeIssuance({
                   reason: failure.reason,
                   cta_category: "custom_1",
                   cta_id: I18n.t("global.buttons.close")
-                })
+                }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
             }
           };
         case IssuanceFailureType.UNSUPPORTED_DEVICE:
@@ -231,95 +331,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
                     "features.itWallet.unsupportedDevice.error.secondaryAction"
                   )
                 }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-            }
-          };
-        case IssuanceFailureType.NOT_MATCHING_IDENTITY:
-          return {
-            title: I18n.t(
-              "features.itWallet.issuance.notMatchingIdentityError.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.issuance.notMatchingIdentityError.body"
-            ),
-            pictogram: "accessDenied",
-            action: {
-              label: I18n.t(
-                "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
-              ),
-              onPress: () =>
-                closeIssuance({
-                  reason: failure.reason,
-                  cta_category: "custom_2",
-                  cta_id: I18n.t(
-                    "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
-                  )
-                }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-            },
-            secondaryAction: supportModalAction
-          };
-        case IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY:
-          return {
-            title: I18n.t(
-              "features.itWallet.issuance.cieNotMatchingAuthenticationIdentityError.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.issuance.cieNotMatchingAuthenticationIdentityError.body"
-            ),
-            pictogram: "attention",
-            action: {
-              label: I18n.t("global.buttons.retry"),
-              onPress: () => {
-                trackItwKoStateAction({
-                  reason: failure.reason,
-                  cta_category: "custom_1",
-                  cta_id: I18n.t("global.buttons.retry")
-                });
-                machineRef.send({ type: "retry" });
-              }
-            },
-            secondaryAction: {
-              label: I18n.t("global.buttons.close"),
-              onPress: () =>
-                closeIssuance({
-                  reason: failure.reason,
-                  cta_category: "custom_2",
-                  cta_id: I18n.t("global.buttons.close")
-                })
-            }
-          };
-        case IssuanceFailureType.WALLET_REVOCATION_ERROR:
-          return {
-            title: I18n.t(
-              "features.itWallet.walletRevocation.failureScreen.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.walletRevocation.failureScreen.subtitle"
-            ),
-            pictogram: "umbrella",
-            action: {
-              label: I18n.t("global.buttons.retry"),
-              onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
-            },
-            secondaryAction: {
-              label: I18n.t("global.buttons.close"),
-              onPress: () => machineRef.send({ type: "close" })
-            }
-          };
-        case IssuanceFailureType.CIE_NOT_REGISTERED:
-          return {
-            title: I18n.t("features.itWallet.issuance.cieNotRegistered.title"),
-            subtitle: I18n.t(
-              "features.itWallet.issuance.cieNotRegistered.subtitle"
-            ),
-            pictogram: "attention",
-            action: {
-              label: I18n.t("global.buttons.findOutMore"),
-              // TODO: replace with the actual URL when available
-              onPress: () => Linking.openURL("https://ioapp.it/")
-            },
-            secondaryAction: {
-              label: I18n.t("global.buttons.close"),
-              onPress: () => machineRef.send({ type: "close" })
             }
           };
         case IssuanceFailureType.UNTRUSTED_ISS:
@@ -365,24 +376,22 @@ const ContentView = ({ failure }: ContentViewProps) => {
               }
             }
           };
-        case IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR:
+        case IssuanceFailureType.WALLET_REVOCATION_ERROR:
           return {
             title: I18n.t(
-              "features.itWallet.issuance.mrtdChallengeInitError.title"
+              "features.itWallet.walletRevocation.failureScreen.title"
             ),
             subtitle: I18n.t(
-              "features.itWallet.issuance.mrtdChallengeInitError.subtitle"
+              "features.itWallet.walletRevocation.failureScreen.subtitle"
             ),
             pictogram: "umbrella",
             action: {
-              label: I18n.t("global.buttons.close"),
-              onPress: () => machineRef.send({ type: "retry" }) // Retry event goes to UserIdentification
+              label: I18n.t("global.buttons.retry"),
+              onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
             },
             secondaryAction: {
-              label: I18n.t("features.itWallet.support.button"),
-              onPress: () => {
-                supportModal.present();
-              }
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "close" })
             }
           };
       }

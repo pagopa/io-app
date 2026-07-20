@@ -1,49 +1,50 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
 import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
-import {
-  cancelQueuedPaymentUpdates,
-  reloadAllMessages
-} from "../../../../messages/store/actions";
-import { Action } from "../../../../../store/actions/types";
-import { appReducer } from "../../../../../store/reducers";
-import { PaymentData, UIMessageDetails } from "../../../../messages/types";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import {
   remoteError,
   remoteLoading,
   remoteReady,
   remoteUndefined
 } from "../../../../../common/model/RemoteValue";
-import {
-  addUserSelectedPaymentRptId,
-  updatePaymentForMessage
-} from "../../actions";
-import {
-  initialState as paymentsInitialState,
-  paymentStatusForUISelector,
-  userSelectedPaymentRptIdSelector,
-  paymentsReducer,
-  shouldRetrievePaymentDataSelector,
-  isUserSelectedPaymentSelector,
-  canNavigateToPaymentFromMessageSelector,
-  paymentsButtonStateSelector,
-  isPaymentsButtonVisibleSelector,
-  testable,
-  SinglePaymentState,
-  MultiplePaymentState,
-  paymentStatisticsForMessageUncachedSelector
-} from "../payments";
-import { getRptIdStringFromPaymentData } from "../../../utils";
-import { applicationChangeState } from "../../../../../store/actions/application";
 import * as versionInfo from "../../../../../common/versionInfo/store/reducers/versionInfo";
-import * as profile from "../../../../settings/common/store/selectors";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { Action } from "../../../../../store/actions/types";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import {
+  cancelQueuedPaymentUpdates,
+  reloadAllMessages
+} from "../../../../messages/store/actions";
+import { PaymentData, UIMessageDetails } from "../../../../messages/types";
+import * as profile from "../../../../settings/common/store/selectors";
 import {
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,
   toTimeoutMessagePaymentError
 } from "../../../types/paymentErrors";
+import { getRptIdStringFromPaymentData } from "../../../utils";
+import {
+  addUserSelectedPaymentRptId,
+  updatePaymentForMessage
+} from "../../actions";
+import {
+  canNavigateToPaymentFromMessageSelector,
+  isPaymentsButtonVisibleSelector,
+  isUserSelectedPaymentSelector,
+  MultiplePaymentState,
+  paymentsButtonStateSelector,
+  initialState as paymentsInitialState,
+  paymentsReducer,
+  paymentStatisticsForMessageUncachedSelector,
+  paymentStatusForUISelector,
+  shouldRetrievePaymentDataSelector,
+  SinglePaymentState,
+  testable,
+  userSelectedPaymentRptIdSelector
+} from "../payments";
 
 describe("Messages payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {
@@ -609,6 +610,17 @@ describe("isUserSelectedPaymentSelector", () => {
 });
 
 describe("userSelectedPaymentRptIdSelector", () => {
+  it("should return undefined when the message is undefined", () => {
+    const appState = appReducer(undefined, {} as Action);
+
+    const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
+      appState,
+      undefined
+    );
+
+    expect(paymentToCheckRptId).toBeUndefined();
+  });
+
   it("should return undefined when none is set", () => {
     const appState = appReducer(undefined, {} as Action);
     const messageDetails = {

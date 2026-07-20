@@ -2,6 +2,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Alert, Platform } from "react-native";
+
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import {
@@ -63,12 +64,24 @@ export const ItwBluetoothActivationScreen = () => {
 
   return (
     <IOScrollViewWithListItems
-      title={I18n.t(
-        "features.itWallet.presentation.proximity.bluetooth.activation.title"
-      )}
-      subtitle={I18n.t(
-        "features.itWallet.presentation.proximity.bluetooth.activation.subtitle"
-      )}
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          label: I18n.t(
+            "features.itWallet.presentation.proximity.bluetooth.activation.actions.primary"
+          ),
+          onPress: () => {
+            trackItwProximityBluetoothActivationGoToSettings();
+            openBluetoothPreferences();
+          }
+        },
+        secondary: {
+          label: I18n.t(
+            "features.itWallet.presentation.proximity.bluetooth.activation.actions.secondary"
+          ),
+          onPress: () => void handleContinue()
+        }
+      }}
       listItemHeaderLabel={I18n.t(
         "features.itWallet.presentation.proximity.bluetooth.activation.listItems.title"
       )}
@@ -104,24 +117,12 @@ export const ItwBluetoothActivationScreen = () => {
           icon: "systemToggleInstructions"
         }
       ]}
-      actions={{
-        type: "TwoButtons",
-        primary: {
-          label: I18n.t(
-            "features.itWallet.presentation.proximity.bluetooth.activation.actions.primary"
-          ),
-          onPress: () => {
-            trackItwProximityBluetoothActivationGoToSettings();
-            openBluetoothPreferences();
-          }
-        },
-        secondary: {
-          label: I18n.t(
-            "features.itWallet.presentation.proximity.bluetooth.activation.actions.secondary"
-          ),
-          onPress: handleContinue
-        }
-      }}
+      subtitle={I18n.t(
+        "features.itWallet.presentation.proximity.bluetooth.activation.subtitle"
+      )}
+      title={I18n.t(
+        "features.itWallet.presentation.proximity.bluetooth.activation.title"
+      )}
     />
   );
 };

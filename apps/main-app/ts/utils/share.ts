@@ -6,11 +6,7 @@ import Share from "react-native-share";
  * @param url
  * @param message option string to attach as a text with shared file
  */
-export const share = (
-  url: string,
-  message?: string,
-  failOnCancel: boolean = false
-) =>
+export const share = (url: string, message?: string, failOnCancel = false) =>
   TE.tryCatch(
     () =>
       Share.open({

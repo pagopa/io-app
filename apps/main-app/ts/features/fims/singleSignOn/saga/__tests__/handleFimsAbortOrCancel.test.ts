@@ -5,6 +5,7 @@ import {
   nativeRequest
 } from "@pagopa/io-react-native-http-client";
 import { testSaga } from "redux-saga-test-plan";
+
 import { oidcProviderDomainSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { fimsPartialAbortUrl } from "../../store/selectors";
 import { handleFimsAbortOrCancel } from "../handleFimsAbortOrCancel";
@@ -16,7 +17,7 @@ import {
   handleFimsResourcesDeallocation
 } from "../sagaUtils";
 
-const abortTimeoutMillisecondsGenerator: number = 8000;
+const abortTimeoutMillisecondsGenerator = 8000;
 
 describe("handleFimsAbortOrCancel", () => {
   const mockedOidcProviderDomain = "https://provider.com";

@@ -1,7 +1,8 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ActionArgs, assertEvent, assign } from "xstate";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOStore } from "../../../../store/hooks";
@@ -15,17 +16,19 @@ import {
   trackItwIdVerifiedDocument,
   trackSaveCredentialSuccess
 } from "../../analytics";
-import { toItwIdMethod } from "../../analytics/utils/types";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
+import { toSurveyAuthMethod } from "../../analytics/utils";
+import { toItwIdMethod } from "../../analytics/utils/types";
 import {
-  itwClearSimplifiedActivationRequirements,
-  itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetCredentialUpgradeFailed,
-  itwSetIdentificationMode
+  itwSetIdentificationMode,
+  itwSetWalletActivationFeedbackBannerData
 } from "../../common/store/actions/preferences";
+import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
@@ -53,6 +56,8 @@ export const createEidIssuanceActionsImplementation = (
       const credentials = itwCredentialsSelector(state);
 
       return {
+        // Get the IT-Wallet version from the global store; this can be overriden during the issuance flow.
+        itwVersion: selectItwSpecsVersion(state),
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
         walletInstanceAttestation,
         credentialsToUpgrade: Object.values(credentials)
@@ -231,14 +236,9 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToUpgradeCredentialsScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS
-    });
-  },
-
   closeIssuance: ({
-    context
+    context,
+    event
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     const isWalletInNavigationState = isRouteInNavigationState(
       navigation.getState(),
@@ -255,9 +255,14 @@ export const createEidIssuanceActionsImplementation = (
     );
     const isReissuance = context.mode === "reissuance";
 
+    const surveyStep = event.type === "close" ? event.surveyStep : undefined;
+
     navigation.navigate(ROUTES.MAIN, {
       screen: ROUTES.WALLET_HOME,
-      params: { requiredEidFeedback: isReissuance && !isSurveyHidden }
+      params: {
+        requiredEidFeedback: isReissuance && !isSurveyHidden,
+        activationExitSurvey: surveyStep ? { step: surveyStep } : undefined
+      }
     });
   },
 
@@ -303,12 +308,25 @@ export const createEidIssuanceActionsImplementation = (
     store.dispatch(itwSetIdentificationMode(context.identification?.mode));
   },
 
-  freezeSimplifiedActivationRequirements: () => {
-    store.dispatch(itwFreezeSimplifiedActivationRequirements());
-  },
-
-  clearSimplifiedActivationRequirements: () => {
-    store.dispatch(itwClearSimplifiedActivationRequirements());
+  storeWalletActivationFeedbackBannerData: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    // Store banner data only for:
+    // - credential-triggered activation (credentialType set): user skips success page
+    // - upgrade flow (mode === "upgrade")
+    // Regular issuance with "Add document" CTA keeps the banner on the success page directly.
+    if (!context.credentialType && context.mode !== "upgrade") {
+      return;
+    }
+    const docStatus = context.mode === "upgrade" ? "active" : "not_active";
+    const authMethod = toSurveyAuthMethod(context.identification);
+    store.dispatch(
+      itwSetWalletActivationFeedbackBannerData({
+        date: new Date().toISOString(),
+        docStatus,
+        authMethod
+      })
+    );
   },
 
   storeCredentialUpgradeFailures: ({
@@ -327,16 +345,9 @@ export const createEidIssuanceActionsImplementation = (
   trackWalletInstanceCreation: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    const identificationMethod =
-      (context.identification
-        ? toItwIdMethod(context.identification)
-        : undefined) ??
-      // Simplified PID activation skips identification but still requires ITW_ID_method for analytics.
-      (context.level === "l3" ? "ciePin" : undefined);
-
     trackSaveCredentialSuccess({
       credential: context.level === "l3" ? "ITW_PID" : "ITW_ID_V2",
-      ITW_ID_method: identificationMethod,
+      ITW_ID_method: context.identification?.mode,
       credential_details: itwMixPanelCredentialDetailsSelector(store.getState())
     });
   },
@@ -385,5 +396,9 @@ export const createEidIssuanceActionsImplementation = (
     );
 
     trackItwIdVerifiedDocument(toItwIdMethod(context.identification));
+  },
+
+  refreshCredentialsCatalogue: () => {
+    store.dispatch(itwFetchCredentialsCatalogue.request());
   }
 });

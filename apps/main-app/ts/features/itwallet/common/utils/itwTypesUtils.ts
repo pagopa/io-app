@@ -1,41 +1,19 @@
 import {
-  SdJwt,
-  WalletInstance,
-  RemotePresentation,
+  CredentialIssuance,
+  CredentialOffer,
   CredentialStatus,
-  CredentialIssuance
+  RemotePresentation,
+  SdJwt,
+  WalletInstance
 } from "@pagopa/io-react-native-wallet";
+
 import { CredentialType } from "./itwMocksUtils.ts";
 
-/**
- * Alias for RequestObject
- */
-export type RequestObject = RemotePresentation.RequestObject;
-
-/**
- * Alias for the result of evaluating a DCQL query against local credentials.
- */
-export type EvaluatedDcqlQueryResult = Awaited<
-  ReturnType<RemotePresentation.RemotePresentationApi["evaluateDcqlQuery"]>
->;
-
-/**
- * Alias type for the relying party entity configuration.
- */
-export type RpEntityConfiguration = RemotePresentation.RelyingPartyConfig;
-
-/**
- * Alias for the IssuerConfiguration type
- */
-export type IssuerConfiguration = CredentialIssuance.IssuerConfig;
-
-/**
- * Alias for the SupportedCredentialConfiguration type
- */
-export type MdocSupportedCredentialConfiguration = Extract<
-  IssuerConfiguration["credential_configurations_supported"][string],
-  { format: "mso_mdoc" }
->;
+export const enum CredentialFormat {
+  LEGACY_SD_JWT = "vc+sd-jwt",
+  MDOC = "mso_mdoc",
+  SD_JWT = "dc+sd-jwt"
+}
 
 /**
  * Alias for the AccessToken type
@@ -43,95 +21,6 @@ export type MdocSupportedCredentialConfiguration = Extract<
 export type CredentialAccessToken = Awaited<
   ReturnType<CredentialIssuance.IssuanceApi["authorizeAccess"]>
 >["accessToken"];
-
-/**
- * Alias for the ParseCredential type
- */
-export type ParsedCredential = CredentialIssuance.ParsedCredential;
-
-/**
- * Alias for the ParsedStatusAssertion type
- */
-export type ParsedStatusAssertion = CredentialStatus.ParsedStatusAssertion;
-/**
- * Alias for the WalletInstanceStatus type
- */
-export type WalletInstanceStatus = WalletInstance.WalletInstanceStatus;
-
-/**
- * Alias for the WalletInstanceRevocationReason type
- */
-export type WalletInstanceRevocationReason =
-  WalletInstanceStatus["revocation_reason"];
-
-/**
- * Alias for the Verification type
- */
-export type Verification = NonNullable<
-  ReturnType<typeof SdJwt.getVerification>
->;
-
-/**
- * Slim version of Verification for storage.
- * Only persists the fields actually used by the app.
- * The `evidence` field is excluded as it's being dropped in spec v1.3.3.
- */
-export type StoredVerification = Pick<
-  Verification,
-  "trust_framework" | "assurance_level"
->;
-
-export type StoredStatusAssertion =
-  | {
-      credentialStatus: "valid";
-      statusAssertion: string;
-      parsedStatusAssertion: ParsedStatusAssertion;
-    }
-  | {
-      credentialStatus: "invalid" | "unknown";
-      // Error code that might contain more details on the invalid status, provided by the issuer
-      errorCode?: string;
-    };
-
-/**
- * Credential's metadata for UI rendering and management.
- * Represents the type for the stored credentials in the wallet.
- * Does not include the actual credential cryptographic material.
- */
-export type CredentialMetadata = {
-  keyTag: string;
-  /**
-   * Key tags of every copy of a batch credential (e.g. one-time-use credentials obtained in
-   * batch). Present only for batch credentials; non-batch credentials omit it. The array is the
-   * source of truth for the batch and `keyTags[0]` is the representative copy, mirrored by
-   * `keyTag` so existing single-credential consumers keep working. The raw bytes of each copy are
-   * stored in {@link CredentialsVault} under that copy's `keyTag` as vault id.
-   */
-  keyTags?: ReadonlyArray<string>;
-  format: string;
-  parsedCredential: ParsedCredential;
-  credentialType: string;
-  credentialId: string;
-  issuerConf: IssuerConfiguration;
-  storedStatusAssertion?: StoredStatusAssertion;
-  /**
-   * The SD-JWT issuance and expiration dates in ISO format.
-   * These might be different from the underlying document's dates.
-   */
-  // TODO: [SIW-2740] This type needs to be rafactored once mdoc format will be available
-  jwt: {
-    expiration: string;
-    issuedAt?: string;
-  };
-  spec_version: string;
-  verification?: StoredVerification;
-  /**
-   * The ID of the Wallet Unit Attestation that contains the credential attested key.
-   * The corresponding attestation is stored in `walletInstace.walletUnitAttestations`.
-   * Only credentials issued with the newer IT-Wallet specs contain this field.
-   */
-  walletUnitAttestationId?: string;
-};
 
 /**
  * Credentials's metadata along with the cryptographic material.
@@ -150,30 +39,148 @@ export type CredentialBundle = {
   metadata: CredentialMetadata;
 };
 
-// Digital credential status
-export type ItwJwtCredentialStatus = "valid" | "jwtExpired" | "jwtExpiring";
-// Combined status of a credential, that includes both the physical and the digital version
-export type ItwCredentialStatus =
-  | "unknown"
-  | "valid"
-  | "invalid"
-  | "expiring"
-  | "expired"
-  | ItwJwtCredentialStatus;
+/**
+ * Credential's metadata for UI rendering and management.
+ * Represents the type for the stored credentials in the wallet.
+ * Does not include the actual credential cryptographic material.
+ */
+export type CredentialMetadata = {
+  credentialId: string;
+  credentialType: string;
+  format: string;
+  issuerConf: IssuerConfiguration;
+  /**
+   * The SD-JWT issuance and expiration dates in ISO format.
+   * These might be different from the underlying document's dates.
+   */
+  // TODO: [SIW-2740] This type needs to be rafactored once mdoc format will be available
+  jwt: {
+    expiration: string;
+    issuedAt?: string;
+  };
+  keyTag: string;
+  /**
+   * Key tags of every copy of a batch credential (e.g. one-time-use credentials obtained in
+   * batch). Present only for batch credentials; non-batch credentials omit it. The array is the
+   * source of truth for the batch and `keyTags[0]` is the representative copy, mirrored by
+   * `keyTag` so existing single-credential consumers keep working. The raw bytes of each copy are
+   * stored in {@link CredentialsVault} under that copy's `keyTag` as vault id.
+   */
+  keyTags?: ReadonlyArray<string>;
+  parsedCredential: ParsedCredential;
+  spec_version: string;
+  storedStatusAssertion?: StoredStatusAssertion;
+  verification?: StoredVerification;
+  /**
+   * The ID of the Wallet Unit Attestation that contains the credential attested key.
+   * The corresponding attestation is stored in `walletInstace.walletUnitAttestations`.
+   * Only credentials issued with the newer IT-Wallet specs contain this field.
+   */
+  walletUnitAttestationId?: string;
+};
+
+export type CredentialOfferResolved = {
+  grantDetails: CredentialOffer.ExtractGrantDetailsResult;
+  offer: CredentialOffer.CredentialOffer;
+};
+
+/**
+ * Alias for the result of evaluating a DCQL query against local credentials.
+ */
+export type EvaluatedDcqlQueryResult = Awaited<
+  ReturnType<RemotePresentation.RemotePresentationApi["evaluateDcqlQuery"]>
+>;
+
+/**
+ * Alias for the IssuerConfiguration type
+ */
+export type IssuerConfiguration = CredentialIssuance.IssuerConfig;
 
 export type ItwAuthLevel = "L2" | "L3";
+// Combined status of a credential, that includes both the physical and the digital version
+export type ItwCredentialStatus =
+  | "expired"
+  | "expiring"
+  | "invalid"
+  | "unknown"
+  | "valid"
+  | ItwJwtCredentialStatus;
 
-export const enum CredentialFormat {
-  MDOC = "mso_mdoc",
-  SD_JWT = "dc+sd-jwt",
-  LEGACY_SD_JWT = "vc+sd-jwt"
-}
+// Digital credential status
+export type ItwJwtCredentialStatus = "jwtExpired" | "jwtExpiring" | "valid";
+
+/**
+ * Alias for the SupportedCredentialConfiguration type
+ */
+export type MdocSupportedCredentialConfiguration = Extract<
+  IssuerConfiguration["credential_configurations_supported"][string],
+  { format: "mso_mdoc" }
+>;
+
+/**
+ * Alias for the ParseCredential type
+ */
+export type ParsedCredential = CredentialIssuance.ParsedCredential;
+
+/**
+ * Alias for the ParsedStatusAssertion type
+ */
+export type ParsedStatusAssertion = CredentialStatus.ParsedStatusAssertion;
+
+/**
+ * Alias for RequestObject
+ */
+export type RequestObject = RemotePresentation.RequestObject;
+
+/**
+ * Alias type for the relying party entity configuration.
+ */
+export type RpEntityConfiguration = RemotePresentation.RelyingPartyConfig;
+
+export type StoredStatusAssertion =
+  | {
+      credentialStatus: "invalid" | "unknown";
+      // Error code that might contain more details on the invalid status, provided by the issuer
+      errorCode?: string;
+    }
+  | {
+      credentialStatus: "valid";
+      parsedStatusAssertion: ParsedStatusAssertion;
+      statusAssertion: string;
+    };
+/**
+ * Slim version of Verification for storage.
+ * Only persists the fields actually used by the app.
+ * The `evidence` field is excluded as it's being dropped in spec v1.3.3.
+ */
+export type StoredVerification = Pick<
+  Verification,
+  "assurance_level" | "trust_framework"
+>;
+
+/**
+ * Alias for the Verification type
+ */
+export type Verification = NonNullable<
+  ReturnType<typeof SdJwt.getVerification>
+>;
 
 export type WalletInstanceAttestations = {
-  jwt: string;
-  [CredentialFormat.SD_JWT]?: string;
   [CredentialFormat.MDOC]?: string;
+  [CredentialFormat.SD_JWT]?: string;
+  jwt: string;
 };
+
+/**
+ * Alias for the WalletInstanceRevocationReason type
+ */
+export type WalletInstanceRevocationReason =
+  WalletInstanceStatus["revocation_reason"];
+
+/**
+ * Alias for the WalletInstanceStatus type
+ */
+export type WalletInstanceStatus = WalletInstance.WalletInstanceStatus;
 
 // A predefined list of credential types that are potentially multi-level.
 const MULTI_LEVEL_CREDENTIAL_TYPES = [

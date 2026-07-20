@@ -1,65 +1,38 @@
-import { call, put } from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
+import { call, put } from "typed-redux-saga/macro";
+
+import { StatusEnum } from "../../../../../../../../definitions/cgn/EycaActivationDetail";
 import {
   ReduxSagaEffect,
   SagaCallReturnType
 } from "../../../../../../../types/utils";
-import { BackendCGN } from "../../../../api/backendCgn";
-import { startTimer } from "../../../../../../../utils/timer";
-import { readablePrivacyReport } from "../../../../../../../utils/reporters";
 import {
   getGenericError,
   getNetworkError,
   NetworkError
 } from "../../../../../../../utils/errors";
-import { StatusEnum } from "../../../../../../../../definitions/cgn/EycaActivationDetail";
-import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
+import { readablePrivacyReport } from "../../../../../../../utils/reporters";
+import { startTimer } from "../../../../../../../utils/timer";
 import { withRefreshApiCall } from "../../../../../../authentication/fastLogin/saga/utils";
+import { BackendCGN } from "../../../../api/backendCgn";
+import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 
 // wait time between requests
 const cgnResultPolling = 1000 as Millisecond;
 // polling will be stopped when elapsed time from start exceeds this threshold
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
-type StartEycaStatus = "INELIGIBLE" | "ALREADY_ACTIVE" | "PROCESSING";
-const mapStatus: Map<number, StartEycaStatus> = new Map([
+type StartEycaStatus = "ALREADY_ACTIVE" | "INELIGIBLE" | "PROCESSING";
+const mapStatus = new Map<number, StartEycaStatus>([
   [201, "PROCESSING"],
   [202, "PROCESSING"],
   [403, "INELIGIBLE"],
   [409, "ALREADY_ACTIVE"]
 ]);
 
-/**
- * ask for starting activation of EYCA card
- * @param startEycaActivation
- */
-export function* handleStartActivation(
-  startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
-): Generator<ReduxSagaEffect, E.Either<NetworkError, StartEycaStatus>, any> {
-  try {
-    const startEycaActivationRequest = startEycaActivation({});
-    const startEycaActivationResult = (yield* call(
-      withRefreshApiCall,
-      startEycaActivationRequest,
-      cgnEycaActivation.request()
-    )) as unknown as SagaCallReturnType<typeof startEycaActivation>;
-    if (E.isRight(startEycaActivationResult)) {
-      const status = startEycaActivationResult.right.status;
-      const activationStatus = mapStatus.get(status);
-      if (activationStatus) {
-        return E.right(activationStatus);
-      }
-      throw Error(`response status ${startEycaActivationResult.right.status}`);
-    }
-    // decoding failure
-    throw Error(readablePrivacyReport(startEycaActivationResult.left));
-  } catch (e) {
-    return E.left(getNetworkError(e));
-  }
-}
+type GetEycaStatus = "COMPLETED" | "ERROR" | "NOT_FOUND" | "PROCESSING";
 
-type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
 /**
  * ask for the current status of EYCA activation
  * it returns the status {@link GetEycaStatus} - right case
@@ -113,7 +86,6 @@ export function* getActivation(
     return E.left(getNetworkError(e));
   }
 }
-
 /**
  * Function that handles the activation of EYCA card
  * see https://www.pivotaltracker.com/story/show/177062719/comments/222747527
@@ -136,13 +108,13 @@ export function* handleEycaActivationSaga(
       case "COMPLETED":
         yield* put(cgnEycaActivation.success("COMPLETED"));
         return;
-      case "NOT_FOUND":
-        yield* put(cgnEycaActivation.success("NOT_FOUND"));
-        // ask for activation
-        return;
       case "ERROR":
         // activation logic error
         yield* put(cgnEycaActivation.success("ERROR"));
+        return;
+      case "NOT_FOUND":
+        yield* put(cgnEycaActivation.success("NOT_FOUND"));
+        // ask for activation
         return;
     }
     yield* put(cgnEycaActivation.success("POLLING"));
@@ -154,5 +126,34 @@ export function* handleEycaActivationSaga(
       yield* put(cgnEycaActivation.success("POLLING_TIMEOUT"));
       return;
     }
+  }
+}
+
+/**
+ * ask for starting activation of EYCA card
+ * @param startEycaActivation
+ */
+export function* handleStartActivation(
+  startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
+): Generator<ReduxSagaEffect, E.Either<NetworkError, StartEycaStatus>, any> {
+  try {
+    const startEycaActivationRequest = startEycaActivation({});
+    const startEycaActivationResult = (yield* call(
+      withRefreshApiCall,
+      startEycaActivationRequest,
+      cgnEycaActivation.request()
+    )) as unknown as SagaCallReturnType<typeof startEycaActivation>;
+    if (E.isRight(startEycaActivationResult)) {
+      const status = startEycaActivationResult.right.status;
+      const activationStatus = mapStatus.get(status);
+      if (activationStatus) {
+        return E.right(activationStatus);
+      }
+      throw Error(`response status ${startEycaActivationResult.right.status}`);
+    }
+    // decoding failure
+    throw Error(readablePrivacyReport(startEycaActivationResult.left));
+  } catch (e) {
+    return E.left(getNetworkError(e));
   }
 }

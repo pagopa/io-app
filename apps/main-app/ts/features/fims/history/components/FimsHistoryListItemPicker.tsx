@@ -1,5 +1,5 @@
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { Access } from "../../../../../definitions/fims_history/Access";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { potFoldWithDefault } from "../../../../utils/pot";
 import { useAutoFetchingServiceByIdPot } from "../../common/hooks";
 import {
@@ -23,13 +23,13 @@ export const FimsHistoryListItemPicker = ({
     default: LoadingFimsHistoryListItem,
     noneError: _ => <FimsHistoryFailureListItem item={item} />,
     some: data => (
-      <FimsHistorySuccessListItem serviceData={data} consent={item} />
+      <FimsHistorySuccessListItem consent={item} serviceData={data} />
     ),
     someError: data => (
-      <FimsHistorySuccessListItem serviceData={data} consent={item} />
+      <FimsHistorySuccessListItem consent={item} serviceData={data} />
     ),
     someLoading: data => (
-      <FimsHistorySuccessListItem serviceData={data} consent={item} />
+      <FimsHistorySuccessListItem consent={item} serviceData={data} />
     )
   });
 };

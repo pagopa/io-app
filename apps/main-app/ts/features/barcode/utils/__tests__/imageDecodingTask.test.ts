@@ -1,16 +1,16 @@
+import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
-import * as E from "fp-ts/lib/Either";
+import { QRCodeScanResult } from "rn-qr-generator";
+
+import { GlobalState } from "../../../../store/reducers/types";
+import { BarcodeFailure } from "../../types/failure";
+import { barcodeDetectionTask } from "../barcodeDetectionTask";
+import { imageDecodingTask } from "../imageDecodingTask";
 
 jest.mock("./../barcodeDetectionTask", () => ({
   barcodeDetectionTask: jest.fn()
 }));
-
-import { QRCodeScanResult } from "rn-qr-generator";
-import { BarcodeFailure } from "../../types/failure";
-import { imageDecodingTask } from "../imageDecodingTask";
-import { barcodeDetectionTask } from "../barcodeDetectionTask";
-import { GlobalState } from "../../../../store/reducers/types";
 
 const mockGlobalState = {
   remoteConfig: O.some({

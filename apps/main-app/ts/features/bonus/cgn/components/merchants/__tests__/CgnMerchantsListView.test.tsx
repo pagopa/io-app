@@ -1,6 +1,7 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
+
 import { DiscountCodeTypeEnum } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { OnlineMerchant } from "../../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import { ProductCategoryEnum } from "../../../../../../../definitions/cgn/merchants/ProductCategory";
@@ -17,11 +18,7 @@ const baseMerchant: OnlineMerchant = {
   newDiscounts: false
 };
 
-const renderItem = (
-  item: OnlineMerchant,
-  index: number = 0,
-  count: number = 1
-) => {
+const renderItem = (item: OnlineMerchant, index = 0, count = 1) => {
   const renderFn = CgnMerchantListViewRenderItem({
     onItemPress: mockOnItemPress,
     count

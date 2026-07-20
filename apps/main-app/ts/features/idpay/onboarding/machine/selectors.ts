@@ -1,7 +1,8 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
+
 import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";
 import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
 import { SelfCriteriaMultiDTO } from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
@@ -51,7 +52,7 @@ const filterMultiCriteria = <T>(criteria: O.Option<OnboardingInitiativeDTO>) =>
 export const multiRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
-    filterMultiCriteria<SelfCriteriaMultiTypeDTO | SelfCriteriaMultiDTO>(
+    filterMultiCriteria<SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO>(
       requiredCriteria
     )
 );
@@ -121,7 +122,7 @@ export const stepperCountSelector = createSelector(
 export const getMultiSelfDeclarationListFromContext = (
   context: Context.Context
 ) =>
-  filterMultiCriteria<SelfCriteriaMultiTypeDTO | SelfCriteriaMultiDTO>(
+  filterMultiCriteria<SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO>(
     context.requiredCriteria
   );
 

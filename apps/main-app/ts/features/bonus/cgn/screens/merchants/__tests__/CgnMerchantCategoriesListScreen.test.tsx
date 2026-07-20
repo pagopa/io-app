@@ -1,10 +1,11 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { useEffect } from "react";
 import { FlatList, View } from "react-native";
 import { createStore } from "redux";
+
 import { ProductCategoryEnum } from "../../../../../../../definitions/cgn/merchants/ProductCategory";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -71,12 +72,12 @@ const renderScreen = (state: GlobalState) => {
     return (
       <FlatList
         data={screen.data}
-        renderItem={({ item, index }: { item: any; index: number }) =>
+        keyExtractor={(item: any) => item.productCategory}
+        ListEmptyComponent={screen.ListEmptyComponent}
+        ListFooterComponent={screen.ListFooterComponent}
+        renderItem={({ item, index }: { index: number; item: any }) =>
           screen.renderItem(item, index)
         }
-        keyExtractor={(item: any) => item.productCategory}
-        ListFooterComponent={screen.ListFooterComponent}
-        ListEmptyComponent={screen.ListEmptyComponent}
       />
     );
   };

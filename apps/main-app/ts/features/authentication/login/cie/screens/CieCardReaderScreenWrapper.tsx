@@ -5,8 +5,9 @@
  * TODO: remove this screen and refactor the CieCardReaderScreen to a functional component.
  * https://pagopa.atlassian.net/browse/IOPID-1857
  */
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme } from "@io-app/design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import CieCardReaderScreen from "./CieCardReaderScreen";
@@ -26,7 +27,6 @@ export const CieCardReaderScreenWrapper = () => {
       blueColorName={IOColors[theme["interactiveElem-default"]]}
       navigation={navigation}
       route={route}
-      headerHeight={0}
     />
   );
 };

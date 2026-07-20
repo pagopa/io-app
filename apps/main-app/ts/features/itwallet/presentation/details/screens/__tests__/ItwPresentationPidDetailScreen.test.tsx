@@ -1,4 +1,6 @@
+import I18n from "i18next";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -35,6 +37,18 @@ describe("ItwPresentationPidDetailScreen", () => {
     const { queryByTestId } = renderComponent(true);
 
     expect(queryByTestId("itwDiscoveryInfoBannerTestID")).toBeNull();
+  });
+
+  it("does not render the assistance action", () => {
+    const { queryByText } = renderComponent(false);
+
+    expect(
+      queryByText(
+        I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+        )
+      )
+    ).toBeNull();
   });
 });
 

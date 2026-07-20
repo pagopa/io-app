@@ -1,6 +1,7 @@
 import { ItwVersion, RemotePresentation } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
+
 import { useIOStore } from "../../../../../store/hooks";
 import { assert } from "../../../../../utils/assert";
 import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
@@ -11,6 +12,7 @@ import { getRepresentativeVaultId } from "../../../common/utils/itwCredentialUti
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../../common/utils/itwStoreUtils";
 import {
+  CredentialFormat,
   CredentialMetadata,
   RequestObject,
   WalletInstanceAttestations
@@ -30,41 +32,48 @@ import {
 } from "../utils/itwRemoteTypeUtils";
 import { InvalidCredentialsStatusError } from "./failure";
 
-type CredentialsSdJwt = Array<RemotePresentation.Credential4Dcql>;
-
 export type EvaluateRelyingPartyTrustInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
 }>;
+
 export type EvaluateRelyingPartyTrustOutput = {
   rpConf: RelyingPartyConfiguration;
+};
+
+export type GetPresentationDetailsInput = Partial<{
+  credentials: Record<string, CredentialMetadata>;
+  qrCodePayload: ItwRemoteRequestPayload;
+  requestObjectEncodedJwt: string;
+  rpConf: RelyingPartyConfiguration;
+  walletInstanceAttestation: WalletInstanceAttestations;
+}>;
+export type GetPresentationDetailsOutput = {
+  presentationDetails: EnrichedPresentationDetails;
+  requestObject: RequestObject;
 };
 export type GetRequestObjectInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
 }>;
 export type GetRequestObjectOutput = string;
 
-export type GetPresentationDetailsInput = Partial<{
-  walletInstanceAttestation: WalletInstanceAttestations;
-  credentials: Record<string, CredentialMetadata>;
-  rpConf: RelyingPartyConfiguration;
-  qrCodePayload: ItwRemoteRequestPayload;
-  requestObjectEncodedJwt: string;
-}>;
-
-export type GetPresentationDetailsOutput = {
-  requestObject: RequestObject;
-  presentationDetails: EnrichedPresentationDetails;
-};
-
 export type SendAuthorizationResponseInput = {
   optionalCredentials: Set<string>;
-  requestObject?: RequestObject;
   presentationDetails?: EnrichedPresentationDetails;
+  requestObject?: RequestObject;
   rpConf?: RelyingPartyConfiguration;
 };
+
 export type SendAuthorizationResponseOutput = {
   redirectUri?: string; // Optional in cross-device presentation
 };
+
+// Credentials split by format, as required by the DCQL evaluation that parses SD-JWT and mDoc
+// credentials with different decoders.
+type CredentialsByFormat = {
+  mdoc: CredentialsForDcql;
+  sdJwt: CredentialsForDcql;
+};
+type CredentialsForDcql = Array<RemotePresentation.Credential4Dcql>;
 
 export const createRemoteActorsImplementation = (
   env: Env,
@@ -198,19 +207,22 @@ export const createRemoteActorsImplementation = (
         );
         return {
           keyTag: c.keyTag,
+          format: c.format,
           credential
         };
       })
     );
 
-    // Prepare credentials to evaluate the Relying Party request
-    const credentialsSdJwt =
+    // Prepare credentials to evaluate the Relying Party request, split by format since the DCQL
+    // evaluation decodes SD-JWT and mDoc credentials (e.g. proof of age) with different parsers.
+    const { sdJwt, mdoc } =
       prepareCredentialsForDcqlEvaluation(credentialsData);
 
     // Evaluate the DCQL query against the credentials contained in the Wallet
     const result = await ioWallet.RemotePresentation.evaluateDcqlQuery(
       requestObject.dcql_query as DcqlQuery,
-      credentialsSdJwt
+      sdJwt,
+      mdoc
     );
 
     // Check whether any of the requested credentials cannot be presented remotely:
@@ -303,5 +315,16 @@ export const createRemoteActorsImplementation = (
 };
 
 const prepareCredentialsForDcqlEvaluation = (
-  credentials: Array<{ keyTag: string; credential: string }>
-): CredentialsSdJwt => credentials.map(c => [c.keyTag, c.credential]);
+  credentials: Array<{ credential: string; format: string; keyTag: string }>
+): CredentialsByFormat => {
+  const isMdoc = (c: { format: string }) => c.format === CredentialFormat.MDOC;
+  const toEntry = (c: {
+    credential: string;
+    keyTag: string;
+  }): RemotePresentation.Credential4Dcql => [c.keyTag, c.credential];
+
+  return {
+    sdJwt: credentials.filter(c => !isMdoc(c)).map(toEntry),
+    mdoc: credentials.filter(isMdoc).map(toEntry)
+  };
+};

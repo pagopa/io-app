@@ -1,4 +1,5 @@
 import { and, assign, fromCallback, fromPromise, not, setup } from "xstate";
+
 import {
   CredentialAccessToken,
   CredentialBundle
@@ -10,8 +11,11 @@ import {
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAssertionActorInput,
+  ProcessCredentialOfferActorInput,
+  ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -48,6 +52,7 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToEidVerificationExpiredScreen: notImplemented,
     closeIssuance: notImplemented,
     navigateToCardOnboardingScreen: notImplemented,
+    navigateToCredentialOfferDiscoveryScreen: notImplemented,
 
     /**
      * Store actions
@@ -67,7 +72,9 @@ export const itwCredentialIssuanceMachine = setup({
     trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
-    verifyTrustFederation: fromPromise<void>(notImplemented),
+    verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+      notImplemented
+    ),
     getWalletAttestation:
       fromPromise<GetWalletAttestationActorOutput>(notImplemented),
     requestCredential: fromPromise<
@@ -85,6 +92,10 @@ export const itwCredentialIssuanceMachine = setup({
     obtainStatusAssertion: fromPromise<
       ReadonlyArray<CredentialBundle>,
       ObtainStatusAssertionActorInput
+    >(notImplemented),
+    processCredentialOffer: fromPromise<
+      ProcessCredentialOfferActorOutput,
+      ProcessCredentialOfferActorInput
     >(notImplemented),
     waitForSessionRefresh: fromCallback(notImplemented)
   },
@@ -105,6 +116,16 @@ export const itwCredentialIssuanceMachine = setup({
         "Waits for a credential selection in order to proceed with the issuance",
       tags: [ItwTags.Loading],
       on: {
+        "start-credential-offer": {
+          target: "CredentialOfferValidation",
+          actions: [
+            "onInit",
+            assign(({ event }) => ({
+              credentialOfferUri: event.itwCredentialOfferUri,
+              mode: "issuance"
+            }))
+          ]
+        },
         "select-credential": {
           target: "EvaluateFlow",
           actions: [
@@ -114,6 +135,73 @@ export const itwCredentialIssuanceMachine = setup({
               mode: event.mode
             }))
           ]
+        }
+      }
+    },
+    CredentialOfferValidation: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "processCredentialOffer",
+        input: ({ context }) => ({
+          credentialOfferUri: context.credentialOfferUri
+        }),
+        onDone: [
+          {
+            guard: ({ context }) => !context.isWalletValid,
+            target: "CredentialOfferResolved",
+            actions: [
+              assign(({ event }) => ({
+                resolvedCredentialOffer: {
+                  offer: event.output.offer,
+                  grantDetails: event.output.grantDetails
+                },
+                credentialType:
+                  event.output.grantDetails.authorizationCodeGrant.scope
+              })),
+              "navigateToCredentialOfferDiscoveryScreen"
+            ]
+          },
+          {
+            target: "CredentialOfferResolved",
+            actions: assign(({ event }) => ({
+              resolvedCredentialOffer: {
+                offer: event.output.offer,
+                grantDetails: event.output.grantDetails
+              },
+              credentialType:
+                event.output.grantDetails.authorizationCodeGrant.scope
+            }))
+          }
+        ],
+        onError: {
+          target: "#itwCredentialIssuanceMachine.Failure",
+          actions: "setFailure"
+        }
+      },
+      on: {
+        close: {
+          target: "Idle",
+          actions: assign({
+            credentialOfferUri: undefined,
+            resolvedCredentialOffer: undefined,
+            credentialType: undefined
+          })
+        }
+      }
+    },
+    CredentialOfferResolved: {
+      on: {
+        "confirm-credential-offer": {
+          target: "EvaluateFlow",
+          actions: ["onInit", assign({ mode: "issuance" as const })]
+        },
+        close: {
+          target: "Idle",
+          actions: assign({
+            credentialOfferUri: undefined,
+            resolvedCredentialOffer: undefined,
+            credentialType: undefined
+          })
         }
       }
     },
@@ -127,6 +215,7 @@ export const itwCredentialIssuanceMachine = setup({
         {
           guard: and([
             ({ context }) => context.mode === "issuance",
+            ({ context }) => !context.resolvedCredentialOffer,
             "hasCredentialIntroContent"
           ]),
           target: "CredentialIntroduction",
@@ -159,7 +248,10 @@ export const itwCredentialIssuanceMachine = setup({
         },
         back: {
           target: "Idle",
-          actions: "navigateToCardOnboardingScreen"
+          actions: [
+            assign({ credentialType: undefined }),
+            "navigateToCardOnboardingScreen"
+          ]
         }
       }
     },
@@ -169,6 +261,9 @@ export const itwCredentialIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "verifyTrustFederation",
+        input: ({ context }) => ({
+          resolvedCredentialOffer: context.resolvedCredentialOffer
+        }),
         onDone: {
           target: "CheckingWalletInstanceAttestation"
         },
@@ -234,6 +329,7 @@ export const itwCredentialIssuanceMachine = setup({
         input: ({ context }) => ({
           credentialType: context.credentialType,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+          resolvedCredentialOffer: context.resolvedCredentialOffer,
           skipMdocIssuance: !context.isItWalletValid // Do not request mDoc credentials for non IT-Wallet instances
         }),
         onDone: {

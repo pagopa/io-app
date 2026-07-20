@@ -1,14 +1,15 @@
 import { createActor, fromCallback, fromPromise, waitFor } from "xstate";
-import { itwCredentialUpgradeMachine } from "../machine";
+
+import { ItwSessionExpiredError } from "../../../api/client";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
   LoadContextOutput,
-  UpgradeCredentialParams,
-  UpgradeCredentialOutput,
   RequestAccessTokenOutput,
-  RequestAccessTokenParams
+  RequestAccessTokenParams,
+  UpgradeCredentialOutput,
+  UpgradeCredentialParams
 } from "../actors";
-import { ItwSessionExpiredError } from "../../../api/client";
+import { itwCredentialUpgradeMachine } from "../machine";
 
 const mockLoadContext = jest.fn(() => Promise.resolve({} as LoadContextOutput));
 
@@ -59,7 +60,8 @@ describe("itwCredentialUpgradeMachine", () => {
     const actor = createActor(machine, {
       input: {
         credentials: [],
-        issuanceMode: "upgrade"
+        issuanceMode: "upgrade",
+        itwVersion: "1.3.3"
       }
     });
     actor.start();
@@ -103,7 +105,8 @@ describe("itwCredentialUpgradeMachine", () => {
     const actor = createActor(machine, {
       input: {
         credentials,
-        issuanceMode: "upgrade"
+        issuanceMode: "upgrade",
+        itwVersion: "1.3.3"
       }
     });
     actor.start();
@@ -149,7 +152,8 @@ describe("itwCredentialUpgradeMachine", () => {
     const actor = createActor(machine, {
       input: {
         credentials,
-        issuanceMode: "upgrade"
+        issuanceMode: "upgrade",
+        itwVersion: "1.3.3"
       }
     });
     actor.start();
@@ -201,7 +205,8 @@ describe("itwCredentialUpgradeMachine", () => {
     const actor = createActor(machine, {
       input: {
         credentials,
-        issuanceMode: "upgrade"
+        issuanceMode: "upgrade",
+        itwVersion: "1.3.3"
       }
     });
     actor.start();

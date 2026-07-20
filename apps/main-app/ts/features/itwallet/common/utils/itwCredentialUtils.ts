@@ -1,7 +1,8 @@
-import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
-import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
-import I18n from "i18next";
+import { IOColors, Tag, useIOTheme } from "@io-app/design-system";
+import { Mdoc, SdJwt } from "@pagopa/io-react-native-wallet";
 import { isBefore } from "date-fns";
+import I18n from "i18next";
+
 import { ItwIridescentBorderVariant } from "../components/ItwBrandedSkiaBorder";
 import { CredentialType } from "./itwMocksUtils";
 import {
@@ -68,9 +69,9 @@ export const newCredentials = [
   CredentialType.EDUCATION_ATTENDANCE
 ] as const;
 
-export type NewCredential = (typeof newCredentials)[number];
-
 export type L2Credential = (typeof l2Credentials)[number];
+
+export type NewCredential = (typeof newCredentials)[number];
 
 // Credentials that will be available in the future
 export const upcomingCredentials = [] as ReadonlyArray<string>;
@@ -120,8 +121,8 @@ const getCredentialNameByType = (
 
 export const getCredentialNameFromType = (
   type: string | undefined,
-  isItwCredential: boolean = false,
-  withDefault: string = ""
+  isItwCredential = false,
+  withDefault = ""
 ): string => {
   if (!type) {
     return withDefault;
@@ -198,9 +199,9 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
 ];
 
 type ExtractVerification = (args: {
+  credential: CredentialBundle["credential"];
   format: CredentialMetadata["format"];
   parsedCredential: CredentialMetadata["parsedCredential"];
-  credential: CredentialBundle["credential"];
 }) => StoredVerification | undefined;
 
 /**
@@ -216,10 +217,10 @@ export const extractVerification: ExtractVerification = ({
   try {
     const verification = (() => {
       switch (format) {
-        case CredentialFormat.SD_JWT:
-          return SdJwt.getVerification(credential);
         case CredentialFormat.MDOC:
           return Mdoc.getVerificationFromParsedCredential(parsedCredential);
+        case CredentialFormat.SD_JWT:
+          return SdJwt.getVerification(credential);
         default:
           return undefined;
       }
@@ -239,7 +240,7 @@ export const extractVerification: ExtractVerification = ({
  * `trust_framework` field is equal to `"it_l2+document_proof"`,
  * and returns `true` only if one of these conditions is met.
  *
- * Currently the assurance level can either be `"high"` or `"https://ta.wallet.ipzs.it/loa/high"`.
+ * v1.0 credentials DO NOT belong to IT-Wallet, even when their assurance level is high/L2+.
  *
  * `"it_l2+document_proof"` indicates that the credential has been issued with
  * a substantial authentication (SPID, CieID) plus an MRTD PoP verification.
@@ -247,8 +248,13 @@ export const extractVerification: ExtractVerification = ({
  * @param metadata - The metadata of the credential to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
  */
-export const isItwCredential = (metadata: CredentialMetadata): boolean => {
-  const verification = metadata.verification;
+export const isItwCredential = ({
+  verification,
+  spec_version
+}: CredentialMetadata): boolean => {
+  if (spec_version === "1.0.0") {
+    return false;
+  }
   return (
     verification?.assurance_level.includes("high") ||
     verification?.trust_framework === "it_l2+document_proof"

@@ -1,15 +1,15 @@
 import * as E from "fp-ts/lib/Either";
-
 import { pipe } from "fp-ts/lib/function";
 import { call, delay, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { PreferredLanguageEnum } from "../../../../../definitions/identity/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idPayInitiativesFromInstrumentGet } from "../store/actions";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 
 export function* handleGetIDPayInitiativesFromInstrument(
   getInitiativesWithInstrument: IDPayClient["getInitiativesWithInstrument"],
@@ -61,7 +61,7 @@ export function* handleGetIDPayInitiativesFromInstrument(
 
 export function* handleInitiativesFromInstrumentRefresh(
   idWallet: string,
-  refreshDelay: number = 5000
+  refreshDelay = 5000
 ) {
   while (true) {
     yield* delay(refreshDelay);

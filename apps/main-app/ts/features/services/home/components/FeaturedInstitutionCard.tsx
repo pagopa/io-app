@@ -5,18 +5,19 @@ import {
   IOSpacingScale,
   IOVisualCostants,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { Dimensions, StyleSheet, View } from "react-native";
+
 import { WithTestID } from "../../../../types/WithTestID";
 import { CardPressableBase } from "../../common/components/CardPressableBase";
 import { getLogoForInstitution } from "../../common/utils";
 import { useServiceCardStyle } from "../hooks/useServiceCardStyle";
 
 export type FeaturedInstitutionCardProps = WithTestID<{
-  id: string;
-  name: string;
   accessibilityLabel?: string;
+  id: string;
   isNew?: boolean;
+  name: string;
   onPress?: () => void;
 }>;
 
@@ -24,7 +25,7 @@ export const CARD_WIDTH =
   Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
 
 const cardPaddingHorizontal: IOSpacingScale = 12;
-const cardBorderRadius: number = 8;
+const cardBorderRadius = 8;
 const cardAvatarMargin: IOSpacingScale = 8;
 
 const styles = StyleSheet.create({
@@ -64,9 +65,9 @@ const FeaturedInstitutionCard = ({
 
   return (
     <CardPressableBase
+      accessibilityLabel={accessibilityLabel}
       onPress={onPress}
       testID={`${testID}-pressable`}
-      accessibilityLabel={accessibilityLabel}
     >
       <View
         style={[
@@ -82,13 +83,13 @@ const FeaturedInstitutionCard = ({
           </View>
           <View style={styles.cardLabel}>
             <H6
-              lineBreakMode="head"
-              numberOfLines={2}
               color={
                 isNew
                   ? newThemeStyle.foreground.primary
                   : defaultThemeStyle.foreground.primary
               }
+              lineBreakMode="head"
+              numberOfLines={2}
             >
               {name}
             </H6>
@@ -111,26 +112,26 @@ const FeaturedInstitutionCardSkeleton = ({ testID }: WithTestID<unknown>) => {
         <View style={styles.cardAvatar}>
           <IOSkeleton
             color={skeletonColor}
-            shape="square"
             radius={IOVisualCostants.avatarRadiusSizeSmall}
+            shape="square"
             size={IOVisualCostants.avatarSizeSmall}
           />
         </View>
         <View style={styles.cardLabel}>
           <IOSkeleton
             color={skeletonColor}
-            shape="rectangle"
-            radius={8}
-            width="70%"
             height={16}
+            radius={8}
+            shape="rectangle"
+            width="70%"
           />
           <VSpacer size={8} />
           <IOSkeleton
             color={skeletonColor}
-            shape="rectangle"
-            radius={8}
-            width="55%"
             height={16}
+            radius={8}
+            shape="rectangle"
+            width="55%"
           />
         </View>
       </View>

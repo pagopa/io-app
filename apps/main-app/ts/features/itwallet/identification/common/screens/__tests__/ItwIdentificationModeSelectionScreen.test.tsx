@@ -1,6 +1,7 @@
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
 import { createActor } from "xstate";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -13,6 +14,7 @@ import {
 import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
+import * as identificationSelectors from "../../store/selectors";
 import {
   ItwIdentificationModeSelectionScreen,
   ItwIdentificationModeSelectionScreenProps
@@ -36,6 +38,9 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     jest
       .spyOn(remoteConfigSelectors, "itwDisabledIdentificationMethodsSelector")
       .mockReturnValue([]);
+    jest
+      .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
+      .mockReturnValue(true);
   });
 
   afterEach(() => {
@@ -54,6 +59,17 @@ describe("ItwIdentificationModeSelectionScreen", () => {
 
   it("[issuance, l2-fallback] hides CiePin, shows SPID and CieID", () => {
     const { queryByTestId } = renderComponent("issuance", "l2-fallback");
+
+    expect(queryByTestId("CiePinMethodModuleTestIDL2")).toBeNull();
+    expect(queryByTestId("SpidMethodModuleTestIDL2")).not.toBeNull();
+    expect(queryByTestId("CieIDMethodModuleTestIDL2")).not.toBeNull();
+  });
+  it("[issuance, l2] hides CIE+PIN when NFC is unavailable", () => {
+    jest
+      .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
+      .mockReturnValue(false);
+
+    const { queryByTestId } = renderComponent("issuance", "l2");
 
     expect(queryByTestId("CiePinMethodModuleTestIDL2")).toBeNull();
     expect(queryByTestId("SpidMethodModuleTestIDL2")).not.toBeNull();

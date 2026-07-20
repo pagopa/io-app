@@ -1,15 +1,16 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@io-app/design-system";
 import i18n from "i18next";
+
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
+import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
+import PN_ROUTES from "../../navigation/routes";
 import { pnActivationUpsert } from "../../store/actions";
 import { isLoadingPnActivationSelector } from "../../store/reducers/activation";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { setSendEngagementScreenHasBeenDismissed } from "../store/actions";
-import PN_ROUTES from "../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
-import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
-import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 export const useSendActivationFlow = () => {
   const { popToTop, replace } = useIONavigation();

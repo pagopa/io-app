@@ -4,11 +4,12 @@ import {
   ListItemHeader,
   VSpacer,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
@@ -31,19 +32,20 @@ import { trackItWalletIDMethod, trackItwUserWithoutCie } from "../../analytics";
 import { CieIdMethodModule } from "../components/CieIdMethodModule";
 import { CiePinMethodModule } from "../components/CiePinMethodModule";
 import { SpidMethodModule } from "../components/SpidMethodModule";
-
-export type ItwIdentificationNavigationParams = {
-  eidReissuing?: boolean;
-  level?: EidIssuanceLevel;
-  credentialType?: string;
-  animationEnabled?: boolean;
-};
+import { itwHasNfcFeatureSelector } from "../store/selectors";
 
 export type ItwIdentificationModeSelectionScreenProps =
   IOStackNavigationRouteProps<
     ItwParamsList,
     "ITW_IDENTIFICATION_MODE_SELECTION"
   >;
+
+export type ItwIdentificationNavigationParams = {
+  animationEnabled?: boolean;
+  credentialType?: string;
+  eidReissuing?: boolean;
+  level?: EidIssuanceLevel;
+};
 
 export const ItwIdentificationModeSelectionScreen = ({
   route
@@ -63,12 +65,15 @@ export const ItwIdentificationModeSelectionScreen = ({
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
+  const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
   const isL2Active = useIOSelector(itwLifecycleIsValidSelector);
 
   const isReissuanceMode = mode === "reissuance";
 
   const isCiePinDisabled =
-    disabledIdentificationMethods.includes("CiePin") || level === "l2-fallback";
+    disabledIdentificationMethods.includes("CiePin") ||
+    level === "l2-fallback" ||
+    !hasNfcFeature;
   const isSpidDisabled = disabledIdentificationMethods.includes("SPID");
   const isCieIdDisabled = disabledIdentificationMethods.includes("CieID");
 
@@ -140,47 +145,46 @@ export const ItwIdentificationModeSelectionScreen = ({
 
   const dismissalDialog = useItwDismissalDialog({
     customLabels: { body: "" },
-    handleDismiss: () => {
-      machineRef.send({ type: "close" });
-    }
+    handleDismiss: () =>
+      machineRef.send({ type: "close", surveyStep: "select_method" })
   });
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
       <IOScrollViewWithLargeHeader
-        title={{ section, label: title }}
         description={description}
-        headerActionsProp={{ showHelp: true }}
         goBack={dismissalDialog.show}
+        headerActionsProp={{ showHelp: true }}
+        title={{ section, label: title }}
       >
         <ContentWrapper>
           <VSpacer size={8} />
           <VStack space={16}>
             {isReissuanceMode && isL3 ? (
               <GroupedMethodList
-                isCiePinDisabled={isCiePinDisabled}
                 isCieIdDisabled={isCieIdDisabled}
+                isCiePinDisabled={isCiePinDisabled}
                 isSpidDisabled={isSpidDisabled}
               />
             ) : (
               <DefaultMethodList
-                isCiePinDisabled={isCiePinDisabled}
                 isCieIdDisabled={isCieIdDisabled}
-                isSpidDisabled={isSpidDisabled}
+                isCiePinDisabled={isCiePinDisabled}
                 isL3={isL3}
                 isReissuanceMode={isReissuanceMode}
+                isSpidDisabled={isSpidDisabled}
               />
             )}
             {!isReissuanceMode && isL3 && (
               <View style={styles.noCieButtonContainer}>
                 <IOButton
-                  variant="link"
-                  textAlign="center"
                   label={I18n.t(
                     "features.itWallet.identification.modeSelection.noCieCta"
                   )}
                   onPress={handleNoCiePress}
                   testID="noCieButtonTestID"
+                  textAlign="center"
+                  variant="link"
                 />
               </View>
             )}
@@ -192,8 +196,8 @@ export const ItwIdentificationModeSelectionScreen = ({
 };
 
 type GroupedMethodListProps = {
-  isCiePinDisabled: boolean;
   isCieIdDisabled: boolean;
+  isCiePinDisabled: boolean;
   isSpidDisabled: boolean;
 };
 
@@ -206,9 +210,6 @@ const GroupedMethodList = ({
     {(!isCiePinDisabled || !isCieIdDisabled) && (
       <VStack space={8}>
         <ListItemHeader
-          label={I18n.t(
-            "features.itWallet.identification.modeSelection.frequency.every12Months"
-          )}
           endElement={{
             type: "badge",
             componentProps: {
@@ -220,6 +221,9 @@ const GroupedMethodList = ({
               testID: "CiePinReissuanceBadgeTestID"
             }
           }}
+          label={I18n.t(
+            "features.itWallet.identification.modeSelection.frequency.every12Months"
+          )}
         />
         <VStack space={16}>
           {!isCiePinDisabled && <CiePinMethodModule isL3 isReissuanceMode />}
@@ -241,11 +245,11 @@ const GroupedMethodList = ({
 );
 
 type DefaultMethodListProps = {
-  isCiePinDisabled: boolean;
   isCieIdDisabled: boolean;
-  isSpidDisabled: boolean;
+  isCiePinDisabled: boolean;
   isL3: boolean;
   isReissuanceMode: boolean;
+  isSpidDisabled: boolean;
 };
 
 const DefaultMethodList = ({
