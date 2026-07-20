@@ -5,6 +5,8 @@ on:
 concurrency:
   group: nightly-release-master
   cancel-in-progress: false
+permissions:
+  contents: read
 jobs:
   detect-changes:
     name: Detect changes since last tag
