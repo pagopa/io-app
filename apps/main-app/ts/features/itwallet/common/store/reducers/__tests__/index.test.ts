@@ -245,4 +245,29 @@ describe("itWalletReducer migrations", () => {
       preferences: {}
     });
   });
+
+  it("should migrate the store to version 17: remove date from preferences.walletActivationFeedbackBannerData", async () => {
+    const previousState = {
+      _persist: { version: 16, rehydrated: false },
+      preferences: {
+        walletActivationFeedbackBannerData: {
+          date: "2025-01-14T20:43:21.361Z",
+          authMethod: "SPID",
+          docStatus: "active"
+        }
+      }
+    };
+
+    const newState = await migrate(previousState, 17);
+
+    expect(newState).toEqual({
+      _persist: { version: 16, rehydrated: false },
+      preferences: {
+        walletActivationFeedbackBannerData: {
+          authMethod: "SPID",
+          docStatus: "active"
+        }
+      }
+    });
+  });
 });

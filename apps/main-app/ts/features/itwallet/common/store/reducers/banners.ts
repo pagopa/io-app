@@ -77,14 +77,12 @@ const reducer = (
       const bannerId = action.payload;
       const current = state[bannerId];
 
-      const dismissedOn = new Date().toISOString();
-      const dismissCount = (current?.dismissCount ?? 0) + 1;
-
       return {
         ...state,
         [bannerId]: {
-          dismissedOn,
-          dismissCount
+          ...current,
+          dismissedOn: new Date().toISOString(),
+          dismissCount: (current?.dismissCount ?? 0) + 1
         }
       };
     }

@@ -81,4 +81,19 @@ describe("IT Wallet banners reducer", () => {
       firstShow.activationSuccessFeedback?.shownOn
     );
   });
+
+  it("should preserve shownOn when handling itwCloseBanner action", () => {
+    const shown = reducer(
+      itwBannersInitialState,
+      itwShowBanner("activationSuccessFeedback")
+    );
+
+    const closed = reducer(shown, itwCloseBanner("activationSuccessFeedback"));
+
+    expect(closed.activationSuccessFeedback).toEqual({
+      shownOn: shown.activationSuccessFeedback?.shownOn,
+      dismissedOn: expect.any(String),
+      dismissCount: 1
+    });
+  });
 });
