@@ -20,6 +20,9 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: write
+
 jobs:
   release-ios:
     name: Release iOS app on App Store
