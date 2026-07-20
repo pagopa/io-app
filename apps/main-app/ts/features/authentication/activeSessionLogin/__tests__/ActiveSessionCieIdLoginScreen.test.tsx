@@ -1,5 +1,4 @@
 import { act, fireEvent } from "@testing-library/react-native";
-import * as O from "fp-ts/lib/Option";
 import { EmitterSubscription, Linking } from "react-native";
 import { createStore } from "redux";
 
@@ -87,7 +86,7 @@ describe("ActiveSessionCieIdLoginScreen", () => {
 
   it("should dispatch activeSessionLoginSuccess when token is present in URL", () => {
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
-      lollipopCheckStatus: { status: "none", url: O.none },
+      lollipopCheckStatus: { status: "none" },
       retryLollipopLogin: jest.fn(),
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
       webviewSource: { uri: "https://example.com/login" }
@@ -109,7 +108,7 @@ describe("ActiveSessionCieIdLoginScreen", () => {
 
   it("should dispatch activeSessionLoginFailure and navigate to AUTH_ERROR_SCREEN when error code is in URL", () => {
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
-      lollipopCheckStatus: { status: "none", url: O.none },
+      lollipopCheckStatus: { status: "none" },
       retryLollipopLogin: jest.fn(),
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
       webviewSource: { uri: "https://example.com/login" }
@@ -153,7 +152,7 @@ describe("ActiveSessionCieIdLoginScreen", () => {
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       webviewSource: { uri: API_PREFIX_URL },
       shouldBlockUrlNavigationWhileCheckingLollipop: () => false,
-      lollipopCheckStatus: { status: "none", url: O.none },
+      lollipopCheckStatus: { status: "none" },
       retryLollipopLogin: jest.fn()
     });
 
@@ -219,7 +218,7 @@ describe("ActiveSessionCieIdLoginScreen", () => {
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       webviewSource: { uri: API_PREFIX_URL },
       shouldBlockUrlNavigationWhileCheckingLollipop: blocker,
-      lollipopCheckStatus: { status: "none", url: O.none },
+      lollipopCheckStatus: { status: "none" },
       retryLollipopLogin: jest.fn()
     });
 
