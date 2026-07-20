@@ -524,7 +524,6 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                 <Text
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  lineBreakMode="head"
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
@@ -1088,7 +1087,6 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                 <Text
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  lineBreakMode="head"
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
