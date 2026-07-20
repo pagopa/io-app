@@ -28,7 +28,7 @@ import {
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
-import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners.ts";
+import { itwIsBannerVisibleSelector } from "../../../common/store/selectors/banners.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { trackItwStartReissuingPID } from "../analytics";
 import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/types.ts";
@@ -65,8 +65,8 @@ export const ItwProximityPresentmentScreen = ({
   const shouldShowExpiredCredentialsBanner = useIOSelector(
     shouldShowExpiredProximityCredentialsBannerSelector
   );
-  const isQrCodeInfoBannerHidden = useIOSelector(
-    itwIsBannerHiddenSelector("proximity_qr_code_info")
+  const isQrCodeInfoBannerVisible = useIOSelector(
+    itwIsBannerVisibleSelector("proximity_qr_code_info")
   );
 
   const isFailure = !!failure;
@@ -193,7 +193,7 @@ export const ItwProximityPresentmentScreen = ({
         />
       </View>
 
-      {!isQrCodeInfoBannerHidden && (
+      {isQrCodeInfoBannerVisible && (
         <Animated.View layout={LinearTransition.duration(200)}>
           <VSpacer size={24} />
           <ItwProximityQrCodeInfoBanner />

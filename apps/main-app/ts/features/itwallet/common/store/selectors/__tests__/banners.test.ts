@@ -3,11 +3,10 @@ import MockDate from "mockdate";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   itwIsActivationSuccessFeedbackBannerVisibleSelector,
-  itwIsBannerHiddenSelector,
   itwIsBannerVisibleSelector
 } from "../banners";
 
-describe("itwIsBannerHiddenSelector", () => {
+describe("itwIsBannerVisibleSelector - dismiss-cooldown", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
@@ -17,9 +16,9 @@ describe("itwIsBannerHiddenSelector", () => {
 
   it.each`
     dismissedOn                   | expected
-    ${undefined}                  | ${false}
-    ${"2025-01-5T20:43:21.361Z"}  | ${false}
-    ${"2025-01-11T20:43:21.361Z"} | ${true}
+    ${undefined}                  | ${true}
+    ${"2025-01-5T20:43:21.361Z"}  | ${true}
+    ${"2025-01-11T20:43:21.361Z"} | ${false}
   `(
     "should return $expected when dismissedOn is $dismissedOn, duration is $duration",
     ({ dismissedOn, expected }) => {
@@ -34,13 +33,13 @@ describe("itwIsBannerHiddenSelector", () => {
         }
       } as unknown as GlobalState;
 
-      expect(itwIsBannerHiddenSelector("discovery")(state)).toBe(expected);
+      expect(itwIsBannerVisibleSelector("discovery")(state)).toBe(expected);
       MockDate.reset();
     }
   );
 });
 
-describe("itwIsBannerVisibleSelector", () => {
+describe("itwIsBannerVisibleSelector - shown-window", () => {
   afterEach(() => {
     MockDate.reset();
   });
@@ -56,10 +55,10 @@ describe("itwIsBannerVisibleSelector", () => {
       }
     }) as unknown as GlobalState;
 
-  it("returns false when the banner was never shown", () => {
+  it("returns true when the banner was never shown", () => {
     const state = buildState(undefined);
     expect(itwIsBannerVisibleSelector("activationSuccessFeedback")(state)).toBe(
-      false
+      true
     );
   });
 
