@@ -2171,6 +2171,36 @@
             "subtitle": "Salva il consenso per saltare questo passaggio alle prossime verifiche contactless per questo servizio",
             "title": "Vuoi salvare la tua scelta per non ripetere questo passaggio?"
           },
+          "consentManagement": {
+            "accessibility": {
+              "openDetail": "Apri il dettaglio del consenso per {{relyingParty}}",
+              "revoke": "Revoca il consenso per {{relyingParty}}"
+            },
+            "alert": {
+              "cancel": "No, mantieni",
+              "confirm": "Sì, revoca",
+              "message": "Ti verrà richiesto un nuovo consenso alle prossime verifiche contactless per {{relyingParty}}.",
+              "title": "Vuoi revocare il consenso?"
+            },
+            "cta": "Gestisci consensi",
+            "detail": {
+              "message": "Hai salvato il consenso per le verifiche contactless di questi dati per **{{relyingParty}}**.",
+              "revokeAction": "Revoca consenso",
+              "title": "Dettaglio consenso"
+            },
+            "empty": {
+              "subtitle": "Potrai salvare il tuo consenso alla trasmissione dei dati alla prossima verifica contactless.",
+              "title": "Non ci sono consensi salvati"
+            },
+            "fallback": "Servizio",
+            "header": "Consensi salvati",
+            "savedAt": "Salvato il {{date}}",
+            "subtitle": "Qui puoi controllare e revocare i consensi salvati per le verifiche contactless del documento {{credentialName}}.",
+            "title": "Gestisci consensi",
+            "toast": {
+              "done": "Fatto!"
+            }
+          },
           "success": {
             "subtitle": "La verifica è stata completata con successo.",
             "title": "Fatto!"
