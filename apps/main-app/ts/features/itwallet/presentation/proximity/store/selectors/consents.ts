@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { ConsentData } from "../types";
+import { ConsentData, StoredConsentData } from "../types";
 import { generateConsentKey } from "../utils";
 
 /**
@@ -15,7 +15,7 @@ export const itwProximityConsentsRecordSelector = (state: GlobalState) =>
  */
 export const itwProximityConsentsSelector = createSelector(
   itwProximityConsentsRecordSelector,
-  (consents): ReadonlyArray<ConsentData> => Object.values(consents)
+  (consents): ReadonlyArray<StoredConsentData> => Object.values(consents)
 );
 
 /**
@@ -27,6 +27,50 @@ export const itwProximityConsentsEntriesSelector = createSelector(
 );
 
 /**
+ * Returns consent entries involving the requested credential type, ordered by
+ * most recent save time. Legacy entries without a timestamp are kept last.
+ */
+export const itwProximityConsentsEntriesByCredentialTypeSelector = (
+  credentialType: string
+) =>
+  createSelector(itwProximityConsentsEntriesSelector, entries =>
+    entries
+      .filter(([, consent]) =>
+        consent.credentials.some(c => c.credentialType === credentialType)
+      )
+      .sort(([, firstConsent], [, secondConsent]) => {
+        if (firstConsent.savedAt && secondConsent.savedAt) {
+          return secondConsent.savedAt.localeCompare(firstConsent.savedAt);
+        }
+        if (firstConsent.savedAt) {
+          return -1;
+        }
+        if (secondConsent.savedAt) {
+          return 1;
+        }
+        return 0;
+      })
+  );
+
+/** Returns a stored proximity consent by its deterministic key. */
+export const itwProximityConsentByKeySelector = (consentKey: string) =>
+  createSelector(
+    itwProximityConsentsRecordSelector,
+    consents => consents[consentKey]
+  );
+
+/**
+ * Returns whether consent management should be available for a credential,
+ * including after all of its stored consents have been explicitly revoked.
+ */
+export const itwProximityShouldShowConsentManagementSelector =
+  (credentialType: string) =>
+  (state: GlobalState): boolean =>
+    state.features.itWallet.proximity.consentManagementCredentialTypes?.[
+      credentialType
+    ] === true;
+
+/**
  * Returns all consents that involve the specified credential type.
  */
 export const itwProximityConsentsByCredentialTypeSelector = (
@@ -34,7 +78,7 @@ export const itwProximityConsentsByCredentialTypeSelector = (
 ) =>
   createSelector(
     itwProximityConsentsSelector,
-    (consents): ReadonlyArray<ConsentData> =>
+    (consents): ReadonlyArray<StoredConsentData> =>
       consents.filter(consent =>
         consent.credentials.some(c => c.credentialType === credentialType)
       )
@@ -56,6 +100,6 @@ export const itwProximityConsentExistsSelector = (consentData: ConsentData) =>
 export const itwProximityConsentsByRpIdSelector = (rpId: string) =>
   createSelector(
     itwProximityConsentsSelector,
-    (consents): ReadonlyArray<ConsentData> =>
+    (consents): ReadonlyArray<StoredConsentData> =>
       consents.filter(consent => consent.rpId === rpId)
   );

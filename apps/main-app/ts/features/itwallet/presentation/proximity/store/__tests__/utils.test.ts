@@ -1,5 +1,5 @@
 import type { ProximityDetails } from "../../utils/types";
-import type { ConsentData } from "../types";
+import type { ConsentData, StoredConsentData } from "../types";
 
 import {
   generateConsentKey,
@@ -154,6 +154,20 @@ describe("generateConsentKey", () => {
     expect(consent.credentials[0].credentialType).toBe("PID");
     expect(consent.credentials[0].claimNames[0]).toBe("z_claim");
   });
+
+  it("ignores stored metadata when generating the consent key", () => {
+    const consent: ConsentData = {
+      credentials: [{ credentialType: "MDL", claimNames: ["given_name"] }],
+      rpId: "rp1"
+    };
+    const storedConsent: StoredConsentData = {
+      ...consent,
+      rpDisplayName: "Verifier organization",
+      savedAt: "2026-07-20T12:00:00.000Z"
+    };
+
+    expect(generateConsentKey(storedConsent)).toBe(generateConsentKey(consent));
+  });
 });
 
 describe("getConsentDataFromProximityDetails", () => {
@@ -169,6 +183,21 @@ describe("getConsentDataFromProximityDetails", () => {
     const result = getConsentDataFromProximityDetails(details);
 
     expect(result.rpId).toBe("verifier.example.com");
+  });
+
+  it("extracts the relying party display name from the first detail", () => {
+    const details: ProximityDetails = [
+      {
+        rpId: "verifier.example.com",
+        rpDisplayName: "Verifier organization",
+        credentialType: "MDL",
+        claimsToDisplay: [makeClaim("given_name")]
+      }
+    ];
+
+    expect(getConsentDataFromProximityDetails(details).rpDisplayName).toBe(
+      "Verifier organization"
+    );
   });
 
   it("maps each detail to a credential with the correct credentialType and claim IDs", () => {
