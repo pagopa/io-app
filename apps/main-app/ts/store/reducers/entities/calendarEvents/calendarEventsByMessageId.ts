@@ -33,12 +33,8 @@ const reducer = (
     }
 
     case getType(removeCalendarEvent): {
-      const messageId = action.payload.messageId;
-
-      const stateCopy = { ...state };
-      // eslint-disable-next-line functional/immutable-data
-      delete stateCopy[messageId];
-      return stateCopy;
+      const { [action.payload.messageId]: _removed, ...nextState } = state;
+      return nextState;
     }
 
     default:

@@ -2436,6 +2436,9 @@
           "title": "Non perderti i messaggi importanti"
         }
       },
+      "attachmentsExpirationAlert": {
+        "body": "I documenti sono disponibili online per un periodo limitato. Salvali sul tuo dispositivo!"
+      },
       "updateBottomSheet": {
         "subtitle": "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare.",
         "title": "Aggiorna l'app IO"
