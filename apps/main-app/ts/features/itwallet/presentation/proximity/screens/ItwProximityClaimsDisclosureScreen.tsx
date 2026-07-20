@@ -149,7 +149,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
           <VStack space={16}>
             <H2>
               {I18n.t(
-                "features.itWallet.presentation.proximity.selectiveDisclosure.title"
+                "features.itWallet.presentation.selectiveDisclosure.title"
               )}
             </H2>
             <IOMarkdownLite
