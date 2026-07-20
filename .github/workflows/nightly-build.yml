@@ -2,6 +2,9 @@ name: Publish app build (nightly)
 on:
   schedule:
     - cron: '59 21 * * *'
+permissions:
+  contents: read
+  packages: read
 concurrency:
   group: nightly-release-master
   cancel-in-progress: false
