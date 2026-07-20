@@ -10,6 +10,8 @@ import { ItwPlaygroundParamsList } from "../playgrounds/navigation/ItwPlayground
 import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModalNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
+import { ItwConsentManagementDetailScreenNavigationParams } from "../presentation/proximity/management/screens/ItwConsentManagementDetailScreen";
+import { ItwConsentManagementScreenNavigationParams } from "../presentation/proximity/management/screens/ItwConsentManagementScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ITW_ROUTES } from "./routes";
 
@@ -67,11 +69,15 @@ export type ItwParamsList = ItwPlaygroundParamsList & {
   // OFFLINE WALLET
   [ITW_ROUTES.OFFLINE.WALLET]: undefined;
   [ITW_ROUTES.ONBOARDING]: undefined;
+  // PRESENTATION
+  [ITW_ROUTES.PRESENTATION
+    .CONSENT_MANAGEMENT]: ItwConsentManagementScreenNavigationParams;
+  [ITW_ROUTES.PRESENTATION
+    .CONSENT_MANAGEMENT_DETAIL]: ItwConsentManagementDetailScreenNavigationParams;
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_ATTACHMENT]: ItwPresentationCredentialAttachmentNavigationParams;
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_CARD_MODAL]: ItwPresentationCredentialCardModalNavigationParams;
-  // PRESENTATION
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;
   [ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL]: undefined;
