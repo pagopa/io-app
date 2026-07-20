@@ -249,17 +249,11 @@ const verifyZeroCallMock = (
   zeroCallMock: any,
   propertyToRemove: keyof typeof zeroCallMock
 ) => {
-  // eslint-disable-next-line functional/immutable-data
-  zeroCallMock[propertyToRemove] = undefined;
-  // eslint-disable-next-line functional/immutable-data
-  delete zeroCallMock[propertyToRemove];
-  // eslint-disable-next-line functional/no-let
-  let key: keyof typeof zeroCallMock;
+  const { [propertyToRemove]: _removed, ...remainingMocks } = zeroCallMock;
 
-  for (key in zeroCallMock) {
-    const value = zeroCallMock[key];
+  Object.values(remainingMocks).forEach(value => {
     expect(value).not.toHaveBeenCalled();
-  }
+  });
 };
 
 describe("toUndefinedOptional", () => {
