@@ -109,8 +109,9 @@ describe("buildThirdPartyCredentialProperty", () => {
 
   it("returns not_valid when third-party credentials are present but none are valid", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
-      storedStatusAssertion: {
-        credentialStatus: "invalid"
+      validity: {
+        type: "status_assertion",
+        status: "invalid"
       }
     });
     const state = getStateWithCredentials({
