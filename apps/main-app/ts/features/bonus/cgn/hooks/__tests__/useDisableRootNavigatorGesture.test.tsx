@@ -1,6 +1,7 @@
-import { render, cleanup } from "@testing-library/react-native";
-import { useDisableRootNavigatorGesture } from "../useDisableRootNavigatorGesture";
+import { cleanup, render } from "@testing-library/react-native";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useDisableRootNavigatorGesture } from "../useDisableRootNavigatorGesture";
 
 const setOptionsMock = jest.fn();
 const getParentMock = jest.fn(() => ({

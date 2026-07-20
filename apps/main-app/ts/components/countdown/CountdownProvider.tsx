@@ -1,11 +1,19 @@
-import { createContext, useContext, useState, ReactNode, useRef } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import BackgroundTimer from "react-native-background-timer";
 
 type CountdownContextType = {
-  timerCount: number;
+  isRunning?: () => boolean;
   resetTimer?: () => void;
   startTimer?: () => void;
-  isRunning?: () => boolean;
+  timerCount: number;
 };
 
 const CountdownContext = createContext<CountdownContextType>({ timerCount: 0 });
@@ -13,8 +21,8 @@ const CountdownContext = createContext<CountdownContextType>({ timerCount: 0 });
 // Props type for the provider component
 interface CountdownProviderProps {
   children: ReactNode;
-  timerTiming: number;
   intervalDuration: number;
+  timerTiming: number;
 }
 
 export const CountdownProvider = (props: CountdownProviderProps) => {
@@ -22,27 +30,30 @@ export const CountdownProvider = (props: CountdownProviderProps) => {
   const [timerCount, setTimerCount] = useState<number>(timerTiming);
   const isRunningTimer = useRef<boolean>(false);
 
-  const startTimer = () => {
+  const startTimer = useCallback(() => {
     // eslint-disable-next-line functional/immutable-data
     isRunningTimer.current = true;
     BackgroundTimer.runBackgroundTimer(() => {
       setTimerCount(prevCount => (prevCount > 0 ? prevCount - 1 : 0));
     }, intervalDuration);
-  };
+  }, [intervalDuration]);
 
-  const resetTimer = () => {
+  const resetTimer = useCallback(() => {
     setTimerCount(timerTiming);
     BackgroundTimer.stopBackgroundTimer();
     // eslint-disable-next-line functional/immutable-data
     isRunningTimer.current = false;
-  };
+  }, [timerTiming]);
 
-  const isRunning = () => isRunningTimer.current;
+  const isRunning = useCallback(() => isRunningTimer.current, []);
+
+  const contextValue = useMemo(
+    () => ({ timerCount, resetTimer, startTimer, isRunning }),
+    [timerCount, resetTimer, startTimer, isRunning]
+  );
 
   return (
-    <CountdownContext.Provider
-      value={{ timerCount, resetTimer, startTimer, isRunning }}
-    >
+    <CountdownContext.Provider value={contextValue}>
       {children}
     </CountdownContext.Provider>
   );

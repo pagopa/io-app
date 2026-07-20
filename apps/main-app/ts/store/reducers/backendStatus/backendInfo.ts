@@ -1,17 +1,18 @@
-import { getType } from "typesafe-actions";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Action } from "../../actions/types";
-import { backendStatusLoadSuccess } from "../../actions/backendStatus";
+import * as O from "fp-ts/lib/Option";
+import { getType } from "typesafe-actions";
+
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
+import { backendStatusLoadSuccess } from "../../actions/backendStatus";
+import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
 
 export type BackedInfoState = {
-  backendInfoMessage: O.Option<BackendStatus["message"]>;
   areSystemsDead: boolean;
+  backendInfoMessage: O.Option<BackendStatus["message"]>;
   deadsCounter: number;
 };
 

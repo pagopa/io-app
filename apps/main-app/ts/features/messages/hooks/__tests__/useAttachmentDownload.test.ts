@@ -1,8 +1,10 @@
-import I18n from "i18next";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
+import I18n from "i18next";
 import RNFS from "react-native-fs";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+
 import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import NavigationService from "../../../../navigation/NavigationService";
 import { isAarAttachmentTtlError } from "../../../pn/aar/utils/aarErrorMappings";
 import {
   trackPNAttachmentDownloadFailure,
@@ -23,12 +25,11 @@ import {
 import {
   Download,
   downloadedMessageAttachmentSelector,
-  requestedDownloadErrorSelector,
   isDownloadingMessageAttachmentSelector,
-  isRequestedAttachmentDownloadSelector
+  isRequestedAttachmentDownloadSelector,
+  requestedDownloadErrorSelector
 } from "../../store/reducers/downloads";
 import { useAttachmentDownload } from "../useAttachmentDownload";
-import NavigationService from "../../../../navigation/NavigationService";
 
 // ---- Mocks ----
 
@@ -44,7 +45,7 @@ jest.mock("../../../../store/hooks", () => ({
 }));
 
 const mockErrorToast = jest.fn();
-jest.mock("@pagopa/io-app-design-system", () => ({
+jest.mock("@io-app/design-system", () => ({
   useIOToast: () => ({
     error: mockErrorToast
   })
@@ -187,10 +188,10 @@ describe("useAttachmentDownload", () => {
 
     it.each<{
       desc: string;
-      download: { path: string } | undefined;
+      download: undefined | { path: string };
+      expectedSkipMixpanel: boolean;
       sendOpeningSource: SendOpeningSource;
       sendUserType: SendUserType;
-      expectedSkipMixpanel: boolean;
     }>([
       {
         desc: "download exists but file not on disk (non-send)",
@@ -377,8 +378,8 @@ describe("useAttachmentDownload", () => {
 
   describe("useEffect - download failure", () => {
     it.each<{
-      isTtlError: boolean;
       expectedToast: string;
+      isTtlError: boolean;
     }>([
       {
         isTtlError: false,
@@ -453,7 +454,7 @@ const baseAttachment: ThirdPartyAttachment = {
 } as unknown as ThirdPartyAttachment;
 
 const setupSelectors = (overrides?: {
-  download?: { path: string } | undefined;
+  download?: undefined | { path: string };
   downloadError?: Error | undefined;
   isFetching?: boolean;
   isRequested?: boolean;

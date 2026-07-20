@@ -1,6 +1,8 @@
 import I18n from "i18next";
+
 import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
+import { mockCreateSignatureBody } from "../../types/__mocks__/CreateSignatureBody.mock";
 import { mockDocuments } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import {
   clausesByType,
@@ -14,7 +16,6 @@ import {
   orderSignatureFields,
   parsePdfAsBase64
 } from "../signatureFields";
-import { mockCreateSignatureBody } from "../../types/__mocks__/CreateSignatureBody.mock";
 
 const emptyAttrs = {} as SignatureField["attrs"];
 

@@ -45,7 +45,7 @@ Every feature lives under `apps/main-app/ts/features/<feature>/` and is self-con
 - The `tsc-noemit` check must pass. Never add `@ts-ignore` without a comment explaining why.
 - Never use hardcoded user-facing strings: every string must have an `I18n.t(...)` key.
 - Never use magic numbers or hardcoded values. Use enums, string literals, or well documented constants.
-- Always use **`@pagopa/io-app-design-system`** components first. Only build custom components when the design system has no suitable primitive.
+- Always use **`@io-app/design-system`** components first. Only build custom components when the design system has no suitable primitive.
 - Always use `useIOTheme()` to access semantic color tokens. Never use raw hex values.
 - All interactive elements must have accessible labels.
 - Use Mixpanel for event tracking. Each feature's `apps/main-app/analytics/` folder should export typed track functions.

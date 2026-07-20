@@ -1,22 +1,23 @@
 import * as O from "fp-ts/lib/Option";
+
+import { SpidLevelEnum } from "../../../../../../definitions/session_manager/SpidLevel";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { format } from "../../../../../utils/dates";
 import {
   authenticationStateSelector,
-  loggedOutWithIdpAuthSelector,
-  fimsTokenSelector,
-  sessionInfoSelector,
-  formattedExpirationDateSelector,
-  zendeskTokenSelector,
-  walletTokenSelector,
   bpdTokenSelector,
-  selectedIdentityProviderSelector,
-  idpSelector,
   extractSpidLevel,
-  spidLevelFromSessionInfoSelector
+  fimsTokenSelector,
+  formattedExpirationDateSelector,
+  idpSelector,
+  loggedOutWithIdpAuthSelector,
+  selectedIdentityProviderSelector,
+  sessionInfoSelector,
+  spidLevelFromSessionInfoSelector,
+  walletTokenSelector,
+  zendeskTokenSelector
 } from "../selectors";
-import { format } from "../../../../../utils/dates";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { isLogoutRequested } from "../utils/guards";
-import { SpidLevelEnum } from "../../../../../../definitions/session_manager/SpidLevel";
 
 const mockIdp = { entityId: "idp1", isTestIdp: false };
 

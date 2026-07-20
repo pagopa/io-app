@@ -1,5 +1,6 @@
 import { createStore } from "redux";
 import { createActor, StateFrom } from "xstate";
+
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
@@ -133,9 +134,9 @@ describe("ItwProximityPresentmentScreen", () => {
 });
 
 type RenderOptions =
-  | { machineState: "loading" }
   | { machineState: "displayQrCode"; qrCodeString: string }
-  | { machineState: "error" };
+  | { machineState: "error" }
+  | { machineState: "loading" };
 
 const renderComponent = (
   options: RenderOptions,
@@ -182,14 +183,6 @@ const buildSnapshot = (
   options: RenderOptions
 ): StateFrom<typeof itwProximityMachine> => {
   switch (options.machineState) {
-    case "loading":
-      return {
-        ...initialSnapshot,
-        value: { Presentment: "Starting" },
-        tags: new Set([ItwPresentationTags.Loading]),
-        context: { ...initialSnapshot.context }
-      };
-
     case "displayQrCode":
       return {
         ...initialSnapshot,
@@ -213,6 +206,14 @@ const buildSnapshot = (
             reason: new Error("test error")
           }
         }
+      };
+
+    case "loading":
+      return {
+        ...initialSnapshot,
+        value: { Presentment: "Starting" },
+        tags: new Set([ItwPresentationTags.Loading]),
+        context: { ...initialSnapshot.context }
       };
   }
 };

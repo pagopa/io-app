@@ -1,10 +1,11 @@
 import { Platform } from "react-native";
+
 import { isDevEnv } from "../../../../../utils/environment";
 import { SpidLevel } from "../utils";
 
 export type WebViewLoginNavigationProps = {
-  spidLevel: SpidLevel;
   isUat: boolean;
+  spidLevel: SpidLevel;
 };
 
 export const iOSUserAgent =
@@ -31,6 +32,6 @@ export const WHITELISTED_DOMAINS = [
 ];
 
 export type CieIdLoginProps = {
-  spidLevel: SpidLevel;
   isUat: boolean;
+  spidLevel: SpidLevel;
 };

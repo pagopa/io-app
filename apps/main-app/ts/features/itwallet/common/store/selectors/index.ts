@@ -2,11 +2,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
-  itwCredentialsEidStatusSelector,
   itwCredentialsEidIssuedAtSelector,
+  itwCredentialsEidStatusSelector,
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
-import { isCredentialIssuedBeforePid } from "../../utils/itwCredentialUtils";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsOperationalOrValid,
@@ -16,10 +15,11 @@ import {
   itwIsRemotelyActiveSelector,
   itwIsWalletInstanceStatusFailureSelector
 } from "../../../walletInstance/store/selectors";
+import { isCredentialIssuedBeforePid } from "../../utils/itwCredentialUtils";
 import {
+  itwIsAgeVerificationUsageDetailsBannerHiddenSelector,
   itwIsBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector,
-  itwIsAgeVerificationUsageDetailsBannerHiddenSelector,
   itwIsWalletDiscoveryBannerHiddenSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
 } from "./banners";
@@ -231,6 +231,8 @@ export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
  * Returns whether the l2 restricted mode banner should be rendered.
  * - The wallet is not offline
  * - IT Wallet instance is not active
+ * - The user is eligible for IT-Wallet (L3), otherwise "Documenti su IO" (L2)
+ *   is their normal, non-restricted experience and this banner does not apply
  * - The wallet is not active (because the device does not have the nfc)
  */
 export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
@@ -238,11 +240,13 @@ export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
 ) =>
   !offlineAccessReasonSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsValidSelector(state) &&
   itwIsActivationDisabledSelector(state);
 
 export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
   !offlineAccessReasonSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
+  itwIsL3EnabledSelector(state) &&
   itwLifecycleIsValidSelector(state) &&
   itwIsActivationDisabledSelector(state);

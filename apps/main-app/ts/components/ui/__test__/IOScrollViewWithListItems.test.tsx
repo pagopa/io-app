@@ -1,9 +1,10 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import { IOScrollViewWithListItems } from "../IOScrollViewWithListItems";
-import { appReducer } from "../../../store/reducers";
+
 import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
+import { IOScrollViewWithListItems } from "../IOScrollViewWithListItems";
 
 describe("IOScrollViewWithListItems", () => {
   const mockAction = jest.fn();

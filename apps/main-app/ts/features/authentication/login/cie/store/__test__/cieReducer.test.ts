@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { cieReducer, CieState } from "../../store/reducers/cie";
+
 import { cieIsSupported, nfcIsEnabled } from "../../store/actions";
+import { cieReducer, CieState } from "../../store/reducers/cie";
 
 const INITIAL_STATE: CieState = {
   isCieSupported: pot.none,

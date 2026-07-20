@@ -1,9 +1,9 @@
 /* eslint-disable max-classes-per-file */
 
 /**
- * Thrown when the verifier (RP) is not marked as trusted
+ * Thrown when an operation times out
  */
-export class UntrustedRpError extends Error {
+export class TimeoutError extends Error {
   constructor(message?: string) {
     super(message);
     this.name = this.constructor.name;
@@ -11,9 +11,9 @@ export class UntrustedRpError extends Error {
 }
 
 /**
- * Thrown when an operation times out
+ * Thrown when the verifier (RP) is not marked as trusted
  */
-export class TimeoutError extends Error {
+export class UntrustedRpError extends Error {
   constructor(message?: string) {
     super(message);
     this.name = this.constructor.name;
