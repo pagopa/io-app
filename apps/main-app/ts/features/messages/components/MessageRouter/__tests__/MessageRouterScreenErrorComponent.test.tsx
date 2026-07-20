@@ -4,6 +4,7 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { trackMessageNotFoundScreen } from "../../../analytics";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import {
   MessageRouterScreenErrorComponent,
@@ -13,6 +14,10 @@ import {
 jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
   AnimatedPictogram: () => null,
   IOAnimatedPictogramsAssets: {}
+}));
+
+jest.mock("../../../analytics", () => ({
+  trackMessageNotFoundScreen: jest.fn()
 }));
 
 const mockVariantSelector = jest.fn();
@@ -123,6 +128,33 @@ variantScenarios.forEach(
     });
   }
 );
+
+describe("messageNotFound screen view tracking", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("tracks when the messageNotFound variant is rendered", () => {
+    mockVariantSelector.mockReturnValue("messageNotFound");
+    expect(trackMessageNotFoundScreen).toHaveBeenCalledTimes(0);
+
+    renderComponent();
+
+    expect(trackMessageNotFoundScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it.each(["genericError", "thirdPartyError"] as const)(
+    "does not track when the %s variant is rendered",
+    variant => {
+      mockVariantSelector.mockReturnValue(variant);
+
+      expect(trackMessageNotFoundScreen).not.toHaveBeenCalled();
+      renderComponent();
+
+      expect(trackMessageNotFoundScreen).not.toHaveBeenCalled();
+    }
+  );
+});
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
