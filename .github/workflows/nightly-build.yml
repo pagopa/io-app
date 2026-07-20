@@ -1,6 +1,6 @@
 # This workflow is triggered nightly and releases a new build of the app if a change has been detected since the last release tag.
 # It's published to the Play Store internal track and TestFlight for internal testers.
-name: Publish a nightly app build
+name: Publish nightly app build
 on:
   schedule:
     - cron: '59 21 * * *'
