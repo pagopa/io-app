@@ -144,7 +144,8 @@
       "connectionRestored": "Connessione ripristinata.",
       "bottomSheet": {
         "title": "Nessuna connessione",
-        "content": "###### Cosa posso fare? \n\nQuando sei offline, alcuni servizi dell’app potrebbero non funzionare. \n\n Documenti su IO funziona anche offline (se hai attivato la funzionalità), ma la validità dei documenti è aggiornata all’ultimo accesso in app con connessione a una rete. \n\n Collegati a internet e ricarica l’app per tornare ad usare tutti i servizi di IO."
+        "content": "###### Cosa posso fare? \n\nQuando sei offline, alcuni servizi dell’app potrebbero non funzionare. \n\n Documenti su IO funziona anche offline (se hai attivato la funzionalità), ma la validità dei documenti è aggiornata all’ultimo accesso in app con connessione a una rete. \n\n Collegati a internet e ricarica l’app per tornare ad usare tutti i servizi di IO.",
+        "footerAction": "Ricarica l'app IO"
       },
       "toast": "Nessuna connessione. Funzionalità non disponibile in assenza di rete."
     }
@@ -2262,6 +2263,9 @@
       },
       "attachmentDownloadFeedback": "Download in corso",
       "attachments": "Allegati",
+      "attachmentsExpirationAlert": {
+        "body": "I documenti sono disponibili online per un periodo limitato. Salvali sul tuo dispositivo!"
+      },
       "updateBottomSheet": {
         "title": "Aggiorna l'app IO",
         "subtitle": "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
@@ -2739,10 +2743,6 @@
         }
       },
       "requestL3": {
-        "localFlag": {
-          "title": "Attivazione check L3 per il flusso di firma",
-          "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"
-        },
         "landingPage": {
           "title": "Prepara la tua Carta di Identità Elettronica e il PIN",
           "subtitle": "Prima di firmare dobbiamo verificare la tua identità. Questo passaggio protegge la tua firma e ne garantisce la validità."
@@ -3562,6 +3562,7 @@
           },
           "actions": {
             "primary": "Aggiungi al Portafoglio",
+            "secondary": "Annulla",
             "somethingWrong": "Qualcosa non torna?"
           }
         },

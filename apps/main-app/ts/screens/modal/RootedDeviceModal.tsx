@@ -1,18 +1,10 @@
-import {
-  BodySmall,
-  ContentWrapper,
-  H3,
-  IOButton,
-  IOMarkdownLite,
-  Pictogram,
-  VSpacer
-} from "@io-app/design-system";
+import { IOMarkdownLite } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
-import { Platform, ScrollView, StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Platform } from "react-native";
 import { useDispatch } from "react-redux";
 
+import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
 import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
@@ -43,56 +35,23 @@ const RootedDeviceModal = () => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.scrollViewContentContainer}>
-        <ContentWrapper>
-          <View style={{ alignItems: "center" }}>
-            <Pictogram name="attention" size={120} />
-          </View>
-          <VSpacer size={24} />
-          <View accessible style={{ alignItems: "center" }}>
-            <H3 style={{ textAlign: "center" }}>{I18n.t("rooted.title")}</H3>
-          </View>
-          <VSpacer size={8} />
-          <View accessible style={{ alignItems: "center" }}>
-            <BodySmall
-              color="grey-650"
-              style={{ textAlign: "center" }}
-              weight="Regular"
-            >
-              {I18n.t("rooted.body")}
-            </BodySmall>
-          </View>
-          <VSpacer size={24} />
-          <View style={{ alignSelf: "center" }}>
-            <IOButton
-              label={I18n.t("rooted.learnMoreButton.title")}
-              onPress={presentLearnMoreBottomSheet}
-              variant="link"
-            />
-          </View>
-          <VSpacer size={24} />
-          <View style={{ alignSelf: "center" }}>
-            <IOButton
-              color="danger"
-              label={I18n.t("global.buttons.continue")}
-              onPress={handleContinueWithRootOrJailbreak}
-              variant="solid"
-            />
-          </View>
-        </ContentWrapper>
-      </ScrollView>
+    <OperationResultScreenContent
+      action={{
+        color: "danger",
+        label: I18n.t("global.buttons.continue"),
+        onPress: handleContinueWithRootOrJailbreak
+      }}
+      pictogram="attention"
+      secondaryAction={{
+        label: I18n.t("rooted.learnMoreButton.title"),
+        onPress: presentLearnMoreBottomSheet
+      }}
+      subtitle={I18n.t("rooted.body")}
+      title={I18n.t("rooted.title")}
+    >
       {learnMoreBottomSheet}
-    </SafeAreaView>
+    </OperationResultScreenContent>
   );
 };
 
 export default RootedDeviceModal;
-
-const styles = StyleSheet.create({
-  scrollViewContentContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexGrow: 1
-  }
-});

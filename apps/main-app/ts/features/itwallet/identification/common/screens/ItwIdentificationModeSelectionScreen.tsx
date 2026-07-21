@@ -32,6 +32,7 @@ import { trackItWalletIDMethod, trackItwUserWithoutCie } from "../../analytics";
 import { CieIdMethodModule } from "../components/CieIdMethodModule";
 import { CiePinMethodModule } from "../components/CiePinMethodModule";
 import { SpidMethodModule } from "../components/SpidMethodModule";
+import { itwHasNfcFeatureSelector } from "../store/selectors";
 
 export type ItwIdentificationModeSelectionScreenProps =
   IOStackNavigationRouteProps<
@@ -64,12 +65,15 @@ export const ItwIdentificationModeSelectionScreen = ({
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
+  const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
   const isL2Active = useIOSelector(itwLifecycleIsValidSelector);
 
   const isReissuanceMode = mode === "reissuance";
 
   const isCiePinDisabled =
-    disabledIdentificationMethods.includes("CiePin") || level === "l2-fallback";
+    disabledIdentificationMethods.includes("CiePin") ||
+    level === "l2-fallback" ||
+    !hasNfcFeature;
   const isSpidDisabled = disabledIdentificationMethods.includes("SPID");
   const isCieIdDisabled = disabledIdentificationMethods.includes("CieID");
 
@@ -77,13 +81,19 @@ export const ItwIdentificationModeSelectionScreen = ({
     if (isL3) {
       return {
         section: I18n.t(
-          `features.itWallet.identification.modeSelection.section.l3-${isReissuanceMode ? "reissuance" : "issuance"}`
+          isReissuanceMode
+            ? "features.itWallet.identification.modeSelection.section.l3-reissuance"
+            : "features.itWallet.identification.modeSelection.section.l3-issuance"
         ),
         title: I18n.t(
-          `features.itWallet.identification.modeSelection.title.l3-${isReissuanceMode ? "reissuance" : "issuance"}`
+          isReissuanceMode
+            ? "features.itWallet.identification.modeSelection.title.l3-reissuance"
+            : "features.itWallet.identification.modeSelection.title.l3-issuance"
         ),
         description: I18n.t(
-          `features.itWallet.identification.modeSelection.description.l3-${isReissuanceMode ? "reissuance" : "issuance"}`
+          isReissuanceMode
+            ? "features.itWallet.identification.modeSelection.description.l3-reissuance"
+            : "features.itWallet.identification.modeSelection.description.l3-issuance"
         )
       };
     } else {
@@ -95,7 +105,9 @@ export const ItwIdentificationModeSelectionScreen = ({
           "features.itWallet.identification.modeSelection.title.l2"
         ),
         description: I18n.t(
-          `features.itWallet.identification.modeSelection.description.l2-${isReissuanceMode ? "reissuance" : "issuance"}`
+          isReissuanceMode
+            ? "features.itWallet.identification.modeSelection.description.l2-reissuance"
+            : "features.itWallet.identification.modeSelection.description.l2-issuance"
         )
       };
     }

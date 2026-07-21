@@ -1,8 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as RA from "fp-ts/lib/ReadonlyArray";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
 
@@ -127,20 +124,20 @@ export const messageMarkdownSelector = (
 export const hasAttachmentsSelector = (
   state: GlobalState,
   ioMessageId: string
-) => pipe(thirdPartyMessageAttachments(state, ioMessageId), RA.isNonEmpty);
+) => thirdPartyMessageAttachmentsSelector(state, ioMessageId).length > 0;
 
-export const thirdPartyMessageAttachments = (
+// caching here is necessary to avoid creating a new array on every call, thus resulting in unnecessary re-renders
+const emptyArray: ReadonlyArray<ThirdPartyAttachment> = [];
+
+export const thirdPartyMessageAttachmentsSelector = (
   state: GlobalState,
   ioMessageId: string
-): ReadonlyArray<ThirdPartyAttachment> =>
-  pipe(
-    thirdPartyFromIdSelector(state, ioMessageId),
-    pot.toOption,
-    O.chainNullableK(
-      thirdPartyMessage => thirdPartyMessage.third_party_message.attachments
-    ),
-    O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => RA.empty)
-  );
+): ReadonlyArray<ThirdPartyAttachment> => {
+  const messagePot = thirdPartyFromIdSelector(state, ioMessageId);
+  const attachments =
+    pot.toUndefined(messagePot)?.third_party_message.attachments;
+  return attachments ?? emptyArray;
+};
 
 const messageContentSelector = <T>(
   state: GlobalState,
