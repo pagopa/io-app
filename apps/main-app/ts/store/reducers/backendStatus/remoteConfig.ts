@@ -17,7 +17,6 @@ import { ServiceId } from "../../../../definitions/services/ServiceId";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
-  fciEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled
 } from "../../../config";
@@ -394,7 +393,6 @@ export const preferredPspsByOriginSelector = createSelector(
 export const isFciEnabledSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): boolean =>
-    fciEnabled &&
     pipe(
       remoteConfig,
       O.map(config =>
