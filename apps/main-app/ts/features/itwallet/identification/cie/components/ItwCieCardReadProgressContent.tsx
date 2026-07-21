@@ -80,7 +80,9 @@ export const ItwCieCardReadProgressContent = (
           progress={0}
           secondaryAction={cancelAction}
           title={I18n.t(
-            `features.itWallet.identification.cie.readingCard.${platform}.idle.title`
+            platform === "ios"
+              ? "features.itWallet.identification.cie.readingCard.ios.idle.title"
+              : "features.itWallet.identification.cie.readingCard.android.idle.title"
           )}
         />
       );
@@ -92,10 +94,14 @@ export const ItwCieCardReadProgressContent = (
           progress={props.progress}
           secondaryAction={cancelAction}
           subtitle={I18n.t(
-            `features.itWallet.identification.cie.readingCard.${platform}.reading.subtitle`
+            platform === "ios"
+              ? "features.itWallet.identification.cie.readingCard.ios.reading.subtitle"
+              : "features.itWallet.identification.cie.readingCard.android.reading.subtitle"
           )}
           title={I18n.t(
-            `features.itWallet.identification.cie.readingCard.${platform}.reading.title`
+            platform === "ios"
+              ? "features.itWallet.identification.cie.readingCard.ios.reading.title"
+              : "features.itWallet.identification.cie.readingCard.android.reading.title"
           )}
         />
       );
@@ -106,7 +112,9 @@ export const ItwCieCardReadProgressContent = (
           pictogram="success"
           progress={1}
           title={I18n.t(
-            `features.itWallet.identification.cie.readingCard.${platform}.completed.title`
+            platform === "ios"
+              ? "features.itWallet.identification.cie.readingCard.ios.completed.title"
+              : "features.itWallet.identification.cie.readingCard.android.completed.title"
           )}
         />
       );
