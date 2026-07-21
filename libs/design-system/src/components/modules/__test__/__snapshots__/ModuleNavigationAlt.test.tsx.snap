@@ -548,7 +548,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Title + Subtitle 
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -802,7 +801,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Title only + chev
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -1143,7 +1141,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Badge (badge
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -1394,7 +1391,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Image (no ic
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -2030,7 +2026,6 @@ exports[`ModuleNavigationAlt - Snapshot Title + Subtitle 1`] = `
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -2284,7 +2279,6 @@ exports[`ModuleNavigationAlt - Snapshot Title only + chevron (onPress) 1`] = `
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -2625,7 +2619,6 @@ exports[`ModuleNavigationAlt - Snapshot With Badge (badge + chevron) 1`] = `
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -2876,7 +2869,6 @@ exports[`ModuleNavigationAlt - Snapshot With Image (no icon) + chevron (onPress)
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={

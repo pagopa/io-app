@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
 
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { checkStatusListCoherenceSaga } from "./checkStatusListCoherenceSaga";
 import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
 

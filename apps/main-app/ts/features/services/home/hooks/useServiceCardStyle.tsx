@@ -34,8 +34,7 @@ export const useServiceCardStyle = (): ServiceCardStyleProps => {
   return {
     default: {
       card: {
-        borderColor:
-          themeType === "light" ? IOColors["grey-100"] : IOColors["grey-850"],
+        borderColor: IOColors[theme["cardBorder-default"]],
         backgroundColor: IOColors[theme["appBackground-secondary"]]
       },
       foreground: {
