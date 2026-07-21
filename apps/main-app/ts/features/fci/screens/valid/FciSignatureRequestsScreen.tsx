@@ -5,6 +5,7 @@ import { ScrollView, SectionList } from "react-native";
 
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
+import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -112,4 +113,4 @@ const FciSignatureRequestsScreen = () => {
     </LoadingSpinnerOverlay>
   );
 };
-export default FciSignatureRequestsScreen;
+export default withAppRequiredUpdate(FciSignatureRequestsScreen, "fci");
