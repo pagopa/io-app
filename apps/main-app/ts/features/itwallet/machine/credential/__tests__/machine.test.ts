@@ -135,7 +135,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const requestCredential = jest.fn();
   const obtainAccessToken = jest.fn();
   const obtainCredential = jest.fn();
-  const obtainStatusAssertion = jest.fn();
+  const obtainCredentialStatus = jest.fn();
   const processCredentialOffer = jest.fn();
   const waitForSessionRefresh = jest.fn();
 
@@ -187,7 +187,7 @@ describe("itwCredentialIssuanceMachine", () => {
       obtainCredentialStatus: fromPromise<
         ReadonlyArray<CredentialBundle>,
         ObtainCredentialStatusActorInput
-      >(obtainStatusAssertion),
+      >(obtainCredentialStatus),
       waitForSessionRefresh: fromCallback(waitForSessionRefresh),
       processCredentialOffer: fromPromise<
         ProcessCredentialOfferActorOutput,
@@ -298,7 +298,7 @@ describe("itwCredentialIssuanceMachine", () => {
       })
     );
 
-    obtainStatusAssertion.mockImplementation(() =>
+    obtainCredentialStatus.mockImplementation(() =>
       Promise.resolve([
         {
           credential: "",
@@ -341,7 +341,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(intermediateState3.value).toStrictEqual({
       Issuance: "ObtainingCredentialStatus"
     });
-    expect(obtainStatusAssertion).toHaveBeenCalledTimes(1);
+    expect(obtainCredentialStatus).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().value).toStrictEqual(
       "DisplayingCredentialPreview"
@@ -672,7 +672,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(intermediateSnapshot.tags).toStrictEqual(new Set([ItwTags.Issuing]));
     expect(obtainAccessToken).toHaveBeenCalledTimes(1);
     expect(obtainCredential).toHaveBeenCalledTimes(1);
-    expect(obtainStatusAssertion).not.toHaveBeenCalled();
+    expect(obtainCredentialStatus).not.toHaveBeenCalled();
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
