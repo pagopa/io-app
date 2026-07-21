@@ -28,21 +28,24 @@ export const FseDiscoveryBanner = ({
   useEffect(() => {
     trackLandingScreenMultiBannerImpression(
       "FSE_REDIRECT",
-      webUrl ?? "INVALID_LINK"
+      webUrl ?? "UNDEFINED_LINK"
     );
   }, [webUrl]);
 
   const handleClose = useCallback(() => {
     trackLandingScreenMultiBannerClosure(
       "FSE_REDIRECT",
-      webUrl ?? "INVALID_LINK"
+      webUrl ?? "UNDEFINED_LINK"
     );
     dispatch(persistedDismissFseDiscoveryBanner());
     handleOnClose();
   }, [dispatch, handleOnClose, webUrl]);
 
   const handlePress = useCallback(() => {
-    trackLandingScreenMultiBannerTap("FSE_REDIRECT", webUrl ?? "INVALID_LINK");
+    trackLandingScreenMultiBannerTap(
+      "FSE_REDIRECT",
+      webUrl ?? "UNDEFINED_LINK"
+    );
     if (webUrl != null) {
       openWebUrl(webUrl);
     }

@@ -61,7 +61,7 @@ describe("FseDiscoveryBanner", () => {
     {
       name: "invalid link fallback",
       webUrl: undefined,
-      expectedLanding: "INVALID_LINK"
+      expectedLanding: "UNDEFINED_LINK"
     }
   ])(
     "should track the impression with the $name",
@@ -118,7 +118,7 @@ describe("FseDiscoveryBanner", () => {
     expect(openWebUrlSpy).not.toHaveBeenCalled();
     expect(trackLandingScreenMultiBannerTap).toHaveBeenCalledWith(
       "FSE_REDIRECT",
-      "INVALID_LINK"
+      "UNDEFINED_LINK"
     );
   });
 });
