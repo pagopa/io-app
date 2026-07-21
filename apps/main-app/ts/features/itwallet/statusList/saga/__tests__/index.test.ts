@@ -2,7 +2,7 @@ import { testSaga } from "redux-saga-test-plan";
 
 // TODO [SIW-4084] import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
 import { watchItwStatusListSaga } from "..";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
 
 describe("watchItwStatusListSaga", () => {
