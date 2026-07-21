@@ -9,12 +9,27 @@ import { appReducer } from "../../../../../store/reducers";
 import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as URL_UTILS from "../../../../../utils/url";
+import {
+  trackLandingScreenMultiBannerClosure,
+  trackLandingScreenMultiBannerImpression,
+  trackLandingScreenMultiBannerTap
+} from "../../../../landingScreenMultiBanner/utils/tracking";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import { persistedDismissFseDiscoveryBanner } from "../../store/actions";
 import { FseDiscoveryBanner } from "../FseDiscoveryBanner";
 
+jest.mock("../../../../landingScreenMultiBanner/utils/tracking", () => ({
+  trackLandingScreenMultiBannerClosure: jest.fn(),
+  trackLandingScreenMultiBannerImpression: jest.fn(),
+  trackLandingScreenMultiBannerTap: jest.fn()
+}));
+
 describe("FseDiscoveryBanner", () => {
   const webUrl = "https://example.com/fse";
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   afterEach(() => {
     jest.restoreAllMocks();
@@ -26,11 +41,41 @@ describe("FseDiscoveryBanner", () => {
     jest.spyOn(STORE_HOOKS, "useIODispatch").mockReturnValue(dispatch);
 
     const component = renderComponent(handleOnClose);
+
+    expect(dispatch).not.toHaveBeenCalled();
+    expect(handleOnClose).not.toHaveBeenCalled();
+    expect(trackLandingScreenMultiBannerClosure).not.toHaveBeenCalled();
+
     fireEvent.press(component.getByLabelText(I18n.t("global.buttons.close")));
 
     expect(dispatch).toHaveBeenCalledWith(persistedDismissFseDiscoveryBanner());
     expect(handleOnClose).toHaveBeenCalledTimes(1);
+    expect(trackLandingScreenMultiBannerClosure).toHaveBeenCalledWith(
+      "FSE_REDIRECT",
+      webUrl
+    );
   });
+
+  it.each([
+    { name: "backend URL", webUrl, expectedLanding: webUrl },
+    {
+      name: "invalid link fallback",
+      webUrl: undefined,
+      expectedLanding: "INVALID_LINK"
+    }
+  ])(
+    "should track the impression with the $name",
+    ({ webUrl, expectedLanding }) => {
+      expect(trackLandingScreenMultiBannerImpression).not.toHaveBeenCalled();
+
+      renderComponent(jest.fn(), { webUrl });
+
+      expect(trackLandingScreenMultiBannerImpression).toHaveBeenCalledWith(
+        "FSE_REDIRECT",
+        expectedLanding
+      );
+    }
+  );
 
   it("should open the backend web url on press", () => {
     const openWebUrlSpy = jest
@@ -38,9 +83,17 @@ describe("FseDiscoveryBanner", () => {
       .mockImplementation(() => undefined);
 
     const component = renderComponent(jest.fn(), { webUrl });
+
+    expect(openWebUrlSpy).not.toHaveBeenCalled();
+    expect(trackLandingScreenMultiBannerTap).not.toHaveBeenCalled();
+
     fireEvent(component.getByTestId("fseDiscoveryBanner"), "onPress");
 
     expect(openWebUrlSpy).toHaveBeenCalledWith(webUrl);
+    expect(trackLandingScreenMultiBannerTap).toHaveBeenCalledWith(
+      "FSE_REDIRECT",
+      webUrl
+    );
   });
 
   it("should not render the close button when the backend flag is false", () => {
@@ -56,9 +109,17 @@ describe("FseDiscoveryBanner", () => {
       .spyOn(URL_UTILS, "openWebUrl")
       .mockImplementation(() => undefined);
     const component = renderComponent(jest.fn(), { webUrl: undefined });
+
+    expect(openWebUrlSpy).not.toHaveBeenCalled();
+    expect(trackLandingScreenMultiBannerTap).not.toHaveBeenCalled();
+
     fireEvent(component.getByTestId("fseDiscoveryBanner"), "onPress");
 
     expect(openWebUrlSpy).not.toHaveBeenCalled();
+    expect(trackLandingScreenMultiBannerTap).toHaveBeenCalledWith(
+      "FSE_REDIRECT",
+      "INVALID_LINK"
+    );
   });
 });
 
