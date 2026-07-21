@@ -1,4 +1,5 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+
 import { QtspClause } from "../../../../../definitions/fci/QtspClause";
 import { QtspClausesMetadataDetailView } from "../../../../../definitions/fci/QtspClausesMetadataDetailView";
 

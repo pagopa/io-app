@@ -1,9 +1,6 @@
-import {
-  ListItemHeader,
-  ListItemInfo,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ListItemHeader, ListItemInfo, VSpacer } from "@io-app/design-system";
 import { View } from "react-native";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 

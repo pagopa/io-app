@@ -6,8 +6,9 @@ import {
   takeEvery,
   takeLatest
 } from "typed-redux-saga/macro";
-import { clearCache } from "../../settings/common/store/actions";
+
 import { logoutSuccess } from "../../authentication/common/store/actions";
+import { clearCache } from "../../settings/common/store/actions";
 import {
   downloadAttachment,
   getMessageDataAction,
@@ -22,28 +23,28 @@ import {
   startPaymentStatusTracking,
   upsertMessageStatusAttributes
 } from "../store/actions";
-import { retryDataAfterFastLoginSessionExpirationSelector } from "../store/reducers/messageGetStatus";
-import { retrievingDataPreconditionStatusAction } from "../store/actions/preconditions";
 import { startProcessingMessageArchivingAction } from "../store/actions/archiving";
-import { handleDownloadAttachment } from "./handleDownloadAttachment";
+import { retrievingDataPreconditionStatusAction } from "../store/actions/preconditions";
+import { retryDataAfterFastLoginSessionExpirationSelector } from "../store/reducers/messageGetStatus";
 import {
   handleClearAllAttachments,
   handleClearAttachment
 } from "./handleClearAttachments";
+import { handleDownloadAttachment } from "./handleDownloadAttachment";
+import { handleLoadMessageById } from "./handleLoadMessageById";
 import { handleLoadMessageData } from "./handleLoadMessageData";
+import { handleLoadMessageDetails } from "./handleLoadMessageDetails";
 import { handleLoadNextPageMessages } from "./handleLoadNextPageMessages";
 import { handleLoadPreviousPageMessages } from "./handleLoadPreviousPageMessages";
+import { handleMessagePrecondition } from "./handleMessagePrecondition";
+import { handlePaymentStatusForAnalyticsTracking } from "./handlePaymentStatusForAnalyticsTracking";
+import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
 import { handleReloadAllMessages } from "./handleReloadAllMessages";
-import { handleLoadMessageById } from "./handleLoadMessageById";
-import { handleLoadMessageDetails } from "./handleLoadMessageDetails";
+import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
 import {
   handleMessageArchivingRestoring,
   raceUpsertMessageStatusAttributes
 } from "./handleUpsertMessageStatusAttributes";
-import { handleMessagePrecondition } from "./handleMessagePrecondition";
-import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
-import { handlePaymentStatusForAnalyticsTracking } from "./handlePaymentStatusForAnalyticsTracking";
-import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
 
 /**
  * Handle messages requests

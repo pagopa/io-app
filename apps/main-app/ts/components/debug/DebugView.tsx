@@ -2,15 +2,15 @@ import {
   IOColors,
   IOVisualCostants,
   ListItemHeader
-} from "@pagopa/io-app-design-system";
-
+} from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { View } from "react-native";
+
 import { withDebugEnabled } from "./withDebugEnabled";
 
 export type DebugViewProps = {
-  title?: string;
   ignoreHorizontalMargins?: boolean;
+  title?: string;
 };
 
 /**
@@ -23,7 +23,6 @@ export const DebugView = withDebugEnabled(
     ignoreHorizontalMargins = false
   }: PropsWithChildren<DebugViewProps>) => (
     <View
-      testID="DebugViewTestID"
       style={{
         paddingHorizontal: 24,
         paddingBottom: 12,
@@ -32,8 +31,9 @@ export const DebugView = withDebugEnabled(
           ? -IOVisualCostants.appMarginDefault
           : 0
       }}
+      testID="DebugViewTestID"
     >
-      <ListItemHeader label={title} iconName="ladybug" />
+      <ListItemHeader iconName="ladybug" label={title} />
       {children}
     </View>
   )

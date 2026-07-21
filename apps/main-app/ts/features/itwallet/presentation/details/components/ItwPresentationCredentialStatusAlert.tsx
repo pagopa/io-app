@@ -1,15 +1,22 @@
-import { Alert, IOButton, IOToast, VStack } from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import I18n from "i18next";
-import { memo, useCallback } from "react";
-import { View } from "react-native";
+import { Alert, IOButton, IOToast, VStack } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
+import { memo, useCallback, useMemo } from "react";
+import { View } from "react-native";
+
 import IOMarkdown from "../../../../../components/IOMarkdown";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { format } from "../../../../../utils/dates.ts";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 import { openWebUrl } from "../../../../../utils/url";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
+import { trackCredentialRenewStart } from "../../../analytics";
+import { getMixPanelCredential } from "../../../analytics/utils";
+import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
+import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import {
   ClaimsLocales,
   getClaimsFullLocale,
@@ -22,25 +29,19 @@ import {
   ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
 import {
-  itwCredentialStatusSelector,
-  itwCredentialsEidStatusSelector
+  itwCredentialsEidStatusSelector,
+  itwCredentialStatusSelector
 } from "../../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
-import { trackCredentialRenewStart } from "../../../analytics";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import {
   trackItwCredentialBottomSheet,
   trackItwCredentialBottomSheetAction,
   trackItwCredentialTapBanner
 } from "../analytics";
-import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
-import { getMixPanelCredential } from "../../../analytics/utils";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
-import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
 import { isMdlSuspendedIssuerError } from "../utils";
-import { ITW_ROUTES } from "../../../navigation/routes.ts";
 
 type Props = {
   credential: CredentialMetadata;
@@ -61,35 +62,35 @@ type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];
 
 const LICENSE_RENEWAL_URL = "https://www.mit.gov.it/rinnovo-patente";
 
-type CredentialAlertEvents = "tap_banner" | "open_bottom_sheet" | "press_cta";
+export enum CredentialAlertType {
+  ATTRIBUTE_UPDATE = "ATTRIBUTE_UPDATE",
+  DOCUMENT_EXPIRED = "DOCUMENT_EXPIRED",
+  DOCUMENT_EXPIRING = "DOCUMENT_EXPIRING",
+  EID_LIFECYCLE = "EID_LIFECYCLE",
+  INVALID_CREDENTIAL = "INVALID_CREDENTIAL",
+  ISSUER_DYNAMIC_ERROR = "ISSUER_DYNAMIC_ERROR",
+  JWT_VERIFICATION = "JWT_VERIFICATION",
+  MDL_SUSPENDED = "MDL_SUSPENDED"
+}
 
 export type TrackCredentialAlert = (action: CredentialAlertEvents) => void;
+
+type CredentialAlertEvents = "open_bottom_sheet" | "press_cta" | "tap_banner";
+
+type CredentialAlertProps = {
+  credentialStatus: ItwCredentialStatus | undefined;
+  eidStatus: ItwJwtCredentialStatus | undefined;
+  hasCredentialAttributeUpdate?: boolean;
+  isItwL3: boolean;
+  isMdlSuspended?: boolean;
+  isOffline: boolean;
+  message: Record<string, { description: string; title: string }> | undefined;
+};
 
 type CredentialStatusAlertProps = {
   credential: CredentialMetadata;
   onTrack: TrackCredentialAlert;
   status?: ItwCredentialStatus;
-};
-
-export enum CredentialAlertType {
-  EID_LIFECYCLE = "EID_LIFECYCLE",
-  JWT_VERIFICATION = "JWT_VERIFICATION",
-  DOCUMENT_EXPIRING = "DOCUMENT_EXPIRING",
-  ATTRIBUTE_UPDATE = "ATTRIBUTE_UPDATE",
-  MDL_SUSPENDED = "MDL_SUSPENDED",
-  ISSUER_DYNAMIC_ERROR = "ISSUER_DYNAMIC_ERROR",
-  DOCUMENT_EXPIRED = "DOCUMENT_EXPIRED",
-  INVALID_CREDENTIAL = "INVALID_CREDENTIAL"
-}
-
-type CredentialAlertProps = {
-  eidStatus: ItwJwtCredentialStatus | undefined;
-  credentialStatus: ItwCredentialStatus | undefined;
-  message: Record<string, { title: string; description: string }> | undefined;
-  isOffline: boolean;
-  isItwL3: boolean;
-  hasCredentialAttributeUpdate?: boolean;
-  isMdlSuspended?: boolean;
 };
 
 /**
@@ -108,7 +109,6 @@ export const isCredentialAttributeUpdate = (
 ): boolean =>
   credential.storedStatusAssertion?.credentialStatus === "invalid" &&
   credential.storedStatusAssertion.errorCode === ATTRIBUTE_UPDATE_ERROR_CODE;
-
 const useAlertPressHandler =
   (onTrack: TrackCredentialAlert, bottomSheet: { present: () => void }) =>
   () => {
@@ -118,12 +118,12 @@ const useAlertPressHandler =
   };
 
 type JwtInvalidAlertProps = {
+  isCredentialJwtExpired: boolean;
+  isCredentialJwtExpiring: boolean;
   isEidExpired: boolean;
   isEidInvalid: boolean;
-  isCredentialJwtExpiring: boolean;
-  isCredentialJwtExpired: boolean;
-  isOffline: boolean;
   isItwL3: boolean;
+  isOffline: boolean;
 };
 
 // Handles the alert types for credentials whose JWT is expiring or expired.
@@ -271,14 +271,14 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     };
 
     switch (action) {
-      case "tap_banner":
-        trackItwCredentialTapBanner(trackingData);
-        break;
       case "open_bottom_sheet":
         trackItwCredentialBottomSheet(trackingData);
         break;
       case "press_cta":
         trackItwCredentialBottomSheetAction(trackingData);
+        break;
+      case "tap_banner":
+        trackItwCredentialTapBanner(trackingData);
         break;
     }
   };
@@ -298,28 +298,6 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   }
 
   switch (alertType) {
-    case CredentialAlertType.EID_LIFECYCLE:
-      return (
-        <ItwEidLifecycleAlert
-          navigation={navigation}
-          currentScreenName={currentScreenName}
-        />
-      );
-    case CredentialAlertType.JWT_VERIFICATION:
-      return (
-        <JwtVerificationAlert
-          credential={credential}
-          onTrack={trackCredentialAlertEvent}
-          status={status}
-        />
-      );
-    case CredentialAlertType.DOCUMENT_EXPIRING:
-      return (
-        <DocumentExpiringAlert
-          credential={credential}
-          onTrack={trackCredentialAlertEvent}
-        />
-      );
     case CredentialAlertType.ATTRIBUTE_UPDATE:
       return (
         <AttributeUpdateAlert
@@ -328,37 +306,44 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
           status={status}
         />
       );
-    case CredentialAlertType.MDL_SUSPENDED:
-      return <MdlSuspendedAlert onTrack={trackCredentialAlertEvent} />;
-    case CredentialAlertType.ISSUER_DYNAMIC_ERROR:
-      return message ? (
-        <IssuerDynamicErrorAlert
-          message={message}
-          credential={credential}
-          onTrack={trackCredentialAlertEvent}
-          status={status}
-        />
-      ) : null;
     case CredentialAlertType.DOCUMENT_EXPIRED:
       return (
         <Alert
-          testID="itwExpiredBannerTestID"
-          variant="error"
           content={I18n.t(
             "features.itWallet.presentation.alerts.expired.content"
           )}
+          testID="itwExpiredBannerTestID"
+          variant="error"
+        />
+      );
+    case CredentialAlertType.DOCUMENT_EXPIRING:
+      // Only render when the credential type has a dedicated expiring bottom
+      // sheet, so the static-key lookup inside the alert is always defined.
+      return credential.credentialType === CredentialType.DRIVING_LICENSE ||
+        credential.credentialType ===
+          CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD ||
+        credential.credentialType ===
+          CredentialType.EUROPEAN_DISABILITY_CARD ? (
+        <DocumentExpiringAlert
+          credential={credential}
+          onTrack={trackCredentialAlertEvent}
+        />
+      ) : null;
+    case CredentialAlertType.EID_LIFECYCLE:
+      return (
+        <ItwEidLifecycleAlert
+          currentScreenName={currentScreenName}
+          navigation={navigation}
         />
       );
     case CredentialAlertType.INVALID_CREDENTIAL:
       return (
         <Alert
-          testID="itwExpiredBannerTestID"
-          variant="error"
-          content={I18n.t(
-            "features.itWallet.presentation.alerts.jwtVerification.content.invalid"
-          )}
           action={I18n.t(
             `features.itWallet.presentation.alerts.jwtVerification.actionInvalid`
+          )}
+          content={I18n.t(
+            "features.itWallet.presentation.alerts.jwtVerification.content.invalid"
           )}
           onPress={() => {
             navigation.navigate(ITW_ROUTES.MAIN, {
@@ -369,8 +354,29 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
               }
             });
           }}
+          testID="itwExpiredBannerTestID"
+          variant="error"
         />
       );
+    case CredentialAlertType.ISSUER_DYNAMIC_ERROR:
+      return message ? (
+        <IssuerDynamicErrorAlert
+          credential={credential}
+          message={message}
+          onTrack={trackCredentialAlertEvent}
+          status={status}
+        />
+      ) : null;
+    case CredentialAlertType.JWT_VERIFICATION:
+      return (
+        <JwtVerificationAlert
+          credential={credential}
+          onTrack={trackCredentialAlertEvent}
+          status={status}
+        />
+      );
+    case CredentialAlertType.MDL_SUSPENDED:
+      return <MdlSuspendedAlert onTrack={trackCredentialAlertEvent} />;
   }
 };
 
@@ -393,18 +399,18 @@ const JwtVerificationAlert = ({
 
   return (
     <Alert
-      testID="itwExpiringBannerTestID"
-      variant={isExpired ? "error" : "warning"}
+      action={I18n.t(
+        "features.itWallet.presentation.alerts.jwtVerification.action"
+      )}
       content={I18n.t(
-        `features.itWallet.presentation.alerts.jwtVerification.content.${
-          isExpired ? "jwtExpired" : "jwtExpiring"
-        }`,
+        isExpired
+          ? "features.itWallet.presentation.alerts.jwtVerification.content.jwtExpired"
+          : "features.itWallet.presentation.alerts.jwtVerification.content.jwtExpiring",
         { date: format(credential.jwt.expiration, "DD-MM-YYYY") }
       )}
-      action={I18n.t(
-        `features.itWallet.presentation.alerts.jwtVerification.action`
-      )}
       onPress={beginCredentialIssuance}
+      testID="itwExpiringBannerTestID"
+      variant={isExpired ? "error" : "warning"}
     />
   );
 };
@@ -415,13 +421,42 @@ const DocumentExpiringAlert = ({
 }: CredentialStatusAlertProps) => {
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
   const showCta = credential.credentialType === CredentialType.DRIVING_LICENSE;
+  const credentialType = credential.credentialType as Exclude<
+    CredentialType,
+    ExcludedCredentialTypes
+  >;
 
-  const bottomSheetNs = `features.itWallet.presentation.bottomSheets.${
-    credential.credentialType as Exclude<
-      CredentialType,
-      ExcludedCredentialTypes
-    >
-  }.expiring` as const;
+  const bottomSheetCopy = useMemo(() => {
+    switch (credentialType) {
+      case CredentialType.DRIVING_LICENSE:
+        return {
+          title: I18n.t(
+            "features.itWallet.presentation.bottomSheets.mDL.expiring.title"
+          ),
+          content: I18n.t(
+            "features.itWallet.presentation.bottomSheets.mDL.expiring.content"
+          )
+        };
+      case CredentialType.EUROPEAN_DISABILITY_CARD:
+        return {
+          title: I18n.t(
+            "features.itWallet.presentation.bottomSheets.EuropeanDisabilityCard.expiring.title"
+          ),
+          content: I18n.t(
+            "features.itWallet.presentation.bottomSheets.EuropeanDisabilityCard.expiring.content"
+          )
+        };
+      case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
+        return {
+          title: I18n.t(
+            "features.itWallet.presentation.bottomSheets.EuropeanHealthInsuranceCard.expiring.title"
+          ),
+          content: I18n.t(
+            "features.itWallet.presentation.bottomSheets.EuropeanHealthInsuranceCard.expiring.content"
+          )
+        };
+    }
+  }, [credentialType]);
 
   const handleCtaPress = useCallback(() => {
     onTrack("press_cta");
@@ -431,19 +466,19 @@ const DocumentExpiringAlert = ({
   }, [onTrack]);
 
   const bottomSheet = useIOBottomSheetModal({
-    title: I18n.t(`${bottomSheetNs}.title`),
+    title: bottomSheetCopy.title,
     component: (
       <VStack space={24}>
-        <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
+        <IOMarkdown content={bottomSheetCopy.content} />
         {showCta && (
           <View style={{ marginBottom: 16 }}>
             <IOButton
-              variant="outline"
               fullWidth
               label={I18n.t(
                 "features.itWallet.presentation.bottomSheets.mDL.expiring.cta"
               )}
               onPress={handleCtaPress}
+              variant="outline"
             />
           </View>
         )}
@@ -456,14 +491,14 @@ const DocumentExpiringAlert = ({
   return (
     <>
       <Alert
-        testID="itwExpiringBannerTestID"
-        variant="warning"
+        action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
         content={I18n.t(
           "features.itWallet.presentation.alerts.expiring.content",
           { days: expireDays }
         )}
-        action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
         onPress={handleAlertPress}
+        testID="itwExpiringBannerTestID"
+        variant="warning"
       />
       {bottomSheet.bottomSheet}
     </>
@@ -507,17 +542,17 @@ const AttributeUpdateAlert = ({
         <IOMarkdown content={I18n.t(`${i18nNs}.content`)} />
         <VStack space={16}>
           <IOButton
-            variant="solid"
             fullWidth
             label={I18n.t(`${i18nNs}.primaryAction`)}
             onPress={handleUpdateCredential}
+            variant="solid"
           />
           <View style={{ alignSelf: "center" }}>
             <IOButton
-              variant="link"
-              textAlign="center"
               label={I18n.t(`${i18nNs}.secondaryAction`)}
               onPress={() => bottomSheet.dismiss()}
+              textAlign="center"
+              variant="link"
             />
           </View>
         </VStack>
@@ -530,10 +565,10 @@ const AttributeUpdateAlert = ({
   return (
     <>
       <Alert
-        variant="warning"
-        content={I18n.t(`${i18nNs}.title`)}
         action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
+        content={I18n.t(`${i18nNs}.title`)}
         onPress={handleAlertPress}
+        variant="warning"
       />
       {bottomSheet.bottomSheet}
     </>
@@ -554,10 +589,10 @@ const MdlSuspendedAlert = ({
         <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
         <View style={{ marginBottom: 16 }}>
           <IOButton
-            variant="solid"
             fullWidth
             label={I18n.t(`${bottomSheetNs}.cta`)}
             onPress={() => bottomSheet.dismiss()}
+            variant="solid"
           />
         </View>
       </VStack>
@@ -569,10 +604,10 @@ const MdlSuspendedAlert = ({
   return (
     <>
       <Alert
-        variant="error"
-        content={I18n.t(`${alertNs}.title`)}
         action={I18n.t(`${alertNs}.action`)}
+        content={I18n.t(`${alertNs}.title`)}
         onPress={handleAlertPress}
+        variant="error"
       />
       {bottomSheet.bottomSheet}
     </>
@@ -580,8 +615,8 @@ const MdlSuspendedAlert = ({
 };
 
 type IssuerDynamicErrorAlertProps = {
-  message: Record<string, { title: string; description: string }>;
   credential: CredentialMetadata;
+  message: Record<string, { description: string; title: string }>;
   onTrack: TrackCredentialAlert;
   status?: ItwCredentialStatus;
 };
@@ -604,10 +639,10 @@ const IssuerDynamicErrorAlert = ({
   return (
     <>
       <Alert
-        variant="error"
-        content={localizedMessage.title}
         action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
+        content={localizedMessage.title}
         onPress={handleAlertPress}
+        variant="error"
       />
       {bottomSheet.bottomSheet}
     </>

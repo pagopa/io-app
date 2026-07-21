@@ -1,29 +1,30 @@
-import { useCallback, useEffect, useState } from "react";
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
+import { useCallback, useEffect, useState } from "react";
+
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
-import { SendEngagementComponent } from "../components/SendEngagementComponent";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { pnActivationUpsert } from "../../store/actions";
-import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
-import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
-import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
 import {
   NotificationModalFlow,
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
-import { PnParamsList } from "../../navigation/params";
-import PN_ROUTES from "../../navigation/routes";
+import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
+import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
+import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 import {
   trackSendActivationModalDialog,
   trackSendActivationModalDialogActivationDismissed,
   trackSendActivationModalDialogActivationStart
 } from "../../analytics/send";
+import { PnParamsList } from "../../navigation/params";
+import PN_ROUTES from "../../navigation/routes";
+import { pnActivationUpsert } from "../../store/actions";
+import { SendEngagementComponent } from "../components/SendEngagementComponent";
 
 const flow: NotificationModalFlow = "send_notification_opening";
 
@@ -41,7 +42,7 @@ export const SendEngagementScreen = ({ route }: SendEngagementScreenProps) => {
   const { sendOpeningSource, sendUserType } = route.params;
 
   const [screenStatus, setScreenStatus] = useState<
-    "Waiting" | "Activating" | "Failed"
+    "Activating" | "Failed" | "Waiting"
   >("Waiting");
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
@@ -131,24 +132,24 @@ export const SendEngagementScreen = ({ route }: SendEngagementScreenProps) => {
   if (screenStatus === "Failed") {
     return (
       <OperationResultScreenContent
-        pictogram="umbrella"
-        title={I18n.t("features.pn.aar.serviceActivation.failure")}
         action={{
           label: I18n.t("global.buttons.retry"),
           onPress: () => onActivateService(true)
         }}
+        pictogram="umbrella"
         secondaryAction={{
           label: I18n.t("global.buttons.close"),
           onPress: onClose
         }}
+        title={I18n.t("features.pn.aar.serviceActivation.failure")}
       />
     );
   }
   return (
     <SendEngagementComponent
       isLoading={screenStatus === "Activating"}
-      onPrimaryAction={onActivateService}
       onClose={onClose}
+      onPrimaryAction={onActivateService}
     />
   );
 };

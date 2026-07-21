@@ -1,20 +1,25 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { identity } from "lodash";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as appVersion from "../../../../utils/appVersion";
 import { GlobalState } from "../../types";
 import {
   absolutePortalLinksSelector,
   barcodesScannerConfigSelector,
+  engagementCGNDiscoveryBannerSelector,
   fimsServiceConfiguration,
   fimsServiceIdInCookieDisabledListSelector,
+  fseDiscoveryBannerWebUrlSelector,
   generateDynamicUrlSelector,
   isAarInAppDelegationRemoteEnabledSelector,
   isAarRemoteEnabled,
-  isIOMarkdownEnabledForMessagesAndServicesSelector,
+  isCGNDiscoveryBannerEnabledSelector,
+  isFseDiscoveryBannerDismissableSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
+  isSendLollipopPlaygroundEnabledSelector,
   landingScreenBannerOrderSelector,
   messageSurveyBannerUriSelector,
   pnAarQRCodeRegexSelector,
@@ -25,12 +30,7 @@ import {
   sendCustomServiceCenterUrlSelector,
   sendEstimateTimelinesUrlSelector,
   sendShowAbstractSelector,
-  sendVisitTheWebsiteUrlSelector,
-  isSendLollipopPlaygroundEnabledSelector,
-  isCGNDiscoveryBannerEnabledSelector,
-  engagementCGNDiscoveryBannerSelector,
-  fseDiscoveryBannerWebUrlSelector,
-  isFseDiscoveryBannerDismissableSelector
+  sendVisitTheWebsiteUrlSelector
 } from "../remoteConfig";
 
 describe("remoteConfig", () => {
@@ -400,9 +400,9 @@ describe("remoteConfig", () => {
         expected: surveyUri
       }
     ] as ReadonlyArray<{
+      expected: string | undefined;
       name: string;
       state: GlobalState;
-      expected: string | undefined;
     }>)('should return "$expected" when $name', ({ state, expected }) => {
       jest
         .spyOn(appVersion, "getAppVersion")
@@ -411,106 +411,6 @@ describe("remoteConfig", () => {
       expect(messageSurveyBannerUriSelector(state)).toBe(expected);
     });
   });
-});
-describe("isIOMarkdownEnabledForMessagesAndServicesSelector", () => {
-  (
-    [
-      [
-        {
-          remoteConfig: O.none
-        } as GlobalState,
-        false
-      ],
-      [
-        {
-          remoteConfig: O.some({})
-        },
-        true
-      ],
-      [
-        {
-          remoteConfig: O.some({
-            ioMarkdown: {}
-          })
-        },
-        true
-      ],
-      [
-        {
-          remoteConfig: O.some({
-            ioMarkdown: {
-              min_app_version: {}
-            }
-          })
-        },
-        false
-      ],
-      [
-        {
-          remoteConfig: O.some({
-            ioMarkdown: {
-              min_app_version: {
-                android: "0.0.0.0",
-                ios: "0.0.0.0"
-              }
-            }
-          })
-        },
-        false
-      ],
-      [
-        {
-          remoteConfig: O.some({
-            ioMarkdown: {
-              min_app_version: {
-                android: "1.0.0.0",
-                ios: "1.0.0.0"
-              }
-            }
-          })
-        },
-        true
-      ],
-      [
-        {
-          remoteConfig: O.some({
-            ioMarkdown: {
-              min_app_version: {
-                android: "2.0.0.0",
-                ios: "2.0.0.0"
-              }
-            }
-          })
-        },
-        true
-      ],
-      [
-        {
-          remoteConfig: O.some({
-            ioMarkdown: {
-              min_app_version: {
-                android: "2.0.0.1",
-                ios: "2.0.0.1"
-              }
-            }
-          })
-        },
-        false
-      ]
-    ] as ReadonlyArray<[GlobalState, boolean]>
-  ).forEach(testData =>
-    it(`should return '${testData[1]}' for '${JSON.stringify(
-      testData[0]
-    )}'`, () => {
-      jest
-        .spyOn(appVersion, "getAppVersion")
-        .mockImplementation(() => "2.0.0.0");
-      const output = isIOMarkdownEnabledForMessagesAndServicesSelector(
-        testData[0]
-      );
-      expect(output).toBe(testData[1]);
-    })
-  );
 });
 
 describe("pnMessageServiceIdSelector", () => {

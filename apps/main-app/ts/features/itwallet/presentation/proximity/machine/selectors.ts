@@ -1,4 +1,6 @@
 import { StateFrom } from "xstate";
+
+import { ProximityFlow } from "../analytics/types";
 import { ItwProximityMachine } from "./machine";
 import { ItwPresentationTags } from "./tags";
 
@@ -15,6 +17,11 @@ export const selectIsSuccess = (snapshot: MachineSnapshot) =>
 
 export const selectIsNfcRetrieval = (snapshot: MachineSnapshot) =>
   snapshot.context.retrievalMethod === "nfc";
+
+export const selectProximityFlow = (
+  snapshot: MachineSnapshot
+): ProximityFlow =>
+  snapshot.context.engagementMode === "nfc" ? "nfc" : "qr_code";
 
 export const selectQRCodeString = (snapshot: MachineSnapshot) =>
   snapshot.context.qrCodeString;

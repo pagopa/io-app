@@ -1,13 +1,10 @@
+import { ListItemInfo } from "@io-app/design-system";
+import i18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { Alert } from "react-native";
-import i18n from "i18next";
-import { ListItemInfo } from "@pagopa/io-app-design-system";
+
 import { IOScrollViewWithListItems } from "../../../../components/ui/IOScrollViewWithListItems";
-import { useIsNfcFeatureEnabled } from "../hooks/useIsNfcFeatureEnabled";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { currentAarFlowData } from "../store/selectors";
-import { sendAarFlowStates } from "../utils/stateUtils";
-import { setAarFlowState } from "../store/actions";
 import {
   trackSendAarMandateCieNfcActivationContinue,
   trackSendAarMandateCieNfcActivationControlAlert,
@@ -15,6 +12,10 @@ import {
   trackSendAarMandateCieNfcActivationControlAlertGoToSettings,
   trackSendAarMandateCieNfcGoToSettings
 } from "../analytics";
+import { useIsNfcFeatureEnabled } from "../hooks/useIsNfcFeatureEnabled";
+import { setAarFlowState } from "../store/actions";
+import { currentAarFlowData } from "../store/selectors";
+import { sendAarFlowStates } from "../utils/stateUtils";
 
 export const SendAarActivateNfcComponent = () => {
   const dispatch = useIODispatch();
@@ -98,8 +99,6 @@ export const SendAarActivateNfcComponent = () => {
 
   return (
     <IOScrollViewWithListItems
-      title={i18n.t("features.pn.aar.flow.androidNfcActivation.title")}
-      subtitle={i18n.t("features.pn.aar.flow.androidNfcActivation.description")}
       actions={{
         type: "TwoButtons",
         primary: {
@@ -117,13 +116,15 @@ export const SendAarActivateNfcComponent = () => {
           label: i18n.t(
             "features.pn.aar.flow.androidNfcActivation.secondaryAction"
           ),
-          onPress: onContinue
+          onPress: () => void onContinue()
         }
       }}
       listItemHeaderLabel={i18n.t(
         "features.pn.aar.flow.androidNfcActivation.content.listItemsHeader"
       )}
       renderItems={listItems}
+      subtitle={i18n.t("features.pn.aar.flow.androidNfcActivation.description")}
+      title={i18n.t("features.pn.aar.flow.androidNfcActivation.title")}
     />
   );
 };

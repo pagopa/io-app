@@ -1,13 +1,13 @@
-import * as O from "fp-ts/lib/Option";
 import { act } from "@testing-library/react-native";
-import configureMockStore from "redux-mock-store";
 import { Store } from "redux";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../store/reducers";
+import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { CardWithMarkdownContent } from "../CardWithMarkdownContent";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { trackAppCaughtError } from "../../../../../utils/analytics";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { CardWithMarkdownContent } from "../CardWithMarkdownContent";
 
 // eslint-disable-next-line functional/no-let
 let capturedOnError:
@@ -48,7 +48,7 @@ describe("CardWithMarkdownContent", () => {
   });
 
   it("should call trackAppCaughtError when IOMarkdown triggers onError", () => {
-    renderComponent(true, "Some markdown content");
+    renderComponent("Some markdown content");
 
     const testError = "Rendering failure";
     act(() => {
@@ -63,24 +63,10 @@ describe("CardWithMarkdownContent", () => {
   });
 });
 
-const renderComponent = (ioMarkdownEnabled: boolean, content: string) => {
+const renderComponent = (content: string) => {
   const baseState = appReducer(undefined, applicationChangeState("active"));
-  const globalState = {
-    ...baseState,
-    remoteConfig: O.some({
-      cgn: {
-        enabled: false
-      },
-      ioMarkdown: {
-        min_app_version: {
-          android: ioMarkdownEnabled ? "1.0.0.0" : "3.0.0.0",
-          ios: ioMarkdownEnabled ? "1.0.0.0" : "3.0.0.0"
-        }
-      }
-    })
-  } as GlobalState;
   const mockStore = configureMockStore<GlobalState>();
-  const store: Store<GlobalState> = mockStore(globalState);
+  const store: Store<GlobalState> = mockStore(baseState);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <CardWithMarkdownContent content={content} />,

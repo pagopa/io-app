@@ -1,9 +1,10 @@
+import type { ProximityDetails } from "../../utils/types";
+import type { ConsentData } from "../types";
+
 import {
   generateConsentKey,
   getConsentDataFromProximityDetails
 } from "../utils";
-import type { ConsentData } from "../types";
-import type { ProximityDetails } from "../../utils/types";
 
 const makeClaim = (id: string) => ({ id, label: id, value: id });
 

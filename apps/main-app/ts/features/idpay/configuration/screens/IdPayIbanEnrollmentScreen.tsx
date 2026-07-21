@@ -1,7 +1,8 @@
-import { FeatureInfo, RadioGroup, VSpacer } from "@pagopa/io-app-design-system";
+import { FeatureInfo, RadioGroup, VSpacer } from "@io-app/design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
-import { ComponentProps, useCallback, useEffect, useState } from "react";
 import I18n from "i18next";
+import { ComponentProps, useCallback, useEffect, useState } from "react";
+
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -130,6 +131,13 @@ export const IdPayIbanEnrollmentScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      actions={renderActionProps()}
+      contextualHelp={emptyContextualHelp}
+      description={I18n.t("idpay.configuration.iban.enrollment.subTitle")}
+      goBack={handleBackPress}
+      headerActionsProp={{
+        showHelp: true
+      }}
       includeContentMargins
       title={{
         label: I18n.t("idpay.configuration.iban.enrollment.header"),
@@ -138,31 +146,24 @@ export const IdPayIbanEnrollmentScreen = () => {
           ? ""
           : I18n.t("idpay.configuration.headerTitle")
       }}
-      goBack={handleBackPress}
-      headerActionsProp={{
-        showHelp: true
-      }}
-      contextualHelp={emptyContextualHelp}
-      actions={renderActionProps()}
-      description={I18n.t("idpay.configuration.iban.enrollment.subTitle")}
     >
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
         <RadioGroup<string>
-          type="radioListItem"
-          key="check_income"
           items={Array.from(ibanList, el => ({
             ...el,
             id: el.iban,
             value: el.iban,
             description: el.description
           }))}
-          selectedItem={selectedIban}
+          key="check_income"
           onPress={iban => handleSelectIban(iban)}
+          selectedItem={selectedIban}
+          type="radioListItem"
         />
         <VSpacer size={16} />
         <FeatureInfo
-          iconName="profile"
           body={I18n.t("idpay.configuration.iban.enrollment.footer")}
+          iconName="profile"
         />
       </LoadingSpinnerOverlay>
     </IOScrollViewWithLargeHeader>

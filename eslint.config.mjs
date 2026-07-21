@@ -12,6 +12,9 @@ import sonarjs from "eslint-plugin-sonarjs";
 import i18Next from "eslint-plugin-i18next";
 import js from "@eslint/js";
 import delegateEffectsRule from "./scripts/eslint/delegate-effects.js";
+import noDynamicI18nKeysRule from "./scripts/eslint/no-dynamic-i18n-keys.js";
+import noUnusedI18nKeysRule from "./scripts/eslint/no-unused-i18n-keys.js";
+import jsonParser from "./scripts/eslint/json-parser.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -56,8 +59,7 @@ export default defineConfig([
 
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
   // eslint-plugin-prettier, perfectionist.
-  // Perfectionist block is excluded — sorting rules are deferred to a follow-up PR.
-  ...pagopaConfig.filter(config => !config.plugins?.perfectionist),
+  ...pagopaConfig,
 
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -85,12 +87,13 @@ export default defineConfig([
     },
 
     plugins: {
-      // Remove `import` plugin once we adopt
-      // `perfectionist/sort-imports` rules
+      // `import` plugin is retained for `import/no-extraneous-dependencies`;
+      // import ordering is handled by `perfectionist/sort-imports`.
       import: importPlugin,
       functional,
       sonarjs,
       i18next: i18Next,
+      "@io-app": { rules: { "i18n-no-dynamic-keys": noDynamicI18nKeysRule } },
       "typed-redux-saga": { rules: { "delegate-effects": delegateEffectsRule } }
     },
 
@@ -121,7 +124,6 @@ export default defineConfig([
       // Rules from tseslint.strict / pagopa config that require widespread
       // refactoring incompatible with the current codebase
       "max-lines-per-function": "off",
-      "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/no-explicit-any": "off",
 
       // Incorrectly fires on mapped types (`[P in ...]`) — only meant for
@@ -173,9 +175,7 @@ export default defineConfig([
       "no-caller": "error",
       "no-void": "off",
       "no-duplicate-imports": "error",
-      // Remove the following `import` rule
-      // once we adopt `perfectionist/sort-imports`
-      "import/order": "error",
+      // Import ordering is handled by `perfectionist/sort-imports`
 
       // TYPESCRIPT
       // Downgraded to warn — existing shadows are widespread and non-critical
@@ -203,11 +203,20 @@ export default defineConfig([
       "@typescript-eslint/dot-notation": "error",
       "@typescript-eslint/no-floating-promises": "error",
       "@typescript-eslint/restrict-plus-operands": "error",
+      "@typescript-eslint/no-misused-promises": "error",
+      "@typescript-eslint/strict-boolean-expressions": [
+        "warn",
+        {
+          allowNullableBoolean: true,
+          allowNullableString: true
+        }
+      ],
 
       // REACT
       "react/jsx-uses-react": "off",
       "react/prop-types": "off",
       "react/jsx-key": "error",
+      "react/jsx-no-constructed-context-values": "error",
       // Less relevant rule with contemporary React with hooks
       "react/jsx-no-bind": [
         "error",
@@ -316,7 +325,10 @@ export default defineConfig([
             }
           ]
         }
-      ]
+      ],
+
+      // Disallow dynamically-built i18n keys so unused-key detection stays reliable
+      "@io-app/i18n-no-dynamic-keys": "warn"
     },
 
     settings: {
@@ -334,7 +346,8 @@ export default defineConfig([
       "@typescript-eslint/no-require-imports": "off",
       "@typescript-eslint/no-empty-function": "off",
       "i18next/no-literal-string": "off",
-      "no-restricted-imports": "off"
+      "no-restricted-imports": "off",
+      "react/jsx-no-constructed-context-values": "off"
     }
   },
   {
@@ -371,6 +384,20 @@ export default defineConfig([
 
     rules: {
       "i18next/no-literal-string": "off"
+    }
+  },
+  {
+    files: ["**/locales/it/index.json"],
+    languageOptions: {
+      parser: jsonParser
+    },
+    plugins: {
+      "@io-app": {
+        rules: { "i18n-no-unused-keys": noUnusedI18nKeysRule }
+      }
+    },
+    rules: {
+      "@io-app/i18n-no-unused-keys": "warn"
     }
   }
 ]);

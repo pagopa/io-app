@@ -5,25 +5,29 @@ import {
   IOPictograms,
   Pictogram,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import { ComponentProps } from "react";
 import { View } from "react-native";
+
 import {
   IOScrollView,
   IOScrollViewActions,
   IOScrollViewProps
 } from "./IOScrollView";
 
-export type IOScrollViewCentredContentProps = {
-  pictogram: IOPictograms;
-  title: string;
-  description?: string;
+export type IOScrollViewCentredContentProps = Omit<
+  IOScrollViewProps,
+  "actions" | "centerContent"
+> & {
+  actions: IOScrollViewActions;
   additionalLink?: Pick<
     ComponentProps<typeof IOButton>,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
+    "accessibilityLabel" | "label" | "onPress" | "testID"
   >;
-  actions: IOScrollViewActions;
-} & Omit<IOScrollViewProps, "centerContent" | "actions">;
+  description?: string;
+  pictogram: IOPictograms;
+  title: string;
+};
 
 /**
  * Istance of `IOScrollView` where the main content is centred,
@@ -38,9 +42,14 @@ export const IOScrollViewCentredContent = ({
   children,
   ...scrollViewProps
 }: IOScrollViewCentredContentProps) => (
-  <IOScrollView centerContent actions={actions} {...scrollViewProps}>
+  <IOScrollView
+    actions={actions}
+    alwaysBounceVertical={false}
+    centerContent
+    {...scrollViewProps}
+  >
     <VStack space={16} style={{ alignItems: "center" }}>
-      <Pictogram name={pictogram} size={180} />
+      <Pictogram name={pictogram} size={120} />
       <View style={{ paddingHorizontal: 24 }}>
         <VStack space={8} style={{ alignItems: "center" }}>
           <H3 accessibilityRole="header" style={{ textAlign: "center" }}>

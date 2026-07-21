@@ -1,15 +1,15 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 
+import { apiUrlPrefix } from "../../../../config";
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
+import { appCurrentStateSelector } from "../../../../store/reducers/appState";
+import { createConnectivityClient } from "../../api/client";
 import { setConnectionStatus } from "../../store/actions";
 import {
   connectionStatusSaga,
   default as connectivityRootSaga
 } from "../index";
-import { createConnectivityClient } from "../../api/client";
-import { apiUrlPrefix } from "../../../../config";
-import { appCurrentStateSelector } from "../../../../store/reducers/appState";
-import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 
 describe("connectionStatusSaga", () => {
   beforeEach(() => {

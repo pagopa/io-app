@@ -1,23 +1,24 @@
-import { ReactNode } from "react";
-import { ListItemHeader } from "@pagopa/io-app-design-system";
+import { ListItemHeader } from "@io-app/design-system";
 import I18n from "i18next";
+import { ReactNode } from "react";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
-import { thirdPartyMessageAttachments } from "../../store/reducers/thirdPartyById";
-import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { thirdPartyMessageAttachmentsSelector } from "../../store/reducers/thirdPartyById";
+import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import { MessageDetailsAttachmentItem } from "./MessageDetailsAttachmentItem";
 
 export type MessageDetailsAttachmentsProps = {
   banner?: ReactNode;
   disabled?: boolean;
   messageId: string;
-  serviceId: ServiceId;
   sendOpeningSource: SendOpeningSource;
   sendUserType: SendUserType;
+  serviceId: ServiceId;
 };
 
 export const MessageDetailsAttachments = ({
@@ -29,7 +30,7 @@ export const MessageDetailsAttachments = ({
   sendUserType
 }: MessageDetailsAttachmentsProps) => {
   const originalAttachments = useIOSelector(state =>
-    thirdPartyMessageAttachments(state, messageId)
+    thirdPartyMessageAttachmentsSelector(state, messageId)
   );
   const isSend = sendOpeningSource !== "not_set";
   const attachments = isSend
@@ -46,19 +47,19 @@ export const MessageDetailsAttachments = ({
   return (
     <>
       <ListItemHeader
-        label={I18n.t("features.messages.attachments")}
         iconName={"attachment"}
+        label={I18n.t("features.messages.attachments")}
       />
       {banner}
       {attachments.map((attachment, index) => (
         <MessageDetailsAttachmentItem
           attachment={attachment}
           bottomSpacer={index + 1 < attachmentCount}
-          sendOpeningSource={sendOpeningSource}
-          sendUserType={sendUserType}
           disabled={disabled}
           key={`MessageAttachment_${index}`}
           messageId={messageId}
+          sendOpeningSource={sendOpeningSource}
+          sendUserType={sendUserType}
           serviceId={serviceId}
         />
       ))}

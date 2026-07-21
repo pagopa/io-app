@@ -1,25 +1,13 @@
+import { IOColors, IOVisualCostants, useIOTheme } from "@io-app/design-system";
+import { useLinkTo } from "@react-navigation/native";
 import { memo, ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
-import { useLinkTo } from "@react-navigation/native";
-import {
-  IOColors,
-  IOVisualCostants,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
-import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
-import { useIOSelector } from "../../../../store/hooks";
-import { Markdown } from "../../../../components/ui/Markdown/Markdown";
-import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { unknownToString } from "../../../../utils/errors";
-import { trackAppCaughtError } from "../../../../utils/analytics";
 
-const CSS_STYLE = `
-  body {
-    line-height: 1.5;
-  }
-`;
+import IOMarkdown from "../../../../components/IOMarkdown";
+import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
+import { trackAppCaughtError } from "../../../../utils/analytics";
+import { unknownToString } from "../../../../utils/errors";
+import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 
 const styles = StyleSheet.create({
   card: {
@@ -57,30 +45,20 @@ const CardWithMarkdownContent = memo(
   ({ content }: CardWithMarkdownContentProps) => {
     const linkTo = useLinkTo();
 
-    const isIOMarkdownEnabledOnMessagesAndServices = useIOSelector(
-      isIOMarkdownEnabledForMessagesAndServicesSelector
+    const renderContent = () => (
+      <IOMarkdown
+        content={content}
+        onError={(error, _stack) => {
+          const errorString = unknownToString(error);
+          trackAppCaughtError(
+            "CardWithMarkdownContent",
+            "Unable to render service's markdown",
+            errorString
+          );
+        }}
+        rules={generateMessagesAndServicesRules(linkTo)}
+      />
     );
-
-    const renderContent = () => {
-      if (isIOMarkdownEnabledOnMessagesAndServices) {
-        return (
-          <IOMarkdown
-            content={content}
-            rules={generateMessagesAndServicesRules(linkTo)}
-            onError={(error, _stack) => {
-              const errorString = unknownToString(error);
-              trackAppCaughtError(
-                "CardWithMarkdownContent",
-                "Unable to render service's markdown",
-                errorString
-              );
-            }}
-          />
-        );
-      }
-
-      return <Markdown cssStyle={CSS_STYLE}>{content}</Markdown>;
-    };
 
     return <CardWrapper>{renderContent()}</CardWrapper>;
   }

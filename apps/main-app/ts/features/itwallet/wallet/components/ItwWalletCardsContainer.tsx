@@ -1,8 +1,9 @@
-import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VStack } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -32,6 +33,7 @@ import {
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
 import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwGuidedTour } from "../../tour/hooks/useItwGuidedTour.ts";
 import {
   ITW_TOUR_GROUP_ID,
@@ -55,6 +57,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const shouldRenderL2EngagementBanner = useIOSelector(
     itwShouldRenderL2EngagementBannerSelector
   );
+  const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const cards = useIOSelector(state =>
     selectWalletCardsByCategory(state, "itw")
@@ -80,8 +83,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
     component: (
       <ItwEidInfoBottomSheetContent
-        navigation={navigation}
         currentScreenName={currentScreenName}
+        navigation={navigation}
       />
     )
   });
@@ -95,12 +98,32 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   );
 
   const sectionHeader = useMemo((): React.ReactElement => {
+    const eidInfoProps = !isItWalletValid
+      ? {
+          endElement: {
+            type: "buttonLink" as const,
+            componentProps: {
+              accessibilityLabel: I18n.t(
+                "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+              ),
+              label: I18n.t(
+                "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+              ),
+              onPress: eidInfoBottomSheet.present,
+              testID: "walletCardsCategoryItwActiveBadgeTestID"
+            }
+          },
+          iconColor,
+          iconName: "legalValue" as const
+        }
+      : {};
+
     if (isNewItwRenderable) {
       return (
         <>
           <ListItemHeader
-            testID={"walletCardsCategoryItwIdCardHeaderTestID"}
             label={I18n.t("features.wallet.cards.categories.itw")}
+            testID={"walletCardsCategoryItwIdCardHeaderTestID"}
           />
           {/* IT-Wallet renders the PID card below the header */}
           <View style={styles.cardsWrapper}>
@@ -111,26 +134,18 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     }
     return (
       <ListItemHeader
-        testID={"walletCardsCategoryItwHeaderTestID"}
-        iconName={"legalValue"}
-        iconColor={iconColor}
+        {...eidInfoProps}
         label={I18n.t("features.wallet.cards.categories.itw")}
-        endElement={{
-          type: "buttonLink",
-          componentProps: {
-            accessibilityLabel: I18n.t(
-              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-            ),
-            label: I18n.t(
-              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-            ),
-            onPress: eidInfoBottomSheet.present,
-            testID: "walletCardsCategoryItwActiveBadgeTestID"
-          }
-        }}
+        testID={"walletCardsCategoryItwHeaderTestID"}
       />
     );
-  }, [iconColor, isNewItwRenderable, cards, eidInfoBottomSheet.present]);
+  }, [
+    cards,
+    eidInfoBottomSheet.present,
+    iconColor,
+    isItWalletValid,
+    isNewItwRenderable
+  ]);
 
   return (
     <View>
@@ -138,9 +153,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
         {!shouldHideEidAlert && (
           <ItwEidLifecycleAlert
+            currentScreenName={currentScreenName}
             lifecycleStatus={LIFECYCLE_STATUS}
             navigation={navigation}
-            currentScreenName={currentScreenName}
           />
         )}
       </VStack>
@@ -155,17 +170,17 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
         {cards.length > 0 && (
           <GuidedTour
-            groupId={ITW_TOUR_GROUP_ID}
-            index={ITW_TOUR_STEP_CREDENTIALS}
-            title={I18n.t("features.itWallet.tour.credentials.title")}
             description={I18n.t(
               "features.itWallet.tour.credentials.description"
             )}
+            groupId={ITW_TOUR_GROUP_ID}
+            index={ITW_TOUR_STEP_CREDENTIALS}
+            title={I18n.t("features.itWallet.tour.credentials.title")}
           >
             <WalletCardsCategoryContainer
+              cards={cards}
               key={`cards_category_itw`}
               testID={`itwWalletCardsContainerTestID`}
-              cards={cards}
             />
           </GuidedTour>
         )}

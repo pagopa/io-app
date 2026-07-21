@@ -8,7 +8,26 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
+
+import NavigationService from "../../../../navigation/NavigationService";
+import ROUTES from "../../../../navigation/routes";
+import {
+  analyticsAuthenticationCompleted,
+  analyticsAuthenticationStarted
+} from "../../../../store/actions/analytics";
+import { startApplicationInitialization } from "../../../../store/actions/application";
+import { GlobalState } from "../../../../store/reducers/types";
 import { ReduxSagaEffect } from "../../../../types/utils";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import {
+  trackCieIDLoginSuccess,
+  trackCieLoginSuccess,
+  trackSpidLoginSuccess
+} from "../../common/analytics";
+import { updateLoginMethodProfileProperty } from "../../common/analytics/spidAnalytics";
+import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
+import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
+import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
@@ -17,54 +36,13 @@ import {
   setStartActiveSessionLogin
 } from "../store/actions";
 import {
-  isActiveSessionFastLoginEnabledSelector,
-  idpSelectedActiveSessionLoginSelector,
-  newTokenActiveSessionLoginSelector,
-  cieIDSelectedSecurityLevelActiveSessionLoginSelector,
   activeSessionLoginFlowSelector,
-  cieLoginFlowSelector
+  cieIDSelectedSecurityLevelActiveSessionLoginSelector,
+  cieLoginFlowSelector,
+  idpSelectedActiveSessionLoginSelector,
+  isActiveSessionFastLoginEnabledSelector,
+  newTokenActiveSessionLoginSelector
 } from "../store/selectors";
-import { startApplicationInitialization } from "../../../../store/actions/application";
-import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
-import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
-import {
-  trackCieLoginSuccess,
-  trackCieIDLoginSuccess,
-  trackSpidLoginSuccess
-} from "../../common/analytics";
-import { GlobalState } from "../../../../store/reducers/types";
-import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
-import { updateLoginMethodProfileProperty } from "../../common/analytics/spidAnalytics";
-import {
-  analyticsAuthenticationCompleted,
-  analyticsAuthenticationStarted
-} from "../../../../store/actions/analytics";
-import NavigationService from "../../../../navigation/NavigationService";
-import ROUTES from "../../../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-
-export function* watchActiveSessionLoginSaga() {
-  yield* takeLatest(
-    [getType(setStartActiveSessionLogin), getType(setRetryActiveSessionLogin)],
-    handleActiveSessionLoginSaga
-  );
-}
-
-export function* handleNavigateAfterFinishedStandardActiveSessionLoginFlow(
-  isActiveLoginSuccessProp?: boolean
-) {
-  const activeSessionLoginFlow = yield* select(activeSessionLoginFlowSelector);
-
-  if (isActiveLoginSuccessProp && activeSessionLoginFlow !== "FCI") {
-    // If the user is logging in from the active session login flow, we can be sure that the session is valid
-    // and we can directly navigate him to the home screen, skipping all the checks about pending background
-    // actions and session expiration blocking screen.
-    yield* call(NavigationService.navigate, ROUTES.MAIN, {
-      screen: MESSAGES_ROUTES.MESSAGES_HOME
-    });
-  }
-  return;
-}
 
 export function* handleActiveSessionLoginSaga(): Generator<
   ReduxSagaEffect,
@@ -154,4 +132,27 @@ export function* handleActiveSessionLoginSaga(): Generator<
       );
     }
   }
+}
+
+export function* handleNavigateAfterFinishedStandardActiveSessionLoginFlow(
+  isActiveLoginSuccessProp?: boolean
+) {
+  const activeSessionLoginFlow = yield* select(activeSessionLoginFlowSelector);
+
+  if (isActiveLoginSuccessProp && activeSessionLoginFlow !== "FCI") {
+    // If the user is logging in from the active session login flow, we can be sure that the session is valid
+    // and we can directly navigate him to the home screen, skipping all the checks about pending background
+    // actions and session expiration blocking screen.
+    yield* call(NavigationService.navigate, ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
+  }
+  return;
+}
+
+export function* watchActiveSessionLoginSaga() {
+  yield* takeLatest(
+    [getType(setStartActiveSessionLogin), getType(setRetryActiveSessionLogin)],
+    handleActiveSessionLoginSaga
+  );
 }

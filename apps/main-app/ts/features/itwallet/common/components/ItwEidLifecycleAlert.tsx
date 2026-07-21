@@ -1,4 +1,4 @@
-import { Alert } from "@pagopa/io-app-design-system";
+import { Alert } from "@io-app/design-system";
 import { format } from "date-fns";
 import { sequenceT } from "fp-ts/lib/Apply";
 import { constNull, pipe } from "fp-ts/lib/function";
@@ -6,6 +6,7 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 import { View } from "react-native";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
@@ -29,15 +30,15 @@ const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
 
 type Props = {
   /**
-   * The eID statuses that will render the alert.
-   */
-  lifecycleStatus?: Array<ItwJwtCredentialStatus>;
-  navigation: ReturnType<typeof useIONavigation>;
-  /**
    * The name of the current screen, used for analytics tracking
    * and conditional rendering logic (e.g. PID detail screen).
    */
   currentScreenName?: string;
+  /**
+   * The eID statuses that will render the alert.
+   */
+  lifecycleStatus?: Array<ItwJwtCredentialStatus>;
+  navigation: ReturnType<typeof useIONavigation>;
   skipViewTracking?: boolean;
 };
 
@@ -77,13 +78,13 @@ export const ItwEidLifecycleAlert = ({
 
   const Content = ({
     eid,
-    eidStatus
+    eidStatus,
+    isItwCredential
   }: {
     eid: CredentialMetadata;
     eidStatus: ItwJwtCredentialStatus;
+    isItwCredential: boolean;
   }) => {
-    const nameSpace = isItw ? "itw" : "documents";
-
     const alertProps = useMemo<ComponentProps<typeof Alert>>(() => {
       const eIDAlertPropsMap: Record<
         ItwJwtCredentialStatus,
@@ -93,7 +94,9 @@ export const ItwEidLifecycleAlert = ({
           testID: "itwEidLifecycleAlertTestID_valid",
           variant: "success",
           content: I18n.t(
-            `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.valid`,
+            isItwCredential
+              ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.itw.valid"
+              : "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.valid",
             {
               date: eid.jwt.issuedAt
                 ? format(eid.jwt.issuedAt, "DD-MM-YYYY")
@@ -105,12 +108,16 @@ export const ItwEidLifecycleAlert = ({
           testID: "itwEidLifecycleAlertTestID_jwtExpiring",
           variant: "warning",
           content: I18n.t(
-            `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.expiring`,
+            isItwCredential
+              ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.itw.expiring"
+              : "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.expiring",
             // TODO [SIW-3225]: date in bold
             { date: format(eid.jwt.expiration, "DD-MM-YYYY") }
           ),
           action: I18n.t(
-            `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.action`
+            isItwCredential
+              ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.itw.action"
+              : "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.action"
           ),
           onPress: startEidReissuing
         },
@@ -118,21 +125,25 @@ export const ItwEidLifecycleAlert = ({
           testID: "itwEidLifecycleAlertTestID_jwtExpired",
           variant: "error",
           content: I18n.t(
-            `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.expired`
+            isItwCredential
+              ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.itw.expired"
+              : "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.expired"
           ),
           action: I18n.t(
-            `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.action`
+            isItwCredential
+              ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.itw.action"
+              : "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.action"
           ),
           onPress: startEidReissuing
         }
       };
 
-      if (offlineAccessReason !== undefined && !isItw) {
+      if (offlineAccessReason !== undefined && !isItwCredential) {
         return {
           testID: "itwEidLifecycleAlertTestID_offline",
           variant: "error",
           content: I18n.t(
-            `features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.offline`
+            "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.offline"
           )
         };
       }
@@ -140,7 +151,7 @@ export const ItwEidLifecycleAlert = ({
       const baseProps = eIDAlertPropsMap[eidStatus];
 
       return baseProps;
-    }, [eidStatus, eid.jwt.issuedAt, eid.jwt.expiration, nameSpace]);
+    }, [eidStatus, eid.jwt.issuedAt, eid.jwt.expiration, isItwCredential]);
 
     if (!lifecycleStatus.includes(eidStatus)) {
       return null;
@@ -156,7 +167,7 @@ export const ItwEidLifecycleAlert = ({
   return pipe(
     sequenceT(O.Monad)(eidOption, O.fromNullable(maybeEidStatus)),
     O.fold(constNull, ([eid, eidStatus]) => (
-      <Content eid={eid} eidStatus={eidStatus} />
+      <Content eid={eid} eidStatus={eidStatus} isItwCredential={isItw} />
     ))
   );
 };

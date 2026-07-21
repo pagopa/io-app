@@ -3,15 +3,16 @@ import {
   H6,
   IOMarkdownLite,
   VSpacer
-} from "@pagopa/io-app-design-system";
-import { View } from "react-native";
+} from "@io-app/design-system";
 import I18n from "i18next";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import { openWebUrl } from "../../../../../utils/url";
+import { View } from "react-native";
+
+import { IOScrollViewCentredContent } from "../../../../../components/ui/IOScrollViewCentredContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { CustomWizardScreen } from "../../../../../components/screens/CustomWizardScreen";
 import { useIOSelector } from "../../../../../store/hooks";
 import { absolutePortalLinksSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { openWebUrl } from "../../../../../utils/url";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 // A future development will allow different actions to
@@ -35,26 +36,26 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
       <H6>{I18n.t("authentication.unlockmodal.title2")}</H6>
       <VSpacer size={24} />
       <FeatureInfo
-        iconName="security"
         body={I18n.t("authentication.unlockmodal.listitem1")}
+        iconName="security"
       />
       <VSpacer size={16} />
       <FeatureInfo
-        iconName="login"
-        body={I18n.t("authentication.unlockmodal.listitem2_1")}
         action={{
           label: I18n.t("authentication.unlockmodal.listitem2_2"),
           onPress: () => openWebUrl(absolutePortalLinks.io_web)
         }}
+        body={I18n.t("authentication.unlockmodal.listitem2_1")}
+        iconName="login"
       />
       <VSpacer size={16} />
       <FeatureInfo
-        iconName="locked"
         body={
           <IOMarkdownLite
             content={I18n.t("authentication.unlockmodal.listitem3")}
           />
         }
+        iconName="locked"
       />
     </View>
   );
@@ -81,32 +82,35 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
 
   return (
     <>
-      <CustomWizardScreen
-        pictogram="accessDenied"
-        title={I18n.t("authentication.unlock.title")}
+      <IOScrollViewCentredContent
+        actions={{
+          type: "TwoButtons",
+          primary: {
+            testID: "button-solid-test",
+            label: I18n.t("authentication.unlock.title"),
+            onPress: () => openWebUrl(absolutePortalLinks.io_web)
+          },
+          secondary: {
+            testID: "button-link-test",
+            label:
+              authLevel === "L2"
+                ? I18n.t("global.buttons.close")
+                : I18n.t("authentication.unlock.loginIO"),
+            onPress: onPressActionButton
+          }
+        }}
+        additionalLink={{
+          label: I18n.t("authentication.unlock.learnmore"),
+          onPress: presentVeryLongAutoresizableBottomSheetWithFooter,
+          testID: "learn-more-link-test"
+        }}
         description={
           authLevel === "L2"
             ? I18n.t("authentication.unlock.subtitlel2")
             : I18n.t("authentication.unlock.subtitlel3")
         }
-        buttonLink={{
-          label: I18n.t("authentication.unlock.learnmore"),
-          onPress: presentVeryLongAutoresizableBottomSheetWithFooter,
-          testID: "learn-more-link-test"
-        }}
-        primaryButton={{
-          testID: "button-solid-test",
-          label: I18n.t("authentication.unlock.title"),
-          onPress: () => openWebUrl(absolutePortalLinks.io_web)
-        }}
-        actionButton={{
-          testID: "button-link-test",
-          label:
-            authLevel === "L2"
-              ? I18n.t("global.buttons.close")
-              : I18n.t("authentication.unlock.loginIO"),
-          onPress: onPressActionButton
-        }}
+        pictogram="accessDenied"
+        title={I18n.t("authentication.unlock.title")}
       />
       {veryLongAutoResizableBottomSheetWithFooter}
     </>

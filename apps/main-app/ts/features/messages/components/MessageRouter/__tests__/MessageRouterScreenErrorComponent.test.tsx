@@ -1,8 +1,10 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { trackMessageNotFoundScreen } from "../../../analytics";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import {
   MessageRouterScreenErrorComponent,
@@ -12,6 +14,10 @@ import {
 jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
   AnimatedPictogram: () => null,
   IOAnimatedPictogramsAssets: {}
+}));
+
+jest.mock("../../../analytics", () => ({
+  trackMessageNotFoundScreen: jest.fn()
 }));
 
 const mockVariantSelector = jest.fn();
@@ -32,11 +38,11 @@ type Variant = keyof ReturnType<typeof getMessageRouterErrorMap>;
 
 type VariantScenario = {
   name: string;
-  variant: Variant;
-  primaryTestId: string;
-  secondaryTestId: string | null;
   /** Whether the primary button dispatches `onCancel` instead of `onRetry` */
   primaryIsCancel: boolean;
+  primaryTestId: string;
+  secondaryTestId: null | string;
+  variant: Variant;
 };
 
 const variantScenarios: Array<VariantScenario> = [
@@ -123,6 +129,33 @@ variantScenarios.forEach(
   }
 );
 
+describe("messageNotFound screen view tracking", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("tracks when the messageNotFound variant is rendered", () => {
+    mockVariantSelector.mockReturnValue("messageNotFound");
+    expect(trackMessageNotFoundScreen).toHaveBeenCalledTimes(0);
+
+    renderComponent();
+
+    expect(trackMessageNotFoundScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it.each(["genericError", "thirdPartyError"] as const)(
+    "does not track when the %s variant is rendered",
+    variant => {
+      mockVariantSelector.mockReturnValue(variant);
+
+      expect(trackMessageNotFoundScreen).not.toHaveBeenCalled();
+      renderComponent();
+
+      expect(trackMessageNotFoundScreen).not.toHaveBeenCalled();
+    }
+  );
+});
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 const renderComponent = () => {
@@ -134,8 +167,8 @@ const renderComponent = () => {
     () => (
       <MessageRouterScreenErrorComponent
         messageId={TEST_MESSAGE_ID}
-        onRetry={mockOnRetry}
         onCancel={mockOnCancel}
+        onRetry={mockOnRetry}
       />
     ),
     MESSAGES_ROUTES.MESSAGE_ROUTER,

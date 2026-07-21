@@ -1,13 +1,14 @@
 import { fireEvent } from "@testing-library/react-native";
-import MockDate from "mockdate";
 import I18n from "i18next";
+import MockDate from "mockdate";
 import { createStore } from "redux";
+
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as bottomSheet from "../../../../../../utils/hooks/bottomSheet.tsx";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as itwAnalytics from "../../../../analytics";
 import {
   CredentialMetadata,
@@ -16,13 +17,13 @@ import {
 import * as selectors from "../../../../credentials/store/selectors";
 import { ItwCredentialIssuanceMachineProvider } from "../../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
+import * as detailsAnalytics from "../../analytics";
 import {
   CredentialAlertType,
-  ItwPresentationCredentialStatusAlert,
   deriveCredentialAlertType,
-  isCredentialAttributeUpdate
+  isCredentialAttributeUpdate,
+  ItwPresentationCredentialStatusAlert
 } from "../ItwPresentationCredentialStatusAlert";
-import * as detailsAnalytics from "../../analytics";
 
 const mockBottomSheetPresent = jest.fn();
 const mockBottomSheetDismiss = jest.fn();
@@ -43,7 +44,7 @@ jest.mock("../../../../../../utils/url", () => ({
 
 type TestCaseParams = [
   ItwCredentialStatus,
-  Record<string, { title: string; description: string }> | undefined
+  Record<string, { description: string; title: string }> | undefined
 ];
 
 const mockMessage = {
