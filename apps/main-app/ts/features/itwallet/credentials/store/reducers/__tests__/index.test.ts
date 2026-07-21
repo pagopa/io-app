@@ -125,16 +125,15 @@ describe("ITW credentials reducer", () => {
         sequenceOfActions
       );
 
-      const remainingCredentials: Record<string, CredentialMetadata> = {
-        [mockedEid.credentialId]: mockedEid,
-        [mockedCredential.credentialId]: mockedCredential,
-        [mockedCredential2.credentialId]: mockedCredential2
-      };
-
-      for (const { credentialId } of credentialsToRemove) {
-        // eslint-disable-next-line functional/immutable-data
-        delete remainingCredentials[credentialId];
-      }
+      const removedIds = new Set(
+        credentialsToRemove.map(({ credentialId }) => credentialId)
+      );
+      const remainingCredentials: Record<string, CredentialMetadata> =
+        Object.fromEntries(
+          [mockedEid, mockedCredential, mockedCredential2]
+            .filter(({ credentialId }) => !removedIds.has(credentialId))
+            .map(credential => [credential.credentialId, credential])
+        );
 
       expect(targetSate.features.itWallet.credentials.credentials).toEqual(
         remainingCredentials
