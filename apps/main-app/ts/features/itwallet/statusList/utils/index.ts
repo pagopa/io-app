@@ -1,14 +1,12 @@
 import { CredentialIssuance, ItwVersion } from "@pagopa/io-react-native-wallet";
 
 import { assert } from "../../../../utils/assert";
-import { getIoWallet } from "./itwIoWallet";
-import { CredentialBundle, IssuerConfiguration } from "./itwTypesUtils";
-
-/**
- * Error thrown when a credential status is not valid, determined
- * by checking the corresponding index in the token status list.
- */
-export class InvalidTslCredentialStatus extends Error {}
+import { getIoWallet } from "../../common/utils/itwIoWallet";
+import {
+  CredentialBundle,
+  IssuerConfiguration
+} from "../../common/utils/itwTypesUtils";
+import { InvalidTslCredentialStatus } from "./errors";
 
 /**
  * Function to get the credential status from its token status list (TSL). The list is fetched from the `uri` extracted from
@@ -51,9 +49,7 @@ export const getCredentialStatusFromStatusList = async (
   const canonicalStatus = status.toLowerCase();
 
   if (canonicalStatus !== "valid") {
-    throw new InvalidTslCredentialStatus(
-      `${metadata.credentialId} is not valid`
-    );
+    throw new InvalidTslCredentialStatus(metadata.credentialId);
   }
 
   return {

@@ -8,7 +8,6 @@ import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { Env } from "../../common/utils/environment";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
-import { getCredentialStatusFromStatusList } from "../../common/utils/itwCredentialStatusListUtils";
 import { getRepresentativeVaultId } from "../../common/utils/itwCredentialUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
@@ -23,6 +22,7 @@ import {
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { CredentialsVault } from "../../credentials/utils/vault";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { getCredentialStatusFromStatusList } from "../../statusList/utils";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { EidIssuanceMode } from "../eid/context";
 import { createCommonActorsImplementation } from "../utils/actors";

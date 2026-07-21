@@ -13,7 +13,6 @@ import { Env } from "../../common/utils/environment";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { getCredentialStatusAssertion } from "../../common/utils/itwCredentialStatusAssertionUtils";
-import { getCredentialStatusFromStatusList } from "../../common/utils/itwCredentialStatusListUtils";
 import {
   enrichErrorWithMetadata,
   isAssertionGenerationError
@@ -34,6 +33,7 @@ import {
 } from "../../issuance/analytics";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { getCredentialStatusFromStatusList } from "../../statusList/utils";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { createCommonActorsImplementation } from "../utils/actors";

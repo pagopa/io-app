@@ -178,8 +178,9 @@ describe("buildWalletListCredentialProperty", () => {
 
   it("returns not_valid when catalogue credentials are present but none are valid", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
-      storedStatusAssertion: {
-        credentialStatus: "invalid"
+      validity: {
+        type: "status_assertion",
+        status: "invalid"
       }
     });
     const state = getStateWithCredentialsAndCatalogue({
