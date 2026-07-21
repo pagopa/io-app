@@ -8,10 +8,9 @@ import { ReactElement, useEffect } from "react";
 
 import { ProblemJson } from "../../../../definitions/fci/ProblemJson";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
+import { withAppRequiredUpdate } from "../../../components/helpers/withAppRequiredUpdate";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isFciEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { isTestEnv } from "../../../utils/environment";
 import {
   getErrorFromNetworkError,
   getGenericError,
@@ -44,26 +43,10 @@ const FciSignatureScreen = (
   const signatureRequestId = props.route.params.signatureRequestId;
   const dispatch = useIODispatch();
   const fciSignatureRequest = useIOSelector(fciSignatureRequestSelector);
-  const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
-  const fciEnabled = isTestEnv || fciEnabledSelector;
 
   useEffect(() => {
-    if (fciEnabled) {
-      dispatch(fciSignatureRequestFromId.request(signatureRequestId));
-    }
-  }, [dispatch, signatureRequestId, fciEnabled]);
-
-  if (!fciEnabled) {
-    return (
-      <SignatureStatusComponent
-        onPress={() => dispatch(fciEndRequest())}
-        pictogram={"umbrella"}
-        subTitle={I18n.t("features.fci.errors.generic.update.subTitle")}
-        testID="GenericErrorComponentTestID"
-        title={I18n.t("features.fci.errors.generic.update.title")}
-      />
-    );
-  }
+    dispatch(fciSignatureRequestFromId.request(signatureRequestId));
+  }, [dispatch, signatureRequestId]);
 
   const LoadingView = () => (
     <LoadingComponent testID={"FciRouterLoadingScreenTestID"} />
@@ -140,4 +123,4 @@ const FciSignatureScreen = (
   );
 };
 
-export default FciSignatureScreen;
+export default withAppRequiredUpdate(FciSignatureScreen, "fci");

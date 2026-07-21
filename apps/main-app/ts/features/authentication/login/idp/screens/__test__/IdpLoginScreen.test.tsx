@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -34,7 +33,7 @@ describe("IdpLoginScreen", () => {
   jest.spyOn(IOHooks, "useIODispatch").mockReturnValue(mockDispatch);
 
   jest.spyOn(useLollipopLoginSource, "useLollipopLoginSource").mockReturnValue({
-    lollipopCheckStatus: { status: "none", url: O.none },
+    lollipopCheckStatus: { status: "none" },
     retryLollipopLogin: jest.fn(),
     shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
     webviewSource: { uri: "https://example.com/login" }

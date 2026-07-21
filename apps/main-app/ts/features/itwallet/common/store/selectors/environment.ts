@@ -4,7 +4,7 @@ import { createSelector } from "reselect";
 
 import { GlobalState } from "../../../../../store/reducers/types";
 import { itwCredentialsEidSelector } from "../../../credentials/store/selectors";
-import { itwIsL3EnabledSelector } from "./preferences";
+import { itwIsL3EnabledSelector } from "./index";
 
 export const selectItwEnv = (state: GlobalState) =>
   state.features.itWallet.environment.env ?? "prod";
