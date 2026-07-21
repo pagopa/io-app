@@ -1828,11 +1828,6 @@
           "alert": {
             "action": "Ricarica l’app IO",
             "content": "Hai bisogno di tornare alla versione completa di IO?"
-          },
-          "modal": {
-            "title": "",
-            "content": "",
-            "footerAction": ""
           }
         },
         "action": "Ricarica l'app IO"
@@ -5472,8 +5467,7 @@
       "outcome": {
         "ALREADY_ONBOARDED": {
           "primaryAction": "Chiudi",
-          "title": "Hai già aggiunto questo metodo",
-          "subtitle": ""
+          "title": "Hai già aggiunto questo metodo"
         },
         "AUTH_ERROR": {
           "bottomSheet": {
@@ -5498,8 +5492,7 @@
         },
         "CANCELED_BY_USER": {
           "primaryAction": "Chiudi",
-          "title": "L'operazione è stata annullata",
-          "subtitle": ""
+          "title": "L'operazione è stata annullata"
         },
         "GENERIC_ERROR": {
           "primaryAction": "Chiudi",
@@ -5519,7 +5512,6 @@
         "SUCCESS": {
           "primaryAction": "Vedi dettagli",
           "title": "Il metodo è stato aggiunto",
-          "subtitle": "",
           "secondaryAction": "Continua"
         },
         "TIMEOUT": {
