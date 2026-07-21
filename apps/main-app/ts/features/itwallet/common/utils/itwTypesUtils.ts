@@ -214,8 +214,8 @@ export const isMultiLevelCredential = (
  * Validity information for v1.3+ credentials that support status list.
  */
 export type CredentialValidity = {
-  rawStatus?: string;
-  status?: string;
+  rawStatus: string;
+  status: string;
   statusList: { idx: number; uri: string };
   type: "status_list";
 };
