@@ -1,9 +1,8 @@
-import { createMigrate, PersistConfig, persistReducer } from "redux-persist";
+import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 
 import { Action } from "../../../../../../store/actions/types";
 import createSecureStorage from "../../../../../../store/storages/secureStorage";
-import { isDevEnv } from "../../../../../../utils/environment";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsReplaceByType
@@ -15,24 +14,14 @@ import {
   itwRevokeProximityConsentsByCredentialType,
   itwRevokeProximityConsentsByRpId
 } from "../actions";
-import {
-  ConsentManagementCredentialTypes,
-  ProximityConsents,
-  StoredConsentData
-} from "../types";
+import { ProximityConsents, StoredConsentData } from "../types";
 import { generateConsentKey } from "../utils";
-import {
-  CURRENT_REDUX_ITW_PROXIMITY_STORE_VERSION,
-  itwProximityStateMigrations
-} from "./migrations";
 
 export type ItwProximityState = {
-  consentManagementCredentialTypes: ConsentManagementCredentialTypes;
   consents: ProximityConsents;
 };
 
 export const itwProximityInitialState: ItwProximityState = {
-  consentManagementCredentialTypes: {},
   consents: {}
 };
 
@@ -63,16 +52,12 @@ const reducer = (
 
       return {
         ...state,
-        consentManagementCredentialTypes: action.payload.credentials.reduce(
-          (credentialTypes, { credentialType }) => ({
-            ...credentialTypes,
-            [credentialType]: true
-          }),
-          state.consentManagementCredentialTypes
-        ),
         consents: {
           ...state.consents,
-          [key]: consentData
+          [key]: {
+            ...consentData,
+            savedAt: new Date().toISOString()
+          }
         }
       };
     }
@@ -121,20 +106,14 @@ const filterConsentsByCredentialType = (
     )
   );
 
-/** Removes consent data and its management marker for a credential type. */
+/** Removes consent data for a credential type. */
 const removeCredentialTypeData = (
   state: ItwProximityState,
   credentialType: string
-): ItwProximityState => {
-  const { [credentialType]: _, ...remainingCredentialTypes } =
-    state.consentManagementCredentialTypes;
-
-  return {
-    ...state,
-    consentManagementCredentialTypes: remainingCredentialTypes,
-    consents: filterConsentsByCredentialType(state.consents, credentialType)
-  };
-};
+): ItwProximityState => ({
+  ...state,
+  consents: filterConsentsByCredentialType(state.consents, credentialType)
+});
 
 /**
  * Filters out all consents given to the specified RP ID.
@@ -150,8 +129,7 @@ const filterConsentsByRpId = (
 const itwProximityPersistConfig: PersistConfig = {
   key: "itwProximity",
   storage: createSecureStorage(),
-  version: CURRENT_REDUX_ITW_PROXIMITY_STORE_VERSION,
-  migrate: createMigrate(itwProximityStateMigrations, { debug: isDevEnv })
+  version: -1
 };
 
 export const itwProximityReducer = reducer;

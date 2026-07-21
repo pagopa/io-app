@@ -2,19 +2,19 @@ import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 
-import { applicationChangeState } from "../../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../../utils/testWrapper";
-import { ITW_ROUTES } from "../../../../../navigation/routes";
-import * as analytics from "../../../analytics";
-import { StoredConsentData } from "../../../store/types";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { ITW_ROUTES } from "../../../../navigation/routes";
+import * as analytics from "../../analytics";
+import { StoredConsentData } from "../../store/types";
 import { ItwConsentManagementScreen } from "../ItwConsentManagementScreen";
 
 const mockNavigate = jest.fn();
 
-jest.mock("../../../../../../../navigation/params/AppParamsList", () => ({
-  ...jest.requireActual("../../../../../../../navigation/params/AppParamsList"),
+jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
+  ...jest.requireActual("../../../../../../navigation/params/AppParamsList"),
   useIONavigation: () => ({ navigate: mockNavigate })
 }));
 
@@ -76,7 +76,6 @@ const renderComponent = (consents: Record<string, StoredConsentData>) => {
         ...initialState.features.itWallet,
         proximity: {
           ...initialState.features.itWallet.proximity,
-          consentManagementCredentialTypes: { mDL: true },
           consents
         }
       }

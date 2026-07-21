@@ -26,9 +26,6 @@ export type ConsentIdentityData = {
   rpId: string;
 };
 
-/** Credential types for which consent management has been enabled at least once. */
-export type ConsentManagementCredentialTypes = Record<string, true>;
-
 /**
  * Represents the collection of consents given by the user, indexed by their
  * deterministic lookup key. Each key maps to the readable consent details,

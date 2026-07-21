@@ -60,15 +60,18 @@ export const itwProximityConsentByKeySelector = (consentKey: string) =>
   );
 
 /**
- * Returns whether consent management should be available for a credential,
- * including after all of its stored consents have been explicitly revoked.
+ * Returns whether consent management should be available for a credential.
  */
-export const itwProximityShouldShowConsentManagementSelector =
-  (credentialType: string) =>
-  (state: GlobalState): boolean =>
-    state.features.itWallet.proximity.consentManagementCredentialTypes?.[
-      credentialType
-    ] === true;
+export const itwProximityShouldShowConsentManagementSelector = (
+  credentialType: string
+) =>
+  createSelector(itwProximityConsentsSelector, consents =>
+    consents.some(consent =>
+      consent.credentials.some(
+        credential => credential.credentialType === credentialType
+      )
+    )
+  );
 
 /**
  * Returns all consents that involve the specified credential type.

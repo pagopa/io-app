@@ -1,7 +1,7 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 
-import { StoredConsentData } from "../../../store/types";
+import { StoredConsentData } from "../../store/types";
 import {
   getConsentSavedAtDescription,
   ItwConsentManagementListItem

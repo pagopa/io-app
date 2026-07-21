@@ -9,21 +9,21 @@ import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 
-import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOScrollViewWithLargeHeader";
+import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
-} from "../../../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../../../store/hooks";
-import { getMixPanelCredential } from "../../../../analytics/utils";
-import { useItwCredentialName } from "../../../../common/hooks/useItwCredentialName";
-import { itwLifecycleIsITWalletValidSelector } from "../../../../lifecycle/store/selectors";
-import { ItwParamsList } from "../../../../navigation/ItwParamsList";
-import { ITW_ROUTES } from "../../../../navigation/routes";
-import { trackItwConsentManagement } from "../../analytics";
-import { itwProximityConsentsEntriesByCredentialTypeSelector } from "../../store/selectors/consents";
+} from "../../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../../store/hooks";
+import { getMixPanelCredential } from "../../../analytics/utils";
+import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../../navigation/routes";
+import { trackItwConsentManagement } from "../analytics";
 import { ItwConsentManagementEmptyState } from "../components/ItwConsentManagementEmptyState";
 import { ItwConsentManagementListItem } from "../components/ItwConsentManagementListItem";
+import { itwProximityConsentsEntriesByCredentialTypeSelector } from "../store/selectors/consents";
 
 export type ItwConsentManagementScreenNavigationParams = {
   credentialType: string;

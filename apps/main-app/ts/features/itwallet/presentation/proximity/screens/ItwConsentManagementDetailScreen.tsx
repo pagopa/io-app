@@ -9,24 +9,24 @@ import I18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { Alert } from "react-native";
 
-import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOScrollViewWithLargeHeader";
+import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
-} from "../../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
-import { usePreventScreenCapture } from "../../../../../../utils/hooks/usePreventScreenCapture";
-import { ItwParamsList } from "../../../../navigation/ItwParamsList";
+} from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import {
   trackItwConsentManagementDetail,
   trackItwRevokeConsent,
   trackItwRevokeConsentOperationBlock,
   trackItwRevokeConsentOperationBlockAction
-} from "../../analytics";
-import { itwRevokeProximityConsentByKey } from "../../store/actions";
-import { itwProximityConsentByKeySelector } from "../../store/selectors/consents";
+} from "../analytics";
 import { ItwConsentClaims } from "../components/ItwConsentClaims";
 import { getConsentSavedAtDescription } from "../components/ItwConsentManagementListItem";
+import { itwRevokeProximityConsentByKey } from "../store/actions";
+import { itwProximityConsentByKeySelector } from "../store/selectors/consents";
 
 export type ItwConsentManagementDetailScreenNavigationParams = {
   consentKey: string;

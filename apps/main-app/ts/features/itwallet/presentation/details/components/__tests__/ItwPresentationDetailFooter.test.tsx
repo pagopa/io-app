@@ -165,8 +165,12 @@ const renderComponent = (
             ...globalState.features.itWallet,
             proximity: {
               ...globalState.features.itWallet.proximity,
-              consentManagementCredentialTypes: { [credentialType]: true },
-              consents: {}
+              consents: {
+                consent: {
+                  credentials: [{ claimNames: [], credentialType }],
+                  rpId: "rp-id"
+                }
+              }
             }
           }
         }

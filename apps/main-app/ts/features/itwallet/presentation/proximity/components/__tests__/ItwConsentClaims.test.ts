@@ -1,5 +1,5 @@
-import { CredentialMetadata } from "../../../../../common/utils/itwTypesUtils";
-import { StoredConsentData } from "../../../store/types";
+import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
+import { StoredConsentData } from "../../store/types";
 import { getConsentClaimsByCredential } from "../ItwConsentClaims";
 
 const mdocCredential = {

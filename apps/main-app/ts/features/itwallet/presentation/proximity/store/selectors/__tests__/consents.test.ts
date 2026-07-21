@@ -1,9 +1,5 @@
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import {
-  ConsentData,
-  ConsentManagementCredentialTypes,
-  StoredConsentData
-} from "../../types";
+import { ConsentData, StoredConsentData } from "../../types";
 import { generateConsentKey } from "../../utils";
 import {
   itwProximityConsentByKeySelector,
@@ -51,14 +47,12 @@ const healthCardOnlyConsent: ConsentData = {
 };
 
 const buildState = (
-  consents: Record<string, StoredConsentData>,
-  consentManagementCredentialTypes: ConsentManagementCredentialTypes = {}
+  consents: Record<string, StoredConsentData>
 ): Pick<GlobalState, "features"> =>
   ({
     features: {
       itWallet: {
         proximity: {
-          consentManagementCredentialTypes,
           consents
         }
       }
@@ -188,8 +182,8 @@ describe("proximity consent selectors", () => {
   });
 
   describe("itwProximityShouldShowConsentManagementSelector", () => {
-    it("returns true when the credential marker exists without active consents", () => {
-      const state = buildState({}, { MDL: true });
+    it("returns true when a consent exists for the credential", () => {
+      const state = buildState({ [mdlKey]: mdlConsent });
 
       expect(
         itwProximityShouldShowConsentManagementSelector("MDL")(
@@ -198,7 +192,7 @@ describe("proximity consent selectors", () => {
       ).toBe(true);
     });
 
-    it("returns false when the credential marker does not exist", () => {
+    it("returns false when no consent exists for the credential", () => {
       expect(
         itwProximityShouldShowConsentManagementSelector("MDL")(
           emptyState as GlobalState

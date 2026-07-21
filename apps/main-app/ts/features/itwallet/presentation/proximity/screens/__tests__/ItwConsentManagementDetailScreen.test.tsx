@@ -3,20 +3,20 @@ import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
 
-import { applicationChangeState } from "../../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../../utils/testWrapper";
-import { ITW_ROUTES } from "../../../../../navigation/routes";
-import * as analytics from "../../../analytics";
-import { StoredConsentData } from "../../../store/types";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { ITW_ROUTES } from "../../../../navigation/routes";
+import * as analytics from "../../analytics";
+import { StoredConsentData } from "../../store/types";
 import { ItwConsentManagementDetailScreen } from "../ItwConsentManagementDetailScreen";
 
 const mockGoBack = jest.fn();
 const mockToastSuccess = jest.fn();
 
-jest.mock("../../../../../../../navigation/params/AppParamsList", () => ({
-  ...jest.requireActual("../../../../../../../navigation/params/AppParamsList"),
+jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
+  ...jest.requireActual("../../../../../../navigation/params/AppParamsList"),
   useIONavigation: () => ({ goBack: mockGoBack })
 }));
 

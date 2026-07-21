@@ -58,8 +58,8 @@ import { ItwPresentationCredentialDetailScreen } from "../presentation/details/s
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/details/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
-import { ItwConsentManagementDetailScreen } from "../presentation/proximity/management/screens/ItwConsentManagementDetailScreen.tsx";
-import { ItwConsentManagementScreen } from "../presentation/proximity/management/screens/ItwConsentManagementScreen.tsx";
+import { ItwConsentManagementDetailScreen } from "../presentation/proximity/screens/ItwConsentManagementDetailScreen.tsx";
+import { ItwConsentManagementScreen } from "../presentation/proximity/screens/ItwConsentManagementScreen.tsx";
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";

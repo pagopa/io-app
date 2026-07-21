@@ -70,7 +70,6 @@ describe("itwProximityReducer", () => {
         ...mdlConsent,
         savedAt: expect.any(String)
       });
-      expect(state.consentManagementCredentialTypes).toEqual({ MDL: true });
       expect(Object.keys(state.consents)).toHaveLength(1);
     });
 
@@ -81,7 +80,6 @@ describe("itwProximityReducer", () => {
         savedAt: "2026-07-19T12:00:00.000Z"
       };
       const stateWithConsent: ItwProximityState = {
-        consentManagementCredentialTypes: { MDL: true },
         consents: { [key]: storedConsent }
       };
 
@@ -135,7 +133,6 @@ describe("itwProximityReducer", () => {
     it("should remove the consent with the specified key", () => {
       const key = generateConsentKey(mdlConsent);
       const stateWithConsent: ItwProximityState = {
-        consentManagementCredentialTypes: { MDL: true },
         consents: { [key]: mdlConsent }
       };
 
@@ -145,17 +142,12 @@ describe("itwProximityReducer", () => {
       );
 
       expect(state.consents).toEqual({});
-      expect(state.consentManagementCredentialTypes).toEqual({ MDL: true });
     });
 
     it("should not affect other consents", () => {
       const mdlKey = generateConsentKey(mdlConsent);
       const multiKey = generateConsentKey(multiCredentialConsent);
       const stateWithConsents: ItwProximityState = {
-        consentManagementCredentialTypes: {
-          EuropeanHealthInsuranceCard: true,
-          MDL: true
-        },
         consents: {
           [mdlKey]: mdlConsent,
           [multiKey]: multiCredentialConsent
@@ -188,10 +180,6 @@ describe("itwProximityReducer", () => {
       const healthKey = generateConsentKey(healthCardOnlyConsent);
 
       const stateWithConsents: ItwProximityState = {
-        consentManagementCredentialTypes: {
-          EuropeanHealthInsuranceCard: true,
-          MDL: true
-        },
         consents: {
           [mdlKey]: mdlConsent,
           [multiKey]: multiCredentialConsent,
@@ -212,9 +200,6 @@ describe("itwProximityReducer", () => {
     it("should not affect consents without the specified credential type", () => {
       const healthKey = generateConsentKey(healthCardOnlyConsent);
       const stateWithConsent: ItwProximityState = {
-        consentManagementCredentialTypes: {
-          EuropeanHealthInsuranceCard: true
-        },
         consents: { [healthKey]: healthCardOnlyConsent }
       };
 
@@ -238,10 +223,6 @@ describe("itwProximityReducer", () => {
       const healthKey = generateConsentKey(healthCardOnlyConsent);
 
       const stateWithConsents: ItwProximityState = {
-        consentManagementCredentialTypes: {
-          EuropeanHealthInsuranceCard: true,
-          MDL: true
-        },
         consents: {
           [mdlKey]: mdlConsent,
           [multiKey]: multiCredentialConsentForSameRpId,
@@ -265,10 +246,6 @@ describe("itwProximityReducer", () => {
       const healthKey = generateConsentKey(healthCardOnlyConsent);
 
       const stateWithConsents: ItwProximityState = {
-        consentManagementCredentialTypes: {
-          EuropeanHealthInsuranceCard: true,
-          MDL: true
-        },
         consents: {
           [mdlKey]: mdlConsent,
           [healthKey]: healthCardOnlyConsent
@@ -282,21 +259,14 @@ describe("itwProximityReducer", () => {
 
       expect(Object.keys(state.consents)).toHaveLength(1);
       expect(state.consents[healthKey]).toEqual(healthCardOnlyConsent);
-      expect(state.consentManagementCredentialTypes).toEqual({
-        EuropeanHealthInsuranceCard: true
-      });
     });
   });
 
   describe("itwCredentialsReplaceByType", () => {
-    it("should remove consents and the marker for the replaced credential type", () => {
+    it("should remove consents for the replaced credential type", () => {
       const mdlKey = generateConsentKey(mdlConsent);
       const healthKey = generateConsentKey(healthCardOnlyConsent);
       const stateWithConsents: ItwProximityState = {
-        consentManagementCredentialTypes: {
-          EuropeanHealthInsuranceCard: true,
-          MDL: true
-        },
         consents: {
           [mdlKey]: mdlConsent,
           [healthKey]: healthCardOnlyConsent
@@ -313,9 +283,6 @@ describe("itwProximityReducer", () => {
 
       expect(state.consents).toEqual({
         [healthKey]: healthCardOnlyConsent
-      });
-      expect(state.consentManagementCredentialTypes).toEqual({
-        EuropeanHealthInsuranceCard: true
       });
     });
 
@@ -335,10 +302,6 @@ describe("itwProximityReducer", () => {
       const healthKey = generateConsentKey(healthCardOnlyConsent);
 
       const stateWithConsents: ItwProximityState = {
-        consentManagementCredentialTypes: {
-          EuropeanHealthInsuranceCard: true,
-          MDL: true
-        },
         consents: {
           [mdlKey]: mdlConsent,
           [healthKey]: healthCardOnlyConsent

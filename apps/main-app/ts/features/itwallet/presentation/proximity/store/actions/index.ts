@@ -1,6 +1,6 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-import { ConsentData, StoredConsentData } from "../types";
+import { ConsentData } from "../types";
 
 /**
  * Grants a proximity presentation consent for a specific RP, credential types,
@@ -9,12 +9,7 @@ import { ConsentData, StoredConsentData } from "../types";
  */
 export const itwGrantProximityConsent = createStandardAction(
   "ITW_PROXIMITY_CONSENT_GRANT"
-).map((consent: ConsentData): { payload: StoredConsentData } => ({
-  payload: {
-    ...consent,
-    savedAt: new Date().toISOString()
-  }
-}));
+)<ConsentData>();
 
 /**
  * Revokes a single consent by its deterministic key.

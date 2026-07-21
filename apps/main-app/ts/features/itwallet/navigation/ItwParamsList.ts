@@ -10,8 +10,8 @@ import { ItwPlaygroundParamsList } from "../playgrounds/navigation/ItwPlayground
 import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModalNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
-import { ItwConsentManagementDetailScreenNavigationParams } from "../presentation/proximity/management/screens/ItwConsentManagementDetailScreen";
-import { ItwConsentManagementScreenNavigationParams } from "../presentation/proximity/management/screens/ItwConsentManagementScreen";
+import { ItwConsentManagementDetailScreenNavigationParams } from "../presentation/proximity/screens/ItwConsentManagementDetailScreen";
+import { ItwConsentManagementScreenNavigationParams } from "../presentation/proximity/screens/ItwConsentManagementScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ITW_ROUTES } from "./routes";
 

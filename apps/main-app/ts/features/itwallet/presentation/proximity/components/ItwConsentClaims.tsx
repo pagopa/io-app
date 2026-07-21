@@ -2,18 +2,18 @@ import { VStack } from "@io-app/design-system";
 import { useMemo } from "react";
 import { View } from "react-native";
 
-import { useIOSelector } from "../../../../../../store/hooks";
+import { useIOSelector } from "../../../../../store/hooks";
 import {
   ClaimDisplayFormat,
   parseClaims
-} from "../../../../common/utils/itwClaimsUtils";
+} from "../../../common/utils/itwClaimsUtils";
 import {
   CredentialFormat,
   CredentialMetadata
-} from "../../../../common/utils/itwTypesUtils";
-import { makeSelectAllCredentials } from "../../../../credentials/store/selectors";
-import { ItwClaimsSelector } from "../../../common/components/ItwClaimsSelector";
-import { StoredConsentData } from "../../store/types";
+} from "../../../common/utils/itwTypesUtils";
+import { makeSelectAllCredentials } from "../../../credentials/store/selectors";
+import { ItwClaimsSelector } from "../../common/components/ItwClaimsSelector";
+import { StoredConsentData } from "../store/types";
 
 type Props = {
   consent: StoredConsentData;
