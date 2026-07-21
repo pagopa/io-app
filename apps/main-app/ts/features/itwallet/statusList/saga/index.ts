@@ -1,9 +1,8 @@
 import { SagaIterator } from "redux-saga";
 import { call, fork, select } from "typed-redux-saga/macro";
 
-import { registerStatusListProperties } from "../analytics";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors";
-
+import { registerStatusListProperties } from "../analytics";
 import { checkStatusListCoherenceSaga } from "./checkStatusListCoherenceSaga";
 
 export function* watchItwStatusListSaga(): SagaIterator {
