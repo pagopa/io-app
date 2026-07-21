@@ -1,6 +1,6 @@
 import { Banner, IOVisualCostants } from "@io-app/design-system";
 import I18n from "i18next";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -9,6 +9,11 @@ import {
   isFseDiscoveryBannerDismissableSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
+import {
+  trackLandingScreenMultiBannerClosure,
+  trackLandingScreenMultiBannerImpression,
+  trackLandingScreenMultiBannerTap
+} from "../../../landingScreenMultiBanner/utils/tracking";
 import { persistedDismissFseDiscoveryBanner } from "../store/actions";
 
 export const FseDiscoveryBanner = ({
@@ -20,11 +25,27 @@ export const FseDiscoveryBanner = ({
   const webUrl = useIOSelector(fseDiscoveryBannerWebUrlSelector);
   const isDismissable = useIOSelector(isFseDiscoveryBannerDismissableSelector);
 
-  const handleClose = () => {
+  useEffect(() => {
+    trackLandingScreenMultiBannerImpression(
+      "FSE_REDIRECT",
+      webUrl ?? "UNDEFINED_LINK"
+    );
+  }, [webUrl]);
+
+  const handleClose = useCallback(() => {
+    trackLandingScreenMultiBannerClosure(
+      "FSE_REDIRECT",
+      webUrl ?? "UNDEFINED_LINK"
+    );
     dispatch(persistedDismissFseDiscoveryBanner());
     handleOnClose();
-  };
+  }, [dispatch, handleOnClose, webUrl]);
+
   const handlePress = useCallback(() => {
+    trackLandingScreenMultiBannerTap(
+      "FSE_REDIRECT",
+      webUrl ?? "UNDEFINED_LINK"
+    );
     if (webUrl != null) {
       openWebUrl(webUrl);
     }
