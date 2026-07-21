@@ -3,7 +3,7 @@ import { useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { memo, useCallback } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { View } from "react-native";
 
 import IOMarkdown from "../../../../../components/IOMarkdown";
@@ -57,32 +57,6 @@ const excludedCredentialTypes = [
 ] as const;
 
 type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];
-
-// Expiring bottom sheet locale keys per credential type. Kept as explicit
-// literals (instead of a dynamically composed key) so they remain statically
-// analysable and discoverable. `satisfies` enforces one entry per non-excluded
-// credential type.
-const expiringBottomSheetKeys = {
-  [CredentialType.DRIVING_LICENSE]: {
-    title: "features.itWallet.presentation.bottomSheets.mDL.expiring.title",
-    content: "features.itWallet.presentation.bottomSheets.mDL.expiring.content"
-  },
-  [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: {
-    title:
-      "features.itWallet.presentation.bottomSheets.EuropeanHealthInsuranceCard.expiring.title",
-    content:
-      "features.itWallet.presentation.bottomSheets.EuropeanHealthInsuranceCard.expiring.content"
-  },
-  [CredentialType.EUROPEAN_DISABILITY_CARD]: {
-    title:
-      "features.itWallet.presentation.bottomSheets.EuropeanDisabilityCard.expiring.title",
-    content:
-      "features.itWallet.presentation.bottomSheets.EuropeanDisabilityCard.expiring.content"
-  }
-} as const satisfies Record<
-  Exclude<CredentialType, ExcludedCredentialTypes>,
-  { content: string; title: string }
->;
 
 const LICENSE_RENEWAL_URL = "https://www.mit.gov.it/rinnovo-patente";
 
@@ -265,7 +239,11 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     case CredentialAlertType.DOCUMENT_EXPIRING:
       // Only render when the credential type has a dedicated expiring bottom
       // sheet, so the static-key lookup inside the alert is always defined.
-      return credential.credentialType in expiringBottomSheetKeys ? (
+      return credential.credentialType === CredentialType.DRIVING_LICENSE ||
+        credential.credentialType ===
+          CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD ||
+        credential.credentialType ===
+          CredentialType.EUROPEAN_DISABILITY_CARD ? (
         <DocumentExpiringAlert
           credential={credential}
           onTrack={trackCredentialAlertEvent}
@@ -340,12 +318,12 @@ const JwtVerificationAlert = ({
   return (
     <Alert
       action={I18n.t(
-        `features.itWallet.presentation.alerts.jwtVerification.action`
+        "features.itWallet.presentation.alerts.jwtVerification.action"
       )}
       content={I18n.t(
-        `features.itWallet.presentation.alerts.jwtVerification.content.${
-          isExpired ? "jwtExpired" : "jwtExpiring"
-        }`,
+        isExpired
+          ? "features.itWallet.presentation.alerts.jwtVerification.content.jwtExpired"
+          : "features.itWallet.presentation.alerts.jwtVerification.content.jwtExpiring",
         { date: format(credential.jwt.expiration, "DD-MM-YYYY") }
       )}
       onPress={beginCredentialIssuance}
@@ -361,14 +339,42 @@ const DocumentExpiringAlert = ({
 }: CredentialStatusAlertProps) => {
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
   const showCta = credential.credentialType === CredentialType.DRIVING_LICENSE;
+  const credentialType = credential.credentialType as Exclude<
+    CredentialType,
+    ExcludedCredentialTypes
+  >;
 
-  const bottomSheetKeys =
-    expiringBottomSheetKeys[
-      credential.credentialType as Exclude<
-        CredentialType,
-        ExcludedCredentialTypes
-      >
-    ];
+  const bottomSheetCopy = useMemo(() => {
+    switch (credentialType) {
+      case CredentialType.DRIVING_LICENSE:
+        return {
+          title: I18n.t(
+            "features.itWallet.presentation.bottomSheets.mDL.expiring.title"
+          ),
+          content: I18n.t(
+            "features.itWallet.presentation.bottomSheets.mDL.expiring.content"
+          )
+        };
+      case CredentialType.EUROPEAN_DISABILITY_CARD:
+        return {
+          title: I18n.t(
+            "features.itWallet.presentation.bottomSheets.EuropeanDisabilityCard.expiring.title"
+          ),
+          content: I18n.t(
+            "features.itWallet.presentation.bottomSheets.EuropeanDisabilityCard.expiring.content"
+          )
+        };
+      case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
+        return {
+          title: I18n.t(
+            "features.itWallet.presentation.bottomSheets.EuropeanHealthInsuranceCard.expiring.title"
+          ),
+          content: I18n.t(
+            "features.itWallet.presentation.bottomSheets.EuropeanHealthInsuranceCard.expiring.content"
+          )
+        };
+    }
+  }, [credentialType]);
 
   const handleCtaPress = useCallback(() => {
     onTrack("press_cta");
@@ -378,10 +384,10 @@ const DocumentExpiringAlert = ({
   }, [onTrack]);
 
   const bottomSheet = useIOBottomSheetModal({
-    title: I18n.t(bottomSheetKeys.title),
+    title: bottomSheetCopy.title,
     component: (
       <VStack space={24}>
-        <IOMarkdown content={I18n.t(bottomSheetKeys.content)} />
+        <IOMarkdown content={bottomSheetCopy.content} />
         {showCta && (
           <View style={{ marginBottom: 16 }}>
             <IOButton
