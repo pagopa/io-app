@@ -8,6 +8,7 @@ import { storeLinkingUrl } from "../features/linking/actions";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 import { resetMessageArchivingAction } from "../features/messages/store/actions/archiving";
 import { isArchivingDisabledSelector } from "../features/messages/store/reducers/archiving";
+import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../features/payments/common/utils/const";
 import { initiateAarFlow } from "../features/pn/aar/store/actions";
 import { isSendAarLink } from "../features/pn/aar/utils/deepLinking";
 import { processUtmLink } from "../features/utmLink";
@@ -16,11 +17,11 @@ import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { shouldTriggerWalletUpdate } from "../utils/deepLinkUtils";
 
-// as of writing this, the only deep link that is dispatched after an app wake, but before the login's completion
-// is the CIEID login one.
-// it is then necessary to ignore it to avoid letting it rewrite other deep links that may be useful after login.
+// Deep links that are dispatched after an app wake but should not be stored or processed by the general navigation system.
+// These are handled by specific flows (e.g., CIE login, payment authorization callbacks).
 const deepLinkStorageBlacklist: Array<RegExp> = [
-  new RegExp(`^${IO_LOGIN_CIE_URL_SCHEME}`, "i")
+  new RegExp(`^${IO_LOGIN_CIE_URL_SCHEME}`, "i"),
+  new RegExp(`^${WALLET_WEBVIEW_OUTCOME_SCHEMA}:`, "i")
 ];
 const isDeepLinkBlackListed = (url: string): boolean =>
   deepLinkStorageBlacklist.some(regex => regex.test(url.trim()));

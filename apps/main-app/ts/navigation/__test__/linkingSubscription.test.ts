@@ -8,6 +8,7 @@ import { storeLinkingUrl } from "../../features/linking/actions";
 import * as LINKING_ANALYTICS from "../../features/linking/analytics";
 import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
 import * as ARCHIVING_SELECTORS from "../../features/messages/store/reducers/archiving";
+import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../features/payments/common/utils/const";
 import { initiateAarFlow } from "../../features/pn/aar/store/actions";
 import * as DEEP_LINKING from "../../features/pn/aar/utils/deepLinking";
 import * as UTM_LINK from "../../features/utmLink";
@@ -166,6 +167,23 @@ describe("linkingSubscription", () => {
     { url: `${IO_LOGIN_CIE_URL_SCHEME.toUpperCase()}`, shouldBlackList: true },
     {
       url: `https://example.com/${IO_LOGIN_CIE_URL_SCHEME}`,
+      shouldBlackList: false
+    },
+    { url: `${WALLET_WEBVIEW_OUTCOME_SCHEMA}://`, shouldBlackList: true },
+    {
+      url: `${WALLET_WEBVIEW_OUTCOME_SCHEMA}://api.platform.pagopa.it/outcome`,
+      shouldBlackList: true
+    },
+    {
+      url: `    ${WALLET_WEBVIEW_OUTCOME_SCHEMA}://outcome`,
+      shouldBlackList: true
+    },
+    {
+      url: `${WALLET_WEBVIEW_OUTCOME_SCHEMA.toUpperCase()}://outcome`,
+      shouldBlackList: true
+    },
+    {
+      url: `https://example.com/${WALLET_WEBVIEW_OUTCOME_SCHEMA}`,
       shouldBlackList: false
     },
     {
