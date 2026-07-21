@@ -18,7 +18,7 @@ jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => ({ navigate: mockNavigate })
 }));
 
-jest.mock("../../../../../common/hooks/useItwCredentialName", () => ({
+jest.mock("../../../../common/hooks/useItwCredentialName", () => ({
   useItwCredentialName: () => "Patente di guida"
 }));
 
