@@ -610,6 +610,17 @@ describe("isUserSelectedPaymentSelector", () => {
 });
 
 describe("userSelectedPaymentRptIdSelector", () => {
+  it("should return undefined when the message is undefined", () => {
+    const appState = appReducer(undefined, {} as Action);
+
+    const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
+      appState,
+      undefined
+    );
+
+    expect(paymentToCheckRptId).toBeUndefined();
+  });
+
   it("should return undefined when none is set", () => {
     const appState = appReducer(undefined, {} as Action);
     const messageDetails = {

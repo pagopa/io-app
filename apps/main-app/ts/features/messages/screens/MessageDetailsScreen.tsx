@@ -17,6 +17,7 @@ import {
   trackPNOptInMessageOpened
 } from "../../pn/analytics";
 import { extractPNOptInMessageInfoIfAvailable } from "../../pn/utils";
+import { MessageAttachmentsAlert } from "../components/MessageAttachment/MessageAttachmentsAlert";
 import { MessageDetailsAttachments } from "../components/MessageDetail/MessageDetailsAttachments";
 import { MessageDetailsBody } from "../components/MessageDetail/MessageDetailsBody";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
@@ -191,7 +192,6 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             />
             <MessageDetailsBody
               messageMarkdown={messageMarkdown}
-              scrollViewRef={scrollViewRef}
               serviceId={serviceId}
             />
             <MessageDetailsPayment
@@ -200,6 +200,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             />
             <VSpacer size={16} />
             <MessageDetailsAttachments
+              banner={<MessageAttachmentsAlert />}
               messageId={messageId}
               sendOpeningSource={"not_set"}
               sendUserType={"not_set"}

@@ -1,5 +1,4 @@
 import { fireEvent } from "@testing-library/react-native";
-import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -37,7 +36,7 @@ describe("ActiveSessionIdpLoginScreen", () => {
     jest
       .spyOn(useLollipopLoginSource, "useLollipopLoginSource")
       .mockReturnValue({
-        lollipopCheckStatus: { status: "none", url: O.none },
+        lollipopCheckStatus: { status: "none" },
         retryLollipopLogin: jest.fn(),
         shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
         webviewSource: { uri: "https://example.com/login" }
@@ -74,7 +73,7 @@ describe("ActiveSessionIdpLoginScreen", () => {
     jest
       .spyOn(useLollipopLoginSource, "useLollipopLoginSource")
       .mockReturnValue({
-        lollipopCheckStatus: { status: "none", url: O.none },
+        lollipopCheckStatus: { status: "none" },
         retryLollipopLogin: jest.fn(),
         shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
         webviewSource: undefined

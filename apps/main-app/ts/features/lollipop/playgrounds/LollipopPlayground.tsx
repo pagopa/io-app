@@ -10,7 +10,6 @@ import { LollipopOriginalURL } from "../../../../definitions/identity/LollipopOr
 import { LollipopSignature } from "../../../../definitions/identity/LollipopSignature";
 import { LollipopSignatureInput } from "../../../../definitions/identity/LollipopSignatureInput";
 import { ProblemJson } from "../../../../definitions/identity/ProblemJson";
-import { SignMessageResponse } from "../../../../definitions/identity/SignMessageResponse";
 import { identityClientManager } from "../../../api/IdentityClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
@@ -56,7 +55,7 @@ const LollipopPlayground = () => {
           keyInfo: {
             keyTag: keyTag.value,
             publicKey: maybePublicKey.value,
-            publicKeyThumbprint: toThumbprint(maybePublicKey)
+            publicKeyThumbprint: toThumbprint(maybePublicKey.value)
           },
           signBody: state.doSignBody
         });
@@ -81,7 +80,7 @@ const LollipopPlayground = () => {
                   verificationResult: `${status} - ${response.title}\n${response.detail}`
                 }));
               } else {
-                const response = res.value as SignMessageResponse;
+                const response = res.value;
                 setState(s => ({
                   ...s,
                   isVerificationSuccess: true,
@@ -121,7 +120,7 @@ const LollipopPlayground = () => {
           onClearButtonPress={() => {
             setState(INITIAL_STATE);
           }}
-          onSignButtonPress={onSignButtonPress}
+          onSignButtonPress={body => void onSignButtonPress(body)}
           playgroundState={state}
         />
       </ContentWrapper>

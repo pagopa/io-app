@@ -21,6 +21,8 @@ import { MixPanelCredential } from "../utils/types";
 import {
   buildItwBaseProperties,
   buildPidProperties,
+  buildThirdPartyCredentialProperty,
+  buildWalletListCredentialProperty,
   computeItwStatus
 } from "./basePropertyBuilder";
 import {
@@ -89,7 +91,6 @@ export const updateItwStatusAndPIDProperties = (state: GlobalState) => {
 /**
  * This function is used to set all to not_available / not_active when wallet
  * is revoked or when the wallet section is visualized in empty state
- * @param state
  */
 export const updatePropertiesWalletRevoked = () => {
   const credentialsResetProps = Object.fromEntries(
@@ -98,7 +99,9 @@ export const updatePropertiesWalletRevoked = () => {
 
   const finalProps: WalletRevokedAnalyticsEvent = {
     ...credentialsResetProps,
-    ITW_STATUS_V2: "not_active"
+    ITW_STATUS_V2: "not_active",
+    ITW_THIRD_PARTY_CREDENTIAL: "not_available",
+    ITW_WALLET_LIST_CREDENTIAL: "not_available"
   };
 
   forceUpdateItwProfileProperties(finalProps);
@@ -125,7 +128,6 @@ export const updateCredentialProperties = (
 /**
  * Track the reason for offline access on Mixpanel
  * @param action - The action that was dispatched
- * @param state - The current state of the application
  */
 export const updateOfflineAccessReason = (
   action: Action
@@ -142,4 +144,23 @@ export const updateOfflineAccessReason = (
         OFFLINE_ACCESS_REASON: "not_available"
       });
   }
+};
+
+/**
+ * Recomputes and syncs the aggregate IT Wallet credential properties
+ * (third-party + wallet list).
+ * It updates both Profile and Super properties so future events and user profile
+ * data stay aligned after credential store/remove operations and catalogue refresh.
+ */
+export const updateThirdPartyCredentialProperty = (state: GlobalState) => {
+  const thirdPartyCredentialProperty = buildThirdPartyCredentialProperty(state);
+  const walletListCredentialProperty = buildWalletListCredentialProperty(state);
+  forceUpdateItwProfileProperties({
+    ITW_THIRD_PARTY_CREDENTIAL: thirdPartyCredentialProperty,
+    ITW_WALLET_LIST_CREDENTIAL: walletListCredentialProperty
+  });
+  forceUpdateItwSuperProperties({
+    ITW_THIRD_PARTY_CREDENTIAL: thirdPartyCredentialProperty,
+    ITW_WALLET_LIST_CREDENTIAL: walletListCredentialProperty
+  });
 };
