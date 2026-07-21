@@ -227,7 +227,6 @@ export function createRootReducer(
             crossSessions: state.crossSessions,
             // data should be kept across multiple sessions
             entities: {
-              organizations: state.entities.organizations,
               paymentByRptId: state.entities.paymentByRptId,
               calendarEvents: state.entities.calendarEvents,
               _persist: state.entities._persist
