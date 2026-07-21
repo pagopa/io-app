@@ -55,7 +55,7 @@ const LollipopPlayground = () => {
           keyInfo: {
             keyTag: keyTag.value,
             publicKey: maybePublicKey.value,
-            publicKeyThumbprint: toThumbprint(maybePublicKey)
+            publicKeyThumbprint: toThumbprint(maybePublicKey.value)
           },
           signBody: state.doSignBody
         });

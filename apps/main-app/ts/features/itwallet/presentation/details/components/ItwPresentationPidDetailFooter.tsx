@@ -4,6 +4,7 @@ import I18n from "i18next";
 import { memo } from "react";
 import { Alert, View } from "react-native";
 
+import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard";
 import { trackItwStartDeactivation } from "../../../analytics";
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
@@ -38,6 +39,7 @@ const ItwPresentationPidDetailFooter = () => {
       ]
     );
   };
+  const guardedHandleRevokePress = useOfflineToastGuard(handleRevokePress);
 
   return (
     <View>
@@ -52,7 +54,7 @@ const ItwPresentationPidDetailFooter = () => {
       <ListItemAction
         icon="trashcan"
         label={I18n.t("features.itWallet.presentation.itWalletId.cta.revoke")}
-        onPress={handleRevokePress}
+        onPress={guardedHandleRevokePress}
         variant="danger"
       />
     </View>

@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.37.0-rc.9](https://github.com/pagopa/io-app/compare/3.37.0-rc.8...3.37.0-rc.9) (2026-07-20)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4157](https://pagopa.atlassian.net/browse/SIW-4157)] Track wallet list credentials ([#8102](https://github.com/pagopa/io-app/issues/8102)) ([91b3dc5](https://github.com/pagopa/io-app/commit/91b3dc553e233d40ab386ada99eb70552d4a9fcf))
+* [[SIW-4472](https://pagopa.atlassian.net/browse/SIW-4472)] add mixpanel events for proximity flow - part 1 ([#8303](https://github.com/pagopa/io-app/issues/8303)) ([febfee4](https://github.com/pagopa/io-app/commit/febfee427d7b343fc3c393efcb850ed3a90b0c8a))
+* **IT Wallet:** [[SIW-4638](https://pagopa.atlassian.net/browse/SIW-4638),[SIW-4678](https://pagopa.atlassian.net/browse/SIW-4678)] Hide L2-fallback engagement banner for non-ITW-eligible users ([#8308](https://github.com/pagopa/io-app/issues/8308)) ([2ce0d5d](https://github.com/pagopa/io-app/commit/2ce0d5d217a18f1fcf10fc50ccc56d96bcb9b8a9))
+
+
+### Bug Fixes
+
+* [[IOCOM-3272](https://pagopa.atlassian.net/browse/IOCOM-3272)] thirdPartyById selector caching regression ([#8330](https://github.com/pagopa/io-app/issues/8330)) ([56e2580](https://github.com/pagopa/io-app/commit/56e2580f4640141e553f5fb1f23c887e9b1c1456))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4514](https://pagopa.atlassian.net/browse/SIW-4514)] Align IT Wallet offline features ([#8228](https://github.com/pagopa/io-app/issues/8228)) ([d242319](https://github.com/pagopa/io-app/commit/d24231980da20249557231257c5bd434c45f16e9))
+* **IT-Wallet:** [[SIW-4622](https://pagopa.atlassian.net/browse/SIW-4622)] Re-enable `usePreventScreenCapture` ([#8281](https://github.com/pagopa/io-app/issues/8281)) ([d4bb585](https://github.com/pagopa/io-app/commit/d4bb585dcbc75577d7b0cd8f1353f05b08db3fc4)), closes [pagopa/io-app#8264](https://github.com/pagopa/io-app/issues/8264)
+* [[IOAPPX-523](https://pagopa.atlassian.net/browse/IOAPPX-523)] Remove unused assets ([#8322](https://github.com/pagopa/io-app/issues/8322)) ([4cc98d5](https://github.com/pagopa/io-app/commit/4cc98d5e196735f2ae1883bfc24cd4cf5d663f80))
+* [[IOCOM-3130](https://pagopa.atlassian.net/browse/IOCOM-3130)] removal of `MessageMarkdown` ([#8319](https://github.com/pagopa/io-app/issues/8319)) ([d9a3d92](https://github.com/pagopa/io-app/commit/d9a3d92c1c74473499bec13ec6d60c86a47d54ec))
+* [[IOPLT-1945](https://pagopa.atlassian.net/browse/IOPLT-1945)] Enforce ESLint `no-dynamic-delete` rule as error ([#8244](https://github.com/pagopa/io-app/issues/8244)) ([63bc617](https://github.com/pagopa/io-app/commit/63bc6176f1899122d9ab3ae169b6c0772ab2cb61))
+* **IT-Wallet:** [[SIW-4669](https://pagopa.atlassian.net/browse/SIW-4669)] Re-enable PRE env status banner ([#8290](https://github.com/pagopa/io-app/issues/8290)) ([b3d724c](https://github.com/pagopa/io-app/commit/b3d724cdcfca1cb64a5d43fb70d9558b4d067c49)), closes [pagopa/io-app#8284](https://github.com/pagopa/io-app/issues/8284)
+
 ## [3.37.0-rc.8](https://github.com/pagopa/io-app/compare/3.37.0-rc.7...3.37.0-rc.8) (2026-07-17)
 
 
