@@ -113,7 +113,7 @@ describe("entities reducer migrations", () => {
         all: [{ fiscalCode: "12345678901", name: "Organization 1" }],
         nameByFiscalCode: { "12345678901": "Organization 1" }
       },
-      messages: { byId: {} },
+      calendarEvents: { byMessageId: {} },
       paymentByRptId: {}
     };
 
@@ -121,7 +121,7 @@ describe("entities reducer migrations", () => {
 
     expect(newState).toEqual({
       _persist: { version: 4, rehydrated: false },
-      messages: { byId: {} },
+      calendarEvents: { byMessageId: {} },
       paymentByRptId: {}
     });
   });
@@ -129,14 +129,14 @@ describe("entities reducer migrations", () => {
   it("should migrate the store to version 5 without errors if organizations is already missing", async () => {
     const previousState = {
       _persist: { version: 4, rehydrated: false },
-      messages: { byId: {} }
+      calendarEvents: { byMessageId: {} }
     };
 
     const newState = await migrate(previousState, 5);
 
     expect(newState).toEqual({
       _persist: { version: 4, rehydrated: false },
-      messages: { byId: {} }
+      calendarEvents: { byMessageId: {} }
     });
   });
 });
