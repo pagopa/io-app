@@ -3541,7 +3541,8 @@
         },
         "credentialPreview": {
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",
-          "title": "Controlla i dettagli",
+          "title": "{{credential}}: ecco l'anteprima dei tuoi dati",
+          "detailsTitle": "Controlla i dettagli",
           "subtitle": "Se i dati sono corretti, aggiungi il documento al Portafoglio.",
           "bottomSheet": {
             "about": {

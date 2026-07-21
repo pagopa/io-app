@@ -36,7 +36,9 @@ describe("ItwIssuanceCredentialPreviewScreen", () => {
     });
 
     expect(
-      getByText(I18n.t("features.itWallet.issuance.credentialPreview.title"))
+      getByText(
+        I18n.t("features.itWallet.issuance.credentialPreview.detailsTitle")
+      )
     ).toBeTruthy();
     expect(
       getByText(I18n.t("features.itWallet.issuance.credentialPreview.subtitle"))

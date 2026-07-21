@@ -173,7 +173,9 @@ const ContentView = ({ credential }: ContentViewProps) => {
       <ContentWrapper style={{ flexGrow: 1 }}>
         <VStack space={8}>
           <H2>
-            {I18n.t("features.itWallet.issuance.credentialPreview.title")}
+            {I18n.t(
+              "features.itWallet.issuance.credentialPreview.detailsTitle"
+            )}
           </H2>
           <Body>
             {I18n.t("features.itWallet.issuance.credentialPreview.subtitle")}
