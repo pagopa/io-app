@@ -35,7 +35,7 @@ export const useLollipopLoginSource = (
   loginUri?: string
 ) => {
   const [lollipopCheckStatus, setLollipopCheckStatus] =
-    useState<LollipopCheckStatus>({ status: "none", url: O.none });
+    useState<LollipopCheckStatus>({ status: "none" });
   const [webviewSource, setWebviewSource] = useState<undefined | WebViewSource>(
     undefined
   );
@@ -61,7 +61,7 @@ export const useLollipopLoginSource = (
         () => {
           setLollipopCheckStatus({
             status: "trusted",
-            url: O.some(eventUrl)
+            url: eventUrl
           });
           setWebviewSource({ uri: eventUrl });
         },
@@ -69,7 +69,7 @@ export const useLollipopLoginSource = (
           trackLollipopIdpLoginFailure(reason);
           setLollipopCheckStatus({
             status: "untrusted",
-            url: O.some(eventUrl)
+            url: eventUrl
           });
           onLollipopCheckFailure();
         }
@@ -137,7 +137,7 @@ export const useLollipopLoginSource = (
   ]);
 
   const retryLollipopLogin = useCallback(() => {
-    setLollipopCheckStatus({ status: "none", url: O.none });
+    setLollipopCheckStatus({ status: "none" });
     // We must set webviewSource to undefined before requesting
     // any changes to loginSource otherwise on the next component
     // refresh (triggered by a different value of loginSource),
@@ -162,7 +162,7 @@ export const useLollipopLoginSource = (
             // Start Lollipop verification process
             setLollipopCheckStatus({
               status: "checking",
-              url: O.some(url)
+              url
             });
             verifyLollipop(url, urlEncodedSamlRequest, maybeEphemeralPublicKey);
             // Prevent the WebView from loading the current URL (its

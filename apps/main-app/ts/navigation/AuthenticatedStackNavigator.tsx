@@ -70,8 +70,7 @@ import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcAppVersionSupportedSelector,
-  isCGNEnabledSelector,
-  isFciEnabledSelector
+  isCGNEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
 import { AppParamsList } from "./params/AppParamsList";
@@ -87,7 +86,6 @@ const hideHeaderOptions = {
 const AuthenticatedStackNavigator = () => {
   const cdcEnabled = useIOSelector(isCdcAppVersionSupportedSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
-  const isFciEnabled = useIOSelector(isFciEnabledSelector);
 
   return (
     <Stack.Navigator
@@ -258,13 +256,11 @@ const AuthenticatedStackNavigator = () => {
         name={FIMS_ROUTES.MAIN}
         options={hideHeaderOptions}
       />
-      {isFciEnabled && (
-        <Stack.Screen
-          component={FciStackNavigator}
-          name={FCI_ROUTES.MAIN}
-          options={hideHeaderOptions}
-        />
-      )}
+      <Stack.Screen
+        component={FciStackNavigator}
+        name={FCI_ROUTES.MAIN}
+        options={hideHeaderOptions}
+      />
 
       <Stack.Screen
         component={IdPayOnboardingNavigator}
