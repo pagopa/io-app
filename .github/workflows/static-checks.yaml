@@ -12,7 +12,6 @@ jobs:
     environment: dev
     permissions:
       contents: read
-      deployments: write
     concurrency:
       group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
