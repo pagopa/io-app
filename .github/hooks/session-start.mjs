@@ -4,11 +4,10 @@ import { execFileSync } from "node:child_process";
 
 import { readPayload } from "./shared.mjs";
 
-const payload = await readPayload();
+await readPayload();
 
-if (payload.source !== "resume") {
-  execFileSync("pnpm", ["install"], { stdio: "inherit" });
-  execFileSync("pnpm", ["nx", "run", "@io-app/main-app:sync"], {
-    stdio: "inherit"
-  });
-}
+execFileSync("pnpm", ["install", "--ignore-scripts"], { stdio: "inherit" });
+execFileSync("pnpm", ["prepare"], { stdio: "inherit" });
+execFileSync("pnpm", ["nx", "run", "@io-app/main-app:generate"], {
+  stdio: "inherit"
+});
