@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": "node .github/hooks/session-start.mjs",
+        "powershell": "node .github/hooks/session-start.mjs",
+        "timeoutSec": 1800
+      }
+    ],
+    "PostToolUse": [
+      {
+        "type": "command",
+        "matcher": "Edit|Write",
+        "bash": "node .github/hooks/post-edit.mjs",
+        "powershell": "node .github/hooks/post-edit.mjs",
+        "timeoutSec": 120
+      }
+    ],
+    "sessionEnd": [
+      {
+        "type": "command",
+        "bash": "node .github/hooks/session-end.mjs",
+        "powershell": "node .github/hooks/session-end.mjs",
+        "timeoutSec": 900
+      }
+    ]
+  }
+}
