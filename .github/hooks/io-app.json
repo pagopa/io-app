@@ -8,11 +8,11 @@
         "timeoutSec": 1800
       }
     ],
-    "sessionEnd": [
+    "agentStop": [
       {
         "type": "command",
-        "bash": "node .github/hooks/scripts/session-end.mjs",
-        "powershell": "node .github/hooks/scripts/session-end.mjs",
+        "bash": "node .github/hooks/scripts/agent-stop.mjs",
+        "powershell": "node .github/hooks/scripts/agent-stop.mjs",
         "timeoutSec": 900
       }
     ]
