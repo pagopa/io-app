@@ -1,5 +1,6 @@
 import { Divider, IOVisualCostants, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { StackActions } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useEffect, useState } from "react";
 import { FlatList } from "react-native";
@@ -31,6 +32,7 @@ import {
   fciQtspPrivacyTextSelector,
   fciQtspPrivacyUrlSelector
 } from "../../store/reducers/fciQtspClauses";
+import { fciQtspErrorKindSelector } from "../../store/selectors/fciErrors";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -46,6 +48,7 @@ const FciQtspClausesScreen = () => {
   const isPollFilledDocumentReady = useIOSelector(
     fciPollFilledDocumentReadySelector
   );
+  const qtspErrorKind = useIOSelector(fciQtspErrorKindSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
 
   const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);
@@ -55,15 +58,25 @@ const FciQtspClausesScreen = () => {
     isServicePreferenceResponseSuccess(servicePreferenceValue) &&
     servicePreferenceValue.value.inbox;
 
-  useOnFirstRender(() => {
-    trackFciQtspTos();
-  });
+  // tracks only when polling is finished
+  useOnFirstRender(
+    () => {
+      trackFciQtspTos();
+    },
+    () => !qtspErrorKind && isPollFilledDocumentReady
+  );
 
   useEffect(() => {
     if (fciServiceId) {
       dispatch(loadServicePreference.request(fciServiceId as ServiceId));
     }
   }, [dispatch, fciServiceId]);
+
+  useEffect(() => {
+    if (qtspErrorKind) {
+      navigation.dispatch(StackActions.replace(FCI_ROUTES.QTSP_ERROR));
+    }
+  }, [qtspErrorKind, navigation]);
 
   const { present: showCheckService, bottomSheet: fciCheckService } =
     useFciCheckService();
@@ -89,7 +102,7 @@ const FciQtspClausesScreen = () => {
     headerShown: isPollFilledDocumentReady
   });
 
-  if (!isPollFilledDocumentReady) {
+  if (qtspErrorKind || !isPollFilledDocumentReady) {
     return <LoadingComponent testID={"FciLoadingScreenTestID"} />;
   }
 

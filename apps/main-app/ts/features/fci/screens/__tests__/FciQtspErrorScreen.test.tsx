@@ -1,14 +1,16 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
 
+import * as mixpanelModule from "../../../../mixpanel";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
+import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { FciQtspErrorScreenNavigationParams } from "../../navigation/params";
-import { FCI_ROUTES } from "../../navigation/routes";
-import { FciQtspErrorKind } from "../../saga";
-import { fciSignatureRequestFromId } from "../../store/actions";
+import {
+  fciPollFilledDocument,
+  fciSignatureRequestFromId
+} from "../../store/actions";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import FciQtspErrorScreen from "../failure/FciQtspErrorScreen";
 
@@ -24,14 +26,40 @@ describe("FciQtspErrorScreen", () => {
 
   it("should render the screen", () => {
     const store = createTestStore();
-    const component = renderComponent(store, { errorKind: "qtsp_clauses" });
+    const component = renderComponent(store);
     expect(component.getByTestId("FciQtspErrorTestID")).not.toBeNull();
+  });
+
+  describe("failure screen-view tracking", () => {
+    const mixpanelTrackSpy = jest
+      .spyOn(mixpanelModule, "mixpanelTrack")
+      .mockImplementation();
+
+    it("should not track the screen view when there is no document-preparation error", () => {
+      const store = createTestStore();
+      renderComponent(store);
+      expect(mixpanelTrackSpy).not.toHaveBeenCalled();
+    });
+
+    it("should track the screen view with the failing step when there is a document-preparation error", () => {
+      const store = createTestStore();
+      store.dispatch(
+        fciPollFilledDocument.failure(getNetworkError(new Error()))
+      );
+      renderComponent(store);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "FCI_POLLING_FAILURE",
+        expect.objectContaining({
+          fci_backend_error: "FCI_POLL_FILLED_DOCUMENT_FAILURE"
+        })
+      );
+    });
   });
 
   describe("without signatureRequestId", () => {
     it("should show only the close button", () => {
       const store = createTestStore();
-      const component = renderComponent(store, { errorKind: "qtsp_clauses" });
+      const component = renderComponent(store);
       expect(
         component.queryByTestId("FciQtspErrorTestIDCloseButton")
       ).not.toBeNull();
@@ -43,9 +71,7 @@ describe("FciQtspErrorScreen", () => {
     it("should dispatch fciEndRequest on close button press", () => {
       const store = createTestStore();
       const dispatchSpy = jest.spyOn(store, "dispatch");
-      const component = renderComponent(store, {
-        errorKind: "filled_document"
-      });
+      const component = renderComponent(store);
       fireEvent.press(component.getByTestId("FciQtspErrorTestIDCloseButton"));
       expect(dispatchSpy).toHaveBeenCalledWith(
         expect.objectContaining({ type: "FCI_END_REQUEST" })
@@ -59,9 +85,7 @@ describe("FciQtspErrorScreen", () => {
       store.dispatch(
         fciSignatureRequestFromId.success({ ...mockSignatureRequestDetailView })
       );
-      const component = renderComponent(store, {
-        errorKind: "poll_filled_document"
-      });
+      const component = renderComponent(store);
       expect(
         component.queryByTestId("FciQtspErrorTestIDRetryButton")
       ).not.toBeNull();
@@ -76,46 +100,19 @@ describe("FciQtspErrorScreen", () => {
         fciSignatureRequestFromId.success({ ...mockSignatureRequestDetailView })
       );
       const dispatchSpy = jest.spyOn(store, "dispatch");
-      const component = renderComponent(store, { errorKind: "qtsp_clauses" });
+      const component = renderComponent(store);
       fireEvent.press(component.getByTestId("FciQtspErrorTestIDRetryButton"));
       expect(dispatchSpy).toHaveBeenCalledWith(
         expect.objectContaining({ type: "FCI_SIGNATURE_DETAIL_RETRY_REQUEST" })
       );
     });
   });
-
-  describe("errorKind param", () => {
-    type ErrorKindScenario = {
-      name: string;
-      params: FciQtspErrorScreenNavigationParams;
-    };
-
-    const scenarios: ReadonlyArray<ErrorKindScenario> = (
-      [
-        "qtsp_clauses",
-        "filled_document",
-        "poll_filled_document"
-      ] as ReadonlyArray<FciQtspErrorKind>
-    ).map(errorKind => ({ name: errorKind, params: { errorKind } }));
-
-    test.each(scenarios)(
-      "should render the screen with $name errorKind",
-      ({ params }) => {
-        const store = createTestStore();
-        const component = renderComponent(store, params);
-        expect(component.getByTestId("FciQtspErrorTestID")).not.toBeNull();
-      }
-    );
-  });
 });
 
-const renderComponent = (
-  store: Store,
-  params: FciQtspErrorScreenNavigationParams
-) =>
+const renderComponent = (store: Store) =>
   renderScreenWithNavigationStoreContext<GlobalState>(
     () => <FciQtspErrorScreen />,
-    FCI_ROUTES.QTSP_ERROR,
-    params,
+    "FCI_QTSP_ERROR_TEST",
+    {},
     store
   );

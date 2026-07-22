@@ -16,6 +16,7 @@ import {
   fciStartRequest,
   fciUpdateDocumentSignaturesRequest
 } from "../store/actions";
+import { FciQtspErrorKind } from "../store/selectors/fciErrors";
 
 export const trackFciLoginRequest = () =>
   mixpanelTrack("FCI_LOGIN_REQUEST", buildEventProperties("UX", "screen_view"));
@@ -332,10 +333,12 @@ export const trackFciBottomsheetMessagePermissionDeclined = () =>
     buildEventProperties("UX", "action")
   );
 
-export const trackFciPollingFailureScreenView = () =>
+export const trackFciPollingFailureScreenView = (
+  fci_backend_error: FciQtspErrorKind
+) =>
   mixpanelTrack(
     "FCI_POLLING_FAILURE",
-    buildEventProperties("KO", "screen_view")
+    buildEventProperties("KO", "screen_view", { fci_backend_error })
   );
 
 export const trackFciPollingFailureAction = (

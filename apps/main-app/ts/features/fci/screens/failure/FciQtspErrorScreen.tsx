@@ -12,12 +12,18 @@ import {
   fciSignatureRequestRetryFromId
 } from "../../store/actions";
 import { fciSignatureRequestIdSelector } from "../../store/reducers/fciSignatureRequest.ts";
+import { fciQtspErrorKindSelector } from "../../store/selectors/fciErrors";
 
 const FciQtspErrorScreen = () => {
   const dispatch = useIODispatch();
   const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
+  const errorKind = useIOSelector(fciQtspErrorKindSelector);
 
-  useOnFirstRender(trackFciPollingFailureScreenView);
+  useOnFirstRender(() => {
+    if (errorKind) {
+      trackFciPollingFailureScreenView(errorKind);
+    }
+  });
 
   const closeButtonProps = {
     testID: "FciQtspErrorTestIDCloseButton",

@@ -58,7 +58,6 @@ import {
   fciDocumentSignatureFieldsSelector,
   fciSignatureDetailDocumentsSelector
 } from "../../store/reducers/fciSignatureRequest";
-import { fciHasDocumentPreparationErrorSelector } from "../../store/selectors/fciErrors";
 import {
   getClauseLabel,
   getRequiredSignatureFields,
@@ -85,9 +84,6 @@ const FciSignatureFieldsScreen = () => {
     fciDocumentSignaturesSelector
   );
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
-  const hasDocumentPreparationError = useIOSelector(
-    fciHasDocumentPreparationErrorSelector
-  );
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const [isClausesChecked, setIsClausesChecked] = useState(false);
@@ -113,12 +109,6 @@ const FciSignatureFieldsScreen = () => {
     setIsPreviewModalVisible(false);
     hideModal();
   }, [hideModal]);
-
-  useEffect(() => {
-    if (hasDocumentPreparationError && isPreviewModalVisible) {
-      dismissModal();
-    }
-  }, [hasDocumentPreparationError, isPreviewModalVisible, dismissModal]);
 
   // Dismiss the modal on unmount. (needed for StackActions.replace on errors)
   useEffect(
