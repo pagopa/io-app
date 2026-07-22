@@ -211,7 +211,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
                                 "justifyContent": "center",
                                 "left": 0,
@@ -222,7 +221,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               },
                               {
                                 "backgroundColor": "rgba(255,255,255,1)",
-                                "opacity": 1,
                               },
                             ]
                           }
@@ -1778,7 +1776,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
                                 "justifyContent": "center",
                                 "left": 0,
@@ -1789,7 +1786,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               },
                               {
                                 "backgroundColor": "rgba(255,255,255,1)",
-                                "opacity": 1,
                               },
                             ]
                           }
