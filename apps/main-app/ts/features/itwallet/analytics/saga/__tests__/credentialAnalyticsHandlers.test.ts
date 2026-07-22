@@ -17,6 +17,7 @@ import {
 } from "../../properties/propertyUpdaters";
 import {
   handleCredentialRemovedAnalytics,
+  handleCredentialsCatalogueLoadedAnalytics,
   handleCredentialStoredAnalytics
 } from "../credentialAnalyticsHandlers";
 
@@ -61,6 +62,7 @@ const mockedMdl: CredentialMetadata = {
 };
 
 const store: DeepPartial<GlobalState> = {
+  remoteConfig: O.none,
   features: {
     itWallet: {
       issuance: { integrityKeyTag: O.some("key-tag") },
@@ -133,5 +135,15 @@ describe("credentialAnalyticsHandlers", () => {
 
     expect(updateCredentialProperties).not.toHaveBeenCalled();
     expect(updateThirdPartyCredentialProperty).not.toHaveBeenCalled();
+  });
+
+  it("updates aggregate credential properties when the catalogue is loaded", async () => {
+    await expectSaga(handleCredentialsCatalogueLoadedAnalytics)
+      .withState(store)
+      .provide([[matchers.select(), store]])
+      .run();
+
+    expect(updateThirdPartyCredentialProperty).toHaveBeenCalledTimes(1);
+    expect(updateThirdPartyCredentialProperty).toHaveBeenCalledWith(store);
   });
 });
