@@ -192,7 +192,6 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             />
             <MessageDetailsBody
               messageMarkdown={messageMarkdown}
-              scrollViewRef={scrollViewRef}
               serviceId={serviceId}
             />
             <MessageDetailsPayment

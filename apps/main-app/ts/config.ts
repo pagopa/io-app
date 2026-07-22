@@ -104,9 +104,6 @@ export const premiumMessagesOptInEnabled =
 export const scanAdditionalBarcodesEnabled =
   Config.SCAN_ADDITIONAL_BARCODES_ENABLED === "YES";
 
-// FCI (Firma con IO) Feature Flag
-export const fciEnabled = Config.FCI_ENABLED === "YES";
-
 // SPID Relay State
 export const spidRelayState = Config.SPID_RELAY_STATE;
 

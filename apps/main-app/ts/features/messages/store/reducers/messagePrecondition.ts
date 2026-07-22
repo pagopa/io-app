@@ -12,32 +12,23 @@ import {
   loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   scheduledPreconditionStatusAction,
-  shownPreconditionStatusAction,
   updateRequiredPreconditionStatusAction
 } from "../actions/preconditions";
 
 export type MessagePreconditionStatus =
   | ErrorPreconditionStatus
   | IdlePreconditionStatus
-  | LoadingContentPreconditionStatus
   | RetrievingDataPreconditionStatus
   | ScheduledPreconditionStatus
   | ShownPreconditionStatus
   | UpdateRequiredPreconditionStatus;
 
-type ContentPreconditionStatus =
-  | LoadingContentPreconditionStatus
-  | ShownPreconditionStatus;
 type ErrorPreconditionStatus = MessagePreconditionData & {
   reason: string;
   state: "error";
 };
 type IdlePreconditionStatus = {
   state: "idle";
-};
-type LoadingContentPreconditionStatus = MessagePreconditionData & {
-  content: ThirdPartyMessagePrecondition;
-  state: "loadingContent";
 };
 type MessagePreconditionData = {
   categoryTag: MessageCategory["tag"];
@@ -82,11 +73,7 @@ export const preconditionReducer = (
 ): MessagePreconditionStatus => {
   switch (action.type) {
     case getType(errorPreconditionStatusAction):
-      if (
-        state.state === "loadingContent" ||
-        state.state === "retrievingData" ||
-        state.state === "shown"
-      ) {
+      if (state.state === "retrievingData" || state.state === "shown") {
         return {
           state: "error",
           messageId: state.messageId,
@@ -104,7 +91,7 @@ export const preconditionReducer = (
     case getType(loadingContentPreconditionStatusAction):
       if (state.state === "retrievingData") {
         return {
-          state: action.payload.skipLoading ? "shown" : "loadingContent",
+          state: "shown",
           messageId: state.messageId,
           categoryTag: state.categoryTag,
           content: action.payload.content
@@ -132,17 +119,6 @@ export const preconditionReducer = (
       }
       break;
 
-    case getType(shownPreconditionStatusAction):
-      if (state.state === "loadingContent") {
-        return {
-          state: "shown",
-          messageId: state.messageId,
-          categoryTag: state.categoryTag,
-          content: state.content
-        };
-      }
-      break;
-
     case getType(updateRequiredPreconditionStatusAction):
       if (state.state === "scheduled") {
         return { state: "updateRequired" };
@@ -155,8 +131,7 @@ export const preconditionReducer = (
 
 const hasPreconditionContent = (
   precondition: MessagePreconditionStatus
-): precondition is ContentPreconditionStatus =>
-  precondition.state === "loadingContent" || precondition.state === "shown";
+): precondition is ShownPreconditionStatus => precondition.state === "shown";
 
 const hasPreconditionMessage = (
   precondition: MessagePreconditionStatus
@@ -226,11 +201,6 @@ const PRECONDITION_CONTENT_LAYOUT_BY_STATE: Record<
     footer: "view"
   },
   idle: undefined,
-  loadingContent: {
-    title: "header",
-    content: "content",
-    footer: "view"
-  },
   retrievingData: {
     title: "loading",
     content: "loading",
