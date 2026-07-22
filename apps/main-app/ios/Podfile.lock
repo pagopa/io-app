@@ -2600,8 +2600,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-randombytes (3.6.2):
-    - React-Core
   - react-native-safe-area-context (5.7.0):
     - boost
     - DoubleConversion
@@ -4028,7 +4026,6 @@ DEPENDENCIES:
   - react-native-pdf (from `../../../node_modules/react-native-pdf`)
   - react-native-quick-base64 (from `../../../node_modules/react-native-quick-base64`)
   - react-native-quick-crypto (from `../../../node_modules/react-native-quick-crypto`)
-  - react-native-randombytes (from `../../../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
   - react-native-screen-brightness (from `../../../node_modules/react-native-screen-brightness`)
   - "react-native-skia (from `../../../node_modules/@shopify/react-native-skia`)"
@@ -4294,8 +4291,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-quick-base64"
   react-native-quick-crypto:
     :path: "../../../node_modules/react-native-quick-crypto"
-  react-native-randombytes:
-    :path: "../../../node_modules/react-native-randombytes"
   react-native-safe-area-context:
     :path: "../../../node_modules/react-native-safe-area-context"
   react-native-screen-brightness:
@@ -4514,7 +4509,6 @@ SPEC CHECKSUMS:
   react-native-pdf: edc236298f13f1609e42d41e45b8b6ea88ed10f9
   react-native-quick-base64: 6568199bb2ac8e72ecdfdc73a230fbc5c1d3aac4
   react-native-quick-crypto: dac9db2adb0a61b4881909b6db7c51eaaada66a8
-  react-native-randombytes: 4eeddad82d1fd57adda1cd5beffe67d041c9d6de
   react-native-safe-area-context: befb5404eb8a16fdc07fa2bebab3568ecabcbb8a
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
   react-native-skia: 80db9e2f8f8b16f8f22b563f0a3874c14026c1e2
