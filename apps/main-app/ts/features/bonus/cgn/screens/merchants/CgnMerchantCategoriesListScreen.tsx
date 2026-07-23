@@ -3,6 +3,7 @@ import {
   ContentWrapper,
   Divider,
   HSpacer,
+  IOSpacingScale,
   IOToast,
   ListItemAction,
   VSpacer
@@ -43,6 +44,7 @@ type RenderableCategory = {
 };
 
 const CATEGORY_CARDS_PER_ROW = 2;
+const CATEGORY_CARD_SPACING: IOSpacingScale = 8;
 
 const getRenderableCategories = (
   categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount>
@@ -163,6 +165,7 @@ export const CgnMerchantCategoriesListScreen = () => {
           });
         }}
         testID={`cgn-category-card-${category.productCategory}`}
+        textColor={specs.textColor}
       />
     );
   };
@@ -181,7 +184,7 @@ export const CgnMerchantCategoriesListScreen = () => {
       <View style={styles.row}>
         {categoryRow.categories.map((renderable, columnIndex) => (
           <Fragment key={renderable.category.productCategory}>
-            {columnIndex > 0 && <HSpacer size={16} />}
+            {columnIndex > 0 && <HSpacer size={CATEGORY_CARD_SPACING} />}
             <View style={styles.cardWrapper}>
               {renderCategoryCard(
                 renderable,
@@ -193,7 +196,7 @@ export const CgnMerchantCategoriesListScreen = () => {
         ))}
         {categoryRow.categories.length === 1 && (
           <>
-            <HSpacer size={16} />
+            <HSpacer size={CATEGORY_CARD_SPACING} />
             <View style={styles.cardWrapper} />
           </>
         )}
@@ -209,7 +212,7 @@ export const CgnMerchantCategoriesListScreen = () => {
   return {
     data: categoriesRows,
     renderItem: renderCategoryRow,
-    ItemSeparatorComponent: () => <VSpacer size={16} />,
+    ItemSeparatorComponent: () => <VSpacer size={CATEGORY_CARD_SPACING} />,
     refreshControlProps: {
       refreshing: isPullRefresh,
       onRefresh: onPullRefresh

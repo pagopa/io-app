@@ -19,12 +19,13 @@ export type CgnMerchantCardProps = WithTestID<{
   isNew?: boolean;
   name: string;
   onPress?: () => void;
+  textColor: "black" | "white";
 }>;
 
 const cardPadding: IOSpacingScale = 16;
 const cardBorderRadius = 8;
 const iconSize = 32;
-const cardMinHeight = 120;
+const cardMinHeight = 116;
 const cardSafeInnerSpace: IOSpacingScale = 24;
 
 const styles = StyleSheet.create({
@@ -59,7 +60,8 @@ const CgnMerchantCard = ({
   isNew,
   backgroundColor,
   icon,
-  name
+  name,
+  textColor
 }: CgnMerchantCardProps) => (
   <CardPressableBase
     accessibilityLabel={accessibilityLabel}
@@ -77,7 +79,7 @@ const CgnMerchantCard = ({
       testID={testID}
     >
       <View style={styles.cardTitle}>
-        <H3 color="black" numberOfLines={3}>
+        <H3 color={textColor} numberOfLines={3}>
           {name}
         </H3>
       </View>
@@ -89,7 +91,7 @@ const CgnMerchantCard = ({
             variant="cgn"
           />
         )}
-        <Icon color="black" name={icon} size={iconSize} />
+        <Icon color={textColor} name={icon} size={iconSize} />
       </View>
     </View>
   </CardPressableBase>
