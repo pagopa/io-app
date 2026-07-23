@@ -1,10 +1,10 @@
 import {
-  Badge,
-  H3,
+  H6,
   Icon,
   IOCategoryIcons,
   IOColors,
-  IOSpacingScale
+  IOSpacingScale,
+  IOText
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
@@ -27,6 +27,12 @@ const cardBorderRadius = 8;
 const iconSize = 32;
 const cardMinHeight = 116;
 const cardSafeInnerSpace: IOSpacingScale = 24;
+const badgeBorderRadius = 24;
+const badgeHPadding: IOSpacingScale = 8;
+const badgeVPadding: IOSpacingScale = 4;
+const badgeTextLetterSpacing = 0.5;
+const badgeTextLineHeight = 16;
+const badgeTextSize = 12;
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -50,6 +56,21 @@ const styles = StyleSheet.create({
   cardTitle: {
     width: "100%",
     marginBottom: cardSafeInnerSpace
+  },
+  newsBadge: {
+    alignItems: "center",
+    backgroundColor: IOColors["hanPurple-100"],
+    borderRadius: badgeBorderRadius,
+    borderCurve: "continuous",
+    flexDirection: "row",
+    justifyContent: "center",
+    overflow: "hidden",
+    paddingHorizontal: badgeHPadding,
+    paddingVertical: badgeVPadding
+  },
+  newsBadgeText: {
+    letterSpacing: badgeTextLetterSpacing,
+    textTransform: "uppercase"
   }
 });
 
@@ -79,17 +100,24 @@ const CgnMerchantCard = ({
       testID={testID}
     >
       <View style={styles.cardTitle}>
-        <H3 color={textColor} numberOfLines={3}>
+        <H6 color={textColor} numberOfLines={3}>
           {name}
-        </H3>
+        </H6>
       </View>
       <View style={styles.cardFooter}>
         {isNew && (
-          <Badge
-            accessible={false}
-            text={I18n.t("bonus.cgn.merchantsList.news")}
-            variant="cgn"
-          />
+          <View accessible={false} style={styles.newsBadge}>
+            <IOText
+              color="hanPurple-500"
+              lineHeight={badgeTextLineHeight}
+              numberOfLines={1}
+              size={badgeTextSize}
+              style={styles.newsBadgeText}
+              weight="Semibold"
+            >
+              {I18n.t("bonus.cgn.merchantsList.news")}
+            </IOText>
+          </View>
         )}
         <Icon color={textColor} name={icon} size={iconSize} />
       </View>
