@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Configures the @pagopa/react-native-cie iOS native module. The SDK must be
+# disabled during development because it crashes the app on iOS simulators.
+# - prod: enables the module and installs pods normally.
+# - dev: disables the module and reinstalls pods without internal modules.
+# - ci: enables the module without installing pods.
+
 set -euo pipefail
 
 MODE="${1:-}"
