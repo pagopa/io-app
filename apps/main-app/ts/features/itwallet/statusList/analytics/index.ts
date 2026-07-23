@@ -1,7 +1,7 @@
 import { mixpanelTrack, registerSuperProperties } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { ITW_TECH_EVENTS } from "../../analytics/enum";
-import { getLastStatusListCheckTimestamp } from "../utils/storage";
+import { getLastStatusListCheckTimestamps } from "../utils/storage";
 
 export const trackItwStatusListFetchRegisterFailure = (reason: unknown) => {
   const eventName = ITW_TECH_EVENTS.ITW_BACKGROUND_TASK_REGISTER_FAILURE;
@@ -21,7 +21,7 @@ export const trackItwStatusListFetchRegistered = () => {
  * Registers ITW Status List related properties to Mixpanel
  */
 export const registerStatusListProperties = async () => {
-  const lastCheckTimes = await getLastStatusListCheckTimestamp();
+  const lastCheckTimes = await getLastStatusListCheckTimestamps();
   const lastCheckTime = lastCheckTimes.at(-1);
   const lastCheckDate = lastCheckTime
     ? new Date(lastCheckTime).toISOString()
