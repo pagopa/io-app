@@ -81,13 +81,19 @@ export const ItwIdentificationModeSelectionScreen = ({
     if (isL3) {
       return {
         section: I18n.t(
-          `features.itWallet.identification.modeSelection.section.l3-${isReissuanceMode ? "reissuance" : "issuance"}`
+          isReissuanceMode
+            ? "features.itWallet.identification.modeSelection.section.l3-reissuance"
+            : "features.itWallet.identification.modeSelection.section.l3-issuance"
         ),
         title: I18n.t(
-          `features.itWallet.identification.modeSelection.title.l3-${isReissuanceMode ? "reissuance" : "issuance"}`
+          isReissuanceMode
+            ? "features.itWallet.identification.modeSelection.title.l3-reissuance"
+            : "features.itWallet.identification.modeSelection.title.l3-issuance"
         ),
         description: I18n.t(
-          `features.itWallet.identification.modeSelection.description.l3-${isReissuanceMode ? "reissuance" : "issuance"}`
+          isReissuanceMode
+            ? "features.itWallet.identification.modeSelection.description.l3-reissuance"
+            : "features.itWallet.identification.modeSelection.description.l3-issuance"
         )
       };
     } else {
@@ -99,7 +105,9 @@ export const ItwIdentificationModeSelectionScreen = ({
           "features.itWallet.identification.modeSelection.title.l2"
         ),
         description: I18n.t(
-          `features.itWallet.identification.modeSelection.description.l2-${isReissuanceMode ? "reissuance" : "issuance"}`
+          isReissuanceMode
+            ? "features.itWallet.identification.modeSelection.description.l2-reissuance"
+            : "features.itWallet.identification.modeSelection.description.l2-issuance"
         )
       };
     }
@@ -210,17 +218,6 @@ const GroupedMethodList = ({
     {(!isCiePinDisabled || !isCieIdDisabled) && (
       <VStack space={8}>
         <ListItemHeader
-          endElement={{
-            type: "badge",
-            componentProps: {
-              text: I18n.t(
-                "features.itWallet.identification.modeSelection.mode.ciePin.reissuanceBadge"
-              ),
-              variant: "highlight",
-              outline: false,
-              testID: "CiePinReissuanceBadgeTestID"
-            }
-          }}
           label={I18n.t(
             "features.itWallet.identification.modeSelection.frequency.every12Months"
           )}
