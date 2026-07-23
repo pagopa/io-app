@@ -23,6 +23,7 @@ import { cgnMerchantsModalSelector } from "../../../../../store/reducers/backend
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { CgnMerchantCard } from "../../components/merchants/CgnMerchantCard";
+import { CgnMerchantCategoriesSocialLinks } from "../../components/merchants/CgnMerchantCategoriesSocialLinks";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
@@ -90,6 +91,9 @@ const styles = StyleSheet.create({
   },
   cardWrapper: {
     flex: 1
+  },
+  footer: {
+    flexGrow: 1
   }
 });
 
@@ -213,60 +217,73 @@ export const CgnMerchantCategoriesListScreen = () => {
     () => getRenderableCategories(categoriesToArray),
     [categoriesToArray]
   );
-  const renderCategoryRow = (categoryRow: CategoryRow, index: number) => (
-    <ContentWrapper key={categoryRow.id}>
-      <View style={styles.row}>
-        {categoryRow.categories.map((renderable, columnIndex) => (
-          <Fragment key={renderable.category.productCategory}>
-            {columnIndex > 0 && <HSpacer size={CATEGORY_CARD_SPACING} />}
-            <View style={styles.cardWrapper}>
-              {renderCategoryCard(
-                renderable,
-                index * CATEGORY_CARDS_PER_ROW + columnIndex,
-                renderableCategories.length
-              )}
-            </View>
-          </Fragment>
-        ))}
-        {categoryRow.categories.length === 1 && (
-          <>
-            <HSpacer size={CATEGORY_CARD_SPACING} />
-            <View style={styles.cardWrapper} />
-          </>
-        )}
-      </View>
-    </ContentWrapper>
-  );
-
   const categoriesRows = useMemo(
     () => getCategoryRows(renderableCategories),
     [renderableCategories]
+  );
+  const renderCategoryRow = (categoryRow: CategoryRow, index: number) => (
+    <>
+      <ContentWrapper key={categoryRow.id}>
+        <View style={styles.row}>
+          {categoryRow.categories.map((renderable, columnIndex) => (
+            <Fragment key={renderable.category.productCategory}>
+              {columnIndex > 0 && <HSpacer size={CATEGORY_CARD_SPACING} />}
+              <View style={styles.cardWrapper}>
+                {renderCategoryCard(
+                  renderable,
+                  index * CATEGORY_CARDS_PER_ROW + columnIndex,
+                  renderableCategories.length
+                )}
+              </View>
+            </Fragment>
+          ))}
+          {categoryRow.categories.length === 1 && (
+            <>
+              <HSpacer size={CATEGORY_CARD_SPACING} />
+              <View style={styles.cardWrapper} />
+            </>
+          )}
+        </View>
+      </ContentWrapper>
+      {index < categoriesRows.length - 1 && (
+        <VSpacer size={CATEGORY_CARD_SPACING} />
+      )}
+    </>
+  );
+
+  const ListFooterComponent = (
+    <>
+      {renderableCategories.length > 0 && <CgnMerchantCategoriesSocialLinks />}
+      {showSortingInfo && (
+        <ContentWrapper>
+          <Divider />
+          <ListItemAction
+            accessibilityLabel={I18n.t(
+              "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
+            )}
+            label={I18n.t(
+              "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
+            )}
+            onPress={present}
+            variant="primary"
+          />
+          {bottomSheet}
+        </ContentWrapper>
+      )}
+    </>
   );
 
   return {
     data: categoriesRows,
     renderItem: renderCategoryRow,
-    ItemSeparatorComponent: () => <VSpacer size={CATEGORY_CARD_SPACING} />,
+    ItemSeparatorComponent: undefined,
     refreshControlProps: {
       refreshing: isPullRefresh,
       onRefresh: onPullRefresh
     },
-    ListFooterComponent: showSortingInfo ? (
-      <ContentWrapper>
-        <Divider />
-        <ListItemAction
-          accessibilityLabel={I18n.t(
-            "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
-          )}
-          label={I18n.t(
-            "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
-          )}
-          onPress={present}
-          variant="primary"
-        />
-        {bottomSheet}
-      </ContentWrapper>
-    ) : undefined,
+    ListFooterComponent,
+    ListFooterComponentStyle:
+      renderableCategories.length > 0 ? styles.footer : undefined,
     ListEmptyComponent: isError ? undefined : (
       <CgnMerchantCategoryCardsSkeleton />
     )
