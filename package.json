@@ -57,7 +57,9 @@
     "onlyBuiltDependencies": [
       "unrs-resolver",
       "@shopify/react-native-skia",
-      "core-js"
+      "core-js",
+      "@swc/core",
+      "nx"
     ]
   },
   "resolutions": {
