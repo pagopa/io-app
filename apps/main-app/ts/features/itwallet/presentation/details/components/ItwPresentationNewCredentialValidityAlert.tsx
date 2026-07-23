@@ -1,7 +1,13 @@
-import { Alert } from "@pagopa/io-app-design-system";
+import { Alert } from "@io-app/design-system";
 import I18n from "i18next";
+import { useMemo } from "react";
+
 import { NewCredential } from "../../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+
+type Props = {
+  credentialType: ValidityAlertCredential;
+};
 
 /**
  * proof_of_age is a new credential but shows its own usage banner instead of this generic
@@ -12,22 +18,38 @@ type ValidityAlertCredential = Exclude<
   CredentialType.PROOF_OF_AGE
 >;
 
-type Props = {
-  credentialType: ValidityAlertCredential;
-};
-
-const i18nNs =
-  "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content";
-
 /**
  * Alert showing information about the validity of new IT Wallet credentials.
  */
 export const ItwPresentationNewCredentialValidityAlert = ({
   credentialType
 }: Props) => {
-  const content = I18n.t(`${i18nNs}.${credentialType}`);
+  const content = useMemo(() => {
+    switch (credentialType) {
+      case CredentialType.EDUCATION_ATTENDANCE:
+        return I18n.t(
+          "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content.education_attendance"
+        );
+      case CredentialType.EDUCATION_DEGREE:
+        return I18n.t(
+          "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content.education_degree"
+        );
+      case CredentialType.EDUCATION_DIPLOMA:
+        return I18n.t(
+          "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content.education_diploma"
+        );
+      case CredentialType.EDUCATION_ENROLLMENT:
+        return I18n.t(
+          "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content.education_enrollment"
+        );
+      case CredentialType.RESIDENCY:
+        return I18n.t(
+          "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content.residency"
+        );
+    }
+  }, [credentialType]);
 
   return (
-    <Alert testID="newCredentialAlertTestID" variant="info" content={content} />
+    <Alert content={content} testID="newCredentialAlertTestID" variant="info" />
   );
 };

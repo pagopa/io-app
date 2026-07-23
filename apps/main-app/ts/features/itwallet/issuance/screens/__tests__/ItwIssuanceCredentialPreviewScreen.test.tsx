@@ -1,6 +1,7 @@
 import I18n from "i18next";
 import { createStore } from "redux";
 import { createActor } from "xstate";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -35,7 +36,9 @@ describe("ItwIssuanceCredentialPreviewScreen", () => {
     });
 
     expect(
-      getByText(I18n.t("features.itWallet.issuance.credentialPreview.title"))
+      getByText(
+        I18n.t("features.itWallet.issuance.credentialPreview.detailsTitle")
+      )
     ).toBeTruthy();
     expect(
       getByText(I18n.t("features.itWallet.issuance.credentialPreview.subtitle"))

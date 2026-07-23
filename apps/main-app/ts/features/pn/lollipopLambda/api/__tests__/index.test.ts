@@ -1,7 +1,7 @@
 import { LollipopConfig } from "../../../../lollipop";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
-import { createSendLollipopLambdaClient } from "../index";
 import * as lollipopFetchModule from "../../../../lollipop/utils/fetch";
+import { createSendLollipopLambdaClient } from "../index";
 
 const mockFetch = jest.fn();
 jest.mock("../../../../lollipop/utils/fetch", () => ({

@@ -1,7 +1,8 @@
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@io-app/design-system";
 import { createActorContext } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
 import { PropsWithChildren } from "react";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import { selectItwEnv } from "../../common/store/selectors/environment";

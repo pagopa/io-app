@@ -12,6 +12,9 @@ import sonarjs from "eslint-plugin-sonarjs";
 import i18Next from "eslint-plugin-i18next";
 import js from "@eslint/js";
 import delegateEffectsRule from "./scripts/eslint/delegate-effects.js";
+import noDynamicI18nKeysRule from "./scripts/eslint/no-dynamic-i18n-keys.js";
+import noUnusedI18nKeysRule from "./scripts/eslint/no-unused-i18n-keys.js";
+import jsonParser from "./scripts/eslint/json-parser.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -56,8 +59,7 @@ export default defineConfig([
 
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
   // eslint-plugin-prettier, perfectionist.
-  // Perfectionist block is excluded — sorting rules are deferred to a follow-up PR.
-  ...pagopaConfig.filter(config => !config.plugins?.perfectionist),
+  ...pagopaConfig,
 
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -85,12 +87,13 @@ export default defineConfig([
     },
 
     plugins: {
-      // Remove `import` plugin once we adopt
-      // `perfectionist/sort-imports` rules
+      // `import` plugin is retained for `import/no-extraneous-dependencies`;
+      // import ordering is handled by `perfectionist/sort-imports`.
       import: importPlugin,
       functional,
       sonarjs,
       i18next: i18Next,
+      "@io-app": { rules: { "i18n-no-dynamic-keys": noDynamicI18nKeysRule } },
       "typed-redux-saga": { rules: { "delegate-effects": delegateEffectsRule } }
     },
 
@@ -107,20 +110,32 @@ export default defineConfig([
       // Auto-fix corrupts multi-line property values (see comment below)
       "perfectionist/sort-objects": "off",
 
+      // Allow `_`-prefixed throwaways and rest-sibling destructuring omits
+      // (`const { key, ...rest } = obj`), matching tsc's own noUnusedLocals.
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          ignoreRestSiblings: true
+        }
+      ],
+
       // Rules from tseslint.strict / pagopa config that require widespread
       // refactoring incompatible with the current codebase
       "max-lines-per-function": "off",
-      "@typescript-eslint/no-invalid-void-type": "off",
-      "@typescript-eslint/no-empty-function": "off",
-      "@typescript-eslint/no-dynamic-delete": "off",
-      "@typescript-eslint/no-non-null-assertion": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "@typescript-eslint/no-inferrable-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
 
       // Incorrectly fires on mapped types (`[P in ...]`) — only meant for
       // plain index signatures (`[key: string]: V`) which should use Record<K,V>
       "@typescript-eslint/consistent-indexed-object-style": "off",
+
+      // Most violations are `typesafe-actions` empty payloads
+      // (`createStandardAction("X")<void>()`, `createAsyncAction(...)<void, S, F>()`).
+      // `void` here is load-bearing: it makes the action creator callable with no
+      // argument while keeping a `payload` slot. Re-enabling requires a deliberate
+      // action-shape refactor, not a mechanical fix.
+      "@typescript-eslint/no-invalid-void-type": "off",
 
       // Widespread, deliberate test patterns from pagopa's jest config that
       // would require refactoring the whole test suite to satisfy:
@@ -160,9 +175,7 @@ export default defineConfig([
       "no-caller": "error",
       "no-void": "off",
       "no-duplicate-imports": "error",
-      // Remove the following `import` rule
-      // once we adopt `perfectionist/sort-imports`
-      "import/order": "error",
+      // Import ordering is handled by `perfectionist/sort-imports`
 
       // TYPESCRIPT
       // Downgraded to warn — existing shadows are widespread and non-critical
@@ -190,11 +203,20 @@ export default defineConfig([
       "@typescript-eslint/dot-notation": "error",
       "@typescript-eslint/no-floating-promises": "error",
       "@typescript-eslint/restrict-plus-operands": "error",
+      "@typescript-eslint/no-misused-promises": "error",
+      "@typescript-eslint/strict-boolean-expressions": [
+        "warn",
+        {
+          allowNullableBoolean: true,
+          allowNullableString: true
+        }
+      ],
 
       // REACT
       "react/jsx-uses-react": "off",
       "react/prop-types": "off",
       "react/jsx-key": "error",
+      "react/jsx-no-constructed-context-values": "error",
       // Less relevant rule with contemporary React with hooks
       "react/jsx-no-bind": [
         "error",
@@ -303,7 +325,10 @@ export default defineConfig([
             }
           ]
         }
-      ]
+      ],
+
+      // Disallow dynamically-built i18n keys so unused-key detection stays reliable
+      "@io-app/i18n-no-dynamic-keys": "warn"
     },
 
     settings: {
@@ -313,19 +338,16 @@ export default defineConfig([
     }
   },
   {
-    files: [
-      "**/*.test.ts",
-      "**/*.test.tsx",
-      "**/__tests__/**/*.ts",
-      "**/__tests__/**/*.tsx"
-    ],
+    files: ["**/*.test.{ts,tsx}", "**/{__tests__,__mocks__}/**/*.{ts,tsx}"],
 
     rules: {
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-shadow": "off",
       "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-empty-function": "off",
       "i18next/no-literal-string": "off",
-      "no-restricted-imports": "off"
+      "no-restricted-imports": "off",
+      "react/jsx-no-constructed-context-values": "off"
     }
   },
   {
@@ -343,25 +365,39 @@ export default defineConfig([
           ignoreTypeOfDescribeName: true,
           ignoreTypeOfTestName: true
         }
+      ],
+      // Saga tests assert through redux-saga-test-plan's chainable APIs
+      // (`testSaga(...).next()`, `expectSaga(...).run()`) rather than a bare
+      // `expect`, so teach the rule to treat those as assertion helpers.
+      "jest/expect-expect": [
+        "warn",
+        {
+          assertFunctionNames: ["expect", "expectSaga", "testSaga"]
+        }
       ]
     }
   },
   {
     files: [
-      "**/design-system/**/*.ts",
-      "**/design-system/**/*.tsx",
-      "**/playgrounds/**/*.ts",
-      "**/playgrounds/**/*.tsx",
-      "**/devMode/**/*.ts",
-      "**/devMode/**/*.tsx",
-      "**/debug/**/*.ts",
-      "**/debug/**/*.tsx",
-      "**/__mocks__/**/*.ts",
-      "**/__mocks__/**/*.tsx"
+      "**/{design-system,playgrounds,devMode,debug,__mocks__}/**/*.{ts,tsx}"
     ],
 
     rules: {
       "i18next/no-literal-string": "off"
+    }
+  },
+  {
+    files: ["**/locales/it/index.json"],
+    languageOptions: {
+      parser: jsonParser
+    },
+    plugins: {
+      "@io-app": {
+        rules: { "i18n-no-unused-keys": noUnusedI18nKeysRule }
+      }
+    },
+    rules: {
+      "@io-app/i18n-no-unused-keys": "warn"
     }
   }
 ]);

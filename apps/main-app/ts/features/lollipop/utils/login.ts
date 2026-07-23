@@ -1,8 +1,9 @@
-import { parseStringPromise } from "xml2js";
-import { getRedirects } from "@pagopa/io-react-native-login-utils";
-import URLParse from "url-parse";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { getRedirects } from "@pagopa/io-react-native-login-utils";
 import pako from "pako";
+import URLParse from "url-parse";
+import { parseStringPromise } from "xml2js";
+
 import { handleRegenerateEphemeralKey } from "..";
 import { AppDispatch } from "../../../App";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
@@ -64,7 +65,7 @@ export const lollipopSamlVerify = (
       .catch(_ => {
         onFailure("Unable to convert saml request from xml to json");
       });
-  } catch (e) {
+  } catch {
     onFailure("Unable to decode saml request");
   }
 };

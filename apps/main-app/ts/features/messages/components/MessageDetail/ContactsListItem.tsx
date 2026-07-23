@@ -1,6 +1,7 @@
-import { Linking } from "react-native";
-import { Body, ListItemAction, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, ListItemAction, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
+import { Linking } from "react-native";
+
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 export type ContactsListItemProps = {
@@ -23,7 +24,7 @@ export const ContactsListItem = ({ email, phone }: ContactsListItemProps) => {
             )}
             icon="email"
             label={I18n.t("messageDetails.contactsBottomSheet.actions.email")}
-            onPress={() => Linking.openURL(`mailto:${email}`)}
+            onPress={() => void Linking.openURL(`mailto:${email}`)}
             variant="primary"
           />
         )}
@@ -34,7 +35,7 @@ export const ContactsListItem = ({ email, phone }: ContactsListItemProps) => {
             )}
             icon="phone"
             label={I18n.t("messageDetails.contactsBottomSheet.actions.call")}
-            onPress={() => Linking.openURL(`tel:${phone}`)}
+            onPress={() => void Linking.openURL(`tel:${phone}`)}
             variant="primary"
           />
         )}

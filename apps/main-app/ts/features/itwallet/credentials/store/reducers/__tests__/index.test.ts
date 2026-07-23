@@ -1,19 +1,19 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { Action } from "../../../../../../store/actions/types";
 import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../../utils/tests";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
-  ParsedStatusAssertion,
-  CredentialMetadata
+  CredentialMetadata,
+  ParsedStatusAssertion
 } from "../../../../common/utils/itwTypesUtils";
+import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 import {
   itwCredentialsRemove,
   itwCredentialsStore,
   itwCredentialsVaultMigrationComplete
 } from "../../actions";
-import { Action } from "../../../../../../store/actions/types";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
-import { reproduceSequence } from "../../../../../../utils/tests";
 
 const mockedEid: CredentialMetadata = {
   credentialType: CredentialType.PID,
@@ -125,16 +125,15 @@ describe("ITW credentials reducer", () => {
         sequenceOfActions
       );
 
-      const remainingCredentials: Record<string, CredentialMetadata> = {
-        [mockedEid.credentialId]: mockedEid,
-        [mockedCredential.credentialId]: mockedCredential,
-        [mockedCredential2.credentialId]: mockedCredential2
-      };
-
-      for (const { credentialId } of credentialsToRemove) {
-        // eslint-disable-next-line functional/immutable-data
-        delete remainingCredentials[credentialId];
-      }
+      const removedIds = new Set(
+        credentialsToRemove.map(({ credentialId }) => credentialId)
+      );
+      const remainingCredentials: Record<string, CredentialMetadata> =
+        Object.fromEntries(
+          [mockedEid, mockedCredential, mockedCredential2]
+            .filter(({ credentialId }) => !removedIds.has(credentialId))
+            .map(credential => [credential.credentialId, credential])
+        );
 
       expect(targetSate.features.itWallet.credentials.credentials).toEqual(
         remainingCredentials

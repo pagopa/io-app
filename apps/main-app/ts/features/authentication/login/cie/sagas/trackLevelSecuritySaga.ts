@@ -1,16 +1,17 @@
-import { select } from "typed-redux-saga/macro";
-import * as O from "fp-ts/Option";
-import { pipe } from "fp-ts/lib/function";
 import { sequenceT } from "fp-ts/lib/Apply";
-import { cieIDSelectedSecurityLevelSelector } from "../store/selectors";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/Option";
+import { select } from "typed-redux-saga/macro";
+
+import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
 import { idpSelector } from "../../../common/store/selectors";
 import { IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 import { trackCieIdSecurityLevelMismatch } from "../analytics";
-import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
+import { cieIDSelectedSecurityLevelSelector } from "../store/selectors";
 
 export function* shouldTrackLevelSecurityMismatchSaga(
   maybeSessionInformation: O.Option<PublicSession>,
-  isActiveLoginSuccess: boolean = false
+  isActiveLoginSuccess = false
 ) {
   const selectedSecurityLevel = yield* select(
     cieIDSelectedSecurityLevelSelector

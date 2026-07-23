@@ -5,7 +5,7 @@ import {
   MdH1,
   MdH2,
   MdH3
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import {
   TxtHeaderNode,
   TxtHtmlNode,
@@ -14,6 +14,7 @@ import {
 } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import { Linking } from "react-native";
+
 import {
   accessibleLinkNodeToReactNative,
   headerNodeToReactNative,
@@ -38,8 +39,8 @@ import { handleInternalLink } from "../../../../utils/internalLink";
 import { openWebUrl } from "../../../../utils/url";
 
 type HeadingMargins = {
-  marginStart: IOSpacer;
   marginEnd: IOSpacer;
+  marginStart: IOSpacer;
 };
 
 const HEADINGS_MAP = {

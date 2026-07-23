@@ -8,11 +8,12 @@ import {
   setup,
   stateIn
 } from "xstate";
+
 import {
-  SendErrorResponseActorOutput,
+  ProximityCommunicationLogicInput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
-  ProximityCommunicationLogicInput,
+  SendErrorResponseActorOutput,
   StartEngagementActorInput
 } from "./actors";
 import { Context, InitialContext } from "./context";
@@ -57,7 +58,14 @@ export const itwProximityMachine = setup({
      */
 
     grantConsent: notImplemented,
-    storeConsent: notImplemented
+    storeConsent: notImplemented,
+
+    /**
+     * Analytics
+     */
+
+    trackProximityStart: notImplemented,
+    trackQrCodeLoadingFailure: notImplemented
   },
   actors: {
     checkBluetoothPermissions: fromPromise<boolean>(notImplemented),
@@ -168,7 +176,7 @@ export const itwProximityMachine = setup({
       },
       onDone: {
         target: "#itwProximityMachine.Presentment",
-        actions: "navigateToPresentmentScreen"
+        actions: ["navigateToPresentmentScreen", "trackProximityStart"]
       }
     },
     Nfc: {
@@ -218,7 +226,8 @@ export const itwProximityMachine = setup({
         target: "#itwProximityMachine.Presentment",
         actions: [
           assign({ engagementMode: "nfc" }),
-          "navigateToNfcPresentmentScreen"
+          "navigateToNfcPresentmentScreen",
+          "trackProximityStart"
         ]
       }
     },
@@ -332,7 +341,7 @@ export const itwProximityMachine = setup({
                 target: "#itwProximityMachine.Failure"
               },
               {
-                actions: "setFailure"
+                actions: ["setFailure", "trackQrCodeLoadingFailure"]
               }
             ]
           },

@@ -1,6 +1,7 @@
 import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+
 import reducer, {
   FIMS_SSO_ERROR_TAGS,
   FimsErrorStateType,
@@ -8,11 +9,11 @@ import reducer, {
   FimsSSOState,
   INITIAL_STATE
 } from "../";
-import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
 import {
   Consent,
   TypeEnum
 } from "../../../../../../../definitions/fims_sso/Consent";
+import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
 import {
   applicationChangeState,
   startApplicationInitialization
@@ -45,7 +46,7 @@ const currentFlowStateTags: ReadonlyArray<FimsFlowStateTags> = [
 const ssoDataPots = (
   consent: Consent,
   errorTag: FIMS_SSO_ERROR_TAGS = "GENERIC",
-  debugMessage: string = "Failed"
+  debugMessage = "Failed"
 ) => [
   pot.none,
   pot.noneLoading,

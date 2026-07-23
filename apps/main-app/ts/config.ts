@@ -104,9 +104,6 @@ export const premiumMessagesOptInEnabled =
 export const scanAdditionalBarcodesEnabled =
   Config.SCAN_ADDITIONAL_BARCODES_ENABLED === "YES";
 
-// FCI (Firma con IO) Feature Flag
-export const fciEnabled = Config.FCI_ENABLED === "YES";
-
 // SPID Relay State
 export const spidRelayState = Config.SPID_RELAY_STATE;
 
@@ -216,7 +213,7 @@ export const fastLoginMaxRetries = pipe(
 export const pageSize: number = DEFAULT_PAGE_SIZE;
 
 // This is the maximum number supported by API via pagination regardless of the content.
-export const maximumItemsFromAPI: number = 100;
+export const maximumItemsFromAPI = 100;
 
 export const testOverlayCaption: string | undefined =
   Config.TEST_OVERLAY_CAPTION;

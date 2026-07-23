@@ -1,13 +1,16 @@
-import { useEffect } from "react";
-import { SectionList, ScrollView } from "react-native";
-import { H2, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { H2, IOVisualCostants } from "@io-app/design-system";
 import I18n from "i18next";
-import SignatureRequestItem from "../../components/SignatureRequestItem";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesList";
-import { fciSignaturesListRequest } from "../../store/actions";
+import { useEffect } from "react";
+import { ScrollView, SectionList } from "react-native";
+
+import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
+import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
+import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
   addTicketCustomField,
   assistanceToolRemoteConfig,
@@ -23,10 +26,9 @@ import {
   zendeskSelectedSubcategory,
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
-import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
-import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import SignatureRequestItem from "../../components/SignatureRequestItem";
+import { fciSignaturesListRequest } from "../../store/actions";
+import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesList";
 
 const FciSignatureRequestsScreen = () => {
   const dispatch = useIODispatch();
@@ -81,19 +83,19 @@ const FciSignatureRequestsScreen = () => {
 
   const renderSignatureRequests = () => (
     <SectionList
-      sections={dataItems.map(item => ({
-        title: item.dossier_title,
-        created_at: item.created_at,
-        data: [item]
-      }))}
       keyExtractor={(_, index) => `${index}`}
-      testID={"FciSignatureRequestsListTestID"}
       renderItem={({ item }) => (
         <SignatureRequestItem
           item={item}
           onPress={() => handleAskAssistance(item.id)}
         />
       )}
+      sections={dataItems.map(item => ({
+        title: item.dossier_title,
+        created_at: item.created_at,
+        data: [item]
+      }))}
+      testID={"FciSignatureRequestsListTestID"}
     />
   );
 
@@ -111,4 +113,4 @@ const FciSignatureRequestsScreen = () => {
     </LoadingSpinnerOverlay>
   );
 };
-export default FciSignatureRequestsScreen;
+export default withAppRequiredUpdate(FciSignatureRequestsScreen, "fci");

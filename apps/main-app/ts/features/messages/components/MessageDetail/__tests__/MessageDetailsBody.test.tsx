@@ -1,18 +1,15 @@
-import * as O from "fp-ts/lib/Option";
 import { act, fireEvent } from "@testing-library/react-native";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
-import { ScrollView } from "react-native";
+
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { trackAppCaughtError } from "../../../../../utils/analytics";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { MessageDetailsBody } from "../MessageDetailsBody";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { trackAppCaughtError } from "../../../../../utils/analytics";
-
-jest.mock("../MessageMarkdown");
 
 // eslint-disable-next-line functional/no-let
 let capturedOnError:
@@ -51,32 +48,22 @@ const invalidCTAMarkdown =
   '---\nit:\n  cta_1:\ntext: "Questo è il testo"\n    action: ioit://messages\nen:\n  cta_1:\ntext: "This is the text"\n    action: ioit://messages\n---\nThis is a mesage with an invalid CTA';
 
 describe("MessageDetailsBody", () => {
-  [false, true].forEach(ioMarkdownEnabled => {
-    it(`should match snapshot for message with no CTA (${
-      ioMarkdownEnabled ? "IOMarkdown" : "Old Markdown"
-    })`, () => {
-      const component = renderComponent(
-        ioMarkdownEnabled,
-        "This is a mesage with no CTA"
-      );
-      expect(component.toJSON()).toMatchSnapshot();
-    });
-    it(`should match snapshot for message with CTA (${
-      ioMarkdownEnabled ? "IOMarkdown" : "Old Markdown"
-    })`, () => {
-      const component = renderComponent(
-        ioMarkdownEnabled,
-        '---\nit:\n  cta_1:\n    text: "Questo è il testo"\n    action: ioit://messages\nen:\n  cta_1:\n    text: "This is the text"\n    action: ioit://messages\n---\nThis is a mesage with a CTA'
-      );
-      expect(component.toJSON()).toMatchSnapshot();
-    });
+  it("should match snapshot for message with no CTA", () => {
+    const component = renderComponent("This is a mesage with no CTA");
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot for message with CTA", () => {
+    const component = renderComponent(
+      '---\nit:\n  cta_1:\n    text: "Questo è il testo"\n    action: ioit://messages\nen:\n  cta_1:\n    text: "This is the text"\n    action: ioit://messages\n---\nThis is a mesage with a CTA'
+    );
+    expect(component.toJSON()).toMatchSnapshot();
   });
   it(`should match snapshot for message with invalid CTA`, () => {
-    const component = renderComponent(true, invalidCTAMarkdown);
+    const component = renderComponent(invalidCTAMarkdown);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should call trackAppCaughtError when IOMarkdown triggers onError", () => {
-    renderComponent(true, "This is a message with no CTA");
+    renderComponent("This is a message with no CTA");
 
     const testError = "Rendering failure";
     act(() => {
@@ -90,7 +77,7 @@ describe("MessageDetailsBody", () => {
     );
   });
   it("should show an Alert for a message with invalid CTA. The alert should be pressable and display the raw content (upong pushing) and hide it again later", () => {
-    const component = renderComponent(true, invalidCTAMarkdown);
+    const component = renderComponent(invalidCTAMarkdown);
 
     // This throws if the component is not found, so there is no need to assert
     const alert = component.getByTestId("markdown-decoding-error-alert");
@@ -119,36 +106,14 @@ describe("MessageDetailsBody", () => {
   });
 });
 
-const renderComponent = (ioMarkdownEnabled: boolean, markdown: string) => {
+const renderComponent = (markdown: string) => {
   const baseState = appReducer(undefined, applicationChangeState("active"));
-  const globalState = {
-    ...baseState,
-    remoteConfig: O.some({
-      cgn: {
-        enabled: false
-      },
-      ioMarkdown: {
-        min_app_version: {
-          android: ioMarkdownEnabled ? "1.0.0.0" : "3.0.0.0",
-          ios: ioMarkdownEnabled ? "1.0.0.0" : "3.0.0.0"
-        }
-      }
-    })
-  } as GlobalState;
   const mockStore = configureMockStore<GlobalState>();
-  const store: Store<GlobalState> = mockStore(globalState);
-
-  const mockScrollViewRef = {
-    current: {} as ScrollView
-  };
+  const store: Store<GlobalState> = mockStore(baseState);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <MessageDetailsBody
-        messageMarkdown={markdown}
-        scrollViewRef={mockScrollViewRef}
-        serviceId={serviceId}
-      />
+      <MessageDetailsBody messageMarkdown={markdown} serviceId={serviceId} />
     ),
     MESSAGES_ROUTES.MESSAGE_DETAIL,
     {},

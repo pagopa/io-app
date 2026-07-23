@@ -1,7 +1,11 @@
-import { createStore, Store } from "redux";
-import configureMockStore from "redux-mock-store";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { act } from "@testing-library/react-native";
+import * as O from "fp-ts/lib/Option";
+import { createStore, Store } from "redux";
+import configureMockStore from "redux-mock-store";
+
+import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
+import mockedProfile from "../../../../__mocks__/initializedProfile";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -12,15 +16,23 @@ import {
   fciSignatureRequestFromId,
   fciStartRequest
 } from "../../store/actions";
-import FciRouterScreen from "../FciRouterScreen";
 import {
   mockedError,
   mockSignatureRequestDetailView
 } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import mockedProfile from "../../../../__mocks__/initializedProfile";
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
+import FciRouterScreen from "../FciRouterScreen";
 
 const now = new Date();
+
+// Minimum valid remoteConfig for tests - only includes required fields with minimal values
+const minimumRemoteConfig = {
+  fci: {
+    enabled: true,
+    min_app_version: { ios: "0.0.0", android: "0.0.0" }
+  },
+  cgn: { enabled: false, merchants_v2: false },
+  assistanceTool: { tool: "none" }
+} as any;
 
 describe("Test FciRouterScreen", () => {
   beforeEach(() => {
@@ -30,7 +42,8 @@ describe("Test FciRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, {
       ...globalState,
-      profile: pot.some(mockedProfile)
+      profile: pot.some(mockedProfile),
+      remoteConfig: O.some(minimumRemoteConfig)
     } as any);
     const render = renderComponent(store);
 
@@ -42,7 +55,8 @@ describe("Test FciRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, {
       ...globalState,
-      profile: pot.some(mockedProfile)
+      profile: pot.some(mockedProfile),
+      remoteConfig: O.some(minimumRemoteConfig)
     } as any);
 
     const render = renderComponent(store);
@@ -69,7 +83,8 @@ describe("Test FciRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, {
       ...globalState,
-      profile: pot.some(mockedProfile)
+      profile: pot.some(mockedProfile),
+      remoteConfig: O.some(minimumRemoteConfig)
     } as any);
 
     const render = renderComponent(store);
@@ -94,7 +109,8 @@ describe("Test FciRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, {
       ...globalState,
-      profile: pot.some(mockedProfile)
+      profile: pot.some(mockedProfile),
+      remoteConfig: O.some(minimumRemoteConfig)
     } as any);
 
     const render = renderComponent(store);
@@ -122,7 +138,8 @@ describe("Test FciRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, {
       ...globalState,
-      profile: pot.some(mockedProfile)
+      profile: pot.some(mockedProfile),
+      remoteConfig: O.some(minimumRemoteConfig)
     } as any);
 
     const render = renderComponent(store);
@@ -151,7 +168,8 @@ describe("Test FciRouterScreen", () => {
     const mockStore = configureMockStore<GlobalState>();
     const store: ReturnType<typeof mockStore> = mockStore({
       ...globalState,
-      profile: pot.some(mockedProfile)
+      profile: pot.some(mockedProfile),
+      remoteConfig: O.some(minimumRemoteConfig)
     });
 
     const render = renderComponent(store);

@@ -1,7 +1,8 @@
-import { IOSpacingScale } from "@pagopa/io-app-design-system";
+import { IOSpacingScale } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
-import { ItwCredentialClaimsCard } from "../../common/components/ItwCredentialClaimsCard";
+
 import { useCredentialCardConfig } from "../../common/components/ItwCredentialCard/config";
+import { ItwCredentialClaimsCard } from "../../common/components/ItwCredentialClaimsCard";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { ItwCredentialPreviewClaimsList } from "./ItwCredentialPreviewClaimsList";
 
@@ -9,13 +10,13 @@ const cardSpacing: IOSpacingScale = 16;
 
 type Props = {
   /**
-   * The credential name displayed in the card header.
-   */
-  title: string;
-  /**
    * The credential whose claims are rendered inside the card.
    */
   data: CredentialMetadata;
+  /**
+   * The credential name displayed in the card header.
+   */
+  title: string;
 };
 
 /**
@@ -27,8 +28,9 @@ export const ItwCredentialPreviewClaimsCard = ({ title, data }: Props) => {
 
   return (
     <ItwCredentialClaimsCard
+      gradientEndColor={background.colors[0]}
+      headerAccessibilityRole="header"
       title={title}
-      headerGradientColor={background.colors[0]}
     >
       <View style={styles.body}>
         <ItwCredentialPreviewClaimsList data={data} />

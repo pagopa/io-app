@@ -4,6 +4,7 @@ import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { FlatList, View } from "react-native";
 import { createStore } from "redux";
+
 import { DiscountCodeTypeEnum } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { OfflineMerchant } from "../../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../../definitions/cgn/merchants/OnlineMerchant";
@@ -92,12 +93,12 @@ const renderScreen = (state: GlobalState) => {
     return (
       <FlatList
         data={screen.data}
-        renderItem={({ item, index }: { item: any; index: number }) =>
-          screen.renderItem(item, index)
-        }
         keyExtractor={(item: any) => item.id}
         ListEmptyComponent={screen.ListEmptyComponent}
         ListFooterComponent={screen.ListFooterComponent}
+        renderItem={({ item, index }: { index: number; item: any }) =>
+          screen.renderItem(item, index)
+        }
       />
     );
   };

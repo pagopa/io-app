@@ -1,11 +1,12 @@
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme } from "@io-app/design-system";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
-import { useSpecialCtaPn } from "../../../pn/hooks/useSpecialCtaPn";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { getServiceActionsProps } from "../utils";
+import { useSpecialCtaPn } from "../../../pn/hooks/useSpecialCtaPn";
 import { ServiceDetailsScreenBase } from "../types";
+import { getServiceActionsProps } from "../utils";
 
 export type ServiceDetailsScreenPnProps = ServiceDetailsScreenBase & {
   activate: boolean;

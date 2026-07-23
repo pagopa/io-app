@@ -8,10 +8,11 @@ import {
   IOListItemVisualParams,
   useIOTheme,
   VStack
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import I18n from "i18next";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
@@ -21,7 +22,7 @@ import {
 } from "../../analytics";
 import { TrackIdMethodBottomsheetProperties } from "../../analytics/types";
 
-type ModeType = "ciePin" | "cieId" | "spid";
+type ModeType = "cieId" | "ciePin" | "spid";
 
 const firstIconMap: Record<ModeType, IOIcons> = {
   ciePin: "fiscalCodeIndividual",
@@ -36,9 +37,9 @@ const secondIconMap: Record<ModeType, IOIcons> = {
 };
 
 type Props = {
-  type: "ciePin" | "cieId" | "spid";
   isL3: boolean;
   onPrimaryAction: () => void;
+  type: "cieId" | "ciePin" | "spid";
 };
 
 /**
@@ -59,35 +60,69 @@ export const useContinueWithBottomSheet = ({
     itw_flow: isL3 ? "L3" : "L2"
   };
 
+  const copy = useMemo(() => {
+    switch (type) {
+      case "cieId":
+        return {
+          title: I18n.t(
+            "features.itWallet.identification.modeSelection.mode.cieId.bottomSheet.title"
+          ),
+          subtitle: I18n.t(
+            "features.itWallet.identification.modeSelection.mode.cieId.bottomSheet.subtitle"
+          ),
+          entry1: I18n.t(
+            "features.itWallet.identification.modeSelection.mode.cieId.bottomSheet.entry-1"
+          ),
+          entry2: I18n.t(
+            "features.itWallet.identification.modeSelection.mode.cieId.bottomSheet.entry-2"
+          )
+        };
+      case "ciePin":
+        return {
+          title: I18n.t(
+            "features.itWallet.identification.modeSelection.mode.ciePin.bottomSheet.title"
+          ),
+          subtitle: I18n.t(
+            "features.itWallet.identification.modeSelection.mode.ciePin.bottomSheet.subtitle"
+          ),
+          entry1: I18n.t(
+            "features.itWallet.identification.modeSelection.mode.ciePin.bottomSheet.entry-1"
+          ),
+          entry2: I18n.t(
+            "features.itWallet.identification.modeSelection.mode.ciePin.bottomSheet.entry-2"
+          )
+        };
+      case "spid":
+        return {
+          title: I18n.t(
+            "features.itWallet.identification.modeSelection.mode.spid.bottomSheet.title"
+          ),
+          subtitle: I18n.t(
+            "features.itWallet.identification.modeSelection.mode.spid.bottomSheet.subtitle"
+          ),
+          entry1: I18n.t(
+            "features.itWallet.identification.modeSelection.mode.spid.bottomSheet.entry-1"
+          ),
+          entry2: I18n.t(
+            "features.itWallet.identification.modeSelection.mode.spid.bottomSheet.entry-2"
+          )
+        };
+    }
+  }, [type]);
+
   const bottomSheet = useIOBottomSheetModal({
-    title: I18n.t(
-      `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.title`
-    ),
+    title: copy.title,
     component: (
       <VStack space={24}>
-        <BodySmall>
-          {I18n.t(
-            `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.subtitle`
-          )}
-        </BodySmall>
-        <ListItem
-          content={I18n.t(
-            `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.entry-1`
-          )}
-          icon={firstIconMap[type]}
-        />
-        <ListItem
-          content={I18n.t(
-            `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.entry-2`
-          )}
-          icon={secondIconMap[type]}
-        />
+        <BodySmall>{copy.subtitle}</BodySmall>
+        <ListItem content={copy.entry1} icon={firstIconMap[type]} />
+        <ListItem content={copy.entry2} icon={secondIconMap[type]} />
         {type === "spid" && (
           <Alert
-            variant="warning"
             content={I18n.t(
-              `features.itWallet.identification.modeSelection.mode.spid.bottomSheet.warning`
+              "features.itWallet.identification.modeSelection.mode.spid.bottomSheet.warning"
             )}
+            variant="warning"
           />
         )}
         <View>
@@ -95,9 +130,7 @@ export const useContinueWithBottomSheet = ({
             {
               type: "SingleButton",
               primary: {
-                label: I18n.t(
-                  `features.itWallet.identification.modeSelection.mode.${type}.bottomSheet.title`
-                ),
+                label: copy.title,
                 onPress: () => {
                   // eslint-disable-next-line functional/immutable-data
                   skipCloseEvent.current = true;
@@ -137,8 +170,8 @@ const ListItem = (props: { content: string; icon: IOIcons }) => {
     <HStack space={16} style={styles.listItem}>
       <Icon
         allowFontScaling
-        name={props.icon}
         color={theme["icon-decorative"]}
+        name={props.icon}
         size={IOListItemVisualParams.iconSize}
       />
       <Body style={{ flex: 1, flexWrap: "wrap" }}>{props.content}</Body>

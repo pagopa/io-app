@@ -1,8 +1,9 @@
 import {
   ActionType,
-  createStandardAction,
-  createAsyncAction
+  createAsyncAction,
+  createStandardAction
 } from "typesafe-actions";
+
 import { InstrumentListDTO } from "../../../../../../definitions/idpay/InstrumentListDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
@@ -17,14 +18,14 @@ export const idpayInitiativeInstrumentsGet = createAsyncAction(
   "IDPAY_INITIATIVE_INSTRUMENTS_GET_FAILURE"
 )<IdPayInitiativeInstrumentsGetPayloadType, InstrumentListDTO, NetworkError>();
 
-type IdPayInitiativeInstrumentsDeletePayloadType = {
-  initiativeId: string;
+type IdPayInitiativeInstrumentsDeleteErrorPayloadType = {
+  error: NetworkError;
   instrumentId: string;
 };
 
-type IdPayInitiativeInstrumentsDeleteErrorPayloadType = {
+type IdPayInitiativeInstrumentsDeletePayloadType = {
+  initiativeId: string;
   instrumentId: string;
-  error: NetworkError;
 };
 
 export const idpayInitiativeInstrumentDelete = createAsyncAction(
@@ -46,8 +47,8 @@ export const idPayInitiativeInstrumentsRefreshStop = createStandardAction(
 )();
 
 export type IDPayInitiativeConfigurationActions = ActionType<
-  | typeof idpayInitiativeInstrumentsGet
   | typeof idpayInitiativeInstrumentDelete
+  | typeof idpayInitiativeInstrumentsGet
   | typeof idPayInitiativeInstrumentsRefreshStart
   | typeof idPayInitiativeInstrumentsRefreshStop
 >;

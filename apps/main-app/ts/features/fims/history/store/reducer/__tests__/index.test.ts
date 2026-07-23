@@ -1,9 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import reducer, {
   FimsExportSuccessStates,
   FimsHistoryState,
   INITIAL_STATE
 } from "..";
+import { Access } from "../../../../../../../definitions/fims_history/Access";
+import { AccessHistoryPage } from "../../../../../../../definitions/fims_history/AccessHistoryPage";
 import {
   isError,
   isReady,
@@ -21,8 +24,6 @@ import {
   resetFimsHistoryExportState,
   resetFimsHistoryState
 } from "../../actions";
-import { AccessHistoryPage } from "../../../../../../../definitions/fims_history/AccessHistoryPage";
-import { Access } from "../../../../../../../definitions/fims_history/Access";
 
 describe("INITIAL_STATE", () => {
   it("Should match snapshot", () => {

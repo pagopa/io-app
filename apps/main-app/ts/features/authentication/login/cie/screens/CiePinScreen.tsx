@@ -7,7 +7,7 @@ import {
   OTPInput,
   useIOToast,
   VSpacer
-} from "@pagopa/io-app-design-system";
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -17,9 +17,8 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
-
 import I18n from "i18next";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -28,6 +27,7 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { IdpData } from "../../../../../../definitions/content/IdpData";
 import {
   BottomTopAnimation,
@@ -132,7 +132,7 @@ const CiePinScreen = () => {
       <View>
         <IOMarkdown content={I18n.t("bottomSheets.ciePin.content")} />
         <VSpacer size={24} />
-        <Body weight="Semibold" asLink onPress={onOpenForgotPinPage}>
+        <Body asLink onPress={onOpenForgotPinPage} weight="Semibold">
           {I18n.t("authentication.cie.pin.bottomSheetCTA")}
         </Body>
         <VSpacer size={24} />
@@ -238,54 +238,58 @@ const CiePinScreen = () => {
           android: undefined
         })}
         contentContainerStyle={{ flex: 1 }}
-        style={{ flex: 1 }}
         keyboardVerticalOffset={headerHeight}
+        style={{ flex: 1 }}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <ContentWrapper>
             <H2>{I18n.t("authentication.cie.pin.pinCardTitle")}</H2>
             <VSpacer size={8} />
             <Body
-              ref={modalTriggerRef}
-              weight="Semibold"
-              asLink
               accessibilityRole="button"
+              asLink
               onPress={() => {
                 trackLoginCiePinInfo(loginType);
                 present();
               }}
+              ref={modalTriggerRef}
+              weight="Semibold"
             >
               {I18n.t("authentication.cie.pin.subtitleCTA")}
             </Body>
             <VSpacer size={24} />
             <View style={{ flex: 1 }}>
               <OTPInput
-                ref={pinPadViewRef}
-                secret
-                value={pin}
-                accessibilityLabel={I18n.t(
-                  "authentication.cie.pin.accessibility.label"
-                )}
                 accessibilityHint={I18n.t(
                   "authentication.cie.pin.accessibility.hint"
                 )}
-                onValueChange={setPin}
-                length={CIE_PIN_LENGTH}
+                accessibilityLabel={I18n.t(
+                  "authentication.cie.pin.accessibility.label"
+                )}
+                accessibilityValueText={({ valueLength, length }) =>
+                  I18n.t("global.accessibility.otpInput.valueText", {
+                    valueLength,
+                    length
+                  })
+                }
                 autoFocus={isFocused}
                 deleteButtonAccessibilityLabel={I18n.t(
                   "authentication.cie.pin.accessibility.deleteLabel",
                   { number: pin.slice(-1) }
                 )}
                 key={isFocused ? "focused" : "unfocused"}
+                length={CIE_PIN_LENGTH}
+                onValueChange={setPin}
+                ref={pinPadViewRef}
+                secret
+                value={pin}
               />
               <VSpacer size={24} />
               <Banner
-                ref={bannerRef}
-                color="neutral"
-                title={I18n.t("login.help_banner_title")}
-                content={I18n.t("login.help_banner_content")}
                 accessibilityRole="link"
                 action={I18n.t("login.help_banner_action")}
+                color="neutral"
+                content={I18n.t("login.help_banner_content")}
                 onPress={() => {
                   trackHelpCenterCtaTapped(
                     "LOGIN_CIE_PIN",
@@ -297,6 +301,8 @@ const CiePinScreen = () => {
                   });
                 }}
                 pictogramName="help"
+                ref={bannerRef}
+                title={I18n.t("login.help_banner_title")}
               />
             </View>
           </ContentWrapper>

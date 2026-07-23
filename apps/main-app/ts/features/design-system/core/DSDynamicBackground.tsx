@@ -4,14 +4,14 @@ import {
   BodySmall,
   ContentWrapper,
   H3,
+  hexToRgba,
   HStack,
   IOColors,
   IOVisualCostants,
   RadioGroup,
-  VStack,
-  hexToRgba,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+  useIOTheme,
+  VStack
+} from "@io-app/design-system";
 import {
   Blur,
   Canvas,
@@ -27,6 +27,7 @@ import { useCallback, useMemo, useState } from "react";
 import { Dimensions, Platform, ScrollView, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { DEFAULT_CONTENT_REPO_URL } from "../../../config";
 
@@ -73,13 +74,13 @@ export const DSDynamicBackground = () => {
 
   const screenSize = Dimensions.get("screen").width;
   const heroHeight: number = 350 + insets.top;
-  const scrollGradientHeight: number = 32;
-  const headerHeight: number = 60;
+  const scrollGradientHeight = 32;
+  const headerHeight = 60;
   // const heroOffset: number = 50;
 
   const renderedOrganizationsURIs: Array<{
-    value: string;
     id: string;
+    value: string;
   }> = organizationsURIs.map(item => ({
     value: item.name,
     id: item.name
@@ -99,7 +100,7 @@ export const DSDynamicBackground = () => {
 
   return (
     <>
-      <FocusAwareStatusBar translucent backgroundColor="transparent" />
+      <FocusAwareStatusBar backgroundColor="transparent" translucent />
       <Canvas
         style={{
           width: screenSize,
@@ -110,11 +111,11 @@ export const DSDynamicBackground = () => {
       >
         <Mask
           mask={
-            <Rect x={0} y={0} width={screenSize} height={heroHeight}>
+            <Rect height={heroHeight} width={screenSize} x={0} y={0}>
               <SkiaLinearGradient
-                start={vec(0, 0)}
-                end={vec(0, heroHeight)}
                 colors={["black", "black", "transparent"]}
+                end={vec(0, heroHeight)}
+                start={vec(0, 0)}
               />
             </Rect>
           }
@@ -128,8 +129,8 @@ export const DSDynamicBackground = () => {
             transform={[{ rotate: 45 }, { scale: 1.75 }]}
           >
             <Image
-              image={useImage(entityData?.imageSource)}
               fit="cover"
+              image={useImage(entityData?.imageSource)}
               rect={{
                 x: screenSize / 2,
                 y: 0,
@@ -153,15 +154,15 @@ export const DSDynamicBackground = () => {
           <HStack space={16}>
             <Avatar
               key={entityData?.name}
-              size="medium"
               logoUri={{ uri: entityData?.imageSource }}
+              size="medium"
             />
             <View style={{ alignSelf: "center", flexShrink: 1 }}>
               <H3 color={theme["textBody-secondary"]}>{entityData?.name}</H3>
               <BodySmall
-                weight="Regular"
                 color={theme["textBody-secondary"]}
                 style={{ opacity: 0.8 }}
+                weight="Regular"
               >
                 {entityData?.name}
               </BodySmall>
@@ -194,6 +195,10 @@ export const DSDynamicBackground = () => {
         </VStack>
 
         <LinearGradient
+          colors={[
+            IOColors[theme["appBackground-primary"]],
+            hexToRgba(IOColors[theme["appBackground-primary"]], 0)
+          ]}
           style={{
             height: scrollGradientHeight,
             position: "absolute",
@@ -201,10 +206,6 @@ export const DSDynamicBackground = () => {
             right: -IOVisualCostants.appMarginDefault,
             bottom: -scrollGradientHeight
           }}
-          colors={[
-            IOColors[theme["appBackground-primary"]],
-            hexToRgba(IOColors[theme["appBackground-primary"]], 0)
-          ]}
         />
       </View>
 
@@ -216,10 +217,10 @@ export const DSDynamicBackground = () => {
       >
         <ContentWrapper>
           <RadioGroup<string>
-            type="radioListItem"
             items={renderedOrganizationsURIs}
-            selectedItem={selectedItem}
             onPress={onEntitySelected}
+            selectedItem={selectedItem}
+            type="radioListItem"
           />
         </ContentWrapper>
       </ScrollView>

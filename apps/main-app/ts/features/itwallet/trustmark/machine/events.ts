@@ -4,4 +4,4 @@ export type Retry = {
   type: "retry";
 };
 
-export type TrustmarkEvents = Retry | ErrorActorEvent;
+export type TrustmarkEvents = ErrorActorEvent | Retry;

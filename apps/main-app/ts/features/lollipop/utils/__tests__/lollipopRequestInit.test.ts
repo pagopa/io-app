@@ -1,9 +1,10 @@
-import MockDate from "mockdate";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import MockDate from "mockdate";
+
 import { LollipopConfig } from "../..";
+import { getUnixTimestamp } from "../../httpSignature/signature";
 import { KeyInfo } from "../crypto";
 import { lollipopRequestInit } from "../fetch";
-import { getUnixTimestamp } from "../../httpSignature/signature";
 
 const publicKey: PublicKey = {
   crv: "P-256",
@@ -41,7 +42,7 @@ jest.mock("@pagopa/io-react-native-crypto", () => ({
 MockDate.set("2023-01-01T01:00:00");
 const mockTimestamp = 1672534800; // 2023-01-01T01:00:00
 
-const testInit = (signBody: boolean = false) => ({
+const testInit = (signBody = false) => ({
   headers: {
     Authorization: "Bearer 123",
     "x-pagopa-lollipop-original-method": "GET",

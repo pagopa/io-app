@@ -11,6 +11,7 @@ export type IOFontFamily = keyof typeof fonts;
 const weights = ["Light", "Regular", "Semibold", "Bold"] as const;
 export type IOFontWeight = (typeof weights)[number];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const weightValues = ["300", "400", "600", "700"] as const;
 export type FontWeightValue = (typeof weightValues)[number];
 
@@ -47,15 +48,9 @@ export const fontWeights: Record<IOFontWeight, FontWeightValue> = {
 };
 
 export enum FontStyle {
-  "normal" = "normal",
-  "italic" = "italic"
+  "italic" = "italic",
+  "normal" = "normal"
 }
-
-type FontStyleObject = {
-  fontFamily: string;
-  fontWeight?: FontWeightValue;
-  fontStyle?: FontStyle;
-};
 
 /**
  * Get the correct `fontFamily` name on both Android and iOS.
@@ -66,7 +61,7 @@ type FontStyleObject = {
 const makeFontFamilyName = (
   font: IOFontFamily,
   weight?: IOFontWeight,
-  isItalic: boolean = false
+  isItalic = false
 ): string =>
   Platform.select({
     default: "undefined",
@@ -89,29 +84,3 @@ export const allUsedFonts = [
     )
   )
 ];
-
-/**
- * Return a {@link FontStyleObject} with the fields filled based on the platform (iOS or Android).
- * @param weight
- * @param isItalic
- * @param font
- * @deprecated Don't use local `makeFontStyleObject`. Import it from `io-app-design-system` instead.
- */
-export const makeFontStyleObject = (
-  weight: IOFontWeight | undefined = undefined,
-  isItalic: boolean | undefined = false,
-  font: IOFontFamily | undefined = "TitilliumSansPro"
-): FontStyleObject =>
-  Platform.select({
-    default: {
-      fontFamily: "undefined"
-    },
-    android: {
-      fontFamily: makeFontFamilyName(font, weight, isItalic)
-    },
-    ios: {
-      fontFamily: makeFontFamilyName(font, weight, isItalic),
-      fontWeight: weight !== undefined ? fontWeights[weight] : weight,
-      fontStyle: isItalic ? FontStyle.italic : FontStyle.normal
-    }
-  });
