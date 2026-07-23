@@ -1,19 +1,9 @@
-// TODO [SIW-4084] import * as BackgroundTask from "expo-background-task";
-// TODO [SIW-4084] import * as TaskManager from "expo-task-manager";
-// TODO [SIW-4084] import { storeLastStatusListCheckTimestamp } from "../utils/storage";
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
+import * as BackgroundTask from "expo-background-task";
+import * as TaskManager from "expo-task-manager";
 
-/**
- * Identifier for the ITW Status List background fetch task.
- * Must match the task name used in TaskManager.defineTask.
- */
-export const ITW_STATUS_LIST_FETCH_TASK = "io-itw-status-list-fetch";
-
-/**
- * Interval in minutes for the ITW Status List fetch task.
- * The task will be scheduled to run approximately every this amount of minutes.
- * Note that the actual execution timing is determined by the OS and may vary.
- */
-export const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 4;
+import { ITW_STATUS_LIST_FETCH_TASK } from "../utils/consts";
+import { refreshStaleEntries } from "../utils/refresh";
 
 /**
  * Register the ITW Status List fetch task handler with expo-task-manager.
@@ -22,15 +12,14 @@ export const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 4;
  * Current behavior: stores the background wake-up timestamp (used later for analytics).
  * Status List refresh/fetch logic will be added separately.
  */
-// TODO [SIW-4084] TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
-//   try {
-//     const now = Date.now();
-//     await storeLastStatusListCheckTimestamp(now);
+TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
+  try {
+    // TODO [SIW-4623] get itw spec version from background context
+    const itwVersion: ItwVersion = "1.3.3";
 
-//     // TODO Add Status List fetch logic here
-
-//     return BackgroundTask.BackgroundTaskResult.Success;
-//   } catch {
-//     return BackgroundTask.BackgroundTaskResult.Failed;
-//   }
-// });
+    await refreshStaleEntries({ itwVersion });
+    return BackgroundTask.BackgroundTaskResult.Success;
+  } catch {
+    return BackgroundTask.BackgroundTaskResult.Failed;
+  }
+});
