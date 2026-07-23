@@ -216,9 +216,9 @@ describe("itwShouldRenderWalletUpgradeMDLDetailsBannerSelector", () => {
       jest
         .spyOn(
           bannersSelectors,
-          "itwIsWalletUpgradeMDLDetailsBannerHiddenSelector"
+          "itwIsWalletUpgradeMDLDetailsBannerVisibleSelector"
         )
-        .mockReturnValue(isBannerHidden);
+        .mockReturnValue(!isBannerHidden);
 
       expect(
         itwShouldRenderWalletUpgradeMDLDetailsBannerSelector(
@@ -282,11 +282,11 @@ describe("itwShouldRenderDiscoveryBannerSelector", () => {
 
 const mockItwIsBannerHiddenSelector = (isBannerHidden: boolean) =>
   jest
-    .spyOn(bannersSelectors, "itwIsBannerHiddenSelector")
+    .spyOn(bannersSelectors, "itwIsBannerVisibleSelector")
     .mockImplementation(
       () =>
-        (() => isBannerHidden) as unknown as ReturnType<
-          typeof bannersSelectors.itwIsBannerHiddenSelector
+        (() => !isBannerHidden) as unknown as ReturnType<
+          typeof bannersSelectors.itwIsBannerVisibleSelector
         >
     );
 

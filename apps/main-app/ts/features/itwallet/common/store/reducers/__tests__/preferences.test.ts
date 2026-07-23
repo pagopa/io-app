@@ -130,7 +130,6 @@ describe("IT Wallet preferences reducer", () => {
 
   describe("itwSetWalletActivationFeedbackBannerData / itwClearWalletActivationFeedbackBannerData", () => {
     const SAMPLE_DATA: ItwWalletActivationFeedbackBannerData = {
-      date: "2026-06-30T10:00:00.000Z",
       docStatus: "not_active",
       authMethod: "ciepin"
     };

@@ -15,7 +15,8 @@ import {
   itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderWalletDiscoveryBannerSelector
 } from "../../itwallet/common/store/selectors";
-import { itwWalletActivationFeedbackBannerSelector } from "../../itwallet/common/store/selectors/preferences";
+import { itwIsActivationSuccessFeedbackBannerVisibleSelector } from "../../itwallet/common/store/selectors/banners";
+import { itwWalletActivationFeedbackBannerDataSelector } from "../../itwallet/common/store/selectors/preferences";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
@@ -52,8 +53,11 @@ const WalletCardsContainer = () => {
   const shouldRenderL2EngagementBanner = useIOSelector(
     itwShouldRenderL2EngagementBannerForInactiveWalletSelector
   );
-  const walletActivationFeedbackBannerData = useIOSelector(
-    itwWalletActivationFeedbackBannerSelector
+  const isActivationSuccessFeedbackBannerVisible = useIOSelector(
+    itwIsActivationSuccessFeedbackBannerVisibleSelector
+  );
+  const activationSuccessFeedbackBannerData = useIOSelector(
+    itwWalletActivationFeedbackBannerDataSelector
   );
 
   useItwWalletInstanceRevocationAlert();
@@ -72,13 +76,14 @@ const WalletCardsContainer = () => {
         {shouldRenderItwDiscoveryBanner && (
           <ItwDiscoveryBanner style={{ marginVertical: 8 }} />
         )}
-        {walletActivationFeedbackBannerData && (
-          <ItwActivationSuccessFeedbackBanner
-            authMethod={walletActivationFeedbackBannerData.authMethod}
-            docStatus={walletActivationFeedbackBannerData.docStatus}
-            style={{ marginVertical: 8 }}
-          />
-        )}
+        {isActivationSuccessFeedbackBannerVisible &&
+          activationSuccessFeedbackBannerData && (
+            <ItwActivationSuccessFeedbackBanner
+              authMethod={activationSuccessFeedbackBannerData.authMethod}
+              docStatus={activationSuccessFeedbackBannerData.docStatus}
+              style={{ marginVertical: 8 }}
+            />
+          )}
         <View style={styles.walletContent} testID="walletCardsContainerTestID">
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
           <OtherWalletCardsContainer />
@@ -91,7 +96,8 @@ const WalletCardsContainer = () => {
     shouldRenderItwCardsContainer,
     shouldRenderItwDiscoveryBanner,
     shouldRenderL2EngagementBanner,
-    walletActivationFeedbackBannerData
+    isActivationSuccessFeedbackBannerVisible,
+    activationSuccessFeedbackBannerData
   ]);
 
   return (

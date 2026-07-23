@@ -14,6 +14,7 @@ import { AppFeedbackContext } from "../../../appReviews/components/AppFeedbackPr
 import * as connectivitySelectors from "../../../connectivity/store/selectors";
 import * as ingressSelectors from "../../../ingress/store/selectors";
 import * as itwSelectors from "../../../itwallet/common/store/selectors";
+import * as itwBannersSelectors from "../../../itwallet/common/store/selectors/banners";
 import * as itwPreferencesSelectors from "../../../itwallet/common/store/selectors/preferences";
 import {
   CredentialType,
@@ -191,6 +192,49 @@ describe("WalletCardsContainer", () => {
           queryByTestId(`${category}WalletCardsContainerTestID`)
         ).not.toBeNull();
       });
+    }
+  );
+
+  it.each([
+    [true, { authMethod: "spid", docStatus: "not_active" as const }, true],
+    [false, { authMethod: "spid", docStatus: "not_active" as const }, false],
+    [true, undefined, false]
+  ] as const)(
+    "when the activation success feedback banner is visible=%p and data=%p, it should render=%p",
+    (isVisible, data, shouldRender) => {
+      jest
+        .spyOn(walletSelectors, "shouldRenderWalletLoadingStateSelector")
+        .mockImplementation(() => false);
+      jest
+        .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
+        .mockImplementation(() => false);
+      jest
+        .spyOn(walletSelectors, "selectWalletOtherCards")
+        .mockImplementation(() => []);
+      jest
+        .spyOn(
+          itwBannersSelectors,
+          "itwIsActivationSuccessFeedbackBannerVisibleSelector"
+        )
+        .mockImplementation(() => isVisible);
+      jest
+        .spyOn(
+          itwPreferencesSelectors,
+          "itwWalletActivationFeedbackBannerDataSelector"
+        )
+        .mockImplementation(() => data);
+
+      const { queryByTestId } = renderComponent(<WalletCardsContainer />);
+
+      if (shouldRender) {
+        expect(
+          queryByTestId("itwActivationSuccessFeedbackBannerTestID")
+        ).not.toBeNull();
+      } else {
+        expect(
+          queryByTestId("itwActivationSuccessFeedbackBannerTestID")
+        ).toBeNull();
+      }
     }
   );
 });

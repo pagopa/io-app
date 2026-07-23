@@ -41,7 +41,6 @@ export const itwSetIdentificationMode = createStandardAction(
 
 export type ItwWalletActivationFeedbackBannerData = {
   authMethod: string;
-  date: string;
   docStatus: "active" | "not_active";
 };
 

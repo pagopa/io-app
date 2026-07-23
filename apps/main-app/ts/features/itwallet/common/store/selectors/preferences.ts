@@ -54,22 +54,11 @@ export const itwIdentificationModeSelector = (state: GlobalState) =>
 export const itwIsActivationDisabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isItwActivationDisabled ?? false;
 
-const WALLET_ACTIVATION_FEEDBACK_BANNER_VALIDITY_DAYS = 7;
-
 /**
- * Returns the wallet activation feedback banner data if it was stored within the last 7 days,
- * otherwise returns undefined. Used to show the survey banner in WALLET_HOME.
+ * Returns the stored data (authMethod/docStatus) for the eID activation feedback survey banner,
+ * regardless of whether the banner is currently visible. Pair with
+ * `itwIsActivationSuccessFeedbackBannerVisibleSelector` (in `./banners`) to decide if it should be shown.
  */
-export const itwWalletActivationFeedbackBannerSelector = (
+export const itwWalletActivationFeedbackBannerDataSelector = (
   state: GlobalState
-) => {
-  const data =
-    state.features.itWallet.preferences.walletActivationFeedbackBannerData;
-  if (!data) {
-    return undefined;
-  }
-  const addedAtMs = new Date(data.date).getTime();
-  const validityMs =
-    WALLET_ACTIVATION_FEEDBACK_BANNER_VALIDITY_DAYS * 24 * 60 * 60 * 1000;
-  return Date.now() - addedAtMs <= validityMs ? data : undefined;
-};
+) => state.features.itWallet.preferences.walletActivationFeedbackBannerData;
