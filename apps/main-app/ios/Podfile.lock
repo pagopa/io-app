@@ -410,13 +410,14 @@ PODS:
     - ZendeskChatSDK
     - ZendeskMessagingAPISDK
     - ZendeskSupportSDK
-  - Pulsar (1.3.0):
+  - Pulsar (1.6.1):
     - boost
     - DoubleConversion
     - fast_float
     - fmt
     - glog
     - hermes-engine
+    - Pulsar-haptics (= 1.1.4)
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -438,6 +439,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - Pulsar-haptics (1.1.4)
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -3543,34 +3545,6 @@ PODS:
     - SocketRocket
     - Yoga
     - ZXingObjC
-  - RNReactNativeHapticFeedback (2.3.3):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
   - RNReanimated (4.3.1):
     - boost
     - DoubleConversion
@@ -4080,7 +4054,6 @@ DEPENDENCIES:
   - RNKeychain (from `../../../node_modules/react-native-keychain`)
   - RNPermissions (from `../../../node_modules/react-native-permissions`)
   - RNQrGenerator (from `../../../node_modules/rn-qr-generator`)
-  - RNReactNativeHapticFeedback (from `../../../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../../../node_modules/react-native-reanimated`)
   - RNScreens (from `../../../node_modules/react-native-screens`)
   - RNShare (from `../../../node_modules/react-native-share`)
@@ -4100,6 +4073,7 @@ SPEC REPOS:
     - JOSESwift
     - Mixpanel-swift
     - OpenSSL-Universal
+    - Pulsar-haptics
     - React-Codegen
     - SocketRocket
     - SwiftCBOR
@@ -4398,8 +4372,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-permissions"
   RNQrGenerator:
     :path: "../../../node_modules/rn-qr-generator"
-  RNReactNativeHapticFeedback:
-    :path: "../../../node_modules/react-native-haptic-feedback"
   RNReanimated:
     :path: "../../../node_modules/react-native-reanimated"
   RNScreens:
@@ -4461,7 +4433,8 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
-  Pulsar: 7cbdae6f59ebf7f6a568045976298fe623394d7a
+  Pulsar: c743a993d501c276827f8fc83c9a26a916f111ef
+  Pulsar-haptics: f795eaf55d8d0290148fd97c747dcc6689c3d079
   RCT-Folly: b29feb752b08042c62badaef7d453f3bb5e6ae23
   RCTDeprecation: c5e70bcdbc24b9edbca24b96f3997319f01ba8fb
   RCTRequired: 7fbf6c9b97de59aab5c6a1ca5a5d91555d5ba403
@@ -4566,7 +4539,6 @@ SPEC CHECKSUMS:
   RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19
   RNQrGenerator: 3318e98283e861e9d93e58111fc4de8e03e2ddb3
-  RNReactNativeHapticFeedback: be4f1b4bf0398c30b59b76ed92ecb0a2ff3a69c6
   RNReanimated: c26dfcd831add485c2ed93de9d7bfb90b035eeaa
   RNScreens: 0bbf16c074ae6bb1058a7bf2d1ae017f4306797c
   RNShare: 1dba46787d6e5543e05655efaefa0e4bb98380d9
