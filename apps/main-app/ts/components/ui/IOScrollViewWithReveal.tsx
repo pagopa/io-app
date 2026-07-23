@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end"
   },
   gradientContainer: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFill
   },
   buttonContainer: {
     position: "relative",

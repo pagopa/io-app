@@ -188,7 +188,7 @@ export const OTPInput = ({
           returnKeyType="done"
           secureTextEntry={isSecret}
           style={[
-            StyleSheet.absoluteFillObject,
+            StyleSheet.absoluteFill,
             // Keep the hidden TextInput minimally visible so native focus still works.
             { opacity: 0.01 }
           ]}

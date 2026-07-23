@@ -94,13 +94,13 @@ const styles = StyleSheet.create({
     paddingVertical: inputPaddingVertical
   },
   textInputOuterBorder: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     borderRadius: inputRadius,
     borderCurve: "continuous",
     borderWidth: 1
   },
   textInputInnerBorder: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     borderRadius: inputRadius,
     borderCurve: "continuous",
     borderWidth: 2

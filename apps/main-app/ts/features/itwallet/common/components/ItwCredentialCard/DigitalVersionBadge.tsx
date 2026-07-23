@@ -195,13 +195,13 @@ const styles = StyleSheet.create({
     marginEnd: -IOBadgeHSpacing
   },
   faded: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: IOColors.white,
     opacity: 0.6,
     zIndex: 10
   },
   gradientCanvas: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     zIndex: 0
   }
 });
