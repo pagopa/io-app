@@ -1847,21 +1847,11 @@
             "contentL3": "Your driver's license on IO has the same legal validity as the physical document, but only within Italy.",
             "invalid": {
               "cta": "Remove document from Wallet"
-            },
-            "suspended": {
-              "action": "Find out more",
-              "title": "Your driving licence is not valid."
             }
           },
           "statusAction": "What can I do?"
         },
         "bottomSheets": {
-          "attributeUpdate": {
-            "content": "Update the digital version of the document now so it matches the physical one.",
-            "primaryAction": "Update now",
-            "secondaryAction": "Maybe later",
-            "title": "An updated version of this document is available"
-          },
           "EuropeanDisabilityCard": {
             "expiring": {
               "content": "You can request a renewal of your European Disability Card (EDC) by contacting the issuing authority.\n\nCheck the procedures and required documents on the official INPS website, or by contacting your local ASL, as the renewal process may vary depending on the type of disability and the regulations in your area.",
@@ -1904,10 +1894,6 @@
               "content": "Renew your driver’s license at the offices of the Motorizzazione Civile or an authorized institution in your area.\n\nYou must undergo a medical examination with an authorized doctor and pay the relevant payment slips.\n\n###### What documents do I need to bring?\n\nYour driver’s license (about to expire or already expired), a valid ID, your fiscal code, and a recent passport-sized photo.",
               "cta": "Learn more",
               "title": "Driver's License on IO: about to expire"
-            },
-            "suspended": {
-              "content": "You cannot currently drive the vehicle categories associated with your driving licence.\n\nYour document may have been temporarily suspended or withdrawn. Contact the Motorizzazione Civile for more details.\n\nWhen your physical driving licence becomes valid again, the digital document will update automatically.\n\nRemember: you can continue using your digital driving licence as an identity document.",
-              "cta": "Got it"
             }
           }
         },
