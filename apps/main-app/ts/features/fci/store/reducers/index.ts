@@ -3,10 +3,7 @@ import { combineReducers } from "redux";
 import { isActionOf } from "typesafe-actions";
 
 import { Action } from "../../../../store/actions/types";
-import {
-  fciClearStateRequest,
-  fciSignatureRequestRetrySuccess
-} from "../actions";
+import { fciClearStateRequest, fciStartRequest } from "../actions";
 import fciDocumentSignaturesReducer, {
   FciDocumentSignaturesState
 } from "./fciDocumentSignatures";
@@ -65,7 +62,12 @@ const innerFciReducer = combineReducers<FciState, Action>({
 const fciInitialState = innerFciReducer(undefined, fciClearStateRequest());
 
 const fciReducer = (state: FciState | undefined, action: Action): FciState => {
-  if (isActionOf(fciSignatureRequestRetrySuccess, action)) {
+  /**
+   * when fciStartRequest starts a signature request with payload (on retry),
+   * it resets completely FCI state with only the fresh signature request, this
+   * prevents 'DocumentUnavailableScreen' pot error or emitting double events.
+   */
+  if (isActionOf(fciStartRequest, action) && action.payload) {
     return { ...fciInitialState, signatureRequest: pot.some(action.payload) };
   }
   return innerFciReducer(state, action);

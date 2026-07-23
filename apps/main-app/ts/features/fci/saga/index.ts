@@ -46,7 +46,6 @@ import {
   fciMetadataRequest,
   fciSignatureRequestFromId,
   fciSignatureRequestRetryFromId,
-  fciSignatureRequestRetrySuccess,
   fciSignaturesListRequest,
   fciSigningRequest,
   fciStartRequest,
@@ -355,8 +354,6 @@ function* watchFciSignatureRequestRetrySaga(
 
     if (isActionOf(fciSignatureRequestFromId.success, result)) {
       if (result.payload.id === action.payload) {
-        // reset FCI state and sets the fresh signature
-        yield* put(fciSignatureRequestRetrySuccess(result.payload));
         yield* put(fciStartRequest(result.payload));
         return;
       }

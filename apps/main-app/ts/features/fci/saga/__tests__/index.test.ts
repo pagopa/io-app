@@ -25,7 +25,6 @@ import {
   fciMetadataRequest,
   fciSignatureRequestFromId,
   fciSignatureRequestRetryFromId,
-  fciSignatureRequestRetrySuccess,
   fciStartRequest
 } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
@@ -212,7 +211,7 @@ describe("FCI Saga Tests", () => {
         )
         .run());
 
-    it("should forward the known signature request detail to standardFciFlowStartSaga when provided", () =>
+    it("should forward the just-fetched signature request detail to standardFciFlowStartSaga when provided", () =>
       expectSaga(
         watchFciStartSaga,
         fciStartRequest(mockSignatureRequestDetailView)
@@ -233,7 +232,7 @@ describe("FCI Saga Tests", () => {
     const signatureRequestId = "test-signature-id" as NonEmptyString;
     const action = fciSignatureRequestRetryFromId(signatureRequestId);
 
-    it("should reset FCI state with the fresh signature request and forward it to fciStartRequest on success", () => {
+    it("should forward the fresh signature request to fciStartRequest on success", () => {
       const signatureRequestDetail = {
         ...mockSignatureRequestDetailView,
         id: signatureRequestId
@@ -242,7 +241,6 @@ describe("FCI Saga Tests", () => {
       return expectSaga(watchFciSignatureRequestRetrySaga, action)
         .put(fciSignatureRequestFromId.request(signatureRequestId))
         .dispatch(fciSignatureRequestFromId.success(signatureRequestDetail))
-        .put(fciSignatureRequestRetrySuccess(signatureRequestDetail))
         .put(fciStartRequest(signatureRequestDetail))
         .not.put(fciDownloadPreview.cancel())
         .run();
