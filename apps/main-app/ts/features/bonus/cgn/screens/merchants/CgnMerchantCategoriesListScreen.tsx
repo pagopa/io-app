@@ -3,6 +3,7 @@ import {
   ContentWrapper,
   Divider,
   HSpacer,
+  IOSkeleton,
   IOSpacingScale,
   IOToast,
   ListItemAction,
@@ -45,6 +46,9 @@ type RenderableCategory = {
 
 const CATEGORY_CARDS_PER_ROW = 2;
 const CATEGORY_CARD_SPACING: IOSpacingScale = 8;
+const CATEGORY_CARD_SKELETON_ROWS = 3;
+const CATEGORY_CARD_SKELETON_HEIGHT = 116;
+const CATEGORY_CARD_SKELETON_RADIUS = 8;
 
 const getRenderableCategories = (
   categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount>
@@ -88,6 +92,36 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+const CgnMerchantCategoryCardsSkeleton = () => (
+  <View testID="CgnMerchantCategoryCardsSkeleton">
+    {new Array(CATEGORY_CARD_SKELETON_ROWS).fill(null).map((_, rowIndex) => (
+      <ContentWrapper key={rowIndex}>
+        <View style={styles.row}>
+          {new Array(CATEGORY_CARDS_PER_ROW)
+            .fill(null)
+            .map((__, columnIndex) => (
+              <Fragment key={columnIndex}>
+                {columnIndex > 0 && <HSpacer size={CATEGORY_CARD_SPACING} />}
+                <View style={styles.cardWrapper}>
+                  <IOSkeleton
+                    height={CATEGORY_CARD_SKELETON_HEIGHT}
+                    radius={CATEGORY_CARD_SKELETON_RADIUS}
+                    shape="rectangle"
+                    testID={`CgnMerchantCategoryCardsSkeleton-Item-${rowIndex}-${columnIndex}`}
+                    width="100%"
+                  />
+                </View>
+              </Fragment>
+            ))}
+        </View>
+        {rowIndex < CATEGORY_CARD_SKELETON_ROWS - 1 && (
+          <VSpacer size={CATEGORY_CARD_SPACING} />
+        )}
+      </ContentWrapper>
+    ))}
+  </View>
+);
 
 export const CgnMerchantCategoriesListScreen = () => {
   const insets = useSafeAreaInsets();
@@ -233,6 +267,8 @@ export const CgnMerchantCategoriesListScreen = () => {
         {bottomSheet}
       </ContentWrapper>
     ) : undefined,
-    ListEmptyComponent: undefined
+    ListEmptyComponent: isError ? undefined : (
+      <CgnMerchantCategoryCardsSkeleton />
+    )
   };
 };
