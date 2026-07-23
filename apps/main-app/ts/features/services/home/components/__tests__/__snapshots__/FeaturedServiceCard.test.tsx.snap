@@ -525,7 +525,6 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
                               <Text
                                 allowFontScaling={true}
                                 dynamicTypeRamp="title3"
-                                lineBreakMode="head"
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={3}
                                 style={
@@ -1138,7 +1137,6 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
                               <Text
                                 allowFontScaling={true}
                                 dynamicTypeRamp="title3"
-                                lineBreakMode="head"
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={3}
                                 style={

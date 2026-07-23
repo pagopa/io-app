@@ -25,10 +25,9 @@ import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText.tsx";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
-import {
-  itwIsL3EnabledSelector,
-  itwIsPendingReviewSelector
-} from "../../../common/store/selectors/preferences.ts";
+import { isItwProximityEnabledSelector } from "../../../common/store/selectors";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors/index.ts";
+import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
@@ -195,6 +194,7 @@ export const ItwPresentationCredentialDetail = ({
 
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -284,7 +284,7 @@ export const ItwPresentationCredentialDetail = ({
       };
     }
 
-    if (itwFeaturesEnabled && isPresentableCredential) {
+    if (isProximityEnabled && isPresentableCredential) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.present"),
         icon: "productITWallet",
@@ -324,9 +324,9 @@ export const ItwPresentationCredentialDetail = ({
   }, [
     credential.credentialType,
     shouldShowMdlUpdateCta,
-    itwFeaturesEnabled,
     isL3Credential,
     isPresentableCredential,
+    isProximityEnabled,
     contentClaim,
     navigation,
     mixPanelCredential,

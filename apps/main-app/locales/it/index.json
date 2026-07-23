@@ -3117,15 +3117,6 @@
       },
       "verifiableCredentials": {
         "claims": {
-          "uniqueId": "ID univoco",
-          "givenName": "Nome",
-          "familyName": "Cognome",
-          "taxIdCode": "Codice Fiscale",
-          "birthdate": "Data di nascita",
-          "placeOfBirth": "Luogo di nascita",
-          "expirationDate": "Scadenza",
-          "securityLevel": "Livello di sicurezza",
-          "info": "Ulteriori info su questi dati",
           "releasedBy": "Emissione versione digitale",
           "releasedByPid": "Emissione IT-Wallet ID",
           "attachments": "Allegati",
@@ -3531,9 +3522,6 @@
             "secondary": "Annulla"
           }
         },
-        "credentialIntro": {
-          "subtitle": "Leggi con attenzione cosa troverai."
-        },
         "credentialOffer": {
           "intro": {
             "fallbackTitle": "Aggiungi un documento al tuo Portafoglio"
@@ -3626,9 +3614,7 @@
           "body": {
             "l2": "L’identità digitale che usi per attivare Documenti su IO deve corrispondere alla stessa persona che ha fatto accesso a IO.",
             "l3": "L’identità digitale che usi per attivare IT-Wallet deve corrispondere alla stessa persona che ha fatto accesso a IO."
-          },
-          "primaryAction": "Riprova",
-          "secondaryAction": "Chiudi"
+          }
         },
         "cieNotMatchingAuthenticationIdentityError": {
           "title": "La CIE non corrisponde",
@@ -3995,8 +3981,7 @@
               "title": "Sistema di verifica degli enti",
               "contentTop": "IO controlla sempre che un ente sia verificato prima di consentire la lettura dei tuoi dati.",
               "subtitle": "Quando un ente è verificato?",
-              "contentBottom": "Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.",
-              "primaryAction": "Scopri di più"
+              "contentBottom": "Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza."
             }
           },
           "purpose": "Finalità: {{purpose}}",

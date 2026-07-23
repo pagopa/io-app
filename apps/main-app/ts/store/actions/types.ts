@@ -64,7 +64,6 @@ import { CrossSessionsActions } from "./crossSessions";
 import { DebugActions } from "./debug";
 import { InstallationActions } from "./installation";
 import { MixpanelActions } from "./mixpanel";
-import { OrganizationsActions } from "./organizations";
 import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PreferencesActions } from "./preferences";
 import { SearchActions } from "./search";
@@ -105,7 +104,6 @@ export type Action =
   | NotificationPermissionsActions
   | NotificationsActions
   | OnboardingActions
-  | OrganizationsActions
   | PaymentsFeatureActions
   | PendingMessageActions
   | PersistedPreferencesActions
