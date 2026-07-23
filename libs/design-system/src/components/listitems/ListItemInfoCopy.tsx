@@ -1,9 +1,10 @@
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps, ReactNode, useCallback } from "react";
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
 import { IOListItemStyles, IOListItemVisualParams } from "../../core";
+import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
@@ -35,6 +36,14 @@ export const ListItemInfoCopy = ({
   const theme = useIOTheme();
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
+
+  const handleOnPress = useCallback(
+    (event: GestureResponderEvent) => {
+      triggerHaptic("impactLight");
+      onPress(event);
+    },
+    [onPress]
+  );
 
   const { dynamicFontScale, spacingScaleMultiplier, hugeFontEnabled } =
     useIOFontDynamicScale();
@@ -68,7 +77,7 @@ export const ListItemInfoCopy = ({
       accessibilityLabel={listItemAccessibilityLabel}
       accessibilityRole="button"
       accessible={true}
-      onPress={onPress}
+      onPress={handleOnPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
