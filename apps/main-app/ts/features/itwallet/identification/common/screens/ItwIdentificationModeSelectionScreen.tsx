@@ -218,17 +218,6 @@ const GroupedMethodList = ({
     {(!isCiePinDisabled || !isCieIdDisabled) && (
       <VStack space={8}>
         <ListItemHeader
-          endElement={{
-            type: "badge",
-            componentProps: {
-              text: I18n.t(
-                "features.itWallet.identification.modeSelection.mode.ciePin.reissuanceBadge"
-              ),
-              variant: "highlight",
-              outline: false,
-              testID: "CiePinReissuanceBadgeTestID"
-            }
-          }}
           label={I18n.t(
             "features.itWallet.identification.modeSelection.frequency.every12Months"
           )}

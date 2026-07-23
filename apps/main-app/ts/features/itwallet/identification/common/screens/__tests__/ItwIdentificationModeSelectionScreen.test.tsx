@@ -47,13 +47,12 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     jest.clearAllMocks();
   });
 
-  it("[issuance, l2] shows all L2 methods, no badges, no noCie button", () => {
+  it("[issuance, l2] shows all L2 methods and no noCie button", () => {
     const { queryByTestId } = renderComponent("issuance", "l2");
 
     expect(queryByTestId("CiePinMethodModuleTestIDL2")).not.toBeNull();
     expect(queryByTestId("SpidMethodModuleTestIDL2")).not.toBeNull();
     expect(queryByTestId("CieIDMethodModuleTestIDL2")).not.toBeNull();
-    expect(queryByTestId("CiePinRecommendedBadgeTestID")).toBeNull();
     expect(queryByTestId("noCieButtonTestID")).toBeNull();
   });
 
@@ -76,15 +75,13 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(queryByTestId("CieIDMethodModuleTestIDL2")).not.toBeNull();
   });
 
-  it("[issuance, l3] shows all L3 methods with the recommended badge and the noCie button", () => {
+  it("[issuance, l3] shows all L3 methods and the noCie button", () => {
     const { queryByTestId } = renderComponent("issuance", "l3");
 
     expect(queryByTestId("CiePinMethodModuleTestIDL3")).not.toBeNull();
-    expect(queryByTestId("CiePinRecommendedBadgeTestID")).not.toBeNull();
     expect(queryByTestId("SpidMethodModuleTestIDL3")).not.toBeNull();
     expect(queryByTestId("CieIDMethodModuleTestIDL3")).not.toBeNull();
     expect(queryByTestId("noCieButtonTestID")).not.toBeNull();
-    expect(queryByTestId("CiePinReissuanceBadgeTestID")).toBeNull();
   });
 
   it("[reissuance, l2] shows all L2 methods, no frequency headers", () => {
@@ -97,7 +94,7 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(queryByText(every90Days())).toBeNull();
   });
 
-  it("[reissuance, l3] shows all L3 methods with frequency headers and reissuance badge, no noCie button", () => {
+  it("[reissuance, l3] shows all L3 methods with frequency headers and no noCie button", () => {
     const { queryByTestId, queryByText } = renderComponent("reissuance", "l3");
 
     expect(queryByTestId("CiePinMethodModuleTestIDL3")).not.toBeNull();
@@ -105,7 +102,6 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(queryByTestId("CieIDMethodModuleTestIDL3")).not.toBeNull();
     expect(queryByText(every12Months())).not.toBeNull();
     expect(queryByText(every90Days())).not.toBeNull();
-    expect(queryByTestId("CiePinReissuanceBadgeTestID")).not.toBeNull();
     expect(queryByTestId("noCieButtonTestID")).toBeNull();
   });
 
