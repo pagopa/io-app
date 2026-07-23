@@ -20,9 +20,7 @@ const FciQtspErrorScreen = () => {
   const errorKind = useIOSelector(fciQtspErrorKindSelector);
 
   useOnFirstRender(() => {
-    if (errorKind) {
-      trackFciPollingFailureScreenView(errorKind);
-    }
+    trackFciPollingFailureScreenView(errorKind);
   });
 
   const closeButtonProps = {
@@ -37,25 +35,23 @@ const FciQtspErrorScreen = () => {
     label: I18n.t("features.fci.errors.buttons.close")
   };
 
-  const operationResultActions = () => {
-    if (signatureRequestId) {
-      return {
-        action: {
-          testID: "FciQtspErrorTestIDRetryButton",
-          onPress: () => {
-            trackFciPollingFailureAction(
-              "custom_2",
-              I18n.t("features.fci.errors.buttons.retry")
-            );
-            dispatch(fciSignatureRequestRetryFromId(signatureRequestId));
-          },
-          label: I18n.t("features.fci.errors.buttons.retry")
-        },
-        secondaryAction: closeButtonProps
-      };
-    }
-    return { action: closeButtonProps };
-  };
+  const operationResultActions = () => ({
+    action: {
+      testID: "FciQtspErrorTestIDRetryButton",
+      onPress: () => {
+        trackFciPollingFailureAction(
+          "custom_2",
+          I18n.t("features.fci.errors.buttons.retry")
+        );
+        // needed only for type checking
+        if (signatureRequestId) {
+          dispatch(fciSignatureRequestRetryFromId(signatureRequestId));
+        }
+      },
+      label: I18n.t("features.fci.errors.buttons.retry")
+    },
+    secondaryAction: closeButtonProps
+  });
 
   return (
     <OperationResultScreenContent

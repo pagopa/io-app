@@ -334,11 +334,13 @@ export const trackFciBottomsheetMessagePermissionDeclined = () =>
   );
 
 export const trackFciPollingFailureScreenView = (
-  fci_backend_error: FciQtspErrorKind
+  fci_backend_error: FciQtspErrorKind | undefined
 ) =>
   mixpanelTrack(
     "FCI_POLLING_FAILURE",
-    buildEventProperties("KO", "screen_view", { fci_backend_error })
+    buildEventProperties("KO", "screen_view", {
+      fci_backend_error: fci_backend_error ?? "not_set"
+    })
   );
 
 export const trackFciPollingFailureAction = (
