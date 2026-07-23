@@ -153,9 +153,8 @@ export const CgnMerchantCategoriesListScreen = () => {
     return (
       <CgnMerchantCard
         accessibilityLabel={accessibilityLabel}
+        backgroundColor={specs.colors}
         icon={specs.icon}
-        iconBackgroundColor={specs.colors}
-        iconColor={specs.textColor}
         isNew={countAvailable}
         name={I18n.t(specs.nameKey)}
         onPress={() => {

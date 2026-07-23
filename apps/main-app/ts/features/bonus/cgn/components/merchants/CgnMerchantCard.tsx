@@ -1,11 +1,10 @@
 import {
   Badge,
-  H4,
+  H3,
   Icon,
   IOCategoryIcons,
   IOColors,
-  IOSpacingScale,
-  useIOTheme
+  IOSpacingScale
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
@@ -15,9 +14,8 @@ import { CardPressableBase } from "../../../../services/common/components/CardPr
 
 export type CgnMerchantCardProps = WithTestID<{
   accessibilityLabel?: string;
+  backgroundColor: string;
   icon: IOCategoryIcons;
-  iconBackgroundColor: string;
-  iconColor: "black" | "white";
   isNew?: boolean;
   name: string;
   onPress?: () => void;
@@ -26,7 +24,6 @@ export type CgnMerchantCardProps = WithTestID<{
 const cardPadding: IOSpacingScale = 16;
 const cardBorderRadius = 8;
 const iconSize = 32;
-const iconContainerSize = 56;
 const cardMinHeight = 120;
 const cardSafeInnerSpace: IOSpacingScale = 24;
 
@@ -43,22 +40,15 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "space-between"
   },
-  cardHeader: {
+  cardFooter: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-start",
+    alignItems: "flex-end",
     width: "100%"
-  },
-  iconContainer: {
-    width: iconContainerSize,
-    height: iconContainerSize,
-    borderRadius: cardBorderRadius,
-    alignItems: "center",
-    justifyContent: "center"
   },
   cardTitle: {
     width: "100%",
-    marginTop: cardSafeInnerSpace
+    marginBottom: cardSafeInnerSpace
   }
 });
 
@@ -67,54 +57,42 @@ const CgnMerchantCard = ({
   testID,
   accessibilityLabel,
   isNew,
+  backgroundColor,
   icon,
-  iconBackgroundColor,
-  iconColor,
   name
-}: CgnMerchantCardProps) => {
-  const theme = useIOTheme();
-
-  return (
-    <CardPressableBase
-      accessibilityLabel={accessibilityLabel}
-      onPress={onPress}
-      testID={testID ? `${testID}-pressable` : undefined}
+}: CgnMerchantCardProps) => (
+  <CardPressableBase
+    accessibilityLabel={accessibilityLabel}
+    onPress={onPress}
+    testID={testID ? `${testID}-pressable` : undefined}
+  >
+    <View
+      style={[
+        styles.cardContainer,
+        {
+          backgroundColor,
+          borderColor: IOColors["hanPurple-100"]
+        }
+      ]}
+      testID={testID}
     >
-      <View
-        style={[
-          styles.cardContainer,
-          {
-            backgroundColor: IOColors[theme["appBackground-secondary"]],
-            borderColor: IOColors[theme["cardBorder-default"]]
-          }
-        ]}
-        testID={testID}
-      >
-        <View style={styles.cardHeader}>
-          <View
-            style={[
-              styles.iconContainer,
-              { backgroundColor: iconBackgroundColor }
-            ]}
-          >
-            <Icon color={iconColor} name={icon} size={iconSize} />
-          </View>
-          {isNew && (
-            <Badge
-              accessible={false}
-              text={I18n.t("bonus.cgn.merchantsList.news")}
-              variant="cgn"
-            />
-          )}
-        </View>
-        <View style={styles.cardTitle}>
-          <H4 color={theme["textHeading-default"]} numberOfLines={3}>
-            {name}
-          </H4>
-        </View>
+      <View style={styles.cardTitle}>
+        <H3 color="black" numberOfLines={3}>
+          {name}
+        </H3>
       </View>
-    </CardPressableBase>
-  );
-};
+      <View style={styles.cardFooter}>
+        {isNew && (
+          <Badge
+            accessible={false}
+            text={I18n.t("bonus.cgn.merchantsList.news")}
+            variant="cgn"
+          />
+        )}
+        <Icon color="black" name={icon} size={iconSize} />
+      </View>
+    </View>
+  </CardPressableBase>
+);
 
 export { CgnMerchantCard };
