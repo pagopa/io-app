@@ -12,7 +12,6 @@ import { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 
-import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
@@ -129,4 +128,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withLightModalContext(FiscalCodeScreen);
+export default FiscalCodeScreen;

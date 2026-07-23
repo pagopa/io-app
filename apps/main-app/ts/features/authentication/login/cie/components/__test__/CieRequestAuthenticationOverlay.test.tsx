@@ -32,12 +32,6 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
   isLoginUtilsError: jest.fn().mockReturnValue(false)
 }));
 
-jest.mock("../../../../../../components/helpers/withLoadingSpinner", () => ({
-  withLoadingSpinner: (Component: any) => (props: any) => (
-    <Component {...props} />
-  )
-}));
-
 jest.mock("../../../../../../features/lollipop/utils/login", () => ({
   regenerateKeyGetRedirectsAndVerifySaml: jest.fn()
 }));

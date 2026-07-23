@@ -5,7 +5,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import { CieCardReaderScreenWrapper } from "../CieCardReaderScreenWrapper";
+import CieCardReaderScreen from "../CieCardReaderScreen";
 
 jest
   .spyOn(Platform, "select")
@@ -75,7 +75,7 @@ function renderComponent() {
   const store = createStore(appReducer, initialState as any);
 
   return renderScreenWithNavigationStoreContext(
-    () => <CieCardReaderScreenWrapper />,
+    () => <CieCardReaderScreen />,
     AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN,
     {},
     store
