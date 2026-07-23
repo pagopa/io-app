@@ -47,6 +47,7 @@ type RenderableCategory = {
 
 const CATEGORY_CARDS_PER_ROW = 2;
 const CATEGORY_CARD_SPACING: IOSpacingScale = 8;
+const CATEGORY_LIST_BOTTOM_SPACING: IOSpacingScale = 32;
 const CATEGORY_CARD_SKELETON_ROWS = 3;
 const CATEGORY_CARD_SKELETON_HEIGHT = 116;
 const CATEGORY_CARD_SKELETON_RADIUS = 8;
@@ -253,7 +254,12 @@ export const CgnMerchantCategoriesListScreen = () => {
 
   const ListFooterComponent = (
     <>
-      {renderableCategories.length > 0 && <CgnMerchantCategoriesSocialLinks />}
+      {renderableCategories.length > 0 && (
+        <>
+          <VSpacer size={CATEGORY_LIST_BOTTOM_SPACING} />
+          <CgnMerchantCategoriesSocialLinks />
+        </>
+      )}
       {showSortingInfo && (
         <ContentWrapper>
           <Divider />
