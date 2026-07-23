@@ -9,7 +9,6 @@ move_if_missing() {
   local source="$1"
   local target="$2"
 
-  # existing targets are authoritative; reconcile duplicates only if needed.
   if [[ -e "$target" ]]; then
     echo "Skipping move: $target already exists"
     return
