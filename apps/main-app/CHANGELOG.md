@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.37.0-rc.11](https://github.com/pagopa/io-app/compare/3.37.0-rc.10...3.37.0-rc.11) (2026-07-22)
+
+
+### Chores
+
+* [[IEL-684](https://pagopa.atlassian.net/browse/IEL-684)] FCI - retry checks for signature request status ([#8306](https://github.com/pagopa/io-app/issues/8306)) ([8334c3b](https://github.com/pagopa/io-app/commit/8334c3b6804c44bcb3a7d081623d02c61f4c0459))
+
 ## [3.37.0-rc.10](https://github.com/pagopa/io-app/compare/3.37.0-rc.9...3.37.0-rc.10) (2026-07-22)
 
 
