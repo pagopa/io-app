@@ -7,7 +7,9 @@
 // and the normal login flow can be done
 // Untrusted means that LolliPOP signature checking has failed
 // and the user cannot proceed with the login
-export type LollipopCheckStatus = {
-  status: "checking" | "none" | "trusted" | "untrusted";
-  url?: string;
-};
+export type LollipopCheckStatus =
+  | {
+      status: "checking" | "trusted" | "untrusted";
+      url: string;
+    }
+  | { status: "none" };

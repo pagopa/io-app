@@ -1602,9 +1602,6 @@
           "title": "Dati necessari per {{credentialName}}",
           "tos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d'uso]({{privacyUrl}})."
         },
-        "credentialIntro": {
-          "subtitle": "Leggi con attenzione cosa troverai."
-        },
         "credentialNotFound": {
           "subtitle": "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce.",
           "title": "Aggiungi il documento al Portafoglio"
@@ -1715,8 +1712,6 @@
             "l2": "L’identità digitale che usi per attivare Documenti su IO deve corrispondere alla stessa persona che ha fatto accesso a IO.",
             "l3": "L’identità digitale che usi per attivare IT-Wallet deve corrispondere alla stessa persona che ha fatto accesso a IO."
           },
-          "primaryAction": "Riprova",
-          "secondaryAction": "Chiudi",
           "title": "Identità non riconosciuta"
         },
         "pidAnprMismatchError": {
@@ -2349,7 +2344,6 @@
             "bottomSheet": {
               "contentBottom": "Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.",
               "contentTop": "IO controlla sempre che un ente sia verificato prima di consentire la lettura dei tuoi dati.",
-              "primaryAction": "Scopri di più",
               "subtitle": "Quando un ente è verificato?",
               "title": "Sistema di verifica degli enti"
             },
@@ -2478,23 +2472,14 @@
         "claims": {
           "attachments": "Allegati",
           "authenticSource": "Origine dei dati",
-          "birthdate": "Data di nascita",
-          "expirationDate": "Scadenza",
-          "familyName": "Cognome",
-          "givenName": "Nome",
-          "info": "Ulteriori info su questi dati",
           "mdl": {
             "category": "Patente {{category}}",
             "expirationDate": "Valida fino",
             "issuedDate": "Valida dal",
             "restrictionConditions": "Codici"
           },
-          "placeOfBirth": "Luogo di nascita",
           "releasedBy": "Emissione versione digitale",
-          "releasedByPid": "Emissione IT-Wallet ID",
-          "securityLevel": "Livello di sicurezza",
-          "taxIdCode": "Codice Fiscale",
-          "uniqueId": "ID univoco"
+          "releasedByPid": "Emissione IT-Wallet ID"
         }
       },
       "walletInstanceRevoked": {

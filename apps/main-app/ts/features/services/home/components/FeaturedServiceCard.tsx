@@ -94,7 +94,6 @@ const FeaturedServiceCard = ({
                 ? newThemeStyle.foreground.primary
                 : defaultThemeStyle.foreground.primary
             }
-            lineBreakMode="head"
             numberOfLines={3}
           >
             {name}
@@ -108,7 +107,6 @@ const FeaturedServiceCard = ({
                     ? newThemeStyle.foreground.secondary
                     : defaultThemeStyle.foreground.secondary
                 }
-                lineBreakMode="head"
                 numberOfLines={1}
                 weight="Regular"
               >
