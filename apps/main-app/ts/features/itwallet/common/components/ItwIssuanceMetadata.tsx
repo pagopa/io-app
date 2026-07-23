@@ -10,18 +10,10 @@ import {
   trackWalletCredentialShowIssuer
 } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
-import {
-  itwCatalogueTranslationsByLocaleSelector,
-  itwCredentialsCatalogueByTypesSelector
-} from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { useItwAuthSourceName } from "../hooks/useItwAuthSourceName";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
-import {
-  getAuthSource,
-  getForcedItwAuthSource,
-  getItwAuthSource
-} from "../utils/itwMetadataUtils.ts";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils.ts";
 
@@ -111,26 +103,15 @@ export const ItwIssuanceMetadata = ({
     isItwL3
   );
 
-  const credentialsFromCatalogue = useIOSelector(
-    itwCredentialsCatalogueByTypesSelector
+  const authSource = useItwAuthSourceName(
+    credential.credentialType,
+    credential
   );
 
-  const translationsByLocale = useIOSelector(
-    itwCatalogueTranslationsByLocaleSelector
-  );
-
-  const authSource =
-    getForcedItwAuthSource(credential.credentialType) ??
-    (credentialsFromCatalogue &&
-    credentialsFromCatalogue[credential.credentialType]
-      ? getItwAuthSource(
-          credentialsFromCatalogue[credential.credentialType],
-          translationsByLocale
-        )
-      : getAuthSource(credential));
-
-  const releasedByPid =
-    itwCredential && credential.credentialType === CredentialType.PID;
+  const releasedByKey =
+    itwCredential && credential.credentialType === CredentialType.PID
+      ? "releasedByPid"
+      : "releasedBy";
 
   const releaserNameBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
     useMemo(
@@ -189,9 +170,7 @@ export const ItwIssuanceMetadata = ({
           bottomSheet={releaserNameBottomSheet}
           isPreview={isPreview}
           label={I18n.t(
-            releasedByPid
-              ? "features.itWallet.verifiableCredentials.claims.releasedByPid"
-              : "features.itWallet.verifiableCredentials.claims.releasedBy"
+            `features.itWallet.verifiableCredentials.claims.${releasedByKey}`
           )}
           value={releaserName}
         />

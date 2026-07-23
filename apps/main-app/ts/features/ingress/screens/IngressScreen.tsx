@@ -47,6 +47,10 @@ import { checkSessionErrorSelector } from "../store/selectors";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
+const BLOCKING_SCREEN_PICTOGRAM = {
+  cdnUnreachable: "umbrella",
+  slowdowns: "time"
+} as const;
 
 const getApiFailureValue = (
   isConnected: boolean | undefined,
@@ -300,12 +304,12 @@ const IngressScreenBlockingError = memo(() => {
       testID="device-blocking-screen-id"
       {...(isBackendStatusLoaded
         ? {
-            pictogram: "time",
+            pictogram: BLOCKING_SCREEN_PICTOGRAM.slowdowns,
             title: I18n.t("startup.slowdowns_results_screen.title"),
             subtitle: I18n.t("startup.slowdowns_results_screen.subtitle")
           }
         : {
-            pictogram: "umbrella",
+            pictogram: BLOCKING_SCREEN_PICTOGRAM.cdnUnreachable,
             title: I18n.t("startup.cdn_unreachable_results_screen.title"),
             subtitle: I18n.t("startup.cdn_unreachable_results_screen.subtitle")
           })}
