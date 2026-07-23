@@ -16,6 +16,8 @@ import {
 import { ActionType, isActionOf } from "typesafe-actions";
 
 import { CreateSignatureBody } from "../../../../definitions/fci/CreateSignatureBody";
+import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
+import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import { apiUrlPrefix } from "../../../config";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
@@ -217,7 +219,33 @@ function* deletePath(path: string) {
   );
 }
 
-function* standardFciFlowStartSaga(): SagaIterator {
+/**
+ * Starts the FCI signing flow if we don't have a Signature Request Details or if
+ * it is still signable.
+ * @param currentSignatureRequest - optional fresh data (ex. after a retry)
+ */
+function* standardFciFlowStartSaga(
+  currentSignatureRequest?: SignatureRequestDetailView
+): SagaIterator {
+  if (
+    currentSignatureRequest &&
+    (currentSignatureRequest.status !==
+      SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE ||
+      new Date(currentSignatureRequest.expires_at) < new Date())
+  ) {
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.replace(FCI_ROUTES.MAIN, {
+        screen: FCI_ROUTES.ROUTER,
+        params: {
+          signatureRequestId: currentSignatureRequest.id,
+          skipInitialFetch: true
+        }
+      })
+    );
+    return;
+  }
+
   yield* call(
     NavigationService.dispatchNavigationAction,
     StackActions.replace(FCI_ROUTES.MAIN, {
@@ -329,10 +357,9 @@ function* watchFciSignatureRequestRetrySaga(
       if (result.payload.id === action.payload) {
         // reset FCI state and sets the fresh signature
         yield* put(fciSignatureRequestRetrySuccess(result.payload));
-        yield* put(fciStartRequest());
+        yield* put(fciStartRequest(result.payload));
         return;
       }
-
       continue;
     }
 
@@ -410,18 +437,22 @@ function* watchFciSigningRequestSaga(): SagaIterator {
 /**
  * Handle the FCI start requests saga
  */
-function* watchFciStartSaga(): SagaIterator {
+function* watchFciStartSaga(
+  action: ActionType<typeof fciStartRequest>
+): SagaIterator {
+  const currentSignatureRequest: SignatureRequestDetailView | undefined =
+    action.payload || undefined;
   const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
   const isFciSecurityLevelCheckEnabled = yield* select(
     isFciSecurityLevelCheckRemoteFFEnabledSelector
   );
 
   if (!isFciSecurityLevelCheckEnabled) {
-    yield* call(standardFciFlowStartSaga);
+    yield* call(standardFciFlowStartSaga, currentSignatureRequest);
     return;
   } else {
     if (spidLevel === "L3") {
-      yield* call(standardFciFlowStartSaga);
+      yield* call(standardFciFlowStartSaga, currentSignatureRequest);
       return;
     }
     yield* call(
