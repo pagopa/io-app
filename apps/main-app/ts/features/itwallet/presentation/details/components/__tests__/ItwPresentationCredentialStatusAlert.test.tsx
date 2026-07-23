@@ -21,7 +21,6 @@ import * as detailsAnalytics from "../../analytics";
 import {
   CredentialAlertType,
   deriveCredentialAlertType,
-  isCredentialAttributeUpdate,
   ItwPresentationCredentialStatusAlert
 } from "../ItwPresentationCredentialStatusAlert";
 
@@ -150,19 +149,6 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     }
   );
 
-  it("returns ATTRIBUTE_UPDATE before dynamic issuer errors", () => {
-    const result = deriveCredentialAlertType({
-      credentialStatus: "invalid",
-      eidStatus: "valid",
-      isOffline: false,
-      isItwL3: false,
-      message: mockMessage,
-      hasCredentialAttributeUpdate: true
-    });
-
-    expect(result).toBe(CredentialAlertType.ATTRIBUTE_UPDATE);
-  });
-
   it("returns MDL_SUSPENDED before dynamic issuer errors", () => {
     const result = deriveCredentialAlertType({
       credentialStatus: "invalid",
@@ -174,33 +160,6 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     });
 
     expect(result).toBe(CredentialAlertType.MDL_SUSPENDED);
-  });
-
-  it("recognizes attribute_update as a credential attribute update", () => {
-    expect(
-      isCredentialAttributeUpdate({
-        storedStatusAssertion: {
-          credentialStatus: "invalid",
-          errorCode: "attribute_update"
-        }
-      } as CredentialMetadata)
-    ).toBe(true);
-  });
-
-  it.each([
-    "ATTRIBUTE_UPDATE",
-    "credential_attribute_update",
-    "credential_attributes_updated",
-    "credential_invalid"
-  ])("does not recognize %s as a credential attribute update", errorCode => {
-    expect(
-      isCredentialAttributeUpdate({
-        storedStatusAssertion: {
-          credentialStatus: "invalid",
-          errorCode
-        }
-      } as CredentialMetadata)
-    ).toBe(false);
   });
 
   it("should render static copy and double CTA for the expired mDL status", () => {
@@ -296,9 +255,7 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     expect(mockBottomSheetDismiss).toHaveBeenCalledTimes(1);
   });
 
-  it("renders attribute update copy and actions", () => {
-    mockBottomSheetModal();
-
+  it("treats attribute_update as an issuer error until status list support is available", () => {
     const selectorMock: ReturnType<
       typeof selectors.itwCredentialStatusSelector
     > = {
@@ -317,85 +274,12 @@ describe("ItwPresentationCredentialStatusAlert", () => {
       }
     });
 
+    expect(component.getByText("__Scaduto__")).toBeTruthy();
     expect(
-      component.getByText(
+      component.queryByText(
         "È disponibile una versione aggiornata di questo documento"
       )
-    ).toBeTruthy();
-    expect(
-      component.getByText(
-        "Aggiorna ora la versione digitale del documento per farla corrispondere a quella fisica."
-      )
-    ).toBeTruthy();
-    expect(component.getByText("Aggiorna ora")).toBeTruthy();
-    expect(component.getByText("Forse più tardi")).toBeTruthy();
-    expect(component.queryByText("__Scaduto__")).toBeNull();
-  });
-
-  it("dismisses the attribute update bottom sheet from the secondary action", () => {
-    mockBottomSheetModal();
-
-    const selectorMock: ReturnType<
-      typeof selectors.itwCredentialStatusSelector
-    > = {
-      status: "invalid",
-      message: mockMessage
-    };
-
-    jest
-      .spyOn(selectors, "itwCredentialStatusSelector")
-      .mockImplementation(() => selectorMock);
-
-    const component = renderComponent({
-      storedStatusAssertion: {
-        credentialStatus: "invalid",
-        errorCode: "attribute_update"
-      }
-    });
-
-    fireEvent.press(component.getByText("Forse più tardi"));
-
-    expect(mockBottomSheetDismiss).toHaveBeenCalledTimes(1);
-  });
-
-  it("tracks renew start and navigates to reissuance from the attribute update primary action", () => {
-    mockBottomSheetModal();
-
-    const selectorMock: ReturnType<
-      typeof selectors.itwCredentialStatusSelector
-    > = {
-      status: "invalid",
-      message: mockMessage
-    };
-
-    jest
-      .spyOn(selectors, "itwCredentialStatusSelector")
-      .mockImplementation(() => selectorMock);
-
-    const component = renderComponent({
-      storedStatusAssertion: {
-        credentialStatus: "invalid",
-        errorCode: "attribute_update"
-      }
-    });
-
-    fireEvent.press(component.getByText("Aggiorna ora"));
-
-    expect(itwAnalytics.trackCredentialRenewStart).toHaveBeenCalledWith(
-      "ITW_PG_V2",
-      {
-        credential_status: "not_valid",
-        position: "bottom_sheet"
-      }
-    );
-    expect(mockBottomSheetDismiss).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
-      params: {
-        credentialType: "mDL",
-        mode: "reissuance"
-      }
-    });
+    ).toBeNull();
   });
 
   it("tracks banner tap and bottom sheet opening for the expiring status alert", () => {

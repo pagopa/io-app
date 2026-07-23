@@ -13,7 +13,6 @@ import { format } from "../../../../../utils/dates.ts";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 import { openWebUrl } from "../../../../../utils/url";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
-import { trackCredentialRenewStart } from "../../../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
@@ -63,7 +62,6 @@ type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];
 const LICENSE_RENEWAL_URL = "https://www.mit.gov.it/rinnovo-patente";
 
 export enum CredentialAlertType {
-  ATTRIBUTE_UPDATE = "ATTRIBUTE_UPDATE",
   DOCUMENT_EXPIRED = "DOCUMENT_EXPIRED",
   DOCUMENT_EXPIRING = "DOCUMENT_EXPIRING",
   EID_LIFECYCLE = "EID_LIFECYCLE",
@@ -80,7 +78,6 @@ type CredentialAlertEvents = "open_bottom_sheet" | "press_cta" | "tap_banner";
 type CredentialAlertProps = {
   credentialStatus: ItwCredentialStatus | undefined;
   eidStatus: ItwJwtCredentialStatus | undefined;
-  hasCredentialAttributeUpdate?: boolean;
   isItwL3: boolean;
   isMdlSuspended?: boolean;
   isOffline: boolean;
@@ -93,22 +90,6 @@ type CredentialStatusAlertProps = {
   status?: ItwCredentialStatus;
 };
 
-/**
- * Error code reported by the status list when the physical document
- * attributes were updated, as defined by the status assertion specifications.
- */
-const ATTRIBUTE_UPDATE_ERROR_CODE = "attribute_update";
-
-/**
- * Returns whether the status assertion describes updated physical-document
- * attributes, a case that requires user consent before reissuing the digital
- * credential.
- */
-export const isCredentialAttributeUpdate = (
-  credential: CredentialMetadata
-): boolean =>
-  credential.storedStatusAssertion?.credentialStatus === "invalid" &&
-  credential.storedStatusAssertion.errorCode === ATTRIBUTE_UPDATE_ERROR_CODE;
 const useAlertPressHandler =
   (onTrack: TrackCredentialAlert, bottomSheet: { present: () => void }) =>
   () => {
@@ -176,7 +157,6 @@ export const deriveCredentialAlertType = (
     message,
     isOffline,
     isItwL3,
-    hasCredentialAttributeUpdate,
     isMdlSuspended
   } = props;
 
@@ -216,24 +196,18 @@ export const deriveCredentialAlertType = (
     return CredentialAlertType.DOCUMENT_EXPIRING;
   }
 
-  // 5. Attribute updates have reviewed copy and consent actions, so they must not
-  // fall back to issuer-provided dynamic errors.
-  if (hasCredentialAttributeUpdate) {
-    return CredentialAlertType.ATTRIBUTE_UPDATE;
-  }
-
-  // 6. A suspended mDL has reviewed static copy, so it must not fall back to
+  // 5. A suspended mDL has reviewed static copy, so it must not fall back to
   // the issuer-provided dynamic error.
   if (isMdlSuspended) {
     return CredentialAlertType.MDL_SUSPENDED;
   }
 
-  // 7. If there is a dynamic message provided by the issuer, show the Issuer Dynamic Error alert
+  // 6. If there is a dynamic message provided by the issuer, show the Issuer Dynamic Error alert
   if (message) {
     return CredentialAlertType.ISSUER_DYNAMIC_ERROR;
   }
 
-  // 8. Fallback when the issuer does not provide a message for an expired credential
+  // 7. Fallback when the issuer does not provide a message for an expired credential
   if (credentialStatus === "expired") {
     return CredentialAlertType.DOCUMENT_EXPIRED;
   }
@@ -289,7 +263,6 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     message,
     isOffline: offlineAccessReason !== undefined,
     isItwL3,
-    hasCredentialAttributeUpdate: isCredentialAttributeUpdate(credential),
     isMdlSuspended: isMdlSuspendedIssuerError(credential)
   });
 
@@ -298,14 +271,6 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   }
 
   switch (alertType) {
-    case CredentialAlertType.ATTRIBUTE_UPDATE:
-      return (
-        <AttributeUpdateAlert
-          credential={credential}
-          onTrack={trackCredentialAlertEvent}
-          status={status}
-        />
-      );
     case CredentialAlertType.DOCUMENT_EXPIRED:
       return (
         <Alert
@@ -498,76 +463,6 @@ const DocumentExpiringAlert = ({
         )}
         onPress={handleAlertPress}
         testID="itwExpiringBannerTestID"
-        variant="warning"
-      />
-      {bottomSheet.bottomSheet}
-    </>
-  );
-};
-
-const AttributeUpdateAlert = ({
-  credential,
-  onTrack,
-  status
-}: CredentialStatusAlertProps) => {
-  const navigation = useIONavigation();
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const mixPanelCredential = getMixPanelCredential(
-    credential.credentialType,
-    isItwL3
-  );
-  const i18nNs = "features.itWallet.presentation.bottomSheets.attributeUpdate";
-
-  const handleUpdateCredential = () => {
-    if (status) {
-      trackCredentialRenewStart(mixPanelCredential, {
-        credential_status: CREDENTIAL_STATUS_MAP[status],
-        position: "bottom_sheet"
-      });
-    }
-    bottomSheet.dismiss();
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
-      params: {
-        credentialType: credential.credentialType,
-        mode: "reissuance"
-      }
-    });
-  };
-
-  const bottomSheet = useIOBottomSheetModal({
-    title: I18n.t(`${i18nNs}.title`),
-    component: (
-      <VStack space={24}>
-        <IOMarkdown content={I18n.t(`${i18nNs}.content`)} />
-        <VStack space={16}>
-          <IOButton
-            fullWidth
-            label={I18n.t(`${i18nNs}.primaryAction`)}
-            onPress={handleUpdateCredential}
-            variant="solid"
-          />
-          <View style={{ alignSelf: "center" }}>
-            <IOButton
-              label={I18n.t(`${i18nNs}.secondaryAction`)}
-              onPress={() => bottomSheet.dismiss()}
-              textAlign="center"
-              variant="link"
-            />
-          </View>
-        </VStack>
-      </VStack>
-    )
-  });
-
-  const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
-
-  return (
-    <>
-      <Alert
-        action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
-        content={I18n.t(`${i18nNs}.title`)}
-        onPress={handleAlertPress}
         variant="warning"
       />
       {bottomSheet.bottomSheet}
