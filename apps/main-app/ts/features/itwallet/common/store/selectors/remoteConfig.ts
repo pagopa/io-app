@@ -138,7 +138,7 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
 export const isItwMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
   (itwConfig): boolean => {
-    const version = O.toUndefined(itwConfig)?.itw_min_app_version;
+    const version = O.toUndefined(itwConfig)?.itw_l3?.min_app_version;
     if (!version) {
       return false;
     }
@@ -155,7 +155,7 @@ export const isItwMinAppVersionSupportedSelector = createSelector(
 export const isItwProximityMinAppVersionSupportedSelector = createSelector(
   itwRemoteConfigSelector,
   (itwConfig): boolean => {
-    const version = O.toUndefined(itwConfig)?.proximity_min_app_version;
+    const version = O.toUndefined(itwConfig)?.proximity?.min_app_version;
     if (!version) {
       return false;
     }
