@@ -11,6 +11,7 @@ import {
   IOSpacer,
   IOVisualCostants
 } from "../../core";
+import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
@@ -157,6 +158,7 @@ export const ListItemNav = ({
 
   const handleOnPress = (event: GestureResponderEvent) => {
     if (!loading) {
+      triggerHaptic("impactLight");
       onPress(event);
     }
   };

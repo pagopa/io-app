@@ -5,6 +5,7 @@ import {
   IOColors,
   IOSpringValues,
   IOVisualCostants,
+  triggerHaptic,
   useIOThemeContext
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -15,7 +16,6 @@ import {
   GestureDetector,
   GestureHandlerRootView
 } from "react-native-gesture-handler";
-import HapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   SharedValue,
   useAnimatedStyle,
@@ -149,10 +149,6 @@ const ListItemSwipeAction = ({
     transform: [{ translateX: translateX.value }]
   }));
 
-  const triggerHaptic = () => {
-    HapticFeedback.trigger("impactLight");
-  };
-
   const handleSwipeStart = () => {
     if (openedItemRef?.current) {
       scheduleOnUI(openedItemRef.current);
@@ -195,7 +191,7 @@ const ListItemSwipeAction = ({
         }
 
         if (translationX < HAPTIC_THRESHOLD && !hapticTriggered.value) {
-          scheduleOnRN(triggerHaptic);
+          scheduleOnRN(triggerHaptic, "impactLight");
           hapticTriggered.value = true;
         } else if (translationX >= HAPTIC_THRESHOLD) {
           hapticTriggered.value = false;

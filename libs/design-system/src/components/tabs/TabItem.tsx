@@ -5,7 +5,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
@@ -16,6 +15,7 @@ import Animated, {
 
 import { useIOTheme } from "../../context";
 import { hexToRgba, IOColors, IOSpringValues } from "../../core";
+import { triggerHaptic } from "../../functions";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import { Icon, IOIcons } from "../icons";
@@ -164,7 +164,7 @@ const TabItem = ({
   const handleOnPress = useCallback(
     (event: GestureResponderEvent) => {
       if (onPress) {
-        ReactNativeHapticFeedback.trigger("impactLight");
+        triggerHaptic("impactLight");
         onPress(event);
       }
     },

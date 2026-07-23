@@ -1,9 +1,8 @@
-import { HapticFeedbackTypes } from "react-native-haptic-feedback";
-
+import { HapticType } from "../../functions";
 import { IOIcons } from "../icons";
 
 export type Toast = {
-  hapticFeedback?: keyof typeof HapticFeedbackTypes;
+  hapticFeedback?: HapticType;
   icon?: IOIcons;
   message: string;
   variant?: ToastVariant;

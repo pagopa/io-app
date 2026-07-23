@@ -1,10 +1,13 @@
-import { Divider, IOToast, ListItemNav, VSpacer } from "@io-app/design-system";
+import {
+  Divider,
+  IOToast,
+  ListItemNav,
+  triggerHaptic,
+  VSpacer
+} from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { Alert, View } from "react-native";
-import ReactNativeHapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
 
 import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
@@ -96,9 +99,7 @@ const BarcodeScanScreen = () => {
     if (barcodesByType.PAGOPA) {
       const pagoPABarcodes = barcodesByType.PAGOPA as Array<PagoPaBarcode>;
 
-      ReactNativeHapticFeedback.trigger(
-        HapticFeedbackTypes.notificationSuccess
-      );
+      triggerHaptic("notificationSuccess");
 
       analytics.trackBarcodeScanSuccess("home", pagoPABarcodes[0], origin);
 
@@ -137,7 +138,7 @@ const BarcodeScanScreen = () => {
    * @param barcode Scanned barcode
    */
   const handleSingleBarcode = (barcode: IOBarcode, origin: IOBarcodeOrigin) => {
-    ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+    triggerHaptic("notificationSuccess");
 
     analytics.trackBarcodeScanSuccess("home", barcode, origin);
 

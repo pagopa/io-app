@@ -27,25 +27,10 @@ jest.mock("react-native-worklets", () =>
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("react-native-reanimated").setUpTests();
 
-// Mock react-native-haptic-feedback to avoid warnings and side effects
-jest.mock("react-native-haptic-feedback", () => ({
-  trigger: jest.fn()
-}));
-
-jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
-  const turboModuleRegistry = jest.requireActual(
-    "react-native/Libraries/TurboModule/TurboModuleRegistry"
-  );
-  return {
-    ...turboModuleRegistry,
-    getEnforcing: name => {
-      if (name === "RNHapticFeedback") {
-        return null; // or return a minimal mock
-      }
-      return turboModuleRegistry.getEnforcing(name);
-    }
-  };
-});
+// Pulsar is a TurboModule, so importing it under Jest throws: there is no
+// native module for TurboModuleRegistry.getEnforcing("RNPulsar") to bind to.
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+jest.mock("react-native-pulsar", () => require("./__mocks__/pulsarJestMock"));
 
 // eslint-disable-next-line functional/immutable-data
 NativeModules.PlatformConstants = NativeModules.PlatformConstants || {

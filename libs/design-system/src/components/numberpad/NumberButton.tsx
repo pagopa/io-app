@@ -1,6 +1,5 @@
 import { memo, useCallback, useMemo } from "react";
 import { Pressable, StyleSheet } from "react-native";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
@@ -9,6 +8,7 @@ import Animated, {
 
 import { useIOTheme } from "../../context";
 import { hexToRgba, IOColors } from "../../core";
+import { triggerHaptic } from "../../functions";
 import { useScaleAnimation } from "../../hooks";
 import { IOText } from "../typography";
 
@@ -81,7 +81,7 @@ export const NumberButton = memo(
     }));
 
     const handleOnPress = useCallback(() => {
-      ReactNativeHapticFeedback.trigger("impactLight");
+      triggerHaptic("impactLight");
       onPress(number);
     }, [number, onPress]);
 
