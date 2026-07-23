@@ -12,6 +12,7 @@ import {
   setNativeExceptionHandler
 } from "react-native-exception-handler";
 
+import App from "./ts/App";
 import "./ts/i18n";
 import { isMixpanelInstanceInitialized, mixpanelTrack } from "./ts/mixpanel";
 import { name as appName } from "./app.json";
@@ -55,12 +56,4 @@ setNativeExceptionHandler(exceptionString => {
   }
 });
 
-/**
- * Lazily resolves the React root component for foreground app launches.
- *
- * Expo background tasks also evaluate this entrypoint in a headless JS runtime.
- * Only the global TaskManager.defineTask registration is safe in that path:
- * importing App eagerly would create the Redux store, start sagas and rehydrate
- * persisted state, which may read secure storage while the app is backgrounded.
- */
-AppRegistry.registerComponent(appName, () => require("./ts/App").default);
+AppRegistry.registerComponent(appName, () => App);
