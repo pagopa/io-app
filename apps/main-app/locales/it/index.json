@@ -1460,14 +1460,12 @@
               }
             },
             "ciePin": {
-              "badge": "consigliato",
               "bottomSheet": {
                 "entry-1": "La tua Carta di Identità Elettronica (CIE)",
                 "entry-2": "Il PIN a 8 cifre della CIE",
                 "subtitle": "Hai bisogno di:",
                 "title": "Continua con CIE + PIN"
               },
-              "reissuanceBadge": "Consigliato",
               "subtitle": {
                 "default": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
                 "l3": "Ha una durata di 12 mesi"
