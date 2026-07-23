@@ -25,64 +25,59 @@ const renderComponent = (
     />
   );
 
-  return { ...utils, onCheckBoxPress, onClearButtonPress, onSignButtonPress };
+  const signButton = utils.getByLabelText("Sign message with body");
+  const clearButton = utils.getByLabelText("Clear");
+
+  return {
+    ...utils,
+    onClearButtonPress,
+    onSignButtonPress,
+    signButton,
+    clearButton
+  };
 };
 
 describe("LollipopPlaygroundContent", () => {
-  beforeEach(() => jest.clearAllMocks());
+  it("should keep the sign and clear buttons disabled when the body is empty", () => {
+    const { signButton, clearButton } = renderComponent();
 
-  it("should not call onSignButtonPress when the body is empty", () => {
-    const { getByLabelText, onSignButtonPress } = renderComponent();
-
-    fireEvent.press(getByLabelText("Sign message with body"));
-
-    expect(onSignButtonPress).not.toHaveBeenCalled();
+    expect(signButton).toBeDisabled();
+    expect(clearButton).toBeDisabled();
   });
 
-  it("should not call onSignButtonPress when the body is only whitespace", () => {
-    const { getByLabelText, getByPlaceholderText, onSignButtonPress } =
-      renderComponent();
+  it("should keep the sign and clear buttons disabled when the body is only whitespace", () => {
+    const { getByPlaceholderText, signButton, clearButton } = renderComponent();
 
     fireEvent.changeText(
       getByPlaceholderText("paste your body message here"),
       "   "
     );
-    fireEvent.press(getByLabelText("Sign message with body"));
 
-    expect(onSignButtonPress).not.toHaveBeenCalled();
+    expect(signButton).toBeDisabled();
+    expect(clearButton).toBeDisabled();
   });
 
-  it("should call onSignButtonPress with the typed text when the body is not empty", () => {
-    const { getByLabelText, getByPlaceholderText, onSignButtonPress } =
-      renderComponent();
+  it("should enable the sign and clear buttons when the body is not empty", () => {
+    const {
+      getByPlaceholderText,
+      signButton,
+      clearButton,
+      onSignButtonPress,
+      onClearButtonPress
+    } = renderComponent();
 
     fireEvent.changeText(
       getByPlaceholderText("paste your body message here"),
       "hello"
     );
-    fireEvent.press(getByLabelText("Sign message with body"));
 
+    expect(signButton).not.toBeDisabled();
+    expect(clearButton).not.toBeDisabled();
+
+    fireEvent.press(signButton);
     expect(onSignButtonPress).toHaveBeenCalledWith("hello");
-  });
 
-  it("should not call onClearButtonPress when the body is empty", () => {
-    const { getByLabelText, onClearButtonPress } = renderComponent();
-
-    fireEvent.press(getByLabelText("Clear"));
-
-    expect(onClearButtonPress).not.toHaveBeenCalled();
-  });
-
-  it("should call onClearButtonPress when the body is not empty", () => {
-    const { getByLabelText, getByPlaceholderText, onClearButtonPress } =
-      renderComponent();
-
-    fireEvent.changeText(
-      getByPlaceholderText("paste your body message here"),
-      "hello"
-    );
-    fireEvent.press(getByLabelText("Clear"));
-
+    fireEvent.press(clearButton);
     expect(onClearButtonPress).toHaveBeenCalled();
   });
 });
