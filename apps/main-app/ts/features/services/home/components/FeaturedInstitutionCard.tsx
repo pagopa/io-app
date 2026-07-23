@@ -88,7 +88,6 @@ const FeaturedInstitutionCard = ({
                   ? newThemeStyle.foreground.primary
                   : defaultThemeStyle.foreground.primary
               }
-              lineBreakMode="head"
               numberOfLines={2}
             >
               {name}

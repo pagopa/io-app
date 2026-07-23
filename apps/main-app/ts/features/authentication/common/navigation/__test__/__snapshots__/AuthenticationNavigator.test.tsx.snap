@@ -2144,7 +2144,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                             <Text
                                               allowFontScaling={true}
                                               dynamicTypeRamp="footnote"
-                                              lineBreakMode="middle"
                                               maxFontSizeMultiplier={1.5}
                                               numberOfLines={2}
                                               style={
@@ -2386,7 +2385,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                                             <Text
                                               allowFontScaling={true}
                                               dynamicTypeRamp="footnote"
-                                              lineBreakMode="middle"
                                               maxFontSizeMultiplier={1.5}
                                               numberOfLines={2}
                                               style={

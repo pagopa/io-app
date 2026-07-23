@@ -44,8 +44,7 @@ export const useCgnStyle = (): CgnStyleProps => {
   return {
     module: {
       default: {
-        borderColor:
-          themeType === "light" ? IOColors["grey-100"] : IOColors["grey-850"],
+        borderColor: IOColors[theme["cardBorder-default"]],
         backgroundColor: IOColors[theme["appBackground-secondary"]]
       },
       new: {
