@@ -1,11 +1,11 @@
 import {
   PressableBaseProps,
+  triggerHaptic,
   useScaleAnimation,
   WithTestID
 } from "@io-app/design-system";
 import { PropsWithChildren, useCallback } from "react";
 import { GestureResponderEvent, Pressable } from "react-native";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated from "react-native-reanimated";
 
 type CardPressableBaseProps = WithTestID<PressableBaseProps>;
@@ -21,7 +21,7 @@ export const CardPressableBase = ({
   const handleOnPress = useCallback(
     (event: GestureResponderEvent) => {
       if (onPress) {
-        ReactNativeHapticFeedback.trigger("impactLight");
+        triggerHaptic("impactLight");
         onPress(event);
       }
     },

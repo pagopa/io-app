@@ -38,16 +38,12 @@ jest.mock("expo-task-manager", () => ({
   defineTask: jest.fn(),
   isTaskRegisteredAsync: jest.fn().mockResolvedValue(false)
 }));
-jest.mock("react-native-haptic-feedback", () => ({
-  ...jest.requireActual("react-native-haptic-feedback"),
-  trigger: jest.fn()
-}));
-
-jest.mock("react-native-pulsar", () => ({
-  Presets: {
-    System: new Proxy({}, { get: () => jest.fn() })
-  }
-}));
+// Pulsar is a TurboModule, so importing it under Jest throws: there is no
+// native module for TurboModuleRegistry.getEnforcing("RNPulsar") to bind to.
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+jest.mock("react-native-pulsar", () =>
+  require("./ts/__mocks__/pulsarJestMock")
+);
 
 // eslint-disable-next-line functional/immutable-data
 global.CanvasKit = {
@@ -181,7 +177,6 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
       const modulesToMock = [
         "IoReactNativeHttpClient",
         "RNDocumentPicker",
-        "RNHapticFeedback",
         "RNCWebViewModule",
         "AppState"
       ];

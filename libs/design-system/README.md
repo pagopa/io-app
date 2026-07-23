@@ -55,7 +55,7 @@ The library requires the following peer dependencies to be installed by the cons
 |---------|-------|
 | `react-native-reanimated` `>=4.0.0` | Animations |
 | `react-native-svg` | Vector asset rendering |
-| `react-native-haptic-feedback` | Haptic feedback |
+| `react-native-pulsar` | Haptic feedback |
 | `react-native-safe-area-context` | Safe area spacing |
 | `react-native-linear-gradient` | Gradient components |
 | `react-native-easing-gradient` | Easing gradient utilities |
