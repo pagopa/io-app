@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { act, fireEvent } from "@testing-library/react-native";
+import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 
@@ -23,7 +23,7 @@ jest.mock("../../../../../utils/clipboard", () => ({
 const renderComponent = (state: GlobalState) => {
   const store = createStore(appReducer, state as any);
 
-  const component = renderScreenWithNavigationStoreContext(
+  return renderScreenWithNavigationStoreContext(
     () => <IdPayBarcodeResultScreen />,
     IdPayBarcodeRoutes.IDPAY_BARCODE_RESULT,
     {
@@ -31,11 +31,6 @@ const renderComponent = (state: GlobalState) => {
     },
     store
   );
-
-  return act(async () => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    return component;
-  });
 };
 
 const barcodeData = {
@@ -52,7 +47,7 @@ const barcodeData = {
 const globalState = appReducer(undefined, applicationChangeState("active"));
 
 describe("IdPayBarcodeResultScreen", () => {
-  it("should render the loading screen when barcode data is loading", async () => {
+  it("should render the loading screen when barcode data is loading", () => {
     const loadingState = {
       ...globalState,
       features: {
@@ -66,11 +61,11 @@ describe("IdPayBarcodeResultScreen", () => {
       }
     };
 
-    const { getByTestId } = await renderComponent(loadingState);
+    const { getByTestId } = renderComponent(loadingState);
     expect(getByTestId("idpay-bar-code-loading")).toBeTruthy();
   });
 
-  it("should render the barcode when data is ready", async () => {
+  it("should render the barcode when data is ready", () => {
     const mockClipboard = clipboardSetStringWithFeedback as jest.Mock;
 
     const successState = {
@@ -86,7 +81,7 @@ describe("IdPayBarcodeResultScreen", () => {
       }
     };
 
-    const { getByText } = await renderComponent(successState);
+    const { getByText } = renderComponent(successState);
 
     expect(
       getByText(I18n.t("idpay.barCode.resultScreen.success.header"))
@@ -100,7 +95,7 @@ describe("IdPayBarcodeResultScreen", () => {
     expect(mockClipboard).toHaveBeenCalledWith(barcodeData.trxCode);
   });
 
-  it("should not render modal when there's an error on barcode generation", async () => {
+  it("should not render modal when there's an error on barcode generation", () => {
     const errorState = {
       ...globalState,
       features: {
@@ -116,14 +111,14 @@ describe("IdPayBarcodeResultScreen", () => {
       }
     };
 
-    const { getByText } = await renderComponent(errorState);
+    const { getByText } = renderComponent(errorState);
 
     expect(
       getByText(I18n.t("idpay.barCode.resultScreen.error.generic.body"))
     ).toBeTruthy();
   });
 
-  it("should render expired barcode when time is expired", async () => {
+  it("should render expired barcode when time is expired", () => {
     const expiredState = {
       ...globalState,
       features: {
@@ -140,7 +135,7 @@ describe("IdPayBarcodeResultScreen", () => {
       }
     };
 
-    const { getByText } = await renderComponent(expiredState);
+    const { getByText } = renderComponent(expiredState);
     expect(
       getByText(I18n.t("idpay.barCode.resultScreen.success.expired.header"))
     ).toBeTruthy();
