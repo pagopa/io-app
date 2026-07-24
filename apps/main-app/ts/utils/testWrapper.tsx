@@ -34,7 +34,7 @@ export const renderScreenWithNavigationStoreContext = <S,>(
     <Provider store={store}>
       <IOThemeContextProvider theme={"light"}>
         <TestInnerNavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator screenOptions={{ animationEnabled: false }}>
             <Stack.Screen
               component={screen}
               initialParams={params}
