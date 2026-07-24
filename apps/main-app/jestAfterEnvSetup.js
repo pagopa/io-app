@@ -1,4 +1,5 @@
 import { configure } from "@testing-library/react-native";
+import { Animated } from "react-native";
 
 /**
  * Default value for includeHiddenElements query option for all queries.
@@ -6,3 +7,15 @@ import { configure } from "@testing-library/react-native";
  * Otherwise tests which queries hidden element for accessibility will fail.
  */
 configure({ defaultIncludeHiddenElements: true });
+
+const createSynchronousAnimation = () => ({
+  start: callback => {
+    callback?.({ finished: true });
+  },
+  stop: () => undefined,
+  reset: () => undefined
+});
+
+Animated.spring = () => createSynchronousAnimation();
+Animated.timing = () => createSynchronousAnimation();
+Animated.decay = () => createSynchronousAnimation();

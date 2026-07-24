@@ -119,6 +119,32 @@ describe("CgnMerchantCategoriesListScreen", () => {
     ).toBeTruthy();
   });
 
+  it("renders social links after the categories list", () => {
+    const categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount> = [
+      makeCategory(ProductCategoryEnum.cultureAndEntertainment)
+    ];
+
+    const { getByTestId } = renderScreen(
+      buildState({ list: pot.some(categories) })
+    );
+
+    expect(getByTestId("CgnMerchantCategoriesSocialLinks")).toBeTruthy();
+  });
+
+  it.each`
+    name              | list
+    ${"initial"}      | ${pot.none}
+    ${"loading"}      | ${pot.noneLoading}
+    ${"empty result"} | ${pot.some([])}
+  `("renders animated category card skeletons in $name state", ({ list }) => {
+    const { getAllByTestId, getByTestId } = renderScreen(buildState({ list }));
+
+    expect(getByTestId("CgnMerchantCategoryCardsSkeleton")).toBeTruthy();
+    expect(
+      getAllByTestId(/CgnMerchantCategoryCardsSkeleton-Item-/)
+    ).toHaveLength(6);
+  });
+
   it("groups valid categories into stable two-column rows", () => {
     const invalidCategory: ProductCategoryWithNewDiscountsCount = {
       productCategory: "UNKNOWN_CATEGORY" as ProductCategoryEnum,

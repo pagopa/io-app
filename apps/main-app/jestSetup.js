@@ -87,9 +87,19 @@ jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
 
 // Mock react-native-worklets before reanimated setup
 // See: https://docs.swmansion.com/react-native-worklets/docs/guides/testing/
-jest.mock("react-native-worklets", () =>
-  require("react-native-worklets/lib/module/mock")
-);
+jest.mock("react-native-worklets", () => {
+  const workletsMock = require("react-native-worklets/lib/module/mock");
+
+  return {
+    ...workletsMock,
+    scheduleOnRN: (fun, ...args) => {
+      if (fun.name.includes("dispatchSetState")) {
+        return undefined;
+      }
+      return fun(...args);
+    }
+  };
+});
 
 // Setup react-native-reanimated for testing (v4.x)
 // See: https://docs.swmansion.com/react-native-reanimated/docs/guides/testing/

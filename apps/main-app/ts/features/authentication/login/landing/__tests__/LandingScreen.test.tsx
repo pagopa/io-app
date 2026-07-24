@@ -1,4 +1,4 @@
-import { act, fireEvent } from "@testing-library/react-native";
+import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -37,8 +37,8 @@ jest.mock("@gorhom/bottom-sheet", () =>
 );
 jest.mock("../../../common/analytics");
 
-const navigateToIdpSelection = () => {
-  const { getByTestId } = renderComponent();
+const navigateToIdpSelection = async () => {
+  const { getByTestId } = await renderComponent();
 
   const loginWithSpid = getByTestId("landing-button-login-spid");
   fireEvent.press(loginWithSpid);
@@ -46,13 +46,13 @@ const navigateToIdpSelection = () => {
   expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
   expect(mockNavigateToIdpSelection).toHaveBeenCalled();
 };
-const toBeDefined = () => {
-  const component = renderComponent();
+const toBeDefined = async () => {
+  const component = await renderComponent();
 
   expect(component).toBeDefined();
 };
-const toMatchSnapshot = () => {
-  const component = renderComponent();
+const toMatchSnapshot = async () => {
+  const component = await renderComponent();
 
   expect(component).toMatchSnapshot();
 };
@@ -63,7 +63,7 @@ describe(LandingScreen, () => {
   it("Should be defined", toBeDefined);
   it("Should match the snapshot", toMatchSnapshot);
   it("Should present the modal", async () => {
-    const { getByTestId } = renderComponent();
+    const { getByTestId } = await renderComponent();
 
     const loginWithCie = getByTestId("landing-button-login-cie");
     await act(async () => {
@@ -75,7 +75,7 @@ describe(LandingScreen, () => {
     expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
   });
   it("Should call navigateToCiePinInsertion", async () => {
-    const { getByTestId } = renderComponent();
+    const { getByTestId } = await renderComponent();
 
     const loginWithCie = getByTestId("landing-button-login-cie");
     await act(async () => {
@@ -96,7 +96,7 @@ describe(LandingScreen, () => {
     expect(mockNavigateToCiePinInsertion).toHaveBeenCalled();
   });
   it("Should call navigateToCieIdLoginScreen", async () => {
-    const { getByTestId } = renderComponent();
+    const { getByTestId } = await renderComponent();
 
     const loginWithCie = getByTestId("landing-button-login-cie");
     await act(async () => {
@@ -117,7 +117,7 @@ describe(LandingScreen, () => {
     expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith("SpidL2");
   });
   it("Should navigate to the wizards screens", async () => {
-    const { getByTestId } = renderComponent();
+    const { getByTestId } = await renderComponent();
 
     const loginWithCie = getByTestId("landing-button-login-cie");
     await act(async () => {
@@ -142,14 +142,20 @@ describe(LandingScreen, () => {
   it("Should navigate to the idp selection", navigateToIdpSelection);
 });
 
-const renderComponent = () => {
+const renderComponent = async () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
 
-  return renderScreenWithNavigationStoreContext(
+  const component = renderScreenWithNavigationStoreContext(
     LandingScreen,
     AUTHENTICATION_ROUTES.LANDING,
     {},
     store
   );
+
+  await waitFor(() => {
+    expect(component.queryByTestId("landing-button-login-cie")).toBeTruthy();
+  });
+
+  return component;
 };

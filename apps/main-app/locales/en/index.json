@@ -663,6 +663,11 @@
             "content": "To make searching easier and improve your experience, we have organized the categories based on how often they are used. This information is not linked to your profile but is based on aggregate data from all users of the Carta Giovani Nazionale who have consented to the processing of their data.",
             "cta": "How are the categories sorted?",
             "title": "How are the categories sorted?"
+          },
+          "socialLinks": {
+            "facebook": "Facebook",
+            "instagram": "Instagram",
+            "linkedin": "LinkedIn"
           }
         },
         "discountOf": "{{discount}}% discount",
