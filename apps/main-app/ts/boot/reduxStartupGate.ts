@@ -17,7 +17,7 @@ export const createReduxStartupGate = () => {
   let isGateOpen = false;
   const middleware: Middleware = () => next => action => {
     const actionType = (action as { type?: unknown }).type;
-    // ponytail: redux-persist v5 has no manualPersist; remove this gate after upgrading to v6.
+    // TODO redux-persist v5 has no manualPersist; remove this gate after upgrading to v6.
     if (
       !isGateOpen &&
       typeof actionType === "string" &&
