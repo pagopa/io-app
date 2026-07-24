@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": "bash .github/hooks/scripts/session-start.sh",
+        "timeoutSec": 1800
+      }
+    ],
+    "agentStop": [
+      {
+        "type": "command",
+        "bash": "node .github/hooks/scripts/agent-stop.mjs",
+        "powershell": "node .github/hooks/scripts/agent-stop.mjs",
+        "timeoutSec": 900
+      }
+    ]
+  }
+}
