@@ -20,6 +20,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "isolatedModules": true,
+    "types": ["jest"],
   },
   "exclude": [
     "node_modules",
