@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.1](https://github.com/pagopa/io-app/compare/3.38.0-rc.0...3.38.0-rc.1) (2026-07-24)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4698](https://pagopa.atlassian.net/browse/SIW-4698)] Update IPZS logo ([#8356](https://github.com/pagopa/io-app/issues/8356)) ([14a8041](https://github.com/pagopa/io-app/commit/14a8041a576de35be880d928f387bbf627d74fba))
+
 ## [3.38.0-rc.0](https://github.com/pagopa/io-app/compare/3.37.0-rc.13...3.38.0-rc.0) (2026-07-24)
 
 
