@@ -9,10 +9,7 @@ import {
   getFirstNameFromCredential,
   getFiscalCodeFromCredential
 } from "../../../common/utils/itwClaimsUtils";
-import {
-  getCredentialStatus,
-  getCredentialStatusObject
-} from "../../../common/utils/itwCredentialStatusUtils";
+import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialFormat,
@@ -234,29 +231,6 @@ export const itwIsWalletEmptySelector = createSelector(
 export const itwHasWalletAtLeastTwoCredentialsSelector = createSelector(
   itwCredentialsSizeSelector,
   size => size >= 2
-);
-
-/**
- * Get the credential status and the error message corresponding to the status assertion error, if present.
- * The message is dynamic and extracted from the issuer configuration.
- *
- * Note: the credential type is passed as second argument to reuse the same selector and cache per credential type.
- *
- * @param state - The global state.
- * @param type - The credential type.
- * @returns The credential status and the error message corresponding to the status assertion error, if present.
- */
-export const itwCredentialStatusSelector = createSelector(
-  itwCredentialsSelector,
-  (_state: GlobalState, type: string) => type,
-  (credentials, type) => {
-    // This should never happen
-    if (credentials[type] === undefined) {
-      return { status: undefined, message: undefined };
-    }
-
-    return getCredentialStatusObject(credentials[type]);
-  }
 );
 
 /**

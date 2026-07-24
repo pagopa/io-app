@@ -15,7 +15,7 @@ import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCa
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors/status";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { trackWalletShowBack } from "../analytics";

@@ -47,7 +47,7 @@ import Animated, {
 import { useIOSelector } from "../../../../store/hooks";
 import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
-import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
+import { itwCredentialStatusSelector } from "../../credentials/store/selectors/status";
 
 type ButtonSize = {
   height: LayoutRectangle["height"];

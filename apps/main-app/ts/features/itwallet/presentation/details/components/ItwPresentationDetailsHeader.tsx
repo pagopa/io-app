@@ -21,10 +21,8 @@ import { useTagPropsByStatus } from "../../../common/utils/itwCredentialUtils.ts
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
-import {
-  itwCredentialsEidStatusSelector,
-  itwCredentialStatusSelector
-} from "../../../credentials/store/selectors";
+import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors/status";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 

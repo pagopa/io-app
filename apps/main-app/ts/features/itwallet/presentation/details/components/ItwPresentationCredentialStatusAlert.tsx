@@ -1,7 +1,5 @@
 import { Alert, IOButton, IOToast, VStack } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { memo, useCallback, useMemo } from "react";
 import { View } from "react-native";
@@ -16,21 +14,15 @@ import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors
 import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
-import {
-  ClaimsLocales,
-  getClaimsFullLocale,
-  getCredentialExpireDays
-} from "../../../common/utils/itwClaimsUtils.ts";
+import { getCredentialExpireDays } from "../../../common/utils/itwClaimsUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
   CredentialMetadata,
   ItwCredentialStatus,
   ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
-import {
-  itwCredentialsEidStatusSelector,
-  itwCredentialStatusSelector
-} from "../../../credentials/store/selectors";
+import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors/status";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
@@ -78,7 +70,7 @@ type CredentialAlertProps = {
   eidStatus: ItwJwtCredentialStatus | undefined;
   isItwL3: boolean;
   isOffline: boolean;
-  message: Record<string, { description: string; title: string }> | undefined;
+  message: undefined | { description?: string; title?: string };
 };
 
 type CredentialStatusAlertProps = {
@@ -425,7 +417,7 @@ const DocumentExpiringAlert = ({
 
 type IssuerDynamicErrorAlertProps = {
   credential: CredentialMetadata;
-  message: Record<string, { description: string; title: string }>;
+  message: { description?: string; title?: string };
   onTrack: TrackCredentialAlert;
   status?: ItwCredentialStatus;
 };
@@ -436,7 +428,11 @@ const IssuerDynamicErrorAlert = ({
   onTrack,
   status
 }: IssuerDynamicErrorAlertProps) => {
-  const localizedMessage = getLocalizedMessageOrFallback(message);
+  const localizedMessage = {
+    title: message.title ?? I18n.t("features.itWallet.card.status.unknown"),
+    description:
+      message.description ?? I18n.t("features.itWallet.card.status.unknown")
+  };
   const bottomSheet = useItwIssuerDynamicErrorBottomSheet({
     credential,
     localizedMessage,
@@ -457,19 +453,6 @@ const IssuerDynamicErrorAlert = ({
     </>
   );
 };
-
-const getLocalizedMessageOrFallback = (
-  message: IssuerDynamicErrorAlertProps["message"]
-) =>
-  pipe(
-    message[getClaimsFullLocale()],
-    O.fromNullable,
-    O.alt(() => O.fromNullable(message[ClaimsLocales.it])),
-    O.getOrElse(() => ({
-      title: I18n.t("features.itWallet.card.status.unknown"),
-      description: I18n.t("features.itWallet.card.status.unknown")
-    }))
-  );
 
 const Memoized = memo(ItwPresentationCredentialStatusAlert);
 
