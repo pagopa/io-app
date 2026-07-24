@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.0](https://github.com/pagopa/io-app/compare/3.37.0-rc.13...3.38.0-rc.0) (2026-07-24)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4213](https://pagopa.atlassian.net/browse/SIW-4213)] Review credentials after status list intro ([#8207](https://github.com/pagopa/io-app/issues/8207)) ([8566dd3](https://github.com/pagopa/io-app/commit/8566dd3ebbf8fc51b9749e46ccc826a19d600c99))
+
 ## [3.37.0-rc.13](https://github.com/pagopa/io-app/compare/3.37.0-rc.12...3.37.0-rc.13) (2026-07-24)
 
 ## [3.37.0-rc.12](https://github.com/pagopa/io-app/compare/3.37.0-rc.11...3.37.0-rc.12) (2026-07-23)
