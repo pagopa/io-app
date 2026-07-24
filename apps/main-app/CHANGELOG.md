@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.37.0-canary.8229](https://github.com/pagopa/io-app/compare/3.37.0-rc.12...3.37.0-canary.8229) (2026-07-24)
+
+
+### Bug Fixes
+
+* [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] defer Redux until foreground ([1244d3c](https://github.com/pagopa/io-app/commit/1244d3c83b2ad1c6f19d6aa71b51ebe4d34d14ee))
+
+
+### Chores
+
+* increase task period ([770e4b2](https://github.com/pagopa/io-app/commit/770e4b2427ce165e078ddac559bc0a0748c6101e))
+* move consts ([1f6b80a](https://github.com/pagopa/io-app/commit/1f6b80ab7457e207a906f0e947662b418adcb86f))
+* persist last 10 timestamps ([92a0a0c](https://github.com/pagopa/io-app/commit/92a0a0c68406d5218aa31cedf1b3328041bac815))
+* remove lazy init ([522fd2b](https://github.com/pagopa/io-app/commit/522fd2bf7c1cba62083d7415837c4cc8167078c4))
+* task registration ([22ee228](https://github.com/pagopa/io-app/commit/22ee228ab31faf75255d29cc251a11adbda00652))
+* wire itw bg task ([00f893e](https://github.com/pagopa/io-app/commit/00f893e55231b4027389db0519c89a40e591ce89))
+
 ## [3.37.0-rc.12](https://github.com/pagopa/io-app/compare/3.37.0-rc.11...3.37.0-rc.12) (2026-07-23)
 
 
