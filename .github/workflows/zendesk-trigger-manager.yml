@@ -175,38 +175,25 @@ jobs:
     needs: update-trigger-app-version
     environment: dev
     steps:
-      - name: Send Slack Notification on Success
-        continue-on-error: true
+      - name: Get status icon
+        id: get-status-icon
         env:
-          IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
-          IS_ACTIVE: ${{ needs.update-trigger-app-version.outputs.is_active }}
           APP_VERSION_TAG: ${{ needs.update-trigger-app-version.outputs.app_version }}
         run: |
-          echo "IS_ACTIVE=$IS_ACTIVE"
-          echo "APP_VERSION_TAG=$APP_VERSION_TAG"
           if [[ "$APP_VERSION_TAG" == "0.disabled" ]]; then
-            STATUS_ICON=":x:"
+            echo "icon=:x:" >> "$GITHUB_OUTPUT"
           else
-            STATUS_ICON=":white_check_mark:"
+            echo "icon=:white_check_mark:" >> "$GITHUB_OUTPUT"
           fi
-
-          # Use jq to safely construct the JSON payload for Slack          
-          slack_payload=$(jq -n \
-            --arg channel "prod_io_segnalazioni_rollout" \
-            --arg text ":zap: *_Zendesk Trigger Status_*
-            
-            - *Active:* \`$IS_ACTIVE\`
-            - *App Version Tag:* \`$APP_VERSION_TAG\`
-            - *Forwarding Enabled:* $STATUS_ICON" \
-            '{
-              "channel": $channel,
-              "text": $text,
-              "unfurl_links": false,
-              "unfurl_media": false
-            }')
-
-          # Post the message to Slack using curl
-          curl -X POST https://slack.com/api/chat.postMessage \
-            -H "Authorization: Bearer $IO_APP_SLACK_HELPER_BOT_TOKEN" \
-            -H "Content-Type: application/json; charset=utf-8" \
-            -d "$slack_payload"
+      - id: send-notification
+        name: Send status update on Slack
+        uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
+        continue-on-error: true
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
+          payload: |
+            channel: "C01NBLJPA01"
+            unfurl_links: false
+            unfurl_media: false
+            text: ":zap: *_Zendesk Trigger Status_*\n\n- *Active:* `${{ needs.update-trigger-app-version.outputs.is_active }}`\n- *App Version Tag:* `${{ needs.update-trigger-app-version.outputs.app_version }}`\n- *Forwarding Enabled:* ${{ steps.get-status-icon.outputs.icon }}"
