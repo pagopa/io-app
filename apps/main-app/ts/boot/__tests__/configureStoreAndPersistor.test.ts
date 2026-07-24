@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { AppState, AppStateStatus } from "react-native";
 
 import {
   isReady,
@@ -11,38 +10,13 @@ import {
 import { testable } from "../configureStoreAndPersistor";
 
 jest.mock("redux-persist", () => {
-  const { PERSIST, REHYDRATE }: { PERSIST: string; REHYDRATE: string } =
-    jest.requireActual("redux-persist");
-  const persistActionHandled = jest.fn();
+  const persist = jest.fn();
   return {
-    PERSIST,
-    REHYDRATE,
     createMigrate: jest.fn(),
     createTransform: jest.fn(),
-    mockPersistActionHandled: persistActionHandled,
-    persistReducer: (_: any, reducer: any) => (state: any, action: any) => {
-      const actionType = (action as { type?: unknown }).type;
-      if (actionType === PERSIST || actionType === REHYDRATE) {
-        persistActionHandled(actionType);
-      }
-      return reducer(state, action);
-    },
-    persistStore: jest.fn(store => {
-      const persistor = {
-        dispatch: jest.fn(),
-        flush: jest.fn(() => Promise.resolve()),
-        getState: jest.fn(() => ({ bootstrapped: false, registry: [] })),
-        pause: jest.fn(),
-        persist: jest.fn(() => {
-          store.dispatch({ type: PERSIST });
-          store.dispatch({ type: REHYDRATE });
-        }),
-        purge: jest.fn(() => Promise.resolve()),
-        subscribe: jest.fn(() => jest.fn())
-      };
-      persistor.persist();
-      return persistor;
-    })
+    mockPersist: persist,
+    persistReducer: (_: any, reducer: any) => reducer,
+    persistStore: jest.fn(() => ({ persist }))
   };
 });
 
@@ -58,87 +32,53 @@ jest.mock("redux-saga", () => {
   return createSagaMiddleware;
 });
 
-const mockPersistActionHandled = (
+jest.mock("../reduxStartupGate", () => {
+  const startWhenAppIsActive = jest.fn();
+  return {
+    createReduxStartupGate: jest.fn(() => ({
+      middleware:
+        () => (next: (action: unknown) => unknown) => (action: unknown) =>
+          next(action),
+      startWhenAppIsActive
+    })),
+    mockStartWhenAppIsActive: startWhenAppIsActive
+  };
+});
+
+const mockPersist = (
   jest.requireMock("redux-persist") as {
-    mockPersistActionHandled: jest.Mock;
+    mockPersist: jest.Mock;
   }
-).mockPersistActionHandled;
+).mockPersist;
 const mockSagaRun = (
   jest.requireMock("redux-saga") as {
     mockRun: jest.Mock;
   }
 ).mockRun;
-
-const setCurrentAppState = (appState: AppStateStatus) => {
-  // eslint-disable-next-line functional/immutable-data
-  Object.defineProperty(AppState, "currentState", {
-    configurable: true,
-    value: appState
-  });
-};
+const mockStartWhenAppIsActive = (
+  jest.requireMock("../reduxStartupGate") as {
+    mockStartWhenAppIsActive: jest.Mock;
+  }
+).mockStartWhenAppIsActive;
 
 describe("configureStoreAndPersistor", () => {
-  describe("Redux bootstrap", () => {
-    const removeAppStateListener = jest.fn();
-    // eslint-disable-next-line functional/no-let
-    let appStateListener: ((state: AppStateStatus) => void) | undefined;
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-    beforeEach(() => {
-      jest.clearAllMocks();
-      appStateListener = undefined;
-      setCurrentAppState("background");
-      jest
-        .spyOn(AppState, "addEventListener")
-        .mockImplementation((_type, listener) => {
-          appStateListener = listener;
-          return { remove: removeAppStateListener };
-        });
-    });
+  it("starts persistence and sagas through the Redux startup gate", () => {
+    const { persistor } = testable!.configureStoreAndPersistor();
 
-    it("keeps persist and rehydrate actions stopped while the app is backgrounded", () => {
-      testable!.configureStoreAndPersistor();
+    expect(mockStartWhenAppIsActive).toHaveBeenCalledTimes(1);
+    expect(persistor.persist).toBe(mockPersist);
+    expect(mockPersist).not.toHaveBeenCalled();
+    expect(mockSagaRun).not.toHaveBeenCalled();
 
-      expect(mockPersistActionHandled).not.toHaveBeenCalled();
-      expect(mockSagaRun).not.toHaveBeenCalled();
-      expect(appStateListener).toBeDefined();
-    });
+    const startPersistenceAndSagas = mockStartWhenAppIsActive.mock.calls[0][0];
+    startPersistenceAndSagas();
 
-    it("starts persisted state and sagas once when the app becomes active", () => {
-      const { persistor } = testable!.configureStoreAndPersistor();
-
-      appStateListener?.("inactive");
-
-      expect(persistor.persist).toHaveBeenCalledTimes(1);
-      expect(mockPersistActionHandled).not.toHaveBeenCalled();
-      expect(mockSagaRun).not.toHaveBeenCalled();
-
-      appStateListener?.("active");
-
-      const handledPersistActions = mockPersistActionHandled.mock.calls.length;
-      expect(handledPersistActions).toBeGreaterThan(0);
-      expect(persistor.persist).toHaveBeenCalledTimes(2);
-      expect(mockSagaRun).toHaveBeenCalledTimes(1);
-      expect(removeAppStateListener).toHaveBeenCalledTimes(1);
-
-      appStateListener?.("active");
-
-      expect(mockPersistActionHandled).toHaveBeenCalledTimes(
-        handledPersistActions
-      );
-      expect(persistor.persist).toHaveBeenCalledTimes(2);
-      expect(mockSagaRun).toHaveBeenCalledTimes(1);
-      expect(removeAppStateListener).toHaveBeenCalledTimes(1);
-    });
-
-    it("starts persisted state and sagas immediately when the app is active", () => {
-      setCurrentAppState("active");
-
-      testable!.configureStoreAndPersistor();
-
-      expect(mockPersistActionHandled).toHaveBeenCalled();
-      expect(mockSagaRun).toHaveBeenCalledTimes(1);
-      expect(removeAppStateListener).toHaveBeenCalledTimes(1);
-    });
+    expect(mockPersist).toHaveBeenCalledTimes(1);
+    expect(mockSagaRun).toHaveBeenCalledTimes(1);
   });
 
   describe("CURRENT_REDUX_STORE_VERSION", () => {
