@@ -11,7 +11,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import I18n from "i18next";
-import { MutableRefObject } from "react";
+import { RefObject } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
@@ -46,7 +46,7 @@ export type MessagePaymentsProps = {
   maxVisiblePaymentCount: number;
   messageId: string;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
-  presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
+  presentPaymentsBottomSheetRef: RefObject<(() => void) | undefined>;
   sendOpeningSource: SendOpeningSource;
   sendUserType: SendUserType;
   serviceId: ServiceId;
