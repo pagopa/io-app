@@ -1368,6 +1368,10 @@
               "cta": "Inizia",
               "description": "Dovrai digitarlo per completare la verifica dell’identità.",
               "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)"
+            },
+            "animation": {
+              "pause": "Metti in pausa animazione",
+              "play": "Riproduci animazione"
             }
           },
           "readingCard": {

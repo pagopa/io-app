@@ -8,6 +8,7 @@ import {
   selectIdentification
 } from "../../../machine/eid/selectors";
 import { trackItwCiePinTutorialCie } from "../../analytics";
+import { ItwCiePreparationAnimatedImage } from "../components/ItwCiePreparationAnimatedImage";
 import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
@@ -47,7 +48,12 @@ export const ItwCiePreparationNfcScreen = () => {
       description={I18n.t(
         `features.itWallet.identification.cie.prepare.nfc.description`
       )}
-      imageSrc={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif")}
+      imageComponent={
+        <ItwCiePreparationAnimatedImage
+          animatedSource={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif")}
+          staticSource={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc_static.png")}
+        />
+      }
       title={I18n.t(`features.itWallet.identification.cie.prepare.nfc.title`)}
     >
       {infoBottomSheet.bottomSheet}

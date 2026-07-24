@@ -1,5 +1,5 @@
 import { ContentWrapper, VStack } from "@io-app/design-system";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 import {
   Dimensions,
   Image,
@@ -15,14 +15,17 @@ type Props = {
   actions?: IOScrollViewActions;
   description: string;
   goBack?: () => void;
-  imageSrc: ImageSourcePropType;
   title: string;
-};
+} & (
+  | { imageComponent: ReactNode; imageSrc?: never }
+  | { imageComponent?: ReactNode; imageSrc: ImageSourcePropType }
+);
 
 export const ItwCiePreparationScreenContent = ({
   title,
   description,
   imageSrc,
+  imageComponent,
   actions,
   children,
   goBack
@@ -38,12 +41,14 @@ export const ItwCiePreparationScreenContent = ({
       <VStack space={16}>
         {children}
         <View style={styles.imageContainer}>
-          <Image
-            accessibilityIgnoresInvertColors
-            resizeMode="contain"
-            source={imageSrc}
-            style={styles.image}
-          />
+          {imageComponent ?? (
+            <Image
+              accessibilityIgnoresInvertColors
+              resizeMode="contain"
+              source={imageSrc}
+              style={styles.image}
+            />
+          )}
         </View>
       </VStack>
     </ContentWrapper>
