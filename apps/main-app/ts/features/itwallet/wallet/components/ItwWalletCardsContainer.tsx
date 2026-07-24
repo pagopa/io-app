@@ -19,7 +19,6 @@ import {
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
 import { ItwL2EngagementBanner } from "../../common/components/ItwL2EngagementBanner.tsx";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
-import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
 import {
   itwShouldHideEidLifecycleAlert,
@@ -66,8 +65,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const eidExpiration = useIOSelector(itwCredentialsEidExpirationSelector);
   const isEidExpired = eidStatus === "jwtExpired";
   const iconColor = useItwStatusIconColor(isEidExpired);
-
-  useItwPendingReviewRequest();
 
   useItwGuidedTour();
 
