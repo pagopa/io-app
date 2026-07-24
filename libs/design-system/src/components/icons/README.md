@@ -32,7 +32,7 @@ In your user interface design app (Figma/Sketch) export your SVG with `1×` pres
 
 #### Using `scripts/generateNewIcons.js`
 1. Move the exported file to the `icons/svg/originals` folder
-2. In your terminal, in the same folder, run the command: `yarn generate:icons`
+2. In your terminal, from the repository root, run the command: `pnpm nx run io-app-design-system:generate:icons`
 3. The script will process `scripts/icons_timestamp.txt`, generate the new React components (with `*.tsx` extension) following exactly the steps listed in the manual process (see below), and process **only the files added after this timestamp value**
 4. If the `generateNewIcons` script accidentally overwrites older React components, remember to discard the changes before committing
 
