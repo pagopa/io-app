@@ -3,7 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { isGestureEnabled } from "../../../utils/navigation";
-import FciDocumentUnavailableScreen from "../screens/failure/FciDocumentUnavailableScreen.tsx";
+import FciDocumentUnavailableScreen from "../screens/failure/FciDocumentUnavailableScreen";
+import FciQtspErrorScreen from "../screens/failure/FciQtspErrorScreen";
 import FciRouterScreen from "../screens/FciRouterScreen";
 import { FciLoginL3Screen } from "../screens/loginL3/FciLoginL3Screen";
 import { FciNfcNotAvailableScreen } from "../screens/loginL3/FciNfcNotAvailableScreen";
@@ -73,6 +74,11 @@ export const FciStackNavigator = () => (
       options={{
         headerShown: false
       }}
+    />
+    <Stack.Screen
+      component={FciQtspErrorScreen}
+      name={FCI_ROUTES.QTSP_ERROR}
+      options={{ headerShown: false }}
     />
     <Stack.Screen
       component={FciNfcNotAvailableScreen}

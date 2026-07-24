@@ -16,6 +16,7 @@ export type FciParamsList = {
   [FCI_ROUTES.FCI_LOGIN_L3]: undefined;
   [FCI_ROUTES.LOGIN_OPTIN]: undefined;
   [FCI_ROUTES.NFC_NOT_AVAILABLE]: undefined;
+  [FCI_ROUTES.QTSP_ERROR]: undefined;
   [FCI_ROUTES.QTSP_TOS]: undefined;
   [FCI_ROUTES.ROUTER]: FciRouterScreenNavigationParams;
   [FCI_ROUTES.SIGNATURE_FIELDS]: FciSignatureFieldsScreenNavigationParams;

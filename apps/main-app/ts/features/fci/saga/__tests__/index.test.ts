@@ -211,7 +211,7 @@ describe("FCI Saga Tests", () => {
         )
         .run());
 
-    it("should forward the known signature request detail to standardFciFlowStartSaga when provided", () =>
+    it("should forward the just-fetched signature request detail to standardFciFlowStartSaga when provided", () =>
       expectSaga(
         watchFciStartSaga,
         fciStartRequest(mockSignatureRequestDetailView)
@@ -231,63 +231,20 @@ describe("FCI Saga Tests", () => {
   describe("watchFciSignatureRequestRetrySaga", () => {
     const signatureRequestId = "test-signature-id" as NonEmptyString;
     const action = fciSignatureRequestRetryFromId(signatureRequestId);
-    const futureDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-    const pastDate = new Date(Date.now() - 1000);
 
-    // signability is no longer decided here: this saga always forwards the
-    // freshly-fetched detail to fciStartRequest, and standardFciFlowStartSaga
-    // performs the final signable/expired check downstream.
-    const statusScenarios = [
-      {
-        name: "WAIT_FOR_SIGNATURE not expired",
-        status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE,
-        expires_at: futureDate
-      },
-      {
-        name: "WAIT_FOR_SIGNATURE expired",
-        status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE,
-        expires_at: pastDate
-      },
-      {
-        name: "SIGNED",
-        status: SignatureRequestStatusEnum.SIGNED,
-        expires_at: futureDate
-      },
-      {
-        name: "WAIT_FOR_QTSP",
-        status: SignatureRequestStatusEnum.WAIT_FOR_QTSP,
-        expires_at: futureDate
-      },
-      {
-        name: "REJECTED",
-        status: SignatureRequestStatusEnum.REJECTED,
-        expires_at: futureDate
-      },
-      {
-        name: "CANCELLED",
-        status: SignatureRequestStatusEnum.CANCELLED,
-        expires_at: futureDate
-      }
-    ];
+    it("should forward the fresh signature request to fciStartRequest on success", () => {
+      const signatureRequestDetail = {
+        ...mockSignatureRequestDetailView,
+        id: signatureRequestId
+      };
 
-    test.each(statusScenarios)(
-      "should cancel download preview and delegate to fciStartRequest when status is $name",
-      ({ status, expires_at }) => {
-        const signatureRequestDetail = {
-          ...mockSignatureRequestDetailView,
-          id: signatureRequestId,
-          status,
-          expires_at
-        };
-
-        return expectSaga(watchFciSignatureRequestRetrySaga, action)
-          .put(fciSignatureRequestFromId.request(signatureRequestId))
-          .dispatch(fciSignatureRequestFromId.success(signatureRequestDetail))
-          .put(fciDownloadPreview.cancel())
-          .put(fciStartRequest(signatureRequestDetail))
-          .run();
-      }
-    );
+      return expectSaga(watchFciSignatureRequestRetrySaga, action)
+        .put(fciSignatureRequestFromId.request(signatureRequestId))
+        .dispatch(fciSignatureRequestFromId.success(signatureRequestDetail))
+        .put(fciStartRequest(signatureRequestDetail))
+        .not.put(fciDownloadPreview.cancel())
+        .run();
+    });
 
     it("should not start flow when signature request fetch fails", () =>
       expectSaga(watchFciSignatureRequestRetrySaga, action)

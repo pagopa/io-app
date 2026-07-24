@@ -937,6 +937,10 @@
         "rightButton": "Firma",
         "title": "Firma tutto il documento"
       },
+      "qtspErrorPage": {
+        "title": "Qualcosa non ha funzionato",
+        "subtitle": "Non siamo riusciti a recuperare i documenti. Riprova tra qualche minuto."
+      },
       "qtspTos": {
         "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma **Namirial S.p.A.**",
         "title": "Ci siamo quasi!"
