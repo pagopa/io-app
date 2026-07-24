@@ -16,14 +16,16 @@ import { View } from "react-native";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isDevEnv } from "../../../../utils/environment";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { ITW_STATUS_LIST_FETCH_TASK } from "../../statusList/utils/consts";
+import { ITW_STATUS_LIST_FETCH_TASK } from "../../statusList/tasks";
 import { getLastStatusListCheckTimestamps } from "../../statusList/utils/storage";
 
 const formatDate = (timestamp: number | undefined): string =>
-  timestamp ? format(new Date(timestamp), "DD/MM/YY HH:mm:ss") : "n/a";
+  timestamp !== undefined
+    ? format(new Date(timestamp), "DD/MM/YY HH:mm:ss")
+    : "n/a";
 
 const formatAge = (lastFetchTime: number | undefined): string => {
-  if (!lastFetchTime) {
+  if (lastFetchTime === undefined) {
     return "n/a";
   }
 

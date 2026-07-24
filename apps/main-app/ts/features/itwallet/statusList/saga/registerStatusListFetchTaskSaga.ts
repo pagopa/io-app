@@ -7,7 +7,7 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
-} from "../tasks/manager";
+} from "../tasks";
 
 /**
  * Registers the ITW Status List fetch task with expo-background-task.
