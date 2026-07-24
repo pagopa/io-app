@@ -1,6 +1,7 @@
 import {
   ContentWrapper,
   HSpacer,
+  Icon,
   IOColors,
   IOSpacingScale,
   IOText,
@@ -11,9 +12,6 @@ import I18n from "i18next";
 import { Fragment } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 
-import FacebookIcon from "../../../../../../img/features/cgn/facebook.svg";
-import InstagramIcon from "../../../../../../img/features/cgn/instagram.svg";
-import LinkedinIcon from "../../../../../../img/features/cgn/linkedin.svg";
 import { openWebUrl } from "../../../../../utils/url";
 
 const SOCIAL_LINKS_TOP_SPACING: IOSpacingScale = 32;
@@ -25,22 +23,22 @@ const SOCIAL_LINK_LABEL_LINE_HEIGHT = 20;
 
 const cgnSocialLinks = [
   {
-    Icon: InstagramIcon,
     id: "instagram",
+    iconName: "instagram",
     labelKey: "bonus.cgn.merchantsList.categoriesList.socialLinks.instagram",
-    url: "https://www.instagram.com/ioitaliait/"
+    url: "https://www.instagram.com/giovani_e_servizio_civile/"
   },
   {
-    Icon: FacebookIcon,
     id: "facebook",
+    iconName: "facebook",
     labelKey: "bonus.cgn.merchantsList.categoriesList.socialLinks.facebook",
-    url: "https://www.facebook.com/io.italia.it/"
+    url: "https://www.facebook.com/PcmGiovaniServiziocivile"
   },
   {
-    Icon: LinkedinIcon,
     id: "linkedin",
+    iconName: "linkedin",
     labelKey: "bonus.cgn.merchantsList.categoriesList.socialLinks.linkedin",
-    url: "https://www.linkedin.com/company/io-app/"
+    url: "https://www.linkedin.com/company/carta-giovani-nazionale/"
   }
 ] as const;
 
@@ -77,38 +75,35 @@ export const CgnMerchantCategoriesSocialLinks = () => {
     >
       <ContentWrapper>
         <View style={styles.socialLinksContainer}>
-          {cgnSocialLinks.map((socialLink, index) => {
-            const SocialIcon = socialLink.Icon;
-
-            return (
-              <Fragment key={socialLink.id}>
-                {index > 0 && <VSpacer size={SOCIAL_LINKS_V_SPACING} />}
-                <Pressable
-                  accessibilityLabel={I18n.t(socialLink.labelKey)}
-                  accessibilityRole="link"
-                  onPress={() => openWebUrl(socialLink.url)}
-                  style={styles.socialLink}
-                  testID={`cgn-social-link-${socialLink.id}`}
-                >
-                  <View style={styles.socialIcon}>
-                    <SocialIcon
-                      height={SOCIAL_ICON_SIZE}
-                      width={SOCIAL_ICON_SIZE}
-                    />
-                  </View>
-                  <HSpacer size={16} />
-                  <IOText
+          {cgnSocialLinks.map((socialLink, index) => (
+            <Fragment key={socialLink.id}>
+              {index > 0 && <VSpacer size={SOCIAL_LINKS_V_SPACING} />}
+              <Pressable
+                accessibilityLabel={I18n.t(socialLink.labelKey)}
+                accessibilityRole="link"
+                onPress={() => openWebUrl(socialLink.url)}
+                style={styles.socialLink}
+                testID={`cgn-social-link-${socialLink.id}`}
+              >
+                <View style={styles.socialIcon}>
+                  <Icon
                     color="blueIO-500"
-                    lineHeight={SOCIAL_LINK_LABEL_LINE_HEIGHT}
-                    size={SOCIAL_LINK_LABEL_SIZE}
-                    weight="Semibold"
-                  >
-                    {I18n.t(socialLink.labelKey)}
-                  </IOText>
-                </Pressable>
-              </Fragment>
-            );
-          })}
+                    name={socialLink.iconName}
+                    size={SOCIAL_ICON_SIZE}
+                  />
+                </View>
+                <HSpacer size={16} />
+                <IOText
+                  color="blueIO-500"
+                  lineHeight={SOCIAL_LINK_LABEL_LINE_HEIGHT}
+                  size={SOCIAL_LINK_LABEL_SIZE}
+                  weight="Semibold"
+                >
+                  {I18n.t(socialLink.labelKey)}
+                </IOText>
+              </Pressable>
+            </Fragment>
+          ))}
         </View>
       </ContentWrapper>
     </View>

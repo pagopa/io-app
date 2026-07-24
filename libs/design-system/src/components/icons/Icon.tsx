@@ -87,6 +87,7 @@ import IconExternalLink from "./svg/IconExternalLink";
 import IconExternalLinkSmall from "./svg/IconExternalLinkSmall";
 import IconEyeHide from "./svg/IconEyeHide";
 import IconEyeShow from "./svg/IconEyeShow";
+import IconFacebook from "./svg/IconFacebook";
 import IconFamilySharing from "./svg/IconFamilySharing";
 import IconFilterAndroid from "./svg/IconFilterAndroid";
 import IconFilterOffiOS from "./svg/IconFilterOffiOS";
@@ -110,6 +111,7 @@ import IconInboxFilled from "./svg/IconInboxFilled";
 import IconInfo from "./svg/IconInfo";
 import IconInfoFilled from "./svg/IconInfoFilled";
 import IconInitiatives from "./svg/IconInitiatives";
+import IconInstagram from "./svg/IconInstagram";
 import IconInstitution from "./svg/IconInstitution";
 import IconInstruction from "./svg/IconInstruction";
 import IconKey from "./svg/IconKey";
@@ -120,6 +122,7 @@ import IconLegalValue from "./svg/IconLegalValue";
 import IconLight from "./svg/IconLight";
 import IconLightbulb from "./svg/IconLightbulb";
 import IconLightFilled from "./svg/IconLightFilled";
+import IconLinkedin from "./svg/IconLinkedin";
 import IconLocationAndroid from "./svg/IconLocationAndroid";
 import IconLocationiOS from "./svg/IconLocationiOS";
 import IconLocationiOSFilled from "./svg/IconLocationiOSFilled";
@@ -248,6 +251,9 @@ export const IOIcons = {
   phone: IconPhone,
   email: IconEmail,
   emailFill: IconEmailFill,
+  facebook: IconFacebook,
+  instagram: IconInstagram,
+  linkedin: IconLinkedin,
   pec: IconPEC,
   messageLegal: IconMessageLegal,
   message: IconMessage,
