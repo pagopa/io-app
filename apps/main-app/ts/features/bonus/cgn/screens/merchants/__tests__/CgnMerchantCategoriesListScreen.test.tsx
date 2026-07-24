@@ -119,6 +119,18 @@ describe("CgnMerchantCategoriesListScreen", () => {
     ).toBeTruthy();
   });
 
+  it("renders social links after the categories list", () => {
+    const categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount> = [
+      makeCategory(ProductCategoryEnum.cultureAndEntertainment)
+    ];
+
+    const { getByTestId } = renderScreen(
+      buildState({ list: pot.some(categories) })
+    );
+
+    expect(getByTestId("CgnMerchantCategoriesSocialLinks")).toBeTruthy();
+  });
+
   it.each`
     name              | list
     ${"initial"}      | ${pot.none}

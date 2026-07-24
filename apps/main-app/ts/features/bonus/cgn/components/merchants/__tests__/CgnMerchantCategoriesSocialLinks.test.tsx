@@ -42,7 +42,7 @@ describe("CgnMerchantCategoriesSocialLinks", () => {
     fireEvent.press(getByTestId("cgn-social-link-instagram"));
 
     expect(openWebUrl).toHaveBeenCalledWith(
-      "https://www.instagram.com/ioitaliait/"
+      "https://www.instagram.com/giovani_e_servizio_civile/"
     );
   });
 });
