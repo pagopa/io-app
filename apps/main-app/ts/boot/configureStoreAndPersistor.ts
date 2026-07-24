@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as O from "fp-ts/lib/Option";
 import _, { merge, omit } from "lodash";
+import { AppState, NativeEventSubscription } from "react-native";
 import {
   applyMiddleware,
   compose,
@@ -64,6 +65,7 @@ import { configureReactotron } from "./configureReactotron";
  * Redux persist will migrate the store to the current version
  */
 const CURRENT_REDUX_STORE_VERSION = 49;
+const REDUX_PERSIST_ACTION_PREFIX = "persist/";
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -680,11 +682,26 @@ function configureStoreAndPersistor(): {
   persistor: Persistor;
   store: Store;
 } {
+  // eslint-disable-next-line functional/no-let
+  let arePersistenceAndSagasStarted = false;
+  const persistGateMiddleware: Middleware = () => next => action => {
+    const actionType = (action as { type?: unknown }).type;
+    // ponytail: redux-persist v5 has no manualPersist option; all lifecycle actions share this prefix.
+    if (
+      !arePersistenceAndSagasStarted &&
+      typeof actionType === "string" &&
+      actionType.startsWith(REDUX_PERSIST_ACTION_PREFIX)
+    ) {
+      return action;
+    }
+    return next(action);
+  };
   const composeEnhancers =
     // eslint-disable-next-line no-underscore-dangle
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
   const baseMiddlewares: ReadonlyArray<Middleware> = [
+    persistGateMiddleware,
     sagaMiddleware,
     logger,
     analytics.actionTracking // generic tracker for selected redux actions
@@ -706,13 +723,31 @@ function configureStoreAndPersistor(): {
   >(persistedReducer, enhancer);
   const persistor = persistStore(store);
 
-  // Run the main saga
-  sagaMiddleware.run(rootSaga);
+  // eslint-disable-next-line functional/no-let, prefer-const -- assigned after startPersistenceAndSagas closes over it
+  let appStateSubscription: NativeEventSubscription | undefined;
+  const startPersistenceAndSagas = () => {
+    if (arePersistenceAndSagasStarted) {
+      return;
+    }
+    arePersistenceAndSagasStarted = true;
+    appStateSubscription?.remove();
+    persistor.persist();
+    sagaMiddleware.run(rootSaga);
+  };
+
+  appStateSubscription = AppState.addEventListener("change", appState => {
+    if (appState === "active") {
+      startPersistenceAndSagas();
+    }
+  });
+  if (AppState.currentState === "active") {
+    startPersistenceAndSagas();
+  }
 
   return { store, persistor };
 }
 
 export const { store, persistor } = configureStoreAndPersistor();
 export const testable = isTestEnv
-  ? { CURRENT_REDUX_STORE_VERSION, migrations }
+  ? { CURRENT_REDUX_STORE_VERSION, configureStoreAndPersistor, migrations }
   : undefined;
