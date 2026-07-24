@@ -14,7 +14,10 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import CGN_ROUTES from "../../../navigation/routes";
-import { CgnMerchantCategoriesListScreen } from "../CgnMerchantCategoriesListScreen";
+import {
+  CategoryRow,
+  CgnMerchantCategoriesListScreen
+} from "../CgnMerchantCategoriesListScreen";
 
 jest.mock("../../../components/CgnAnimatedBackground", () => {
   const React = require("react");
@@ -72,7 +75,7 @@ const renderScreen = (state: GlobalState) => {
     return (
       <FlatList
         data={screen.data}
-        keyExtractor={(item: any) => item.productCategory}
+        keyExtractor={(item: any) => item.id}
         ListEmptyComponent={screen.ListEmptyComponent}
         ListFooterComponent={screen.ListFooterComponent}
         renderItem={({ item, index }: { index: number; item: any }) =>
@@ -114,6 +117,60 @@ describe("CgnMerchantCategoriesListScreen", () => {
     expect(
       getByText(I18n.t("bonus.cgn.merchantDetail.categories.health"))
     ).toBeTruthy();
+  });
+
+  it("groups valid categories into stable two-column rows", () => {
+    const invalidCategory: ProductCategoryWithNewDiscountsCount = {
+      productCategory: "UNKNOWN_CATEGORY" as ProductCategoryEnum,
+      newDiscounts: 0
+    };
+    const categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount> = [
+      makeCategory(ProductCategoryEnum.cultureAndEntertainment),
+      invalidCategory,
+      makeCategory(ProductCategoryEnum.health),
+      makeCategory(ProductCategoryEnum.travelling)
+    ];
+    const store = createStore(
+      appReducer,
+      buildState({ list: pot.some(categories) }) as any
+    );
+    const captureScreenData = jest.fn<void, [ReadonlyArray<CategoryRow>]>();
+
+    const Wrapper = () => {
+      const screen = CgnMerchantCategoriesListScreen();
+      captureScreenData(screen.data);
+
+      return <View />;
+    };
+
+    renderScreenWithNavigationStoreContext(
+      Wrapper,
+      CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES,
+      {},
+      store
+    );
+
+    const screenData =
+      captureScreenData.mock.calls[captureScreenData.mock.calls.length - 1][0];
+
+    expect(screenData).toHaveLength(2);
+    expect(screenData[0]).toMatchObject({
+      id: "category-row-cultureAndEntertainment",
+      categories: [
+        {
+          category: {
+            productCategory: ProductCategoryEnum.cultureAndEntertainment
+          }
+        },
+        { category: { productCategory: ProductCategoryEnum.health } }
+      ]
+    });
+    expect(screenData[1]).toMatchObject({
+      id: "category-row-travelling",
+      categories: [
+        { category: { productCategory: ProductCategoryEnum.travelling } }
+      ]
+    });
   });
 
   it("shows a news badge when a category has new discounts", () => {

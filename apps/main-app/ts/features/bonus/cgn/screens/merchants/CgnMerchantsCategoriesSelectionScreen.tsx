@@ -1,5 +1,4 @@
 import {
-  Divider,
   IOColors,
   IOIcons,
   IOVisualCostants,
@@ -23,8 +22,11 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";
-import { CgnMerchantCategoriesListScreen } from "./CgnMerchantCategoriesListScreen";
-import { CgnMerchantsListScreen } from "./CgnMerchantsListScreen";
+import {
+  CategoryRow,
+  CgnMerchantCategoriesListScreen
+} from "./CgnMerchantCategoriesListScreen";
+import { CgnMerchantsListScreen, MerchantsAll } from "./CgnMerchantsListScreen";
 
 export const CgnMerchantsHomeTabRoutes = {
   CGN_CATEGORIES: "CGN_CATEGORIES",
@@ -35,6 +37,8 @@ type CgnMerchantsHomeTabParamsList = {
   [CgnMerchantsHomeTabRoutes.CGN_CATEGORIES]: undefined;
   [CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL]: undefined;
 };
+
+type CgnMerchantsListItem = CategoryRow | MerchantsAll;
 
 type TabOption = {
   icon: IOIcons;
@@ -52,6 +56,9 @@ const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
   }
 };
 
+const isCategoryRow = (item: CgnMerchantsListItem): item is CategoryRow =>
+  "categories" in item;
+
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const { navigate } = useIONavigation();
   useDisableRootNavigatorGesture();
@@ -65,10 +72,10 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const {
     data,
-    renderItem,
     refreshControlProps,
     ListFooterComponent,
-    ListEmptyComponent
+    ListEmptyComponent,
+    ItemSeparatorComponent
   } =
     selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES
       ? categoriesScreen
@@ -76,7 +83,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const tabRoutesKeys = Object.keys(CgnMerchantsHomeTabRoutes);
 
-  const animatedFlatListRef = useAnimatedRef<Animated.FlatList<unknown>>();
+  const animatedFlatListRef =
+    useAnimatedRef<Animated.FlatList<CgnMerchantsListItem>>();
 
   const rawScrollY = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
@@ -176,33 +184,35 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   );
 
   return (
-    <Animated.FlatList
+    <Animated.FlatList<CgnMerchantsListItem>
       contentContainerStyle={{
         flexGrow: 1,
         paddingBottom: IOVisualCostants.appMarginDefault + bottom
       }}
-      data={[...data]}
-      ItemSeparatorComponent={() => <Divider />}
-      keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
+      data={data}
+      ItemSeparatorComponent={ItemSeparatorComponent}
+      keyExtractor={item => item.id}
       ListEmptyComponent={ListEmptyComponent}
       ListFooterComponent={ListFooterComponent}
       ListHeaderComponent={ListHeaderComponent}
       onScroll={scrollHandler}
       ref={animatedFlatListRef}
       refreshControl={
-        refreshControlProps && (
-          <RefreshControl
-            tintColor={Platform.OS === "ios" ? "transparent" : IOColors.black}
-            {...refreshControlProps}
-            onRefresh={() => {
-              refreshControlProps.onRefresh();
-              setIsPullRefresh(true);
-            }}
-            refreshing={isRefreshing}
-          />
-        )
+        <RefreshControl
+          tintColor={Platform.OS === "ios" ? "transparent" : IOColors.black}
+          {...refreshControlProps}
+          onRefresh={() => {
+            refreshControlProps.onRefresh();
+            setIsPullRefresh(true);
+          }}
+          refreshing={isRefreshing}
+        />
       }
-      renderItem={({ item, index }) => renderItem(item as any, index)}
+      renderItem={({ item, index }) =>
+        isCategoryRow(item)
+          ? categoriesScreen.renderItem(item, index)
+          : merchantsScreen.renderItem(item, index)
+      }
       scrollEventThrottle={8}
       snapToEnd={false}
       style={{ flex: 1 }}
