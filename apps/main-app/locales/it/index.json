@@ -1840,6 +1840,10 @@
             "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano.",
             "invalid": {
               "cta": "Rimuovi documento dal Portafoglio"
+            },
+            "suspended": {
+              "action": "Scopri di più",
+              "title": "La tua Patente di guida risulta non valida."
             }
           },
           "statusAction": "Cosa posso fare?"
@@ -1887,6 +1891,10 @@
               "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
               "cta": "Scopri di più",
               "title": "Patente su IO: documento in scadenza"
+            },
+            "suspended": {
+              "content": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente.\n\nIl tuo documento potrebbe ad esempio essere stato sospeso o ritirato in via temporanea. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.\n\nQuando la Patente fisica sarà di nuovo valida, il documento digitale si aggiornerà in automatico.\n\nRicorda: puoi continuare a usare la Patente digitale come documento di riconoscimento.",
+              "cta": "Ho capito"
             }
           }
         },

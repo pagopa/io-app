@@ -1,6 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 
-import { mockItWalletClient } from "../../../api/__mocks__/client.ts";
+import { mockItWalletClient } from "../../../api/__mocks__/itWalletClient.ts";
 import { ItWalletClient } from "../../../api/client.ts";
 import { itwSetFiscalCodeWhitelisted } from "../../../common/store/actions/preferences";
 import { handleGetWhitelistedStatus } from "../handleGetWhitelistedStatus";
