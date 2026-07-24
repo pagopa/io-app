@@ -74,6 +74,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     data,
     refreshControlProps,
     ListFooterComponent,
+    ListFooterComponentStyle,
     ListEmptyComponent,
     ItemSeparatorComponent
   } =
@@ -125,6 +126,9 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const isRefreshing =
     (refreshControlProps?.refreshing ?? false) && isPullRefresh;
+  const contentContainerPaddingBottom = ListFooterComponentStyle
+    ? 0
+    : IOVisualCostants.appMarginDefault + bottom;
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
@@ -187,13 +191,14 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     <Animated.FlatList<CgnMerchantsListItem>
       contentContainerStyle={{
         flexGrow: 1,
-        paddingBottom: IOVisualCostants.appMarginDefault + bottom
+        paddingBottom: contentContainerPaddingBottom
       }}
       data={data}
       ItemSeparatorComponent={ItemSeparatorComponent}
       keyExtractor={item => item.id}
       ListEmptyComponent={ListEmptyComponent}
       ListFooterComponent={ListFooterComponent}
+      ListFooterComponentStyle={ListFooterComponentStyle}
       ListHeaderComponent={ListHeaderComponent}
       onScroll={scrollHandler}
       ref={animatedFlatListRef}

@@ -137,6 +137,7 @@ export const CgnMerchantsListScreen = () => {
     ItemSeparatorComponent: MerchantsItemSeparatorComponent,
     refreshControlProps,
     ListFooterComponent: <></>,
+    ListFooterComponentStyle: undefined,
     ListEmptyComponent
   };
 };
