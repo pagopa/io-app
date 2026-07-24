@@ -4,16 +4,7 @@ import * as TaskManager from "expo-task-manager";
 import {
   ITW_STATUS_LIST_FETCH_TASK,
   ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES
-} from ".";
-import {
-  trackItwStatusListFetchRegistered,
-  trackItwStatusListFetchRegisterFailure
-} from "../analytics";
-
-export {
-  ITW_STATUS_LIST_FETCH_TASK,
-  ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES
-};
+} from "../utils/consts";
 
 /**
  * Registers the ITW Status List background fetch task with expo-background-task

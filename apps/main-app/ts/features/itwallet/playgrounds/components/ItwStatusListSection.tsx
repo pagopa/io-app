@@ -16,8 +16,8 @@ import { View } from "react-native";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isDevEnv } from "../../../../utils/environment";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { ITW_STATUS_LIST_FETCH_TASK } from "../../statusList/tasks";
-import { getLastStatusListCheckTimestamp } from "../../statusList/utils/storage";
+import { ITW_STATUS_LIST_FETCH_TASK } from "../../statusList/utils/consts";
+import { getLastStatusListCheckTimestamps } from "../../statusList/utils/storage";
 
 const formatDate = (timestamp: number | undefined): string =>
   timestamp ? format(new Date(timestamp), "DD/MM/YY HH:mm:ss") : "n/a";
@@ -35,20 +35,20 @@ const formatAge = (lastFetchTime: number | undefined): string => {
 };
 
 export const ItwStatusListSection = () => {
-  const [lastCheckTime, setLastCheckTime] = useState<number>();
+  const [timestamps, setTimestamps] = useState<ReadonlyArray<number>>();
 
   useEffect(() => {
-    getLastStatusListCheckTimestamp()
-      .then(setLastCheckTime)
-      .catch(() => setLastCheckTime(undefined));
+    getLastStatusListCheckTimestamps()
+      .then(setTimestamps)
+      .catch(() => setTimestamps(undefined));
   }, []);
 
   return (
     <View>
       <ListItemHeader label="Status List" />
-      <ListItemInfo label="Last check" value={formatDate(lastCheckTime)} />
+      <ListItemInfo label="Last check" value={formatDate(timestamps?.at(-1))} />
       <Divider />
-      <ListItemInfo label="Age" value={formatAge(lastCheckTime)} />
+      <ListItemInfo label="Age" value={formatAge(timestamps?.at(-1))} />
       <VSpacer size={8} />
       <IOButton
         disabled={true}

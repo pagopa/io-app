@@ -21,7 +21,8 @@ export const trackItwStatusListFetchRegistered = () => {
  * Registers ITW Status List related properties to Mixpanel
  */
 export const registerStatusListProperties = async () => {
-  const lastCheckTime = await getLastStatusListCheckTimestamp();
+  const lastCheckTimes = await getLastStatusListCheckTimestamp();
+  const lastCheckTime = lastCheckTimes.at(-1);
   const lastCheckDate = lastCheckTime
     ? new Date(lastCheckTime).toISOString()
     : undefined;

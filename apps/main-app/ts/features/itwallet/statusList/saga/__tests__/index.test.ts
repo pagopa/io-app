@@ -1,9 +1,9 @@
 import { testSaga } from "redux-saga-test-plan";
 
-// TODO [SIW-4084] import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
 import { watchItwStatusListSaga } from "..";
 import { itwIsL3EnabledSelector } from "../../../common/store/selectors";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
+import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
 
 describe("watchItwStatusListSaga", () => {
   it("stops when L3 is not enabled", () => {
@@ -19,8 +19,8 @@ describe("watchItwStatusListSaga", () => {
       .next()
       .select(itwIsL3EnabledSelector)
       .next(true)
-      // TODO [SIW-4084] .fork(registerStatusListFetchTaskSaga)
-      // TODO [SIW-4084] .next()
+      .fork(registerStatusListFetchTaskSaga)
+      .next()
       .fork(checkStatusListCoherenceSaga)
       .next()
       .isDone();
