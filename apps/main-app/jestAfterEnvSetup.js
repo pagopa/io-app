@@ -8,31 +8,14 @@ import { Animated } from "react-native";
  */
 configure({ defaultIncludeHiddenElements: true });
 
-const completeAnimatedStartSynchronously = animation => ({
-  ...animation,
+const createSynchronousAnimation = () => ({
   start: callback => {
     callback?.({ finished: true });
-  }
+  },
+  stop: () => undefined,
+  reset: () => undefined
 });
 
-const originalAnimatedSpring = Animated.spring;
-const originalAnimatedTiming = Animated.timing;
-const originalAnimatedDecay = Animated.decay;
-
-jest
-  .spyOn(Animated, "spring")
-  .mockImplementation((...args) =>
-    completeAnimatedStartSynchronously(originalAnimatedSpring(...args))
-  );
-
-jest
-  .spyOn(Animated, "timing")
-  .mockImplementation((...args) =>
-    completeAnimatedStartSynchronously(originalAnimatedTiming(...args))
-  );
-
-jest
-  .spyOn(Animated, "decay")
-  .mockImplementation((...args) =>
-    completeAnimatedStartSynchronously(originalAnimatedDecay(...args))
-  );
+Animated.spring = () => createSynchronousAnimation();
+Animated.timing = () => createSynchronousAnimation();
+Animated.decay = () => createSynchronousAnimation();
