@@ -1,5 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { isGestureEnabled } from "../../../../utils/navigation";
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import {
   IdPayOnboardingMachineContext,
   IdPayOnboardingMachineProvider
@@ -15,7 +17,6 @@ import IdPayInputFormVerificationScreen from "../screens/IdPayInputFormVerificat
 import IdPayLoadingScreen from "../screens/IdPayLoadingScreen";
 import IdPayMultiValuePrerequisitesScreen from "../screens/IdPayMultiValuePrerequisitesScreen";
 import IdPayPDNDPrerequisitesScreen from "../screens/IdPayPDNDPrerequisitesScreen";
-import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import { IdPayOnboardingParamsList } from "./params";
 import { IdPayOnboardingRoutes } from "./routes";
 
@@ -37,7 +38,6 @@ const InnerNavigator = () => {
       initialRouteName={
         IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS
       }
-      screenOptions={{ gestureEnabled: isGestureEnabled }}
       screenListeners={{
         beforeRemove: () => {
           // Read more on https://reactnavigation.org/docs/preventing-going-back/
@@ -46,56 +46,57 @@ const InnerNavigator = () => {
           idPayOnboardingMachineRef.send({ type: "back" });
         }
       }}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
       <Stack.Screen
-        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_MESSAGE}
         component={IdPayEnableMessageScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_MESSAGE}
         options={{ headerShown: false, gestureEnabled: false }}
       />
       <Stack.Screen
-        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}
         component={IdPayInitiativeDetailsScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}
       />
       <Stack.Screen
-        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS}
         component={IdPayBoolValuePrerequisitesScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS}
       />
       <Stack.Screen
-        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM}
         component={IdPayInputFormVerificationScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM}
       />
       <Stack.Screen
-        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS}
         component={IdPayMultiValuePrerequisitesScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS}
       />
       <Stack.Screen
-        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}
         component={IdPayPDNDPrerequisitesScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}
       />
       <Stack.Screen
-        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION}
         component={IdPayCompletionScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION}
         options={{ gestureEnabled: false }}
       />
       <Stack.Screen
-        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_NOTIFICATIONS}
         component={IdPayEnableNotificationScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_NOTIFICATIONS}
         options={{ gestureEnabled: false, headerShown: false }}
       />
       <Stack.Screen
-        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE}
         component={IdPayFailureScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE}
         options={{ gestureEnabled: false, headerShown: false }}
       />
       <Stack.Screen
-        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE_TO_RETRY}
         component={IdPayFailToRetryScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE_TO_RETRY}
         options={{ gestureEnabled: false, headerShown: false }}
       />
 
       <Stack.Screen
-        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_LOADING}
         component={IdPayLoadingScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_LOADING}
         options={{ gestureEnabled: false, headerShown: false }}
       />
     </Stack.Navigator>

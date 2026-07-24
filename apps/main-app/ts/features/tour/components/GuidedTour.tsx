@@ -5,6 +5,7 @@ import Animated, {
   useAnimatedRef,
   useFrameCallback
 } from "react-native-reanimated";
+
 import { useIOSelector } from "../../../store/hooks";
 import {
   activeGroupIdSelector,
@@ -15,11 +16,11 @@ import { TourCutoutStyle } from "../types";
 import { useTourContext } from "./TourProvider";
 
 export type GuidedTourProps = {
+  cutoutStyle?: TourCutoutStyle;
+  description: string;
   groupId: string;
   index: number;
   title: string;
-  description: string;
-  cutoutStyle?: TourCutoutStyle;
 };
 
 export const GuidedTour = (props: PropsWithChildren<GuidedTourProps>) => {

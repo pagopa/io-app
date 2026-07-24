@@ -1,11 +1,12 @@
-import { createStore } from "redux";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { createStore } from "redux";
+
+import { TypeEnum as ClausesTypeEnum } from "../../../../../../definitions/fci/Clause";
+import { DocumentToSign } from "../../../../../../definitions/fci/DocumentToSign";
+import { SignatureField } from "../../../../../../definitions/fci/SignatureField";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { fciUpdateDocumentSignaturesRequest } from "../../actions";
-import { DocumentToSign } from "../../../../../../definitions/fci/DocumentToSign";
-import { SignatureField } from "../../../../../../definitions/fci/SignatureField";
-import { TypeEnum as ClausesTypeEnum } from "../../../../../../definitions/fci/Clause";
 
 describe("FciDocumentSignaturesReducer", () => {
   it("The initial state should be an ampty array", () => {

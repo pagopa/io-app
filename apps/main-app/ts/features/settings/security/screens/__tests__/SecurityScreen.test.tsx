@@ -1,18 +1,19 @@
-import configureMockStore from "redux-mock-store";
 import { act, fireEvent } from "@testing-library/react-native";
-import { ActionType } from "typesafe-actions";
 import I18n from "i18next";
-import SecurityScreen from "../SecurityScreen";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { identificationRequest } from "../../../../identification/store/actions";
+import configureMockStore from "redux-mock-store";
+import { ActionType } from "typesafe-actions";
+
 import { shufflePinPadOnPayment } from "../../../../../config";
-import * as fimsHistorySelectors from "../../../../fims/history/store/selectors";
-import { FIMS_ROUTES } from "../../../../fims/common/navigation";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { FIMS_ROUTES } from "../../../../fims/common/navigation";
+import * as fimsHistorySelectors from "../../../../fims/history/store/selectors";
+import { identificationRequest } from "../../../../identification/store/actions";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import SecurityScreen from "../SecurityScreen";
 
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({

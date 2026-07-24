@@ -128,10 +128,10 @@ describe("index", () => {
 
 const codeFromTypeAndFormat = (barcodeType: string, format: string) => {
   switch (barcodeType) {
+    case "FCI":
+      return "firma con IO";
     case "IDPAY":
       return "idpay";
-    case "SEND":
-      return "SEND";
     case "PAGOPA":
       if (format === "DATA_MATRIX") {
         return "data_matrix";
@@ -140,8 +140,8 @@ const codeFromTypeAndFormat = (barcodeType: string, format: string) => {
       }
     case "ITW_REMOTE":
       return "ITW presentazione remota";
-    case "FCI":
-      return "firma con IO";
+    case "SEND":
+      return "SEND";
     default:
       return undefined;
   }

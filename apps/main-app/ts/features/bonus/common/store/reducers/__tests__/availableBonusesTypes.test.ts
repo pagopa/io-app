@@ -1,13 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
+import { BonusAvailable } from "../../../../../../../definitions/content/BonusAvailable";
+import { BonusesAvailable } from "../../../../../../../definitions/content/BonusesAvailable";
+import { BonusVisibilityEnum } from "../../../../../../../definitions/content/BonusVisibility";
 import {
   availableBonuses,
   contentBonusVacanzeIT
 } from "../../../../__mock__/availableBonuses";
-import { BonusesAvailable } from "../../../../../../../definitions/content/BonusesAvailable";
-import { BonusVisibilityEnum } from "../../../../../../../definitions/content/BonusVisibility";
 import { ID_CGN_TYPE } from "../../../../common/utils";
-import { BonusAvailable } from "../../../../../../../definitions/content/BonusAvailable";
 import * as bonus from "../../../utils";
 import {
   isAvailableBonusErrorSelector,
@@ -54,8 +54,8 @@ describe("availableBonusesTypes with FF enabled", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
       () =>
         new Map<number, boolean>([
-          [ID_CGN_TYPE, true],
-          [4, true]
+          [4, true],
+          [ID_CGN_TYPE, true]
         ])
     );
     const bonuses: BonusesAvailable = [
@@ -74,8 +74,8 @@ describe("availableBonusesTypes with FF enabled", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
       () =>
         new Map<number, boolean>([
-          [ID_CGN_TYPE, true],
-          [4, true]
+          [4, true],
+          [ID_CGN_TYPE, true]
         ])
     );
     const bonuses: BonusesAvailable = [
@@ -107,8 +107,8 @@ describe("availableBonusesTypes with FF enabled", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
       () =>
         new Map<number, boolean>([
-          [ID_CGN_TYPE, true],
-          [4, true]
+          [4, true],
+          [ID_CGN_TYPE, true]
         ])
     );
     const bonuses: BonusesAvailable = [];
@@ -122,8 +122,8 @@ describe("availableBonusesTypes with FF enabled", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
       () =>
         new Map<number, boolean>([
-          [ID_CGN_TYPE, true],
-          [4, true]
+          [4, true],
+          [ID_CGN_TYPE, true]
         ])
     );
     const visibility = BonusVisibilityEnum.experimental;

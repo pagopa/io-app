@@ -1,11 +1,12 @@
 import { ListItemHeader, RadioGroup, RadioItem } from "@io-app/design-system";
-import { Alert, View } from "react-native";
 import I18n from "i18next";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { EnvType, getEnv } from "../../common/utils/environment";
-import { selectItwEnv } from "../../common/store/selectors/environment";
-import { itwSetEnv } from "../../common/store/actions/environment";
+import { Alert, View } from "react-native";
+
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { itwSetEnv } from "../../common/store/actions/environment";
+import { selectItwEnv } from "../../common/store/selectors/environment";
+import { EnvType, getEnv } from "../../common/utils/environment";
 
 export const ItwEnvironmentSection = () => {
   const dispatch = useIODispatch();
@@ -63,11 +64,11 @@ export const ItwEnvironmentSection = () => {
     <View>
       <ListItemHeader label="Environment" />
       <RadioGroup
-        type="radioListItem"
-        key="itw_environment"
         items={envRadioItems()}
-        selectedItem={selectedEnv}
+        key="itw_environment"
         onPress={toggleEnvironment}
+        selectedItem={selectedEnv}
+        type="radioListItem"
       />
     </View>
   );

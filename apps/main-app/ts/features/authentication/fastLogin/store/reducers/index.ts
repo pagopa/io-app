@@ -1,25 +1,26 @@
-import { PersistPartial } from "redux-persist";
 import { combineReducers } from "redux";
+import { PersistPartial } from "redux-persist";
+
 import { Action } from "../../../../../store/actions/types";
-import { FastLoginOptInState, fastLoginOptInPersistor } from "./optInReducer";
+import { fastLoginOptInPersistor, FastLoginOptInState } from "./optInReducer";
 import {
-  FastLoginTokenRefreshReducer,
-  FastLoginTokenRefreshState
-} from "./tokenRefreshReducer";
-import {
-  SecurityAdviceAcknowledgedState,
-  securityAdviceAcknowledgedPersistor
+  securityAdviceAcknowledgedPersistor,
+  SecurityAdviceAcknowledgedState
 } from "./securityAdviceReducer";
 import {
   automaticSessionRefreshPersistor,
   AutomaticSessionRefreshState
 } from "./sessionRefreshReducer";
+import {
+  FastLoginTokenRefreshReducer,
+  FastLoginTokenRefreshState
+} from "./tokenRefreshReducer";
 
 export type FastLoginState = {
-  optIn: FastLoginOptInState & PersistPartial;
   automaticSessionRefresh: AutomaticSessionRefreshState & PersistPartial;
+  optIn: FastLoginOptInState & PersistPartial;
+  securityAdviceAcknowledged: PersistPartial & SecurityAdviceAcknowledgedState;
   tokenRefreshHandler: FastLoginTokenRefreshState;
-  securityAdviceAcknowledged: SecurityAdviceAcknowledgedState & PersistPartial;
 };
 
 export const fastLoginReducer = combineReducers<FastLoginState, Action>({

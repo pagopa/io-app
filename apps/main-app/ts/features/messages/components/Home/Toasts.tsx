@@ -1,8 +1,10 @@
-import { useEffect } from "react";
-import { AccessibilityInfo } from "react-native";
 import { useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
+import { useEffect } from "react";
+import { AccessibilityInfo } from "react-native";
+
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 import {
   archiveMessagesErrorReasonSelector,
   inboxMessagesErrorReasonSelector
@@ -11,7 +13,6 @@ import {
   processingResultReasonSelector,
   processingResultTypeSelector
 } from "../../store/reducers/archiving";
-import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 
 export const Toasts = () => {
   const store = useIOStore();

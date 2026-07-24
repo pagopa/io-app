@@ -9,6 +9,7 @@ import _ from "lodash";
 import { memo, useMemo } from "react";
 import { Modal } from "react-native";
 import { useSelector } from "react-redux";
+
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
 import { backendInfoMessageSelector } from "../../store/reducers/backendStatus/backendInfo";
 import { getFullLocale } from "../../utils/locale";
@@ -29,8 +30,8 @@ const SystemOffModal = () => {
     <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
         pictogram="umbrella"
-        title={I18n.t("systemsOff.title")}
         subtitle={subtitle}
+        title={I18n.t("systemsOff.title")}
       />
     </Modal>
   );

@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import MockDate from "mockdate";
 import { createStore } from "redux";
+
 import { FeaturedService } from "../../../../../../../definitions/services/FeaturedService";
 import { FeaturedServices } from "../../../../../../../definitions/services/FeaturedServices";
 import { InstitutionsResource } from "../../../../../../../definitions/services/InstitutionsResource";

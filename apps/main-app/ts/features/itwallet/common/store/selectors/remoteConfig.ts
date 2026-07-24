@@ -1,7 +1,8 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   getAppVersion,
@@ -17,7 +18,7 @@ const itwRemoteConfigSelector = (state: GlobalState) =>
   );
 
 /**
- * Returns the remote config for IT-WALLET
+ * Returns the remote config for docIO
  */
 export const isItwEnabledSelector = createSelector(
   itwRemoteConfigSelector,
@@ -129,6 +130,40 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
       O.map(itw => itw.ipzs_privacy_url),
       O.toUndefined
     )
+);
+
+/**
+ * Returns whether the current app version meets the minimum required to use IT Wallet.
+ */
+export const isItwMinAppVersionSupportedSelector = createSelector(
+  itwRemoteConfigSelector,
+  (itwConfig): boolean => {
+    const version = O.toUndefined(itwConfig)?.itw_l3?.min_app_version;
+    if (!version) {
+      return false;
+    }
+    return isVersionSupported(
+      Platform.OS === "ios" ? version.ios : version.android,
+      getAppVersion()
+    );
+  }
+);
+
+/**
+ * Returns whether the current app version meets the minimum required to use Proximity presentation.
+ */
+export const isItwProximityMinAppVersionSupportedSelector = createSelector(
+  itwRemoteConfigSelector,
+  (itwConfig): boolean => {
+    const version = O.toUndefined(itwConfig)?.proximity?.min_app_version;
+    if (!version) {
+      return false;
+    }
+    return isVersionSupported(
+      Platform.OS === "ios" ? version.ios : version.android,
+      getAppVersion()
+    );
+  }
 );
 
 /**

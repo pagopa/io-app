@@ -2,16 +2,16 @@
  * An handler for application internal links
  */
 import * as A from "fp-ts/lib/Array";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { fciEnabled } from "../config";
+import * as O from "fp-ts/lib/Option";
+
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
-import ROUTES from "../navigation/routes";
+import { IO_FIMS_LINK_PREFIX } from "../features/fims/singleSignOn/utils";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import { IO_FIMS_LINK_PREFIX } from "../features/fims/singleSignOn/utils";
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
+import ROUTES from "../navigation/routes";
 import { isTestEnv } from "./environment";
 import {
   IO_INTERNAL_LINK_PREFIX,
@@ -55,7 +55,7 @@ const allowedRoutes = {
   ...routesToNavigationLink,
   ...cgnRoutesToNavigationLink,
   ...legacyRoutesToNavigationLink,
-  ...(fciEnabled ? fciRoutesToNavigationLink : {})
+  ...fciRoutesToNavigationLink
 };
 
 export const isServiceDetailNavigationLink = (

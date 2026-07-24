@@ -1,20 +1,21 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+
 import { useIOStore } from "../../../../../store/hooks.ts";
 import { ItwSessionExpiredError } from "../../../api/client.ts";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors";
 import { isItwEnabledSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors/index.ts";
 import { ClientIdPrefix } from "../utils/itwRemotePresentationUtils";
-import { RemoteEvents } from "./events.ts";
 import { Context } from "./context.ts";
+import { RemoteEvents } from "./events.ts";
 
 type GuardArgs = {
-  event: RemoteEvents;
   context: Context;
+  event: RemoteEvents;
 };
 
 export const createRemoteGuardsImplementation = (

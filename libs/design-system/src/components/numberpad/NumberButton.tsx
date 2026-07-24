@@ -6,18 +6,19 @@ import Animated, {
   useAnimatedStyle,
   useReducedMotion
 } from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import { hexToRgba, IOColors } from "../../core";
 import { useScaleAnimation } from "../../hooks";
 import { IOText } from "../typography";
 
-type NumberButtonVariantType = "neutral" | "primary";
+type ColorMapVariant = {
+  background: string;
+  foreground: IOColors;
+  pressed: string;
+};
 
 type NumberButtonProps = {
-  /**
-   * Used to choose the component color variant between `neutral` and `primary`.
-   */
-  variant: NumberButtonVariantType;
   /**
    * The button value.
    */
@@ -28,13 +29,13 @@ type NumberButtonProps = {
    * @returns void
    */
   onPress: (number: number) => void;
+  /**
+   * Used to choose the component color variant between `neutral` and `primary`.
+   */
+  variant: NumberButtonVariantType;
 };
 
-type ColorMapVariant = {
-  background: string;
-  pressed: string;
-  foreground: IOColors;
-};
+type NumberButtonVariantType = "neutral" | "primary";
 
 const numberPadBtnSize = 56;
 
@@ -86,11 +87,11 @@ export const NumberButton = memo(
 
     return (
       <Pressable
-        accessible
         accessibilityRole="button"
+        accessible
+        onPress={handleOnPress}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
-        onPress={handleOnPress}
       >
         <Animated.View
           style={[
@@ -101,13 +102,13 @@ export const NumberButton = memo(
           ]}
         >
           <IOText
-            size={22}
-            weight="Semibold"
             color={colorMap[variant].foreground}
+            size={22}
             style={{
               // Additional prop for Android
               textAlignVertical: "center"
             }}
+            weight="Semibold"
           >
             {number}
           </IOText>

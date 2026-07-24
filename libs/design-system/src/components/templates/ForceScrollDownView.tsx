@@ -18,59 +18,60 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { scheduleOnRN, scheduleOnUI } from "react-native-worklets";
+
 import { IOSpringValues, IOVisualCostants } from "../../core";
 import { IconButtonSolid } from "../buttons";
 import { FooterActions, useFooterActionsInlineMeasurements } from "../layout";
 
+export type ForceScrollDownView = ForceScrollDownViewSlot &
+  Pick<
+    ScrollViewProps,
+    "contentContainerStyle" | "scrollEnabled" | "style" | "testID"
+  > & {
+    /**
+     * Optional Animated ref to be used with `useScrollOffset`
+     * (outside this component)
+     */
+    animatedRef?: AnimatedRef<Animated.ScrollView>;
+    /**
+     * Announced by screen readers for the "scroll to bottom" button.
+     * Required because this package has no i18n layer: the consumer owns the copy.
+     */
+    buttonAccessibilityLabel: string;
+    /**
+     * The content to display inside the scroll view.
+     */
+    children: ReactNode;
+    /**
+     * A callback that will be called whenever the scroll view crosses the threshold. The callback
+     * is passed a boolean indicating whether the threshold has been crossed (`true`) or not (`false`).
+     */
+    onThresholdCrossed?: (crossed: boolean) => void;
+  };
+
 type ForceScrollDownViewActions = {
-  /**
-   * The distance from the bottom is computed automatically based on the actions.
-   */
-  threshold?: never;
   footerActions: Omit<
     ComponentProps<typeof FooterActions>,
     "fixed" | "onMeasure"
   >;
+  /**
+   * The distance from the bottom is computed automatically based on the actions.
+   */
+  threshold?: never;
 };
 
 type ForceScrollDownViewCustomSlot = {
+  footerActions?: never;
   /**
    * The distance from the bottom of the scrollable content at which the "scroll to bottom" button
    * should become hidden.
    */
   threshold: number;
-  footerActions?: never;
 };
 
 type ForceScrollDownViewSlot =
   | ForceScrollDownViewActions
   | ForceScrollDownViewCustomSlot;
-
-export type ForceScrollDownView = {
-  /**
-   * The content to display inside the scroll view.
-   */
-  children: ReactNode;
-  /**
-   * A callback that will be called whenever the scroll view crosses the threshold. The callback
-   * is passed a boolean indicating whether the threshold has been crossed (`true`) or not (`false`).
-   */
-  onThresholdCrossed?: (crossed: boolean) => void;
-  /**
-   * Optional Animated ref to be used with `useScrollOffset`
-   * (outside this component)
-   */
-  animatedRef?: AnimatedRef<Animated.ScrollView>;
-  /**
-   * Announced by screen readers for the "scroll to bottom" button.
-   * Required because this package has no i18n layer: the consumer owns the copy.
-   */
-  buttonAccessibilityLabel: string;
-} & ForceScrollDownViewSlot &
-  Pick<
-    ScrollViewProps,
-    "style" | "contentContainerStyle" | "scrollEnabled" | "testID"
-  >;
 
 /**
  * A React Native component that displays a scroll view with a button that scrolls to the bottom of the content
@@ -185,10 +186,10 @@ const ForceScrollDownView = ({
   const scrollDownButton = (
     <Animated.View style={[styles.scrollDownButton, buttonTransitionStyle]}>
       <IconButtonSolid
-        testID={"ScrollDownButton"}
         accessibilityLabel={buttonAccessibilityLabel}
         icon="arrowBottom"
         onPress={handleScrollDownPress}
+        testID={"ScrollDownButton"}
       />
     </Animated.View>
   );
@@ -196,20 +197,20 @@ const ForceScrollDownView = ({
   return (
     <>
       <Animated.ScrollView
-        testID={"ScrollView"}
+        contentContainerStyle={contentContainerStyle}
+        onContentSizeChange={handleContentSizeChange}
+        onLayout={handleLayout}
         ref={scrollViewRef}
         scrollEnabled={scrollEnabled}
         style={style}
-        onLayout={handleLayout}
-        onContentSizeChange={handleContentSizeChange}
-        contentContainerStyle={contentContainerStyle}
+        testID={"ScrollView"}
       >
         {children}
         {footerActions && (
           <FooterActions
             {...footerActions}
-            onMeasure={handleFooterActionsInlineMeasurements}
             fixed={false}
+            onMeasure={handleFooterActionsInlineMeasurements}
           />
         )}
       </Animated.ScrollView>

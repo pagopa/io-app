@@ -1,8 +1,9 @@
 import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+
 import { MessageBodyMarkdown } from "../../../../../definitions/communication/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../definitions/communication/MessageSubject";
-import { EphemeralAarMessageDataActionPayload } from "../store/actions";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
+import { EphemeralAarMessageDataActionPayload } from "../store/actions";
 import { AarFlowState, RecipientInfo, sendAarFlowStates } from "./stateUtils";
 
 const iun = "000000000001";

@@ -1,5 +1,6 @@
 import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { STORAGE_PREFIX } from "../consts";
 import { StatusListRepository, STORAGE_ENTRY_PREFIX } from "../repository";
 import { STORAGE_KEY_LAST_CHECK_TIME } from "../storage";

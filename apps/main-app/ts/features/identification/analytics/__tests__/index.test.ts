@@ -1,4 +1,5 @@
-import { trackIdentificationAction } from "../index";
+import { mixpanelTrack } from "../../../../mixpanel";
+import { PinString } from "../../../../types/PinString";
 import {
   identificationCancel,
   identificationFailure,
@@ -8,8 +9,7 @@ import {
   identificationStart,
   identificationSuccess
 } from "../../store/actions";
-import { PinString } from "../../../../types/PinString";
-import { mixpanelTrack } from "../../../../mixpanel";
+import { trackIdentificationAction } from "../index";
 
 jest.mock("../../../../mixpanel", () => ({
   mixpanelTrack: jest.fn()

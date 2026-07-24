@@ -1,4 +1,5 @@
 import { assign, fromPromise, not, setup } from "xstate";
+
 import { type WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils";
 import {
   EvaluateRelyingPartyTrustInput,

@@ -1,7 +1,7 @@
-import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { getCredentialDocumentNumber, getCredentialTrustmark } from "..";
 import { Env } from "../../../common/utils/environment";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
+import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 
 jest.mock("../../../common/utils/itwIoWallet", () => ({
   getIoWallet: jest.fn().mockReturnValue({

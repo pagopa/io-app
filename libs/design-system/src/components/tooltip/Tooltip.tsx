@@ -18,6 +18,7 @@ import {
 } from "react-native";
 import Animated, { Easing, FadeIn, FadeOut } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { useIOTheme, useIOThemeContext } from "../../context";
 import { IOColors } from "../../core/IOColors";
 import { IconButton } from "../buttons";
@@ -59,42 +60,8 @@ const ARROWS_BY_PLACEMENT: Record<
   right: RightArrow
 };
 
-type CommonProps = {
-  /**
-   * The title text displayed at the top of the tooltip.
-   */
-  title: string;
-  /**
-   * The tooltip text content.
-   */
-  content: string;
-  /**
-   * Controls the visibility of the tooltip.
-   */
-  isVisible: boolean;
-  /**
-   * Initial tooltip position; can be 'top', 'bottom', 'left', or 'right'.
-   * @default top
-   */
-  placement?: Placement;
-  /**
-   * Insets for adjusting tooltip position within screen boundaries.
-   * @default {}
-   */
-  displayInsets?: Partial<DisplayInsets>;
-  /**
-   * Accessibility label for the close icon button.
-   */
-  closeIconAccessibilityLabel: string;
-  /**
-   * Determines whether interactions with the tooltip's children are allowed when `isVisible` is set to true.
-   * @default false
-   */
-  childrenInteractionsEnabled?: boolean;
-  /**
-   *  Callback function triggered when the tooltip is closed.
-   */
-  onClose: () => void;
+type CloseWithBackgroundTapDisabled = {
+  allowCloseOnBackgroundTap?: false;
 };
 type CloseWithTapOnBackground = {
   /**
@@ -106,11 +73,45 @@ type CloseWithTapOnBackground = {
    */
   backgroundAccessibilityLabel: string;
 };
-type CloseWithBackgroundTapDisabled = {
-  allowCloseOnBackgroundTap?: false;
+type CommonProps = {
+  /**
+   * Determines whether interactions with the tooltip's children are allowed when `isVisible` is set to true.
+   * @default false
+   */
+  childrenInteractionsEnabled?: boolean;
+  /**
+   * Accessibility label for the close icon button.
+   */
+  closeIconAccessibilityLabel: string;
+  /**
+   * The tooltip text content.
+   */
+  content: string;
+  /**
+   * Insets for adjusting tooltip position within screen boundaries.
+   * @default {}
+   */
+  displayInsets?: Partial<DisplayInsets>;
+  /**
+   * Controls the visibility of the tooltip.
+   */
+  isVisible: boolean;
+  /**
+   *  Callback function triggered when the tooltip is closed.
+   */
+  onClose: () => void;
+  /**
+   * Initial tooltip position; can be 'top', 'bottom', 'left', or 'right'.
+   * @default top
+   */
+  placement?: Placement;
+  /**
+   * The title text displayed at the top of the tooltip.
+   */
+  title: string;
 };
-type Props = CommonProps &
-  (CloseWithTapOnBackground | CloseWithBackgroundTapDisabled);
+type Props = (CloseWithBackgroundTapDisabled | CloseWithTapOnBackground) &
+  CommonProps;
 
 const styles = StyleSheet.create({
   backdrop: {
@@ -303,10 +304,10 @@ export const Tooltip = ({
           {children}
         </View>
         <TouchableWithoutFeedback
-          accessible={allowCloseOnBackgroundTap}
-          accessibilityRole={allowCloseOnBackgroundTap ? "button" : "none"}
-          importantForAccessibility={allowCloseOnBackgroundTap ? "yes" : "no"}
           accessibilityElementsHidden={!allowCloseOnBackgroundTap}
+          accessibilityRole={allowCloseOnBackgroundTap ? "button" : "none"}
+          accessible={allowCloseOnBackgroundTap}
+          importantForAccessibility={allowCloseOnBackgroundTap ? "yes" : "no"}
           onPress={handleTapOnBackground}
         >
           <Animated.View
@@ -345,9 +346,9 @@ export const Tooltip = ({
           <H6 ref={titleRef}>{title}</H6>
           <View style={styles.closeIcon}>
             <IconButton
+              accessibilityLabel={closeIconAccessibilityLabel}
               color="neutral"
               icon="closeSmall"
-              accessibilityLabel={closeIconAccessibilityLabel}
               onPress={onClose}
             />
           </View>

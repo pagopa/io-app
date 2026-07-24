@@ -10,6 +10,7 @@ import {
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
+
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { markdownToPlainText } from "../../../../utils/markdown";
@@ -44,19 +45,19 @@ const IdPayInitiativeRulesInfoBox = (props: Props) => {
       >
         <H6>{I18n.t("idpay.initiative.beneficiaryDetails.infobox.title")}</H6>
         <VSpacer size={4} />
-        <Body numberOfLines={3} ellipsizeMode="tail">
+        <Body ellipsizeMode="tail" numberOfLines={3}>
           {markdownToPlainText(content)}
         </Body>
         <VSpacer size={16} />
         <View style={{ flexDirection: "row" }}>
           <IOButton
+            icon="categLearning"
             iconPosition="end"
-            variant="link"
             label={I18n.t(
               "idpay.initiative.beneficiaryDetails.infobox.rulesButton"
             )}
             onPress={present}
-            icon="categLearning"
+            variant="link"
           />
         </View>
       </View>
@@ -76,16 +77,16 @@ const IdPayInitiativeRulesInfoBoxSkeleton = () => {
         { borderColor: IOColors[theme["textInputBorder-default"]] }
       ]}
     >
-      <IOSkeleton shape="rectangle" width={"40%"} height={24} radius={4} />
+      <IOSkeleton height={24} radius={4} shape="rectangle" width={"40%"} />
       <VSpacer size={16} />
       <VStack space={4}>
         {Array.from({ length: 4 }).map((_, i) => (
           <IOSkeleton
-            key={i}
-            shape="rectangle"
             height={16}
-            width={"100%"}
+            key={i}
             radius={4}
+            shape="rectangle"
+            width={"100%"}
           />
         ))}
       </VStack>

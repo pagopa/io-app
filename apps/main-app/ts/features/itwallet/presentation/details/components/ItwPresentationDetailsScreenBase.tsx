@@ -5,6 +5,7 @@ import Animated, {
   useAnimatedRef,
   useSharedValue
 } from "react-native-reanimated";
+
 import {
   IOScrollView,
   IOScrollViewActions
@@ -20,8 +21,8 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 export type CredentialCtaProps = ButtonBlockProps;
 
 export type ItwPresentationDetailsScreenBaseProps = {
-  credential: CredentialMetadata;
   children?: ReactNode;
+  credential: CredentialMetadata;
   ctaProps?: CredentialCtaProps;
   headerTransparent?: boolean;
 };
@@ -72,9 +73,9 @@ const ItwPresentationDetailsScreenBase = ({
 
   return (
     <IOScrollView
+      actions={actions}
       animatedRef={animatedScrollViewRef}
       includeContentMargins={false}
-      actions={actions}
     >
       {children}
     </IOScrollView>

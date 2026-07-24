@@ -1,10 +1,11 @@
-import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getTimeoutError } from "../../../../../utils/errors";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { fciClearStateRequest, fciMetadataRequest } from "../../actions";
+import { getTimeoutError } from "../../../../../utils/errors";
 import { mockFciMetadata } from "../../../types/__mocks__/Metadata.mock";
+import { fciClearStateRequest, fciMetadataRequest } from "../../actions";
 
 const genericError = getTimeoutError();
 

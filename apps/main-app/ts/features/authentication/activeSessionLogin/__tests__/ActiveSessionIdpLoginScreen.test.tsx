@@ -1,14 +1,14 @@
-import { createStore } from "redux";
-import * as O from "fp-ts/lib/Option";
 import { fireEvent } from "@testing-library/react-native";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import * as IOHooks from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import * as IOHooks from "../../../../store/hooks";
 import * as useLollipopLoginSource from "../../../lollipop/hooks/useLollipopLoginSource";
-import * as activeSessionSelectors from "../store/selectors";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import ActiveSessionIdpLoginScreen from "../screens/spid/ActiveSessionIdpLoginScreen";
+import * as activeSessionSelectors from "../store/selectors";
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -36,7 +36,7 @@ describe("ActiveSessionIdpLoginScreen", () => {
     jest
       .spyOn(useLollipopLoginSource, "useLollipopLoginSource")
       .mockReturnValue({
-        lollipopCheckStatus: { status: "none", url: O.none },
+        lollipopCheckStatus: { status: "none" },
         retryLollipopLogin: jest.fn(),
         shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
         webviewSource: { uri: "https://example.com/login" }
@@ -73,7 +73,7 @@ describe("ActiveSessionIdpLoginScreen", () => {
     jest
       .spyOn(useLollipopLoginSource, "useLollipopLoginSource")
       .mockReturnValue({
-        lollipopCheckStatus: { status: "none", url: O.none },
+        lollipopCheckStatus: { status: "none" },
         retryLollipopLogin: jest.fn(),
         shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
         webviewSource: undefined

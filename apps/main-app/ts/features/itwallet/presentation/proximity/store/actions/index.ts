@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { ConsentData } from "../types";
 
 /**
@@ -34,5 +35,5 @@ export const itwRevokeProximityConsentsByCredentialType = createStandardAction(
 export type ItwProximityActions =
   | ActionType<typeof itwGrantProximityConsent>
   | ActionType<typeof itwRevokeProximityConsentByKey>
-  | ActionType<typeof itwRevokeProximityConsentsByRpId>
-  | ActionType<typeof itwRevokeProximityConsentsByCredentialType>;
+  | ActionType<typeof itwRevokeProximityConsentsByCredentialType>
+  | ActionType<typeof itwRevokeProximityConsentsByRpId>;

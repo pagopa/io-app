@@ -1,23 +1,24 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
+
 import { ServicesPreferencesModeEnum } from "../../definitions/identity/ServicesPreferencesMode";
-import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { fastLoginOptInSelector } from "../features/authentication/fastLogin/store/selectors";
-import {
-  selectWalletCardsByType,
-  selectWalletPlaceholderCards
-} from "../features/wallet/store/selectors";
+import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { paymentsWalletUserMethodsSelector } from "../features/payments/wallet/store/selectors";
 import {
+  getNotificationPreferenceConfiguration,
   NotificationPreferenceConfiguration,
-  ServiceConfigurationTrackingType,
-  getNotificationPreferenceConfiguration
+  ServiceConfigurationTrackingType
 } from "../features/settings/common/analytics";
 import {
   profileNotificationSettingsSelector,
   profileServicePreferencesModeSelector
 } from "../features/settings/common/store/selectors";
+import {
+  selectWalletCardsByType,
+  selectWalletPlaceholderCards
+} from "../features/wallet/store/selectors";
 import { GlobalState } from "../store/reducers/types";
 import { isMixpanelEnabled } from "./../store/reducers/persistedPreferences";
 
@@ -35,12 +36,12 @@ export const loginSessionConfigHandler = (
 ): LoginSessionDuration => {
   const optInState = fastLoginOptInSelector(state).enabled;
   switch (optInState) {
-    case undefined:
-      return "not set";
-    case true:
-      return "365";
     case false:
       return "30";
+    case true:
+      return "365";
+    case undefined:
+      return "not set";
   }
 };
 

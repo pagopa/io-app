@@ -1,10 +1,10 @@
-import { sendLollipopLambdaAction } from "../../actions";
 import {
   INITIAL_LOLLIPOP_LAMBDA_STATE,
   lollipopLambdaReducer,
   SENDLollipopLambdaState
 } from "..";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { sendLollipopLambdaAction } from "../../actions";
 
 describe("lollipopLambdaReducer", () => {
   describe("INITIAL_LOLLIPOP_LAMBDA_STATE", () => {

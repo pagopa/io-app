@@ -1,8 +1,9 @@
-import { Svg, Path } from "react-native-svg";
+import { Path, Svg } from "react-native-svg";
+
 import { SVGLogoProps } from "../types";
 
 const LogoPaymentJCB = ({ size }: SVGLogoProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24">
+  <Svg height={size} viewBox="0 0 24 24" width={size}>
     <Path
       d="M.205 20h4.518c1.028 0 2.26-1.195 2.26-2.133V4H2.463C1.436 4 .205 5.195.205 7.2V20Z"
       fill="#047AB1"
@@ -24,10 +25,10 @@ const LogoPaymentJCB = ({ size }: SVGLogoProps) => (
       fill="#67B637"
     />
     <Path
-      fillRule="evenodd"
       clipRule="evenodd"
       d="M21.665 13.28c0 .853-.7 1.387-1.637 1.387h-4.01V9.333h3.648l.26.01c.824.044 1.434.502 1.434 1.292 0 .618-.418 1.152-1.174 1.28v.032c.835.053 1.48.554 1.48 1.333Zm-2.88-3.104a1.091 1.091 0 0 0-.147-.01h-1.355v1.343h1.502a.667.667 0 0 0 .52-.672c0-.362-.238-.608-.52-.661Zm-.011 2.165c.06-.002.12.002.18.01.294.076.52.342.52.716 0 .373-.237.65-.52.714l-.18.022h-1.491V12.34h1.49Z"
       fill="#fff"
+      fillRule="evenodd"
     />
   </Svg>
 );

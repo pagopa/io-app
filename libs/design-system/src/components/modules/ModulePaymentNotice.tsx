@@ -1,4 +1,5 @@
 import { GestureResponderEvent, StyleSheet, View } from "react-native";
+
 import { useIOTheme } from "../../context";
 import { IOListItemVisualParams, IOSpacer } from "../../core";
 import { WithTestID } from "../../utils/types";
@@ -10,42 +11,42 @@ import { Body, BodySmall, H6 } from "../typography";
 import { ModuleStatic } from "./ModuleStatic";
 import { PressableModuleBase } from "./PressableModuleBase";
 
-export type PaymentNoticeStatus =
-  | "default"
-  | "paid"
-  | "error"
-  | "expired"
-  | "revoked"
-  | "canceled"
-  | "in-progress";
-
 export type ModulePaymentNoticeProps = WithTestID<
   {
-    isLoading?: boolean;
     accessibilityLabel?: string;
+    isLoading?: boolean;
     loadingAccessibilityLabel?: string;
-    title?: string;
-    subtitle: string;
     onPress: (event: GestureResponderEvent) => void;
+    subtitle: string;
+    title?: string;
   } & (
     | {
+        badgeText: string;
         paymentNotice: {
-          status: Extract<PaymentNoticeStatus, "default">;
-          amount: string;
-          amountAccessibilityLabel: string;
-        };
-        badgeText?: never;
-      }
-    | {
-        paymentNotice: {
-          status: Exclude<PaymentNoticeStatus, "default">;
           amount?: string;
           amountAccessibilityLabel?: string;
+          status: Exclude<PaymentNoticeStatus, "default">;
         };
-        badgeText: string;
+      }
+    | {
+        badgeText?: never;
+        paymentNotice: {
+          amount: string;
+          amountAccessibilityLabel: string;
+          status: Extract<PaymentNoticeStatus, "default">;
+        };
       }
   )
 >;
+
+export type PaymentNoticeStatus =
+  | "canceled"
+  | "default"
+  | "error"
+  | "expired"
+  | "in-progress"
+  | "paid"
+  | "revoked";
 
 const styles = StyleSheet.create({
   endBlock: {
@@ -61,14 +62,19 @@ const AmountOrBadgeComponent = ({
   amountAccessibilityLabel,
   badgeText
 }: {
-  status: PaymentNoticeStatus;
   amount: string | undefined;
   amountAccessibilityLabel: string | undefined;
   badgeText: string;
+  status: PaymentNoticeStatus;
 }) => {
   const theme = useIOTheme();
 
   switch (status) {
+    case "canceled":
+    case "expired":
+    case "in-progress":
+    case "revoked":
+      return <Badge text={badgeText} variant="default" />;
     case "default":
       return (
         <H6
@@ -79,15 +85,10 @@ const AmountOrBadgeComponent = ({
           {amount}
         </H6>
       );
-    case "paid":
-      return <Badge variant="success" text={badgeText} />;
     case "error":
-      return <Badge variant="error" text={badgeText} />;
-    case "expired":
-    case "revoked":
-    case "canceled":
-    case "in-progress":
-      return <Badge variant="default" text={badgeText} />;
+      return <Badge text={badgeText} variant="error" />;
+    case "paid":
+      return <Badge text={badgeText} variant="success" />;
   }
 };
 
@@ -104,9 +105,9 @@ const ModulePaymentNoticeContent = ({
       <View style={{ flexGrow: 1, flexShrink: 1 }}>
         {title && (
           <BodySmall
+            color={theme["textBody-tertiary"]}
             numberOfLines={1}
             weight="Regular"
-            color={theme["textBody-tertiary"]}
           >
             {title}
           </BodySmall>
@@ -123,14 +124,14 @@ const ModulePaymentNoticeContent = ({
       </View>
       <View style={styles.endBlock}>
         <AmountOrBadgeComponent
-          status={status}
           amount={amount}
           amountAccessibilityLabel={amountAccessibilityLabel}
           badgeText={badgeText}
+          status={status}
         />
         <Icon
-          name="chevronRightListItem"
           color={theme["interactiveElem-default"]}
+          name="chevronRightListItem"
           size={IOListItemVisualParams.chevronSize}
         />
       </View>
@@ -168,8 +169,8 @@ export const ModulePaymentNotice = ({
 
   return (
     <PressableModuleBase
-      onPress={onPress}
       accessibilityLabel={accessibilityLabel}
+      onPress={onPress}
       testID={testID}
     >
       <ModulePaymentNoticeContent {...rest} />
@@ -181,17 +182,17 @@ const ModulePaymentNoticeSkeleton = ({
   loadingAccessibilityLabel
 }: Pick<ModulePaymentNoticeProps, "loadingAccessibilityLabel">) => (
   <ModuleStatic
-    accessible={true}
     accessibilityLabel={loadingAccessibilityLabel}
     accessibilityState={{ busy: true }}
+    accessible={true}
+    endBlock={
+      <IOSkeleton height={24} radius={16} shape="rectangle" width={64} />
+    }
     startBlock={
       <VStack space={4}>
-        <IOSkeleton shape="rectangle" width={120} height={12} radius={8} />
-        <IOSkeleton shape="rectangle" width={180} height={16} radius={8} />
+        <IOSkeleton height={12} radius={8} shape="rectangle" width={120} />
+        <IOSkeleton height={16} radius={8} shape="rectangle" width={180} />
       </VStack>
-    }
-    endBlock={
-      <IOSkeleton shape="rectangle" width={64} height={24} radius={16} />
     }
   />
 );

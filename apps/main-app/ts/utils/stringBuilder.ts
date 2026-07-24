@@ -1,4 +1,5 @@
 import I18n from "i18next";
+
 import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
 
 const DISPLAYED_DIGITS = 2;

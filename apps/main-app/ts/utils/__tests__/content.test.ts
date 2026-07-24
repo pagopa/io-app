@@ -1,10 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { setLocale, Locales } from "../../i18n";
+
+import { Locales, setLocale } from "../../i18n";
 import {
+  getContextualHelpDataFromRouteSelector,
   idpContextualHelpDataFromIdSelector,
-  screenContextualHelpDataSelector,
-  getContextualHelpDataFromRouteSelector
+  screenContextualHelpDataSelector
 } from "../../store/reducers/content";
 
 const chData = {

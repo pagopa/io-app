@@ -1,13 +1,14 @@
 import { fireEvent } from "@testing-library/react-native";
-import MockDate from "mockdate";
 import I18n from "i18next";
+import MockDate from "mockdate";
 import { createStore } from "redux";
+
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as bottomSheet from "../../../../../../utils/hooks/bottomSheet.tsx";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as itwAnalytics from "../../../../analytics";
 import {
   CredentialMetadata,
@@ -16,12 +17,12 @@ import {
 import * as selectors from "../../../../credentials/store/selectors";
 import { ItwCredentialIssuanceMachineProvider } from "../../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
+import * as detailsAnalytics from "../../analytics";
 import {
   CredentialAlertType,
-  ItwPresentationCredentialStatusAlert,
-  deriveCredentialAlertType
+  deriveCredentialAlertType,
+  ItwPresentationCredentialStatusAlert
 } from "../ItwPresentationCredentialStatusAlert";
-import * as detailsAnalytics from "../../analytics";
 
 const mockBottomSheetPresent = jest.fn();
 const mockBottomSheetDismiss = jest.fn();
@@ -42,7 +43,7 @@ jest.mock("../../../../../../utils/url", () => ({
 
 type TestCaseParams = [
   ItwCredentialStatus,
-  Record<string, { title: string; description: string }> | undefined
+  Record<string, { description: string; title: string }> | undefined
 ];
 
 const mockMessage = {
@@ -148,6 +149,19 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     }
   );
 
+  it("returns MDL_SUSPENDED before dynamic issuer errors", () => {
+    const result = deriveCredentialAlertType({
+      credentialStatus: "invalid",
+      eidStatus: "valid",
+      isOffline: false,
+      isItwL3: false,
+      message: mockMessage,
+      isMdlSuspended: true
+    });
+
+    expect(result).toBe(CredentialAlertType.MDL_SUSPENDED);
+  });
+
   it("should render static copy and double CTA for the expired mDL status", () => {
     const selectorMock: ReturnType<
       typeof selectors.itwCredentialStatusSelector
@@ -191,6 +205,81 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     expect(component.queryByText("Hai già rinnovato il documento?")).toBeNull();
     expect(component.getByText("Aggiorna il documento digitale")).toBeTruthy();
     expect(component.getByText("Rimuovi dal Portafoglio")).toBeTruthy();
+  });
+
+  it("should render suspended mDL review copy with acknowledgement action", () => {
+    mockBottomSheetModal();
+
+    const selectorMock: ReturnType<
+      typeof selectors.itwCredentialStatusSelector
+    > = {
+      status: "invalid",
+      message: {
+        "it-IT": {
+          title: "__Issuer suspended title__",
+          description: "__Issuer suspended description__"
+        }
+      }
+    };
+
+    jest
+      .spyOn(selectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => selectorMock);
+
+    const component = renderComponent({
+      storedStatusAssertion: {
+        credentialStatus: "invalid",
+        errorCode: "credential_suspended"
+      }
+    });
+
+    expect(
+      component.getByText("La tua Patente di guida risulta non valida.")
+    ).toBeTruthy();
+    expect(component.getByText("Scopri di più")).toBeTruthy();
+    expect(
+      component.getByText(
+        /Il tuo documento potrebbe ad esempio essere stato sospeso o ritirato/
+      )
+    ).toBeTruthy();
+    expect(component.getByText("Ho capito")).toBeTruthy();
+    expect(component.queryByText("__Issuer suspended title__")).toBeNull();
+    expect(
+      component.queryByText("__Issuer suspended description__")
+    ).toBeNull();
+    expect(component.queryByText("Aggiorna il documento digitale")).toBeNull();
+    expect(component.queryByText("Rimuovi dal Portafoglio")).toBeNull();
+
+    fireEvent.press(component.getByText("Ho capito"));
+
+    expect(mockBottomSheetDismiss).toHaveBeenCalledTimes(1);
+  });
+
+  it("treats attribute_update as an issuer error until status list support is available", () => {
+    const selectorMock: ReturnType<
+      typeof selectors.itwCredentialStatusSelector
+    > = {
+      status: "invalid",
+      message: mockMessage
+    };
+
+    jest
+      .spyOn(selectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => selectorMock);
+
+    const component = renderComponent({
+      storedStatusAssertion: {
+        credentialStatus: "invalid",
+        errorCode: "attribute_update"
+      }
+    });
+
+    expect(component.getByText("__Scaduto__")).toBeTruthy();
+    expect(
+      component.queryByText(
+        "È disponibile una versione aggiornata di questo documento"
+      )
+    ).toBeNull();
   });
 
   it("tracks banner tap and bottom sheet opening for the expiring status alert", () => {

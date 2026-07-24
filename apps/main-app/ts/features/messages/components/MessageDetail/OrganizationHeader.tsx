@@ -9,6 +9,7 @@ import {
 import i18n from "i18next";
 import { useCallback } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -17,13 +18,13 @@ import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
 import { AvatarDouble } from "../Home/DS/AvatarDouble";
 
 export type OrganizationHeaderProps = {
+  canNavigateToServiceDetails?: boolean;
+  logoUri?: ImageSourcePropType;
   messageId: string;
   organizationName: string;
   serviceId: ServiceId;
   serviceName: string;
-  logoUri?: ImageSourcePropType;
   thirdPartySenderDenomination?: string;
-  canNavigateToServiceDetails?: boolean;
 };
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
@@ -69,9 +70,9 @@ export const OrganizationHeader = ({
   const OrganizationNameComponent = () =>
     thirdPartySenderDenomination ? (
       <BodySmall
-        weight="Regular"
         color={theme["textBody-default"]}
         testID="org-name-aar"
+        weight="Regular"
       >
         {thirdPartySenderDenomination}
         <BodySmall weight="Regular">
@@ -88,18 +89,18 @@ export const OrganizationHeader = ({
 
   return (
     <View
-      testID="organization-header"
       style={[styles.item, { borderColor: IOColors[theme["divider-default"]] }]}
+      testID="organization-header"
     >
       <View style={{ flex: 1 }}>
         <OrganizationNameComponent />
         <BodySmall
-          asLink
           accessibilityRole="button"
+          asLink
           onPress={navigateToServiceDetails}
+          testID="service-name"
           textStyle={{ textDecorationLine: "none" }}
           weight="Semibold"
-          testID="service-name"
         >
           {serviceName}
         </BodySmall>

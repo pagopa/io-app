@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+
 import { FooterActionsInlineMeasurements } from "../FooterActionsInline";
 
 type UseFooterActionsInlineMeasurementsProps = {

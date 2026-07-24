@@ -1,19 +1,20 @@
 import { EmailString, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
+
 import { IssuerEnvironmentEnum } from "../../../../../definitions/fci/IssuerEnvironment";
 import { StatusEnum } from "../../../../../definitions/fci/SignatureDetailView";
+import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 import * as mixpanelModule from "../../../../mixpanel";
-import trackFciAction from "../index";
 import {
+  fciClearStateRequest,
   fciLoadQtspClauses,
   fciLoadQtspFilledDocument,
+  fciPollFilledDocument,
   fciSignatureRequestFromId,
-  fciStartRequest,
   fciSigningRequest,
-  fciUpdateDocumentSignaturesRequest,
-  fciClearStateRequest,
-  fciPollFilledDocument
+  fciStartRequest,
+  fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
+import trackFciAction from "../index";
 
 describe("index", () => {
   describe("trackFciAction", () => {

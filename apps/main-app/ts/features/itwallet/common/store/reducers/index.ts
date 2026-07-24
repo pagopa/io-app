@@ -11,6 +11,7 @@ import {
   PersistPartial,
   persistReducer
 } from "redux-persist";
+
 import { Action } from "../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../utils/environment";
 import itwCredentialsReducer, {
@@ -42,17 +43,17 @@ import securePreferencesReducer, {
 } from "./securePreferences";
 
 export type ItWalletState = {
+  banners: ItwBannersState;
+  credentials: ItwCredentialsState & PersistPartial;
+  credentialsCatalogue: ItwCredentialsCatalogueState;
+  debug: ItwDebugState;
   environment: ItwEnvironmentState;
   identification: ItwIdentificationState;
   issuance: ItwIssuanceState & PersistPartial;
-  credentials: ItwCredentialsState & PersistPartial;
-  walletInstance: ItwWalletInstanceState & PersistPartial;
   preferences: ItwPreferencesState;
-  securePreferences: ItwSecurePreferencesState & PersistPartial;
-  credentialsCatalogue: ItwCredentialsCatalogueState;
   proximity: ItwProximityState & PersistPartial;
-  banners: ItwBannersState;
-  debug: ItwDebugState;
+  securePreferences: ItwSecurePreferencesState & PersistPartial;
+  walletInstance: ItwWalletInstanceState & PersistPartial;
 };
 
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;

@@ -1,14 +1,15 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
+import * as NAVIGATION from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import * as DISPATCH from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { FIMS_ROUTES } from "../../../common/navigation";
-import { FimsHistoryKoScreen } from "../FimsHistoryKoScreen";
-import * as NAVIGATION from "../../../../../navigation/params/AppParamsList";
-import * as DISPATCH from "../../../../../store/hooks";
 import { fimsHistoryGet } from "../../store/actions";
+import { FimsHistoryKoScreen } from "../FimsHistoryKoScreen";
 
 describe("fimshistoryKoScreen", () => {
   it("should match snapshot", () => {

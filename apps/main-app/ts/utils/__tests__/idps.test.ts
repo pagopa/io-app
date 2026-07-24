@@ -1,5 +1,5 @@
-import { fromGeneratedToLocalSpidIdp } from "../idps";
 import { SpidIdp as GeneratedSpidIdpType } from "../../../definitions/content/SpidIdp";
+import { fromGeneratedToLocalSpidIdp } from "../idps";
 
 describe("IDPS utils", () => {
   describe("fromGeneratedToLocalSpidIdp", () => {

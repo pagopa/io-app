@@ -1,5 +1,5 @@
-import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
 import {
@@ -14,7 +14,7 @@ import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisa
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 import { useItwFailureSupportModal } from "../../../common/hooks/useItwFailureSupportModal.tsx";
 import { ZendeskSubcategoryValue } from "../../../common/hooks/useItwZendeskSupport";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors/index.ts";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
 import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
 import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent.tsx";
@@ -83,6 +83,145 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
+        case RemoteFailureType.EID_EXPIRED: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.eidExpiredScreen.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.eidExpiredScreen.subtitle"
+            ),
+            pictogram: "identity",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.eidExpiredScreen.primaryAction"
+              ),
+              onPress: () =>
+                machineRef.send({ type: "go-to-identification-mode" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.eidExpiredScreen.secondaryAction"
+              ),
+              onPress: closeMachine
+            }
+          };
+        }
+        case RemoteFailureType.INVALID_CREDENTIALS_STATUS: {
+          const { invalidCredentials } = failure.reason;
+          const count = invalidCredentials.length;
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.invalidCredentialsScreen.title",
+              {
+                count,
+                credentialName: resolveCredentialName(invalidCredentials[0])
+              }
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.invalidCredentialsScreen.subtitle",
+              {
+                count
+              }
+            ),
+            pictogram: "accessDenied",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.invalidCredentialsScreen.primaryAction"
+              ),
+              onPress: closeMachine
+            }
+          };
+        }
+        case RemoteFailureType.INVALID_REQUEST_OBJECT: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.primaryAction"
+              ),
+              onPress: closeMachine
+            }
+          };
+        }
+        case RemoteFailureType.RELYING_PARTY_GENERIC: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.genericError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.genericError.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.genericError.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "go-to-barcode-scan" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.genericError.secondaryAction"
+              ),
+              onPress: closeMachine
+            }
+          };
+        }
+        case RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.subtitle"
+            ),
+            pictogram: "stopSecurity",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.primaryAction"
+              ),
+              onPress: closeMachine
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.secondaryAction"
+              ),
+              onPress: () => {
+                trackItwRemoteInvalidAuthResponseBottomSheet();
+                failureSupportModal.present();
+              }
+            }
+          };
+        }
+        case RemoteFailureType.UNTRUSTED_RP: {
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.untrustedRpScreen.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.untrustedRpScreen.subtitle"
+            ),
+            pictogram: "stopSecurity",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.untrustedRpScreen.primaryAction"
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.untrustedRpScreen.secondaryAction"
+              ),
+              onPress: present
+            }
+          };
+        }
         case RemoteFailureType.WALLET_INACTIVE:
           return {
             title: I18n.t(
@@ -127,145 +266,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
               }
             }
           };
-        case RemoteFailureType.EID_EXPIRED: {
-          return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.eidExpiredScreen.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.presentation.remote.eidExpiredScreen.subtitle"
-            ),
-            pictogram: "identity",
-            action: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.eidExpiredScreen.primaryAction"
-              ),
-              onPress: () =>
-                machineRef.send({ type: "go-to-identification-mode" })
-            },
-            secondaryAction: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.eidExpiredScreen.secondaryAction"
-              ),
-              onPress: closeMachine
-            }
-          };
-        }
-        case RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE: {
-          return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.subtitle"
-            ),
-            pictogram: "stopSecurity",
-            action: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.primaryAction"
-              ),
-              onPress: closeMachine
-            },
-            secondaryAction: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.relyingParty.invalidAuthResponse.secondaryAction"
-              ),
-              onPress: () => {
-                trackItwRemoteInvalidAuthResponseBottomSheet();
-                failureSupportModal.present();
-              }
-            }
-          };
-        }
-        case RemoteFailureType.RELYING_PARTY_GENERIC: {
-          return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.genericError.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.genericError.subtitle"
-            ),
-            pictogram: "umbrella",
-            action: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.relyingParty.genericError.primaryAction"
-              ),
-              onPress: () => machineRef.send({ type: "go-to-barcode-scan" })
-            },
-            secondaryAction: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.relyingParty.genericError.secondaryAction"
-              ),
-              onPress: closeMachine
-            }
-          };
-        }
-        case RemoteFailureType.INVALID_REQUEST_OBJECT: {
-          return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.subtitle"
-            ),
-            pictogram: "umbrella",
-            action: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.relyingParty.invalidRequestObject.primaryAction"
-              ),
-              onPress: closeMachine
-            }
-          };
-        }
-        case RemoteFailureType.UNTRUSTED_RP: {
-          return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.untrustedRpScreen.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.presentation.remote.untrustedRpScreen.subtitle"
-            ),
-            pictogram: "stopSecurity",
-            action: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.untrustedRpScreen.primaryAction"
-              ),
-              onPress: () => machineRef.send({ type: "close" })
-            },
-            secondaryAction: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.untrustedRpScreen.secondaryAction"
-              ),
-              onPress: present
-            }
-          };
-        }
-        case RemoteFailureType.INVALID_CREDENTIALS_STATUS: {
-          const { invalidCredentials } = failure.reason;
-          const count = invalidCredentials.length;
-          return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.invalidCredentialsScreen.title",
-              {
-                count,
-                credentialName: resolveCredentialName(invalidCredentials[0])
-              }
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.presentation.remote.invalidCredentialsScreen.subtitle",
-              {
-                count
-              }
-            ),
-            pictogram: "accessDenied",
-            action: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.invalidCredentialsScreen.primaryAction"
-              ),
-              onPress: closeMachine
-            }
-          };
-        }
         case RemoteFailureType.UNEXPECTED:
         default:
           return {

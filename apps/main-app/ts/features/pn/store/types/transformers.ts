@@ -1,4 +1,5 @@
 import { isLeft } from "fp-ts/lib/Either";
+
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/communication/ThirdPartyMessageWithContent";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 import { PNMessage } from "./types";

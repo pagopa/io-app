@@ -1,16 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createStore, Store } from "redux";
 import { fireEvent } from "@testing-library/react-native";
-import { appReducer } from "../../../../store/reducers";
+import { createStore, Store } from "redux";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { FCI_ROUTES } from "../../navigation/routes";
 import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { FCI_ROUTES } from "../../navigation/routes";
 import { fciSigningRequest } from "../../store/actions";
 import { mockCreateSignatureBody } from "../../types/__mocks__/CreateSignatureBody.mock";
-import FciThankyouScreen from "../valid/FciThankyouScreen";
 import { mockSignatureDetailView } from "../../types/__mocks__/SignatureDetailView.mock";
+import FciThankyouScreen from "../valid/FciThankyouScreen";
 
 const mockedNavigation = jest.fn();
 const networkError = getNetworkError(new Error("network error"));

@@ -1,13 +1,14 @@
 import { HapticFeedbackTypes } from "react-native-haptic-feedback";
+
 import { IOIcons } from "../icons";
 
-export type ToastVariant = "neutral" | "error" | "info" | "success" | "warning";
-
 export type Toast = {
+  hapticFeedback?: keyof typeof HapticFeedbackTypes;
+  icon?: IOIcons;
   message: string;
   variant?: ToastVariant;
-  icon?: IOIcons;
-  hapticFeedback?: keyof typeof HapticFeedbackTypes;
 };
 
 export type ToastOptions = Omit<Toast, "message">;
+
+export type ToastVariant = "error" | "info" | "neutral" | "success" | "warning";

@@ -4,7 +4,7 @@ import {
   useIOTheme,
   useIOThemeContext
 } from "@io-app/design-system";
-import { ViewStyle, ColorValue } from "react-native";
+import { ColorValue, ViewStyle } from "react-native";
 
 type ServiceCardStyleProps = {
   default: {
@@ -34,8 +34,7 @@ export const useServiceCardStyle = (): ServiceCardStyleProps => {
   return {
     default: {
       card: {
-        borderColor:
-          themeType === "light" ? IOColors["grey-100"] : IOColors["grey-850"],
+        borderColor: IOColors[theme["cardBorder-default"]],
         backgroundColor: IOColors[theme["appBackground-secondary"]]
       },
       foreground: {

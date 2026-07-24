@@ -14,7 +14,7 @@ export type EmptyListProps = WithTestID<{
 
 export const EmptyList = ({ pictogram, title, testID }: EmptyListProps) => (
   <ContentWrapper testID={testID}>
-    <VStack style={{ alignItems: "center" }} space={24}>
+    <VStack space={24} style={{ alignItems: "center" }}>
       <Pictogram name={pictogram} size={120} />
       <H6 style={{ textAlign: "center" }}>{title}</H6>
     </VStack>

@@ -8,22 +8,29 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { useEffect } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { identificationRequest } from "../../../identification/store/actions";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import {
   formatDateOrDefault,
   formatNumberCurrencyCents,
   formatNumberCurrencyCentsOrDefault
 } from "../../common/utils/strings";
+import {
+  trackIDPayDetailAuthorizationCancel,
+  trackIDPayDetailAuthorizationConversion,
+  trackIDPayDetailAuthorizationSummary
+} from "../../details/analytics";
 import { IdPayPaymentMachineContext } from "../machine/provider";
 import {
   areButtonsDisabledSelector,
@@ -32,16 +39,10 @@ import {
   transactionDataSelector
 } from "../machine/selectors";
 import { IdPayPaymentParamsList } from "../navigation/params";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import {
-  trackIDPayDetailAuthorizationCancel,
-  trackIDPayDetailAuthorizationConversion,
-  trackIDPayDetailAuthorizationSummary
-} from "../../details/analytics";
 
 export type IDPayPaymentAuthorizationScreenRouteParams = {
+  data_entry?: "manual" | "qr_code";
   trxCode?: string;
-  data_entry?: "qr_code" | "manual";
 };
 
 type IDPayPaymentAuthorizationRouteProps = RouteProp<
@@ -139,12 +140,6 @@ const IDPayPaymentAuthorizationScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      canGoback={false}
-      contextualHelp={emptyContextualHelp}
-      headerActionsProp={{ showHelp: true }}
-      title={{
-        label: I18n.t("idpay.payment.authorization.header")
-      }}
       actions={{
         type: "TwoButtons",
         primary: {
@@ -159,7 +154,13 @@ const IDPayPaymentAuthorizationScreen = () => {
           disabled: areButtonsDisabled
         }
       }}
+      canGoback={false}
+      contextualHelp={emptyContextualHelp}
+      headerActionsProp={{ showHelp: true }}
       includeContentMargins
+      title={{
+        label: I18n.t("idpay.payment.authorization.header")
+      }}
     >
       {renderContent()}
     </IOScrollViewWithLargeHeader>
@@ -199,36 +200,36 @@ const AuthorizationScreenContent = ({
       <VSpacer size={16} />
       <Divider />
       <ListItemInfo
+        accessibilityLabel={I18n.t("idpay.payment.authorization.amount")}
         label={I18n.t("idpay.payment.authorization.amount")}
         value={formatNumberCurrencyCents(data.amountCents)}
-        accessibilityLabel={I18n.t("idpay.payment.authorization.amount")}
       />
       <Divider />
       <ListItemInfo
+        accessibilityLabel={I18n.t("idpay.payment.authorization.businessName")}
         label={I18n.t("idpay.payment.authorization.businessName")}
         value={data.businessName || "-"}
-        accessibilityLabel={I18n.t("idpay.payment.authorization.businessName")}
       />
       <Divider />
       <ListItemInfo
+        accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
         label={I18n.t("idpay.payment.authorization.dateTime")}
         value={formatDateOrDefault(data.trxDate)}
-        accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
       />
       <Divider />
       <ListItemInfo
-        label={I18n.t("idpay.payment.authorization.initiativeName")}
-        value={data.initiativeName || "-"}
         accessibilityLabel={I18n.t(
           "idpay.payment.authorization.initiativeName"
         )}
+        label={I18n.t("idpay.payment.authorization.initiativeName")}
+        value={data.initiativeName || "-"}
       />
     </>
   );
 };
 
 const SmallSkeleton = () => (
-  <IOSkeleton shape="rectangle" width={178} height={24} radius={8} />
+  <IOSkeleton height={24} radius={8} shape="rectangle" width={178} />
 );
 
 const AuthorizationScreenSkeleton = () => (
@@ -241,33 +242,33 @@ const AuthorizationScreenSkeleton = () => (
         alignItems: "center"
       }}
     >
-      <IOSkeleton shape="rectangle" width={82} height={29} radius={8} />
-      <IOSkeleton shape="rectangle" width={130} height={29} radius={8} />
+      <IOSkeleton height={29} radius={8} shape="rectangle" width={82} />
+      <IOSkeleton height={29} radius={8} shape="rectangle" width={130} />
     </View>
     <VSpacer size={16} />
     <Divider />
     <ListItemInfo
+      accessibilityLabel={I18n.t("idpay.payment.authorization.amount")}
       label={I18n.t("idpay.payment.authorization.amount")}
       value={<SmallSkeleton />}
-      accessibilityLabel={I18n.t("idpay.payment.authorization.amount")}
     />
     <Divider />
     <ListItemInfo
+      accessibilityLabel={I18n.t("idpay.payment.authorization.businessName")}
       label={I18n.t("idpay.payment.authorization.businessName")}
       value={<SmallSkeleton />}
-      accessibilityLabel={I18n.t("idpay.payment.authorization.businessName")}
     />
     <Divider />
     <ListItemInfo
+      accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
       label={I18n.t("idpay.payment.authorization.dateTime")}
       value={<SmallSkeleton />}
-      accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
     />
     <Divider />
     <ListItemInfo
+      accessibilityLabel={I18n.t("idpay.payment.authorization.initiativeName")}
       label={I18n.t("idpay.payment.authorization.initiativeName")}
       value={<SmallSkeleton />}
-      accessibilityLabel={I18n.t("idpay.payment.authorization.initiativeName")}
     />
   </>
 );

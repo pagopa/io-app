@@ -1,16 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
+import _isEqual from "lodash/isEqual";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
-import I18n from "i18next";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import _isEqual from "lodash/isEqual";
+
 import { IdpData } from "../../../../../../definitions/content/IdpData";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
@@ -30,6 +31,7 @@ import {
 } from "../../../../../utils/supportAssistance";
 import { getUrlBasepath } from "../../../../../utils/url";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
+import { trackLoginFailure } from "../../../common/analytics";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpLoginUrlChanged } from "../../../common/store/actions";
@@ -40,21 +42,20 @@ import {
 } from "../../../common/utils/login";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { usePosteIDApp2AppEducational } from "../../../login/idp/hooks/usePosteIDApp2AppEducational";
+import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import { getSpidErrorCodeDescription } from "../../../login/idp/utils/spidErrorCode";
+import { ACS_PATH } from "../../shared/utils";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
 } from "../../store/actions";
 import {
-  idpSelectedActiveSessionLoginSelector,
   activeSessionUserLoggedSelector,
+  idpSelectedActiveSessionLoginSelector,
   remoteApiLoginUrlPrefixSelector
 } from "../../store/selectors";
-import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
-import { ACS_PATH } from "../../shared/utils";
 import { trackSpidLoginIntent } from "../analytics";
-import { trackLoginFailure } from "../../../common/analytics";
 
 // TODO: consider changing the loader to unify it and use the same one for both CIE and SPID
 
@@ -337,18 +338,18 @@ const ActiveSessionIdpLoginScreen = () => {
   const content = useMemo(
     () => (
       <WebView
-        testID="webview-active-session-idp-login-screen"
-        cacheEnabled={false}
         androidCameraAccessDisabled
         androidMicrophoneAccessDisabled
+        cacheEnabled={false}
         javaScriptEnabled
-        textZoom={100}
-        originWhitelist={originSchemasWhiteList}
-        source={webviewSource}
         onError={handleLoadingError}
         onHttpError={handleLoadingError}
         onNavigationStateChange={handleNavigationStateChange}
         onShouldStartLoadWithRequest={handleShouldStartLoading}
+        originWhitelist={originSchemasWhiteList}
+        source={webviewSource}
+        testID="webview-active-session-idp-login-screen"
+        textZoom={100}
       />
     ),
     [

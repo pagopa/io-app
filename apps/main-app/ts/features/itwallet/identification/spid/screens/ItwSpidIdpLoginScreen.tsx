@@ -1,9 +1,10 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
+
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import {
   HeaderSecondLevelHookProps,
@@ -100,9 +101,9 @@ const ItwSpidIdpLoginScreen = () => {
   // Setup header properties
   const headerProps: HeaderSecondLevelHookProps = {
     title: I18n.t(
-      `features.itWallet.identification.modeSelection.mode.spid.title.${
-        issuanceLevel === "l3" ? "l3" : "default"
-      }`
+      issuanceLevel === "l3"
+        ? "features.itWallet.identification.modeSelection.mode.spid.title.l3"
+        : "features.itWallet.identification.modeSelection.mode.spid.title.default"
     ),
     supportRequest: false,
     goBack: dismissalDialog.show
@@ -116,22 +117,22 @@ const ItwSpidIdpLoginScreen = () => {
         () => null,
         (url: string) => (
           <WebView
-            key={"spid_webview"}
-            cacheEnabled={false}
+            allowsInlineMediaPlayback
             androidCameraAccessDisabled
             androidMicrophoneAccessDisabled
+            cacheEnabled={false}
             javaScriptEnabled
-            textZoom={100}
-            originWhitelist={originSchemasWhiteList}
-            source={{ uri: url }}
+            key={"spid_webview"}
+            mediaPlaybackRequiresUserAction
             onError={onError}
             onHttpError={onError}
+            onLoadEnd={onLoadEnd}
             onNavigationStateChange={handleNavigationStateChange}
             onShouldStartLoadWithRequest={handleShouldStartLoading}
-            allowsInlineMediaPlayback
-            mediaPlaybackRequiresUserAction
+            originWhitelist={originSchemasWhiteList}
+            source={{ uri: url }}
+            textZoom={100}
             userAgent={defaultUserAgent}
-            onLoadEnd={onLoadEnd}
           />
         )
       )(spidAuthUrl),

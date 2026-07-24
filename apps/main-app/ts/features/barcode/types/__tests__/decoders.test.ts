@@ -1,8 +1,9 @@
 import * as O from "fp-ts/lib/Option";
-import { decodeIOBarcode } from "../decoders";
-import { IO_BARCODE_ALL_TYPES } from "../IOBarcode";
+
 import { GlobalState } from "../../../../store/reducers/types";
 import * as itWalletEnvSelectors from "../../../itwallet/common/store/selectors/environment";
+import { decodeIOBarcode } from "../decoders";
+import { IO_BARCODE_ALL_TYPES } from "../IOBarcode";
 
 const fakeGlobalState = {
   remoteConfig: O.some({

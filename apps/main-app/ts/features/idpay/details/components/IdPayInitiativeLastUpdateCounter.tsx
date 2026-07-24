@@ -1,8 +1,9 @@
 import { BodySmall, IOSkeleton } from "@io-app/design-system";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { StyleSheet, View } from "react-native";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+import { StyleSheet, View } from "react-native";
+
 import { format } from "../../../../utils/dates";
 
 type Props = { isLoading: true } | { isLoading?: false; lastUpdateDate?: Date };
@@ -11,7 +12,7 @@ const IdPayInitiativeLastUpdateCounter = (props: Props) => {
   if (props.isLoading) {
     return (
       <View style={styles.lastUpdate}>
-        <IOSkeleton shape="rectangle" height={16} width={180} radius={4} />
+        <IOSkeleton height={16} radius={4} shape="rectangle" width={180} />
       </View>
     );
   }
@@ -30,8 +31,8 @@ const IdPayInitiativeLastUpdateCounter = (props: Props) => {
   return (
     <BodySmall
       style={styles.lastUpdate}
-      weight="Regular"
       testID={"IDPayDetailsLastUpdatedTestID"}
+      weight="Regular"
     >
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.lastUpdated"

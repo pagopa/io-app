@@ -1,17 +1,18 @@
 import MockDate from "mockdate";
 import { createStore, Store } from "redux";
+
 import { InitializedProfile } from "../../../../../../../definitions/identity/InitializedProfile";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { backendStatusLoadSuccess } from "../../../../../../store/actions/backendStatus";
 import { appReducer } from "../../../../../../store/reducers";
+import { baseRawBackendStatus } from "../../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { profileLoadSuccess } from "../../../../../settings/common/store/actions";
+import { cgnDetails } from "../../actions/details";
 import {
   isCgnEligibleByAgeSelector,
   isCgnEngagementBannerRenderableSelector
 } from "../banners";
-import { cgnDetails } from "../../actions/details";
-import { backendStatusLoadSuccess } from "../../../../../../store/actions/backendStatus";
-import { baseRawBackendStatus } from "../../../../../../store/reducers/__mock__/backendStatus";
 
 const youngProfile = {
   fiscal_code: "RSSMRA00A01H501U",

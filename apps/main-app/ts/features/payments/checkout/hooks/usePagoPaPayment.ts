@@ -6,15 +6,16 @@ import {
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
-  PaymentInitStateParams,
-  initPaymentStateAction
+  initPaymentStateAction,
+  PaymentInitStateParams
 } from "../store/actions/orchestration";
 
 type PagoPaPaymentParams = Omit<PaymentInitStateParams, "startRoute">;
@@ -22,18 +23,18 @@ type PagoPaPaymentParams = Omit<PaymentInitStateParams, "startRoute">;
 const DEFAULT_PAYMENT_PARAMS: PagoPaPaymentParams = {};
 
 type PaymentData = {
-  paymentNoticeNumber: string;
   organizationFiscalCode: string;
+  paymentNoticeNumber: string;
 };
 
 type UsePagoPaPayment = {
   startPaymentFlow: (rptId: RptId, params?: PagoPaPaymentParams) => void;
-  startPaymentFlowWithRptId: (
-    rptId: PagoPaRptId,
-    params?: PagoPaPaymentParams
-  ) => void;
   startPaymentFlowWithData: (
     data: PaymentData,
+    params?: PagoPaPaymentParams
+  ) => void;
+  startPaymentFlowWithRptId: (
+    rptId: PagoPaRptId,
     params?: PagoPaPaymentParams
   ) => void;
 };

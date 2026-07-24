@@ -8,13 +8,15 @@ import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
-import I18n from "i18next";
+
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import IOMarkdown from "../../../../components/IOMarkdown";
+import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -51,7 +53,6 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
-import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 
 const WalletPaymentConfirmScreen = () => {
   const navigation = useIONavigation();
@@ -229,39 +230,39 @@ const WalletPaymentConfirmScreen = () => {
       }}
     >
       <ListItemHeader
-        label={I18n.t("payment.confirm.payWith")}
         accessibilityLabel={I18n.t("payment.confirm.payWith")}
         iconName="creditCard"
+        label={I18n.t("payment.confirm.payWith")}
       />
       <SelectedPaymentMethodModuleCheckout />
       <VSpacer size={24} />
       <ListItemHeader
-        label={I18n.t("payment.confirm.fee")}
         accessibilityLabel={I18n.t("payment.confirm.fee")}
         iconName="psp"
+        label={I18n.t("payment.confirm.fee")}
       />
       <SelectedPspModuleCheckout pspName={pspName} />
       <VSpacer size={24} />
       <WalletPaymentTotalAmount totalAmount={totalAmount} />
       <VSpacer size={16} />
       <IOMarkdown
+        content={I18n.t("payment.confirm.termsAndConditions", {
+          pspName
+        })}
         rules={{
           Link: (param, renderer) => (
             <Body
-              asLink
-              key={getTxtNodeKey(param)}
-              weight="Semibold"
-              onPress={() => onLinkPress(param.url)}
-              avoidPressable
               accessibilityRole="link"
+              asLink
+              avoidPressable
+              key={getTxtNodeKey(param)}
+              onPress={() => void onLinkPress(param.url)}
+              weight="Semibold"
             >
               {param.children.map(child => renderer(child))}
             </Body>
           )
         }}
-        content={I18n.t("payment.confirm.termsAndConditions", {
-          pspName
-        })}
       />
     </IOScrollView>
   );
@@ -304,10 +305,10 @@ const SelectedPaymentMethodModuleCheckout = () => {
 
     return (
       <ModuleCheckout
-        title={getPaymentTitle(details)}
-        subtitle={getPaymentSubtitle(details)}
         ctaText={I18n.t("payment.confirm.editButton")}
         onPress={handleOnPress}
+        subtitle={getPaymentSubtitle(details)}
+        title={getPaymentTitle(details)}
         {...imageProps}
       />
     );
@@ -316,10 +317,10 @@ const SelectedPaymentMethodModuleCheckout = () => {
   if (O.isSome(selectedPaymentMethodOption)) {
     return (
       <ModuleCheckout
-        title={selectedPaymentMethodOption.value.description}
         ctaText={I18n.t("payment.confirm.editButton")}
-        onPress={handleOnPress}
         image={{ uri: selectedPaymentMethodOption.value.asset }}
+        onPress={handleOnPress}
+        title={selectedPaymentMethodOption.value.description}
       />
     );
   }
@@ -365,9 +366,9 @@ const SelectedPspModuleCheckout = ({
       ctaText={
         pspList.length > 1 ? I18n.t("payment.confirm.editButton") : undefined
       }
-      title={formatNumberCentsToAmount(taxFee, true, "right")}
-      subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${pspName}`}
       onPress={handleOnPress}
+      subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${pspName}`}
+      title={formatNumberCentsToAmount(taxFee, true, "right")}
     />
   );
 };

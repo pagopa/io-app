@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { clearCache } from "../../../settings/common/store/actions";
@@ -38,18 +39,18 @@ export const reducer = (
   action: Action
 ): PaginatedById => {
   switch (action.type) {
+    case getType(clearCache):
+      return INITIAL_STATE;
+    case getType(loadMessageById.failure):
     case getType(loadMessageById.request):
     case getType(loadMessageById.success):
-    case getType(loadMessageById.failure):
       return reduceLoadMessageById(state, action);
-    case getType(reloadAllMessages.success):
     case getType(loadNextPageMessages.success):
     case getType(loadPreviousPageMessages.success):
+    case getType(reloadAllMessages.success):
       return reduceLoadMessages(state, action.payload.messages);
     case getType(upsertMessageStatusAttributes.success):
       return reduceUpsertMessageStatusAttributes(state, action.payload);
-    case getType(clearCache):
-      return INITIAL_STATE;
 
     default:
       return state;
@@ -61,6 +62,14 @@ const reduceLoadMessageById = (
   action: Action
 ): PaginatedById => {
   switch (action.type) {
+    case getType(loadMessageById.failure):
+      return {
+        ...state,
+        [action.payload.id]: pot.toError(state[action.payload.id] ?? pot.none, {
+          error: action.payload.error,
+          kind: action.payload.kind
+        })
+      };
     case getType(loadMessageById.request):
       return {
         ...state,
@@ -70,14 +79,6 @@ const reduceLoadMessageById = (
       return {
         ...state,
         [action.payload.id]: pot.some(action.payload)
-      };
-    case getType(loadMessageById.failure):
-      return {
-        ...state,
-        [action.payload.id]: pot.toError(state[action.payload.id] ?? pot.none, {
-          error: action.payload.error,
-          kind: action.payload.kind
-        })
       };
     default:
       return state;

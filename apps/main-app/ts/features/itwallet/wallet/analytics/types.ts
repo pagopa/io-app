@@ -1,4 +1,4 @@
 export type ItwOfflineRicaricaAppIOSource =
-  | "bottom_sheet"
+  | "access_expired_screen"
   | "banner"
-  | "access_expired_screen";
+  | "bottom_sheet";

@@ -1,9 +1,10 @@
 import { Mixpanel, MixpanelProperties } from "mixpanel-react-native";
+
 import { mixpanelToken, mixpanelUrl } from "./config";
-import { getDeviceId } from "./utils/device";
-import { GlobalState } from "./store/reducers/types";
-import { updateMixpanelSuperProperties } from "./mixpanelConfig/superProperties";
 import { updateMixpanelProfileProperties } from "./mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "./mixpanelConfig/superProperties";
+import { GlobalState } from "./store/reducers/types";
+import { getDeviceId } from "./utils/device";
 import { isTestEnv } from "./utils/environment";
 
 type EnqueuedMixpanelEvent = {

@@ -2,6 +2,7 @@ import { ComponentProps, ReactNode, useState } from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import {
   IOSelectionListItemStyles,
@@ -11,7 +12,7 @@ import {
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
-import { IOIcons, Icon } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer, VStack } from "../layout";
 import { IOLogoPaymentType, LogoPayment } from "../logos";
 import { AnimatedRadio } from "../radio/AnimatedRadio";
@@ -19,40 +20,40 @@ import { IOSkeleton } from "../skeleton";
 import { BodySmall, H6 } from "../typography";
 
 type ListItemRadioGraphicProps =
+  | { icon: IOIcons; paymentLogo?: never; uri?: never }
   | { icon?: never; paymentLogo: IOLogoPaymentType; uri?: never }
-  | { icon?: never; paymentLogo?: never; uri: string }
-  | { icon: IOIcons; paymentLogo?: never; uri?: never };
+  | { icon?: never; paymentLogo?: never; uri: string };
 
 type ListItemRadioLoadingProps =
   | {
-      state: true;
-      skeletonDescription?: boolean;
-      skeletonIcon?: boolean;
-      loadingAccessibilityLabel?: string;
-    }
-  | {
-      state?: false;
+      loadingAccessibilityLabel?: never;
       skeletonDescription?: never;
       skeletonIcon?: never;
-      loadingAccessibilityLabel?: never;
+      state?: false;
+    }
+  | {
+      loadingAccessibilityLabel?: string;
+      skeletonDescription?: boolean;
+      skeletonIcon?: boolean;
+      state: true;
     };
 
 type Props = WithTestID<{
-  value: string;
-  description?: string | ReactNode;
-  selected: boolean;
-  onValueChange?: (newValue: boolean) => void;
-  startImage?: ListItemRadioGraphicProps;
+  description?: ReactNode | string;
   loadingProps?: ListItemRadioLoadingProps;
+  onValueChange?: (newValue: boolean) => void;
+  selected: boolean;
+  startImage?: ListItemRadioGraphicProps;
+  value: string;
 }>;
 
 const DISABLED_OPACITY = 0.5;
 
-type ListItemRadioProps = Props &
-  Pick<
-    ComponentProps<typeof Pressable>,
-    "onPress" | "accessibilityLabel" | "accessibilityHint" | "disabled"
-  >;
+type ListItemRadioProps = Pick<
+  ComponentProps<typeof Pressable>,
+  "accessibilityHint" | "accessibilityLabel" | "disabled" | "onPress"
+> &
+  Props;
 
 const styles = StyleSheet.create({
   imageSize: {
@@ -100,8 +101,8 @@ export const ListItemRadio = ({
 
   const SkeletonDescriptionLines = () => (
     <VStack space={8}>
-      <IOSkeleton shape="rectangle" width="100%" height={8} radius={8} />
-      <IOSkeleton shape="rectangle" width="100%" height={8} radius={8} />
+      <IOSkeleton height={8} radius={8} shape="rectangle" width="100%" />
+      <IOSkeleton height={8} radius={8} shape="rectangle" width="100%" />
     </VStack>
   );
 
@@ -112,9 +113,9 @@ export const ListItemRadio = ({
       }}
     >
       <IOSkeleton
+        radius={8}
         shape="square"
         size={IOSelectionListItemVisualParams.iconSize}
-        radius={8}
       />
     </View>
   );
@@ -123,10 +124,10 @@ export const ListItemRadio = ({
     loadingAccessibilityLabel
   }: Pick<ListItemRadioLoadingProps, "loadingAccessibilityLabel">) => (
     <View
-      style={[IOSelectionListItemStyles.listItem, { rowGap: 8 }]}
-      accessible={true}
       accessibilityLabel={loadingAccessibilityLabel}
       accessibilityState={{ busy: true }}
+      accessible={true}
+      style={[IOSelectionListItemStyles.listItem, { rowGap: 8 }]}
     >
       <View style={IOSelectionListItemStyles.listItemInner}>
         <View
@@ -139,13 +140,13 @@ export const ListItemRadio = ({
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             {loadingProps?.skeletonIcon && <SkeletonIcon />}
-            <IOSkeleton shape="rectangle" width={180} height={16} radius={8} />
+            <IOSkeleton height={16} radius={8} shape="rectangle" width={180} />
           </View>
           <HSpacer size={8} />
           <View pointerEvents="none" style={disabledStyle}>
             <AnimatedRadio
-              size={IOSelectionTickVisualParams.size * dynamicFontScale}
               checked={toggleValue}
+              size={IOSelectionTickVisualParams.size * dynamicFontScale}
             />
           </View>
         </View>
@@ -160,29 +161,29 @@ export const ListItemRadio = ({
     />
   ) : (
     <Pressable
+      accessibilityHint={accessibilityHint}
+      accessibilityLabel={accessibilityLabel}
       accessibilityRole="radio"
       accessibilityState={{
         checked: selected ?? toggleValue,
         disabled: !!disabled
       }}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
+      disabled={disabled}
       onPress={toggleRadioItem}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
       testID={testID}
-      disabled={disabled}
     >
       <Animated.View
+        // This is required to avoid opacity
+        // inheritance on Android
+        needsOffscreenAlphaCompositing={true}
         style={[
           IOSelectionListItemStyles.listItem,
           backgroundAnimatedStyle,
           disabledStyle
         ]}
-        // This is required to avoid opacity
-        // inheritance on Android
-        needsOffscreenAlphaCompositing={true}
       >
         <Animated.View style={scaleAnimatedStyle}>
           <View style={IOSelectionListItemStyles.listItemInner}>
@@ -199,8 +200,8 @@ export const ListItemRadio = ({
               {startImage?.icon && !hugeFontEnabled && (
                 <Icon
                   allowFontScaling
-                  name={startImage.icon}
                   color={theme["icon-decorative"]}
+                  name={startImage.icon}
                   size={IOSelectionListItemVisualParams.iconSize}
                 />
               )}
@@ -227,13 +228,13 @@ export const ListItemRadio = ({
             </View>
             <HSpacer size={8} />
             <View
-              pointerEvents="none"
               accessibilityElementsHidden
               importantForAccessibility="no-hide-descendants"
+              pointerEvents="none"
             >
               <AnimatedRadio
-                size={IOSelectionTickVisualParams.size * dynamicFontScale}
                 checked={selected ?? toggleValue}
+                size={IOSelectionTickVisualParams.size * dynamicFontScale}
               />
             </View>
           </View>
@@ -242,7 +243,7 @@ export const ListItemRadio = ({
               <VSpacer
                 size={IOSelectionListItemVisualParams.descriptionMargin}
               />
-              <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+              <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
                 {description}
               </BodySmall>
             </View>

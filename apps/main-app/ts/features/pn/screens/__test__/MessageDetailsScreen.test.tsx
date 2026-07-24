@@ -4,12 +4,13 @@ import * as O from "fp-ts/lib/Option";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { getType } from "typesafe-actions";
+
 import * as HARDWARE_BACK_BUTTON from "../../../../hooks/useHardwareBackButton";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { reproduceSequence } from "../../../../utils/tests";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { message_1 } from "../../../messages/__mocks__/message";
 import { service_1 } from "../../../messages/__mocks__/messages";
 import {

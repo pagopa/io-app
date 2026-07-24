@@ -2,12 +2,13 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+
+import { DiscountCodeTypeEnum } from "../../../../../../../../definitions/cgn/merchants/DiscountCodeType";
+import { Merchant } from "../../../../../../../../definitions/cgn/merchants/Merchant";
+import { SupportTypeEnum } from "../../../../../../../../definitions/cgn/merchants/SupportType";
 import { getGenericError } from "../../../../../../../utils/errors";
 import { cgnSelectedMerchant } from "../../../../store/actions/merchants";
 import { cgnMerchantDetail } from "../cgnMerchantDetail";
-import { Merchant } from "../../../../../../../../definitions/cgn/merchants/Merchant";
-import { SupportTypeEnum } from "../../../../../../../../definitions/cgn/merchants/SupportType";
-import { DiscountCodeTypeEnum } from "../../../../../../../../definitions/cgn/merchants/DiscountCodeType";
 
 const merchant: Merchant = {
   id: "12345" as NonEmptyString,

@@ -1,27 +1,46 @@
+import {
+  Body,
+  ContentWrapper,
+  H3,
+  IOButton,
+  IOPictogramSizeScale,
+  IOToast,
+  Pictogram,
+  VSpacer
+} from "@io-app/design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 /**
  * A component to remind the user to validate his email
  */
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { pipe } from "fp-ts/lib/function";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { useRef, useCallback, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View, AppState } from "react-native";
-import {
-  IOPictogramSizeScale,
-  Pictogram,
-  VSpacer,
-  Body,
-  H3,
-  IOToast,
-  ContentWrapper,
-  IOButton
-} from "@io-app/design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
-import _ from "lodash";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+import _ from "lodash";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { AppState, ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
+import { CountdownProvider } from "../../../../../components/countdown/CountdownProvider";
+import SectionStatusComponent from "../../../../../components/SectionStatus";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { getFlowType } from "../../../../../utils/analytics";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { usePrevious } from "../../../../../utils/hooks/usePrevious";
+import { FCI_ROUTES } from "../../../../fci/navigation/routes";
+import {
+  trackEmailValidation,
+  trackEmailValidationSuccess,
+  trackEmailValidationSuccessConfirmed,
+  trackResendValidationEmail
+} from "../../../../mailCheck/analytics";
+import { emailValidationSelector } from "../../../../mailCheck/store/selectors/emailValidation";
+import { emailAcknowledged } from "../../../../onboarding/store/actions";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import {
   acknowledgeOnEmailValidation,
   emailValidationPollingStart,
@@ -34,26 +53,7 @@ import {
   isProfileFirstOnBoardingSelector,
   profileEmailSelector
 } from "../../../common/store/selectors";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { emailValidationSelector } from "../../../../mailCheck/store/selectors/emailValidation";
-import { emailAcknowledged } from "../../../../onboarding/store/actions";
-import { getFlowType } from "../../../../../utils/analytics";
-import {
-  trackEmailValidation,
-  trackEmailValidationSuccess,
-  trackEmailValidationSuccessConfirmed,
-  trackResendValidationEmail
-} from "../../../../mailCheck/analytics";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { usePrevious } from "../../../../../utils/hooks/usePrevious";
-import { CountdownProvider } from "../../../../../components/countdown/CountdownProvider";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { FCI_ROUTES } from "../../../../fci/navigation/routes";
-import ROUTES from "../../../../../navigation/routes";
-import SectionStatusComponent from "../../../../../components/SectionStatus";
 import Countdown from "../../components/CountdownComponent";
-import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 const emailSentTimeout = 60000 as Millisecond; // 60 seconds
 const countdownIntervalDuration = 1000 as Millisecond; // 1 second
@@ -62,17 +62,17 @@ const EMPTY_EMAIL = "";
 const VALIDATION_ILLUSTRATION_WIDTH: IOPictogramSizeScale = 120;
 
 export type SendEmailValidationScreenProp = {
+  isEditingEmailMode?: boolean;
+  isFciEditEmailFlow?: boolean;
   isOnboarding?: boolean;
   sendEmailAtFirstRender?: boolean;
-  isFciEditEmailFlow?: boolean;
-  isEditingEmailMode?: boolean;
 };
 
 const EmailValidationSendEmailScreen = () => {
   const props =
     useRoute<
       Route<
-        "ONBOARDING_EMAIL_VERIFICATION_SCREEN" | "EMAIL_VERIFICATION_SCREEN",
+        "EMAIL_VERIFICATION_SCREEN" | "ONBOARDING_EMAIL_VERIFICATION_SCREEN",
         SendEmailValidationScreenProp
       >
     >().params;
@@ -273,9 +273,9 @@ const EmailValidationSendEmailScreen = () => {
           </View>
           <VSpacer size={24} />
           <View
-            style={{ alignItems: "center" }}
             accessible={true}
             ref={accessibilityFirstFocuseViewRef}
+            style={{ alignItems: "center" }}
           >
             <H3 testID="title-test">
               {I18n.t(
@@ -288,9 +288,9 @@ const EmailValidationSendEmailScreen = () => {
           <VSpacer size={16} />
           <View style={{ display: "flex", flexDirection: "column" }}>
             <Body
-              weight="Regular"
               style={{ textAlign: "center" }}
               testID="subtitle-test"
+              weight="Regular"
             >
               {I18n.t(
                 isEmailValidated
@@ -304,17 +304,17 @@ const EmailValidationSendEmailScreen = () => {
           {!isEmailValidated && (
             <View style={{ alignSelf: "center" }}>
               <IOButton
-                variant="link"
                 label={I18n.t("email.newvalidate.link")}
                 onPress={navigateBackToInsertEmail}
                 testID="link-test"
+                variant="link"
               />
               <VSpacer size={24} />
             </View>
           )}
           <CountdownProvider
-            timerTiming={emailSentTimeout / 1000}
             intervalDuration={countdownIntervalDuration}
+            timerTiming={emailSentTimeout / 1000}
           >
             <Countdown
               onContdownCompleted={() => {
@@ -326,18 +326,18 @@ const EmailValidationSendEmailScreen = () => {
           {isEmailValidated ? (
             <View style={{ alignSelf: "center" }}>
               <IOButton
-                variant="solid"
                 label={I18n.t("global.buttons.continue")}
                 onPress={handleContinue}
+                variant="solid"
               />
             </View>
           ) : (
             !showCountdown && (
               <View style={{ alignSelf: "center" }}>
                 <IOButton
-                  variant="outline"
                   label={I18n.t("email.newvalidate.buttonlabelsentagain")}
                   onPress={handleResendEmail}
+                  variant="outline"
                 />
               </View>
             )

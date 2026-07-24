@@ -1,7 +1,9 @@
 import { render } from "@testing-library/react-native";
 import { ComponentProps } from "react";
 import { Alert } from "react-native";
+
 import type { IOColors } from "../../../core/IOColors";
+
 import { IOFontWeight } from "../../../utils/fonts";
 import { Body } from "../Body";
 import { BodyMonospace } from "../BodyMonospace";

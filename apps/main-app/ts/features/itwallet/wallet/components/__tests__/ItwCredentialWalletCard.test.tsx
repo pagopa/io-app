@@ -1,12 +1,13 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as connectivitySelectors from "../../../../connectivity/store/selectors";
 import * as ingressSelectors from "../../../../ingress/store/selectors";
-import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import * as eIDSelectors from "../../../credentials/store/selectors";
+import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import {
   ItwCredentialWalletCard,
   ItwCredentialWalletCardProps

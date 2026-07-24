@@ -7,17 +7,18 @@ import {
   Group as SkiaGroup
 } from "@shopify/react-native-skia";
 import { ColorSchemeName, LayoutRectangle } from "react-native";
+
 import { ItwBrandedSkiaGradient } from "./ItwBrandedSkiaGradient";
 
-export type ItwIridescentBorderVariant = "default" | "warning" | "error";
+export type ItwIridescentBorderVariant = "default" | "error" | "warning";
 
 type ItwIridescentBorderProps = {
-  width: LayoutRectangle["width"];
-  height: LayoutRectangle["height"];
-  variant?: ItwIridescentBorderVariant;
-  thickness?: number;
   borderRadius?: number;
+  height: LayoutRectangle["height"];
   themeType?: ColorSchemeName;
+  thickness?: number;
+  variant?: ItwIridescentBorderVariant;
+  width: LayoutRectangle["width"];
 };
 
 /**
@@ -41,16 +42,16 @@ export const ItwBrandedSkiaBorder = ({
 
   return (
     <Mask
-      mode="alpha"
       mask={
         <SkiaGroup blendMode={"colorDodge"} opacity={gradientBorderOpacity}>
           <ItwBrandedSkiaGradient
-            width={width}
             height={height}
             variant={variant}
+            width={width}
           />
         </SkiaGroup>
       }
+      mode="alpha"
     >
       <SkiaGroup
         layer={
@@ -60,14 +61,14 @@ export const ItwBrandedSkiaBorder = ({
         }
       >
         <RoundedRect
-          x={0}
-          y={0}
-          width={width}
           height={height}
           r={borderRadius}
-          strokeWidth={thickness}
           strokeJoin={"round"}
+          strokeWidth={thickness}
           style={"stroke"}
+          width={width}
+          x={0}
+          y={0}
         />
       </SkiaGroup>
     </Mask>

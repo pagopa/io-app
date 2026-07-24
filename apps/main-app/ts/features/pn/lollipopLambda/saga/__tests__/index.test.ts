@@ -1,20 +1,21 @@
 import * as E from "fp-ts/lib/Either";
-import { call, take } from "typed-redux-saga/macro";
 import { testSaga } from "redux-saga-test-plan";
 import { Effect } from "redux-saga/effects";
-import { KeyInfo } from "../../../../lollipop/utils/crypto";
+import { call, take } from "typed-redux-saga/macro";
+
+import { testable, watchSendLollipopLambda } from "..";
+import { ErrorResponse } from "../../../../../../definitions/pn/lollipop-lambda/ErrorResponse";
+import { MethodEnum } from "../../../../../../definitions/pn/lollipop-lambda/RequestInfo";
+import { SuccessResponse } from "../../../../../../definitions/pn/lollipop-lambda/SuccessResponse";
+import { apiUrlPrefix } from "../../../../../config";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import {
   createSendLollipopLambdaClient,
   SendLollipopLambdaClient
 } from "../../api";
 import { sendLollipopLambdaAction } from "../../store/actions";
-import { testable, watchSendLollipopLambda } from "..";
-import { apiUrlPrefix } from "../../../../../config";
-import { SuccessResponse } from "../../../../../../definitions/pn/lollipop-lambda/SuccessResponse";
-import { MethodEnum } from "../../../../../../definitions/pn/lollipop-lambda/RequestInfo";
-import { ErrorResponse } from "../../../../../../definitions/pn/lollipop-lambda/ErrorResponse";
 
 const {
   bodyStringToObject,

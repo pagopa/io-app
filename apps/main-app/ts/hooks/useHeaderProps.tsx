@@ -3,67 +3,68 @@ import {
   HeaderSecondLevel,
   IOIcons
 } from "@io-app/design-system";
-import { ComponentProps, useMemo } from "react";
 import I18n from "i18next";
+import { ComponentProps, useMemo } from "react";
+
 import {
   SupportRequestParams,
   useStartSupportRequest
 } from "./useStartSupportRequest";
 
-type HeaderSecondLevelProps = ComponentProps<typeof HeaderSecondLevel>;
+export type BackProps =
+  | {
+      backAccessibilityLabel: string;
+      goBack: () => void;
+    }
+  | {
+      backAccessibilityLabel?: never;
+      goBack?: never;
+    };
+export type HeaderActionsProps =
+  | HeaderHelpActionProps
+  | HeaderNoActionProps
+  | HeaderThreeActionsProps
+  | HeaderTwoActionsProps;
+
 type HeaderBaseProps = {
   headerType?: Exclude<HeaderSecondLevelProps["type"], "base" | "singleAction">;
   showHelp?: boolean;
 };
 
-interface HeaderNoActionProps extends HeaderBaseProps {
-  showHelp?: false;
-  headerType?: never;
-  secondAction?: never;
-  thirdAction?: never;
-}
-
 interface HeaderHelpActionProps extends HeaderBaseProps {
-  showHelp: true;
   headerType?: never;
   secondAction?: never;
+  showHelp: true;
   thirdAction?: never;
 }
 
-interface HeaderTwoActionsProps extends HeaderBaseProps {
-  showHelp: true;
-  headerType: "twoActions";
-  secondAction: HeaderActionProps;
+interface HeaderNoActionProps extends HeaderBaseProps {
+  headerType?: never;
+  secondAction?: never;
+  showHelp?: false;
   thirdAction?: never;
 }
+
+type HeaderProps = BackProps &
+  HeaderActionsProps &
+  Pick<HeaderSecondLevelProps, "scrollValues" | "title"> &
+  SupportRequestParams;
+
+type HeaderSecondLevelProps = ComponentProps<typeof HeaderSecondLevel>;
 
 interface HeaderThreeActionsProps extends HeaderBaseProps {
-  showHelp: true;
   headerType: "threeActions";
   secondAction: HeaderActionProps;
+  showHelp: true;
   thirdAction: HeaderActionProps;
 }
 
-export type HeaderActionsProps =
-  | HeaderNoActionProps
-  | HeaderHelpActionProps
-  | HeaderTwoActionsProps
-  | HeaderThreeActionsProps;
-
-export type BackProps =
-  | {
-      goBack: () => void;
-      backAccessibilityLabel: string;
-    }
-  | {
-      goBack?: never;
-      backAccessibilityLabel?: never;
-    };
-
-type HeaderProps = HeaderActionsProps &
-  BackProps &
-  Pick<HeaderSecondLevelProps, "title" | "scrollValues"> &
-  SupportRequestParams;
+interface HeaderTwoActionsProps extends HeaderBaseProps {
+  headerType: "twoActions";
+  secondAction: HeaderActionProps;
+  showHelp: true;
+  thirdAction?: never;
+}
 
 export const useHeaderProps = ({
   backAccessibilityLabel,

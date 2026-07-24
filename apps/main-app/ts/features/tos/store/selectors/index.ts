@@ -1,6 +1,7 @@
-import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { createSelector } from "reselect";
+
 import { TosConfig } from "../../../../../definitions/content/TosConfig";
 import {
   absolutePortalLinksSelector,

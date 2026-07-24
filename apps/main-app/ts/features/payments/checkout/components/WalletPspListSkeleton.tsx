@@ -25,11 +25,11 @@ const PspSkeleton = ({ showFeatured }: PspSkeletonProps) => (
     }}
   >
     <View style={{ flex: 1 }}>
-      <IOSkeleton shape="rectangle" height={16} width="50%" radius={4} />
+      <IOSkeleton height={16} radius={4} shape="rectangle" width="50%" />
       {showFeatured && (
         <>
           <VSpacer size={8} />
-          <IOSkeleton shape="rectangle" height={16} width="40%" radius={4} />
+          <IOSkeleton height={16} radius={4} shape="rectangle" width="40%" />
         </>
       )}
     </View>
@@ -40,9 +40,9 @@ const PspSkeleton = ({ showFeatured }: PspSkeletonProps) => (
         alignItems: "center"
       }}
     >
-      <IOSkeleton shape="rectangle" height={16} width={26} radius={4} />
+      <IOSkeleton height={16} radius={4} shape="rectangle" width={26} />
       <HSpacer size={8} />
-      <IOSkeleton shape="rectangle" height={24} width={26} radius={20} />
+      <IOSkeleton height={24} radius={20} shape="rectangle" width={26} />
     </View>
   </View>
 );

@@ -1,14 +1,15 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import { Range } from "../../../../../../../definitions/pagopa/ecommerce/Range";
-import { PaymentMethodStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
+
+import { PaymentMethodManagementTypeEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { PaymentMethodsResponse } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
+import { PaymentMethodStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
+import { Range } from "../../../../../../../definitions/pagopa/ecommerce/Range";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { paymentsGetPaymentMethodsAction } from "../../../store/actions/networking";
 import { handleWalletPaymentGetAllMethods } from "../handleWalletPaymentGetAllMethods";
-import { PaymentMethodManagementTypeEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 
 describe("Test handleWalletPaymentGetAllMethods saga", () => {
   const T_SESSION_TOKEN = "ABCD";

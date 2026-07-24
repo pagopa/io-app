@@ -13,8 +13,8 @@ import LogoPaymentPayPal from "./svg/LogoPaymentPayPal";
 import LogoPaymentPostepay from "./svg/LogoPaymentPostepay";
 import LogoPaymentSatispay from "./svg/LogoPaymentSatispay";
 import LogoPaymentUnionPay from "./svg/LogoPaymentUnionPay";
-import LogoPaymentVPay from "./svg/LogoPaymentVPay";
 import LogoPaymentVisa from "./svg/LogoPaymentVisa";
+import LogoPaymentVPay from "./svg/LogoPaymentVPay";
 
 export const IOPaymentLogos = {
   maestro: LogoPaymentMaestro,
@@ -39,7 +39,7 @@ export type IOLogoPaymentType = keyof typeof IOPaymentLogos;
 
 type IOIconsProps = {
   name: IOLogoPaymentType;
-  size?: number | "100%";
+  size?: "100%" | number;
 };
 
 const LogoPayment = ({ name, size = 24, ...props }: IOIconsProps) => {

@@ -5,6 +5,7 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { memo, useMemo } from "react";
+
 import { CredentialCardConfig } from "./config";
 
 /**
@@ -17,7 +18,7 @@ export const getGradientVectors = (
   angle: number,
   width: number,
   height: number
-): { start: ReturnType<typeof vec>; end: ReturnType<typeof vec> } => {
+): { end: ReturnType<typeof vec>; start: ReturnType<typeof vec> } => {
   const rad = (angle * Math.PI) / 180;
   const dx = Math.sin(rad);
   const dy = -Math.cos(rad);
@@ -33,8 +34,8 @@ export const getGradientVectors = (
 
 type CredentialCardSkiaBackgroundProps = {
   bg: CredentialCardConfig["background"];
-  width: number;
   height: number;
+  width: number;
 };
 
 /**
@@ -49,20 +50,20 @@ export const SkiaGradientBackground = memo(
       [bg.angle, width, height]
     );
     return (
-      <Rect x={0} y={0} width={width} height={height}>
+      <Rect height={height} width={width} x={0} y={0}>
         {bg.type === "radial" ? (
           <RadialGradient
             c={vec(width * bg.center[0], height * bg.center[1])}
-            r={width * bg.radius}
             colors={bg.colors}
             positions={bg.positions}
+            r={width * bg.radius}
           />
         ) : (
           <LinearGradient
-            start={start}
-            end={end}
             colors={bg.colors}
+            end={end}
             positions={bg.positions}
+            start={start}
           />
         )}
       </Rect>

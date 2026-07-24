@@ -1,4 +1,5 @@
 import { ImageSourcePropType } from "react-native";
+
 import { contentRepoUrl } from "../../../../config";
 
 const LOGO_SIZE = 180;

@@ -7,6 +7,7 @@ import {
   takeLatest,
   takeLeading
 } from "typed-redux-saga/macro";
+
 import { walletUpdate } from "../store/actions";
 import { walletAddCards } from "../store/actions/cards";
 import { walletToggleLoadingState } from "../store/actions/placeholders";

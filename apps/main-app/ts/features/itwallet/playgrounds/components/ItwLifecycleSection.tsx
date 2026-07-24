@@ -1,9 +1,10 @@
 import { IOButton, ListItemHeader, ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
 import { Alert, View } from "react-native";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferences";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsFiscalCodeWhitelisted } from "../../common/store/selectors/preferences";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 import {
   itwLifecycleIsInstalledSelector,
@@ -18,7 +19,7 @@ export const ItwLifecycleSection = () => {
   const isItwInstalled = useIOSelector(itwLifecycleIsInstalledSelector);
   const isItwOperational = useIOSelector(itwLifecycleIsOperationalSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isFiscalCodeWhitelisted = useIOSelector(itwIsL3EnabledSelector);
+  const isFiscalCodeWhitelisted = useIOSelector(itwIsFiscalCodeWhitelisted);
   const isITWalletInstanceValid = useIOSelector(
     itwLifecycleIsITWalletValidSelector
   );
@@ -66,11 +67,11 @@ export const ItwLifecycleSection = () => {
         value={isFiscalCodeWhitelisted ? "YES" : "NO"}
       />
       <IOButton
-        variant="solid"
         color="danger"
-        label="Disable L3 whitelist"
         disabled={!isFiscalCodeWhitelisted}
+        label="Disable L3 whitelist"
         onPress={confirmDisableL3Whitelist}
+        variant="solid"
       />
     </View>
   );

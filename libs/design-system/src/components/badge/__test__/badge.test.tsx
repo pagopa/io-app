@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react-native";
+
 import { renderWithExperimentalEnabledContextProvider } from "../../../utils/testing";
 import { Badge } from "../Badge";
 

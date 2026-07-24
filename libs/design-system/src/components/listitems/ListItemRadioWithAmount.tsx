@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { View } from "react-native";
 import RNReactNativeHapticFeedback from "react-native-haptic-feedback";
+
 import { useIOTheme } from "../../context";
 import { IOColors, IOSelectionTickVisualParams } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -11,11 +12,11 @@ import { BodySmall, H6 } from "../typography";
 import { PressableListItemBase } from "./PressableListItemBase";
 
 export type ListItemRadioWithAmountProps = {
+  accessibilityLabel?: string;
+  formattedAmountString: string;
+  label: string;
   onValueChange?: (newValue: boolean) => void;
   selected?: boolean;
-  label: string;
-  formattedAmountString: string;
-  accessibilityLabel?: string;
 } & (
   | {
       isSuggested?: false;
@@ -55,38 +56,38 @@ export const ListItemRadioWithAmount = ({
 
   return (
     <PressableListItemBase
-      onPress={pressHandler}
-      accessibilityRole="radio"
       accessibilityLabel={accessibilityLabel ?? defaultAccessibilityLabel}
+      accessibilityRole="radio"
       accessibilityState={{
         checked: selected ?? toggleValue
       }}
+      onPress={pressHandler}
     >
       <View style={{ flexShrink: 1 }}>
-        <H6 numberOfLines={1} color={theme["textBody-default"]}>
+        <H6 color={theme["textBody-default"]} numberOfLines={1}>
           {label}
         </H6>
         {isSuggested && (
           <HStack space={4} style={{ alignItems: "center" }}>
-            <Icon name="sparkles" size={16} color={suggestColor} />
-            <BodySmall weight="Regular" color={suggestColor}>
+            <Icon color={suggestColor} name="sparkles" size={16} />
+            <BodySmall color={suggestColor} weight="Regular">
               {suggestReason}
             </BodySmall>
           </HStack>
         )}
       </View>
       <HStack
-        space={8}
-        pointerEvents="none"
         accessibilityElementsHidden
         importantForAccessibility="no-hide-descendants"
+        pointerEvents="none"
+        space={8}
       >
         <H6 color={theme["interactiveElem-default"]}>
           {formattedAmountString}
         </H6>
         <AnimatedRadio
-          size={IOSelectionTickVisualParams.size * dynamicFontScale}
           checked={selected ?? toggleValue}
+          size={IOSelectionTickVisualParams.size * dynamicFontScale}
         />
       </HStack>
     </PressableListItemBase>

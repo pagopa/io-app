@@ -1,21 +1,22 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import configureMockStore from "redux-mock-store";
 import I18n from "i18next";
+import configureMockStore from "redux-mock-store";
+
+import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
+import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
+import { applicationChangeState } from "../../../../../store/actions/application";
 // import WebView from "react-native-webview";
 // import {
 //   WebViewErrorEvent,
 //   WebViewNavigationEvent
 // } from "react-native-webview/lib/WebViewTypes";
 import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import TosScreen from "../TosScreen";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import TosScreen from "../TosScreen";
 
 const CurrentTestToSVersion = 2.0;
 

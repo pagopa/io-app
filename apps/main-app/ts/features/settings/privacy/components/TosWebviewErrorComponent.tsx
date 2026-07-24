@@ -26,7 +26,7 @@ const TosWebviewErrorComponent = ({
     >
       <Pictogram name="stopSecurity" />
       <VSpacer size={8} />
-      <H3 testID="toSErrorContainerTitle" style={{ textAlign: "center" }}>
+      <H3 style={{ textAlign: "center" }} testID="toSErrorContainerTitle">
         {I18n.t("onboarding.tos.error")}
       </H3>
     </ContentWrapper>

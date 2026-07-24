@@ -1,4 +1,5 @@
 import * as E from "fp-ts/lib/Either";
+
 import { DateFromISOString } from "../dates";
 
 describe("should convert a ISO string into a date object and a date object into ISO string representation", () => {

@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
-import { WithTestID } from "../../utils/types";
-import { IOColors, hexToRgba } from "../../core";
 
+import { hexToRgba, IOColors } from "../../core";
+import { WithTestID } from "../../utils/types";
 /* Logos */
 import LogoPaymentCardBancomatPay from "./svg/LogoPaymentCardBancomatPay";
 import LogoPaymentCardPayPal from "./svg/LogoPaymentCardPayPal";
@@ -15,12 +15,12 @@ export const IOPaymentCardLogos = {
 export type IOLogoPaymentCardType = keyof typeof IOPaymentCardLogos;
 
 type IOPaymentLogos = WithTestID<{
-  name: IOLogoPaymentCardType;
   accessibilityLabel: string;
-  align: "start" | "center" | "end";
-  width?: "100%" | number;
-  height?: number;
+  align: "center" | "end" | "start";
   debugMode?: boolean;
+  height?: number;
+  name: IOLogoPaymentCardType;
+  width?: "100%" | number;
 }>;
 
 const preserveAspectRatioValues: Record<
@@ -51,8 +51,8 @@ const LogoPaymentCard = ({
   const LogoElement = IOPaymentCardLogos[name];
   return (
     <View
-      accessible={true}
       accessibilityLabel={accessibilityLabel}
+      accessible={true}
       style={[{ width, height }, debugMode && styles.debugMode]}
       testID={testID}
     >

@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { GestureResponderEvent, PressableProps } from "react-native";
+
 import { useIOTheme } from "../../context";
 import { IOListItemVisualParams } from "../../core";
 import { WithTestID } from "../../utils/types";
@@ -12,21 +13,21 @@ import { Body } from "../typography";
 import { ModuleStatic } from "./ModuleStatic";
 import { PressableModuleBase } from "./PressableModuleBase";
 
-type PartialProps = WithTestID<{
-  title: string;
-  format: "doc" | "pdf";
-  isLoading?: boolean;
-  isFetching?: boolean;
-  loadingAccessibilityLabel?: string;
-  fetchingAccessibilityLabel?: string;
-  onPress: (event: GestureResponderEvent) => void;
-}>;
-
 export type ModuleAttachmentProps = PartialProps &
   Pick<
     PressableProps,
-    "onPress" | "accessibilityLabel" | "disabled" | "testID"
+    "accessibilityLabel" | "disabled" | "onPress" | "testID"
   >;
+
+type PartialProps = WithTestID<{
+  fetchingAccessibilityLabel?: string;
+  format: "doc" | "pdf";
+  isFetching?: boolean;
+  isLoading?: boolean;
+  loadingAccessibilityLabel?: string;
+  onPress: (event: GestureResponderEvent) => void;
+  title: string;
+}>;
 
 const ModuleAttachmentContent = ({
   isFetching,
@@ -35,7 +36,7 @@ const ModuleAttachmentContent = ({
   testID
 }: Pick<
   ModuleAttachmentProps,
-  "isFetching" | "format" | "title" | "testID"
+  "format" | "isFetching" | "testID" | "title"
 >) => {
   const theme = useIOTheme();
 
@@ -46,9 +47,9 @@ const ModuleAttachmentContent = ({
         style={{ alignItems: "flex-start", flexShrink: 1, flexGrow: 1 }}
       >
         <Body
-          weight="Semibold"
-          numberOfLines={2}
           color={theme["interactiveElem-default"]}
+          numberOfLines={2}
+          weight="Semibold"
         >
           {title}
         </Body>
@@ -60,8 +61,8 @@ const ModuleAttachmentContent = ({
         />
       ) : (
         <Icon
-          name="chevronRightListItem"
           color={theme["interactiveElem-default"]}
+          name="chevronRightListItem"
           size={IOListItemVisualParams.chevronSize}
         />
       )}
@@ -123,22 +124,22 @@ export const ModuleAttachment = ({
   return disabled || isFetching ? (
     <ModuleStatic disabled={disabled}>
       <ModuleAttachmentContent
+        format={format}
         isFetching={isFetching}
         title={title}
-        format={format}
       />
     </ModuleStatic>
   ) : (
     <PressableModuleBase
-      testID={testID}
-      onPress={handleOnPress}
       accessibilityHint={format}
       accessibilityLabel={pressableAccessibilityLabel}
+      onPress={handleOnPress}
+      testID={testID}
     >
       <ModuleAttachmentContent
+        format={format}
         isFetching={isFetching}
         title={title}
-        format={format}
       />
     </PressableModuleBase>
   );
@@ -148,13 +149,13 @@ const ModuleAttachmentSkeleton = ({
   loadingAccessibilityLabel
 }: Pick<ModuleAttachmentProps, "loadingAccessibilityLabel">) => (
   <ModuleStatic
-    accessible={true}
     accessibilityLabel={loadingAccessibilityLabel}
     accessibilityState={{ busy: true }}
+    accessible={true}
     startBlock={
       <VStack space={4}>
-        <IOSkeleton shape="rectangle" radius={8} width={114} height={16} />
-        <IOSkeleton shape="rectangle" radius={16} width={42} height={20} />
+        <IOSkeleton height={16} radius={8} shape="rectangle" width={114} />
+        <IOSkeleton height={20} radius={16} shape="rectangle" width={42} />
       </VStack>
     }
   />

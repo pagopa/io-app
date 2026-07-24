@@ -1,8 +1,9 @@
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
+import { NonEmptyArray } from "../../../../../types/helpers";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwCloseBanner, itwShowBanner } from "../actions/banners";
-import { NonEmptyArray } from "../../../../../types/helpers";
 
 /**
  * Pseudo-infinite duration in days.
@@ -15,13 +16,13 @@ const FOREVER = 100 * 365; // approx. 100 years
  * To add a new banner add a new id to this type
  */
 export type ItwBannerId =
-  | "discovery" // (Legacy) Discovery banner for Documenti su IO
-  | "discovery_wallet" // Discovery banner for IT Wallet placed in the wallet screen
-  | "discovery_messages_inbox" // Discovery banner for IT Wallet placed in the messages inbox screen
-  | "upgradeMDLDetails" // Upgrade to IT Wallet banner placed in MDL details screen
   | "ageVerificationUsageDetails" // Age Verification usage banner placed in credential details screen
+  | "discovery" // (Legacy) Discovery banner for Documenti su IO
+  | "discovery_messages_inbox" // Discovery banner for IT Wallet placed in the messages inbox screen
+  | "discovery_wallet" // Discovery banner for IT Wallet placed in the wallet screen
   | "itw_pid_info" // IT-Wallet informational banner within PID details screen
-  | "proximity_qr_code_info"; // Info banner shown on the proximity QR code screen
+  | "proximity_qr_code_info" // Info banner shown on the proximity QR code screen
+  | "upgradeMDLDetails"; // Upgrade to IT Wallet banner placed in MDL details screen
 
 /**
  * Mapping between banner identifiers and the duration (expressed in days) for which they should be hidden
@@ -41,10 +42,10 @@ export type ItwBannersState = Partial<
   Record<
     ItwBannerId,
     {
-      /** The last time the banner was dismissed */
-      dismissedOn?: string;
       /** How many times the banner was dismissed */
       dismissCount?: number;
+      /** The last time the banner was dismissed */
+      dismissedOn?: string;
     }
   >
 >;
@@ -75,6 +76,9 @@ const reducer = (
       };
     }
 
+    case getType(itwLifecycleStoresReset):
+      return itwBannersInitialState;
+
     case getType(itwShowBanner): {
       const bannerId = action.payload;
       return {
@@ -82,9 +86,6 @@ const reducer = (
         [bannerId]: {}
       };
     }
-
-    case getType(itwLifecycleStoresReset):
-      return itwBannersInitialState;
 
     default:
       return state;

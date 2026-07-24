@@ -1,6 +1,7 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
+
 import { readablePrivacyReport } from "../reporters";
 
 const Person = t.type({ name: t.string, age: t.number, secret: t.string });

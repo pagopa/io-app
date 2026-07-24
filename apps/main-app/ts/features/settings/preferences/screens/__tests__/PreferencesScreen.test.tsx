@@ -1,15 +1,16 @@
 import { fireEvent, waitFor } from "@testing-library/react-native";
+import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
-import I18n from "i18next";
-import PreferencesScreen from "../PreferencesScreen";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { checkAndRequestPermission } from "../../../../../utils/calendar";
-import { openAppSettings } from "../../../../../utils/appSettings";
-import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { openAppSettings } from "../../../../../utils/appSettings";
+import { checkAndRequestPermission } from "../../../../../utils/calendar";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import PreferencesScreen from "../PreferencesScreen";
 
 jest.mock("../../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: jest.fn()

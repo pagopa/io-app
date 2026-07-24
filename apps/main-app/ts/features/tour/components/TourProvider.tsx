@@ -4,15 +4,16 @@ import {
   PropsWithChildren,
   useCallback,
   useContext,
+  useMemo,
   useRef
 } from "react";
-import { View } from "react-native";
 import Animated, {
   AnimatedRef,
   SharedValue,
   useAnimatedRef,
   useSharedValue
 } from "react-native-reanimated";
+
 import { useIODispatch } from "../../../store/hooks";
 import {
   registerTourItemAction,
@@ -21,67 +22,30 @@ import {
 import { TourCutoutStyle, TourItemMeasurement } from "../types";
 import { TourOverlay } from "./TourOverlay";
 
-type TourItemConfig = {
-  ref?: AnimatedRef<Animated.View>;
-  regionProvider?: () => TourItemMeasurement | undefined;
-  title: string;
-  description: string;
-  cutoutStyle?: TourCutoutStyle;
-};
-
 type ScrollRef = {
+  headerHeight: number;
   scrollViewRef: AnimatedRef<Animated.ScrollView>;
   scrollY: SharedValue<number>;
-  headerHeight: number;
 };
 
 type TourContextValue = {
-  registerItem: (
+  cutoutH: SharedValue<number>;
+  cutoutW: SharedValue<number>;
+  /** Shared values driving the cutout and tooltip position. */
+  cutoutX: SharedValue<number>;
+  cutoutY: SharedValue<number>;
+  getConfig: (
     groupId: string,
-    index: number,
-    viewRef: AnimatedRef<Animated.View>,
-    config: {
-      title: string;
-      description: string;
-      cutoutStyle?: TourCutoutStyle;
-    }
-  ) => void;
-  unregisterItem: (groupId: string, index: number) => void;
-  registerRegion: (
-    groupId: string,
-    index: number,
-    regionProvider: () => TourItemMeasurement | undefined,
-    config: {
-      title: string;
-      description: string;
-      cutoutStyle?: TourCutoutStyle;
-    }
-  ) => void;
-  unregisterRegion: (groupId: string, index: number) => void;
+    index: number
+  ) => undefined | { description: string; title: string };
+  getCutoutStyle: (groupId: string, index: number) => { cornerRadius?: number };
   getMeasurement: (
     groupId: string,
     index: number
   ) => TourItemMeasurement | undefined;
-  getConfig: (
-    groupId: string,
-    index: number
-  ) => { title: string; description: string } | undefined;
-  getCutoutStyle: (groupId: string, index: number) => { cornerRadius?: number };
+  getScrollRef: (groupId: string) => ScrollRef | undefined;
   /** Returns true if the item is region-based (no ref tracking needed). */
   isRegionItem: (groupId: string, index: number) => boolean;
-  registerScrollRef: (
-    groupId: string,
-    ref: AnimatedRef<Animated.ScrollView>,
-    scrollY: SharedValue<number>,
-    headerHeight: number
-  ) => void;
-  unregisterScrollRef: (groupId: string) => void;
-  getScrollRef: (groupId: string) => ScrollRef | undefined;
-  /** Shared values driving the cutout and tooltip position. */
-  cutoutX: SharedValue<number>;
-  cutoutY: SharedValue<number>;
-  cutoutW: SharedValue<number>;
-  cutoutH: SharedValue<number>;
   /**
    * When true, the active GuidedTour component continuously tracks its
    * position via useFrameCallback. Set to false during step transitions.
@@ -89,6 +53,43 @@ type TourContextValue = {
   isTracking: SharedValue<boolean>;
   /** Animated ref for the overlay container, used for coordinate conversion. */
   overlayAnimatedRef: AnimatedRef<Animated.View>;
+  registerItem: (
+    groupId: string,
+    index: number,
+    viewRef: AnimatedRef<Animated.View>,
+    config: {
+      cutoutStyle?: TourCutoutStyle;
+      description: string;
+      title: string;
+    }
+  ) => void;
+  registerRegion: (
+    groupId: string,
+    index: number,
+    regionProvider: () => TourItemMeasurement | undefined,
+    config: {
+      cutoutStyle?: TourCutoutStyle;
+      description: string;
+      title: string;
+    }
+  ) => void;
+  registerScrollRef: (
+    groupId: string,
+    ref: AnimatedRef<Animated.ScrollView>,
+    scrollY: SharedValue<number>,
+    headerHeight: number
+  ) => void;
+  unregisterItem: (groupId: string, index: number) => void;
+  unregisterRegion: (groupId: string, index: number) => void;
+  unregisterScrollRef: (groupId: string) => void;
+};
+
+type TourItemConfig = {
+  cutoutStyle?: TourCutoutStyle;
+  description: string;
+  ref?: AnimatedRef<Animated.View>;
+  regionProvider?: () => TourItemMeasurement | undefined;
+  title: string;
 };
 
 const TourContext = createContext<TourContextValue | undefined>(undefined);
@@ -121,9 +122,9 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       index: number,
       viewRef: AnimatedRef<Animated.View>,
       config: {
-        title: string;
-        description: string;
         cutoutStyle?: TourCutoutStyle;
+        description: string;
+        title: string;
       }
     ) => {
       dispatch(registerTourItemAction({ groupId, index }));
@@ -151,9 +152,9 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       index: number,
       regionProvider: () => TourItemMeasurement | undefined,
       config: {
-        title: string;
-        description: string;
         cutoutStyle?: TourCutoutStyle;
+        description: string;
+        title: string;
       }
     ) => {
       dispatch(registerTourItemAction({ groupId, index }));
@@ -195,7 +196,7 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       const result: { value: TourItemMeasurement | undefined } = {
         value: undefined
       };
-      (node as unknown as View).measureInWindow((x, y, width, height) => {
+      node.measureInWindow((x, y, width, height) => {
         if (width !== 0 || height !== 0) {
           result.value = { x, y, width, height };
         }
@@ -253,28 +254,49 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
     []
   );
 
+  const contextValue = useMemo(
+    () => ({
+      registerItem,
+      unregisterItem,
+      registerRegion,
+      unregisterRegion,
+      getMeasurement,
+      getConfig,
+      getCutoutStyle,
+      isRegionItem,
+      registerScrollRef,
+      unregisterScrollRef,
+      getScrollRef,
+      cutoutX,
+      cutoutY,
+      cutoutW,
+      cutoutH,
+      isTracking,
+      overlayAnimatedRef
+    }),
+    [
+      registerItem,
+      unregisterItem,
+      registerRegion,
+      unregisterRegion,
+      getMeasurement,
+      getConfig,
+      getCutoutStyle,
+      isRegionItem,
+      registerScrollRef,
+      unregisterScrollRef,
+      getScrollRef,
+      cutoutX,
+      cutoutY,
+      cutoutW,
+      cutoutH,
+      isTracking,
+      overlayAnimatedRef
+    ]
+  );
+
   return (
-    <TourContext.Provider
-      value={{
-        registerItem,
-        unregisterItem,
-        registerRegion,
-        unregisterRegion,
-        getMeasurement,
-        getConfig,
-        getCutoutStyle,
-        isRegionItem,
-        registerScrollRef,
-        unregisterScrollRef,
-        getScrollRef,
-        cutoutX,
-        cutoutY,
-        cutoutW,
-        cutoutH,
-        isTracking,
-        overlayAnimatedRef
-      }}
-    >
+    <TourContext.Provider value={contextValue}>
       {children}
       <TourOverlay />
     </TourContext.Provider>

@@ -5,6 +5,7 @@ jest.mock("../FimsHistoryListItemPicker.tsx");
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
 import { AccessHistoryPage } from "../../../../../../definitions/fims_history/AccessHistoryPage";
 import {
   remoteLoading,
@@ -15,11 +16,11 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { FIMS_ROUTES } from "../../../common/navigation";
+import * as HOOK from "../../hooks/useFimsHistoryResultToasts";
 import {
   FimsHistoryNonEmptyContent,
   FimsHistoryNonEmptyContentProps
 } from "../FimsHistoryNonEmptyContent";
-import * as HOOK from "../../hooks/useFimsHistoryResultToasts";
 
 const mockAccess = {
   id: "TESTING",

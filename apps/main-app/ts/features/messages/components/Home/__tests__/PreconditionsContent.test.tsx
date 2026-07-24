@@ -1,15 +1,14 @@
 import { constUndefined } from "fp-ts/lib/function";
 import { createStore } from "redux";
-import { appReducer } from "../../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { PreconditionsContent } from "../PreconditionsContent";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import * as messagePreconditions from "../../../store/reducers/messagePrecondition";
+import { appReducer } from "../../../../../store/reducers";
 import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
-
-jest.mock("../../MessageDetail/MessageMarkdown");
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import * as messagePreconditions from "../../../store/reducers/messagePrecondition";
+import { PreconditionsContent } from "../PreconditionsContent";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({

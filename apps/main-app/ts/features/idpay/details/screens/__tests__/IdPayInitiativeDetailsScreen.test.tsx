@@ -1,19 +1,20 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import configureMockStore from "redux-mock-store";
-import { ComponentType } from "react";
 import I18n from "i18next";
-import { IDPayDetailsRoutes } from "../../navigation";
-import { IdPayInitiativeDetailsScreen } from "../IdPayInitiativeDetailsScreen";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
+import { ComponentType } from "react";
+import configureMockStore from "redux-mock-store";
+
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { IDPayDetailsRoutes } from "../../navigation";
+import { IdPayInitiativeDetailsScreen } from "../IdPayInitiativeDetailsScreen";
 
 jest.mock("../../../../../components/helpers/withAppRequiredUpdate", () => ({
   withAppRequiredUpdate: (

@@ -1,6 +1,7 @@
 import { Divider } from "@io-app/design-system";
 import { memo } from "react";
 import { View } from "react-native";
+
 import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
 import { ItwIssuanceMetadata } from "../../common/components/ItwIssuanceMetadata";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
@@ -32,9 +33,9 @@ const ItwCredentialPreviewClaimsList = ({
         <View key={index}>
           <ItwCredentialClaim
             claim={elem}
-            isPreview={true}
-            hidden={false}
             credentialType={credentialType}
+            hidden={false}
+            isPreview={true}
           />
           {index < claims.length - 1 && <Divider />}
         </View>

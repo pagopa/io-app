@@ -1,7 +1,8 @@
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { fromCallback, fromPromise } from "xstate";
+
 import { PreferredLanguageEnum } from "../../../../../definitions/identity/PreferredLanguage";
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import { IbanListDTO } from "../../../../../definitions/idpay/IbanListDTO";
@@ -88,7 +89,7 @@ export const createActorsImplementation = (
 
   const enrollIban = fromPromise<
     undefined,
-    { initiativeId: string; iban: IbanDTO | IbanPutDTO }
+    { iban: IbanDTO | IbanPutDTO; initiativeId: string }
   >(async ({ input }) => {
     try {
       const res = await idPayClient.enrollIban({

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 export const useDisableRootNavigatorGesture = (): void => {

@@ -1,4 +1,27 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
+import reducer, {
+  emptyListReasonSelector,
+  isLoadingOrUpdatingInbox,
+  isPaymentMessageWithPaidNoticeSelector,
+  messageListForCategorySelector,
+  messagePagePotFromCategorySelector,
+  shouldShowFooterListComponentSelector,
+  shouldShowRefreshControllOnListSelector,
+  shownMessageCategorySelector
+} from "..";
+import { MessageCategory } from "../../../../../../../definitions/communication/MessageCategory";
+import { pageSize } from "../../../../../../config";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { PaymentByRptIdState } from "../../../../../../store/reducers/entities/payments";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { isSomeLoadingOrSomeUpdating } from "../../../../../../utils/pot";
+import { clearCache } from "../../../../../settings/common/store/actions";
+import { nextPageLoadingWaitMillisecondsGenerator } from "../../../../components/Home/homeUtils";
+import { UIMessage } from "../../../../types";
+import { MessageListCategory } from "../../../../types/messageListCategory";
+import { emptyMessageArray } from "../../../../utils";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
@@ -6,34 +29,12 @@ import {
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes
 } from "../../../actions";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import reducer, {
-  isLoadingOrUpdatingInbox,
-  shownMessageCategorySelector,
-  messageListForCategorySelector,
-  emptyListReasonSelector,
-  shouldShowFooterListComponentSelector,
-  shouldShowRefreshControllOnListSelector,
-  isPaymentMessageWithPaidNoticeSelector,
-  messagePagePotFromCategorySelector
-} from "..";
 import {
   AllPaginated,
   LastRequestValues,
   MessagePage,
   MessagePagePot
 } from "../types";
-import { pageSize } from "../../../../../../config";
-import { UIMessage } from "../../../../types";
-import { clearCache } from "../../../../../settings/common/store/actions";
-import { appReducer } from "../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { MessageListCategory } from "../../../../types/messageListCategory";
-import { emptyMessageArray } from "../../../../utils";
-import { isSomeLoadingOrSomeUpdating } from "../../../../../../utils/pot";
-import { PaymentByRptIdState } from "../../../../../../store/reducers/entities/payments";
-import { MessageCategory } from "../../../../../../../definitions/communication/MessageCategory";
-import { nextPageLoadingWaitMillisecondsGenerator } from "../../../../components/Home/homeUtils";
 
 type LastRequestType = LastRequestValues | undefined;
 

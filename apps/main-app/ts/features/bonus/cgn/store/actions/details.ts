@@ -1,4 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
+
 import { Card } from "../../../../../../definitions/cgn/Card";
 import { NetworkError } from "../../../../../utils/errors";
 

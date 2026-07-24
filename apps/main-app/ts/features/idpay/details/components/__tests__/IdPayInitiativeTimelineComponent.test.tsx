@@ -1,5 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
+
+import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
+import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -8,8 +11,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { IDPayDetailsRoutes } from "../../navigation";
 import { PaginatedTimelineDTO } from "../../store";
 import { IdPayInitiativeTimelineComponent } from "../IdPayInitiativeTimelineComponent";
-import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
-import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 
 const mockedTimeline: PaginatedTimelineDTO = {
   0: {

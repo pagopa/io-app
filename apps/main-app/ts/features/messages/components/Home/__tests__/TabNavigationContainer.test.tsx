@@ -1,14 +1,15 @@
-import { createStore } from "redux";
-import PagerView from "react-native-pager-view";
 import { fireEvent } from "@testing-library/react-native";
+import PagerView from "react-native-pager-view";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import { TabNavigationContainer } from "../TabNavigationContainer";
-import { MessageListCategory } from "../../../types/messageListCategory";
 import { setShownMessageCategoryAction } from "../../../store/actions";
-import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
+import { MessageListCategory } from "../../../types/messageListCategory";
+import { TabNavigationContainer } from "../TabNavigationContainer";
 
 describe("TabNavigationContainer", () => {
   beforeEach(() => {

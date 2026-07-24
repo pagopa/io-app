@@ -1,6 +1,7 @@
 import { act } from "@testing-library/react-native";
 import { Action, createStore } from "redux";
 import { fromPromise } from "xstate";
+
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList.ts";
 import { applicationChangeState } from "../../../../../../store/actions/application.ts";
 import { startupLoadSuccess } from "../../../../../../store/actions/startup.ts";

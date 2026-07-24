@@ -1,4 +1,5 @@
 import MarkdownIt, { Token } from "markdown-it";
+
 import { pipe } from "../../utils/pipe";
 import { MarkdownNode, MarkdownNodeType } from "./types";
 
@@ -24,6 +25,13 @@ const createKeyFactory = () => {
  * Complete set of all supported node types.
  */
 const ALL_TYPES = new Set<string>([
+  "blockquote",
+  /* full types */
+  "bullet_list",
+  "code_inline",
+  "em",
+  "fence",
+  "hardbreak",
   /* lite types */
   "heading1",
   "heading2",
@@ -31,24 +39,17 @@ const ALL_TYPES = new Set<string>([
   "heading4",
   "heading5",
   "heading6",
-  "paragraph",
-  "text",
-  "strong",
-  "em",
-  "link",
-  "softbreak",
-  "hardbreak",
-  /* full types */
-  "bullet_list",
-  "ordered_list",
-  "list_item",
-  "blockquote",
-  "image",
-  "code_inline",
-  "fence",
   "hr",
   "html_block",
-  "html_inline"
+  "html_inline",
+  "image",
+  "link",
+  "list_item",
+  "ordered_list",
+  "paragraph",
+  "softbreak",
+  "strong",
+  "text"
 ]);
 
 /**

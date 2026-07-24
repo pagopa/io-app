@@ -1,18 +1,19 @@
 import { ComponentProps, PropsWithChildren } from "react";
 import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
+
 import { IOListItemStyles, IOListItemVisualParams } from "../../core";
-import { WithTestID } from "../../utils/types";
 import { useListItemAnimation } from "../../hooks";
+import { WithTestID } from "../../utils/types";
 
 export type PressableBaseProps = WithTestID<
   Pick<
     ComponentProps<typeof Pressable>,
-    | "onPress"
-    | "accessibilityLabel"
     | "accessibilityHint"
-    | "accessibilityState"
+    | "accessibilityLabel"
     | "accessibilityRole"
+    | "accessibilityState"
+    | "onPress"
   >
 >;
 
@@ -28,13 +29,13 @@ export const PressableListItemBase = ({
 
   return (
     <Pressable
-      onPress={onPress}
-      testID={testID}
+      accessibilityRole={accessibilityRole || "button"}
       accessible={true}
+      onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
-      accessibilityRole={accessibilityRole || "button"}
+      testID={testID}
       {...props}
     >
       <Animated.View

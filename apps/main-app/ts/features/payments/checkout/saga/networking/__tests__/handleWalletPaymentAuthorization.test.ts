@@ -1,16 +1,17 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
+
 import { AmountEuroCents } from "../../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
+import { PaymentMethodManagementTypeEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { RequestAuthorizationResponse } from "../../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationResponse";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import {
-  WalletPaymentAuthorizePayload,
-  paymentsStartPaymentAuthorizationAction
+  paymentsStartPaymentAuthorizationAction,
+  WalletPaymentAuthorizePayload
 } from "../../../store/actions/networking";
 import { handleWalletPaymentAuthorization } from "../handleWalletPaymentAuthorization";
-import { PaymentMethodManagementTypeEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 
 describe("Test handleWalletPaymentAuthorization saga", () => {
   const requestTransactionAuthorizationPayload: WalletPaymentAuthorizePayload =

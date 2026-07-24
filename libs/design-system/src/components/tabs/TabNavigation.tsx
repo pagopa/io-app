@@ -1,26 +1,27 @@
 import { cloneElement, ReactElement, useState } from "react";
 import { FlexStyle, LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+
 import { IOVisualCostants } from "../../core";
 import { TabItem } from "./TabItem";
 
-type TabNavigationChildren =
-  | ReactElement<TabItem>
-  | Array<ReactElement<TabItem>>;
-
-type TabAlignment = "start" | "center" | "end" | "stretch";
+type TabAlignment = "center" | "end" | "start" | "stretch";
 
 type TabNavigation = {
-  // Configuration
-  color?: TabItem["color"];
-  selectedIndex?: number;
-  tabAlignment?: TabAlignment;
-  // Events
-  onItemPress?: (index: number) => void;
   // Tabs
   children: TabNavigationChildren;
+  // Configuration
+  color?: TabItem["color"];
   includeContentMargins?: boolean;
+  // Events
+  onItemPress?: (index: number) => void;
+  selectedIndex?: number;
+  tabAlignment?: TabAlignment;
 };
+
+type TabNavigationChildren =
+  | Array<ReactElement<TabItem>>
+  | ReactElement<TabItem>;
 
 const itemsJustify: Record<TabAlignment, FlexStyle["justifyContent"]> = {
   start: "flex-start",
@@ -49,13 +50,13 @@ const TabNavigation = ({
   const wrapChild = (child: ReactElement<TabItem>, index = 0) => (
     <View
       key={child.props.label}
+      onLayout={handleItemOnLayout}
       style={[
         styles.item,
         stretchItems && {
           minWidth: itemMinWidth
         }
       ]}
-      onLayout={handleItemOnLayout}
     >
       {cloneElement<TabItem>(child, {
         onPress: event => {
@@ -70,9 +71,7 @@ const TabNavigation = ({
 
   return (
     <ScrollView
-      horizontal={true}
       centerContent={true}
-      showsHorizontalScrollIndicator={false}
       contentContainerStyle={[
         includeContentMargins
           ? { paddingHorizontal: IOVisualCostants.appMarginDefault }
@@ -83,6 +82,8 @@ const TabNavigation = ({
           gap: 8
         }
       ]}
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
     >
       {Array.isArray(children) ? children.map(wrapChild) : wrapChild(children)}
     </ScrollView>

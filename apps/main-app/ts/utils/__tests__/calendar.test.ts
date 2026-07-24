@@ -1,4 +1,5 @@
 import I18n from "i18next";
+
 import { convertLocalCalendarName } from "../calendar";
 
 describe("Convert calendar title to readable string", () => {

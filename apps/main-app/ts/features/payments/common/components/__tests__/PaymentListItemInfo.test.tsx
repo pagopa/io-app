@@ -1,6 +1,7 @@
-import { render, fireEvent } from "@testing-library/react-native";
-import { PaymentListItemInfo } from "../PaymentListItemInfo";
+import { fireEvent, render } from "@testing-library/react-native";
+
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
+import { PaymentListItemInfo } from "../PaymentListItemInfo";
 
 jest.mock("../../../../../utils/clipboard", () => ({
   clipboardSetStringWithFeedback: jest.fn()
@@ -26,9 +27,9 @@ describe("PaymentListItemInfo", () => {
   it("should copy `copyableValue` when provided", () => {
     const { getByTestId } = render(
       <PaymentListItemInfo
+        copyableValue="copied value"
         testID="listItem"
         value="displayed value"
-        copyableValue="copied value"
       />
     );
 
@@ -40,9 +41,9 @@ describe("PaymentListItemInfo", () => {
   it("should not call clipboard function when `copyable` is false", () => {
     const { getByTestId } = render(
       <PaymentListItemInfo
+        copyable={false}
         testID="listItem"
         value="any value"
-        copyable={false}
       />
     );
 

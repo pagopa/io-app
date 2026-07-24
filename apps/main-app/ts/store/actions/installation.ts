@@ -13,5 +13,5 @@ export const appVersionHistory = createStandardAction(
 )<string>();
 
 export type InstallationActions =
-  | ActionType<typeof previousInstallationDataDeleteSuccess>
-  | ActionType<typeof appVersionHistory>;
+  | ActionType<typeof appVersionHistory>
+  | ActionType<typeof previousInstallationDataDeleteSuccess>;

@@ -2,12 +2,14 @@ import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import { assign, type ActionArgs, type DoneActorEvent } from "xstate";
+import { type ActionArgs, assign, type DoneActorEvent } from "xstate";
+
+import type { WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils.ts";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import ROUTES from "../../../../../navigation/routes.ts";
 import { useIOStore } from "../../../../../store/hooks.ts";
 import { checkCurrentSession } from "../../../../authentication/common/store/actions/index.ts";
-import type { WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialsAllSelector } from "../../../credentials/store/selectors/index.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwWalletInstanceAttestationStore } from "../../../walletInstance/store/actions/index.ts";

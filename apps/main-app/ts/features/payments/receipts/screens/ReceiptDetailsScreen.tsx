@@ -8,9 +8,10 @@ import {
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import I18n from "i18next";
+
 import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
@@ -37,10 +38,10 @@ import {
 import { DownloadReceiptOutcomeErrorEnum } from "../types";
 
 export type ReceiptDetailsScreenParams = {
-  transactionId: string;
-  isPayer?: boolean;
   isCart?: boolean;
   isDebtor?: boolean;
+  isPayer?: boolean;
+  transactionId: string;
 };
 
 type ReceiptDetailsScreenProps = RouteProp<
@@ -157,18 +158,18 @@ const ReceiptDetailsScreen = () => {
   if (isError) {
     return (
       <OperationResultScreenContent
-        pictogram="umbrella"
-        title={I18n.t("transaction.details.error.title")}
         action={{
           label: I18n.t("global.buttons.retry"),
           accessibilityLabel: I18n.t("global.buttons.retry"),
           onPress: fetchTransactionDetails
         }}
+        pictogram="umbrella"
         secondaryAction={{
           label: I18n.t("global.buttons.back"),
           accessibilityLabel: I18n.t("global.buttons.back"),
           onPress: navigation.goBack
         }}
+        title={I18n.t("transaction.details.error.title")}
       />
     );
   }
@@ -178,8 +179,6 @@ const ReceiptDetailsScreen = () => {
 
   return (
     <IOScrollView
-      includeContentMargins={false}
-      animatedRef={animatedScrollViewRef}
       actions={
         showGenerateReceiptButton
           ? {
@@ -195,18 +194,20 @@ const ReceiptDetailsScreen = () => {
             }
           : undefined
       }
+      animatedRef={animatedScrollViewRef}
+      includeContentMargins={false}
     >
       <View style={[styles.wrapper, { backgroundColor }]}>
         {/* The following line is used to show the background color gray that overlay the basic one which is white */}
         <View style={[styles.bottomBackground, { backgroundColor }]} />
         <ReceiptHeadingSection
-          transaction={transactionDetails}
           isLoading={isLoading}
+          transaction={transactionDetails}
         />
         <WalletTransactionInfoSection
-          transaction={transactionDetails}
-          showUnavailableReceiptBanner={!showGenerateReceiptButton}
           loading={isLoading}
+          showUnavailableReceiptBanner={!showGenerateReceiptButton}
+          transaction={transactionDetails}
         />
         {isCart && isDebtor && (
           <ContentWrapper>
@@ -219,7 +220,7 @@ const ReceiptDetailsScreen = () => {
             <VSpacer size={16} />
           </ContentWrapper>
         )}
-        <HideReceiptButton transactionId={transactionId} isCart={isCart} />
+        <HideReceiptButton isCart={isCart} transactionId={transactionId} />
       </View>
     </IOScrollView>
   );

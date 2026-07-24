@@ -1,10 +1,11 @@
-import { Modal } from "react-native";
 import { IOColors, useIOTheme } from "@io-app/design-system";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { Modal } from "react-native";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 const AskUserInteractionScreen = (props: OperationResultScreenContentProps) => {
   useAvoidHardwareBackButton();

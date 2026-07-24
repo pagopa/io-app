@@ -1,4 +1,5 @@
 import { View } from "react-native";
+
 import { MessageDetailsProps } from "../MessageDetails";
 
 export const MessageDetails = ({

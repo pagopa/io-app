@@ -1,16 +1,17 @@
-import { PreloadedState, createStore } from "redux";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
+import { createStore, PreloadedState } from "redux";
+
+import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import FiscalCodeScreen from "../FiscalCodeScreen";
-import { profileLoadSuccess } from "../../../common/store/actions";
-import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import { profileLoadSuccess } from "../../../common/store/actions";
+import FiscalCodeScreen from "../FiscalCodeScreen";
 
 jest.mock("../../../../../utils/brightness", () => ({
   useMaxBrightness: jest.fn()

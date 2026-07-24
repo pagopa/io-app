@@ -1,4 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
+
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";

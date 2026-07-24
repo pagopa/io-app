@@ -1,10 +1,11 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+
 import { cgnUnsubscriptionHandler } from "..";
 import { getGenericError } from "../../../../../../../utils/errors";
-import { cgnUnsubscribe } from "../../../../store/actions/unsubscribe";
 import { walletRemoveCardsByType } from "../../../../../../wallet/store/actions/cards";
+import { cgnUnsubscribe } from "../../../../store/actions/unsubscribe";
 
 describe("cgnUnsubscriptionHandler", () => {
   const request = cgnUnsubscribe.request();

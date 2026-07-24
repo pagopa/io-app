@@ -1,23 +1,24 @@
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import * as E from "fp-ts/lib/Either";
-import { readablePrivacyReport } from "../../../../utils/reporters";
-import { fciSigningRequest } from "../../store/actions";
-import { getNetworkError } from "../../../../utils/errors";
-import { LollipopConfig } from "../../../lollipop";
-import { getCustomSignature, getTosSignature } from "../../utils/signature";
-import { fciDocumentsWithUrlSelector } from "../../store/reducers/fciSignatureRequest";
-import { fciQtspFilledDocumentUrlSelector } from "../../store/reducers/fciQtspFilledDocument";
-import { createFciClientWithLollipop } from "../../api/backendFci";
-import { KeyInfo } from "../../../lollipop/utils/crypto";
+
 import { LollipopMethodEnum } from "../../../../../definitions/fci/LollipopMethod";
 import { LollipopOriginalURL } from "../../../../../definitions/fci/LollipopOriginalURL";
-import { LollipopSignatureInput } from "../../../../../definitions/fci/LollipopSignatureInput";
 import { LollipopSignature } from "../../../../../definitions/fci/LollipopSignature";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { LollipopSignatureInput } from "../../../../../definitions/fci/LollipopSignatureInput";
 import { SagaCallReturnType } from "../../../../types/utils";
+import { getNetworkError } from "../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../utils/reporters";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { LollipopConfig } from "../../../lollipop";
+import { KeyInfo } from "../../../lollipop/utils/crypto";
+import { createFciClientWithLollipop } from "../../api/backendFci";
+import { fciSigningRequest } from "../../store/actions";
+import { fciQtspFilledDocumentUrlSelector } from "../../store/reducers/fciQtspFilledDocument";
+import { fciDocumentsWithUrlSelector } from "../../store/reducers/fciSignatureRequest";
+import { getCustomSignature, getTosSignature } from "../../utils/signature";
 
 /*
  * A saga to post signature data.

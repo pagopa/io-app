@@ -1,16 +1,17 @@
 import * as O from "fp-ts/lib/Option";
-import {
-  hasProfileEmail,
-  isProfileEmailValidated,
-  isProfileFirstOnBoarding,
-  isProfileEmailAlreadyTaken,
-  isServicesPreferenceModeSet,
-  getProfileEmail,
-  getProfileSpidEmail
-} from "../utils/guards";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
+
 import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
 import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
+import {
+  getProfileEmail,
+  getProfileSpidEmail,
+  hasProfileEmail,
+  isProfileEmailAlreadyTaken,
+  isProfileEmailValidated,
+  isProfileFirstOnBoarding,
+  isServicesPreferenceModeSet
+} from "../utils/guards";
 
 const baseProfile = {
   has_profile: true,

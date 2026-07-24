@@ -1,11 +1,12 @@
 import { renderHook } from "@testing-library/react-native";
-import { useDerivedConnectivityState } from "../useStatusAlertProps";
-import * as navigationSelectors from "../../store/reducers/navigation";
-import * as connectivitySelectors from "../../features/connectivity/store/selectors";
-import * as ingressSelectors from "../../features/ingress/store/selectors";
-import * as startup from "../../store/reducers/startup";
-import { OfflineAccessReasonEnum } from "../../features/ingress/store/reducer";
+
 import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes";
+import * as connectivitySelectors from "../../features/connectivity/store/selectors";
+import { OfflineAccessReasonEnum } from "../../features/ingress/store/reducer";
+import * as ingressSelectors from "../../features/ingress/store/selectors";
+import * as navigationSelectors from "../../store/reducers/navigation";
+import * as startup from "../../store/reducers/startup";
+import { useDerivedConnectivityState } from "../useStatusAlertProps";
 
 jest.mock("../../store/hooks", () => ({
   useIOSelector: (selector: any) => selector()

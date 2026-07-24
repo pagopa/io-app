@@ -1,13 +1,13 @@
-import {
-  trackLoginSessionOptIn,
-  trackLoginSessionOptInInfo,
-  trackLoginSessionOptIn365,
-  trackLoginSessionOptIn30
-} from "../optinAnalytics";
 import { mixpanelTrack } from "../../../../../mixpanel";
-import { buildEventProperties } from "../../../../../utils/analytics";
 import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../../../mixpanelConfig/superProperties";
+import { buildEventProperties } from "../../../../../utils/analytics";
+import {
+  trackLoginSessionOptIn,
+  trackLoginSessionOptIn30,
+  trackLoginSessionOptIn365,
+  trackLoginSessionOptInInfo
+} from "../optinAnalytics";
 
 jest.mock("../../../../../mixpanel", () => ({
   mixpanelTrack: jest.fn()

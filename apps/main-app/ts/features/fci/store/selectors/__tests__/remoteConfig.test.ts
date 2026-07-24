@@ -1,10 +1,11 @@
 import * as O from "fp-ts/lib/Option";
+
+import { GlobalState } from "../../../../../store/reducers/types.ts";
 import * as appVersion from "../../../../../utils/appVersion";
 import {
   fciSecurityLevelCheckHelpCenterUrlSelector,
   isFciSecurityLevelCheckRemoteFFEnabledSelector
 } from "../remoteConfig";
-import { GlobalState } from "../../../../../store/reducers/types.ts";
 
 const noneState = { remoteConfig: O.none } as GlobalState;
 

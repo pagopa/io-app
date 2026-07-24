@@ -1,4 +1,3 @@
-import I18n from "i18next";
 import {
   IOButton,
   ListItemHeader,
@@ -7,6 +6,7 @@ import {
 } from "@io-app/design-system";
 import { CieManager, NfcEvent } from "@pagopa/io-react-native-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
+import I18n from "i18next";
 import { createRef, useEffect, useState } from "react";
 import {
   Alert,
@@ -18,6 +18,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView, { WebViewNavigation } from "react-native-webview";
+
 import LoadingSpinnerOverlay from "../../../../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../../../hooks/useScreenEndMargin";
@@ -34,8 +35,8 @@ const defaultUserAgent = Platform.select({
 });
 
 type CiewWebViewProps = {
-  uri: string;
   onAuthUrlChange: (url: string) => void;
+  uri: string;
 };
 
 const AuthenticationUrlWebView = ({
@@ -53,8 +54,6 @@ const AuthenticationUrlWebView = ({
 
   return (
     <WebView
-      ref={webView}
-      userAgent={defaultUserAgent}
       javaScriptEnabled={true}
       onShouldStartLoadWithRequest={({ url }: WebViewNavigation) => {
         if (authUrl) {
@@ -75,14 +74,16 @@ const AuthenticationUrlWebView = ({
         }
 
         // Once the returned url contains the "OpenApp" string, then the authorization has been given
-        if (url && url.indexOf("OpenApp") !== -1) {
+        if (url && url.includes("OpenApp")) {
           setAuthUrl(url);
           return false;
         }
 
         return true;
       }}
+      ref={webView}
       source={{ uri }}
+      userAgent={defaultUserAgent}
     />
   );
 };
@@ -148,10 +149,10 @@ export const CieAuthenticationScreen = () => {
     return (
       <LoadingSpinnerOverlay isLoading={true} loadingOpacity={1}>
         <AuthenticationUrlWebView
+          onAuthUrlChange={setAuthUrl}
           uri={
             "https://app-backend.io.italia.it/login?entityID=xx_servizicie&authLevel=SpidL3"
           }
-          onAuthUrlChange={setAuthUrl}
         />
       </LoadingSpinnerOverlay>
     );
@@ -159,7 +160,7 @@ export const CieAuthenticationScreen = () => {
 
   if (authenticatedUrl) {
     return (
-      <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
+      <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
         <WebView source={{ uri: authenticatedUrl }} />;
       </SafeAreaView>
     );
@@ -195,7 +196,7 @@ export const CieAuthenticationScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={["bottom"]}>
+    <SafeAreaView edges={["bottom"]} style={styles.container}>
       <KeyboardAvoidingView
         behavior="padding"
         contentContainerStyle={{
@@ -215,26 +216,28 @@ export const CieAuthenticationScreen = () => {
         <View>
           <ListItemHeader label="Insert card PIN" />
           <OTPInput
-            secret
             accessibilityValueText={({ valueLength, length }) =>
-              I18n.t("global.accessibility.inputDigitCounter", {
+              I18n.t("global.accessibility.otpInput.valueText", {
                 valueLength,
                 length
               })
             }
-            value={code}
             length={CIE_PIN_LENGTH}
             onValueChange={onPinChanged}
+            secret
+            value={code}
           />
         </View>
         <VSpacer size={16} />
         <IOButton
-          variant="solid"
-          label={status === "reading" ? "Stop reading" : "Start reading"}
           disabled={code.length !== 8}
+          label={status === "reading" ? "Stop reading" : "Start reading"}
           onPress={() =>
-            status === "reading" ? handleStopReading() : handleStartReading()
+            void (status === "reading"
+              ? handleStopReading()
+              : handleStartReading())
           }
+          variant="solid"
         />
         <VSpacer size={16} />
       </KeyboardAvoidingView>

@@ -2,12 +2,20 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { loadThirdPartyMessage } from "../store/actions";
-import { toSENDMessage } from "../../pn/store/types/transformers";
+
+import { TagEnum } from "../../../../definitions/communication/MessageCategoryPN";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/communication/ThirdPartyMessageWithContent";
+import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
+import { SagaCallReturnType } from "../../../types/utils";
+import { isTestEnv } from "../../../utils/environment";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import {
   trackPNNotificationLoadError,
   trackPNNotificationLoadSuccess
 } from "../../pn/analytics";
+import { toSENDMessage } from "../../pn/store/types/transformers";
+import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import {
   trackRemoteContentLoadFailure,
   trackRemoteContentLoadRequest,
@@ -16,16 +24,9 @@ import {
   trackUndefinedBearerToken,
   UndefinedBearerTokenPhase
 } from "../analytics";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
-import { SagaCallReturnType } from "../../../types/utils";
-import { unknownToReason } from "../utils";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/communication/ThirdPartyMessageWithContent";
-import { TagEnum } from "../../../../definitions/communication/MessageCategoryPN";
-import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
-import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
+import { loadThirdPartyMessage } from "../store/actions";
 import { thirdPartyKind } from "../types/thirdPartyById";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { isTestEnv } from "../../../utils/environment";
+import { unknownToReason } from "../utils";
 import { getCommunicationClient } from "./commons";
 
 export function* handleThirdPartyMessage(

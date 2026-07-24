@@ -1,12 +1,13 @@
-import { ActionType } from "typesafe-actions";
-import { call, put, select } from "typed-redux-saga/macro";
 import { isCancelledFailure } from "@pagopa/io-react-native-http-client";
+import { call, put, select } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
+
+import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   fimsAcceptConsentsAction,
   fimsAcceptConsentsFailureAction,
   fimsSignAndRetrieveInAppBrowserUrlAction
 } from "../store/actions";
-import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   absoluteRedirectUrl,
   computeAndTrackAuthenticationError,

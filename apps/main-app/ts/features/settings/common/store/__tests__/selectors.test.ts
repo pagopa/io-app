@@ -1,22 +1,23 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
+import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../../../../definitions/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import mockedProfile from "../../../../../__mocks__/initializedProfile";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
+  hasProfileEmailSelector,
   isEmailEnabledSelector,
   isInboxEnabledSelector,
-  profileNameSelector,
-  profileFiscalCodeSelector,
-  profileNameSurnameSelector,
-  hasProfileEmailSelector,
-  profileServicePreferencesModeSelector,
   isProfileEmailAlreadyTakenSelector,
   isProfileFirstOnBoardingSelector,
+  profileFiscalCodeSelector,
+  profileNameSelector,
+  profileNameSurnameSelector,
   profileNotificationSettingsSelector,
+  profileServicePreferencesModeSelector,
   tosVersionSelector
 } from "../selectors";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
-import { ReminderStatusEnum } from "../../../../../../definitions/identity/ReminderStatus";
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/identity/PushNotificationsContentType";
 
 describe("profile selectors", () => {
   const baseProfile = {

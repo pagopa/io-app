@@ -1,4 +1,5 @@
 import { ColorSchemeName } from "react-native";
+
 import { CredentialType } from "../../../utils/itwMocksUtils";
 import {
   CREDENTIAL_CARD_PATTERN_OVERLAYS,

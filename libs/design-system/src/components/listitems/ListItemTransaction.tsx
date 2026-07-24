@@ -1,5 +1,6 @@
 import { isValidElement, ReactNode } from "react";
 import { ImageURISource, View } from "react-native";
+
 import { useIOTheme } from "../../context";
 import {
   IOColors,
@@ -13,7 +14,7 @@ import { isImageUri } from "../../utils/url";
 import { Avatar } from "../avatar/Avatar";
 import { Badge } from "../badge/Badge";
 import { LogoPaymentWithFallback } from "../common/LogoPaymentWithFallback";
-import { IOIconSizeScale, Icon } from "../icons";
+import { Icon, IOIconSizeScale } from "../icons";
 import { HStack, VStack } from "../layout";
 import { IOLogoPaymentType } from "../logos";
 import { IOSkeleton } from "../skeleton";
@@ -23,35 +24,25 @@ import {
   PressableListItemBase
 } from "./PressableListItemBase";
 
-export type ListItemTransactionBadge = {
-  text: string;
-  variant: Badge["variant"];
-};
-
-export type ListItemTransactionLogo =
-  | IOLogoPaymentType
-  | ImageURISource
-  | ReactNode;
-
 export type ListItemTransaction = WithTestID<
   PressableBaseProps & {
-    showChevron?: boolean;
+    accessible?: boolean;
     isLoading?: boolean;
     loadingAccessibilityLabel?: string;
+    /**
+     * The maximum number of lines to display for the title.
+     * @default 2
+     */
+    numberOfLines?: number;
     /**
      * A logo that will be displayed on the left of the list item.
      *
      * Must be a {@link IOLogoPaymentType} or an {@link ImageURISource} or an {@link Icon}.
      */
     paymentLogoIcon?: ListItemTransactionLogo;
+    showChevron?: boolean;
     subtitle: string;
     title: string;
-    /**
-     * The maximum number of lines to display for the title.
-     * @default 2
-     */
-    numberOfLines?: number;
-    accessible?: boolean;
   } & (
       | {
           transaction: {
@@ -72,6 +63,16 @@ export type ListItemTransaction = WithTestID<
     )
 >;
 
+export type ListItemTransactionBadge = {
+  text: string;
+  variant: Badge["variant"];
+};
+
+export type ListItemTransactionLogo =
+  | ImageURISource
+  | IOLogoPaymentType
+  | ReactNode;
+
 const CARD_LOGO_SIZE: IOIconSizeScale = 24;
 const MUNICIPALITY_LOGO_SIZE = 44;
 // this is the <Avatar/>'s "small" size,
@@ -90,11 +91,11 @@ const ListItemTransactionContent = ({
   refund
 }: Pick<
   ListItemTransaction,
-  "paymentLogoIcon" | "numberOfLines" | "title" | "subtitle" | "showChevron"
+  "numberOfLines" | "paymentLogoIcon" | "showChevron" | "subtitle" | "title"
 > & {
-  badge: ListItemTransactionBadge | undefined;
   amount: string | undefined;
   amountAccessibilityLabel: string | undefined;
+  badge: ListItemTransactionBadge | undefined;
   refund: boolean | undefined;
 }) => {
   const theme = useIOTheme();
@@ -121,17 +122,17 @@ const ListItemTransactionContent = ({
           </View>
         )}
         <View style={{ flexShrink: 1 }}>
-          <H6 numberOfLines={numberOfLines} color={theme["textBody-default"]}>
+          <H6 color={theme["textBody-default"]} numberOfLines={numberOfLines}>
             {title}
           </H6>
-          <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+          <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
             {subtitle}
           </BodySmall>
         </View>
       </HStack>
       <HStack space={4} style={{ alignItems: "center" }}>
         {badge ? (
-          <Badge variant={badge?.variant} text={badge?.text} />
+          <Badge text={badge?.text} variant={badge?.variant} />
         ) : (
           <H6
             accessibilityLabel={amountAccessibilityLabel}
@@ -144,8 +145,8 @@ const ListItemTransactionContent = ({
         {showChevron && (
           <Icon
             allowFontScaling
-            name="chevronRightListItem"
             color={interactiveColor}
+            name="chevronRightListItem"
             size={IOListItemVisualParams.chevronSize}
           />
         )}
@@ -210,9 +211,9 @@ export const ListItemTransaction = ({
   if (onPress) {
     return (
       <PressableListItemBase
+        accessibilityLabel={accessibilityLabel}
         onPress={onPress}
         testID={testID}
-        accessibilityLabel={accessibilityLabel}
       >
         <ListItemTransactionContent {...contentProps} />
       </PressableListItemBase>
@@ -220,10 +221,10 @@ export const ListItemTransaction = ({
   } else {
     return (
       <View
+        accessibilityLabel={accessibilityLabel}
+        accessible={accessible}
         style={IOListItemStyles.listItem}
         testID={testID}
-        accessible={accessible}
-        accessibilityLabel={accessibilityLabel}
       >
         <View
           style={[
@@ -242,25 +243,25 @@ const ListItemTransactionSkeleton = ({
   loadingAccessibilityLabel
 }: Pick<ListItemTransaction, "loadingAccessibilityLabel">) => (
   <View
-    style={IOListItemStyles.listItem}
-    accessible={true}
     accessibilityLabel={loadingAccessibilityLabel}
     accessibilityState={{ busy: true }}
+    accessible={true}
+    style={IOListItemStyles.listItem}
   >
     <View style={IOListItemStyles.listItemInner}>
       <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
         <IOSkeleton
+          radius={IOVisualCostants.avatarRadiusSizeSmall}
           shape="square"
           size={IOVisualCostants.avatarSizeSmall}
-          radius={IOVisualCostants.avatarRadiusSizeSmall}
         />
       </View>
       <VStack space={4} style={{ flexGrow: 1 }}>
-        <IOSkeleton shape="rectangle" width={62} height={16} radius={8} />
-        <IOSkeleton shape="rectangle" width={107} height={16} radius={8} />
+        <IOSkeleton height={16} radius={8} shape="rectangle" width={62} />
+        <IOSkeleton height={16} radius={8} shape="rectangle" width={107} />
       </VStack>
       <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
-        <IOSkeleton shape="rectangle" width={70} height={24} radius={8} />
+        <IOSkeleton height={24} radius={8} shape="rectangle" width={70} />
       </View>
     </View>
   </View>

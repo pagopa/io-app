@@ -1,4 +1,5 @@
 import Svg, { Path } from "react-native-svg";
+
 import { IOColors } from "../../core";
 
 export const LeftArrow = ({ color = IOColors.white }: { color?: string }) => (

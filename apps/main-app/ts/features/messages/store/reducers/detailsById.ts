@@ -1,9 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
+import _ from "lodash";
 import { getType } from "typesafe-actions";
 
-import _ from "lodash";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
@@ -31,16 +29,10 @@ export const detailsByIdReducer = (
   action: Action
 ): DetailsById => {
   switch (action.type) {
-    case getType(loadMessageDetails.request): {
-      const { id } = action.payload;
-      if (state[id]) {
-        return { ...state, [id]: pot.toLoading(state[id]) };
-      }
-      return { ...state, [action.payload.id]: pot.noneLoading };
-    }
+    case getType(clearCache):
 
-    case getType(loadMessageDetails.success):
-      return { ...state, [action.payload.id]: pot.some(action.payload) };
+    case getType(reloadAllMessages.request):
+      return INITIAL_STATE;
 
     case getType(loadMessageDetails.failure): {
       const { id, error } = action.payload;
@@ -55,6 +47,16 @@ export const detailsByIdReducer = (
         [action.payload.id]: pot.noneError(error.message || "UNKNOWN")
       };
     }
+    case getType(loadMessageDetails.request): {
+      const { id } = action.payload;
+      if (state[id]) {
+        return { ...state, [id]: pot.toLoading(state[id]) };
+      }
+      return { ...state, [action.payload.id]: pot.noneLoading };
+    }
+    case getType(loadMessageDetails.success):
+      return { ...state, [action.payload.id]: pot.some(action.payload) };
+
     case getType(populateStoresWithEphemeralAarMessageData): {
       const { iun, markdown, pnServiceID, subject } = action.payload;
       const messageData: UIMessageDetails = {
@@ -76,10 +78,6 @@ export const detailsByIdReducer = (
       }
       return _.omit(state, action.payload.messageId);
 
-    case getType(clearCache):
-    case getType(reloadAllMessages.request):
-      return INITIAL_STATE;
-
     default:
       return state;
   }
@@ -98,10 +96,8 @@ export const messageDetailsByIdSelector = (
 ): pot.Pot<UIMessageDetails, string> =>
   state.entities.messages.detailsById[id] ?? pot.none;
 
-export const messagePaymentDataSelector = (state: GlobalState, id: string) =>
-  pipe(
-    messageDetailsByIdSelector(state, id),
-    pot.toOption,
-    O.chainNullableK(message => message.paymentData),
-    O.toUndefined
-  );
+export const messagePaymentDataSelector = (state: GlobalState, id: string) => {
+  const detailsPot = messageDetailsByIdSelector(state, id);
+  const paymentData = pot.toUndefined(detailsPot)?.paymentData;
+  return paymentData;
+};

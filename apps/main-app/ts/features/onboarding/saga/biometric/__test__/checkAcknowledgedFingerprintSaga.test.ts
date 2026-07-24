@@ -1,19 +1,20 @@
 import { testSaga } from "redux-saga-test-plan";
+
 import { fingerprintAcknowledged } from "../../../../../features/onboarding/store/actions";
 import { isFingerprintAcknowledgedSelector } from "../../../../../features/onboarding/store/selectors";
 import { isFingerprintEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
+import { getBiometricState } from "../../../../../utils/biometrics";
+import { isScreenLockSet } from "../../../../../utils/device";
+import {
+  handleBiometricAvailable,
+  handleBiometricNotSupported,
+  hanldeBiometricNotEnrolled,
+  hanldeMissingDevicePin
+} from "../biometricStateSagas";
 import {
   checkAcknowledgedFingerprintSaga,
   testable
 } from "../checkAcknowledgedFingerprintSaga";
-import {
-  handleBiometricAvailable,
-  hanldeBiometricNotEnrolled,
-  hanldeMissingDevicePin,
-  handleBiometricNotSupported
-} from "../biometricStateSagas";
-import { getBiometricState } from "../../../../../utils/biometrics";
-import { isScreenLockSet } from "../../../../../utils/device";
 
 describe("checkAcknowledgedFingerprintSaga", () => {
   it("should do nothing if fingerprint already acknowledged", () => {

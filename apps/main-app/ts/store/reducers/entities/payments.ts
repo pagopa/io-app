@@ -4,16 +4,17 @@
  * are managed by different global reducers.
  */
 import { getType } from "typesafe-actions";
-import { Action } from "../../actions/types";
-import { paymentCompletedSuccess } from "../../../features/payments/checkout/store/actions/orchestration";
-import { GlobalState } from "../types";
-import { differentProfileLoggedIn } from "../../actions/crossSessions";
+
 import {
   updatePaymentForMessage,
   UpdatePaymentForMessageFailure
 } from "../../../features/messages/store/actions";
-import { isPaidPaymentFromDetailV2Enum } from "../../../utils/payment";
 import { isMessagePaymentSpecificError } from "../../../features/messages/types/paymentErrors";
+import { paymentCompletedSuccess } from "../../../features/payments/checkout/store/actions/orchestration";
+import { isPaidPaymentFromDetailV2Enum } from "../../../utils/payment";
+import { differentProfileLoggedIn } from "../../actions/crossSessions";
+import { Action } from "../../actions/types";
+import { GlobalState } from "../types";
 
 export type PaidReason = Readonly<
   | {
@@ -41,6 +42,9 @@ export const paymentByRptIdReducer = (
   action: Action
 ): PaymentByRptIdState => {
   switch (action.type) {
+    // clear state if the current profile is different from the previous one
+    case getType(differentProfileLoggedIn):
+      return INITIAL_STATE;
     case getType(paymentCompletedSuccess):
       return {
         ...state,
@@ -58,9 +62,6 @@ export const paymentByRptIdReducer = (
         action.payload,
         state
       );
-    // clear state if the current profile is different from the previous one
-    case getType(differentProfileLoggedIn):
-      return INITIAL_STATE;
 
     default:
       return state;

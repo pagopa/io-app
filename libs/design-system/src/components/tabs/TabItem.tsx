@@ -13,48 +13,49 @@ import Animated, {
   useReducedMotion,
   withSpring
 } from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
-import { IOColors, IOSpringValues, hexToRgba } from "../../core";
+import { hexToRgba, IOColors, IOSpringValues } from "../../core";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
-import { IOIcons, Icon } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { IOText } from "../typography";
 
-type ColorMode = "light" | "dark";
-
-type TabItemState = "default" | "selected" | "disabled";
-
 export type TabItem = WithTestID<{
-  ref?: Ref<View>;
-  label: string;
+  accessibilityHint?: string;
+  // Accessibility
+  accessibilityLabel: string;
   color?: ColorMode;
-  selected?: boolean;
+  disabled?: boolean;
   // Icons
   icon?: IOIcons;
   iconSelected?: IOIcons;
-  // Accessibility
-  accessibilityLabel: string;
-  accessibilityHint?: string;
+  label: string;
   // Events
   onPress?: (event: GestureResponderEvent) => void;
-  disabled?: boolean;
+  ref?: Ref<View>;
+  selected?: boolean;
 }>;
 
+type ColorMode = "dark" | "light";
+
 type ColorStates = {
-  border: {
+  background: {
     default: string;
     selected: string;
   };
-  background: {
+  border: {
     default: string;
     selected: string;
   };
   foreground: {
     default: IOColors;
-    selected: IOColors;
     disabled: IOColors;
+    selected: IOColors;
   };
 };
+
+type TabItemState = "default" | "disabled" | "selected";
 
 const DISABLED_OPACITY = 0.5;
 
@@ -172,17 +173,17 @@ const TabItem = ({
 
   return (
     <Pressable
-      ref={ref}
-      accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
+      accessibilityLabel={accessibilityLabel}
       accessibilityRole="tab"
       accessibilityState={{ checked: !!selected }}
-      testID={testID}
+      accessible={true}
+      disabled={disabled}
       onPress={handleOnPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      accessible={true}
-      disabled={disabled}
+      ref={ref}
+      testID={testID}
     >
       <Animated.View
         style={[
@@ -194,9 +195,9 @@ const TabItem = ({
         ]}
       >
         {activeIcon && (
-          <Icon name={activeIcon} color={foregroundColor} size={16} />
+          <Icon color={foregroundColor} name={activeIcon} size={16} />
         )}
-        <IOText size={14} weight="Semibold" color={foregroundColor}>
+        <IOText color={foregroundColor} size={14} weight="Semibold">
           {label}
         </IOText>
       </Animated.View>

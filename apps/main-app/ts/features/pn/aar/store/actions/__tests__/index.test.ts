@@ -1,14 +1,15 @@
 import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+
 import {
   EphemeralAarMessageDataActionPayload,
+  initiateAarFlow,
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState,
-  terminateAarFlow,
-  initiateAarFlow
+  terminateAarFlow
 } from "..";
-import { ThirdPartyMessage } from "../../../../../../../definitions/pn/ThirdPartyMessage";
 import { MessageBodyMarkdown } from "../../../../../../../definitions/communication/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../../../definitions/communication/MessageSubject";
+import { ThirdPartyMessage } from "../../../../../../../definitions/pn/ThirdPartyMessage";
 import { AarFlowState, sendAarFlowStates } from "../../../utils/stateUtils";
 
 describe("AarFlowStateActions", () => {

@@ -1,10 +1,11 @@
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwDiscoveryLandingScreen } from "../ItwDiscoveryLandingScreen";
 
@@ -36,11 +37,11 @@ describe("ItwDiscoveryLandingScreen", () => {
       expectedRoute,
       expectedParams
     }: {
+      expectedParams: object | undefined;
+      expectedRoute: string;
       isItWalletActive: boolean;
       isWalletActive: boolean;
       isWhitelisted: boolean;
-      expectedRoute: string;
-      expectedParams: object | undefined;
     }) => {
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
@@ -49,7 +50,7 @@ describe("ItwDiscoveryLandingScreen", () => {
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(isWalletActive);
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
         .mockReturnValue(isWhitelisted);
 
       renderComponent();

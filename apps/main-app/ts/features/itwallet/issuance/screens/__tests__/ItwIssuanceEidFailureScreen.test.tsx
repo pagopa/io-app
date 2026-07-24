@@ -3,6 +3,7 @@ import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 import { createActor } from "xstate";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

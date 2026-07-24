@@ -6,15 +6,16 @@ import {
   SharedValue,
   useAnimatedStyle
 } from "react-native-reanimated";
+
 import { IOScaleEffect } from "../core";
 import { useSpringPressProgressValue } from "../utils/hooks";
 
 export const useScaleAnimation = (
   magnitude: IOScaleEffect = "slight"
 ): {
-  progress: SharedValue<number>;
   onPressIn: (event: GestureResponderEvent) => void;
   onPressOut: (event: GestureResponderEvent) => void;
+  progress: SharedValue<number>;
   scaleAnimatedStyle: AnimatedStyle<ViewStyle>;
 } => {
   const { progress, onPressIn, onPressOut } =

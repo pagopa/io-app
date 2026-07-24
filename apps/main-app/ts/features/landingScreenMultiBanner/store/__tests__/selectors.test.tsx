@@ -1,4 +1,5 @@
 import * as Reselect from "reselect";
+
 import { GlobalState } from "../../../../store/reducers/types";
 import { LandingScreenBannerState } from "../reducer";
 import * as SELECTORS from "../selectors";

@@ -1,4 +1,10 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+  useState
+} from "react";
 
 type IOExperimentalContextType = {
   isExperimental: boolean;
@@ -28,10 +34,13 @@ export const IODSExperimentalContextProvider = ({
     isExperimentaEnabled ?? false
   );
 
+  const value = useMemo(
+    () => ({ isExperimental, setExperimental }),
+    [isExperimental]
+  );
+
   return (
-    <IOExperimentalDesignContext.Provider
-      value={{ isExperimental, setExperimental }}
-    >
+    <IOExperimentalDesignContext.Provider value={value}>
       {children}
     </IOExperimentalDesignContext.Provider>
   );

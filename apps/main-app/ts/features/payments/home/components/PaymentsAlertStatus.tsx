@@ -1,12 +1,13 @@
 import { Alert } from "@io-app/design-system";
 import { constVoid } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { GestureResponderEvent } from "react-native";
 import Animated, {
   FadeIn,
   FadeOut,
   LinearTransition
 } from "react-native-reanimated";
-import I18n from "i18next";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
 import {
@@ -41,14 +42,14 @@ export const PaymentsAlertStatus = () => {
       layout={LinearTransition.duration(200)}
     >
       <Alert
+        action={actionLabel}
         content={
           alertInfo.message[fallbackForLocalizedMessageKeys(getFullLocale())]
         }
-        variant={getAlertVariant(alertInfo.level)}
-        action={actionLabel}
         onPress={
           alertInfo.web_url ? handleOnPressAlertStatusInfo : () => constVoid
         }
+        variant={getAlertVariant(alertInfo.level)}
       />
     </Animated.View>
   );

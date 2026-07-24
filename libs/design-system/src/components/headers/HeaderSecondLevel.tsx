@@ -8,16 +8,16 @@ import {
 import {
   AccessibilityInfo,
   ColorValue,
+  findNodeHandle,
   Platform,
   StyleSheet,
-  View,
-  findNodeHandle
+  View
 } from "react-native";
 import Animated, {
   AnimatedRef,
-  SharedValue,
   interpolate,
   interpolateColor,
+  SharedValue,
   useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
@@ -28,97 +28,99 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { scheduleOnRN } from "react-native-worklets";
+
+import type { IOSpacer, IOSpacingScale } from "../../core/IOSpacing";
+
 import { useIOTheme } from "../../context";
 import {
+  alertEdgeToEdgeInsetTransitionConfig,
+  hexToRgba,
+  iconBtnSizeSmall,
   IOColors,
   IOSpringValues,
   IOThemeDark,
   IOThemeLight,
-  IOVisualCostants,
-  alertEdgeToEdgeInsetTransitionConfig,
-  hexToRgba,
-  iconBtnSizeSmall
+  IOVisualCostants
 } from "../../core";
-import type { IOSpacer, IOSpacingScale } from "../../core/IOSpacing";
 import { WithTestID } from "../../utils/types";
 import { IconButton } from "../buttons/IconButton";
 import { HSpacer, HStack } from "../layout";
 import { IOText } from "../typography";
 import { HeaderActionProps } from "./common";
 
+export type HeaderSecondLevel = BackProps &
+  (Base | OneAction | ThreeActions | TwoActions) &
+  DiscreteTransitionProps;
+
+type BackProps =
+  | {
+      backAccessibilityLabel: string;
+      backTestID?: string;
+      goBack: () => void;
+    }
+  | {
+      backAccessibilityLabel?: never;
+      backTestID?: never;
+      goBack?: never;
+    };
+
+interface Base extends CommonProps {
+  firstAction?: never;
+  secondAction?: never;
+  thirdAction?: never;
+  type: "base";
+}
+
+type CommonProps = WithTestID<{
+  backgroundColor?: string;
+  // Prevents screen readers from focusing on the title when other elements are focused
+  // (e.g. when an input text is throwing an error)
+  ignoreAccessibilityCheck?: boolean;
+  ignoreSafeAreaMargin?: boolean;
+  scrollValues?: ScrollValues;
+  title: string;
+  // Visual attributes
+  transparent?: boolean;
+  variant?: "contrast" | "neutral" | "primary";
+}>;
+
+type DiscreteTransitionProps =
+  | {
+      animatedRef:
+        | AnimatedRef<Animated.FlatList<any>>
+        | AnimatedRef<Animated.ScrollView>;
+      enableDiscreteTransition: true;
+    }
+  | {
+      animatedRef?: never;
+      enableDiscreteTransition?: false;
+    };
+
+interface OneAction extends CommonProps {
+  firstAction: HeaderActionProps;
+  secondAction?: never;
+  thirdAction?: never;
+  type: "singleAction";
+}
+
 type ScrollValues = {
   contentOffsetY: SharedValue<number>;
   triggerOffset: number;
 };
 
-type DiscreteTransitionProps =
-  | {
-      enableDiscreteTransition: true;
-      animatedRef:
-        | AnimatedRef<Animated.ScrollView>
-        | AnimatedRef<Animated.FlatList<any>>;
-    }
-  | {
-      enableDiscreteTransition?: false;
-      animatedRef?: never;
-    };
-
-type BackProps =
-  | {
-      goBack: () => void;
-      backAccessibilityLabel: string;
-      backTestID?: string;
-    }
-  | {
-      goBack?: never;
-      backAccessibilityLabel?: never;
-      backTestID?: never;
-    };
-
-type CommonProps = WithTestID<{
-  scrollValues?: ScrollValues;
-  title: string;
-  // Visual attributes
-  transparent?: boolean;
-  variant?: "neutral" | "contrast" | "primary";
-  backgroundColor?: string;
-  ignoreSafeAreaMargin?: boolean;
-  // Prevents screen readers from focusing on the title when other elements are focused
-  // (e.g. when an input text is throwing an error)
-  ignoreAccessibilityCheck?: boolean;
-}>;
-
-interface Base extends CommonProps {
-  type: "base";
-  firstAction?: never;
-  secondAction?: never;
-  thirdAction?: never;
-}
-
-interface OneAction extends CommonProps {
-  type: "singleAction";
-  firstAction: HeaderActionProps;
-  secondAction?: never;
-  thirdAction?: never;
-}
-
-interface TwoActions extends CommonProps {
-  type: "twoActions";
-  firstAction: HeaderActionProps;
-  secondAction: HeaderActionProps;
-  thirdAction?: never;
-}
-
 interface ThreeActions extends CommonProps {
-  type: "threeActions";
   firstAction: HeaderActionProps;
   secondAction: HeaderActionProps;
   thirdAction: HeaderActionProps;
+  type: "threeActions";
 }
 
-export type HeaderSecondLevel = BackProps &
-  DiscreteTransitionProps &
-  (Base | OneAction | TwoActions | ThreeActions);
+interface TwoActions extends CommonProps {
+  firstAction: HeaderActionProps;
+  secondAction: HeaderActionProps;
+  thirdAction?: never;
+  type: "twoActions";
+}
 
 const titleHorizontalMargin: IOSpacingScale = 16;
 
@@ -274,7 +276,7 @@ export const HeaderSecondLevel = ({
   }));
 
   const [importantForAccessibility, setImportantForAccessibility] = useState<
-    "yes" | "no-hide-descendants"
+    "no-hide-descendants" | "yes"
   >("yes");
 
   // Updates accessibility state based on scroll position.
@@ -309,44 +311,44 @@ export const HeaderSecondLevel = ({
       ]}
     >
       <Animated.View
-        testID={testID}
         style={[animatedPaddingStyle, styles.headerInner]}
+        testID={testID}
       >
         {goBack ? (
           <IconButton
+            accessibilityLabel={backAccessibilityLabel}
+            color={defaultIconColor}
             icon={Platform.select({
               android: "backAndroid",
               default: "backiOS"
             })}
-            color={defaultIconColor}
+            onPress={goBack}
             /* If we specify a variant, we probably want to
               make it persistent in both light and dark modes. */
             persistentColorMode={!!variant}
-            onPress={goBack}
-            accessibilityLabel={backAccessibilityLabel}
             testID={backTestID}
           />
         ) : (
           <HSpacer size={32} />
         )}
         <View
-          ref={titleRef}
           accessibilityElementsHidden={!isTitleAccessible}
-          importantForAccessibility={importantForAccessibility}
-          accessible={isTitleAccessible}
           accessibilityLabel={title}
           accessibilityRole="header"
+          accessible={isTitleAccessible}
+          importantForAccessibility={importantForAccessibility}
+          ref={titleRef}
           style={styles.titleContainer}
         >
           <AnimatedIOText
-            size={14}
-            numberOfLines={1}
             accessible={false}
-            weight={"Semibold"}
+            numberOfLines={1}
+            size={14}
             style={[
               { color: titleColor, textAlign: "center" },
               titleAnimatedStyle
             ]}
+            weight={"Semibold"}
           >
             {title}
           </AnimatedIOText>

@@ -1,4 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
+
 import { ReceiptsCategoryFilter, receiptsCategoryFilters } from "../../types";
 import { ReceiptFilterTabs } from "../ReceiptFilterTabs";
 
@@ -8,8 +9,8 @@ describe("ReceiptFilterTabs", () => {
   const renderComponent = (selectedCategory: ReceiptsCategoryFilter) =>
     render(
       <ReceiptFilterTabs
-        selectedCategory={selectedCategory}
         onCategorySelected={mockOnCategorySelected}
+        selectedCategory={selectedCategory}
       />
     );
 

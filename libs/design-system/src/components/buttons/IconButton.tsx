@@ -4,29 +4,30 @@ import Animated, {
   useAnimatedProps,
   useReducedMotion
 } from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import {
+  hexToRgba,
   IOColors,
   IOIconButtonStyles,
-  IOThemeLight,
-  hexToRgba
+  IOThemeLight
 } from "../../core";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import {
   AnimatedIcon,
   AnimatedIconWithColorTransition,
-  IOIconSizeScale,
-  IOIcons
+  IOIcons,
+  IOIconSizeScale
 } from "../icons";
 
 export type IconButton = WithTestID<{
-  color?: "primary" | "neutral" | "contrast";
+  accessibilityHint?: string;
+  accessibilityLabel: string;
+  color?: "contrast" | "neutral" | "primary";
+  disabled?: boolean;
   icon: IOIcons;
   iconSize?: IOIconSizeScale;
-  disabled?: boolean;
-  accessibilityLabel: string;
-  accessibilityHint?: string;
   onPress: (event: GestureResponderEvent) => void;
   persistentColorMode?: boolean;
 }>;
@@ -34,8 +35,8 @@ export type IconButton = WithTestID<{
 type ColorStates = {
   icon: {
     default: string;
-    pressed: string;
     disabled: string;
+    pressed: string;
   };
 };
 
@@ -103,20 +104,20 @@ export const IconButton = ({
 
   return (
     <Pressable
+      accessibilityHint={accessibilityHint}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole={"button"}
+      accessibilityState={{ disabled }}
+      // Accessibility
+      accessible={true}
       disabled={disabled}
+      // Usability
+      // Add a touchable area around the button
+      hitSlop={8}
       // Events
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      // Accessibility
-      accessible={true}
-      accessibilityRole={"button"}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityState={{ disabled }}
-      // Usability
-      // Add a touchable area around the button
-      hitSlop={8}
       // Test
       testID={testID}
     >
@@ -130,17 +131,17 @@ export const IconButton = ({
         {!disabled ? (
           <AnimatedIconWithColorTransition
             allowFontScaling
-            name={icon}
-            size={iconSize}
             animatedProps={animatedColor}
             color={mapColorStates[color]?.icon?.default}
+            name={icon}
+            size={iconSize}
           />
         ) : (
           <AnimatedIcon
             allowFontScaling
+            color={mapColorStates[color]?.icon?.disabled}
             name={icon}
             size={iconSize}
-            color={mapColorStates[color]?.icon?.disabled}
           />
         )}
       </Animated.View>

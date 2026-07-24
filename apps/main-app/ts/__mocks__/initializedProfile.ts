@@ -1,4 +1,5 @@
 import { EmailString, FiscalCode } from "@pagopa/ts-commons/lib/strings";
+
 import { InitializedProfile } from "../../definitions/identity/InitializedProfile";
 import { ServicesPreferencesModeEnum } from "../../definitions/identity/ServicesPreferencesMode";
 import { Version } from "../../definitions/identity/Version";

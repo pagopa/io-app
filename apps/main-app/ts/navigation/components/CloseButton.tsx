@@ -1,7 +1,7 @@
-import { IOVisualCostants, IconButton } from "@io-app/design-system";
+import { IconButton, IOVisualCostants } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
-import { View } from "react-native";
 import I18n from "i18next";
+import { View } from "react-native";
 
 const CloseButton = () => {
   const navigation = useNavigation();
@@ -9,12 +9,12 @@ const CloseButton = () => {
   return (
     <View style={{ marginRight: IOVisualCostants.appMarginDefault }}>
       <IconButton
-        icon="closeMedium"
+        accessibilityLabel={I18n.t("global.buttons.close")}
         color="neutral"
+        icon="closeMedium"
         onPress={() => {
           navigation.goBack();
         }}
-        accessibilityLabel={I18n.t("global.buttons.close")}
       />
     </View>
   );

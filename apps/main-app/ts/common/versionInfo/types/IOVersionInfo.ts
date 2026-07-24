@@ -1,11 +1,11 @@
 export type IOVersionInfo = {
-  min_app_version: IOVersionPerPlatform;
   latest_released_app_version: IOVersionPerPlatform;
-  rollout_app_version: IOVersionPerPlatform;
+  min_app_version: IOVersionPerPlatform;
   min_app_version_pagopa?: IOVersionPerPlatform;
+  rollout_app_version: IOVersionPerPlatform;
 };
 
 export type IOVersionPerPlatform = {
-  ios: string;
   android: string;
+  ios: string;
 };

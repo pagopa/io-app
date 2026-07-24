@@ -1,11 +1,12 @@
-import { createStore } from "redux";
 import { render } from "@testing-library/react-native";
 import I18n from "i18next";
-import { NotificationPreviewSample } from "../NotificationPreviewSample";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { createStore } from "redux";
+
 import ROUTES from "../../../../navigation/routes";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { NotificationPreviewSample } from "../NotificationPreviewSample";
 
 describe("NotificationPreviewSample", () => {
   it("Given enabled previews and enabled reminders then title should match 'onboarding.notifications.preview.reminderOnPreviewOnTitle' key and message should match 'onboarding.notifications.preview.reminderOnPreviewOnMessage' key", () => {

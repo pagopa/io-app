@@ -15,6 +15,8 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+
+import { useIsScreenFocused } from "../../hooks/useIsScreenFocused";
 import { useLayoutSize } from "../../hooks/useLayoutSize";
 import { useCachedImage } from "../../utils/imageCache";
 import { CredentialType } from "../../utils/itwMocksUtils";
@@ -31,16 +33,26 @@ type Props = Pick<CredentialCardConfig, "background" | "color" | "overlay">;
 
 export const CardBackground = memo(({ background, color, overlay }: Props) => {
   const { size, onLayout } = useLayoutSize();
+  // Skia's Canvas can fail to paint its first frame when it mounts while the
+  // screen is mid-transition (e.g. switching to the Wallet tab right after a
+  // keyboard dismissal), leaving the card with only its white base color.
+  // Keying the Canvas on the focus state forces a remount when the screen
+  // regains focus, guaranteeing a fresh surface that repaints correctly.
+  const isFocused = useIsScreenFocused();
 
   return (
     <View
+      onLayout={onLayout}
       style={[
         StyleSheet.absoluteFillObject,
         { backgroundColor: IOColors.white }
       ]}
-      onLayout={onLayout}
     >
-      <Canvas style={StyleSheet.absoluteFillObject} pointerEvents="none">
+      <Canvas
+        key={isFocused ? "focused" : "unfocused"}
+        pointerEvents="none"
+        style={StyleSheet.absoluteFillObject}
+      >
         <SkiaGradientBackground bg={background} {...size} />
         {overlay?.showCornerOverlay && (
           <SkiaCardCornerOverlay color={color} {...size} />
@@ -75,8 +87,8 @@ const legacyCredentialGradientColors: { [type: string]: Array<string> } = {
 };
 
 type LegacyProps = {
-  credentialType: string;
   colorScheme: CardColorScheme;
+  credentialType: string;
 };
 
 /**
@@ -89,6 +101,9 @@ export const LegacyCardBackground = ({
   const { size, onLayout } = useLayoutSize();
   const image = useCachedImage(legacyCredentialCardBackgrounds[credentialType]);
   const loadingOverlayOpacity = useSharedValue(1);
+  // See CardBackground: remount the Skia Canvas on focus to avoid a blank
+  // (white) background when it fails to paint its first frame mid-transition.
+  const isFocused = useIsScreenFocused();
 
   // Read the shared value directly; animation is driven from useEffect below
   const loadingOverlayOpacityTransition = useAnimatedStyle(() => ({
@@ -112,11 +127,11 @@ export const LegacyCardBackground = ({
 
   return (
     <View
+      onLayout={onLayout}
       style={[
         StyleSheet.absoluteFillObject,
         { backgroundColor: IOColors.white }
       ]}
-      onLayout={onLayout}
     >
       <Animated.View
         style={[
@@ -125,14 +140,14 @@ export const LegacyCardBackground = ({
           { backgroundColor: IOColors["grey-100"] }
         ]}
       />
-      <Canvas style={{ flex: 1 }}>
+      <Canvas key={isFocused ? "focused" : "unfocused"} style={{ flex: 1 }}>
         {image ? (
           <SkiaImage
-            image={image}
             fit="fill"
-            width={size.width}
             height={size.height}
+            image={image}
             opacity={colorScheme === "default" ? 1 : 0.4}
+            width={size.width}
           >
             {colorScheme === "greyscale" && (
               <BlendColor color="white" mode="color" />
@@ -140,16 +155,16 @@ export const LegacyCardBackground = ({
           </SkiaImage>
         ) : (
           <RoundedRect
-            x={0}
-            y={0}
-            width={size.width}
             height={size.height}
             r={16}
+            width={size.width}
+            x={0}
+            y={0}
           >
             <LinearGradient
-              start={vec(0, 0)}
-              end={vec(size.width, size.height)}
               colors={gradientColors}
+              end={vec(size.width, size.height)}
+              start={vec(0, 0)}
             />
           </RoundedRect>
         )}

@@ -1,14 +1,15 @@
 import {
+  BodySmall,
   H6,
   HSpacer,
+  Icon,
   IOColors,
   IOSpacingScale,
-  Icon,
-  BodySmall,
   useIOTheme
 } from "@io-app/design-system";
-import { StyleSheet, View } from "react-native";
 import I18n from "i18next";
+import { StyleSheet, View } from "react-native";
+
 import { TranslationKeys } from "../../../i18n";
 
 const notificationMarginVertical: IOSpacingScale = 4;
@@ -37,7 +38,7 @@ type Props = {
 const computeTitleAndMessageKeys = (
   isPreviewEnabled: boolean,
   areRemindersEnabled: boolean
-): Record<"titleKey" | "messageKey", TranslationKeys> => {
+): Record<"messageKey" | "titleKey", TranslationKeys> => {
   if (isPreviewEnabled && areRemindersEnabled) {
     return {
       titleKey: "onboarding.notifications.preview.reminderOnPreviewOnTitle",
@@ -82,7 +83,7 @@ export const NotificationPreviewSample = ({
         }
       ]}
     >
-      <Icon size={24} name="productIOAppBlueBg" />
+      <Icon name="productIOAppBlueBg" size={24} />
       <HSpacer />
       <View style={{ flex: 1 }}>
         <H6>{I18n.t(titleKey)}</H6>

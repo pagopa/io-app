@@ -1,15 +1,16 @@
 import I18n from "i18next";
+
 import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOScrollViewWithLargeHeader";
-import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../../../store/hooks";
+import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
+import { isActiveSessionLoginSelector } from "../../../../activeSessionLogin/store/selectors";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import {
   trackSpidWizardScreen,
   trackWizardSpidSelected
 } from "../../analytics";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
-import { isActiveSessionLoginSelector } from "../../../../activeSessionLogin/store/selectors";
-import { useIOSelector } from "../../../../../../store/hooks";
 
 const SpidWizard = () => {
   const { navigate } = useIONavigation();
@@ -24,11 +25,6 @@ const SpidWizard = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      title={{
-        label,
-        accessibilityLabel: label
-      }}
-      description={I18n.t("authentication.wizards.spid_wizard.description")}
       actions={{
         type: "TwoButtons",
         primary: {
@@ -51,6 +47,11 @@ const SpidWizard = () => {
               screen: AUTHENTICATION_ROUTES.ID_ACTIVATION_WIZARD
             })
         }
+      }}
+      description={I18n.t("authentication.wizards.spid_wizard.description")}
+      title={{
+        label,
+        accessibilityLabel: label
       }}
     />
   );

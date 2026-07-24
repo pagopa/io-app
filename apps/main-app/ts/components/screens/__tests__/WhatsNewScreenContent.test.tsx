@@ -1,5 +1,6 @@
-import { fireEvent, render } from "@testing-library/react-native";
 import { Body } from "@io-app/design-system";
+import { fireEvent, render } from "@testing-library/react-native";
+
 import {
   WhatsNewScreenContent,
   WhatsNewScreenContentProps

@@ -1,20 +1,18 @@
-import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
+import configureMockStore from "redux-mock-store";
+
+import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
-import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
-
 import * as envSelectors from "../../../common/store/selectors/environment";
 import { EnvType } from "../../../common/utils/environment";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
+import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
-
-import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { ItwCardOnboardingL3Screen } from "../ItwCardOnboardingL3Screen";
 
 describe("ItwCardOnboardingL3Screen", () => {
@@ -128,7 +126,7 @@ describe("ItwCardOnboardingL3Screen", () => {
   });
 });
 
-const renderComponent = (params?: { page?: number } | undefined) => {
+const renderComponent = (params?: undefined | { page?: number }) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
@@ -144,8 +142,8 @@ const renderComponent = (params?: { page?: number } | undefined) => {
     () => (
       <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
         <ItwCardOnboardingL3Screen
-          route={{ key: "x", name: ITW_ROUTES.L3_ONBOARDING, params } as any}
           navigation={{} as any}
+          route={{ key: "x", name: ITW_ROUTES.L3_ONBOARDING, params } as any}
         />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),

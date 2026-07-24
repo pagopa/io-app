@@ -1,8 +1,9 @@
-import { Svg, Path } from "react-native-svg";
+import { Path, Svg } from "react-native-svg";
+
 import { SVGLogoProps } from "../types";
 
 const LogoPaymentExtVPay = ({ size }: SVGLogoProps) => (
-  <Svg width={size} height={size} viewBox="0 0 48 30">
+  <Svg height={size} viewBox="0 0 48 30" width={size}>
     <Path d="M47.692 0H20v30h27.692V0Z" fill="#1834CB" />
     <Path d="M47 19.482H20.695V.692h26.307v18.79Z" fill="#fff" />
     <Path

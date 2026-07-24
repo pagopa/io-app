@@ -1,4 +1,7 @@
 import { createSelector } from "reselect";
+
+import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
+import { isCredentialIssuedBeforePid } from "../../../common/utils/itwCredentialUtils";
 import {
   itwCredentialsEidIssuedAtSelector,
   itwCredentialsSelector
@@ -6,8 +9,6 @@ import {
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { getMixPanelCredential } from "../../utils";
 import { CREDENTIAL_STATUS_MAP, ItwCredentialDetails } from "../../utils/types";
-import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
-import { isCredentialIssuedBeforePid } from "../../../common/utils/itwCredentialUtils";
 
 /**
  * Map all the credentials in the Wallet and their status to the corresponding MixPanel format.

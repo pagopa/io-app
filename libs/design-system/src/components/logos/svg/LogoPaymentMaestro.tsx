@@ -1,9 +1,10 @@
-import { Svg, Path } from "react-native-svg";
+import { Path, Svg } from "react-native-svg";
+
 import { SVGLogoProps } from "../types";
 
 const LogoPaymentMaestro = ({ size }: SVGLogoProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24">
-    <Path fill="#7673C0" d="M8.75415 6.58813h6.48917v11.662H8.75415z" />
+  <Svg height={size} viewBox="0 0 24 24" width={size}>
+    <Path d="M8.75415 6.58813h6.48917v11.662H8.75415z" fill="#7673C0" />
     <Path
       d="M9.16616 12.4181c-.0018-2.2753 1.04274-4.42514 2.83254-5.82997-3.04065-2.38965-7.4072-2.04157-10.03091.79961-2.62372 2.84116-2.62372 7.22156 0 10.06276 2.62371 2.8412 6.99026 3.1892 10.03091.7996-1.7904-1.4053-2.83497-3.556-2.83254-5.832Z"
       fill="#EB001B"

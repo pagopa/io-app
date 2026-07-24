@@ -1,18 +1,19 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
+
 import { Zendesk } from "../../../../../../definitions/content/Zendesk";
 import { ZendeskCategory } from "../../../../../../definitions/content/ZendeskCategory";
 import { ZendeskSubCategory } from "../../../../../../definitions/content/ZendeskSubCategory";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { toIndexed } from "../../../../../store/helpers/indexer";
-import { appReducer } from "../../../../../store/reducers";
-import { getTimeoutError } from "../../../../../utils/errors";
 import {
   remoteError,
   remoteLoading,
   remoteReady,
   remoteUndefined
 } from "../../../../../common/model/RemoteValue";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { toIndexed } from "../../../../../store/helpers/indexer";
+import { appReducer } from "../../../../../store/reducers";
+import { getTimeoutError } from "../../../../../utils/errors";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber,

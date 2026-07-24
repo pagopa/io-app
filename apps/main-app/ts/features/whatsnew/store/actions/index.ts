@@ -7,6 +7,6 @@ type DisableWhatsNewPayload = {
 export const disableWhatsNew =
   createStandardAction("DISABLE_WHATS_NEW")<DisableWhatsNewPayload>();
 
-type WhatsNewActionsType = typeof disableWhatsNew;
-
 export type WhatsNewActions = ActionType<WhatsNewActionsType>;
+
+type WhatsNewActionsType = typeof disableWhatsNew;

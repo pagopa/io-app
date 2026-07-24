@@ -2,10 +2,11 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+
+import { SearchResult } from "../../../../../../../../definitions/cgn/merchants/SearchResult";
 import { getGenericError } from "../../../../../../../utils/errors";
 import { cgnSearchMerchants } from "../../../../store/actions/merchants";
 import { cgnSearchMerchantsSaga } from "../cgnSearchMerchantsSaga";
-import { SearchResult } from "../../../../../../../../definitions/cgn/merchants/SearchResult";
 
 const items: SearchResult["items"] = [
   {

@@ -12,15 +12,15 @@ import { ItwPreferencesActions } from "./preferences";
 import { ItwSecurePreferencesActions } from "./securePreferences";
 
 export type ItwActions =
+  | ItwBannersActions
+  | ItwCredentialsActions
+  | ItwCredentialsCatalogueActions
+  | ItwDebugActions
   | ItwEnvironmentActions
   | ItwIdentificationActions
   | ItwIssuanceActions
   | ItwLifecycleActions
-  | ItwCredentialsActions
-  | ItwWalletInstanceActions
   | ItwPreferencesActions
+  | ItwProximityActions
   | ItwSecurePreferencesActions
-  | ItwCredentialsCatalogueActions
-  | ItwBannersActions
-  | ItwDebugActions
-  | ItwProximityActions;
+  | ItwWalletInstanceActions;

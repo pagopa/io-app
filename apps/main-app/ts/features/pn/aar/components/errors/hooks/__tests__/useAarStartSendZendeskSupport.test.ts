@@ -1,9 +1,5 @@
 import { act, renderHook } from "@testing-library/react-native";
-import {
-  AAR_SUB_CATEGORY_ID,
-  SendAarZendeskSecondLevelTag,
-  useAarStartSendZendeskSupport
-} from "../useAarStartSendZendeskSupport";
+
 import {
   addTicketCustomField,
   appendLog,
@@ -16,6 +12,11 @@ import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../../../../zendesk/store/actions";
+import {
+  AAR_SUB_CATEGORY_ID,
+  SendAarZendeskSecondLevelTag,
+  useAarStartSendZendeskSupport
+} from "../useAarStartSendZendeskSupport";
 
 const mockDispatch = jest.fn();
 

@@ -1,7 +1,7 @@
 /* eslint-disable functional/immutable-data */
-import { BackHandler } from "react-native";
-import { useCallback, useEffect, useRef } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useEffect, useRef } from "react";
+import { BackHandler } from "react-native";
 
 /**
  * Custom hook to handle the hardware back button on Android devices

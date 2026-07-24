@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useState } from "react";
 import { createStore } from "redux";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { useIODispatch } from "../../../../store/hooks";
@@ -35,9 +36,9 @@ type PreferencePotState = pot.Pot<
 
 // eslint-disable-next-line functional/no-let
 let testingHookData: {
-  isLoading: boolean;
-  isError: boolean;
   isEnabled: boolean;
+  isError: boolean;
+  isLoading: boolean;
 };
 
 const mockDispatch = jest.fn();

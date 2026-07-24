@@ -1,14 +1,15 @@
-import { createStore } from "redux";
 import { AccessibilityInfo } from "react-native";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { Toasts } from "../Toasts";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import * as archivingReducer from "../../../store/reducers/archiving";
 import * as preferencesReducer from "../../../../../store/reducers/preferences";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as allPaginatedReducer from "../../../store/reducers/allPaginated";
+import * as archivingReducer from "../../../store/reducers/archiving";
+import { Toasts } from "../Toasts";
 
 const mockToastSuccess = jest.fn();
 const mockToastError = jest.fn();
@@ -200,7 +201,7 @@ describe("Toast", () => {
 });
 
 const mockSelectorOutput = (
-  processingResultType: "success" | "error" | undefined = undefined,
+  processingResultType: "error" | "success" | undefined = undefined,
   processingResultReason: string | undefined = undefined,
   isScreenReaderEnabled = false,
   inboxErrorReason: string | undefined = undefined,

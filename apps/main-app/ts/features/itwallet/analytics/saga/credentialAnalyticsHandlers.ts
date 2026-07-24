@@ -1,24 +1,63 @@
 import { SagaIterator } from "redux-saga";
 import { select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
+import { GlobalState } from "../../../../store/reducers/types";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
-  itwCredentialsStore,
-  itwCredentialsRemove
+  itwCredentialsRemove,
+  itwCredentialsStore
 } from "../../credentials/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   updateCredentialProperties,
-  updateItwStatusAndPIDProperties
+  updateItwStatusAndPIDProperties,
+  updateThirdPartyCredentialProperty
 } from "../properties/propertyUpdaters";
 import { getMixPanelCredential } from "../utils";
 import { MixPanelCredential } from "../utils/types";
-import { GlobalState } from "../../../../store/reducers/types";
-import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 
 const MIXPANEL_EID_CREDENTIALS: ReadonlySet<MixPanelCredential> = new Set([
-  "ITW_PID",
-  "ITW_ID_V2"
+  "ITW_ID_V2",
+  "ITW_PID"
 ]);
+
+/**
+ * Handles analytics updates when an ITW credential is removed.
+ */
+export function* handleCredentialRemovedAnalytics(
+  action: ActionType<typeof itwCredentialsRemove>
+): SagaIterator {
+  const state: GlobalState = yield* select();
+  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+
+  const credential = getAnalyticsCredentialFromStored(action.payload, isItwL3);
+
+  if (!credential) {
+    return;
+  }
+
+  /**
+   * During ITW upgrade, eID (ID_V2) is removed from the store
+   * but must NOT be marked as deleted in analytics.
+   * In case of wallet revocation, all analytics properties are
+   * already reset by updatePropertiesWalletRevoked.
+   */
+  if (MIXPANEL_EID_CREDENTIALS.has(credential)) {
+    return;
+  }
+
+  updateCredentialProperties(credential, "not_available");
+  updateThirdPartyCredentialProperty(state);
+}
+
+/**
+ * Handles aggregate analytics updates when catalogue metadata is refreshed.
+ */
+export function* handleCredentialsCatalogueLoadedAnalytics(): SagaIterator {
+  const state: GlobalState = yield* select();
+  updateThirdPartyCredentialProperty(state);
+}
 
 /**
  * Handles analytics updates when an ITW credential is stored.
@@ -41,33 +80,7 @@ export function* handleCredentialStoredAnalytics(
   }
 
   updateCredentialProperties(credential, "valid");
-}
-
-/**
- * Handles analytics updates when an ITW credential is removed.
- */
-export function* handleCredentialRemovedAnalytics(
-  action: ActionType<typeof itwCredentialsRemove>
-): SagaIterator {
-  const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
-
-  const credential = getAnalyticsCredentialFromStored(action.payload, isItwL3);
-
-  if (!credential) {
-    return;
-  }
-
-  /**
-   * During ITW upgrade, eID (ID_V2) is removed from the store
-   * but must NOT be marked as deleted in analytics.
-   * In case of wallet revocation, all analytics properties are
-   * already reset by updatePropertiesWalletRevoked.
-   */
-  if (MIXPANEL_EID_CREDENTIALS.has(credential)) {
-    return;
-  }
-
-  updateCredentialProperties(credential, "not_available");
+  updateThirdPartyCredentialProperty(state);
 }
 
 function getAnalyticsCredentialFromStored(

@@ -1,13 +1,14 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServicesClient } from "../../../../api/ServicesClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { loadServiceDetail } from "../store/actions/details";
-import { readablePrivacyReport } from "../../../../utils/reporters";
 
 /**
  * saga to handle the loading of a service detail

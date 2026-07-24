@@ -1,10 +1,11 @@
 import I18n from "i18next";
-import { OperationResultScreenContent } from "../screens/OperationResultScreenContent";
+
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import { OperationResultScreenContent } from "../screens/OperationResultScreenContent";
 
 type OfflineFailureComponentProps = {
-  onRetry?: () => void;
   isHeaderVisible?: boolean;
+  onRetry?: () => void;
 };
 
 export const OfflineFailureComponent = ({
@@ -14,9 +15,8 @@ export const OfflineFailureComponent = ({
   useHeaderSecondLevel({ title: "" });
   return (
     <OperationResultScreenContent
+      isHeaderVisible={isHeaderVisible}
       pictogram="lostConnection"
-      title={I18n.t("global.offline.screen.title")}
-      subtitle={I18n.t("global.offline.screen.subtitle")}
       secondaryAction={
         onRetry
           ? {
@@ -25,7 +25,8 @@ export const OfflineFailureComponent = ({
             }
           : undefined
       }
-      isHeaderVisible={isHeaderVisible}
+      subtitle={I18n.t("global.offline.screen.subtitle")}
+      title={I18n.t("global.offline.screen.title")}
     />
   );
 };

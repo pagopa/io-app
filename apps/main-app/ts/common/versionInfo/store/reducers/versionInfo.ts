@@ -1,9 +1,9 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
@@ -23,10 +23,10 @@ export const versionInfoReducer = (
   action: Action
 ): VersionInfoState => {
   switch (action.type) {
-    case getType(versionInfoLoadSuccess):
-      return action.payload;
     case getType(versionInfoLoadFailure):
       return null;
+    case getType(versionInfoLoadSuccess):
+      return action.payload;
     default:
       return state;
   }

@@ -1,3 +1,10 @@
+import type {
+  AcceptedFields,
+  ProximityDetails,
+  RequestedDocument,
+  VerifierRequest
+} from "./types";
+
 import { assert } from "../../../../../utils/assert";
 import {
   parseClaims,
@@ -6,16 +13,10 @@ import {
 import { getRepresentativeVaultId } from "../../../common/utils/itwCredentialUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
+  MissingCredentialError,
   TimeoutError,
-  UntrustedRpError,
-  MissingCredentialError
+  UntrustedRpError
 } from "./errors";
-import type {
-  AcceptedFields,
-  ProximityDetails,
-  RequestedDocument,
-  VerifierRequest
-} from "./types";
 
 const WIA_DOC_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";
 
@@ -33,8 +34,8 @@ export const promiseWithTimeout = <T>(
 };
 
 type GetProximityDetails = (params: {
+  credentials: Partial<Record<string, CredentialMetadata>>;
   request: VerifierRequest["request"];
-  credentials: Record<string, CredentialMetadata>;
   requireAuthenticated?: boolean;
 }) => ProximityDetails;
 
@@ -146,7 +147,7 @@ export const getProximityDetails: GetProximityDetails = ({
  */
 export const getDocuments = async (
   request: VerifierRequest["request"],
-  credentials: Record<string, CredentialMetadata>,
+  credentials: Partial<Record<string, CredentialMetadata>>,
   getCredential: (vaultId: string) => Promise<string | undefined>
 ): Promise<Array<RequestedDocument>> => {
   const documents = await Promise.all(

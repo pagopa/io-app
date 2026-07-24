@@ -1,14 +1,16 @@
-import { Ref, ReactNode } from "react";
+import { ReactNode, Ref } from "react";
 import { View, ViewProps, ViewStyle } from "react-native";
+
 import type { IOAppMargin } from "../../core";
+
 import { IOVisualCostants } from "../../core/IOStyles";
 import { WithTestID } from "../../utils/types";
 
 type IOContentWrapperProps = WithTestID<
   Omit<ViewProps, "style"> & {
-    ref?: Ref<View>;
-    margin?: IOAppMargin;
     children: ReactNode;
+    margin?: IOAppMargin;
+    ref?: Ref<View>;
     style?: Omit<
       ViewStyle,
       "paddingHorizontal" | "paddingLeft" | "paddingRight"
@@ -30,12 +32,12 @@ export const ContentWrapper = ({
   ...rest
 }: IOContentWrapperProps) => (
   <View
-    testID={testID}
+    ref={ref}
     style={{
       paddingHorizontal: margin,
       ...style
     }}
-    ref={ref}
+    testID={testID}
     {...rest}
   >
     {children}

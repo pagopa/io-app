@@ -1,10 +1,11 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
+import { format } from "../../../../utils/dates";
 import {
   formatNumberAmount,
   formatNumberCentsToAmount
 } from "../../../../utils/stringBuilder";
-import { format } from "../../../../utils/dates";
 
 export const formatNumberCurrency = (amount: number) =>
   `${formatNumberAmount(amount, false)} €`;

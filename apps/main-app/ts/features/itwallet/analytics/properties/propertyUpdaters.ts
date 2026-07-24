@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+
 import {
   getPeople,
   isMixpanelInstanceInitialized,
@@ -14,17 +15,19 @@ import {
   itwAuthLevelSelector,
   itwIdentificationModeSelector
 } from "../../common/store/selectors/preferences";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { isItwAnalyticsCredential } from "../utils";
 import { MixPanelCredential } from "../utils/types";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   buildItwBaseProperties,
   buildPidProperties,
+  buildThirdPartyCredentialProperty,
+  buildWalletListCredentialProperty,
   computeItwStatus
 } from "./basePropertyBuilder";
 import {
-  ItwProfileProperties,
-  forceUpdateItwProfileProperties
+  forceUpdateItwProfileProperties,
+  ItwProfileProperties
 } from "./profileProperties";
 import {
   ITW_ANALYTICS_CREDENTIALS,
@@ -32,9 +35,9 @@ import {
   WalletRevokedAnalyticsEvent
 } from "./propertyTypes";
 import {
-  ItwSuperProperties,
   buildItwSuperProperties,
-  forceUpdateItwSuperProperties
+  forceUpdateItwSuperProperties,
+  ItwSuperProperties
 } from "./superProperties";
 
 /**
@@ -88,7 +91,6 @@ export const updateItwStatusAndPIDProperties = (state: GlobalState) => {
 /**
  * This function is used to set all to not_available / not_active when wallet
  * is revoked or when the wallet section is visualized in empty state
- * @param state
  */
 export const updatePropertiesWalletRevoked = () => {
   const credentialsResetProps = Object.fromEntries(
@@ -97,7 +99,9 @@ export const updatePropertiesWalletRevoked = () => {
 
   const finalProps: WalletRevokedAnalyticsEvent = {
     ...credentialsResetProps,
-    ITW_STATUS_V2: "not_active"
+    ITW_STATUS_V2: "not_active",
+    ITW_THIRD_PARTY_CREDENTIAL: "not_available",
+    ITW_WALLET_LIST_CREDENTIAL: "not_available"
   };
 
   forceUpdateItwProfileProperties(finalProps);
@@ -106,7 +110,7 @@ export const updatePropertiesWalletRevoked = () => {
 
 export const updateCredentialProperties = (
   credential: MixPanelCredential,
-  status: "valid" | "not_available"
+  status: "not_available" | "valid"
 ) => {
   if (!isItwAnalyticsCredential(credential)) {
     return;
@@ -124,11 +128,10 @@ export const updateCredentialProperties = (
 /**
  * Track the reason for offline access on Mixpanel
  * @param action - The action that was dispatched
- * @param state - The current state of the application
  */
 export const updateOfflineAccessReason = (
   action: Action
-): void | ReadonlyArray<null> => {
+): ReadonlyArray<null> | void => {
   switch (action.type) {
     case getType(setOfflineAccessReason):
       forceUpdateItwSuperProperties({
@@ -141,4 +144,23 @@ export const updateOfflineAccessReason = (
         OFFLINE_ACCESS_REASON: "not_available"
       });
   }
+};
+
+/**
+ * Recomputes and syncs the aggregate IT Wallet credential properties
+ * (third-party + wallet list).
+ * It updates both Profile and Super properties so future events and user profile
+ * data stay aligned after credential store/remove operations and catalogue refresh.
+ */
+export const updateThirdPartyCredentialProperty = (state: GlobalState) => {
+  const thirdPartyCredentialProperty = buildThirdPartyCredentialProperty(state);
+  const walletListCredentialProperty = buildWalletListCredentialProperty(state);
+  forceUpdateItwProfileProperties({
+    ITW_THIRD_PARTY_CREDENTIAL: thirdPartyCredentialProperty,
+    ITW_WALLET_LIST_CREDENTIAL: walletListCredentialProperty
+  });
+  forceUpdateItwSuperProperties({
+    ITW_THIRD_PARTY_CREDENTIAL: thirdPartyCredentialProperty,
+    ITW_WALLET_LIST_CREDENTIAL: walletListCredentialProperty
+  });
 };

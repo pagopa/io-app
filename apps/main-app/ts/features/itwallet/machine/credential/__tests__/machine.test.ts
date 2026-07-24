@@ -8,6 +8,7 @@ import {
   StateFrom,
   waitFor as waitForActor
 } from "xstate";
+
 import {
   ItwStatusAssertionMocks,
   ItwStoredCredentialsMocks
@@ -15,8 +16,8 @@ import {
 import {
   CredentialAccessToken,
   CredentialBundle,
-  EvaluatedDcqlQueryResult,
   CredentialMetadata,
+  EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject
 } from "../../../common/utils/itwTypesUtils";

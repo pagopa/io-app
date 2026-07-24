@@ -1,5 +1,6 @@
 import { Ref } from "react";
 import { Pressable, View } from "react-native";
+
 import { useIOTheme } from "../../context";
 import { IOFontWeight } from "../../utils/fonts";
 import {
@@ -9,10 +10,11 @@ import {
   TypographicStyleProps
 } from "./IOText";
 
-type LabelMiniProps = Omit<TypographicStyleProps, "ref"> & {
-  ref?: Ref<View>;
-  weight?: Extract<IOFontWeight, "Regular" | "Semibold">;
-} & TypographicStyleAsLinkProps;
+type LabelMiniProps = Omit<TypographicStyleProps, "ref"> &
+  TypographicStyleAsLinkProps & {
+    ref?: Ref<View>;
+    weight?: Extract<IOFontWeight, "Regular" | "Semibold">;
+  };
 
 /**
  * `LabelMini` typographic style
@@ -54,9 +56,9 @@ export const LabelMini = ({
     // type can be removed entirely.
     return (
       <Pressable
+        accessibilityRole={accessibilityRole}
         onPress={onPress}
         ref={ref}
-        accessibilityRole={accessibilityRole}
       >
         <IOText {...LabelMiniProps}>{props.children}</IOText>
       </Pressable>

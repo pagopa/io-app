@@ -1,5 +1,6 @@
 import {
   H4,
+  hexToRgba,
   HSpacer,
   IOColors,
   IOPictograms,
@@ -8,18 +9,18 @@ import {
   Pictogram,
   PictogramBleed,
   SVGPictogramProps,
-  VStack,
-  hexToRgba,
-  useIOTheme
+  useIOTheme,
+  VStack
 } from "@io-app/design-system";
-import { StyleSheet, View } from "react-native";
 import { JSX } from "react";
+import { StyleSheet, View } from "react-native";
+
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import {
-  DSAssetViewerBox,
-  assetItemGutter
+  assetItemGutter,
+  DSAssetViewerBox
 } from "../components/DSAssetViewerBox";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -48,14 +49,14 @@ const styles = StyleSheet.create({
   }
 });
 
+interface PictogramSetObject {
+  [key: string]: ({ size }: SVGPictogramProps) => JSX.Element;
+}
 // Filter the main object, removing already displayed pictograms in the other sets
 type PictogramSubsetObject = Record<
   string,
   ({ size }: SVGPictogramProps) => JSX.Element
 >;
-interface PictogramSetObject {
-  [key: string]: ({ size }: SVGPictogramProps) => JSX.Element;
-}
 
 const filterPictogramSet = (
   pictogramSubsetObject: PictogramSubsetObject,
@@ -84,6 +85,12 @@ export const DSPictograms = () => {
         <View style={styles.itemsWrapper}>
           {Object.entries(filteredIOPictograms).map(([pictogramItemName]) => (
             <DSAssetViewerBox
+              image={
+                <Pictogram
+                  name={pictogramItemName as IOPictograms}
+                  size="100%"
+                />
+              }
               key={pictogramItemName}
               name={pictogramItemName}
               spacing="small"
@@ -91,12 +98,6 @@ export const DSPictograms = () => {
                 Object.keys(IOPictogramsBleed).includes(pictogramItemName)
                   ? "hasBleed"
                   : "vector"
-              }
-              image={
-                <Pictogram
-                  name={pictogramItemName as IOPictograms}
-                  size="100%"
-                />
               }
             />
           ))}
@@ -108,16 +109,16 @@ export const DSPictograms = () => {
           <View style={styles.itemsWrapper}>
             {Object.entries(IOPictogramsBleed).map(([pictogramItemName]) => (
               <DSAssetViewerBox
-                type="bleed"
-                key={pictogramItemName}
-                name={pictogramItemName}
-                size="small"
                 image={
                   <PictogramBleed
                     name={pictogramItemName as IOPictogramsBleed}
                     size="100%"
                   />
                 }
+                key={pictogramItemName}
+                name={pictogramItemName}
+                size="small"
+                type="bleed"
               />
             ))}
           </View>
@@ -129,16 +130,16 @@ export const DSPictograms = () => {
           <View style={styles.itemsWrapper}>
             {Object.entries(IOPictogramsObject).map(([pictogramItemName]) => (
               <DSAssetViewerBox
-                key={pictogramItemName}
-                name={pictogramItemName}
-                spacing="small"
-                size="small"
                 image={
                   <Pictogram
                     name={pictogramItemName as IOPictogramsObject}
                     size="100%"
                   />
                 }
+                key={pictogramItemName}
+                name={pictogramItemName}
+                size="small"
+                spacing="small"
               />
             ))}
           </View>

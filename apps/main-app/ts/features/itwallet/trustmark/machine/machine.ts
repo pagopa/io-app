@@ -1,8 +1,9 @@
 import { addSeconds, differenceInSeconds, isPast } from "date-fns";
 import { assign, fromPromise, not, setup } from "xstate";
-import { ItwTags } from "../../machine/tags";
+
 import { trackItwTrustmarkRenewFailure } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
+import { ItwTags } from "../../machine/tags";
 import {
   GetCredentialTrustmarkUrlActorInput,
   GetCredentialTrustmarkUrlActorOutput,

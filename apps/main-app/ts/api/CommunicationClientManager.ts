@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
-import { createClient, Client } from "../../definitions/communication/client";
+
+import { Client, createClient } from "../../definitions/communication/client";
 import { KeyInfo } from "../features/lollipop/utils/crypto";
 import { lollipopFetch } from "../features/lollipop/utils/fetch";
 import { isTestEnv } from "../utils/environment";

@@ -1,11 +1,12 @@
 import { BodySmall } from "@io-app/design-system";
 import I18n from "i18next";
+
 import { useIOSelector } from "../../../store/hooks";
-import { PNMessage } from "../store/types/types";
-import { aarAdresseeDenominationSelector } from "../aar/store/selectors";
 import { sendShowAbstractSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
 import { SendUserType } from "../../pushNotifications/analytics";
+import { aarAdresseeDenominationSelector } from "../aar/store/selectors";
+import { PNMessage } from "../store/types/types";
 
 export type MessageDetailsContentProps = {
   message: PNMessage;

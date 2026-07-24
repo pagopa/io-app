@@ -1,8 +1,9 @@
 import { LabelMini } from "@io-app/design-system";
 import { render } from "@testing-library/react-native";
+import I18n from "i18next";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import I18n from "i18next";
+
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
@@ -71,7 +72,7 @@ describe("Test BonusCard", () => {
         organizationName: T_ORG_NAME,
         cardColorSchemeValues: mockResolvedColors,
         status: (
-          <LabelMini weight="Regular" color="grey-650">
+          <LabelMini color="grey-650" weight="Regular">
             {I18n.t("bonusCard.validUntil", {
               endDate: format(T_END_DATE, "DD/MM/YY")
             })}

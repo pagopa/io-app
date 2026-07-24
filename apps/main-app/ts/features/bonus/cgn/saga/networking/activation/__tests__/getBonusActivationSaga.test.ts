@@ -1,14 +1,15 @@
 import * as E from "fp-ts/Either";
 import { testSaga } from "redux-saga-test-plan";
+
+import { StatusEnum } from "../../../../../../../../definitions/cgn/CgnActivationDetail";
+import { InstanceId } from "../../../../../../../../definitions/cgn/InstanceId";
+import { startTimer } from "../../../../../../../utils/timer";
+import { cgnActivationStatus } from "../../../../store/actions/activation";
+import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";
 import {
   cgnActivationSaga,
   handleCgnStatusPolling
 } from "../getBonusActivationSaga";
-import { cgnActivationStatus } from "../../../../store/actions/activation";
-import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";
-import { startTimer } from "../../../../../../../utils/timer";
-import { StatusEnum } from "../../../../../../../../definitions/cgn/CgnActivationDetail";
-import { InstanceId } from "../../../../../../../../definitions/cgn/InstanceId";
 
 describe("cgnActivationSaga", () => {
   const startCgnActivation = jest.fn();

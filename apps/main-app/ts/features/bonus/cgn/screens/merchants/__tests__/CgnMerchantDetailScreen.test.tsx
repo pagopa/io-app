@@ -1,8 +1,8 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { act } from "@testing-library/react-native";
+import I18n from "i18next";
 import { createStore } from "redux";
 
-import I18n from "i18next";
 import { Merchant } from "../../../../../../../definitions/cgn/merchants/Merchant";
 import { ProductCategoryEnum } from "../../../../../../../definitions/cgn/merchants/ProductCategory";
 import { applicationChangeState } from "../../../../../../store/actions/application";

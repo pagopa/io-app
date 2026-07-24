@@ -1,15 +1,16 @@
 import _ from "lodash";
 import MockDate from "mockdate";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import {
-  itwAuthLevelSelector,
-  itwWalletActivationFeedbackBannerSelector,
-  itwIdentificationModeSelector,
-  itwIsPidReissuingSurveyHiddenSelector
-} from "../preferences";
 import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 import { ItwWalletActivationFeedbackBannerData } from "../../actions/preferences";
+import {
+  itwAuthLevelSelector,
+  itwIdentificationModeSelector,
+  itwIsPidReissuingSurveyHiddenSelector,
+  itwWalletActivationFeedbackBannerSelector
+} from "../preferences";
 
 describe("itwAuthLevelSelector", () => {
   afterEach(() => {

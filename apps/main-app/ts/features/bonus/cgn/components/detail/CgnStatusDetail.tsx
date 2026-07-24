@@ -2,6 +2,7 @@ import { Divider, ListItemHeader, ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
 import { FunctionComponent } from "react";
 import { View } from "react-native";
+
 import { Card } from "../../../../../../definitions/cgn/Card";
 import { CardActivated } from "../../../../../../definitions/cgn/CardActivated";
 import { CardExpired } from "../../../../../../definitions/cgn/CardExpired";
@@ -27,9 +28,6 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
         <Divider />
         {CardRevoked.is(cgnDetail) && (
           <ListItemInfo
-            icon="calendar"
-            label={I18n.t("bonus.cgn.detail.status.date.revoked")}
-            value={formatDateAsShortFormat(cgnDetail.revocation_date)}
             accessibilityLabel={`${getAccessibleExpirationDate(
               cgnDetail.revocation_date,
               "revoked"
@@ -43,13 +41,13 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
                 testID: "status-badge"
               }
             }}
+            icon="calendar"
+            label={I18n.t("bonus.cgn.detail.status.date.revoked")}
+            value={formatDateAsShortFormat(cgnDetail.revocation_date)}
           />
         )}
         {CardExpired.is(cgnDetail) && (
           <ListItemInfo
-            icon="calendar"
-            label={I18n.t("bonus.cgn.detail.status.date.expired")}
-            value={formatDateAsShortFormat(cgnDetail.expiration_date)}
             accessibilityLabel={`${getAccessibleExpirationDate(
               cgnDetail.expiration_date,
               "expired"
@@ -63,13 +61,13 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
                 testID: "status-badge"
               }
             }}
+            icon="calendar"
+            label={I18n.t("bonus.cgn.detail.status.date.expired")}
+            value={formatDateAsShortFormat(cgnDetail.expiration_date)}
           />
         )}
         {CardActivated.is(cgnDetail) && (
           <ListItemInfo
-            icon="calendar"
-            label={I18n.t("bonus.cgn.detail.status.expiration.cgn")}
-            value={formatDateAsShortFormat(cgnDetail.expiration_date)}
             accessibilityLabel={`${getAccessibleExpirationDate(
               cgnDetail.expiration_date,
               "active"
@@ -83,6 +81,9 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
                 testID: "status-badge"
               }
             }}
+            icon="calendar"
+            label={I18n.t("bonus.cgn.detail.status.expiration.cgn")}
+            value={formatDateAsShortFormat(cgnDetail.expiration_date)}
           />
         )}
       </>

@@ -1,7 +1,8 @@
-import { createStore } from "redux";
 import { Platform } from "react-native";
-import { appReducer } from "../../../../../../store/reducers";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { CieCardReaderScreenWrapper } from "../CieCardReaderScreenWrapper";

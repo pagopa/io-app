@@ -1,11 +1,14 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { getServiceDetails } from "../../../../services/common/saga/getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
+import { trackPNNotificationLoadSuccess } from "../../../analytics";
 import { trackSendAarFailure } from "../../analytics";
 import { SendAarClient } from "../../api/client";
 import {
@@ -20,8 +23,6 @@ import {
   sendAarMockStates
 } from "../../utils/testUtils";
 import { fetchAarDataSaga, testable } from "../fetchNotificationDataSaga";
-import { trackPNNotificationLoadSuccess } from "../../../analytics";
-import { getServiceDetails } from "../../../../services/common/saga/getServiceDetails";
 
 const mockCurrentState = {
   type: sendAarFlowStates.fetchingNotificationData,

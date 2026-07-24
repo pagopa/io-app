@@ -1,4 +1,5 @@
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
+
 import { TosConfig } from "../../../definitions/content/TosConfig";
 
 export const getTosVersion = (tosData: TosConfig): NonNegativeNumber =>

@@ -1,7 +1,8 @@
 import { call } from "typed-redux-saga/macro";
+
+import { communicationClientManager } from "../../../api/CommunicationClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { getKeyInfo } from "../../lollipop/saga";
-import { communicationClientManager } from "../../../api/CommunicationClientManager";
 
 export function* getCommunicationClient(sessionToken: string) {
   const keyInfo = yield* call(getKeyInfo);

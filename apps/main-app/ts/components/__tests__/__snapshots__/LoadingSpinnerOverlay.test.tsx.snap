@@ -353,7 +353,6 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                 {
                   "alignItems": "center",
                   "borderCurve": "continuous",
-                  "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "overflow": "hidden",
@@ -377,7 +376,6 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                 {
                   "alignItems": "center",
                   "borderCurve": "continuous",
-                  "elevation": 0,
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "overflow": "hidden",

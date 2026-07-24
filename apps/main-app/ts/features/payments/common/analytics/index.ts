@@ -1,4 +1,4 @@
 export type PaymentsTrackingConfiguration = {
-  savedPaymentMethods: number;
   paymentsCompleted?: number;
+  savedPaymentMethods: number;
 };

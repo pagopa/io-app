@@ -1,2 +1,2 @@
-export * from "./useFooterActionsMeasurements";
 export * from "./useFooterActionsInlineMeasurements";
+export * from "./useFooterActionsMeasurements";

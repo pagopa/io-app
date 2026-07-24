@@ -1,16 +1,16 @@
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 
-export function trackLoginRootedScreen() {
+export function trackForcedUpdateScreen() {
   void mixpanelTrack(
-    "LOGIN_JAILBREAK",
+    "APP_FORCED_UPDATE",
     buildEventProperties("UX", "screen_view")
   );
 }
 
-export function trackForcedUpdateScreen() {
+export function trackLoginRootedScreen() {
   void mixpanelTrack(
-    "APP_FORCED_UPDATE",
+    "LOGIN_JAILBREAK",
     buildEventProperties("UX", "screen_view")
   );
 }

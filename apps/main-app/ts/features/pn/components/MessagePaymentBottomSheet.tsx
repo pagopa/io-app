@@ -1,25 +1,26 @@
+import I18n from "i18next";
 import { MutableRefObject } from "react";
 import { Dimensions } from "react-native";
-import I18n from "i18next";
+
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { useIODispatch } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { cancelQueuedPaymentUpdates } from "../../messages/store/actions";
-import { getRptIdStringFromPayment } from "../utils/rptId";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
+import { getRptIdStringFromPayment } from "../utils/rptId";
 
 export type MessagePaymentBottomSheetProps = {
   messageId: string;
   payments: ReadonlyArray<NotificationPaymentInfo>;
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
-  serviceId: ServiceId;
   sendOpeningSource: SendOpeningSource;
   sendUserType: SendUserType;
+  serviceId: ServiceId;
 };
 
 export const MessagePaymentBottomSheet = ({
@@ -45,13 +46,13 @@ export const MessagePaymentBottomSheet = ({
               isPNPayment
               key={`LI_${index}`}
               messageId={messageId}
-              rptId={rptId}
-              noticeNumber={payment.noticeCode}
               noSpaceOnTop={index === 0}
-              serviceId={serviceId}
-              willNavigateToPayment={() => dismiss()}
+              noticeNumber={payment.noticeCode}
+              rptId={rptId}
               sendOpeningSource={sendOpeningSource}
               sendUserType={sendUserType}
+              serviceId={serviceId}
+              willNavigateToPayment={() => dismiss()}
             />
           );
         })}

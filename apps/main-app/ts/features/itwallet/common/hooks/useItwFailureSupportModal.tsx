@@ -1,8 +1,3 @@
-import { Fragment, JSX } from "react";
-import { Linking, View } from "react-native";
-import * as O from "fp-ts/lib/Option";
-import { constNull, pipe } from "fp-ts/lib/function";
-import { Errors } from "@pagopa/io-react-native-wallet";
 import {
   Divider,
   ListItemAction,
@@ -12,14 +7,20 @@ import {
   VSpacer,
   VStack
 } from "@io-app/design-system";
+import { Errors } from "@pagopa/io-react-native-wallet";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { Fragment, JSX } from "react";
+import { Linking, View } from "react-native";
+
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { IssuanceFailure } from "../../machine/eid/failure";
-import { CredentialIssuanceFailure } from "../../machine/credential/failure";
-import { ItwFailure } from "../utils/ItwFailureTypes.ts";
-import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
 import { isDefined } from "../../../../utils/guards.ts";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { CredentialIssuanceFailure } from "../../machine/credential/failure";
+import { IssuanceFailure } from "../../machine/eid/failure";
+import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
+import { ItwFailure } from "../utils/ItwFailureTypes.ts";
 import {
   useItwZendeskSupport,
   ZendeskSubcategoryValue
@@ -29,8 +30,8 @@ const { isWalletProviderResponseError, isIssuerResponseError } = Errors;
 
 type SupportContactMethods = Partial<{
   email: string;
-  mobile: string;
   landline: string;
+  mobile: string;
   website: string;
 }>;
 
@@ -70,15 +71,15 @@ const extractErrorCode = (failure: Props["failure"]) => {
 };
 
 type Props = {
+  credentialType?: string;
   failure:
-    | IssuanceFailure
     | CredentialIssuanceFailure
+    | IssuanceFailure
     | ItwFailure
     | RemoteFailure;
-  credentialType?: string;
   supportChatEnabled: boolean;
-  zendeskSubcategory: ZendeskSubcategoryValue;
   supportLink?: string;
+  zendeskSubcategory: ZendeskSubcategoryValue;
 };
 
 /**
@@ -106,15 +107,15 @@ export const useItwFailureSupportModal = ({
     if (supportChatEnabled) {
       return [
         <ListItemAction
-          key="contact-method-chat"
-          testID="contact-method-chat"
-          variant="primary"
           icon="chat"
+          key="contact-method-chat"
           label={I18n.t("features.itWallet.support.chat")}
           onPress={() => {
             dismiss();
             handleAskAssistance();
           }}
+          testID="contact-method-chat"
+          variant="primary"
         />
       ];
     }
@@ -132,13 +133,13 @@ export const useItwFailureSupportModal = ({
         O.fromNullable(contactMethods.mobile),
         O.fold(constNull, value => (
           <ListItemAction
-            testID="contact-method-mobile"
-            variant="primary"
             icon="phone"
             label={I18n.t("features.itWallet.support.phone", {
               phoneNumber: value
             })}
-            onPress={() => Linking.openURL(`tel:${value}`)}
+            onPress={() => void Linking.openURL(`tel:${value}`)}
+            testID="contact-method-mobile"
+            variant="primary"
           />
         ))
       ),
@@ -146,11 +147,11 @@ export const useItwFailureSupportModal = ({
         O.fromNullable(contactMethods.email),
         O.fold(constNull, value => (
           <ListItemAction
-            testID="contact-method-email"
-            variant="primary"
             icon="chat"
             label={I18n.t("features.itWallet.support.email")}
-            onPress={() => Linking.openURL(`mailto:${value}`)}
+            onPress={() => void Linking.openURL(`mailto:${value}`)}
+            testID="contact-method-email"
+            variant="primary"
           />
         ))
       ),
@@ -158,11 +159,11 @@ export const useItwFailureSupportModal = ({
         O.fromNullable(contactMethods.website),
         O.fold(constNull, value => (
           <ListItemAction
-            testID="contact-method-website"
-            variant="primary"
             icon="website"
             label={I18n.t("features.itWallet.support.website")}
-            onPress={() => Linking.openURL(value)}
+            onPress={() => void Linking.openURL(value)}
+            testID="contact-method-website"
+            variant="primary"
           />
         ))
       ),
@@ -170,9 +171,9 @@ export const useItwFailureSupportModal = ({
         O.fromNullable(contactMethods.landline),
         O.fold(constNull, value => (
           <ListItemInfo
-            testID="contact-method-landline"
             icon="phone"
             label={I18n.t("features.itWallet.support.landline")}
+            testID="contact-method-landline"
             value={value}
           />
         ))
@@ -202,11 +203,11 @@ export const useItwFailureSupportModal = ({
             {supportLink && (
               <>
                 <ListItemAction
-                  testID="contact-method-help-center"
-                  variant="primary"
                   icon="website"
                   label={I18n.t("features.itWallet.support.visitHelpCenter")}
-                  onPress={() => Linking.openURL(supportLink)}
+                  onPress={() => void Linking.openURL(supportLink)}
+                  testID="contact-method-help-center"
+                  variant="primary"
                 />
                 <Divider />
               </>
@@ -220,11 +221,11 @@ export const useItwFailureSupportModal = ({
               label={I18n.t("features.itWallet.support.additionalDataTitle")}
             />
             <ListItemInfoCopy
+              accessibilityHint={I18n.t("clipboard.copyIntoClipboard")}
               icon="ladybug"
               label={I18n.t("features.itWallet.support.errorCode")}
-              accessibilityHint={I18n.t("clipboard.copyIntoClipboard")}
-              value={code}
               onPress={() => clipboardSetStringWithFeedback(code)}
+              value={code}
             />
             <VSpacer size={24} />
           </View>

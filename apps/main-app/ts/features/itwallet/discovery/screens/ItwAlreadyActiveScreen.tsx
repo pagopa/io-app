@@ -1,6 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
+
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -45,10 +46,6 @@ export const ItwAlreadyActiveScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="itWallet"
-      title={I18n.t("features.itWallet.discovery.alreadyActive.title")}
-      subtitle={I18n.t("features.itWallet.discovery.alreadyActive.content")}
-      isHeaderVisible={false}
       action={{
         label: I18n.t("features.itWallet.discovery.alreadyActive.action"),
         accessibilityLabel: I18n.t(
@@ -56,11 +53,14 @@ export const ItwAlreadyActiveScreen = () => {
         ),
         onPress: navigateToWallet
       }}
+      pictogram="itWallet"
       secondaryAction={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: handleClose
       }}
+      subtitle={I18n.t("features.itWallet.discovery.alreadyActive.content")}
+      title={I18n.t("features.itWallet.discovery.alreadyActive.title")}
     />
   );
 };

@@ -21,8 +21,8 @@ export const trackIDPayDisabledFeatureIngressScreen = (
 };
 
 type StaticCodeEventProperties = {
-  initiativeName?: string;
   initiativeId?: string;
+  initiativeName?: string;
 };
 export const trackIDPayStaticCodeGeneration = (
   props: StaticCodeEventProperties

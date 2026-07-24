@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { LoginType } from "../../features/authentication/activeSessionLogin/screens/analytics";
 
 export const analyticsAuthenticationStarted = createStandardAction(
@@ -10,5 +11,5 @@ export const analyticsAuthenticationCompleted = createStandardAction(
 )<LoginType>();
 
 export type AnalyticsActions =
-  | ActionType<typeof analyticsAuthenticationStarted>
-  | ActionType<typeof analyticsAuthenticationCompleted>;
+  | ActionType<typeof analyticsAuthenticationCompleted>
+  | ActionType<typeof analyticsAuthenticationStarted>;

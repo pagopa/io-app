@@ -1,19 +1,19 @@
-import { appReducer } from "../../../../../store/reducers";
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { Action } from "../../../../../store/actions/types";
+import { appReducer } from "../../../../../store/reducers";
 import {
-  LoadMessageByIdFailureKind,
   getMessageDataAction,
   loadMessageById,
+  LoadMessageByIdFailureKind,
   reloadAllMessages,
   resetGetMessageDataAction
 } from "../../actions";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { Action } from "../../../../../store/actions/types";
 import {
-  INITIAL_STATE,
-  MessageGetStatusFailurePhaseType,
   blockedFromPushNotificationSelector,
+  INITIAL_STATE,
   messageGetStatusErrorPhaseSelector,
+  MessageGetStatusFailurePhaseType,
   messageGetStatusReducer,
   messageRouterScreenErrorVariantSelector,
   messageSuccessDataSelector,
@@ -319,10 +319,10 @@ describe("messageRouterScreenErrorVariantSelector", () => {
   const TEST_MESSAGE_ID = "test-message-id";
 
   type Scenario = {
-    name: string;
-    failurePhase: MessageGetStatusFailurePhaseType;
     byIdFailureKind: LoadMessageByIdFailureKind | undefined;
-    expectedVariant: "messageNotFound" | "genericError" | "thirdPartyError";
+    expectedVariant: "genericError" | "messageNotFound" | "thirdPartyError";
+    failurePhase: MessageGetStatusFailurePhaseType;
+    name: string;
   };
 
   const scenarios: Array<Scenario> = [

@@ -1,9 +1,11 @@
 import { IOToast, IOVisualCostants } from "@io-app/design-system";
 import I18n from "i18next";
 import { useRef } from "react";
+
 import { useIOSelector } from "../../../../../store/hooks";
-import { getDeviceId } from "../../../../../utils/device";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
+import { getDeviceId } from "../../../../../utils/device";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import BonusInformationComponent, {
@@ -13,7 +15,6 @@ import { availableBonusTypesSelectorFromId } from "../../../common/store/selecto
 import { ID_CDC_TYPE } from "../../../common/utils";
 import * as analytics from "../../analytics";
 import { cdcCtaConfigSelector } from "../../common/store/selectors/remoteConfig";
-import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 
 const CdcBonusRequestInformationTos = () => {
   const cdcInfo = useIOSelector(availableBonusTypesSelectorFromId(ID_CDC_TYPE));
@@ -49,14 +50,14 @@ const CdcBonusRequestInformationTos = () => {
     <BonusInformationComponent
       bonus={cdcInfo}
       contextualHelp={emptyContextualHelp}
-      primaryCtaText={I18n.t("global.buttons.continue")}
-      ref={bonusInformationComponentRef}
-      onConfirm={onStartCdcFlow}
       imageStyle={{
         aspectRatio: 2,
         resizeMode: "contain",
         marginHorizontal: IOVisualCostants.appMarginDefault
       }}
+      onConfirm={onStartCdcFlow}
+      primaryCtaText={I18n.t("global.buttons.continue")}
+      ref={bonusInformationComponentRef}
     />
   );
 };

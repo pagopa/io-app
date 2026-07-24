@@ -1,5 +1,5 @@
-import { useCallback } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useCallback } from "react";
 
 export function useTabItemPressWhenScreenActive(
   callback: () => void,

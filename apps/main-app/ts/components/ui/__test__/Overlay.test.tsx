@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react-native";
 import { Text } from "react-native";
+
 import { Overlay } from "../Overlay";
 
 describe("Overlay", () => {
@@ -15,8 +16,8 @@ describe("Overlay", () => {
     const component = render(
       <Overlay
         backgroundColor={backgroundColor}
-        opacity={opacity}
         foreground={foreground}
+        opacity={opacity}
       >
         {children}
       </Overlay>

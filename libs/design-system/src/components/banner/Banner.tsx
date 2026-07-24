@@ -8,6 +8,7 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
+
 import { useIOTheme, useIOThemeContext } from "../../context";
 import { IOBannerBigSpacing, IOBannerRadius } from "../../core";
 import { hexToRgba, IOColors } from "../../core/IOColors";
@@ -50,54 +51,54 @@ const styles = StyleSheet.create({
 
 /* Component Types */
 
-type BaseBannerProps = WithTestID<{
-  ref?: Ref<View>;
-  color: "neutral" | "turquoise";
-  pictogramName: IOPictogramsBleed;
-  // A11y related props
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
-}>;
-
-/* Description only */
-type BannerPropsDescOnly = { title: never; content?: string };
-/* Title only */
-type BannerPropsTitleOnly = { title?: string; content: never };
-/* Title + Description */
-type BannerPropsTitleAndDesc = { title?: string; content?: string };
-
-type RequiredBannerProps =
-  | BannerPropsDescOnly
-  | BannerPropsTitleOnly
-  | BannerPropsTitleAndDesc;
+export type Banner = BannerActionProps &
+  BannerCloseProps &
+  BaseBannerProps &
+  RequiredBannerProps;
 
 type BannerActionProps =
   | {
-      action: string;
-      onPress: (event: GestureResponderEvent) => void;
-      accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
-    }
-  | {
+      accessibilityRole?: AccessibilityRole;
       action?: never;
       onPress?: never;
-      accessibilityRole?: AccessibilityRole;
+    }
+  | {
+      accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
+      action: string;
+      onPress: (event: GestureResponderEvent) => void;
     };
-
 // Banner will display a close button if this event is provided
 type BannerCloseProps =
   | {
-      onClose?: (event: GestureResponderEvent) => void;
-      labelClose?: string;
+      labelClose?: never;
+      onClose?: never;
     }
   | {
-      onClose?: never;
-      labelClose?: never;
+      labelClose?: string;
+      onClose?: (event: GestureResponderEvent) => void;
     };
+/* Description only */
+type BannerPropsDescOnly = { content?: string; title: never };
 
-export type Banner = BaseBannerProps &
-  RequiredBannerProps &
-  BannerActionProps &
-  BannerCloseProps;
+/* Title + Description */
+type BannerPropsTitleAndDesc = { content?: string; title?: string };
+
+/* Title only */
+type BannerPropsTitleOnly = { content: never; title?: string };
+
+type BaseBannerProps = WithTestID<{
+  accessibilityHint?: string;
+  // A11y related props
+  accessibilityLabel?: string;
+  color: "neutral" | "turquoise";
+  pictogramName: IOPictogramsBleed;
+  ref?: Ref<View>;
+}>;
+
+type RequiredBannerProps =
+  | BannerPropsDescOnly
+  | BannerPropsTitleAndDesc
+  | BannerPropsTitleOnly;
 
 // COMPONENT CONFIGURATION
 
@@ -167,12 +168,12 @@ export const Banner = ({
   const renderMainBlock = () => (
     <>
       <View
-        style={{ flex: 1, alignSelf: "center", gap: 4 }}
-        accessible={true}
+        accessibilityHint={accessibilityHint}
         // A11y related props
         accessibilityLabel={accessibilityLabel ?? fallbackAccessibilityLabel}
-        accessibilityHint={accessibilityHint}
         accessibilityRole={action !== undefined ? accessibilityRole : "text"}
+        accessible={true}
+        style={{ flex: 1, alignSelf: "center", gap: 4 }}
       >
         {title && <H6 color={colorTitle}>{title}</H6>}
         {content && (
@@ -184,25 +185,25 @@ export const Banner = ({
           /* Disable pointer events to avoid
              pressed state on the button */
           <Pressable
-            pointerEvents="none"
-            importantForAccessibility="no-hide-descendants"
-            accessible={true}
             accessibilityElementsHidden
             accessibilityLabel={action}
             accessibilityRole="button"
+            accessible={true}
+            importantForAccessibility="no-hide-descendants"
             onPress={onPress}
+            pointerEvents="none"
           >
             <VSpacer size={8} />
             <IOText
-              weight="Semibold"
-              color={colorMainButton}
-              size={buttonTextFontSize}
-              numberOfLines={1}
-              ellipsizeMode="tail"
+              accessibilityElementsHidden={true}
               // A11y
               accessible={false}
+              color={colorMainButton}
+              ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              accessibilityElementsHidden={true}
+              numberOfLines={1}
+              size={buttonTextFontSize}
+              weight="Semibold"
             >
               {action}
             </IOText>
@@ -215,10 +216,10 @@ export const Banner = ({
       {onClose && labelClose && (
         <View style={styles.closeIconButton}>
           <IconButton
-            icon="closeSmall"
-            color={colorCloseButton}
-            onPress={onClose}
             accessibilityLabel={labelClose}
+            color={colorCloseButton}
+            icon="closeSmall"
+            onPress={onClose}
           />
         </View>
       )}
@@ -227,12 +228,12 @@ export const Banner = ({
 
   const PressableButton = () => (
     <Pressable
-      ref={viewRef}
-      testID={testID}
+      accessible={false}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      accessible={false}
+      ref={viewRef}
+      testID={testID}
     >
       <Animated.View
         style={[styles.container, dynamicContainerStyles, scaleAnimatedStyle]}
@@ -244,11 +245,11 @@ export const Banner = ({
 
   const StaticComponent = () => (
     <View
-      ref={viewRef}
-      testID={testID}
-      style={[styles.container, dynamicContainerStyles]}
       // A11y related props
       accessible={false}
+      ref={viewRef}
+      style={[styles.container, dynamicContainerStyles]}
+      testID={testID}
     >
       {renderMainBlock()}
     </View>

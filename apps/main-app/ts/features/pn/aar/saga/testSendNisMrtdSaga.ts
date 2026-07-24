@@ -1,64 +1,17 @@
+import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
-import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { SendAarClient } from "../api/client";
+
 import { SagaCallReturnType } from "../../../../types/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
   trackSendAarFailure
 } from "../analytics";
-import { unknownToReason } from "../../../messages/utils";
+import { SendAarClient } from "../api/client";
 import { testAarAcceptMandate, testAarCreateMandate } from "../store/actions";
 import { sendMandateIdSelector } from "../store/reducers/tempAarMandate";
-
-export function* testAarCreateMandateSaga(
-  sendAarClient: SendAarClient,
-  sessionToken: string,
-  action: ReturnType<typeof testAarCreateMandate.request>
-) {
-  try {
-    const createAarMandateRequest = sendAarClient.createAARMandate({
-      Bearer: `Bearer ${sessionToken}`,
-      body: {
-        aarQrCodeValue: action.payload
-      },
-      isTest: true
-    });
-    const result = (yield* call(
-      withRefreshApiCall,
-      createAarMandateRequest
-    )) as unknown as SagaCallReturnType<typeof sendAarClient.createAARMandate>;
-
-    if (E.isLeft(result)) {
-      const reason = `Create mandate decoding failure (${readableReportSimplified(
-        result.left
-      )})`;
-      throw Error(reason);
-    }
-
-    const { status, value } = result.right;
-    switch (status) {
-      case 201:
-        yield* put(testAarCreateMandate.success(value));
-        return;
-      case 401:
-        throw Error("Create mandate 401 Fast login expired");
-      default:
-        const reason = `Create mandate HTTP request failed (${aarProblemJsonAnalyticsReport(
-          status,
-          value
-        )})`;
-        yield* call(trackSendAarFailure, "Playground", reason, value);
-        yield* put(testAarCreateMandate.failure(reason));
-        return;
-    }
-  } catch (e) {
-    const reason = unknownToReason(e);
-    yield* call(trackSendAarFailure, "Playground", reason, undefined);
-    yield* put(testAarCreateMandate.failure(reason));
-  }
-}
 
 export function* testAarAcceptMandateSaga(
   sendAarClient: SendAarClient,
@@ -120,5 +73,53 @@ export function* testAarAcceptMandateSaga(
     const reason = unknownToReason(e);
     yield* call(trackSendAarFailure, "Playground", reason, undefined);
     yield* put(testAarAcceptMandate.failure(reason));
+  }
+}
+
+export function* testAarCreateMandateSaga(
+  sendAarClient: SendAarClient,
+  sessionToken: string,
+  action: ReturnType<typeof testAarCreateMandate.request>
+) {
+  try {
+    const createAarMandateRequest = sendAarClient.createAARMandate({
+      Bearer: `Bearer ${sessionToken}`,
+      body: {
+        aarQrCodeValue: action.payload
+      },
+      isTest: true
+    });
+    const result = (yield* call(
+      withRefreshApiCall,
+      createAarMandateRequest
+    )) as unknown as SagaCallReturnType<typeof sendAarClient.createAARMandate>;
+
+    if (E.isLeft(result)) {
+      const reason = `Create mandate decoding failure (${readableReportSimplified(
+        result.left
+      )})`;
+      throw Error(reason);
+    }
+
+    const { status, value } = result.right;
+    switch (status) {
+      case 201:
+        yield* put(testAarCreateMandate.success(value));
+        return;
+      case 401:
+        throw Error("Create mandate 401 Fast login expired");
+      default:
+        const reason = `Create mandate HTTP request failed (${aarProblemJsonAnalyticsReport(
+          status,
+          value
+        )})`;
+        yield* call(trackSendAarFailure, "Playground", reason, value);
+        yield* put(testAarCreateMandate.failure(reason));
+        return;
+    }
+  } catch (e) {
+    const reason = unknownToReason(e);
+    yield* call(trackSendAarFailure, "Playground", reason, undefined);
+    yield* put(testAarCreateMandate.failure(reason));
   }
 }

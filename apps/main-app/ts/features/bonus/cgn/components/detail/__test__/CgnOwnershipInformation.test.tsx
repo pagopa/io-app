@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
+
 import mockedProfile from "../../../../../../__mocks__/initializedProfile";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";

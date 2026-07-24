@@ -1,5 +1,16 @@
-import { testSaga } from "redux-saga-test-plan";
 import * as O from "fp-ts/lib/Option";
+import { testSaga } from "redux-saga-test-plan";
+
+import { testable as IdentificationSagaModule } from "../";
+import { maybeHandlePendingBackgroundActions } from "../../../../sagas/backgroundActions";
+import { startApplicationInitialization } from "../../../../store/actions/application";
+import { PinString } from "../../../../types/PinString";
+import { deletePin, getPin } from "../../../../utils/keychain";
+import {
+  checkCurrentSession,
+  sessionInvalid
+} from "../../../authentication/common/store/actions";
+import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
 import {
   identificationCancel,
   identificationForceLogout,
@@ -9,18 +20,8 @@ import {
   identificationStart,
   identificationSuccess
 } from "../../store/actions";
-import { startAndReturnIdentificationResult } from "../index";
-import { deletePin, getPin } from "../../../../utils/keychain";
-import {
-  checkCurrentSession,
-  sessionInvalid
-} from "../../../authentication/common/store/actions";
-import { maybeHandlePendingBackgroundActions } from "../../../../sagas/backgroundActions";
-import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
-import { startApplicationInitialization } from "../../../../store/actions/application";
-import { PinString } from "../../../../types/PinString";
-import { testable as IdentificationSagaModule } from "../";
 import { IdentificationResult } from "../../store/reducers";
+import { startAndReturnIdentificationResult } from "../index";
 
 const pin = "123456" as PinString;
 const testableModule = IdentificationSagaModule!;

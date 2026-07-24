@@ -1,14 +1,15 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { KeyInfo } from "../../../lollipop/utils/crypto";
-import { LollipopConfig } from "../../../lollipop";
-import { lollipopFetch } from "../../../lollipop/utils/fetch";
+
 import { LollipopMethodEnum } from "../../../../../definitions/identity/LollipopMethod";
 import { LollipopOriginalURL } from "../../../../../definitions/identity/LollipopOriginalURL";
-import { LollipopSignatureInput } from "../../../../../definitions/identity/LollipopSignatureInput";
 import { LollipopSignature } from "../../../../../definitions/identity/LollipopSignature";
-import { defaultRetryingFetch } from "../../../../utils/fetch";
+import { LollipopSignatureInput } from "../../../../../definitions/identity/LollipopSignatureInput";
 import { createClient } from "../../../../../definitions/session_manager/client";
 import { fetchMaxRetries, fetchTimeout } from "../../../../config";
+import { defaultRetryingFetch } from "../../../../utils/fetch";
+import { LollipopConfig } from "../../../lollipop";
+import { KeyInfo } from "../../../lollipop/utils/crypto";
+import { lollipopFetch } from "../../../lollipop/utils/fetch";
 
 const FAST_LOGIN_TIMEOUT_MS = 9000 as Millisecond;
 

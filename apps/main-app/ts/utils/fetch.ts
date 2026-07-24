@@ -3,8 +3,6 @@
  * timeout and retries with exponential backoff.
  */
 
-import * as E from "fp-ts/lib/Either";
-import * as TE from "fp-ts/lib/TaskEither";
 import { calculateExponentialBackoffInterval } from "@pagopa/ts-commons/lib/backoff";
 import {
   AbortableFetch,
@@ -18,7 +16,10 @@ import {
   withRetries
 } from "@pagopa/ts-commons/lib/tasks";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import * as TE from "fp-ts/lib/TaskEither";
+
 import { fetchMaxRetries, fetchTimeout } from "../config";
 // FIXME: This is a temporary type created to avoid
 // a compilation error caused by the `toFetch` function
@@ -29,6 +30,29 @@ type FixedFetch = (
   input: RequestInfo | URL,
   init?: RequestInit | undefined
 ) => Promise<Response>;
+
+/**
+ * Wrapper for the Fetch API configured by default with a short timeout and
+ * an exponential backoff retrying strategy.
+ * Suitable for calling the backend APIs that are supposed
+ * to respond quickly.
+ *
+ * Note that the retry is applied only upon receiving error "429 Too Many Requests".
+ * Timeout and max retries act as circuit breakers.
+ */
+export function defaultRetryingFetch(
+  timeout: Millisecond = fetchTimeout,
+  maxRetries: number = fetchMaxRetries,
+  retryOnStatusCode = 429
+): typeof fetch {
+  const timeoutFetch = toFetchTimeout(timeout);
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const retriableFetch = toRetriableFetch(maxRetries, retryOnStatusCode);
+
+  return retriableFetch((input: RequestInfo | URL, init?: RequestInit) =>
+    timeoutFetch(input, init)
+  );
+}
 
 export function toFetchTimeout(timeout: Millisecond = fetchTimeout) {
   const fetchApi = (global as any).fetch;
@@ -54,29 +78,6 @@ export function toRetriableFetch(
 }
 
 /**
- * Wrapper for the Fetch API configured by default with a short timeout and
- * an exponential backoff retrying strategy.
- * Suitable for calling the backend APIs that are supposed
- * to respond quickly.
- *
- * Note that the retry is applied only upon receiving error "429 Too Many Requests".
- * Timeout and max retries act as circuit breakers.
- */
-export function defaultRetryingFetch(
-  timeout: Millisecond = fetchTimeout,
-  maxRetries: number = fetchMaxRetries,
-  retryOnStatusCode = 429
-): typeof fetch {
-  const timeoutFetch = toFetchTimeout(timeout);
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  const retriableFetch = toRetriableFetch(maxRetries, retryOnStatusCode);
-
-  return retriableFetch((input: RequestInfo | URL, init?: RequestInit) =>
-    timeoutFetch(input, init)
-  );
-}
-
-/**
  * Fetch with transient error handling.
  * Handle error that occurs once or at unpredictable intervals.
  */
@@ -85,7 +86,7 @@ function retryLogicForTransientResponseError(
   retryLogic: (
     t: RetriableTask<Error, Response>,
     shouldAbort?: Promise<boolean>
-  ) => TE.TaskEither<Error | "max-retries" | "retry-aborted", Response>
+  ) => TE.TaskEither<"max-retries" | "retry-aborted" | Error, Response>
 ): typeof retryLogic {
   return (t: RetriableTask<Error, Response>, shouldAbort?: Promise<boolean>) =>
     retryLogic(

@@ -1,6 +1,8 @@
+import type { ComponentProps } from "react";
+
 import { Divider } from "@io-app/design-system";
 import { render } from "@testing-library/react-native";
-import type { ComponentProps } from "react";
+
 import { FimsClaimsList } from "../FimsClaims";
 
 jest.mock("@io-app/design-system", () => ({

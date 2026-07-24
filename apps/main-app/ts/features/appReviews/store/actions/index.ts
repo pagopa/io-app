@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { AppFeedbackUri } from "../../../../../definitions/content/AppFeedbackUri";
 
 export type TopicKeys = keyof AppFeedbackUri;
@@ -17,6 +18,6 @@ export const clearFeedbackDatas = createStandardAction(
 )();
 
 export type AppFeedbackActions =
-  | ActionType<typeof appReviewPositiveFeedback>
   | ActionType<typeof appReviewNegativeFeedback>
+  | ActionType<typeof appReviewPositiveFeedback>
   | ActionType<typeof clearFeedbackDatas>;

@@ -20,10 +20,11 @@ import {
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import IOMarkdownSuggestions from "./IOMarkdownSuggestions";
 
 const ALL = `# Lorem Ipsum
@@ -194,10 +195,10 @@ export const IOMarkdownPlayground = () => {
         keyboardVerticalOffset={headerHeight - bottom}
       >
         <LinearGradient
+          colors={["transparent", "rgba(0,0,0,0.1)"]}
           style={{
             height: 2
           }}
-          colors={["transparent", "rgba(0,0,0,0.1)"]}
         />
         <View
           style={{
@@ -214,19 +215,19 @@ export const IOMarkdownPlayground = () => {
               }}
             >
               <TextInput
-                style={styles.textInput}
-                placeholderTextColor={IOColors["grey-450"]}
                 accessibilityLabel="Text input field"
-                placeholder="Insert here your markdown"
-                value={content}
-                onChangeText={setContent}
                 multiline
+                onChangeText={setContent}
+                placeholder="Insert here your markdown"
+                placeholderTextColor={IOColors["grey-450"]}
+                style={styles.textInput}
+                value={content}
               />
               <HSpacer size={16} />
               <IconButton
-                icon="magicWand"
-                color="neutral"
                 accessibilityLabel=""
+                color="neutral"
+                icon="magicWand"
                 onPress={() => {
                   Keyboard.dismiss();
                   present();

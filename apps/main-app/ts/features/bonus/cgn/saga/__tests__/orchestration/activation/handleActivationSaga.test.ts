@@ -1,14 +1,15 @@
 import { testSaga } from "redux-saga-test-plan";
+
 import NavigationService from "../../../../../../../navigation/NavigationService";
+import CGN_ROUTES from "../../../../navigation/routes";
+import { cgnActivationStatus } from "../../../../store/actions/activation";
+import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";
+import { cgnActivationWorker } from "../../../orchestration/activation/handleActivationSaga";
 import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationLoading,
   navigateToCgnActivationTimeout
 } from "../../../orchestration/navigation/actions";
-import CGN_ROUTES from "../../../../navigation/routes";
-import { cgnActivationStatus } from "../../../../store/actions/activation";
-import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";
-import { cgnActivationWorker } from "../../../orchestration/activation/handleActivationSaga";
 
 jest.mock("react-native-share", () => ({
   open: jest.fn()

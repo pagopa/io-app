@@ -1,8 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
-import { paymentsSetAddMethodsBannerVisible } from "../actions";
+
 import { Action } from "../../../../../store/actions/types";
+import { paymentsSetAddMethodsBannerVisible } from "../actions";
 
 export type PaymentsHomeState = {
   shouldShowAddMethodsBanner: boolean;

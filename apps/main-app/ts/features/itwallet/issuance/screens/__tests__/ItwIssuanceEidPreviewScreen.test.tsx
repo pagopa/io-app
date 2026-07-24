@@ -1,24 +1,25 @@
 import I18n from "i18next";
 import { createStore } from "redux";
 import { createActor, type StateFrom } from "xstate";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
-import { ItwTags } from "../../../machine/tags";
 import {
   ItwEidIssuanceMachine,
   itwEidIssuanceMachine
 } from "../../../machine/eid/machine";
+import { ItwTags } from "../../../machine/tags";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceEidPreviewScreen } from "../ItwIssuanceEidPreviewScreen";
 
 const mockSend = jest.fn();
 const mockUseSelector = jest.fn();
 
-type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 type MachineSelector<T> = (snapshot: MachineSnapshot) => T;
+type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
 jest.mock("../../../machine/eid/provider", () => {
   const actual = jest.requireActual("../../../machine/eid/provider");
@@ -55,8 +56,8 @@ const renderComponent = ({
   value,
   tags
 }: {
-  value: { Issuance: "CheckingIdentityMatch" | "DisplayingPreview" };
   tags: Set<ItwTags>;
+  value: { Issuance: "CheckingIdentityMatch" | "DisplayingPreview" };
 }) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();

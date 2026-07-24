@@ -1,8 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { render } from "@testing-library/react-native";
+import I18n from "i18next";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import I18n from "i18next";
+
+import { StatusEnum } from "../../../../../../definitions/idpay/InitiativesStatusDTO";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -10,7 +12,6 @@ import { Store } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import WalletDetailsPaymentMethodFeatures from "../WalletDetailsPaymentMethodFeatures";
-import { StatusEnum } from "../../../../../../definitions/idpay/InitiativesStatusDTO";
 
 const globalState = appReducer(undefined, applicationChangeState("active"));
 const mockStore = configureMockStore<GlobalState>();

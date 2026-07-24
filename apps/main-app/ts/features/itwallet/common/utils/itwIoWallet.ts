@@ -1,4 +1,5 @@
 import { IoWallet, ItwVersion } from "@pagopa/io-react-native-wallet";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { selectItwSpecsVersion } from "../store/selectors/environment";
 

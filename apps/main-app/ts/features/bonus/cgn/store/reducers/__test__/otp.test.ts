@@ -1,15 +1,15 @@
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { appReducer } from "../../../../../../store/reducers";
+import { OtpCode } from "../../../../../../../definitions/cgn/OtpCode";
 import {
   isReady,
   remoteError,
   remoteLoading,
   remoteReady
 } from "../../../../../../common/model/RemoteValue";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { getGenericError } from "../../../../../../utils/errors";
 import { cgnGenerateOtp } from "../../actions/otp";
 import { cgnOtpDataSelector } from "../otp";
-import { OtpCode } from "../../../../../../../definitions/cgn/OtpCode";
-import { getGenericError } from "../../../../../../utils/errors";
 
 describe("cgnOtpReducer", () => {
   it("should be loading", () => {

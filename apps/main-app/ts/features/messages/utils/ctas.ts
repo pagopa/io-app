@@ -1,5 +1,6 @@
 import FM, { FrontMatterResult } from "front-matter";
 import { Linking } from "react-native";
+
 import { MessageBodyMarkdown } from "../../../../definitions/communication/MessageBodyMarkdown";
 import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { ServiceMetadata } from "../../../../definitions/services/ServiceMetadata";
@@ -24,9 +25,9 @@ import { isFIMSLink } from "../../fims/singleSignOn/utils";
 import { trackCTAFrontMatterDecodingError } from "../analytics";
 
 export type CTAActionType =
+  | "fims"
   | "io_handled_link"
   | "io_internal_link"
-  | "fims"
   | "none";
 
 export const handleCtaAction = (
@@ -211,9 +212,9 @@ const isCtaActionValid = (cta: CTA): boolean => {
 };
 
 type FrontMatterParseResult<T> =
-  | { status: "no-header" }
-  | { status: "success"; frontMatter: FrontMatterResult<T> }
-  | { status: "failure" };
+  | { frontMatter: FrontMatterResult<T>; status: "success" }
+  | { status: "failure" }
+  | { status: "no-header" };
 
 const parseFrontMatter = <T>(
   input: string,

@@ -1,25 +1,26 @@
+import { fireEvent } from "@testing-library/react-native";
 import { createElement, type ReactElement } from "react";
 import { createStore } from "redux";
-import { fireEvent } from "@testing-library/react-native";
+
 import { MessageCategory } from "../../../../../definitions/communication/MessageCategory";
 import { TagEnum as BaseTagEnum } from "../../../../../definitions/communication/MessageCategoryBase";
 import { TagEnum as PaymentTagEnum } from "../../../../../definitions/communication/MessageCategoryPayment";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { backendStatusLoadSuccess } from "../../../../store/actions/backendStatus";
 import { type Action } from "../../../../store/actions/types";
-import { baseRawBackendStatus } from "../../../../store/reducers/__mock__/backendStatus";
 import { appReducer } from "../../../../store/reducers";
+import { baseRawBackendStatus } from "../../../../store/reducers/__mock__/backendStatus";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { openWebUrl } from "../../../../utils/url";
+import { PNMessage } from "../../../pn/store/types/types";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { service_1 } from "../../__mocks__/messages";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { loadMessageDetails, loadThirdPartyMessage } from "../../store/actions";
-import { PNMessage } from "../../../pn/store/types/types";
-import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import { UIMessage, UIMessageDetails } from "../../types";
+import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import {
   SendMessageSurveyBanner,

@@ -2,8 +2,9 @@ import * as E from "fp-ts/lib/Either";
 import configureMockStore from "redux-mock-store";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
+
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
+import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

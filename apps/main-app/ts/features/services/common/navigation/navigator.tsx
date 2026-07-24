@@ -1,8 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { ServiceDetailsScreen } from "../../details/screens/ServiceDetailsScreen";
-import { InstitutionServicesScreen } from "../../institution/screens/InstitutionServicesScreen";
 import { FavouriteServicesScreen } from "../../favouriteServices/screens/FavouriteServicesScreen";
+import { InstitutionServicesScreen } from "../../institution/screens/InstitutionServicesScreen";
 import { ServicesParamsList } from "./params";
 import { SERVICES_ROUTES } from "./routes";
 
@@ -18,16 +19,16 @@ const ServicesNavigator = () => (
     }}
   >
     <Stack.Screen
-      name={SERVICES_ROUTES.INSTITUTION_SERVICES}
       component={InstitutionServicesScreen}
+      name={SERVICES_ROUTES.INSTITUTION_SERVICES}
     />
     <Stack.Screen
-      name={SERVICES_ROUTES.SERVICE_DETAIL}
       component={ServiceDetailsScreen}
+      name={SERVICES_ROUTES.SERVICE_DETAIL}
     />
     <Stack.Screen
-      name={SERVICES_ROUTES.FAVOURITE_SERVICES}
       component={FavouriteServicesScreen}
+      name={SERVICES_ROUTES.FAVOURITE_SERVICES}
     />
   </Stack.Navigator>
 );

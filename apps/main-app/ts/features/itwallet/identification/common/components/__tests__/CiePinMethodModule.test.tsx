@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react-native";
+
 import { CiePinMethodModule } from "../CiePinMethodModule";
 
 jest.mock("../../../../machine/eid/provider", () => ({

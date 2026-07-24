@@ -1,64 +1,64 @@
 import {
+  aarProblemJsonAnalyticsReport,
+  type SendAarScreen,
   trackSendAarAccessDeniedDelegateInfo,
   trackSendAarAccessDeniedDismissed,
   trackSendAarAccessDeniedScreenView,
-  trackSendAarToS,
-  trackSendAarToSAccepted,
-  trackSendAarToSDismissed,
-  aarProblemJsonAnalyticsReport,
-  trackSendAarFailure,
-  trackSendQRCodeScanRedirect,
-  trackSendQRCodeScanRedirectConfirmed,
-  trackSendQRCodeScanRedirectDismissed,
-  trackSendAarNotificationClosure,
-  trackSendAarNotificationClosureBack,
-  trackSendAarNotificationClosureConfirm,
-  trackSendAarNotificationClosureExit,
   trackSendAarErrorScreenClosure,
   trackSendAarErrorScreenDetails,
-  trackSendAarErrorScreenDetailsHelp,
   trackSendAarErrorScreenDetailsCode,
-  trackSendAarNotificationOpeningMandateDisclaimer,
-  trackSendAarNotificationOpeningMandateDisclaimerAccepted,
-  trackSendAarNotificationOpeningMandateDisclaimerClosure,
-  trackSendAarNotificationOpeningMandateBottomSheet,
-  trackSendAarNotificationOpeningMandateBottomSheetAccepted,
-  trackSendAarNotificationOpeningMandateBottomSheetClosure,
-  trackSendAarNotificationOpeningNfcNotSupported,
-  trackSendAarNotificationOpeningNfcNotSupportedInfo,
-  trackSendAarNotificationOpeningNfcNotSupportedClosure,
-  trackSendAarMandateCiePreparation,
-  trackSendAarMandateCiePreparationContinue,
-  trackSendAarMandateCieReadingClosureAlert,
-  trackSendAarMandateCieReadingClosureAlertAccepted,
-  trackSendAarMandateCieReadingClosureAlertContinue,
+  trackSendAarErrorScreenDetailsHelp,
+  trackSendAarFailure,
+  trackSendAarMandateCieCanCodeError,
   trackSendAarMandateCieCanEnter,
+  trackSendAarMandateCieCardReading,
   trackSendAarMandateCieCardReadingDisclaimer,
   trackSendAarMandateCieCardReadingDisclaimerContinue,
-  trackSendAarMandateCieCardReading,
-  trackSendAarMandateCieCardReadingSuccess,
   trackSendAarMandateCieCardReadingError,
+  trackSendAarMandateCieCardReadingFailure,
+  trackSendAarMandateCieCardReadingSuccess,
+  trackSendAarMandateCieDataError,
+  trackSendAarMandateCieErrorCac,
+  trackSendAarMandateCieErrorClosure,
+  trackSendAarMandateCieErrorDetail,
+  trackSendAarMandateCieErrorDetailCode,
+  trackSendAarMandateCieErrorDetailHelp,
+  trackSendAarMandateCieErrorRetry,
+  trackSendAarMandateCieExpiredError,
   trackSendAarMandateCieNfcActivation,
   trackSendAarMandateCieNfcActivationContinue,
   trackSendAarMandateCieNfcActivationControlAlert,
   trackSendAarMandateCieNfcActivationControlAlertClosure,
   trackSendAarMandateCieNfcActivationControlAlertGoToSettings,
   trackSendAarMandateCieNfcGoToSettings,
-  trackSendAarMandateCieCanCodeError,
-  trackSendAarMandateCieCardReadingFailure,
-  trackSendAarMandateCieExpiredError,
   trackSendAarMandateCieNotRelatedToDelegatorError,
+  trackSendAarMandateCiePreparation,
+  trackSendAarMandateCiePreparationContinue,
+  trackSendAarMandateCieReadingClosureAlert,
+  trackSendAarMandateCieReadingClosureAlertAccepted,
+  trackSendAarMandateCieReadingClosureAlertContinue,
   trackSendAarMandateRetryError,
   trackSendAarMandateTtlExpiredError,
+  trackSendAarNotificationClosure,
+  trackSendAarNotificationClosureBack,
+  trackSendAarNotificationClosureConfirm,
+  trackSendAarNotificationClosureExit,
   trackSendAarNotificationDetailTtlError,
-  trackSendAarMandateCieDataError,
-  trackSendAarMandateCieErrorCac,
-  trackSendAarMandateCieErrorClosure,
-  trackSendAarMandateCieErrorDetail,
-  trackSendAarMandateCieErrorDetailCode,
-  trackSendAarMandateCieErrorRetry,
-  trackSendAarMandateCieErrorDetailHelp,
-  type SendAarScreen
+  trackSendAarNotificationOpeningMandateBottomSheet,
+  trackSendAarNotificationOpeningMandateBottomSheetAccepted,
+  trackSendAarNotificationOpeningMandateBottomSheetClosure,
+  trackSendAarNotificationOpeningMandateDisclaimer,
+  trackSendAarNotificationOpeningMandateDisclaimerAccepted,
+  trackSendAarNotificationOpeningMandateDisclaimerClosure,
+  trackSendAarNotificationOpeningNfcNotSupported,
+  trackSendAarNotificationOpeningNfcNotSupportedClosure,
+  trackSendAarNotificationOpeningNfcNotSupportedInfo,
+  trackSendAarToS,
+  trackSendAarToSAccepted,
+  trackSendAarToSDismissed,
+  trackSendQRCodeScanRedirect,
+  trackSendQRCodeScanRedirectConfirmed,
+  trackSendQRCodeScanRedirectDismissed
 } from "..";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import * as mixpanel from "../../../../../mixpanel";
@@ -66,20 +66,20 @@ import { buildEventProperties } from "../../../../../utils/analytics";
 import { SendUserType } from "../../../../pushNotifications/analytics";
 
 type TrackingTestBase<FN extends (...p: Array<any>) => void = () => void> = {
-  name: string;
-  fn: FN;
   eventName: string;
   eventProps: {
     event_category: Parameters<typeof buildEventProperties>[0];
     event_type: Parameters<typeof buildEventProperties>[1];
   };
+  fn: FN;
+  name: string;
 };
+
+type TrackingTestWithError = TrackingTestBase<(error: string) => void>;
 
 type TrackingTestWithUserType = TrackingTestBase<
   (userType: SendUserType) => void
 >;
-
-type TrackingTestWithError = TrackingTestBase<(error: string) => void>;
 
 const sendUserTypes: ReadonlyArray<SendUserType> = [
   "mandatory",
@@ -105,8 +105,8 @@ type TrackingTestWithErrorDetails = Omit<
   eventProps: {
     event_category: Parameters<typeof buildEventProperties>[0];
     event_type: Parameters<typeof buildEventProperties>[1];
-    name: string | undefined;
     message: string | undefined;
+    name: string | undefined;
     nfc_detected: boolean | undefined;
   };
 };

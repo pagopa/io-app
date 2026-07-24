@@ -22,10 +22,10 @@ import {
   updatePaymentForMessage,
   upsertMessageStatusAttributes
 } from "..";
-import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
 import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
 import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { UIMessage, UIMessageDetails } from "../../../types";
 import {
   MessagePaymentError,

@@ -1,4 +1,5 @@
-import { ActionType } from "typesafe-actions";
+import I18n from "i18next";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import {
   call,
   cancelled,
@@ -8,17 +9,17 @@ import {
   select,
   take
 } from "typed-redux-saga/macro";
-import ReactNativeBlobUtil from "react-native-blob-util";
-import I18n from "i18next";
-import { ReduxSagaEffect } from "../../../types/utils";
-import { fetchTimeout } from "../../../config";
-import { getError } from "../../../utils/errors";
-import { isTestEnv } from "../../../utils/environment";
-import {
-  cancelPreviousAttachmentDownload,
-  downloadAttachment
-} from "../store/actions";
+import { ActionType } from "typesafe-actions";
+
 import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { fetchTimeout } from "../../../config";
+import { ReduxSagaEffect } from "../../../types/utils";
+import { isTestEnv } from "../../../utils/environment";
+import { getError } from "../../../utils/errors";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { getKeyInfo } from "../../lollipop/saga";
+import { KeyInfo } from "../../lollipop/utils/crypto";
+import { downloadAarAttachmentSaga } from "../../pn/aar/saga/downloadAarAttachmentSaga";
 import {
   trackThirdPartyMessageAttachmentBadFormat,
   trackThirdPartyMessageAttachmentDownloadFailed,
@@ -26,8 +27,11 @@ import {
   trackUndefinedBearerToken,
   UndefinedBearerTokenPhase
 } from "../analytics";
+import {
+  cancelPreviousAttachmentDownload,
+  downloadAttachment
+} from "../store/actions";
 import { thirdPartyMessageSelector } from "../store/reducers/thirdPartyById";
-import { KeyInfo } from "../../lollipop/utils/crypto";
 import {
   attachmentDisplayName,
   getHeaderValueByKey,
@@ -35,9 +39,6 @@ import {
   restrainRetryAfterIntervalInMilliseconds
 } from "../utils/attachments";
 import { isEphemeralAarThirdPartyMessage } from "../utils/thirdPartyById";
-import { downloadAarAttachmentSaga } from "../../pn/aar/saga/downloadAarAttachmentSaga";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { getKeyInfo } from "../../lollipop/saga";
 import { handleRequestInit } from "./handleRequestInit";
 
 /**

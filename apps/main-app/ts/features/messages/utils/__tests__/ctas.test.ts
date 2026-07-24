@@ -1,6 +1,7 @@
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import FM from "front-matter";
 import { Linking } from "react-native";
+
 import { CreatedMessageWithContent } from "../../../../../definitions/communication/CreatedMessageWithContent";
 import { FiscalCode } from "../../../../../definitions/communication/FiscalCode";
 import { MessageBodyMarkdown } from "../../../../../definitions/communication/MessageBodyMarkdown";

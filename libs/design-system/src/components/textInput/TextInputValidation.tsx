@@ -9,6 +9,7 @@ import {
 } from "react";
 import { AccessibilityInfo, TextInput, View } from "react-native";
 import Animated from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import { IOColors } from "../../core/IOColors";
 import {
@@ -17,15 +18,29 @@ import {
 } from "../../core/IOTransitions";
 import { triggerHaptic } from "../../functions";
 import { TextInputValidationRefProps } from "../../utils/types";
-import { IOIconSizeScale, IOIcons, Icon } from "../icons";
+import { Icon, IOIcons, IOIconSizeScale } from "../icons";
 import { TextInputBase } from "./TextInputBase";
 
-export type ValidationWithOptions = { isValid: boolean; errorMessage: string };
+export type ValidationWithOptions = { errorMessage: string; isValid: boolean };
 
 type TextInputValidationProps = Omit<
   ComponentProps<typeof TextInputBase>,
-  "rightElement" | "status" | "bottomMessageColor" | "isPassword" | "ref"
+  "bottomMessageColor" | "isPassword" | "ref" | "rightElement" | "status"
 > & {
+  /**
+   * A string that will be read by screen readers when the field is not valid.
+   */
+  accessibilityErrorLabel?: string;
+  /**
+   * In case of a dynamic `errorMessage`, use the `onValidate` function with a `ValidationWithOptions` object as the return value to ensure that screen readers announce the correct value.
+   */
+  errorMessage: string;
+  /**
+   * This function can return either a `boolean` or a `ValidationWithOptions` object.
+   * If a `boolean` is returned and the field is not valid, the value of the errorMessage prop will be displayed/announced.
+   * If a `ValidationWithOptions` object is returned and the field is not valid, the value displayed/announced will be the one contained within this object.
+   */
+  onValidate: (value: string) => boolean | ValidationWithOptions;
   ref?: Ref<TextInputValidationRefProps>;
   /**
    * If true, the character counter will only be displayed/announced when the counter limit is reached.
@@ -34,23 +49,9 @@ type TextInputValidationProps = Omit<
    */
   showCounterOnlyWhenLimitReached?: boolean;
   /**
-   * This function can return either a `boolean` or a `ValidationWithOptions` object.
-   * If a `boolean` is returned and the field is not valid, the value of the errorMessage prop will be displayed/announced.
-   * If a `ValidationWithOptions` object is returned and the field is not valid, the value displayed/announced will be the one contained within this object.
-   */
-  onValidate: (value: string) => boolean | ValidationWithOptions;
-  /**
-   * In case of a dynamic `errorMessage`, use the `onValidate` function with a `ValidationWithOptions` object as the return value to ensure that screen readers announce the correct value.
-   */
-  errorMessage: string;
-  /**
    * Determines the validation mode. If "onBlur", validation occurs on blur. If "onContinue", validation occurs when an external button is pressed.
    */
   validationMode?: "onBlur" | "onContinue";
-  /**
-   * A string that will be read by screen readers when the field is not valid.
-   */
-  accessibilityErrorLabel?: string;
 };
 
 function isValidationWithOptions(
@@ -144,7 +145,7 @@ export const TextInputValidation = ({
 
   const feedbackIconAttrMap: Record<
     string,
-    { name: IOIcons; color: IOColors }
+    { color: IOColors; name: IOIcons }
   > = useMemo(
     () => ({
       valid: {
@@ -168,8 +169,8 @@ export const TextInputValidation = ({
         exiting={exitTransitionInputIcon}
       >
         <Icon
-          name={feedbackIconAttrMap[validationStatus].name}
           color={feedbackIconAttrMap[validationStatus].color}
+          name={feedbackIconAttrMap[validationStatus].name}
           size={feedbackIconSize}
         />
       </Animated.View>
@@ -181,14 +182,14 @@ export const TextInputValidation = ({
   return (
     <TextInputBase
       {...props}
-      inputRef={inputRef}
-      value={value}
-      status={isValid === false ? "error" : undefined}
       bottomMessage={labelError}
       bottomMessageColor={labelErrorColor}
-      rightElement={feedbackIcon}
+      inputRef={inputRef}
       onBlur={onBlurHandler}
       onFocus={onFocusHandler}
+      rightElement={feedbackIcon}
+      status={isValid === false ? "error" : undefined}
+      value={value}
     />
   );
 };

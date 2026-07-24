@@ -7,15 +7,16 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
+
 import { useIOThemeContext } from "../../context";
 import { IOVisualCostants } from "../../core";
-import { IOColors, hexToRgba } from "../../core/IOColors";
+import { hexToRgba, IOColors } from "../../core/IOColors";
 import { IOAlertRadius } from "../../core/IOShapes";
 import { IOAlertSpacing, IOSpacer } from "../../core/IOSpacing";
 import { useScaleAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
-import { IOIconSizeScale, IOIcons, Icon } from "../icons";
+import { Icon, IOIcons, IOIconSizeScale } from "../icons";
 import { HStack, VStack } from "../layout";
 import { Body, ButtonText } from "../typography";
 
@@ -23,31 +24,31 @@ const ICON_SIZE: IOIconSizeScale = 24;
 
 const [padding, paddingFullWidth] = IOAlertSpacing;
 
-type AlertProps = WithTestID<{
-  ref?: Ref<View>;
-  variant: "error" | "warning" | "info" | "success";
-  content: string;
-  fullWidth?: boolean;
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
-}>;
-
 type AlertActionProps =
-  | {
-      action?: string;
-      onPress: (event: GestureResponderEvent) => void;
-    }
   | {
       action?: never;
       onPress?: never;
+    }
+  | {
+      action?: string;
+      onPress: (event: GestureResponderEvent) => void;
     };
 
-type AlertType = AlertProps & AlertActionProps;
+type AlertProps = WithTestID<{
+  accessibilityHint?: string;
+  accessibilityLabel?: string;
+  content: string;
+  fullWidth?: boolean;
+  ref?: Ref<View>;
+  variant: "error" | "info" | "success" | "warning";
+}>;
+
+type AlertType = AlertActionProps & AlertProps;
 
 type VariantStates = {
-  icon: IOIcons;
   background: ColorValue;
   foreground: IOColors;
+  icon: IOIcons;
 };
 
 // COMPONENT CONFIGURATION
@@ -134,15 +135,15 @@ export const Alert = ({
 
   const renderMainBlock = () => (
     <HStack
-      space={IOVisualCostants.iconMargin as IOSpacer}
       allowScaleSpacing
+      space={IOVisualCostants.iconMargin as IOSpacer}
       style={{ alignItems: "center" }}
     >
       <Icon
         allowFontScaling
+        color={mapVariantStates[variant].foreground}
         name={mapVariantStates[variant].icon}
         size={ICON_SIZE}
-        color={mapVariantStates[variant].foreground}
       />
       {/* Sadly we don't have specific alignments style for text
       in React Native, like `text-box-trim` for CSS. So we
@@ -155,19 +156,19 @@ export const Alert = ({
           flex: 1
         }}
       >
-        <VStack space={8} allowScaleSpacing>
+        <VStack allowScaleSpacing space={8}>
           <Body
+            accessibilityRole="text"
             color={mapVariantStates[variant].foreground}
             weight={"Regular"}
-            accessibilityRole="text"
           >
             {content}
           </Body>
           {action && (
             <ButtonText
               color={mapVariantStates[variant].foreground}
-              numberOfLines={1}
               ellipsizeMode="tail"
+              numberOfLines={1}
             >
               {action}
             </ButtonText>
@@ -179,15 +180,15 @@ export const Alert = ({
 
   const StaticComponent = () => (
     <View
+      accessibilityHint={accessibilityHint}
+      accessibilityRole="alert"
+      accessible={false}
       ref={viewRef}
       style={[
         fullWidth ? { padding: paddingFullWidth } : paddingDefaultVariant,
         { backgroundColor: mapVariantStates[variant].background }
       ]}
       testID={testID}
-      accessible={false}
-      accessibilityRole="alert"
-      accessibilityHint={accessibilityHint}
     >
       {renderMainBlock()}
     </View>
@@ -195,16 +196,16 @@ export const Alert = ({
 
   const PressableButton = () => (
     <Pressable
-      ref={viewRef}
-      testID={testID}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole={"button"}
+      // A11y related props
+      accessible={true}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
-      // A11y related props
-      accessible={true}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole={"button"}
+      ref={viewRef}
+      testID={testID}
     >
       <Animated.View
         style={[

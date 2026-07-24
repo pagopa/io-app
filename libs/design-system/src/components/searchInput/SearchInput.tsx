@@ -22,7 +22,7 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
-import { WithTestID } from "../../utils/types";
+
 import { useIONewTypeface, useIOTheme } from "../../context";
 import { IOColors, IOSpacingScale, IOVisualCostants } from "../../core";
 import {
@@ -30,6 +30,7 @@ import {
   IOMaxFontSizeMultiplier,
   makeFontStyleObject
 } from "../../utils/fonts";
+import { WithTestID } from "../../utils/types";
 import { Icon, IOIconSizeScale } from "../icons";
 import {
   buttonTextFontSize,
@@ -49,39 +50,39 @@ const inputFontSizePlaceholder: IOFontSize = 14;
 const cancelButtonMargin: IOSpacingScale = 16;
 const inputTransitionDuration = 250;
 
-type SearchInputPressableProps = {
-  onPress: (event: GestureResponderEvent) => void;
+export type SearchInputRef = {
+  focus: () => void;
 };
 
 type SearchInputActionProps =
   | {
-      pressable: SearchInputPressableProps;
-      keepCancelVisible?: never;
-      onCancel?: never;
-      onChangeText?: never;
-      value?: never;
-    }
-  | {
-      pressable?: never;
       keepCancelVisible?: boolean;
       onCancel: (event: GestureResponderEvent) => void;
       onChangeText: (value: string) => void;
+      pressable?: never;
       value: string;
+    }
+  | {
+      keepCancelVisible?: never;
+      onCancel?: never;
+      onChangeText?: never;
+      pressable: SearchInputPressableProps;
+      value?: never;
     };
 
-type SearchInputProps = WithTestID<{
-  ref?: Ref<SearchInputRef>;
-  accessibilityLabel: TextInputProps["accessibilityLabel"];
-  cancelButtonLabel: string;
-  clearAccessibilityLabel: string;
-  placeholder: TextInputProps["placeholder"];
-  autoFocus?: TextInputProps["autoFocus"];
-}> &
-  SearchInputActionProps;
-
-export type SearchInputRef = {
-  focus: () => void;
+type SearchInputPressableProps = {
+  onPress: (event: GestureResponderEvent) => void;
 };
+
+type SearchInputProps = SearchInputActionProps &
+  WithTestID<{
+    accessibilityLabel: TextInputProps["accessibilityLabel"];
+    autoFocus?: TextInputProps["autoFocus"];
+    cancelButtonLabel: string;
+    clearAccessibilityLabel: string;
+    placeholder: TextInputProps["placeholder"];
+    ref?: Ref<SearchInputRef>;
+  }>;
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -232,25 +233,33 @@ export const SearchInput = ({
       style={styles.searchBar}
     >
       <Animated.View
-        style={[styles.searchInput, animatedStyle]}
         pointerEvents={pressable ? "none" : "auto"}
+        style={[styles.searchInput, animatedStyle]}
       >
         <View style={styles.iconContainer}>
           <Icon
             allowFontScaling
+            color={iconColor}
             name="search"
             size={iconSize}
-            color={iconColor}
           />
         </View>
         <AnimatedTextInput
-          testID={testID}
-          ref={searchInputRef}
-          inputMode="search"
-          returnKeyType="search"
-          accessibilityRole={"search"}
           accessibilityLabel={accessibilityLabel}
+          accessibilityRole={"search"}
+          autoFocus={autoFocus}
+          cursorColor={inputCaretColor}
+          inputMode="search"
+          maxFontSizeMultiplier={IOMaxFontSizeMultiplier}
           numberOfLines={1}
+          onBlur={handleBlur}
+          onChangeText={handleChangeText}
+          onFocus={handleFocus}
+          placeholder={placeholder}
+          placeholderTextColor={inputColorPlaceholder}
+          ref={searchInputRef}
+          returnKeyType="search"
+          selectionColor={inputCaretColor}
           style={[
             {
               color: IOColors[theme["textBody-default"]],
@@ -266,26 +275,18 @@ export const SearchInput = ({
               ? styles.textInputIOS
               : styles.textInputAndroid
           ]}
-          selectionColor={inputCaretColor}
-          cursorColor={inputCaretColor}
-          placeholder={placeholder}
-          placeholderTextColor={inputColorPlaceholder}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChangeText={handleChangeText}
+          testID={testID}
           value={value}
-          autoFocus={autoFocus}
-          maxFontSizeMultiplier={IOMaxFontSizeMultiplier}
         />
 
         <AnimatedPressable
-          style={[styles.clearButton, clearButtonAnimatedStyle]}
-          onPress={handleClear}
           accessibilityLabel={clearAccessibilityLabel}
           accessibilityRole="button"
           hitSlop={16}
+          onPress={handleClear}
+          style={[styles.clearButton, clearButtonAnimatedStyle]}
         >
-          <Icon name="closeSmall" size={iconCloseSize} color={iconColor} />
+          <Icon color={iconColor} name="closeSmall" size={iconCloseSize} />
         </AnimatedPressable>
       </Animated.View>
       <Animated.View
@@ -293,19 +294,19 @@ export const SearchInput = ({
         style={[styles.cancelButton, cancelButtonAnimatedStyle]}
       >
         <Pressable
-          accessibilityRole="button"
           accessibilityLabel={cancelButtonLabel}
+          accessibilityRole="button"
           onPress={handleCancel}
         >
           <IOText
+            accessibilityElementsHidden
+            accessible={false}
             color={theme["interactiveElem-default"]}
-            weight={"Semibold"}
-            size={buttonTextFontSize}
+            importantForAccessibility="no-hide-descendants"
             lineHeight={buttonTextLineHeight}
             numberOfLines={1}
-            accessible={false}
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
+            size={buttonTextFontSize}
+            weight={"Semibold"}
           >
             {cancelButtonLabel}
           </IOText>
@@ -316,9 +317,9 @@ export const SearchInput = ({
 
   return pressable ? (
     <Pressable
-      accessible={true}
-      accessibilityRole="button"
       accessibilityLabel={placeholder}
+      accessibilityRole="button"
+      accessible={true}
       onPress={pressable.onPress}
     >
       {renderSearchBar()}

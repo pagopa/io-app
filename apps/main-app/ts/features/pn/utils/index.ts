@@ -1,18 +1,19 @@
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { PNMessage } from "../store/types/types";
-import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
-import { CTAS } from "../../../types/LocalizedCTAs";
-import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
-import { GlobalState } from "../../../store/reducers/types";
+
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
-import { TimelineStatus } from "../components/Timeline";
-import { SendOpeningSource } from "../../pushNotifications/analytics";
+import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
 import { NotificationStatusHistoryElement } from "../../../../definitions/pn/NotificationStatusHistoryElement.ts";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { GlobalState } from "../../../store/reducers/types";
+import { CTAS } from "../../../types/LocalizedCTAs";
 import { format } from "../../../utils/dates.ts";
+import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
+import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
+import { SendOpeningSource } from "../../pushNotifications/analytics";
+import { TimelineStatus } from "../components/Timeline";
+import { PNMessage } from "../store/types/types";
 
 export const maxVisiblePaymentCount = 5;
 
@@ -30,22 +31,22 @@ export const notificationStatusToTimelineStatus = (
   status: NotificationStatus
 ): TimelineStatus => {
   switch (status) {
-    case "VIEWED":
-      return "viewed";
+    case "CANCELLED":
+      return "cancelled";
     case "EFFECTIVE_DATE":
       return "effective";
     case "UNREACHABLE":
       return "unreachable";
-    case "CANCELLED":
-      return "cancelled";
+    case "VIEWED":
+      return "viewed";
   }
   return "default";
 };
 
 export type PNOptInMessageInfo = {
-  isPNOptInMessage: boolean;
   cta1LinksToPNService: boolean;
   cta2LinksToPNService: boolean;
+  isPNOptInMessage: boolean;
 };
 
 export const extractPNOptInMessageInfoIfAvailable = (

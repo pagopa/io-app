@@ -1,7 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import I18n from "i18next";
-import { Action, createStore } from "redux";
 import { Text } from "react-native";
+import { Action, createStore } from "redux";
+
 import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
@@ -10,11 +11,11 @@ import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
+import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as credentialStatusUtils from "../../../common/utils/itwCredentialStatusUtils";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
-import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import * as catalogSelectors from "../../../credentialsCatalogue/store/selectors";
+import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
@@ -53,7 +54,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockReturnValue(false);
     jest
-      .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+      .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
       .mockReturnValue(true);
     jest
       .spyOn(catalogSelectors, "itwCredentialIntroContentSelector")
@@ -166,9 +167,9 @@ const renderComponent = (
     () => (
       <Stack.Navigator screenOptions={{ animationEnabled: false }}>
         <Stack.Screen
-          name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO}
           component={ItwIssuanceCredentialOfferIntroScreen}
           initialParams={{ itwCredentialOfferUri: T_CREDENTIAL_OFFER_URI }}
+          name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO}
         />
         <Stack.Screen name={ITW_ROUTES.DISCOVERY.INFO}>
           {({ route }) => {

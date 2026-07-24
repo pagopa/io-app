@@ -1,6 +1,7 @@
 import Clipboard from "@react-native-clipboard/clipboard";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
+
 import {
   OriginEnum,
   PaymentMethodEnum
@@ -40,9 +41,9 @@ describe("ReceiptInfoSection", () => {
   it("renders transaction information correctly when transaction data is provided", () => {
     const { getByText } = render(
       <ReceiptInfoSection
-        transaction={mockTransaction}
         loading={false}
         showUnavailableReceiptBanner
+        transaction={mockTransaction}
       />
     );
 
@@ -113,7 +114,7 @@ describe("ReceiptInfoSection", () => {
       }
     };
     const { getByText } = render(
-      <ReceiptInfoSection transaction={paypalTransaction} loading={false} />
+      <ReceiptInfoSection loading={false} transaction={paypalTransaction} />
     );
 
     expect(

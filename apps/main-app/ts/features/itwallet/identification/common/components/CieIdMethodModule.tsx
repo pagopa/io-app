@@ -1,6 +1,7 @@
 import { ModuleNavigationAlt } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
+
 import { trackItWalletIDMethodSelected } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
@@ -30,17 +31,6 @@ export const CieIdMethodModule = ({
     return (
       <>
         <ModuleNavigationAlt
-          testID="CieIDMethodModuleTestIDL3"
-          title={I18n.t(
-            `features.itWallet.identification.modeSelection.mode.cieId.title.l3`
-          )}
-          subtitle={
-            isReissuanceMode
-              ? undefined
-              : I18n.t(
-                  `features.itWallet.identification.modeSelection.mode.cieId.subtitle.l3`
-                )
-          }
           icon="cie"
           onPress={() => {
             trackItWalletIDMethodSelected({
@@ -49,6 +39,17 @@ export const CieIdMethodModule = ({
             });
             cieIdBottomSheet.present();
           }}
+          subtitle={
+            isReissuanceMode
+              ? undefined
+              : I18n.t(
+                  `features.itWallet.identification.modeSelection.mode.cieId.subtitle.l3`
+                )
+          }
+          testID="CieIDMethodModuleTestIDL3"
+          title={I18n.t(
+            `features.itWallet.identification.modeSelection.mode.cieId.title.l3`
+          )}
         />
         {cieIdBottomSheet.bottomSheet}
       </>
@@ -57,6 +58,11 @@ export const CieIdMethodModule = ({
 
   return (
     <ModuleNavigationAlt
+      icon="cie"
+      onPress={handleOnPress}
+      subtitle={I18n.t(
+        `features.itWallet.identification.modeSelection.mode.cieId.subtitle.default`
+      )}
       testID="CieIDMethodModuleTestIDL2"
       title={
         isReissuanceMode
@@ -67,11 +73,6 @@ export const CieIdMethodModule = ({
               `features.itWallet.identification.modeSelection.mode.cieId.title.default`
             )
       }
-      subtitle={I18n.t(
-        `features.itWallet.identification.modeSelection.mode.cieId.subtitle.default`
-      )}
-      icon="cie"
-      onPress={handleOnPress}
     />
   );
 };

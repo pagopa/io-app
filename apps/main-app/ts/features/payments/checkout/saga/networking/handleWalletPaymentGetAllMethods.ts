@@ -1,13 +1,14 @@
 import * as E from "fp-ts/lib/Either";
+import { Platform } from "react-native";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { Platform } from "react-native";
+
+import { getDeviceAppVersion } from "../../../../../utils/device";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { PaymentClient } from "../../../common/api/client";
-import { paymentsGetPaymentMethodsAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
-import { getDeviceAppVersion } from "../../../../../utils/device";
+import { paymentsGetPaymentMethodsAction } from "../../store/actions/networking";
 
 export function* handleWalletPaymentGetAllMethods(
   getAllPaymentMethods: PaymentClient["getAllPaymentMethodsForIO"],

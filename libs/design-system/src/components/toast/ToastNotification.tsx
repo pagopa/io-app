@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
+
 import { useIOThemeContext } from "../../context";
-import { IOAlertRadius, IOColors, hexToRgba } from "../../core";
+import { hexToRgba, IOAlertRadius, IOColors } from "../../core";
 import { Icon } from "../icons";
 import { HSpacer } from "../layout";
 import { ButtonText } from "../typography";
@@ -35,7 +36,7 @@ const toastColorVariants: Record<ToastVariant, ColorVariant> = {
   }
 };
 
-type Props = Pick<Toast, "message" | "variant" | "icon">;
+type Props = Pick<Toast, "icon" | "message" | "variant">;
 
 const ToastNotification = ({ message, variant = "neutral", icon }: Props) => {
   const colors = toastColorVariants[variant];
@@ -59,10 +60,10 @@ const ToastNotification = ({ message, variant = "neutral", icon }: Props) => {
 
   return (
     <View
-      style={[styles.toast, dynamicStyle]}
-      accessible={true}
-      accessibilityRole={"alert"}
       accessibilityLabel={message}
+      accessibilityRole={"alert"}
+      accessible={true}
+      style={[styles.toast, dynamicStyle]}
     >
       <ButtonText color={colors.stroke} style={styles.content}>
         {message}
@@ -70,7 +71,7 @@ const ToastNotification = ({ message, variant = "neutral", icon }: Props) => {
       {icon && (
         <>
           <HSpacer size={16} />
-          <Icon name={icon} size={24} color={colors.stroke} />
+          <Icon color={colors.stroke} name={icon} size={24} />
         </>
       )}
     </View>

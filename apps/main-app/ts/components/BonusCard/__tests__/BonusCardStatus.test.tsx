@@ -1,16 +1,17 @@
 import { render } from "@testing-library/react-native";
-import { Provider } from "react-redux";
-import { Store, createStore } from "redux";
 import I18n from "i18next";
-import { applicationChangeState } from "../../../store/actions/application";
-import { appReducer } from "../../../store/reducers";
-import { GlobalState } from "../../../store/reducers/types";
-import { format } from "../../../utils/dates";
+import { Provider } from "react-redux";
+import { createStore, Store } from "redux";
+
 import {
   InitiativeDTO,
   VoucherStatusEnum
 } from "../../../../definitions/idpay/InitiativeDTO";
 import { IdPayCardStatus } from "../../../features/idpay/details/utils";
+import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
+import { GlobalState } from "../../../store/reducers/types";
+import { format } from "../../../utils/dates";
 
 jest.mock("react-native-safe-area-context", () => {
   const useSafeAreaInsets = () => ({ top: 0 });

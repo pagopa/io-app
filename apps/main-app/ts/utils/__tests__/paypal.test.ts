@@ -1,6 +1,7 @@
 import I18n from "i18next";
-import { pspAccountList } from "../__mocks__/paypalAccountPsp";
+
 import { PayPalInfo } from "../../../definitions/pagopa/PayPalInfo";
+import { pspAccountList } from "../__mocks__/paypalAccountPsp";
 import { getPaypalAccountEmail } from "../paypal";
 
 const payPalInfo: PayPalInfo = { pspInfo: pspAccountList };

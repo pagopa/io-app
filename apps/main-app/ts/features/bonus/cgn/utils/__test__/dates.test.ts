@@ -1,5 +1,6 @@
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import MockDate from "mockdate";
+
 import { AppVersion } from "../../../../../../definitions/identity/AppVersion";
 import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
 import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";

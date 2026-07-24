@@ -9,6 +9,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { useState } from "react";
 import { FlatList } from "react-native";
+
 import {
   StatusEnum as InitiativeOnboardingStatus,
   UserOnboardingStatusDTO
@@ -26,7 +27,7 @@ export const IdPayInitiativeWaitingList = () => {
   const dispatch = useIODispatch();
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const [selectedInitiative, setSelectedInitiative] = useState<
-    UserOnboardingStatusDTO | undefined
+    undefined | UserOnboardingStatusDTO
   >();
 
   const { bottomSheet, present } = useIOBottomSheetModal({
@@ -86,14 +87,11 @@ export const IdPayInitiativeWaitingList = () => {
   return (
     <>
       <FlatList
-        ListHeaderComponent={renderListHeaderComponent}
         data={initiativeWaitingList}
         ItemSeparatorComponent={() => <Divider />}
+        ListHeaderComponent={renderListHeaderComponent}
         renderItem={({ item }) => (
           <ListItemInfo
-            icon="hourglass"
-            topElement={getInitiativeStatusBadge(item.status)}
-            value={item.initiativeName}
             endElement={
               item.status !== InitiativeOnboardingStatus.ON_WAITING_LIST
                 ? undefined
@@ -109,6 +107,9 @@ export const IdPayInitiativeWaitingList = () => {
                     }
                   }
             }
+            icon="hourglass"
+            topElement={getInitiativeStatusBadge(item.status)}
+            value={item.initiativeName}
           />
         )}
       />
@@ -121,16 +122,6 @@ const getInitiativeStatusBadge = (
   initiativeStatus: InitiativeOnboardingStatus
 ): ListItemInfo["topElement"] | undefined => {
   switch (initiativeStatus) {
-    case InitiativeOnboardingStatus.ON_WAITING_LIST:
-      return {
-        type: "badge",
-        componentProps: {
-          variant: "default",
-          text: I18n.t(
-            "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.label"
-          )
-        }
-      };
     case InitiativeOnboardingStatus.ON_EVALUATION: {
       return {
         type: "badge",
@@ -142,6 +133,16 @@ const getInitiativeStatusBadge = (
         }
       };
     }
+    case InitiativeOnboardingStatus.ON_WAITING_LIST:
+      return {
+        type: "badge",
+        componentProps: {
+          variant: "default",
+          text: I18n.t(
+            "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.label"
+          )
+        }
+      };
     default: {
       return undefined;
     }

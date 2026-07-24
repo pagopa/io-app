@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
+
 import {
   idPayAreInitiativesFromInstrumentLoadingSelector,
   idPayEnabledInitiativesFromInstrumentSelector,
@@ -12,14 +13,14 @@ import { WalletDTO } from "../../../../../../../definitions/idpay/WalletDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { isIdPayEnabledSelector } from "../../../../../../store/reducers/backendStatus/remoteConfig";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
 import {
   idPayInitiativesFromInstrumentGet,
-  idPayWalletGet,
   idpayInitiativesInstrumentDelete,
-  idpayInitiativesInstrumentEnroll
+  idpayInitiativesInstrumentEnroll,
+  idPayWalletGet
 } from "../../actions";
-import { GlobalState } from "../../../../../../store/reducers/types";
 
 const mockResponseSuccess: WalletDTO = {
   initiativeList: []

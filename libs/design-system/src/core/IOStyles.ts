@@ -1,6 +1,7 @@
-import { StyleSheet } from "react-native";
+import { BoxShadowValue, StyleSheet } from "react-native";
+
 import { IOIconSizeScale } from "../components/icons";
-import { IOColors } from "./IOColors";
+import { hexToRgba, IOColors } from "./IOColors";
 import { IOModuleIDPRadius } from "./IOShapes";
 import {
   IOAppMargin,
@@ -16,17 +17,17 @@ import {
 
 interface IOVisualCostants {
   appMarginDefault: IOAppMargin;
-  // Header
-  headerHeight: number;
+  avatarRadiusSizeMedium: number;
+  avatarRadiusSizeSmall: number;
+  avatarSizeMedium: number;
   // Dimensions
   avatarSizeSmall: number;
-  avatarSizeMedium: number;
-  avatarRadiusSizeSmall: number;
-  avatarRadiusSizeMedium: number;
+  // Header
+  headerHeight: number;
   iconContainedSizeDefault: number;
-  scrollDownButtonRight: number;
-  scrollDownButtonBottom: number;
   iconMargin: IOSpacingScale;
+  scrollDownButtonBottom: number;
+  scrollDownButtonRight: number;
 }
 
 export const IOVisualCostants: IOVisualCostants = {
@@ -42,6 +43,16 @@ export const IOVisualCostants: IOVisualCostants = {
   iconMargin: 12
 };
 
+/**
+ * Shared footer `boxShadow`
+ */
+export const footerBoxShadow = {
+  offsetX: 0,
+  offsetY: 0,
+  blurRadius: 32,
+  color: hexToRgba(IOColors.black, 0.1)
+} satisfies BoxShadowValue;
+
 export const IOStyles = StyleSheet.create({
   // The following styles come from the original
   // NativeBase's `View`. They are moved here to
@@ -51,15 +62,7 @@ export const IOStyles = StyleSheet.create({
     paddingBottom: 16,
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     paddingTop: 16,
-    // iOS shadow
-    shadowColor: IOColors.black,
-    shadowOffset: {
-      width: 0,
-      height: 50
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 37,
-    elevation: 20 // Prop supported on Android only
+    boxShadow: [footerBoxShadow]
   }
 });
 
@@ -94,9 +97,7 @@ export const IOButtonStyles = StyleSheet.create({
     dynamic ones once NativeBase is gone */
     borderRadius: btnBorderRadius,
     borderCurve: "continuous",
-    paddingHorizontal: 24,
-    // Reset default visual parameters
-    elevation: 0
+    paddingHorizontal: 24
     // Visual parameters based on the FontScale
     // paddingVertical: PixelRatio.getFontScale() * 10,
     // paddingHorizontal: PixelRatio.getFontScale() * 16,
@@ -111,9 +112,7 @@ export const IOButtonStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    textAlignVertical: "center", // Prop supported on Android only
-    // Reset default visual parameters
-    elevation: 0
+    textAlignVertical: "center" // Prop supported on Android only
   },
   /* Labels */
   label: {
@@ -163,12 +162,12 @@ export const IOIconButtonStyles = StyleSheet.create({
  */
 
 interface IOListItemVisualParams {
-  paddingVertical: IOSpacingScale;
-  paddingHorizontal: IOAppMargin;
-  iconMargin: IOSpacingScale;
   actionMargin: IOSpacingScale;
-  iconSize: IOIconSizeScale;
   chevronSize: IOIconSizeScale;
+  iconMargin: IOSpacingScale;
+  iconSize: IOIconSizeScale;
+  paddingHorizontal: IOAppMargin;
+  paddingVertical: IOSpacingScale;
 }
 
 export const IOListItemVisualParams: IOListItemVisualParams = {
@@ -212,8 +211,8 @@ export const IOModuleStyles = StyleSheet.create({
  */
 
 interface IOSelectionTickVisualParams {
-  size: IOIconSizeScale;
   borderWidth: number;
+  size: IOIconSizeScale;
 }
 
 export const IOSelectionTickVisualParams: IOSelectionTickVisualParams = {
@@ -222,12 +221,12 @@ export const IOSelectionTickVisualParams: IOSelectionTickVisualParams = {
 };
 
 interface IOSelectionListItemVisualParams {
-  paddingVertical: IOSpacingScale;
-  paddingHorizontal: IOAppMargin;
-  iconMargin: IOSpacingScale;
   actionMargin: IOSpacer;
-  iconSize: IOIconSizeScale;
   descriptionMargin: IOSpacer;
+  iconMargin: IOSpacingScale;
+  iconSize: IOIconSizeScale;
+  paddingHorizontal: IOAppMargin;
+  paddingVertical: IOSpacingScale;
 }
 
 export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =

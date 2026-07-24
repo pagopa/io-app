@@ -7,16 +7,17 @@ import {
   SharedValue,
   useAnimatedStyle
 } from "react-native-reanimated";
+
 import { useIOTheme } from "../context";
 import { hexToRgba, IOColors, IOScaleEffect } from "../core";
 import { useSpringPressProgressValue } from "../utils/hooks";
 
 export const useListItemAnimation = (): {
-  progress: SharedValue<number>;
+  backgroundAnimatedStyle: AnimatedStyle<ViewStyle>;
   onPressIn: (event: GestureResponderEvent) => void;
   onPressOut: (event: GestureResponderEvent) => void;
+  progress: SharedValue<number>;
   scaleAnimatedStyle: AnimatedStyle<ViewStyle>;
-  backgroundAnimatedStyle: AnimatedStyle<ViewStyle>;
 } => {
   const { progress, onPressIn, onPressOut } =
     useSpringPressProgressValue("button");

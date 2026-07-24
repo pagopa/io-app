@@ -1,15 +1,16 @@
 import { IOEasingCurves } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 import Animated, { AnimatedStyle, FadeIn } from "react-native-reanimated";
+
 import CameraMarkerCorner from "../../../../img/camera-marker-corner.svg";
 import CameraMarkerLine from "../../../../img/camera-marker-line.svg";
 
 const ANIMATION_DURATION = 1500;
 
 type Props = {
-  size?: number;
   cornerSize?: number;
   isAnimated?: boolean;
+  size?: number;
 };
 
 const defaultMarkerSize = 230;
@@ -24,11 +25,11 @@ const AnimatedCameraMarker = ({
 
   const drawMarkerCorner = (rotation: number) => (
     <CameraMarkerCorner
-      width={cornerSize}
       height={cornerSize}
       style={{
         transform: [{ rotate: `${rotation}deg` }]
       }}
+      width={cornerSize}
     />
   );
 
@@ -45,7 +46,7 @@ const AnimatedCameraMarker = ({
   };
 
   return (
-    <Animated.View style={styles.container} entering={FadeIn}>
+    <Animated.View entering={FadeIn} style={styles.container}>
       <View style={[styles.marker, { width: size, height: size }]}>
         <View style={styles.corners}>
           <View style={styles.cornersSide}>
@@ -58,7 +59,7 @@ const AnimatedCameraMarker = ({
           </View>
         </View>
         <Animated.View style={scanAnimation}>
-          <CameraMarkerLine width={size - 10} height={size} />
+          <CameraMarkerLine height={size} width={size - 10} />
         </Animated.View>
       </View>
     </Animated.View>

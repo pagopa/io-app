@@ -1,12 +1,13 @@
-import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../../store/actions/types";
-import { SpidLoginRequestInfo } from "../types";
 import {
-  setSpidLoginRequestState,
+  resetSpidLoginState,
   setSpidLoginInLoadingState,
-  resetSpidLoginState
+  setSpidLoginRequestState
 } from "../actions";
+import { SpidLoginRequestInfo } from "../types";
 
 export type SpidLoginState = {
   requestInfo: SpidLoginRequestInfo;
@@ -23,14 +24,8 @@ export const spidLoginReducer = (
   action: Action
 ): SpidLoginState => {
   switch (action.type) {
-    case getType(setSpidLoginRequestState):
-      return {
-        ...state,
-        requestInfo: {
-          ...state.requestInfo,
-          requestState: action.payload
-        }
-      };
+    case getType(resetSpidLoginState):
+      return spidLoginInitialState;
     case getType(setSpidLoginInLoadingState):
       return {
         ...state,
@@ -39,8 +34,14 @@ export const spidLoginReducer = (
           requestState: pot.noneLoading
         }
       };
-    case getType(resetSpidLoginState):
-      return spidLoginInitialState;
+    case getType(setSpidLoginRequestState):
+      return {
+        ...state,
+        requestInfo: {
+          ...state.requestInfo,
+          requestState: action.payload
+        }
+      };
     default:
       return state;
   }

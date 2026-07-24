@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { FlexStyle, Image, ImageProps, StyleSheet } from "react-native";
 
-type IOAspectRatioScale = "1:1" | "4:3" | "16:9" | "3:4" | "21:9";
+type IOAspectRatioScale = "1:1" | "3:4" | "4:3" | "16:9" | "21:9";
 
 const IOAspectRatioScaleMap: Record<IOAspectRatioScale, number> = {
   "1:1": 1,
@@ -12,9 +12,9 @@ const IOAspectRatioScaleMap: Record<IOAspectRatioScale, number> = {
 };
 
 type IOImageProps = {
-  imageProps: Omit<ImageProps, "alt" | "style">;
   alt: string;
   aspectRatio?: IOAspectRatioScale;
+  imageProps: Omit<ImageProps, "alt" | "style">;
 };
 
 const styles = StyleSheet.create({
@@ -47,8 +47,8 @@ export const IOImage = ({
     <Image
       accessibilityIgnoresInvertColors
       {...imageProps}
-      style={[styles.image, aspectRatioStyle]}
       alt={alt}
+      style={[styles.image, aspectRatioStyle]}
     />
   );
 };

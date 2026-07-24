@@ -5,6 +5,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
+
 import { useIOThemeContext } from "../../context";
 import {
   hexToRgba,
@@ -18,21 +19,21 @@ import { WithTestID } from "../../utils/types";
 import { IOText } from "../typography";
 
 export type Badge = WithTestID<{
+  accessible?: boolean;
+  allowFontScaling?: boolean;
   outline?: boolean;
   text: string;
-  allowFontScaling?: boolean;
-  variant: "default" | "warning" | "error" | "success" | "cgn" | "highlight";
-  accessible?: boolean;
+  variant: "cgn" | "default" | "error" | "highlight" | "success" | "warning";
 }>;
+
+type OutlinedVariantProps = {
+  background?: never;
+  foreground: IOColors;
+};
 
 type SolidVariantProps = {
   background: ColorValue;
   foreground: IOColors;
-};
-
-type OutlinedVariantProps = {
-  foreground: IOColors;
-  background?: never;
 };
 
 const styles = StyleSheet.create({
@@ -195,7 +196,6 @@ export const Badge = ({
   return (
     <View
       accessible={accessible}
-      testID={testID}
       style={[
         styles.badge,
         allowFontScaling ? dynamicStyle : styles.badgeStaticStyle,
@@ -208,20 +208,21 @@ export const Badge = ({
               backgroundColor: background ?? undefined
             }
       ]}
+      testID={testID}
     >
       <IOText
         allowFontScaling={allowFontScaling}
-        weight={"Semibold"}
-        size={12}
-        lineHeight={16}
         color={foreground}
-        numberOfLines={1}
         ellipsizeMode="tail"
+        lineHeight={16}
+        numberOfLines={1}
+        size={12}
         style={{
           alignSelf: "center",
           textTransform: "uppercase",
           letterSpacing: 0.5
         }}
+        weight={"Semibold"}
       >
         {text}
       </IOText>

@@ -1,19 +1,20 @@
-import { ReactNode } from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { ReactNode } from "react";
 import { View } from "react-native";
 import { createStore } from "redux";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+
 import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import * as thirdPartySelectors from "../../../store/reducers/thirdPartyById";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../../pushNotifications/analytics";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import * as thirdPartySelectors from "../../../store/reducers/thirdPartyById";
+import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
 
 jest.mock("../MessageDetailsAttachmentItem");
 
@@ -85,7 +86,10 @@ describe("MessageDetailsAttachments", () => {
               banner ? "" : "no "
             }banner) (disabled: ${disabled}) (opening source: ${sendOpeningSource} user type: ${sendUserType})`, () => {
               jest
-                .spyOn(thirdPartySelectors, "thirdPartyMessageAttachments")
+                .spyOn(
+                  thirdPartySelectors,
+                  "thirdPartyMessageAttachmentsSelector"
+                )
                 .mockImplementation((_state, _messageId) => attachmentArray);
               const component = renderScreen(
                 messageId,
@@ -121,8 +125,8 @@ const renderScreen = (
     () => (
       <MessageDetailsAttachments
         banner={banner}
-        messageId={messageId}
         disabled={disabled}
+        messageId={messageId}
         sendOpeningSource={sendOpeningSource}
         sendUserType={sendUserType}
         serviceId={serviceId}

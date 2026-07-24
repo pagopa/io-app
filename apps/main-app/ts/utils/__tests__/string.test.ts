@@ -1,11 +1,12 @@
 import * as O from "fp-ts/lib/Option";
+
 import {
   addEvery,
   capitalize,
-  isStringNullyOrEmpty,
-  maybeNotNullyString,
+  capitalizeTextName,
   formatBytesWithUnit,
-  capitalizeTextName
+  isStringNullyOrEmpty,
+  maybeNotNullyString
 } from "../strings";
 
 describe("capitalize", () => {

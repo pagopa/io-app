@@ -1,14 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+
+import { InitiativeDetailDTO } from "../../../../../definitions/idpay/InitiativeDetailDTO";
 import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
-import { InitiativeDetailDTO } from "../../../../../definitions/idpay/InitiativeDetailDTO";
 import { OnboardingStatusDTO } from "../../../../../definitions/idpay/OnboardingStatusDTO";
 import { TimelineDTO } from "../../../../../definitions/idpay/TimelineDTO";
 import { Action } from "../../../../store/actions/types";
@@ -16,19 +17,19 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
 import {
   idPayBeneficiaryDetailsGet,
-  idPayOnboardingStatusGet,
   idpayInitiativeGet,
+  idPayOnboardingStatusGet,
   idpayTimelinePageGet
 } from "./actions";
 
-export type PaginatedTimelineDTO = Record<number, TimelineDTO>;
-
 export type IdPayInitiativeState = {
-  details: pot.Pot<InitiativeDTO, NetworkError>;
   beneficiaryDetails: pot.Pot<InitiativeDetailDTO, NetworkError>;
+  details: pot.Pot<InitiativeDTO, NetworkError>;
   onboardingStatus: pot.Pot<OnboardingStatusDTO, NetworkError>;
   timeline: pot.Pot<PaginatedTimelineDTO, NetworkError>;
 };
+
+export type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 
 const INITIAL_STATE: IdPayInitiativeState = {
   details: pot.none,
@@ -42,6 +43,29 @@ const reducer = (
   action: Action
 ): IdPayInitiativeState => {
   switch (action.type) {
+    case getType(idPayBeneficiaryDetailsGet.failure):
+      return {
+        ...state,
+        beneficiaryDetails: pot.toError(
+          state.beneficiaryDetails,
+          action.payload
+        )
+      };
+    case getType(idPayBeneficiaryDetailsGet.request):
+      return {
+        ...state,
+        beneficiaryDetails: pot.toLoading(pot.none)
+      };
+    case getType(idPayBeneficiaryDetailsGet.success):
+      return {
+        ...state,
+        beneficiaryDetails: pot.some(action.payload)
+      };
+    case getType(idpayInitiativeGet.failure):
+      return {
+        ...state,
+        details: pot.toError(state.details, action.payload)
+      };
     case getType(idpayInitiativeGet.request):
       return {
         ...state,
@@ -52,10 +76,25 @@ const reducer = (
         ...state,
         details: pot.some(action.payload)
       };
-    case getType(idpayInitiativeGet.failure):
+    case getType(idPayOnboardingStatusGet.failure):
       return {
         ...state,
-        details: pot.toError(state.details, action.payload)
+        onboardingStatus: pot.toError(state.onboardingStatus, action.payload)
+      };
+    case getType(idPayOnboardingStatusGet.request):
+      return {
+        ...state,
+        onboardingStatus: pot.toLoading(pot.none)
+      };
+    case getType(idPayOnboardingStatusGet.success):
+      return {
+        ...state,
+        onboardingStatus: pot.some(action.payload)
+      };
+    case getType(idpayTimelinePageGet.failure):
+      return {
+        ...state,
+        timeline: pot.toError(state.timeline, action.payload)
       };
     // TIMELINE ACTIONS
     case getType(idpayTimelinePageGet.request):
@@ -81,44 +120,6 @@ const reducer = (
           ...currentTimeline,
           [action.payload.page]: action.payload.timeline
         })
-      };
-    case getType(idpayTimelinePageGet.failure):
-      return {
-        ...state,
-        timeline: pot.toError(state.timeline, action.payload)
-      };
-    case getType(idPayBeneficiaryDetailsGet.request):
-      return {
-        ...state,
-        beneficiaryDetails: pot.toLoading(pot.none)
-      };
-    case getType(idPayBeneficiaryDetailsGet.success):
-      return {
-        ...state,
-        beneficiaryDetails: pot.some(action.payload)
-      };
-    case getType(idPayBeneficiaryDetailsGet.failure):
-      return {
-        ...state,
-        beneficiaryDetails: pot.toError(
-          state.beneficiaryDetails,
-          action.payload
-        )
-      };
-    case getType(idPayOnboardingStatusGet.request):
-      return {
-        ...state,
-        onboardingStatus: pot.toLoading(pot.none)
-      };
-    case getType(idPayOnboardingStatusGet.success):
-      return {
-        ...state,
-        onboardingStatus: pot.some(action.payload)
-      };
-    case getType(idPayOnboardingStatusGet.failure):
-      return {
-        ...state,
-        onboardingStatus: pot.toError(state.onboardingStatus, action.payload)
       };
   }
   return state;

@@ -15,13 +15,13 @@ import {
   sessionInvalid
 } from "../../../features/authentication/common/store/actions";
 import { cieAuthenticationError } from "../../../features/authentication/login/cie/store/actions";
+import * as CGNANALYTICS from "../../../features/bonus/cgn/analytics";
 import { loadAvailableBonuses } from "../../../features/bonus/common/store/actions/availableBonusesTypes";
-import {
-  analyticsAuthenticationCompleted,
-  analyticsAuthenticationStarted
-} from "../../actions/analytics";
-import { applicationChangeState } from "../../actions/application";
-import { contentMunicipalityLoad } from "../../actions/content";
+import * as FCIANALYTICS from "../../../features/fci/analytics";
+import * as FCIREDUCERS from "../../../features/fci/store/reducers/fciEnvironment";
+import { profileEmailValidationChanged } from "../../../features/mailCheck/store/actions/profileEmailValidationChange";
+import * as MESSAGESANALYTICS from "../../../features/messages/analytics";
+import * as SERVICESANALYTICS from "../../../features/services/common/analytics";
 import {
   profileFirstLogin,
   profileLoadFailure,
@@ -30,23 +30,23 @@ import {
   removeAccountMotivation,
   RemoveAccountMotivationEnum
 } from "../../../features/settings/common/store/actions";
-import { profileEmailValidationChanged } from "../../../features/mailCheck/store/actions/profileEmailValidationChange";
-import { searchMessagesEnabled } from "../../actions/search";
 import {
   deleteUserDataProcessing,
   upsertUserDataProcessing
 } from "../../../features/settings/common/store/actions/userDataProcessing";
 import { ProfileError } from "../../../features/settings/common/store/types";
-import { actionTracking, testable } from "../analytics";
-import * as CGNANALYTICS from "../../../features/bonus/cgn/analytics";
-import * as SERVICESANALYTICS from "../../../features/services/common/analytics";
-import * as CONTENTANALYTICS from "../contentAnalytics";
 import * as ZENDESKANALYTICS from "../../../features/zendesk/analytics/index";
-import * as FCIANALYTICS from "../../../features/fci/analytics";
-import * as MESSAGESANALYTICS from "../../../features/messages/analytics";
-import * as FCIREDUCERS from "../../../features/fci/store/reducers/fciEnvironment";
+import {
+  analyticsAuthenticationCompleted,
+  analyticsAuthenticationStarted
+} from "../../actions/analytics";
+import { applicationChangeState } from "../../actions/application";
+import { contentMunicipalityLoad } from "../../actions/content";
+import { searchMessagesEnabled } from "../../actions/search";
 import { Action, MiddlewareAPI } from "../../actions/types";
 import { GlobalState } from "../../reducers/types";
+import { actionTracking, testable } from "../analytics";
+import * as CONTENTANALYTICS from "../contentAnalytics";
 
 // eslint-disable-next-line functional/no-let
 let mockIsMixpanelInitialized = true;

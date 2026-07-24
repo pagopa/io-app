@@ -1,3 +1,5 @@
+import * as MIXPANEL from "../../../../../mixpanel";
+import * as PROFILEPROPERTIES from "../../../../../mixpanelConfig/profileProperties";
 import {
   trackToSWebViewError,
   trackToSWebViewErrorRetry
@@ -8,26 +10,24 @@ import {
   IdpCIE_ID
 } from "../../../login/hooks/useNavigateToLoginMethod";
 import {
-  trackLoginFlowStarting,
-  trackCieLoginSelected,
-  trackCiePinLoginSelected,
-  trackCieIDLoginSelected,
-  trackCieBottomSheetScreenView,
   loginCieWizardSelected,
-  trackSpidLoginSelected,
-  trackSpidLoginIdpSelection,
-  trackMethodInfo,
-  trackCieLoginSuccess,
+  trackCieBottomSheetScreenView,
+  trackCieIDLoginSelected,
   trackCieIDLoginSuccess,
-  trackSpidLoginSuccess,
-  trackTosUserExit,
-  trackLoginUserExit,
+  trackCieLoginSelected,
+  trackCieLoginSuccess,
+  trackCiePinLoginSelected,
   trackLoginEnded,
+  trackLoginFlowStarting,
+  trackLoginUserExit,
+  trackMethodInfo,
+  trackSessionTokenFragmentFailure,
   trackSessionTokenSource,
-  trackSessionTokenFragmentFailure
+  trackSpidLoginIdpSelection,
+  trackSpidLoginSelected,
+  trackSpidLoginSuccess,
+  trackTosUserExit
 } from "../index";
-import * as MIXPANEL from "../../../../../mixpanel";
-import * as PROFILEPROPERTIES from "../../../../../mixpanelConfig/profileProperties";
 
 describe("analytics/index.ts", () => {
   const mixpanelTrackSpyOn = jest

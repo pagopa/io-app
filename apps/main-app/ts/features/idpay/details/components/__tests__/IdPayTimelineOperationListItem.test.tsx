@@ -1,9 +1,15 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
+
 import {
   IbanOperationDTO,
   OperationTypeEnum as IbanOperationTypeEnum
 } from "../../../../../../definitions/idpay/IbanOperationDTO";
+import {
+  InstrumentOperationDTO,
+  OperationTypeEnum as InstrumentOperationTypeEnum,
+  InstrumentTypeEnum
+} from "../../../../../../definitions/idpay/InstrumentOperationDTO";
 import {
   OnboardingOperationDTO,
   OperationTypeEnum as OnboardingOperationTypeEnum
@@ -12,29 +18,24 @@ import {
   RefundOperationDTO,
   OperationTypeEnum as RefundOperationTypeEnum
 } from "../../../../../../definitions/idpay/RefundOperationDTO";
-import { setLocale } from "../../../../../i18n";
-import {
-  IdPayTimelineOperationListItem,
-  getOperationSubtitle,
-  getOperationSubtitleWithAmount
-} from "../IdPayTimelineOperationListItem";
-import {
-  InstrumentOperationDTO,
-  OperationTypeEnum as InstrumentOperationTypeEnum,
-  InstrumentTypeEnum
-} from "../../../../../../definitions/idpay/InstrumentOperationDTO";
 import {
   RejectedInstrumentOperationDTO,
   OperationTypeEnum as RejectedInstrumentOperationTypeEnum
 } from "../../../../../../definitions/idpay/RejectedInstrumentOperationDTO";
 import {
-  ChannelEnum,
-  TransactionOperationDTO
-} from "../../../../../../definitions/idpay/TransactionOperationDTO";
-import {
   StatusEnum,
   OperationTypeEnum as TransactionOperationTypeEnum
 } from "../../../../../../definitions/idpay/TransactionDetailDTO";
+import {
+  ChannelEnum,
+  TransactionOperationDTO
+} from "../../../../../../definitions/idpay/TransactionOperationDTO";
+import { setLocale } from "../../../../../i18n";
+import {
+  getOperationSubtitle,
+  getOperationSubtitleWithAmount,
+  IdPayTimelineOperationListItem
+} from "../IdPayTimelineOperationListItem";
 
 setLocale("it");
 
@@ -111,8 +112,8 @@ describe("Test IdPayTimelineOperationListItem", () => {
 
         const component = render(
           <IdPayTimelineOperationListItem
-            operation={T_OPERATION}
             onPress={mockOnPress}
+            operation={T_OPERATION}
             pressable
             testID="itemTestID"
           />
@@ -156,8 +157,8 @@ describe("Test IdPayTimelineOperationListItem", () => {
 
         const component = render(
           <IdPayTimelineOperationListItem
-            operation={T_OPERATION}
             onPress={mockOnPress}
+            operation={T_OPERATION}
             pressable
             testID="itemTestID"
           />

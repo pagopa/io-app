@@ -1,6 +1,7 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/Either";
 import { testSaga } from "redux-saga-test-plan";
+
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {
@@ -9,16 +10,16 @@ import {
   trackSendAarMandateRetryError
 } from "../../analytics";
 import { setAarFlowState } from "../../store/actions";
+import {
+  testable as errorMappingsTestable,
+  getAarErrorBehaviour
+} from "../../utils/aarErrorMappings";
 import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
   sendAarMockStates
 } from "../../utils/testUtils";
 import { createAarMandateSaga } from "../createAarMandateSaga";
-import {
-  getAarErrorBehaviour,
-  testable as errorMappingsTestable
-} from "../../utils/aarErrorMappings";
 
 const sessionToken = "mock-session-token";
 const createAarMandateMock = jest.fn();

@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
+
+import { isFseDiscoveryBannerRenderableSelector, testable } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { testable, isFseDiscoveryBannerRenderableSelector } from "..";
 
 const { isFseDiscoveryBannerDismissedSelector } = testable!;
 describe("fseDiscoveryBanner selectors", () => {

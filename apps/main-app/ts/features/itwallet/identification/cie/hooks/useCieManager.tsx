@@ -10,6 +10,7 @@ import { useCallback, useEffect, useState } from "react";
 import HapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
+
 import { useIOSelector } from "../../../../../store/hooks";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import {
@@ -22,21 +23,17 @@ import { getCieProgressEmojis } from "../utils/strings";
 export type CieManagerFailure = CieError | NfcError;
 
 export type CieManagerState =
-  | { state: "idle" }
-  | { state: "reading"; progress: number }
   | {
-      state: "failure";
       failure: CieManagerFailure;
-      progress?: number;
       origin?: string;
+      progress?: number;
+      state: "failure";
     }
+  | { progress: number; state: "reading" }
+  | { state: "idle" }
   | { state: "success" };
 
 type UseCieManager = (params: {
-  /**
-   * Handler called upon successful CIE authentication flow.
-   */
-  onSuccess?: (authorizationUrl: string) => void;
   /**
    * Handler called upon successful internal authentication and MRTD with PACE flow.
    * Returned data is base64 encoded.
@@ -45,19 +42,14 @@ type UseCieManager = (params: {
     data: InternalAuthAndMrtdResponse
   ) => void;
   /**
+   * Handler called upon successful CIE authentication flow.
+   */
+  onSuccess?: (authorizationUrl: string) => void;
+  /**
    * Wether to use UAT endpoints for CIE auth operations.
    */
   useUat?: boolean;
 }) => {
-  /**
-   * The current state of the CIE manager.
-   */
-  state: CieManagerState;
-  /**
-   * Starts the CIE reading process with the provided PIN and service provider URL.
-   */
-  startReading: (pin: string, serviceProviderUrl: string) => Promise<void>;
-
   /**
    * Starts the internal authentication and MRTD with PACE reading process with the provided CAN and challenge to sign.
    */
@@ -65,6 +57,15 @@ type UseCieManager = (params: {
     can: string,
     challenge: string
   ) => Promise<void>;
+  /**
+   * Starts the CIE reading process with the provided PIN and service provider URL.
+   */
+  startReading: (pin: string, serviceProviderUrl: string) => Promise<void>;
+
+  /**
+   * The current state of the CIE manager.
+   */
+  state: CieManagerState;
 };
 
 export const useCieManager: UseCieManager = ({

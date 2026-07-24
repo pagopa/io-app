@@ -1,21 +1,22 @@
 import { createStore, Store } from "redux";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { GlobalState } from "../../../../store/reducers/types";
-import { FCI_ROUTES } from "../../navigation/routes";
-import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+
 import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
-import FciSignatureFieldsScreen from "../valid/FciSignatureFieldsScreen";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { FCI_ROUTES } from "../../navigation/routes";
 import { fciSignatureRequestFromId } from "../../store/actions";
+import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import {
   getSectionListData,
   orderSignatureFields
 } from "../../utils/signatureFields";
+import FciSignatureFieldsScreen from "../valid/FciSignatureFieldsScreen";
 
 type Props = {
-  documentId: DocumentDetailView["id"];
   currentDoc: number;
+  documentId: DocumentDetailView["id"];
 };
 
 describe("Test FciSignatureFields screen", () => {

@@ -1,17 +1,18 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { Action, createStore } from "redux";
-import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
+
 import { ServiceDetails } from "../../../../../../../definitions/services/ServiceDetails";
+import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../../utils/tests";
 import {
   logoutSuccess,
   sessionExpired
 } from "../../../../../authentication/common/store/actions";
 import { loadServiceDetail } from "../../actions/details";
-import { appReducer } from "../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { reproduceSequence } from "../../../../../../utils/tests";
 
 const serviceId = "serviceId" as ServiceId;
 

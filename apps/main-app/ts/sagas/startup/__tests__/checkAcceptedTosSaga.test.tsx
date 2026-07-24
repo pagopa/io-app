@@ -1,16 +1,17 @@
-import { expectSaga } from "redux-saga-test-plan";
 import {
   NonNegativeInteger,
   NonNegativeNumber
 } from "@pagopa/ts-commons/lib/numbers";
+import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga/effects";
-import { navigateToTosScreen } from "../../../store/actions/navigation";
+
+import { ServicesPreferencesModeEnum } from "../../../../definitions/identity/ServicesPreferencesMode";
+import mockedProfile from "../../../__mocks__/initializedProfile";
 import { tosAccepted } from "../../../features/onboarding/store/actions";
 import { isProfileFirstOnBoarding } from "../../../features/settings/common/store/utils/guards";
-import mockedProfile from "../../../__mocks__/initializedProfile";
-import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
-import { ServicesPreferencesModeEnum } from "../../../../definitions/identity/ServicesPreferencesMode";
 import { tosConfigSelector } from "../../../features/tos/store/selectors";
+import { navigateToTosScreen } from "../../../store/actions/navigation";
+import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
 
 const tosVersion = 3.2 as NonNegativeNumber;
 

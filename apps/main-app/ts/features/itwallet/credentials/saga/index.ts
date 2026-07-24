@@ -1,17 +1,18 @@
 import { SagaIterator } from "redux-saga";
 import { takeLeading } from "typed-redux-saga/macro";
+
 import {
+  itwCredentialsRefreshStatusByType,
   itwCredentialsRemoveByType,
   itwCredentialsReplaceByType,
   itwCredentialsStore,
-  itwCredentialsStoreBundle,
-  itwCredentialsRefreshStatusByType
+  itwCredentialsStoreBundle
 } from "../store/actions";
+import { handleCredentialStatusAssertionRetry } from "./checkCredentialsStatusAssertion";
 import { handleItwCredentialsRemoveByTypeSaga } from "./handleItwCredentialsRemoveByTypeSaga";
 import { handleItwCredentialsReplaceByTypeSaga } from "./handleItwCredentialsReplaceByTypeSaga";
-import { handleItwCredentialsStoreSaga } from "./handleItwCredentialsStoreSaga";
 import { handleItwCredentialsStoreBundleSaga } from "./handleItwCredentialsStoreBundleSaga";
-import { handleCredentialStatusAssertionRetry } from "./checkCredentialsStatusAssertion";
+import { handleItwCredentialsStoreSaga } from "./handleItwCredentialsStoreSaga";
 
 export function* watchItwCredentialsSaga(): SagaIterator {
   yield* takeLeading(

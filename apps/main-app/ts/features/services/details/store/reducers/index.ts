@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
+
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
@@ -40,6 +41,25 @@ const reducer = (
   action: Action
 ): ServicesDetailsState => {
   switch (action.type) {
+    case getType(loadServiceDetail.failure):
+      // when a request to load a previously loaded service detail fails its state is updated
+      // with a someError pot, otherwise its state is updated with a noneError pot
+      const { service_id, error } = action.payload;
+      return {
+        ...state,
+        dataById: {
+          ...state.dataById,
+          [service_id]: pipe(
+            state.dataById[service_id],
+            O.fromNullable,
+            O.fold(
+              () => pot.noneError(error),
+              servicePot => pot.toError(servicePot, error)
+            )
+          )
+        }
+      };
+
     // Get service details actions
     case getType(loadServiceDetail.request):
       // When a previously loaded service detail is loaded again, its state
@@ -66,25 +86,17 @@ const reducer = (
         }
       };
 
-    case getType(loadServiceDetail.failure):
-      // when a request to load a previously loaded service detail fails its state is updated
-      // with a someError pot, otherwise its state is updated with a noneError pot
-      const { service_id, error } = action.payload;
+    case getType(loadServicePreference.failure):
+    case getType(upsertServicePreference.failure):
+      const currentPreference =
+        state.preferencesById[action.payload.id] ?? pot.none;
       return {
         ...state,
-        dataById: {
-          ...state.dataById,
-          [service_id]: pipe(
-            state.dataById[service_id],
-            O.fromNullable,
-            O.fold(
-              () => pot.noneError(error),
-              servicePot => pot.toError(servicePot, error)
-            )
-          )
+        preferencesById: {
+          ...state.preferencesById,
+          [action.payload.id]: pot.toError(currentPreference, action.payload)
         }
       };
-
     // Get service preference actions
     case getType(loadServicePreference.request):
       const serviceId = action.payload;
@@ -96,6 +108,20 @@ const reducer = (
           [serviceId]: pot.toLoading(preferenceToLoad)
         }
       };
+    case getType(loadServicePreference.success):
+    case getType(upsertServicePreference.success):
+      return {
+        ...state,
+        preferencesById: {
+          ...state.preferencesById,
+          [action.payload.id]: pot.some(action.payload)
+        }
+      };
+    case getType(logoutSuccess):
+
+    case getType(sessionCorrupted):
+    case getType(sessionExpired):
+      return INITIAL_STATE;
     case getType(upsertServicePreference.request):
       const { id, ...payload } = action.payload;
       const preferenceToUpsert = state.preferencesById[id] ?? pot.none;
@@ -111,31 +137,6 @@ const reducer = (
           })
         }
       };
-    case getType(loadServicePreference.success):
-    case getType(upsertServicePreference.success):
-      return {
-        ...state,
-        preferencesById: {
-          ...state.preferencesById,
-          [action.payload.id]: pot.some(action.payload)
-        }
-      };
-    case getType(loadServicePreference.failure):
-    case getType(upsertServicePreference.failure):
-      const currentPreference =
-        state.preferencesById[action.payload.id] ?? pot.none;
-      return {
-        ...state,
-        preferencesById: {
-          ...state.preferencesById,
-          [action.payload.id]: pot.toError(currentPreference, action.payload)
-        }
-      };
-
-    case getType(logoutSuccess):
-    case getType(sessionExpired):
-    case getType(sessionCorrupted):
-      return INITIAL_STATE;
   }
   return state;
 };

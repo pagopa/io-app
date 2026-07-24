@@ -19,8 +19,8 @@ const testCases = [
     enabled: false
   }
 ] as Array<{
-  id: LandingScreenBannerId;
   enabled: boolean;
+  id: LandingScreenBannerId;
 }>;
 
 describe("updateLandingScreenBannerVisibility", () => {

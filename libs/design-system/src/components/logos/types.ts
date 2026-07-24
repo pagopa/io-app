@@ -1,7 +1,7 @@
-export type SVGLogoProps = {
-  size: number | "100%";
+export type SVGCardLogoProps = {
+  preserveAspectRatio: "xMaxYMax meet" | "xMidYMid meet" | "xMinYMin meet";
 };
 
-export type SVGCardLogoProps = {
-  preserveAspectRatio: "xMinYMin meet" | "xMidYMid meet" | "xMaxYMax meet";
+export type SVGLogoProps = {
+  size: "100%" | number;
 };

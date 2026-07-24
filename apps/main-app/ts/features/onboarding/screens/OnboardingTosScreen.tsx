@@ -15,6 +15,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
+
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
@@ -130,8 +131,8 @@ const OnboardingTosScreen = () => {
     <LoadingSpinnerOverlay isLoading={isLoading || isUpdatingProfile}>
       <ContentWrapper>
         <H2
-          accessible={true}
           accessibilityRole="header"
+          accessible={true}
           testID="screen-content-header-title"
         >
           {I18n.t("profile.main.privacy.privacyPolicy.title")}
@@ -141,13 +142,13 @@ const OnboardingTosScreen = () => {
       {!hasAcceptedCurrentTos && (
         <ContentWrapper testID={"currentToSNotAcceptedView"}>
           <AlertDS
-            testID="currentToSNotAcceptedText"
-            variant="info"
             content={
               hasAcceptedOldTosVersion
                 ? I18n.t("profile.main.privacy.privacyPolicy.updated")
                 : I18n.t("profile.main.privacy.privacyPolicy.infobox")
             }
+            testID="currentToSNotAcceptedText"
+            variant="info"
           />
         </ContentWrapper>
       )}
@@ -155,9 +156,9 @@ const OnboardingTosScreen = () => {
         flow={flow}
         handleLoadEnd={handleLoadEnd}
         handleReload={handleReload}
-        webViewSource={{ uri: privacyUrl }}
-        shouldRenderFooter={!isLoading}
         onAcceptTos={onAcceptTos}
+        shouldRenderFooter={!isLoading}
+        webViewSource={{ uri: privacyUrl }}
       />
     </LoadingSpinnerOverlay>
   );

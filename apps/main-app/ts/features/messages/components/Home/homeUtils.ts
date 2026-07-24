@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { StyleSheet } from "react-native";
 import { ActionType } from "typesafe-actions";
+
 import { TagEnum } from "../../../../../definitions/communication/MessageCategoryPN";
 import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import NavigationService from "../../../../navigation/NavigationService";
@@ -77,7 +78,7 @@ export const messageViewPageIndexToListCategory = (
 
 export const accessibilityLabelForMessageItem = (
   message: UIMessage,
-  source: MessageListCategory | "SEARCH",
+  source: "SEARCH" | MessageListCategory,
   isSelected?: boolean
 ): string =>
   I18n.t("messages.accessibility.message.description", {
@@ -95,7 +96,7 @@ export const accessibilityLabelForMessageItem = (
   });
 
 export const archiveUnarchiveAccessibilityInstructions = (
-  source: MessageListCategory | "SEARCH",
+  source: "SEARCH" | MessageListCategory,
   isSelected?: boolean
 ): string => {
   // Search screen does not allow archiving/unarchiving

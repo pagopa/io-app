@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react-native";
+
 import { ReceiptLoadingList } from "../ReceiptLoadingList";
 
 describe("ReceiptLoadingList", () => {

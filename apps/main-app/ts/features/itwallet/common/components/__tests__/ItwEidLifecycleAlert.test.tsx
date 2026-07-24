@@ -1,14 +1,15 @@
 import { render } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
-import { createStore } from "redux";
 import { Provider } from "react-redux";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { ItwEidLifecycleAlert } from "../ItwEidLifecycleAlert";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
-import { ItwStoredCredentialsMocks } from "../../utils/itwMocksUtils";
 import * as alertTracking from "../../hooks/useItwEidLifecycleAlertTracking";
+import { ItwStoredCredentialsMocks } from "../../utils/itwMocksUtils";
+import { ItwEidLifecycleAlert } from "../ItwEidLifecycleAlert";
 
 const mockNavigation = {
   navigate: jest.fn(),

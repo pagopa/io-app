@@ -1,5 +1,5 @@
 import { getType } from "typesafe-actions";
-import * as Mixpanel from "../../../../../mixpanel";
+
 import {
   getNotificationPermissionType,
   getNotificationPreferenceConfiguration,
@@ -18,6 +18,7 @@ import {
   trackSettingsDiscoverBannerTap,
   trackSettingsDiscoverBannerVisualized
 } from "..";
+import * as Mixpanel from "../../../../../mixpanel";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { profileLoadSuccess } from "../../store/actions";
 

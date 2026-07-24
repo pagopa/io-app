@@ -1,17 +1,18 @@
 import { waitFor } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
-import { appReducer } from "../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import FciDocumentsScreen from "../valid/FciDocumentsScreen";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import {
   fciDownloadPreview,
   fciSignatureRequestFromId
 } from "../../store/actions";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import { FciNetworkError } from "../../utils/errors";
+import FciDocumentsScreen from "../valid/FciDocumentsScreen";
 
 const mockReplace = jest.fn();
 const mockShouldNeverCall = jest.fn();
@@ -69,9 +70,9 @@ describe("Test FciDocuments screen", () => {
   });
 
   type ErrorKindScenario = {
-    name: string;
-    failure: FciNetworkError;
     expectedKind: FciNetworkError["kind"];
+    failure: FciNetworkError;
+    name: string;
   };
 
   const errorKindScenarios: ReadonlyArray<ErrorKindScenario> = [

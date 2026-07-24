@@ -1,8 +1,9 @@
-import { Svg, Path, LinearGradient, Stop, Defs } from "react-native-svg";
+import { Defs, LinearGradient, Path, Stop, Svg } from "react-native-svg";
+
 import { SVGLogoProps } from "../types";
 
 const LogoPaymentPostepay = ({ size }: SVGLogoProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24">
+  <Svg height={size} viewBox="0 0 24 24" width={size}>
     <Path
       d="M22.403 0H1.597C.715 0 0 1.15 0 2.567v18.866C0 22.85.715 24 1.597 24h20.806C23.285 24 24 22.85 24 21.433V2.567C24 1.15 23.285 0 22.403 0Z"
       fill="url(#postepay-gradient)"
@@ -13,12 +14,12 @@ const LogoPaymentPostepay = ({ size }: SVGLogoProps) => (
     />
     <Defs>
       <LinearGradient
+        gradientUnits="userSpaceOnUse"
         id="postepay-gradient"
         x1="12"
-        y1="0"
         x2="12"
+        y1="0"
         y2="24"
-        gradientUnits="userSpaceOnUse"
       >
         <Stop stopColor="#F6E301" />
         <Stop offset="1" stopColor="#E9D407" />

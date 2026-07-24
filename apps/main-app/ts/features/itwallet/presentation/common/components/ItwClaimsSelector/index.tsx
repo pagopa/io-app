@@ -5,8 +5,8 @@ import {
   IOAccordionRadius,
   IOColors,
   IOSpacingScale,
-  useIOThemeContext,
-  useAccordionAnimation
+  useAccordionAnimation,
+  useIOThemeContext
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment } from "react";
@@ -14,6 +14,7 @@ import { AccessibilityInfo, StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
+
 import { getCredentialCardConfig } from "../../../../common/components/ItwCredentialCard/config";
 import { ClaimDisplayFormat } from "../../../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../../../common/utils/itwCredentialUtils";
@@ -31,27 +32,22 @@ const COLLAPSIBLE_BORDER = 1;
 
 type Props = {
   /**
+   * Accessibilty
+   */
+  accessibilityLabel?: string;
+  /**
    * Credential type to display as title of the accordion
    */
   credentialType: string;
-  /**
-   * The list of items to display within the accordion.
-   */
-  items: Array<ClaimDisplayFormat>;
-  /**
-   * Enable the selection of items with a checkbox.
-   * @default false
-   */
-  selectionEnabled?: boolean;
-  /**
-   * The IDs of the selected items, when the component is controlled.
-   */
-  selectedItemIds?: Array<string>;
   /**
    * Whether the accordion starts expanded.
    * @default false
    */
   defaultExpanded?: boolean;
+  /**
+   * The list of items to display within the accordion.
+   */
+  items: Array<ClaimDisplayFormat>;
   /**
    * Function called when a item is selected.
    */
@@ -61,9 +57,14 @@ type Props = {
    */
   onToggle?: (expanded: boolean) => void;
   /**
-   * Accessibilty
+   * The IDs of the selected items, when the component is controlled.
    */
-  accessibilityLabel?: string;
+  selectedItemIds?: Array<string>;
+  /**
+   * Enable the selection of items with a checkbox.
+   * @default false
+   */
+  selectionEnabled?: boolean;
 };
 
 export const ItwClaimsSelector = ({
@@ -136,10 +137,10 @@ export const ItwClaimsSelector = ({
       ]}
     >
       <TouchableWithoutFeedback
-        accessible={true}
+        accessibilityLabel={accessibilityLabel ?? title}
         accessibilityRole="button"
         accessibilityState={{ expanded }}
-        accessibilityLabel={accessibilityLabel ?? title}
+        accessible={true}
         onPress={onItemPress}
       >
         <Animated.View
@@ -158,18 +159,18 @@ export const ItwClaimsSelector = ({
 
       <Animated.View style={bodyAnimatedStyle}>
         <View
-          style={[bodyInnerStyle, styles.bodyInnerContainer]}
           onLayout={onBodyLayout}
+          style={[bodyInnerStyle, styles.bodyInnerContainer]}
         >
           {items.map((item, index) => (
             <Fragment key={item.id}>
               {index !== 0 && <Divider />}
               <ClaimItem
-                item={item}
-                selectionEnabled={selectionEnabled}
                 isSelected={selectedItemIds?.includes(item.id)}
+                item={item}
                 onItemSelected={onItemSelected}
                 present={present}
+                selectionEnabled={selectionEnabled}
               />
             </Fragment>
           ))}

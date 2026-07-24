@@ -4,7 +4,7 @@ import { automaticSessionRefreshActions } from "./sessionRefreshActions";
 import { FastLoginTokenRefreshActions } from "./tokenRefreshActions";
 
 export type FastLoginActions =
-  | fastLoginOptInActions
   | automaticSessionRefreshActions
+  | fastLoginOptInActions
   | FastLoginTokenRefreshActions
   | SecurityAdviceActions;

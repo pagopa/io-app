@@ -1,5 +1,6 @@
-import { IOPictogramsBleed } from "../pictograms";
 import type { MarkdownNode } from "./types";
+
+import { IOPictogramsBleed } from "../pictograms";
 
 const BULLET_FULL = "\u2022";
 const BULLET_HOLLOW = "\u25E6";

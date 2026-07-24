@@ -1,15 +1,16 @@
 import { useEffect } from "react";
+
 import {
   serializeFailureReason,
   shouldSerializeReason
 } from "../../../common/utils/itwStoreUtils";
-import { ProximityFailure, ProximityFailureType } from "../machine/failure";
 import {
   trackItwProximityRPGenericFailure,
   trackItwProximityTimeout,
   trackItwProximityUnexpectedFailure,
   trackItwProximityUnofficialVerifier
 } from "../analytics";
+import { ProximityFailure, ProximityFailureType } from "../machine/failure";
 import { ItwProximityMachineContext } from "../machine/provider";
 import { hasGivenConsentSelector } from "../machine/selectors";
 

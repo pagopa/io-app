@@ -1,17 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
-import * as O from "fp-ts/lib/Option";
-import { Linking } from "react-native";
-import * as t from "io-ts";
 import { CieIdErrorResult, openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as t from "io-ts";
+import { useCallback, useEffect, useState } from "react";
+import { Linking } from "react-native";
+
+import { convertUnknownToError } from "../../../../../utils/errors";
+import { isAndroid, isIos } from "../../../../../utils/platform";
 import {
   CIE_ID_ERROR,
   CIE_ID_ERROR_MESSAGE,
   IO_LOGIN_CIE_SOURCE_APP,
   IO_LOGIN_CIE_URL_SCHEME
 } from "../../../../authentication/login/cie/utils/cie";
-import { isAndroid, isIos } from "../../../../../utils/platform";
-import { convertUnknownToError } from "../../../../../utils/errors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 
 type CieIdHookResult = {
@@ -20,6 +21,10 @@ type CieIdHookResult = {
    */
   authUrl: O.Option<string>;
   /**
+   * Function that handles CieID related errors.
+   */
+  handleAuthenticationFailure: (error: unknown) => void;
+  /**
    * Whether the CieID app has been opened separately from IO (iOS only).
    */
   isAppLaunched: boolean;
@@ -27,10 +32,6 @@ type CieIdHookResult = {
    * Function that starts the authentication with CieID.
    */
   startCieIdAppAuthentication: (url: string) => void;
-  /**
-   * Function that handles CieID related errors.
-   */
-  handleAuthenticationFailure: (error: unknown) => void;
 };
 
 const cieIdAppError = t.type({

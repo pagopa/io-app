@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
+
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
@@ -37,10 +38,6 @@ const IdPayCodeResultScreen = () => {
 
   const screenContent = isFailure ? (
     <OperationResultScreenContent
-      pictogram={"umbrella"}
-      title={I18n.t(
-        `idpay.initiative.discountDetails.IDPayCode.failureScreen.header.GENERIC`
-      )}
       action={{
         label: I18n.t(
           "idpay.initiative.discountDetails.IDPayCode.failureScreen.cta"
@@ -50,13 +47,13 @@ const IdPayCodeResultScreen = () => {
         ),
         onPress: handleClose
       }}
+      pictogram={"umbrella"}
+      title={I18n.t(
+        `idpay.initiative.discountDetails.IDPayCode.failureScreen.header.GENERIC`
+      )}
     />
   ) : (
     <OperationResultScreenContent
-      title={I18n.t(
-        `idpay.initiative.discountDetails.IDPayCode.successScreen.header`
-      )}
-      pictogram="success"
       action={{
         label: I18n.t(
           "idpay.initiative.discountDetails.IDPayCode.successScreen.cta"
@@ -67,8 +64,12 @@ const IdPayCodeResultScreen = () => {
         onPress: handleClose,
         testID: "actionButtonTestID"
       }}
+      pictogram="success"
       subtitle={I18n.t(
         "idpay.initiative.discountDetails.IDPayCode.successScreen.body"
+      )}
+      title={I18n.t(
+        `idpay.initiative.discountDetails.IDPayCode.successScreen.header`
       )}
     />
   );

@@ -1,17 +1,18 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
+
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import {
   getGenericError,
   getNetworkError
 } from "../../../../../../utils/errors";
+import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 import {
   cgnMerchantsCount,
   cgnSearchMerchants
 } from "../../../store/actions/merchants";
-import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";
 
 export function* cgnGetMerchantsCountSaga(
   getMerchantsCount: ReturnType<

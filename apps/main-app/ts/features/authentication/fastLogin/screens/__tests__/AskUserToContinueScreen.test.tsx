@@ -1,8 +1,10 @@
 import type { IOPictograms } from "@io-app/design-system";
+
 import { fireEvent, render } from "@testing-library/react-native";
 import * as _ from "lodash";
 import { Provider } from "react-redux";
-import { Store, createStore } from "redux";
+import { createStore, Store } from "redux";
+
 import { OperationResultScreenContentProps } from "../../../../../components/screens/OperationResultScreenContent";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";

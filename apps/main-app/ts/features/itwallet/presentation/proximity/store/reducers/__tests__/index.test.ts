@@ -3,15 +3,15 @@ import { itwLifecycleStoresReset } from "../../../../../lifecycle/store/actions"
 import {
   itwGrantProximityConsent,
   itwRevokeProximityConsentByKey,
-  itwRevokeProximityConsentsByRpId,
-  itwRevokeProximityConsentsByCredentialType
+  itwRevokeProximityConsentsByCredentialType,
+  itwRevokeProximityConsentsByRpId
 } from "../../actions";
 import { ConsentData } from "../../types";
 import { generateConsentKey } from "../../utils";
 import {
-  itwProximityReducer as reducer,
+  itwProximityInitialState,
   ItwProximityState,
-  itwProximityInitialState
+  itwProximityReducer as reducer
 } from "../index";
 
 const mdlConsent: ConsentData = {

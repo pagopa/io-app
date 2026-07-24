@@ -1,9 +1,10 @@
 import { Body, VSpacer } from "@io-app/design-system";
-import { memo } from "react";
 import I18n from "i18next";
-import { tosConfigSelector } from "../../../../../tos/store/selectors";
+import { memo } from "react";
+
 import { useIOSelector } from "../../../../../../store/hooks";
 import { openWebUrl } from "../../../../../../utils/url";
+import { tosConfigSelector } from "../../../../../tos/store/selectors";
 import { TrackingInfo } from "../../../../common/analytics/mixpanel/mixpanelAnalytics";
 import {
   AnalyticsFeatureInfo,
@@ -31,22 +32,22 @@ export const ShareDataComponent = memo(({ trackAction }: FeatureProps) => {
       <GDPRFeatureInfo trackAction={trackAction} />
       <VSpacer size={32} />
       <Body
-        accessibilityRole="link"
         accessibilityLabel={`${I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.description"
         )}${I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.cta"
         )}`}
+        accessibilityRole="link"
       >
         {I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.description"
         )}
         <Body
-          weight="Semibold"
           asLink
           avoidPressable
           onPress={handleOnPress}
           testID="additionalInformation"
+          weight="Semibold"
         >
           {I18n.t(
             "profile.main.privacy.shareData.screen.additionalInformation.cta"

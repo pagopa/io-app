@@ -1,9 +1,10 @@
 import { createStore } from "redux";
-import { appReducer } from "../../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { MessageDetailsScrollViewAdditionalSpace } from "../MessageDetailsScrollViewAdditionalSpace";
 import * as payments from "../../../store/reducers/payments";
+import { MessageDetailsScrollViewAdditionalSpace } from "../MessageDetailsScrollViewAdditionalSpace";
 
 describe("MessageDetailsScrollViewAdditionalSpace", () => {
   beforeEach(() => {
@@ -64,9 +65,9 @@ const renderComponent = (
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessageDetailsScrollViewAdditionalSpace
-        messageId={messageId}
         hasCTA1={hasCTA1}
         hasCTA2={hasCTA2}
+        messageId={messageId}
       />
     ),
     "DUMMY",

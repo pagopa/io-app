@@ -8,6 +8,7 @@ import {
 } from "@shopify/react-native-skia";
 import { memo, useEffect } from "react";
 import { Easing, useSharedValue, withTiming } from "react-native-reanimated";
+
 import { useCachedImage } from "../../utils/imageCache";
 import { CredentialCardConfig } from "./config";
 
@@ -17,7 +18,7 @@ import { CredentialCardConfig } from "./config";
  */
 export const CREDENTIAL_CARD_CORNER_OVERLAY = require("../../../../../../img/features/itWallet/cards/overlay/card_corner.png");
 
-type CardOverlayProps = { src: DataSourceParam } & Size;
+type CardOverlayProps = Size & { src: DataSourceParam };
 
 export const SkiaCardOverlay = memo(
   ({ src, height, width }: CardOverlayProps) => {
@@ -34,13 +35,13 @@ export const SkiaCardOverlay = memo(
 
     return (
       <SkiaImage
-        image={image}
         fit="cover"
+        height={height}
+        image={image}
+        opacity={opacity}
+        width={width}
         x={0}
         y={0}
-        width={width}
-        height={height}
-        opacity={opacity}
       />
     );
   }
@@ -61,19 +62,19 @@ export const SkiaCardPatternOverlay = memo(
 
     return (
       <Rect
-        x={0}
-        y={0}
-        width={width}
+        blendMode={"softLight"}
         height={height}
         opacity={opacity}
-        blendMode={"softLight"}
+        width={width}
+        x={0}
+        y={0}
       >
         <SkiaImageShader
-          image={image}
           fit={"contain"}
+          image={image}
+          rect={{ x: 0, y: 0, width: 20, height: 20 }}
           tx={"repeat"}
           ty={"repeat"}
-          rect={{ x: 0, y: 0, width: 20, height: 20 }}
         />
       </Rect>
     );
@@ -97,13 +98,13 @@ export const SkiaCardCornerOverlay = memo(
 
     return (
       <SkiaImage
-        image={image}
         fit="fill"
+        height={height}
+        image={image}
+        opacity={opacity}
+        width={width}
         x={0}
         y={0}
-        width={width}
-        height={height}
-        opacity={opacity}
       >
         <BlendColor color={color} mode="srcIn" />
       </SkiaImage>

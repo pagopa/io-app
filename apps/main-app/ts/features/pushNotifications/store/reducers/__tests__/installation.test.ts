@@ -1,11 +1,11 @@
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { GlobalState } from "../../../../../store/reducers/types";
 import {
   logoutRequest,
   sessionExpired,
   sessionInvalid
 } from "../../../../authentication/common/store/actions";
 import { clearCache } from "../../../../settings/common/store/actions";
-import { GlobalState } from "../../../../../store/reducers/types";
 import * as utils from "../../../utils";
 import {
   newPushNotificationsToken,

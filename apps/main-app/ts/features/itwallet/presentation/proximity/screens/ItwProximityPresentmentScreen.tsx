@@ -18,6 +18,7 @@ import Animated, {
   useAnimatedRef
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -29,7 +30,10 @@ import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
 import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
-import { trackItwStartReissuingPID } from "../analytics";
+import {
+  trackItwProximityNfcStart,
+  trackItwStartReissuingPID
+} from "../analytics";
 import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/types.ts";
 import { ItwProximityQrCodeImage } from "../components/ItwProximityQrCodeImage.tsx";
 import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner.tsx";
@@ -91,16 +95,16 @@ export const ItwProximityPresentmentScreen = ({
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          title={""}
-          type="singleAction"
+          animatedRef={animatedScrollViewRef}
+          enableDiscreteTransition={true}
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: () => machineRef.send({ type: "close" })
           }}
+          title={""}
           transparent={true}
-          enableDiscreteTransition={true}
-          animatedRef={animatedScrollViewRef}
+          type="singleAction"
         />
       ),
       headerTransparent: true
@@ -108,6 +112,7 @@ export const ItwProximityPresentmentScreen = ({
   }, [navigation, machineRef, animatedScrollViewRef]);
 
   const handleContactlessPress = () => {
+    trackItwProximityNfcStart();
     machineRef.send({ type: "start-nfc-presentment" });
   };
 
@@ -126,10 +131,10 @@ export const ItwProximityPresentmentScreen = ({
 
   return (
     <IOScrollView
+      animatedRef={animatedScrollViewRef}
       contentContainerStyle={{
         marginTop: safeAreaInsets.top + IOVisualCostants.headerHeight
       }}
-      animatedRef={animatedScrollViewRef}
     >
       {shouldShowExpiredCredentialsBanner && (
         <Animated.View
@@ -137,23 +142,23 @@ export const ItwProximityPresentmentScreen = ({
           style={styles.expiredBanner}
         >
           <Alert
-            testID="itwExpiredBannerTestID"
-            variant="error"
-            content={I18n.t(
-              "features.itWallet.presentation.proximity.engagement.invalidBanner.content"
-            )}
             action={I18n.t(
               "features.itWallet.presentation.proximity.engagement.invalidBanner.action"
             )}
+            content={I18n.t(
+              "features.itWallet.presentation.proximity.engagement.invalidBanner.content"
+            )}
             onPress={handleReissuePress}
+            testID="itwExpiredBannerTestID"
+            variant="error"
           />
         </Animated.View>
       )}
 
       <ItwBrandedBox
-        variant={isFailure ? "error" : "default"}
         backgroundVariant={"gradient"}
         style={styles.qrCodeShadow}
+        variant={isFailure ? "error" : "default"}
       >
         <VStack space={16}>
           {!isFailure && (
@@ -182,13 +187,13 @@ export const ItwProximityPresentmentScreen = ({
           {I18n.t("features.itWallet.presentation.proximity.engagement.nfc.or")}
         </BodySmall>
         <IOButton
-          variant="link"
+          icon="contactless"
+          iconPosition="end"
           label={I18n.t(
             "features.itWallet.presentation.proximity.engagement.nfc.action"
           )}
           onPress={handleContactlessPress}
-          icon="contactless"
-          iconPosition="end"
+          variant="link"
         />
       </View>
 

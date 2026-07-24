@@ -2,18 +2,19 @@ import { ComponentProps, PropsWithChildren, useCallback } from "react";
 import { GestureResponderEvent, Pressable } from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated, { useReducedMotion } from "react-native-reanimated";
-import { IOColors, IOModuleIDPSavedVSpacing, IOModuleStyles } from "../../core";
+
 import { useIOTheme } from "../../context";
+import { IOColors, IOModuleIDPSavedVSpacing, IOModuleStyles } from "../../core";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 
 export type PressableModuleBaseProps = WithTestID<
-  {
-    withLooseSpacing?: boolean;
-  } & Pick<
+  Pick<
     ComponentProps<typeof Pressable>,
-    "onPress" | "accessibilityLabel" | "accessibilityHint"
-  >
+    "accessibilityHint" | "accessibilityLabel" | "onPress"
+  > & {
+    withLooseSpacing?: boolean;
+  }
 >;
 
 export const PressableModuleBase = ({
@@ -47,15 +48,15 @@ export const PressableModuleBase = ({
 
   return (
     <Pressable
-      onPress={handleOnPress}
-      testID={testID}
+      accessibilityHint={accessibilityHint}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
       accessible={true}
+      onPress={handleOnPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole="button"
+      testID={testID}
     >
       <Animated.View
         style={[

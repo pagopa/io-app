@@ -1,9 +1,11 @@
 import { ComponentType } from "react";
+
 import { useIOSelector } from "../../store/hooks";
 import {
   fimsRequiresAppUpdateSelector,
   idPayDetailsRequiresAppUpdateSelector,
   idPayOnboardingRequiresAppUpdateSelector,
+  isFciEnabledSelector,
   isPnAppVersionSupportedSelector
 } from "../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../store/reducers/types";
@@ -11,9 +13,10 @@ import { UpdateAppAlert } from "../UpdateAppAlert";
 
 // Keys accepted by the HOC, add new keys here if you need to check for app update on a specific feature
 export type AppUpdateFeatureKey =
+  | "fci"
   | "fims"
-  | "idpay.onboarding"
   | "idpay.initiative_details"
+  | "idpay.onboarding"
   | "send";
 
 export type RequiredUpdateMixPanelTracking = {
@@ -30,7 +33,8 @@ const featureUpdateSelectorMap: Record<
   fims: fimsRequiresAppUpdateSelector,
   "idpay.onboarding": idPayOnboardingRequiresAppUpdateSelector,
   "idpay.initiative_details": idPayDetailsRequiresAppUpdateSelector,
-  send: (state: GlobalState) => !isPnAppVersionSupportedSelector(state)
+  send: (state: GlobalState) => !isPnAppVersionSupportedSelector(state),
+  fci: (state: GlobalState) => !isFciEnabledSelector(state)
 };
 
 /**

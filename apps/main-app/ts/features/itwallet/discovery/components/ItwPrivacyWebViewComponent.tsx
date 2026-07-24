@@ -4,16 +4,17 @@ import {
   WebViewMessageEvent,
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
+
 import {
   AVOID_ZOOM_JS,
-  GET_CONTENT_HEIGHT_SCRIPT,
-  closeInjectedScript
+  closeInjectedScript,
+  GET_CONTENT_HEIGHT_SCRIPT
 } from "../../../../utils/webview";
 
 type Props = {
-  source: WebViewSource;
-  onLoadEnd: () => void;
   onError: () => void;
+  onLoadEnd: () => void;
+  source: WebViewSource;
 };
 
 const ItwPrivacyWebViewComponent = ({ source, onLoadEnd, onError }: Props) => {
@@ -26,19 +27,19 @@ const ItwPrivacyWebViewComponent = ({ source, onLoadEnd, onError }: Props) => {
 
   return (
     <WebView
-      javaScriptEnabled={true}
       androidCameraAccessDisabled={true}
       androidMicrophoneAccessDisabled={true}
-      onLoadEnd={onLoadEnd}
-      onError={onError}
-      textZoom={100}
-      style={{ height: contentHeight }}
-      source={source}
-      scrollEnabled={false}
-      onMessage={handleWebViewMessage}
       injectedJavaScript={closeInjectedScript(
         `${AVOID_ZOOM_JS};${GET_CONTENT_HEIGHT_SCRIPT}`
       )}
+      javaScriptEnabled={true}
+      onError={onError}
+      onLoadEnd={onLoadEnd}
+      onMessage={handleWebViewMessage}
+      scrollEnabled={false}
+      source={source}
+      style={{ height: contentHeight }}
+      textZoom={100}
     />
   );
 };

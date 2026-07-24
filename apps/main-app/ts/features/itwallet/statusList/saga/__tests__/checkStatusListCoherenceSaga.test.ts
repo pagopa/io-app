@@ -1,8 +1,9 @@
 import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { testSaga } from "redux-saga-test-plan";
-import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
+
 import { itwStatusListReferencedUrisSelector } from "../../store/selectors";
 import { StatusListRepository } from "../../utils/repository";
+import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
 
 const makePayload = (sub: string): CredentialStatus.StatusList => ({
   sub,

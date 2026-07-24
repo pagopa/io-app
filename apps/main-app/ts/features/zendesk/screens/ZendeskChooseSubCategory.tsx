@@ -7,17 +7,21 @@ import {
   useIOToast,
   VSpacer
 } from "@io-app/design-system";
-import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import I18n from "i18next";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
+
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { trackHelpCenterCtaTapped } from "../../../utils/analytics";
 import { getFullLocale } from "../../../utils/locale";
+import { getOrFallback } from "../../../utils/object";
 import {
   addTicketCustomField,
   hasSubCategories
 } from "../../../utils/supportAssistance";
+import { openWebUrl } from "../../../utils/url";
 import { ZendeskParamsList } from "../navigation/params";
 import {
   ZendeskAssistanceType,
@@ -25,9 +29,6 @@ import {
   zendeskSupportFailure
 } from "../store/actions";
 import { zendeskSelectedCategorySelector } from "../store/reducers";
-import { openWebUrl } from "../../../utils/url";
-import { trackHelpCenterCtaTapped } from "../../../utils/analytics";
-import { getOrFallback } from "../../../utils/object";
 
 export type ZendeskChooseSubCategoryNavigationParams = {
   assistanceType: ZendeskAssistanceType;
@@ -81,8 +82,6 @@ const ZendeskChooseSubCategory = (props: Props) => {
     item: subCategory
   }: ListRenderItemInfo<ZendeskSubCategory>) => (
     <ListItemNav
-      testID={subCategory.value}
-      value={subCategory.description[locale]}
       onPress={() => {
         selectedSubcategory(subCategory);
         // Set sub-category as custom field
@@ -91,30 +90,30 @@ const ZendeskChooseSubCategory = (props: Props) => {
           assistanceType
         });
       }}
+      testID={subCategory.value}
+      value={subCategory.description[locale]}
     />
   );
 
   return (
     <IOScrollViewWithLargeHeader
+      ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
+      testID={"ZendeskChooseCategory"}
       title={{
         label: I18n.t("support.chooseCategory.title.subCategory"),
         section: selectedCategory.description[locale]
       }}
-      ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
-      testID={"ZendeskChooseCategory"}
     >
       {bannerEducational && (
         <ContentWrapper>
           <Banner
-            pictogramName="help"
-            color="neutral"
-            title={getOrFallback(bannerEducational.title, locale, "it-IT")}
-            content={getOrFallback(bannerEducational.content, locale, "it-IT")}
             action={getOrFallback(
               bannerEducational.action.label,
               locale,
               "it-IT"
             )}
+            color="neutral"
+            content={getOrFallback(bannerEducational.content, locale, "it-IT")}
             onPress={() => {
               const url = getOrFallback(
                 bannerEducational.action.href,
@@ -127,19 +126,21 @@ const ZendeskChooseSubCategory = (props: Props) => {
                 error(I18n.t("global.jserror.title"));
               });
             }}
+            pictogramName="help"
+            title={getOrFallback(bannerEducational.title, locale, "it-IT")}
           />
           <VSpacer size={8} />
         </ContentWrapper>
       )}
       <FlatList
-        scrollEnabled={false}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
         data={subCategories}
+        ItemSeparatorComponent={Divider}
         keyExtractor={c => c.value}
         renderItem={renderItem}
-        ItemSeparatorComponent={Divider}
+        scrollEnabled={false}
       />
     </IOScrollViewWithLargeHeader>
   );

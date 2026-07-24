@@ -4,9 +4,11 @@
  * are managed by different global reducers.
  */
 
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
+
+import { Action } from "../../../../store/actions/types";
 import {
   acknowledgeOnEmailValidation,
   emailValidationPollingStart,
@@ -14,13 +16,12 @@ import {
   setEmailCheckAtStartupFailure,
   startEmailValidation
 } from "../../../settings/common/store/actions";
-import { Action } from "../../../../store/actions/types";
 
 export type EmailValidationState = {
-  sendEmailValidationRequest: pot.Pot<void, Error>;
   acknowledgeOnEmailValidated: O.Option<boolean>;
   emailCheckAtStartupFailed: O.Option<boolean>;
   isEmailValidationPollingRunning: boolean;
+  sendEmailValidationRequest: pot.Pot<void, Error>;
 };
 
 const INITIAL_STATE: EmailValidationState = {
@@ -35,8 +36,14 @@ const reducer = (
   action: Action
 ): EmailValidationState => {
   switch (action.type) {
-    case getType(startEmailValidation.request):
-      return { ...state, sendEmailValidationRequest: pot.noneLoading };
+    case getType(acknowledgeOnEmailValidation):
+      return { ...state, acknowledgeOnEmailValidated: action.payload };
+    case getType(emailValidationPollingStart):
+      return { ...state, isEmailValidationPollingRunning: true };
+    case getType(emailValidationPollingStop):
+      return { ...state, isEmailValidationPollingRunning: false };
+    case getType(setEmailCheckAtStartupFailure):
+      return { ...state, emailCheckAtStartupFailed: action.payload };
     case getType(startEmailValidation.failure):
       return {
         ...state,
@@ -45,16 +52,10 @@ const reducer = (
           action.payload
         )
       };
+    case getType(startEmailValidation.request):
+      return { ...state, sendEmailValidationRequest: pot.noneLoading };
     case getType(startEmailValidation.success):
       return { ...state, sendEmailValidationRequest: pot.some(undefined) };
-    case getType(acknowledgeOnEmailValidation):
-      return { ...state, acknowledgeOnEmailValidated: action.payload };
-    case getType(setEmailCheckAtStartupFailure):
-      return { ...state, emailCheckAtStartupFailed: action.payload };
-    case getType(emailValidationPollingStart):
-      return { ...state, isEmailValidationPollingRunning: true };
-    case getType(emailValidationPollingStop):
-      return { ...state, isEmailValidationPollingRunning: false };
     default:
       return state;
   }

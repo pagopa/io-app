@@ -1,5 +1,6 @@
 import { Ref } from "react";
 import { Pressable, View } from "react-native";
+
 import { useIOTheme } from "../../context";
 import { IOFontWeight } from "../../utils/fonts";
 import {
@@ -9,10 +10,11 @@ import {
   TypographicStyleProps
 } from "./IOText";
 
-type BodyStyleProps = Omit<TypographicStyleProps, "ref"> & {
-  ref?: Ref<View>;
-  weight?: Extract<IOFontWeight, "Regular" | "Semibold">;
-} & TypographicStyleAsLinkProps;
+type BodyStyleProps = Omit<TypographicStyleProps, "ref"> &
+  TypographicStyleAsLinkProps & {
+    ref?: Ref<View>;
+    weight?: Extract<IOFontWeight, "Regular" | "Semibold">;
+  };
 
 export const bodyFontSize = 16;
 export const bodyLineHeight = 24;
@@ -58,9 +60,9 @@ export const Body = ({
     // type can be removed entirely.
     return (
       <Pressable
+        accessibilityRole={accessibilityRole}
         onPress={onPress}
         ref={ref}
-        accessibilityRole={accessibilityRole}
       >
         <IOText {...BodyProps}>{props.children}</IOText>
       </Pressable>

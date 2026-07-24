@@ -1,7 +1,9 @@
 import { PropsWithChildren } from "react";
 import { ColorValue, LayoutChangeEvent, StyleSheet, View } from "react-native";
+
 import { useIOTheme, useIOThemeContext } from "../../context";
 import {
+  footerBoxShadow,
   IOColors,
   IOSpacer,
   IOSpacing,
@@ -11,11 +13,6 @@ import {
 import { WithTestID } from "../../utils/types";
 import { IOButton, IOButtonBlockSpecificProps } from "../buttons";
 import { useBottomMargins } from "./hooks/useBottomMargins";
-
-type IOButtonBlockProps = Omit<
-  IOButtonBlockSpecificProps,
-  "variant" | "fullWidth"
->;
 
 export type FooterActionsInlineMeasurements = {
   /* Height of the safe bottom area. It includes:
@@ -31,14 +28,19 @@ export type FooterActionsInlineMeasurements = {
 
 type FooterActionsInline = WithTestID<
   PropsWithChildren<{
-    startAction: IOButtonBlockProps;
     endAction: IOButtonBlockProps;
-    onMeasure?: (measurements: FooterActionsInlineMeasurements) => void;
     /* Don't include safe area insets */
     excludeSafeAreaMargins?: boolean;
     /* Fixed at the bottom of the screen */
     fixed?: boolean;
+    onMeasure?: (measurements: FooterActionsInlineMeasurements) => void;
+    startAction: IOButtonBlockProps;
   }>
+>;
+
+type IOButtonBlockProps = Omit<
+  IOButtonBlockSpecificProps,
+  "fullWidth" | "variant"
 >;
 
 const styles = StyleSheet.create({
@@ -49,16 +51,6 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     flex: 1
-  },
-  blockShadow: {
-    shadowColor: IOColors.black,
-    shadowOffset: {
-      width: 0,
-      height: -4
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 32,
-    elevation: 10 // Prop supported on Android only
   }
 });
 
@@ -105,23 +97,23 @@ export const FooterActionsInline = ({
           ? {
               position: "absolute",
               bottom: 0,
-              backgroundColor: HEADER_BG_COLOR
+              backgroundColor: HEADER_BG_COLOR,
+              boxShadow: [footerBoxShadow]
             }
           : { marginTop: IOSpacing.screenEndMargin },
-        /* Apply shadow only on light theme OR if fixed */
-        fixed || themeType === "light" ? styles.blockShadow : {},
-        /* Apply bottom border only on dark theme */
-        themeType === "dark" && {
-          borderTopColor: IOColors[theme["divider-bottomBar"]],
-          borderTopWidth: 1
-        }
+        /* Apply bottom border only on dark theme, only if fixed */
+        themeType === "dark" &&
+          fixed && {
+            borderTopColor: IOColors[theme["divider-bottomBar"]],
+            borderTopWidth: 1
+          }
       ]}
       testID={testID}
     >
       <View
-        style={[styles.buttonContainer, { paddingTop: topSpacing }]}
         onLayout={getActionBlockMeasurements}
         pointerEvents="box-none"
+        style={[styles.buttonContainer, { paddingTop: topSpacing }]}
       >
         <View
           style={{
@@ -130,10 +122,10 @@ export const FooterActionsInline = ({
           }}
         >
           <View style={styles.buttonWrapper}>
-            <IOButton variant="outline" fullWidth {...startAction} />
+            <IOButton fullWidth variant="outline" {...startAction} />
           </View>
           <View style={styles.buttonWrapper}>
-            <IOButton variant="solid" fullWidth {...endAction} />
+            <IOButton fullWidth variant="solid" {...endAction} />
           </View>
         </View>
       </View>

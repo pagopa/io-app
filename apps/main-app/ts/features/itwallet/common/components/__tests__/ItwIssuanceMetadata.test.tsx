@@ -1,12 +1,13 @@
-import configureMockStore from "redux-mock-store";
 import I18n from "i18next";
+import configureMockStore from "redux-mock-store";
+
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { CredentialMetadata } from "../../utils/itwTypesUtils";
 import { ItwStoredCredentialsMocks } from "../../utils/itwMocksUtils";
+import { CredentialMetadata } from "../../utils/itwTypesUtils";
 import { ItwIssuanceMetadata } from "../ItwIssuanceMetadata";
 
 describe("ItwIssuanceMetadata", () => {

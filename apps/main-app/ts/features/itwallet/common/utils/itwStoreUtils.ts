@@ -1,16 +1,16 @@
+import { useIOStore } from "../../../../store/hooks";
 import { GlobalState } from "../../../../store/reducers/types";
+import { itwIntegrityServiceStatusSelector } from "../../issuance/store/selectors";
 import { type CredentialIssuanceFailure } from "../../machine/credential/failure";
 import { type IssuanceFailure } from "../../machine/eid/failure";
-import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
 import { ProximityFailure } from "../../presentation/proximity/machine/failure.ts";
-import { itwIntegrityServiceStatusSelector } from "../../issuance/store/selectors";
-import { useIOStore } from "../../../../store/hooks";
+import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
 
 interface PollForStoreValueOptions<T> {
-  getState: () => GlobalState;
-  selector: (state: GlobalState) => T;
   condition: (value: T) => boolean;
+  getState: () => GlobalState;
   interval?: number;
+  selector: (state: GlobalState) => T;
   timeout?: number;
 }
 
@@ -69,10 +69,10 @@ export const shouldSerializeReason = (failure: { reason?: unknown }) =>
  */
 export const serializeFailureReason = (
   failure:
-    | IssuanceFailure
     | CredentialIssuanceFailure
-    | RemoteFailure
+    | IssuanceFailure
     | ProximityFailure
+    | RemoteFailure
 ) => ({
   ...failure,
   reason: mapFailureReason(failure.reason)

@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as Notifications from "expo-notifications";
 import _ from "lodash";
+
 import { maximumItemsFromAPI, pageSize } from "../../../config";
 import { Store } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";

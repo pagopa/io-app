@@ -1,11 +1,10 @@
-import * as B from "fp-ts/lib/boolean";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
+
 import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
@@ -13,10 +12,11 @@ import { BancomatPayConfig } from "../../../../definitions/content/BancomatPayCo
 import { Banner } from "../../../../definitions/content/Banner";
 import { BarcodesScannerConfig } from "../../../../definitions/content/BarcodesScannerConfig";
 import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
+import { OSPerPlatform } from "../../../../definitions/content/OSPerPlatform";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
-  fciEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled
 } from "../../../config";
@@ -30,7 +30,6 @@ import {
 } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
-import { OSPerPlatform } from "../../../../definitions/content/OSPerPlatform";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -394,7 +393,6 @@ export const preferredPspsByOriginSelector = createSelector(
 export const isFciEnabledSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): boolean =>
-    fciEnabled &&
     pipe(
       remoteConfig,
       O.map(config =>
@@ -772,42 +770,6 @@ export const appFeedbackEnabledSelector = (state: GlobalState) =>
       mainLocalFlag: true,
       configPropertyName: "app_feedback"
     })
-  );
-
-/**
- * This selector is used to know if IOMarkdown is enabled on Messages and Services
- *
- * @returns true (enabled) if:
- * - the IOMarkdown configuration is missing
- * - the min_app_version parameter is missing
- * - current app version is greater than or equal to the min app version
- * false (disabled) if:
- * - CDN data is not available
- * - current app version is lower than the min app version
- * - min app version is set to 0
- */
-export const isIOMarkdownEnabledForMessagesAndServicesSelector = (
-  state: GlobalState
-) =>
-  pipe(
-    state,
-    remoteConfigSelector,
-    O.fold(
-      () => false, // CDN data not available, IOMarkdown is disabled
-      remoteConfig =>
-        pipe(
-          remoteConfig.ioMarkdown?.min_app_version != null,
-          B.fold(
-            () => true, // Either IOMarkdown configuration missing or min_app_version missing on IOMarkdown configuration. IOMarkdown is enabled
-            () =>
-              isPropertyWithMinAppVersionEnabled({
-                remoteConfig: O.some(remoteConfig),
-                mainLocalFlag: true,
-                configPropertyName: "ioMarkdown"
-              })
-          )
-        )
-    )
   );
 
 export const pnMessagingServiceIdSelector = (

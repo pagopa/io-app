@@ -1,46 +1,47 @@
 import { ComponentProps, Fragment, ReactNode } from "react";
+
 import { Divider } from "../layout";
 import { ListItemRadio, ListItemRadioWithAmount } from "../listitems";
 
 export type RadioItem<T> = {
-  id: T;
-  value: string;
   accessibilityLabel?: string;
-  description?: string | ReactNode;
+  description?: ReactNode | string;
   disabled?: boolean;
-  startImage?: ComponentProps<typeof ListItemRadio>["startImage"];
+  id: T;
   loadingProps?: ComponentProps<typeof ListItemRadio>["loadingProps"];
+  startImage?: ComponentProps<typeof ListItemRadio>["startImage"];
+  value: string;
 };
 
 export type RadioItemWithAmount<T> = {
+  formattedAmountString: string;
   id: T;
   label: string;
-  formattedAmountString: string;
 } & (
-  | {
-      isSuggested?: false;
-    }
   | {
       isSuggested: true;
       suggestReason: string;
     }
+  | {
+      isSuggested?: false;
+    }
 );
 type CommonProps<T> = {
-  selectedItem?: T;
   onPress: (selected: T) => void;
+  selectedItem?: T;
 };
 
-type RadioListItemProps<T> = {
-  type: "radioListItem";
-  items: ReadonlyArray<RadioItem<T>>;
-} & CommonProps<T>;
-
-type RadioListItemWithAmountProps<T> = {
-  type: "radioListItemWithAmount";
-  items: ReadonlyArray<RadioItemWithAmount<T>>;
-} & CommonProps<T>;
-
 type Props<T> = RadioListItemProps<T> | RadioListItemWithAmountProps<T>;
+
+type RadioListItemProps<T> = CommonProps<T> & {
+  items: ReadonlyArray<RadioItem<T>>;
+  type: "radioListItem";
+};
+
+type RadioListItemWithAmountProps<T> = CommonProps<T> & {
+  items: ReadonlyArray<RadioItemWithAmount<T>>;
+  type: "radioListItemWithAmount";
+};
 
 /**
  * A list of radio buttons.
@@ -53,15 +54,15 @@ const RadioListItem = <T,>(props: RadioListItemProps<T>) => (
     {props.items.map((item, index) => (
       <Fragment key={`radio_item_${item.id}`}>
         <ListItemRadio
-          testID={`RadioItemTestID_${item.id}`}
-          value={item.value}
-          description={item.description}
           accessibilityLabel={item.accessibilityLabel}
-          startImage={item.startImage}
+          description={item.description}
           disabled={item.disabled}
           loadingProps={item.loadingProps}
           onValueChange={() => props.onPress(item.id)}
           selected={props.selectedItem === item.id}
+          startImage={item.startImage}
+          testID={`RadioItemTestID_${item.id}`}
+          value={item.value}
         />
         {index < props.items.length - 1 && <Divider />}
       </Fragment>
@@ -77,17 +78,17 @@ const RadioListItemWithAmount = <T,>(
       <Fragment key={`radio_item_${item.id}`}>
         {item.isSuggested ? (
           <ListItemRadioWithAmount
-            label={item.label}
             formattedAmountString={item.formattedAmountString}
-            suggestReason={item.suggestReason}
             isSuggested={item.isSuggested}
+            label={item.label}
             onValueChange={() => props.onPress(item.id)}
             selected={props.selectedItem === item.id}
+            suggestReason={item.suggestReason}
           />
         ) : (
           <ListItemRadioWithAmount
-            label={item.label}
             formattedAmountString={item.formattedAmountString}
+            label={item.label}
             onValueChange={() => props.onPress(item.id)}
             selected={props.selectedItem === item.id}
           />

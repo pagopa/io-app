@@ -10,6 +10,7 @@ import I18n from "i18next";
 import { useMemo } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { CircularProgress } from "../../../../../components/ui/CircularProgress.tsx";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
@@ -102,16 +103,16 @@ const AndroidContent = () => {
     <IOScrollView centerContent={true}>
       <View style={{ alignItems: "center", gap: 24 }}>
         <CircularProgress
-          size={240}
-          radius={120}
           progress={isSuccess ? 100 : 0}
-          strokeColor={IOColors["blueIO-500"]}
+          radius={120}
+          size={240}
           strokeBgColor={IOColors["grey-200"]}
+          strokeColor={IOColors["blueIO-500"]}
           strokeWidth={4}
         >
           <Pictogram
-            size={180}
             name={isSuccess ? "success" : "nfcScanAndroid"}
+            size={180}
           />
         </CircularProgress>
         <H4 textStyle={{ textAlign: "center" }}>{title}</H4>
@@ -122,8 +123,8 @@ const AndroidContent = () => {
                 ? I18n.t("global.buttons.close")
                 : I18n.t("global.buttons.cancel")
             }
-            variant="link"
             onPress={handleDismiss}
+            variant="link"
           />
         </View>
       </View>

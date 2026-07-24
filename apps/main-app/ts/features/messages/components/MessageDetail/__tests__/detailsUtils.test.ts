@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
+
 import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
+import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import {
   isError,
@@ -13,10 +14,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { CTA } from "../../../../../types/LocalizedCTAs";
 import * as analytics from "../../../analytics";
 import {
+  MessagePaymentError,
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,
-  toTimeoutMessagePaymentError,
-  MessagePaymentError
+  toTimeoutMessagePaymentError
 } from "../../../types/paymentErrors";
 import {
   computeAndTrackCTAPressAnalytics,

@@ -1,7 +1,12 @@
 import { ActionArgs, assign } from "xstate";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../../store/hooks";
 import { assert } from "../../../../../utils/assert";
+import {
+  trackItwProximityQrCodeLoadingFailure,
+  trackItwProximityStart
+} from "../analytics";
 import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
 import { itwGrantProximityConsent } from "../store/actions";
 import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors/credentials";
@@ -11,6 +16,7 @@ import {
 } from "../store/utils";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
+import { mapEventToFailure } from "./failure";
 
 export const createProximityActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -113,5 +119,23 @@ export const createProximityActionsImplementation = (
     );
 
     store.dispatch(itwGrantProximityConsent(consentData));
+  },
+
+  trackProximityStart: ({
+    context
+  }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
+    trackItwProximityStart({
+      proximity_flow: context.engagementMode === "nfc" ? "nfc" : "qr_code"
+    });
+  },
+
+  trackQrCodeLoadingFailure: ({
+    context,
+    event
+  }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
+    if (context.engagementMode === "qrcode") {
+      const { reason, type } = mapEventToFailure(event);
+      trackItwProximityQrCodeLoadingFailure({ reason, type });
+    }
   }
 });

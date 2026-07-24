@@ -2,14 +2,14 @@ import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import { MixPanelCredential } from "../../../analytics/utils/types";
 import {
+  ITW_PRESENTATION_DETAILS_ACTIONS_EVENTS,
+  ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS
+} from "./enum";
+import {
   ItwEidReissuingTrigger,
   TrackCredentialAction,
   TrackCredentialDetail
 } from "./types";
-import {
-  ITW_PRESENTATION_DETAILS_ACTIONS_EVENTS,
-  ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS
-} from "./enum";
 
 // Screen view events
 

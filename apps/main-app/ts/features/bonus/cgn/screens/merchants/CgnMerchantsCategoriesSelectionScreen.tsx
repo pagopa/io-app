@@ -1,5 +1,4 @@
 import {
-  Divider,
   IOColors,
   IOIcons,
   IOVisualCostants,
@@ -17,13 +16,17 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";
-import { CgnMerchantCategoriesListScreen } from "./CgnMerchantCategoriesListScreen";
-import { CgnMerchantsListScreen } from "./CgnMerchantsListScreen";
+import {
+  CategoryRow,
+  CgnMerchantCategoriesListScreen
+} from "./CgnMerchantCategoriesListScreen";
+import { CgnMerchantsListScreen, MerchantsAll } from "./CgnMerchantsListScreen";
 
 export const CgnMerchantsHomeTabRoutes = {
   CGN_CATEGORIES: "CGN_CATEGORIES",
@@ -35,9 +38,11 @@ type CgnMerchantsHomeTabParamsList = {
   [CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL]: undefined;
 };
 
+type CgnMerchantsListItem = CategoryRow | MerchantsAll;
+
 type TabOption = {
-  title: string;
   icon: IOIcons;
+  title: string;
 };
 
 const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
@@ -50,6 +55,9 @@ const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
     title: I18n.t("bonus.cgn.merchantsList.tabs.perMerchant")
   }
 };
+
+const isCategoryRow = (item: CgnMerchantsListItem): item is CategoryRow =>
+  "categories" in item;
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const { navigate } = useIONavigation();
@@ -64,10 +72,11 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const {
     data,
-    renderItem,
     refreshControlProps,
     ListFooterComponent,
-    ListEmptyComponent
+    ListFooterComponentStyle,
+    ListEmptyComponent,
+    ItemSeparatorComponent
   } =
     selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES
       ? categoriesScreen
@@ -75,7 +84,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const tabRoutesKeys = Object.keys(CgnMerchantsHomeTabRoutes);
 
-  const animatedFlatListRef = useAnimatedRef<Animated.FlatList<unknown>>();
+  const animatedFlatListRef =
+    useAnimatedRef<Animated.FlatList<CgnMerchantsListItem>>();
 
   const rawScrollY = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
@@ -116,6 +126,9 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const isRefreshing =
     (refreshControlProps?.refreshing ?? false) && isPullRefresh;
+  const contentContainerPaddingBottom = ListFooterComponentStyle
+    ? 0
+    : IOVisualCostants.appMarginDefault + bottom;
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
@@ -132,14 +145,14 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     () => (
       <>
         <CgnAnimatedHeader
-          pullProgress={pullProgress}
           isRefreshingValue={isRefreshingSharedValue}
+          pullProgress={pullProgress}
         />
         <View style={{ flexGrow: 0, flexShrink: 0 }}>
           <TabNavigation
             includeContentMargins={true}
-            tabAlignment="start"
             selectedIndex={tabRoutesKeys.indexOf(selectedTab)}
+            tabAlignment="start"
           >
             {tabRoutesKeys.map((routeKey, index) => {
               const route = routeKey as keyof CgnMerchantsHomeTabParamsList;
@@ -156,12 +169,12 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
               );
               return (
                 <TabItem
-                  testID={`cgn-merchants-tab-${route}`}
-                  icon={tabOptions[route].icon}
-                  label={label}
                   accessibilityLabel={accessibilityLabel}
+                  icon={tabOptions[route].icon}
                   key={route}
+                  label={label}
                   onPress={onPress}
+                  testID={`cgn-merchants-tab-${route}`}
                 />
               );
             })}
@@ -175,36 +188,39 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   );
 
   return (
-    <Animated.FlatList
-      ref={animatedFlatListRef}
-      scrollEventThrottle={8}
-      onScroll={scrollHandler}
-      snapToEnd={false}
-      data={[...data]}
-      keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
-      renderItem={({ item, index }) => renderItem(item as any, index)}
-      refreshControl={
-        refreshControlProps && (
-          <RefreshControl
-            tintColor={Platform.OS === "ios" ? "transparent" : IOColors.black}
-            {...refreshControlProps}
-            refreshing={isRefreshing}
-            onRefresh={() => {
-              refreshControlProps.onRefresh();
-              setIsPullRefresh(true);
-            }}
-          />
-        )
-      }
-      ListHeaderComponent={ListHeaderComponent}
-      ListFooterComponent={ListFooterComponent}
-      ListEmptyComponent={ListEmptyComponent}
-      ItemSeparatorComponent={() => <Divider />}
-      style={{ flex: 1 }}
+    <Animated.FlatList<CgnMerchantsListItem>
       contentContainerStyle={{
         flexGrow: 1,
-        paddingBottom: IOVisualCostants.appMarginDefault + bottom
+        paddingBottom: contentContainerPaddingBottom
       }}
+      data={data}
+      ItemSeparatorComponent={ItemSeparatorComponent}
+      keyExtractor={item => item.id}
+      ListEmptyComponent={ListEmptyComponent}
+      ListFooterComponent={ListFooterComponent}
+      ListFooterComponentStyle={ListFooterComponentStyle}
+      ListHeaderComponent={ListHeaderComponent}
+      onScroll={scrollHandler}
+      ref={animatedFlatListRef}
+      refreshControl={
+        <RefreshControl
+          tintColor={Platform.OS === "ios" ? "transparent" : IOColors.black}
+          {...refreshControlProps}
+          onRefresh={() => {
+            refreshControlProps.onRefresh();
+            setIsPullRefresh(true);
+          }}
+          refreshing={isRefreshing}
+        />
+      }
+      renderItem={({ item, index }) =>
+        isCategoryRow(item)
+          ? categoriesScreen.renderItem(item, index)
+          : merchantsScreen.renderItem(item, index)
+      }
+      scrollEventThrottle={8}
+      snapToEnd={false}
+      style={{ flex: 1 }}
     />
   );
 };

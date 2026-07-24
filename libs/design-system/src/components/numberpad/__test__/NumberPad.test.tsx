@@ -1,5 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
+
 import { NumberPad } from "../NumberPad";
 
 const mockOnDelete = jest.fn();
@@ -66,12 +67,12 @@ describe(NumberPad, () => {
 function renderNumberPad() {
   return render(
     <NumberPad
+      biometricAccessibilityLabel="touch id trigger"
+      biometricType="TOUCH_ID"
+      deleteAccessibilityLabel="delete"
+      onBiometricPress={mockOnBiometricPress}
       onDeletePress={mockOnDelete}
       onNumberPress={mockOnNumberPress}
-      deleteAccessibilityLabel="delete"
-      biometricType="TOUCH_ID"
-      biometricAccessibilityLabel="touch id trigger"
-      onBiometricPress={mockOnBiometricPress}
     />
   );
 }

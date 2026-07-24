@@ -1,7 +1,8 @@
-import * as O from "fp-ts/lib/Option";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { appReducer } from "../../../../../store/reducers";
+import * as O from "fp-ts/lib/Option";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import {
   lollipopKeyTagSave,
   lollipopRemoveEphemeralPublicKey,

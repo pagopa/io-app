@@ -1,8 +1,9 @@
-import { parseStringPromise } from "xml2js";
-import { getRedirects } from "@pagopa/io-react-native-login-utils";
-import URLParse from "url-parse";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { getRedirects } from "@pagopa/io-react-native-login-utils";
 import pako from "pako";
+import URLParse from "url-parse";
+import { parseStringPromise } from "xml2js";
+
 import { handleRegenerateEphemeralKey } from "..";
 import { AppDispatch } from "../../../App";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";

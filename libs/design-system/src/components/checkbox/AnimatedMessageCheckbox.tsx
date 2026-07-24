@@ -8,6 +8,7 @@ import Animated, {
   withSpring,
   withTiming
 } from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import { IOSpringValues } from "../../core/IOAnimations";
 import { IOColors } from "../../core/IOColors";
@@ -15,12 +16,12 @@ import { IOSpacingScale } from "../../core/IOSpacing";
 import { IOVisualCostants } from "../../core/IOStyles";
 import { AnimatedTick } from "../common/AnimatedTick";
 
+type AnimatedMessageCheckbox = Pick<PressableProps, "accessible" | "onPress"> &
+  Props;
+
 type Props = {
   checked?: boolean;
 };
-
-type AnimatedMessageCheckbox = Props &
-  Pick<PressableProps, "accessible" | "onPress">;
 
 const internalSpacing: IOSpacingScale = 4;
 
@@ -83,12 +84,12 @@ export const AnimatedMessageCheckbox = ({
 
   return (
     <Pressable
-      accessible={accessible}
       accessibilityRole="checkbox"
       accessibilityState={{ checked }}
-      testID="AnimatedMessageCheckboxInput"
+      accessible={accessible}
       onPress={onPress}
       style={styles.checkBoxWrapper}
+      testID="AnimatedMessageCheckboxInput"
     >
       <Animated.View
         style={[
@@ -100,8 +101,8 @@ export const AnimatedMessageCheckbox = ({
       {isChecked && (
         <AnimatedTick
           progress={tickAnimationProgress}
-          strokeWidth={1.5}
           stroke={IOColors[theme["selection-tick"]]}
+          strokeWidth={1.5}
         />
       )}
     </Pressable>

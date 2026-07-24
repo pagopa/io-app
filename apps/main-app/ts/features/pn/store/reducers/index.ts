@@ -2,12 +2,25 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
+
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isUserSelectedPaymentSelector } from "../../../messages/store/reducers/payments";
 import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
 import { aarFlowReducer } from "../../aar/store/reducers";
+import {
+  tempAarMandateReducer,
+  TempAarMandateState
+} from "../../aar/store/reducers/tempAarMandate";
 import { AarFlowState } from "../../aar/utils/stateUtils";
+import {
+  persistedSendLoginEngagementReducer,
+  type SENDLoginEngagementState
+} from "../../loginEngagement/store/reducers";
+import {
+  lollipopLambdaReducer,
+  SENDLollipopLambdaState
+} from "../../lollipopLambda/store/reducers";
 import {
   persistedPnBannerDismissReducer,
   PnBannerDismissState
@@ -15,25 +28,13 @@ import {
 import { getRptIdStringFromPayment } from "../../utils/rptId";
 import { toSENDMessage } from "../types/transformers";
 import { PNMessage } from "../types/types";
-import {
-  persistedSendLoginEngagementReducer,
-  type SENDLoginEngagementState
-} from "../../loginEngagement/store/reducers";
-import {
-  TempAarMandateState,
-  tempAarMandateReducer
-} from "../../aar/store/reducers/tempAarMandate";
-import {
-  lollipopLambdaReducer,
-  SENDLollipopLambdaState
-} from "../../lollipopLambda/store/reducers";
 import { pnActivationReducer, PnActivationState } from "./activation";
 
 export type PnState = {
-  activation: PnActivationState;
-  bannerDismiss: PnBannerDismissState & PersistPartial;
   aarFlow: AarFlowState;
-  loginEngagement: SENDLoginEngagementState & PersistPartial;
+  activation: PnActivationState;
+  bannerDismiss: PersistPartial & PnBannerDismissState;
+  loginEngagement: PersistPartial & SENDLoginEngagementState;
   lollipopLambda: SENDLollipopLambdaState;
   tempAarMandate: TempAarMandateState;
 };

@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { LayoutChangeEvent, LayoutRectangle } from "react-native";
 
-type LayoutSize = Pick<LayoutRectangle, "width" | "height">;
+type LayoutSize = Pick<LayoutRectangle, "height" | "width">;
 
 /**
  * Custom hook to manage layout size state, providing a setter that only updates

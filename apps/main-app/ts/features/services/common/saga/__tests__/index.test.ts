@@ -1,23 +1,24 @@
 import { testSaga } from "redux-saga-test-plan";
+
 import { watchServicesSaga } from "..";
 import {
   IdentityClient,
   identityClientManager
 } from "../../../../../api/IdentityClientManager";
-import { apiUrlPrefix } from "../../../../../config";
-import { watchServicesDetailsSaga } from "../../../details/saga";
-import { watchHomeSaga } from "../../../home/saga";
-import { watchInstitutionSaga } from "../../../institution/saga";
-import { watchSearchSaga } from "../../../search/saga";
-import { loadServicePreference } from "../../../details/store/actions/preference";
-import { watchFavouriteServicesSaga } from "../../../favouriteServices/saga";
-import { specialServicePreferencesSaga } from "../specialServicePreferencesSaga";
-import { isFavouriteServicesEnabledSelector } from "../../store/selectors/remoteConfig";
-import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import {
   ServicesClient,
   servicesClientManager
 } from "../../../../../api/ServicesClientManager";
+import { apiUrlPrefix } from "../../../../../config";
+import { KeyInfo } from "../../../../lollipop/utils/crypto";
+import { watchServicesDetailsSaga } from "../../../details/saga";
+import { loadServicePreference } from "../../../details/store/actions/preference";
+import { watchFavouriteServicesSaga } from "../../../favouriteServices/saga";
+import { watchHomeSaga } from "../../../home/saga";
+import { watchInstitutionSaga } from "../../../institution/saga";
+import { watchSearchSaga } from "../../../search/saga";
+import { isFavouriteServicesEnabledSelector } from "../../store/selectors/remoteConfig";
+import { specialServicePreferencesSaga } from "../specialServicePreferencesSaga";
 
 jest.mock("../../../../../api/IdentityClientManager");
 jest.mock("../../../../../api/ServicesClientManager");

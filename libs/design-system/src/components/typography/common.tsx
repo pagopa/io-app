@@ -1,13 +1,15 @@
 import { ComponentPropsWithRef } from "react";
 import { StyleProp, Text, TextStyle } from "react-native";
+
 import type { IOColors } from "../../core";
+
 import { IOFontFamily, IOFontWeight } from "../../utils/fonts";
 import { RequiredAll } from "../../utils/types";
 
 /**
  * Define the font size values for the typography elements
  */
-export type FontSize = "regular" | "small" | "mini";
+export type FontSize = "mini" | "regular" | "small";
 
 export const fontSizeMapping: Record<FontSize, number> = {
   regular: 16,
@@ -21,6 +23,15 @@ export const lineHeightMapping: Record<FontSize, number> = {
 };
 
 /**
+ * Define the common props interface for all the leaf Typography components.
+ * In addition to the {@link DefaultTypographyProps} all the {@link Text} props are allowed (`style` excluded)
+ */
+export type ExternalTypographyProps<T> = T extends DefaultTypographyProps
+  ? Omit<ComponentPropsWithRef<typeof Text>, "style"> &
+      T & { style?: TypographyStyle }
+  : never;
+
+/**
  * Define the font name values for the typography elements
  */
 export type FontType = {
@@ -28,25 +39,31 @@ export type FontType = {
 };
 
 /**
- * The style exported for the typography elements, without the fields characterizing the font style
+ * Define mandatory all the keys of {@link TypographyProps}
  */
-type TypographyStyle = StyleProp<
-  Omit<
-    TextStyle,
-    "color" | "fontFamily" | "fontStyle" | "fontWeight" | "fontSize"
-  >
->;
+export type RequiredTypographyProps<WeightPropsType, ColorsPropsType> =
+  RequiredAll<TypographyProps<WeightPropsType, ColorsPropsType>>;
 
 /**
  * Define a generic type for props used by all the typography leaf components
  */
 export type TypographyProps<WeightPropsType, ColorsPropsType> = {
-  weight?: WeightPropsType;
   color?: ColorsPropsType;
+  weight?: WeightPropsType;
 };
 
 // Define a standard type, using IOFontWeight and IOColors
 type DefaultTypographyProps = TypographyProps<IOFontWeight, IOColors>;
+
+/**
+ * The style exported for the typography elements, without the fields characterizing the font style
+ */
+type TypographyStyle = StyleProp<
+  Omit<
+    TextStyle,
+    "color" | "fontFamily" | "fontSize" | "fontStyle" | "fontWeight"
+  >
+>;
 
 /**
  * A default function used to calculate the weight and color with some fallback values if not specified.
@@ -66,18 +83,3 @@ export function calculateWeightColor<WeightPropsType, ColorsPropsType>(
     color: color ?? defaultColor
   };
 }
-
-/**
- * Define the common props interface for all the leaf Typography components.
- * In addition to the {@link DefaultTypographyProps} all the {@link Text} props are allowed (`style` excluded)
- */
-export type ExternalTypographyProps<T> = T extends DefaultTypographyProps
-  ? Omit<ComponentPropsWithRef<typeof Text>, "style"> &
-      T & { style?: TypographyStyle }
-  : never;
-
-/**
- * Define mandatory all the keys of {@link TypographyProps}
- */
-export type RequiredTypographyProps<WeightPropsType, ColorsPropsType> =
-  RequiredAll<TypographyProps<WeightPropsType, ColorsPropsType>>;

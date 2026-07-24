@@ -1,7 +1,7 @@
 import {
-  trigger,
   HapticFeedbackTypes,
-  HapticOptions
+  HapticOptions,
+  trigger
 } from "react-native-haptic-feedback";
 
 const defaultOptions: HapticOptions = {
@@ -14,5 +14,5 @@ const triggerHaptic = (
   options?: HapticOptions
 ) => trigger(type, { ...defaultOptions, ...options });
 
-export { triggerHaptic, HapticFeedbackTypes as HapticTypes };
+export { HapticFeedbackTypes as HapticTypes, triggerHaptic };
 export type { HapticOptions };

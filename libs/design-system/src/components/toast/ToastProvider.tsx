@@ -7,12 +7,13 @@ import Animated, {
   SlideOutUp
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { IOVisualCostants } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { throttle } from "../../utils/throttle";
 import { Dismissable } from "../templates";
-import { ToastNotification } from "./ToastNotification";
 import { ToastContext } from "./context";
+import { ToastNotification } from "./ToastNotification";
 import { Toast } from "./types";
 import { IOToastRef, useIOToast } from "./useIOToast";
 
@@ -35,8 +36,8 @@ export const TOAST_DURATION_TIME = 5000;
 export const TOAST_THROTTLE_TIME = 500;
 
 type ToastNotificationStackItem = Toast & { id: number };
-type ToastNotificationStackItemProps = ToastNotificationStackItem &
-  Pick<Dismissable, "onDismiss">;
+type ToastNotificationStackItemProps = Pick<Dismissable, "onDismiss"> &
+  ToastNotificationStackItem;
 
 /**
  * A toast notification item that can be swiped to the right to dismiss it, with enter and exit animations
@@ -115,10 +116,10 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
   return (
     <ToastContext.Provider value={contextValue as ToastContext}>
       <InitializeToastRef />
-      <SafeAreaView style={styles.container} pointerEvents="box-none">
+      <SafeAreaView pointerEvents="box-none" style={styles.container}>
         <View
-          style={{ padding: IOVisualCostants.appMarginDefault }}
           pointerEvents="box-none"
+          style={{ padding: IOVisualCostants.appMarginDefault }}
         >
           {toasts.map(toast => (
             <ToastNotificationStackItem

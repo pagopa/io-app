@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AccessibilityInfo, Platform, useWindowDimensions } from "react-native";
+
 import { IOMaxFontSizeMultiplier } from "./fonts";
 
 /**
@@ -41,8 +42,8 @@ export const useBoldTextEnabled = () => {
  */
 export const useIOFontDynamicScale = (): {
   dynamicFontScale: number;
-  spacingScaleMultiplier: number;
   hugeFontEnabled: boolean;
+  spacingScaleMultiplier: number;
 } => {
   const { fontScale } = useWindowDimensions();
 

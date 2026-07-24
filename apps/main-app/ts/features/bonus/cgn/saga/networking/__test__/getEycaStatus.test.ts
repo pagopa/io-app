@@ -1,23 +1,23 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
-
 import { ValidationError } from "io-ts";
 import { expectSaga } from "redux-saga-test-plan";
+
 import { StatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
 import { StatusEnum as ExpiredStatus } from "../../../../../../../definitions/cgn/CardExpired";
 import { StatusEnum as PendingStatus } from "../../../../../../../definitions/cgn/CardPending";
 import { StatusEnum as RevokedStatus } from "../../../../../../../definitions/cgn/CardRevoked";
 import { CcdbNumber } from "../../../../../../../definitions/cgn/CcdbNumber";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
-import { appReducer } from "../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { getGenericError } from "../../../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import {
   remoteError,
   remoteReady
 } from "../../../../../../common/model/RemoteValue";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { getGenericError } from "../../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { cgnEycaStatus } from "../../../store/actions/eyca/details";
 import { handleGetEycaStatus } from "../eyca/details/getEycaStatus";
 

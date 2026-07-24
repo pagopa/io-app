@@ -2,18 +2,19 @@ import {
   RptId as PagoPaRptId,
   RptIdFromString as PagoPaRptIdFromString
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { Dispatch } from "redux";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { Dispatch } from "redux";
+
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
-import {
-  PaymentInitStateParams,
-  initPaymentStateAction
-} from "../store/actions/orchestration";
-import { PaymentsCheckoutRoutes } from "../navigation/routes";
-import { Action } from "../../../../store/actions/types";
-import { AppParamsList } from "../../../../navigation/params/AppParamsList";
 import { NavigationParams } from "../../../../navigation/NavigationService";
+import { AppParamsList } from "../../../../navigation/params/AppParamsList";
+import { Action } from "../../../../store/actions/types";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
+import {
+  initPaymentStateAction,
+  PaymentInitStateParams
+} from "../store/actions/orchestration";
 
 type PagoPaPaymentParams = Omit<PaymentInitStateParams, "startRoute">;
 

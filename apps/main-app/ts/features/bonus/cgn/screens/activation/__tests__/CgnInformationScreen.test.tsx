@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
+
 import { BonusAvailable } from "../../../../../../../definitions/content/BonusAvailable";
 import * as useHardwareBackButtonModule from "../../../../../../hooks/useHardwareBackButton";
 import { applicationChangeState } from "../../../../../../store/actions/application";

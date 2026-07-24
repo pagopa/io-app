@@ -1,7 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { fireEvent, render } from "@testing-library/react-native";
-import { Alert } from "react-native";
 import I18n from "i18next";
+import { Alert } from "react-native";
+
 import HideReceiptButton from "../HideReceiptButton";
 
 jest.spyOn(Alert, "alert");

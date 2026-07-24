@@ -1,9 +1,15 @@
 import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback } from "react";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { SpidIdp } from "../../../../utils/idps";
+import {
+  setCieIDSelectedSecurityLevelActiveSessionLogin,
+  setIdpSelectedActiveSessionLogin
+} from "../../activeSessionLogin/store/actions";
+import { isActiveSessionLoginSelector } from "../../activeSessionLogin/store/selectors";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import { idpSelected } from "../../common/store/actions";
 import { fastLoginOptInFFEnabled } from "../../fastLogin/store/selectors";
@@ -17,11 +23,6 @@ import {
   Identifier
 } from "../../login/optIn/screens/OptInScreen";
 import { cieIDSetSelectedSecurityLevel } from "../cie/store/actions";
-import { isActiveSessionLoginSelector } from "../../activeSessionLogin/store/selectors";
-import {
-  setIdpSelectedActiveSessionLogin,
-  setCieIDSelectedSecurityLevelActiveSessionLogin
-} from "../../activeSessionLogin/store/actions";
 
 export const IdpCIE: SpidIdp = {
   id: "cie",

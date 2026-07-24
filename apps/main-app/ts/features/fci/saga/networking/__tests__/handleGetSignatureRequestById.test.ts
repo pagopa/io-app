@@ -1,20 +1,21 @@
-import { testSaga } from "redux-saga-test-plan";
-import { ActionType } from "typesafe-actions";
 import { left, right } from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
+import { testSaga } from "redux-saga-test-plan";
+import { ActionType } from "typesafe-actions";
+
+import { EnvironmentEnum } from "../../../../../../definitions/fci/Environment";
+import { SignatureRequestDetailView } from "../../../../../../definitions/fci/SignatureRequestDetailView";
 import { getNetworkError } from "../../../../../utils/errors";
-import { handleGetSignatureRequestById } from "../handleGetSignatureRequestById";
-import {
-  mockSignatureRequestDetailView,
-  mockedError
-} from "../../../types/__mocks__/SignatureRequestDetailView.mock";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {
   fciEnvironmentSet,
   fciSignatureRequestFromId
 } from "../../../store/actions";
-import { SignatureRequestDetailView } from "../../../../../../definitions/fci/SignatureRequestDetailView";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { EnvironmentEnum } from "../../../../../../definitions/fci/Environment";
+import {
+  mockedError,
+  mockSignatureRequestDetailView
+} from "../../../types/__mocks__/SignatureRequestDetailView.mock";
+import { handleGetSignatureRequestById } from "../handleGetSignatureRequestById";
 
 const mockId = "mockId";
 

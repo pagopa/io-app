@@ -1,17 +1,18 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
+
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import WalletOnboardingPaymentMethodsList from "../components/WalletOnboardingPaymentMethodsList";
 import { useWalletOnboardingWebView } from "../hooks/useWalletOnboardingWebView";
 import { PaymentsOnboardingRoutes } from "../navigation/routes";
 import { paymentsOnboardingGetMethodsAction } from "../store/actions";
 import { selectPaymentOnboardingMethods } from "../store/selectors";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 const PaymentsOnboardingSelectMethodScreen = () => {
   usePreventScreenCapture();
@@ -52,36 +53,36 @@ const PaymentsOnboardingSelectMethodScreen = () => {
   if (pot.isError(paymentMethodsPot)) {
     return (
       <OperationResultScreenContent
-        pictogram="umbrella"
-        title={I18n.t("genericError")}
-        subtitle={I18n.t("global.genericError")}
         action={{
           label: I18n.t("global.genericRetry"),
           accessibilityLabel: I18n.t("global.genericRetry"),
           onPress: () => dispatch(paymentsOnboardingGetMethodsAction.request())
         }}
+        pictogram="umbrella"
+        subtitle={I18n.t("global.genericError")}
+        title={I18n.t("genericError")}
       />
     );
   }
 
   return (
     <IOScrollViewWithLargeHeader
-      headerActionsProp={{
-        showHelp: true
-      }}
-      faqCategories={["wallet", "wallet_methods"]}
-      title={{
-        label: I18n.t("wallet.onboarding.paymentMethodsList.header.title")
-      }}
       description={I18n.t(
         "wallet.onboarding.paymentMethodsList.header.subtitle"
       )}
+      faqCategories={["wallet", "wallet_methods"]}
+      headerActionsProp={{
+        showHelp: true
+      }}
+      title={{
+        label: I18n.t("wallet.onboarding.paymentMethodsList.header.title")
+      }}
     >
       <WalletOnboardingPaymentMethodsList
         isLoadingMethods={isLoadingPaymentMethods}
+        isLoadingWebView={isLoading || isPendingOnboarding}
         onSelectPaymentMethod={handleSelectedPaymentMethod}
         paymentMethods={availablePaymentMethods ?? []}
-        isLoadingWebView={isLoading || isPendingOnboarding}
       />
     </IOScrollViewWithLargeHeader>
   );

@@ -1,12 +1,13 @@
 import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
+
 import { CodeEnum } from "../../../../../definitions/idpay/TransactionErrorDTO";
 
 enum SessionExpiredEnum {
   SESSION_EXPIRED = "SESSION_EXPIRED"
 }
 
-export type PaymentFailureEnum = SessionExpiredEnum | CodeEnum;
+export type PaymentFailureEnum = CodeEnum | SessionExpiredEnum;
 export const PaymentFailureEnum = {
   ...SessionExpiredEnum,
   ...CodeEnum

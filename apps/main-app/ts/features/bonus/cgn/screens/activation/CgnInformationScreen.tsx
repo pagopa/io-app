@@ -1,5 +1,6 @@
-import { FunctionComponent, useCallback } from "react";
 import I18n from "i18next";
+import { FunctionComponent, useCallback } from "react";
+
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
@@ -40,13 +41,13 @@ const CgnInformationScreen: FunctionComponent = () => {
     <>
       {bonus ? (
         <BonusInformationComponent
+          bonus={bonus}
+          contextualHelp={emptyContextualHelp}
           onBack={onBack}
+          onCancel={onCancel}
+          onConfirm={onConfirm}
           primaryCtaText={I18n.t("bonus.cgn.cta.activeBonus")}
           secondaryAction={{ type: "back", text: I18n.t("bonus.cgn.cta.back") }}
-          bonus={bonus}
-          onConfirm={onConfirm}
-          onCancel={onCancel}
-          contextualHelp={emptyContextualHelp}
         />
       ) : null}
     </>

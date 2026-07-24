@@ -2,22 +2,23 @@ import { ReactElement, useId } from "react";
 import { ColorValue, View } from "react-native";
 import Animated from "react-native-reanimated";
 import Svg, { Defs, G, LinearGradient, Path, Stop } from "react-native-svg";
+
 import { useIOTheme } from "../../context";
 import { IOColors } from "../../core/IOColors";
 import { WithTestID } from "../../utils/types";
-
-export type LoadingSpinner = WithTestID<{
-  color?: ColorValue;
-  size?: IOLoadingSpinnerSizeScale;
-  durationMs?: number;
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
-}>;
 
 /**
  * Size scale
  */
 export type IOLoadingSpinnerSizeScale = 24 | 48;
+
+export type LoadingSpinner = WithTestID<{
+  accessibilityHint?: string;
+  accessibilityLabel?: string;
+  color?: ColorValue;
+  durationMs?: number;
+  size?: IOLoadingSpinnerSizeScale;
+}>;
 
 const spinKeyframes = {
   from: { transform: [{ rotateZ: "0deg" }] },
@@ -48,15 +49,14 @@ export const LoadingSpinner = ({
 
   return (
     <View
-      style={{ width: size, height: size }}
-      accessible={true}
-      accessibilityRole="progressbar"
       accessibilityHint={accessibilityHint}
       accessibilityLabel={accessibilityLabel}
+      accessibilityRole="progressbar"
+      accessible={true}
+      style={{ width: size, height: size }}
       testID={testID}
     >
       <Animated.View
-        testID={"LoadingSpinnerAnimatedTestID"}
         style={{
           animationName: spinKeyframes,
           animationDuration: durationMs,
@@ -64,47 +64,48 @@ export const LoadingSpinner = ({
           animationTimingFunction: "linear",
           transformOrigin: "center"
         }}
+        testID={"LoadingSpinnerAnimatedTestID"}
       >
         {/* Thanks to Ben Ilegbodu for the article on how to
           create a a SVG gradient loading spinner. Below is
           a parameterized version of his code.
           Source: https://www.benmvp.com/blog/how-to-create-circle-svg-gradient-loading-spinner/ */}
         <Svg
-          width={size}
+          fill="none"
           height={size}
           viewBox={`0 0 ${size} ${size}`}
-          fill="none"
+          width={size}
         >
           <Defs>
             <LinearGradient id={secondHalfId}>
-              <Stop offset="0%" stopOpacity="0" stopColor={color} />
-              <Stop offset="100%" stopOpacity="1" stopColor={color} />
+              <Stop offset="0%" stopColor={color} stopOpacity="0" />
+              <Stop offset="100%" stopColor={color} stopOpacity="1" />
             </LinearGradient>
             <LinearGradient id={firstHalfId}>
-              <Stop offset="0%" stopOpacity="1" stopColor={color} />
-              <Stop offset="100%" stopOpacity="1" stopColor={color} />
+              <Stop offset="0%" stopColor={color} stopOpacity="1" />
+              <Stop offset="100%" stopColor={color} stopOpacity="1" />
             </LinearGradient>
           </Defs>
 
           <G strokeWidth={stroke}>
             <Path
-              stroke={`url(#${secondHalfId})`}
               d={`M ${stroke / 2} ${size / 2} A ${size / 2 - stroke / 2} ${
                 size / 2 - stroke / 2
               } 0 0 1 ${size - stroke / 2} ${size / 2}`}
+              stroke={`url(#${secondHalfId})`}
             />
             <Path
-              stroke={`url(#${firstHalfId})`}
               d={`M ${size - stroke / 2} ${size / 2} A ${
                 size / 2 - stroke / 2
               } ${size / 2 - stroke / 2} 0 0 1 ${stroke / 2} ${size / 2}`}
+              stroke={`url(#${firstHalfId})`}
             />
             <Path
-              stroke={color}
-              strokeLinecap="round"
               d={`M ${stroke / 2} ${size / 2} A ${size / 2 - stroke / 2} ${
                 size / 2 - stroke / 2
               } 0 0 1 ${stroke / 2} ${size / 2 - stroke / 4}`}
+              stroke={color}
+              strokeLinecap="round"
             />
           </G>
         </Svg>

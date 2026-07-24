@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useEffect } from "react";
+
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
 import { PnParamsList } from "../../navigation/params";
@@ -33,11 +34,10 @@ export const SendAarErrorScreen = () => {
   }, [navigation, type]);
 
   switch (type) {
-    case sendAarFlowStates.notAddresseeFinal: {
-      return <SendAarNotAddresseeKoComponent />;
-    }
-    case sendAarFlowStates.nfcNotSupportedFinal: {
-      return <SendAarNfcNotSupportedComponent />;
+    case sendAarFlowStates.cieCanAdvisory: {
+      // navigation handled in useEffect,
+      // this is to avoid rendering the default error component while redirecting
+      return <LoadingScreenContent title="" />;
     }
     case sendAarFlowStates.ko: {
       const { Component: ErrorComponent } = getAarErrorBehaviour(
@@ -45,10 +45,11 @@ export const SendAarErrorScreen = () => {
       );
       return <ErrorComponent />;
     }
-    case sendAarFlowStates.cieCanAdvisory: {
-      // navigation handled in useEffect,
-      // this is to avoid rendering the default error component while redirecting
-      return <LoadingScreenContent title="" />;
+    case sendAarFlowStates.nfcNotSupportedFinal: {
+      return <SendAarNfcNotSupportedComponent />;
+    }
+    case sendAarFlowStates.notAddresseeFinal: {
+      return <SendAarNotAddresseeKoComponent />;
     }
     default: {
       return <SendAarGenericErrorComponent />;

@@ -2,9 +2,9 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { GlobalState } from "../../../../../store/reducers/types";
 import { pnActivationUpsert } from "../../actions";
 import {
-  PnActivationState,
   isLoadingPnActivationSelector,
-  pnActivationReducer
+  pnActivationReducer,
+  PnActivationState
 } from "../activation";
 
 describe("pnActivationReducer", () => {

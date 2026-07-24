@@ -1,9 +1,10 @@
-import { useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { itwIsPendingReviewSelector } from "../store/selectors/preferences";
-import { itwSetReviewPending } from "../store/actions/preferences";
+
 import { useAppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
+import { itwSetReviewPending } from "../store/actions/preferences";
+import { itwIsPendingReviewSelector } from "../store/selectors/preferences";
 
 /**
  * Hook to monitor isPendingReview state and request an app review if needed.

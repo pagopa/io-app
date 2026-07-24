@@ -1,8 +1,10 @@
-import { getType } from "typesafe-actions";
-import { createSelector } from "reselect";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { IndexedById, toIndexed } from "../../../../store/helpers/indexer";
+import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
+
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
+import { ZendeskSubcategoriesErrors } from "../../../../../definitions/content/ZendeskSubcategoriesErrors";
+import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
 import {
   remoteError,
   remoteLoading,
@@ -10,51 +12,50 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../common/model/RemoteValue";
-import { NetworkError } from "../../../../utils/errors";
 import { Action } from "../../../../store/actions/types";
+import { IndexedById, toIndexed } from "../../../../store/helpers/indexer";
+import { GlobalState } from "../../../../store/reducers/types";
+import { NetworkError } from "../../../../utils/errors";
 import {
   getZendeskConfig,
+  getZendeskPaymentConfig,
+  getZendeskToken,
   zendeskRequestTicketNumber,
   zendeskSelectedCategory,
   zendeskSelectedSubcategory,
   zendeskStartPolling,
   zendeskStopPolling,
-  zendeskSupportStart,
-  getZendeskToken,
-  getZendeskPaymentConfig
+  zendeskSupportStart
 } from "../actions";
-import { GlobalState } from "../../../../store/reducers/types";
-import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
-import { ZendeskSubcategoriesErrors } from "../../../../../definitions/content/ZendeskSubcategoriesErrors";
 
-type ZendeskValue = {
-  panicMode: boolean;
-  zendeskCategories?: {
-    id: string;
-    categories: IndexedById<ZendeskCategory>;
-  };
-};
+export enum ZendeskTokenStatusEnum {
+  ERROR = "error",
+  REQUEST = "request",
+  SUCCESS = "success"
+}
 export type ZendeskConfig = RemoteValue<ZendeskValue, NetworkError>;
+
+export type ZendeskState = {
+  getSessionPollingRunning?: boolean;
+  getZendeskTokenStatus?: "401" | ZendeskTokenStatusEnum;
+  selectedCategory?: ZendeskCategory;
+  selectedSubcategory?: ZendeskSubCategory;
+  ticketNumber: pot.Pot<number, Error>;
+  zendeskConfig: ZendeskConfig;
+  zendeskSubcategoriesErrorMap: ZendeskSubcategoriesErrorsConfig;
+};
 
 export type ZendeskSubcategoriesErrorsConfig = RemoteValue<
   ZendeskSubcategoriesErrors,
   NetworkError
 >;
 
-export enum ZendeskTokenStatusEnum {
-  SUCCESS = "success",
-  ERROR = "error",
-  REQUEST = "request"
-}
-
-export type ZendeskState = {
-  zendeskConfig: ZendeskConfig;
-  selectedCategory?: ZendeskCategory;
-  selectedSubcategory?: ZendeskSubCategory;
-  ticketNumber: pot.Pot<number, Error>;
-  getSessionPollingRunning?: boolean;
-  getZendeskTokenStatus?: ZendeskTokenStatusEnum | "401";
-  zendeskSubcategoriesErrorMap: ZendeskSubcategoriesErrorsConfig;
+type ZendeskValue = {
+  panicMode: boolean;
+  zendeskCategories?: {
+    categories: IndexedById<ZendeskCategory>;
+    id: string;
+  };
 };
 
 const INITIAL_STATE: ZendeskState = {
@@ -68,43 +69,12 @@ const reducer = (
   action: Action
 ): ZendeskState => {
   switch (action.type) {
-    case getType(getZendeskToken.request):
+    case getType(getZendeskConfig.failure):
       return {
         ...state,
-        getZendeskTokenStatus: ZendeskTokenStatusEnum.REQUEST
+        zendeskConfig: remoteError(action.payload)
       };
 
-    case getType(getZendeskToken.success):
-      return {
-        ...state,
-        getZendeskTokenStatus: ZendeskTokenStatusEnum.SUCCESS
-      };
-    case getType(getZendeskToken.failure):
-      return {
-        ...state,
-        getZendeskTokenStatus:
-          action.payload === "401"
-            ? action.payload
-            : ZendeskTokenStatusEnum.ERROR
-      };
-    case getType(zendeskStopPolling):
-      return {
-        ...state,
-        getSessionPollingRunning: false
-      };
-    case getType(zendeskStartPolling):
-      return {
-        ...state,
-        getSessionPollingRunning: true
-      };
-    case getType(zendeskSupportStart):
-      return {
-        ...state,
-        zendeskConfig: remoteUndefined,
-        selectedCategory: undefined,
-        selectedSubcategory: undefined,
-        ticketNumber: pot.none
-      };
     case getType(getZendeskConfig.request):
       return {
         ...state,
@@ -126,23 +96,10 @@ const reducer = (
             : undefined
         })
       };
-    case getType(getZendeskConfig.failure):
+    case getType(getZendeskPaymentConfig.failure):
       return {
         ...state,
-        zendeskConfig: remoteError(action.payload)
-      };
-    case getType(zendeskSelectedCategory):
-      return { ...state, selectedCategory: action.payload };
-    case getType(zendeskSelectedSubcategory):
-      return { ...state, selectedSubcategory: action.payload };
-    case getType(zendeskRequestTicketNumber.request):
-      return { ...state, ticketNumber: pot.toLoading(state.ticketNumber) };
-    case getType(zendeskRequestTicketNumber.success):
-      return { ...state, ticketNumber: pot.some(action.payload) };
-    case getType(zendeskRequestTicketNumber.failure):
-      return {
-        ...state,
-        ticketNumber: pot.toError(state.ticketNumber, action.payload)
+        zendeskSubcategoriesErrorMap: remoteError(action.payload)
       };
     case getType(getZendeskPaymentConfig.request):
       return {
@@ -154,10 +111,54 @@ const reducer = (
         ...state,
         zendeskSubcategoriesErrorMap: remoteReady(action.payload)
       };
-    case getType(getZendeskPaymentConfig.failure):
+    case getType(getZendeskToken.failure):
       return {
         ...state,
-        zendeskSubcategoriesErrorMap: remoteError(action.payload)
+        getZendeskTokenStatus:
+          action.payload === "401"
+            ? action.payload
+            : ZendeskTokenStatusEnum.ERROR
+      };
+    case getType(getZendeskToken.request):
+      return {
+        ...state,
+        getZendeskTokenStatus: ZendeskTokenStatusEnum.REQUEST
+      };
+    case getType(getZendeskToken.success):
+      return {
+        ...state,
+        getZendeskTokenStatus: ZendeskTokenStatusEnum.SUCCESS
+      };
+    case getType(zendeskRequestTicketNumber.failure):
+      return {
+        ...state,
+        ticketNumber: pot.toError(state.ticketNumber, action.payload)
+      };
+    case getType(zendeskRequestTicketNumber.request):
+      return { ...state, ticketNumber: pot.toLoading(state.ticketNumber) };
+    case getType(zendeskRequestTicketNumber.success):
+      return { ...state, ticketNumber: pot.some(action.payload) };
+    case getType(zendeskSelectedCategory):
+      return { ...state, selectedCategory: action.payload };
+    case getType(zendeskSelectedSubcategory):
+      return { ...state, selectedSubcategory: action.payload };
+    case getType(zendeskStartPolling):
+      return {
+        ...state,
+        getSessionPollingRunning: true
+      };
+    case getType(zendeskStopPolling):
+      return {
+        ...state,
+        getSessionPollingRunning: false
+      };
+    case getType(zendeskSupportStart):
+      return {
+        ...state,
+        zendeskConfig: remoteUndefined,
+        selectedCategory: undefined,
+        selectedSubcategory: undefined,
+        ticketNumber: pot.none
       };
   }
   return state;
@@ -176,15 +177,15 @@ export const getZendeskTokenStatusSelector = (state: GlobalState) =>
 
 export const zendeskSelectedCategorySelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.selectedCategory],
-  (zendeskCategory: ZendeskCategory | undefined): ZendeskCategory | undefined =>
+  (zendeskCategory: undefined | ZendeskCategory): undefined | ZendeskCategory =>
     zendeskCategory
 );
 
 export const zendeskSelectedSubcategorySelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.selectedSubcategory],
   (
-    zendeskSubcategory: ZendeskSubCategory | undefined
-  ): ZendeskSubCategory | undefined => zendeskSubcategory
+    zendeskSubcategory: undefined | ZendeskSubCategory
+  ): undefined | ZendeskSubCategory => zendeskSubcategory
 );
 
 export const zendeskTicketNumberSelector = createSelector(

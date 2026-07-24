@@ -7,9 +7,9 @@ interface Some<T> {
 }
 // type alias of pot.SomeError to make possible type guard, since pot.Some is not exported
 interface SomeError<T, E> {
+  readonly error: E;
   readonly kind: "PotSomeError";
   readonly value: T;
-  readonly error: E;
 }
 
 // return true if pot is just None, not NoneLoading, nor NoneUpdating, nor NoneError
@@ -57,16 +57,16 @@ export const isLoadingOrUpdating = <A, E>(p: pot.Pot<A, E>): boolean =>
   pot.isLoading(p) || pot.isUpdating(p);
 
 type PotFoldWithDefaultHandlers<A, E, O> = {
+  default: (value?: A | E, secondValue?: A | E) => O;
+} & {
   none?: () => O;
+  noneError?: (error: E) => O;
   noneLoading?: () => O;
   noneUpdating?: (newValue: A) => O;
-  noneError?: (error: E) => O;
   some?: (value: A) => O;
+  someError?: (value: A, error: E) => O;
   someLoading?: (value: A) => O;
   someUpdating?: (value: A, newValue: A) => O;
-  someError?: (value: A, error: E) => O;
-} & {
-  default: (value?: A | E, secondValue?: A | E) => O;
 };
 
 /**

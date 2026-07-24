@@ -1,4 +1,8 @@
+import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
+import { Alert } from "react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -8,6 +12,28 @@ import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { ItwPresentationPidDetailScreen } from "../ItwPresentationPidDetailScreen";
 
+const mockToastError = jest.fn();
+const mockToastInfo = jest.fn();
+const mockToastSuccess = jest.fn();
+const mockTrackItwStartDeactivation = jest.fn();
+
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual<typeof import("@io-app/design-system")>(
+    "@io-app/design-system"
+  ),
+  useIOToast: () => ({
+    error: mockToastError,
+    info: mockToastInfo,
+    success: mockToastSuccess
+  })
+}));
+
+jest.mock("../../../../analytics", () => ({
+  ...jest.requireActual("../../../../analytics"),
+  trackItwStartDeactivation: (properties: unknown) =>
+    mockTrackItwStartDeactivation(properties)
+}));
+
 describe("ItwPresentationPidDetailScreen", () => {
   beforeEach(() => {
     jest
@@ -16,6 +42,7 @@ describe("ItwPresentationPidDetailScreen", () => {
   });
 
   afterEach(() => {
+    jest.clearAllMocks();
     jest.restoreAllMocks();
   });
 
@@ -36,9 +63,51 @@ describe("ItwPresentationPidDetailScreen", () => {
 
     expect(queryByTestId("itwDiscoveryInfoBannerTestID")).toBeNull();
   });
+
+  it("opens the IT-Wallet deactivation dialog when online", () => {
+    jest.spyOn(Alert, "alert").mockImplementation(jest.fn());
+
+    const { getByText } = renderComponent(false);
+
+    fireEvent.press(
+      getByText(I18n.t("features.itWallet.presentation.itWalletId.cta.revoke"))
+    );
+
+    expect(Alert.alert).toHaveBeenCalledWith(
+      I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.title"),
+      I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.message"),
+      expect.any(Array)
+    );
+    expect(mockTrackItwStartDeactivation).toHaveBeenCalled();
+  });
+
+  it("shows an offline toast and does not open the IT-Wallet deactivation dialog when offline", () => {
+    jest.spyOn(Alert, "alert").mockImplementation(jest.fn());
+
+    const { getByText } = renderComponent(false, false);
+
+    fireEvent.press(
+      getByText(I18n.t("features.itWallet.presentation.itWalletId.cta.revoke"))
+    );
+
+    expect(Alert.alert).not.toHaveBeenCalled();
+    expect(mockTrackItwStartDeactivation).not.toHaveBeenCalled();
+    expect(mockToastError).toHaveBeenCalledWith(I18n.t("global.offline.toast"));
+  });
+  it("does not render the assistance action", () => {
+    const { queryByText } = renderComponent(false);
+
+    expect(
+      queryByText(
+        I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+        )
+      )
+    ).toBeNull();
+  });
 });
 
-const renderComponent = (isBannerHidden: boolean) => {
+const renderComponent = (isBannerHidden: boolean, isConnected = true) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const validEid = {
     ...ItwStoredCredentialsMocks.eid,
@@ -52,6 +121,10 @@ const renderComponent = (isBannerHidden: boolean) => {
     ...globalState,
     features: {
       ...globalState.features,
+      connectivityStatus: {
+        ...globalState.features.connectivityStatus,
+        isConnected
+      },
       itWallet: {
         ...globalState.features.itWallet,
         banners: isBannerHidden

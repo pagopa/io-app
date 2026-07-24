@@ -1,5 +1,6 @@
 import { Linking, Platform } from "react-native";
 import AndroidOpenSettings from "react-native-android-open-settings";
+import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import {
   checkMultiple,
   Permission,
@@ -7,7 +8,6 @@ import {
   requestMultiple,
   RESULTS
 } from "react-native-permissions";
-import BluetoothStateManager from "react-native-bluetooth-state-manager";
 
 const BLUETOOTH_PERMISSIONS: Array<Permission> =
   Platform.OS === "android"

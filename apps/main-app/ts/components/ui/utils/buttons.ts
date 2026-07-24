@@ -1,8 +1,9 @@
 import { IOButtonBlockSpecificProps, IOToast } from "@io-app/design-system";
 import I18n from "i18next";
+
+import { GuidedTourProps } from "../../../features/tour/components/GuidedTour";
 import { openWebUrl } from "../../../utils/url";
 import { OperationResultScreenContentProps } from "../../screens/OperationResultScreenContent";
-import { GuidedTourProps } from "../../../features/tour/components/GuidedTour";
 
 export type ButtonBlockProps = Omit<
   IOButtonBlockSpecificProps,

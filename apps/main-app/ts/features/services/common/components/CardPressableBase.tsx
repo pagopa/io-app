@@ -4,9 +4,8 @@ import {
   WithTestID
 } from "@io-app/design-system";
 import { PropsWithChildren, useCallback } from "react";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
-
 import { GestureResponderEvent, Pressable } from "react-native";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated from "react-native-reanimated";
 
 type CardPressableBaseProps = WithTestID<PressableBaseProps>;
@@ -35,14 +34,15 @@ export const CardPressableBase = ({
 
   return (
     <Pressable
-      onPress={handleOnPress}
-      testID={testID}
-      accessible={true}
       accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      accessible={true}
+      onPress={handleOnPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
       style={{ flexGrow: 1 }}
+      testID={testID}
     >
       <Animated.View style={[scaleAnimatedStyle, { flexGrow: 1 }]}>
         {children}

@@ -4,6 +4,7 @@ import {
   useAnimatedProps,
   useAnimatedStyle
 } from "react-native-reanimated";
+
 import { useIOTheme } from "../../../context";
 import { hexToRgba, IOColors } from "../../../core/IOColors";
 import { IOButtonColor, IOButtonProps, IOButtonVariant } from "./IOButton";
@@ -11,13 +12,13 @@ import { IOButtonColor, IOButtonProps, IOButtonVariant } from "./IOButton";
 type ColorStates = {
   background: {
     default: string;
-    pressed: string;
     disabled: string;
+    pressed: string;
   };
   foreground: {
     default: string;
-    pressed: string;
     disabled: string;
+    pressed: string;
   };
 };
 

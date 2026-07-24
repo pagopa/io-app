@@ -1,10 +1,11 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
+
 import { Institutions } from "../../../../../../definitions/services/Institutions";
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { servicesClientManager } from "../../../../../api/ServicesClientManager";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { featuredInstitutionsGet } from "../../store/actions";
 import { handleGetFeaturedInstitutions } from "../handleGetFeaturedInstitutions";
 

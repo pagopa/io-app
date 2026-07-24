@@ -1,6 +1,7 @@
-import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useEffect } from "react";
+
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 
 /**

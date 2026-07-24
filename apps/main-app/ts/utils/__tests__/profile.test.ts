@@ -1,8 +1,9 @@
 import { none, some } from "@pagopa/ts-commons/lib/pot";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
+
+import { mockedMunicipality } from "../__mocks__/municipality";
 import { formatFiscalCodeBirthdayAsShortFormat } from "../dates";
 import { extractFiscalCodeData } from "../profile";
-import { mockedMunicipality } from "../__mocks__/municipality";
 
 describe("extracting data from fiscal code", () => {
   // mario rossi / roma / rm / 1-1-1980

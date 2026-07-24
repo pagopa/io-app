@@ -1,11 +1,12 @@
+import type { VerifierRequest } from "../types";
+
+import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import { UntrustedRpError } from "../errors";
 import {
   generateAcceptedFields,
   getProximityDetails,
   getVerifierIdentity
 } from "../presentation";
-import type { VerifierRequest } from "../types";
-import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 
 const mockDocType = "org.iso.18013.5.1.mDL";
 const mockCommonName = "EUDI Proximity Verifier";

@@ -3,6 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+
 import { NetworkError } from "../../../../../../utils/errors";
 import { CgnEycaActivationStatus } from "../../reducers/eyca/activation";
 

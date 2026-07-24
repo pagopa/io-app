@@ -1,11 +1,12 @@
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { MessageListCategory } from "../../../types/messageListCategory";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import { Footer } from "../Footer";
 import * as allPaginated from "../../../store/reducers/allPaginated";
+import { MessageListCategory } from "../../../types/messageListCategory";
+import { Footer } from "../Footer";
 
 describe("Footer", () => {
   beforeEach(() => {

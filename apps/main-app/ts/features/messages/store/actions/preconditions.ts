@@ -1,6 +1,7 @@
 import { createStandardAction } from "typesafe-actions";
-import { ThirdPartyMessagePrecondition } from "../../../../../definitions/communication/ThirdPartyMessagePrecondition";
+
 import { MessageCategory } from "../../../../../definitions/communication/MessageCategory";
+import { ThirdPartyMessagePrecondition } from "../../../../../definitions/communication/ThirdPartyMessagePrecondition";
 
 // NPS stands for Next Precondition Status
 export type NPSError = {
@@ -11,20 +12,16 @@ export type NPSIdle = {
   nextStatus: "idle";
 };
 export type NPSLoadingContent = {
-  nextStatus: "loadingContent";
   content: ThirdPartyMessagePrecondition;
-  skipLoading: boolean;
+  nextStatus: "loadingContent";
 };
 export type NPSRetrievingData = {
   nextStatus: "retrievingData";
 };
 export type NPSScheduled = {
-  nextStatus: "scheduled";
-  messageId: string;
   categoryTag: MessageCategory["tag"];
-};
-export type NPSShown = {
-  nextStatus: "shown";
+  messageId: string;
+  nextStatus: "scheduled";
 };
 export type NPSUpdateRequired = {
   nextStatus: "updateRequired";
@@ -38,12 +35,10 @@ export const toIdlePayload = (): NPSIdle => ({
   nextStatus: "idle"
 });
 export const toLoadingContentPayload = (
-  content: ThirdPartyMessagePrecondition,
-  skipLoading: boolean
+  content: ThirdPartyMessagePrecondition
 ): NPSLoadingContent => ({
   nextStatus: "loadingContent",
-  content,
-  skipLoading
+  content
 });
 export const toRetrievingDataPayload = (): NPSRetrievingData => ({
   nextStatus: "retrievingData"
@@ -55,9 +50,6 @@ export const toScheduledPayload = (
   nextStatus: "scheduled",
   messageId,
   categoryTag
-});
-export const toShownPayload = (): NPSShown => ({
-  nextStatus: "shown"
 });
 export const toUpdateRequiredPayload = (): NPSUpdateRequired => ({
   nextStatus: "updateRequired"
@@ -78,9 +70,6 @@ export const retrievingDataPreconditionStatusAction = createStandardAction(
 export const scheduledPreconditionStatusAction = createStandardAction(
   "TO_SCHEDULED_PRECONDITION_STATUS"
 )<NPSScheduled>();
-export const shownPreconditionStatusAction = createStandardAction(
-  "TO_SHOWN_PRECONDITION_STATUS"
-)<NPSShown>();
 export const updateRequiredPreconditionStatusAction = createStandardAction(
   "TO_UPDATE_REQUIRED_PRECONDITION_STATUS"
 )<NPSUpdateRequired>();

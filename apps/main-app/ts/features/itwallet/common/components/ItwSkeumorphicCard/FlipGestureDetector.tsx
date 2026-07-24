@@ -12,10 +12,10 @@ const directions = {
 };
 
 type FlipsGestureDetectorProps = {
-  isFlipped: boolean;
-  setIsFlipped: (isFlipped: boolean) => void;
   children: ReactNode;
   direction?: keyof typeof directions;
+  isFlipped: boolean;
+  setIsFlipped: (isFlipped: boolean) => void;
 };
 
 /**

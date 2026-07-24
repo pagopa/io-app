@@ -1,10 +1,11 @@
 import { ColorValue, View } from "react-native";
+
 import { useIOTheme } from "../../context";
 import { IOColors, IOSpacer, IOVisualCostants } from "../../core";
 
 type StepperProps = {
-  steps: number;
   currentStep: number;
+  steps: number;
 };
 
 export const Stepper = ({ steps, currentStep }: StepperProps) => {

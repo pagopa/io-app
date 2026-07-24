@@ -1,13 +1,14 @@
 import { Body, FooterActions } from "@io-app/design-system";
-import { View } from "react-native";
 import I18n from "i18next";
+import { View } from "react-native";
+
+import { getFlowType } from "../../../../../utils/analytics";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   trackMixpanelConsentBottomsheet,
   trackMixpanelConsentCancel
 } from "../../../common/analytics/mixpanel/mixpanelAnalytics";
-import { getFlowType } from "../../../../../utils/analytics";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 
 const ConfirmOptOut = () => {
   useOnFirstRender(() => {

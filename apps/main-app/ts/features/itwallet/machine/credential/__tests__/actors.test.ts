@@ -1,6 +1,6 @@
+import { Env } from "../../../common/utils/environment";
 import { createCredentialIssuanceActorsImplementation } from "../actors";
 import { itwCredentialIssuanceMachine } from "../machine";
-import { Env } from "../../../common/utils/environment";
 
 describe("createCredentialIssuanceActorsImplementation", () => {
   /**

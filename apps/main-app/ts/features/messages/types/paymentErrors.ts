@@ -6,10 +6,10 @@ export type MessagePaymentError =
   | MessagePaymentGenericError
   | MessagePaymentSpecificError
   | MessagePaymentTimeoutError;
-export type MessagePaymentGenericError = { type: "generic"; message: string };
+export type MessagePaymentGenericError = { message: string; type: "generic" };
 export type MessagePaymentSpecificError = {
-  type: "specific";
   details: PaymentFaultV2Enum;
+  type: "specific";
 };
 export type MessagePaymentTimeoutError = { type: "timeout" };
 

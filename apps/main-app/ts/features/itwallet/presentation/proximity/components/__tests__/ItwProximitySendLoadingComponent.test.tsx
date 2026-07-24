@@ -1,6 +1,7 @@
 import { act, screen } from "@testing-library/react-native";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -8,7 +9,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import { ITW_PROXIMITY_ROUTES } from "../../navigation/routes";
 import { ItwProximitySendLoadingComponent } from "../ItwProximitySendLoadingComponent";
 
-const i18nKey = (step: 0 | 1 | 2, field: "title" | "subtitle") =>
+const i18nKey = (step: 0 | 1 | 2, field: "subtitle" | "title") =>
   I18n.t(
     `features.itWallet.presentation.proximity.sendDocumentsLoading.${step}.${field}`
   );

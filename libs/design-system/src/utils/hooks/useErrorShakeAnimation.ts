@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import {
   Easing,
   useAnimatedStyle,
@@ -5,7 +6,7 @@ import {
   withSequence,
   withTiming
 } from "react-native-reanimated";
-import { useCallback } from "react";
+
 import { triggerHaptic } from "../../functions";
 
 const SHAKE_OFFSET = 8;

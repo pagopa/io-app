@@ -1,5 +1,6 @@
-import { createMigrate } from "redux-persist";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { createMigrate } from "redux-persist";
+
 import { migrations } from "..";
 
 describe("ITW Wallet Instance reducer migrations", () => {

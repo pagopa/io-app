@@ -1,8 +1,9 @@
 import { createStore } from "redux";
-import CieLoginConfigScreen from "../CieLoginConfigScreen";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import CieLoginConfigScreen from "../CieLoginConfigScreen";
 
 describe("CieLoginConfigScreen", () => {
   it("renders the OTPInput initially", () => {

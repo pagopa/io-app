@@ -1,15 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { MixpanelProperties } from "mixpanel-react-native";
 import { Appearance } from "react-native";
+
 import { PushNotificationsContentTypeEnum } from "../../../definitions/identity/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/identity/ReminderStatus";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { GlobalState } from "../../store/reducers/types";
 import * as ACCESSIBILITY from "../../utils/accessibility";
+import * as analytics from "../../utils/analytics";
 import * as APPVERSION from "../../utils/appVersion";
 import * as BIOMETRICS from "../../utils/biometrics";
 import * as DEVICE from "../../utils/device";
-import * as analytics from "../../utils/analytics";
 import { updateMixpanelSuperProperties } from "../superProperties";
 
 const mockColorScheme = "light";

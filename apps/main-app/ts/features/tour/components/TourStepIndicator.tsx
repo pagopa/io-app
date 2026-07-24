@@ -22,11 +22,11 @@ export const TourStepIndicator = ({ stepIndex, totalSteps }: Props) => {
 
   return (
     <View
-      accessible
       accessibilityLabel={I18n.t("features.tour.stepIndicator", {
         current: stepIndex + 1,
         total: totalSteps
       })}
+      accessible
       style={styles.container}
     >
       {Array.from({ length: totalSteps }).map((_, index) => {

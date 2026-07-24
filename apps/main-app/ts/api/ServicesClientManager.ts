@@ -1,6 +1,6 @@
 import { Client, createClient } from "../../definitions/services/client";
-import { defaultRetryingFetch } from "../utils/fetch";
 import { isTestEnv } from "../utils/environment";
+import { defaultRetryingFetch } from "../utils/fetch";
 import { ApiClientManager, BaseClientOptions } from "./ApiClientManager";
 
 export type ServicesClient = Client<"Bearer">;

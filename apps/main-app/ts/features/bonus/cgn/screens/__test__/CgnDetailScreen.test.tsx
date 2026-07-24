@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
+
 import { Card } from "../../../../../../definitions/cgn/Card";
 import { StatusEnum as ActivatedStatusEnum } from "../../../../../../definitions/cgn/CardActivated";
 import { StatusEnum as ExpiredStatusEnum } from "../../../../../../definitions/cgn/CardExpired";
@@ -19,15 +20,15 @@ import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/bac
 import { GlobalState } from "../../../../../store/reducers/types";
 import { formatDateAsShortFormat } from "../../../../../utils/dates";
 import { getGenericError } from "../../../../../utils/errors";
+import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as urlUtils from "../../../../../utils/url";
 import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnActivationStart } from "../../store/actions/activation";
 import { cgnDetails } from "../../store/actions/details";
 import { cgnEycaStatus } from "../../store/actions/eyca/details";
 import CgnDetailScreen from "../CgnDetailScreen";
-import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
-import * as urlUtils from "../../../../../utils/url";
 
 jest.mock("../../components/CgnAnimatedBackground", () => ({
   CgnAnimatedBackground: () => null

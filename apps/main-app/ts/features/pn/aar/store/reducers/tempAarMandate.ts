@@ -1,10 +1,6 @@
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../../store/actions/types";
-import {
-  testAarAcceptMandate,
-  testAarClearData,
-  testAarCreateMandate
-} from "../actions";
+
+import { MandateCreationResponse } from "../../../../../../definitions/pn/aar/MandateCreationResponse";
 import {
   getValue,
   isError,
@@ -16,8 +12,13 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../common/model/RemoteValue";
+import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { MandateCreationResponse } from "../../../../../../definitions/pn/aar/MandateCreationResponse";
+import {
+  testAarAcceptMandate,
+  testAarClearData,
+  testAarCreateMandate
+} from "../actions";
 
 export type TempAarMandateState = {
   mandate: RemoteValue<MandateCreationResponse, string>;
@@ -34,20 +35,10 @@ export const tempAarMandateReducer = (
   action: Action
 ): TempAarMandateState => {
   switch (action.type) {
-    case getType(testAarCreateMandate.request):
+    case getType(testAarAcceptMandate.failure):
       return {
-        mandate: remoteLoading,
-        validation: remoteUndefined
-      };
-    case getType(testAarCreateMandate.success):
-      return {
-        mandate: remoteReady(action.payload),
-        validation: remoteUndefined
-      };
-    case getType(testAarCreateMandate.failure):
-      return {
-        mandate: remoteError(action.payload),
-        validation: remoteUndefined
+        ...state,
+        validation: remoteError(action.payload)
       };
     case getType(testAarAcceptMandate.request):
       return {
@@ -59,14 +50,24 @@ export const tempAarMandateReducer = (
         ...state,
         validation: remoteReady(undefined)
       };
-    case getType(testAarAcceptMandate.failure):
-      return {
-        ...state,
-        validation: remoteError(action.payload)
-      };
     case getType(testAarClearData): {
       return INITIAL_TEMP_AAR_MANDATE_STATE;
     }
+    case getType(testAarCreateMandate.failure):
+      return {
+        mandate: remoteError(action.payload),
+        validation: remoteUndefined
+      };
+    case getType(testAarCreateMandate.request):
+      return {
+        mandate: remoteLoading,
+        validation: remoteUndefined
+      };
+    case getType(testAarCreateMandate.success):
+      return {
+        mandate: remoteReady(action.payload),
+        validation: remoteUndefined
+      };
   }
   return state;
 };

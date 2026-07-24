@@ -1,11 +1,12 @@
 import { createStore } from "redux";
-import * as selector from "../../store/reducers";
-import { useEngagementScreen } from "../useEngagementScreen";
-import { appReducer } from "../../../../store/reducers";
+
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
+import * as selector from "../../store/reducers";
+import { useEngagementScreen } from "../useEngagementScreen";
 
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({

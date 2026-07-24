@@ -1,5 +1,14 @@
 import { useCallback, useMemo } from "react";
 import { Linking, type TextStyle, View } from "react-native";
+
+import type {
+  IOMarkdownRenderRules,
+  MarkdownNode,
+  MarkdownNodeType,
+  RenderContext,
+  RenderRule
+} from "./types";
+
 import { useIOTheme } from "../../context";
 import {
   bodyFontSize,
@@ -9,29 +18,22 @@ import {
 } from "../typography";
 import { parse } from "./parser";
 import { DEFAULT_RULES } from "./rules";
-import type {
-  IOMarkdownRenderRules,
-  MarkdownNode,
-  MarkdownNodeType,
-  RenderContext,
-  RenderRule
-} from "./types";
 
 export type IOMarkdownProps = {
   /** The markdown string to render */
   content: string;
+  /** Node types to disable (parser will skip them entirely) */
+  disabledRules?: ReadonlyArray<MarkdownNodeType>;
   /** Override default link press behavior. Default: Linking.openURL(url) */
   onLinkPress?: (url: string) => void;
-  /** Paragraph alignment. Default: "auto" */
-  textAlign?: TextStyle["textAlign"];
+  /** Override individual render rules */
+  rules?: IOMarkdownRenderRules;
   /** Override default text size */
   small?: boolean;
   /** Test ID for the container View */
   testID?: string;
-  /** Node types to disable (parser will skip them entirely) */
-  disabledRules?: ReadonlyArray<MarkdownNodeType>;
-  /** Override individual render rules */
-  rules?: IOMarkdownRenderRules;
+  /** Paragraph alignment. Default: "auto" */
+  textAlign?: TextStyle["textAlign"];
 };
 
 /**

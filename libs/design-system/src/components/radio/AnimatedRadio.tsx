@@ -14,18 +14,19 @@ import Animated, {
   withSpring,
   withTiming
 } from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import { IOSpringValues } from "../../core/IOAnimations";
 import { IOColors } from "../../core/IOColors";
 import { IOSelectionTickVisualParams } from "../../core/IOStyles";
 import { AnimatedTick } from "../common/AnimatedTick";
 
-type Props = {
-  size: number;
-  checked?: boolean;
-};
+type OwnProps = Pick<PressableProps, "disabled" | "onPress"> & Props;
 
-type OwnProps = Props & Pick<PressableProps, "disabled" | "onPress">;
+type Props = {
+  checked?: boolean;
+  size: number;
+};
 
 const styles = StyleSheet.create({
   radioBorder: {
@@ -98,9 +99,9 @@ export const AnimatedRadio = ({
     <Pressable
       accessible={false}
       disabled={disabled}
-      testID="AnimatedRadioInput"
       onPress={onPress}
       style={radioButtonWrapperSizeStyle}
+      testID="AnimatedRadioInput"
     >
       <View
         style={[styles.radioBorder, radioButtonSizeStyle, { borderColor }]}
@@ -116,8 +117,8 @@ export const AnimatedRadio = ({
       {isChecked && (
         <View>
           <AnimatedTick
-            size={size}
             progress={tickAnimationProgress}
+            size={size}
             stroke={IOColors[theme["selection-tick"]]}
           />
         </View>

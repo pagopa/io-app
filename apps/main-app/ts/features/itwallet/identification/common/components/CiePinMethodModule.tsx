@@ -1,6 +1,7 @@
-import { Badge, ModuleNavigationAlt } from "@io-app/design-system";
+import { ModuleNavigationAlt } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
+
 import { trackItWalletIDMethodSelected } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
@@ -26,30 +27,10 @@ export const CiePinMethodModule = ({
     isL3
   });
 
-  const badgeProps: Badge = {
-    testID: "CiePinRecommendedBadgeTestID",
-    text: I18n.t(
-      "features.itWallet.identification.modeSelection.mode.ciePin.badge"
-    ),
-    variant: "highlight",
-    outline: false
-  };
-
   if (isL3) {
     return (
       <>
         <ModuleNavigationAlt
-          testID="CiePinMethodModuleTestIDL3"
-          title={I18n.t(
-            `features.itWallet.identification.modeSelection.mode.ciePin.title.l3`
-          )}
-          subtitle={
-            isReissuanceMode
-              ? undefined
-              : I18n.t(
-                  `features.itWallet.identification.modeSelection.mode.ciePin.subtitle.l3`
-                )
-          }
           icon="fiscalCodeIndividual"
           onPress={() => {
             trackItWalletIDMethodSelected({
@@ -58,7 +39,17 @@ export const CiePinMethodModule = ({
             });
             ciePinBottomSheet.present();
           }}
-          badge={!isReissuanceMode ? badgeProps : undefined}
+          subtitle={
+            isReissuanceMode
+              ? undefined
+              : I18n.t(
+                  `features.itWallet.identification.modeSelection.mode.ciePin.subtitle.l3`
+                )
+          }
+          testID="CiePinMethodModuleTestIDL3"
+          title={I18n.t(
+            `features.itWallet.identification.modeSelection.mode.ciePin.title.l3`
+          )}
         />
         {ciePinBottomSheet.bottomSheet}
       </>
@@ -67,6 +58,11 @@ export const CiePinMethodModule = ({
 
   return (
     <ModuleNavigationAlt
+      icon="fiscalCodeIndividual"
+      onPress={handleOnPress}
+      subtitle={I18n.t(
+        `features.itWallet.identification.modeSelection.mode.ciePin.subtitle.default`
+      )}
       testID="CiePinMethodModuleTestIDL2"
       title={
         isReissuanceMode
@@ -77,11 +73,6 @@ export const CiePinMethodModule = ({
               `features.itWallet.identification.modeSelection.mode.ciePin.title.default`
             )
       }
-      subtitle={I18n.t(
-        `features.itWallet.identification.modeSelection.mode.ciePin.subtitle.default`
-      )}
-      icon="fiscalCodeIndividual"
-      onPress={handleOnPress}
     />
   );
 };

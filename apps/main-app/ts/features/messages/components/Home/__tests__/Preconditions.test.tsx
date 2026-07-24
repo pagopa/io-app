@@ -1,13 +1,13 @@
 import { constUndefined } from "fp-ts/lib/function";
 import { createStore } from "redux";
+
+import { TagEnum } from "../../../../../../definitions/communication/MessageCategoryBase";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import * as bottomSheet from "../../../../../utils/hooks/bottomSheet";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { Preconditions } from "../Preconditions";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import * as messagePrecondition from "../../../store/reducers/messagePrecondition";
-import { TagEnum } from "../../../../../../definitions/communication/MessageCategoryBase";
 import * as analytics from "../../../analytics";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import {
   idlePreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
@@ -16,7 +16,8 @@ import {
   toUpdateRequiredPayload,
   updateRequiredPreconditionStatusAction
 } from "../../../store/actions/preconditions";
-import * as bottomSheet from "../../../../../utils/hooks/bottomSheet";
+import * as messagePrecondition from "../../../store/reducers/messagePrecondition";
+import { Preconditions } from "../Preconditions";
 import { PreconditionsFooterProps } from "../PreconditionsFooter";
 
 jest.mock("../PreconditionsContent");

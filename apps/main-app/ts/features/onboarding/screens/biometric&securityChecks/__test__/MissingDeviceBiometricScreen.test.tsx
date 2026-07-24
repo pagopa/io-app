@@ -1,10 +1,11 @@
-import { createStore } from "redux";
 import I18n from "i18next";
-import MissingDeviceBiometricScreen from "../MissingDeviceBiometricScreen";
+import { createStore } from "redux";
+
+import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import ROUTES from "../../../../../navigation/routes";
+import MissingDeviceBiometricScreen from "../MissingDeviceBiometricScreen";
 
 jest.mock("../../../../../store/hooks", () => {
   const original = jest.requireActual("../../../../../store/hooks");

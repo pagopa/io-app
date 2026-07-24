@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
@@ -7,11 +8,6 @@ const DSLoadingScreenExtendedProps = () => {
 
   return (
     <LoadingScreenContent
-      headerVisible
-      title={"Loading…"}
-      subtitle={
-        "Potreste essere in tanti in questo momento.\nPuoi riprovare tra qualche minuto, o puoi richiedere il bonus dal sito dedicato."
-      }
       action={{
         label: "Torna indietro",
         onPress: () => navigation.popToTop()
@@ -25,6 +21,11 @@ const DSLoadingScreenExtendedProps = () => {
           Alert.alert("Alert", "Action triggered");
         }
       }}
+      headerVisible
+      subtitle={
+        "Potreste essere in tanti in questo momento.\nPuoi riprovare tra qualche minuto, o puoi richiedere il bonus dal sito dedicato."
+      }
+      title={"Loading…"}
     />
   );
 };

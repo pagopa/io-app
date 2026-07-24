@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { ConsentData } from "../types";
 import { generateConsentKey } from "../utils";

@@ -2,6 +2,7 @@ import { ComponentProps, useState } from "react";
 import { Pressable, View } from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated from "react-native-reanimated";
+
 import { useIOTheme } from "../../context";
 import {
   IOSelectionListItemStyles,
@@ -11,25 +12,25 @@ import {
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { AnimatedCheckbox } from "../checkbox/AnimatedCheckbox";
-import { IOIcons, Icon } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer } from "../layout";
 import { BodySmall, H6 } from "../typography";
 
 type Props = {
-  value: string;
   description?: string;
   icon?: IOIcons;
-  selected?: boolean;
   onValueChange?: (newValue: boolean) => void;
+  selected?: boolean;
+  value: string;
 };
 
 const DISABLED_OPACITY = 0.5;
 
-type ListItemCheckboxProps = Props &
-  Pick<
-    ComponentProps<typeof Pressable>,
-    "onPress" | "accessibilityLabel" | "accessibilityHint" | "disabled"
-  >;
+type ListItemCheckboxProps = Pick<
+  ComponentProps<typeof Pressable>,
+  "accessibilityHint" | "accessibilityLabel" | "disabled" | "onPress"
+> &
+  Props;
 
 /**
  *  with the automatic state management that uses a {@link AnimatedCheckBox}
@@ -74,30 +75,30 @@ export const ListItemCheckbox = ({
 
   return (
     <Pressable
-      onPress={toggleCheckbox}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      onTouchEnd={onPressOut}
-      testID="ListItemCheckbox"
-      accessible={true}
-      accessibilityLabel={accessibilityLabel || fallbackAccessibilityLabel}
       accessibilityHint={accessibilityHint}
+      accessibilityLabel={accessibilityLabel || fallbackAccessibilityLabel}
       accessibilityRole="checkbox"
       accessibilityState={{
         checked: selected ?? toggleValue,
         disabled: !!disabled
       }}
+      accessible={true}
       disabled={disabled}
+      onPress={toggleCheckbox}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
+      testID="ListItemCheckbox"
     >
       <Animated.View
+        // This is required to avoid opacity
+        // inheritance on Android
+        needsOffscreenAlphaCompositing={true}
         style={[
           IOSelectionListItemStyles.listItem,
           backgroundAnimatedStyle,
           { opacity: disabled ? DISABLED_OPACITY : 1 }
         ]}
-        // This is required to avoid opacity
-        // inheritance on Android
-        needsOffscreenAlphaCompositing={true}
       >
         <Animated.View style={scaleAnimatedStyle}>
           <View style={IOSelectionListItemStyles.listItemInner}>
@@ -114,8 +115,8 @@ export const ListItemCheckbox = ({
               {icon && !hugeFontEnabled && (
                 <Icon
                   allowFontScaling
-                  name={icon}
                   color={theme["icon-decorative"]}
+                  name={icon}
                   size={IOSelectionListItemVisualParams.iconSize}
                 />
               )}
@@ -125,13 +126,13 @@ export const ListItemCheckbox = ({
             </View>
             <HSpacer size={8} />
             <View
-              pointerEvents="none"
               accessibilityElementsHidden
               importantForAccessibility="no-hide-descendants"
+              pointerEvents="none"
             >
               <AnimatedCheckbox
-                size={IOSelectionTickVisualParams.size * dynamicFontScale}
                 checked={selected ?? toggleValue}
+                size={IOSelectionTickVisualParams.size * dynamicFontScale}
               />
             </View>
           </View>
@@ -140,7 +141,7 @@ export const ListItemCheckbox = ({
               <VSpacer
                 size={IOSelectionListItemVisualParams.descriptionMargin}
               />
-              <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
+              <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
                 {description}
               </BodySmall>
             </View>

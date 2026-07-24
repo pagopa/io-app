@@ -1,4 +1,6 @@
 import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
+
+import { IO_FIMS_LINK_PREFIX } from "../../features/fims/singleSignOn/utils";
 import {
   getInternalRoute,
   isServiceDetailNavigationLink,
@@ -8,7 +10,6 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../navigation";
-import { IO_FIMS_LINK_PREFIX } from "../../features/fims/singleSignOn/utils";
 
 describe("getInternalRoute", () => {
   const allowedRoutes = Object.entries(testableALLOWED_ROUTE_NAMES!).map(

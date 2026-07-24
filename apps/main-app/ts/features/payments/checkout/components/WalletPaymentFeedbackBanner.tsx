@@ -2,6 +2,7 @@ import { Banner, VSpacer } from "@io-app/design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { useRef } from "react";
 import { View } from "react-native";
+
 import { mixpanelTrack } from "../../../../mixpanel";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -28,7 +29,7 @@ const WalletPaymentFeebackBanner = () => {
     if (!feedbackBannerConfig?.action) {
       return;
     }
-    void mixpanelTrack("VOC_USER_EXIT", {
+    mixpanelTrack("VOC_USER_EXIT", {
       screen_name: "PAYMENT_OUTCOMECODE_MESSAGE"
     });
     return openAuthenticationSession(feedbackBannerConfig.action.url, "");
@@ -42,15 +43,15 @@ const WalletPaymentFeebackBanner = () => {
     <>
       <VSpacer size={24} />
       <Banner
-        color="neutral"
-        pictogramName="feedback"
-        ref={bannerViewRef}
-        title={feedbackBannerConfig.title?.[localeFallback]}
-        content={feedbackBannerConfig.description[localeFallback]}
         // Starting from version 5.1.3 of the Design System, the `action` property,
         // if explicitly configured, cannot have the value `undefined`.
         action={feedbackBannerConfig.action?.label[localeFallback] ?? ""}
-        onPress={handleBannerPress}
+        color="neutral"
+        content={feedbackBannerConfig.description[localeFallback]}
+        onPress={() => void handleBannerPress()}
+        pictogramName="feedback"
+        ref={bannerViewRef}
+        title={feedbackBannerConfig.title?.[localeFallback]}
       />
     </>
   );

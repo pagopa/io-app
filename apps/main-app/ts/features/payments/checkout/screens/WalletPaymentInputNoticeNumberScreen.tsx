@@ -1,12 +1,13 @@
 import { IOButton, TextInputValidation } from "@io-app/design-system";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { useNavigation } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ComponentRef, useRef, useState } from "react";
 import { Keyboard, View } from "react-native";
 import { KeyboardStickyView } from "react-native-keyboard-controller";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useFooterActionsMargin } from "../../../../hooks/useFooterActionsMargin";
 import {
@@ -25,8 +26,8 @@ import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { trimAndLimitValue } from "../utils";
 
 type InputState = {
-  noticeNumberText: string;
   noticeNumber: O.Option<PaymentNoticeNumberFromString>;
+  noticeNumberText: string;
 };
 
 const MAX_LENGTH_NOTICE_NUMBER = 18;
@@ -71,32 +72,28 @@ const WalletPaymentInputNoticeNumberScreen = () => {
   return (
     <>
       <IOScrollViewWithLargeHeader
+        canGoback={true}
+        contextualHelp={emptyContextualHelp}
+        description={I18n.t("wallet.payment.manual.noticeNumber.subtitle")}
+        headerActionsProp={{ showHelp: true }}
         ignoreAccessibilityCheck
+        includeContentMargins
+        ref={textInputWrapperRef}
         title={{
           label: I18n.t("wallet.payment.manual.noticeNumber.title")
         }}
-        description={I18n.t("wallet.payment.manual.noticeNumber.subtitle")}
-        canGoback={true}
-        contextualHelp={emptyContextualHelp}
-        headerActionsProp={{ showHelp: true }}
-        includeContentMargins
-        ref={textInputWrapperRef}
       >
         <TextInputValidation
-          testID="noticeNumberInput"
-          ref={textInputRef}
-          validationMode="onContinue"
-          placeholder={I18n.t("wallet.payment.manual.noticeNumber.placeholder")}
-          accessibilityLabel={I18n.t(
-            "wallet.payment.manual.noticeNumber.placeholder"
-          )}
-          errorMessage={I18n.t(
-            "wallet.payment.manual.noticeNumber.validationError"
-          )}
           accessibilityErrorLabel={I18n.t(
             "wallet.payment.manual.noticeNumber.a11y"
           )}
-          value={inputState.noticeNumberText}
+          accessibilityLabel={I18n.t(
+            "wallet.payment.manual.noticeNumber.placeholder"
+          )}
+          counterLimit={MAX_LENGTH_NOTICE_NUMBER}
+          errorMessage={I18n.t(
+            "wallet.payment.manual.noticeNumber.validationError"
+          )}
           icon="docPaymentCode"
           onChangeText={value => {
             const normalizedValue = trimAndLimitValue(
@@ -109,14 +106,18 @@ const WalletPaymentInputNoticeNumberScreen = () => {
               noticeNumber: decodePaymentNoticeNumber(normalizedValue)
             });
           }}
-          counterLimit={MAX_LENGTH_NOTICE_NUMBER}
-          showCounterOnlyWhenLimitReached
           onValidate={validatePaymentNoticeNumber}
+          placeholder={I18n.t("wallet.payment.manual.noticeNumber.placeholder")}
+          ref={textInputRef}
+          showCounterOnlyWhenLimitReached
+          testID="noticeNumberInput"
           textInputProps={{
             keyboardType: "number-pad",
             inputMode: "numeric",
             inputAccessoryViewID: "keyboardStickyView"
           }}
+          validationMode="onContinue"
+          value={inputState.noticeNumberText}
         />
       </IOScrollViewWithLargeHeader>
       <KeyboardStickyView offset={{ closed: 0 }}>
@@ -128,9 +129,9 @@ const WalletPaymentInputNoticeNumberScreen = () => {
         >
           <IOButton
             fullWidth
-            variant="solid"
             label={I18n.t("global.buttons.continue")}
             onPress={handleContinueClick}
+            variant="solid"
           />
         </View>
       </KeyboardStickyView>

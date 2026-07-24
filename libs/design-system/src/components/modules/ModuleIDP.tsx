@@ -1,5 +1,6 @@
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
-import { useIOThemeContext, useIOTheme } from "../../context";
+
+import { useIOTheme, useIOThemeContext } from "../../context";
 import { IOListItemLogoMargin } from "../../core";
 import { addCacheTimestampToUri } from "../../utils/image";
 import { IOText } from "../typography";
@@ -9,13 +10,13 @@ import {
 } from "./PressableModuleBase";
 
 type IDPLogoColorMode = {
-  light: ImageSourcePropType;
   dark?: ImageSourcePropType;
+  light: ImageSourcePropType;
 };
 interface ModuleIDP extends PressableModuleBaseProps {
-  name: string;
-  logo: IDPLogoColorMode;
   accessibilityLabel?: string;
+  logo: IDPLogoColorMode;
+  name: string;
 }
 
 const styles = StyleSheet.create({
@@ -59,17 +60,17 @@ export const ModuleIDP = ({
       withLooseSpacing={withLooseSpacing}
     >
       <IOText
-        weight={"Semibold"}
-        size={12}
-        lineHeight={16}
+        accessibilityLabel={accessibilityLabel ?? name}
         color={theme["textBody-tertiary"]}
+        lineHeight={16}
+        size={12}
         textStyle={{
           alignSelf: "center",
           textTransform: "uppercase",
           letterSpacing: 0.5,
           flexShrink: 1
         }}
-        accessibilityLabel={accessibilityLabel ?? name}
+        weight={"Semibold"}
       >
         {name}
       </IOText>

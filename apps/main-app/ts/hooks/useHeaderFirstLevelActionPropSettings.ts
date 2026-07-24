@@ -1,8 +1,9 @@
 import { HeaderActionProps } from "@io-app/design-system";
-import { useCallback } from "react";
 import I18n from "i18next";
-import { useIONavigation } from "../navigation/params/AppParamsList";
+import { useCallback } from "react";
+
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
+import { useIONavigation } from "../navigation/params/AppParamsList";
 
 export const useNavigateToSettingMainScreen = () => {
   const navigation = useIONavigation();

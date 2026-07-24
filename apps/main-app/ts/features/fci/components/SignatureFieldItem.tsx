@@ -1,14 +1,14 @@
 import { Body, ListItemCheckbox } from "@io-app/design-system";
+import I18n from "i18next";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
 
 type Props = {
-  title: string;
-  value?: boolean;
   disabled?: boolean;
   onChange: (_: boolean) => void;
   onPressDetail: () => void;
+  title: string;
+  value?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -28,23 +28,23 @@ const SignatureFieldItem = (props: Props) => {
   return (
     <View style={styles.container}>
       <ListItemCheckbox
-        value={props.title}
+        accessibilityLabel={props.title}
         disabled={props.disabled}
-        selected={checked}
         onValueChange={() => {
           onChange(!checked);
         }}
-        accessibilityLabel={props.title}
+        selected={checked}
+        value={props.title}
       />
       <View style={{ flexDirection: "row", paddingTop: 4, paddingBottom: 8 }}>
         <Body
-          testID="SignatureFieldItemDetailTestID"
-          weight="Semibold"
-          asLink
-          onPress={props.onPressDetail}
           accessibilityHint={I18n.t(
             "features.fci.signatureFields.accessibility.fieldDetailHint"
           )}
+          asLink
+          onPress={props.onPressDetail}
+          testID="SignatureFieldItemDetailTestID"
+          weight="Semibold"
         >
           {I18n.t("features.fci.signatureFields.showOnDocument")}
         </Body>
