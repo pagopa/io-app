@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "lefthook install --reset-hooks-path",
     "validate": "nx affected --targets=lint,test,tsc-noemit --configuration=ci --nx-bail",
     "prettify": "prettier --write \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
     "prettier:check": "prettier --check \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
@@ -25,8 +25,8 @@
     "@swc/core": "~1.15.5",
     "@swc/helpers": "~0.5.18",
     "eslint": "catalog:",
-    "husky": "^8.0.0",
     "jest": "catalog:",
+    "lefthook": "^2.1.10",
     "nx": "catalog:",
     "prettier": "catalog:",
     "tslib": "^2.3.0",
