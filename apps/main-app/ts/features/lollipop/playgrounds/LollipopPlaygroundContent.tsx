@@ -6,12 +6,10 @@ import {
   IOColors,
   VSpacer
 } from "@io-app/design-system";
-import * as O from "fp-ts/lib/Option";
 import { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
 import { WithTestID } from "../../../types/WithTestID";
-import { maybeNotNullyString } from "../../../utils/strings";
 import { LollipopPlaygroundState } from "./LollipopPlayground";
 
 const styles = StyleSheet.create({
@@ -50,7 +48,7 @@ type Props = WithTestID<{
 const LollipopPlaygroundContent = (props: Props) => {
   const [httpRequestBodyText, setHttpRequestBodyText] = useState<string>("");
 
-  const isMessageBodySet = O.isSome(maybeNotNullyString(httpRequestBodyText));
+  const isMessageBodySet = !!httpRequestBodyText.trim();
 
   return (
     <View style={styles.column}>
