@@ -1,6 +1,7 @@
 import {
   Badge,
   ContentWrapper,
+  Divider,
   H6,
   HSpacer,
   ListItemNav
@@ -35,6 +36,8 @@ import {
 import { mixAndSortMerchants } from "../../utils/merchants";
 
 export type MerchantsAll = OfflineMerchant | OnlineMerchant;
+
+const MerchantsItemSeparatorComponent = () => <Divider />;
 
 export const CgnMerchantsListScreen = () => {
   const navigator = useIONavigation();
@@ -131,8 +134,10 @@ export const CgnMerchantsListScreen = () => {
   return {
     data,
     renderItem,
+    ItemSeparatorComponent: MerchantsItemSeparatorComponent,
     refreshControlProps,
     ListFooterComponent: <></>,
+    ListFooterComponentStyle: undefined,
     ListEmptyComponent
   };
 };
