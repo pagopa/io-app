@@ -6,6 +6,7 @@ import { CommonActions, StackActions } from "@react-navigation/native";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 
+import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { appCurrentStateSelector } from "../../../../store/reducers/appState";
@@ -110,7 +111,7 @@ describe("FCI Saga Tests", () => {
   });
 
   describe("standardFciFlowStartSaga", () => {
-    it("should navigate to documents screen and dispatch initial requests", () =>
+    it("should navigate to documents screen and dispatch initial requests when no known data is provided", () =>
       expectSaga(standardFciFlowStartSaga)
         .call(
           NavigationService.dispatchNavigationAction,
@@ -124,11 +125,51 @@ describe("FCI Saga Tests", () => {
         .put(fciLoadQtspClauses.request())
         .put(fciMetadataRequest.request())
         .run());
+
+    it("should navigate to documents screen and dispatch initial requests when known data is still signable", () =>
+      expectSaga(standardFciFlowStartSaga, {
+        ...mockSignatureRequestDetailView,
+        status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE,
+        expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      })
+        .call(
+          NavigationService.dispatchNavigationAction,
+          StackActions.replace(FCI_ROUTES.MAIN, {
+            screen: FCI_ROUTES.DOCUMENTS,
+            params: {
+              attrs: undefined
+            }
+          })
+        )
+        .put(fciLoadQtspClauses.request())
+        .put(fciMetadataRequest.request())
+        .run());
+
+    it("should navigate to router screen and skip initial requests when known data is no longer signable", () => {
+      const signatureRequestId = "test-signature-id" as NonEmptyString;
+
+      return expectSaga(standardFciFlowStartSaga, {
+        ...mockSignatureRequestDetailView,
+        id: signatureRequestId,
+        status: SignatureRequestStatusEnum.SIGNED,
+        expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      })
+        .call(
+          NavigationService.dispatchNavigationAction,
+          StackActions.replace(FCI_ROUTES.MAIN, {
+            screen: FCI_ROUTES.ROUTER,
+            params: { signatureRequestId, skipInitialFetch: true }
+          })
+        )
+        .not.put(fciLoadQtspClauses.request())
+        .not.put(fciMetadataRequest.request())
+        .run();
+    });
   });
 
   describe("watchFciStartSaga", () => {
     it("should start standard flow when security level check is disabled", () =>
-      expectSaga(watchFciStartSaga)
+      expectSaga(watchFciStartSaga, fciStartRequest())
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
           [
@@ -137,11 +178,11 @@ describe("FCI Saga Tests", () => {
           ],
           [matchers.call.fn(standardFciFlowStartSaga), undefined]
         ])
-        .call(standardFciFlowStartSaga)
+        .call(standardFciFlowStartSaga, undefined)
         .run());
 
     it("should start standard flow when security level check is enabled and spidLevel is L3", () =>
-      expectSaga(watchFciStartSaga)
+      expectSaga(watchFciStartSaga, fciStartRequest())
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L3"],
           [
@@ -150,11 +191,11 @@ describe("FCI Saga Tests", () => {
           ],
           [matchers.call.fn(standardFciFlowStartSaga), undefined]
         ])
-        .call(standardFciFlowStartSaga)
+        .call(standardFciFlowStartSaga, undefined)
         .run());
 
     it("should navigate to L3 login screen when security level check is enabled and spidLevel is not L3", () =>
-      expectSaga(watchFciStartSaga)
+      expectSaga(watchFciStartSaga, fciStartRequest())
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
           [
@@ -169,26 +210,86 @@ describe("FCI Saga Tests", () => {
           })
         )
         .run());
+
+    it("should forward the known signature request detail to standardFciFlowStartSaga when provided", () =>
+      expectSaga(
+        watchFciStartSaga,
+        fciStartRequest(mockSignatureRequestDetailView)
+      )
+        .provide([
+          [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
+          [
+            matchers.select(isFciSecurityLevelCheckRemoteFFEnabledSelector),
+            false
+          ],
+          [matchers.call.fn(standardFciFlowStartSaga), undefined]
+        ])
+        .call(standardFciFlowStartSaga, mockSignatureRequestDetailView)
+        .run());
   });
 
   describe("watchFciSignatureRequestRetrySaga", () => {
     const signatureRequestId = "test-signature-id" as NonEmptyString;
     const action = fciSignatureRequestRetryFromId(signatureRequestId);
+    const futureDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+    const pastDate = new Date(Date.now() - 1000);
 
-    it("should cancel download preview and dispatch fciStartRequest on success", () =>
-      expectSaga(watchFciSignatureRequestRetrySaga, action)
-        .put(fciSignatureRequestFromId.request(signatureRequestId))
-        .dispatch(
-          fciSignatureRequestFromId.success({
-            ...mockSignatureRequestDetailView,
-            id: signatureRequestId
-          })
-        )
-        .put(fciDownloadPreview.cancel())
-        .put(fciStartRequest())
-        .run());
+    // signability is no longer decided here: this saga always forwards the
+    // freshly-fetched detail to fciStartRequest, and standardFciFlowStartSaga
+    // performs the final signable/expired check downstream.
+    const statusScenarios = [
+      {
+        name: "WAIT_FOR_SIGNATURE not expired",
+        status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE,
+        expires_at: futureDate
+      },
+      {
+        name: "WAIT_FOR_SIGNATURE expired",
+        status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE,
+        expires_at: pastDate
+      },
+      {
+        name: "SIGNED",
+        status: SignatureRequestStatusEnum.SIGNED,
+        expires_at: futureDate
+      },
+      {
+        name: "WAIT_FOR_QTSP",
+        status: SignatureRequestStatusEnum.WAIT_FOR_QTSP,
+        expires_at: futureDate
+      },
+      {
+        name: "REJECTED",
+        status: SignatureRequestStatusEnum.REJECTED,
+        expires_at: futureDate
+      },
+      {
+        name: "CANCELLED",
+        status: SignatureRequestStatusEnum.CANCELLED,
+        expires_at: futureDate
+      }
+    ];
 
-    it("should not start flow when signature request fails", () =>
+    test.each(statusScenarios)(
+      "should cancel download preview and delegate to fciStartRequest when status is $name",
+      ({ status, expires_at }) => {
+        const signatureRequestDetail = {
+          ...mockSignatureRequestDetailView,
+          id: signatureRequestId,
+          status,
+          expires_at
+        };
+
+        return expectSaga(watchFciSignatureRequestRetrySaga, action)
+          .put(fciSignatureRequestFromId.request(signatureRequestId))
+          .dispatch(fciSignatureRequestFromId.success(signatureRequestDetail))
+          .put(fciDownloadPreview.cancel())
+          .put(fciStartRequest(signatureRequestDetail))
+          .run();
+      }
+    );
+
+    it("should not start flow when signature request fetch fails", () =>
       expectSaga(watchFciSignatureRequestRetrySaga, action)
         .put(fciSignatureRequestFromId.request(signatureRequestId))
         .dispatch(
