@@ -663,6 +663,11 @@
             "content": "Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo. Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.",
             "cta": "Come vengono ordinate le categorie?",
             "title": "Come vengono ordinate le categorie?"
+          },
+          "socialLinks": {
+            "facebook": "Facebook",
+            "instagram": "Instagram",
+            "linkedin": "LinkedIn"
           }
         },
         "discountOf": "Sconto del {{discount}}%",
