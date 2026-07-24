@@ -28,7 +28,7 @@ describe("getCredentialStatus", () => {
             value: "2024-01-12" // Expired
           }
         },
-        storedStatusAssertion: { credentialStatus: "invalid" }
+        validity: { type: "status_assertion", status: "invalid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("expired");
@@ -48,8 +48,11 @@ describe("getCredentialStatus", () => {
             value: "2034-12-31" // Still valid
           }
         },
-        // @ts-expect-error partial type
-        storedStatusAssertion: { credentialStatus: "valid" }
+        validity: {
+          type: "status_assertion",
+          status: "valid",
+          statusAssertion: {} as any
+        }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual(
@@ -72,7 +75,7 @@ describe("getCredentialStatus", () => {
             value: "2024-01-12" // Expired
           }
         },
-        storedStatusAssertion: { credentialStatus: "invalid" }
+        validity: { type: "status_assertion", status: "invalid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("expired");
@@ -109,8 +112,11 @@ describe("getCredentialStatus", () => {
             value: "2024-01-30" // Expiring
           }
         },
-        // @ts-expect-error partial type
-        storedStatusAssertion: { credentialStatus: "valid" }
+        validity: {
+          type: "status_assertion",
+          status: "valid",
+          statusAssertion: {} as any
+        }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
@@ -130,8 +136,11 @@ describe("getCredentialStatus", () => {
             value: "2034-12-31" // Still valid
           }
         },
-        // @ts-expect-error partial type
-        storedStatusAssertion: { credentialStatus: "valid" }
+        validity: {
+          type: "status_assertion",
+          status: "valid",
+          statusAssertion: {} as any
+        }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual(
@@ -154,8 +163,11 @@ describe("getCredentialStatus", () => {
             value: "2024-01-25" // Expiring
           }
         },
-        // @ts-expect-error partial type
-        storedStatusAssertion: { credentialStatus: "valid" }
+        validity: {
+          type: "status_assertion",
+          status: "valid",
+          statusAssertion: {} as any
+        }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual(
@@ -178,8 +190,11 @@ describe("getCredentialStatus", () => {
             value: "2024-01-30" // Expiring
           }
         },
-        // @ts-expect-error partial type
-        storedStatusAssertion: { credentialStatus: "valid" }
+        validity: {
+          type: "status_assertion",
+          status: "valid",
+          statusAssertion: {} as any
+        }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
@@ -216,7 +231,7 @@ describe("getCredentialStatus", () => {
             value: "2034-12-31"
           }
         },
-        storedStatusAssertion: { credentialStatus: "invalid" }
+        validity: { type: "status_assertion", status: "invalid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("invalid");
@@ -236,7 +251,7 @@ describe("getCredentialStatus", () => {
             value: "2034-12-31"
           }
         },
-        storedStatusAssertion: { credentialStatus: "invalid" }
+        validity: { type: "status_assertion", status: "invalid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("invalid");
@@ -258,8 +273,11 @@ describe("getCredentialStatus", () => {
             value: "2034-12-31"
           }
         },
-        // @ts-expect-error partial type
-        storedStatusAssertion: { credentialStatus: "valid" }
+        validity: {
+          type: "status_assertion",
+          status: "valid",
+          statusAssertion: {} as any
+        }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("valid");
@@ -279,8 +297,11 @@ describe("getCredentialStatus", () => {
             value: undefined
           }
         },
-        // @ts-expect-error partial type
-        storedStatusAssertion: { credentialStatus: "valid" }
+        validity: {
+          type: "status_assertion",
+          status: "valid",
+          statusAssertion: {} as any
+        }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("valid");
@@ -304,8 +325,9 @@ describe("getCredentialStatus", () => {
     it("should return unknown when the status assertion could not be fetched", () => {
       const mockCredential: CredentialMetadata = {
         ...ItwStoredCredentialsMocks.eid,
-        storedStatusAssertion: {
-          credentialStatus: "unknown"
+        validity: {
+          type: "status_assertion",
+          status: "unknown"
         }
       };
       expect(getCredentialStatus(mockCredential, options)).toEqual("unknown");

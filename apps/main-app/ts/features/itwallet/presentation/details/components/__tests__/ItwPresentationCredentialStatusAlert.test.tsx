@@ -182,8 +182,9 @@ describe("ItwPresentationCredentialStatusAlert", () => {
       .mockImplementation(() => selectorMock);
 
     const component = renderComponent({
-      storedStatusAssertion: {
-        credentialStatus: "invalid",
+      validity: {
+        type: "status_assertion",
+        status: "invalid",
         errorCode: "credential_invalid"
       }
     });
@@ -273,8 +274,9 @@ describe("ItwPresentationCredentialStatusAlert", () => {
       .mockImplementation(() => selectorMock);
 
     const component = renderComponent({
-      storedStatusAssertion: {
-        credentialStatus: "invalid",
+      validity: {
+        type: "status_assertion",
+        status: "invalid",
         errorCode: "credential_invalid"
       }
     });
@@ -308,8 +310,9 @@ describe("ItwPresentationCredentialStatusAlert", () => {
       .mockImplementation(() => selectorMock);
 
     const component = renderComponent({
-      storedStatusAssertion: {
-        credentialStatus: "invalid",
+      validity: {
+        type: "status_assertion",
+        status: "invalid",
         errorCode: "credential_invalid"
       }
     });

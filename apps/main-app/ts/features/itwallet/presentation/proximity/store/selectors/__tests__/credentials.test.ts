@@ -49,8 +49,11 @@ describe("proximity selectors", () => {
           value: "2034-12-31"
         }
       },
-      // @ts-expect-error partial type for test fixture
-      storedStatusAssertion: { credentialStatus: "valid" }
+      validity: {
+        type: "status_assertion",
+        status: "valid",
+        statusAssertion: {} as any
+      }
     };
     expect(
       shouldShowExpiredProximityCredentialsBannerSelector.resultFunc(
