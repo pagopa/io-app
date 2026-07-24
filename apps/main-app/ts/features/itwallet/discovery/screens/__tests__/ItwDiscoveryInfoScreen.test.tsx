@@ -1,3 +1,4 @@
+import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -43,12 +44,18 @@ describe("ItwDiscoveryInfoScreen", () => {
     jest
       .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
       .mockReturnValue(true);
-    const { getByText } = renderComponent("l3");
+    const { getByLabelText, navigateToIpzsPrivacyScreen } =
+      renderComponent("l3");
+    const privacyAndTermsLink = getByLabelText(
+      "Premendo Continua dichiari di aver letto e compreso l'Informativa Privacy e i Termini e Condizioni d'uso."
+    );
 
-    expect(
-      getByText("Informativa Privacy e i Termini e Condizioni d'uso.").props
-        .accessibilityRole
-    ).toBe("link");
+    expect(privacyAndTermsLink.props.accessibilityRole).toBe("link");
+    expect(privacyAndTermsLink.props.focusable).toBe(true);
+
+    fireEvent.press(privacyAndTermsLink);
+
+    expect(navigateToIpzsPrivacyScreen).toHaveBeenCalledTimes(1);
   });
 
   it("should render ItwNfcNotSupportedComponent for level l3 when NFC is not supported", () => {
@@ -75,6 +82,7 @@ describe("ItwDiscoveryInfoScreen", () => {
 
 const renderComponent = (level: EidIssuanceLevel | undefined) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
+  const navigateToIpzsPrivacyScreen = jest.fn();
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
@@ -83,7 +91,8 @@ const renderComponent = (level: EidIssuanceLevel | undefined) => {
     const logic = itwEidIssuanceMachine.provide({
       actions: {
         onInit: jest.fn(),
-        navigateToTosScreen: () => undefined
+        navigateToTosScreen: () => undefined,
+        navigateToIpzsPrivacyScreen
       }
     });
 
@@ -94,10 +103,13 @@ const renderComponent = (level: EidIssuanceLevel | undefined) => {
     );
   };
 
-  return renderScreenWithNavigationStoreContext<GlobalState>(
-    WrappedComponent,
-    ITW_ROUTES.DISCOVERY.INFO,
-    { level },
-    store
-  );
+  return {
+    ...renderScreenWithNavigationStoreContext<GlobalState>(
+      WrappedComponent,
+      ITW_ROUTES.DISCOVERY.INFO,
+      { level },
+      store
+    ),
+    navigateToIpzsPrivacyScreen
+  };
 };

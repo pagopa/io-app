@@ -10,7 +10,6 @@ import {
   Icon,
   IOColors,
   IOIcons,
-  IOMarkdownLite,
   useIOTheme,
   useIOThemeContext,
   useIOToast,
@@ -33,6 +32,7 @@ import { useIOSelector } from "../../../../store/hooks.ts";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import { generateAccessibleLinkRule } from "../../../common/components/IOMarkdown/customRules.tsx";
 import { trackOpenItwTos } from "../../analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
@@ -240,12 +240,14 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
               />
             </VStack>
             <VSpacer size={32} />
-            <IOMarkdownLite
+            <IOMarkdown
               content={I18n.t("features.itWallet.discovery.screen.itw.tos", {
                 privacyUrl: "itw-privacy-and-terms"
               })}
-              onLinkPress={handlePrivacyAndTermsPress}
-              small
+              rules={generateAccessibleLinkRule({
+                onLinkPress: handlePrivacyAndTermsPress,
+                paragraphSize: "small"
+              })}
             />
           </ContentWrapper>
         </ForceScrollDownView>

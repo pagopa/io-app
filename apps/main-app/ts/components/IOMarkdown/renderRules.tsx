@@ -51,6 +51,7 @@ import { Dimensions, Image, Pressable, View } from "react-native";
 import { isAndroid } from "../../utils/platform";
 import { openWebUrl } from "../../utils/url";
 import {
+  extractAllLinksFromNodeWithChildren,
   extractAllLinksFromRootNode,
   isParagraphNodeInHierarchy,
   LinkData
@@ -508,7 +509,12 @@ export const linkNodeToReactNative = (
 
 export const paragraphNodeToReactNative = (
   paragraph: TxtParagraphNode,
-  options: { screenReaderEnabled: boolean; size?: ParagraphSize },
+  options: {
+    enableKeyboardLinkFocus?: boolean;
+    onLinkPress?: (url: string) => void;
+    screenReaderEnabled: boolean;
+    size?: ParagraphSize;
+  },
   render: Renderer
 ) => {
   if (paragraph.children.length > 0 && paragraph.children[0].type === "Image") {
@@ -525,6 +531,27 @@ export const paragraphNodeToReactNative = (
   );
   const nodeKey = getTxtNodeKey(paragraph);
   const BodyComponent = options.size === "small" ? BodySmall : Body;
+  const onLinkPress = options.onLinkPress ?? handleOpenLink;
+
+  if (options.enableKeyboardLinkFocus) {
+    const keyboardLinkData: Array<LinkData> = [];
+    extractAllLinksFromNodeWithChildren(paragraph, keyboardLinkData);
+    if (keyboardLinkData.length === 1) {
+      const link = keyboardLinkData[0];
+      return (
+        <Pressable
+          accessibilityLabel={getStrValue(paragraph)}
+          accessibilityRole="link"
+          accessible
+          focusable
+          key={nodeKey}
+          onPress={() => onLinkPress(link.url)}
+        >
+          <BodyComponent>{paragraph.children.map(render)}</BodyComponent>
+        </Pressable>
+      );
+    }
+  }
 
   return (
     <Fragment key={nodeKey}>
@@ -532,7 +559,7 @@ export const paragraphNodeToReactNative = (
       {generateAccesibilityLinkViewsIfNeeded(
         allLinkData,
         nodeKey,
-        handleOpenLink,
+        onLinkPress,
         options.screenReaderEnabled
       )}
     </Fragment>
@@ -550,21 +577,16 @@ export const accessibleLinkNodeToReactNative = (
 ) => {
   const BodyComponent = options.size === "small" ? BodySmall : Body;
   return (
-    <Pressable
+    <BodyComponent
       accessibilityRole="link"
       accessible
-      focusable
+      asLink
+      avoidPressable
       key={getTxtNodeKey(link)}
-      style={{ height: 19 }}
+      onPress={options.onPress}
+      weight="Semibold"
     >
-      <BodyComponent
-        asLink
-        avoidPressable
-        onPress={options.onPress}
-        weight="Semibold"
-      >
-        {link.children.map(render)}
-      </BodyComponent>
-    </Pressable>
+      {link.children.map(render)}
+    </BodyComponent>
   );
 };

@@ -10,6 +10,7 @@ import {
   TxtHeaderNode,
   TxtHtmlNode,
   TxtLinkNode,
+  TxtParagraphNode,
   TxtStrNode
 } from "@textlint/ast-node-types";
 import I18n from "i18next";
@@ -20,6 +21,8 @@ import {
   headerNodeToReactNative,
   htmlNodeToReactNative,
   linkNodeToReactNative,
+  paragraphNodeToReactNative,
+  ParagraphSize,
   strNodeToReactNative
 } from "../../../../components/IOMarkdown/renderRules";
 import {
@@ -134,13 +137,36 @@ export const testable = isTestEnv
     }
   : undefined;
 
-export const generateAccessibleLinkRule =
-  (): Partial<IOMarkdownRenderRules> => ({
-    Link(link: TxtLinkNode, render: Renderer) {
-      return accessibleLinkNodeToReactNative(
-        link,
-        { onPress: () => openWebUrl(link.url) },
-        render
-      );
-    }
-  });
+type AccessibleLinkRuleOptions = {
+  onLinkPress?: (url: string) => void;
+  paragraphSize?: ParagraphSize;
+};
+
+export const generateAccessibleLinkRule = ({
+  onLinkPress = openWebUrl,
+  paragraphSize
+}: AccessibleLinkRuleOptions = {}): Partial<IOMarkdownRenderRules> => ({
+  Paragraph(
+    paragraph: TxtParagraphNode,
+    render: Renderer,
+    screenReaderEnabled: boolean
+  ) {
+    return paragraphNodeToReactNative(
+      paragraph,
+      {
+        screenReaderEnabled,
+        size: paragraphSize,
+        onLinkPress,
+        enableKeyboardLinkFocus: true
+      },
+      render
+    );
+  },
+  Link(link: TxtLinkNode, render: Renderer) {
+    return accessibleLinkNodeToReactNative(
+      link,
+      { onPress: () => onLinkPress(link.url), size: paragraphSize },
+      render
+    );
+  }
+});
