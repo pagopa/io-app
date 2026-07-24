@@ -70,6 +70,15 @@ export const getVerifierIdentity = (
 };
 
 /**
+ * Returns the best available user-facing name for the relying party without
+ * changing the stable identifier used for consent lookup.
+ */
+export const getVerifierDisplayName = (
+  certificateData: VerifierRequest["request"][string]["certificateData"]
+): string | undefined =>
+  certificateData?.organization || certificateData?.commonName;
+
+/**
  * Get the Presentation details based on the request from the Verifier.
  *
  * @param request The request from the Verifier, specifying which document types and claims are required
@@ -101,6 +110,7 @@ export const getProximityDetails: GetProximityDetails = ({
       }
 
       const rpId = getVerifierIdentity(certificateData, requireAuthenticated);
+      const rpDisplayName = getVerifierDisplayName(certificateData);
 
       const credential = credentialsByType[docType];
       assert(credential, `Credential not found for docType: ${docType}`);
@@ -121,6 +131,7 @@ export const getProximityDetails: GetProximityDetails = ({
 
       return {
         rpId,
+        rpDisplayName,
         credentialType: credential.credentialType,
         claimsToDisplay: parseClaims(parsedCredential, {
           exclude: [WellKnownClaim.unique_id]

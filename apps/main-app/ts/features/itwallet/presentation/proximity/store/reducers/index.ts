@@ -3,7 +3,10 @@ import { getType } from "typesafe-actions";
 
 import { Action } from "../../../../../../store/actions/types";
 import createSecureStorage from "../../../../../../store/storages/secureStorage";
-import { itwCredentialsRemoveByType } from "../../../../credentials/store/actions";
+import {
+  itwCredentialsRemoveByType,
+  itwCredentialsReplaceByType
+} from "../../../../credentials/store/actions";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 import {
   itwGrantProximityConsent,
@@ -11,7 +14,7 @@ import {
   itwRevokeProximityConsentsByCredentialType,
   itwRevokeProximityConsentsByRpId
 } from "../actions";
-import { ConsentData, ProximityConsents } from "../types";
+import { ProximityConsents, StoredConsentData } from "../types";
 import { generateConsentKey } from "../utils";
 
 export type ItwProximityState = {
@@ -28,10 +31,14 @@ const reducer = (
 ): ItwProximityState => {
   switch (action.type) {
     case getType(itwCredentialsRemoveByType): {
-      return {
-        ...state,
-        consents: filterConsentsByCredentialType(state.consents, action.payload)
-      };
+      return removeCredentialTypeData(state, action.payload);
+    }
+
+    case getType(itwCredentialsReplaceByType): {
+      const credentialType = action.payload[0]?.metadata.credentialType;
+      return credentialType
+        ? removeCredentialTypeData(state, credentialType)
+        : state;
     }
 
     case getType(itwGrantProximityConsent): {
@@ -47,7 +54,10 @@ const reducer = (
         ...state,
         consents: {
           ...state.consents,
-          [key]: consentData
+          [key]: {
+            ...consentData,
+            savedAt: new Date().toISOString()
+          }
         }
       };
     }
@@ -86,9 +96,9 @@ const reducer = (
  * Filters out all consents that involve the specified credential type.
  */
 const filterConsentsByCredentialType = (
-  consents: Record<string, ConsentData>,
+  consents: Record<string, StoredConsentData>,
   credentialType: string
-): Record<string, ConsentData> =>
+): Record<string, StoredConsentData> =>
   Object.fromEntries(
     Object.entries(consents).filter(
       ([, consent]) =>
@@ -96,23 +106,30 @@ const filterConsentsByCredentialType = (
     )
   );
 
+/** Removes consent data for a credential type. */
+const removeCredentialTypeData = (
+  state: ItwProximityState,
+  credentialType: string
+): ItwProximityState => ({
+  ...state,
+  consents: filterConsentsByCredentialType(state.consents, credentialType)
+});
+
 /**
  * Filters out all consents given to the specified RP ID.
  */
 const filterConsentsByRpId = (
-  consents: Record<string, ConsentData>,
+  consents: Record<string, StoredConsentData>,
   rpId: string
-): Record<string, ConsentData> =>
+): Record<string, StoredConsentData> =>
   Object.fromEntries(
     Object.entries(consents).filter(([, consent]) => consent.rpId !== rpId)
   );
 
-const CURRENT_REDUX_ITW_PROXIMITY_STORE_VERSION = -1;
-
 const itwProximityPersistConfig: PersistConfig = {
   key: "itwProximity",
   storage: createSecureStorage(),
-  version: CURRENT_REDUX_ITW_PROXIMITY_STORE_VERSION
+  version: -1
 };
 
 export const itwProximityReducer = reducer;

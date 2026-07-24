@@ -1,4 +1,7 @@
-import { itwCredentialsRemoveByType } from "../../../../../credentials/store/actions";
+import {
+  itwCredentialsRemoveByType,
+  itwCredentialsReplaceByType
+} from "../../../../../credentials/store/actions";
 import { itwLifecycleStoresReset } from "../../../../../lifecycle/store/actions";
 import {
   itwGrantProximityConsent,
@@ -63,14 +66,21 @@ describe("itwProximityReducer", () => {
       );
       const key = generateConsentKey(mdlConsent);
 
-      expect(state.consents[key]).toEqual(mdlConsent);
+      expect(state.consents[key]).toEqual({
+        ...mdlConsent,
+        savedAt: expect.any(String)
+      });
       expect(Object.keys(state.consents)).toHaveLength(1);
     });
 
     it("should be a no-op when the same consent already exists", () => {
       const key = generateConsentKey(mdlConsent);
+      const storedConsent = {
+        ...mdlConsent,
+        savedAt: "2026-07-19T12:00:00.000Z"
+      };
       const stateWithConsent: ItwProximityState = {
-        consents: { [key]: mdlConsent }
+        consents: { [key]: storedConsent }
       };
 
       const nextState = reducer(
@@ -79,6 +89,7 @@ describe("itwProximityReducer", () => {
       );
 
       expect(nextState).toBe(stateWithConsent);
+      expect(nextState.consents[key]).toBe(storedConsent);
     });
 
     it("should add multiple different consents", () => {
@@ -248,6 +259,40 @@ describe("itwProximityReducer", () => {
 
       expect(Object.keys(state.consents)).toHaveLength(1);
       expect(state.consents[healthKey]).toEqual(healthCardOnlyConsent);
+    });
+  });
+
+  describe("itwCredentialsReplaceByType", () => {
+    it("should remove consents for the replaced credential type", () => {
+      const mdlKey = generateConsentKey(mdlConsent);
+      const healthKey = generateConsentKey(healthCardOnlyConsent);
+      const stateWithConsents: ItwProximityState = {
+        consents: {
+          [mdlKey]: mdlConsent,
+          [healthKey]: healthCardOnlyConsent
+        }
+      };
+
+      const state = reducer(
+        stateWithConsents,
+        itwCredentialsReplaceByType(
+          [{ metadata: { credentialType: "MDL" } } as never],
+          {}
+        )
+      );
+
+      expect(state.consents).toEqual({
+        [healthKey]: healthCardOnlyConsent
+      });
+    });
+
+    it("should be a no-op when the replacement payload is empty", () => {
+      const state = reducer(
+        itwProximityInitialState,
+        itwCredentialsReplaceByType([], {})
+      );
+
+      expect(state).toBe(itwProximityInitialState);
     });
   });
 

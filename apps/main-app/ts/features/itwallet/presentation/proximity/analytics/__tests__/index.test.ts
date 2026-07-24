@@ -5,11 +5,17 @@ import {
   ITW_PROXIMITY_TECH_EVENTS
 } from "../enum";
 import {
+  trackItwConsentManagement,
+  trackItwConsentManagementDetail,
+  trackItwCredentialManageConsent,
   trackItwProximityContinuePresentation,
   trackItwProximityDataShare,
   trackItwProximityNfcStart,
   trackItwProximityPresentationCompleted,
-  trackItwProximityStart
+  trackItwProximityStart,
+  trackItwRevokeConsent,
+  trackItwRevokeConsentOperationBlock,
+  trackItwRevokeConsentOperationBlockAction
 } from "../index";
 
 describe("proximity analytics", () => {
@@ -83,6 +89,71 @@ describe("proximity analytics", () => {
         event_type: "action",
         flow: undefined,
         proximity_flow: "nfc"
+      }
+    },
+    {
+      name: "trackItwCredentialManageConsent",
+      track: () => trackItwCredentialManageConsent({ credential: "ITW_PG_V3" }),
+      eventName: ITW_PROXIMITY_ACTIONS_EVENTS.ITW_CREDENTIAL_MANAGE_CONSENT,
+      properties: {
+        credential: "ITW_PG_V3",
+        event_category: "UX",
+        event_type: "action",
+        flow: undefined
+      }
+    },
+    {
+      name: "trackItwConsentManagement",
+      track: () => trackItwConsentManagement({ credential: "ITW_PG_V3" }),
+      eventName: ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_CONSENT_MANAGEMENT,
+      properties: {
+        credential: "ITW_PG_V3",
+        event_category: "UX",
+        event_type: "screen_view",
+        flow: undefined
+      }
+    },
+    {
+      name: "trackItwConsentManagementDetail",
+      track: () => trackItwConsentManagementDetail(),
+      eventName: ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_CONSENT_MANAGEMENT_DETAIL,
+      properties: {
+        event_category: "UX",
+        event_type: "screen_view",
+        flow: undefined
+      }
+    },
+    {
+      name: "trackItwRevokeConsent",
+      track: () => trackItwRevokeConsent(),
+      eventName: ITW_PROXIMITY_ACTIONS_EVENTS.ITW_REVOKE_CONSENT,
+      properties: {
+        event_category: "UX",
+        event_type: "action",
+        flow: undefined
+      }
+    },
+    {
+      name: "trackItwRevokeConsentOperationBlock",
+      track: () => trackItwRevokeConsentOperationBlock(),
+      eventName:
+        ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_REVOKE_CONSENT_OPERATION_BLOCK,
+      properties: {
+        event_category: "UX",
+        event_type: "screen_view",
+        flow: undefined
+      }
+    },
+    {
+      name: "trackItwRevokeConsentOperationBlockAction",
+      track: () => trackItwRevokeConsentOperationBlockAction("confirm"),
+      eventName:
+        ITW_PROXIMITY_ACTIONS_EVENTS.ITW_REVOKE_CONSENT_OPERATION_BLOCK_ACTION,
+      properties: {
+        event_category: "UX",
+        event_type: "action",
+        flow: undefined,
+        user_action: "confirm"
       }
     }
   ])(

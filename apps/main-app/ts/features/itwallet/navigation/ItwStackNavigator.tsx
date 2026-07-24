@@ -58,6 +58,8 @@ import { ItwPresentationCredentialDetailScreen } from "../presentation/details/s
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/details/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
+import { ItwConsentManagementDetailScreen } from "../presentation/proximity/screens/ItwConsentManagementDetailScreen.tsx";
+import { ItwConsentManagementScreen } from "../presentation/proximity/screens/ItwConsentManagementScreen.tsx";
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
@@ -270,6 +272,14 @@ const InnerNavigator = memo(() => {
         options={hiddenHeader}
       />
       {/* CREDENTIAL PRESENTATION */}
+      <Stack.Screen
+        component={ItwConsentManagementScreen}
+        name={ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT}
+      />
+      <Stack.Screen
+        component={ItwConsentManagementDetailScreen}
+        name={ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT_DETAIL}
+      />
       <Stack.Screen
         component={ItwPresentationCredentialDetailScreen}
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
