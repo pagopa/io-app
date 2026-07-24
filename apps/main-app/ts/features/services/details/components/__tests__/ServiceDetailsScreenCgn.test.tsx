@@ -1,6 +1,5 @@
 import { Body } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import { createStore } from "redux";
 
@@ -70,13 +69,16 @@ describe("ServiceDetailsScreenCgn", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
     const state = _.merge(undefined, globalState, {
-      remoteConfig: O.some({
-        ...backendStatus.config,
-        cgn: {
-          ...backendStatus.config.cgn,
-          enabled: false
-        }
-      } as Config)
+      remoteConfig: {
+        _tag: "Some",
+        value: {
+          ...backendStatus.config,
+          cgn: {
+            ...backendStatus.config.cgn,
+            enabled: false
+          }
+        } as Config
+      }
     } as GlobalState);
 
     const component = renderComponent(state);
@@ -99,13 +101,16 @@ describe("ServiceDetailsScreenCgn", () => {
           }
         }
       },
-      remoteConfig: O.some({
-        ...backendStatus.config,
-        cgn: {
-          ...backendStatus.config.cgn,
-          enabled: true
-        }
-      } as Config)
+      remoteConfig: {
+        _tag: "Some",
+        value: {
+          ...backendStatus.config,
+          cgn: {
+            ...backendStatus.config.cgn,
+            enabled: true
+          }
+        } as Config
+      }
     } as GlobalState);
 
     const component = renderComponent(state);
@@ -128,13 +133,16 @@ describe("ServiceDetailsScreenCgn", () => {
           }
         }
       },
-      remoteConfig: O.some({
-        ...backendStatus.config,
-        cgn: {
-          ...backendStatus.config.cgn,
-          enabled: true
-        }
-      } as Config)
+      remoteConfig: {
+        _tag: "Some",
+        value: {
+          ...backendStatus.config,
+          cgn: {
+            ...backendStatus.config.cgn,
+            enabled: true
+          }
+        } as Config
+      }
     } as GlobalState);
 
     const component = renderComponent(state);
@@ -157,13 +165,16 @@ describe("ServiceDetailsScreenCgn", () => {
           }
         }
       },
-      remoteConfig: O.some({
-        ...backendStatus.config,
-        cgn: {
-          ...backendStatus.config.cgn,
-          enabled: true
-        }
-      } as Config)
+      remoteConfig: {
+        _tag: "Some",
+        value: {
+          ...backendStatus.config,
+          cgn: {
+            ...backendStatus.config.cgn,
+            enabled: true
+          }
+        } as Config
+      }
     } as GlobalState);
 
     const component = renderComponent(state);

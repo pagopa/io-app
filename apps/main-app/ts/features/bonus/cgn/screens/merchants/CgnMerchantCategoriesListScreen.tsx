@@ -82,12 +82,12 @@ export const CgnMerchantCategoriesListScreen = () => {
     category: ProductCategoryWithNewDiscountsCount,
     index: number
   ) => {
-    const specsOption = getCategorySpecs(category.productCategory);
-    if (!("value" in specsOption)) {
+    const specs = getCategorySpecs(category.productCategory);
+    if (!specs) {
       return null;
     }
 
-    const s = specsOption.value;
+    const s = specs;
     const countAvailable = category.newDiscounts > 0;
 
     const accessibilityLabel =

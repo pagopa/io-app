@@ -1,5 +1,4 @@
 import { IOToast } from "@io-app/design-system";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Alert } from "react-native";
@@ -36,8 +35,8 @@ const useCgnActivation = (serviceId: ServiceId) => {
     if (!isFirstRender.current) {
       fold(
         unsubscriptionStatus,
-        constNull,
-        constNull,
+        () => null,
+        () => null,
         () => {
           IOToast.success(I18n.t("bonus.cgn.activation.deactivate.toast"));
           dispatch(loadServicePreference.request(serviceId));

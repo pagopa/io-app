@@ -1,5 +1,4 @@
 import { HeaderSecondLevel, IOCategoryIcons } from "@io-app/design-system";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { StatusBarProps } from "react-native";
 
@@ -115,7 +114,7 @@ export const categories: Record<ProductCategory, Category> = {
 
 export const getCategorySpecs = (
   category: ProductCategory
-): O.Option<Category> => O.fromNullable(categories[category]);
+): Category | undefined => categories[category];
 
 export const orderCategoriesByNameKey = (
   categoriesList: ReadonlyArray<ProductCategoryWithNewDiscountsCount>

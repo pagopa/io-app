@@ -1,5 +1,4 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -37,7 +36,7 @@ export function* cgnCategoriesSaga(
       publishedCategoriesRequest,
       action
     )) as unknown as SagaCallReturnType<typeof getPublishedCategories>;
-    if (E.isLeft(publishedCategoriesResult)) {
+    if ("left" in publishedCategoriesResult) {
       yield* put(
         cgnCategories.failure(
           getGenericError(

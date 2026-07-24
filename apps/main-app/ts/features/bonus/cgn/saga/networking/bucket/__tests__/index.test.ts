@@ -1,5 +1,4 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 
 import { cgnBucketConsuption } from "..";
@@ -20,7 +19,10 @@ describe("cgnBucketConsuption", () => {
   it(`should dispatch success on 200 response`, () => {
     testSaga(cgnBucketConsuption, unsubscribeRequest, request)
       .next()
-      .next(E.right({ status: 200, value: { code: "discount-code" } }))
+      .next({
+        _tag: "Right",
+        right: { status: 200, value: { code: "discount-code" } }
+      })
       .put(
         cgnCodeFromBucket.success({
           kind: "success",
@@ -34,7 +36,7 @@ describe("cgnBucketConsuption", () => {
   });
 
   it("should dispatch failure action on API error", () => {
-    const leftResponse = E.left([]);
+    const leftResponse = { _tag: "Left", left: [] };
     const expectedError = new Error(readableReport([]));
 
     testSaga(cgnBucketConsuption, unsubscribeRequest, request)
@@ -48,7 +50,7 @@ describe("cgnBucketConsuption", () => {
   it("should not dispatch success or failure on 402 response", () => {
     testSaga(cgnBucketConsuption, unsubscribeRequest, request)
       .next()
-      .next(E.right({ status: 402 }))
+      .next({ _tag: "Right", right: { status: 402 } })
       .put(cgnCodeFromBucket.success({ kind: "unhandled" }))
       .next()
       .isDone();
@@ -57,7 +59,7 @@ describe("cgnBucketConsuption", () => {
   it("should not dispatch success or failure on 404 response", () => {
     testSaga(cgnBucketConsuption, unsubscribeRequest, request)
       .next()
-      .next(E.right({ status: 404 }))
+      .next({ _tag: "Right", right: { status: 404 } })
       .put(cgnCodeFromBucket.success({ kind: "notFound" }))
       .next()
       .isDone();

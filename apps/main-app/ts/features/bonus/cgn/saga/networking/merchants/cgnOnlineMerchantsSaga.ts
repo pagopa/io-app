@@ -1,5 +1,4 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -27,7 +26,7 @@ export function* cgnOnlineMerchantsSaga(
       cgnOnlineMerchantRequest
     )) as unknown as SagaCallReturnType<typeof getOnlineMerchants>;
 
-    if (E.isLeft(onlineMerchantsResult)) {
+    if ("left" in onlineMerchantsResult) {
       yield* put(
         cgnOnlineMerchants.failure(
           getGenericError(new Error(readableReport(onlineMerchantsResult.left)))

@@ -1,5 +1,4 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 
 import { CountResult } from "../../../../../../../../definitions/cgn/merchants/CountResult";
@@ -18,14 +17,14 @@ describe("cgnGetMerchantsCountSaga", () => {
   it("should dispatch success action on successful API call", () => {
     testSaga(cgnGetMerchantsCountSaga, getMerchantsCount, requestAction)
       .next()
-      .next(E.right({ status: 200, value: countResult }))
+      .next({ _tag: "Right", right: { status: 200, value: countResult } })
       .put(cgnMerchantsCount.success(countResult))
       .next()
       .isDone();
   });
 
   it("should dispatch failure action on API error", () => {
-    const leftResponse = E.left([]);
+    const leftResponse = { _tag: "Left", left: [] };
     const expectedError = new Error(readableReport([]));
 
     testSaga(cgnGetMerchantsCountSaga, getMerchantsCount, requestAction)
@@ -39,7 +38,7 @@ describe("cgnGetMerchantsCountSaga", () => {
   it("should not dispatch success or failure on 401 response", () => {
     testSaga(cgnGetMerchantsCountSaga, getMerchantsCount, requestAction)
       .next()
-      .next(E.right({ status: 401 }))
+      .next({ _tag: "Right", right: { status: 401 } })
       .next()
       .isDone();
   });
@@ -59,7 +58,7 @@ describe("cgnGetMerchantsCountSaga", () => {
     const unexpectedStatus = 500;
     testSaga(cgnGetMerchantsCountSaga, getMerchantsCount, requestAction)
       .next()
-      .next(E.right({ status: unexpectedStatus }))
+      .next({ _tag: "Right", right: { status: unexpectedStatus } })
       .put(
         cgnSearchMerchants.failure(
           getGenericError(new Error(`Response in status ${unexpectedStatus}`))
