@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.37.0-rc.12](https://github.com/pagopa/io-app/compare/3.37.0-rc.11...3.37.0-rc.12) (2026-07-23)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4700](https://pagopa.atlassian.net/browse/SIW-4700)] Remove recommended badge from ITW auth flows ([#8349](https://github.com/pagopa/io-app/issues/8349)) ([9c37f06](https://github.com/pagopa/io-app/commit/9c37f06889bb802627a34851ca5aa48e56841f5b)), closes [/github.com/pagopa/io-app/pull/8349/changes#diff-69b0a7b5cf2e276f9e50ac09d49de0cacb7690a78a810282fc16e949d66f9885](https://github.com/pagopa//github.com/pagopa/io-app/pull/8349/changes/issues/diff-69b0a7b5cf2e276f9e50ac09d49de0cacb7690a78a810282fc16e949d66f9885)
+
 ## [3.37.0-rc.11](https://github.com/pagopa/io-app/compare/3.37.0-rc.10...3.37.0-rc.11) (2026-07-22)
 
 
