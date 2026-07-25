@@ -6,8 +6,8 @@ pre-commit:
 pre-push:
   parallel: true
   jobs:
-    - name: lint affected projects
-      run: pnpm nx affected --target=lint --parallel --nx-bail
+    - name: validate affected projects
+      run: pnpm nx affected --target=lint,tsc-noemit --parallel --nx-bail
 
-    - name: type-check affected projects
-      run: pnpm nx affected --target=tsc-noemit --parallel --nx-bail
+    - name: check formatting
+      run: pnpm prettier:check
