@@ -40,6 +40,7 @@ import {
   trackItwCredentialTapBanner
 } from "../analytics";
 import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
+import { isMdlSuspendedIssuerError } from "../utils";
 
 type Props = {
   credential: CredentialMetadata;
@@ -66,7 +67,8 @@ export enum CredentialAlertType {
   EID_LIFECYCLE = "EID_LIFECYCLE",
   INVALID_CREDENTIAL = "INVALID_CREDENTIAL",
   ISSUER_DYNAMIC_ERROR = "ISSUER_DYNAMIC_ERROR",
-  JWT_VERIFICATION = "JWT_VERIFICATION"
+  JWT_VERIFICATION = "JWT_VERIFICATION",
+  MDL_SUSPENDED = "MDL_SUSPENDED"
 }
 
 export type TrackCredentialAlert = (action: CredentialAlertEvents) => void;
@@ -77,6 +79,7 @@ type CredentialAlertProps = {
   credentialStatus: ItwCredentialStatus | undefined;
   eidStatus: ItwJwtCredentialStatus | undefined;
   isItwL3: boolean;
+  isMdlSuspended?: boolean;
   isOffline: boolean;
   message: Record<string, { description: string; title: string }> | undefined;
 };
@@ -95,11 +98,67 @@ const useAlertPressHandler =
     onTrack("open_bottom_sheet");
   };
 
+type JwtInvalidAlertProps = {
+  isCredentialJwtExpired: boolean;
+  isCredentialJwtExpiring: boolean;
+  isEidExpired: boolean;
+  isEidInvalid: boolean;
+  isItwL3: boolean;
+  isOffline: boolean;
+};
+
+// Handles the alert types for credentials whose JWT is expiring or expired.
+const deriveJwtInvalidAlertType = ({
+  isEidExpired,
+  isEidInvalid,
+  isCredentialJwtExpiring,
+  isCredentialJwtExpired,
+  isOffline,
+  isItwL3
+}: JwtInvalidAlertProps): CredentialAlertType | undefined => {
+  /**
+   * 1. Don't show any alert if:
+   * - The eID is expired or expiring AND the credential JWT is expiring
+   * - OR the app is offline but the credential JWT is not yet expired
+   */
+  const shouldHideAlert =
+    (isEidInvalid && isCredentialJwtExpiring) ||
+    (isOffline && !isCredentialJwtExpired);
+
+  if (shouldHideAlert) {
+    return undefined;
+  }
+
+  /**
+   * 2. Show the eID lifecycle alert if:
+   * - Both the eID and the credential JWT are expired (and not in L3 mode)
+   * - OR the app is offline and the credential JWT is expired
+   */
+  const shouldShowEidAlert =
+    (!isItwL3 && isEidExpired && isCredentialJwtExpired) ||
+    (isOffline && isCredentialJwtExpired);
+
+  if (shouldShowEidAlert) {
+    return CredentialAlertType.EID_LIFECYCLE;
+  }
+
+  // 3. In all other cases where the JWT is invalid but no special condition applies,
+  // show the generic JWT verification alert
+  return CredentialAlertType.JWT_VERIFICATION;
+};
+
 // Helper function that calculates which alert type should be shown.
 export const deriveCredentialAlertType = (
   props: CredentialAlertProps
 ): CredentialAlertType | undefined => {
-  const { eidStatus, credentialStatus, message, isOffline, isItwL3 } = props;
+  const {
+    eidStatus,
+    credentialStatus,
+    message,
+    isOffline,
+    isItwL3,
+    isMdlSuspended
+  } = props;
 
   const isEidExpired = eidStatus === "jwtExpired";
   const isEidExpiring = eidStatus === "jwtExpiring";
@@ -122,35 +181,14 @@ export const deriveCredentialAlertType = (
 
   // Handle alerts only if the credential JWT is expiring or expired
   if (isCredentialJwtInvalid) {
-    /**
-     * 1. Don't show any alert if:
-     * - The eID is expired or expiring AND the credential JWT is expiring
-     * - OR the app is offline but the credential JWT is not yet expired
-     */
-    const shouldHideAlert =
-      (isEidInvalid && isCredentialJwtExpiring) ||
-      (isOffline && !isCredentialJwtExpired);
-
-    if (shouldHideAlert) {
-      return undefined;
-    }
-
-    /**
-     * 2. Show the eID lifecycle alert if:
-     * - Both the eID and the credential JWT are expired (and not in L3 mode)
-     * - OR the app is offline and the credential JWT is expired
-     */
-    const shouldShowEidAlert =
-      (!isItwL3 && isEidExpired && isCredentialJwtExpired) ||
-      (isOffline && isCredentialJwtExpired);
-
-    if (shouldShowEidAlert) {
-      return CredentialAlertType.EID_LIFECYCLE;
-    }
-
-    // 3. In all other cases where the JWT is invalid but no special condition applies,
-    // show the generic JWT verification alert
-    return CredentialAlertType.JWT_VERIFICATION;
+    return deriveJwtInvalidAlertType({
+      isEidExpired,
+      isEidInvalid,
+      isCredentialJwtExpiring,
+      isCredentialJwtExpired,
+      isOffline,
+      isItwL3
+    });
   }
 
   // 4. If the credential status is "expiring", show the Document Expiring alert
@@ -158,12 +196,18 @@ export const deriveCredentialAlertType = (
     return CredentialAlertType.DOCUMENT_EXPIRING;
   }
 
-  // 5. If there is a dynamic message provided by the issuer, show the Issuer Dynamic Error alert
+  // 5. A suspended mDL has reviewed static copy, so it must not fall back to
+  // the issuer-provided dynamic error.
+  if (isMdlSuspended) {
+    return CredentialAlertType.MDL_SUSPENDED;
+  }
+
+  // 6. If there is a dynamic message provided by the issuer, show the Issuer Dynamic Error alert
   if (message) {
     return CredentialAlertType.ISSUER_DYNAMIC_ERROR;
   }
 
-  // 6. Fallback when the issuer does not provide a message for an expired credential
+  // 7. Fallback when the issuer does not provide a message for an expired credential
   if (credentialStatus === "expired") {
     return CredentialAlertType.DOCUMENT_EXPIRED;
   }
@@ -218,7 +262,8 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     credentialStatus: status,
     message,
     isOffline: offlineAccessReason !== undefined,
-    isItwL3
+    isItwL3,
+    isMdlSuspended: isMdlSuspendedIssuerError(credential)
   });
 
   if (!alertType) {
@@ -295,6 +340,8 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
           status={status}
         />
       );
+    case CredentialAlertType.MDL_SUSPENDED:
+      return <MdlSuspendedAlert onTrack={trackCredentialAlertEvent} />;
   }
 };
 
@@ -417,6 +464,45 @@ const DocumentExpiringAlert = ({
         onPress={handleAlertPress}
         testID="itwExpiringBannerTestID"
         variant="warning"
+      />
+      {bottomSheet.bottomSheet}
+    </>
+  );
+};
+
+const MdlSuspendedAlert = ({
+  onTrack
+}: Pick<CredentialStatusAlertProps, "onTrack">) => {
+  const alertNs = "features.itWallet.presentation.alerts.mdl.suspended";
+  const bottomSheetNs =
+    "features.itWallet.presentation.bottomSheets.mDL.suspended";
+
+  const bottomSheet = useIOBottomSheetModal({
+    title: I18n.t(`${alertNs}.title`),
+    component: (
+      <VStack space={24}>
+        <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
+        <View style={{ marginBottom: 16 }}>
+          <IOButton
+            fullWidth
+            label={I18n.t(`${bottomSheetNs}.cta`)}
+            onPress={() => bottomSheet.dismiss()}
+            variant="solid"
+          />
+        </View>
+      </VStack>
+    )
+  });
+
+  const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
+
+  return (
+    <>
+      <Alert
+        action={I18n.t(`${alertNs}.action`)}
+        content={I18n.t(`${alertNs}.title`)}
+        onPress={handleAlertPress}
+        variant="error"
       />
       {bottomSheet.bottomSheet}
     </>

@@ -92,10 +92,11 @@ export const fciClearStateRequest = createStandardAction(
 )<void>();
 
 /**
- * start the FCI action
+ * start the FCI action, with optional latest request data
  */
-export const fciStartRequest =
-  createStandardAction("FCI_START_REQUEST")<void>();
+export const fciStartRequest = createStandardAction(
+  "FCI_START_REQUEST"
+)<SignatureRequestDetailView | void>();
 
 /**
  * start the FCI signing action
