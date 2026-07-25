@@ -41,12 +41,6 @@
     "dev-pod-install": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod install && cd ..",
     "dev-pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
   },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
-  },
   "dependencies": {
     "@io-app/design-system": "workspace:@pagopa/io-app-design-system@*",
     "@babel/plugin-transform-class-properties": "^7.25.9",
@@ -229,7 +223,6 @@
     "eslint-plugin-sonarjs": "^3.0.7",
     "fs-extra": "^7.0.0",
     "jest": "catalog:",
-    "lint-staged": "^13.2.0",
     "mockdate": "^3.0.2",
     "mockttp": "2.4.0",
     "node-fetch": "^2.6.7",
