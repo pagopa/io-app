@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.2](https://github.com/pagopa/io-app/compare/3.38.0-rc.1...3.38.0-rc.2) (2026-07-25)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4671](https://pagopa.atlassian.net/browse/SIW-4671)] remove feedback alert on driving license detail ([#8348](https://github.com/pagopa/io-app/issues/8348)) ([ec3f3e4](https://github.com/pagopa/io-app/commit/ec3f3e4244442b92800c50d1d027f2564bf9e97c))
+
 ## [3.38.0-rc.1](https://github.com/pagopa/io-app/compare/3.38.0-rc.0...3.38.0-rc.1) (2026-07-24)
 
 
