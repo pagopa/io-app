@@ -1,9 +1,15 @@
 import I18n from "i18next";
+import { useEffect } from "react";
 
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch } from "../../../../../store/hooks";
 import { identificationRequest } from "../../../../identification/store/actions";
+import {
+  trackItwProximitySavePreferences,
+  trackItwProximitySavePreferencesConfirm,
+  trackItwProximitySavePreferencesDismiss
+} from "../analytics";
 import { ItwProximityMachineContext } from "../machine/provider";
 import { selectIsLoading } from "../machine/selectors";
 
@@ -12,9 +18,18 @@ export const ItwProximityStoreConsentScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
 
+  useEffect(() => {
+    trackItwProximitySavePreferences();
+  }, []);
+
   const handleContinue =
     (storeConsent = false) =>
-    () =>
+    () => {
+      if (storeConsent) {
+        trackItwProximitySavePreferencesConfirm();
+      } else {
+        trackItwProximitySavePreferencesDismiss();
+      }
       dispatch(
         identificationRequest(
           false,
@@ -32,6 +47,7 @@ export const ItwProximityStoreConsentScreen = () => {
           }
         )
       );
+    };
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
