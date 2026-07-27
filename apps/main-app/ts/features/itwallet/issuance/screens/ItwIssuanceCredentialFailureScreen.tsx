@@ -1,4 +1,3 @@
-import { Errors } from "@pagopa/io-react-native-wallet";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -15,15 +14,7 @@ import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
 import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
-import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
-import { statusAssertionFailure } from "../../common/utils/itwFailureUtils";
-import { useIoWallet } from "../../common/utils/itwIoWallet";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
-import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
-import {
-  itwCatalogueTranslationsByLocaleSelector,
-  itwCredentialsCatalogueByTypesSelector
-} from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   CredentialIssuanceFailure,
@@ -36,6 +27,7 @@ import {
   selectIssuerConfigurationOption
 } from "../../machine/credential/selectors";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
+import { useCredentialIssuanceStatusMessage } from "../hooks/useCredentialIssuanceStatusMessage";
 
 const ASSERTION_FAILED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/43824826487953-Provo-ad-aggiungere-un-documento-al-Portafoglio-ma-ricevo-un-errore-dal-mio-dispositivo-Apple";
@@ -83,7 +75,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const credentialTypeValue = O.toUndefined(credentialType);
   const credentialName = useItwCredentialName(credentialTypeValue);
 
-  const invalidStatusDetails = useCredentialFailureIssuerMessage(
+  const invalidStatusDetails = useCredentialIssuanceStatusMessage(
     failure,
     O.toUndefined(issuerConf)
   );
@@ -226,64 +218,4 @@ const ContentView = ({ failure }: ContentViewProps) => {
       {supportModal.bottomSheet}
     </>
   );
-};
-
-const useCredentialFailureIssuerMessage = (
-  failure: CredentialIssuanceFailure,
-  issuerConf?: IssuerConfiguration
-) => {
-  const credentialsCatalog = useIOSelector(
-    itwCredentialsCatalogueByTypesSelector
-  );
-  const catalogTranslations = useIOSelector(
-    itwCatalogueTranslationsByLocaleSelector
-  );
-  const ioWallet = useIoWallet();
-
-  if (failure.type === CredentialIssuanceFailureType.INVALID_STATUS_BY_TSL) {
-    const { credentialType } = failure.reason?.metadata ?? {};
-
-    if (credentialType && credentialsCatalog && failure.reason) {
-      const l10nMessage = ioWallet.CredentialsCatalogue.getStatusL10nIds(
-        failure.reason.rawStatus,
-        credentialsCatalog[credentialType]
-      );
-      if (l10nMessage) {
-        return {
-          message: {
-            title: catalogTranslations?.[l10nMessage.titleL10nId],
-            description: catalogTranslations?.[l10nMessage.descriptionL10nId]
-          },
-          errorCode: failure.reason.rawStatus
-        };
-      }
-    }
-
-    return { message: undefined, errorCode: undefined };
-  }
-
-  if (
-    failure.type === CredentialIssuanceFailureType.INVALID_STATUS_BY_ASSERTION
-  ) {
-    const { credentialId } = failure.reason?.metadata ?? {};
-
-    try {
-      const { error } = statusAssertionFailure.parse(failure.reason);
-      const localizedMessage =
-        issuerConf && credentialId
-          ? Errors.extractErrorMessageFromIssuerConf(error, {
-              credentialType: credentialId,
-              issuerConf
-            })
-          : undefined;
-      return {
-        message: localizedMessage?.[getClaimsFullLocale()],
-        errorCode: error
-      };
-    } catch {
-      return { message: undefined, errorCode: undefined };
-    }
-  }
-
-  return { message: undefined, errorCode: undefined };
 };

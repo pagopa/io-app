@@ -6,7 +6,7 @@ export class InvalidTslCredentialStatus extends Error {
   /** The raw status (e.g. "0x01") to map to the dedicated error message */
   rawStatus: string;
   constructor(credentialId: string, rawStatus: string) {
-    super(`${credentialId}'s status is not valid`);
+    super(`${credentialId}'s status is: ${rawStatus}`);
     this.rawStatus = rawStatus;
   }
 }

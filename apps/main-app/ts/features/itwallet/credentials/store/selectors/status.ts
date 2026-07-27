@@ -1,11 +1,13 @@
-import { Errors } from "@pagopa/io-react-native-wallet";
 import { createSelector } from "reselect";
 
 import { itwCredentialsSelector } from ".";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { selectItwSpecsVersion } from "../../../common/store/selectors/environment";
-import { getClaimsFullLocale } from "../../../common/utils/itwClaimsUtils";
-import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
+import {
+  getCredentialStatus,
+  getCredentialStatusMessageFromCatalog,
+  getCredentialStatusMessageFromIssuerConf
+} from "../../../common/utils/itwCredentialStatusUtils";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { ItwCredentialStatus } from "../../../common/utils/itwTypesUtils";
 import {
@@ -59,46 +61,21 @@ export const itwCredentialStatusSelector = createSelector(
         credential.validity.status === "invalid"
           ? credential.validity.errorCode
           : undefined;
-      if (errorCode) {
-        const messagesByLocale = Errors.extractErrorMessageFromIssuerConf(
-          errorCode,
-          {
-            issuerConf: credential.issuerConf,
-            credentialType: credential.credentialId
-          }
-        );
-
-        return {
-          status,
-          message: messagesByLocale
-            ? messagesByLocale[getClaimsFullLocale()]
-            : undefined
-        };
-      }
-
-      return { status, message: undefined };
+      const message = getCredentialStatusMessageFromIssuerConf({
+        errorCode,
+        issuerConf: credential.issuerConf,
+        credentialId: credential.credentialId
+      });
+      return { status, message };
     }
 
-    if (!catalog?.[credential.credentialType]) {
-      return { status, message: undefined };
-    }
+    const message = getCredentialStatusMessageFromCatalog({
+      ioWallet: getIoWallet(itwVersion),
+      errorCode: credential.validity.rawStatus,
+      catalogMetadata: catalog?.[credential.credentialType],
+      catalogTranslations
+    });
 
-    const message = getIoWallet(
-      itwVersion
-    ).CredentialsCatalogue.getStatusL10nIds(
-      credential.validity.rawStatus,
-      catalog[credential.credentialType]
-    );
-
-    return {
-      status,
-      message:
-        message && catalogTranslations
-          ? {
-              title: catalogTranslations[message.titleL10nId],
-              description: catalogTranslations[message.descriptionL10nId]
-            }
-          : undefined
-    };
+    return { status, message };
   }
 );
