@@ -45,7 +45,6 @@ export const ClaimLabel: FunctionComponent<
       // If you want to make it accessible use the parent components
       accessible={false}
       allowFontScaling={false}
-      lineBreakMode="head"
       numberOfLines={1}
       style={{
         ...makeFontStyleObject(
