@@ -46,7 +46,7 @@ export const useCredentialIssuanceStatusMessage = (
 
     const message = getCredentialStatusMessageFromCatalog({
       ioWallet,
-      errorCode: failure.reason?.rawStatus,
+      rawStatus: failure.reason?.rawStatus,
       catalogMetadata: credentialsCatalog?.[credentialType],
       catalogTranslations
     });
@@ -58,17 +58,14 @@ export const useCredentialIssuanceStatusMessage = (
   ) {
     const { credentialId } = failure.reason?.metadata ?? {};
 
-    try {
-      const { error } = statusAssertionFailure.parse(failure.reason);
-      const message = getCredentialStatusMessageFromIssuerConf({
-        errorCode: error,
-        issuerConf,
-        credentialId
-      });
-      return { message, errorCode: error };
-    } catch {
-      return { message: undefined, errorCode: undefined };
-    }
+    const parsed = statusAssertionFailure.safeParse(failure.reason);
+    const errorCode = parsed.success ? parsed.data.error : undefined;
+    const message = getCredentialStatusMessageFromIssuerConf({
+      errorCode,
+      issuerConf,
+      credentialId
+    });
+    return { message, errorCode };
   }
 
   return { message: undefined, errorCode: undefined };

@@ -71,7 +71,7 @@ export const itwCredentialStatusSelector = createSelector(
 
     const message = getCredentialStatusMessageFromCatalog({
       ioWallet: getIoWallet(itwVersion),
-      errorCode: credential.validity.rawStatus,
+      rawStatus: credential.validity.rawStatus,
       catalogMetadata: catalog?.[credential.credentialType],
       catalogTranslations
     });

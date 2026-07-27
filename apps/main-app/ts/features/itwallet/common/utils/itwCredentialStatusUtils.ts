@@ -94,31 +94,31 @@ export type CredentialStatusMessage = {
 };
 
 /**
- * Extract the status message from the catalog for the provided error code.
+ * Extract the status message from the catalog for the provided raw status.
  * This function is meant to be used for status list codes (e.g. `0x01`, `0x02`).
  * @param ioWallet - The current IoWallet instance
- * @param errorCode - The raw error code, e.g. `0x01`
+ * @param rawStatus - The raw status, e.g. `0x01`
  * @param catalogMetadata - The credential metadata from the catalog, used to map the code to a l10n string
  * @param catalogTranslations - The catalog translations to resolve the l10n string
- * @returns The message for the provided error code, if found
+ * @returns The message for the provided status code, if found
  */
 export const getCredentialStatusMessageFromCatalog = ({
   ioWallet,
-  errorCode,
+  rawStatus,
   catalogMetadata,
   catalogTranslations
 }: {
   catalogMetadata?: DigitalCredentialMetadata;
   catalogTranslations?: Record<string, string>;
-  errorCode?: string;
   ioWallet: IoWallet;
+  rawStatus?: string;
 }): CredentialStatusMessage | undefined => {
-  if (!errorCode || !catalogMetadata) {
+  if (!rawStatus || !catalogMetadata) {
     return undefined;
   }
 
   const l10nMessage = ioWallet.CredentialsCatalogue.getStatusL10nIds(
-    errorCode,
+    rawStatus,
     catalogMetadata
   );
 
@@ -151,10 +151,16 @@ export const getCredentialStatusMessageFromIssuerConf = ({
     return undefined;
   }
 
-  const messagesByLocale = Errors.extractErrorMessageFromIssuerConf(errorCode, {
-    issuerConf,
-    credentialType: credentialId // Legacy mismatch: the param `credentialType` was not renamed
-  });
-
-  return messagesByLocale?.[getClaimsFullLocale()];
+  try {
+    const messagesByLocale = Errors.extractErrorMessageFromIssuerConf(
+      errorCode,
+      {
+        issuerConf,
+        credentialType: credentialId // Legacy mismatch: the param `credentialType` was not renamed
+      }
+    );
+    return messagesByLocale?.[getClaimsFullLocale()];
+  } catch {
+    return undefined;
+  }
 };
