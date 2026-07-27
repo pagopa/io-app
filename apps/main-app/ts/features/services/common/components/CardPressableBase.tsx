@@ -35,6 +35,7 @@ export const CardPressableBase = ({
   return (
     <Pressable
       accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
       accessible={true}
       onPress={handleOnPress}
       onPressIn={onPressIn}
