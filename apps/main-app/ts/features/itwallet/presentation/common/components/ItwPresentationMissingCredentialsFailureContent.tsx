@@ -1,4 +1,10 @@
-import { Body, VSpacer } from "@io-app/design-system";
+import {
+  Body,
+  Divider,
+  IOButton,
+  ListItemInfo,
+  VSpacer
+} from "@io-app/design-system";
 import I18n from "i18next";
 
 import {
@@ -31,7 +37,10 @@ export const ItwPresentationMissingCredentialsFailureContent = ({
     itwCredentialNameResolverSelector
   );
 
-  const { bottomSheet, present } = useIOBottomSheetModal({
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
+    title: I18n.t(
+      "features.itWallet.presentation.missingCredentials.other.bottomSheet.title"
+    ),
     component: (
       <>
         <Body>
@@ -40,16 +49,36 @@ export const ItwPresentationMissingCredentialsFailureContent = ({
           )}
         </Body>
         <VSpacer size={24} />
-        {credentialDocTypes.map(docType => {
+        {credentialDocTypes.map((docType, index) => {
           const credentialType = getCredentialTypeFromDocType(docType);
           const credentialName = resolveCredentialName(credentialType);
 
-          return <Body key={credentialType}>{credentialName}</Body>;
+          return (
+            <>
+              {index !== 0 && <Divider />}
+              <ListItemInfo
+                icon="fiscalCodeIndividual"
+                key={docType}
+                value={credentialName}
+              />
+            </>
+          );
         })}
+        <VSpacer size={32} />
+        <IOButton
+          icon="addSmall"
+          iconPosition="end"
+          label={I18n.t(
+            "features.itWallet.presentation.missingCredentials.other.bottomSheet.primaryAction"
+          )}
+          onPress={() => {
+            dismiss();
+            navigation.replace(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.L3_ONBOARDING
+            });
+          }}
+        />
       </>
-    ),
-    title: I18n.t(
-      "features.itWallet.presentation.missingCredentials.other.bottomSheet.title"
     )
   });
 
