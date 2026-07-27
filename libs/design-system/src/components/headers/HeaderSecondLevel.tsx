@@ -223,7 +223,6 @@ export const HeaderSecondLevel = ({
   );
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     paddingTop.value = withTiming(
       ignoreSafeAreaMargin ? 0 : insets.top,
       alertEdgeToEdgeInsetTransitionConfig

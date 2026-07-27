@@ -60,7 +60,6 @@ export const ItwPresentationCredentialUnknownStatus = ({
     ) {
       setIsRetryComplete(true);
       setIsRetrying(false);
-      // eslint-disable-next-line functional/immutable-data
       previousAssertionRef.current = credential.storedStatusAssertion;
     }
   }, [credential.storedStatusAssertion, isRetrying]);

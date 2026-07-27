@@ -68,7 +68,7 @@
     "del-cli": "^5.0.0",
     "eslint": "catalog:",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-functional": "^5.0.8",
+    "eslint-plugin-functional": "^10.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-prettier": "^4.0.0",

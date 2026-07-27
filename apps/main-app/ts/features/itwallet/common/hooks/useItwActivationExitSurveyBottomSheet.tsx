@@ -80,7 +80,6 @@ export const useItwActivationExitSurveyBottomSheet = ({
                 "features.itWallet.feedback.eidActivationExit.bottomSheet.primaryAction"
               )}
               onPress={() => {
-                // eslint-disable-next-line functional/immutable-data
                 skipDeclinedEvent.current = true;
                 trackItwSurveyRequestAccepted(trackingProps);
                 openWebUrl(surveyUrl);
@@ -106,7 +105,6 @@ export const useItwActivationExitSurveyBottomSheet = ({
       if (!skipDeclinedEvent.current) {
         trackItwSurveyRequestDeclined(trackingProps);
       }
-      // eslint-disable-next-line functional/immutable-data
       skipDeclinedEvent.current = false;
     }
   });

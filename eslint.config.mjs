@@ -254,6 +254,25 @@ export default defineConfig([
             "navigation.**",
             "navigate.**",
             "StackActions.**"
+          ],
+          ignoreMapsAndSets: true,
+          overrides: [
+            {
+              specifiers: {
+                from: "package",
+                package: "@types/react",
+                pattern: "RefObject"
+              },
+              disable: true
+            },
+            {
+              specifiers: {
+                from: "package",
+                package: "react-native-reanimated",
+                pattern: "SharedValue"
+              },
+              disable: true
+            }
           ]
         }
       ],

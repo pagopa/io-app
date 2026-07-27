@@ -185,7 +185,6 @@ const LanguagesPreferencesScreen = () => {
   const onLanguageSelected = useCallback(
     (language: string) => {
       if (selectedItem !== language) {
-        // eslint-disable-next-line functional/immutable-data
         previousSelectedItem.current = selectedItem;
         setSelectedItem(language);
         upsertProfile(language as Locales);
