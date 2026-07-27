@@ -10,11 +10,9 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { AppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
 import * as connectivitySelectors from "../../../connectivity/store/selectors";
 import * as ingressSelectors from "../../../ingress/store/selectors";
 import * as itwSelectors from "../../../itwallet/common/store/selectors";
-import * as itwPreferencesSelectors from "../../../itwallet/common/store/selectors/preferences";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
@@ -22,7 +20,6 @@ import {
 import { ItwJwtCredentialStatus } from "../../../itwallet/common/utils/itwTypesUtils";
 import * as itwCredentialsSelectors from "../../../itwallet/credentials/store/selectors";
 import * as itwLifecycleSelectors from "../../../itwallet/lifecycle/store/selectors";
-import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import * as itwWalletInstanceSelectors from "../../../itwallet/walletInstance/store/selectors";
 import { TourProvider } from "../../../tour/components/TourProvider";
 import { WalletCardsState } from "../../store/reducers/cards";
@@ -537,50 +534,6 @@ describe("OtherWalletCardsContainer", () => {
         }
       ]
     );
-  });
-
-  it("should request app review when driving license credential is viewed", async () => {
-    jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
-    jest
-      .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
-      .mockImplementation(() => true);
-    jest
-      .spyOn(walletSelectors, "selectWalletCardsByCategory")
-      .mockImplementation(() => [T_CARDS["4"], T_CARDS["5"]]);
-
-    jest
-      .spyOn(itwPreferencesSelectors, "itwIsPendingReviewSelector")
-      .mockImplementation(() => true);
-    const requestReview = jest.fn();
-    const { queryByTestId } = renderComponent(
-      <AppFeedbackContext.Provider value={{ requestFeedback: requestReview }}>
-        <ItwWalletCardsContainer />
-      </AppFeedbackContext.Provider>
-    );
-
-    expect(queryByTestId(`walletCardsCategoryItwHeaderTestID`)).not.toBeNull();
-    expect(queryByTestId(`walletCardTestID_itw_itw_4`)).not.toBeNull();
-    expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
-
-    const mDLCredential = queryByTestId(`walletCardTestID_itw_itw_4`);
-
-    if (mDLCredential) {
-      const pressableComponent = mDLCredential.findByProps({
-        accessibilityRole: "button"
-      });
-      pressableComponent.props.onPress();
-    }
-
-    expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-      params: {
-        credentialType: CredentialType.DRIVING_LICENSE
-      }
-    });
-
-    expect(requestReview).toHaveBeenCalledTimes(1);
   });
 });
 

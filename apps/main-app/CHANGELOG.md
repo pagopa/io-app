@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.2](https://github.com/pagopa/io-app/compare/3.38.0-rc.1...3.38.0-rc.2) (2026-07-25)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4671](https://pagopa.atlassian.net/browse/SIW-4671)] remove feedback alert on driving license detail ([#8348](https://github.com/pagopa/io-app/issues/8348)) ([ec3f3e4](https://github.com/pagopa/io-app/commit/ec3f3e4244442b92800c50d1d027f2564bf9e97c))
+
+## [3.38.0-rc.1](https://github.com/pagopa/io-app/compare/3.38.0-rc.0...3.38.0-rc.1) (2026-07-24)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4698](https://pagopa.atlassian.net/browse/SIW-4698)] Update IPZS logo ([#8356](https://github.com/pagopa/io-app/issues/8356)) ([14a8041](https://github.com/pagopa/io-app/commit/14a8041a576de35be880d928f387bbf627d74fba))
+
+## [3.38.0-rc.0](https://github.com/pagopa/io-app/compare/3.37.0-rc.13...3.38.0-rc.0) (2026-07-24)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4213](https://pagopa.atlassian.net/browse/SIW-4213)] Review credentials after status list intro ([#8207](https://github.com/pagopa/io-app/issues/8207)) ([8566dd3](https://github.com/pagopa/io-app/commit/8566dd3ebbf8fc51b9749e46ccc826a19d600c99))
+
+## [3.37.0-rc.13](https://github.com/pagopa/io-app/compare/3.37.0-rc.12...3.37.0-rc.13) (2026-07-24)
+
+## [3.37.0-rc.12](https://github.com/pagopa/io-app/compare/3.37.0-rc.11...3.37.0-rc.12) (2026-07-23)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4700](https://pagopa.atlassian.net/browse/SIW-4700)] Remove recommended badge from ITW auth flows ([#8349](https://github.com/pagopa/io-app/issues/8349)) ([9c37f06](https://github.com/pagopa/io-app/commit/9c37f06889bb802627a34851ca5aa48e56841f5b)), closes [/github.com/pagopa/io-app/pull/8349/changes#diff-69b0a7b5cf2e276f9e50ac09d49de0cacb7690a78a810282fc16e949d66f9885](https://github.com/pagopa//github.com/pagopa/io-app/pull/8349/changes/issues/diff-69b0a7b5cf2e276f9e50ac09d49de0cacb7690a78a810282fc16e949d66f9885)
+
+## [3.37.0-rc.11](https://github.com/pagopa/io-app/compare/3.37.0-rc.10...3.37.0-rc.11) (2026-07-22)
+
+
+### Chores
+
+* [[IEL-684](https://pagopa.atlassian.net/browse/IEL-684)] FCI - retry checks for signature request status ([#8306](https://github.com/pagopa/io-app/issues/8306)) ([8334c3b](https://github.com/pagopa/io-app/commit/8334c3b6804c44bcb3a7d081623d02c61f4c0459))
+
 ## [3.37.0-rc.10](https://github.com/pagopa/io-app/compare/3.37.0-rc.9...3.37.0-rc.10) (2026-07-22)
 
 
