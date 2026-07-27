@@ -1,11 +1,11 @@
 import { useIOSelector } from "../../../../store/hooks";
+import { useIoWallet } from "../../common/hooks/useIoWallet";
 import {
   CredentialStatusMessage,
   getCredentialStatusMessageFromCatalog,
   getCredentialStatusMessageFromIssuerConf
 } from "../../common/utils/itwCredentialStatusUtils";
 import { statusAssertionFailure } from "../../common/utils/itwFailureUtils";
-import { useIoWallet } from "../../common/utils/itwIoWallet";
 import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import {
   itwCatalogueTranslationsByLocaleSelector,

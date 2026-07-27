@@ -1,6 +1,5 @@
 import { createSelector } from "reselect";
 
-import { itwCredentialsSelector } from ".";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { selectItwSpecsVersion } from "../../../common/store/selectors/environment";
 import {
@@ -15,21 +14,25 @@ import {
   itwCatalogueTranslationsByLocaleSelector,
   itwCredentialsCatalogueByTypesSelector
 } from "../../../credentialsCatalogue/store/selectors";
+import { itwCredentialsSelector } from "./index";
 
 type CredentialStatusObject = {
   message: CredentialStatusMessage | undefined;
   status: ItwCredentialStatus | undefined;
 };
 
+// TODO: [SIW-0000] There are many circular dependencies across IT-Wallet selectors.
+// This separate file is a solution to break the circles, but ideally selectors organization should be reviewed.
+
 /**
- * Get the credential status and the error message corresponding to the status assertion error, if present.
- * The message is dynamic and extracted from the issuer configuration.
+ * Get the credential status and the localized message corresponding to the status list/assertion code, if present.
+ * The message is dynamic and extracted either from the credentials catalog o the issuer configuration.
  *
  * Note: the credential type is passed as second argument to reuse the same selector and cache per credential type.
  *
  * @param state - The global state.
  * @param type - The credential type.
- * @returns The credential status and the error message corresponding to the status assertion error, if present.
+ * @returns The credential status and the localized message corresponding to the status list/assertion code, if present.
  */
 export const itwCredentialStatusSelector = createSelector(
   selectItwSpecsVersion,
