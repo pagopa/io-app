@@ -14,7 +14,6 @@ import {
   itwSetFiscalCodeWhitelisted,
   itwSetIdentificationMode,
   itwSetPidReissuingSurveyHidden,
-  itwSetReviewPending,
   itwSetWalletActivationFeedbackBannerData,
   ItwWalletActivationFeedbackBannerData
 } from "../actions/preferences";
@@ -33,8 +32,6 @@ export type ItwPreferencesState = {
   // Indicates whether the IT-Wallet activation should be disabled
   // because the user's device does not support NFC
   isItwActivationDisabled?: boolean;
-  // Indicates whether the user should see the modal to review the app.
-  isPendingReview?: boolean;
   // Indicates whether the bottom sheet survey is visible when the user quits
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
@@ -124,13 +121,6 @@ const reducer = (
       return {
         ...state,
         isPidReissuingSurveyHidden: action.payload
-      };
-    }
-
-    case getType(itwSetReviewPending): {
-      return {
-        ...state,
-        isPendingReview: action.payload
       };
     }
 
