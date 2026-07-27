@@ -317,7 +317,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   if (failure.type === RemoteFailureType.MISSING_CREDENTIALS) {
     return (
       <ItwPresentationMissingCredentialsFailureContent
-        credentialTypes={failure.reason.missingCredentials}
+        credentialDocTypes={failure.reason.missingCredentials}
         onClose={() => machineRef.send({ type: "close" })}
       />
     );

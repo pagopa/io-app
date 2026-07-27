@@ -6,19 +6,30 @@ import {
   OperationResultScreenContentProps
 } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
+import {
+  itwCredentialNameResolverSelector,
+  itwCredentialTypeFromDocTypeSelector
+} from "../../../credentialsCatalogue/store/selectors/index.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 
 type Props = {
-  credentialTypes: ReadonlyArray<string>;
+  credentialDocTypes: ReadonlyArray<string>;
   onClose: () => void;
 };
 
 export const ItwPresentationMissingCredentialsFailureContent = ({
-  credentialTypes,
+  credentialDocTypes,
   onClose
 }: Props) => {
   const navigation = useIONavigation();
+  const getCredentialTypeFromDocType = useIOSelector(
+    itwCredentialTypeFromDocTypeSelector
+  );
+  const resolveCredentialName = useIOSelector(
+    itwCredentialNameResolverSelector
+  );
 
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: (
@@ -29,6 +40,12 @@ export const ItwPresentationMissingCredentialsFailureContent = ({
           )}
         </Body>
         <VSpacer size={24} />
+        {credentialDocTypes.map(docType => {
+          const credentialType = getCredentialTypeFromDocType(docType);
+          const credentialName = resolveCredentialName(credentialType);
+
+          return <Body key={credentialType}>{credentialName}</Body>;
+        })}
       </>
     ),
     title: I18n.t(
@@ -38,14 +55,22 @@ export const ItwPresentationMissingCredentialsFailureContent = ({
 
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
-      if (credentialTypes.length === 1) {
+      if (credentialDocTypes.length === 1) {
+        const credentialType = getCredentialTypeFromDocType(
+          credentialDocTypes[0]
+        );
+        const credentialName = resolveCredentialName(credentialType);
+
         return {
           pictogram: "umbrella",
           title: I18n.t(
             "features.itWallet.presentation.missingCredentials.one.title"
           ),
           subtitle: I18n.t(
-            "features.itWallet.presentation.missingCredentials.one.subtitle"
+            "features.itWallet.presentation.missingCredentials.one.subtitle",
+            {
+              credentialName
+            }
           ),
           action: {
             icon: "addSmall",
@@ -57,7 +82,7 @@ export const ItwPresentationMissingCredentialsFailureContent = ({
               navigation.replace(ITW_ROUTES.MAIN, {
                 screen: ITW_ROUTES.LANDING.CREDENTIAL_ISSUANCE,
                 params: {
-                  credentialType: credentialTypes[0]
+                  credentialType: credentialType || ""
                 }
               });
             }

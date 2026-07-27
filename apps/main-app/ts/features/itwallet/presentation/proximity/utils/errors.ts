@@ -4,7 +4,7 @@
  * Thrown when one or more mandatory credentials are missing
  */
 export class MissingCredentialError extends Error {
-  constructor(public credentialTypes: Array<string>) {
+  constructor(public credentialDocTypes: Array<string>) {
     super("One or more mandatory credentials are missing");
   }
 }

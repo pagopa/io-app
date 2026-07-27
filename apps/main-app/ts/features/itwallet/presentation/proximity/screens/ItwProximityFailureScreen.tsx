@@ -132,7 +132,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   if (failure.type === ProximityFailureType.MISSING_CREDENTIALS) {
     return (
       <ItwPresentationMissingCredentialsFailureContent
-        credentialTypes={failure.reason.credentialTypes}
+        credentialDocTypes={failure.reason.credentialDocTypes}
         onClose={() => machineRef.send({ type: "close" })}
       />
     );
