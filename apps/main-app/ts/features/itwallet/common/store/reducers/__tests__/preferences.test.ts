@@ -27,7 +27,6 @@ describe("IT Wallet preferences reducer", () => {
 
   it("should handle itwLifecycleStoresReset action and ensure some values are not reset", () => {
     const initialState: ItwPreferencesState = {
-      isPendingReview: true,
       authLevel: "L2",
       claimValuesHidden: true,
       isFiscalCodeWhitelisted: true,
@@ -113,7 +112,6 @@ describe("IT Wallet preferences reducer", () => {
     const action = itwLifecycleStoresReset();
     const newState = reducer(
       {
-        isPendingReview: true,
         authLevel: "L2",
         claimValuesHidden: true,
         isItwActivationDisabled: true

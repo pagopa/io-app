@@ -270,4 +270,18 @@ describe("itWalletReducer migrations", () => {
       }
     });
   });
+
+  it("should migrate the store to version 18: remove isPendingReview from preferences", async () => {
+    const previousState = {
+      _persist: { version: 17, rehydrated: false },
+      preferences: { isPendingReview: true }
+    };
+
+    const newState = await migrate(previousState, 18);
+
+    expect(newState).toEqual({
+      _persist: { version: 17, rehydrated: false },
+      preferences: {}
+    });
+  });
 });

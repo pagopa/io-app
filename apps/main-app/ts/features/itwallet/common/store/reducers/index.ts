@@ -191,7 +191,10 @@ export const migrations: MigrationManifest = {
     _.omit(state, "environment.itWalletSpecsVersion"),
   // Removed date from preferences.walletActivationFeedbackBannerData
   "17": (state: PersistedState): PersistedState =>
-    _.omit(state, "preferences.walletActivationFeedbackBannerData.date")
+    _.omit(state, "preferences.walletActivationFeedbackBannerData.date"),
+  // Removed isPendingReview from preferences
+  "18": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.isPendingReview")
 };
 
 const itwPersistConfig: PersistConfig = {
