@@ -415,7 +415,8 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
       }
     ).catch(
       enrichErrorWithMetadata({
-        credentialId: credential_configuration_id
+        credentialId: credential_configuration_id,
+        credentialType
       })
     );
 
@@ -705,7 +706,8 @@ export const obtainCredentialsBatch: ObtainCredentialsBatch = async ({
             }
           ).catch(
             enrichErrorWithMetadata({
-              credentialId: credential_configuration_id
+              credentialId: credential_configuration_id,
+              credentialType
             })
           );
 

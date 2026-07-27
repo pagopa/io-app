@@ -3,11 +3,10 @@ import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
-import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
+import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors/status";
 import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
-import { CredentialIssuanceFailureType } from "./failure";
 
 export const createCredentialIssuanceGuardsImplementation = (
   store: ReturnType<typeof useIOStore>,
@@ -23,9 +22,6 @@ export const createCredentialIssuanceGuardsImplementation = (
     }
     return isWalletInstanceAttestationValid(itwVersion, attestation);
   },
-
-  isStatusError: ({ context }: { context: Context }) =>
-    context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS,
 
   isEidExpired: () => {
     const eidStatus = itwCredentialsEidStatusSelector(store.getState());
