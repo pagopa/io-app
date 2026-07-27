@@ -1,7 +1,8 @@
 import {
   HSpacer,
   IOSpacingScale,
-  IOVisualCostants
+  IOVisualCostants,
+  triggerHaptic
 } from "@io-app/design-system";
 import { FlatList, FlatListProps, StyleSheet } from "react-native";
 
@@ -57,6 +58,8 @@ const FeaturedServicesCarousel = ({
 }: FeaturedServicesCarouselProps) => (
   <FeaturedServicesCarouselBaseComponent
     data={services}
+    /* Fired once the snap animation settles on a card */
+    onMomentumScrollEnd={() => triggerHaptic("impactLight")}
     renderItem={({ item }) => <FeaturedServiceCard {...item} />}
     testID={testID}
   />

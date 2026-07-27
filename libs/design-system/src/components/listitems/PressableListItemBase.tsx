@@ -7,7 +7,7 @@ import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 
-export type PressableBaseProps = WithTestID<
+export type PressableListItemBaseProps = WithTestID<
   Pick<
     ComponentProps<typeof Pressable>,
     | "accessibilityHint"
@@ -24,7 +24,7 @@ export const PressableListItemBase = ({
   children,
   accessibilityRole,
   ...props
-}: PropsWithChildren<PressableBaseProps>) => {
+}: PropsWithChildren<PressableListItemBaseProps>) => {
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
 
