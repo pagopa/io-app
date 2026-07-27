@@ -15,6 +15,7 @@ import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { getCredentialExpireDays } from "../../../common/utils/itwClaimsUtils.ts";
+import { CredentialStatusMessage } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
   CredentialMetadata,
@@ -73,7 +74,7 @@ type CredentialAlertProps = {
   isItwL3: boolean;
   isMdlSuspended?: boolean;
   isOffline: boolean;
-  message: undefined | { description?: string; title?: string };
+  message?: CredentialStatusMessage;
 };
 
 type CredentialStatusAlertProps = {
@@ -316,14 +317,14 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
         />
       );
     case CredentialAlertType.ISSUER_DYNAMIC_ERROR:
-      return message ? (
+      return (
         <IssuerDynamicErrorAlert
           credential={credential}
           message={message}
           onTrack={trackCredentialAlertEvent}
           status={status}
         />
-      ) : null;
+      );
     case CredentialAlertType.JWT_VERIFICATION:
       return (
         <JwtVerificationAlert
@@ -503,7 +504,7 @@ const MdlSuspendedAlert = ({
 
 type IssuerDynamicErrorAlertProps = {
   credential: CredentialMetadata;
-  message: { description?: string; title?: string };
+  message?: CredentialStatusMessage;
   onTrack: TrackCredentialAlert;
   status?: ItwCredentialStatus;
 };
@@ -515,9 +516,9 @@ const IssuerDynamicErrorAlert = ({
   status
 }: IssuerDynamicErrorAlertProps) => {
   const localizedMessage = {
-    title: message.title ?? I18n.t("features.itWallet.card.status.unknown"),
+    title: message?.title ?? I18n.t("features.itWallet.card.status.unknown"),
     description:
-      message.description ?? I18n.t("features.itWallet.card.status.unknown")
+      message?.description ?? I18n.t("features.itWallet.card.status.unknown")
   };
   const bottomSheet = useItwIssuerDynamicErrorBottomSheet({
     credential,

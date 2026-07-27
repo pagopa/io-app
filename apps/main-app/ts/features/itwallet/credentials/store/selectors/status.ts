@@ -4,6 +4,7 @@ import { itwCredentialsSelector } from ".";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { selectItwSpecsVersion } from "../../../common/store/selectors/environment";
 import {
+  CredentialStatusMessage,
   getCredentialStatus,
   getCredentialStatusMessageFromCatalog,
   getCredentialStatusMessageFromIssuerConf
@@ -16,7 +17,7 @@ import {
 } from "../../../credentialsCatalogue/store/selectors";
 
 type CredentialStatusObject = {
-  message: undefined | { description?: string; title?: string };
+  message: CredentialStatusMessage | undefined;
   status: ItwCredentialStatus | undefined;
 };
 
