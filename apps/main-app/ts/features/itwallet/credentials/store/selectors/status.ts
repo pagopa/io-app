@@ -21,7 +21,7 @@ type CredentialStatusObject = {
   status: ItwCredentialStatus | undefined;
 };
 
-// TODO: [SIW-0000] There are many circular dependencies across IT-Wallet selectors.
+// TODO: [SIW-4723] There are many circular dependencies across IT-Wallet selectors.
 // This separate file is a solution to break the circles, but ideally selectors organization should be reviewed.
 
 /**
