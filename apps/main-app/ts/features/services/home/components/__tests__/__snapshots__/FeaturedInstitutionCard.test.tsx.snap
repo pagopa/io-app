@@ -342,6 +342,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                     >
                       <View
                         accessibilityLabel="### Accessibility Label ###"
+                        accessibilityRole="button"
                         accessibilityState={
                           {
                             "busy": undefined,
@@ -902,6 +903,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                     >
                       <View
                         accessibilityLabel="### Accessibility Label ###"
+                        accessibilityRole="button"
                         accessibilityState={
                           {
                             "busy": undefined,
