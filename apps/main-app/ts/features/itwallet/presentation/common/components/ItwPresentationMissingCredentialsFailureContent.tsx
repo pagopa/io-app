@@ -14,25 +14,21 @@ import {
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
-import {
-  itwCredentialNameResolverSelector,
-  itwCredentialTypeFromDocTypeSelector
-} from "../../../credentialsCatalogue/store/selectors/index.ts";
+import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors/index.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 
 type Props = {
-  credentialDocTypes: ReadonlyArray<string>;
+  /** The list of missing credentials types to display */
+  missingCredentials: ReadonlyArray<string>;
+  /** Callback to be called when the user closes the screen */
   onClose: () => void;
 };
 
 export const ItwPresentationMissingCredentialsFailureContent = ({
-  credentialDocTypes,
+  missingCredentials,
   onClose
 }: Props) => {
   const navigation = useIONavigation();
-  const getCredentialTypeFromDocType = useIOSelector(
-    itwCredentialTypeFromDocTypeSelector
-  );
   const resolveCredentialName = useIOSelector(
     itwCredentialNameResolverSelector
   );
@@ -49,16 +45,14 @@ export const ItwPresentationMissingCredentialsFailureContent = ({
           )}
         </Body>
         <VSpacer size={24} />
-        {credentialDocTypes.map((docType, index) => {
-          const credentialType = getCredentialTypeFromDocType(docType);
-          const credentialName = resolveCredentialName(credentialType);
-
+        {missingCredentials.map((type, index) => {
+          const credentialName = resolveCredentialName(type);
           return (
             <>
               {index !== 0 && <Divider />}
               <ListItemInfo
                 icon="fiscalCodeIndividual"
-                key={docType}
+                key={type}
                 value={credentialName}
               />
             </>
@@ -84,11 +78,8 @@ export const ItwPresentationMissingCredentialsFailureContent = ({
 
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
-      if (credentialDocTypes.length === 1) {
-        const credentialType = getCredentialTypeFromDocType(
-          credentialDocTypes[0]
-        );
-        const credentialName = resolveCredentialName(credentialType);
+      if (missingCredentials.length === 1) {
+        const credentialName = resolveCredentialName(missingCredentials[0]);
 
         return {
           pictogram: "umbrella",
@@ -111,7 +102,7 @@ export const ItwPresentationMissingCredentialsFailureContent = ({
               navigation.replace(ITW_ROUTES.MAIN, {
                 screen: ITW_ROUTES.LANDING.CREDENTIAL_ISSUANCE,
                 params: {
-                  credentialType: credentialType || ""
+                  credentialType: missingCredentials[0]
                 }
               });
             }

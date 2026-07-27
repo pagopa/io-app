@@ -6,10 +6,13 @@ import {
   OperationResultScreenContentProps
 } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { isDefined } from "../../../../../utils/guards.ts";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
+import { itwCredentialTypeFromDocTypeSelector } from "../../../credentialsCatalogue/store/selectors/index.ts";
 import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent.tsx";
 import { trackItwProximityUnofficialVerifierBottomSheet } from "../analytics/index.ts";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
@@ -30,6 +33,9 @@ type ContentViewProps = { failure: ProximityFailure };
 
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwProximityMachineContext.useActorRef();
+  const getCredentialTypeFromDocType = useIOSelector(
+    itwCredentialTypeFromDocTypeSelector
+  );
 
   useDebugInfo({
     failure: serializeFailureReason(failure)
@@ -132,7 +138,9 @@ const ContentView = ({ failure }: ContentViewProps) => {
   if (failure.type === ProximityFailureType.MISSING_CREDENTIALS) {
     return (
       <ItwPresentationMissingCredentialsFailureContent
-        credentialDocTypes={failure.reason.credentialDocTypes}
+        missingCredentials={failure.reason.credentialsDocType
+          .map(getCredentialTypeFromDocType)
+          .filter(isDefined)}
         onClose={() => machineRef.send({ type: "close" })}
       />
     );
