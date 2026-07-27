@@ -3,7 +3,7 @@ import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
-import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors/status";
+import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";

@@ -14,7 +14,7 @@ import {
   CredentialMetadata,
   ItwCredentialStatus
 } from "../../../../common/utils/itwTypesUtils";
-import * as selectors from "../../../../credentials/store/selectors";
+import * as selectors from "../../../../credentials/store/selectors/status";
 import { ItwCredentialIssuanceMachineProvider } from "../../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import * as detailsAnalytics from "../../analytics";
@@ -46,10 +46,7 @@ type TestCaseParams = [
   Record<string, { description: string; title: string }> | undefined
 ];
 
-const mockMessage = {
-  "it-IT": { title: "__Scaduto__", description: "__Scaduto__" },
-  "en-US": { title: "__Expired__", description: "__Expired__" }
-};
+const mockMessage = { title: "__Scaduto__", description: "__Scaduto__" };
 
 const mockBottomSheetModal = () => {
   jest.spyOn(bottomSheet, "useIOBottomSheetModal").mockImplementation(
@@ -88,11 +85,8 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     ["expiring", undefined],
     ["expired", undefined],
     ["invalid", mockMessage],
-    [
-      "invalid",
-      { "it-IT": { title: "__Scaduto__", description: "__Scaduto__" } }
-    ],
-    ["invalid", { "ko-KO": { title: "__만료됨__", description: "__만료됨__" } }]
+    ["invalid", { title: "__Scaduto__", description: "__Scaduto__" }],
+    ["invalid", {}]
   ] as ReadonlyArray<TestCaseParams>)(
     "should match snapshot when the status is %s and the message is %s",
     (credentialStatus, message) => {
@@ -216,10 +210,8 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     > = {
       status: "invalid",
       message: {
-        "it-IT": {
-          title: "__Issuer suspended title__",
-          description: "__Issuer suspended description__"
-        }
+        title: "__Issuer suspended title__",
+        description: "__Issuer suspended description__"
       }
     };
 
@@ -432,6 +424,11 @@ function renderComponent(credentialOverride: Partial<CredentialMetadata> = {}) {
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
       expiration: "2100-09-04T00:00:00.000Z"
+    },
+    validity: {
+      type: "status_assertion",
+      status: "valid",
+      statusAssertion: {} as any
     },
     spec_version: "1.0.0"
   };

@@ -14,7 +14,7 @@ import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../../../common/utils/itwMocksUtils.ts";
-import * as credentialSelectors from "../../../../credentials/store/selectors";
+import * as credentialStatusSelectors from "../../../../credentials/store/selectors/status";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider.tsx";
@@ -97,7 +97,7 @@ describe("ItwPresentationDetailsFooter", () => {
   it("tracks credential deletion from the detail screen with status and position", () => {
     jest.spyOn(Alert, "alert").mockImplementation(jest.fn());
     jest
-      .spyOn(credentialSelectors, "itwCredentialStatusSelector")
+      .spyOn(credentialStatusSelectors, "itwCredentialStatusSelector")
       .mockImplementation(() => ({
         status: "expired",
         message: undefined
