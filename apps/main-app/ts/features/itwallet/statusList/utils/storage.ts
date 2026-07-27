@@ -42,7 +42,12 @@ export const getLastStatusListCheckTimestamps = async (): Promise<
 > => {
   try {
     const raw = await AsyncStorage.getItem(STORAGE_KEY_LAST_CHECK_TIME);
-    return LastStatusListCheckTimestampsSchema.parse(JSON.parse(raw || ""));
+
+    if (raw === null || raw.trim() === "") {
+      return [];
+    }
+
+    return LastStatusListCheckTimestampsSchema.parse(JSON.parse(raw));
   } catch {
     return [];
   }
