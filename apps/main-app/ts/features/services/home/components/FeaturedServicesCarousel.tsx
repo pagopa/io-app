@@ -4,7 +4,14 @@ import {
   IOVisualCostants,
   triggerHaptic
 } from "@io-app/design-system";
-import { FlatList, FlatListProps, StyleSheet } from "react-native";
+import { useCallback, useRef } from "react";
+import {
+  FlatList,
+  FlatListProps,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  StyleSheet
+} from "react-native";
 
 import { TestID, WithTestID } from "../../../../types/WithTestID";
 import {
@@ -55,15 +62,36 @@ const FeaturedServicesCarouselBaseComponent = <T,>({
 const FeaturedServicesCarousel = ({
   services,
   testID
-}: FeaturedServicesCarouselProps) => (
-  <FeaturedServicesCarouselBaseComponent
-    data={services}
-    /* Fired once the snap animation settles on a card */
-    onMomentumScrollEnd={() => triggerHaptic("impactLight")}
-    renderItem={({ item }) => <FeaturedServiceCard {...item} />}
-    testID={testID}
-  />
-);
+}: FeaturedServicesCarouselProps) => {
+  const snappedOffsetRef = useRef(0);
+
+  /**
+   * A tap on the carousel also drags it by a few pixels, so the snap animation
+   * settles back on the very same card: comparing the offsets keeps the
+   * feedback tied to an actual card change.
+   */
+  const handleMomentumScrollEnd = useCallback(
+    ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const { x } = nativeEvent.contentOffset;
+
+      if (x !== snappedOffsetRef.current) {
+        // eslint-disable-next-line functional/immutable-data
+        snappedOffsetRef.current = x;
+        triggerHaptic("impactLight");
+      }
+    },
+    []
+  );
+
+  return (
+    <FeaturedServicesCarouselBaseComponent
+      data={services}
+      onMomentumScrollEnd={handleMomentumScrollEnd}
+      renderItem={({ item }) => <FeaturedServiceCard {...item} />}
+      testID={testID}
+    />
+  );
+};
 
 const FeaturedServicesCarouselSkeleton = ({ testID }: TestID) => (
   <FeaturedServicesCarouselBaseComponent
