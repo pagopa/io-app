@@ -97,7 +97,7 @@ export const getProximityDetails: GetProximityDetails = ({
     "No requested documents found in the Verifier request"
   );
 
-  return Object.entries(rest).map(
+  const proximityDetails = Object.entries(rest).map(
     ([docType, { isAuthenticated, certificateData, ...namespaces }]) => {
       // Stop the flow if the verifier (RP) is not trusted
       if (!isAuthenticated && requireAuthenticated) {
@@ -106,7 +106,7 @@ export const getProximityDetails: GetProximityDetails = ({
 
       const credential = credentialsByType[docType];
       if (!credential) {
-        throw new MissingCredentialError([docType]);
+        return undefined;
       }
 
       const rpId = getVerifierIdentity(certificateData, requireAuthenticated);
@@ -134,6 +134,17 @@ export const getProximityDetails: GetProximityDetails = ({
         })
       };
     }
+  );
+
+  const missingCredentials = Object.keys(rest).filter(
+    docType => !credentialsByType[docType]
+  );
+  if (missingCredentials.length > 0) {
+    throw new MissingCredentialError(missingCredentials);
+  }
+
+  return proximityDetails.filter(
+    details => details !== undefined
   ) as ProximityDetails;
 };
 
