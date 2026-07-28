@@ -526,7 +526,9 @@ export const TextInputBase = ({
           ]}
         >
           <Animated.Text
+            accessibilityElementsHidden={true}
             accessible={false}
+            importantForAccessibility="no-hide-descendants"
             maxFontSizeMultiplier={IOMaxFontSizeMultiplier}
             numberOfLines={1}
             onLayout={getLabelWidth}
