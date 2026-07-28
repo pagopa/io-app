@@ -11,6 +11,7 @@ import {
   itwLifecycleIsOperationalOrValid,
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
+import { hasPresentableCredentialsSelector } from "../../../presentation/proximity/store/selectors/credentials";
 import {
   itwIsRemotelyActiveSelector,
   itwIsWalletInstanceStatusFailureSelector
@@ -26,9 +27,21 @@ import {
 import {
   itwCredentialUpgradeFailedSelector,
   itwIsActivationDisabledSelector,
-  itwIsL3EnabledSelector
+  itwIsFiscalCodeWhitelisted
 } from "./preferences";
-import { isItwEnabledSelector } from "./remoteConfig";
+import {
+  isItwEnabledSelector,
+  isItwMinAppVersionSupportedSelector,
+  isItwProximityMinAppVersionSupportedSelector
+} from "./remoteConfig";
+
+/**
+ * Returns whether the L3 features are enabled.
+ * @param state the application global state
+ */
+export const itwIsL3EnabledSelector = (state: GlobalState) =>
+  !!itwIsFiscalCodeWhitelisted(state) ||
+  isItwMinAppVersionSupportedSelector(state);
 
 /**
  * Returns if the discovery banner should be rendered. The banner is rendered if:
@@ -250,3 +263,13 @@ export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
   itwIsL3EnabledSelector(state) &&
   itwLifecycleIsValidSelector(state) &&
   itwIsActivationDisabledSelector(state);
+
+/**
+ * Returns whether the IT Wallet proximity presentation feature is enabled:
+ * the wallet must be valid and the app version must meet the proximity minimum.
+ * The wallet must have at least one presentable credential.
+ */
+export const isItwProximityEnabledSelector = (state: GlobalState) =>
+  itwLifecycleIsITWalletValidSelector(state) &&
+  isItwProximityMinAppVersionSupportedSelector(state) &&
+  hasPresentableCredentialsSelector(state);

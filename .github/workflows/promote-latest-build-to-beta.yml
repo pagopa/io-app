@@ -1,3 +1,5 @@
+# This workflow can be triggered manually to promote the latest build of the app to the beta track.
+# It's published to the Play Store beta track after manual publishing through Play Console and TestFlight for external testers.
 name: Promote latest build to beta
 on: workflow_dispatch
 jobs:

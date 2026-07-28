@@ -101,9 +101,9 @@ const ItwSpidIdpLoginScreen = () => {
   // Setup header properties
   const headerProps: HeaderSecondLevelHookProps = {
     title: I18n.t(
-      `features.itWallet.identification.modeSelection.mode.spid.title.${
-        issuanceLevel === "l3" ? "l3" : "default"
-      }`
+      issuanceLevel === "l3"
+        ? "features.itWallet.identification.modeSelection.mode.spid.title.l3"
+        : "features.itWallet.identification.modeSelection.mode.spid.title.default"
     ),
     supportRequest: false,
     goBack: dismissalDialog.show
