@@ -219,4 +219,5 @@ type QualtricsSurveyId =
   | "confirm_eid_flow_exit"
   | "confirm_eid_flow_success"
   | "itw_credential_exit"
-  | "itw_eid_activation_exit";
+  | "itw_pid_activation_exit"
+  | "itw_pid_activation_success";
