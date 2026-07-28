@@ -31,7 +31,7 @@ const ItwActivationSuccessFeedbackBanner = ({
 
   const trackingProps: TrackQualtricsSurvey = useMemo(
     () => ({
-      survey_id: "confirm_eid_flow_success",
+      survey_id: "itw_pid_activation_success",
       survey_page: routeName
     }),
     [routeName]
