@@ -1,14 +1,11 @@
 const { TestEnvironment: NodeEnvironment } = require("jest-environment-node");
 
 /**
- * Test environment that pins `process.env.TZ` for the whole test file.
+ * Pins `process.env.TZ` for the whole test file.
  *
- * Jest workers are reused across files, and V8 only refreshes its date cache
- * when `process.env.TZ` is assigned in the worker process itself — assigning it
- * from inside a test has no effect. Setting it before the sandbox globals are
- * created is therefore the only way to control the zone per file, and the
- * previous value must be restored on teardown so the next file in the same
- * worker is not affected.
+ * V8 only refreshes its date cache when `TZ` is assigned in the worker process,
+ * so it must be set before the sandbox globals exist — assigning it from inside
+ * a test has no effect. Workers are reused, hence the restore on teardown.
  */
 class TimezoneEnvironment extends NodeEnvironment {
   constructor(config, context) {

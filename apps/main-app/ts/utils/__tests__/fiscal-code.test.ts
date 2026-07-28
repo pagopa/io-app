@@ -2,41 +2,54 @@
  * @jest-environment ./jest/TimezoneEnvironment.js
  * @jest-environment-options {"timezone": "America/New_York"}
  */
+import i18next from "i18next";
+
 import { availableTranslations, setLocale } from "../../i18n";
 import { formatFiscalCodeBirthdayAsShortFormat } from "../dates";
 
-/**
- * The suite is pinned to a negative-offset zone on purpose: the birth date is
- * stored as UTC midnight, so in `America/New_York` the *local* calendar day is
- * the 21st while the correct rendered value is the 22nd. Reading the date with
- * local getters instead of UTC ones therefore fails here, which is the
- * regression this suite guards (IABT-1403). Under `UTC` — the default for the
- * rest of the suite — both readings agree and the bug would slip through.
- */
+// Pinned to a negative-offset zone: the birth date is UTC midnight, so reading
+// it with local getters yields the 21st instead of the 22nd (IABT-1403). Under
+// UTC, the default elsewhere, that bug is invisible.
 const PINNED_TIMEZONE = "America/New_York";
 
 const BIRTH_DATE = new Date("1977-05-22T00:00:00.000Z");
 const EXPECTED_BIRTHDAY = "22/05/1977";
+const INVALID_DATE_KEY = "global.date.invalid";
+
+const invalidDateLabel = (locale: (typeof availableTranslations)[number]) =>
+  i18next.getFixedT(locale)(INVALID_DATE_KEY);
 
 describe("formatFiscalCodeBirthdayAsShortFormat", () => {
   it("runs in the pinned timezone", () => {
-    // Guards against the custom environment silently not being applied, which
-    // would make the assertions below pass for the wrong reason.
+    // Without this the assertions below could pass for the wrong reason.
     expect(Intl.DateTimeFormat().resolvedOptions().timeZone).toBe(
       PINNED_TIMEZONE
     );
     expect(BIRTH_DATE.getDate()).not.toBe(BIRTH_DATE.getUTCDate());
   });
 
-  // Driven by the shipped locale resources so a newly added language is
-  // covered automatically instead of silently skipped.
-  test.each(availableTranslations)(
-    "renders the UTC calendar day with locale %s",
-    locale => {
-      setLocale(locale);
-      expect(formatFiscalCodeBirthdayAsShortFormat(BIRTH_DATE)).toBe(
-        EXPECTED_BIRTHDAY
-      );
-    }
-  );
+  it("renders the UTC calendar day rather than the local one", () => {
+    expect(formatFiscalCodeBirthdayAsShortFormat(BIRTH_DATE)).toBe(
+      EXPECTED_BIRTHDAY
+    );
+  });
+
+  describe("when the date is not valid", () => {
+    it("has a distinct label per locale", () => {
+      const labels = availableTranslations.map(invalidDateLabel);
+      expect(new Set(labels).size).toBe(availableTranslations.length);
+    });
+
+    // The only locale-dependent branch: a valid date uses a plain dd/MM/yyyy
+    // template. Driven by the shipped resources so new languages are covered.
+    test.each(availableTranslations)(
+      "returns the label of the active locale %s",
+      locale => {
+        setLocale(locale);
+        expect(formatFiscalCodeBirthdayAsShortFormat(new Date("nope"))).toBe(
+          invalidDateLabel(locale)
+        );
+      }
+    );
+  });
 });
