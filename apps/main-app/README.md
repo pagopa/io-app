@@ -222,7 +222,7 @@ Follow the [React Native guide for running on a device](https://reactnative.dev/
 **iOS physical device notes:**
 
 - If you are not part of the PagoPA organisation, change the `Bundle Identifier` in Xcode → Signing (Debug) to something unique.
-- To test the CIE authentication flow on a physical device, run `pnpm nx run main-app:cie-ios-prod` before building. Revert with `pnpm nx run main-app:cie-ios-dev`.
+- To test the CIE authentication flow on a physical device, run `pnpm nx run main-app:cie-ios prod` before building. Revert with `pnpm nx run main-app:cie-ios dev`.
 
 ---
 

@@ -663,6 +663,11 @@
             "content": "Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo. Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.",
             "cta": "Come vengono ordinate le categorie?",
             "title": "Come vengono ordinate le categorie?"
+          },
+          "socialLinks": {
+            "facebook": "Facebook",
+            "instagram": "Instagram",
+            "linkedin": "LinkedIn"
           }
         },
         "discountOf": "Sconto del {{discount}}%",
@@ -936,6 +941,10 @@
         "leftButton": "Rileggi",
         "rightButton": "Firma",
         "title": "Firma tutto il documento"
+      },
+      "qtspErrorPage": {
+        "title": "Qualcosa non ha funzionato",
+        "subtitle": "Non siamo riusciti a recuperare i documenti. Riprova tra qualche minuto."
       },
       "qtspTos": {
         "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma **Namirial S.p.A.**",
@@ -1460,14 +1469,12 @@
               }
             },
             "ciePin": {
-              "badge": "consigliato",
               "bottomSheet": {
                 "entry-1": "La tua Carta di Identità Elettronica (CIE)",
                 "entry-2": "Il PIN a 8 cifre della CIE",
                 "subtitle": "Hai bisogno di:",
                 "title": "Continua con CIE + PIN"
               },
-              "reissuanceBadge": "Consigliato",
               "subtitle": {
                 "default": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
                 "l3": "Ha una durata di 12 mesi"
@@ -1842,6 +1849,10 @@
             "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano.",
             "invalid": {
               "cta": "Rimuovi documento dal Portafoglio"
+            },
+            "suspended": {
+              "action": "Scopri di più",
+              "title": "La tua Patente di guida risulta non valida."
             }
           },
           "statusAction": "Cosa posso fare?"
@@ -1889,6 +1900,10 @@
               "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
               "cta": "Scopri di più",
               "title": "Patente su IO: documento in scadenza"
+            },
+            "suspended": {
+              "content": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente.\n\nIl tuo documento potrebbe ad esempio essere stato sospeso o ritirato in via temporanea. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.\n\nQuando la Patente fisica sarà di nuovo valida, il documento digitale si aggiornerà in automatico.\n\nRicorda: puoi continuare a usare la Patente digitale come documento di riconoscimento.",
+              "cta": "Ho capito"
             }
           }
         },
