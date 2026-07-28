@@ -25,11 +25,6 @@ export const ItwProximityStoreConsentScreen = () => {
   const handleContinue =
     (storeConsent = false) =>
     () => {
-      if (storeConsent) {
-        trackItwProximitySavePreferencesConfirm();
-      } else {
-        trackItwProximitySavePreferencesDismiss();
-      }
       dispatch(
         identificationRequest(
           false,
@@ -40,10 +35,16 @@ export const ItwProximityStoreConsentScreen = () => {
             onCancel: () => undefined
           },
           {
-            onSuccess: () =>
+            onSuccess: () => {
+              if (storeConsent) {
+                trackItwProximitySavePreferencesConfirm();
+              } else {
+                trackItwProximitySavePreferencesDismiss();
+              }
               machineRef.send(
                 storeConsent ? { type: "store-consent" } : { type: "continue" }
-              )
+              );
+            }
           }
         )
       );
