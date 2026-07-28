@@ -1,4 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -95,6 +96,29 @@ describe("WrappedItwCredentialCard", () => {
 
     expect(mockNavigation).not.toHaveBeenCalled();
   });
+
+  const accessibilityScenarios = [
+    {
+      name: "PID, which renders the IT-Wallet ID logo",
+      props: { credentialType: "pid", withItwDesign: true },
+      expectedLabel: I18n.t("features.itWallet.credentialName.pid")
+    },
+    {
+      name: "mDL",
+      props: { credentialType: "mDL", withItwDesign: true },
+      expectedLabel: I18n.t("features.itWallet.credentialName.mdl")
+    }
+  ];
+
+  it.each(accessibilityScenarios)(
+    "should expose the credential name as accessibility label ($name)",
+    ({ props, expectedLabel }) => {
+      const { getByTestId } = renderComponent(props);
+      const button = getByTestId("ItwCredentialWalletCardTestID");
+
+      expect(button.props.accessibilityLabel).toBe(expectedLabel);
+    }
+  );
 });
 
 const renderComponent = (props: ItwCredentialWalletCardProps) => {
