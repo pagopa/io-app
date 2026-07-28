@@ -1,4 +1,4 @@
-import { Badge, ModuleNavigationAlt } from "@io-app/design-system";
+import { ModuleNavigationAlt } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 
@@ -27,20 +27,10 @@ export const CiePinMethodModule = ({
     isL3
   });
 
-  const badgeProps: Badge = {
-    testID: "CiePinRecommendedBadgeTestID",
-    text: I18n.t(
-      "features.itWallet.identification.modeSelection.mode.ciePin.badge"
-    ),
-    variant: "highlight",
-    outline: false
-  };
-
   if (isL3) {
     return (
       <>
         <ModuleNavigationAlt
-          badge={!isReissuanceMode ? badgeProps : undefined}
           icon="fiscalCodeIndividual"
           onPress={() => {
             trackItWalletIDMethodSelected({

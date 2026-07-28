@@ -4,8 +4,8 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as envSelectors from "../../../common/store/selectors/environment";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
 import * as itwRemoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 import { EnvType } from "../../../common/utils/environment";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
@@ -143,7 +143,7 @@ describe("WalletCardOnboardingScreen", () => {
         .mockReturnValue(true);
 
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
         .mockReturnValue(isL3Enabled);
 
       jest.spyOn(envSelectors, "selectItwEnv").mockReturnValue(env as EnvType);

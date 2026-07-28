@@ -850,7 +850,9 @@ export const getClaimDisplayValue = (
           return {
             renderAs: "text",
             value: I18n.t(
-              `features.itWallet.presentation.credentialDetails.boolClaim.${decoded}`
+              decoded
+                ? "features.itWallet.presentation.credentialDetails.boolClaim.true"
+                : "features.itWallet.presentation.credentialDetails.boolClaim.false"
             )
           };
         }

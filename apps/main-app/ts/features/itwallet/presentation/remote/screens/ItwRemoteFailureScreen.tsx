@@ -15,7 +15,7 @@ import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisa
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 import { useItwFailureSupportModal } from "../../../common/hooks/useItwFailureSupportModal.tsx";
 import { ZendeskSubcategoryValue } from "../../../common/hooks/useItwZendeskSupport";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
 import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";

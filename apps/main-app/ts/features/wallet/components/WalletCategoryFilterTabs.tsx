@@ -45,6 +45,11 @@ const WalletCategoryFilterTabs = () => {
     [categoryFilter]
   );
 
+  const categoryLabels = {
+    itw: I18n.t("features.wallet.cards.categories.itw"),
+    other: I18n.t("features.wallet.cards.categories.other")
+  };
+
   if (!isFilteringEnabled) {
     return null;
   }
@@ -67,17 +72,15 @@ const WalletCategoryFilterTabs = () => {
       >
         {[
           <TabItem
-            accessibilityLabel={I18n.t(`features.wallet.cards.categories.all`)}
+            accessibilityLabel={I18n.t("features.wallet.cards.categories.all")}
             key={`category_tab_all`}
-            label={I18n.t(`features.wallet.cards.categories.all`)}
+            label={I18n.t("features.wallet.cards.categories.all")}
           />,
           ...walletCardCategoryFilters.map(category => (
             <TabItem
-              accessibilityLabel={I18n.t(
-                `features.wallet.cards.categories.${category}`
-              )}
+              accessibilityLabel={categoryLabels[category]}
               key={`category_tab_${category}`}
-              label={I18n.t(`features.wallet.cards.categories.${category}`)}
+              label={categoryLabels[category]}
               testID={`CategoryTabTestID-${category}`}
             />
           ))
