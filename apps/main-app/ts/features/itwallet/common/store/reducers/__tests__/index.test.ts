@@ -246,7 +246,7 @@ describe("itWalletReducer migrations", () => {
     });
   });
 
-  it("should migrate the store to version 17: remove date from preferences.walletActivationFeedbackBannerData", async () => {
+  it("should migrate the store to version 17: remove date from preferences.walletActivationFeedbackBannerData, migrating it to banners.activationSuccessFeedback.shownOn", async () => {
     const previousState = {
       _persist: { version: 16, rehydrated: false },
       preferences: {
@@ -266,6 +266,60 @@ describe("itWalletReducer migrations", () => {
         walletActivationFeedbackBannerData: {
           authMethod: "SPID",
           docStatus: "active"
+        }
+      },
+      banners: {
+        activationSuccessFeedback: {
+          shownOn: "2025-01-14T20:43:21.361Z"
+        }
+      }
+    });
+  });
+
+  it("should migrate the store to version 17: leave state untouched when there is no walletActivationFeedbackBannerData.date to migrate", async () => {
+    const previousState = {
+      _persist: { version: 16, rehydrated: false },
+      preferences: {}
+    };
+
+    const newState = await migrate(previousState, 17);
+
+    expect(newState).toEqual({
+      _persist: { version: 16, rehydrated: false },
+      preferences: {}
+    });
+  });
+
+  it("should migrate the store to version 17: not overwrite an already-present banners.activationSuccessFeedback.shownOn", async () => {
+    const previousState = {
+      _persist: { version: 16, rehydrated: false },
+      preferences: {
+        walletActivationFeedbackBannerData: {
+          date: "2025-01-14T20:43:21.361Z",
+          authMethod: "SPID",
+          docStatus: "active"
+        }
+      },
+      banners: {
+        activationSuccessFeedback: {
+          shownOn: "2024-06-01T00:00:00.000Z"
+        }
+      }
+    };
+
+    const newState = await migrate(previousState, 17);
+
+    expect(newState).toEqual({
+      _persist: { version: 16, rehydrated: false },
+      preferences: {
+        walletActivationFeedbackBannerData: {
+          authMethod: "SPID",
+          docStatus: "active"
+        }
+      },
+      banners: {
+        activationSuccessFeedback: {
+          shownOn: "2024-06-01T00:00:00.000Z"
         }
       }
     });

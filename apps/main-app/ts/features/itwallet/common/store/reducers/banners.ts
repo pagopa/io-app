@@ -42,8 +42,8 @@ export const bannerHideDurations: Record<ItwBannerId, NonEmptyArray<number>> = {
 
 /**
  * Mapping between banner identifiers and the duration (expressed in days) for which they should stay
- * visible after being triggered, regardless of whether they were dismissed. Banners not listed here have
- * no visibility time limit.
+ * visible after being triggered (via `itwShowBanner`). Dismissal rules in `bannerHideDurations` still
+ * take precedence. Banners not listed here have no visibility time limit.
  */
 export const bannerVisibleDurations: Partial<Record<ItwBannerId, number>> = {
   activationSuccessFeedback: 7 // ~1 week

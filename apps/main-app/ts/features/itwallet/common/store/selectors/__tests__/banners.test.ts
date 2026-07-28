@@ -55,11 +55,27 @@ describe("itwIsBannerVisibleSelector - shown-window", () => {
       }
     }) as unknown as GlobalState;
 
-  it("returns true when the banner was never shown", () => {
+  it("returns false when the banner was never shown", () => {
     const state = buildState(undefined);
     expect(itwIsBannerVisibleSelector("activationSuccessFeedback")(state)).toBe(
-      true
+      false
     );
+  });
+
+  it("returns false when there is no persisted state at all for a banner with a configured visible duration", () => {
+    const state = {
+      features: { itWallet: { banners: {} } }
+    } as unknown as GlobalState;
+    expect(itwIsBannerVisibleSelector("activationSuccessFeedback")(state)).toBe(
+      false
+    );
+  });
+
+  it("returns true when there is no persisted state at all for a banner without a configured visible duration", () => {
+    const state = {
+      features: { itWallet: { banners: {} } }
+    } as unknown as GlobalState;
+    expect(itwIsBannerVisibleSelector("discovery")(state)).toBe(true);
   });
 
   it("returns true within the configured visible duration", () => {

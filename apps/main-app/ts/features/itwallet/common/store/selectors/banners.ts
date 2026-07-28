@@ -16,17 +16,22 @@ const itwBannersSelector = (state: GlobalState) =>
  * banner's lifecycle:
  * - Dismiss-cooldown: if the banner was dismissed, it stays hidden until `bannerHideDurations`
  *   has elapsed since the last dismissal, regardless of `shownOn`.
- * - Shown-window: if the banner tracks `shownOn`, it stays visible only within
- *   `bannerVisibleDurations` since it was first triggered. Banners that never set `shownOn`
- *   have no such constraint.
+ * - Shown-window: banners with a configured `bannerVisibleDurations` entry are visible only
+ *   within that window since `shownOn` was first set, and are not visible at all until then.
+ *   Banners without a configured window have no such constraint.
  */
 export const itwIsBannerVisibleSelector = (id: ItwBannerId) =>
   createSelector(itwBannersSelector, banners => {
     const bannerState = banners[id];
 
-    // Banner has no state, so it's visible
     if (!bannerState) {
-      return true;
+      /**
+       * Banners with a configured shown-window must have been triggered (shownOn set)
+       * before they can be visible, otherwise they'd show indefinitely for users who
+       * never went through the trigger flow (e.g. after migrating away legacy state).
+       * Banners without such a window have no visibility constraint, so they default to visible.
+       */
+      return bannerVisibleDurations[id] === undefined;
     }
 
     const { dismissedOn, dismissCount, shownOn } = bannerState;
@@ -47,14 +52,16 @@ export const itwIsBannerVisibleSelector = (id: ItwBannerId) =>
       }
     }
 
+    const visibleDurationInDays = bannerVisibleDurations[id];
+
     // Banner does not track a shown-window, so it has no further visibility constraint
-    if (!shownOn) {
+    if (visibleDurationInDays === undefined) {
       return true;
     }
 
-    const visibleDurationInDays = bannerVisibleDurations[id];
-    if (visibleDurationInDays === undefined) {
-      return true;
+    // Banner tracks a shown-window but was never triggered, so it must not be visible yet
+    if (!shownOn) {
+      return false;
     }
 
     const shownDate = new Date(shownOn);
