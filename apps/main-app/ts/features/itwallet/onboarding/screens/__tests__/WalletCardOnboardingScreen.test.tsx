@@ -16,7 +16,7 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
 
 describe("WalletCardOnboardingScreen", () => {
-  it("it should render the screen correctly", () => {
+  it("should render the screen correctly", () => {
     jest
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockReturnValue(true);
@@ -29,7 +29,7 @@ describe("WalletCardOnboardingScreen", () => {
     expect(component).toBeTruthy();
   });
 
-  it("it should render the IT Wallet modules", () => {
+  it("should render the IT Wallet modules", () => {
     jest
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockReturnValue(true);

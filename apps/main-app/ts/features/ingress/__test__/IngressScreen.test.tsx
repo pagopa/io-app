@@ -54,7 +54,7 @@ describe(IngressScreen, () => {
       expect(queryByTestId("ingress-screen-loader-id")).toBeNull();
       expect(operationResults).toBeTruthy();
     });
-    it("It should begin the identification flow", async () => {
+    it("should begin the identification flow", async () => {
       const testDispatch = jest.fn();
       jest
         .spyOn(selectors, "isConnectedSelector")

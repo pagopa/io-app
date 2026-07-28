@@ -46,6 +46,25 @@ const reactNativeSanitizedConfig = reactNativeConfig.map(config => {
   return { ...config, plugins, rules };
 });
 
+// Pagopa scopes its jest block to `.{js,ts}`, so `.tsx` test files — every
+// component and screen test — get no jest linting at all. Widen that block's
+// globs so both extensions share one rule set; a separate `.tsx` block would
+// duplicate 24 rules and drift on the next config bump.
+const pagopaSanitizedConfig = pagopaConfig.map(config => {
+  if (!config.plugins?.jest) {
+    return config;
+  }
+  const files = config.files.map(glob =>
+    glob.replace("{js,ts}", "{js,ts,tsx}")
+  );
+  if (files.every((glob, i) => glob === config.files[i])) {
+    throw new Error(
+      "@pagopa/eslint-config/jest globs no longer match `{js,ts}`; update the tsx widening above."
+    );
+  }
+  return { ...config, files };
+});
+
 export default defineConfig([
   globalIgnores([
     "**/*.js",
@@ -59,7 +78,7 @@ export default defineConfig([
 
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
   // eslint-plugin-prettier, perfectionist.
-  ...pagopaConfig,
+  ...pagopaSanitizedConfig,
 
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -353,10 +372,8 @@ export default defineConfig([
   {
     // Data-driven tests here derive titles dynamically (loop variables,
     // `fn.name`, ternaries). Allow non-string titles while keeping the
-    // empty/whitespace/duplicate-prefix checks active. Scoped to `.ts` test
-    // files only: `jest/valid-title` is an active rule and pagopa's config
-    // only registers the jest plugin for `.{js,ts}` test files, not `.tsx`.
-    files: ["**/*.test.ts", "**/__tests__/**/*.ts"],
+    // empty/whitespace/duplicate-prefix checks active.
+    files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
 
     rules: {
       "jest/valid-title": [
@@ -369,10 +386,19 @@ export default defineConfig([
       // Saga tests assert through redux-saga-test-plan's chainable APIs
       // (`testSaga(...).next()`, `expectSaga(...).run()`) rather than a bare
       // `expect`, so teach the rule to treat those as assertion helpers.
+      // The trailing entries are local helpers that hold the assertions for a
+      // parameterised suite; inlining them would duplicate the body per case.
       "jest/expect-expect": [
         "warn",
         {
-          assertFunctionNames: ["expect", "expectSaga", "testSaga"]
+          assertFunctionNames: [
+            "expect",
+            "expectSaga",
+            "testSaga",
+            "commonAccessibilityTestCode",
+            "testIsAppSupportedSelector",
+            "testRootModal"
+          ]
         }
       ]
     }
