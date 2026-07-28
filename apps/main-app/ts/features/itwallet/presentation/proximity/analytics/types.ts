@@ -14,6 +14,10 @@ export type ItwProximityGenericFailure = ItwProximityFailure & {
   proximity_sharing_status: "post" | "pre";
 };
 
+export type ItwProximityHttpFailure = {
+  reason: unknown;
+};
+
 export type ItwProximityQrCode = {
   qr_code_status: "generation_failed" | "PID_expired" | "valid";
   source: "ITW_CREDENTIAL_DETAIL" | "WALLET_HOME";

@@ -10,7 +10,10 @@ import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.ts
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
-import { trackItwProximityUnofficialVerifierBottomSheet } from "../analytics/index.ts";
+import {
+  trackItwProximityRpNotTrustedBottomSheet,
+  trackItwProximityUnofficialVerifierBottomSheet
+} from "../analytics/index.ts";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
@@ -48,6 +51,22 @@ const ContentView = ({ failure }: ContentViewProps) => {
     title: I18n.t(
       "features.itWallet.presentation.proximity.relyingParty.untrustedRp.bottomSheet.title"
     )
+    // TODO: [SIW-4482] Uncomment when the FAQ are ready
+    /*     footer: (
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
+            onPress: () => {
+              trackItwProximityRpNotTrustedDiscoverMore();
+            },
+            label: I18n.t(
+              "features.itWallet.presentation.proximity.relyingParty.untrustedRp.bottomSheet.primaryAction"
+            )
+          }
+        }}
+      />
+    ) */
   });
 
   const getOperationResultScreenContentProps =
@@ -116,6 +135,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               ),
               onPress: () => {
                 trackItwProximityUnofficialVerifierBottomSheet();
+                trackItwProximityRpNotTrustedBottomSheet();
                 present();
               }
             }
