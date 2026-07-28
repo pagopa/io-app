@@ -29,6 +29,5 @@ module.exports = {
     "<rootDir>/ts/features/design-system/",
     "<rootDir>/ts/features/.*/playgrounds/",
     "<rootDir>/ts/features/settings/devMode/"
-  ],
-  testPathIgnorePatterns: [".*fiscal-code.test.ts$"]
+  ]
 };
