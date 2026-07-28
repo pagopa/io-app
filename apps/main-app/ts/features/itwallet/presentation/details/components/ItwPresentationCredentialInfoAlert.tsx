@@ -9,7 +9,6 @@ import {
   ItwCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 type Props = {
   credential: CredentialMetadata;
@@ -29,24 +28,9 @@ const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
   const { status } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   if (!validStates.includes(status)) {
     return null;
-  }
-
-  if (credentialType === CredentialType.DRIVING_LICENSE) {
-    return (
-      <Alert
-        content={
-          withL3Design
-            ? I18n.t("features.itWallet.presentation.alerts.mdl.contentL3")
-            : I18n.t("features.itWallet.presentation.alerts.mdl.content")
-        }
-        testID="itwMdlBannerTestID"
-        variant="info"
-      />
-    );
   }
 
   if (credentialType === CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD) {

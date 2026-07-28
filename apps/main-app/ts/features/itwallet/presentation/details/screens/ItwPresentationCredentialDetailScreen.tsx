@@ -65,6 +65,7 @@ import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase.tsx";
+import { ItwPresentationMdlInfoBanner } from "../components/ItwPresentationMdlInfoBanner.tsx";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus.tsx";
 import { shouldShowMdlUpdateDigitalCredential } from "../utils";
 
@@ -369,6 +370,7 @@ export const ItwPresentationCredentialDetail = ({
           <ItwPresentationAdditionalInfoSection credential={credential} />
           <ItwPresentationCredentialStatusAlert credential={credential} />
           <ItwPresentationCredentialInfoAlert credential={credential} />
+          <ItwPresentationMdlInfoBanner credential={credential} />
           <ItwPresentationClaimsSection credential={credential} />
           {!itwFeaturesEnabled && (
             <ItwCredentialTrustmark
