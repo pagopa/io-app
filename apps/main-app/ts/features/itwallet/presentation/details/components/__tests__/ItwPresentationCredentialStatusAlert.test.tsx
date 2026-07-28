@@ -433,7 +433,12 @@ function renderComponent(credentialOverride: Partial<CredentialMetadata> = {}) {
       issuedAt: "2024-09-30T07:32:49.000Z",
       expiration: "2100-09-04T00:00:00.000Z"
     },
-    spec_version: "1.0.0"
+    spec_version: "1.0.0",
+    validity: {
+      type: "status_assertion",
+      status: "valid",
+      statusAssertion: {} as any
+    }
   };
   const credential: CredentialMetadata = {
     ...mockedMdl,
