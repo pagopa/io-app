@@ -3116,6 +3116,7 @@ packages:
 
   '@react-navigation/bottom-tabs@6.5.11':
     resolution: {integrity: sha512-CBN/NOdxnMvmjw+AJQI1kltOYaClTZmGec5pQ3ZNTPX86ytbIOylDIITKMfTgHZcIEFQDymx1SHeS++PIL3Szw==}
+    deprecated: This version is no longer supported
     peerDependencies:
       '@react-navigation/native': ^6.0.0
       react: '*'
@@ -3161,6 +3162,7 @@ packages:
 
   '@react-navigation/native@6.1.18':
     resolution: {integrity: sha512-mIT9MiL/vMm4eirLcmw2h6h/Nm5FICtnYSdohq4vTLA2FF/6PNhByM7s8ffqoVfE5L0uAa6Xda1B7oddolUiGg==}
+    deprecated: This version is no longer supported
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -3171,6 +3173,7 @@ packages:
 
   '@react-navigation/stack@6.4.1':
     resolution: {integrity: sha512-upMEHOKMtuMu4c9gmoPlO/JqI6mDlSqwXg1aXKOTQLXAF8H5koOLRfrmi7AkdiE9A7lDXWUAZoGuD9O88cYvDQ==}
+    deprecated: This version is no longer supported
     peerDependencies:
       '@react-navigation/native': ^6.0.0
       react: '*'
