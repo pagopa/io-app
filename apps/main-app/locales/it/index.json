@@ -2294,12 +2294,12 @@
           },
           "other": {
             "title": "Non puoi continuare perché mancano alcuni documenti",
-            "subtitle": "Scopri i documenti mancanti necessari per questa verifica. ",
+            "subtitle": "Scopri i documenti mancanti necessari per questa verifica.",
             "primaryAction": "Mostra documenti",
             "secondaryAction": "Chiudi",
             "bottomSheet": {
               "title": "Documenti mancanti",
-              "subtitle": "I seguenti documenti non sono presenti nel tuo Portafoglio IT-Wallet. ",
+              "subtitle": "I seguenti documenti non sono presenti nel tuo Portafoglio IT-Wallet.",
               "primaryAction": "Aggiungi documento"
             }
           }

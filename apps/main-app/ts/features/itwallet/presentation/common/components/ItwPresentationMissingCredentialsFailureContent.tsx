@@ -6,6 +6,7 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
+import { Fragment } from "react";
 
 import {
   OperationResultScreenContent,
@@ -48,14 +49,13 @@ export const ItwPresentationMissingCredentialsFailureContent = ({
         {missingCredentials.map((type, index) => {
           const credentialName = resolveCredentialName(type);
           return (
-            <>
+            <Fragment key={type}>
               {index !== 0 && <Divider />}
               <ListItemInfo
                 icon="fiscalCodeIndividual"
-                key={type}
                 value={credentialName}
               />
-            </>
+            </Fragment>
           );
         })}
         <VSpacer size={32} />
