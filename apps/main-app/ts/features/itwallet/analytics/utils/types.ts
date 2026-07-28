@@ -120,6 +120,8 @@ export type ItwStatus =
 
 export type ItwThirdPartyCredentials = "not_available" | "not_valid" | "valid";
 
+export type ItwWalletListCredential = "not_available" | "not_valid" | "valid";
+
 export type TrackITWalletIDMethodSelected = {
   itw_flow: ItwFlow;
   ITW_ID_method: ItwIdMethod;

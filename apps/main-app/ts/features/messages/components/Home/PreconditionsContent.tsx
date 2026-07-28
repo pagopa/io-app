@@ -10,24 +10,18 @@ import {
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import {
-  isIOMarkdownEnabledForMessagesAndServicesSelector,
-  pnMinAppVersionSelector
-} from "../../../../store/reducers/backendStatus/remoteConfig";
+import { pnMinAppVersionSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { trackDisclaimerLoadError } from "../../analytics";
 import {
   errorPreconditionStatusAction,
-  shownPreconditionStatusAction,
-  toErrorPayload,
-  toShownPayload
+  toErrorPayload
 } from "../../store/actions/preconditions";
 import {
   preconditionsCategoryTagSelector,
   preconditionsContentMarkdownSelector,
   preconditionsContentSelector
 } from "../../store/reducers/messagePrecondition";
-import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
 import { PreconditionsFeedback } from "./PreconditionsFeedback";
 
 type PreconditionsContentProps = {
@@ -58,14 +52,8 @@ const PreconditionsContentMarkdown = ({
   const store = useIOStore();
   const linkTo = useLinkTo();
 
-  const useIOMarkdown = useIOSelector(
-    isIOMarkdownEnabledForMessagesAndServicesSelector
-  );
   const markdown = useIOSelector(preconditionsContentMarkdownSelector);
 
-  const onLoadEndCallback = useCallback(() => {
-    dispatch(shownPreconditionStatusAction(toShownPayload()));
-  }, [dispatch]);
   const onErrorCallback = useCallback(
     (anyError: any) => {
       const state = store.getState();
@@ -86,22 +74,11 @@ const PreconditionsContentMarkdown = ({
   }
   return (
     <View>
-      {useIOMarkdown ? (
-        <IOMarkdown
-          content={markdown}
-          onError={onErrorCallback}
-          rules={generateMessagesAndServicesRules(linkTo)}
-        />
-      ) : (
-        <MessageMarkdown
-          loadingLines={7}
-          onError={onErrorCallback}
-          onLoadEnd={onLoadEndCallback}
-          testID="preconditions_content_message_markdown"
-        >
-          {markdown}
-        </MessageMarkdown>
-      )}
+      <IOMarkdown
+        content={markdown}
+        onError={onErrorCallback}
+        rules={generateMessagesAndServicesRules(linkTo)}
+      />
       {/* This view is needed since the bottom sheet has a FooterActions component
           that is partially visible above the content. Without the extra space, the
           Markdown will go underneath it */}

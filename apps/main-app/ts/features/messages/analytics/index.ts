@@ -88,6 +88,12 @@ export const trackOpenMessage = (
   void mixpanelTrack(eventName, props);
 };
 
+export const trackMessageNotFoundScreen = () => {
+  const eventName = "MESSAGE_NOT_AVAILABLE";
+  const props = buildEventProperties("KO", "screen_view");
+  void mixpanelTrack(eventName, props);
+};
+
 export const trackCTAFrontMatterDecodingError = (
   reason: string,
   serviceId: ServiceId

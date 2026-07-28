@@ -1,4 +1,4 @@
-import { Banner, Body, IOButton, VSpacer } from "@io-app/design-system";
+import { Alert, Body, IOButton, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { View } from "react-native";
 
@@ -35,15 +35,14 @@ export const BannerAttachments = () => {
   });
   return (
     <>
-      <Banner
+      <Alert
         action={I18n.t("features.pn.details.attachmentsSection.banner.action")}
-        color="neutral"
         content={I18n.t(
           "features.pn.details.attachmentsSection.banner.content"
         )}
         onPress={present}
-        pictogramName="attachment"
-        testID="banner-attachment-banner"
+        testID="SEND-attachments-alert"
+        variant="info"
       />
       <VSpacer size={16} />
       {bottomSheet}

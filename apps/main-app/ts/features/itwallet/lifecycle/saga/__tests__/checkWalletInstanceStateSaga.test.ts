@@ -50,6 +50,7 @@ describe("checkWalletInstanceStateSaga", () => {
 
   it("Checks the wallet state when the wallet is OPERATIONAL", () => {
     const store: DeepPartial<GlobalState> = {
+      remoteConfig: O.none,
       features: {
         itWallet: {
           issuance: {
@@ -81,6 +82,7 @@ describe("checkWalletInstanceStateSaga", () => {
 
   it("Checks and resets the wallet state when the wallet is OPERATIONAL and the instance was revoked", () => {
     const store: DeepPartial<GlobalState> = {
+      remoteConfig: O.none,
       features: {
         itWallet: {
           issuance: {
@@ -110,6 +112,7 @@ describe("checkWalletInstanceStateSaga", () => {
 
   it("Checks the wallet state when the wallet is VALID", () => {
     const store: DeepPartial<GlobalState> = {
+      remoteConfig: O.none,
       features: {
         itWallet: {
           issuance: {
@@ -141,6 +144,7 @@ describe("checkWalletInstanceStateSaga", () => {
 
   it("Checks and resets the wallet state when the wallet is VALID and the instance was revoked", () => {
     const store: DeepPartial<GlobalState> = {
+      remoteConfig: O.none,
       features: {
         itWallet: {
           issuance: {
@@ -193,6 +197,7 @@ describe("checkWalletInstanceStateSaga", () => {
 
   it("Resets the wallet instance when the status endpoint returns 404 with a valid key tag", () => {
     const store: DeepPartial<GlobalState> = {
+      remoteConfig: O.none,
       features: {
         itWallet: {
           issuance: {

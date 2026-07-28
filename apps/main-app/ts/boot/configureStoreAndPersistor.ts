@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as O from "fp-ts/lib/Option";
-import _, { merge, omit } from "lodash";
+import { get, merge, omit, set } from "lodash";
 import {
   applyMiddleware,
   compose,
@@ -151,16 +151,14 @@ const migrations: MigrationManifest = {
   // we removed selectedFiscalCodes from organizations
   "6": (state: PersistedState) => {
     const entitiesState = (state as PersistedGlobalState).entities;
-    const organizations = entitiesState.organizations;
+    const organizations = get(entitiesState, "organizations", {});
     return {
       ...state,
       entities: {
-        ...(entitiesState ? entitiesState : {}),
+        ...entitiesState,
         organizations: {
-          nameByFiscalCode: organizations.nameByFiscalCode
-            ? organizations.nameByFiscalCode
-            : {},
-          all: organizations.all ? organizations.all : {}
+          nameByFiscalCode: organizations.nameByFiscalCode || {},
+          all: organizations.all || {}
         }
       }
     };
@@ -168,7 +166,7 @@ const migrations: MigrationManifest = {
 
   // Version 7
   // we empty the services list to get both services list and services metadata being reloaded and persisted
-  "7": (state: PersistedState) => _.set(state, "entities.services.byId", {}),
+  "7": (state: PersistedState) => set(state, "entities.services.byId", {}),
 
   // Version 8
   // we load services scope in an specific view. So now it is uselss to hold (old) services metadata
@@ -284,9 +282,7 @@ const migrations: MigrationManifest = {
     const content: ContentState = (state as PersistedGlobalState).content;
     return {
       ...state,
-      content: {
-        ..._.omit(content, "servicesMetadata")
-      }
+      content: omit(content, "servicesMetadata")
     };
   },
   // Version 19
@@ -353,9 +349,10 @@ const migrations: MigrationManifest = {
       .persistedPreferences;
     return {
       ...state,
-      persistedPreferences: {
-        ..._.omit(persistedPreferences, "isExperimentalFeaturesEnabled")
-      }
+      persistedPreferences: omit(
+        persistedPreferences,
+        "isExperimentalFeaturesEnabled"
+      )
     };
   },
   // Version 24
