@@ -1,5 +1,6 @@
 import { Divider, IOVisualCostants, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { StackActions } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useEffect, useState } from "react";
 import { FlatList } from "react-native";
@@ -15,31 +16,23 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
-import {
-  trackFciPollingFailureAction,
-  trackFciPollingFailureScreenView,
-  trackFciQtspTos,
-  trackFciUxConversion
-} from "../../analytics";
+import { trackFciQtspTos, trackFciUxConversion } from "../../analytics";
 import LinkedText from "../../components/LinkedText";
 import LoadingComponent from "../../components/LoadingComponent";
 import QtspClauseListItem from "../../components/QtspClauseListItem";
-import SignatureStatusComponent from "../../components/SignatureStatusComponent";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { useFciCheckService } from "../../hooks/useFciCheckService";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { fciEndRequest, fciStartSigningRequest } from "../../store/actions";
+import { fciStartSigningRequest } from "../../store/actions";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
-import {
-  fciPollFilledDocumentErrorSelector,
-  fciPollFilledDocumentReadySelector
-} from "../../store/reducers/fciPollFilledDocument";
+import { fciPollFilledDocumentReadySelector } from "../../store/reducers/fciPollFilledDocument";
 import {
   fciQtspClausesSelector,
   fciQtspPrivacyTextSelector,
   fciQtspPrivacyUrlSelector
 } from "../../store/reducers/fciQtspClauses";
+import { fciQtspErrorKindSelector } from "../../store/selectors/fciErrors";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -55,9 +48,7 @@ const FciQtspClausesScreen = () => {
   const isPollFilledDocumentReady = useIOSelector(
     fciPollFilledDocumentReadySelector
   );
-  const fciPollFilledDocumentError = useIOSelector(
-    fciPollFilledDocumentErrorSelector
-  );
+  const qtspErrorKind = useIOSelector(fciQtspErrorKindSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
 
   const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);
@@ -67,15 +58,25 @@ const FciQtspClausesScreen = () => {
     isServicePreferenceResponseSuccess(servicePreferenceValue) &&
     servicePreferenceValue.value.inbox;
 
-  useOnFirstRender(() => {
-    trackFciQtspTos();
-  });
+  // tracks only when polling is finished
+  useOnFirstRender(
+    () => {
+      trackFciQtspTos();
+    },
+    () => !qtspErrorKind && isPollFilledDocumentReady
+  );
 
   useEffect(() => {
     if (fciServiceId) {
       dispatch(loadServicePreference.request(fciServiceId as ServiceId));
     }
   }, [dispatch, fciServiceId]);
+
+  useEffect(() => {
+    if (qtspErrorKind) {
+      navigation.dispatch(StackActions.replace(FCI_ROUTES.QTSP_ERROR));
+    }
+  }, [qtspErrorKind, navigation]);
 
   const { present: showCheckService, bottomSheet: fciCheckService } =
     useFciCheckService();
@@ -94,43 +95,14 @@ const FciQtspClausesScreen = () => {
     });
   };
 
-  useEffect(() => {
-    if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
-      trackFciPollingFailureScreenView();
-    }
-  }, [fciPollFilledDocumentError, isPollFilledDocumentReady]);
-
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
     contextualHelp: emptyContextualHelp,
-    headerShown: isPollFilledDocumentReady && !fciPollFilledDocumentError
+    headerShown: isPollFilledDocumentReady
   });
 
-  if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
-    return (
-      <SignatureStatusComponent
-        assistance={true}
-        onPress={() => {
-          trackFciPollingFailureAction(
-            "custom_1",
-            I18n.t("features.fci.errors.buttons.back")
-          );
-          dispatch(fciEndRequest());
-        }}
-        onPressAssistance={() =>
-          trackFciPollingFailureAction(
-            "custom_2",
-            I18n.t("features.fci.errors.buttons.assistance")
-          )
-        }
-        pictogram={"umbrella"}
-        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
-        testID="PollingErrorComponentTestID"
-        title={I18n.t("features.fci.errors.generic.default.title")}
-      />
-    );
-  } else if (!isPollFilledDocumentReady) {
+  if (qtspErrorKind || !isPollFilledDocumentReady) {
     return <LoadingComponent testID={"FciLoadingScreenTestID"} />;
   }
 

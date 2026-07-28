@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.3](https://github.com/pagopa/io-app/compare/3.38.0-rc.2...3.38.0-rc.3) (2026-07-27)
+
+
+### Chores
+
+* [[IEL-601](https://pagopa.atlassian.net/browse/IEL-601),[IEL-729](https://pagopa.atlassian.net/browse/IEL-729)] Added Qtsp Error Screen ([#8194](https://github.com/pagopa/io-app/issues/8194)) ([5fae8e9](https://github.com/pagopa/io-app/commit/5fae8e9985b3167f7a785d3267657933ef5e46f3))
+* **CI:** [[IOAPPX-528](https://pagopa.atlassian.net/browse/IOAPPX-528)] Makes CIE config script idempotent  ([#8347](https://github.com/pagopa/io-app/issues/8347)) ([ca9ea52](https://github.com/pagopa/io-app/commit/ca9ea521ac2422c74d9c7a48c550aa48f4d7568a))
+
 ## [3.38.0-rc.2](https://github.com/pagopa/io-app/compare/3.38.0-rc.1...3.38.0-rc.2) (2026-07-25)
 
 
