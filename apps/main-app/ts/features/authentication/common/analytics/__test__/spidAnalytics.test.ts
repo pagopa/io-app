@@ -1,5 +1,6 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../../../mixpanelConfig/superProperties";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import { AUTH_ERRORS } from "../../components/AuthErrorComponent";
 import {
@@ -18,6 +19,10 @@ jest.mock("../../../../../utils/analytics", () => ({
 
 jest.mock("../../../../../mixpanelConfig/profileProperties", () => ({
   updateMixpanelProfileProperties: jest.fn()
+}));
+
+jest.mock("../../../../../mixpanelConfig/superProperties", () => ({
+  updateMixpanelSuperProperties: jest.fn()
 }));
 
 describe("spidAnalytics", () => {
@@ -94,6 +99,11 @@ describe("spidAnalytics", () => {
     await trackLoginSpidIdpSelected("test-idp", mockState);
 
     expect(updateMixpanelProfileProperties).toHaveBeenCalledWith(mockState, {
+      property: "LOGIN_METHOD",
+      value: "test-idp"
+    });
+
+    expect(updateMixpanelSuperProperties).toHaveBeenCalledWith(mockState, {
       property: "LOGIN_METHOD",
       value: "test-idp"
     });

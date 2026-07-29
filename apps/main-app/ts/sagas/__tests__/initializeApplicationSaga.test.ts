@@ -46,6 +46,7 @@ import { trackKeychainFailures } from "../../utils/analytics";
 import { previousInstallationDataDeleteSaga } from "../installation";
 import {
   initMixpanel,
+  updateMixpanelProfileAndSuperProperties,
   watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "../mixpanel";
 import {
@@ -517,6 +518,8 @@ describe("initializeApplicationSaga", () => {
       .select(userFromSuccessLoginSelector)
       .next()
       .call(shouldTrackLevelSecurityMismatchSaga, aSessionInfo, true)
+      .next()
+      .call(updateMixpanelProfileAndSuperProperties)
       .next()
       .select(lollipopPublicKeySelector)
       .next(aPublicKey)

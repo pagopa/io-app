@@ -156,6 +156,7 @@ import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
   initMixpanel,
+  updateMixpanelProfileAndSuperProperties,
   watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "./mixpanel";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
@@ -463,6 +464,9 @@ export function* initializeApplicationSaga(
       maybeSessionInformation,
       isActiveLoginSuccessProp
     );
+    // Update Mixpanel profile and super properties at the end of every
+    // auth flow (mainly for the auth security level and login method)
+    yield* call(updateMixpanelProfileAndSuperProperties);
   }
 
   const publicKey = yield* select(lollipopPublicKeySelector);

@@ -14,10 +14,12 @@ import {
   terminateMixpanel
 } from "../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../mixpanelConfig/superProperties";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
+import { GlobalState } from "../../store/reducers/types";
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
@@ -25,6 +27,7 @@ import {
   initMixpanel,
   resetMixpanelSaga,
   testable,
+  updateMixpanelProfileAndSuperProperties,
   watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "../mixpanel";
 
@@ -55,6 +58,21 @@ describe("mixpanel", () => {
   describe("resetMixpanelSaga", () => {
     it("should call resetMixpanel", () => {
       testSaga(resetMixpanelSaga).next().call(resetMixpanel).next().isDone();
+    });
+  });
+
+  describe("updateMixpanelProfileAndSuperProperties", () => {
+    it("should select the state and update both profile and super properties", () => {
+      const aState = {} as GlobalState;
+      testSaga(updateMixpanelProfileAndSuperProperties)
+        .next()
+        .select()
+        .next(aState)
+        .call(updateMixpanelProfileProperties, aState)
+        .next()
+        .call(updateMixpanelSuperProperties, aState)
+        .next()
+        .isDone();
     });
   });
 

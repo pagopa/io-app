@@ -14,6 +14,7 @@ import {
   terminateMixpanel
 } from "../mixpanel";
 import { updateMixpanelProfileProperties } from "../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../mixpanelConfig/superProperties";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
@@ -96,6 +97,16 @@ export function* resetMixpanelSaga(): Generator<
   boolean
 > {
   yield* call(resetMixpanel);
+}
+
+/**
+ * Recomputes and pushes all Mixpanel profile and super properties
+ * from the current state.
+ */
+export function* updateMixpanelProfileAndSuperProperties() {
+  const state: GlobalState = yield* select();
+  yield* call(updateMixpanelProfileProperties, state);
+  yield* call(updateMixpanelSuperProperties, state);
 }
 
 export function* watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel() {
