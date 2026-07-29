@@ -79,7 +79,7 @@ export const ItwBluetoothActivationScreen = () => {
           label: I18n.t(
             "features.itWallet.presentation.proximity.bluetooth.activation.actions.secondary"
           ),
-          onPress: handleContinue
+          onPress: () => void handleContinue()
         }
       }}
       listItemHeaderLabel={I18n.t(

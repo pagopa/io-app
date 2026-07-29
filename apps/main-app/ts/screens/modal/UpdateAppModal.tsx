@@ -71,7 +71,7 @@ const UpdateAppModal: FC = () => {
         action={{
           label: actionLabel,
           accessibilityLabel: actionLabel,
-          onPress: openAppStore
+          onPress: () => void openAppStore()
         }}
         pictogram="updateOS"
         subtitle={subtitle}

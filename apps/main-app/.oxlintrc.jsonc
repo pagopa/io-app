@@ -22,7 +22,6 @@
     "**/*.cjs",
     "**/*.mjs",
     "**/locales/locales.ts",
-    "**/ts/utils/__tests__/xss.test.ts",
     "**/definitions/**",
     "**/*.typegen.ts"
   ],
@@ -188,7 +187,9 @@
             ]
           }
         ],
-        "delegate-effects/delegate-effects": "error",
+        "io-app/delegate-effects": "error",
+        // Disallow dynamically-built i18n keys so unused-key detection stays reliable
+        "io-app/i18n-no-dynamic-keys": "warn",
         "func-names": "off",
         "func-style": "off",
         "new-cap": "off",
@@ -242,6 +243,7 @@
         "max-classes-per-file": ["error", 1],
         "arrow-body-style": "error",
         "react/jsx-key": "error",
+        "react/jsx-no-constructed-context-values": "error",
         "react/no-direct-mutation-state": "off",
         "functional/no-let": "error",
         "functional/immutable-data": [
@@ -368,9 +370,18 @@
         ],
         "typescript/await-thenable": "error",
         "typescript/consistent-type-assertions": "error",
+        "typescript/no-dynamic-delete": "error",
         "typescript/no-floating-promises": "error",
+        "typescript/no-misused-promises": "error",
         "typescript/prefer-function-type": "error",
         "typescript/restrict-plus-operands": "error",
+        "typescript/strict-boolean-expressions": [
+          "warn",
+          {
+            "allowNullableBoolean": true,
+            "allowNullableString": true
+          }
+        ],
         "typescript/unified-signatures": "error",
         // Curated perfectionist sorts (natural order), a subset of master's
         // `recommended-natural` preset covering the highest-value cases.
@@ -393,9 +404,9 @@
         "eslint-plugin-react-native-a11y",
         "eslint-plugin-functional",
         "eslint-plugin-sonarjs",
-        // Local plugin exposing the custom delegate-effects rule (no native oxlint equivalent)
-        // Source: scripts/eslint/delegate-effects-plugin.js (installed as a local package)
-        "eslint-plugin-delegate-effects",
+        // Local plugin exposing the project's custom rules (no native oxlint equivalent)
+        // Source: scripts/eslint (installed as a local package)
+        "eslint-plugin-io-app",
         "eslint-plugin-i18next",
         "eslint-plugin-perfectionist"
       ],
@@ -456,9 +467,10 @@
         "typescript/no-require-imports": "off",
         "typescript/unbound-method": "off",
         "typescript/no-misused-spread": "off",
-        "i18next/no-literal-string": "off"
+        "i18next/no-literal-string": "off",
+        "react/jsx-no-constructed-context-values": "off"
       },
-      "plugins": ["typescript"]
+      "plugins": ["typescript", "react"]
     },
     {
       // Scoped to `.ts` test files only: data-driven tests derive titles

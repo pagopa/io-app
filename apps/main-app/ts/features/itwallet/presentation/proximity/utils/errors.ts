@@ -1,5 +1,12 @@
 /* eslint-disable max-classes-per-file */
 
+/** Thrown when one or more mandatory credentials are missing */
+export class MissingCredentialError extends Error {
+  constructor(public credentialsDocType: Array<string>) {
+    super("One or more mandatory credentials are missing");
+  }
+}
+
 /** Thrown when an operation times out */
 export class TimeoutError extends Error {
   constructor(message?: string) {

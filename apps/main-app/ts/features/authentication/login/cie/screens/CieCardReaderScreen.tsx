@@ -77,7 +77,6 @@ type Props = CieCardReaderNavigationProps &
   ReduxProps &
   ReturnType<typeof mapStateToProps> & {
     blueColorName: string;
-    headerHeight: number;
   };
 
 const styles = StyleSheet.create({
@@ -156,19 +155,21 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
     this.startCieAndroid = this.startCieAndroid.bind(this);
   }
 
-  public async componentDidMount() {
+  public componentDidMount() {
     const startCie = Platform.select({
       ios: this.startCieiOS,
       default: this.startCieAndroid
     });
-    await startCie(this.props.isCieUatEnabled);
+    void startCie(this.props.isCieUatEnabled);
   }
 
-  public async componentWillUnmount() {
-    await cieManager.stopListeningNFC().catch(() => {
-      // Ignore errors on stop listening NFC
-    });
-    cieManager.removeAllListeners();
+  public componentWillUnmount() {
+    void cieManager
+      .stopListeningNFC()
+      .catch(() => {
+        // Ignore errors on stop listening NFC
+      })
+      .then(() => cieManager.removeAllListeners());
   }
 
   public render(): ReactNode {
@@ -210,7 +211,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
     cieManager
       .start()
       .then(async () => {
-        cieManager.onEvent(this.handleCieEvent);
+        cieManager.onEvent(event => void this.handleCieEvent(event));
         cieManager.onError(this.handleCieError);
         cieManager.onSuccess(this.handleCieSuccess);
         await cieManager.setPin(this.ciePin);
@@ -227,7 +228,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
 
   public async startCieiOS(useCieUat: boolean) {
     cieManager.removeAllListeners();
-    cieManager.onEvent(this.handleCieEvent);
+    cieManager.onEvent(event => void this.handleCieEvent(event));
     cieManager.onError(this.handleCieError);
     cieManager.onSuccess(this.handleCieSuccess);
     cieManager.enableLog(isDevEnv);
@@ -295,7 +296,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
           <View>
             <IOButton
               label={I18n.t("authentication.cie.nfc.retry")}
-              onPress={() => this.startCieiOS(this.props.isCieUatEnabled)}
+              onPress={() => void this.startCieiOS(this.props.isCieUatEnabled)}
               variant="solid"
             />
           </View>
@@ -416,7 +417,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
     this.setState({ readingState: ReadingState.completed }, () => {
       this.updateContent();
       setTimeout(
-        async () => {
+        () => {
           trackLoginCieCardReadingSuccess();
           this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
             screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,

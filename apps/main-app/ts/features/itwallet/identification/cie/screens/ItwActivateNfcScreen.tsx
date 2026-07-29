@@ -48,7 +48,7 @@ export const ItwActivateNfcScreen = () => {
         },
         {
           text: I18n.t("authentication.cie.nfc.activeNFCAlertButton"),
-          onPress: openSettings
+          onPress: () => void openSettings()
         }
       ]);
     }
@@ -60,11 +60,11 @@ export const ItwActivateNfcScreen = () => {
         type: "TwoButtons",
         primary: {
           label: I18n.t("features.itWallet.identification.nfc.primaryAction"),
-          onPress: openSettings
+          onPress: () => void openSettings()
         },
         secondary: {
           label: I18n.t("features.itWallet.identification.nfc.secondaryAction"),
-          onPress: onContinue
+          onPress: () => void onContinue()
         }
       }}
       description={I18n.t("features.itWallet.identification.nfc.description")}

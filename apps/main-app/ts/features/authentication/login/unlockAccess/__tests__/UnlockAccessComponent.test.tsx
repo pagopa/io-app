@@ -1,7 +1,6 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { View } from "react-native";
-import { Provider } from "react-redux";
 import { createStore } from "redux";
 
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -97,10 +96,11 @@ const renderComponent = (authLevel?: "L2" | "L3") => {
   if (authLevel) {
     const props: UnlockAccessProps = { authLevel };
 
-    return render(
-      <Provider store={store}>
-        <UnlockAccessComponent {...props} />
-      </Provider>
+    return renderScreenWithNavigationStoreContext(
+      () => <UnlockAccessComponent {...props} />,
+      "DUMMY",
+      {},
+      store
     );
   }
   return renderScreenWithNavigationStoreContext(

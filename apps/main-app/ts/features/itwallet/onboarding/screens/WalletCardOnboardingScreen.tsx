@@ -26,8 +26,8 @@ import {
   trackStartAddNewCredential
 } from "../../analytics";
 import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { selectItwEnv } from "../../common/store/selectors/environment";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { isItwEnabledSelector } from "../../common/store/selectors/remoteConfig";
 import {
   isL2Credential,

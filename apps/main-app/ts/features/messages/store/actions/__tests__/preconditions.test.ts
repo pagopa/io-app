@@ -6,13 +6,11 @@ import {
   loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   scheduledPreconditionStatusAction,
-  shownPreconditionStatusAction,
   toErrorPayload,
   toIdlePayload,
   toLoadingContentPayload,
   toRetrievingDataPayload,
   toScheduledPayload,
-  toShownPayload,
   toUpdateRequiredPayload,
   updateRequiredPreconditionStatusAction
 } from "../preconditions";
@@ -33,7 +31,7 @@ describe("Action payload generators", () => {
       title: "The title",
       markdown: "The content"
     };
-    const loadingContentPayload = toLoadingContentPayload(content, false);
+    const loadingContentPayload = toLoadingContentPayload(content);
     expect(loadingContentPayload.nextStatus).toStrictEqual("loadingContent");
     expect(loadingContentPayload.content).toStrictEqual(content);
   });
@@ -48,10 +46,6 @@ describe("Action payload generators", () => {
     expect(scheduledPayload.nextStatus).toStrictEqual("scheduled");
     expect(scheduledPayload.messageId).toStrictEqual(messageId);
     expect(scheduledPayload.categoryTag).toStrictEqual(categoryTag);
-  });
-  it("should generate proper payload with 'toShownPayload'", () => {
-    const shownPayload = toShownPayload();
-    expect(shownPayload.nextStatus).toStrictEqual("shown");
   });
   it("should generate proper payload with 'toUpdateRequiredPayload'", () => {
     const updateRequiredPayload = toUpdateRequiredPayload();
@@ -73,13 +67,10 @@ describe("Action generators", () => {
     expect(idlePSA.payload).toStrictEqual(idlePayload);
   });
   it("should return the proper action data for 'loadingContentPreconditionStatusAction'", () => {
-    const loadingContentPayload = toLoadingContentPayload(
-      {
-        title: "",
-        markdown: ""
-      },
-      false
-    );
+    const loadingContentPayload = toLoadingContentPayload({
+      title: "",
+      markdown: ""
+    });
     const loadingContentPSA = loadingContentPreconditionStatusAction(
       loadingContentPayload
     );
@@ -105,12 +96,6 @@ describe("Action generators", () => {
     const scheduledPSA = scheduledPreconditionStatusAction(scheduledPayload);
     expect(scheduledPSA.type).toStrictEqual("TO_SCHEDULED_PRECONDITION_STATUS");
     expect(scheduledPSA.payload).toStrictEqual(scheduledPayload);
-  });
-  it("should return the proper action data for 'shownPreconditionStatusAction'", () => {
-    const shownPayload = toShownPayload();
-    const shownPSA = shownPreconditionStatusAction(shownPayload);
-    expect(shownPSA.type).toStrictEqual("TO_SHOWN_PRECONDITION_STATUS");
-    expect(shownPSA.payload).toStrictEqual(shownPayload);
   });
   it("should return the proper action data for 'updateRequiredPreconditionStatusAction'", () => {
     const updateRequiredPayload = toUpdateRequiredPayload();

@@ -9,6 +9,7 @@ import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
 import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
@@ -24,12 +25,19 @@ type ItwPresentationDetailFooterProps = {
 const ItwPresentationDetailsFooter = ({
   credential
 }: ItwPresentationDetailFooterProps) => {
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const startAndTrackSupportRequest = useOfflineToastGuard(
     useItwStartCredentialSupportRequest(credential)
+  );
+  const handleSupportRequest = useNotAvailableToastGuard(
+    startAndTrackSupportRequest
   );
   const { confirmAndRemoveCredential } = useItwRemoveCredentialWithConfirm(
     credential,
     "screen"
+  );
+  const guardedConfirmAndRemoveCredential = useOfflineToastGuard(
+    confirmAndRemoveCredential
   );
   const credentialActions = useMemo(
     () => getCredentialActions(credential),
@@ -39,18 +47,20 @@ const ItwPresentationDetailsFooter = ({
   return (
     <View>
       {credentialActions}
-      <ListItemAction
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
-        )}
-        icon="message"
-        label={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
-        )}
-        onPress={useNotAvailableToastGuard(startAndTrackSupportRequest)}
-        testID="requestAssistanceActionTestID"
-        variant="primary"
-      />
+      {!isItwL3 && (
+        <ListItemAction
+          accessibilityLabel={I18n.t(
+            "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+          )}
+          icon="message"
+          label={I18n.t(
+            "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+          )}
+          onPress={handleSupportRequest}
+          testID="requestAssistanceActionTestID"
+          variant="primary"
+        />
+      )}
       <ListItemAction
         accessibilityLabel={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
@@ -59,7 +69,7 @@ const ItwPresentationDetailsFooter = ({
         label={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
         )}
-        onPress={confirmAndRemoveCredential}
+        onPress={guardedConfirmAndRemoveCredential}
         testID="removeCredentialActionTestID"
         variant="danger"
       />

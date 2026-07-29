@@ -49,7 +49,7 @@ const HostCardEmulationInfo = () => {
   const [hasHce, setHasHce] = useState<boolean>();
   const [failure, setFailure] = useState<Error>();
 
-  useOnFirstRender(async () => {
+  useOnFirstRender(() => {
     isHceSupported().then(setHasHce).catch(setFailure);
   });
 
@@ -79,7 +79,7 @@ const AntennaInfo = () => {
   const [nfcAntennaInfo, setNfcAntennaInfo] = useState<NfcAntennaInfo>();
   const [failure, setFailure] = useState<Error>();
 
-  useOnFirstRender(async () => {
+  useOnFirstRender(() => {
     getNfcAntennaInfo().then(setNfcAntennaInfo).catch(setFailure);
   });
 

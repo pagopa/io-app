@@ -2,7 +2,6 @@ import * as O from "fp-ts/Option";
 import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
-import { select } from "typed-redux-saga";
 
 import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
@@ -11,19 +10,21 @@ import {
   itwCredentialsRemove,
   itwCredentialsStore
 } from "../../../credentials/store/actions";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import {
   updateCredentialProperties,
-  updateItwStatusAndPIDProperties
+  updateItwStatusAndPIDProperties,
+  updateThirdPartyCredentialProperty
 } from "../../properties/propertyUpdaters";
 import {
   handleCredentialRemovedAnalytics,
+  handleCredentialsCatalogueLoadedAnalytics,
   handleCredentialStoredAnalytics
 } from "../credentialAnalyticsHandlers";
 
 jest.mock("../../properties/propertyUpdaters", () => ({
   updateCredentialProperties: jest.fn(),
-  updateItwStatusAndPIDProperties: jest.fn()
+  updateItwStatusAndPIDProperties: jest.fn(),
+  updateThirdPartyCredentialProperty: jest.fn()
 }));
 
 const expirationClaim = { value: "2100-09-04", name: "exp" };
@@ -61,6 +62,7 @@ const mockedMdl: CredentialMetadata = {
 };
 
 const store: DeepPartial<GlobalState> = {
+  remoteConfig: O.none,
   features: {
     itWallet: {
       issuance: { integrityKeyTag: O.some("key-tag") },
@@ -85,13 +87,12 @@ describe("credentialAnalyticsHandlers", () => {
       itwCredentialsStore([mockedMdl])
     )
       .withState(store)
-      .provide([
-        [select(itwLifecycleIsITWalletValidSelector), true],
-        [matchers.select(), store]
-      ])
+      .provide([[matchers.select(), store]])
       .run();
 
     expect(updateCredentialProperties).toHaveBeenCalledTimes(1);
+    expect(updateThirdPartyCredentialProperty).toHaveBeenCalledTimes(1);
+    expect(updateThirdPartyCredentialProperty).toHaveBeenCalledWith(store);
     expect(updateItwStatusAndPIDProperties).not.toHaveBeenCalled();
   });
 
@@ -101,11 +102,12 @@ describe("credentialAnalyticsHandlers", () => {
       itwCredentialsStore([mockedEid])
     )
       .withState(store)
-      .provide([[select(itwLifecycleIsITWalletValidSelector), true]])
+      .provide([[matchers.select(), store]])
       .run();
 
     expect(updateItwStatusAndPIDProperties).toHaveBeenCalledTimes(1);
     expect(updateCredentialProperties).not.toHaveBeenCalled();
+    expect(updateThirdPartyCredentialProperty).not.toHaveBeenCalled();
   });
 
   it("tracks credential deletion for non-eID credentials", async () => {
@@ -114,10 +116,12 @@ describe("credentialAnalyticsHandlers", () => {
       itwCredentialsRemove([mockedMdl])
     )
       .withState(store)
-      .provide([[select(itwLifecycleIsITWalletValidSelector), true]])
+      .provide([[matchers.select(), store]])
       .run();
 
     expect(updateCredentialProperties).toHaveBeenCalledTimes(1);
+    expect(updateThirdPartyCredentialProperty).toHaveBeenCalledTimes(1);
+    expect(updateThirdPartyCredentialProperty).toHaveBeenCalledWith(store);
   });
 
   it("does NOT delete eIDs analytics properties when eID is removed", async () => {
@@ -126,9 +130,20 @@ describe("credentialAnalyticsHandlers", () => {
       itwCredentialsRemove([mockedEid])
     )
       .withState(store)
-      .provide([[select(itwLifecycleIsITWalletValidSelector), true]])
+      .provide([[matchers.select(), store]])
       .run();
 
     expect(updateCredentialProperties).not.toHaveBeenCalled();
+    expect(updateThirdPartyCredentialProperty).not.toHaveBeenCalled();
+  });
+
+  it("updates aggregate credential properties when the catalogue is loaded", async () => {
+    await expectSaga(handleCredentialsCatalogueLoadedAnalytics)
+      .withState(store)
+      .provide([[matchers.select(), store]])
+      .run();
+
+    expect(updateThirdPartyCredentialProperty).toHaveBeenCalledTimes(1);
+    expect(updateThirdPartyCredentialProperty).toHaveBeenCalledWith(store);
   });
 });

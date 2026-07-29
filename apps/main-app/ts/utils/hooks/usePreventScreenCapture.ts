@@ -46,13 +46,7 @@ export function usePreventScreenCapture(key?: string) {
 
   useFocusEffect(
     useCallback(() => {
-      if (
-        isDevEnv ||
-        /*
-        TODO [SIW-4622] Re-enable screen capture prevention 
-        */
-        true
-      ) {
+      if (isDevEnv) {
         return;
       }
 

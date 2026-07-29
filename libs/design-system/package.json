@@ -66,7 +66,7 @@
     "babel-plugin-module-resolver": "^5.0.2",
     "commitlint": "^17.0.2",
     "del-cli": "^5.0.0",
-    "eslint-plugin-delegate-effects": "file:../../apps/main-app/scripts/eslint",
+    "eslint-plugin-io-app": "file:../../apps/main-app/scripts/eslint",
     "eslint-plugin-functional": "^5.0.8",
     "eslint-plugin-react-native-a11y": "^3.3.0",
     "fs-extra": "^11.1.1",
@@ -117,11 +117,6 @@
       "release": true
     },
     "plugins": {}
-  },
-  "prettier": {
-    "trailingComma": "none",
-    "arrowParens": "avoid",
-    "parser": "typescript"
   },
   "react-native-builder-bob": {
     "source": "src",

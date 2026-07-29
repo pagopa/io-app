@@ -107,7 +107,14 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
   }
 
   return (
-    <Animated.View entering={FadeIn.duration(200)}>
+    <Animated.View
+      accessibilityLabel={I18n.t(
+        "features.itWallet.presentation.proximity.engagement.qrCode.accessibilityLabel"
+      )}
+      accessibilityRole="image"
+      accessible={true}
+      entering={FadeIn.duration(200)}
+    >
       <QRCode
         color={theme["textBody-default"]}
         errorCorrectionLevel="H"

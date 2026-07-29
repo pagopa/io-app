@@ -1,4 +1,10 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+  useState
+} from "react";
 
 type IONewTypefaceContextType = {
   newTypefaceEnabled: boolean;
@@ -24,10 +30,13 @@ export const IONewTypefaceContextProvider = ({
     isNewTypefaceEnabled ?? true
   );
 
+  const value = useMemo(
+    () => ({ newTypefaceEnabled, setNewTypefaceEnabled }),
+    [newTypefaceEnabled]
+  );
+
   return (
-    <IONewTypefaceContext.Provider
-      value={{ newTypefaceEnabled, setNewTypefaceEnabled }}
-    >
+    <IONewTypefaceContext.Provider value={value}>
       {children}
     </IONewTypefaceContext.Provider>
   );

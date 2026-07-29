@@ -6,7 +6,6 @@ import * as t from "io-ts";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
-import { IdpData } from "../../../../../definitions/content/IdpData";
 import { AccessToken } from "../../../../../definitions/session_manager/AccessToken";
 import { PasswordLogin } from "../../../../../definitions/session_manager/PasswordLogin";
 import { BackendPublicClient } from "../../../../api/backendPublic";
@@ -48,15 +47,22 @@ export function* handleTestLogin({
     hashAlgorithm?: string,
     isFastLogin?: boolean
   ): Promise<t.Validation<BasicResponseType<AccessToken>>> {
-    return new Promise((resolve, _) =>
-      backendPublicClient
+    return new Promise((resolve, _) => {
+      void backendPublicClient
         .postTestLogin(
           publicKey,
           hashAlgorithm,
           isFastLogin
         )(login)
-        .then(resolve, e => resolve(E.left([{ context: [], value: e }])))
-    );
+        .then(
+          value => {
+            resolve(value);
+          },
+          e => {
+            resolve(E.left([{ context: [], value: e }]));
+          }
+        );
+    });
   }
   try {
     const testLoginResponse: SagaCallReturnType<typeof postTestLogin> =
@@ -75,7 +81,7 @@ export function* handleTestLogin({
         yield* put(
           loginSuccess({
             token: testLoginResponse.right.value.token,
-            idp: "test" as keyof IdpData
+            idp: "test"
           })
         );
         return;
@@ -83,7 +89,7 @@ export function* handleTestLogin({
       yield* put(
         loginFailure({
           error: new Error(`response status ${testLoginResponse.right.status}`),
-          idp: "test" as keyof IdpData
+          idp: "test"
         })
       );
       return;
@@ -95,14 +101,14 @@ export function* handleTestLogin({
             "unknown error"
           ])[0]
         ),
-        idp: "test" as keyof IdpData
+        idp: "test"
       })
     );
   } catch (e) {
     yield* put(
       loginFailure({
         error: convertUnknownToError(e),
-        idp: "test" as keyof IdpData
+        idp: "test"
       })
     );
   }

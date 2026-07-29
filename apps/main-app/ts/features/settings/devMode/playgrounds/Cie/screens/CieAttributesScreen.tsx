@@ -82,7 +82,9 @@ export const CieAttributesScreen = () => {
       <IOButton
         label={status === "reading" ? "Stop reading" : "Start reading"}
         onPress={() =>
-          status === "reading" ? handleStopReading() : handleStartReading()
+          void (status === "reading"
+            ? handleStopReading()
+            : handleStartReading())
         }
       />
       <VSpacer size={16} />

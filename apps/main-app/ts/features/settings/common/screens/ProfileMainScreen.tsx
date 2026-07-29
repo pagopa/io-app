@@ -42,7 +42,7 @@ import {
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import { isDevEnv } from "../../../../utils/environment";
 import { openWebUrl } from "../../../../utils/url";
-import { itwIsL3EnabledSelector } from "../../../itwallet/common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../../itwallet/common/store/selectors";
 import { itwLifecycleIsOperationalOrValid } from "../../../itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import DeveloperModeSection from "../../devMode/components/DeveloperModeSection";

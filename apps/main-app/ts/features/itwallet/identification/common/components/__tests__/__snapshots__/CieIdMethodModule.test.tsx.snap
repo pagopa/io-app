@@ -136,7 +136,6 @@ exports[`CieIdMethodModule When isL3 is false and isReissuance mode is false ren
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -381,7 +380,6 @@ exports[`CieIdMethodModule When isL3 is false and isReissuance mode is true rend
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -626,7 +624,6 @@ exports[`CieIdMethodModule When isL3 is true and isReissuance mode is false rend
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={
@@ -871,7 +868,6 @@ exports[`CieIdMethodModule When isL3 is true and isReissuance mode is true rende
             <Text
               allowFontScaling={true}
               dynamicTypeRamp="footnote"
-              lineBreakMode="middle"
               maxFontSizeMultiplier={1.5}
               numberOfLines={2}
               style={

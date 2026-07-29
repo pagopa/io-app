@@ -32,20 +32,21 @@ export const usePushNotificationEngagement = (
   useEffect(() => {
     const subscription = AppState.addEventListener(
       "change",
-      appStateHandler(
-        () => {
-          if (shouldSetSecurityAdviceUponLeaving) {
-            dispatch(setSecurityAdviceReadyToShow(true));
-          }
-          popToTop();
-        },
-        () => {
-          toast.success(
-            I18n.t("features.pushNotifications.engagementScreen.toast")
-          );
-        },
-        isButtonPressed
-      )
+      nextAppState =>
+        void appStateHandler(
+          () => {
+            if (shouldSetSecurityAdviceUponLeaving) {
+              dispatch(setSecurityAdviceReadyToShow(true));
+            }
+            popToTop();
+          },
+          () => {
+            toast.success(
+              I18n.t("features.pushNotifications.engagementScreen.toast")
+            );
+          },
+          isButtonPressed
+        )(nextAppState)
     );
     return () => {
       subscription.remove();

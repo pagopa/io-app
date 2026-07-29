@@ -14,6 +14,8 @@ export const DPOP_KEYTAG = "DPOP_KEYTAG";
 export const regenerateCryptoKey = (keyTag: string) =>
   deleteKey(keyTag)
     .catch(constNull)
+    // `finally` awaits a returned thenable, so key generation is not fire-and-forget
+    // oxlint-disable-next-line typescript/no-misused-promises
     .finally(() => generate(keyTag));
 
 /**
