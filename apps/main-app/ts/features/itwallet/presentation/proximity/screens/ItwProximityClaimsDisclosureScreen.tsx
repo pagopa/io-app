@@ -161,7 +161,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
             requesterLogoUri={require("../../../../../../img/features/itWallet/issuer/IPZS.png")}
           />
           <VStack space={16}>
-            <H2>
+            <H2 accessibilityRole="header">
               {I18n.t(
                 "features.itWallet.presentation.proximity.selectiveDisclosure.title"
               )}
