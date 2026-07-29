@@ -129,11 +129,6 @@
     "scripts/",
     ".eslintrc.js"
   ],
-  "prettier": {
-    "trailingComma": "none",
-    "arrowParens": "avoid",
-    "parser": "typescript"
-  },
   "react-native-builder-bob": {
     "source": "src",
     "output": "lib",

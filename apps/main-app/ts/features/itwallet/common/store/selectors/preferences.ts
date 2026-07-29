@@ -4,12 +4,6 @@ export const itwPreferencesSelector = (state: GlobalState) =>
   state.features.itWallet.preferences;
 
 /**
- * Returns whether the app review modal should be shown.
- */
-export const itwIsPendingReviewSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isPendingReview;
-
-/**
  * Returns the authentication level used to obtain the eID.
  */
 export const itwAuthLevelSelector = (state: GlobalState) =>
