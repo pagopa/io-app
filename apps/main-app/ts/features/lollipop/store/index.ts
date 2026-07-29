@@ -15,7 +15,7 @@ import { Action } from "../../../store/actions/types";
 import { isDevEnv } from "../../../utils/environment";
 import lollipopReducer, { LollipopState } from "./reducers/lollipop";
 
-export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 1;
+export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 2;
 
 /**
  * This function is used to migrate the redux store from version 0 to version 1.
@@ -24,14 +24,21 @@ export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 1;
  * @param state the persisted redux state
  * @returns the migrated persisted redux state
  */
+export type PersistedLollipopStateV1 = Omit<
+  PersistedLollipopState,
+  "keyTag"
+> & {
+  keyTag: O.Option<string>;
+};
+
 export const migrationKeyTagFunctional = (
   state: PersistedState
-): PersistedLollipopState =>
+): PersistedLollipopStateV1 =>
   pipe(
-    (state as PersistedLollipopState).keyTag as O.Option<O.Option<string>>,
+    (state as PersistedLollipopStateV1).keyTag as O.Option<O.Option<string>>,
     O.filter(keyTag => typeof keyTag !== "string"),
     O.fold(
-      () => state as PersistedLollipopState,
+      () => state as PersistedLollipopStateV1,
       optionKeyTag =>
         pipe(
           optionKeyTag,
@@ -40,16 +47,33 @@ export const migrationKeyTagFunctional = (
               ({
                 ...state,
                 keyTag: O.none
-              }) as PersistedLollipopState,
+              }) as PersistedLollipopStateV1,
             keyTg =>
               ({
                 ...state,
                 keyTag: O.some(keyTg)
-              }) as PersistedLollipopState
+              }) as PersistedLollipopStateV1
           )
         )
     )
   );
+
+/**
+ * This function is used to migrate the redux store from version 1 to version 2.
+ * The migration is needed because the type of the persisted redux state has changed.
+ * The keyTag field should go back to being a string | undefined.
+ * @param state the persisted redux state
+ * @returns the migrated persisted redux state
+ */
+export const migrationKeyTagToStringUndefined = (
+  state: PersistedState
+): PersistedLollipopState => {
+  const castedPeviousState = state as unknown as PersistedLollipopStateV1;
+  return {
+    ...castedPeviousState,
+    keyTag: O.toUndefined(castedPeviousState.keyTag)
+  };
+};
 
 const migrations: MigrationManifest = {
   // Version 0
@@ -57,7 +81,7 @@ const migrations: MigrationManifest = {
   // { keyTag?: string; _persist: ... }
   // to
   // { keyTag: O.Option<string>; _persist: ... }
-  "0": (state: PersistedState): PersistedLollipopState => {
+  "0": (state: PersistedState): PersistedLollipopStateV1 => {
     type PreviousPersistedLollipopState = PersistPartial & { keyTag?: string };
     const castedPeviousState =
       state as unknown as PreviousPersistedLollipopState;
@@ -72,8 +96,15 @@ const migrations: MigrationManifest = {
       }
     };
   },
-  "1": (state: PersistedState): PersistedLollipopState =>
-    migrationKeyTagFunctional(state)
+  "1": (state: PersistedState): PersistedLollipopStateV1 =>
+    migrationKeyTagFunctional(state),
+  // Version 2
+  // Lollipop PERSISTED redux type changes from
+  // { keyTag: O.Option<string>; _persist: ... }
+  // back to
+  // { keyTag: string | undefined; _persist: ... }
+  "2": (state: PersistedState): PersistedLollipopState =>
+    migrationKeyTagToStringUndefined(state)
 };
 
 export type PersistedLollipopState = LollipopState & PersistPartial;
