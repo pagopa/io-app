@@ -8,6 +8,7 @@ import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import ItwActivationSuccessFeedbackBanner from "../../itwallet/common/components/ItwActivationSuccessFeedbackBanner";
+import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import {
@@ -75,6 +76,7 @@ const WalletCardsContainer = () => {
           <ItwActivationSuccessFeedbackBanner
             authMethod={walletActivationFeedbackBannerData.authMethod}
             docStatus={walletActivationFeedbackBannerData.docStatus}
+            style={{ marginVertical: 8 }}
           />
         )}
         <View style={styles.walletContent} testID="walletCardsContainerTestID">
@@ -97,7 +99,7 @@ const WalletCardsContainer = () => {
       layout={LinearTransition.duration(200)}
       style={styles.container}
     >
-      {/* <ItwEnvironmentAlert /> */}
+      <ItwEnvironmentAlert />
       <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />
 

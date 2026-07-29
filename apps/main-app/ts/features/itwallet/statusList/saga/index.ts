@@ -1,7 +1,8 @@
 import { SagaIterator } from "redux-saga";
 import { call, fork, select } from "typed-redux-saga/macro";
 
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors";
+import { registerStatusListProperties } from "../analytics";
 import { checkStatusListCoherenceSaga } from "./checkStatusListCoherenceSaga";
 import { refreshStaleStatusListsSaga } from "./refreshStaleStatusListsSaga";
 import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
@@ -24,6 +25,5 @@ export function* watchItwStatusListSaga(): SagaIterator {
   yield* call(refreshStaleStatusListsSaga);
 
   // Register Status List super properties
-  // TODO [SIW-4474] Add super property registration
-  // yield* call(registerStatusListProperties);
+  yield* call(registerStatusListProperties);
 }

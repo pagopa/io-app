@@ -75,7 +75,7 @@ export const ItwBluetoothPermissionsScreen = () => {
           label: I18n.t(
             "features.itWallet.presentation.proximity.bluetooth.permissions.actions.secondary"
           ),
-          onPress: handleContinue
+          onPress: () => void handleContinue()
         }
       }}
       listItemHeaderLabel={I18n.t(

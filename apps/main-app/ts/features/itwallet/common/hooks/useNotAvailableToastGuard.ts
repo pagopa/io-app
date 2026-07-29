@@ -22,5 +22,7 @@ export const useNotAvailableToastGuard = (
     toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
   }, [toast]);
 
-  return (...args: Array<any>) => (isItwPid ? guardFn() : fn(...args));
+  return (...args: Array<any>) => {
+    void (isItwPid ? guardFn() : fn(...args));
+  };
 };

@@ -3,6 +3,7 @@ import { ColorValue, LayoutChangeEvent, StyleSheet, View } from "react-native";
 
 import { useIOTheme, useIOThemeContext } from "../../context";
 import {
+  footerBoxShadow,
   IOColors,
   IOSpacer,
   IOSpacing,
@@ -50,16 +51,6 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     flex: 1
-  },
-  blockShadow: {
-    shadowColor: IOColors.black,
-    shadowOffset: {
-      width: 0,
-      height: -4
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 32,
-    elevation: 10 // Prop supported on Android only
   }
 });
 
@@ -106,16 +97,16 @@ export const FooterActionsInline = ({
           ? {
               position: "absolute",
               bottom: 0,
-              backgroundColor: HEADER_BG_COLOR
+              backgroundColor: HEADER_BG_COLOR,
+              boxShadow: [footerBoxShadow]
             }
           : { marginTop: IOSpacing.screenEndMargin },
-        /* Apply shadow only on light theme OR if fixed */
-        fixed || themeType === "light" ? styles.blockShadow : {},
-        /* Apply bottom border only on dark theme */
-        themeType === "dark" && {
-          borderTopColor: IOColors[theme["divider-bottomBar"]],
-          borderTopWidth: 1
-        }
+        /* Apply bottom border only on dark theme, only if fixed */
+        themeType === "dark" &&
+          fixed && {
+            borderTopColor: IOColors[theme["divider-bottomBar"]],
+            borderTopWidth: 1
+          }
       ]}
       testID={testID}
     >

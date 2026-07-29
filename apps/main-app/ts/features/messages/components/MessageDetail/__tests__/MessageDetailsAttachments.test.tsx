@@ -86,7 +86,10 @@ describe("MessageDetailsAttachments", () => {
               banner ? "" : "no "
             }banner) (disabled: ${disabled}) (opening source: ${sendOpeningSource} user type: ${sendUserType})`, () => {
               jest
-                .spyOn(thirdPartySelectors, "thirdPartyMessageAttachments")
+                .spyOn(
+                  thirdPartySelectors,
+                  "thirdPartyMessageAttachmentsSelector"
+                )
                 .mockImplementation((_state, _messageId) => attachmentArray);
               const component = renderScreen(
                 messageId,

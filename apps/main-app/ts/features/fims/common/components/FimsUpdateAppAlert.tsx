@@ -1,4 +1,4 @@
-import { HeaderActionProps, HeaderSecondLevel } from "@io-app/design-system";
+import { HeaderSecondLevel } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect } from "react";
 
@@ -14,7 +14,7 @@ export const FimsUpdateAppAlert = () => {
     <OperationResultScreenContent
       action={{
         label: I18n.t("btnUpdateApp"),
-        onPress: () => openAppStoreUrl(),
+        onPress: () => void openAppStoreUrl(),
         testID: "primary-update-app"
       }}
       isHeaderVisible={true}
@@ -39,7 +39,7 @@ const useOnlySupportRequestHeader = () => {
       header: () => (
         <HeaderSecondLevel
           firstAction={{
-            icon: "help" as HeaderActionProps["icon"],
+            icon: "help",
             onPress: startSupportRequest,
             accessibilityLabel: I18n.t(
               "global.accessibility.contextualHelp.open.label"

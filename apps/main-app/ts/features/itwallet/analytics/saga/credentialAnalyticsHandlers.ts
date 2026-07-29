@@ -11,7 +11,8 @@ import {
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   updateCredentialProperties,
-  updateItwStatusAndPIDProperties
+  updateItwStatusAndPIDProperties,
+  updateThirdPartyCredentialProperty
 } from "../properties/propertyUpdaters";
 import { getMixPanelCredential } from "../utils";
 import { MixPanelCredential } from "../utils/types";
@@ -27,7 +28,8 @@ const MIXPANEL_EID_CREDENTIALS: ReadonlySet<MixPanelCredential> = new Set([
 export function* handleCredentialRemovedAnalytics(
   action: ActionType<typeof itwCredentialsRemove>
 ): SagaIterator {
-  const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
+  const state: GlobalState = yield* select();
+  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
 
   const credential = getAnalyticsCredentialFromStored(action.payload, isItwL3);
 
@@ -46,6 +48,15 @@ export function* handleCredentialRemovedAnalytics(
   }
 
   updateCredentialProperties(credential, "not_available");
+  updateThirdPartyCredentialProperty(state);
+}
+
+/**
+ * Handles aggregate analytics updates when catalogue metadata is refreshed.
+ */
+export function* handleCredentialsCatalogueLoadedAnalytics(): SagaIterator {
+  const state: GlobalState = yield* select();
+  updateThirdPartyCredentialProperty(state);
 }
 
 /**
@@ -69,6 +80,7 @@ export function* handleCredentialStoredAnalytics(
   }
 
   updateCredentialProperties(credential, "valid");
+  updateThirdPartyCredentialProperty(state);
 }
 
 function getAnalyticsCredentialFromStored(

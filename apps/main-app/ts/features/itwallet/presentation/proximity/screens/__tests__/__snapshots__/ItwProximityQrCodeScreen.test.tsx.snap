@@ -795,7 +795,6 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -819,7 +818,6 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -2713,7 +2711,6 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -2737,7 +2734,6 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -2971,7 +2967,6 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -2995,7 +2990,6 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -4934,7 +4928,6 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -4958,7 +4951,6 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -7118,7 +7110,6 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -7142,7 +7133,6 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",

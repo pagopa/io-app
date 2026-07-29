@@ -611,7 +611,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -635,7 +634,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -922,7 +920,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -946,7 +943,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1703,7 +1699,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1727,7 +1722,6 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",

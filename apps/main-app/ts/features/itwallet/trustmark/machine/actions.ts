@@ -73,11 +73,12 @@ export const createItwTrustmarkActionsImplementation = (
         ? Math.ceil(timeDiffInSeconds / 60)
         : timeDiffInSeconds;
 
-    const timeUnit = timeDiffInSeconds > 60 ? "minutes" : "seconds";
-
-    const timeString = I18n.t(`date.time.${timeUnit}`, {
-      count: time
-    });
+    const timeString = I18n.t(
+      timeDiffInSeconds > 60 ? "date.time.minutes" : "date.time.seconds",
+      {
+        count: time
+      }
+    );
 
     toast.error(
       I18n.t("features.itWallet.trustmark.failure.toast", {

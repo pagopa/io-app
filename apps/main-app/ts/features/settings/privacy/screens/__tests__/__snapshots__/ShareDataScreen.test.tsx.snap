@@ -1219,7 +1219,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1243,7 +1242,6 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",

@@ -160,13 +160,13 @@ export const ItwCieAuthenticationWebview = ({
     <>
       {authenticationUrl && (
         <ItwCieWebView
-          onMessage={handleMessage}
+          onMessage={event => void handleMessage(event)}
           onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
           onWebViewError={onWebViewError}
           source={{ uri: authenticationUrl }}
         />
       )}
-      <View style={StyleSheet.absoluteFillObject}>
+      <View style={StyleSheet.absoluteFill}>
         <LoadingScreenContent title={I18n.t("global.genericWaiting")} />
       </View>
     </>

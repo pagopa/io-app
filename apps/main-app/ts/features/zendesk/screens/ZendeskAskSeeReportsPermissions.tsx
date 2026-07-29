@@ -86,7 +86,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
   ];
 
   /* Remove items that have no value associated with them */
-  const items = permissionItems.filter(it => it.value);
+  const items = permissionItems.filter(it => it.value != null);
 
   const renderPermissionItem = ({
     item
@@ -119,7 +119,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
     <IOScrollViewWithLargeHeader
       actions={buttonConf}
       description={I18n.t("support.askPermissions.listBody")}
-      ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
+      ignoreSafeAreaMargin={Platform.OS === "ios"}
       testID={"ZendeskAskPermissions"}
       title={{
         label: I18n.t("support.askPermissions.title"),

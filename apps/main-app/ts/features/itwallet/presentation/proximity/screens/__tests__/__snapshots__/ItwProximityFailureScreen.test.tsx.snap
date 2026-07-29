@@ -611,7 +611,6 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -635,7 +634,6 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1507,7 +1505,6 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1531,7 +1528,6 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2426,7 +2422,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2450,7 +2445,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2666,7 +2660,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -2690,7 +2683,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",

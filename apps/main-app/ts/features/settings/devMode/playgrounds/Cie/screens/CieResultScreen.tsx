@@ -51,11 +51,11 @@ export function CieResultScreen({ route }: Props) {
           type: "TwoButtons",
           primary: {
             label: "Share",
-            onPress: handleShare
+            onPress: () => void handleShare()
           },
           secondary: {
             label: "Copy",
-            onPress: handleCopy
+            onPress: () => void handleCopy()
           }
         }}
         contentContainerStyle={styles.contentContainer}

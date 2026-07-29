@@ -159,7 +159,9 @@ export const CieMrtdScreen = () => {
           disabled={can.length < CAN_PIN_LENGTH}
           label={status === "reading" ? "Stop" : "Start reading"}
           onPress={() =>
-            status === "reading" ? handleStopReading() : handleStartReading()
+            void (status === "reading"
+              ? handleStopReading()
+              : handleStartReading())
           }
           variant="solid"
         />

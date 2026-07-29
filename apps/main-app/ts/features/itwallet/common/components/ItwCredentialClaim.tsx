@@ -93,7 +93,9 @@ const BoolClaimItem = ({
   label: string;
 }) => {
   const realValue = I18n.t(
-    `features.itWallet.presentation.credentialDetails.boolClaim.${claim}`
+    claim
+      ? "features.itWallet.presentation.credentialDetails.boolClaim.true"
+      : "features.itWallet.presentation.credentialDetails.boolClaim.false"
   );
   const displayValue = hidden ? HIDDEN_CLAIM_TEXT : realValue;
   const accessibilityStateText = hidden

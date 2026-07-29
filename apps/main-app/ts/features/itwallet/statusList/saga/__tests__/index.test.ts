@@ -1,7 +1,8 @@
 import { testSaga } from "redux-saga-test-plan";
 
 import { watchItwStatusListSaga } from "..";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors";
+import { registerStatusListProperties } from "../../analytics";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
 import { refreshStaleStatusListsSaga } from "../refreshStaleStatusListsSaga";
 import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
@@ -25,6 +26,8 @@ describe("watchItwStatusListSaga", () => {
       .call(checkStatusListCoherenceSaga)
       .next()
       .call(refreshStaleStatusListsSaga)
+      .next()
+      .call(registerStatusListProperties)
       .next()
       .isDone();
   });

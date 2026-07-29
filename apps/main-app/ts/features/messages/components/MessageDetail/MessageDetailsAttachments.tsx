@@ -8,7 +8,7 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
-import { thirdPartyMessageAttachments } from "../../store/reducers/thirdPartyById";
+import { thirdPartyMessageAttachmentsSelector } from "../../store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import { MessageDetailsAttachmentItem } from "./MessageDetailsAttachmentItem";
 
@@ -30,7 +30,7 @@ export const MessageDetailsAttachments = ({
   sendUserType
 }: MessageDetailsAttachmentsProps) => {
   const originalAttachments = useIOSelector(state =>
-    thirdPartyMessageAttachments(state, messageId)
+    thirdPartyMessageAttachmentsSelector(state, messageId)
   );
   const isSend = sendOpeningSource !== "not_set";
   const attachments = isSend
