@@ -9,21 +9,78 @@ import {
 } from "../../common/model/RemoteValue";
 import { testable } from "../configureStoreAndPersistor";
 
-jest.mock("redux-persist", () => ({
-  createMigrate: jest.fn(),
-  createTransform: jest.fn(),
-  persistReducer: (_: any, reducer: any) => reducer,
-  persistStore: jest.fn()
-}));
-
-jest.mock("redux-saga", () => {
-  const fn = () => () => undefined;
-  // eslint-disable-next-line functional/immutable-data
-  fn.run = () => undefined;
-  return () => fn;
+jest.mock("redux-persist", () => {
+  const persist = jest.fn();
+  return {
+    createMigrate: jest.fn(),
+    createTransform: jest.fn(),
+    mockPersist: persist,
+    persistReducer: (_: any, reducer: any) => reducer,
+    persistStore: jest.fn(() => ({ persist }))
+  };
 });
 
+jest.mock("redux-saga", () => {
+  const run = jest.fn();
+  const fn = () => (next: (action: unknown) => unknown) => (action: unknown) =>
+    next(action);
+  // eslint-disable-next-line functional/immutable-data
+  fn.run = run;
+  const createSagaMiddleware = () => fn;
+  // eslint-disable-next-line functional/immutable-data
+  createSagaMiddleware.mockRun = run;
+  return createSagaMiddleware;
+});
+
+jest.mock("../reduxStartupGate", () => {
+  const startWhenAppIsActive = jest.fn();
+  return {
+    createReduxStartupGate: jest.fn(() => ({
+      middleware:
+        () => (next: (action: unknown) => unknown) => (action: unknown) =>
+          next(action),
+      startWhenAppIsActive
+    })),
+    mockStartWhenAppIsActive: startWhenAppIsActive
+  };
+});
+
+const mockPersist = (
+  jest.requireMock("redux-persist") as {
+    mockPersist: jest.Mock;
+  }
+).mockPersist;
+const mockSagaRun = (
+  jest.requireMock("redux-saga") as {
+    mockRun: jest.Mock;
+  }
+).mockRun;
+const mockStartWhenAppIsActive = (
+  jest.requireMock("../reduxStartupGate") as {
+    mockStartWhenAppIsActive: jest.Mock;
+  }
+).mockStartWhenAppIsActive;
+
 describe("configureStoreAndPersistor", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("starts persistence and sagas through the Redux startup gate", () => {
+    const { persistor } = testable!.configureStoreAndPersistor();
+
+    expect(mockStartWhenAppIsActive).toHaveBeenCalledTimes(1);
+    expect(persistor.persist).toBe(mockPersist);
+    expect(mockPersist).not.toHaveBeenCalled();
+    expect(mockSagaRun).not.toHaveBeenCalled();
+
+    const startPersistenceAndSagas = mockStartWhenAppIsActive.mock.calls[0][0];
+    startPersistenceAndSagas();
+
+    expect(mockPersist).toHaveBeenCalledTimes(1);
+    expect(mockSagaRun).toHaveBeenCalledTimes(1);
+  });
+
   describe("CURRENT_REDUX_STORE_VERSION", () => {
     it("should match expected value", () => {
       const version = testable!.CURRENT_REDUX_STORE_VERSION;
