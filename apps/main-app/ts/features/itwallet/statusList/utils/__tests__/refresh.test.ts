@@ -1,13 +1,13 @@
 import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { STORAGE_KEY_LAST_CHECK_TIME } from "../consts";
 import {
   refreshStaleEntries,
   refreshStatusListToken,
   refreshWithBoundedParallelism
 } from "../refresh";
 import { StatusListRepository } from "../repository";
-import { STORAGE_KEY_LAST_CHECK_TIME } from "../storage";
 import { type StatusListContext } from "../types";
 
 const mockGetByUri = jest.fn<Promise<string>, [string]>();
