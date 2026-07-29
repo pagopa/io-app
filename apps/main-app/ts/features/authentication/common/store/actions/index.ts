@@ -1,6 +1,4 @@
-/**
- * Action types and action creator related to the Authentication.
- */
+/** Action types and action creator related to the Authentication. */
 
 import {
   ActionType,

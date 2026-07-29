@@ -92,9 +92,7 @@ export const shouldRequestStatusAssertion = ({
   }
 };
 
-/**
- * Shape of a credential status assertion response error.
- */
+/** Shape of a credential status assertion response error. */
 export const StatusAssertionError = t.intersection([
   t.type({ error: t.string }),
   t.partial({ error_description: t.string })
@@ -102,11 +100,11 @@ export const StatusAssertionError = t.intersection([
 
 /**
  * Create a shared promise to fetch the new Issuer Entity Configuration.
- * Multiple invocations of this function will reuse the same promise,
- * avoiding multiple HTTP calls for the same result.
+ * Multiple invocations of this function will reuse the same promise, avoiding
+ * multiple HTTP calls for the same result.
  *
  * @param maxAge Time in seconds to share the promise, defaults to 24 hours
- * @return The shared promise that resolves to the Issuer Configuration
+ * @returns The shared promise that resolves to the Issuer Configuration
  */
 function createIssuerConfSharedFetch(maxAge = 86400) {
   // eslint-disable-next-line functional/no-let

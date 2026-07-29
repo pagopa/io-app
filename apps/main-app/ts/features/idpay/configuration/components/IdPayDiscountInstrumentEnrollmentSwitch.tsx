@@ -71,7 +71,8 @@ const getInstrumentPaymentMethodBage = (
 };
 
 /**
- * A component to enable/disable the payment method of an instrument into discount initiative configuration
+ * A component to enable/disable the payment method of an instrument into
+ * discount initiative configuration
  */
 const IdPayDiscountInstrumentEnrollmentSwitch = (
   props: PaymentMethodSwitchProps

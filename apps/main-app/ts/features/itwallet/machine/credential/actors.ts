@@ -81,9 +81,9 @@ export type VerifyTrustFederationActorInput = Pick<
 >;
 
 /**
- * Builds the dictionary of Wallet Unit Attestations generated during issuance, keyed by their
- * `walletUnitAttestationId`. Works for both single and batch issuance, where a batch shares a
- * single WUA across all its keys.
+ * Builds the dictionary of Wallet Unit Attestations generated during issuance,
+ * keyed by their `walletUnitAttestationId`. Works for both single and batch
+ * issuance, where a batch shares a single WUA across all its keys.
  */
 const extractWalletUnitAttestations = (
   authorizedCredentials: ReadonlyArray<{
@@ -101,10 +101,11 @@ const extractWalletUnitAttestations = (
 
 /**
  * Creates the actors for the eid issuance machine
+ *
  * @param env - The environment to use for the IT Wallet API calls
  * @param itwVersion - IT-Wallet technical specs version
- * @param store the IOStore
- * @returns the actors
+ * @param store The IOStore
+ * @returns The actors
  */
 export const createCredentialIssuanceActorsImplementation = (
   env: Env,

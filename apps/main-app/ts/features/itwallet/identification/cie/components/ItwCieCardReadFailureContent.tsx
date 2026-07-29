@@ -38,14 +38,13 @@ type ItwCieCardReadFailureContentProps = Extract<
   CieManagerState,
   { state: "failure" }
 > & {
-  /**
-   * Handles the retry action for some failure cases.
-   */
+  /** Handles the retry action for some failure cases. */
   onRetry: () => void;
 };
 
 /**
- * Renders the failure screen content based on the platforms and received failure
+ * Renders the failure screen content based on the platforms and received
+ * failure
  */
 export const ItwCieCardReadFailureContent = ({
   failure,
@@ -254,6 +253,7 @@ type TrackErrorParams = {
   readProgress?: number;
 };
 
+// oxlint-disable-next-line complexity
 const trackError = ({
   failure,
   isL3,

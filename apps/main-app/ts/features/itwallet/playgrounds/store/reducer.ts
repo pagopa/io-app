@@ -13,14 +13,11 @@ import {
 } from "./actions";
 
 export type ItwDebugState = {
-  /**
-   * Per-credential status overrides, keyed by credentialType.
-   */
+  /** Per-credential status overrides, keyed by credentialType. */
   credentialStatusOverrides: Record<string, ItwCredentialStatus>;
   /**
-   * Original credentials saved before any override was applied.
-   * Used to restore the real data when overrides are cleared.
-   * Keyed by credentialId.
+   * Original credentials saved before any override was applied. Used to restore
+   * the real data when overrides are cleared. Keyed by credentialId.
    */
   savedCredentials: Record<string, CredentialMetadata> | undefined;
 };

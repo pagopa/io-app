@@ -1,7 +1,9 @@
 /**
- * Custom ESLint rule: delegate-effects
+ * Custom `delegate-effects` rule, exposed to oxlint via the local plugin in
+ * `index.js`. This rule has no native oxlint equivalent and is not a
+ * compatibility shim: it enforces a project-specific typed-redux-saga guideline.
  *
- * Enforces `yield*` (delegation) over `yield` when calling effects
+ * The rule enforces `yield*` (delegation) over `yield` when calling effects
  * imported from "typed-redux-saga/macro". Using plain `yield` returns `any`,
  * losing type safety, while `yield*` preserves the return type.
  *
@@ -11,19 +13,18 @@
 "use strict";
 
 /** @type {import("eslint").Rule.RuleModule} */
-module.exports = {
+const delegateEffectsRule = {
   meta: {
     type: "problem",
     docs: {
-      description:
-        'Enforce `yield*` over `yield` for typed-redux-saga effects',
+      description: "Enforce `yield*` over `yield` for typed-redux-saga effects"
     },
     fixable: "code",
     messages: {
       useYieldStar:
-        'Use `yield*` instead of `yield` when calling typed-redux-saga effects to preserve type safety.',
+        "Use `yield*` instead of `yield` when calling typed-redux-saga effects to preserve type safety."
     },
-    schema: [],
+    schema: []
   },
 
   create(context) {
@@ -73,14 +74,16 @@ module.exports = {
             node,
             messageId: "useYieldStar",
             fix(fixer) {
-              const sourceCode = context.sourceCode ?? context.getSourceCode();
+              const sourceCode = context.sourceCode;
               const yieldToken = sourceCode.getFirstToken(node);
               // Replace "yield" with "yield*"
               return fixer.replaceText(yieldToken, "yield*");
-            },
+            }
           });
         }
-      },
+      }
     };
-  },
+  }
 };
+
+module.exports = delegateEffectsRule;

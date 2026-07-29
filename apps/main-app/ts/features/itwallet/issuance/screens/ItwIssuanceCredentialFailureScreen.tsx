@@ -64,9 +64,7 @@ export const ItwIssuanceCredentialFailureScreen = () => {
 
 type ContentViewProps = { failure: CredentialIssuanceFailure };
 
-/**
- * Renders the content of the screen
- */
+/** Renders the content of the screen */
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
@@ -228,8 +226,9 @@ type GetCredentialInvalidStatusDetailsParams = {
 };
 
 /**
- * Utility to safely extract details from an invalid status failure, including the localized message.
- * **Note:** The message is dynamic and is extracted from the EC.
+ * Utility to safely extract details from an invalid status failure, including
+ * the localized message. **Note:** The message is dynamic and is extracted from
+ * the EC.
  */
 const getCredentialInvalidStatusDetails = (
   failure: CredentialIssuanceFailure,

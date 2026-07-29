@@ -23,12 +23,13 @@ export const itwCredentialsStore = createStandardAction(
 )<ReadonlyArray<CredentialMetadata>>();
 
 /**
- * This action stores one or multiple credentials using the CredentialBundle payload.
- * The handling saga writes each credential's raw bytes to the vault and collapses batch copies
- * into a single metadata (carrying `keyTags`) per `credentialId` before dispatching
- * `itwCredentialsStore`, which keeps one metadata per `credentialId`.
- * It also accepts optional callbacks in the meta to handle success and failure cases
- * after the credentials are stored in the vault.
+ * This action stores one or multiple credentials using the CredentialBundle
+ * payload. The handling saga writes each credential's raw bytes to the vault
+ * and collapses batch copies into a single metadata (carrying `keyTags`) per
+ * `credentialId` before dispatching `itwCredentialsStore`, which keeps one
+ * metadata per `credentialId`. It also accepts optional callbacks in the meta
+ * to handle success and failure cases after the credentials are stored in the
+ * vault.
  */
 export const itwCredentialsStoreBundle = createStandardAction(
   "ITW_CREDENTIALS_STORE_BUNDLE"
@@ -45,39 +46,40 @@ export const itwCredentialsRemove = createStandardAction(
 )<ReadonlyArray<CredentialMetadata>>();
 
 /**
- * Remove all credentials of the specified type. Used to fully clean
- * a credential in all its formats. A separate saga handles the deletion
- * of the associated crypto keys and Wallet cards.
- * It also accepts optional callbacks in the meta to handle success and failure cases
- * after the credentials are stored in the vault.
+ * Remove all credentials of the specified type. Used to fully clean a
+ * credential in all its formats. A separate saga handles the deletion of the
+ * associated crypto keys and Wallet cards. It also accepts optional callbacks
+ * in the meta to handle success and failure cases after the credentials are
+ * stored in the vault.
  */
 export const itwCredentialsRemoveByType = createStandardAction(
   "ITW_CREDENTIALS_REMOVE_BY_TYPE"
 )<CredentialMetadata["credentialType"], CallbackActionMeta>();
 
 /**
- * Signals that one or more legacy `credential` JWTs have been written to CredentialsVault.
- * The payload contains the IDs of successfully migrated credentials so the reducer can
- * remove only those from `legacyCredentials`; failing ones stay and retry on the next boot.
+ * Signals that one or more legacy `credential` JWTs have been written to
+ * CredentialsVault. The payload contains the IDs of successfully migrated
+ * credentials so the reducer can remove only those from `legacyCredentials`;
+ * failing ones stay and retry on the next boot.
  */
 export const itwCredentialsVaultMigrationComplete = createStandardAction(
   "ITW_CREDENTIALS_VAULT_MIGRATION_COMPLETE"
 )<ReadonlyArray<string>>();
 
 /**
- * Atomically removes all credentials of the specified type and stores the new ones.
- * The credential type is derived from the first bundle's metadata.
- * This avoids the race condition of dispatching remove and store as two separate actions.
- * It also accepts optional callbacks in the meta to handle success and failure cases
- * after the credentials are stored in the vault.
+ * Atomically removes all credentials of the specified type and stores the new
+ * ones. The credential type is derived from the first bundle's metadata. This
+ * avoids the race condition of dispatching remove and store as two separate
+ * actions. It also accepts optional callbacks in the meta to handle success and
+ * failure cases after the credentials are stored in the vault.
  */
 export const itwCredentialsReplaceByType = createStandardAction(
   "ITW_CREDENTIALS_REPLACE_BY_TYPE"
 )<ReadonlyArray<CredentialBundle>, CallbackActionMeta>();
 
 /**
- * Refresh the status of a credential, requesting a status assertion
- * to the Issuer and updating the stored credential with the result.
+ * Refresh the status of a credential, requesting a status assertion to the
+ * Issuer and updating the stored credential with the result.
  */
 export const itwCredentialsRefreshStatusByType = createStandardAction(
   "ITW_CREDENTIALS_REFRESH_STATUS_BY_TYPE"

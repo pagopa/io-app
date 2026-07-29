@@ -30,10 +30,11 @@ type Props = {
 
 /**
  * A header for a modals and bottom sheet.
+ *
  * @param title - The title of the modal.
  * @param onClose - The function to call when the close button is pressed.
- * @param closeAccessibilityLabel - The accessibility label for the close button.
- *
+ * @param closeAccessibilityLabel - The accessibility label for the close
+ *   button.
  */
 export const ModalBSHeader = ({
   title,

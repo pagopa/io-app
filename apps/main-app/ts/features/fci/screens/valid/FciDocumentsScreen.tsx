@@ -224,11 +224,12 @@ const FciDocumentsScreen = () => {
     );
 
   const renderPager = () => (
-    /** Be aware that, in react-native-pdf 6.7.7, on Android, there
-     * is a bug where onLoadComplete callback is not called. So,
-     * in order to detect proper PDF loading ending, we rely on
-     * onPageChanged, which is called to report that the first page
-     * has loaded */
+    /**
+     * Be aware that, in react-native-pdf 6.7.7, on Android, there is a bug
+     * where onLoadComplete callback is not called. So, in order to detect
+     * proper PDF loading ending, we rely on onPageChanged, which is called to
+     * report that the first page has loaded
+     */
     <Pdf
       enablePaging
       key={`${
@@ -307,8 +308,8 @@ const FciDocumentsScreen = () => {
         disabled={false}
         iconLeftDisabled={totalPages === 0 || currentPage === 1}
         /**
-         * buttons have to be disabled when totalPages is not ready yet (zero value) OR
-         * when corresponding limit is reached
+         * Buttons have to be disabled when totalPages is not ready yet (zero
+         * value) OR when corresponding limit is reached
          */
         iconRightDisabled={currentPage >= totalPages}
         indicatorPosition={"right"}

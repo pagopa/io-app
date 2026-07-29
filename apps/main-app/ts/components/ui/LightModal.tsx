@@ -1,6 +1,6 @@
 /**
- * Provides a mechanism to display non-native modals (i.e. overlays)
- * on top of the root component.
+ * Provides a mechanism to display non-native modals (i.e. overlays) on top of
+ * the root component.
  */
 
 import { Component, createContext, PropsWithChildren, ReactNode } from "react";

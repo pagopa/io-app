@@ -66,6 +66,7 @@ import { IdentificationLockModal } from "./IdentificationLockModal";
 const VERTICAL_PADDING = 16;
 const A11Y_FOCUS_DELAY = 1000 as Millisecond;
 
+// oxlint-disable-next-line complexity
 export const IdentificationModal = () => {
   const [isBiometricLocked, setIsBiometricLocked] = useState(false);
   const showRetryText = useRef(false);
@@ -176,10 +177,10 @@ export const IdentificationModal = () => {
       }
       onIdentificationSuccess(isBiometric);
       /**
-       * if the identification was successful, if at least two minutes
-       * have passed since the last time the app was placed in the
-       * background and returned to the foreground then the dispatch
-       * of the action that refreshes the session will be performed
+       * If the identification was successful, if at least two minutes have
+       * passed since the last time the app was placed in the background and
+       * returned to the foreground then the dispatch of the action that
+       * refreshes the session will be performed
        */
       if (hasTwoMinutesElapsedSinceLastActivity && isFastLoginEnabled) {
         onSuccessDispatchTokenRefresh();

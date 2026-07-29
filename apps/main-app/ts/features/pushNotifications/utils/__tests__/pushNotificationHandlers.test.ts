@@ -48,7 +48,10 @@ const makeResponse = ({
     }
   }) as unknown as Notifications.NotificationResponse;
 
-/** Build a minimal GlobalState slice with only the fields consumed by handleMessageNotificationInteraction. */
+/**
+ * Build a minimal GlobalState slice with only the fields consumed by
+ * handleMessageNotificationInteraction.
+ */
 const makeState = ({
   inboxData = messagePagePotNone,
   archiveData = messagePagePotNone,

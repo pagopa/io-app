@@ -3,9 +3,7 @@ import I18n from "i18next";
 
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 
-/**
- * A hook that returns a function to present an info bottom sheet
- */
+/** A hook that returns a function to present an info bottom sheet */
 export const useFciSignatureFieldInfo = () => {
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: I18n.t("features.fci.signatureFieldInfo.title"),

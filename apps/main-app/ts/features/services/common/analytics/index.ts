@@ -330,9 +330,7 @@ export const trackServicesFavouritesSortSelected = (
     buildEventProperties("UX", "action", { sortType })
   );
 
-/**
- * Isolated tracker for services actions
- */
+/** Isolated tracker for services actions */
 export const trackServicesAction = (action: Action): void => {
   switch (action.type) {
     case getType(featuredInstitutionsGet.failure):

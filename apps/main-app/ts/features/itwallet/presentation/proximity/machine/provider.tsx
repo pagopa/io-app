@@ -37,7 +37,8 @@ export const ItwProximityMachineProvider = ({
 };
 
 /**
- * Convenience component to display debug info about the machine state in the ladybug component.
+ * Convenience component to display debug info about the machine state in the
+ * ladybug component.
  */
 const DebugData = () => {
   const state = ItwProximityMachineContext.useSelector(({ value }) => value);

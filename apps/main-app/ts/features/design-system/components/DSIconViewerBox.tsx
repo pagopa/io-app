@@ -61,7 +61,10 @@ const styles = StyleSheet.create({
 });
 
 type DSIconViewerBoxProps = {
-  /** When true, the wrapper fills its parent width instead of using the size-based percentage. */
+  /**
+   * When true, the wrapper fills its parent width instead of using the
+   * size-based percentage.
+   */
   fullWidth?: boolean;
   image: ReactNode;
   name: string;

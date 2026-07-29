@@ -48,9 +48,7 @@ export const randomOrderIdps = <T extends object>(
     .sort((a, b) => a.sort - b.sort) // Sorts the array according to the random values assigned
     .map(({ value }) => value); // Extract only the original values from the array
 
-/**
- * A screen where the user choose the SPID IPD to login with.
- */
+/** A screen where the user choose the SPID IPD to login with. */
 const IdpSelectionScreen = (): ReactElement => {
   const dispatch = useIODispatch();
   const store = useIOStore();

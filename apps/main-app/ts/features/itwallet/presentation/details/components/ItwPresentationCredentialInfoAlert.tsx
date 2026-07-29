@@ -21,9 +21,7 @@ const validStates: Array<ItwCredentialStatus | undefined> = [
   "jwtExpiring"
 ];
 
-/**
- * Informative alert that is only visible when a credential is in a valid state.
- */
+/** Informative alert that is only visible when a credential is in a valid state. */
 const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
   const { credentialType } = credential;
   const { status } = useIOSelector(state =>

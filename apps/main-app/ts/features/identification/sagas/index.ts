@@ -36,8 +36,8 @@ type ResultAction =
   | ActionType<typeof identificationPinReset>
   | ActionType<typeof identificationSuccess>;
 /**
- * If you need to start the identification process and wait the result in a "sync" way,
- * like we do in the startup saga, use this generator
+ * If you need to start the identification process and wait the result in a
+ * "sync" way, like we do in the startup saga, use this generator
  */
 export function* startAndReturnIdentificationResult(
   pin: PinString,

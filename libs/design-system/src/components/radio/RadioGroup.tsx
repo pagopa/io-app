@@ -44,9 +44,9 @@ type RadioListItemWithAmountProps<T> = CommonProps<T> & {
 };
 
 /**
- * A list of radio buttons.
- * The management of the selection is demanded and derived by the `selectedItem` prop.
- * The item with the `id` equal to the `selectedItem` is the active one.
+ * A list of radio buttons. The management of the selection is demanded and
+ * derived by the `selectedItem` prop. The item with the `id` equal to the
+ * `selectedItem` is the active one.
  */
 
 const RadioListItem = <T,>(props: RadioListItemProps<T>) => (

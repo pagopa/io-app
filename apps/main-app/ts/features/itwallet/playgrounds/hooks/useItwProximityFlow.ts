@@ -127,12 +127,10 @@ const parseAndPrintError = (
 };
 
 /**
- * Proximity status enum to track the current state of the flow.
- * - IDLE: No flow active.
- * - READY: Permissions granted, waiting for engagement selection.
- * - ENGAGEMENT: Engagement active.
- * - PRESENTING: Verifier has requested a document.
- * - ERROR: An error occurred.
+ * Proximity status enum to track the current state of the flow. - IDLE: No flow
+ * active. - READY: Permissions granted, waiting for engagement selection. -
+ * ENGAGEMENT: Engagement active. - PRESENTING: Verifier has requested a
+ * document. - ERROR: An error occurred.
  */
 export enum PROXIMITY_STATUS {
   ENGAGEMENT = "ENGAGEMENT",

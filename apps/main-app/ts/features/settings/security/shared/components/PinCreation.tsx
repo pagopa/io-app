@@ -53,10 +53,11 @@ export type Props = {
 
 type PinMode = "confirmation" | "creation";
 /**
- * The Pin Creation component is used in both the onboarding
- * process and the profile settings.
+ * The Pin Creation component is used in both the onboarding process and the
+ * profile settings.
  *
- * This component will allow the user to create a new pin or change the existing one.
+ * This component will allow the user to create a new pin or change the existing
+ * one.
  */
 export const PinCreation = ({ isOnboarding = false }: Props) => {
   usePreventScreenCapture();
@@ -101,9 +102,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
 
   const goBack = useCallback(() => {
     if (pinModeRef.current === "confirmation") {
-      /**
-       * Scrolls back to pin creation section
-       */
+      /** Scrolls back to pin creation section */
       scrollToCreation();
     } else if (isOnboarding) {
       showAlert();
@@ -154,7 +153,8 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
 
       if (isValid) {
         /**
-         * pinRef is used to avoid having to pass pin as a dependency of useCallback around `handlePinConfirmation`.
+         * PinRef is used to avoid having to pass pin as a dependency of
+         * useCallback around `handlePinConfirmation`.
          */
 
         pinRef.current = v;

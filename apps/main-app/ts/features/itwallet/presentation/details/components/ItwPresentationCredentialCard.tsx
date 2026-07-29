@@ -27,8 +27,9 @@ type Props = {
 };
 
 /**
- * This component renders the credential card in the presentation screen.
- * If the credential supports the skeumorphic card, it also renders it with the flip button and If L3 is enabled, it shows the badge.
+ * This component renders the credential card in the presentation screen. If the
+ * credential supports the skeumorphic card, it also renders it with the flip
+ * button and If L3 is enabled, it shows the badge.
  */
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const navigation = useIONavigation();

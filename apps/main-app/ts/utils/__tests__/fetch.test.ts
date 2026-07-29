@@ -162,8 +162,9 @@ describe("constantPollingFetch function", () => {
        */
 
       /**
-       * Taking into account the time to bootstrap and run the test, we consider it successful
-       * if it takes overall less than the bare time of all the requests (including delay + timeout).
+       * Taking into account the time to bootstrap and run the test, we consider
+       * it successful if it takes overall less than the bare time of all the
+       * requests (including delay + timeout).
        */
       it(`should take less than ${MAX_DURATION_NO_TIMEOUT} milliseconds`, async () => {
         await mockServer.get(TEST_PATH).thenCallback(delayedResponse);

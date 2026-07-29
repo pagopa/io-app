@@ -19,10 +19,11 @@ export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 1;
 
 /**
  * This function is used to migrate the redux store from version 0 to version 1.
- * The migration is needed because the type of the persisted redux state has changed.
- * The keyTag field should be an Option<string>.
- * @param state the persisted redux state
- * @returns the migrated persisted redux state
+ * The migration is needed because the type of the persisted redux state has
+ * changed. The keyTag field should be an Option<string>.
+ *
+ * @param state The persisted redux state
+ * @returns The migrated persisted redux state
  */
 export const migrationKeyTagFunctional = (
   state: PersistedState

@@ -1,6 +1,4 @@
-/**
- * Action types and action creator related to persisted preferences
- */
+/** Action types and action creator related to persisted preferences */
 import { Calendar } from "react-native-calendar-events";
 import { ActionType, createStandardAction } from "typesafe-actions";
 

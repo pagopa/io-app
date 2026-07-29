@@ -28,11 +28,12 @@ type OwnProps = Pick<
   Props;
 
 /**
- * A checkbox with the automatic state management that uses a {@link AnimatedCheckBox}
- * The toggleValue change when a `onPress` event is received and dispatch the `onValueChange`.
+ * A checkbox with the automatic state management that uses a
+ * {@link AnimatedCheckBox} The toggleValue change when a `onPress` event is
+ * received and dispatch the `onValueChange`.
  *
+ * @class
  * @param props
- * @constructor
  */
 export const CheckboxLabel = ({
   label,

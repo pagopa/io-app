@@ -32,15 +32,11 @@ export const itwProximityMachine = setup({
   },
   actions: {
     onInit: notImplemented,
-    /**
-     * Context manipulation
-     */
+    /** Context manipulation */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
 
-    /**
-     * Navigation
-     */
+    /** Navigation */
 
     navigateToBluetoothPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
@@ -53,16 +49,12 @@ export const itwProximityMachine = setup({
     navigateToSuccessScreen: notImplemented,
     closeProximity: notImplemented,
 
-    /**
-     * Consents
-     */
+    /** Consents */
 
     grantConsent: notImplemented,
     storeConsent: notImplemented,
 
-    /**
-     * Analytics
-     */
+    /** Analytics */
 
     trackProximityStart: notImplemented,
     trackQrCodeLoadingFailure: notImplemented

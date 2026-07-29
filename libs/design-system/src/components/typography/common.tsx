@@ -6,9 +6,7 @@ import type { IOColors } from "../../core";
 import { IOFontFamily, IOFontWeight } from "../../utils/fonts";
 import { RequiredAll } from "../../utils/types";
 
-/**
- * Define the font size values for the typography elements
- */
+/** Define the font size values for the typography elements */
 export type FontSize = "mini" | "regular" | "small";
 
 export const fontSizeMapping: Record<FontSize, number> = {
@@ -23,30 +21,25 @@ export const lineHeightMapping: Record<FontSize, number> = {
 };
 
 /**
- * Define the common props interface for all the leaf Typography components.
- * In addition to the {@link DefaultTypographyProps} all the {@link Text} props are allowed (`style` excluded)
+ * Define the common props interface for all the leaf Typography components. In
+ * addition to the {@link DefaultTypographyProps} all the {@link Text} props are
+ * allowed (`style` excluded)
  */
 export type ExternalTypographyProps<T> = T extends DefaultTypographyProps
   ? Omit<ComponentPropsWithRef<typeof Text>, "style"> &
       T & { style?: TypographyStyle }
   : never;
 
-/**
- * Define the font name values for the typography elements
- */
+/** Define the font name values for the typography elements */
 export type FontType = {
   font?: IOFontFamily;
 };
 
-/**
- * Define mandatory all the keys of {@link TypographyProps}
- */
+/** Define mandatory all the keys of {@link TypographyProps} */
 export type RequiredTypographyProps<WeightPropsType, ColorsPropsType> =
   RequiredAll<TypographyProps<WeightPropsType, ColorsPropsType>>;
 
-/**
- * Define a generic type for props used by all the typography leaf components
- */
+/** Define a generic type for props used by all the typography leaf components */
 export type TypographyProps<WeightPropsType, ColorsPropsType> = {
   color?: ColorsPropsType;
   weight?: WeightPropsType;
@@ -56,7 +49,8 @@ export type TypographyProps<WeightPropsType, ColorsPropsType> = {
 type DefaultTypographyProps = TypographyProps<IOFontWeight, IOColors>;
 
 /**
- * The style exported for the typography elements, without the fields characterizing the font style
+ * The style exported for the typography elements, without the fields
+ * characterizing the font style
  */
 type TypographyStyle = StyleProp<
   Omit<
@@ -66,11 +60,13 @@ type TypographyStyle = StyleProp<
 >;
 
 /**
- * A default function used to calculate the weight and color with some fallback values if not specified.
- * @param defaultWeight the default weight value to use if weight is not defined
- * @param defaultColor the default color value to use if color is not defined
- * @param weight the optional weight value
- * @param color the optional color value
+ * A default function used to calculate the weight and color with some fallback
+ * values if not specified.
+ *
+ * @param defaultWeight The default weight value to use if weight is not defined
+ * @param defaultColor The default color value to use if color is not defined
+ * @param weight The optional weight value
+ * @param color The optional color value
  */
 export function calculateWeightColor<WeightPropsType, ColorsPropsType>(
   defaultWeight: WeightPropsType,

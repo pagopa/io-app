@@ -18,9 +18,7 @@ const notImplemented = () => {
   throw new Error("Not implemented");
 };
 
-/**
- * Amount in seconds to wait before retrying
- */
+/** Amount in seconds to wait before retrying */
 const backoffTimeAmounts = [1, 10, 60, 180];
 
 export const itwTrustmarkMachine = setup({

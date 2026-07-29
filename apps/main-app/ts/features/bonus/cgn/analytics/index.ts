@@ -33,6 +33,7 @@ import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 
 export type TrackCgnStatus = "active" | "not_active";
 
+// oxlint-disable-next-line complexity
 const trackCgnAction = (action: Action): void => {
   switch (action.type) {
     case getType(cgnActivationBack):

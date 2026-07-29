@@ -11,14 +11,15 @@ import { buildEventProperties } from "../../../utils/analytics";
 import { getUrlBasepath } from "../../../utils/url";
 
 /**
- * Track when the app is opened from a Universal App Link.
- * If Mixpanel is not yet initialized, the event will be enqueued and sent
- * once Mixpanel initialization is complete.
+ * Track when the app is opened from a Universal App Link. If Mixpanel is not
+ * yet initialized, the event will be enqueued and sent once Mixpanel
+ * initialization is complete.
  *
  * @param link_id The URL that opened the app
- * @param mixpanelUserOptedIn Whether the user has enabled Mixpanel tracking.
- *                          If false or undefined, the event will not be enqueued (but will still be tracked if Mixpanel is initialized).
- *                          If true, the tracking will always be attempted.
+ * @param mixpanelUserOptedIn Whether the user has enabled Mixpanel tracking. If
+ *   false or undefined, the event will not be enqueued (but will still be
+ *   tracked if Mixpanel is initialized). If true, the tracking will always be
+ *   attempted.
  */
 export function trackIOOpenedFromUniversalAppLink(
   link_id: string,

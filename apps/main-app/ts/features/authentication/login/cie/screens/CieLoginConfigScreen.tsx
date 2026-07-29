@@ -23,9 +23,7 @@ const PinView = (props: PinViewProps) => (
   />
 );
 
-/**
- * @deprecated Use one of the `IOScrollView…` components instead.
- */
+/** @deprecated Use one of the `IOScrollView…` components instead. */
 const CieLoginConfigScreen = () => {
   const [locked, setLocked] = useState(true);
   const [pin, setPin] = useState("");

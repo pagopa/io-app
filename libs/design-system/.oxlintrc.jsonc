@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  // Reuse main-app's full ruleset, globals and plugins. Only design-system
+  // specific tweaks live here.
+  "extends": ["../../apps/main-app/.oxlintrc.jsonc"],
+  // `extends` replaces `ignorePatterns` rather than merging it, so the base's
+  // `**/*.{js,cjs,mjs}` must be repeated here alongside `lib/**` (bob build output).
+  "ignorePatterns": ["**/*.js", "**/*.cjs", "**/*.mjs", "lib/**"],
+  "overrides": [
+    {
+      // Generated `Pictogram...` and `Icon...` SVG components: sorting their
+      // imports/props/named imports offers no benefit and only creates churn.
+      "files": [
+        "src/components/icons/svg/**/*.tsx",
+        "src/components/pictograms/svg/**/*.tsx"
+      ],
+      "rules": {
+        "perfectionist/sort-imports": "off",
+        "perfectionist/sort-jsx-props": "off",
+        "perfectionist/sort-named-imports": "off"
+      },
+      "jsPlugins": ["eslint-plugin-perfectionist"]
+    }
+  ]
+}

@@ -29,10 +29,10 @@ const defaultUserAgent = Platform.select({
 const AUTH_LINK_PATTERN = "lettura carta";
 
 /**
- * To obtain the authentication URL on CIE L3 it is necessary to take the
- * link contained in the "Entra con lettura carta CIE" button.
- * This link can then be used on CieManager.
- * This javascript code takes the link in question and sends it to the react native function via postMessage
+ * To obtain the authentication URL on CIE L3 it is necessary to take the link
+ * contained in the "Entra con lettura carta CIE" button. This link can then be
+ * used on CieManager. This javascript code takes the link in question and sends
+ * it to the react native function via postMessage
  */
 const injectedJavaScript = `
     (function() {
@@ -63,9 +63,7 @@ type ItwCieWebViewProps = ComponentProps<typeof WebView> & {
   onWebViewError: (error: WebViewError) => void;
 };
 
-/**
- * Base WebView component used for the CIE flow
- */
+/** Base WebView component used for the CIE flow */
 const ItwCieWebView = ({ onWebViewError, ...props }: ItwCieWebViewProps) => {
   const webView = createRef<WebView>();
 
@@ -128,8 +126,9 @@ type ItwCieAuthenticationWebviewProps = {
 };
 
 /**
- * Webview used to fetch the authentication url to use a servide provider for the CIE authentication
- * It displayes a loading spinner, with the webview working in the background
+ * Webview used to fetch the authentication url to use a servide provider for
+ * the CIE authentication It displayes a loading spinner, with the webview
+ * working in the background
  */
 export const ItwCieAuthenticationWebview = ({
   authenticationUrl,
@@ -180,7 +179,8 @@ type ItwCieAuthorizationWebviewProps = {
 };
 
 /**
- * Webview used to display to the user the authorization request after the CIE authentication
+ * Webview used to display to the user the authorization request after the CIE
+ * authentication
  */
 export const ItwCieAuthorizationWebview = ({
   authorizationUrl,

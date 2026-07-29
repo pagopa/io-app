@@ -57,9 +57,7 @@ type ListItemNavPartialProps = WithTestID<
     description?: ReactNode | string;
     hideChevron?: boolean;
     loading?: boolean;
-    /**
-     * The maximum number of lines to display for the value.
-     */
+    /** The maximum number of lines to display for the value. */
     numberOfLines?: number;
     onPress: (event: GestureResponderEvent) => void;
     topElement?: ListItemTopElementProps;

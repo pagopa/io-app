@@ -7,17 +7,13 @@ import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { itwDebugReset } from "../../playgrounds/store/actions";
 import { itwResetEnv, itwSetEnv } from "../store/actions/environment";
 
-/**
- * Watch environment actions and triggers the IT Wallet reset.
- */
+/** Watch environment actions and triggers the IT Wallet reset. */
 export function* watchItwEnvironment(): SagaIterator {
   yield* takeLatest(itwSetEnv, handleItwEnvironmentChanged);
   yield* takeLatest(itwResetEnv, handleItwEnvironmentChanged);
 }
 
-/**
- * Ensures the wallet is correctly reset when the environment changes.
- */
+/** Ensures the wallet is correctly reset when the environment changes. */
 function* handleItwEnvironmentChanged(
   action: ActionType<typeof itwResetEnv> | ActionType<typeof itwSetEnv>
 ): SagaIterator {

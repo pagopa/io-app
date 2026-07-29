@@ -1,6 +1,4 @@
-/**
- * Action types and action creator related to lollipop
- */
+/** Action types and action creator related to lollipop */
 
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { ActionType, createStandardAction } from "typesafe-actions";

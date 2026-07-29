@@ -6,9 +6,7 @@ import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 export const h3FontSize: IOFontSize = 22;
 export const h3LineHeight = 33;
 
-/**
- * `H3` typographic style
- */
+/** `H3` typographic style */
 export const H3 = ({ color: customColor, ...props }: TypographicStyleProps) => {
   const theme = useIOTheme();
 

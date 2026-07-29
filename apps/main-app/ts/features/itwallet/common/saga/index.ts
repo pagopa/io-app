@@ -36,7 +36,8 @@ import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess";
 
 /**
- * Watcher for ITW sagas that do not require internet connection or a valid session
+ * Watcher for ITW sagas that do not require internet connection or a valid
+ * session
  */
 export function* watchItwOfflineSaga(): SagaIterator {
   // Watch for changes in the credentials store to keep the wallet in sync
@@ -98,16 +99,20 @@ export function* watchItwSaga(): SagaIterator {
 }
 
 /**
- * Sanitizes the authentication level to fix an inconsistency introduced by a regression in app version 3.21.
+ * Sanitizes the authentication level to fix an inconsistency introduced by a
+ * regression in app version 3.21.
  *
- * This saga ensures that users with an L3 PID credential (assurance_level = high) have their
- * `auth_level` correctly set to 'L3'.
+ * This saga ensures that users with an L3 PID credential (assurance_level =
+ * high) have their `auth_level` correctly set to 'L3'.
  *
- * The sanitization is skipped for whitelisted users (when `action.payload` is `true`).
+ * The sanitization is skipped for whitelisted users (when `action.payload` is
+ * `true`).
  *
- * @param action - The action dispatched when the fiscal code whitelist status changes.
+ * @param action - The action dispatched when the fiscal code whitelist status
+ *   changes.
  *
- * TODO: This check can be safely removed once the minimum supported app version is greater than 3.21
+ *   TODO: This check can be safely removed once the minimum supported app
+ *   version is greater than 3.21
  */
 const handleAuthLevelSanitizationSaga = function* (
   action: ActionType<typeof itwSetFiscalCodeWhitelisted>

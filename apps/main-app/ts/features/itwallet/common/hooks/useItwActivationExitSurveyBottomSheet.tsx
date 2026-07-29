@@ -24,9 +24,9 @@ export type EidActivationExitStep =
   | "select_method";
 
 /**
- * Module-level flag: the survey is shown at most once per app session.
- * Resets automatically when the app is killed and restarted.
- * Using a const object to comply with functional/no-let rules.
+ * Module-level flag: the survey is shown at most once per app session. Resets
+ * automatically when the app is killed and restarted. Using a const object to
+ * comply with functional/no-let rules.
  */
 const eidActivationExitSession = { shown: false };
 
@@ -35,9 +35,9 @@ type Props = {
 };
 
 /**
- * Shows a Qualtrics survey bottom sheet when the user exits the EID
- * activation flow. The survey includes the step at which the user dropped off
- * and the current Documenti su IO status.
+ * Shows a Qualtrics survey bottom sheet when the user exits the EID activation
+ * flow. The survey includes the step at which the user dropped off and the
+ * current Documenti su IO status.
  *
  * The bottom sheet is shown at most once per app session. If already shown,
  * `onAfterDismiss` is invoked immediately.

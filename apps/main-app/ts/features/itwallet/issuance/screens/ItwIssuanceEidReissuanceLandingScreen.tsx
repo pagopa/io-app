@@ -20,9 +20,9 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 /**
- * Landing screen for the eID reissuing flow started from a message.
- * Since this flow is started from outside the Wallet screen,
- * it it necessary to make some preliminary checks before proceeding.
+ * Landing screen for the eID reissuing flow started from a message. Since this
+ * flow is started from outside the Wallet screen, it it necessary to make some
+ * preliminary checks before proceeding.
  */
 export const ItwIssuanceEidReissuanceLandingScreen = () => {
   const navigation = useIONavigation();
@@ -106,9 +106,9 @@ type Props = {
 };
 
 /**
- * Navigate to the issuance machine. The entry point depends on
- * whether the user has a valid Wallet and only needs to reissue the eID/PID
- * or does not have an active Wallet and needs to activate it first.
+ * Navigate to the issuance machine. The entry point depends on whether the user
+ * has a valid Wallet and only needs to reissue the eID/PID or does not have an
+ * active Wallet and needs to activate it first.
  */
 const NavigateToEidIssuanceMachine = ({ eidReissuing }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();

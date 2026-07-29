@@ -11,7 +11,8 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { loadServiceDetail } from "../store/actions/details";
 
 /**
- * saga to handle the loading of a service detail
+ * Saga to handle the loading of a service detail
+ *
  * @param getService
  * @param action
  */

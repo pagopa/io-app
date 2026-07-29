@@ -67,9 +67,9 @@ const pictogramByOutcome: Record<
 };
 
 /**
- * Subtitle shown under the outcome title, if any.
- * `undefined` marks the outcomes whose title is self-explanatory and that are
- * therefore rendered without a subtitle.
+ * Subtitle shown under the outcome title, if any. `undefined` marks the
+ * outcomes whose title is self-explanatory and that are therefore rendered
+ * without a subtitle.
  */
 export const subtitleKeyByOutcome: Record<
   keyof typeof WalletOnboardingOutcomeEnum,

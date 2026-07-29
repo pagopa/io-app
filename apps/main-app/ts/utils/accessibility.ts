@@ -10,9 +10,10 @@ import { AccessibilityInfo, findNodeHandle } from "react-native";
 import { format } from "./dates";
 
 /**
- * set the accessibility focus on the given {@param nodeReference}
- * use {@param executionDelay} to set focus with a delay
- * when the focus is set (or not) the {@param callback} will be executed
+ * Set the accessibility focus on the given {@param nodeReference} use
+ * {@param executionDelay} to set focus with a delay when the focus is set (or
+ * not) the {@param callback} will be executed
+ *
  * @param nodeReference
  * @param executionDelay
  * @param callback
@@ -43,7 +44,8 @@ export const setAccessibilityFocus = <T extends Component>(
 };
 
 /**
- * return a Promise where true means there is a screen reader active (VoiceOver / TalkBack)
+ * Return a Promise where true means there is a screen reader active (VoiceOver
+ * / TalkBack)
  */
 export const isScreenReaderEnabled = async (): Promise<boolean> =>
   await pipe(

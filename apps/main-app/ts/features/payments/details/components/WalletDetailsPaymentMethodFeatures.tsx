@@ -11,9 +11,8 @@ import PaymentMethodSettings from "./WalletDetailsPaymentMethodSettings";
 type Props = { paymentMethod: WalletInfo };
 
 /**
- * Display the features available for a payment method:
- * - vertical initiatives (eg: cashback, fa)
- * - global settings (payment capability, favourite, etc.)
+ * Display the features available for a payment method: - vertical initiatives
+ * (eg: cashback, fa) - global settings (payment capability, favourite, etc.)
  */
 const WalletDetailsPaymentMethodFeatures = ({ paymentMethod }: Props) => {
   const isMethodExpired = isPaymentMethodExpired(paymentMethod.details);

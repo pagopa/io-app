@@ -18,9 +18,8 @@ export type ContextualHelpPropsMarkdown = {
 };
 
 /**
- * Create the object needed to ensure that the Contextual Help question mark is visible
- * when the Contextual Help is filled remotely.
- *
+ * Create the object needed to ensure that the Contextual Help question mark is
+ * visible when the Contextual Help is filled remotely.
  */
 export const emptyContextualHelp: ContextualHelpProps = {
   title: "",
@@ -28,8 +27,9 @@ export const emptyContextualHelp: ContextualHelpProps = {
 };
 
 /**
- * Extract a title and a body (ContextualHelpProps) if the contextualHelp or the contextualHelpMarkdown in input are defined,
- * otherwise returns undefined.
+ * Extract a title and a body (ContextualHelpProps) if the contextualHelp or the
+ * contextualHelpMarkdown in input are defined, otherwise returns undefined.
+ *
  * @param contextualHelp
  * @param contextualHelpMarkdown
  * @param onLoadEnd
@@ -50,8 +50,9 @@ export const getContextualHelpConfig = (
       : undefined;
 
 /**
- If contextualData (loaded from the content server) contains the route of the current screen,
- title, content, faqs are read from it, otherwise they came from the locales stored in app
+ * If contextualData (loaded from the content server) contains the route of the
+ * current screen, title, content, faqs are read from it, otherwise they came
+ * from the locales stored in app
  */
 export const getContextualHelpData = (
   maybeContextualData: O.Option<ScreenCHData>,

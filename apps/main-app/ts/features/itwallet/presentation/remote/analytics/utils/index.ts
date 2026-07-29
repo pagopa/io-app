@@ -17,13 +17,12 @@ const isCredentialRecord = (
  * Returns a string of missing or invalid credentials formatted for tracking,
  * ordered according to a predefined priority.
  *
- * It checks which credentials from a predefined list (CREDENTIALS_MAP)
- * are included in the input array, maps them to their Mixpanel names,
- * and joins them with " - ".
+ * It checks which credentials from a predefined list (CREDENTIALS_MAP) are
+ * included in the input array, maps them to their Mixpanel names, and joins
+ * them with " - ".
  *
- * Example:
- * Input: ["mDL", "EuropeanHealthInsuranceCard"]
- * Output: "ITW_PG_V3 - ITW_TS_V3"
+ * Example: Input: ["mDL", "EuropeanHealthInsuranceCard"] Output: "ITW_PG_V3 -
+ * ITW_TS_V3"
  */
 export const getOrderedCredential = (
   missingCredentials: Array<string>
@@ -36,10 +35,12 @@ export const getOrderedCredential = (
     .join(" - ");
 
 /**
- * Returns the dismiss context for a given failure type.
- * This is used to determine which screen and flow to show when a failure occurs.
+ * Returns the dismiss context for a given failure type. This is used to
+ * determine which screen and flow to show when a failure occurs.
+ *
  * @param failureType - The type of failure that occurred
- * @returns An ItwDismissalContext object or undefined if no dismiss context is defined for the failure type
+ * @returns An ItwDismissalContext object or undefined if no dismiss context is
+ *   defined for the failure type
  */
 export const getDismissalContextFromFailure = (
   failureType: RemoteFailureType

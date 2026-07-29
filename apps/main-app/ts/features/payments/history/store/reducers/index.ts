@@ -74,6 +74,7 @@ const INITIAL_STATE: PaymentsHistoryState = {
 
 const ARCHIVE_SIZE = 15;
 
+// oxlint-disable-next-line complexity
 const reducer = (
   state: PaymentsHistoryState = INITIAL_STATE,
   action: Action

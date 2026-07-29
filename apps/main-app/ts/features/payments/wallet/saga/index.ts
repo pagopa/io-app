@@ -7,6 +7,7 @@ import { handleGetPaymentsWalletUserMethods } from "./handleGetPaymentsWalletUse
 
 /**
  * Handle Wallet onboarding requests
+ *
  * @param bearerToken
  */
 export function* watchPaymentsWalletSaga(

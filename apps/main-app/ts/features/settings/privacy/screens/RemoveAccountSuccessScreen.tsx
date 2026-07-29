@@ -7,8 +7,8 @@ import { useIODispatch } from "../../../../store/hooks";
 import { logoutRequest } from "../../../authentication/common/store/actions";
 
 /**
- * A screen to explain how the account removal works.
- * Here user can ask to delete his account
+ * A screen to explain how the account removal works. Here user can ask to
+ * delete his account
  */
 const RemoveAccountSuccess = () => {
   const dispatch = useIODispatch();

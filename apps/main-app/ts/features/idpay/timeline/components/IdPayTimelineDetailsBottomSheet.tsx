@@ -42,7 +42,9 @@ type IdPayTimelineDetailsBottomSheetModal = Omit<
 };
 
 /**
- * This hook is used to show the bottom sheet with the details of a timeline operation
+ * This hook is used to show the bottom sheet with the details of a timeline
+ * operation
+ *
  * @param initiativeId ID of the initiative associated to the operation details
  */
 const useIdPayTimelineDetailsBottomSheet = (
@@ -78,6 +80,7 @@ const useIdPayTimelineDetailsBottomSheet = (
     return pipe(
       detailsPot,
       pot.toOption,
+      // oxlint-disable-next-line react/jsx-key -- O.map is fp-ts Option map, not Array.map; key prop is not needed
       O.map(details => {
         switch (details.operationType) {
           case RefundOperationTypeEnum.PAID_REFUND:

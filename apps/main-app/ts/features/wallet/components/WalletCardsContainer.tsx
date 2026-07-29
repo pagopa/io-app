@@ -32,9 +32,9 @@ import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
 /**
- * A component which renders the wallet cards container
- * It handles the loading state, which is displayed when the wallet is empty and the cards are still loading,
- * and the empty state
+ * A component which renders the wallet cards container It handles the loading
+ * state, which is displayed when the wallet is empty and the cards are still
+ * loading, and the empty state
  */
 const WalletCardsContainer = () => {
   const shouldRenderLoadingState = useIOSelector(
@@ -108,9 +108,7 @@ const WalletCardsContainer = () => {
   );
 };
 
-/**
- * Skeleton for the wallet cards container
- */
+/** Skeleton for the wallet cards container */
 const WalletCardsContainerSkeleton = () => (
   <>
     <WalletCardSkeleton cardProps={{}} testID="walletCardSkeletonTestID_1" />
@@ -119,9 +117,7 @@ const WalletCardsContainerSkeleton = () => (
   </>
 );
 
-/**
- * Card container for the other cards (payments, bonus, etc.)
- */
+/** Card container for the other cards (payments, bonus, etc.) */
 const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   const cards = useIOSelector(selectWalletOtherCards);
 

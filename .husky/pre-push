@@ -12,8 +12,8 @@ echo "🔨 compiling..."
 pnpm nx affected --target=tsc-noemit
 
 # Run lintier
-echo "🧹 running linter..."  
-pnpm nx affected --target=lint --fix --cache
+echo "🧹 running linter..."
+pnpm nx affected --target=lint-autofix
 # Run prettifier
 echo "🧼 running formatter..."
 pnpm prettify

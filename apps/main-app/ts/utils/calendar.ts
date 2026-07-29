@@ -13,31 +13,32 @@ import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
 import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
 import { formatDateAsReminder } from "./dates";
 
-/**
- * Utility functions to interact with the device calendars
- */
+/** Utility functions to interact with the device calendars */
 
 /**
- * A type that brings info about calendar authorization
- * asked means (when true) that the authorized values comes from user choise
- * otherwise comes from a previous recorded choice
+ * A type that brings info about calendar authorization asked means (when true)
+ * that the authorized values comes from user choise otherwise comes from a
+ * previous recorded choice
  */
 type CalendarAuthorization = { asked: boolean; authorized: boolean };
 
 type CalendarTitleTranslation = { [key: string]: TranslationKeys };
 
 /**
- * This Type has been introduced after this story https://www.pivotaltracker.com/story/show/172079415
- * to solve the bug on some android devices (mostly the one running MIUI) naming their local calendar
- * with camel case notation this is a common situation as figured on a related reddit post
+ * This Type has been introduced after this story
+ * https://www.pivotaltracker.com/story/show/172079415 to solve the bug on some
+ * android devices (mostly the one running MIUI) naming their local calendar
+ * with camel case notation this is a common situation as figured on a related
+ * reddit post
  * https://www.reddit.com/r/Xiaomi/comments/84jgdn/google_calendars_not_syncing_or_even_requesting/
  * and can be seen on MIUI's github repository
  * https://github.com/ChameleonOS/miui_framework/blob/master/java/miui/provider/ExtraCalendarContracts.java
  */
 
 /**
- * A function that checks if the user has already permission to read/write to Calendars
- * and in case of not already defined permission try to get the authorization.
+ * A function that checks if the user has already permission to read/write to
+ * Calendars and in case of not already defined permission try to get the
+ * authorization.
  */
 export async function checkAndRequestPermission(): Promise<CalendarAuthorization> {
   try {
@@ -94,8 +95,9 @@ export function convertLocalCalendarName(calendarTitle: string) {
 }
 
 /**
- * return a TaskEither where left is an error
- * and right is a boolean -> true === the is in calendar
+ * Return a TaskEither where left is an error and right is a boolean -> true ===
+ * the is in calendar
+ *
  * @param eventId
  */
 export const legacyIsEventInCalendar = (
@@ -209,7 +211,8 @@ export const removeCalendarEventFromDeviceCalendar = (
 
 /**
  * Check and request the permission to access the device calendar
- * @returns a boolean that is true if the permission is granted
+ *
+ * @returns A boolean that is true if the permission is granted
  */
 export const requestCalendarPermission = async (): Promise<boolean> => {
   const checkResult = await RNCalendarEvents.checkPermissions();
@@ -221,9 +224,7 @@ export const requestCalendarPermission = async (): Promise<boolean> => {
   return requestStatus === "authorized";
 };
 
-/**
- * Check if the event is in the device calendar
- */
+/** Check if the event is in the device calendar */
 export const isEventInCalendar = (eventId: string) =>
   pipe(
     TE.tryCatch(() => requestCalendarPermission(), E.toError),
@@ -234,9 +235,7 @@ export const isEventInCalendar = (eventId: string) =>
     TE.map(ev => ev !== null)
   );
 
-/**
- * Add an event to the device calendar
- */
+/** Add an event to the device calendar */
 export const saveEventToDeviceCalendarTask = (
   calendarId: string,
   dueDate: Date,
@@ -254,18 +253,14 @@ export const saveEventToDeviceCalendarTask = (
     E.toError
   );
 
-/**
- * Remove an event from the device calendar
- */
+/** Remove an event from the device calendar */
 export const removeEventFromDeviceCalendarTask = (eventId: string) =>
   pipe(
     TE.tryCatch(() => RNCalendarEvents.removeEvent(eventId), E.toError),
     TE.map(_ => eventId)
   );
 
-/**
- * Find the device calendars
- */
+/** Find the device calendars */
 export const findDeviceCalendarsTask = TE.tryCatch(
   () => RNCalendarEvents.findCalendars(),
   E.toError
