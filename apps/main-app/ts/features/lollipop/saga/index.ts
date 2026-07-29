@@ -21,6 +21,7 @@ import {
   trackLollipopKeyGenerationFailure,
   trackLollipopKeyGenerationSuccess
 } from "../../../utils/analytics";
+import { isTestEnv } from "../../../utils/environment";
 import { sessionInvalid } from "../../authentication/common/store/actions";
 import {
   lollipopKeyTagSave,
@@ -228,3 +229,13 @@ const defaultKeyInfo = (): KeyInfo => ({
   publicKey: undefined,
   publicKeyThumbprint: undefined
 });
+
+export const testable = isTestEnv
+  ? {
+      cryptoKeyGenerationSaga,
+      deleteCryptoKeyPair,
+      deletePreviousCryptoKeyPair,
+      checkPublicKeyExists,
+      generateCryptoKeyPair
+    }
+  : undefined;
