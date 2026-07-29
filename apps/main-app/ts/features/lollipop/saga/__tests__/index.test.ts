@@ -31,8 +31,8 @@ jest.mock("../../utils/crypto", () => ({
 }));
 
 describe("generateKeyInfo", () => {
-  it("should return a full KeyInfo when both keyTag and publicKey are Some", () => {
-    const result = generateKeyInfo(O.some("keyTag"), O.some(mockPublicKey));
+  it("should return a full KeyInfo when both keyTag is defined and publicKey is Some", () => {
+    const result = generateKeyInfo("keyTag", O.some(mockPublicKey));
     expect(result).toEqual({
       keyTag: "keyTag",
       publicKey: mockPublicKey,
@@ -40,8 +40,8 @@ describe("generateKeyInfo", () => {
     });
   });
 
-  it("should return an empty KeyInfo when keyTag is None", () => {
-    const result = generateKeyInfo(O.none, O.some(mockPublicKey));
+  it("should return an empty KeyInfo when keyTag is undefined", () => {
+    const result = generateKeyInfo(undefined, O.some(mockPublicKey));
     expect(result).toEqual({
       keyTag: undefined,
       publicKey: undefined,
@@ -50,7 +50,7 @@ describe("generateKeyInfo", () => {
   });
 
   it("should return an empty KeyInfo when publicKey is None", () => {
-    const result = generateKeyInfo(O.some("keyTag"), O.none);
+    const result = generateKeyInfo("keyTag", O.none);
     expect(result).toEqual({
       keyTag: undefined,
       publicKey: undefined,
@@ -70,10 +70,10 @@ describe("getKeyInfo", () => {
     testSaga(getKeyInfo)
       .next()
       .select(lollipopKeyTagSelector)
-      .next(O.some("keyTag"))
+      .next("keyTag")
       .select(lollipopPublicKeySelector)
       .next(O.some(mockPublicKey))
-      .call(generateKeyInfo, O.some("keyTag"), O.some(mockPublicKey))
+      .call(generateKeyInfo, "keyTag", O.some(mockPublicKey))
       .next(keyInfo)
       .returns(keyInfo);
   });
@@ -84,10 +84,10 @@ describe("generateLollipopKeySaga", () => {
     testSaga(generateLollipopKeySaga)
       .next()
       .select(lollipopKeyTagSelector)
-      .next(O.none)
+      .next(undefined)
       .put(lollipopKeyTagSave({ keyTag: mockUUID }))
       .next()
-      .call(cryptoKeyGenerationSaga, mockUUID, O.none)
+      .call(cryptoKeyGenerationSaga, mockUUID, undefined)
       .next()
       .isDone();
   });
@@ -96,7 +96,7 @@ describe("generateLollipopKeySaga", () => {
     testSaga(generateLollipopKeySaga)
       .next()
       .select(lollipopKeyTagSelector)
-      .next(O.some("existingKeyTag"))
+      .next("existingKeyTag")
       .call(getPublicKey, "existingKeyTag")
       .next(mockPublicKey)
       .put(lollipopSetPublicKey({ publicKey: mockPublicKey }))
@@ -108,10 +108,10 @@ describe("generateLollipopKeySaga", () => {
     testSaga(generateLollipopKeySaga)
       .next()
       .select(lollipopKeyTagSelector)
-      .next(O.some("existingKeyTag"))
+      .next("existingKeyTag")
       .call(getPublicKey, "existingKeyTag")
       .throw(new Error("not found"))
-      .call(cryptoKeyGenerationSaga, "existingKeyTag", O.none)
+      .call(cryptoKeyGenerationSaga, "existingKeyTag", undefined)
       .next()
       .isDone();
   });
@@ -122,20 +122,20 @@ describe("deleteCurrentLollipopKeyAndGenerateNewKeyTag", () => {
     testSaga(deleteCurrentLollipopKeyAndGenerateNewKeyTag)
       .next()
       .select(lollipopKeyTagSelector)
-      .next(O.some("oldKeyTag"))
-      .call(deletePreviousCryptoKeyPair, O.some("oldKeyTag"))
+      .next("oldKeyTag")
+      .call(deletePreviousCryptoKeyPair, "oldKeyTag")
       .next()
       .put(lollipopKeyTagSave({ keyTag: mockUUID }))
       .next()
       .isDone();
   });
 
-  it("should call deletePreviousCryptoKeyPair with None when there is no current keyTag", () => {
+  it("should call deletePreviousCryptoKeyPair with undefined when there is no current keyTag", () => {
     testSaga(deleteCurrentLollipopKeyAndGenerateNewKeyTag)
       .next()
       .select(lollipopKeyTagSelector)
-      .next(O.none)
-      .call(deletePreviousCryptoKeyPair, O.none)
+      .next(undefined)
+      .call(deletePreviousCryptoKeyPair, undefined)
       .next()
       .put(lollipopKeyTagSave({ keyTag: mockUUID }))
       .next()

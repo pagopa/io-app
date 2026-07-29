@@ -96,7 +96,7 @@ export function* generateLollipopKeySaga() {
   // we generate a key (if no one is present)
   // to have a key also for those users that update the app
   // and are already logged in.
-  if (O.isNone(maybeOldKeyTag)) {
+  if (!maybeOldKeyTag) {
     const newKeyTag = uuid();
     yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
     yield* call(cryptoKeyGenerationSaga, newKeyTag, maybeOldKeyTag);
@@ -104,7 +104,7 @@ export function* generateLollipopKeySaga() {
     try {
       // If we already have a keyTag, we check if there is
       // a public key tied with it.
-      const publicKey = yield* call(getPublicKey, maybeOldKeyTag.value);
+      const publicKey = yield* call(getPublicKey, maybeOldKeyTag);
       yield* put(lollipopSetPublicKey({ publicKey }));
     } catch {
       // If there is no key it could be for two reasons:
@@ -114,7 +114,7 @@ export function* generateLollipopKeySaga() {
       // Having a key or an error in those cases is useful to show
       // the user an informative banner saying that their device
       // is not suitable for future version of IO.
-      yield* call(cryptoKeyGenerationSaga, maybeOldKeyTag.value, O.none);
+      yield* call(cryptoKeyGenerationSaga, maybeOldKeyTag, undefined);
     }
   }
 }
@@ -122,10 +122,7 @@ export function* generateLollipopKeySaga() {
 /**
  * Generates a new crypto key pair.
  */
-function* cryptoKeyGenerationSaga(
-  keyTag: string,
-  previousKeyTag: O.Option<string>
-) {
+function* cryptoKeyGenerationSaga(keyTag: string, previousKeyTag?: string) {
   // Every new login we need to regenerate a brand new key pair.
   yield* call(deletePreviousCryptoKeyPair, previousKeyTag);
   yield* call(generateCryptoKeyPair, keyTag);
@@ -155,10 +152,11 @@ function* deleteCryptoKeyPair(keyTag: string) {
 /**
  * Deletes a previous saved crypto key pair.
  */
-function* deletePreviousCryptoKeyPair(keyTag: O.Option<string>) {
-  if (O.isSome(keyTag)) {
-    yield* call(deleteCryptoKeyPair, keyTag.value);
+function* deletePreviousCryptoKeyPair(keyTag?: string) {
+  if (!keyTag) {
+    return;
   }
+  yield* call(deleteCryptoKeyPair, keyTag);
 }
 
 const checkPublicKeyExists = (keyTag: string) =>
@@ -201,19 +199,18 @@ function* generateCryptoKeyPair(keyTag: string) {
 }
 
 export const generateKeyInfo = (
-  maybeKeyTag: O.Option<string>,
+  keyTag: string | undefined,
   maybePublicKey: O.Option<PublicKey>
-) =>
-  pipe(
-    maybeKeyTag,
-    O.chain(keyTag =>
-      pipe(
-        maybePublicKey,
-        O.map(publicKey => keyInfoFromKeyTagAndPublicKey(keyTag, publicKey))
-      )
-    ),
+) => {
+  if (!keyTag) {
+    return defaultKeyInfo();
+  }
+  return pipe(
+    maybePublicKey,
+    O.map(publicKey => keyInfoFromKeyTagAndPublicKey(keyTag, publicKey)),
     O.getOrElse(defaultKeyInfo)
   );
+};
 
 const keyInfoFromKeyTagAndPublicKey = (
   keyTag: string,
