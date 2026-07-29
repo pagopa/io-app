@@ -11,7 +11,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import * as preferencesSelectors from "../../../../common/store/selectors/preferences";
+import * as itwCommonSelectors from "../../../../common/store/selectors";
 import { RemoteFailure, RemoteFailureType } from "../../machine/failure";
 import { itwRemoteMachine } from "../../machine/machine";
 import { ItwRemoteMachineContext } from "../../machine/provider";
@@ -56,7 +56,7 @@ describe("ItwRemoteFailureScreen", () => {
     }
   ])("should render failure screen for $type", failure => {
     jest
-      .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+      .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
       .mockImplementation(constTrue);
     expect(renderComponent(failure)).toMatchSnapshot();
   });

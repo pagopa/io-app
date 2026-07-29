@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { type DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
@@ -75,6 +76,7 @@ describe("fetchCatalogueTranslationsSaga", () => {
 
   it("should dispatch success with empty translations for v1.0.0 (library returns {} when fetchTranslations is unavailable)", () => {
     const v1Store: DeepPartial<GlobalState> = {
+      remoteConfig: O.none,
       features: {
         itWallet: {
           credentialsCatalogue: {

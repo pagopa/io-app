@@ -570,7 +570,6 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -594,7 +593,6 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",

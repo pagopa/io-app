@@ -1004,7 +1004,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1028,7 +1027,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -1596,7 +1594,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -1620,7 +1617,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -3573,7 +3569,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -3597,7 +3592,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -4165,7 +4159,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -4189,7 +4182,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -5938,7 +5930,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -5962,7 +5953,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -6530,7 +6520,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -6554,7 +6543,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -8324,7 +8312,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -8348,7 +8335,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -8916,7 +8902,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -8940,7 +8925,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -10725,7 +10709,6 @@ Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’op
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -10749,7 +10732,6 @@ Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’op
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -11317,7 +11299,6 @@ Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’op
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -11341,7 +11322,6 @@ Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’op
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -13101,7 +13081,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -13125,7 +13104,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -13341,7 +13319,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -13365,7 +13342,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -13931,7 +13907,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -13955,7 +13930,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -16021,7 +15995,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -16045,7 +16018,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -16261,7 +16233,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -16285,7 +16256,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -16851,7 +16821,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -16875,7 +16844,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -18645,7 +18613,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -18669,7 +18636,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -19237,7 +19203,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -19261,7 +19226,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -20981,7 +20945,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -21005,7 +20968,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -21573,7 +21535,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -21597,7 +21558,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -23468,7 +23428,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -23492,7 +23451,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -24060,7 +24018,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -24084,7 +24041,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -25997,7 +25953,6 @@ Probabilmente hai sforato i limiti di spesa previsti dalla tua banca.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -26021,7 +25976,6 @@ Probabilmente hai sforato i limiti di spesa previsti dalla tua banca.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -26589,7 +26543,6 @@ Probabilmente hai sforato i limiti di spesa previsti dalla tua banca.
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -26613,7 +26566,6 @@ Probabilmente hai sforato i limiti di spesa previsti dalla tua banca.
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -28730,7 +28682,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -28754,7 +28705,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -29322,7 +29272,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -29346,7 +29295,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -31106,7 +31054,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -31130,7 +31077,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -31346,7 +31292,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -31370,7 +31315,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -31936,7 +31880,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -31960,7 +31903,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -33995,7 +33937,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -34019,7 +33960,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -34587,7 +34527,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -34611,7 +34550,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -36605,7 +36543,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -36629,7 +36566,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -37197,7 +37133,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -37221,7 +37156,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -39033,7 +38967,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -39057,7 +38990,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -39625,7 +39557,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -39649,7 +39580,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -41433,7 +41363,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -41457,7 +41386,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -42025,7 +41953,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -42049,7 +41976,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -44207,7 +44133,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -44231,7 +44156,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -44447,7 +44371,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -44471,7 +44394,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -45037,7 +44959,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -45061,7 +44982,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -47260,7 +47180,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -47284,7 +47203,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -47852,7 +47770,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -47876,7 +47793,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -49702,7 +49618,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -49726,7 +49641,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -50294,7 +50208,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -50318,7 +50231,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -52559,7 +52471,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -52583,7 +52494,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -52799,7 +52709,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -52823,7 +52732,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -53389,7 +53297,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -53413,7 +53320,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -55243,7 +55149,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -55267,7 +55172,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -55483,7 +55387,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -55507,7 +55410,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -56073,7 +55975,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -56097,7 +55998,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -57867,7 +57767,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -57891,7 +57790,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -58459,7 +58357,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -58483,7 +58380,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -60295,7 +60191,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -60319,7 +60214,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -60887,7 +60781,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -60911,7 +60804,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -62695,7 +62587,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -62719,7 +62610,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -63287,7 +63177,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -63311,7 +63200,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -65100,7 +64988,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -65124,7 +65011,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -65692,7 +65578,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",
@@ -65716,7 +65601,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                             "overflow": "hidden",

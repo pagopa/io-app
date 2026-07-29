@@ -27,7 +27,7 @@ export const PageNotFound = () => {
       action={{
         testID: BTN_UPDATE_TEST_ID,
         label: I18n.t("btnUpdateApp"),
-        onPress: async () => {
+        onPress: () => {
           void track404ErrorScreenUpdateAppButton();
           void openAppStoreUrl(() => {
             error(I18n.t("msgErrorUpdateApp"));

@@ -156,7 +156,9 @@ export const CieInternalAuthScreen = () => {
           disabled={challenge.length === 0}
           label={status === "reading" ? "Stop" : "Start sign"}
           onPress={() =>
-            status === "reading" ? handleStopReading() : handleStartReading()
+            void (status === "reading"
+              ? handleStopReading()
+              : handleStartReading())
           }
           variant="solid"
         />

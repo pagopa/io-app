@@ -398,15 +398,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -418,15 +419,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -507,7 +509,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -531,7 +532,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -745,7 +745,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -769,7 +768,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -1311,15 +1309,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -1331,15 +1330,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -1413,7 +1413,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1441,7 +1440,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1633,7 +1631,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1657,7 +1654,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1872,7 +1868,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -1896,7 +1891,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -2790,15 +2784,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -2810,15 +2805,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -2892,7 +2888,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2920,7 +2915,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -3806,15 +3800,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -3826,15 +3821,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -3908,7 +3904,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -3936,7 +3931,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -4614,15 +4608,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -4634,15 +4629,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -4723,7 +4719,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -4747,7 +4742,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -5290,15 +5284,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -5310,15 +5305,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
+                                "boxShadow": [
+                                  {
+                                    "blurRadius": 32,
+                                    "color": "rgba(14,15,19,0.1)",
+                                    "offsetX": 0,
+                                    "offsetY": 0,
+                                  },
+                                ],
                                 "height": 0,
                                 "position": "absolute",
-                                "shadowColor": "#0E0F13",
-                                "shadowOffset": {
-                                  "height": -4,
-                                  "width": 0,
-                                },
-                                "shadowOpacity": 0.1,
-                                "shadowRadius": 32,
                                 "width": "100%",
                               },
                               undefined,
@@ -5392,7 +5388,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -5420,7 +5415,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -5625,7 +5619,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -5649,7 +5642,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",

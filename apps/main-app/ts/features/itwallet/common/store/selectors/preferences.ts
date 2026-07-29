@@ -3,10 +3,6 @@ import { GlobalState } from "../../../../../store/reducers/types";
 export const itwPreferencesSelector = (state: GlobalState) =>
   state.features.itWallet.preferences;
 
-/** Returns whether the app review modal should be shown. */
-export const itwIsPendingReviewSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isPendingReview;
-
 /** Returns the authentication level used to obtain the eID. */
 export const itwAuthLevelSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.authLevel;
@@ -23,8 +19,8 @@ export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
  *
  * @param state The application global state
  */
-export const itwIsL3EnabledSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isFiscalCodeWhitelisted ?? false;
+export const itwIsFiscalCodeWhitelisted = (state: GlobalState) =>
+  !!state.features.itWallet.preferences.isFiscalCodeWhitelisted;
 
 /**
  * Selects the state that indicates whether the bottom sheet of survey is

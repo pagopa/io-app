@@ -15,6 +15,7 @@ import I18n from "i18next";
 import { isEqual } from "lodash";
 import {
   ComponentProps,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -104,10 +105,18 @@ const FciSignatureFieldsScreen = () => {
     return true;
   });
 
-  const dismissModal = () => {
+  const dismissModal = useCallback(() => {
     setIsPreviewModalVisible(false);
     hideModal();
-  };
+  }, [hideModal]);
+
+  // Dismiss the modal on unmount. (needed for StackActions.replace on errors)
+  useEffect(
+    () => () => {
+      hideModal();
+    },
+    [hideModal]
+  );
 
   // get signatureFields for the current document
   const docSignatures = useMemo(

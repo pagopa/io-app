@@ -703,7 +703,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -727,7 +726,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -934,7 +932,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -958,7 +955,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -1806,7 +1802,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -1830,7 +1825,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -2037,7 +2031,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -2061,7 +2054,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -2909,7 +2901,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -2933,7 +2924,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -3140,7 +3130,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -3164,7 +3153,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -3963,7 +3951,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -3987,7 +3974,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -4194,7 +4180,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -4218,7 +4203,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -5190,7 +5174,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -5214,7 +5197,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -6186,7 +6168,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -6210,7 +6191,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -7182,7 +7162,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -7206,7 +7185,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -8178,7 +8156,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -8202,7 +8179,6 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",

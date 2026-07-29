@@ -3,7 +3,6 @@ import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { fciEnabled } from "../config";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import { IO_FIMS_LINK_PREFIX } from "../features/fims/singleSignOn/utils";
@@ -54,7 +53,7 @@ const allowedRoutes = {
   ...routesToNavigationLink,
   ...cgnRoutesToNavigationLink,
   ...legacyRoutesToNavigationLink,
-  ...(fciEnabled ? fciRoutesToNavigationLink : {})
+  ...fciRoutesToNavigationLink
 };
 
 export const isServiceDetailNavigationLink = (

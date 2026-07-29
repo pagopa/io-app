@@ -1261,7 +1261,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1285,7 +1284,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2423,7 +2421,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2447,7 +2444,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2661,7 +2657,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",
@@ -2685,7 +2680,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                       "overflow": "hidden",

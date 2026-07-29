@@ -74,7 +74,7 @@ const AuthenticationUrlWebView = ({
         }
 
         // Once the returned url contains the "OpenApp" string, then the authorization has been given
-        if (url && url.indexOf("OpenApp") !== -1) {
+        if (url && url.includes("OpenApp")) {
           setAuthUrl(url);
           return false;
         }
@@ -233,7 +233,9 @@ export const CieAuthenticationScreen = () => {
           disabled={code.length !== 8}
           label={status === "reading" ? "Stop reading" : "Start reading"}
           onPress={() =>
-            status === "reading" ? handleStopReading() : handleStartReading()
+            void (status === "reading"
+              ? handleStopReading()
+              : handleStartReading())
           }
           variant="solid"
         />

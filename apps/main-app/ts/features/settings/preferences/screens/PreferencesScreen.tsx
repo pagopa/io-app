@@ -134,7 +134,7 @@ const PreferencesScreen = () => {
       description: I18n.t(
         "profile.preferences.list.preferred_calendar.description"
       ),
-      onPress: checkPermissionThenGoCalendar
+      onPress: () => void checkPermissionThenGoCalendar()
     },
     {
       // Service Contacts

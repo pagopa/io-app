@@ -73,7 +73,7 @@ export const MessageDetailsReminderExpiring = ({
           minute: "2-digit"
         }).format(dueDate)
       })}
-      onPress={() => upsertReminder(dueDate, title, preferredCalendar)}
+      onPress={() => void upsertReminder(dueDate, title, preferredCalendar)}
       ref={alertRef}
       testID="due-date-alert"
       variant="warning"

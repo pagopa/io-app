@@ -637,7 +637,6 @@ Premendo **Vai alla notifica SEND** dichiari di aver letto e compreso l’**[Inf
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -661,7 +660,6 @@ Premendo **Vai alla notifica SEND** dichiari di aver letto e compreso l’**[Inf
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -878,7 +876,6 @@ Premendo **Vai alla notifica SEND** dichiari di aver letto e compreso l’**[Inf
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",
@@ -902,7 +899,6 @@ Premendo **Vai alla notifica SEND** dichiari di aver letto e compreso l’**[Inf
                                         {
                                           "alignItems": "center",
                                           "borderCurve": "continuous",
-                                          "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
                                           "overflow": "hidden",

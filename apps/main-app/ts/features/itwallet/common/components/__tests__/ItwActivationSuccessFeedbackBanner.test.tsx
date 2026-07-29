@@ -56,6 +56,7 @@ const renderComponent = (
     <ItwActivationSuccessFeedbackBanner
       authMethod={props.authMethod ?? "spid"}
       docStatus={props.docStatus ?? "not_active"}
+      style={{ marginVertical: 8 }}
     />
   );
 

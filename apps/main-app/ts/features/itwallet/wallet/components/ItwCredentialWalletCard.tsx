@@ -1,3 +1,5 @@
+import I18n from "i18next";
+
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -7,7 +9,9 @@ import {
   ItwCredentialCard,
   ItwCredentialCardLegacy
 } from "../../common/components/ItwCredentialCard";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { itwShouldUpgradeCredentialSelector } from "../../common/store/selectors";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 
@@ -21,11 +25,19 @@ export type ItwCredentialWalletCardProps = ItwCredentialCard & {
 const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
   const { credentialType, issuedAt, onPress } = props;
   const navigation = useIONavigation();
+  const credentialName = useItwCredentialName(credentialType);
   const needsItwUpgrade = useIOSelector(
     itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
   );
   const withItwDesign =
     useIOSelector(itwLifecycleIsITWalletValidSelector) || props.withItwDesign;
+
+  // The PID card displays the IT-Wallet ID logo instead of a textual title,
+  // so its name must be exposed explicitly to screen readers
+  const accessibilityLabel =
+    withItwDesign && credentialType === CredentialType.PID
+      ? I18n.t("features.itWallet.credentialName.pid")
+      : credentialName;
 
   const handleCredentialUpgrade = useOfflineToastGuard(() =>
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -54,6 +66,7 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
 
   return (
     <WalletCardPressableBase
+      accessibilityLabel={accessibilityLabel}
       onPress={handleOnPress}
       testID="ItwCredentialWalletCardTestID"
     >

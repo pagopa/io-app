@@ -621,7 +621,6 @@ exports[`BottomSheetContent doesn't render the website section and matches its s
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -645,7 +644,6 @@ exports[`BottomSheetContent doesn't render the website section and matches its s
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -859,7 +857,6 @@ exports[`BottomSheetContent doesn't render the website section and matches its s
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -883,7 +880,6 @@ exports[`BottomSheetContent doesn't render the website section and matches its s
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -1743,7 +1739,6 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -1767,7 +1762,6 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -1981,7 +1975,6 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2005,7 +1998,6 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -2865,7 +2857,6 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -2889,7 +2880,6 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -3103,7 +3093,6 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",
@@ -3127,7 +3116,6 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                                   {
                                     "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                     "overflow": "hidden",

@@ -26,7 +26,6 @@ import {
   loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   scheduledPreconditionStatusAction,
-  shownPreconditionStatusAction,
   updateRequiredPreconditionStatusAction
 } from "./preconditions";
 
@@ -328,7 +327,6 @@ export type MessagesActions = ActionType<
   | typeof scheduledPreconditionStatusAction
   | typeof setMessageSagasRegisteredAction
   | typeof setShownMessageCategoryAction
-  | typeof shownPreconditionStatusAction
   | typeof startPaymentStatusTracking
   | typeof startProcessingMessageArchivingAction
   | typeof toggleScheduledMessageArchivingAction

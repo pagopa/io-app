@@ -7,7 +7,8 @@ import { ITW_ANALYTICS_CREDENTIALS } from "../propertyTypes";
 import {
   updateCredentialProperties,
   updateItwAnalyticsProperties,
-  updatePropertiesWalletRevoked
+  updatePropertiesWalletRevoked,
+  updateThirdPartyCredentialProperty
 } from "../propertyUpdaters";
 import * as superProp from "../superProperties";
 import { ItwSuperProperties } from "../superProperties";
@@ -87,6 +88,32 @@ describe("propertyUpdaters", () => {
     });
 
     expect(callArg.ITW_STATUS_V2).toBe("not_active");
+    expect(callArg.ITW_THIRD_PARTY_CREDENTIAL).toBe("not_available");
+    expect(callArg.ITW_WALLET_LIST_CREDENTIAL).toBe("not_available");
     expect(callArg).not.toHaveProperty("ITW_RES");
+  });
+
+  it("updates third-party and wallet list credential profile and super properties", () => {
+    jest
+      .spyOn(baseBuilder, "buildThirdPartyCredentialProperty")
+      .mockReturnValue("valid");
+    jest
+      .spyOn(baseBuilder, "buildWalletListCredentialProperty")
+      .mockReturnValue("not_valid");
+    const profileSpy = jest.spyOn(
+      profileProp,
+      "forceUpdateItwProfileProperties"
+    );
+    const superSpy = jest.spyOn(superProp, "forceUpdateItwSuperProperties");
+
+    updateThirdPartyCredentialProperty({} as GlobalState);
+
+    const expectedProperties = {
+      ITW_THIRD_PARTY_CREDENTIAL: "valid",
+      ITW_WALLET_LIST_CREDENTIAL: "not_valid"
+    };
+
+    expect(profileSpy).toHaveBeenCalledWith(expectedProperties);
+    expect(superSpy).toHaveBeenCalledWith(expectedProperties);
   });
 });

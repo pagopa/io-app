@@ -77,7 +77,6 @@ const FciDocumentUnavailableScreen = () => {
 
   return (
     <OperationResultScreenContent
-      isHeaderVisible={false}
       pictogram={"umbrella"}
       subtitle={I18n.t("features.fci.documentUnavailablePage.subtitle")}
       testID={"FciDocUnavailableTestID"}

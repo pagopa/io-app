@@ -333,8 +333,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlignVertical: "center", // Prop supported on Android only
     borderCurve: "continuous",
-    overflow: "hidden",
-    elevation: 0
+    overflow: "hidden"
   },
   buttonInner: {
     flexDirection: "row",

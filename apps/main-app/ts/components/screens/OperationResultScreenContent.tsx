@@ -28,6 +28,7 @@ import {
 type ButtonProps = Pick<
   IOButtonProps,
   | "accessibilityLabel"
+  | "color"
   | "icon"
   | "iconPosition"
   | "label"
@@ -64,7 +65,7 @@ const OperationResultScreenContent = ({
   secondaryAction,
   children,
   testID,
-  isHeaderVisible,
+  isHeaderVisible = false,
   topElement = undefined
 }: PropsWithChildren<OperationResultScreenContentProps>) => {
   const isAnimatedPictogram =

@@ -10,8 +10,12 @@ import {
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment } from "react";
-import { AccessibilityInfo, StyleSheet, View } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import {
+  AccessibilityInfo,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View
+} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
 
@@ -133,7 +137,6 @@ export const ItwClaimsSelector = ({
         accessibilityLabel={accessibilityLabel ?? title}
         accessibilityRole="button"
         accessibilityState={{ expanded }}
-        accessible={true}
         onPress={onItemPress}
       >
         <Animated.View
@@ -143,7 +146,13 @@ export const ItwClaimsSelector = ({
             colors={[itwTheme["card-background"], background.colors[0]]}
             style={StyleSheet.absoluteFill}
           />
-          <H6 style={styles.title}>{title}</H6>
+          <View
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            style={styles.title}
+          >
+            <H6>{title}</H6>
+          </View>
           <Animated.View style={[styles.iconContainer, iconAnimatedStyle]}>
             <Icon name="chevronBottom" />
           </Animated.View>

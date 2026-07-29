@@ -10952,7 +10952,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -10976,7 +10975,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -12977,7 +12975,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",
@@ -13001,7 +12998,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "alignItems": "center",
                                   "borderCurve": "continuous",
-                                  "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
                                   "overflow": "hidden",

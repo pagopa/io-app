@@ -98,7 +98,6 @@ const ModuleContent = ({
 
         <BodySmall
           color={theme["interactiveElem-default"]}
-          lineBreakMode="middle"
           numberOfLines={2}
           style={{ flexShrink: 1 }}
           weight="Semibold"

@@ -31,6 +31,10 @@ type DataComponentProps = {
  * compatibility.
  */
 const mdlClaimsFallback: Record<string, string> = {
+  portrait: "picture",
+  issue_date: "issuance_date",
+  expiry_date: "date_of_expiry",
+  birth_date: "birthdate",
   birth_place: "place_of_birth",
   document_iss_authority: "issuing_authority"
 };

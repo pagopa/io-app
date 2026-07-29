@@ -50,12 +50,6 @@ export enum FontStyle {
   normal = "normal"
 }
 
-type FontStyleObject = {
-  fontFamily: string;
-  fontStyle?: FontStyle;
-  fontWeight?: FontWeightValue;
-};
-
 /**
  * Get the correct `fontFamily` name on both Android and iOS.
  *
@@ -89,32 +83,3 @@ export const allUsedFonts = [
     )
   )
 ];
-
-/**
- * Return a {@link FontStyleObject} with the fields filled based on the platform
- * (iOS or Android).
- *
- * @deprecated Don't use local `makeFontStyleObject`. Import it from
- *   `io-app-design-system` instead.
- * @param weight
- * @param isItalic
- * @param font
- */
-export const makeFontStyleObject = (
-  weight: IOFontWeight | undefined = undefined,
-  isItalic: boolean | undefined = false,
-  font: IOFontFamily | undefined = "TitilliumSansPro"
-): FontStyleObject =>
-  Platform.select({
-    default: {
-      fontFamily: "undefined"
-    },
-    android: {
-      fontFamily: makeFontFamilyName(font, weight, isItalic)
-    },
-    ios: {
-      fontFamily: makeFontFamilyName(font, weight, isItalic),
-      fontWeight: weight !== undefined ? fontWeights[weight] : weight,
-      fontStyle: isItalic ? FontStyle.italic : FontStyle.normal
-    }
-  });

@@ -30,7 +30,7 @@ describe("BannerAttachments", () => {
           present: mockedPresent
         }));
       const component = renderComponent();
-      const link = component.getByTestId("banner-attachment-banner");
+      const link = component.getByTestId("SEND-attachments-alert");
       fireEvent.press(link);
       expect(mockedPresent.mock.calls.length).toBe(1);
       expect(mockedPresent.mock.calls[0].length).toBe(0);

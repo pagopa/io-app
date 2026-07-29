@@ -4,6 +4,7 @@ import I18n from "i18next";
 import { createRef, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
+import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -59,6 +60,8 @@ export const ItwDiscoveryBannerLegacy = ({
       params: {}
     });
   };
+  const guardedHandleOnPress = useOfflineToastGuard(handleOnPress);
+
   useOnFirstRender(() => {
     trackItwBannerVisualized(trackBannerProperties);
   });
@@ -96,7 +99,7 @@ export const ItwDiscoveryBannerLegacy = ({
         content={content}
         labelClose={I18n.t("global.buttons.close")}
         onClose={closable ? handleClose : undefined}
-        onPress={handleOnPress}
+        onPress={guardedHandleOnPress}
         pictogramName="itWallet"
         ref={bannerRef}
         testID="itwDiscoveryBannerTestID"

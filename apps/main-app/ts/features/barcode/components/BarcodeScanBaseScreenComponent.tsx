@@ -201,9 +201,9 @@ const BarcodeScanBaseScreenComponent = ({
             accessibilityLabel: I18n.t(
               "barcodeScan.permissions.undefined.action"
             ),
-            onPress: async () => {
+            onPress: () => {
               trackBarcodeCameraAuthorized();
-              await requestCameraPermission();
+              void requestCameraPermission();
             }
           }}
           body={I18n.t("barcodeScan.permissions.undefined.label")}

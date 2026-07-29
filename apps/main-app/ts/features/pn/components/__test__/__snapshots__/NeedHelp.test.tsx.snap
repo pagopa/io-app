@@ -685,7 +685,6 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -709,7 +708,6 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
