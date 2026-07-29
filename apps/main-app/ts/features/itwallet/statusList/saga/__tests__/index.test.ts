@@ -26,7 +26,6 @@ describe("watchItwStatusListSaga", () => {
       .call(checkStatusListCoherenceSaga)
       .next()
       .call(refreshStaleStatusListsSaga)
-      .fork(checkStatusListCoherenceSaga)
       .next()
       .call(registerStatusListProperties)
       .next()
