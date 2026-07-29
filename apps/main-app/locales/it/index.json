@@ -1845,7 +1845,6 @@
             }
           },
           "mdl": {
-            "bannerTitle": "Lo sapevi?",
             "content": "Puoi usare la tua Patente su IO solo in Italia esclusivamente per dimostrare l'abilitazione alla guida in caso di controlli delle Forze dell'ordine.",
             "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano.",
             "invalid": {
@@ -1854,7 +1853,8 @@
             "suspended": {
               "action": "Scopri di più",
               "title": "La tua Patente di guida risulta non valida."
-            }
+            },
+            "title": "Lo sapevi?"
           },
           "statusAction": "Cosa posso fare?"
         },
