@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.38.0-rc.3",
+  "version": "3.38.0-rc.4",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -19,11 +19,6 @@
     "attach": "react-native attach",
     "postinstall": "rn-nodeify --install path,buffer && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
     "test:dev": "nx test --detectOpenHandles --coverage=false",
-    "test:tz": "pnpm test:tz-eu-rome && pnpm test:tz-us-ny && pnpm test:tz-us-yt && pnpm test:tz-au-syd",
-    "test:tz-eu-rome": "TZ='Europe/Rome' nx test --config='./jest.config.no.timezone.js' --detectOpenHandles --coverage=false -t 'Check fiscal code date IT|SimpleDateClaim should handle valid, invalid, edge cases, and formatting correctly' './ts/utils/__tests__/fiscal-code.test.ts' './ts/features/itwallet/common/utils/__tests__/itwClaimsUtils.test.ts'",
-    "test:tz-us-ny": "TZ='America/New_York' nx test --config='./jest.config.no.timezone.js' --detectOpenHandles --coverage=false -t 'Check fiscal code date NY|SimpleDateClaim should handle valid, invalid, edge cases, and formatting correctly' './ts/utils/__tests__/fiscal-code.test.ts' './ts/features/itwallet/common/utils/__tests__/itwClaimsUtils.test.ts'",
-    "test:tz-us-yt": "TZ='America/Whitehorse' nx test --config='./jest.config.no.timezone.js' --detectOpenHandles --coverage=false -t 'Check fiscal code date CA|SimpleDateClaim should handle valid, invalid, edge cases, and formatting correctly' './ts/utils/__tests__/fiscal-code.test.ts' './ts/features/itwallet/common/utils/__tests__/itwClaimsUtils.test.ts'",
-    "test:tz-au-syd": "TZ='Australia/Sydney' nx test --config='./jest.config.no.timezone.js' --detectOpenHandles --coverage=false -t 'Check fiscal code date AU|SimpleDateClaim should handle valid, invalid, edge cases, and formatting correctly' './ts/utils/__tests__/fiscal-code.test.ts' './ts/features/itwallet/common/utils/__tests__/itwClaimsUtils.test.ts'",
     "packager:clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*",
     "bundle:android": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev true --entry-file index.js --bundle-output ./bundles/index.android.bundle",
     "tsc-noemit": "tsc --noemit",
@@ -38,12 +33,6 @@
     "lollipop_checks-uncomment": "./scripts/toggle-comments-on-lollipop-checks.sh uncomment ./ts/sagas/startup.ts",
     "dev-pod-install": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod install && cd ..",
     "dev-pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
   },
   "dependencies": {
     "@io-app/design-system": "workspace:@pagopa/io-app-design-system@*",
@@ -207,8 +196,8 @@
     "@types/uuid": "^8.3.1",
     "@types/validator": "^9.4.2",
     "@types/xml2js": "^0.4.11",
-    "@typescript-eslint/eslint-plugin": "^8.58.0",
-    "@typescript-eslint/parser": "^8.58.0",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
     "babel-jest": "^30.3.0",
     "babel-plugin-macros": "^3.1.0",
     "babel-plugin-module-resolver": "^5.0.2",
@@ -227,7 +216,6 @@
     "eslint-plugin-sonarjs": "^3.0.7",
     "fs-extra": "^7.0.0",
     "jest": "catalog:",
-    "lint-staged": "^13.2.0",
     "mockdate": "^3.0.2",
     "mockttp": "2.4.0",
     "node-fetch": "^2.6.7",
@@ -241,7 +229,8 @@
     "redux-saga-test-plan": "4.0.3",
     "rn-nodeify": "^10.0.1",
     "standard-version": "^8.0.2",
-    "typescript-eslint": "^8.58.0"
+    "typescript": "catalog:",
+    "typescript-eslint": "^8.65.0"
   },
   "engines": {
     "node": ">=20"
