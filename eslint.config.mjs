@@ -46,26 +46,6 @@ const reactNativeSanitizedConfig = reactNativeConfig.map(config => {
   return { ...config, plugins, rules };
 });
 
-// Pagopa scopes its jest block to `.{js,ts}`, so `.tsx` test files — every
-// component and screen test — get no jest linting at all. Widen that block's
-// globs so both extensions share one rule set.
-// Fix belongs upstream: `@pagopa/eslint-config/jest` should ship `{js,ts,tsx}`
-// itself. Once it does, drop this map.
-const pagopaSanitizedConfig = pagopaConfig.map(config => {
-  if (!config.plugins?.jest) {
-    return config;
-  }
-  const files = config.files.map(glob =>
-    glob.replace("{js,ts}", "{js,ts,tsx}")
-  );
-  if (files.every((glob, i) => glob === config.files[i])) {
-    throw new Error(
-      "@pagopa/eslint-config/jest globs no longer match `{js,ts}`; update the tsx widening above."
-    );
-  }
-  return { ...config, files };
-});
-
 export default defineConfig([
   globalIgnores([
     "**/*.js",
@@ -79,7 +59,7 @@ export default defineConfig([
 
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
   // eslint-plugin-prettier, perfectionist.
-  ...pagopaSanitizedConfig,
+  ...pagopaConfig,
 
   {
     files: ["**/*.ts", "**/*.tsx"],

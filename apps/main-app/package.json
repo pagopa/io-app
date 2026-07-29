@@ -35,10 +35,7 @@
     "dev-pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
+    "*.{ts,tsx}": ["prettier --write", "eslint --fix"]
   },
   "dependencies": {
     "@io-app/design-system": "workspace:@pagopa/io-app-design-system@*",
@@ -173,7 +170,7 @@
     "@eslint/compat": "^2.0.3",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^10.0.1",
-    "@pagopa/eslint-config": "6.2.0",
+    "@pagopa/eslint-config": "6.2.2",
     "@pagopa/openapi-codegen-ts": "^14.2.0",
     "@react-native-community/cli": "20.0.0",
     "@react-native-community/cli-platform-android": "20.0.0",
