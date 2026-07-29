@@ -38,19 +38,18 @@ jest.spyOn(identityClientManager, "getClient").mockReturnValue({
 } as any);
 
 const selectorValues = (overrides: {
-  keyTag?: O.Option<string>;
+  keyTag?: string;
   publicKey?: O.Option<PublicKey>;
-  sessionToken?: O.Option<string>;
+  sessionToken?: string;
 }) => {
-  const {
-    keyTag = O.some("mock-key-tag"),
-    publicKey = O.some(mockPublicKey),
-    sessionToken = O.some("mock-session-token")
-  } = overrides;
+  const keyTag = "keyTag" in overrides ? overrides.keyTag : "mock-key-tag";
+  const sessionToken =
+    "sessionToken" in overrides ? overrides.sessionToken : "mock-session-token";
+  const { publicKey = O.some(mockPublicKey) } = overrides;
 
   (useIOSelector as jest.Mock).mockImplementation(selector => {
     if (selector === sessionTokenSelector) {
-      return O.toUndefined(sessionToken);
+      return sessionToken;
     }
     if (selector === lollipopPublicKeySelector) {
       return publicKey;
@@ -87,7 +86,7 @@ describe("LollipopPlayground", () => {
   });
 
   it("should not call signMessage when keyTag is None", () => {
-    selectorValues({ keyTag: O.none });
+    selectorValues({ keyTag: undefined });
     render(<LollipopPlayground />);
 
     capturedOnSignButtonPress?.("body");
@@ -107,7 +106,7 @@ describe("LollipopPlayground", () => {
   });
 
   it("should not call signMessage when sessionToken is undefined", () => {
-    selectorValues({ sessionToken: O.none });
+    selectorValues({ sessionToken: undefined });
     render(<LollipopPlayground />);
 
     capturedOnSignButtonPress?.("body");
