@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.4](https://github.com/pagopa/io-app/compare/3.38.0-rc.3...3.38.0-rc.4) (2026-07-28)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3824](https://pagopa.atlassian.net/browse/SIW-3824)] Add accessibility labels for IT-Wallet ID card ([#8365](https://github.com/pagopa/io-app/issues/8365)) ([d8b58ce](https://github.com/pagopa/io-app/commit/d8b58cec524b8a1dc02f138b6919263415d153a0))
+* **IT-Wallet:** [[SIW-4712](https://pagopa.atlassian.net/browse/SIW-4712)] Align tracking survey IDs for PID activation flow ([#8366](https://github.com/pagopa/io-app/issues/8366)) ([94ffaa8](https://github.com/pagopa/io-app/commit/94ffaa81a0e34a5b7afb0dd1feebd77f5dbfdf78))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3670](https://pagopa.atlassian.net/browse/SIW-3670),[SIW-3780](https://pagopa.atlassian.net/browse/SIW-3780)] Fix a11y proximity disclosure screen ([#8362](https://github.com/pagopa/io-app/issues/8362)) ([b20d90a](https://github.com/pagopa/io-app/commit/b20d90a0800e4249d1daccae71ce25bd4981e4a2))
+
+
+### Chores
+
+* [[IOPLT-1975](https://pagopa.atlassian.net/browse/IOPLT-1975)] Upgrade `ts` from `5.x` to `6.x` ([#8353](https://github.com/pagopa/io-app/issues/8353)) ([e84ac10](https://github.com/pagopa/io-app/commit/e84ac108d9feb7aa2af29351ccc473f135e7051f))
+* **IT-Wallet:** [[SIW-4474](https://pagopa.atlassian.net/browse/SIW-4474)] Register IT-Wallet Status List last check time super property ([#8338](https://github.com/pagopa/io-app/issues/8338)) ([45f6d03](https://github.com/pagopa/io-app/commit/45f6d036ce2c1110ffd528333e1c5bffe3706af5))
+
+## [3.38.0-rc.3](https://github.com/pagopa/io-app/compare/3.38.0-rc.2...3.38.0-rc.3) (2026-07-27)
+
+
+### Chores
+
+* [[IEL-601](https://pagopa.atlassian.net/browse/IEL-601),[IEL-729](https://pagopa.atlassian.net/browse/IEL-729)] Added Qtsp Error Screen ([#8194](https://github.com/pagopa/io-app/issues/8194)) ([5fae8e9](https://github.com/pagopa/io-app/commit/5fae8e9985b3167f7a785d3267657933ef5e46f3))
+* **CI:** [[IOAPPX-528](https://pagopa.atlassian.net/browse/IOAPPX-528)] Makes CIE config script idempotent  ([#8347](https://github.com/pagopa/io-app/issues/8347)) ([ca9ea52](https://github.com/pagopa/io-app/commit/ca9ea521ac2422c74d9c7a48c550aa48f4d7568a))
+
+## [3.38.0-rc.2](https://github.com/pagopa/io-app/compare/3.38.0-rc.1...3.38.0-rc.2) (2026-07-25)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4671](https://pagopa.atlassian.net/browse/SIW-4671)] remove feedback alert on driving license detail ([#8348](https://github.com/pagopa/io-app/issues/8348)) ([ec3f3e4](https://github.com/pagopa/io-app/commit/ec3f3e4244442b92800c50d1d027f2564bf9e97c))
+
 ## [3.38.0-rc.1](https://github.com/pagopa/io-app/compare/3.38.0-rc.0...3.38.0-rc.1) (2026-07-24)
 
 
