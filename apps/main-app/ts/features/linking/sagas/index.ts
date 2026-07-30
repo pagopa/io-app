@@ -6,8 +6,8 @@ import {
   shouldTriggerWalletUpdate
 } from "../../../utils/deepLinkUtils";
 import { cgnEycaStatus } from "../../bonus/cgn/store/actions/eyca/details";
-import { handleItwStoredDeepLink } from "../../itwallet/navigation/saga";
-import { parseItwDeepLink } from "../../itwallet/navigation/utils";
+import { handleItwStoredDeepLink } from "../../itwallet/common/saga/linking";
+import { parseItwDeepLink } from "../../itwallet/common/utils/linking";
 import { initiateAarFlow } from "../../pn/aar/store/actions";
 import { isSendAarLink } from "../../pn/aar/utils/deepLinking";
 import { walletUpdate } from "../../wallet/store/actions";

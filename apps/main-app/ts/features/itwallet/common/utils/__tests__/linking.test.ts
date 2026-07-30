@@ -1,4 +1,4 @@
-import { parseItwDeepLink } from "..";
+import { parseItwDeepLink } from "../linking";
 
 describe("parseItwDeepLink", () => {
   test.each([

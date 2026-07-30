@@ -1,10 +1,10 @@
 import { getActionFromState, getStateFromPath } from "@react-navigation/native";
 import { call } from "typed-redux-saga/macro";
 
-import type { ItwDeepLink } from "../utils";
+import type { ItwDeepLink } from "../utils/linking";
 
 import NavigationService from "../../../../navigation/NavigationService";
-import { itwLinkingConfig } from "../linking";
+import { itwLinkingConfig } from "../../navigation/linking";
 
 /**
  * Converts a parsed ITW deep link into a navigation action and dispatches it.

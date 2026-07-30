@@ -2,7 +2,7 @@ import { testSaga } from "redux-saga-test-plan";
 
 import { handleStoredLinkingUrlIfNeeded } from "..";
 import { waitForMainNavigator } from "../../../../navigation/saga/navigation";
-import { handleItwStoredDeepLink } from "../../../itwallet/navigation/saga";
+import { handleItwStoredDeepLink } from "../../../itwallet/common/saga/linking";
 import { initiateAarFlow } from "../../../pn/aar/store/actions";
 import { isSendAarLink } from "../../../pn/aar/utils/deepLinking";
 import { clearLinkingUrl } from "../../actions";
