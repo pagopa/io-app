@@ -3523,7 +3523,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Data di Scadenza 22/02/2025"
+                          accessibilityLabel="Data di Scadenza; 22/02/2025; Scaduta"
                           accessible={true}
                           style={
                             {
