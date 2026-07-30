@@ -6,7 +6,8 @@ import {
   itwCatalogueTranslationsByLocaleSelector,
   itwCredentialIntroContentSelector,
   itwCredentialsCatalogueByTypesSelector,
-  itwCredentialsCatalogueSelector
+  itwCredentialsCatalogueSelector,
+  itwCredentialTypeFromDocTypeSelector
 } from "..";
 import { type GlobalState } from "../../../../../../store/reducers/types";
 import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
@@ -148,6 +149,57 @@ describe("itwCatalogueTranslationsByLocaleSelector", () => {
     expect(itwCatalogueTranslationsByLocaleSelector(state)).toEqual({
       "cred2.name": "Credential 2 EN"
     });
+  });
+});
+
+describe("itwCredentialTypeFromDocTypeSelector", () => {
+  const docType = "org.iso.18013.5.1.cred2";
+  const catalogue = {
+    ...mockCatalogue,
+    credentials: [
+      {
+        ...mockCatalogue.credentials[1],
+        formats: [
+          {
+            configuration_id: "dc_sd_jwt_cred2",
+            format: "dc+sd-jwt"
+          },
+          {
+            configuration_id: "mso_mdoc_cred2",
+            format: "mso_mdoc",
+            docType
+          }
+        ]
+      }
+    ]
+  } as DigitalCredentialsCatalogue;
+
+  it("should return the credential type matching the docType", () => {
+    const state = buildState({
+      catalogue: pot.some(catalogue)
+    });
+
+    expect(itwCredentialTypeFromDocTypeSelector(state)(docType)).toBe("cred2");
+  });
+
+  it("should return undefined when the docType is not found", () => {
+    const state = buildState({
+      catalogue: pot.some(catalogue)
+    });
+
+    expect(
+      itwCredentialTypeFromDocTypeSelector(state)("unknown-doc-type")
+    ).toBeUndefined();
+  });
+
+  it("should return undefined when the docType is undefined", () => {
+    const state = buildState({
+      catalogue: pot.some(catalogue)
+    });
+
+    expect(
+      itwCredentialTypeFromDocTypeSelector(state)(undefined)
+    ).toBeUndefined();
   });
 });
 

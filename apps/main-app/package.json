@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.38.0-rc.4",
+  "version": "3.38.0-rc.5",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -219,7 +219,6 @@
     "eslint-plugin-sonarjs": "^3.0.7",
     "fs-extra": "^7.0.0",
     "jest": "catalog:",
-    "lint-staged": "^13.2.0",
     "mockdate": "^3.0.2",
     "mockttp": "2.4.0",
     "node-fetch": "^2.6.7",
