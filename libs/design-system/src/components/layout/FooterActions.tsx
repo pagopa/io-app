@@ -229,10 +229,8 @@ const renderActions = (
   } = actions;
   return (
     <Fragment>
-      {primaryAction && (
-        <IOButton fullWidth variant="solid" {...primaryAction} />
-      )}
-      {type === "TwoButtons" && secondaryAction && (
+      <IOButton fullWidth variant="solid" {...primaryAction} />
+      {type === "TwoButtons" && (
         <View style={{ alignSelf: "center", marginBottom: extraBottomMargin }}>
           <VSpacer size={spaceBetweenActionAndLink} />
           <IOButton variant="link" {...secondaryAction} />
@@ -240,20 +238,14 @@ const renderActions = (
       )}
       {type === "ThreeButtons" && (
         <>
-          {secondaryAction && (
-            <>
-              <VSpacer size={spaceBetweenActions} />
-              <IOButton fullWidth variant="outline" {...secondaryAction} />
-            </>
-          )}
-          {tertiaryAction && (
-            <View
-              style={{ alignSelf: "center", marginBottom: extraBottomMargin }}
-            >
-              <VSpacer size={spaceBetweenActionAndLink} />
-              <IOButton variant="link" {...tertiaryAction} />
-            </View>
-          )}
+          <VSpacer size={spaceBetweenActions} />
+          <IOButton fullWidth variant="outline" {...secondaryAction} />
+          <View
+            style={{ alignSelf: "center", marginBottom: extraBottomMargin }}
+          >
+            <VSpacer size={spaceBetweenActionAndLink} />
+            <IOButton variant="link" {...tertiaryAction} />
+          </View>
         </>
       )}
     </Fragment>

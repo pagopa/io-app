@@ -101,7 +101,7 @@ export const OTPInput = ({
       // eslint-disable-next-line functional/immutable-data
       translate.value = shakeAnimation();
 
-      if (timerRef.current) {
+      if (timerRef.current != null) {
         clearTimeout(timerRef.current);
       }
       // eslint-disable-next-line functional/immutable-data
@@ -114,7 +114,7 @@ export const OTPInput = ({
 
   useEffect(
     () => () => {
-      if (timerRef.current) {
+      if (timerRef.current != null) {
         clearTimeout(timerRef.current);
       }
     },

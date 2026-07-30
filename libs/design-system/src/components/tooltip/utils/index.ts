@@ -158,7 +158,11 @@ export const getTooltipVerticalAlignment = (
   childrenHeight: number,
   tooltipHeight?: number
 ) => {
-  if ((placement === "left" || placement === "right") && tooltipHeight) {
+  if (
+    (placement === "left" || placement === "right") &&
+    tooltipHeight != null &&
+    tooltipHeight > 0
+  ) {
     return {
       transform: [
         {

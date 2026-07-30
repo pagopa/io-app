@@ -164,7 +164,8 @@ const HelperRow = ({
     bottomMessageColor ?? bottomMessageColorDefault;
 
   const shouldShowCounter =
-    !!counterLimit &&
+    counterLimit != null &&
+    counterLimit > 0 &&
     (!showCounterOnlyWhenLimitReached || valueCount >= counterLimit);
 
   const helperRowStyle: ViewStyle = useMemo(() => {
@@ -295,7 +296,7 @@ export const TextInputBase = ({
   };
 
   const animatedLabelStyle = useAnimatedStyle(() => {
-    const enableTransition = focusedState.value || value.length > 0;
+    const enableTransition = focusedState.value === 1 || value.length > 0;
 
     return {
       transform: [
@@ -359,7 +360,8 @@ export const TextInputBase = ({
       // Notify the user when the limit is reached
       // This is only for iOS, as Android handles it via accessibilityLiveRegion
       if (
-        counterLimit &&
+        counterLimit != null &&
+        counterLimit > 0 &&
         actualTextLength >= counterLimit &&
         accessibilityAnnounceLimitReached &&
         Platform.OS === "ios"
@@ -368,7 +370,11 @@ export const TextInputBase = ({
           accessibilityAnnounceLimitReached
         );
       }
-      if (counterLimit && actualTextLength > counterLimit) {
+      if (
+        counterLimit != null &&
+        counterLimit > 0 &&
+        actualTextLength > counterLimit
+      ) {
         return;
       }
 
@@ -413,7 +419,12 @@ export const TextInputBase = ({
 
   // Calculate the adjusted maxLength to account for spaces
   const adjustedMaxLength = useMemo(() => {
-    if (counterLimit && derivedInputProps && derivedInputProps.valueFormat) {
+    if (
+      counterLimit != null &&
+      counterLimit > 0 &&
+      derivedInputProps &&
+      derivedInputProps.valueFormat
+    ) {
       const spacesCount = Math.floor(counterLimit / 4);
       return counterLimit + spacesCount;
     }
@@ -546,6 +557,7 @@ export const TextInputBase = ({
             {placeholder}
           </Animated.Text>
         </Animated.View>
+        {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
         {rightElement && (
           <Animated.View
             style={{
@@ -572,7 +584,7 @@ export const TextInputBase = ({
         )}
       </Pressable>
 
-      {(bottomMessage || counterLimit) && (
+      {(bottomMessage || (counterLimit ?? 0) > 0) && (
         <HelperRow
           bottomMessage={bottomMessage}
           bottomMessageColor={bottomMessageColor}
