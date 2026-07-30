@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.5](https://github.com/pagopa/io-app/compare/3.38.0-rc.4...3.38.0-rc.5) (2026-07-29)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3963](https://pagopa.atlassian.net/browse/SIW-3963)] Request status list during credentials issuance ([#8261](https://github.com/pagopa/io-app/issues/8261)) ([ed38917](https://github.com/pagopa/io-app/commit/ed3891726b4d986672f71cfe99e5f88841e73e2b))
+* **IT-Wallet:** [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] Register IT-Wallet Status List background task ([#8275](https://github.com/pagopa/io-app/issues/8275)) ([367e5ca](https://github.com/pagopa/io-app/commit/367e5ca94c07404f66b70122de2eac3acd7acca8))
+
+
+### Chores
+
+* [[IOAPPX-527](https://pagopa.atlassian.net/browse/IOAPPX-527)] migrate Git hooks from Husky to Lefthook ([#8345](https://github.com/pagopa/io-app/issues/8345)) ([e4f76d7](https://github.com/pagopa/io-app/commit/e4f76d707e64e31cfe7ff86171b80cc77390cb35))
+* **IT-Wallet:** [[SIW-4666](https://pagopa.atlassian.net/browse/SIW-4666)] Add "Missing credentials" failure scenario for proximity presentation ([#8280](https://github.com/pagopa/io-app/issues/8280)) ([e43dd04](https://github.com/pagopa/io-app/commit/e43dd0417293a3cbf7f4b6fbb3a320c4098d2c5b))
+* **IT-Wallet:** [[SIW-4713](https://pagopa.atlassian.net/browse/SIW-4713)] Add accessibility labels for QR code proximity component ([#8370](https://github.com/pagopa/io-app/issues/8370)) ([a5307c0](https://github.com/pagopa/io-app/commit/a5307c092d1cc04dbcd9c4ca2560f3eaed0ac4eb))
+
 ## [3.38.0-rc.4](https://github.com/pagopa/io-app/compare/3.38.0-rc.3...3.38.0-rc.4) (2026-07-28)
 
 
