@@ -1918,61 +1918,64 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         }
                                       }
                                     />
-                                    <View
-                                      accessibilityLabel="Per sapere come tratta i tuoi dati consulta l’Informativa Privacy."
-                                      accessibilityRole="link"
-                                      accessibilityState={
-                                        {
-                                          "busy": undefined,
-                                          "checked": undefined,
-                                          "disabled": undefined,
-                                          "expanded": undefined,
-                                          "selected": undefined,
-                                        }
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="body"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
                                       }
-                                      accessibilityValue={
-                                        {
-                                          "max": undefined,
-                                          "min": undefined,
-                                          "now": undefined,
-                                          "text": undefined,
-                                        }
-                                      }
-                                      accessible={true}
-                                      collapsable={false}
-                                      focusable={true}
-                                      onBlur={[Function]}
-                                      onClick={[Function]}
-                                      onFocus={[Function]}
-                                      onResponderGrant={[Function]}
-                                      onResponderMove={[Function]}
-                                      onResponderRelease={[Function]}
-                                      onResponderTerminate={[Function]}
-                                      onResponderTerminationRequest={[Function]}
-                                      onStartShouldSetResponder={[Function]}
                                     >
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
+                                      Per sapere come tratta i tuoi dati consulta l’
+                                      <View
+                                        accessibilityRole="link"
+                                        accessibilityState={
+                                          {
+                                            "busy": undefined,
+                                            "checked": undefined,
+                                            "disabled": undefined,
+                                            "expanded": undefined,
+                                            "selected": undefined,
+                                          }
+                                        }
+                                        accessibilityValue={
+                                          {
+                                            "max": undefined,
+                                            "min": undefined,
+                                            "now": undefined,
+                                            "text": undefined,
+                                          }
+                                        }
+                                        accessible={true}
+                                        collapsable={false}
+                                        focusable={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onResponderGrant={[Function]}
+                                        onResponderMove={[Function]}
+                                        onResponderRelease={[Function]}
+                                        onResponderTerminate={[Function]}
+                                        onResponderTerminationRequest={[Function]}
+                                        onStartShouldSetResponder={[Function]}
                                         style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
+                                          {
+                                            "height": 19,
+                                          }
                                         }
                                       >
-                                        Per sapere come tratta i tuoi dati consulta l’
                                         <Text
                                           accessibilityRole="link"
-                                          accessible={true}
                                           allowFontScaling={true}
                                           dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.5}
@@ -1995,9 +1998,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         >
                                           Informativa Privacy
                                         </Text>
-                                        .
-                                      </Text>
-                                    </View>
+                                      </View>
+                                      .
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
@@ -4676,61 +4679,64 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         }
                                       }
                                     />
-                                    <View
-                                      accessibilityLabel="Per sapere come tratta i tuoi dati consulta l’Informativa Privacy."
-                                      accessibilityRole="link"
-                                      accessibilityState={
-                                        {
-                                          "busy": undefined,
-                                          "checked": undefined,
-                                          "disabled": undefined,
-                                          "expanded": undefined,
-                                          "selected": undefined,
-                                        }
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="body"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
                                       }
-                                      accessibilityValue={
-                                        {
-                                          "max": undefined,
-                                          "min": undefined,
-                                          "now": undefined,
-                                          "text": undefined,
-                                        }
-                                      }
-                                      accessible={true}
-                                      collapsable={false}
-                                      focusable={true}
-                                      onBlur={[Function]}
-                                      onClick={[Function]}
-                                      onFocus={[Function]}
-                                      onResponderGrant={[Function]}
-                                      onResponderMove={[Function]}
-                                      onResponderRelease={[Function]}
-                                      onResponderTerminate={[Function]}
-                                      onResponderTerminationRequest={[Function]}
-                                      onStartShouldSetResponder={[Function]}
                                     >
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
+                                      Per sapere come tratta i tuoi dati consulta l’
+                                      <View
+                                        accessibilityRole="link"
+                                        accessibilityState={
+                                          {
+                                            "busy": undefined,
+                                            "checked": undefined,
+                                            "disabled": undefined,
+                                            "expanded": undefined,
+                                            "selected": undefined,
+                                          }
+                                        }
+                                        accessibilityValue={
+                                          {
+                                            "max": undefined,
+                                            "min": undefined,
+                                            "now": undefined,
+                                            "text": undefined,
+                                          }
+                                        }
+                                        accessible={true}
+                                        collapsable={false}
+                                        focusable={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onResponderGrant={[Function]}
+                                        onResponderMove={[Function]}
+                                        onResponderRelease={[Function]}
+                                        onResponderTerminate={[Function]}
+                                        onResponderTerminationRequest={[Function]}
+                                        onStartShouldSetResponder={[Function]}
                                         style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
+                                          {
+                                            "height": 19,
+                                          }
                                         }
                                       >
-                                        Per sapere come tratta i tuoi dati consulta l’
                                         <Text
                                           accessibilityRole="link"
-                                          accessible={true}
                                           allowFontScaling={true}
                                           dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.5}
@@ -4753,9 +4759,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         >
                                           Informativa Privacy
                                         </Text>
-                                        .
-                                      </Text>
-                                    </View>
+                                      </View>
+                                      .
+                                    </Text>
                                   </View>
                                 </View>
                                 <View
