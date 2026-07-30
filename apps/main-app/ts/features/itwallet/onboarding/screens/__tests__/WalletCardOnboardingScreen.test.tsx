@@ -79,11 +79,12 @@ describe("WalletCardOnboardingScreen", () => {
     expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
   });
 
-  test.each([["mDL"], ["mDL", "EuropeanHealthInsuranceCard"]] as ReadonlyArray<
-    ReadonlyArray<string>
-  >)(
-    "it should hide credential modules when %1 are remotely disabled",
-    (...disabledCredentials) => {
+  test.each([
+    { disabledCredentials: ["mDL"] },
+    { disabledCredentials: ["mDL", "EuropeanHealthInsuranceCard"] }
+  ])(
+    "it should hide credential modules when $disabledCredentials are remotely disabled",
+    ({ disabledCredentials }) => {
       jest
         .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(true);
@@ -97,7 +98,7 @@ describe("WalletCardOnboardingScreen", () => {
         .mockReturnValue(disabledCredentials);
 
       const { queryByTestId } = renderComponent();
-      for (const type of disabledCredentials!) {
+      for (const type of disabledCredentials) {
         // Currently ModuleCredential does not attach the testID if onPress is undefined.
         // Since disabled credentials have undefined onPress, we can test for null.
         expect(queryByTestId(`${type}ModuleTestID`)).toBeNull();
