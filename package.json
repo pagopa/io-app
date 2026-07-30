@@ -59,7 +59,8 @@
       "@shopify/react-native-skia",
       "core-js",
       "@swc/core",
-      "nx"
+      "nx",
+      "lefthook"
     ]
   },
   "resolutions": {
