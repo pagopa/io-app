@@ -55,7 +55,7 @@ export const useItwActivationExitSurveyBottomSheet = ({
 
   const trackingProps: TrackQualtricsSurvey = useMemo(
     () => ({
-      survey_id: "itw_eid_activation_exit",
+      survey_id: "itw_pid_activation_exit",
       survey_page: routeName
     }),
     [routeName]
