@@ -187,6 +187,23 @@ export const itwCredentialNameResolverSelector = createSelector(
 );
 
 /**
+ * Returns a resolver function that gets a credential type from an mdoc
+ * document type.
+ */
+export const itwCredentialTypeFromDocTypeSelector = createSelector(
+  itwCredentialsCatalogueSelector,
+  catalogue =>
+    (docType: string | undefined): string | undefined => {
+      if (!docType) {
+        return undefined;
+      }
+      return catalogue?.credentials.find(credential =>
+        credential.formats?.some(format => format.docType === docType)
+      )?.credential_type;
+    }
+);
+
+/**
  * Select the list of all obtainable credentials that are available in the catalogue (if enabled),
  * or the hardcoded list otherwise.
  *
