@@ -133,12 +133,14 @@ describe("mixpanel", () => {
   });
 
   describe("askMixpanelOptIn", () => {
-    it("should do nothing when user already opted in", () => {
+    it("should identify and update profile and super properties when user already opted in", () => {
       testSaga(askMixpanelOptIn)
         .next()
         .select(isMixpanelEnabled)
         .next(true)
         .call(identifyMixpanelSaga)
+        .next()
+        .call(updateMixpanelProfileAndSuperProperties)
         .next()
         .isDone();
     });
@@ -152,8 +154,6 @@ describe("mixpanel", () => {
     });
 
     it("should navigate to opt-in screen when no preference is set", () => {
-      const mockState = { someState: "mockValue" };
-
       testSaga(askMixpanelOptIn)
         .next()
         .select(isMixpanelEnabled)
@@ -175,9 +175,7 @@ describe("mixpanel", () => {
           StackActions.popToTop()
         )
         .next()
-        .select()
-        .next(mockState)
-        .call(updateMixpanelProfileProperties, mockState)
+        .call(updateMixpanelProfileAndSuperProperties)
         .next()
         .isDone();
     });

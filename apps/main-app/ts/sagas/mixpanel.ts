@@ -24,7 +24,9 @@ import { ReduxSagaEffect } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 
 /**
- * check, and eventually ask, about mixpanel opt-in
+ * Checks whether the user has already expressed a Mixpanel opt-in
+ * preference and, if not, asks for it. This saga is also responsible for
+ * updating the Mixpanel profile and super properties
  */
 export function* askMixpanelOptIn() {
   const isMixpanelEnabledResult: ReturnType<typeof isMixpanelEnabled> =
@@ -33,8 +35,9 @@ export function* askMixpanelOptIn() {
   // do nothing
   if (isMixpanelEnabledResult !== null) {
     if (isMixpanelEnabledResult === true) {
-      // if user already opt-in, identify mixpanel
+      // if user already opt-in, identify mixpanel and refresh properties
       yield* call(identifyMixpanelSaga);
+      yield* call(updateMixpanelProfileAndSuperProperties);
     }
     return;
   }
@@ -54,10 +57,9 @@ export function* askMixpanelOptIn() {
     NavigationService.dispatchNavigationAction,
     StackActions.popToTop()
   );
-  // Update mixpanel profile properties
+  // Update mixpanel profile and super properties
   // (mainly for mixpanel opt-in)
-  const state = (yield* select()) as GlobalState;
-  yield* call(updateMixpanelProfileProperties, state);
+  yield* call(updateMixpanelProfileAndSuperProperties);
 }
 
 export function* handleSetMixpanelEnabled(
