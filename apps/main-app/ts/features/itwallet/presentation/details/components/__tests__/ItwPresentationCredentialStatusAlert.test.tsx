@@ -14,7 +14,7 @@ import {
   CredentialMetadata,
   ItwCredentialStatus
 } from "../../../../common/utils/itwTypesUtils";
-import { useCredentialStatusMessage } from "../../../../credentials/hooks/useCredentialStatusMessage.ts";
+import { useCredentialStatusMessage } from "../../../../credentials/hooks/useCredentialStatusMessage";
 import * as selectors from "../../../../credentials/store/selectors";
 import { ItwCredentialIssuanceMachineProvider } from "../../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";

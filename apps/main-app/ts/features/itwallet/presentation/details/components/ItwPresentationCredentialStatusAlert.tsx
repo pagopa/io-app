@@ -22,7 +22,7 @@ import {
   ItwCredentialStatus,
   ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
-import { useCredentialStatusMessage } from "../../../credentials/hooks/useCredentialStatusMessage.ts";
+import { useCredentialStatusMessage } from "../../../credentials/hooks/useCredentialStatusMessage";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialStatusSelector
