@@ -1,9 +1,9 @@
 import { PathConfigMap } from "@react-navigation/native";
 
-import { AppParamsList } from "../../../navigation/params/AppParamsList";
-import { ITW_CREDENTIAL_OFFER_LINKING_PATH } from "../offer/utils";
+import { AppParamsList } from "../../../navigation/params/AppParamsList.ts";
+import { ITW_CREDENTIAL_OFFER_LINKING_PATH } from "../offer/utils/index.ts";
 import { ITW_REMOTE_ROUTES } from "../presentation/remote/navigation/routes.ts";
-import { ITW_ROUTES } from "./routes";
+import { ITW_ROUTES } from "./routes.ts";
 
 const safeDecodeURIComponent = (value: string): string => {
   try {

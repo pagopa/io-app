@@ -1,5 +1,5 @@
+import { itwLinkingOptions } from "../linking";
 import { ITW_ROUTES } from "../routes";
-import { itwLinkingOptions } from "../useItwLinkingOptions";
 
 const getCredentialOfferUriParser = () => {
   const linkingOptions = itwLinkingOptions[ITW_ROUTES.MAIN] as {

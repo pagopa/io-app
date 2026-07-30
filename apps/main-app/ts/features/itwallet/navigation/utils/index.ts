@@ -6,7 +6,7 @@ import {
 } from "../../../../utils/navigation";
 import { extractPathFromURL } from "../../../../utils/url";
 import { parseCredentialOfferLink } from "../../offer/utils";
-import { itwLinkingConfig } from "../useItwLinkingOptions";
+import { itwLinkingConfig } from "../linking";
 
 const itwLinkPrefixes = [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX];
 

@@ -4,7 +4,7 @@ import { call } from "typed-redux-saga/macro";
 import type { ItwDeepLink } from "../utils";
 
 import NavigationService from "../../../../navigation/NavigationService";
-import { itwLinkingConfig } from "../useItwLinkingOptions";
+import { itwLinkingConfig } from "../linking";
 
 /**
  * Converts a parsed ITW deep link into a navigation action and dispatches it.
