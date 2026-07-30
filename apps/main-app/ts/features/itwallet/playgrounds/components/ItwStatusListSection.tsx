@@ -4,6 +4,7 @@ import {
   ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy,
+  ListItemNav,
   useIOToast,
   VSpacer
 } from "@io-app/design-system";
@@ -11,19 +12,22 @@ import { format } from "date-fns";
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
 import { useCallback, useEffect, useState } from "react";
-import { View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isDevEnv } from "../../../../utils/environment";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ITW_STATUS_LIST_FETCH_TASK } from "../../statusList/tasks";
-import { getLastStatusListCheckTimestamp } from "../../statusList/utils/storage";
+import { getLastStatusListCheckTimestamps } from "../../statusList/utils/storage";
 
 const formatDate = (timestamp: number | undefined): string =>
-  timestamp ? format(new Date(timestamp), "DD/MM/YY HH:mm:ss") : "n/a";
+  timestamp !== undefined
+    ? format(new Date(timestamp), "DD/MM/YY HH:mm:ss")
+    : "n/a";
 
 const formatAge = (lastFetchTime: number | undefined): string => {
-  if (!lastFetchTime) {
+  if (lastFetchTime === undefined) {
     return "n/a";
   }
 
@@ -35,40 +39,63 @@ const formatAge = (lastFetchTime: number | undefined): string => {
 };
 
 export const ItwStatusListSection = () => {
-  const [lastCheckTime, setLastCheckTime] = useState<number>();
+  const [timestamps, setTimestamps] = useState<ReadonlyArray<number>>();
 
   useEffect(() => {
-    getLastStatusListCheckTimestamp()
-      .then(setLastCheckTime)
-      .catch(() => setLastCheckTime(undefined));
+    getLastStatusListCheckTimestamps()
+      .then(setTimestamps)
+      .catch(() => setTimestamps(undefined));
   }, []);
 
+  const modal = useIOBottomSheetModal({
+    title: "Status List",
+    component: (
+      <View style={{ flex: 1 }}>
+        <FlatList
+          contentContainerStyle={{
+            flexGrow: 1
+          }}
+          data={timestamps ?? []}
+          keyExtractor={(_, index) => String(index)}
+          ListEmptyComponent={
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+                paddingVertical: 24
+              }}
+            >
+              <Text>No check occurred</Text>
+            </View>
+          }
+          renderItem={({ item, index }) => (
+            <ListItemInfo
+              label={`Check #${index + 1}`}
+              value={`${formatDate(item)} (${formatAge(item)} ago)`}
+            />
+          )}
+          scrollEnabled={false}
+          style={{ flex: 1 }}
+        />
+      </View>
+    )
+  });
+
   return (
-    <View>
-      <ListItemHeader label="Status List" />
-      <ListItemInfo label="Last check" value={formatDate(lastCheckTime)} />
-      <Divider />
-      <ListItemInfo label="Age" value={formatAge(lastCheckTime)} />
-      <VSpacer size={8} />
-      <IOButton
-        disabled={true}
-        label="Refresh Status List"
-        loading={false}
-        onPress={() => null}
-        variant="solid"
-      />
-      <VSpacer size={8} />
-      <IOButton
-        color="danger"
-        disabled={true}
-        label="Clear Status List"
-        loading={false}
-        onPress={() => null}
-        variant="solid"
-      />
-      <VSpacer size={16} />
-      <BackgroundTaskSection />
-    </View>
+    <>
+      <View>
+        <ListItemHeader label="Status List" />
+        <ListItemNav
+          description={formatDate(timestamps?.at(-1))}
+          onPress={() => modal.present()}
+          value="Last check"
+        />
+        <VSpacer size={16} />
+        <BackgroundTaskSection />
+      </View>
+      {modal.bottomSheet}
+    </>
   );
 };
 
