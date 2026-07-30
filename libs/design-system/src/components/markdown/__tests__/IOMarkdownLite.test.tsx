@@ -27,6 +27,17 @@ const getFirstParagraphStyles = (
   return [paragraph?.props?.style].flat();
 };
 
+const getFirstParagraphProps = (
+  toJSON: ReturnType<typeof render>["toJSON"]
+) => {
+  const tree = toJSON();
+  const root = Array.isArray(tree) ? tree[0] : tree;
+  const paragraph = root?.children?.[0];
+  return typeof paragraph === "object" && paragraph !== null
+    ? paragraph.props
+    : {};
+};
+
 describe("IOMarkdownLite", () => {
   /* ─── Supported content ─── */
 
@@ -45,6 +56,13 @@ describe("IOMarkdownLite", () => {
           expect.objectContaining({ color: defaultParagraphColor })
         ])
       );
+    });
+
+    it("does not make plain paragraphs explicitly accessible", () => {
+      const { toJSON } = renderComponent({ content: "Hello world" });
+
+      expect(getFirstParagraphProps(toJSON).accessible).toBeUndefined();
+      expect(getFirstParagraphProps(toJSON).focusable).toBeUndefined();
     });
 
     it("applies the provided textAlign to paragraph text", () => {
@@ -105,6 +123,15 @@ describe("IOMarkdownLite", () => {
       expect(getByRole("link")).toBeTruthy();
     });
 
+    it("makes a paragraph containing a link keyboard focusable", () => {
+      const { toJSON } = renderComponent({
+        content: "Read the [privacy policy](https://example.com)"
+      });
+
+      expect(getFirstParagraphProps(toJSON).accessible).toBe(true);
+      expect(getFirstParagraphProps(toJSON).focusable).toBe(true);
+    });
+
     it("calls onLinkPress callback when link is pressed", () => {
       const onLinkPress = jest.fn();
       const { getByRole } = renderComponent({
@@ -125,6 +152,26 @@ describe("IOMarkdownLite", () => {
       fireEvent.press(getByRole("link"));
       expect(spy).toHaveBeenCalledWith("https://example.com");
       spy.mockRestore();
+    });
+
+    it("renders and activates multiple links in one paragraph", () => {
+      const onLinkPress = jest.fn();
+      const { getAllByRole, toJSON } = renderComponent({
+        content:
+          "[first](https://first.example) and [second](https://second.example)",
+        onLinkPress
+      });
+      const links = getAllByRole("link");
+
+      expect(getFirstParagraphProps(toJSON).accessible).toBe(true);
+      expect(getFirstParagraphProps(toJSON).focusable).toBe(true);
+      expect(links).toHaveLength(2);
+
+      fireEvent.press(links[0]);
+      fireEvent.press(links[1]);
+
+      expect(onLinkPress).toHaveBeenNthCalledWith(1, "https://first.example");
+      expect(onLinkPress).toHaveBeenNthCalledWith(2, "https://second.example");
     });
 
     it("renders bold link with fontWeight 600 and link role", () => {
