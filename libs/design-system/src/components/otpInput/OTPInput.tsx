@@ -121,12 +121,12 @@ export const OTPInput = ({
     []
   );
 
-  const handleChange = (value: string) => {
-    if (value.length > length) {
+  const handleChange = (nextValue: string) => {
+    if (nextValue.length > length) {
       return;
     }
-    onValueChange(value);
-    handleValidate(value);
+    onValueChange(nextValue);
+    handleValidate(nextValue);
   };
 
   const handleKeyPress = (e: TextInputKeyPressEvent) => {
