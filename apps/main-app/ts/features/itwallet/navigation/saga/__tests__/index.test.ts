@@ -2,7 +2,7 @@ import { testSaga } from "redux-saga-test-plan";
 
 import { handleItwStoredDeepLink } from "..";
 import NavigationService from "../../../../../navigation/NavigationService";
-import { ITW_ROUTES } from "../../../navigation/routes";
+import { ITW_ROUTES } from "../../routes";
 import { parseItwDeepLink } from "../../utils";
 
 describe("handleItwStoredDeepLink", () => {

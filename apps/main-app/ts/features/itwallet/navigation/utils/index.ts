@@ -5,8 +5,8 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../../../../utils/navigation";
 import { extractPathFromURL } from "../../../../utils/url";
-import { itwLinkingConfig } from "../../navigation/useItwLinkingOptions";
 import { parseCredentialOfferLink } from "../../offer/utils";
+import { itwLinkingConfig } from "../useItwLinkingOptions";
 
 const itwLinkPrefixes = [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX];
 
