@@ -74,6 +74,7 @@ export const mapEventToFailure = (
     };
   }
 
+  // TODO: [SIW-4682] Handle invalid status from status list and its dynamic message
   if (isIssuerResponseError(error, Codes.CredentialInvalidStatus)) {
     return {
       type: CredentialIssuanceFailureType.INVALID_STATUS,
