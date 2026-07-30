@@ -2089,6 +2089,7 @@
               "or": "oppure"
             },
             "qrCode": {
+              "accessibilityLabel": "Immagine del codice QR da mostrare a chi verifica i documenti digitali",
               "error": "Abbiamo avuto un problema nel generare il QR Code."
             },
             "title": "Avvia una verifica"
@@ -2212,14 +2213,6 @@
             "subtitle": "Attendi qualche secondo...",
             "timeout": "Ancora un attimo di pazienza..."
           },
-          "missingCredentialsScreen": {
-            "primaryAction_one": "Aggiungi documento al Portafoglio",
-            "primaryAction_other": "Aggiungi documenti al Portafoglio",
-            "secondaryAction": "Non ora",
-            "subtitle": "Aggiungi {{credentialNames}} al Portafoglio e poi riprova.",
-            "title_one": "Manca un documento per continuare",
-            "title_other": "Mancano alcuni documenti per continuare"
-          },
           "purpose": "Finalità: {{purpose}}",
           "relyingParty": {
             "genericError": {
@@ -2293,6 +2286,25 @@
             "title": "Qualcosa non va"
           },
           "title": "Non riusciamo a caricare {{credentialName}}"
+        },
+        "missingCredentials": {
+          "one": {
+            "title": "Non puoi continuare perché manca un documento",
+            "subtitle": "È richiesta la verifica di {{credentialName}}, che non è presente nel tuo Portafoglio IT-Wallet.",
+            "primaryAction": "Aggiungi documento",
+            "secondaryAction": "Chiudi"
+          },
+          "other": {
+            "title": "Non puoi continuare perché mancano alcuni documenti",
+            "subtitle": "Scopri i documenti mancanti necessari per questa verifica.",
+            "primaryAction": "Mostra documenti",
+            "secondaryAction": "Chiudi",
+            "bottomSheet": {
+              "title": "Documenti mancanti",
+              "subtitle": "I seguenti documenti non sono presenti nel tuo Portafoglio IT-Wallet.",
+              "primaryAction": "Aggiungi documento"
+            }
+          }
         }
       },
       "reissuanceLandingScreen": {
