@@ -9,6 +9,10 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
+import {
+  isStartupLoaded,
+  StartupStatusEnum
+} from "../../../../store/reducers/startup";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors";
@@ -57,6 +61,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
   const introContent = useIOSelector(
     itwCredentialIntroContentSelector(credentialType)
   );
+  const startupStatus = useIOSelector(isStartupLoaded);
   const credentialName = useItwCredentialName(credentialType);
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credentialType, isItwL3),
@@ -85,6 +90,11 @@ export const ItwIssuanceCredentialLandingScreen = ({
   );
 
   useEffect(() => {
+    if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
+      // Skip navigation until the startup process is completed and the user is authenticated
+      return;
+    }
+
     if (isCredentialValid) {
       if (!isEidExpiredOrExpiring) {
         trackItwAlreadyHasCredential(mixPanelCredential);
@@ -126,6 +136,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
       getMixPanelCredential(credentialType, isWhitelisted)
     );
   }, [
+    startupStatus,
     navigation,
     isItwValid,
     isWhitelisted,
