@@ -6,7 +6,8 @@ import { AUTH_ERRORS } from "../../components/AuthErrorComponent";
 import {
   EventProperties,
   trackLoginSpidError,
-  trackLoginSpidIdpSelected
+  trackLoginSpidIdpSelected,
+  updateLoginMethodProfileAndSuperProperties
 } from "../spidAnalytics";
 
 jest.mock("../../../../../mixpanel", () => ({
@@ -110,6 +111,23 @@ describe("spidAnalytics", () => {
 
     expect(mixpanelTrack).toHaveBeenCalledWith("LOGIN_SPID_IDP_SELECTED", {
       mocked: true
+    });
+  });
+
+  describe("updateLoginMethodProfileAndSuperProperties", () => {
+    it("updates both mixpanel profile and super properties with the LOGIN_METHOD property", async () => {
+      const mockState = { some: "state" } as any;
+
+      await updateLoginMethodProfileAndSuperProperties(mockState, "poste-id");
+
+      expect(updateMixpanelProfileProperties).toHaveBeenCalledWith(mockState, {
+        property: "LOGIN_METHOD",
+        value: "poste-id"
+      });
+      expect(updateMixpanelSuperProperties).toHaveBeenCalledWith(mockState, {
+        property: "LOGIN_METHOD",
+        value: "poste-id"
+      });
     });
   });
 });
