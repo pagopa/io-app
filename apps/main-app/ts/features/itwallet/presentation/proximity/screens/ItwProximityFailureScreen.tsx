@@ -1,5 +1,6 @@
 import { Body, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
+import { useEffect } from "react";
 
 import {
   OperationResultScreenContent,
@@ -14,7 +15,10 @@ import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisa
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
 import { itwCredentialTypeFromDocTypeSelector } from "../../../credentialsCatalogue/store/selectors/index.ts";
 import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent.tsx";
-import { trackItwProximityUnofficialVerifierBottomSheet } from "../analytics/index.ts";
+import {
+  trackItwProximityMandatoryCredentialMissing,
+  trackItwProximityUnofficialVerifierBottomSheet
+} from "../analytics/index.ts";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
@@ -43,6 +47,20 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   useItwProximityEventsTracking({ failure });
 
+  useEffect(() => {
+    if (failure.type === ProximityFailureType.MISSING_CREDENTIALS) {
+      const missingCredentials = failure.reason.credentialsDocType
+        .map(getCredentialTypeFromDocType)
+        .filter(isDefined);
+
+      trackItwProximityMandatoryCredentialMissing({
+        missing_credential: missingCredentials.join(" - "),
+        missing_credential_number: missingCredentials.length
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- run only when the failure changes
+  }, [failure]);
+
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: (
       <>
@@ -57,22 +75,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
     title: I18n.t(
       "features.itWallet.presentation.proximity.relyingParty.untrustedRp.bottomSheet.title"
     )
-    // TODO: [SIW-4482] Uncomment when the FAQ are ready
-    /*     footer: (
-      <FooterActions
-        actions={{
-          type: "SingleButton",
-          primary: {
-            onPress: () => {
-              trackItwProximityRpNotTrustedDiscoverMore();
-            },
-            label: I18n.t(
-              "features.itWallet.presentation.proximity.relyingParty.untrustedRp.bottomSheet.primaryAction"
-            )
-          }
-        }}
-      />
-    ) */
   });
 
   const getOperationResultScreenContentProps =
