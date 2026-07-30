@@ -22,8 +22,11 @@ import {
   ItwCredentialStatus,
   ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors/status";
+import { useCredentialStatusMessage } from "../../../credentials/hooks/useCredentialStatusMessage.ts";
+import {
+  itwCredentialsEidStatusSelector,
+  itwCredentialStatusSelector
+} from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
@@ -217,9 +220,10 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const navigation = useIONavigation();
   const { name: currentScreenName } = useRoute();
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
-  const { status, message } = useIOSelector(state =>
+  const { status } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  const message = useCredentialStatusMessage(credential.credentialType);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
 

@@ -32,8 +32,10 @@ import {
   CredentialMetadata,
   isMultiLevelCredential
 } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialSelector } from "../../../credentials/store/selectors";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors/status";
+import {
+  itwCredentialSelector,
+  itwCredentialStatusSelector
+} from "../../../credentials/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector

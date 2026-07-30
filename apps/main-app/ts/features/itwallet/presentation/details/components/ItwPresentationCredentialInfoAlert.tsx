@@ -8,7 +8,7 @@ import {
   CredentialMetadata,
   ItwCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors/status";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 type Props = {

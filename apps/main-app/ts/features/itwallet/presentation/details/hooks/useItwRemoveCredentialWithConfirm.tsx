@@ -11,7 +11,7 @@ import {
 } from "../../../analytics/utils/types";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsRemoveByType } from "../../../credentials/store/actions";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors/status";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { trackItwCredentialDelete } from "../analytics";
 

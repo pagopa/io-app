@@ -234,10 +234,34 @@ export const itwHasWalletAtLeastTwoCredentialsSelector = createSelector(
 );
 
 /**
- * Returns the credential status and the error message corresponding to the status assertion error, if present.
+ * Get the credential status corresponding to the status list/status assertion error, if present.
+ *
+ * Note: the credential type is passed as second argument to reuse the same selector and cache per credential type.
  *
  * @param state - The global state.
- * @returns The credential status and the error message corresponding to the status assertion error, if present.
+ * @param type - The credential type.
+ * @returns The credential status corresponding to the status assertion error, if present.
+ */
+export const itwCredentialStatusSelector = createSelector(
+  itwCredentialsSelector,
+  (_state: GlobalState, type: string) => type,
+  (credentials, type) => {
+    // This should never happen
+    if (credentials[type] === undefined) {
+      return { status: undefined };
+    }
+
+    return { status: getCredentialStatus(credentials[type]) };
+  }
+);
+
+/**
+ * Returns the credential status for the eID.
+ *
+ * Note that this status is determined only by the SD-JWT credential, and does not use status assertion/status list.
+ *
+ * @param state - The global state.
+ * @returns The eID's JWT status.
  */
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,
