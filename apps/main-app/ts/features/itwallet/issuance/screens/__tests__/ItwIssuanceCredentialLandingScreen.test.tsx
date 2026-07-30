@@ -9,7 +9,6 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
-import * as credentialsStatusSelectors from "../../../credentials/store/selectors/status";
 import * as issuanceAnalytics from "../../../issuance/analytics";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -310,10 +309,8 @@ const mockSelectors = ({
     .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
     .mockReturnValue(isWhitelisted);
   jest
-    .spyOn(credentialsStatusSelectors, "itwCredentialStatusSelector")
-    .mockImplementation(
-      () => ({ status: credentialStatus, message: undefined }) as any
-    );
+    .spyOn(credentialsSelectors, "itwCredentialStatusSelector")
+    .mockImplementation(() => ({ status: credentialStatus }) as any);
   jest
     .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
     .mockReturnValue(pidStatus as any);

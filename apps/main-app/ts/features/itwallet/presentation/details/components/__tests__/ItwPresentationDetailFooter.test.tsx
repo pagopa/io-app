@@ -14,7 +14,7 @@ import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../../../common/utils/itwMocksUtils.ts";
-import * as credentialStatusSelectors from "../../../../credentials/store/selectors/status";
+import * as credentialStatusSelectors from "../../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider.tsx";
@@ -99,8 +99,7 @@ describe("ItwPresentationDetailsFooter", () => {
     jest
       .spyOn(credentialStatusSelectors, "itwCredentialStatusSelector")
       .mockImplementation(() => ({
-        status: "expired",
-        message: undefined
+        status: "expired"
       }));
 
     const { getByTestId } = renderComponent(CredentialType.DRIVING_LICENSE);
