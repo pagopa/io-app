@@ -2,6 +2,58 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.6](https://github.com/pagopa/io-app/compare/3.38.0-rc.5...3.38.0-rc.6) (2026-07-30)
+
+
+### Features
+
+* [[IOPID-4079](https://pagopa.atlassian.net/browse/IOPID-4079)] Add `AUTH_SECURITY_LEVEL` and `LOGIN_METHOD` super and profile properties ([#8374](https://github.com/pagopa/io-app/issues/8374)) ([f40ca67](https://github.com/pagopa/io-app/commit/f40ca67f51ec8a461c6896e8f95fdd1ab2fe8f76))
+
+
+### Bug Fixes
+
+* [[IEL-715](https://pagopa.atlassian.net/browse/IEL-715)] prevented double FCI_POLL_FILLED_DOCUMENT_FAILURE tracking on MP ([#8369](https://github.com/pagopa/io-app/issues/8369)) ([2df6395](https://github.com/pagopa/io-app/commit/2df6395fd07203c4b6196442b21a40f6ccfe3f6d))
+
+
+### Chores
+
+* [[IOPLT-1971](https://pagopa.atlassian.net/browse/IOPLT-1971)] Fix some `pnpm install` dependency warnings ([#8342](https://github.com/pagopa/io-app/issues/8342)) ([cc03737](https://github.com/pagopa/io-app/commit/cc03737e3f5345e496845ff8e314c50c1060269e))
+* Update translations from Lokalise ([#8378](https://github.com/pagopa/io-app/issues/8378)) ([aeb7d60](https://github.com/pagopa/io-app/commit/aeb7d608f973f5801dccefd3da1edb4d320726c5))
+
+## [3.38.0-rc.5](https://github.com/pagopa/io-app/compare/3.38.0-rc.4...3.38.0-rc.5) (2026-07-29)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3963](https://pagopa.atlassian.net/browse/SIW-3963)] Request status list during credentials issuance ([#8261](https://github.com/pagopa/io-app/issues/8261)) ([ed38917](https://github.com/pagopa/io-app/commit/ed3891726b4d986672f71cfe99e5f88841e73e2b))
+* **IT-Wallet:** [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] Register IT-Wallet Status List background task ([#8275](https://github.com/pagopa/io-app/issues/8275)) ([367e5ca](https://github.com/pagopa/io-app/commit/367e5ca94c07404f66b70122de2eac3acd7acca8))
+
+
+### Chores
+
+* [[IOAPPX-527](https://pagopa.atlassian.net/browse/IOAPPX-527)] migrate Git hooks from Husky to Lefthook ([#8345](https://github.com/pagopa/io-app/issues/8345)) ([e4f76d7](https://github.com/pagopa/io-app/commit/e4f76d707e64e31cfe7ff86171b80cc77390cb35))
+* **IT-Wallet:** [[SIW-4666](https://pagopa.atlassian.net/browse/SIW-4666)] Add "Missing credentials" failure scenario for proximity presentation ([#8280](https://github.com/pagopa/io-app/issues/8280)) ([e43dd04](https://github.com/pagopa/io-app/commit/e43dd0417293a3cbf7f4b6fbb3a320c4098d2c5b))
+* **IT-Wallet:** [[SIW-4713](https://pagopa.atlassian.net/browse/SIW-4713)] Add accessibility labels for QR code proximity component ([#8370](https://github.com/pagopa/io-app/issues/8370)) ([a5307c0](https://github.com/pagopa/io-app/commit/a5307c092d1cc04dbcd9c4ca2560f3eaed0ac4eb))
+
+## [3.38.0-rc.4](https://github.com/pagopa/io-app/compare/3.38.0-rc.3...3.38.0-rc.4) (2026-07-28)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3824](https://pagopa.atlassian.net/browse/SIW-3824)] Add accessibility labels for IT-Wallet ID card ([#8365](https://github.com/pagopa/io-app/issues/8365)) ([d8b58ce](https://github.com/pagopa/io-app/commit/d8b58cec524b8a1dc02f138b6919263415d153a0))
+* **IT-Wallet:** [[SIW-4712](https://pagopa.atlassian.net/browse/SIW-4712)] Align tracking survey IDs for PID activation flow ([#8366](https://github.com/pagopa/io-app/issues/8366)) ([94ffaa8](https://github.com/pagopa/io-app/commit/94ffaa81a0e34a5b7afb0dd1feebd77f5dbfdf78))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3670](https://pagopa.atlassian.net/browse/SIW-3670),[SIW-3780](https://pagopa.atlassian.net/browse/SIW-3780)] Fix a11y proximity disclosure screen ([#8362](https://github.com/pagopa/io-app/issues/8362)) ([b20d90a](https://github.com/pagopa/io-app/commit/b20d90a0800e4249d1daccae71ce25bd4981e4a2))
+
+
+### Chores
+
+* [[IOPLT-1975](https://pagopa.atlassian.net/browse/IOPLT-1975)] Upgrade `ts` from `5.x` to `6.x` ([#8353](https://github.com/pagopa/io-app/issues/8353)) ([e84ac10](https://github.com/pagopa/io-app/commit/e84ac108d9feb7aa2af29351ccc473f135e7051f))
+* **IT-Wallet:** [[SIW-4474](https://pagopa.atlassian.net/browse/SIW-4474)] Register IT-Wallet Status List last check time super property ([#8338](https://github.com/pagopa/io-app/issues/8338)) ([45f6d03](https://github.com/pagopa/io-app/commit/45f6d036ce2c1110ffd528333e1c5bffe3706af5))
+
 ## [3.38.0-rc.3](https://github.com/pagopa/io-app/compare/3.38.0-rc.2...3.38.0-rc.3) (2026-07-27)
 
 

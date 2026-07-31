@@ -1,4 +1,6 @@
 import { GlobalState } from "../../../../../store/reducers/types";
+import { CredentialValidity } from "../../../common/utils/itwTypesUtils";
+import { itwAllStoredCredentialsSelector } from "../../../credentials/store/selectors";
 
 /**
  * Collects the Status List URIs referenced by all current owners
@@ -12,5 +14,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
  * Status List references in their Redux state.
  */
 export const itwStatusListReferencedUrisSelector = (
-  _state: GlobalState
-): ReadonlyArray<string> => [];
+  state: GlobalState
+): ReadonlyArray<string> => {
+  const credentials = itwAllStoredCredentialsSelector(state);
+  return credentials
+    .filter(c => c.validity?.type === "status_list")
+    .map(c => (c.validity as CredentialValidity).statusList.uri);
+};

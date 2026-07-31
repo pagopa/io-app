@@ -1,7 +1,9 @@
+import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { expectSaga } from "redux-saga-test-plan";
 
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { CredentialBundle } from "../../../common/utils/itwTypesUtils";
+import { StatusListRepository } from "../../../statusList/utils/repository";
 import { trackItwVaultCredentialStoreFailed } from "../../analytics";
 import {
   itwCredentialsStore,
@@ -16,9 +18,13 @@ jest.mock("../../utils/vault", () => ({
 jest.mock("../../analytics", () => ({
   trackItwVaultCredentialStoreFailed: jest.fn()
 }));
+jest.mock("../../../statusList/utils/repository", () => ({
+  StatusListRepository: { upsertMany: jest.fn() }
+}));
 
 const mockStoreAll = jest.mocked(CredentialsVault.storeAll);
 const mockTrackStoreFailed = jest.mocked(trackItwVaultCredentialStoreFailed);
+const mockStatusListUpsertMany = jest.mocked(StatusListRepository.upsertMany);
 
 const makeBundle = (
   overrides: Partial<CredentialBundle> = {}
@@ -29,6 +35,13 @@ const makeBundle = (
     ...overrides
   }
 ];
+
+const makeStatusList = (id: number): CredentialStatus.StatusList => ({
+  sub: `https://issuer.example/status/${id}`,
+  iat: 1690000000,
+  exp: 1700000000,
+  status_list: { bits: 1, lst: "raw-list" }
+});
 
 describe("handleItwCredentialsStoreBundleSaga", () => {
   beforeEach(() => jest.clearAllMocks());
@@ -50,6 +63,8 @@ describe("handleItwCredentialsStoreBundleSaga", () => {
             credential: b.credential
           }))
         );
+        // No status list in the bundles
+        expect(mockStatusListUpsertMany).toHaveBeenCalledWith([]);
       });
   });
 
@@ -96,6 +111,66 @@ describe("handleItwCredentialsStoreBundleSaga", () => {
           credential_ids: payload.map(({ metadata }) => metadata.credentialId),
           reason: "vault error"
         });
+      });
+  });
+
+  it("calls StatusListRepository with the array of status lists contained in the credential bundles", () => {
+    mockStoreAll.mockResolvedValue(undefined);
+    mockStatusListUpsertMany.mockResolvedValue(undefined);
+
+    const statusList1 = makeStatusList(1);
+    const statusList2 = makeStatusList(2);
+    const bundles: ReadonlyArray<CredentialBundle> = [
+      {
+        credential: "raw-jwt-0",
+        metadata: ItwStoredCredentialsMocks.mdl,
+        statusList: { uri: statusList1.sub, payload: statusList1 }
+      },
+      {
+        credential: "raw-jwt-1",
+        metadata: ItwStoredCredentialsMocks.ts,
+        statusList: { uri: statusList2.sub, payload: statusList2 }
+      }
+    ];
+    const action = itwCredentialsStoreBundle(bundles, {});
+
+    return expectSaga(handleItwCredentialsStoreBundleSaga, action)
+      .put(itwCredentialsStore(bundles.map(b => b.metadata)))
+      .run()
+      .then(() => {
+        expect(mockStatusListUpsertMany).toHaveBeenCalledWith([
+          [statusList1.sub, statusList1],
+          [statusList2.sub, statusList2]
+        ]);
+      });
+  });
+
+  it("deduplicates the status lists of multiple credentials sharing the same URI", () => {
+    mockStoreAll.mockResolvedValue(undefined);
+    mockStatusListUpsertMany.mockResolvedValue(undefined);
+
+    const statusList = makeStatusList(1);
+    const bundles: ReadonlyArray<CredentialBundle> = [
+      {
+        credential: "raw-jwt-0",
+        metadata: ItwStoredCredentialsMocks.mdl,
+        statusList: { uri: statusList.sub, payload: statusList }
+      },
+      {
+        credential: "raw-jwt-1",
+        metadata: ItwStoredCredentialsMocks.ts,
+        statusList: { uri: statusList.sub, payload: statusList }
+      }
+    ];
+    const action = itwCredentialsStoreBundle(bundles, {});
+
+    return expectSaga(handleItwCredentialsStoreBundleSaga, action)
+      .put(itwCredentialsStore(bundles.map(b => b.metadata)))
+      .run()
+      .then(() => {
+        expect(mockStatusListUpsertMany).toHaveBeenCalledWith([
+          [statusList.sub, statusList]
+        ]);
       });
   });
 });
