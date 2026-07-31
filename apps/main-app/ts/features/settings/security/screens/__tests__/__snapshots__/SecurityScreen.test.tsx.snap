@@ -447,7 +447,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                             }
                           >
                             <View
-                              accessibilityLabel="Modifica il codice di sblocco"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
