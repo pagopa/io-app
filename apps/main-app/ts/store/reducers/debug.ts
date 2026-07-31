@@ -6,7 +6,8 @@ import { getType } from "typesafe-actions";
 import {
   resetDebugData,
   setDebugData,
-  setDebugModeEnabled
+  setDebugModeEnabled,
+  setI18nDebugEnabled
 } from "../actions/debug";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -14,10 +15,12 @@ import { GlobalState } from "./types";
 type DebugState = Readonly<{
   debugData: Record<string, unknown>;
   isDebugModeEnabled: boolean;
+  isI18nDebugEnabled: boolean;
 }>;
 
 const INITIAL_STATE: DebugState = {
   isDebugModeEnabled: false,
+  isI18nDebugEnabled: false,
   debugData: {}
 };
 
@@ -53,6 +56,11 @@ function debugReducer(
         isDebugModeEnabled: action.payload,
         debugData: {}
       };
+    case getType(setI18nDebugEnabled):
+      return {
+        ...state,
+        isI18nDebugEnabled: action.payload
+      };
   }
 
   return state;
@@ -65,7 +73,7 @@ const persistConfig: PersistConfig = {
   key: "debug",
   storage: AsyncStorage,
   version: CURRENT_REDUX_DEBUG_STORE_VERSION,
-  whitelist: ["isDebugModeEnabled"]
+  whitelist: ["isDebugModeEnabled", "isI18nDebugEnabled"]
 };
 
 export type PersistedDebugState = DebugState & PersistPartial;
@@ -78,6 +86,14 @@ export const debugPersistor = persistReducer<DebugState, Action>(
 // Selector
 export const isDebugModeEnabledSelector = (state: GlobalState) =>
   state.debug.isDebugModeEnabled;
+
+/**
+ * Selector for the translation key debug overlay preference.
+ * When true, all `I18n.t()` calls return the key in brackets instead of the
+ * translated string.
+ */
+export const isI18nDebugEnabledSelector = (state: GlobalState) =>
+  state.debug.isI18nDebugEnabled;
 
 /**
  * Selector that returns the debug data without the undefined values

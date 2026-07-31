@@ -23,14 +23,20 @@ import { AlertModal } from "../../../../components/ui/AlertModal";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../../../config";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { setDebugModeEnabled } from "../../../../store/actions/debug";
+import {
+  setDebugModeEnabled,
+  setI18nDebugEnabled
+} from "../../../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled
 } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig.ts";
-import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
+import {
+  isDebugModeEnabledSelector,
+  isI18nDebugEnabledSelector
+} from "../../../../store/reducers/debug";
 import {
   isIdPayLocallyEnabledSelector,
   isPagoPATestEnabledSelector
@@ -607,6 +613,7 @@ const DeveloperModeSection = () => {
   const { showModal } = useContext(LightModalContext);
   const dispatch = useIODispatch();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
+  const isI18nDebugEnabled = useIOSelector(isI18nDebugEnabledSelector);
 
   const theme = useIOTheme();
 
@@ -635,6 +642,17 @@ const DeveloperModeSection = () => {
           }
           testID="debugModeSwitch"
           value={isDebugModeEnabled}
+        />
+        <Divider />
+        {/* Show translation keys instead of translated strings */}
+        <ListItemSwitch
+          description={I18n.t("profile.main.i18nDebugModeDescription")}
+          label={I18n.t("profile.main.i18nDebugMode")}
+          onSwitchValueChange={enabled =>
+            dispatch(setI18nDebugEnabled(enabled))
+          }
+          testID="i18nDebugModeSwitch"
+          value={isI18nDebugEnabled}
         />
       </ContentWrapper>
 

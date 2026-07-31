@@ -4418,6 +4418,8 @@
         "title": "I tuoi dati"
       },
       "debugMode": "Modalità debug",
+      "i18nDebugMode": "Mostra chiavi di traduzione",
+      "i18nDebugModeDescription": "Sostituisce i testi con le rispettive chiavi per aiutare il team dei contenuti",
       "designSystem": "Design System",
       "developerModeOn": "Modalità sviluppatore attivata",
       "developersSectionHeader": "Sviluppatori",

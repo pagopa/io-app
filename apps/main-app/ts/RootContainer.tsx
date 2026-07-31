@@ -20,6 +20,7 @@ import {
   setupAndroidNotificationChannel
 } from "./features/pushNotifications/utils/configurePushNotification";
 import { useAppThemeConfiguration } from "./hooks/useAppThemeConfiguration";
+import { useI18nDebugSync } from "./hooks/useI18nDebugSync";
 import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
@@ -168,6 +169,7 @@ const RootContainerClass = connect(
 
 const RootContainerFC = ({ store }: { store: Store }) => {
   useAppThemeConfiguration();
+  useI18nDebugSync();
 
   return <RootContainerClass store={store} />;
 };

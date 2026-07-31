@@ -28,8 +28,19 @@ export const setDebugData =
 export const resetDebugData =
   createStandardAction("DEBUG_RESET_DATA")<ReadonlyArray<string>>();
 
+/**
+ * Enables or disables the translation key debug overlay.
+ * When enabled, all `I18n.t()` calls return the key in brackets instead of
+ * the translated string, helping the content team identify which key maps to
+ * which label on screen.
+ */
+export const setI18nDebugEnabled = createStandardAction(
+  "DEBUG_I18N_SET_ENABLED"
+)<boolean>();
+
 export type DebugActions =
   | ActionType<typeof resetDebugData>
   | ActionType<typeof setDebugCurrentRouteName>
   | ActionType<typeof setDebugData>
-  | ActionType<typeof setDebugModeEnabled>;
+  | ActionType<typeof setDebugModeEnabled>
+  | ActionType<typeof setI18nDebugEnabled>;

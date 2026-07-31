@@ -12,6 +12,7 @@ import { PreferredLanguageEnum } from "../definitions/session_manager/PreferredL
 import de from "../locales/de/index.json";
 import en from "../locales/en/index.json";
 import it from "../locales/it/index.json";
+import { i18nDebugPostProcessor } from "./components/debug/i18nDebugPostProcessor";
 // import { contentRepoUrl } from "./config";
 
 export const resources = {
@@ -137,6 +138,7 @@ export interface SmartBackendOptions {
 
 void i18next
   .use(initReactI18next)
+  .use(i18nDebugPostProcessor)
   // .use(SmartI18nextBackend)
   .init({
     lng: "it",
@@ -155,7 +157,8 @@ void i18next
     // backend: {
     //   localResources: resources
     // },
-    interpolation: { escapeValue: false }
+    interpolation: { escapeValue: false },
+    postProcess: ["i18nDebug"]
   });
 
 export const setLocale = (locale: Locales) => {
