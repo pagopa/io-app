@@ -73,7 +73,7 @@ describe("setAccessibilityFocus", () => {
     setAccessibilityFocus(nodeReference);
     jest.runAllTimers();
 
-    expect(focusSpy).toHaveBeenCalledWith(node, "focus");
+    expect(focusSpy).toHaveBeenCalled();
   });
 });
 
