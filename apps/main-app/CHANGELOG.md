@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.6](https://github.com/pagopa/io-app/compare/3.38.0-rc.5...3.38.0-rc.6) (2026-07-30)
+
+
+### Features
+
+* [[IOPID-4079](https://pagopa.atlassian.net/browse/IOPID-4079)] Add `AUTH_SECURITY_LEVEL` and `LOGIN_METHOD` super and profile properties ([#8374](https://github.com/pagopa/io-app/issues/8374)) ([f40ca67](https://github.com/pagopa/io-app/commit/f40ca67f51ec8a461c6896e8f95fdd1ab2fe8f76))
+
+
+### Bug Fixes
+
+* [[IEL-715](https://pagopa.atlassian.net/browse/IEL-715)] prevented double FCI_POLL_FILLED_DOCUMENT_FAILURE tracking on MP ([#8369](https://github.com/pagopa/io-app/issues/8369)) ([2df6395](https://github.com/pagopa/io-app/commit/2df6395fd07203c4b6196442b21a40f6ccfe3f6d))
+
+
+### Chores
+
+* [[IOPLT-1971](https://pagopa.atlassian.net/browse/IOPLT-1971)] Fix some `pnpm install` dependency warnings ([#8342](https://github.com/pagopa/io-app/issues/8342)) ([cc03737](https://github.com/pagopa/io-app/commit/cc03737e3f5345e496845ff8e314c50c1060269e))
+* Update translations from Lokalise ([#8378](https://github.com/pagopa/io-app/issues/8378)) ([aeb7d60](https://github.com/pagopa/io-app/commit/aeb7d608f973f5801dccefd3da1edb4d320726c5))
+
 ## [3.38.0-rc.5](https://github.com/pagopa/io-app/compare/3.38.0-rc.4...3.38.0-rc.5) (2026-07-29)
 
 
