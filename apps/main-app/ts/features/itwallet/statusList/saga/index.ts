@@ -19,7 +19,6 @@ export function* watchItwStatusListSaga(): SagaIterator {
   yield* fork(registerStatusListFetchTaskSaga);
   // Run startup coherence for the Status List Token cache
   yield* fork(checkStatusListCoherenceSaga);
-
   // Register Status List super properties
   yield* call(registerStatusListProperties);
 }

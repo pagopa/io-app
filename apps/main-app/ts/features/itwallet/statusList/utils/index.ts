@@ -6,7 +6,7 @@ import {
   CredentialBundle,
   IssuerConfiguration
 } from "../../common/utils/itwTypesUtils";
-import { InvalidTslCredentialStatus } from "./errors";
+import { InvalidTslCredentialStatus, InvalidTslWuaStatus } from "./errors";
 
 /**
  * Function to get the credential status from its token status list (TSL). The list is fetched from the `uri` extracted from
@@ -50,6 +50,64 @@ export const getCredentialStatusFromStatusList = async (
 
   if (canonicalStatus !== "valid") {
     throw new InvalidTslCredentialStatus(metadata.credentialId);
+  }
+
+  return {
+    idx,
+    parsedStatusList: parsed,
+    rawStatus,
+    status: canonicalStatus,
+    statusList,
+    uri
+  };
+};
+
+/**
+ * Fetches, verifies and parses the Status List Token referenced by a WUA.
+ *
+ * @param walletUnitAttestationId The ID of the Wallet Unit Attestation.
+ * @param walletUnitAttestation The encoded Wallet Unit Attestation.
+ * @param env The current ITW environment.
+ * @param itwVersion The active IT-Wallet specifications version.
+ */
+export const getWalletUnitAttestationStatusFromStatusList = async (
+  walletUnitAttestationId: string,
+  walletUnitAttestation: string,
+  itwVersion: ItwVersion,
+  keys: IssuerConfiguration["keys"]
+) => {
+  const ioWallet = getIoWallet(itwVersion);
+  assert(
+    ioWallet.CredentialStatus.statusList.isSupported,
+    `Status List is not supported by IT-Wallet v${itwVersion}`
+  );
+  assert(
+    ioWallet.WalletUnitAttestation.isSupported,
+    `Wallet Unit Attestation is not supported by IT-Wallet v${itwVersion}`
+  );
+
+  const decoded = ioWallet.WalletUnitAttestation.decode(walletUnitAttestation);
+  const { uri, idx } = decoded.status.status_list;
+
+  const statusList = await ioWallet.CredentialStatus.statusList.getByUri(uri);
+  const parsed = await ioWallet.CredentialStatus.statusList.verifyAndParse(
+    keys,
+    statusList
+  );
+
+  assert(parsed.sub === uri, `Status List Token sub does not match URI ${uri}`);
+
+  const { status, rawStatus } = ioWallet.CredentialStatus.statusList.getStatus(
+    parsed.status_list,
+    idx
+  );
+
+  // Every status check in the app is done against the lowercase value, so it is transformed here.
+  // TODO: [SIW-4664] Export a more accurate type from `getStatus`.
+  const canonicalStatus = status.toLowerCase();
+
+  if (canonicalStatus !== "valid") {
+    throw new InvalidTslWuaStatus(walletUnitAttestationId);
   }
 
   return {
