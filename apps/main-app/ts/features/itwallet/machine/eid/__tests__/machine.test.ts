@@ -23,6 +23,8 @@ import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
+  ObtainEidWuaStatusListsActorInput,
+  ObtainEidWuaStatusListsActorOutput,
   RequestAccessTokenActorParams,
   RequestEidActorOutput,
   RequestEidActorParams,
@@ -120,6 +122,7 @@ const requestEid = jest.fn();
 const startAuthFlow = jest.fn();
 const initMrtdPoPChallenge = jest.fn();
 const validateMrtdPoPChallenge = jest.fn();
+const obtainWuaStatusLists = jest.fn();
 const storeEidCredentialActor = jest.fn();
 const waitForSessionRefresh = jest.fn();
 
@@ -198,6 +201,10 @@ describe("itwEidIssuanceMachine", () => {
       requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
         requestEid
       ),
+      obtainWuaStatusLists: fromPromise<
+        ObtainEidWuaStatusListsActorOutput,
+        ObtainEidWuaStatusListsActorInput
+      >(obtainWuaStatusLists),
       storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
         storeEidCredentialActor
       ),
@@ -229,6 +236,7 @@ describe("itwEidIssuanceMachine", () => {
     jest.clearAllMocks();
     jest.resetAllMocks();
     jest.useFakeTimers();
+    obtainWuaStatusLists.mockResolvedValue([]);
     storeEidCredentialActor.mockResolvedValue(undefined);
   });
 

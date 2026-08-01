@@ -6,9 +6,11 @@ import { fromPromise } from "xstate";
 import type {
   AuthenticationContext,
   CieContext,
+  Context,
   EidIssuanceLevel,
   IdentificationContext,
-  MrtdPoPContext
+  MrtdPoPContext,
+  StatusListEntry
 } from "./context";
 
 import { useIOStore } from "../../../../store/hooks";
@@ -44,6 +46,8 @@ import {
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
+import { getWalletUnitAttestationStatusFromStatusList } from "../../statusList/utils";
+import { StatusListRepository } from "../../statusList/utils/repository";
 import {
   itwSetWalletInstanceRenewalError,
   itwWalletUnitAttestationsStore
@@ -66,6 +70,13 @@ export type InitMrtdPoPChallengeActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
   walletInstanceAttestation: string | undefined;
 }>;
+
+export type ObtainEidWuaStatusListsActorInput = Pick<
+  Context,
+  "authenticationContext" | "itwVersion" | "walletUnitAttestations"
+>;
+
+export type ObtainEidWuaStatusListsActorOutput = ReadonlyArray<StatusListEntry>;
 
 export type RequestAccessTokenActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
@@ -94,6 +105,7 @@ export type StartAuthFlowActorParams = WithItwVersion<{
 export type StoreEidCredentialActorParams = {
   eid: CredentialBundle | undefined;
   walletUnitAttestations?: Record<string, string>;
+  wuaStatusLists: ReadonlyArray<StatusListEntry>;
 };
 
 export type ValidateMrtdPoPChallengeActorParams = WithItwVersion<{
@@ -409,10 +421,60 @@ export const createEidIssuanceActorsImplementation = (
     }
   ),
 
+  obtainWuaStatusLists: fromPromise<
+    ObtainEidWuaStatusListsActorOutput,
+    ObtainEidWuaStatusListsActorInput
+  >(async ({ input }) => {
+    const walletUnitAttestations = input.walletUnitAttestations;
+    if (
+      !walletUnitAttestations ||
+      Object.keys(walletUnitAttestations).length === 0
+    ) {
+      return [];
+    }
+
+    const ioWallet = getIoWallet(input.itwVersion);
+    if (
+      !ioWallet.WalletUnitAttestation.isSupported ||
+      !ioWallet.CredentialStatus.statusList.isSupported
+    ) {
+      return [];
+    }
+
+    const authenticationContext = input.authenticationContext;
+    assert(authenticationContext, "authenticationContext is undefined");
+
+    const statusLists = await Promise.all(
+      Object.entries(walletUnitAttestations).map(
+        async ([walletUnitAttestationId, walletUnitAttestation]) => {
+          const { uri, parsedStatusList } =
+            await getWalletUnitAttestationStatusFromStatusList(
+              walletUnitAttestationId,
+              walletUnitAttestation,
+              input.itwVersion,
+              authenticationContext.issuerConf.keys
+            );
+
+          const entry: StatusListEntry = [uri, parsedStatusList];
+          return entry;
+        }
+      )
+    );
+
+    return [...new Map(statusLists)];
+  }),
+
   storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
     async ({ input }) => {
-      const { eid, walletUnitAttestations } = input;
+      const { eid, walletUnitAttestations, wuaStatusLists } = input;
       assert(eid, "eID credential is undefined");
+
+      // Persist verified status lists before activating the wallet instance.
+      await StatusListRepository.upsertMany([...wuaStatusLists]);
+
+      if (walletUnitAttestations) {
+        store.dispatch(itwWalletUnitAttestationsStore(walletUnitAttestations));
+      }
 
       // Waits for the credential store/replace to complete before proceeding
       await new Promise<void>((resolve, reject) => {
@@ -423,10 +485,6 @@ export const createEidIssuanceActorsImplementation = (
           })
         );
       });
-
-      if (walletUnitAttestations) {
-        store.dispatch(itwWalletUnitAttestationsStore(walletUnitAttestations));
-      }
     }
   ),
 
