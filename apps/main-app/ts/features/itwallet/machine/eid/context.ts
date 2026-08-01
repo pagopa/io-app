@@ -1,6 +1,7 @@
 import type {
   AuthorizationDetail,
   CredentialIssuance,
+  CredentialStatus,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 
@@ -112,6 +113,10 @@ export type Context = {
    * An optional dictionary of Wallet Unit Attestations generated for the issuance.
    */
   walletUnitAttestations?: Record<string, string>;
+  /**
+   * Status Lists referenced by the WUAs generated for the issuance.
+   */
+  wuaStatusLists: ReadonlyArray<StatusListEntry>;
 };
 
 /**
@@ -165,6 +170,11 @@ export type MrtdPoPContext = {
   validationUrl: string;
 };
 
+export type StatusListEntry = [
+  uri: string,
+  payload: CredentialStatus.StatusList
+];
+
 export const InitialContext: Context = {
   itwVersion: "1.0.0", // Initial value to satisfy type constraints. It is assigned in the `onInit` action.
   mode: undefined,
@@ -180,5 +190,6 @@ export const InitialContext: Context = {
   credentialsToUpgrade: [],
   failedCredentials: undefined,
   credentialType: undefined,
-  accessToken: undefined
+  accessToken: undefined,
+  wuaStatusLists: []
 };

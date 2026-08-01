@@ -24,6 +24,8 @@ import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
+  ObtainEidWuaStatusListsActorInput,
+  ObtainEidWuaStatusListsActorOutput,
   RequestAccessTokenActorParams,
   RequestEidActorOutput,
   type RequestEidActorParams,
@@ -216,6 +218,10 @@ export const itwEidIssuanceMachine = setup({
     requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
       notImplemented
     ),
+    obtainWuaStatusLists: fromPromise<
+      ObtainEidWuaStatusListsActorOutput,
+      ObtainEidWuaStatusListsActorInput
+    >(notImplemented),
     storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
       notImplemented
     ),
@@ -1167,7 +1173,7 @@ export const itwEidIssuanceMachine = setup({
                 eid: event.output.credential,
                 walletUnitAttestations: event.output.walletUnitAttestations
               })),
-              target: "CheckingIdentityMatch"
+              target: "ObtainingStatus"
             },
             onError: [
               {
@@ -1180,6 +1186,27 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.Failure"
               }
             ]
+          }
+        },
+        ObtainingStatus: {
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "obtainWuaStatusLists",
+            input: ({ context }) => ({
+              authenticationContext: context.authenticationContext,
+              itwVersion: context.itwVersion,
+              walletUnitAttestations: context.walletUnitAttestations
+            }),
+            onDone: {
+              actions: assign(({ event }) => ({
+                wuaStatusLists: event.output
+              })),
+              target: "CheckingIdentityMatch"
+            },
+            onError: {
+              target: "#itwEidIssuanceMachine.Failure",
+              actions: "setFailure"
+            }
           }
         },
         CheckingIdentityMatch: {
@@ -1220,6 +1247,7 @@ export const itwEidIssuanceMachine = setup({
             src: "storeEidCredential",
             input: ({ context }) => ({
               eid: context.eid,
+              wuaStatusLists: context.wuaStatusLists,
               walletUnitAttestations: context.walletUnitAttestations
             }),
             onDone: {
