@@ -36,11 +36,8 @@ const extractItwPath = (url: string): string | undefined => {
     /^\/+/,
     ""
   );
-  const normalizedPath = path?.replace(/^itw(?=\/|$)/i, "itw");
 
-  return normalizedPath === "itw" || normalizedPath?.startsWith("itw/") === true
-    ? normalizedPath
-    : undefined;
+  return path === "itw" || path?.startsWith("itw/") === true ? path : undefined;
 };
 
 /** Checks whether the ITW linking configuration supports the path. */
