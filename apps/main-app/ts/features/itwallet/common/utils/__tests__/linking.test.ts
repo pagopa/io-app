@@ -31,10 +31,14 @@ describe("parseItwDeepLink", () => {
       "remote request validation",
       "https://continua.io.pagopa.it/itw/auth/request-validation",
       "itw/auth/request-validation"
+    ],
+    [
+      "case-insensitive ITW prefix",
+      "https://continua.io.pagopa.it/ITW/discovery/info",
+      "itw/discovery/info"
     ]
   ])("parses supported %s route", (_, url, path) => {
     expect(parseItwDeepLink(url)).toEqual({
-      type: "navigation",
       path
     });
   });
@@ -44,11 +48,9 @@ describe("parseItwDeepLink", () => {
       "openid-credential-offer://?credential_offer=offer";
 
     expect(parseItwDeepLink(credentialOfferUri)).toEqual({
-      type: "credential-offer",
       path: `itw/credential-offer?itwCredentialOfferUri=${encodeURIComponent(
         credentialOfferUri
-      )}`,
-      credentialOfferUri
+      )}`
     });
   });
 
@@ -60,11 +62,9 @@ describe("parseItwDeepLink", () => {
     )}`;
 
     expect(parseItwDeepLink(normalizedUrl)).toEqual({
-      type: "credential-offer",
       path: `itw/credential-offer?itwCredentialOfferUri=${encodeURIComponent(
         credentialOfferUri
-      )}`,
-      credentialOfferUri
+      )}`
     });
   });
 

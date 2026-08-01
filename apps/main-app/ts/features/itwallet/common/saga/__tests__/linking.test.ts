@@ -87,7 +87,6 @@ describe("handleItwStoredDeepLink", () => {
 
   it("does not navigate when action creation fails", () => {
     testSaga(handleItwStoredDeepLink, {
-      type: "navigation",
       path: "itw/unknown"
     })
       .next()
