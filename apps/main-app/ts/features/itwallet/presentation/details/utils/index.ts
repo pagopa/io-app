@@ -5,11 +5,19 @@ import {
   ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
 
+/**
+ * Statuses that always reflect the credential's own condition and must never be
+ * masked by the eID status or by the offline mode. "jwtExpiring" belongs here
+ * because it is derived from the locally stored JWT expiration: it stays accurate
+ * without connectivity, and an eID that is itself expiring must not hide it —
+ * the PID shares its status with the eID, so it would otherwise hide its own tag.
+ */
 const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
   "expired",
   "expiring",
   "invalid",
-  "unknown"
+  "unknown",
+  "jwtExpiring"
 ];
 
 /**
@@ -17,7 +25,7 @@ const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
  * based on the current eID status and offline conditions.
  *
  * Logic summary:
- * - Excluded statuses ("expired", "expiring", "invalid", "unknown") are never overridden.
+ * - Excluded statuses (see {@link EXCLUDED_CREDENTIAL_STATUSES}) are never overridden.
  * - Expired eID + expired credential → display as "invalid" (both show "NON VALIDO").
  * - Expired eID alone → keep credential's actual status (only PID shows "NON VALIDO").
  * - Offline:

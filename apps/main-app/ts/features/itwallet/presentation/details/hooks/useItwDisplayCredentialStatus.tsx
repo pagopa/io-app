@@ -13,14 +13,14 @@ import { getItwDisplayCredentialStatus } from "../utils";
  * the status shown in the Wallet or credential details screen.
  *
  * @param credentialStatus the actual status of the credential
- * @param credentialType optional credential type to skip override for PID
  * @returns {ItwCredentialStatus} The status to display in the UI
  */
 export const useItwDisplayCredentialStatus = (
   credentialStatus: ItwCredentialStatus
 ): ItwCredentialStatus => {
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
-  const isOffline = offlineAccessReason !== null;
+  // The reason is reset to `undefined`, never to `null`, when the user is back online
+  const isOffline = offlineAccessReason !== undefined;
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   return getItwDisplayCredentialStatus(credentialStatus, eidStatus, isOffline);

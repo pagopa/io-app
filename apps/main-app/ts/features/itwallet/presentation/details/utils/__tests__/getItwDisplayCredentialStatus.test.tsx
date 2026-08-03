@@ -1,15 +1,19 @@
 import { getItwDisplayCredentialStatus } from "..";
 
 describe("getItwDisplayCredentialStatus", () => {
-  describe("non-PID credentials", () => {
+  // Rows where credentialStatus and eidStatus match also model the PID,
+  // whose status is the eID status itself
+  describe("credential status display rules", () => {
     it.each`
       credentialStatus | eidStatus        | isOffline | expected
       ${"valid"}       | ${"jwtExpiring"} | ${true}   | ${"valid"}
-      ${"jwtExpiring"} | ${"valid"}       | ${true}   | ${"valid"}
+      ${"jwtExpiring"} | ${"valid"}       | ${true}   | ${"jwtExpiring"}
       ${"jwtExpired"}  | ${"valid"}       | ${true}   | ${"jwtExpired"}
       ${"expired"}     | ${"valid"}       | ${true}   | ${"expired"}
       ${"jwtExpired"}  | ${"jwtExpired"}  | ${true}   | ${"invalid"}
-      ${"jwtExpiring"} | ${"jwtExpiring"} | ${false}  | ${"valid"}
+      ${"jwtExpiring"} | ${"jwtExpiring"} | ${true}   | ${"jwtExpiring"}
+      ${"jwtExpiring"} | ${"jwtExpiring"} | ${false}  | ${"jwtExpiring"}
+      ${"jwtExpiring"} | ${undefined}     | ${false}  | ${"jwtExpiring"}
       ${"valid"}       | ${"jwtExpired"}  | ${false}  | ${"valid"}
       ${"jwtExpired"}  | ${"jwtExpired"}  | ${false}  | ${"invalid"}
       ${"jwtExpiring"} | ${"jwtExpired"}  | ${false}  | ${"jwtExpiring"}
