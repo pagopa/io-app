@@ -153,7 +153,7 @@ const ContentView = ({ credential }: ContentViewProps) => {
         actions: {
           type: "TwoButtons",
           primary: {
-            icon: "add",
+            icon: "addSmall",
             iconPosition: "end",
             label: I18n.t(
               "features.itWallet.issuance.credentialPreview.actions.primary"
