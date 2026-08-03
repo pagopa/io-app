@@ -144,7 +144,11 @@ const upsertComment = async (repo, prNumber, body) => {
   const comments = await github(
     `/repos/${repo}/issues/${prNumber}/comments?per_page=100`
   );
-  const existing = comments.find(comment => comment.body?.includes(MARKER));
+  // Quoting a comment on GitHub copies its raw markdown, marker included, so a
+  // human reply can carry the marker too. Only ever edit our own comment.
+  const existing = comments.find(
+    comment => comment.user?.type === "Bot" && comment.body?.includes(MARKER)
+  );
 
   if (existing) {
     await github(`/repos/${repo}/issues/comments/${existing.id}`, {
