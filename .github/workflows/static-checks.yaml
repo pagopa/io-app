@@ -31,6 +31,7 @@ jobs:
       - id: run-validate
         run: pnpm validate
       - id: knip
+        name: Check unused files and/or references
         # Advisory only: reports code this PR left unused, and can never block a
         # merge. Reuses the checkout and install above rather than paying for a
         # second one in a dedicated workflow. Skipped outside pull requests,
@@ -49,13 +50,8 @@ jobs:
           # avoids blaming a PR for dead code introduced by whatever landed on
           # master in the meantime.
           BASE_SHA=$(git rev-parse HEAD^1)
-          # TEMPORARY (IOPLT-1992): master has no baseline runs until this merges,
-          # so the lookup falls back to this branch. Restore the --commit form
-          # (commented below) before merging.
-          # BASELINE_RUN=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow "Knip baseline" \
-          #   --commit "$BASE_SHA" --status success --limit 1 --json databaseId --jq '.[0].databaseId')
           BASELINE_RUN=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow "Knip baseline" \
-            --branch IOPLT-1992-add-knip-report-unused-references --status success --limit 1 --json databaseId --jq '.[0].databaseId')
+            --commit "$BASE_SHA" --status success --limit 1 --json databaseId --jq '.[0].databaseId')
           echo "base commit: $BASE_SHA / baseline run: ${BASELINE_RUN:-none}"
           if [ -n "$BASELINE_RUN" ]; then
             gh run download "$BASELINE_RUN" --repo "$GITHUB_REPOSITORY" --name knip-baseline --dir baseline || true
