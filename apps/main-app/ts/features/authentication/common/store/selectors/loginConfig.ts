@@ -1,7 +1,7 @@
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getDeviceId } from "../../../../../utils/device";
 import { isFeatureEnabled } from "../../../../../utils/featureRollout";
-import { oneIdentityRemoteConfigSelector } from "./remoteConfig";
+import { oneIdentityRolloutPercentageSelector } from "./remoteConfig";
 
 export const oneIdentityEnvSelector = (state: GlobalState) =>
   state.features.loginFeatures.loginConfig.oneIdentityEnv;
@@ -22,8 +22,7 @@ export const oneIdentityLocalFeatureFlagSelector = (state: GlobalState) =>
  */
 export const isOneIdentityLoginEnabledSelector = (state: GlobalState) => {
   const localFeatureFlag = oneIdentityLocalFeatureFlagSelector(state);
-  const rolloutPercentage =
-    oneIdentityRemoteConfigSelector(state)?.rolloutPercentage ?? 0;
+  const rolloutPercentage = oneIdentityRolloutPercentageSelector(state);
   return (
     localFeatureFlag ??
     isFeatureEnabled(getDeviceId(), rolloutPercentage, "OneIdentityRollout")
