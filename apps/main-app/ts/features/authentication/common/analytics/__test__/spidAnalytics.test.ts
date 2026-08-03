@@ -1,11 +1,13 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../../../mixpanelConfig/superProperties";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import { AUTH_ERRORS } from "../../components/AuthErrorComponent";
 import {
   EventProperties,
   trackLoginSpidError,
-  trackLoginSpidIdpSelected
+  trackLoginSpidIdpSelected,
+  updateLoginMethodProfileAndSuperProperties
 } from "../spidAnalytics";
 
 jest.mock("../../../../../mixpanel", () => ({
@@ -18,6 +20,10 @@ jest.mock("../../../../../utils/analytics", () => ({
 
 jest.mock("../../../../../mixpanelConfig/profileProperties", () => ({
   updateMixpanelProfileProperties: jest.fn()
+}));
+
+jest.mock("../../../../../mixpanelConfig/superProperties", () => ({
+  updateMixpanelSuperProperties: jest.fn()
 }));
 
 describe("spidAnalytics", () => {
@@ -98,8 +104,30 @@ describe("spidAnalytics", () => {
       value: "test-idp"
     });
 
+    expect(updateMixpanelSuperProperties).toHaveBeenCalledWith(mockState, {
+      property: "LOGIN_METHOD",
+      value: "test-idp"
+    });
+
     expect(mixpanelTrack).toHaveBeenCalledWith("LOGIN_SPID_IDP_SELECTED", {
       mocked: true
+    });
+  });
+
+  describe("updateLoginMethodProfileAndSuperProperties", () => {
+    it("updates both mixpanel profile and super properties with the LOGIN_METHOD property", async () => {
+      const mockState = { some: "state" } as any;
+
+      await updateLoginMethodProfileAndSuperProperties(mockState, "poste-id");
+
+      expect(updateMixpanelProfileProperties).toHaveBeenCalledWith(mockState, {
+        property: "LOGIN_METHOD",
+        value: "poste-id"
+      });
+      expect(updateMixpanelSuperProperties).toHaveBeenCalledWith(mockState, {
+        property: "LOGIN_METHOD",
+        value: "poste-id"
+      });
     });
   });
 });

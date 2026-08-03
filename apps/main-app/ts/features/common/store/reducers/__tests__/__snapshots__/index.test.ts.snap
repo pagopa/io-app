@@ -234,6 +234,10 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "userInteractionForSessionExpiredNeeded": false,
       },
     },
+    "loginConfig": {
+      "oneIdentityEnv": "prod",
+      "oneIdentityLocalFeatureFlag": undefined,
+    },
     "loginInfo": {
       "userFromSuccessLogin": false,
     },
