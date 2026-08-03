@@ -177,7 +177,13 @@ const main = async () => {
   const added = [...headFindings.keys()].filter(id => !baseFindings.has(id));
   const removed = [...baseFindings.keys()].filter(id => !headFindings.has(id));
 
-  console.log(`new: ${added.length}, resolved: ${removed.length}`);
+  // Without a baseline every finding counts as added, which would read as a
+  // huge regression in the log even though the comment reports nothing.
+  console.log(
+    baseReport === undefined
+      ? `no baseline to compare against (${headFindings.size} findings on this branch)`
+      : `new: ${added.length}, resolved: ${removed.length}`
+  );
 
   const body = buildBody({
     added,
