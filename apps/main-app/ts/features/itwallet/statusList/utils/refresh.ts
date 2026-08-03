@@ -29,19 +29,18 @@ export const refreshStatusListToken = async (
       `Status List is not supported by IT-Wallet v${itwVersion}`
     );
 
-    const raw = await ioWallet.CredentialStatus.statusList.getByUri(uri);
-    const payload = decodeJwt(raw).payload;
-    const statusList = CredentialStatus.StatusList.parse(payload);
-
+    const statusList = await ioWallet.CredentialStatus.statusList.getByUri(uri);
     // TODO [SIW-4542] add JWT verification
-    // const statusList = await ioWallet.CredentialStatus.statusList.verifyAndParse(jwks, raw);
+    // const parsed = await ioWallet.CredentialStatus.statusList.verifyAndParse(jwks, statusList);
+    const decoded = decodeJwt(statusList).payload;
+    const parsed = CredentialStatus.StatusList.parse(decoded);
 
     assert(
-      statusList.sub === uri,
+      parsed.sub === uri,
       `Status List Token sub does not match URI ${uri}`
     );
 
-    await StatusListRepository.upsert(uri, statusList);
+    await StatusListRepository.upsert(uri, parsed);
     return true;
   } catch {
     return false;

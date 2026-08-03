@@ -18,12 +18,10 @@ export function* watchItwStatusListSaga(): SagaIterator {
 
   // Register the background task for Status List fetch only for active wallet instances
   yield* fork(registerStatusListFetchTaskSaga);
-
   // Run startup coherence for the Status List Token cache
   yield* call(checkStatusListCoherenceSaga);
   // Check for stale Status List Tokens and refresh them in the background
   yield* call(refreshStaleStatusListsSaga);
-
   // Register Status List super properties
   yield* call(registerStatusListProperties);
 }
