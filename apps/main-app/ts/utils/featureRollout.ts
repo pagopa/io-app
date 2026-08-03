@@ -12,11 +12,11 @@ const MAX_UINT32 = 4294967295;
  * @param featureName - The feature name, used as a salt to ensure independent distributions across features.
  * @returns `true` if the feature is enabled for the device; otherwise `false`.
  */
-export function isFeatureEnabled(
+export const isFeatureEnabled = (
   deviceId: string,
   rolloutPercentage: number,
   featureName: string
-): boolean {
+): boolean => {
   // Short-circuit evaluations for boundaries
   if (rolloutPercentage <= 0) {
     return false;
@@ -30,7 +30,7 @@ export function isFeatureEnabled(
   const threshold = rolloutPercentage / 100;
 
   return userRatio < threshold;
-}
+};
 
 /**
  * Computes a deterministic float between 0.0 (inclusive) and 1.0 (exclusive)
@@ -40,10 +40,10 @@ export function isFeatureEnabled(
  * @param featureName - The feature name used as a cryptographic salt.
  * @returns A predictable decimal value representing the device's rollout bucket.
  */
-function computeDeviceRolloutRatio(
+const computeDeviceRolloutRatio = (
   deviceId: string,
   featureName: string
-): number {
+): number => {
   const inputString = `${deviceId}-${featureName}`;
 
   // Compute the SHA-256 hash
@@ -54,4 +54,4 @@ function computeDeviceRolloutRatio(
 
   // Normalize the integer to a float between 0.0 and 1.0
   return hashInteger / MAX_UINT32;
-}
+};
