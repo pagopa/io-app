@@ -57,8 +57,7 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
   );
 
   useHeaderSecondLevel({
-    title: "",
-    goBack: () => machineRef.send({ type: "back" })
+    title: ""
   });
 
   // Send the requested credential type to the machine when the issuance flow
