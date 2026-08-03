@@ -13,6 +13,7 @@ import {
   ItwProximityGenericFailure,
   ItwProximityQrCode,
   ItwProximityShowQrCode,
+  ItwRevokeConsentUserAction,
   ItwStartReissuingPID
 } from "./types";
 
@@ -164,7 +165,7 @@ export const trackItwRevokeConsent = () => {
 
 /** Tracks the action selected in the revoke-confirmation alert. */
 export const trackItwRevokeConsentOperationBlockAction = (
-  user_action: string
+  user_action: ItwRevokeConsentUserAction
 ) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_REVOKE_CONSENT_OPERATION_BLOCK_ACTION,

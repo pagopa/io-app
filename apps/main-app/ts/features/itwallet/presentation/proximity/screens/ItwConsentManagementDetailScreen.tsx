@@ -72,19 +72,16 @@ export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
     }, [consent])
   );
 
-  const revokeConsent = useCallback(
-    (confirmLabel: string) => {
-      trackItwRevokeConsentOperationBlockAction(confirmLabel);
-      dispatch(itwRevokeProximityConsentByKey(consentKey));
-      toast.success(
-        I18n.t(
-          "features.itWallet.presentation.proximity.consentManagement.toast.done"
-        )
-      );
-      navigation.goBack();
-    },
-    [consentKey, dispatch, navigation, toast]
-  );
+  const revokeConsent = useCallback(() => {
+    trackItwRevokeConsentOperationBlockAction("confirm");
+    dispatch(itwRevokeProximityConsentByKey(consentKey));
+    toast.success(
+      I18n.t(
+        "features.itWallet.presentation.proximity.consentManagement.toast.done"
+      )
+    );
+    navigation.goBack();
+  }, [consentKey, dispatch, navigation, toast]);
 
   const showRevokeAlert = useCallback(() => {
     if (!consent) {
@@ -110,12 +107,12 @@ export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
       ),
       [
         {
-          onPress: () => revokeConsent(confirmLabel),
+          onPress: revokeConsent,
           style: "destructive",
           text: confirmLabel
         },
         {
-          onPress: () => trackItwRevokeConsentOperationBlockAction(cancelLabel),
+          onPress: () => trackItwRevokeConsentOperationBlockAction("cancel"),
           style: "cancel",
           text: cancelLabel
         }

@@ -70,17 +70,30 @@ describe("ItwConsentManagementDetailScreen", () => {
     ).toBeUndefined();
     expect(
       analytics.trackItwRevokeConsentOperationBlockAction
-    ).toHaveBeenCalledWith(
-      I18n.t(
-        "features.itWallet.presentation.proximity.consentManagement.alert.confirm"
-      )
-    );
+    ).toHaveBeenCalledWith("confirm");
     expect(mockToastSuccess).toHaveBeenCalledWith(
       I18n.t(
         "features.itWallet.presentation.proximity.consentManagement.toast.done"
       )
     );
     expect(mockGoBack).toHaveBeenCalled();
+  });
+
+  it("keeps the consent and tracks a stable identifier when the alert is dismissed", () => {
+    const { component, store } = renderComponent(consent);
+
+    fireEvent.press(component.getByTestId("revoke-consent-action"));
+
+    const alertButtons = (Alert.alert as jest.Mock).mock.calls[0][2];
+    alertButtons[1].onPress();
+
+    expect(
+      analytics.trackItwRevokeConsentOperationBlockAction
+    ).toHaveBeenCalledWith("cancel");
+    expect(
+      store.getState().features.itWallet.proximity.consents[consentKey]
+    ).toEqual(consent);
+    expect(mockToastSuccess).not.toHaveBeenCalled();
   });
 
   it("returns safely when the consent key no longer exists", () => {
