@@ -9,7 +9,7 @@ catalog:
   "@nx/jest": "22.7.2"
   "@nx/js": "22.7.2"
   # --- TypeScript ---
-  typescript: "^5.8.3"
+  typescript: "6.0.3"
   prettier: "^3.8.1"
   eslint: "^9.39.4"
   jest: "~30.3.0"
