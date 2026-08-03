@@ -10,6 +10,7 @@ export const configureReactotron = () => {
     name: "IO App"
   })
     .useReactNative({
+      asyncStorage: true,
       networking: {
         ignoreUrls: ignoredUrls
       }
