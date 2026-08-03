@@ -4,9 +4,10 @@ import { call, fork, select } from "typed-redux-saga/macro";
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { registerStatusListProperties } from "../analytics";
+import { refreshStaleEntries } from "../utils/refresh";
 import { checkStatusListCoherenceSaga } from "./checkStatusListCoherenceSaga";
-import { refreshStaleStatusListsSaga } from "./refreshStaleStatusListsSaga";
 import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
+import { updateStatusListCredentialsSaga } from "./updateStatusListCredentialsSaga";
 
 export function* watchItwStatusListAuthenticatedSaga(): SagaIterator {
   const itwSpecsVersion = yield* select(selectItwSpecsVersion);
@@ -21,8 +22,8 @@ export function* watchItwStatusListAuthenticatedSaga(): SagaIterator {
 }
 
 export function* watchItwStatusListSaga(): SagaIterator {
-  const itwSpecsVersion = yield* select(selectItwSpecsVersion);
-  const ioWallet = getIoWallet(itwSpecsVersion);
+  const itwVersion = yield* select(selectItwSpecsVersion);
+  const ioWallet = getIoWallet(itwVersion);
 
   if (!ioWallet.CredentialStatus.statusList.isSupported) {
     return;
@@ -31,7 +32,9 @@ export function* watchItwStatusListSaga(): SagaIterator {
   // Run startup coherence for the Status List Token cache
   yield* call(checkStatusListCoherenceSaga);
   // Check for stale Status List Tokens and refresh them in the background
-  yield* call(refreshStaleStatusListsSaga);
+  yield* call(refreshStaleEntries, { itwVersion });
+  // Update the validity of credentials whose status list is available in the cache
+  yield* call(updateStatusListCredentialsSaga, { itwVersion });
   // Register Status List super properties
   yield* call(registerStatusListProperties);
 }

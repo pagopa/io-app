@@ -6,9 +6,10 @@ import {
 } from "..";
 import { selectItwSpecsVersion } from "../../../common/store/selectors/environment";
 import { registerStatusListProperties } from "../../analytics";
+import { refreshStaleEntries } from "../../utils/refresh";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
-import { refreshStaleStatusListsSaga } from "../refreshStaleStatusListsSaga";
 import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
+import { updateStatusListCredentialsSaga } from "../updateStatusListCredentialsSaga";
 
 describe("watchItwStatusListAuthenticatedSaga", () => {
   it("stops when Status List is unsupported", () => {
@@ -46,7 +47,9 @@ describe("watchItwStatusListSaga", () => {
       .next("1.3.3")
       .call(checkStatusListCoherenceSaga)
       .next()
-      .call(refreshStaleStatusListsSaga)
+      .call(refreshStaleEntries, { itwVersion: "1.3.3" })
+      .next()
+      .call(updateStatusListCredentialsSaga, { itwVersion: "1.3.3" })
       .next()
       .call(registerStatusListProperties)
       .next()
