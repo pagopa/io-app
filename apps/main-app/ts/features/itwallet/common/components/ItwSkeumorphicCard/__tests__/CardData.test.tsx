@@ -65,6 +65,7 @@ describe("CardData", () => {
     );
 
     expect(component.queryByTestId("dcBackDataTestID")).toBeTruthy();
+    expect(component.getByLabelText("QR Code")).toBeTruthy();
     expect(component).toMatchSnapshot();
   });
 });

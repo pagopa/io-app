@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.7](https://github.com/pagopa/io-app/compare/3.38.0-rc.6...3.38.0-rc.7) (2026-07-31)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4482](https://pagopa.atlassian.net/browse/SIW-4482)] add proximity NFC and save preferences events ([#8361](https://github.com/pagopa/io-app/issues/8361)) ([963fd67](https://github.com/pagopa/io-app/commit/963fd67aa127851c458b2fb1a3d7863f110ab20f))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4714](https://pagopa.atlassian.net/browse/SIW-4714)] CED update accessibility labels and remove unused QR code component ([#8376](https://github.com/pagopa/io-app/issues/8376)) ([f3440c6](https://github.com/pagopa/io-app/commit/f3440c61af79b106cf39b70f10fc52d3750bf4ec))
+
+
+### Chores
+
+* [[IOAPPX-522](https://pagopa.atlassian.net/browse/IOAPPX-522)] Remove unused scripts ([#8321](https://github.com/pagopa/io-app/issues/8321)) ([c72f9b1](https://github.com/pagopa/io-app/commit/c72f9b16e79e289b7de097a9b30d9db746c0b36c))
+
+## [3.38.0-rc.6](https://github.com/pagopa/io-app/compare/3.38.0-rc.5...3.38.0-rc.6) (2026-07-30)
+
+
+### Features
+
+* [[IOPID-4079](https://pagopa.atlassian.net/browse/IOPID-4079)] Add `AUTH_SECURITY_LEVEL` and `LOGIN_METHOD` super and profile properties ([#8374](https://github.com/pagopa/io-app/issues/8374)) ([f40ca67](https://github.com/pagopa/io-app/commit/f40ca67f51ec8a461c6896e8f95fdd1ab2fe8f76))
+
+
+### Bug Fixes
+
+* [[IEL-715](https://pagopa.atlassian.net/browse/IEL-715)] prevented double FCI_POLL_FILLED_DOCUMENT_FAILURE tracking on MP ([#8369](https://github.com/pagopa/io-app/issues/8369)) ([2df6395](https://github.com/pagopa/io-app/commit/2df6395fd07203c4b6196442b21a40f6ccfe3f6d))
+
+
+### Chores
+
+* [[IOPLT-1971](https://pagopa.atlassian.net/browse/IOPLT-1971)] Fix some `pnpm install` dependency warnings ([#8342](https://github.com/pagopa/io-app/issues/8342)) ([cc03737](https://github.com/pagopa/io-app/commit/cc03737e3f5345e496845ff8e314c50c1060269e))
+* Update translations from Lokalise ([#8378](https://github.com/pagopa/io-app/issues/8378)) ([aeb7d60](https://github.com/pagopa/io-app/commit/aeb7d608f973f5801dccefd3da1edb4d320726c5))
+
 ## [3.38.0-rc.5](https://github.com/pagopa/io-app/compare/3.38.0-rc.4...3.38.0-rc.5) (2026-07-29)
 
 
