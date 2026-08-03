@@ -15,7 +15,7 @@ const MAX_UINT32 = 4294967295;
 export function isFeatureEnabled(
   deviceId: string,
   rolloutPercentage: number,
-  featureName = "OneIdentityRollout"
+  featureName: string
 ): boolean {
   // Short-circuit evaluations for boundaries
   if (rolloutPercentage <= 0) {
@@ -42,7 +42,7 @@ export function isFeatureEnabled(
  */
 function computeDeviceRolloutRatio(
   deviceId: string,
-  featureName = "OneIdentityRollout"
+  featureName: string
 ): number {
   const inputString = `${deviceId}-${featureName}`;
 

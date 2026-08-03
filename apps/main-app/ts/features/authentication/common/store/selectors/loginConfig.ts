@@ -24,5 +24,8 @@ export const isOneIdentityLoginEnabledSelector = (state: GlobalState) => {
   const localFeatureFlag = oneIdentityLocalFeatureFlagSelector(state);
   const rolloutPercentage =
     oneIdentityRemoteConfigSelector(state)?.rolloutPercentage ?? 0;
-  return localFeatureFlag ?? isFeatureEnabled(getDeviceId(), rolloutPercentage);
+  return (
+    localFeatureFlag ??
+    isFeatureEnabled(getDeviceId(), rolloutPercentage, "OneIdentityRollout")
+  );
 };
