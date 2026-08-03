@@ -56,6 +56,26 @@ export const itwCredentialsRemoveByType = createStandardAction(
 )<CredentialMetadata["credentialType"], CallbackActionMeta>();
 
 /**
+ * Consumes one presented copy of a batch-issued credential (e.g. Proof of Age) after a
+ * successful presentation, as required by the IT-Wallet spec: the consumed copy's vault entry
+ * and crypto key are deleted and the credential's `keyTags` are reduced by one, decreasing the
+ * batch count. If the consumed copy was the last one, the credential is fully removed instead
+ * (same effect as `itwCredentialsRemoveByType` for that credential).
+ * Has no effect on non-batch credentials.
+ * It also accepts optional callbacks in the meta to handle success and failure cases; failures
+ * are treated as best-effort (tracked, never surfaced to the user or blocking the flow).
+ */
+export const itwCredentialsConsumeInstance = createStandardAction(
+  "ITW_CREDENTIALS_CONSUME_INSTANCE"
+)<
+  ReadonlyArray<{
+    credentialId: CredentialMetadata["credentialId"];
+    keyTag: string;
+  }>,
+  CallbackActionMeta
+>();
+
+/**
  * Signals that one or more legacy `credential` JWTs have been written to CredentialsVault.
  * The payload contains the IDs of successfully migrated credentials so the reducer can
  * remove only those from `legacyCredentials`; failing ones stay and retry on the next boot.
@@ -84,6 +104,7 @@ export const itwCredentialsRefreshStatusByType = createStandardAction(
 )<string>();
 
 export type ItwCredentialsActions =
+  | ActionType<typeof itwCredentialsConsumeInstance>
   | ActionType<typeof itwCredentialsRefreshStatusByType>
   | ActionType<typeof itwCredentialsRemove>
   | ActionType<typeof itwCredentialsRemoveByType>
