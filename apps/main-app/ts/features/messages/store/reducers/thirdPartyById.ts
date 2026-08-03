@@ -126,6 +126,9 @@ export const hasAttachmentsSelector = (
   ioMessageId: string
 ) => thirdPartyMessageAttachmentsSelector(state, ioMessageId).length > 0;
 
+// caching here is necessary to avoid creating a new array on every call, thus resulting in unnecessary re-renders
+const emptyArray: ReadonlyArray<ThirdPartyAttachment> = [];
+
 export const thirdPartyMessageAttachmentsSelector = (
   state: GlobalState,
   ioMessageId: string
@@ -133,7 +136,7 @@ export const thirdPartyMessageAttachmentsSelector = (
   const messagePot = thirdPartyFromIdSelector(state, ioMessageId);
   const attachments =
     pot.toUndefined(messagePot)?.third_party_message.attachments;
-  return attachments ?? [];
+  return attachments ?? emptyArray;
 };
 
 const messageContentSelector = <T>(

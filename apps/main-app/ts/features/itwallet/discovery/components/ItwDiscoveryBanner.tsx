@@ -3,6 +3,7 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useCallback, useMemo } from "react";
 
+import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -98,6 +99,10 @@ export const ItwDiscoveryBanner = ({
     });
   };
 
+  const guardedNavigateToDiscoveryScreen = useOfflineToastGuard(
+    navigateToDiscoveryScreen
+  );
+
   const handleOnDismiss = () => {
     trackItwDiscoveryBannerClosure(trackBannerProperties);
     onDismiss?.();
@@ -122,7 +127,7 @@ export const ItwDiscoveryBanner = ({
         )}
         labelClose={I18n.t("global.buttons.close")}
         onClose={handleOnDismiss}
-        onPress={navigateToDiscoveryScreen}
+        onPress={guardedNavigateToDiscoveryScreen}
         pictogramName="itWallet"
         testID="itwReactivationBannerTestID"
         title={I18n.t("features.itWallet.engagementBanner.reactivation.title")}
@@ -139,7 +144,7 @@ export const ItwDiscoveryBanner = ({
         )}
         dismissable={true}
         onDismiss={handleOnDismiss}
-        onPress={navigateToDiscoveryScreen}
+        onPress={guardedNavigateToDiscoveryScreen}
         style={style}
         title={I18n.t("features.itWallet.engagementBanner.activation.title")}
       />
@@ -156,7 +161,7 @@ export const ItwDiscoveryBanner = ({
           "features.itWallet.engagementBanner.upgrade_empty.description"
         )}
         onDismiss={handleOnDismiss}
-        onPress={navigateToDiscoveryScreen}
+        onPress={guardedNavigateToDiscoveryScreen}
         style={style}
         title={I18n.t("features.itWallet.engagementBanner.upgrade_empty.title")}
       />
@@ -174,7 +179,7 @@ export const ItwDiscoveryBanner = ({
         )}
         dismissable={true}
         onDismiss={handleOnDismiss}
-        onPress={navigateToDiscoveryScreen}
+        onPress={guardedNavigateToDiscoveryScreen}
         style={style}
         title={I18n.t(
           "features.itWallet.engagementBanner.upgrade_with_mdl.title"
@@ -191,7 +196,7 @@ export const ItwDiscoveryBanner = ({
       )}
       dismissable={true}
       onDismiss={handleOnDismiss}
-      onPress={navigateToDiscoveryScreen}
+      onPress={guardedNavigateToDiscoveryScreen}
       style={style}
       title={I18n.t("features.itWallet.engagementBanner.upgrade.title")}
     />

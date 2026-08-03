@@ -88,7 +88,6 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
           <View style={{ flexShrink: 1 }}>
             <BodySmall
               color={theme["interactiveElem-default"]}
-              lineBreakMode="middle"
               numberOfLines={2}
               style={{ flexShrink: 1 }}
               weight="Semibold"

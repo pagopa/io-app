@@ -7,7 +7,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
+import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as issuanceAnalytics from "../../../issuance/analytics";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
@@ -306,7 +306,7 @@ const mockSelectors = ({
     .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
     .mockReturnValue(isItwL3);
   jest
-    .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+    .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
     .mockReturnValue(isWhitelisted);
   jest
     .spyOn(credentialsSelectors, "itwCredentialStatusSelector")

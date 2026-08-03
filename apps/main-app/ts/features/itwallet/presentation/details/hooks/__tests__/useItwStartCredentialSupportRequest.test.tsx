@@ -111,7 +111,7 @@ describe("useItwStartCredentialSupportRequest", () => {
     );
   });
 
-  it("does NOT set the failure code field when storedStatusAssertion is absent", () => {
+  it("does NOT set the failure code field when validity is absent", () => {
     renderAndAct(baseMockedCredential);
 
     expect(mockedAddTicketCustomField).not.toHaveBeenCalledWith(
@@ -121,11 +121,12 @@ describe("useItwStartCredentialSupportRequest", () => {
     expect(mockedAppendLog).not.toHaveBeenCalled();
   });
 
-  it("sets the failure code field and appends log when storedStatusAssertion errorCode is present", () => {
+  it("sets the failure code field and appends log when validity errorCode is present", () => {
     const credentialWithError: CredentialMetadata = {
       ...baseMockedCredential,
-      storedStatusAssertion: {
-        credentialStatus: "invalid",
+      validity: {
+        type: "status_assertion",
+        status: "invalid",
         errorCode: "driving_license_suspended"
       }
     };

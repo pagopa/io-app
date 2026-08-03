@@ -52,6 +52,14 @@ export function* handleCredentialRemovedAnalytics(
 }
 
 /**
+ * Handles aggregate analytics updates when catalogue metadata is refreshed.
+ */
+export function* handleCredentialsCatalogueLoadedAnalytics(): SagaIterator {
+  const state: GlobalState = yield* select();
+  updateThirdPartyCredentialProperty(state);
+}
+
+/**
  * Handles analytics updates when an ITW credential is stored.
  */
 export function* handleCredentialStoredAnalytics(

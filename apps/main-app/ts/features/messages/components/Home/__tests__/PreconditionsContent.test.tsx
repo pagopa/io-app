@@ -10,8 +10,6 @@ import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as messagePreconditions from "../../../store/reducers/messagePrecondition";
 import { PreconditionsContent } from "../PreconditionsContent";
 
-jest.mock("../../MessageDetail/MessageMarkdown");
-
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
   ...jest.requireActual<typeof import("react-redux")>("react-redux"),

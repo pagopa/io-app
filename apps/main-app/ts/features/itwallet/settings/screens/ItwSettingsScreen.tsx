@@ -70,9 +70,9 @@ const ItwSettingsScreen = () => {
   const ctaProps: ButtonBlockProps = useMemo(
     () => ({
       label: I18n.t(
-        `features.itWallet.settings.manage.cta.${
-          isWalletValid ? "revoke" : "obtain"
-        }`
+        isWalletValid
+          ? "features.itWallet.settings.manage.cta.revoke"
+          : "features.itWallet.settings.manage.cta.obtain"
       ),
       testID: isWalletValid ? "itwRevokeButtonTestID" : "itwObtainButtonTestID",
       onPress: isWalletValid ? handleRevokeOnPress : handleObtainItwOnPress,

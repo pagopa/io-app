@@ -28,9 +28,9 @@ const ItwPresentationCredentialCardHideValuesButton = ({
       icon={valuesHidden ? "eyeShow" : "eyeHide"}
       iconPosition="end"
       label={I18n.t(
-        `features.itWallet.presentation.credentialDetails.card.${
-          valuesHidden ? "showValues" : "hideValues"
-        }`
+        valuesHidden
+          ? "features.itWallet.presentation.credentialDetails.card.showValues"
+          : "features.itWallet.presentation.credentialDetails.card.hideValues"
       )}
       onPress={handleOnPress}
       variant="link"

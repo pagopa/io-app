@@ -19,7 +19,6 @@ import {
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
 import { ItwL2EngagementBanner } from "../../common/components/ItwL2EngagementBanner.tsx";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
-import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
 import {
   itwShouldHideEidLifecycleAlert,
@@ -33,6 +32,7 @@ import {
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
 import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwGuidedTour } from "../../tour/hooks/useItwGuidedTour.ts";
 import {
   ITW_TOUR_GROUP_ID,
@@ -56,6 +56,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const shouldRenderL2EngagementBanner = useIOSelector(
     itwShouldRenderL2EngagementBannerSelector
   );
+  const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const cards = useIOSelector(state =>
     selectWalletCardsByCategory(state, "itw")
@@ -64,8 +65,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const eidExpiration = useIOSelector(itwCredentialsEidExpirationSelector);
   const isEidExpired = eidStatus === "jwtExpired";
   const iconColor = useItwStatusIconColor(isEidExpired);
-
-  useItwPendingReviewRequest();
 
   useItwGuidedTour();
 
@@ -96,6 +95,26 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   );
 
   const sectionHeader = useMemo((): React.ReactElement => {
+    const eidInfoProps = !isItWalletValid
+      ? {
+          endElement: {
+            type: "buttonLink" as const,
+            componentProps: {
+              accessibilityLabel: I18n.t(
+                "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+              ),
+              label: I18n.t(
+                "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+              ),
+              onPress: eidInfoBottomSheet.present,
+              testID: "walletCardsCategoryItwActiveBadgeTestID"
+            }
+          },
+          iconColor,
+          iconName: "legalValue" as const
+        }
+      : {};
+
     if (isNewItwRenderable) {
       return (
         <>
@@ -112,26 +131,18 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     }
     return (
       <ListItemHeader
-        endElement={{
-          type: "buttonLink",
-          componentProps: {
-            accessibilityLabel: I18n.t(
-              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-            ),
-            label: I18n.t(
-              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-            ),
-            onPress: eidInfoBottomSheet.present,
-            testID: "walletCardsCategoryItwActiveBadgeTestID"
-          }
-        }}
-        iconColor={iconColor}
-        iconName={"legalValue"}
+        {...eidInfoProps}
         label={I18n.t("features.wallet.cards.categories.itw")}
         testID={"walletCardsCategoryItwHeaderTestID"}
       />
     );
-  }, [iconColor, isNewItwRenderable, cards, eidInfoBottomSheet.present]);
+  }, [
+    cards,
+    eidInfoBottomSheet.present,
+    iconColor,
+    isItWalletValid,
+    isNewItwRenderable
+  ]);
 
   return (
     <View>

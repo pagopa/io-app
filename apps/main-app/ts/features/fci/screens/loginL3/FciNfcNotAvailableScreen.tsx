@@ -35,7 +35,6 @@ export const FciNfcNotAvailableScreen = () => {
           label: i18n.t("features.fci.requestL3.nfcNotAvailable.cta")
         }
       }}
-      alwaysBounceVertical={false}
       contentContainerStyle={{
         paddingHorizontal: 32
       }}
