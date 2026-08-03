@@ -1,0 +1,34 @@
+name: Knip baseline
+on:
+  push:
+    branches:
+      - master
+      # TEMPORARY (IOPLT-1992): seeds a baseline so the diff can be verified
+      # before merging. Removed in the next commit.
+      - IOPLT-1992-add-knip-report-unused-references
+permissions:
+  contents: read
+jobs:
+  baseline:
+    name: Record the unused-code baseline
+    runs-on: ubuntu-latest
+    environment: dev
+    permissions:
+      contents: read
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref_name }}
+      cancel-in-progress: true
+    steps:
+      - id: checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup
+        uses: ./.github/actions/setup-composite
+      - id: run-knip
+        # --silent keeps pnpm's script banner out of the redirected JSON.
+        run: pnpm --silent knip > knip-baseline.json
+      - id: upload-baseline
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: knip-baseline
+          path: knip-baseline.json
+          retention-days: 90

@@ -12,6 +12,10 @@ jobs:
     environment: dev
     permissions:
       contents: read
+      # Needed to fetch the Knip baseline artifact from the master workflow.
+      actions: read
+      # Needed to post the advisory Knip comment.
+      pull-requests: write
     concurrency:
       group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
@@ -26,6 +30,28 @@ jobs:
         uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
       - id: run-validate
         run: pnpm validate
+      - id: knip
+        # Advisory only: reports code this PR left unused, and can never block a
+        # merge. Reuses the checkout and install above rather than paying for a
+        # second one in a dedicated workflow. Skipped outside pull requests,
+        # where there is nothing to comment on.
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          # --silent keeps pnpm's script banner out of the redirected JSON.
+          pnpm --silent knip > knip-head.json
+          # TEMPORARY (IOPLT-1992): --branch points at this feature branch to
+          # verify the diff pre-merge. Restored to master before merging.
+          BASELINE_RUN=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow "Knip baseline" \
+            --branch IOPLT-1992-add-knip-report-unused-references --status success --limit 1 --json databaseId --jq '.[0].databaseId')
+          if [ -n "$BASELINE_RUN" ]; then
+            gh run download "$BASELINE_RUN" --repo "$GITHUB_REPOSITORY" --name knip-baseline --dir baseline || true
+          fi
+          node .github/scripts/knip-report.mjs knip-head.json baseline/knip-baseline.json
       - id: codecov-script
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
