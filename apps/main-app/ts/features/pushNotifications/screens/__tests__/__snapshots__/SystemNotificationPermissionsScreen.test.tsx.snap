@@ -341,6 +341,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                       }
                     >
                       <RCTScrollView
+                        alwaysBounceVertical={false}
                         centerContent={true}
                         collapsable={false}
                         contentContainerStyle={
@@ -354,6 +355,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                               "alignItems": "stretch",
                               "flexGrow": 1,
                               "justifyContent": "center",
+                              "paddingTop": 0,
                             },
                           ]
                         }
@@ -391,10 +393,10 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={180}
-                              bbWidth={180}
+                              bbHeight={120}
+                              bbWidth={120}
                               focusable={false}
-                              height={180}
+                              height={120}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -406,14 +408,14 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 180,
-                                    "width": 180,
+                                    "height": 120,
+                                    "width": 120,
                                   },
                                 ]
                               }
                               vbHeight={240}
                               vbWidth={240}
-                              width={180}
+                              width={120}
                             >
                               <RNSVGGroup
                                 fill={

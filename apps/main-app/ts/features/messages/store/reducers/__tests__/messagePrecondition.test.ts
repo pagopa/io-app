@@ -12,13 +12,11 @@ import {
   loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   scheduledPreconditionStatusAction,
-  shownPreconditionStatusAction,
   toErrorPayload,
   toIdlePayload,
   toLoadingContentPayload,
   toRetrievingDataPayload,
   toScheduledPayload,
-  toShownPayload,
   toUpdateRequiredPayload,
   updateRequiredPreconditionStatusAction
 } from "../../actions/preconditions";
@@ -50,13 +48,12 @@ type ChangeStatusAction = ActionType<
   | typeof loadingContentPreconditionStatusAction
   | typeof retrievingDataPreconditionStatusAction
   | typeof scheduledPreconditionStatusAction
-  | typeof shownPreconditionStatusAction
   | typeof updateRequiredPreconditionStatusAction
 >;
 
 type PreconditionContent = Extract<
   MessagePreconditionStatus,
-  { state: "loadingContent" }
+  { state: "shown" }
 >["content"];
 
 type ReducerScenario = {
@@ -79,17 +76,6 @@ const toErrorMPS = (
 
 const toIdleMPS = (): MessagePreconditionStatus => ({
   state: "idle"
-});
-
-const toLoadingContentMPS = (
-  inputMessageId: string,
-  inputCategoryTag: MessageCategory["tag"],
-  inputContent: PreconditionContent
-): MessagePreconditionStatus => ({
-  state: "loadingContent",
-  messageId: inputMessageId,
-  categoryTag: inputCategoryTag,
-  content: inputContent
 });
 
 const toRetrievingDataMPS = (
@@ -130,7 +116,6 @@ const messagePreconditionStatusesGenerator = (
 ) => [
   toErrorMPS(messageId, inputCategoryTag, errorReason),
   toIdleMPS(),
-  toLoadingContentMPS(messageId, inputCategoryTag, content),
   toRetrievingDataMPS(messageId, inputCategoryTag),
   toScheduledMPS(messageId, inputCategoryTag),
   toShownMPS(messageId, inputCategoryTag, content),
@@ -143,7 +128,7 @@ describe("messagePrecondition reducer", () => {
   );
   const idleAction = idlePreconditionStatusAction(toIdlePayload());
   const loadingContentAction = loadingContentPreconditionStatusAction(
-    toLoadingContentPayload(content, false)
+    toLoadingContentPayload(content)
   );
   const retrievingDataAction = retrievingDataPreconditionStatusAction(
     toRetrievingDataPayload()
@@ -151,21 +136,12 @@ describe("messagePrecondition reducer", () => {
   const scheduledAction = scheduledPreconditionStatusAction(
     toScheduledPayload(messageId, categoryTag)
   );
-  const shownAction = shownPreconditionStatusAction(toShownPayload());
-  const skipLoadingContentAction = loadingContentPreconditionStatusAction(
-    toLoadingContentPayload(content, true)
-  );
   const updateRequiredAction = updateRequiredPreconditionStatusAction(
     toUpdateRequiredPayload()
   );
 
   const errorStatus = toErrorMPS(messageId, categoryTag, errorReason);
   const idleStatus = toIdleMPS();
-  const loadingContentStatus = toLoadingContentMPS(
-    messageId,
-    categoryTag,
-    content
-  );
   const retrievingDataStatus = toRetrievingDataMPS(messageId, categoryTag);
   const scheduledStatus = toScheduledMPS(messageId, categoryTag);
   const shownStatus = toShownMPS(messageId, categoryTag, content);
@@ -175,10 +151,8 @@ describe("messagePrecondition reducer", () => {
     errorAction,
     idleAction,
     loadingContentAction,
-    skipLoadingContentAction,
     retrievingDataAction,
     scheduledAction,
-    shownAction,
     updateRequiredAction
   ];
   const changeStatusScenarios: ReadonlyArray<ReducerScenario> = [
@@ -203,24 +177,6 @@ describe("messagePrecondition reducer", () => {
     {
       action: errorAction,
       expectedStatus: errorStatus,
-      initialStatus: loadingContentStatus,
-      name: "loading content to error"
-    },
-    {
-      action: idleAction,
-      expectedStatus: idleStatus,
-      initialStatus: loadingContentStatus,
-      name: "loading content to idle"
-    },
-    {
-      action: shownAction,
-      expectedStatus: shownStatus,
-      initialStatus: loadingContentStatus,
-      name: "loading content to shown"
-    },
-    {
-      action: errorAction,
-      expectedStatus: errorStatus,
       initialStatus: retrievingDataStatus,
       name: "retrieving data to error"
     },
@@ -232,15 +188,9 @@ describe("messagePrecondition reducer", () => {
     },
     {
       action: loadingContentAction,
-      expectedStatus: loadingContentStatus,
-      initialStatus: retrievingDataStatus,
-      name: "retrieving data to loading content"
-    },
-    {
-      action: skipLoadingContentAction,
       expectedStatus: shownStatus,
       initialStatus: retrievingDataStatus,
-      name: "retrieving data to shown when loading is skipped"
+      name: "retrieving data to shown"
     },
     {
       action: retrievingDataAction,
@@ -276,7 +226,6 @@ describe("messagePrecondition reducer", () => {
   const unchangedStatusScenarios: ReadonlyArray<ReducerScenario> = [
     errorStatus,
     idleStatus,
-    loadingContentStatus,
     retrievingDataStatus,
     scheduledStatus,
     shownStatus,
@@ -378,7 +327,6 @@ describe("preconditionsTitleContentSelector", () => {
   const expectedOutput = [
     "empty",
     undefined,
-    "header",
     "loading",
     undefined,
     "header",
@@ -403,9 +351,7 @@ describe("preconditionsTitleContentSelector", () => {
 describe("preconditionsTitleSelector", () => {
   messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
     const expectedOutput =
-      status.state === "loadingContent" || status.state === "shown"
-        ? status.content.title
-        : undefined;
+      status.state === "shown" ? status.content.title : undefined;
     it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
       const globalStatus = {
         entities: {
@@ -424,7 +370,6 @@ describe("preconditionsContentSelector", () => {
   const expectedOutput = [
     "error",
     undefined,
-    "content",
     "loading",
     undefined,
     "content",
@@ -449,9 +394,7 @@ describe("preconditionsContentSelector", () => {
 describe("preconditionsContentMarkdownSelector", () => {
   messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
     const expectedOutput =
-      status.state === "loadingContent" || status.state === "shown"
-        ? status.content.markdown
-        : undefined;
+      status.state === "shown" ? status.content.markdown : undefined;
     it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
       const globalStatus = {
         entities: {
@@ -471,7 +414,6 @@ describe("preconditionsFooterSelector", () => {
   const expectedOutput = [
     "view",
     undefined,
-    "view",
     "view",
     undefined,
     "content",

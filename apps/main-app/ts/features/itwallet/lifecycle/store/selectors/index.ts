@@ -4,7 +4,8 @@ import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
 import { GlobalState } from "../../../../../store/reducers/types";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences";
+import { itwIsFiscalCodeWhitelisted } from "../../../common/store/selectors/preferences";
+import { isItwMinAppVersionSupportedSelector } from "../../../common/store/selectors/remoteConfig";
 import { isItwCredential } from "../../../common/utils/itwCredentialUtils";
 import { itwCredentialsEidSelector } from "../../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
@@ -48,10 +49,16 @@ export const itwLifecycleIsITWalletValidSelector = createSelector(
   [
     itwIntegrityKeyTagSelector,
     itwCredentialsEidSelector,
-    itwIsL3EnabledSelector
+    itwIsFiscalCodeWhitelisted,
+    isItwMinAppVersionSupportedSelector
   ],
-  (integrityKeyTagOption, eidOption, isWhitelisted) =>
-    isWhitelisted &&
+  (
+    integrityKeyTagOption,
+    eidOption,
+    isFiscalCodeWhitelisted,
+    isMinAppVersionSupported
+  ) =>
+    (isFiscalCodeWhitelisted || isMinAppVersionSupported) &&
     pipe(
       sequenceS(O.Monad)({
         eid: eidOption,

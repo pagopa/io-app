@@ -7,7 +7,7 @@ import {
 import I18n from "i18next";
 import { View } from "react-native";
 
-import { CustomWizardScreen } from "../../../../../components/screens/CustomWizardScreen";
+import { IOScrollViewCentredContent } from "../../../../../components/ui/IOScrollViewCentredContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { absolutePortalLinksSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
@@ -82,16 +82,24 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
 
   return (
     <>
-      <CustomWizardScreen
-        actionButton={{
-          testID: "button-link-test",
-          label:
-            authLevel === "L2"
-              ? I18n.t("global.buttons.close")
-              : I18n.t("authentication.unlock.loginIO"),
-          onPress: onPressActionButton
+      <IOScrollViewCentredContent
+        actions={{
+          type: "TwoButtons",
+          primary: {
+            testID: "button-solid-test",
+            label: I18n.t("authentication.unlock.title"),
+            onPress: () => openWebUrl(absolutePortalLinks.io_web)
+          },
+          secondary: {
+            testID: "button-link-test",
+            label:
+              authLevel === "L2"
+                ? I18n.t("global.buttons.close")
+                : I18n.t("authentication.unlock.loginIO"),
+            onPress: onPressActionButton
+          }
         }}
-        buttonLink={{
+        additionalLink={{
           label: I18n.t("authentication.unlock.learnmore"),
           onPress: presentVeryLongAutoresizableBottomSheetWithFooter,
           testID: "learn-more-link-test"
@@ -102,11 +110,6 @@ const UnlockAccessComponent = (props: UnlockAccessProps) => {
             : I18n.t("authentication.unlock.subtitlel3")
         }
         pictogram="accessDenied"
-        primaryButton={{
-          testID: "button-solid-test",
-          label: I18n.t("authentication.unlock.title"),
-          onPress: () => openWebUrl(absolutePortalLinks.io_web)
-        }}
         title={I18n.t("authentication.unlock.title")}
       />
       {veryLongAutoResizableBottomSheetWithFooter}

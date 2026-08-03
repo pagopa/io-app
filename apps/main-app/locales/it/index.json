@@ -663,6 +663,11 @@
             "content": "Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo. Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.",
             "cta": "Come vengono ordinate le categorie?",
             "title": "Come vengono ordinate le categorie?"
+          },
+          "socialLinks": {
+            "facebook": "Facebook",
+            "instagram": "Instagram",
+            "linkedin": "LinkedIn"
           }
         },
         "discountOf": "Sconto del {{discount}}%",
@@ -936,6 +941,10 @@
         "leftButton": "Rileggi",
         "rightButton": "Firma",
         "title": "Firma tutto il documento"
+      },
+      "qtspErrorPage": {
+        "subtitle": "Non siamo riusciti a recuperare i documenti. Riprova tra qualche minuto.",
+        "title": "Qualcosa non ha funzionato"
       },
       "qtspTos": {
         "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma **Namirial S.p.A.**",
@@ -1460,14 +1469,12 @@
               }
             },
             "ciePin": {
-              "badge": "consigliato",
               "bottomSheet": {
                 "entry-1": "La tua Carta di Identità Elettronica (CIE)",
                 "entry-2": "Il PIN a 8 cifre della CIE",
                 "subtitle": "Hai bisogno di:",
                 "title": "Continua con CIE + PIN"
               },
-              "reissuanceBadge": "Consigliato",
               "subtitle": {
                 "default": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
                 "l3": "Ha una durata di 12 mesi"
@@ -1553,9 +1560,6 @@
           "subtitle": "Saranno condivisi con **{{organization}}** solo per il tempo necessario al rilascio della versione digitale del documento.",
           "title": "Dati necessari per {{credentialName}}",
           "tos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d'uso]({{privacyUrl}})."
-        },
-        "credentialIntro": {
-          "subtitle": "Leggi con attenzione cosa troverai."
         },
         "credentialNotFound": {
           "subtitle": "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce.",
@@ -1667,8 +1671,6 @@
             "l2": "L’identità digitale che usi per attivare Documenti su IO deve corrispondere alla stessa persona che ha fatto accesso a IO.",
             "l3": "L’identità digitale che usi per attivare IT-Wallet deve corrispondere alla stessa persona che ha fatto accesso a IO."
           },
-          "primaryAction": "Riprova",
-          "secondaryAction": "Chiudi",
           "title": "Identità non riconosciuta"
         },
         "pidAnprMismatchError": {
@@ -1847,6 +1849,10 @@
             "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano.",
             "invalid": {
               "cta": "Rimuovi documento dal Portafoglio"
+            },
+            "suspended": {
+              "action": "Scopri di più",
+              "title": "La tua Patente di guida risulta non valida."
             }
           },
           "statusAction": "Cosa posso fare?"
@@ -1894,6 +1900,10 @@
               "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
               "cta": "Scopri di più",
               "title": "Patente su IO: documento in scadenza"
+            },
+            "suspended": {
+              "content": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente.\n\nIl tuo documento potrebbe ad esempio essere stato sospeso o ritirato in via temporanea. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.\n\nQuando la Patente fisica sarà di nuovo valida, il documento digitale si aggiornerà in automatico.\n\nRicorda: puoi continuare a usare la Patente digitale come documento di riconoscimento.",
+              "cta": "Ho capito"
             }
           }
         },
@@ -1995,6 +2005,25 @@
           },
           "listItemHeader": "Dati del mio IT-Wallet ID"
         },
+        "missingCredentials": {
+          "one": {
+            "primaryAction": "Aggiungi documento",
+            "secondaryAction": "Chiudi",
+            "subtitle": "È richiesta la verifica di {{credentialName}}, che non è presente nel tuo Portafoglio IT-Wallet.",
+            "title": "Non puoi continuare perché manca un documento"
+          },
+          "other": {
+            "bottomSheet": {
+              "primaryAction": "Aggiungi documento",
+              "subtitle": "I seguenti documenti non sono presenti nel tuo Portafoglio IT-Wallet.",
+              "title": "Documenti mancanti"
+            },
+            "primaryAction": "Mostra documenti",
+            "secondaryAction": "Chiudi",
+            "subtitle": "Scopri i documenti mancanti necessari per questa verifica.",
+            "title": "Non puoi continuare perché mancano alcuni documenti"
+          }
+        },
         "proximity": {
           "bluetooth": {
             "activation": {
@@ -2078,6 +2107,7 @@
               "or": "oppure"
             },
             "qrCode": {
+              "accessibilityLabel": "Immagine del codice QR da mostrare a chi verifica i documenti digitali",
               "error": "Abbiamo avuto un problema nel generare il QR Code."
             },
             "title": "Avvia una verifica"
@@ -2201,14 +2231,6 @@
             "subtitle": "Attendi qualche secondo...",
             "timeout": "Ancora un attimo di pazienza..."
           },
-          "missingCredentialsScreen": {
-            "primaryAction_one": "Aggiungi documento al Portafoglio",
-            "primaryAction_other": "Aggiungi documenti al Portafoglio",
-            "secondaryAction": "Non ora",
-            "subtitle": "Aggiungi {{credentialNames}} al Portafoglio e poi riprova.",
-            "title_one": "Manca un documento per continuare",
-            "title_other": "Mancano alcuni documenti per continuare"
-          },
           "purpose": "Finalità: {{purpose}}",
           "relyingParty": {
             "genericError": {
@@ -2244,7 +2266,6 @@
             "bottomSheet": {
               "contentBottom": "Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.",
               "contentTop": "IO controlla sempre che un ente sia verificato prima di consentire la lettura dei tuoi dati.",
-              "primaryAction": "Scopri di più",
               "subtitle": "Quando un ente è verificato?",
               "title": "Sistema di verifica degli enti"
             },
@@ -2367,23 +2388,14 @@
         "claims": {
           "attachments": "Allegati",
           "authenticSource": "Origine dei dati",
-          "birthdate": "Data di nascita",
-          "expirationDate": "Scadenza",
-          "familyName": "Cognome",
-          "givenName": "Nome",
-          "info": "Ulteriori info su questi dati",
           "mdl": {
             "category": "Patente {{category}}",
             "expirationDate": "Valida fino",
             "issuedDate": "Valida dal",
             "restrictionConditions": "Codici"
           },
-          "placeOfBirth": "Luogo di nascita",
           "releasedBy": "Emissione versione digitale",
-          "releasedByPid": "Emissione IT-Wallet ID",
-          "securityLevel": "Livello di sicurezza",
-          "taxIdCode": "Codice Fiscale",
-          "uniqueId": "ID univoco"
+          "releasedByPid": "Emissione IT-Wallet ID"
         }
       },
       "walletInstanceRevoked": {
@@ -2430,6 +2442,9 @@
       },
       "attachmentDownloadFeedback": "Download in corso",
       "attachments": "Allegati",
+      "attachmentsExpirationAlert": {
+        "body": "I documenti sono disponibili online per un periodo limitato. Salvali sul tuo dispositivo!"
+      },
       "badge": {
         "dueDate": "Scaduto il {{date}} alle ore {{time}}"
       },
@@ -3191,6 +3206,7 @@
     "offline": {
       "bottomSheet": {
         "content": "###### Cosa posso fare? \n\nQuando sei offline, alcuni servizi dell’app potrebbero non funzionare. \n\n Documenti su IO funziona anche offline (se hai attivato la funzionalità), ma la validità dei documenti è aggiornata all’ultimo accesso in app con connessione a una rete. \n\n Collegati a internet e ricarica l’app per tornare ad usare tutti i servizi di IO.",
+        "footerAction": "Ricarica l'app IO",
         "title": "Nessuna connessione"
       },
       "connectionRestored": "Connessione ripristinata.",

@@ -30,6 +30,10 @@ type DataComponentProps = {
  * between specs 0.7 and 1.0, so this is necessary to ensure backward compatibility.
  */
 const mdlClaimsFallback: Record<string, string> = {
+  portrait: "picture",
+  issue_date: "issuance_date",
+  expiry_date: "date_of_expiry",
+  birth_date: "birthdate",
   birth_place: "place_of_birth",
   document_iss_authority: "issuing_authority"
 };

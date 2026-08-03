@@ -30,9 +30,9 @@ const ItwPresentationCredentialCardFlipButton = ({
       icon="switchCard"
       iconPosition="end"
       label={I18n.t(
-        `features.itWallet.presentation.credentialDetails.card.${
-          isFlipped ? "showFront" : "showBack"
-        }`
+        isFlipped
+          ? "features.itWallet.presentation.credentialDetails.card.showFront"
+          : "features.itWallet.presentation.credentialDetails.card.showBack"
       )}
       onPress={handleOnPress}
       variant={fullScreen ? "solid" : "link"}
