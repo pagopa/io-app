@@ -1,3 +1,4 @@
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -17,6 +18,13 @@ import lollipopReducer, { LollipopState } from "./reducers/lollipop";
 
 export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 2;
 
+export type BuggedPersistedLollipopStateV0 = Omit<
+  PersistedLollipopStateV0,
+  "keyTag"
+> & {
+  keyTag: O.Option<O.Option<string>>;
+};
+
 /**
  * This function is used to migrate the redux store from version 0 to version 1.
  * The migration is needed because the type of the persisted redux state has changed.
@@ -24,21 +32,25 @@ export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 2;
  * @param state the persisted redux state
  * @returns the migrated persisted redux state
  */
-export type PersistedLollipopStateV1 = Omit<
-  PersistedLollipopState,
-  "keyTag"
-> & {
+
+export type PersistedLollipopStateV0 = PersistPartial & {
+  ephemeralKey: {
+    ephemeralKeyTag: string;
+    ephemeralPublicKey: PublicKey | undefined;
+  };
   keyTag: O.Option<string>;
+  publicKey: O.Option<PublicKey>;
+  supportedDevice: boolean;
 };
 
 export const migrationKeyTagFunctional = (
   state: PersistedState
-): PersistedLollipopStateV1 =>
+): PersistedLollipopStateV0 =>
   pipe(
-    (state as PersistedLollipopStateV1).keyTag as O.Option<O.Option<string>>,
+    (state as BuggedPersistedLollipopStateV0).keyTag,
     O.filter(keyTag => typeof keyTag !== "string"),
     O.fold(
-      () => state as PersistedLollipopStateV1,
+      () => state as PersistedLollipopStateV0,
       optionKeyTag =>
         pipe(
           optionKeyTag,
@@ -47,28 +59,26 @@ export const migrationKeyTagFunctional = (
               ({
                 ...state,
                 keyTag: O.none
-              }) as PersistedLollipopStateV1,
+              }) as PersistedLollipopStateV0,
             keyTg =>
               ({
                 ...state,
                 keyTag: O.some(keyTg)
-              }) as PersistedLollipopStateV1
+              }) as PersistedLollipopStateV0
           )
         )
     )
   );
 
 /**
- * This function is used to migrate the redux store from version 1 to version 2.
- * The migration is needed because the type of the persisted redux state has changed.
- * The keyTag field should go back to being a string | undefined.
+ * The keyTag field type was changed from O.Option<string> to string | undefined
  * @param state the persisted redux state
  * @returns the migrated persisted redux state
  */
 export const migrationKeyTagToStringUndefined = (
   state: PersistedState
 ): PersistedLollipopState => {
-  const castedPeviousState = state as unknown as PersistedLollipopStateV1;
+  const castedPeviousState = state as unknown as PersistedLollipopStateV0;
   return {
     ...castedPeviousState,
     keyTag: O.toUndefined(castedPeviousState.keyTag)
@@ -81,7 +91,7 @@ const migrations: MigrationManifest = {
   // { keyTag?: string; _persist: ... }
   // to
   // { keyTag: O.Option<string>; _persist: ... }
-  "0": (state: PersistedState): PersistedLollipopStateV1 => {
+  "0": (state: PersistedState): PersistedLollipopStateV0 => {
     type PreviousPersistedLollipopState = PersistPartial & { keyTag?: string };
     const castedPeviousState =
       state as unknown as PreviousPersistedLollipopState;
@@ -96,12 +106,12 @@ const migrations: MigrationManifest = {
       }
     };
   },
-  "1": (state: PersistedState): PersistedLollipopStateV1 =>
+  "1": (state: PersistedState): PersistedLollipopStateV0 =>
     migrationKeyTagFunctional(state),
   // Version 2
   // Lollipop PERSISTED redux type changes from
   // { keyTag: O.Option<string>; _persist: ... }
-  // back to
+  // to
   // { keyTag: string | undefined; _persist: ... }
   "2": (state: PersistedState): PersistedLollipopState =>
     migrationKeyTagToStringUndefined(state)

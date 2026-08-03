@@ -122,7 +122,10 @@ export function* generateLollipopKeySaga() {
 /**
  * Generates a new crypto key pair.
  */
-function* cryptoKeyGenerationSaga(keyTag: string, previousKeyTag?: string) {
+function* cryptoKeyGenerationSaga(
+  keyTag: string,
+  previousKeyTag: string | undefined
+) {
   // Every new login we need to regenerate a brand new key pair.
   yield* call(deletePreviousCryptoKeyPair, previousKeyTag);
   yield* call(generateCryptoKeyPair, keyTag);
@@ -152,7 +155,7 @@ function* deleteCryptoKeyPair(keyTag: string) {
 /**
  * Deletes a previous saved crypto key pair.
  */
-function* deletePreviousCryptoKeyPair(keyTag?: string) {
+function* deletePreviousCryptoKeyPair(keyTag: string | undefined) {
   if (!keyTag) {
     return;
   }
