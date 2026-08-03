@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -6,18 +7,32 @@ import {
   setOneIdentityEnv,
   setOneIdentityLocalFeatureFlag
 } from "../../actions/loginConfig";
-import { OneIdentityEnv } from "../loginConfig";
+import {
+  CURRENT_REDUX_LOGIN_CONFIG_STORE_VERSION,
+  OneIdentityEnv,
+  persistConfig
+} from "../loginConfig";
 
 describe("loginConfig reducer", () => {
+  it("should have the expected persist config", () => {
+    expect(persistConfig.key).toBe("loginConfig");
+    expect(persistConfig.storage).toBe(AsyncStorage);
+    expect(persistConfig.version).toBe(
+      CURRENT_REDUX_LOGIN_CONFIG_STORE_VERSION
+    );
+    expect(persistConfig.whitelist).toStrictEqual([
+      "oneIdentityLocalFeatureFlag",
+      "oneIdentityEnv"
+    ]);
+  });
+
   it("should have initial state", () => {
     const state = appReducer(undefined, applicationChangeState("active"));
 
-    expect(state.features.loginFeatures.loginConfig).toEqual(
-      expect.objectContaining({
-        oneIdentityLocalFeatureFlag: undefined,
-        oneIdentityEnv: "prod"
-      })
-    );
+    expect(state.features.loginFeatures.loginConfig).toEqual({
+      oneIdentityLocalFeatureFlag: undefined,
+      oneIdentityEnv: "prod"
+    });
   });
 
   it.each([true, false, undefined])(
@@ -28,10 +43,10 @@ describe("loginConfig reducer", () => {
 
       store.dispatch(setOneIdentityLocalFeatureFlag(value));
 
-      expect(
-        store.getState().features.loginFeatures.loginConfig
-          .oneIdentityLocalFeatureFlag
-      ).toBe(value);
+      expect(store.getState().features.loginFeatures.loginConfig).toEqual({
+        oneIdentityLocalFeatureFlag: value,
+        oneIdentityEnv: "prod"
+      });
     }
   );
 
@@ -43,9 +58,10 @@ describe("loginConfig reducer", () => {
 
       store.dispatch(setOneIdentityEnv(value));
 
-      expect(
-        store.getState().features.loginFeatures.loginConfig.oneIdentityEnv
-      ).toBe(value);
+      expect(store.getState().features.loginFeatures.loginConfig).toEqual({
+        oneIdentityLocalFeatureFlag: undefined,
+        oneIdentityEnv: value
+      });
     }
   );
 });

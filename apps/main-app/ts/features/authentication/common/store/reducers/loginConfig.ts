@@ -48,9 +48,9 @@ export const loginConfigReducer = (
   }
 };
 
-const CURRENT_REDUX_LOGIN_CONFIG_STORE_VERSION = 0;
+export const CURRENT_REDUX_LOGIN_CONFIG_STORE_VERSION = 0;
 
-const persistConfig: PersistConfig = {
+export const persistConfig: PersistConfig = {
   key: "loginConfig",
   storage: AsyncStorage,
   version: CURRENT_REDUX_LOGIN_CONFIG_STORE_VERSION,
