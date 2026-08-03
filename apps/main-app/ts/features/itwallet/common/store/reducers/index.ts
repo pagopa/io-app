@@ -67,7 +67,7 @@ const itwReducer = combineReducers({
   banners: bannersReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 17;
+const CURRENT_REDUX_ITW_STORE_VERSION = 18;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -184,8 +184,11 @@ export const migrations: MigrationManifest = {
   // Removed itWalletSpecsVersion from environment
   "16": (state: PersistedState): PersistedState =>
     _.omit(state, "environment.itWalletSpecsVersion"),
+  // Removed isPendingReview from preferences
+  "17": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.isPendingReview"),
   // Removed the duplicated playground credential status state
-  "17": (state: PersistedState): PersistedState => _.omit(state, "debug")
+  "18": (state: PersistedState): PersistedState => _.omit(state, "debug")
 };
 
 const itwPersistConfig: PersistConfig = {

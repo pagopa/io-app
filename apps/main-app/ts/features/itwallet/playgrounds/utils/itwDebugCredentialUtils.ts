@@ -28,7 +28,7 @@ const normalizeCredentialAsValid = (
 
   return {
     ...credential,
-    storedStatusAssertion: undefined,
+    validity: undefined,
     jwt: {
       ...credential.jwt,
       expiration: safeExpirationDate.toISOString()
@@ -91,8 +91,9 @@ export const applyStatusToCredential = (
     case "expired":
       return {
         ...validCredential,
-        storedStatusAssertion: {
-          credentialStatus: "invalid",
+        validity: {
+          type: "status_assertion",
+          status: "invalid",
           errorCode: "credential_expired"
         }
       };
@@ -121,8 +122,9 @@ export const applyStatusToCredential = (
     case "invalid":
       return {
         ...validCredential,
-        storedStatusAssertion: {
-          credentialStatus: "invalid",
+        validity: {
+          type: "status_assertion",
+          status: "invalid",
           errorCode: "credential_revoked"
         }
       };
@@ -148,7 +150,7 @@ export const applyStatusToCredential = (
     case "unknown":
       return {
         ...validCredential,
-        storedStatusAssertion: { credentialStatus: "unknown" }
+        validity: { type: "status_assertion", status: "unknown" }
       };
 
     case "valid":

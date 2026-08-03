@@ -1,6 +1,3 @@
-import * as O from "fp-ts/lib/Option";
-
-import { idpSelector } from "../features/authentication/common/store/selectors";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import {
@@ -28,8 +25,10 @@ import { trackAppCaughtError } from "../utils/analytics.ts";
 import { BiometricsType, getBiometricsType } from "../utils/biometrics";
 import { unknownToString } from "../utils/errors.ts";
 import {
+  authSecurityLevelHandler,
   cdcStatusHandler,
   cgnStatusHandler,
+  loginMethodHandler,
   loginSessionConfigHandler,
   mixpanelOptInHandler,
   MixpanelOptInTrackingType,
@@ -42,6 +41,7 @@ import {
 } from "./mixpanelPropertyUtils";
 
 type ProfileProperties = {
+  AUTH_SECURITY_LEVEL: string;
   BIOMETRIC_TECHNOLOGY: BiometricsType;
   CDC_STATUS: number;
   CGN_STATUS: TrackCgnStatus;
@@ -76,6 +76,7 @@ export const updateMixpanelProfileProperties = async (
     const CDC_STATUS = cdcStatusHandler(state);
     const FONT_PREFERENCE = fontPreferenceSelector(state);
     const THEME_PREFERENCE = themePreferenceSelector(state);
+    const AUTH_SECURITY_LEVEL = authSecurityLevelHandler(state);
     const LOGIN_METHOD = loginMethodHandler(state);
     const LOGIN_SESSION = loginSessionConfigHandler(state);
     const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
@@ -95,6 +96,7 @@ export const updateMixpanelProfileProperties = async (
       CDC_STATUS,
       FONT_PREFERENCE,
       THEME_PREFERENCE,
+      AUTH_SECURITY_LEVEL,
       LOGIN_METHOD,
       LOGIN_SESSION,
       NOTIFICATION_CONFIGURATION,
@@ -131,11 +133,6 @@ const forceUpdate = <T extends keyof ProfileProperties>(
 ) => {
   // eslint-disable-next-line functional/immutable-data
   profilePropertiesObject[toUpdate.property] = toUpdate.value;
-};
-
-const loginMethodHandler = (state: GlobalState): string => {
-  const idpSelected = idpSelector(state);
-  return O.isSome(idpSelected) ? idpSelected.value.name : "not set";
 };
 
 const tosVersionHandler = (state: GlobalState): number | string => {

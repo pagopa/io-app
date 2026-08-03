@@ -6,7 +6,7 @@ import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors"
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
-} from "../../tasks/manager";
+} from "../../tasks";
 import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
 
 describe("registerStatusListFetchTaskSaga", () => {

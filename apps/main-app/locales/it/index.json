@@ -942,6 +942,10 @@
         "rightButton": "Firma",
         "title": "Firma tutto il documento"
       },
+      "qtspErrorPage": {
+        "subtitle": "Non siamo riusciti a recuperare i documenti. Riprova tra qualche minuto.",
+        "title": "Qualcosa non ha funzionato"
+      },
       "qtspTos": {
         "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma **Namirial S.p.A.**",
         "title": "Ci siamo quasi!"
@@ -1845,6 +1849,10 @@
             "contentL3": "La tua Patente su IO ha lo stesso valore legale del documento fisico, solo sul territorio italiano.",
             "invalid": {
               "cta": "Rimuovi documento dal Portafoglio"
+            },
+            "suspended": {
+              "action": "Scopri di più",
+              "title": "La tua Patente di guida risulta non valida."
             }
           },
           "statusAction": "Cosa posso fare?"
@@ -1892,6 +1900,10 @@
               "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
               "cta": "Scopri di più",
               "title": "Patente su IO: documento in scadenza"
+            },
+            "suspended": {
+              "content": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente.\n\nIl tuo documento potrebbe ad esempio essere stato sospeso o ritirato in via temporanea. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.\n\nQuando la Patente fisica sarà di nuovo valida, il documento digitale si aggiornerà in automatico.\n\nRicorda: puoi continuare a usare la Patente digitale come documento di riconoscimento.",
+              "cta": "Ho capito"
             }
           }
         },
@@ -1993,6 +2005,25 @@
           },
           "listItemHeader": "Dati del mio IT-Wallet ID"
         },
+        "missingCredentials": {
+          "one": {
+            "primaryAction": "Aggiungi documento",
+            "secondaryAction": "Chiudi",
+            "subtitle": "È richiesta la verifica di {{credentialName}}, che non è presente nel tuo Portafoglio IT-Wallet.",
+            "title": "Non puoi continuare perché manca un documento"
+          },
+          "other": {
+            "bottomSheet": {
+              "primaryAction": "Aggiungi documento",
+              "subtitle": "I seguenti documenti non sono presenti nel tuo Portafoglio IT-Wallet.",
+              "title": "Documenti mancanti"
+            },
+            "primaryAction": "Mostra documenti",
+            "secondaryAction": "Chiudi",
+            "subtitle": "Scopri i documenti mancanti necessari per questa verifica.",
+            "title": "Non puoi continuare perché mancano alcuni documenti"
+          }
+        },
         "proximity": {
           "bluetooth": {
             "activation": {
@@ -2076,6 +2107,7 @@
               "or": "oppure"
             },
             "qrCode": {
+              "accessibilityLabel": "Immagine del codice QR da mostrare a chi verifica i documenti digitali",
               "error": "Abbiamo avuto un problema nel generare il QR Code."
             },
             "title": "Avvia una verifica"
@@ -2198,14 +2230,6 @@
             "response": "Stiamo comunicando i tuoi dati a {{relyingParty}}",
             "subtitle": "Attendi qualche secondo...",
             "timeout": "Ancora un attimo di pazienza..."
-          },
-          "missingCredentialsScreen": {
-            "primaryAction_one": "Aggiungi documento al Portafoglio",
-            "primaryAction_other": "Aggiungi documenti al Portafoglio",
-            "secondaryAction": "Non ora",
-            "subtitle": "Aggiungi {{credentialNames}} al Portafoglio e poi riprova.",
-            "title_one": "Manca un documento per continuare",
-            "title_other": "Mancano alcuni documenti per continuare"
           },
           "purpose": "Finalità: {{purpose}}",
           "relyingParty": {
@@ -2418,6 +2442,9 @@
       },
       "attachmentDownloadFeedback": "Download in corso",
       "attachments": "Allegati",
+      "attachmentsExpirationAlert": {
+        "body": "I documenti sono disponibili online per un periodo limitato. Salvali sul tuo dispositivo!"
+      },
       "badge": {
         "dueDate": "Scaduto il {{date}} alle ore {{time}}"
       },
@@ -2438,9 +2465,6 @@
           },
           "title": "Non perderti i messaggi importanti"
         }
-      },
-      "attachmentsExpirationAlert": {
-        "body": "I documenti sono disponibili online per un periodo limitato. Salvali sul tuo dispositivo!"
       },
       "updateBottomSheet": {
         "subtitle": "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare.",
