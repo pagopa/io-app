@@ -10,10 +10,10 @@ import {
   AccessibilityState,
   StyleProp,
   StyleSheet,
+  TouchableWithoutFeedback,
   View,
   ViewStyle
 } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, { AnimatedStyle } from "react-native-reanimated";
 
@@ -61,6 +61,8 @@ export const ItwCredentialClaimsCard = ({
   const { theme } = useIOThemeContext();
   const itwTheme = useItWalletTheme();
 
+  const isHeaderInteractive = onHeaderPress !== undefined;
+
   const header = (
     <Animated.View
       accessibilityRole={headerAccessibilityRole}
@@ -70,7 +72,20 @@ export const ItwCredentialClaimsCard = ({
         colors={[itwTheme["card-background"], gradientEndColor]}
         style={StyleSheet.absoluteFill}
       />
-      <H6 style={styles.title}>{title}</H6>
+      {/*
+        When the header is pressable its title is already announced by the
+        touchable accessibility label, so it is hidden to avoid a duplicate
+        announcement. A static header must keep exposing its own title.
+      */}
+      <View
+        accessibilityElementsHidden={isHeaderInteractive}
+        importantForAccessibility={
+          isHeaderInteractive ? "no-hide-descendants" : "auto"
+        }
+        style={styles.title}
+      >
+        <H6>{title}</H6>
+      </View>
       {headerAccessory}
     </Animated.View>
   );
@@ -85,12 +100,11 @@ export const ItwCredentialClaimsCard = ({
         }
       ]}
     >
-      {onHeaderPress ? (
+      {isHeaderInteractive ? (
         <TouchableWithoutFeedback
           accessibilityLabel={headerAccessibilityLabel ?? title}
           accessibilityRole="button"
           accessibilityState={headerAccessibilityState}
-          accessible={true}
           onPress={onHeaderPress}
         >
           {header}
