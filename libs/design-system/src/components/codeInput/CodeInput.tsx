@@ -86,7 +86,7 @@ export const CodeInput = ({
         : filledDotColorThemeBased;
 
   useEffect(() => {
-    if (onValidate && value.length === length) {
+    if (value.length === length) {
       const isValid = onValidate(value);
 
       if (!isValid) {
