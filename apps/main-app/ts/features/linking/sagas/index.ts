@@ -27,11 +27,16 @@ export function* handleStoredLinkingUrlIfNeeded() {
 
     const itwDeepLink = parseItwDeepLink(storedLinkingUrl);
     if (itwDeepLink !== undefined) {
-      yield* put(clearLinkingUrl());
       yield* call(waitForMainNavigator);
-      yield* call(handleItwStoredDeepLink, itwDeepLink);
+      const didHandleItwDeepLink = yield* call(
+        handleItwStoredDeepLink,
+        itwDeepLink
+      );
 
-      return true;
+      if (didHandleItwDeepLink) {
+        yield* put(clearLinkingUrl());
+        return true;
+      }
     }
 
     if (shouldTriggerWalletUpdate(storedLinkingUrl)) {

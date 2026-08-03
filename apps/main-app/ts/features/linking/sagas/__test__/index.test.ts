@@ -12,7 +12,6 @@ describe("handleStoredLinkingUrlIfNeeded", () => {
   const aarUrl = "https://example.com/aar";
   const itwDiscoveryUrl = "https://continua.io.pagopa.it/itw/discovery/info";
   const itwDiscoveryDeepLink = {
-    type: "navigation" as const,
     path: "itw/discovery/info"
   };
 
