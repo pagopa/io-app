@@ -2,10 +2,7 @@
 // single, continuously updated PR comment.
 //
 // Only *new* findings are reported: anything already present on master is noise
-// the PR author did not introduce, and stays silent. This is what keeps the bot
-// quiet enough to be worth reading, and it also absorbs known false positives
-// (e.g. `jest.preset.js`, unreachable while @nx/jest cannot load the root jest
-// config) without maintaining an ignore list.
+// the PR author did not introduce, and stays silent.
 //
 // Advisory only: always exits 0. A mobile engineer has the final word.
 
@@ -39,7 +36,10 @@ const toFindings = report => {
         const name = entry?.name ?? entry;
         if (!name) continue;
         const id = scoped ? `${key}:${issue.file}#${name}` : `${key}:${name}`;
-        findings.set(id, scoped ? `\`${name}\` — \`${issue.file}\`` : `\`${name}\``);
+        findings.set(
+          id,
+          scoped ? `\`${name}\` in \`${issue.file}\`` : `\`${name}\``
+        );
       }
     }
   }
@@ -64,26 +64,35 @@ const renderSection = (title, ids, findings) => {
   return `${title}\n\n${lines.join("\n")}\n\n`;
 };
 
-const buildBody = ({ added, removed, headFindings, baseFindings, hasBaseline }) => {
+const buildBody = ({
+  added,
+  removed,
+  headFindings,
+  baseFindings,
+  hasBaseline
+}) => {
+  const heading = `${MARKER}\n### Unused code check\n\n`;
+
   if (!hasBaseline) {
     return (
-      `${MARKER}\n### Knip\n\n` +
-      `No master baseline was available for comparison, so this PR could not be ` +
-      `checked for newly orphaned code. This resolves itself once the baseline ` +
-      `workflow has run on \`master\`.\n`
+      `${heading}` +
+      `There was no baseline to compare against, so this branch could not be ` +
+      `checked for code left unused. This resolves itself once the baseline ` +
+      `has been recorded on \`master\`.\n`
     );
   }
 
   if (added.length === 0 && removed.length === 0) {
-    return `${MARKER}\n### Knip\n\nNo change in unused code. ✅\n`;
+    return `${heading}No code was left unused by this branch.\n`;
   }
 
-  let body = `${MARKER}\n### Knip\n\n`;
+  let body = heading;
 
   if (added.length > 0) {
     body +=
-      `This PR appears to have left **${added.length} new unused ` +
-      `${added.length === 1 ? "item" : "items"}** behind:\n\n`;
+      `[Knip](https://knip.dev) compared this branch against \`master\` and found ` +
+      `**${added.length} ${added.length === 1 ? "item" : "items"} that nothing ` +
+      `references any more**:\n\n`;
     for (const { key, label } of REPORTED_TYPES) {
       body += renderSection(
         `**${label}**`,
@@ -92,18 +101,22 @@ const buildBody = ({ added, removed, headFindings, baseFindings, hasBaseline }) 
       );
     }
     body +=
-      `A file can become unused without appearing in the diff — removing its ` +
-      `last import is enough. If these are intentional (upcoming work, dynamic ` +
-      `imports, codegen templates), ignore this comment.\n\n`;
+      `Some of these may sit in files you never opened. Removing an import is ` +
+      `all it takes to orphan whatever was on the other end of it.\n\n` +
+      `If it is intentional (upcoming work, dynamic imports, codegen templates), ` +
+      `ignore this comment.\n\n`;
   }
 
   if (removed.length > 0) {
-    body += `Also cleaned up **${removed.length} previously unused ${
+    // "also" only reads correctly when a findings section precedes it.
+    body += `This branch ${added.length > 0 ? "also " : ""}cleaned up **${
+      removed.length
+    } previously unused ${
       removed.length === 1 ? "item" : "items"
-    }**. Thanks! 🧹\n\n`;
+    }**. Thanks!\n\n`;
   }
 
-  body += `<sub>Advisory only — never blocks the merge.</sub>\n`;
+  body += `<sub>Advisory only. This check never blocks a merge.</sub>\n`;
   return body;
 };
 

@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - master
-      # TEMPORARY (IOPLT-1992): seeds a baseline so the diff can be verified
-      # before merging. Removed in the next commit.
-      - IOPLT-1992-add-knip-report-unused-references
 permissions:
   contents: read
 jobs:
