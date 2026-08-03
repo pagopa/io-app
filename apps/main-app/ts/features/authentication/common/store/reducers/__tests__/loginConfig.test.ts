@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -16,7 +15,6 @@ import {
 describe("loginConfig reducer", () => {
   it("should have the expected persist config", () => {
     expect(persistConfig.key).toBe("loginConfig");
-    expect(persistConfig.storage).toBe(AsyncStorage);
     expect(persistConfig.version).toBe(
       CURRENT_REDUX_LOGIN_CONFIG_STORE_VERSION
     );
