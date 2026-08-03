@@ -43,7 +43,12 @@ export function* handleItwCredentialsConsumeInstanceSaga(
         yield* call(CredentialsVault.remove, keyTag);
         yield* call(deleteKey, keyTag);
       } catch (e) {
-        const error = e instanceof Error ? e : new Error("Unknown error");
+        const error =
+          e instanceof Error
+            ? e
+            : new Error(
+                `Unknown error while removing vault credential for keyTag ${keyTag}`
+              );
 
         trackItwVaultCredentialRemoveFailed({
           credential_ids: [credentialId],
@@ -78,6 +83,10 @@ export function* handleItwCredentialsConsumeInstanceSaga(
 
     onComplete?.();
   } catch (e) {
-    onError?.(e instanceof Error ? e : new Error("Unknown error"));
+    onError?.(
+      e instanceof Error
+        ? e
+        : new Error("Unknown error while consuming presented batch credentials")
+    );
   }
 }
