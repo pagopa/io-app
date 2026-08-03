@@ -38,12 +38,16 @@ const ephemeralInitialState = () => ({
   ephemeralPublicKey: undefined
 });
 
-export type LollipopState = Readonly<{
+export type InMemoryLollipopData = {
   ephemeralKey: EphemeralKey;
-  keyTag: string | undefined;
   publicKey: O.Option<PublicKey>;
   supportedDevice: boolean;
-}>;
+};
+export type LollipopState = InMemoryLollipopData & PersistedLollipopData;
+
+export type PersistedLollipopData = {
+  keyTag: string | undefined;
+};
 
 export const initialLollipopState: LollipopState = {
   keyTag: undefined,

@@ -12,7 +12,11 @@ import {
 
 import { Action } from "../../../store/actions/types";
 import { isDevEnv } from "../../../utils/environment";
-import lollipopReducer, { LollipopState } from "./reducers/lollipop";
+import lollipopReducer, {
+  InMemoryLollipopData,
+  LollipopState,
+  PersistedLollipopData
+} from "./reducers/lollipop";
 
 export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 2;
 
@@ -60,13 +64,10 @@ export const migrationKeyTagFunctional = (
  * @param state the persisted redux state
  * @returns the migrated persisted redux state
  */
-export type PersistedLollipopStateV2 = PersistPartial & {
-  keyTag: string | undefined;
-};
 
 export const migrationKeyTagToStringUndefined = (
   state: PersistedState
-): PersistedLollipopStateV2 => {
+): PersistedLollipopState => {
   const castedPeviousState = state as unknown as PersistedLollipopStateV0V1;
   return {
     ...castedPeviousState,
@@ -96,11 +97,13 @@ const migrations: MigrationManifest = {
   // { keyTag: O.Option<string>; _persist: ... }
   // to
   // { keyTag: string | undefined; _persist: ... }
-  "2": (state: PersistedState): PersistedLollipopStateV2 =>
+  "2": (state: PersistedState): PersistedLollipopState =>
     migrationKeyTagToStringUndefined(state)
 };
+export type LollipopReducerState = InMemoryLollipopData &
+  PersistedLollipopState;
 
-export type PersistedLollipopState = LollipopState & PersistPartial;
+type PersistedLollipopState = PersistedLollipopData & PersistPartial;
 
 export const lollipopPersistConfig: PersistConfig = {
   whitelist: ["keyTag"],
