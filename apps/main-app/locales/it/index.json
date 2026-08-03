@@ -1573,7 +1573,8 @@
         "credentialPreview": {
           "actions": {
             "primary": "Aggiungi al Portafoglio",
-            "secondary": "Annulla"
+            "secondary": "Annulla",
+            "somethingWrong": "Qualcosa non torna?"
           },
           "bottomSheet": {
             "about": {
@@ -1583,9 +1584,18 @@
             "authSource": {
               "subtitle": "È l’ente o la banca dati digitale che detiene i dati contenuti all'interno del tuo documento.",
               "title": "Chi è"
+            },
+            "somethingWrong": {
+              "body": "Se riscontri errori o incongruenze, ti invitiamo a segnalarli all'ente che detiene i dati e ne è responsabile.",
+              "bodyAuthSource": "Per questo documento digitale, l'ente di riferimento è {{authSource}}.",
+              "bodyFooter": "Una volta che i dati saranno stati corretti, potrai ripetere l'operazione di aggiunta del documento al portafoglio.",
+              "primaryAction": "Ho capito",
+              "title": "Qualcosa non torna sui dati del documento"
             }
           },
+          "detailsTitle": "Controlla i dettagli",
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",
+          "subtitle": "Se i dati sono corretti, aggiungi il documento al Portafoglio.",
           "title": "{{credential}}: ecco l'anteprima dei tuoi dati"
         },
         "credentialResult": {
