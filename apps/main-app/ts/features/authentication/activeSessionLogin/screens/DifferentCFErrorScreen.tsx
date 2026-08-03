@@ -29,7 +29,6 @@ export const DifferentCFErrorScreen = () => {
         label: I18n.t("authentication.auth_errors.not_same_cf.button"),
         onPress: handleNavigateToLandingScreen
       }}
-      isHeaderVisible={false}
       pictogram="umbrella"
       subtitle={I18n.t("authentication.auth_errors.not_same_cf.subtitle")}
       testID="different-cf-error"

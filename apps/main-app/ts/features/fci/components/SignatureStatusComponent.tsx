@@ -147,7 +147,6 @@ const SignatureStatusComponent = ({
 
   return (
     <OperationResultScreenContent
-      isHeaderVisible={false}
       onSubtitleLinkPress={url => void Linking.openURL(url)}
       pictogram={pictogram}
       subtitle={composedSubtitle}

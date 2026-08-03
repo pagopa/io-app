@@ -46,7 +46,8 @@ module.exports = {
 
   resetGenericPassword: jest.fn((options: Options | undefined) => {
     if (options) {
-      // eslint-disable-next-line functional/immutable-data
+      // The mock keychain is a mutable in-memory store by design
+      // eslint-disable-next-line functional/immutable-data, @typescript-eslint/no-dynamic-delete
       delete keychainDB[options.service];
     }
     return Promise.resolve(true);
