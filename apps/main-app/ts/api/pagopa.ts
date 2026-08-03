@@ -121,7 +121,7 @@ const getSession: MapResponseType<StartSessionUsingGETT, 200, SessionResponse> =
 
 // to support 'start' param in query string we re-define the type GetTransactionsUsingGETT
 // because the generated one doesn't support 'start' due to weak specs in api definition
-export type GetTransactionsUsingGETT = r.IGetApiRequestType<
+type GetTransactionsUsingGETT = r.IGetApiRequestType<
   { readonly Bearer: string; readonly start: number },
   "Authorization",
   never,
@@ -241,7 +241,7 @@ const getWallets: GetWalletsUsingGETExtraT = {
 const getWalletsV2UsingGETDecoderCustom = getWalletsV2UsingGETDecoder({
   200: PatchedWalletV2ListResponse
 });
-export type GetWalletsV2UsingGETTExtra = r.IGetApiRequestType<
+type GetWalletsV2UsingGETTExtra = r.IGetApiRequestType<
   { readonly Bearer: string },
   "Authorization",
   never,
@@ -440,7 +440,7 @@ const getPans: GetPansUsingGETT = {
   response_decoder: getPansUsingGETDefaultDecoder()
 };
 
-export type AddWalletsBancomatCardUsingPOSTTExtra = r.IPostApiRequestType<
+type AddWalletsBancomatCardUsingPOSTTExtra = r.IPostApiRequestType<
   {
     readonly bancomatCardsRequest: BancomatCardsRequest;
     readonly Bearer: string;
@@ -508,7 +508,7 @@ const searchCobadgePans: GetCobadgeByRequestIdUsingGETT = {
   response_decoder: getCobadgeByRequestIdUsingGETDefaultDecoder()
 };
 
-export type AddWalletsCobadge = r.IPostApiRequestType<
+type AddWalletsCobadge = r.IPostApiRequestType<
   {
     readonly Bearer: string;
     readonly cobadegPaymentInstrumentsRequest: CobadegPaymentInstrumentsRequest;
@@ -549,7 +549,7 @@ const addCobadgeToWallet: AddWalletsCobadge = {
     addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoderCustom
 };
 
-export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
+type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
   { readonly Bearer: string; readonly bPayRequest: BPayRequest },
   "Authorization" | "Content-Type",
   never,
@@ -573,7 +573,7 @@ const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
 };
 
 // Request type definition
-export type ChangePayOptionT = r.IPutApiRequestType<
+type ChangePayOptionT = r.IPutApiRequestType<
   {
     readonly Bearer: string;
     readonly idWallet: number;
@@ -600,7 +600,7 @@ const updatePaymentStatus: ChangePayOptionT = {
   response_decoder: changePayOptionDecoderCustom
 };
 
-export type DeleteWalletsByServiceUsingDELETETExtra = r.IDeleteApiRequestType<
+type DeleteWalletsByServiceUsingDELETETExtra = r.IDeleteApiRequestType<
   { readonly Bearer: string; readonly service: string },
   "Authorization",
   never,

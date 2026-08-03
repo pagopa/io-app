@@ -5,30 +5,6 @@ import {
   ItwRemoteRequestPayload
 } from "../utils/itwRemoteTypeUtils.ts";
 
-export type Back = {
-  type: "back";
-};
-
-export type Close = {
-  type: "close";
-};
-
-export type Consent = {
-  type: "holder-consent";
-};
-
-export type GoToBarcodeScan = {
-  type: "go-to-barcode-scan";
-};
-
-export type GoToIdentificationMode = {
-  type: "go-to-identification-mode";
-};
-
-export type GoToWalletActivation = {
-  type: "go-to-wallet-activation";
-};
-
 export type RemoteEvents =
   | Back
   | Close
@@ -41,17 +17,41 @@ export type RemoteEvents =
   | Start
   | ToggleCredential;
 
-export type Reset = {
+type Back = {
+  type: "back";
+};
+
+type Close = {
+  type: "close";
+};
+
+type Consent = {
+  type: "holder-consent";
+};
+
+type GoToBarcodeScan = {
+  type: "go-to-barcode-scan";
+};
+
+type GoToIdentificationMode = {
+  type: "go-to-identification-mode";
+};
+
+type GoToWalletActivation = {
+  type: "go-to-wallet-activation";
+};
+
+type Reset = {
   type: "reset";
 };
 
-export type Start = {
+type Start = {
   flowType: ItwRemoteFlowType;
   payload: ItwRemoteRequestPayload;
   type: "start";
 };
 
-export type ToggleCredential = {
+type ToggleCredential = {
   credentialIds: Array<string>;
   type: "toggle-credential";
 };

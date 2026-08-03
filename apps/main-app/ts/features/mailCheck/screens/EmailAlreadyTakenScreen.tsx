@@ -22,10 +22,6 @@ export type EmailAlreadyUsedScreenParamList = {
   email: string;
 };
 
-export type OnboardingServicesPreferenceScreenNavigationParams = {
-  isFirstOnboarding: boolean;
-};
-
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.cduScreens.emailAlreadyTaken.title",
   body: "email.cduScreens.emailAlreadyTaken.help.body"

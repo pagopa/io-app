@@ -3,11 +3,6 @@ import { Platform } from "react-native";
 import { isDevEnv } from "../../../../../utils/environment";
 import { SpidLevel } from "../utils";
 
-export type WebViewLoginNavigationProps = {
-  isUat: boolean;
-  spidLevel: SpidLevel;
-};
-
 export const iOSUserAgent =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
 
