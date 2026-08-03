@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.7](https://github.com/pagopa/io-app/compare/3.38.0-rc.6...3.38.0-rc.7) (2026-07-31)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4482](https://pagopa.atlassian.net/browse/SIW-4482)] add proximity NFC and save preferences events ([#8361](https://github.com/pagopa/io-app/issues/8361)) ([963fd67](https://github.com/pagopa/io-app/commit/963fd67aa127851c458b2fb1a3d7863f110ab20f))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4714](https://pagopa.atlassian.net/browse/SIW-4714)] CED update accessibility labels and remove unused QR code component ([#8376](https://github.com/pagopa/io-app/issues/8376)) ([f3440c6](https://github.com/pagopa/io-app/commit/f3440c61af79b106cf39b70f10fc52d3750bf4ec))
+
+
+### Chores
+
+* [[IOAPPX-522](https://pagopa.atlassian.net/browse/IOAPPX-522)] Remove unused scripts ([#8321](https://github.com/pagopa/io-app/issues/8321)) ([c72f9b1](https://github.com/pagopa/io-app/commit/c72f9b16e79e289b7de097a9b30d9db746c0b36c))
+
 ## [3.38.0-rc.6](https://github.com/pagopa/io-app/compare/3.38.0-rc.5...3.38.0-rc.6) (2026-07-30)
 
 
