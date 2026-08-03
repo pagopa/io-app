@@ -43,4 +43,22 @@ describe("registerStatusListFetchTaskSaga", () => {
       .next(true)
       .call(registerItwStatusListFetchTask);
   });
+
+  it("waits for credential storage when the wallet is still invalid after reset", () => {
+    testSaga(registerStatusListFetchTaskSaga)
+      .next()
+      .select(itwLifecycleIsValidSelector)
+      .next(true)
+      .call(registerItwStatusListFetchTask)
+      .next()
+      .take(itwLifecycleStoresReset)
+      .next()
+      .call(unregisterItwStatusListFetchTask)
+      .next()
+      .select(itwLifecycleIsValidSelector)
+      .next(false)
+      .take(itwCredentialsStore)
+      .next()
+      .call(registerItwStatusListFetchTask);
+  });
 });
