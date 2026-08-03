@@ -4,11 +4,11 @@ import { PersistedState } from "redux-persist";
 import {
   migrationKeyTagFunctional,
   migrationKeyTagToStringUndefined,
-  PersistedLollipopStateV1
+  PersistedLollipopStateV0
 } from "..";
 
-const migrationKeyTag = (state: PersistedState): PersistedLollipopStateV1 => {
-  const persistedLS = state as PersistedLollipopStateV1;
+const migrationKeyTag = (state: PersistedState): PersistedLollipopStateV0 => {
+  const persistedLS = state as PersistedLollipopStateV0;
   const keyTagOption = persistedLS.keyTag;
   if (O.isSome(keyTagOption) && typeof keyTagOption.value !== "string") {
     const innerOption = keyTagOption.value as O.Option<string>;
@@ -16,15 +16,15 @@ const migrationKeyTag = (state: PersistedState): PersistedLollipopStateV1 => {
       return {
         ...state,
         keyTag: O.some(innerOption.value)
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
     } else {
       return {
         ...state,
         keyTag: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
     }
   }
-  return state as PersistedLollipopStateV1;
+  return state as PersistedLollipopStateV0;
 };
 
 describe("Test migration KeyTag", () => {
@@ -33,7 +33,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.some("tag"),
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTag(persistedState).keyTag).toEqual(O.some("tag"));
     });
@@ -42,7 +42,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.some(O.some("tag")),
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTag(persistedState).keyTag).toEqual(O.some("tag"));
     });
@@ -51,7 +51,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.some(O.none),
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTag(persistedState).keyTag).toEqual(O.none);
     });
@@ -60,7 +60,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.none,
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTag(persistedState).keyTag).toEqual(O.none);
     });
@@ -70,7 +70,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.some("tag"),
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTagFunctional(persistedState).keyTag).toEqual(
         O.some("tag")
@@ -81,7 +81,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.some(O.some("tag")),
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTagFunctional(persistedState).keyTag).toEqual(
         O.some("tag")
@@ -92,7 +92,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.some(O.none),
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTagFunctional(persistedState).keyTag).toEqual(O.none);
     });
@@ -101,7 +101,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.none,
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTagFunctional(persistedState).keyTag).toEqual(O.none);
     });
@@ -111,7 +111,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.some("tag"),
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTagToStringUndefined(persistedState).keyTag).toEqual(
         "tag"
@@ -122,7 +122,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.none,
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTagToStringUndefined(persistedState).keyTag).toEqual(
         undefined
@@ -135,7 +135,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.some("tag"),
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTagFunctional(persistedState).keyTag).toEqual(
         migrationKeyTag(persistedState).keyTag
@@ -146,7 +146,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.some(O.some("tag")),
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTagFunctional(persistedState).keyTag).toEqual(
         migrationKeyTag(persistedState).keyTag
@@ -157,7 +157,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.some(O.none),
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTagFunctional(persistedState).keyTag).toEqual(
         migrationKeyTag(persistedState).keyTag
@@ -168,7 +168,7 @@ describe("Test migration KeyTag", () => {
       const persistedState = {
         keyTag: O.none,
         publicKey: O.none
-      } as PersistedLollipopStateV1;
+      } as PersistedLollipopStateV0;
 
       expect(migrationKeyTagFunctional(persistedState).keyTag).toEqual(
         migrationKeyTag(persistedState).keyTag
