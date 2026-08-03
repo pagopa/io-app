@@ -1,9 +1,7 @@
-import { createSelector } from "reselect";
-
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getDeviceId } from "../../../../../utils/device";
 import { isFeatureEnabled } from "../../../../../utils/featureRollout";
-import { oneIdentityRolloutPercentageSelector } from "./remoteConfig";
+import { oneIdentityRemoteConfigSelector } from "./remoteConfig";
 
 export const oneIdentityEnvSelector = (state: GlobalState) =>
   state.features.loginFeatures.loginConfig.oneIdentityEnv;
@@ -22,9 +20,9 @@ export const oneIdentityLocalFeatureFlagSelector = (state: GlobalState) =>
  * Evaluates the local flag (`true` or `false`) first. If undefined,
  * it falls back to the deterministic remote rollout percentage for this device.
  */
-export const isOneIdentityLoginEnabledSelector = createSelector(
-  oneIdentityLocalFeatureFlagSelector,
-  oneIdentityRolloutPercentageSelector,
-  (localFeatureFlag, rolloutPercentage) =>
-    localFeatureFlag ?? isFeatureEnabled(getDeviceId(), rolloutPercentage)
-);
+export const isOneIdentityLoginEnabledSelector = (state: GlobalState) => {
+  const localFeatureFlag = oneIdentityLocalFeatureFlagSelector(state);
+  const rolloutPercentage =
+    oneIdentityRemoteConfigSelector(state)?.rolloutPercentage ?? 0;
+  return localFeatureFlag ?? isFeatureEnabled(getDeviceId(), rolloutPercentage);
+};
