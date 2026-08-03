@@ -12,7 +12,7 @@ import { useCallback, useEffect } from "react";
 import { Image, StyleSheet, View } from "react-native";
 
 import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";

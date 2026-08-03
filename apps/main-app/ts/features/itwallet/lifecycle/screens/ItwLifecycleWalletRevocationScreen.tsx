@@ -1,6 +1,6 @@
 import I18n from "i18next";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
