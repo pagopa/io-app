@@ -7,8 +7,9 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
+import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
+import * as credentialsCatalogueSelectors from "../../../credentialsCatalogue/store/selectors";
 import * as issuanceAnalytics from "../../../issuance/analytics";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -233,6 +234,30 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
     });
   });
 
+  describe("Introduction content routing", () => {
+    it("navigates to the introduction screen when the credential has intro content", () => {
+      mockSelectors({ isItwValid: true, hasIntroContent: true });
+
+      renderComponent();
+
+      expect(mockReplace).toHaveBeenCalledWith(
+        ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION,
+        { animationEnabled: false, credentialType: "mDL" }
+      );
+    });
+
+    it("navigates to the trust issuer screen when the credential has no intro content", () => {
+      mockSelectors({ isItwValid: true, hasIntroContent: false });
+
+      renderComponent();
+
+      expect(mockReplace).toHaveBeenCalledWith(
+        ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+        { animationEnabled: false, credentialType: "mDL" }
+      );
+    });
+  });
+
   describe("Landing error screen", () => {
     it("renders the error screen as fallback", () => {
       mockSelectors({
@@ -286,6 +311,7 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
 
 type MockSelectorOptions = {
   credentialStatus?: string;
+  hasIntroContent?: boolean;
   isItwL3?: boolean;
   isItwValid?: boolean;
   isWhitelisted?: boolean;
@@ -297,7 +323,8 @@ const mockSelectors = ({
   pidStatus,
   isItwValid = false,
   isItwL3 = false,
-  isWhitelisted = false
+  isWhitelisted = false,
+  hasIntroContent = false
 }: MockSelectorOptions = {}) => {
   jest
     .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
@@ -306,7 +333,7 @@ const mockSelectors = ({
     .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
     .mockReturnValue(isItwL3);
   jest
-    .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+    .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
     .mockReturnValue(isWhitelisted);
   jest
     .spyOn(credentialsSelectors, "itwCredentialStatusSelector")
@@ -316,6 +343,9 @@ const mockSelectors = ({
   jest
     .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
     .mockReturnValue(pidStatus as any);
+  jest
+    .spyOn(credentialsCatalogueSelectors, "itwCredentialIntroContentSelector")
+    .mockReturnValue(() => (hasIntroContent ? "intro content" : undefined));
 };
 
 const renderComponent = () => {

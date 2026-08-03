@@ -45,7 +45,6 @@ const ItwCredentialNotFound = ({
         accessibilityLabel: I18n.t("global.buttons.continue"),
         onPress: navigateToCredential
       }}
-      isHeaderVisible={false}
       pictogram="cie"
       secondaryAction={{
         label: I18n.t("global.buttons.cancel"),

@@ -5,18 +5,9 @@ import { StyleSheet, View } from "react-native";
 
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
-import { Markdown } from "../../../../components/ui/Markdown/Markdown";
-import { useIOSelector } from "../../../../store/hooks";
-import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { trackAppCaughtError } from "../../../../utils/analytics";
 import { unknownToString } from "../../../../utils/errors";
 import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
-
-const CSS_STYLE = `
-  body {
-    line-height: 1.5;
-  }
-`;
 
 const styles = StyleSheet.create({
   card: {
@@ -54,30 +45,20 @@ const CardWithMarkdownContent = memo(
   ({ content }: CardWithMarkdownContentProps) => {
     const linkTo = useLinkTo();
 
-    const isIOMarkdownEnabledOnMessagesAndServices = useIOSelector(
-      isIOMarkdownEnabledForMessagesAndServicesSelector
+    const renderContent = () => (
+      <IOMarkdown
+        content={content}
+        onError={(error, _stack) => {
+          const errorString = unknownToString(error);
+          trackAppCaughtError(
+            "CardWithMarkdownContent",
+            "Unable to render service's markdown",
+            errorString
+          );
+        }}
+        rules={generateMessagesAndServicesRules(linkTo)}
+      />
     );
-
-    const renderContent = () => {
-      if (isIOMarkdownEnabledOnMessagesAndServices) {
-        return (
-          <IOMarkdown
-            content={content}
-            onError={(error, _stack) => {
-              const errorString = unknownToString(error);
-              trackAppCaughtError(
-                "CardWithMarkdownContent",
-                "Unable to render service's markdown",
-                errorString
-              );
-            }}
-            rules={generateMessagesAndServicesRules(linkTo)}
-          />
-        );
-      }
-
-      return <Markdown cssStyle={CSS_STYLE}>{content}</Markdown>;
-    };
 
     return <CardWrapper>{renderContent()}</CardWrapper>;
   }

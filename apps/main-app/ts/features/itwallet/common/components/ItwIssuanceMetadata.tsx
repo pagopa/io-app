@@ -129,10 +129,8 @@ export const ItwIssuanceMetadata = ({
         )
       : getAuthSource(credential));
 
-  const releasedByKey =
-    itwCredential && credential.credentialType === CredentialType.PID
-      ? "releasedByPid"
-      : "releasedBy";
+  const releasedByPid =
+    itwCredential && credential.credentialType === CredentialType.PID;
 
   const releaserNameBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
     useMemo(
@@ -191,7 +189,9 @@ export const ItwIssuanceMetadata = ({
           bottomSheet={releaserNameBottomSheet}
           isPreview={isPreview}
           label={I18n.t(
-            `features.itWallet.verifiableCredentials.claims.${releasedByKey}`
+            releasedByPid
+              ? "features.itWallet.verifiableCredentials.claims.releasedByPid"
+              : "features.itWallet.verifiableCredentials.claims.releasedBy"
           )}
           value={releaserName}
         />

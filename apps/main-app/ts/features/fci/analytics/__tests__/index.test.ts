@@ -14,7 +14,7 @@ import {
   fciStartRequest,
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
-import trackFciAction from "../index";
+import trackFciAction, { trackFciPollingFailureScreenView } from "../index";
 
 describe("index", () => {
   describe("trackFciAction", () => {
@@ -349,5 +349,34 @@ describe("index", () => {
 
       expect(mixpanelTrackSpy.mock.calls.length).toBe(0);
     });
+  });
+
+  describe("trackFciPollingFailureScreenView", () => {
+    const mixpanelTrackSpy = jest
+      .spyOn(mixpanelModule, "mixpanelTrack")
+      .mockImplementation();
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    test.each([
+      "FCI_QTSP_CLAUSES_FAILURE",
+      "FCI_QTSP_FILLED_DOC_FAILURE",
+      "FCI_POLL_FILLED_DOCUMENT_FAILURE"
+    ] as const)(
+      "should track the FCI_POLLING_FAILURE event with fci_backend_error set to %s",
+      errorKind => {
+        trackFciPollingFailureScreenView(errorKind);
+
+        expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+          "FCI_POLLING_FAILURE",
+          expect.objectContaining({
+            event_category: "KO",
+            fci_backend_error: errorKind
+          })
+        );
+      }
+    );
   });
 });

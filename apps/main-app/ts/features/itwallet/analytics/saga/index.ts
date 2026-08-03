@@ -8,9 +8,11 @@ import {
   itwCredentialsRemove,
   itwCredentialsStore
 } from "../../credentials/store/actions";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import { updateItwAnalyticsProperties } from "../properties/propertyUpdaters";
 import {
   handleCredentialRemovedAnalytics,
+  handleCredentialsCatalogueLoadedAnalytics,
   handleCredentialStoredAnalytics
 } from "./credentialAnalyticsHandlers";
 
@@ -59,7 +61,6 @@ export function* updateNfcInfoTrackingProperties() {
     });
   }
 }
-
 export function* watchItwAnalyticsSaga(): SagaIterator {
   // Aligns Mixpanel with current IT-Wallet state
   yield* fork(syncItwAnalyticsProperties);
@@ -71,4 +72,8 @@ export function* watchItwAnalyticsSaga(): SagaIterator {
 export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
   yield* takeEvery(itwCredentialsStore, handleCredentialStoredAnalytics);
   yield* takeEvery(itwCredentialsRemove, handleCredentialRemovedAnalytics);
+  yield* takeEvery(
+    itwFetchCredentialsCatalogue.success,
+    handleCredentialsCatalogueLoadedAnalytics
+  );
 }
