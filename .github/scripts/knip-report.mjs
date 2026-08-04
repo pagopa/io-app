@@ -23,15 +23,15 @@ const REPORTED_TYPES = [
 const MAX_ITEMS_PER_SECTION = 20;
 
 /**
- * Reads the display name out of a Knip entry.
+ * Reads the symbol a Knip entry stands for.
  *
  * Grouped types carry the several symbols that share one binding; they are
  * sorted so that merely reordering those exports is not read as a new finding.
  */
-const toName = (entry, grouped) =>
+const toSymbol = (entry, grouped) =>
   grouped
     ? entry
-        .map(symbol => symbol?.name)
+        .map(item => item?.name)
         .filter(Boolean)
         .sort()
         .join(", ")
@@ -49,12 +49,14 @@ const toFindings = report => {
   for (const issue of report?.issues ?? []) {
     for (const { key, scoped, grouped } of REPORTED_TYPES) {
       for (const entry of issue[key] ?? []) {
-        const name = toName(entry, grouped);
-        if (!name) continue;
-        const id = scoped ? `${key}:${issue.file}#${name}` : `${key}:${name}`;
+        const symbol = toSymbol(entry, grouped);
+        if (!symbol) continue;
+        const id = scoped
+          ? `${key}:${issue.file}#${symbol}`
+          : `${key}:${symbol}`;
         findings.set(
           id,
-          scoped ? `\`${name}\` in \`${issue.file}\`` : `\`${name}\``
+          scoped ? `\`${symbol}\` in \`${issue.file}\`` : `\`${symbol}\``
         );
       }
     }
@@ -80,13 +82,7 @@ const renderSection = (title, ids, findings) => {
   return `${title}\n\n${lines.join("\n")}\n\n`;
 };
 
-const buildBody = ({
-  added,
-  removed,
-  headFindings,
-  baseFindings,
-  hasBaseline
-}) => {
+const buildBody = ({ added, removed, headFindings, hasBaseline }) => {
   const heading = `${MARKER}\n### Unused code check\n\n`;
 
   if (!hasBaseline) {
@@ -209,7 +205,6 @@ const main = async () => {
     added,
     removed,
     headFindings,
-    baseFindings,
     hasBaseline: baseReport !== undefined
   });
 
