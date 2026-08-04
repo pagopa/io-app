@@ -111,6 +111,7 @@ const ListItemTransactionContent = ({
         space={IOListItemLogoMargin}
         style={{ alignItems: "center", flexShrink: 1 }}
       >
+        {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
         {paymentLogoIcon && (
           <View
             style={{

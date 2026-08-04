@@ -61,6 +61,7 @@ export const ListItemNavAlert = ({
       ) : (
         value
       )}
+      {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
       {description && (
         <>
           {typeof description === "string" ? (

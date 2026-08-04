@@ -238,9 +238,7 @@ const ListItemSwipeAction = ({
   return (
     <GestureHandlerRootView style={styles.gestureHandlerRoot}>
       <ContentWrapper style={styles.contentWrapper}>
-        <Animated.View
-          style={[StyleSheet.absoluteFillObject, backgroundStyle]}
-        />
+        <Animated.View style={[StyleSheet.absoluteFill, backgroundStyle]} />
         <RightActions
           accessibilityLabel={accessibilityLabel}
           color={color}
