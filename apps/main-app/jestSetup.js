@@ -5,7 +5,7 @@
  */
 
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
-import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
+import * as mockClipboard from "expo-clipboard/mocks/ExpoClipboard.ts";
 import nodeFetch from "node-fetch";
 import { NativeModules, AccessibilityInfo, AppState } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
@@ -83,7 +83,7 @@ jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("expo-notifications", () => ({}));
 jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("react-native-share", () => jest.fn());
-jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
+jest.mock("expo-clipboard", () => mockClipboard);
 
 // Mock react-native-worklets before reanimated setup
 // See: https://docs.swmansion.com/react-native-worklets/docs/guides/testing/

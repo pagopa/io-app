@@ -1,5 +1,5 @@
-import Clipboard from "@react-native-clipboard/clipboard";
 import { fireEvent, render } from "@testing-library/react-native";
+import * as Clipboard from "expo-clipboard";
 import I18n from "i18next";
 
 import {
@@ -31,6 +31,10 @@ const mockTransaction: NoticeDetailResponse = {
     amount: "100.00"
   }
 };
+
+jest.mock("expo-clipboard", () => ({
+  setStringAsync: jest.fn()
+}));
 
 describe("ReceiptInfoSection", () => {
   it("renders loading skeletons when loading is true", () => {
@@ -80,7 +84,7 @@ describe("ReceiptInfoSection", () => {
     const eventIdElement = getByText("event123");
     fireEvent.press(eventIdElement);
 
-    expect(Clipboard.setString).toHaveBeenCalledWith(
+    expect(Clipboard.setStringAsync).toHaveBeenCalledWith(
       mockTransaction.infoNotice?.rrn
     );
 
