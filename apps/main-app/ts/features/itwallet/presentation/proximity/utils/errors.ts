@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file */
-
 /**
  * Thrown when one or more mandatory credentials are missing
  */

@@ -1,14 +1,10 @@
-/**
- * TODO: refactor to a functional component.
- * https://pagopa.atlassian.net/browse/IOPID-1857
- */
 import {
   IOColors,
   IOPictograms,
   IOPictogramSizeScale,
   Pictogram
 } from "@io-app/design-system";
-import { PureComponent } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
 
 import { CircularProgress } from "../../../../../components/ui/CircularProgress";
@@ -27,10 +23,6 @@ type CieCardReadingAnimationProps = Readonly<{
   readingState: ReadingState;
 }>;
 
-type State = Readonly<{
-  progressBarValue: number;
-}>;
-
 // Image dimension
 const imgSize: IOPictogramSizeScale = 180;
 const progressThreshold = 60;
@@ -45,137 +37,122 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class CieCardReadingAnimation extends PureComponent<
-  CieCardReadingAnimationProps,
-  State
-> {
-  private progressAnimatedValue: Animated.Value;
-  private progressAnimation?: Animated.CompositeAnimation;
+const CieCardReadingAnimation = ({
+  readingState,
+  pictogramName,
+  circleColor
+}: CieCardReadingAnimationProps) => {
+  const [progressBarValue, setProgressBarValue] = useState(0);
+  const progressAnimatedValue = useRef(new Animated.Value(0));
+  const progressAnimation = useRef<Animated.CompositeAnimation | null>(null);
+  // Holds the latest startAnimation to allow recursive loop calls without stale closures
+  const startAnimationRef = useRef<() => void>(() => undefined);
 
-  constructor(props: CieCardReadingAnimationProps) {
-    super(props);
-    this.state = {
-      progressBarValue: 0
-    };
-
-    this.progressAnimatedValue = new Animated.Value(0);
-    this.createAnimation();
-  }
-
-  public componentDidUpdate(
-    prevCieCardReadingAnimationProps: CieCardReadingAnimationProps
-  ) {
-    // If we start reading the card, start the animation
-    if (
-      prevCieCardReadingAnimationProps.readingState !== ReadingState.reading &&
-      this.props.readingState === ReadingState.reading
-    ) {
-      this.startAnimation();
-    }
-    // If we are not reading the card, stop the animation
-    if (
-      this.progressAnimation !== undefined &&
-      prevCieCardReadingAnimationProps.readingState === ReadingState.reading &&
-      this.props.readingState !== ReadingState.reading
-    ) {
-      this.progressAnimation.stop();
-    }
-  }
-
-  public componentWillUnmount() {
-    this.stopAnimation();
-  }
-
-  public render() {
-    return (
-      <View accessible={false} style={{ alignSelf: "center" }}>
-        <CircularProgress
-          progress={
-            this.props.readingState === ReadingState.completed
-              ? 100
-              : this.state.progressBarValue
-          }
-          radius={imgSize / 2}
-          size={imgSize}
-          strokeBgColor={IOColors["grey-100"]}
-          strokeColor={
-            this.props.readingState === ReadingState.error
-              ? IOColors["grey-100"]
-              : this.props.circleColor
-          }
-          strokeWidth={circleBorderWidth}
-        >
-          {/* Use a `View` to translate the Pictogram to simulate the
-          `Bleed` variant effect */}
-          <View style={styles.imgTranslated}>
-            <Pictogram name={this.props.pictogramName} size={"100%"} />
-          </View>
-        </CircularProgress>
-      </View>
-    );
-  }
-
-  private addAnimationListener = () => {
-    if (this.progressAnimatedValue === undefined) {
-      return;
-    }
-    this.progressAnimatedValue.addListener(anim => {
-      this.setState({ progressBarValue: anim.value });
-    });
-  };
-
-  private createAnimation() {
-    // Two animation: the first fills the progress with the primary
-    // color up to progressThreshold, the second up to 100
-    // from 0 to 60 in 8 secs
-    const firstAnim = Animated.timing(this.progressAnimatedValue, {
+  const createAnimation = useCallback(() => {
+    // Two animations: the first fills the progress up to progressThreshold,
+    // the second fills it up to 100
+    const firstAnim = Animated.timing(progressAnimatedValue.current, {
       useNativeDriver: false,
       toValue: progressThreshold,
       easing: Easing.linear,
       duration: 8000
     });
-    // from 60 to 100 in 10 secs
-    const secondAnim = Animated.timing(this.progressAnimatedValue, {
+    const secondAnim = Animated.timing(progressAnimatedValue.current, {
       useNativeDriver: false,
       toValue: 100,
       easing: Easing.linear,
       duration: 10000
     });
     // eslint-disable-next-line functional/immutable-data
-    this.progressAnimation = Animated.sequence([firstAnim, secondAnim]);
-    this.addAnimationListener();
-  }
+    progressAnimation.current = Animated.sequence([firstAnim, secondAnim]);
+    progressAnimatedValue.current.addListener(({ value }) => {
+      setProgressBarValue(value);
+    });
+  }, []);
 
-  private startAnimation = () => {
-    if (
-      this.progressAnimation === undefined ||
-      this.progressAnimatedValue === undefined
-    ) {
+  const startAnimation = useCallback(() => {
+    if (!progressAnimation.current) {
       return;
     }
-    this.progressAnimation.stop();
-    this.setState({ progressBarValue: 0 });
-    this.progressAnimatedValue.setValue(0);
-    this.progressAnimation.start(({ finished }) => {
+    progressAnimation.current.stop();
+    setProgressBarValue(0);
+    progressAnimatedValue.current.setValue(0);
+    progressAnimation.current.start(({ finished }) => {
       if (finished) {
-        // loop
-        this.createAnimation();
-        this.startAnimation();
+        // Loop: recreate and restart animation
+        createAnimation();
+        startAnimationRef.current();
       }
     });
-  };
+  }, [createAnimation]);
 
-  private stopAnimation = () => {
+  // Keep ref in sync with the latest startAnimation to support recursive loop calls
+  useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    startAnimationRef.current = startAnimation;
+  }, [startAnimation]);
+
+  // Initialize animation on mount and clean up on unmount
+  useEffect(() => {
+    createAnimation();
+    // Copy ref value to a local variable for use in the cleanup function,
+    // as the ref may have changed by the time cleanup runs.
+    const animatedValue = progressAnimatedValue.current;
+    const animation = progressAnimation;
+    return () => {
+      animation.current?.stop();
+      animatedValue.removeAllListeners();
+    };
+  }, [createAnimation]);
+
+  // React to readingState transitions (replaces componentDidUpdate)
+  const prevReadingStateRef = useRef(readingState);
+  useEffect(() => {
+    const prevState = prevReadingStateRef.current;
+    // eslint-disable-next-line functional/immutable-data
+    prevReadingStateRef.current = readingState;
+
     if (
-      this.progressAnimation === undefined ||
-      this.progressAnimatedValue === undefined
+      prevState !== ReadingState.reading &&
+      readingState === ReadingState.reading
     ) {
-      return;
+      startAnimation();
+    } else if (
+      progressAnimation.current !== null &&
+      prevState === ReadingState.reading &&
+      readingState !== ReadingState.reading
+    ) {
+      progressAnimation.current.stop();
     }
-    this.progressAnimation.stop();
-    this.progressAnimatedValue.removeAllListeners();
-  };
-}
+  }, [readingState, startAnimation]);
+
+  return (
+    <View accessible={false} style={{ alignSelf: "center" }}>
+      <CircularProgress
+        progress={
+          readingState === ReadingState.completed ? 100 : progressBarValue
+        }
+        radius={imgSize / 2}
+        size={imgSize}
+        strokeBgColor={IOColors["grey-100"]}
+        strokeColor={
+          readingState === ReadingState.error
+            ? IOColors["grey-100"]
+            : circleColor
+        }
+        strokeWidth={circleBorderWidth}
+      >
+        {/* Use a `View` to translate the Pictogram to simulate the
+        `Bleed` variant effect */}
+        <View style={styles.imgTranslated}>
+          <Pictogram name={pictogramName} size={"100%"} />
+        </View>
+      </CircularProgress>
+    </View>
+  );
+};
+
+export default CieCardReadingAnimation;
 
 export const testableCieCardReadingAnimation = isDevEnv
   ? {

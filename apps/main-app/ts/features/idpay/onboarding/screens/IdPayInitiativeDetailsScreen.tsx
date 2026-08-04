@@ -11,8 +11,9 @@ import I18n from "i18next";
 import { useEffect } from "react";
 
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
+import { useAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import IOMarkdown from "../../../../components/IOMarkdown";
+import { UpdateAppAlert } from "../../../../components/UpdateAppAlert";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -163,30 +164,33 @@ export const IdPayInitiativeDetailsScreen = () => {
     O.toUndefined
   );
 
-  const IdPayInitiativeDetails = () => (
-    <IdPayEnabledSubFeatureGuard featureKey="idpay.onboarding">
-      <IdPayInitiativeDetailsScreenComponent />
-    </IdPayEnabledSubFeatureGuard>
-  );
+  const requiresUpdate = useAppRequiredUpdate("idpay.onboarding");
 
   useOnFirstRender(
     () => trackIDPayOnboardingIntro({ initiativeId }),
     () => O.isSome(initiative)
   );
 
-  const WrappedComponent = withAppRequiredUpdate(
-    IdPayInitiativeDetails,
-    "idpay.onboarding",
-    {
-      onConfirm: () =>
-        trackIDPayOnboardingAppUpdateConfirm({
-          initiativeId
-        }),
-      onLanding: () =>
-        trackIDPayOnboardingAppUpdateRequired({
-          initiativeId
-        })
-    }
+  if (requiresUpdate) {
+    return (
+      <UpdateAppAlert
+        mixPanelTracking={{
+          onConfirm: () =>
+            trackIDPayOnboardingAppUpdateConfirm({
+              initiativeId
+            }),
+          onLanding: () =>
+            trackIDPayOnboardingAppUpdateRequired({
+              initiativeId
+            })
+        }}
+      />
+    );
+  }
+
+  return (
+    <IdPayEnabledSubFeatureGuard featureKey="idpay.onboarding">
+      <IdPayInitiativeDetailsScreenComponent />
+    </IdPayEnabledSubFeatureGuard>
   );
-  return <WrappedComponent />;
 };

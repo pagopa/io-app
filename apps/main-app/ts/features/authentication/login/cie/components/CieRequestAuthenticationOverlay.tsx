@@ -24,7 +24,7 @@ import {
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
 
-import { withLoadingSpinner } from "../../../../../components/helpers/withLoadingSpinner";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { selectedIdentityProviderSelector } from "../../../../../features/authentication/common/store/selectors";
 import { ephemeralKeyTagSelector } from "../../../../../features/lollipop/store/reducers/lollipop";
@@ -300,36 +300,34 @@ const CieWebView = (props: Props) => {
     );
   }
 
-  const WithLoading = withLoadingSpinner(() => (
-    <View style={{ flex: 1 }}>
-      {requestInfo.requestState === "AUTHORIZED" &&
-        internalState.authUrl === undefined && (
-          <WebView
-            androidCameraAccessDisabled={true}
-            androidMicrophoneAccessDisabled={true}
-            injectedJavaScript={injectJs}
-            javaScriptEnabled={true}
-            key={internalState.key}
-            onError={handleOnError}
-            onHttpError={handleOnError}
-            onLoadEnd={handleOnLoadEnd}
-            onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-            ref={webView}
-            source={{ uri: requestInfo.url } as WebViewSource}
-            testID="webview"
-            userAgent={defaultUserAgent}
-          />
-        )}
-    </View>
-  ));
-
   return (
-    <WithLoading
+    <LoadingSpinnerOverlay
       isLoading={!cieFlowForDevServerEnabled}
       loadingCaption={I18n.t("global.genericWaiting")}
       loadingOpacity={1.0}
       onCancel={props.onClose}
-    />
+    >
+      <View style={{ flex: 1 }}>
+        {requestInfo.requestState === "AUTHORIZED" &&
+          internalState.authUrl === undefined && (
+            <WebView
+              androidCameraAccessDisabled={true}
+              androidMicrophoneAccessDisabled={true}
+              injectedJavaScript={injectJs}
+              javaScriptEnabled={true}
+              key={internalState.key}
+              onError={handleOnError}
+              onHttpError={handleOnError}
+              onLoadEnd={handleOnLoadEnd}
+              onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+              ref={webView}
+              source={{ uri: requestInfo.url } as WebViewSource}
+              testID="webview"
+              userAgent={defaultUserAgent}
+            />
+          )}
+      </View>
+    </LoadingSpinnerOverlay>
   );
 };
 

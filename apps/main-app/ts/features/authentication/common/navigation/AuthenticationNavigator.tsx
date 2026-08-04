@@ -15,7 +15,7 @@ import ActiveSessionCieIdLoginScreen from "../../activeSessionLogin/screens/cieI
 import ActiveSessionIdpLoginScreen from "../../activeSessionLogin/screens/spid/ActiveSessionIdpLoginScreen";
 import AuthErrorScreen from "../../login/authError/screens/AuthErrorScreen";
 import ActivateNfcScreen from "../../login/cie/screens/ActivateNfcScreen";
-import { CieCardReaderScreenWrapper } from "../../login/cie/screens/CieCardReaderScreenWrapper";
+import CieCardReaderScreen from "../../login/cie/screens/CieCardReaderScreen";
 import CieConsentDataUsageScreen from "../../login/cie/screens/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../../login/cie/screens/CieExpiredOrInvalidScreen";
 import CieExtendedApduNotSupportedScreen from "../../login/cie/screens/CieExtendedApduNotSupportedScreen";
@@ -142,7 +142,7 @@ const AuthenticationStackNavigator = () => (
     />
 
     <Stack.Screen
-      component={CieCardReaderScreenWrapper}
+      component={CieCardReaderScreen}
       name={AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN}
     />
 

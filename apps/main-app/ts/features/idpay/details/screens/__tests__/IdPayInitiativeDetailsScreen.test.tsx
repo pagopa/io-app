@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
-import { ComponentType } from "react";
 import configureMockStore from "redux-mock-store";
 
 import {
@@ -17,9 +16,7 @@ import { IDPayDetailsRoutes } from "../../navigation";
 import { IdPayInitiativeDetailsScreen } from "../IdPayInitiativeDetailsScreen";
 
 jest.mock("../../../../../components/helpers/withAppRequiredUpdate", () => ({
-  withAppRequiredUpdate: (
-    Component: ComponentType<typeof IdPayInitiativeDetailsScreen>
-  ) => Component
+  useAppRequiredUpdate: () => false
 }));
 
 const mockedInitiative = {

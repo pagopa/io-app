@@ -13,7 +13,7 @@ import { BackHandler, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView from "react-native-webview";
 
-import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
 
 type Props = {
@@ -93,54 +93,53 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
     );
   };
 
-  // TODO: Remove HOC to use the theme
-  const ContainerComponent = withLoadingSpinner(() => (
-    <SafeAreaView style={{ flex: 1, backgroundColor: IOColors.white }}>
-      <View
-        style={{
-          paddingHorizontal: 16,
-          alignItems: "flex-end"
-        }}
-      >
-        <IconButton
-          accessibilityLabel={I18n.t("global.buttons.close")}
-          color="neutral"
-          icon="closeLarge"
-          onPress={props.onClose}
-        />
-      </View>
-      <ScrollView contentContainerStyle={styles.flex1}>
-        {renderError()}
-        {!hasError && (
-          <View style={styles.flex1}>
-            <WebView
-              androidCameraAccessDisabled={true}
-              androidMicrophoneAccessDisabled={true}
-              injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
-              onError={handleError}
-              onLoadEnd={handleLoadEnd}
-              source={{ uri: props.tos_url }}
-              style={styles.flex2}
-              textZoom={100}
-            />
-          </View>
-        )}
-      </ScrollView>
-      {isLoadEnd && (
-        <FooterActions
-          actions={{
-            type: "SingleButton",
-            primary: {
-              onPress: props.onClose,
-              label: I18n.t("global.buttons.close")
-            }
+  return (
+    <LoadingSpinnerOverlay isLoading={!isLoadEnd}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: IOColors.white }}>
+        <View
+          style={{
+            paddingHorizontal: 16,
+            alignItems: "flex-end"
           }}
-        />
-      )}
-    </SafeAreaView>
-  ));
-
-  return <ContainerComponent isLoading={!isLoadEnd} />;
+        >
+          <IconButton
+            accessibilityLabel={I18n.t("global.buttons.close")}
+            color="neutral"
+            icon="closeLarge"
+            onPress={props.onClose}
+          />
+        </View>
+        <ScrollView contentContainerStyle={styles.flex1}>
+          {renderError()}
+          {!hasError && (
+            <View style={styles.flex1}>
+              <WebView
+                androidCameraAccessDisabled={true}
+                androidMicrophoneAccessDisabled={true}
+                injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
+                onError={handleError}
+                onLoadEnd={handleLoadEnd}
+                source={{ uri: props.tos_url }}
+                style={styles.flex2}
+                textZoom={100}
+              />
+            </View>
+          )}
+        </ScrollView>
+        {isLoadEnd && (
+          <FooterActions
+            actions={{
+              type: "SingleButton",
+              primary: {
+                onPress: props.onClose,
+                label: I18n.t("global.buttons.close")
+              }
+            }}
+          />
+        )}
+      </SafeAreaView>
+    </LoadingSpinnerOverlay>
+  );
 };
 
 export default TosBonusComponent;
