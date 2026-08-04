@@ -7,7 +7,7 @@ const mockOnDelete = jest.fn();
 const mockOnNumberPress = jest.fn();
 const mockOnBiometricPress = jest.fn();
 
-describe(NumberPad, () => {
+describe("NumberPad", () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
