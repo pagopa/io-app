@@ -255,6 +255,7 @@ export default defineConfig([
             "navigate.**",
             "StackActions.**"
           ],
+          // Caches and memoization rely on mutable Map/Set
           ignoreMapsAndSets: true,
           overrides: [
             {

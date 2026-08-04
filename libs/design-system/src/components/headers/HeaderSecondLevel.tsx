@@ -165,8 +165,7 @@ export const HeaderSecondLevel = ({
   ignoreAccessibilityCheck = false
 }: HeaderSecondLevel) => {
   const scrollOffset = useScrollOffset(
-    (animatedRef as AnimatedRef<Animated.ScrollView>) ||
-      (animatedRef as AnimatedRef<Animated.FlatList<any>>)
+    animatedRef as AnimatedRef<Animated.ScrollView>
   );
 
   const titleRef = createRef<View>();

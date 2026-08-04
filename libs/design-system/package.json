@@ -38,11 +38,7 @@
     "generate:pictograms": "node scripts/generateNewPictograms.js",
     "generate": "pnpm generate:icons && pnpm generate:pictograms"
   },
-  "keywords": [
-    "react-native",
-    "ios",
-    "android"
-  ],
+  "keywords": ["react-native", "ios", "android"],
   "repository": "https://github.com/pagopa/io-app.git",
   "author": "PagoPa (https://github.com/pagopa)",
   "license": "MIT",
@@ -99,9 +95,7 @@
     "node": ">= 20"
   },
   "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
+    "extends": ["@commitlint/config-conventional"]
   },
   "release-it": {
     "git": {
