@@ -245,6 +245,6 @@ describe("refreshStaleEntries", () => {
     });
     await expect(
       AsyncStorage.getItem(STORAGE_KEY_LAST_CHECK_TIME)
-    ).resolves.toBe(now.toString());
+    ).resolves.toBe(JSON.stringify([now]));
   });
 });
