@@ -9,6 +9,7 @@ export const configureReactotron = () => {
   const rtt = ReactotronReactNative.configure({
     name: "IO App"
   })
+    .setAsyncStorageHandler(AsyncStorage)
     .useReactNative({
       asyncStorage: true,
       networking: {
@@ -16,7 +17,6 @@ export const configureReactotron = () => {
       }
     })
     .use(reactotronRedux())
-    .setAsyncStorageHandler(AsyncStorage)
     .connect();
 
   // Let's clear Reactotron on every app loading
