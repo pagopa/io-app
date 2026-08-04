@@ -39,7 +39,7 @@ export const checkIOPermission = async (
 
 /**
  * Wrapper function to request the permission to create an event in the calendar
- * Note: currently unavailable on iOS17, use react-native-calendar-events instead
+ * Note: currently unavailable on iOS17, use expo-calendar instead
  * @returns boolean that indicates wether the user has granted the permission or not
  */
 export const requestWriteCalendarPermission = async (
@@ -51,8 +51,7 @@ export const requestWriteCalendarPermission = async (
       rationale
     ),
     // react-native-permissions currently has problems on iOS 17.
-    // Use react-native-calendar-events instead
-    // https://github.com/vonovak/react-native-add-calendar-event/issues/180
+    // Use expo-calendar instead
     ios: Promise.resolve(true),
     default: Promise.resolve(true)
   });
