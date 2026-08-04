@@ -12,10 +12,6 @@ jobs:
     environment: dev
     permissions:
       contents: read
-      # Needed to fetch the Knip baseline artifact from the master workflow.
-      actions: read
-      # Needed to post the advisory Knip comment.
-      pull-requests: write
     concurrency:
       group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
@@ -39,24 +35,32 @@ jobs:
         if: github.event_name == 'pull_request'
         continue-on-error: true
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
+          mkdir -p knip-pr
           # --silent keeps pnpm's script banner out of the redirected JSON.
-          pnpm --silent knip > knip-head.json
+          pnpm --silent knip > knip-pr/head.json
           # On pull_request the checkout is a merge commit, so HEAD^1 is the exact
           # base commit this PR merges into. Pinning the baseline to that commit
           # avoids blaming a PR for dead code introduced by whatever landed on
-          # master in the meantime.
-          BASE_SHA=$(git rev-parse HEAD^1)
-          BASELINE_RUN=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow "Knip baseline" \
-            --commit "$BASE_SHA" --status success --limit 1 --json databaseId --jq '.[0].databaseId')
-          echo "base commit: $BASE_SHA / baseline run: ${BASELINE_RUN:-none}"
-          if [ -n "$BASELINE_RUN" ]; then
-            gh run download "$BASELINE_RUN" --repo "$GITHUB_REPOSITORY" --name knip-baseline --dir baseline || true
-          fi
-          node .github/scripts/knip-report.mjs knip-head.json baseline/knip-baseline.json
+          # master in the meantime. It is resolvable here and nowhere else, so it
+          # travels with the report.
+          jq -n --arg pr "$PR_NUMBER" --arg base "$(git rev-parse HEAD^1)" \
+            '{pr: $pr, base: $base}' > knip-pr/meta.json
+      - id: upload-knip
+        name: Upload the unused-code report
+        # The comment is posted by the Unused code report workflow, not here:
+        # this one is reachable through workflow_call from the release
+        # workflows, and a called workflow can only downgrade the caller's
+        # token, never elevate it to the `pull-requests: write` that needs.
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: knip-pr
+          path: knip-pr
+          retention-days: 1
+          if-no-files-found: ignore
       - id: codecov-script
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:

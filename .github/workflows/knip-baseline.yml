@@ -1,4 +1,4 @@
-name: Knip baseline
+name: Unused code baseline
 on:
   push:
     branches:
