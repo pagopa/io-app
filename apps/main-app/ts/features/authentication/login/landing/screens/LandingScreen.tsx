@@ -234,13 +234,11 @@ export const LandingScreen = () => {
     }
   }, [present, isCieSupported, handleNavigateToCieIdLoginScreen]);
 
-  const navigateToCieUatSelectionScreen = useCallback(() => {
-    if (isCieSupported) {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_LOGIN_CONFIG_SCREEN
-      });
-    }
-  }, [isCieSupported, navigation]);
+  const navigateToLoginConfigScreen = useCallback(() => {
+    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.LOGIN_CONFIG_SCREEN
+    });
+  }, [navigation]);
 
   const LandingScreenComponent = () => {
     useHeaderSecondLevel({
@@ -371,7 +369,7 @@ export const LandingScreen = () => {
         ) : (
           <Carousel
             carouselCards={carouselCards}
-            dotEasterEggCallback={navigateToCieUatSelectionScreen}
+            dotEasterEggCallback={navigateToLoginConfigScreen}
             ref={accessibilityFirstFocuseViewRef}
           />
         )}
