@@ -1,3 +1,4 @@
+import { triggerHaptic } from "@io-app/design-system";
 import {
   CieError,
   CieManager,
@@ -7,9 +8,6 @@ import {
 } from "@pagopa/io-react-native-cie";
 import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
-import HapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
 
 import { useIOSelector } from "../../../../../store/hooks";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
@@ -88,7 +86,7 @@ export const useCieManager: UseCieManager = ({
       setState({ state: "success" });
 
       // Trigger a success haptic feedback
-      HapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+      triggerHaptic("notificationSuccess");
 
       // Before proceeding to the next step, give some time to read the success message
       setTimeout(
@@ -112,7 +110,7 @@ export const useCieManager: UseCieManager = ({
       // Trigger a light haptic feedback on the start of the reading
       // when the tag is discovered
       if (event.name === "ON_TAG_DISCOVERED") {
-        HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
+        triggerHaptic("impactLight");
       }
 
       // Updates the status alert for the iOS NFC system dialog with the current reading progress.
@@ -159,10 +157,8 @@ export const useCieManager: UseCieManager = ({
 
     // Trigger a warning haptic feedback on TAG_LOST error
     // or an error haptic feedback for all the other errors
-    HapticFeedback.trigger(
-      error.name === "TAG_LOST"
-        ? HapticFeedbackTypes.notificationWarning
-        : HapticFeedbackTypes.notificationError
+    triggerHaptic(
+      error.name === "TAG_LOST" ? "notificationWarning" : "notificationError"
     );
 
     CieManager.stopReading().catch(() => {
