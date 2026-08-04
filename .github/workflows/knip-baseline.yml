@@ -14,7 +14,8 @@ jobs:
       contents: read
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref_name }}
-      cancel-in-progress: true
+      # Every master commit needs its own baseline: PRs look one up by exact SHA.
+      cancel-in-progress: false
     steps:
       - id: checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
