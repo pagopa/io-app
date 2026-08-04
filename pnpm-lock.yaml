@@ -492,6 +492,9 @@ importers:
       expo:
         specifier: ^55.0.8
         version: 55.0.26(5ac497104e8869e9f123994d20a3812e)
+      expo-application:
+        specifier: ~55.0.17
+        version: 55.0.17(expo@55.0.26)
       expo-background-task:
         specifier: ~55.0.18
         version: 55.0.18(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))
@@ -509,7 +512,7 @@ importers:
         version: 55.0.16(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(supports-color@8.1.1)
       expo-device:
         specifier: ~55.0.17
-        version: 55.0.17(expo@55.0.26)
+        version: 55.0.19(expo@55.0.26)
       expo-document-picker:
         specifier: ~55.0.15
         version: 55.0.15(expo@55.0.26)
@@ -6861,8 +6864,8 @@ packages:
     resolution: {integrity: sha512-1zQrciTiQfRdo7qJM1uG4navm8DayFa2TgCSRlzUyNkhcJ6XUZF3hjnpkyr3VhAqPH7i/9GkG7Tv5abz6fqz0Q==}
     engines: {node: ^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0}
 
-  expo-application@55.0.15:
-    resolution: {integrity: sha512-eWf5OGrat1r/TYr0daL684C6pJYiN2k30NmcISsD9fbtZLfA6Sbo/JebfYzP3OjO/T/i8j/9Pf3ePqUYPLfZnw==}
+  expo-application@55.0.17:
+    resolution: {integrity: sha512-ASuZe+Sl8ax+0pQOjd8L5cz5xpxW0F1VSorRKFr9LHxDSQwH929nYjbMrvW6KlRIIWZBIAQQsYqWiowytCLMRA==}
     peerDependencies:
       expo: '*'
 
@@ -6903,8 +6906,8 @@ packages:
       expo: '*'
       react-native: '*'
 
-  expo-device@55.0.17:
-    resolution: {integrity: sha512-ZcMrSeD0zWooosm5Bet5qluxUrhw+NPgcMmN6ySVF7cm4K8Bvh4KPogJePbI1qfhFAiJWcWeV9e/2uewb9ktfw==}
+  expo-device@55.0.19:
+    resolution: {integrity: sha512-BYEr3oyjtnXk432usxavftybCtucelCQD1QGIo2zruxeT/hzoGe36uclOC49a+tYFQoybqOylSV2035H7kDIPg==}
     peerDependencies:
       expo: '*'
 
@@ -22269,7 +22272,7 @@ snapshots:
       jest-mock: 30.3.0
       jest-util: 30.3.0
 
-  expo-application@55.0.15(expo@55.0.26):
+  expo-application@55.0.17(expo@55.0.26):
     dependencies:
       expo: 55.0.26(5ac497104e8869e9f123994d20a3812e)
 
@@ -22334,7 +22337,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  expo-device@55.0.17(expo@55.0.26):
+  expo-device@55.0.19(expo@55.0.26):
     dependencies:
       expo: 55.0.26(5ac497104e8869e9f123994d20a3812e)
       ua-parser-js: 0.7.41
@@ -22434,7 +22437,7 @@ snapshots:
       abort-controller: 3.0.0
       badgin: 1.2.3
       expo: 55.0.26(5ac497104e8869e9f123994d20a3812e)
-      expo-application: 55.0.15(expo@55.0.26)
+      expo-application: 55.0.17(expo@55.0.26)
       expo-constants: 55.0.16(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(supports-color@8.1.1)
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
