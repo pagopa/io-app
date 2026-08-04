@@ -828,6 +828,29 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
   });
 
+  it("should clear the selected credential when leaving the introduction screen", async () => {
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    hasCredentialIntroContent.mockImplementation(() => true);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({
+      type: "select-credential",
+      credentialType: "education_degree",
+      mode: "issuance"
+    });
+
+    await waitForActor(actor, snapshot =>
+      snapshot.matches("CredentialIntroduction")
+    );
+
+    actor.send({ type: "back" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context.credentialType).toBeUndefined();
+    expect(navigateToCardOnboardingScreen).not.toHaveBeenCalled();
+  });
+
   describe("Credential Offer flow", () => {
     it("Should process a credential offer and populate the resolved offer in context", async () => {
       processCredentialOffer.mockImplementation(() =>
