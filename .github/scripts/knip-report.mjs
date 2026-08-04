@@ -16,10 +16,26 @@ const REPORTED_TYPES = [
   { key: "files", label: "Unused files", scoped: false },
   { key: "exports", label: "Unused exports", scoped: true },
   { key: "types", label: "Unused exported types", scoped: true },
-  { key: "duplicates", label: "Duplicate exports", scoped: true }
+  // Knip nests this one: an array of symbol groups, not of single symbols.
+  { key: "duplicates", label: "Duplicate exports", scoped: true, grouped: true }
 ];
 
 const MAX_ITEMS_PER_SECTION = 20;
+
+/**
+ * Reads the display name out of a Knip entry.
+ *
+ * Grouped types carry the several symbols that share one binding; they are
+ * sorted so that merely reordering those exports is not read as a new finding.
+ */
+const toName = (entry, grouped) =>
+  grouped
+    ? entry
+        .map(symbol => symbol?.name)
+        .filter(Boolean)
+        .sort()
+        .join(", ")
+    : (entry?.name ?? entry);
 
 /**
  * Flattens a Knip JSON report into a map of stable identity → display label.
@@ -31,9 +47,9 @@ const MAX_ITEMS_PER_SECTION = 20;
 const toFindings = report => {
   const findings = new Map();
   for (const issue of report?.issues ?? []) {
-    for (const { key, scoped } of REPORTED_TYPES) {
+    for (const { key, scoped, grouped } of REPORTED_TYPES) {
       for (const entry of issue[key] ?? []) {
-        const name = entry?.name ?? entry;
+        const name = toName(entry, grouped);
         if (!name) continue;
         const id = scoped ? `${key}:${issue.file}#${name}` : `${key}:${name}`;
         findings.set(
