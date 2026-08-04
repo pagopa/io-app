@@ -327,6 +327,13 @@ const PlaygroundsSection = () => {
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
+      value: "Authentication",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.AUTHENTICATION_PLAYGROUND
+        })
+    },
+    {
       value: "Lollipop",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
