@@ -63,10 +63,9 @@ describe("handleItwCredentialsConsumeInstanceSaga", () => {
   beforeEach(() => jest.clearAllMocks());
 
   it("does nothing when the credentialId is not found in the store", () => {
-    const action = itwCredentialsConsumeInstance(
-      [{ credentialId: "unknown", keyTag: "key-tag-01" }],
-      {}
-    );
+    const action = itwCredentialsConsumeInstance([
+      { credentialId: "unknown", keyTag: "key-tag-01" }
+    ]);
 
     return expectSaga(handleItwCredentialsConsumeInstanceSaga, action)
       .withState(makeState([]))
@@ -84,15 +83,12 @@ describe("handleItwCredentialsConsumeInstanceSaga", () => {
     mockVaultRemove.mockResolvedValue(undefined);
     mockDeleteKey.mockResolvedValue(undefined);
 
-    const action = itwCredentialsConsumeInstance(
-      [
-        {
-          credentialId: batchCredential.credentialId,
-          keyTag: "key-tag-01"
-        }
-      ],
-      {}
-    );
+    const action = itwCredentialsConsumeInstance([
+      {
+        credentialId: batchCredential.credentialId,
+        keyTag: "key-tag-01"
+      }
+    ]);
 
     return expectSaga(handleItwCredentialsConsumeInstanceSaga, action)
       .withState(makeState([batchCredential]))
@@ -118,15 +114,12 @@ describe("handleItwCredentialsConsumeInstanceSaga", () => {
     mockVaultRemove.mockResolvedValue(undefined);
     mockDeleteKey.mockResolvedValue(undefined);
 
-    const action = itwCredentialsConsumeInstance(
-      [
-        {
-          credentialId: lastCopyCredential.credentialId,
-          keyTag: "key-tag-01"
-        }
-      ],
-      {}
-    );
+    const action = itwCredentialsConsumeInstance([
+      {
+        credentialId: lastCopyCredential.credentialId,
+        keyTag: "key-tag-01"
+      }
+    ]);
 
     return expectSaga(handleItwCredentialsConsumeInstanceSaga, action)
       .withState(makeState([lastCopyCredential]))
@@ -143,15 +136,12 @@ describe("handleItwCredentialsConsumeInstanceSaga", () => {
   it("tracks vault removal failures as best-effort and skips Redux cleanup for that instance", () => {
     mockVaultRemove.mockRejectedValue(new Error("vault error"));
 
-    const action = itwCredentialsConsumeInstance(
-      [
-        {
-          credentialId: batchCredential.credentialId,
-          keyTag: "key-tag-01"
-        }
-      ],
-      {}
-    );
+    const action = itwCredentialsConsumeInstance([
+      {
+        credentialId: batchCredential.credentialId,
+        keyTag: "key-tag-01"
+      }
+    ]);
 
     return expectSaga(handleItwCredentialsConsumeInstanceSaga, action)
       .withState(makeState([batchCredential]))
@@ -168,28 +158,39 @@ describe("handleItwCredentialsConsumeInstanceSaga", () => {
       });
   });
 
-  it("calls onComplete/onError meta callbacks", () => {
-    mockVaultRemove.mockResolvedValue(undefined);
+  it("keeps processing the remaining instances after a failure", () => {
+    mockVaultRemove
+      .mockRejectedValueOnce(new Error("vault error"))
+      .mockResolvedValue(undefined);
     mockDeleteKey.mockResolvedValue(undefined);
-    const onComplete = jest.fn();
-    const onError = jest.fn();
 
-    const action = itwCredentialsConsumeInstance(
-      [
-        {
-          credentialId: batchCredential.credentialId,
-          keyTag: "key-tag-01"
-        }
-      ],
-      { onComplete, onError }
-    );
+    const otherCredential: CredentialMetadata = {
+      ...batchCredential,
+      credentialId: "dc_sd_jwt_other",
+      keyTag: "key-tag-11",
+      keyTags: ["key-tag-11", "key-tag-12"]
+    };
+
+    const action = itwCredentialsConsumeInstance([
+      { credentialId: batchCredential.credentialId, keyTag: "key-tag-01" },
+      { credentialId: otherCredential.credentialId, keyTag: "key-tag-11" }
+    ]);
 
     return expectSaga(handleItwCredentialsConsumeInstanceSaga, action)
-      .withState(makeState([batchCredential]))
+      .withState(makeState([batchCredential, otherCredential]))
+      .put(
+        itwCredentialsStore([
+          {
+            ...otherCredential,
+            keyTag: "key-tag-12",
+            keyTags: ["key-tag-12"]
+          }
+        ])
+      )
       .run()
       .then(() => {
-        expect(onComplete).toHaveBeenCalledTimes(1);
-        expect(onError).not.toHaveBeenCalled();
+        expect(mockTrackRemoveFailed).toHaveBeenCalledTimes(1);
+        expect(mockVaultRemove).toHaveBeenCalledTimes(2);
       });
   });
 });

@@ -62,10 +62,9 @@ describe("createRemoteActionsImplementation - consumePresentedBatchCredentials",
 
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith(
-      itwCredentialsConsumeInstance(
-        [{ credentialId: baseCredential.credentialId, keyTag: "key-tag-01" }],
-        {}
-      )
+      itwCredentialsConsumeInstance([
+        { credentialId: baseCredential.credentialId, keyTag: "key-tag-01" }
+      ])
     );
   });
 

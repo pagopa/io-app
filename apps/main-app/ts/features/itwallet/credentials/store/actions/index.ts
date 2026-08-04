@@ -62,8 +62,6 @@ export const itwCredentialsRemoveByType = createStandardAction(
  * batch count. If the consumed copy was the last one, the credential is fully removed instead
  * (same effect as `itwCredentialsRemoveByType` for that credential).
  * Has no effect on non-batch credentials.
- * It also accepts optional callbacks in the meta to handle success and failure cases; failures
- * are treated as best-effort (tracked, never surfaced to the user or blocking the flow).
  */
 export const itwCredentialsConsumeInstance = createStandardAction(
   "ITW_CREDENTIALS_CONSUME_INSTANCE"
@@ -71,8 +69,7 @@ export const itwCredentialsConsumeInstance = createStandardAction(
   ReadonlyArray<{
     credentialId: CredentialMetadata["credentialId"];
     keyTag: string;
-  }>,
-  CallbackActionMeta
+  }>
 >();
 
 /**

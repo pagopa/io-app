@@ -157,7 +157,7 @@ export const createRemoteActionsImplementation = (
       );
 
     if (consumedInstances.length > 0) {
-      store.dispatch(itwCredentialsConsumeInstance(consumedInstances, {}));
+      store.dispatch(itwCredentialsConsumeInstance(consumedInstances));
     }
   },
 

@@ -22,71 +22,53 @@ import { CredentialsVault } from "../utils/vault";
  * Storage cleanup is best-effort: if it fails for one instance, the failure is only tracked via
  * analytics and processing continues with the remaining instances, since the presentation has
  * already succeeded from the Relying Party's perspective by the time this saga runs.
- * @param itwCredentialsConsumeInstance
  */
 export function* handleItwCredentialsConsumeInstanceSaga(
   action: ReturnType<typeof itwCredentialsConsumeInstance>
 ) {
-  const instances = action.payload;
-  const { onComplete, onError } = action.meta;
+  const credentials = yield* select(itwAllStoredCredentialsSelector);
 
-  try {
-    const credentials = yield* select(itwAllStoredCredentialsSelector);
-
-    for (const { credentialId, keyTag } of instances) {
-      const credential = credentials.find(c => c.credentialId === credentialId);
-      if (!credential) {
-        continue;
-      }
-
-      try {
-        yield* call(CredentialsVault.remove, keyTag);
-        yield* call(deleteKey, keyTag);
-      } catch (e) {
-        const error =
-          e instanceof Error
-            ? e
-            : new Error(
-                `Unknown error while removing vault credential for keyTag ${keyTag}`
-              );
-
-        trackItwVaultCredentialRemoveFailed({
-          credential_ids: [credentialId],
-          reason: error.message
-        });
-
-        // Best-effort: skip this instance, the app state stays untouched for it.
-        continue;
-      }
-
-      const remainingKeyTags = getCredentialKeyTags(credential).filter(
-        tag => tag !== keyTag
-      );
-
-      if (remainingKeyTags.length > 0) {
-        // Copies remain: rotate the representative copy and decrease the batch count.
-        yield* put(
-          itwCredentialsStore([
-            {
-              ...credential,
-              keyTag: remainingKeyTags[0],
-              keyTags: remainingKeyTags
-            }
-          ])
-        );
-      } else {
-        // The last copy was just consumed: fully remove the credential and its Wallet card.
-        yield* put(itwCredentialsRemove([credential]));
-        yield* put(walletRemoveCards([`ITW_${credential.credentialType}`]));
-      }
+  for (const { credentialId, keyTag } of action.payload) {
+    const credential = credentials.find(c => c.credentialId === credentialId);
+    if (!credential) {
+      continue;
     }
 
-    onComplete?.();
-  } catch (e) {
-    onError?.(
-      e instanceof Error
-        ? e
-        : new Error("Unknown error while consuming presented batch credentials")
+    try {
+      yield* call(CredentialsVault.remove, keyTag);
+      yield* call(deleteKey, keyTag);
+    } catch (e) {
+      trackItwVaultCredentialRemoveFailed({
+        credential_ids: [credentialId],
+        reason:
+          e instanceof Error
+            ? e.message
+            : `Unknown error while removing vault credential for keyTag ${keyTag}`
+      });
+
+      // Best-effort: skip this instance, the app state stays untouched for it.
+      continue;
+    }
+
+    const remainingKeyTags = getCredentialKeyTags(credential).filter(
+      tag => tag !== keyTag
     );
+
+    if (remainingKeyTags.length > 0) {
+      // Copies remain: rotate the representative copy and decrease the batch count.
+      yield* put(
+        itwCredentialsStore([
+          {
+            ...credential,
+            keyTag: remainingKeyTags[0],
+            keyTags: remainingKeyTags
+          }
+        ])
+      );
+    } else {
+      // The last copy was just consumed: fully remove the credential and its Wallet card.
+      yield* put(itwCredentialsRemove([credential]));
+      yield* put(walletRemoveCards([`ITW_${credential.credentialType}`]));
+    }
   }
 }
