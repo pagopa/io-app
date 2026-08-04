@@ -46,7 +46,7 @@ export function* handleItwCredentialsConsumeInstanceSaga(
             : `Unknown error while removing vault credential for keyTag ${keyTag}`
       });
 
-      // Best-effort: skip this instance, the app state stays untouched for it.
+      // Best-effort: skip this instance
       continue;
     }
 
@@ -55,7 +55,7 @@ export function* handleItwCredentialsConsumeInstanceSaga(
     );
 
     if (remainingKeyTags.length > 0) {
-      // Copies remain: rotate the representative copy and decrease the batch count.
+      // Copies remain: rotate the representative copy and decrease the batch count
       yield* put(
         itwCredentialsStore([
           {
@@ -66,7 +66,7 @@ export function* handleItwCredentialsConsumeInstanceSaga(
         ])
       );
     } else {
-      // The last copy was just consumed: fully remove the credential and its Wallet card.
+      // The last copy was just consumed: fully remove the credential.
       yield* put(itwCredentialsRemove([credential]));
       yield* put(walletRemoveCards([`ITW_${credential.credentialType}`]));
     }
