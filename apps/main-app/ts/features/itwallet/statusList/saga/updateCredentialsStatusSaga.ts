@@ -18,7 +18,7 @@ const hasStatusListValidity = (
 /**
  * Updates the validity of credentials whose status list is available in the cache.
  */
-export function* updateStatusListCredentialsSaga({
+export function* updateCredentialsStatusSaga({
   itwVersion
 }: StatusListContext) {
   const statusListApi = getIoWallet(itwVersion).CredentialStatus.statusList;

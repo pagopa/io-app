@@ -7,7 +7,7 @@ import { registerStatusListProperties } from "../analytics";
 import { refreshStaleEntries } from "../utils/refresh";
 import { checkStatusListCoherenceSaga } from "./checkStatusListCoherenceSaga";
 import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
-import { updateStatusListCredentialsSaga } from "./updateStatusListCredentialsSaga";
+import { updateCredentialsStatusSaga } from "./updateCredentialsStatusSaga";
 
 export function* watchItwStatusListAuthenticatedSaga(): SagaIterator {
   const itwSpecsVersion = yield* select(selectItwSpecsVersion);
@@ -34,7 +34,7 @@ export function* watchItwStatusListSaga(): SagaIterator {
   // Check for stale Status List Tokens and refresh them in the background
   yield* call(refreshStaleEntries, { itwVersion });
   // Update the validity of credentials whose status list is available in the cache
-  yield* call(updateStatusListCredentialsSaga, { itwVersion });
+  yield* call(updateCredentialsStatusSaga, { itwVersion });
   // Register Status List super properties
   yield* call(registerStatusListProperties);
 }

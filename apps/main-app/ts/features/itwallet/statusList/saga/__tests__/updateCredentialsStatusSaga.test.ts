@@ -7,7 +7,7 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsStore } from "../../../credentials/store/actions";
 import { itwAllStoredCredentialsSelector } from "../../../credentials/store/selectors";
-import { updateStatusListCredentialsSaga } from "../updateStatusListCredentialsSaga";
+import { updateCredentialsStatusSaga } from "../updateCredentialsStatusSaga";
 
 const mockGetStatus = jest.fn();
 
@@ -54,7 +54,7 @@ const makeCredential = (): CredentialMetadata => {
   };
 };
 
-describe("updateStatusListCredentialsSaga", () => {
+describe("updateCredentialsStatusSaga", () => {
   beforeEach(() => {
     mockGetStatus.mockReset();
   });
@@ -81,7 +81,7 @@ describe("updateStatusListCredentialsSaga", () => {
       rawStatus: "0x01"
     });
 
-    testSaga(updateStatusListCredentialsSaga, { itwVersion: "1.3.3" })
+    testSaga(updateCredentialsStatusSaga, { itwVersion: "1.3.3" })
       .next()
       .select(itwAllStoredCredentialsSelector)
       .next([credential, credentialWithoutStatusList])
@@ -100,7 +100,7 @@ describe("updateStatusListCredentialsSaga", () => {
       rawStatus: "0x00"
     });
 
-    testSaga(updateStatusListCredentialsSaga, { itwVersion: "1.3.3" })
+    testSaga(updateCredentialsStatusSaga, { itwVersion: "1.3.3" })
       .next()
       .select(itwAllStoredCredentialsSelector)
       .next([credential])
@@ -112,7 +112,7 @@ describe("updateStatusListCredentialsSaga", () => {
   it("skips credentials whose status list is not cached", () => {
     const credential = makeCredential();
 
-    testSaga(updateStatusListCredentialsSaga, { itwVersion: "1.3.3" })
+    testSaga(updateCredentialsStatusSaga, { itwVersion: "1.3.3" })
       .next()
       .select(itwAllStoredCredentialsSelector)
       .next([credential])
