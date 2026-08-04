@@ -1,12 +1,9 @@
-import { IOToast } from "@io-app/design-system";
+import { IOToast, triggerHaptic } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { View } from "react-native";
-import ReactNativeHapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
 
 import { mixpanelTrack } from "../../../../mixpanel";
 import {
@@ -57,7 +54,7 @@ const PaymentsBarcodeScanScreen = () => {
     barcodes: Array<IOBarcode>,
     origin: IOBarcodeOrigin
   ) => {
-    ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+    triggerHaptic("notificationSuccess");
 
     analytics.trackBarcodeScanSuccess("avviso", barcodes[0], origin);
 
