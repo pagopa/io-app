@@ -6,10 +6,10 @@ import { reactotronRedux } from "reactotron-redux";
 const ignoredUrls: RegExp | undefined = /symbolicate/;
 
 export const configureReactotron = () => {
-  const rtt = ReactotronReactNative.configure({
-    name: "IO App"
-  })
-    .setAsyncStorageHandler(AsyncStorage)
+  const rtt = ReactotronReactNative.setAsyncStorageHandler(AsyncStorage)
+    .configure({
+      name: "IO App"
+    })
     .useReactNative({
       asyncStorage: true,
       networking: {
@@ -20,9 +20,7 @@ export const configureReactotron = () => {
     .connect();
 
   // Let's clear Reactotron on every app loading
-  if (rtt.clear) {
-    rtt.clear();
-  }
+  rtt.clear();
 
   return rtt;
 };
