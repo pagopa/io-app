@@ -22,9 +22,7 @@ export const configureReactotron = () => {
     .connect();
 
   // Let's clear Reactotron on every app loading
-  if (rtt.clear) {
-    rtt.clear();
-  }
+  rtt.clear();
 
   return rtt;
 };
