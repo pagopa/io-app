@@ -93,7 +93,7 @@ const buildBody = ({ added, removed, headFindings }) => {
   const footer = `<sub>Advisory only. This check never blocks a merge.</sub>\n`;
 
   if (added.length === 0 && removed.length === 0) {
-    return `${heading}No code was left unused by this branch.\n\n${footer}`;
+    return `${heading}Everything this check flagged earlier is now clear.\n\n${footer}`;
   }
 
   let body = heading;
@@ -207,9 +207,9 @@ const main = async () => {
   console.log(`new: ${added.length}, resolved: ${removed.length}`);
 
   const body = buildBody({ added, removed, headFindings });
-  const hasSomethingToReport = added.length > 0 || removed.length > 0;
+  const hasFindingsToReport = added.length > 0 || removed.length > 0;
 
-  await upsertComment(repo, prNumber, body, hasSomethingToReport);
+  await upsertComment(repo, prNumber, body, hasFindingsToReport);
 };
 
 // Never fail the build: this check is informational by design.
