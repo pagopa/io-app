@@ -13,28 +13,24 @@ import {
 import { LoginConfigScreenContent } from "../LoginConfigScreenContent";
 
 describe("LoginConfigScreenContent", () => {
-  it("should render all controls as disabled when readOnly is true", () => {
-    const { getByLabelText } = renderComponent({ readOnly: true });
+  it("should render all controls as disabled when disabled is true", () => {
+    const { getByLabelText } = renderComponent({ disabled: true });
 
-    expect(getByLabelText("Login IO")).toBeDisabled();
-    expect(getByLabelText("Login OneIdentity")).toBeDisabled();
-    expect(
-      getByLabelText("Login OneIdentity con rollout remoto")
-    ).toBeDisabled();
+    expect(getByLabelText("Usa solo IO")).toBeDisabled();
+    expect(getByLabelText("Usa solo OneIdentity")).toBeDisabled();
+    expect(getByLabelText("Automatico")).toBeDisabled();
     expect(
       getByLabelText(/Abilita ambiente di UAT OneIdentity/i)
     ).toBeDisabled();
     expect(getByLabelText(/Abilita endpoint di collaudo/i)).toBeDisabled();
   });
 
-  it("should render all controls as enabled when readOnly is false", () => {
-    const { getByLabelText } = renderComponent({ readOnly: false });
+  it("should render all controls as enabled when disabled is false", () => {
+    const { getByLabelText } = renderComponent({ disabled: false });
 
-    expect(getByLabelText("Login IO")).toBeEnabled();
-    expect(getByLabelText("Login OneIdentity")).toBeEnabled();
-    expect(
-      getByLabelText("Login OneIdentity con rollout remoto")
-    ).toBeEnabled();
+    expect(getByLabelText("Usa solo IO")).toBeEnabled();
+    expect(getByLabelText("Usa solo OneIdentity")).toBeEnabled();
+    expect(getByLabelText("Automatico")).toBeEnabled();
     expect(
       getByLabelText(/Abilita ambiente di UAT OneIdentity/i)
     ).toBeEnabled();
@@ -61,13 +57,13 @@ describe("LoginConfigScreenContent", () => {
   it("should dispatch the OneIdentity local feature flag action when a radio option is selected", () => {
     const { store, getByLabelText } = renderComponent();
 
-    fireEvent.press(getByLabelText("Login OneIdentity"));
+    fireEvent.press(getByLabelText("Usa solo OneIdentity"));
     expect(oneIdentityLocalFeatureFlagSelector(store.getState())).toBe(true);
 
-    fireEvent.press(getByLabelText("Login IO"));
+    fireEvent.press(getByLabelText("Usa solo IO"));
     expect(oneIdentityLocalFeatureFlagSelector(store.getState())).toBe(false);
 
-    fireEvent.press(getByLabelText("Login OneIdentity con rollout remoto"));
+    fireEvent.press(getByLabelText("Automatico"));
     expect(
       oneIdentityLocalFeatureFlagSelector(store.getState())
     ).toBeUndefined();
@@ -75,13 +71,13 @@ describe("LoginConfigScreenContent", () => {
 });
 
 const renderComponent = ({
-  readOnly = false
+  disabled = false
 }: ComponentProps<typeof LoginConfigScreenContent> = {}) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
 
   const utils = renderScreenWithNavigationStoreContext(
-    () => <LoginConfigScreenContent readOnly={readOnly} />,
+    () => <LoginConfigScreenContent disabled={disabled} />,
     "DUMMY",
     {},
     store

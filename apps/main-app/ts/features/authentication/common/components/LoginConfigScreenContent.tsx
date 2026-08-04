@@ -2,6 +2,7 @@ import {
   ListItemCheckbox,
   ListItemHeader,
   RadioGroup,
+  RadioItem,
   VSpacer
 } from "@io-app/design-system";
 import { useCallback, useMemo } from "react";
@@ -24,34 +25,37 @@ import {
 
 type OneIdentityLocalFeatureFlag = boolean | undefined;
 
-const LOGIN_FLOW_OPTIONS: Array<{
-  accessibilityLabel: string;
-  id: OneIdentityLocalFeatureFlag;
-  value: string;
-}> = [
+const LOGIN_FLOW_OPTIONS: ReadonlyArray<
+  RadioItem<OneIdentityLocalFeatureFlag>
+> = [
   {
-    accessibilityLabel: "Login IO",
+    accessibilityLabel: "Usa solo IO",
     id: false,
-    value: "Login IO"
+    value: "Usa solo IO",
+    description: "Forza le login in ingresso ad utilizzare lo stack di IO."
   },
   {
-    accessibilityLabel: "Login OneIdentity",
+    accessibilityLabel: "Usa solo OneIdentity",
     id: true,
-    value: "Login OneIdentity"
+    value: "Usa solo OneIdentity",
+    description:
+      "Forza le login in ingresso ad utilizzare lo stack di OneIdentity."
   },
   {
-    accessibilityLabel: "Login OneIdentity con rollout remoto",
+    accessibilityLabel: "Automatico",
     id: undefined,
-    value: "Login OneIdentity con rollout remoto"
+    value: "Automatico",
+    description:
+      "Questo è il normale funzionamento dell'app. Usa questa opzione per l'utilizzo comune."
   }
 ];
 
 type LoginConfigScreenContentProps = {
-  readOnly?: boolean;
+  disabled?: boolean;
 };
 
 export const LoginConfigScreenContent = ({
-  readOnly = false
+  disabled = false
 }: LoginConfigScreenContentProps) => {
   const dispatch = useIODispatch();
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
@@ -64,9 +68,9 @@ export const LoginConfigScreenContent = ({
     () =>
       LOGIN_FLOW_OPTIONS.map(item => ({
         ...item,
-        disabled: readOnly
+        disabled
       })),
-    [readOnly]
+    [disabled]
   );
 
   const handleOneIdentityFlow = useCallback(
@@ -107,7 +111,7 @@ export const LoginConfigScreenContent = ({
       <ListItemHeader label="Environment OneIdentity" />
       <ListItemCheckbox
         description="Questa opzione serve agli sviluppatori per testare la login con OneIdentity in ambiente di UAT."
-        disabled={readOnly}
+        disabled={disabled}
         onValueChange={handleOneIdentityEnv}
         selected={oneIdentityEnv === "uat"}
         value="Abilita ambiente di UAT OneIdentity"
@@ -116,7 +120,7 @@ export const LoginConfigScreenContent = ({
       <ListItemHeader label="Environment CIE" />
       <ListItemCheckbox
         description="Questa opzione serve agli sviluppatori per testare la login con CIE."
-        disabled={readOnly}
+        disabled={disabled}
         onValueChange={handleCieEnv}
         selected={useCieUat}
         value={`Abilita endpoint di collaudo (${CieEntityIds.DEV})`}
