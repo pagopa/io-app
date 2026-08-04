@@ -45,6 +45,8 @@ PODS:
   - ExpoBackgroundTask (55.0.18):
     - ExpoModulesCore
     - ExpoTaskManager
+  - ExpoClipboard (55.0.15):
+    - ExpoModulesCore
   - ExpoDevice (55.0.17):
     - ExpoModulesCore
   - ExpoDomWebView (55.0.6):
@@ -3398,34 +3400,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNCClipboard (1.16.3):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
   - RNDeviceInfo (14.0.4):
     - React-Core
   - RNFS (2.18.0):
@@ -3947,6 +3921,7 @@ DEPENDENCIES:
   - Expo (from `../../../node_modules/expo`)
   - ExpoAsset (from `../../../node_modules/expo-asset/ios`)
   - ExpoBackgroundTask (from `../../../node_modules/expo-background-task/ios`)
+  - ExpoClipboard (from `../../../node_modules/expo-clipboard/ios`)
   - ExpoDevice (from `../../../node_modules/expo-device/ios`)
   - "ExpoDomWebView (from `../../../node_modules/@expo/dom-webview/ios`)"
   - ExpoFileSystem (from `../../../node_modules/expo-file-system/ios`)
@@ -4073,7 +4048,6 @@ DEPENDENCIES:
   - RNBluetoothStateManager (from `../../../node_modules/react-native-bluetooth-state-manager`)
   - RNCalendarEvents (from `../../../node_modules/react-native-calendar-events`)
   - "RNCAsyncStorage (from `../../../node_modules/@react-native-async-storage/async-storage`)"
-  - "RNCClipboard (from `../../../node_modules/@react-native-clipboard/clipboard`)"
   - RNDeviceInfo (from `../../../node_modules/react-native-device-info`)
   - RNFS (from `../../../node_modules/react-native-fs`)
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
@@ -4133,6 +4107,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-asset/ios"
   ExpoBackgroundTask:
     :path: "../../../node_modules/expo-background-task/ios"
+  ExpoClipboard:
+    :path: "../../../node_modules/expo-clipboard/ios"
   ExpoDevice:
     :path: "../../../node_modules/expo-device/ios"
   ExpoDomWebView:
@@ -4384,8 +4360,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-calendar-events"
   RNCAsyncStorage:
     :path: "../../../node_modules/@react-native-async-storage/async-storage"
-  RNCClipboard:
-    :path: "../../../node_modules/@react-native-clipboard/clipboard"
   RNDeviceInfo:
     :path: "../../../node_modules/react-native-device-info"
   RNFS:
@@ -4428,6 +4402,7 @@ SPEC CHECKSUMS:
   Expo: fb8cded217862a2c6fc046a6cc68aa83a2ed15f0
   ExpoAsset: 7721c5c4ae2a7c3c8147a046727ac6c020b05648
   ExpoBackgroundTask: 2c988fa88705c72b07f0e60d5661d566df611980
+  ExpoClipboard: 0e4b587fc6b5c5996b4ad4e5804d509e90aa6c75
   ExpoDevice: b8a65afe42c3c5934eb6983870672fe785b39dea
   ExpoDomWebView: b2e9d601f9cb77d3c97da73234e175b64be91928
   ExpoFileSystem: 61e663d0bbd1a973d324530d1d6ee559a5e5192c
@@ -4559,7 +4534,6 @@ SPEC CHECKSUMS:
   RNBluetoothStateManager: 929f132d0dacf65cb4767a11e2803e47fdda9e73
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
-  RNCClipboard: 4b58c780f63676367640f23c8e114e9bd0cf86ac
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 884f03ad24511911552480eb2058266db0b177ce
