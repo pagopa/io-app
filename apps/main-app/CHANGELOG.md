@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.8](https://github.com/pagopa/io-app/compare/3.38.0-rc.7...3.38.0-rc.8) (2026-08-03)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4448](https://pagopa.atlassian.net/browse/SIW-4448)] Updated Playground so the status override correctly updated the credential status ([#8355](https://github.com/pagopa/io-app/issues/8355)) ([4590b0b](https://github.com/pagopa/io-app/commit/4590b0b9398ad19ba2053883aa481d4d457e478b))
+* **IT-Wallet:** [[SIW-4457](https://pagopa.atlassian.net/browse/SIW-4457)] Edit credential preview page ([#8256](https://github.com/pagopa/io-app/issues/8256)) ([4a8567e](https://github.com/pagopa/io-app/commit/4a8567eca03d6989efb030a08591c07753e3c594))
+* **IT-Wallet:** [[SIW-4493](https://pagopa.atlassian.net/browse/SIW-4493)] Fix CTA presentation screen ([#8388](https://github.com/pagopa/io-app/issues/8388)) ([7bb37fd](https://github.com/pagopa/io-app/commit/7bb37fd9e085e570184c2dd9d87b913327589d88))
+* **IT-Wallet:** [[SIW-4704](https://pagopa.atlassian.net/browse/SIW-4704)] Add informational banner for MDL details and update related components ([#8367](https://github.com/pagopa/io-app/issues/8367)) ([217aa0f](https://github.com/pagopa/io-app/commit/217aa0fac657ec76126b2dbacacb764aa244d1ec))
+* [[IOPID-4113](https://pagopa.atlassian.net/browse/IOPID-4113)] Add login configuration actions, reducer, and selectors ([#8386](https://github.com/pagopa/io-app/issues/8386)) ([f76cdf7](https://github.com/pagopa/io-app/commit/f76cdf7f82f10d88a348385adcf921f5fee65b5e))
+
+
+### Bug Fixes
+
+* [[IOPLT-1985](https://pagopa.atlassian.net/browse/IOPLT-1985)] Fix all ESLint warnings in the DS library ([#8379](https://github.com/pagopa/io-app/issues/8379)) ([d203916](https://github.com/pagopa/io-app/commit/d203916a537e233ae781bdc4991ad71836e1f6d3))
+* **IT-Wallet:** [[SIW-4733](https://pagopa.atlassian.net/browse/SIW-4733)] Wrong animation after intro screen when issuing a credential outside the catalogue ([#8375](https://github.com/pagopa/io-app/issues/8375)) ([733fa03](https://github.com/pagopa/io-app/commit/733fa031db6ba75270914bbd97217ef365fa47d7))
+* **IT-Wallet:** [[SIW-4773](https://pagopa.atlassian.net/browse/SIW-4773)] Credential issuance intro back navigation from a presentation failure ([#8389](https://github.com/pagopa/io-app/issues/8389)) ([d7cc1d0](https://github.com/pagopa/io-app/commit/d7cc1d06d082eeee9f68b37971da33d6d4ba157b))
+
+
+### Chores
+
+* [[IOPLT-1987](https://pagopa.atlassian.net/browse/IOPLT-1987)] Remove `IOScrollViewWithReveal` ([#8382](https://github.com/pagopa/io-app/issues/8382)) ([7d6d3c6](https://github.com/pagopa/io-app/commit/7d6d3c64a8b1c53e2545012d976bfbca981920c3))
+
 ## [3.38.0-rc.7](https://github.com/pagopa/io-app/compare/3.38.0-rc.6...3.38.0-rc.7) (2026-07-31)
 
 
