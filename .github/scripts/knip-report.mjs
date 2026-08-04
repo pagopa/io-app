@@ -13,11 +13,17 @@ const MARKER = "<!-- knip-report -->";
 // Issue types worth reporting. Dependency-level types are excluded on purpose:
 // they are noisy and orthogonal to dead-code review.
 const REPORTED_TYPES = [
-  { key: "files", label: "Unused files", scoped: false },
-  { key: "exports", label: "Unused exports", scoped: true },
-  { key: "types", label: "Unused exported types", scoped: true },
+  { key: "files", emoji: "📄", label: "Unused files", scoped: false },
+  { key: "exports", emoji: "↗️", label: "Unused exports", scoped: true },
+  { key: "types", emoji: "🧩", label: "Unused exported types", scoped: true },
   // Knip nests this one: an array of symbol groups, not of single symbols.
-  { key: "duplicates", label: "Duplicate exports", scoped: true, grouped: true }
+  {
+    key: "duplicates",
+    emoji: "👯",
+    label: "Duplicate exports",
+    scoped: true,
+    grouped: true
+  }
 ];
 
 const MAX_ITEMS_PER_SECTION = 20;
@@ -105,9 +111,9 @@ const buildBody = ({ added, removed, headFindings, hasBaseline }) => {
       `[Knip](https://knip.dev) compared this branch against \`master\` and found ` +
       `**${added.length} ${added.length === 1 ? "item" : "items"} that nothing ` +
       `references any more**:\n\n`;
-    for (const { key, label } of REPORTED_TYPES) {
+    for (const { key, emoji, label } of REPORTED_TYPES) {
       body += renderSection(
-        `**${label}**`,
+        `**${emoji} ${label}**`,
         added.filter(id => id.startsWith(`${key}:`)),
         headFindings
       );
