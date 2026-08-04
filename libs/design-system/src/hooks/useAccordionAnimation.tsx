@@ -26,7 +26,7 @@ export const useAccordionAnimation = ({
   const toggleAccordion = useCallback(() => {
     // Re-enable animation when the user interacts with the accordion
     animationEnabled.value = true;
-    setExpanded(expanded => !expanded);
+    setExpanded(isExpanded => !isExpanded);
   }, [animationEnabled]);
 
   const iconAnimatedStyle = useAnimatedStyle(

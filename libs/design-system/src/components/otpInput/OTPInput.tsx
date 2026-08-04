@@ -100,7 +100,7 @@ export const OTPInput = ({
       triggerHaptic("notificationError");
       translate.value = shakeAnimation();
 
-      if (timerRef.current) {
+      if (timerRef.current != null) {
         clearTimeout(timerRef.current);
       }
       timerRef.current = setTimeout(() => {
@@ -112,19 +112,19 @@ export const OTPInput = ({
 
   useEffect(
     () => () => {
-      if (timerRef.current) {
+      if (timerRef.current != null) {
         clearTimeout(timerRef.current);
       }
     },
     []
   );
 
-  const handleChange = (value: string) => {
-    if (value.length > length) {
+  const handleChange = (nextValue: string) => {
+    if (nextValue.length > length) {
       return;
     }
-    onValueChange(value);
-    handleValidate(value);
+    onValueChange(nextValue);
+    handleValidate(nextValue);
   };
 
   const handleKeyPress = (e: TextInputKeyPressEvent) => {
@@ -186,7 +186,7 @@ export const OTPInput = ({
           returnKeyType="done"
           secureTextEntry={isSecret}
           style={[
-            StyleSheet.absoluteFillObject,
+            StyleSheet.absoluteFill,
             // Keep the hidden TextInput minimally visible so native focus still works.
             { opacity: 0.01 }
           ]}
