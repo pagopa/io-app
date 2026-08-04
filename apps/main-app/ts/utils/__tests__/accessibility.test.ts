@@ -1,19 +1,81 @@
-import { AccessibilityInfo } from "react-native";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { AccessibilityInfo, HostInstance } from "react-native";
 
 import {
   formatStringToSpacedString,
   getAccessibleAmountText,
   getListItemAccessibilityLabelCount,
-  isScreenReaderEnabled
+  isScreenReaderEnabled,
+  setAccessibilityFocus
 } from "../accessibility";
 
-jest.mock("react-native", () => ({
-  AccessibilityInfo: {
-    setAccessibilityFocus: jest.fn(),
-    isScreenReaderEnabled: jest.fn()
-  },
-  findNodeHandle: jest.fn()
-}));
+describe("setAccessibilityFocus", () => {
+  const node = {} as HostInstance;
+  const nodeReference = { current: node };
+
+  const spyOnSendAccessibilityEvent = () =>
+    jest
+      .spyOn(AccessibilityInfo, "sendAccessibilityEvent")
+      .mockImplementation(() => undefined);
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+    jest.restoreAllMocks();
+  });
+
+  it("should focus the node and run the callback only once the delay elapsed", () => {
+    const focusSpy = spyOnSendAccessibilityEvent();
+    const callback = jest.fn();
+
+    setAccessibilityFocus(nodeReference, 300 as Millisecond, callback);
+
+    expect(focusSpy).not.toHaveBeenCalled();
+    expect(callback).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(300);
+
+    expect(focusSpy).toHaveBeenCalledWith(node, "focus");
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
+  it("should do nothing if the node is not mounted anymore once the delay elapsed", () => {
+    const focusSpy = spyOnSendAccessibilityEvent();
+    const callback = jest.fn();
+
+    setAccessibilityFocus({ current: null }, 300 as Millisecond, callback);
+    jest.advanceTimersByTime(300);
+
+    expect(focusSpy).not.toHaveBeenCalled();
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it("should run the callback even if the native focus call throws", () => {
+    jest
+      .spyOn(AccessibilityInfo, "sendAccessibilityEvent")
+      .mockImplementation(() => {
+        throw new Error("native failure");
+      });
+    const callback = jest.fn();
+
+    setAccessibilityFocus(nodeReference, 300 as Millisecond, callback);
+
+    expect(() => jest.advanceTimersByTime(300)).not.toThrow();
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
+  it("should focus the node immediately when no delay is given", () => {
+    const focusSpy = spyOnSendAccessibilityEvent();
+
+    setAccessibilityFocus(nodeReference);
+    jest.runAllTimers();
+
+    expect(focusSpy).toHaveBeenCalled();
+  });
+});
 
 describe("isScreenReaderEnabled", () => {
   it("should return true if screen reader is enabled", async () => {

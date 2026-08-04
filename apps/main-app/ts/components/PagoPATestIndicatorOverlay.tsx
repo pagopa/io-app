@@ -5,7 +5,7 @@ import PagoPATestIndicator from "./PagoPATestIndicator";
 
 const styles = StyleSheet.create({
   indicatorContainer: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     justifyContent: "flex-start",
     alignItems: "center",
     zIndex: 1000

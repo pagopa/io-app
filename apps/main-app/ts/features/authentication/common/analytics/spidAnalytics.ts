@@ -1,5 +1,6 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { LoginType } from "../../activeSessionLogin/screens/analytics";
@@ -59,7 +60,7 @@ export async function trackLoginSpidIdpSelected(
   flow: LoginType = "auth"
 ) {
   if (flow === "auth") {
-    await updateLoginMethodProfileProperty(state, idp);
+    await updateLoginMethodProfileAndSuperProperties(state, idp);
   }
   mixpanelTrack(
     "LOGIN_SPID_IDP_SELECTED",
@@ -70,11 +71,15 @@ export async function trackLoginSpidIdpSelected(
   );
 }
 
-export async function updateLoginMethodProfileProperty(
+export async function updateLoginMethodProfileAndSuperProperties(
   state: GlobalState,
   value: string
 ) {
   await updateMixpanelProfileProperties(state, {
+    property: "LOGIN_METHOD",
+    value
+  });
+  await updateMixpanelSuperProperties(state, {
     property: "LOGIN_METHOD",
     value
   });
