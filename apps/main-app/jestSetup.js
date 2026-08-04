@@ -5,7 +5,7 @@
  */
 
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
-import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
+import * as mockClipboard from "expo-clipboard/mocks/ExpoClipboard.ts";
 import nodeFetch from "node-fetch";
 import { NativeModules, AccessibilityInfo, AppState } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
@@ -38,16 +38,12 @@ jest.mock("expo-task-manager", () => ({
   defineTask: jest.fn(),
   isTaskRegisteredAsync: jest.fn().mockResolvedValue(false)
 }));
-jest.mock("react-native-haptic-feedback", () => ({
-  ...jest.requireActual("react-native-haptic-feedback"),
-  trigger: jest.fn()
-}));
-
-jest.mock("react-native-pulsar", () => ({
-  Presets: {
-    System: new Proxy({}, { get: () => jest.fn() })
-  }
-}));
+// Pulsar is a TurboModule, so importing it under Jest throws: there is no
+// native module for TurboModuleRegistry.getEnforcing("RNPulsar") to bind to.
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+jest.mock("react-native-pulsar", () =>
+  require("./ts/__mocks__/pulsarJestMock")
+);
 
 // eslint-disable-next-line functional/immutable-data
 global.CanvasKit = {
@@ -83,7 +79,7 @@ jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("expo-notifications", () => ({}));
 jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("react-native-share", () => jest.fn());
-jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
+jest.mock("expo-clipboard", () => mockClipboard);
 
 // Mock react-native-worklets before reanimated setup
 // See: https://docs.swmansion.com/react-native-worklets/docs/guides/testing/
@@ -181,7 +177,6 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
       const modulesToMock = [
         "IoReactNativeHttpClient",
         "RNDocumentPicker",
-        "RNHapticFeedback",
         "RNCWebViewModule",
         "AppState"
       ];
