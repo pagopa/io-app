@@ -23,12 +23,12 @@ const globalState = appReducer(undefined, applicationChangeState("active"));
 describe("Lollipop state", () => {
   it("Test selectors and reducers", () => {
     const lollipopState = testable?.lollipopSelector(globalState);
-    expect(lollipopState?.keyTag).toBe(O.none);
+    expect(lollipopState?.keyTag).toBe(undefined);
     const newLollipopState = lollipopReducer(
       lollipopState,
       lollipopKeyTagSave({ keyTag: "newKeyTag" })
     );
-    expect(newLollipopState.keyTag).toStrictEqual(O.some("newKeyTag"));
+    expect(newLollipopState.keyTag).toBe("newKeyTag");
   });
 
   it("should handle lollipopSetPublicKey action", () => {
