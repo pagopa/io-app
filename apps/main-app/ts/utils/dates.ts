@@ -311,28 +311,3 @@ export const getDateFromExpiryDate = (expiryDate: string): Date | undefined => {
     return undefined;
   }
 };
-
-// TEMPORARY: probes the unused-code report rendering. Revert before merge.
-export const knipProbe1 = 1;
-export const knipProbe2 = 2;
-export const knipProbe3 = 3;
-export const knipProbe4 = 4;
-export const knipProbe5 = 5;
-export const knipProbe6 = 6;
-export const knipProbe7 = 7;
-export const knipProbe8 = 8;
-export const knipProbe9 = 9;
-export const knipProbe10 = 10;
-export const knipProbe11 = 11;
-export const knipProbe12 = 12;
-export const knipProbe13 = 13;
-export const knipProbe14 = 14;
-export const knipProbe15 = 15;
-export const knipProbe16 = 16;
-export const knipProbe17 = 17;
-export const knipProbe18 = 18;
-export const knipProbe19 = 19;
-export const knipProbe20 = 20;
-export const knipProbe21 = 21;
-export const knipProbe22 = 22;
-export type KnipProbeResult = { readonly probe: number };
