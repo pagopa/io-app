@@ -6,7 +6,9 @@ import { reactotronRedux } from "reactotron-redux";
 const ignoredUrls: RegExp | undefined = /symbolicate/;
 
 export const configureReactotron = () => {
-  const rtt = ReactotronReactNative.setAsyncStorageHandler(AsyncStorage)
+  const rtt = ReactotronReactNative
+    // AsyncStorage handler should be set before anything else
+    .setAsyncStorageHandler(AsyncStorage)
     .configure({
       name: "IO App"
     })
