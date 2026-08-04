@@ -352,16 +352,16 @@ const styles = StyleSheet.create({
     overflow: "hidden"
   },
   gradientView: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFill
   },
   buttonInnerBorder: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     borderRadius: buttonBorderRadius - 1,
     borderCurve: "continuous",
     borderWidth: 1
   },
   content: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     justifyContent: "center",
     zIndex: 10,
     paddingHorizontal: 16
