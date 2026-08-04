@@ -38,15 +38,19 @@ const ephemeralInitialState = () => ({
   ephemeralPublicKey: undefined
 });
 
-export type LollipopState = Readonly<{
+export type InMemoryLollipopData = {
   ephemeralKey: EphemeralKey;
-  keyTag: O.Option<string>;
   publicKey: O.Option<PublicKey>;
   supportedDevice: boolean;
-}>;
+};
+export type LollipopState = InMemoryLollipopData & PersistedLollipopData;
+
+export type PersistedLollipopData = {
+  keyTag: string | undefined;
+};
 
 export const initialLollipopState: LollipopState = {
-  keyTag: O.none,
+  keyTag: undefined,
   publicKey: O.none,
   supportedDevice: true,
   ephemeralKey: ephemeralInitialState()
@@ -77,14 +81,14 @@ export default function lollipopReducer(
       // new ephemeral key is set, ready to be used for a new login
       return {
         ...state,
-        keyTag: O.some(state.ephemeralKey.ephemeralKeyTag),
+        keyTag: state.ephemeralKey.ephemeralKeyTag,
         publicKey: O.fromNullable(state.ephemeralKey.ephemeralPublicKey),
         ephemeralKey: ephemeralInitialState()
       };
     case getType(lollipopKeyTagSave):
       return {
         ...state,
-        keyTag: O.some(action.payload.keyTag)
+        keyTag: action.payload.keyTag
       };
     case getType(lollipopRemovePublicKey):
       return {
