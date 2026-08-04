@@ -20,12 +20,12 @@ import { IOLogoPaymentType } from "../logos";
 import { IOSkeleton } from "../skeleton";
 import { BodySmall, H6 } from "../typography";
 import {
-  PressableBaseProps,
-  PressableListItemBase
+  PressableListItemBase,
+  PressableListItemBaseProps
 } from "./PressableListItemBase";
 
 export type ListItemTransaction = WithTestID<
-  PressableBaseProps & {
+  PressableListItemBaseProps & {
     accessible?: boolean;
     isLoading?: boolean;
     loadingAccessibilityLabel?: string;
