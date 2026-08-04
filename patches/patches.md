@@ -1,5 +1,11 @@
 This file describes the reason for the patches applied.
 
+### @react-navigation__core@7.21.11.patch
+Created on **28/07/2026**
+
+#### Reason:
+- Gate the dev-only `checkSerializable`/`checkDuplicateRouteNames` walk of the whole navigation state tree (run in `BaseNavigationContainer` after every navigation state change) behind an opt-in global flag (`global.__IO_NAV_SERIALIZABILITY_CHECK_ENABLED__`, wired from `Config.NAV_SERIALIZABILITY_CHECK` / `navSerializabilityCheckEnabled` in `ts/config.ts`). Off by default: this app's deeply nested navigator tree makes that walk noticeably slow in dev builds. Re-enable locally to debug non-serializable route params affecting state persistence/deep-linking.
+
 ### react-native-pdf-npm-6.7.7-7aa1e3a631.patch
 Created on **16/07/2025**
 
@@ -93,7 +99,9 @@ Created on **23/03/2026**
 ### @react-navigation-stack-npm-6.4.1-52dad4e278.patch
 
 Created on **24/04/2026**
+Updated on **28/07/2026**
 
 #### Reason:
 
 - Patch to apply an explicit header `minHeight` in `CardContainer` only when `headerTransparent` is enabled and a screen reader is active, improving Android accessibility by ensuring the header area is properly sized for TalkBack.
+- Updated on the `@react-navigation/stack` 7.x upgrade: v7 packages are distributed as ESM-only with package exports, so the patch now targets the compiled `lib/module/views/Stack/CardContainer.js` file instead of the `src/` source, per the [React Navigation v7 upgrade guide](https://reactnavigation.org/docs/upgrading-from-6.x/#packages-now-use-esm-and-package-exports). The behavior of the patch is unchanged.

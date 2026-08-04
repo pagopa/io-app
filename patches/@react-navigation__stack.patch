@@ -1,65 +1,54 @@
-diff --git a/src/views/Stack/CardContainer.tsx b/src/views/Stack/CardContainer.tsx
-index 1e9ee0e6a5e5b0087cbe2c61146af89f8b050802..36e57bcb131377cf15a3a95d6927958032374cd3 100644
---- a/src/views/Stack/CardContainer.tsx
-+++ b/src/views/Stack/CardContainer.tsx
-@@ -6,7 +6,7 @@ import {
- } from '@react-navigation/elements';
- import { Route, useTheme } from '@react-navigation/native';
+diff --git a/lib/module/views/Stack/CardContainer.js b/lib/module/views/Stack/CardContainer.js
+index 3f0229701ea27f19c446182910eafc3812cb28ad..750bb09f25eb4f550e4f8654d2b626e51fd76f5e 100644
+--- a/lib/module/views/Stack/CardContainer.js
++++ b/lib/module/views/Stack/CardContainer.js
+@@ -3,7 +3,7 @@
+ import { getHeaderTitle, HeaderBackContext, HeaderHeightContext, HeaderShownContext } from '@react-navigation/elements';
+ import { useLinkBuilder, useLocale, useTheme } from '@react-navigation/native';
  import * as React from 'react';
--import { Animated, StyleSheet, View } from 'react-native';
-+import { AccessibilityInfo, Animated, StyleSheet, View } from 'react-native';
- 
- import type { Layout, Scene } from '../../types';
- import ModalPresentationContext from '../../utils/ModalPresentationContext';
-@@ -164,6 +164,28 @@ function CardContainer({
-   };
- 
-   const { colors } = useTheme();
-+  const [isScreenReaderEnabled, setIsScreenReaderEnabled] =
-+    React.useState(false);
-+
+-import { StyleSheet, View } from 'react-native';
++import { AccessibilityInfo, StyleSheet, View } from 'react-native';
+ import { ModalPresentationContext } from "../../utils/ModalPresentationContext.js";
+ import { useKeyboardManager } from "../../utils/useKeyboardManager.js";
+ import { Card } from "./Card.js";
+@@ -134,6 +134,20 @@ function CardContainerInner({
+   const {
+     colors
+   } = useTheme();
++  const [isScreenReaderEnabled, setIsScreenReaderEnabled] = React.useState(false);
 +  React.useEffect(() => {
 +    let isMounted = true;
-+
 +    AccessibilityInfo.isScreenReaderEnabled().then(enabled => {
 +      if (isMounted) {
 +        setIsScreenReaderEnabled(enabled);
 +      }
 +    });
-+
-+    const subscription = AccessibilityInfo.addEventListener(
-+      'screenReaderChanged',
-+      setIsScreenReaderEnabled
-+    );
-+
++    const subscription = AccessibilityInfo.addEventListener('screenReaderChanged', setIsScreenReaderEnabled);
 +    return () => {
 +      isMounted = false;
 +      subscription.remove();
 +    };
 +  }, []);
- 
-   const [pointerEvents, setPointerEvents] = React.useState<'box-none' | 'none'>(
-     'box-none'
-@@ -197,6 +219,7 @@ function CardContainer({
+   React.useEffect(() => {
+     const listener = scene.progress.next?.addListener?.(({
+       value
+@@ -160,6 +174,7 @@ function CardContainerInner({
      gestureVelocityImpact,
      headerMode,
      headerShown,
 +    headerTransparent,
-     transitionSpec,
+     transitionSpec
    } = scene.descriptor.options;
- 
-@@ -299,6 +322,14 @@ function CardContainer({
-                 getPreviousScene,
-                 getFocusedRoute,
-                 onContentHeightChange: onHeaderHeightChange,
-+                style: [
-+                  headerTransparent && isScreenReaderEnabled
-+                    ? {
-+                        // Specify an explicit min height for Android screen readers
-+                        minHeight: headerHeight,
-+                      }
-+                    : null,
-+                ],
-               })
-             : null}
-         </ModalPresentationContext.Provider>
+   const {
+@@ -242,7 +257,10 @@ function CardContainerInner({
+             getFocusedRoute,
+             contentHeight: headerHeight,
+             onContentHeightChange: onHeaderHeightChange,
+-            style: styles.header
++            style: [styles.header, headerTransparent && isScreenReaderEnabled ? {
++              // Specify an explicit min height for Android screen readers
++              minHeight: headerHeight
++            } : null]
+           }) : null, /*#__PURE__*/_jsx(View, {
+             style: styles.scene,
+             children: /*#__PURE__*/_jsx(HeaderBackContext.Provider, {
