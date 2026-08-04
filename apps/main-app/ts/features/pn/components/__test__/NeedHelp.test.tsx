@@ -35,7 +35,8 @@ describe("NeedHelp", () => {
       fireEvent.press(listItemAction);
 
       expect(mockPresent.mock.calls.length).toBe(1);
-      expect(mockPresent.mock.calls[0].length).toBe(0);
+      // ListItemAction forwards the press event to `onPress`
+      expect(mockPresent.mock.calls[0].length).toBe(1);
     });
     it("Should open the external url upon tap on the bottom-sheet action", () => {
       const customerServiceUrl = "https://an.url/toCustomService";
