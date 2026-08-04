@@ -68,7 +68,7 @@ export const migrationKeyTagFunctional = (
 export const migrationKeyTagToStringUndefined = (
   state: PersistedState
 ): PersistedLollipopState => {
-  const castedPeviousState = state as unknown as PersistedLollipopStateV0V1;
+  const castedPeviousState = state as PersistedLollipopStateV0V1;
   return {
     ...castedPeviousState,
     keyTag: O.toUndefined(castedPeviousState.keyTag)
