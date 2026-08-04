@@ -33,7 +33,7 @@ const useIDPLogo = (logo: IDPLogoColorMode): ImageSourcePropType => {
 
   const logoIDPLightMode = addCacheTimestampToUri(logo.light);
 
-  if (!logo.dark) {
+  if (logo.dark == null) {
     return logoIDPLightMode;
   }
 

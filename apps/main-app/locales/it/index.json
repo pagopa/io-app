@@ -1863,7 +1863,8 @@
             "suspended": {
               "action": "Scopri di più",
               "title": "La tua Patente di guida risulta non valida."
-            }
+            },
+            "title": "Lo sapevi?"
           },
           "statusAction": "Cosa posso fare?"
         },
