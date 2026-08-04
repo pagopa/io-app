@@ -6,8 +6,15 @@ import { useEffect } from "react";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { capitalize } from "../../../../utils/strings";
-import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
-import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
+import {
+  idPayInitiativesFromInstrumentGet,
+  idPayWalletGet
+} from "../../../idpay/wallet/store/actions";
+import {
+  idPayAreInitiativesFromInstrumentLoadingSelector,
+  idPayHasPairableInitiativesSelector,
+  idPayWalletInitiativeListSelector
+} from "../../../idpay/wallet/store/reducers";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import { getPaymentCardPropsFromWalletInfo } from "../../common/utils";
 import { PaymentsMethodDetailsBaseScreenComponent } from "../components/PaymentsMethodDetailsBaseScreenComponent";
@@ -40,6 +47,18 @@ const PaymentsMethodDetailsScreen = () => {
   const areIdpayInitiativesLoading = useIOSelector(
     idPayAreInitiativesFromInstrumentLoadingSelector
   );
+  const idPayWalletInitiativesPot = useIOSelector(
+    idPayWalletInitiativeListSelector
+  );
+  // `idPayWalletInitiativesPot` is a new object reference on every
+  // dispatch so this is needed to prevent re-triggering state update on every
+  // event
+  const isIdPayWalletInitiativesUnfetched = pot.isNone(
+    idPayWalletInitiativesPot
+  );
+  const hasPairableInitiatives = useIOSelector(
+    idPayHasPairableInitiativesSelector
+  );
 
   const isLoading =
     pot.isLoading(walletDetailsPot) ||
@@ -48,14 +67,34 @@ const PaymentsMethodDetailsScreen = () => {
 
   useEffect(() => {
     dispatch(paymentsGetMethodDetailsAction.request({ walletId }));
-    if (isIdpayEnabled) {
+  }, [walletId, dispatch]);
+
+  useEffect(() => {
+    if (!isIdpayEnabled) {
+      return;
+    }
+    if (isIdPayWalletInitiativesUnfetched) {
+      // Ensure the IDPay wallet is fetched even when this screen is reached
+      // without going through the Wallet home first (e.g. from the Payments
+      // tab), since that data drives the pairable-initiatives check below.
+      dispatch(idPayWalletGet.request());
+      return;
+    }
+    // (see idPayHasPairableInitiativesSelector)
+    if (hasPairableInitiatives) {
       dispatch(
         idPayInitiativesFromInstrumentGet.request({
           idWallet: walletId
         })
       );
     }
-  }, [walletId, dispatch, isIdpayEnabled]);
+  }, [
+    walletId,
+    dispatch,
+    isIdpayEnabled,
+    isIdPayWalletInitiativesUnfetched,
+    hasPairableInitiatives
+  ]);
 
   if (isLoading) {
     return (

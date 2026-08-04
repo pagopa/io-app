@@ -3,7 +3,10 @@ import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { StatusEnum as InitiativeStatus } from "../../../../../../definitions/idpay/InitiativeDTO";
+import {
+  InitiativeRewardTypeEnum,
+  StatusEnum as InitiativeStatus
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import { StatusEnum as InstrumentInitiativeStatus } from "../../../../../../definitions/idpay/InitiativesStatusDTO";
 import { InitiativesWithInstrumentDTO } from "../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 import { ListUsersOnboardingStatusDTO } from "../../../../../../definitions/idpay/ListUsersOnboardingStatusDTO";
@@ -169,6 +172,24 @@ export const idPayWalletSubscribedInitiativeListSelector = createSelector(
   initiativeListPot =>
     pot.map(initiativeListPot, list =>
       list.filter(({ status }) => status !== InitiativeStatus.UNSUBSCRIBED)
+    )
+);
+
+/**
+ * Used to avoid polling instrument specific initiatives
+ * (`getInitiativesWithInstrument`) when the user has none compatible.
+ */
+export const idPayHasPairableInitiativesSelector = createSelector(
+  idPayWalletSubscribedInitiativeListSelector,
+  initiativeListPot =>
+    pot.getOrElse(
+      pot.map(initiativeListPot, list =>
+        list.some(
+          ({ initiativeRewardType }) =>
+            initiativeRewardType !== InitiativeRewardTypeEnum.EXPENSE
+        )
+      ),
+      false
     )
 );
 

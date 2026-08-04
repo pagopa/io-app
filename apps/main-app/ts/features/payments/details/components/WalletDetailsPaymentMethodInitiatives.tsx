@@ -12,7 +12,10 @@ import {
   idPayInitiativesFromInstrumentRefreshStart,
   idPayInitiativesFromInstrumentRefreshStop
 } from "../../../idpay/wallet/store/actions";
-import { idPayEnabledInitiativesFromInstrumentSelector } from "../../../idpay/wallet/store/reducers";
+import {
+  idPayEnabledInitiativesFromInstrumentSelector,
+  idPayHasPairableInitiativesSelector
+} from "../../../idpay/wallet/store/reducers";
 import { PaymentsMethodDetailsRoutes } from "../navigation/routes";
 
 type Props = Pick<ComponentProps<typeof View>, "style"> & {
@@ -31,8 +34,14 @@ const WalletDetailsPaymentMethodInitiatives = (
   const idWalletString = props.paymentMethod.walletId;
 
   const dispatch = useIODispatch();
+  const hasPairableInitiatives = useIOSelector(
+    idPayHasPairableInitiativesSelector
+  );
 
   const startInitiativeRefreshPolling = useCallback(() => {
+    if (!hasPairableInitiatives) {
+      return undefined;
+    }
     dispatch(
       idPayInitiativesFromInstrumentRefreshStart({
         idWallet: idWalletString
@@ -41,7 +50,7 @@ const WalletDetailsPaymentMethodInitiatives = (
     return () => {
       dispatch(idPayInitiativesFromInstrumentRefreshStop());
     };
-  }, [idWalletString, dispatch]);
+  }, [idWalletString, dispatch, hasPairableInitiatives]);
 
   useFocusEffect(startInitiativeRefreshPolling);
 
