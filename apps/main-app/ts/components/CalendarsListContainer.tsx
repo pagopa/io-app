@@ -60,8 +60,9 @@ const CalendarsListContainer = ({
     Calendar.Calendar | undefined
   >(defaultCalendar);
 
-  const fetchCalendars = useCallback(() => {
+  const fetchCalendars = useCallback(async () => {
     setCalendarsByAccount(pot.noneLoading);
+    await Calendar.requestRemindersPermissionsAsync();
     // Fetch user calendars.
     Calendar.getCalendarsAsync()
       .then(calendars => {
@@ -128,7 +129,7 @@ const CalendarsListContainer = ({
   );
 
   useEffect(() => {
-    fetchCalendars();
+    void fetchCalendars();
   }, [fetchCalendars]);
 
   return (

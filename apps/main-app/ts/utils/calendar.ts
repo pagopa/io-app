@@ -68,10 +68,12 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
     }
 
     // if not returned yet, we can ask for the authorization
-    const { status: newStatus } =
+    const { status: calendarStatus } =
       await Calendar.requestCalendarPermissionsAsync();
+    const { status: remindersStatus } =
+      await Calendar.requestRemindersPermissionsAsync();
     return {
-      authorized: newStatus === "granted",
+      authorized: calendarStatus === "granted" && remindersStatus === "granted",
       asked: true
     };
   } catch {
@@ -217,15 +219,21 @@ export const removeCalendarEventFromDeviceCalendar = (
  * @returns a boolean that is true if the permission is granted
  */
 export const requestCalendarPermission = async (): Promise<boolean> => {
-  const { status: checkResult } =
-    await Calendar.requestCalendarPermissionsAsync();
-  if (checkResult === "granted") {
+  const { status: calendarResult } =
+    await Calendar.getCalendarPermissionsAsync();
+  const { status: reminderResult } =
+    await Calendar.getRemindersPermissionsAsync();
+  if (calendarResult === "granted" && reminderResult === "granted") {
     return true;
   }
 
-  const { status: requestStatus } =
+  const { status: requestCalendarStatus } =
     await Calendar.requestCalendarPermissionsAsync();
-  return requestStatus === "granted";
+  const { status: requestReminderStatus } =
+    await Calendar.requestRemindersPermissionsAsync();
+  return (
+    requestCalendarStatus === "granted" && requestReminderStatus === "granted"
+  );
 };
 
 /**
