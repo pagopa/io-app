@@ -2,7 +2,12 @@ import * as O from "fp-ts/lib/Option";
 
 import { OneIdentityConfig } from "../../../../../../../definitions/content/OneIdentityConfig";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { oneIdentityRolloutPercentageSelector } from "../remoteConfig";
+import {
+  FALLBACK_ONE_IDENTITY_IDPS_URL_PROD,
+  FALLBACK_ONE_IDENTITY_IDPS_URL_UAT,
+  oneIdentityIdpsUrlSelector,
+  oneIdentityRolloutPercentageSelector
+} from "../remoteConfig";
 
 const makeState = (oneIdentity?: OneIdentityConfig): GlobalState =>
   ({
@@ -23,4 +28,72 @@ describe("oneIdentityRolloutPercentageSelector", () => {
       oneIdentityRolloutPercentageSelector(makeState({ rolloutPercentage: 75 }))
     ).toBe(75);
   });
+});
+
+describe("oneIdentityIdpsUrlSelector", () => {
+  const remoteProdUrl = "https://remote-prod.example.com/idps";
+  const remoteUatUrl = "https://remote-uat.example.com/idps";
+
+  const scenarios = [
+    {
+      name: "remoteConfig is none",
+      statePayload: undefined,
+      env: "prod",
+      expected: FALLBACK_ONE_IDENTITY_IDPS_URL_PROD
+    },
+    {
+      name: "remoteConfig is none",
+      statePayload: undefined,
+      env: "uat",
+      expected: FALLBACK_ONE_IDENTITY_IDPS_URL_UAT
+    },
+    {
+      name: "environments is absent",
+      statePayload: {},
+      env: "prod",
+      expected: FALLBACK_ONE_IDENTITY_IDPS_URL_PROD
+    },
+    {
+      name: "environments is absent",
+      statePayload: {},
+      env: "uat",
+      expected: FALLBACK_ONE_IDENTITY_IDPS_URL_UAT
+    },
+    {
+      name: "the environment is empty",
+      statePayload: { environments: { prod: {} } },
+      env: "prod",
+      expected: FALLBACK_ONE_IDENTITY_IDPS_URL_PROD
+    },
+    {
+      name: "the environment is empty",
+      statePayload: { environments: { uat: {} } },
+      env: "uat",
+      expected: FALLBACK_ONE_IDENTITY_IDPS_URL_UAT
+    },
+    {
+      name: "the remote idpsUrl is present",
+      statePayload: { environments: { prod: { idpsUrl: remoteProdUrl } } },
+      env: "prod",
+      expected: remoteProdUrl
+    },
+    {
+      name: "the remote idpsUrl is present",
+      statePayload: { environments: { uat: { idpsUrl: remoteUatUrl } } },
+      env: "uat",
+      expected: remoteUatUrl
+    }
+  ];
+
+  it.each(scenarios)(
+    "should return the expected url when $name for '$env' env",
+    ({ statePayload, env, expected }) => {
+      expect(
+        oneIdentityIdpsUrlSelector(
+          makeState(statePayload),
+          env as "prod" | "uat"
+        )
+      ).toBe(expected);
+    }
+  );
 });
