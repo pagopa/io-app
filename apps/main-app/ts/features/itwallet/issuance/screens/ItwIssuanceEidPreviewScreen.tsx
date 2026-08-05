@@ -95,7 +95,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
       if (identification) {
         trackItwRequestSuccess(
           toItwIdMethod(identification),
-          identification.level,
+          isL3 ? "L3" : identification.level,
           isL3 ? "L3" : "L2"
         );
       }
