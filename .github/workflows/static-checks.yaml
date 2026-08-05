@@ -47,6 +47,13 @@ jobs:
           # travels with the report.
           jq -n --arg pr "$PR_NUMBER" --arg base "$(git rev-parse HEAD^1)" \
             '{pr: $pr, base: $base}' > knip-pr/meta.json
+      # TEMPORARY: previews how a run-level annotation renders on the PR.
+      # Fires unconditionally on purpose. Remove before merging.
+      - id: annotation-preview
+        name: Annotation preview
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "::warning::Knip could not run; unused-code report skipped for this PR"
       - id: upload-knip
         name: Upload the unused-code report
         # The comment is posted by the Unused code report workflow, not here:
