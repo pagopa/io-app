@@ -203,16 +203,12 @@ function* generateCryptoKeyPair(keyTag: string) {
 
 export const generateKeyInfo = (
   keyTag: string | undefined,
-  maybePublicKey: O.Option<PublicKey>
+  maybePublicKey: PublicKey | undefined
 ) => {
-  if (!keyTag) {
+  if (!keyTag || maybePublicKey == null) {
     return defaultKeyInfo();
   }
-  return pipe(
-    maybePublicKey,
-    O.map(publicKey => keyInfoFromKeyTagAndPublicKey(keyTag, publicKey)),
-    O.getOrElse(defaultKeyInfo)
-  );
+  return keyInfoFromKeyTagAndPublicKey(keyTag, maybePublicKey);
 };
 
 const keyInfoFromKeyTagAndPublicKey = (
