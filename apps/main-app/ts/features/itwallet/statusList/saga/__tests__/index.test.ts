@@ -12,19 +12,9 @@ import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskS
 import { updateCredentialsStatusSaga } from "../updateCredentialsStatusSaga";
 
 describe("watchItwStatusListAuthenticatedSaga", () => {
-  it("stops when Status List is unsupported", () => {
+  it("registers the background fetch task", () => {
     testSaga(watchItwStatusListAuthenticatedSaga)
       .next()
-      .select(selectItwSpecsVersion)
-      .next("1.0.0")
-      .isDone();
-  });
-
-  it("registers the background fetch task when Status List is supported", () => {
-    testSaga(watchItwStatusListAuthenticatedSaga)
-      .next()
-      .select(selectItwSpecsVersion)
-      .next("1.3.3")
       .fork(registerStatusListFetchTaskSaga)
       .next()
       .isDone();

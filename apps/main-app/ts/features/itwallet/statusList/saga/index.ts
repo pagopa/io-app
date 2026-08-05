@@ -10,13 +10,6 @@ import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSa
 import { updateCredentialsStatusSaga } from "./updateCredentialsStatusSaga";
 
 export function* watchItwStatusListAuthenticatedSaga(): SagaIterator {
-  const itwSpecsVersion = yield* select(selectItwSpecsVersion);
-  const ioWallet = getIoWallet(itwSpecsVersion);
-
-  if (!ioWallet.CredentialStatus.statusList.isSupported) {
-    return;
-  }
-
   // Register the background task for Status List fetch only for active wallet instances
   yield* fork(registerStatusListFetchTaskSaga);
 }
