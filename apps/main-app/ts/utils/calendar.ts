@@ -70,10 +70,8 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
     // if not returned yet, we can ask for the authorization
     const { status: calendarStatus } =
       await Calendar.requestCalendarPermissionsAsync();
-    const { status: remindersStatus } =
-      await Calendar.requestRemindersPermissionsAsync();
     return {
-      authorized: calendarStatus === "granted" && remindersStatus === "granted",
+      authorized: calendarStatus === "granted",
       asked: true
     };
   } catch {
@@ -229,11 +227,7 @@ export const requestCalendarPermission = async (): Promise<boolean> => {
 
   const { status: requestCalendarStatus } =
     await Calendar.requestCalendarPermissionsAsync();
-  const { status: requestReminderStatus } =
-    await Calendar.requestRemindersPermissionsAsync();
-  return (
-    requestCalendarStatus === "granted" && requestReminderStatus === "granted"
-  );
+  return requestCalendarStatus === "granted";
 };
 
 /**

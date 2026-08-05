@@ -62,9 +62,8 @@ const CalendarsListContainer = ({
 
   const fetchCalendars = useCallback(async () => {
     setCalendarsByAccount(pot.noneLoading);
-    await Calendar.requestRemindersPermissionsAsync();
     // Fetch user calendars.
-    Calendar.getCalendarsAsync()
+    Calendar.getCalendarsAsync("event")
       .then(calendars => {
         // Filter out only calendars that allow modifications
         const organizedCalendars = pot.some(
