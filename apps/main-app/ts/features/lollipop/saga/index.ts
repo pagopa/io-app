@@ -48,9 +48,9 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
   if (O.isSome(maybeSessionInformation) && publicKey) {
     const publicKeyThumbprint = toBase64EncodedThumbprint(publicKey);
     const localAssertionRef = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`;
-    const areTheSame =
+    const doesLocalAssertionRefMatchSession =
       localAssertionRef === maybeSessionInformation.value.lollipopAssertionRef;
-    if (areTheSame) {
+    if (doesLocalAssertionRefMatchSession) {
       return true;
     }
   }
