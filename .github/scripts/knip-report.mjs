@@ -79,18 +79,20 @@ const readReport = path => {
   }
 };
 
-const renderSection = (title, ids, findings) => {
-  if (ids.length === 0) return "";
+const renderList = (ids, findings) => {
   const shown = ids.slice(0, MAX_ITEMS_PER_SECTION);
   const rest = ids.length - shown.length;
   const lines = shown.map(id => `- ${findings.get(id)}`);
   if (rest > 0) lines.push(`- …and ${rest} more`);
-  return `${title}\n\n${lines.join("\n")}\n\n`;
+  return `${lines.join("\n")}\n\n`;
 };
 
-const buildBody = ({ added, removed, headFindings }) => {
+const renderSection = (title, ids, findings) =>
+  ids.length === 0 ? "" : `${title}\n\n${renderList(ids, findings)}`;
+
+const buildBody = ({ added, removed, headFindings, baseFindings }) => {
   const heading = `${MARKER}\n### Unused code check\n\n`;
-  const footer = `<sub>Advisory only. This check never blocks a merge.</sub>\n`;
+  const footer = `<sub>Advisory only. This check never blocks a merge. A renamed or moved item counts on both sides.</sub>\n`;
 
   if (added.length === 0 && removed.length === 0) {
     return `${heading}Everything this check flagged earlier is now clear.\n\n${footer}`;
@@ -118,12 +120,12 @@ const buildBody = ({ added, removed, headFindings }) => {
   }
 
   if (removed.length > 0) {
-    // "also" only reads correctly when a findings section precedes it.
-    body += `This branch ${added.length > 0 ? "also " : ""}cleaned up **${
-      removed.length
-    } previously unused ${
-      removed.length === 1 ? "item" : "items"
-    }**. Thanks!\n\n`;
+    // "Also" only reads correctly when a findings section precedes it.
+    body +=
+      `${added.length > 0 ? "Also, " : ""}**${removed.length} previously ` +
+      `reported ${removed.length === 1 ? "item is" : "items are"} no longer ` +
+      `flagged as unused**, having been either referenced or removed:\n\n` +
+      renderList(removed, baseFindings);
   }
 
   body += footer;
@@ -206,7 +208,7 @@ const main = async () => {
 
   console.log(`new: ${added.length}, resolved: ${removed.length}`);
 
-  const body = buildBody({ added, removed, headFindings });
+  const body = buildBody({ added, removed, headFindings, baseFindings });
   const hasFindingsToReport = added.length > 0 || removed.length > 0;
 
   await upsertComment(repo, prNumber, body, hasFindingsToReport);
