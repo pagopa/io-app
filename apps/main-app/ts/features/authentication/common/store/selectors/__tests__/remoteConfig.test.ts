@@ -3,8 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { OneIdentityConfig } from "../../../../../../../definitions/content/OneIdentityConfig";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
-  FALLBACK_ONE_IDENTITY_IDPS_URL_PROD,
-  FALLBACK_ONE_IDENTITY_IDPS_URL_UAT,
+  FALLBACK_ONE_IDENTITY_IDPS_URLS,
   oneIdentityIdpsUrlSelector,
   oneIdentityRolloutPercentageSelector
 } from "../remoteConfig";
@@ -39,37 +38,37 @@ describe("oneIdentityIdpsUrlSelector", () => {
       name: "remoteConfig is none",
       statePayload: undefined,
       env: "prod",
-      expected: FALLBACK_ONE_IDENTITY_IDPS_URL_PROD
+      expected: FALLBACK_ONE_IDENTITY_IDPS_URLS.prod
     },
     {
       name: "remoteConfig is none",
       statePayload: undefined,
       env: "uat",
-      expected: FALLBACK_ONE_IDENTITY_IDPS_URL_UAT
+      expected: FALLBACK_ONE_IDENTITY_IDPS_URLS.uat
     },
     {
       name: "environments is absent",
       statePayload: {},
       env: "prod",
-      expected: FALLBACK_ONE_IDENTITY_IDPS_URL_PROD
+      expected: FALLBACK_ONE_IDENTITY_IDPS_URLS.prod
     },
     {
       name: "environments is absent",
       statePayload: {},
       env: "uat",
-      expected: FALLBACK_ONE_IDENTITY_IDPS_URL_UAT
+      expected: FALLBACK_ONE_IDENTITY_IDPS_URLS.uat
     },
     {
       name: "the environment is empty",
       statePayload: { environments: { prod: {} } },
       env: "prod",
-      expected: FALLBACK_ONE_IDENTITY_IDPS_URL_PROD
+      expected: FALLBACK_ONE_IDENTITY_IDPS_URLS.prod
     },
     {
       name: "the environment is empty",
       statePayload: { environments: { uat: {} } },
       env: "uat",
-      expected: FALLBACK_ONE_IDENTITY_IDPS_URL_UAT
+      expected: FALLBACK_ONE_IDENTITY_IDPS_URLS.uat
     },
     {
       name: "the remote idpsUrl is present",

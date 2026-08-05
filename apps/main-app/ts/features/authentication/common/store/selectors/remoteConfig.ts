@@ -18,20 +18,13 @@ export const oneIdentityRolloutPercentageSelector = (state: GlobalState) => {
   return oneIdentityConfig?.rolloutPercentage ?? 0;
 };
 
-export const FALLBACK_ONE_IDENTITY_IDPS_URL_PROD =
-  "https://io.oneid.pagopa.it/idps";
-export const FALLBACK_ONE_IDENTITY_IDPS_URL_UAT =
-  "https://uat.io.oneid.pagopa.it/idps";
-
 /**
- * Returns the fallback OneIdentity IDPs list URL for the given environment.
- * @param env The OneIdentity environment.
- * @returns The fallback OneIdentity IDPs list URL for the given environment.
+ * Fallback OneIdentity IDPs list URL for each environment.
  */
-const fallbackOneIdentityIdpsUrl = (env: OneIdentityEnv) =>
-  env === "uat"
-    ? FALLBACK_ONE_IDENTITY_IDPS_URL_UAT
-    : FALLBACK_ONE_IDENTITY_IDPS_URL_PROD;
+export const FALLBACK_ONE_IDENTITY_IDPS_URLS: Record<OneIdentityEnv, string> = {
+  prod: "https://io.oneid.pagopa.it/idps",
+  uat: "https://uat.io.oneid.pagopa.it/idps"
+};
 
 /**
  * Retrieves the OneIdentity IDPs list URL for the given environment.
@@ -43,6 +36,6 @@ export const oneIdentityIdpsUrlSelector = (
   const oneIdentityConfig = oneIdentityRemoteConfigSelector(state);
   return (
     oneIdentityConfig?.environments?.[env]?.idpsUrl ??
-    fallbackOneIdentityIdpsUrl(env)
+    FALLBACK_ONE_IDENTITY_IDPS_URLS[env]
   );
 };
