@@ -2,6 +2,7 @@ import { SagaIterator } from "redux-saga";
 import { takeLeading } from "typed-redux-saga/macro";
 
 import {
+  itwCredentialsConsumeInstance,
   itwCredentialsRefreshStatusByType,
   itwCredentialsRemoveByType,
   itwCredentialsReplaceByType,
@@ -9,6 +10,7 @@ import {
   itwCredentialsStoreBundle
 } from "../store/actions";
 import { handleCredentialStatusAssertionRetry } from "./checkCredentialsStatusAssertion";
+import { handleItwCredentialsConsumeInstanceSaga } from "./handleItwCredentialsConsumeInstanceSaga";
 import { handleItwCredentialsRemoveByTypeSaga } from "./handleItwCredentialsRemoveByTypeSaga";
 import { handleItwCredentialsReplaceByTypeSaga } from "./handleItwCredentialsReplaceByTypeSaga";
 import { handleItwCredentialsStoreBundleSaga } from "./handleItwCredentialsStoreBundleSaga";
@@ -31,5 +33,9 @@ export function* watchItwCredentialsSaga(): SagaIterator {
   yield* takeLeading(
     itwCredentialsRefreshStatusByType,
     handleCredentialStatusAssertionRetry
+  );
+  yield* takeLeading(
+    itwCredentialsConsumeInstance,
+    handleItwCredentialsConsumeInstanceSaga
   );
 }
