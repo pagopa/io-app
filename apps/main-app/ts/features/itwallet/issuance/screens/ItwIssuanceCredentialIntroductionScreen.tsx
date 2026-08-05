@@ -12,9 +12,12 @@ import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { Image, StyleSheet, View } from "react-native";
 
+import type { CredentialIssuanceMode } from "../../machine/credential/context";
+
 import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
@@ -26,6 +29,7 @@ import {
   selectCredentialTypeOption,
   selectIsLoading
 } from "../../machine/credential/selectors";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 import {
   trackItwCredentialIntro,
   trackItwCredentialStartIssuing
@@ -33,22 +37,50 @@ import {
 
 const introHeroUri = Image.resolveAssetSource(introHeroSource).uri;
 
-export const ItwIssuanceCredentialIntroductionScreen = () => {
+export type ItwIssuanceCredentialIntroductionNavigationParams = {
+  animationEnabled?: boolean;
+  credentialType?: string;
+  mode?: CredentialIssuanceMode;
+};
+
+type ScreenProps = IOStackNavigationRouteProps<
+  ItwParamsList,
+  "ITW_ISSUANCE_CREDENTIAL_INTRODUCTION"
+>;
+
+export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
+  const { credentialType, mode } = props.route.params ?? {};
+
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
 
   useHeaderSecondLevel({
-    title: "",
-    goBack: () => machineRef.send({ type: "back" })
+    title: ""
   });
+
+  // Send the requested credential type to the machine when the issuance flow
+  // directly starts from this screen and not from the credentials catalog.
+  useFocusEffect(
+    useCallback(() => {
+      if (credentialType) {
+        machineRef.send({
+          type: "select-credential",
+          credentialType,
+          mode: mode ?? "issuance"
+        });
+      }
+    }, [credentialType, machineRef, mode])
+  );
 
   return pipe(
     credentialTypeOption,
     O.fold(
       () => <ItwGenericErrorContent />, // This should never happen
-      credentialType => <ContentView credentialType={credentialType} />
+      resolvedCredentialType => (
+        <ContentView credentialType={resolvedCredentialType} />
+      )
     )
   );
 };

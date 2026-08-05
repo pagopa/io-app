@@ -6,6 +6,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types.ts";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
 import { ItwStoredCredentialsMocks } from "../../../../common/utils/itwMocksUtils.ts";
+import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils.ts";
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
 import { ItwPresentationClaimsSection } from "../ItwPresentationClaimsSection.tsx";
 
@@ -26,16 +27,32 @@ describe("ItwPresentationClaimsSection", () => {
     fireEvent(toggleButton, "onPress");
     expect(component).toMatchSnapshot();
   });
+
+  it("should not render the European Disability Card QR code in the claims list", () => {
+    const component = renderComponent(ItwStoredCredentialsMocks.dc);
+
+    expect(component.queryByLabelText("QR Code")).toBeNull();
+  });
+
+  it("should expose the European Disability Card validity status to screen readers", () => {
+    const component = renderComponent(ItwStoredCredentialsMocks.dc);
+
+    expect(
+      component.getByLabelText("Scadenza; 23/03/2032; Valida")
+    ).toBeTruthy();
+  });
 });
 
-function renderComponent() {
+function renderComponent(
+  credential: CredentialMetadata = ItwStoredCredentialsMocks.ts
+) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwPresentationClaimsSection
         credential={{
-          ...ItwStoredCredentialsMocks.ts,
+          ...credential,
           jwt: { expiration: "2100-01-01T00:00:00Z" }
         }}
       />

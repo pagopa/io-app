@@ -8,6 +8,7 @@ import { SETTINGS_ROUTES } from "../routes";
 export type SettingsParamsList = {
   [SETTINGS_ROUTES.APP_FEEDBACK_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
+  [SETTINGS_ROUTES.AUTHENTICATION_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.BOTTOM_SHEET_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.CGN_LANDING_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.CIE_PLAYGROUND]: undefined;
