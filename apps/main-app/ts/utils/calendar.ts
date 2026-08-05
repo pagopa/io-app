@@ -219,9 +219,8 @@ export const removeCalendarEventFromDeviceCalendar = (
 export const requestCalendarPermission = async (): Promise<boolean> => {
   const { status: calendarResult } =
     await Calendar.getCalendarPermissionsAsync();
-  const { status: reminderResult } =
-    await Calendar.getRemindersPermissionsAsync();
-  if (calendarResult === "granted" && reminderResult === "granted") {
+
+  if (calendarResult === "granted") {
     return true;
   }
 
