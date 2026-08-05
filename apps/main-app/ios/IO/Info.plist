@@ -78,6 +78,8 @@
     <string>IO richiede l'accesso al Bluetooth per completare la verifica dei documenti</string>
     <key>NSCalendarsFullAccessUsageDescription</key>
     <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
+    <key>NSRemindersFullAccessUsageDescription</key>
+    <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
     <key>NSCameraUsageDescription</key>
     <string>You’ll be able to read QR codes and pay pagoPA notices.</string>
     <key>NSContactsUsageDescription</key>
