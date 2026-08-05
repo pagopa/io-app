@@ -167,5 +167,3 @@ export const itwCredentialUpgradeMachine = setup({
     failedCredentials: context.failedCredentials
   })
 });
-
-export type ItwCredentialUpgradeMachine = typeof itwCredentialUpgradeMachine;

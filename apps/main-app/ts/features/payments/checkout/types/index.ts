@@ -12,6 +12,4 @@ export type PaymentStartOrigin =
   | "poste_datamatrix_scan"
   | "qrcode_scan";
 
-export type TextInputValidationRefProps = { validateInput: () => void };
-
 export type WalletPaymentPspSortType = "amount" | "default" | "name";

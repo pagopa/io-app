@@ -12,7 +12,7 @@ import { StyleSheet, View } from "react-native";
 import { WithTestID } from "../../../../../types/WithTestID";
 import { CardPressableBase } from "../../../../services/common/components/CardPressableBase";
 
-export type CgnMerchantCardProps = WithTestID<{
+type CgnMerchantCardProps = WithTestID<{
   accessibilityLabel?: string;
   backgroundColor: string;
   icon: IOCategoryIcons;

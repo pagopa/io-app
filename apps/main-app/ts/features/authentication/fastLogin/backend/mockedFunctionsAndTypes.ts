@@ -4,7 +4,6 @@
 import {
   composeResponseDecoders as compD,
   ioResponseDecoder as ioD,
-  IPostApiRequestType,
   IResponseType,
   ResponseDecoder
 } from "@pagopa/ts-commons/lib/requests";
@@ -17,13 +16,6 @@ import { ProblemJson } from "../../../../../definitions/backend/ProblemJson";
 export const NonceResponse = t.interface({
   nonce: t.string
 });
-
-export type GetNonceT = IPostApiRequestType<
-  never,
-  "Content-Type",
-  never,
-  NonceBaseResponseType<NonceResponse>
->;
 
 export type NonceBaseResponseType<R> =
   | IResponseType<200, R>

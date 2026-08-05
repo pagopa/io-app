@@ -22,7 +22,6 @@ const NfcAntennaInfoSchema = z.object({
   isDeviceFoldable: z.boolean()
 });
 
-export type AvailableNfcAntenna = z.infer<typeof AvailableNfcAntennaSchema>;
 export type NfcAntennaInfo = z.infer<typeof NfcAntennaInfoSchema>;
 
 function getUnsupportedPlatformNfcInfo(): Promise<NfcAntennaInfo> {
