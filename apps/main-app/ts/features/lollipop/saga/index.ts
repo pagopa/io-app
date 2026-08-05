@@ -45,26 +45,26 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
   publicKey: PublicKey | undefined,
   maybeSessionInformation: O.Option<PublicSession>
 ) {
-  const lollipopCheckResult =
-    O.isSome(maybeSessionInformation) && publicKey != null
-      ? `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toBase64EncodedThumbprint(publicKey)}` ===
-        maybeSessionInformation.value.lollipopAssertionRef
-      : false;
-
-  if (!lollipopCheckResult) {
-    void mixpanelTrack(
-      "LOGIN_UNEXPECTED_REQUEST_ID",
-      buildEventProperties("KO", undefined)
-    );
-    yield* put(sessionInvalid());
-    // We want to take a little time before restarting the application
-    // to let the action sessionInvalid be dispatched and handled.
-    yield* delay(WAIT_A_BIT_AFTER_SESSION_EXPIRED);
-    yield* call(restartCleanApplication);
-    return false;
+  if (O.isSome(maybeSessionInformation) && publicKey) {
+    const publicKeyThumbprint = toBase64EncodedThumbprint(publicKey);
+    const localAssertionRef = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`;
+    const areTheSame =
+      localAssertionRef === maybeSessionInformation.value.lollipopAssertionRef;
+    if (areTheSame) {
+      return true;
+    }
   }
 
-  return true;
+  void mixpanelTrack(
+    "LOGIN_UNEXPECTED_REQUEST_ID",
+    buildEventProperties("KO", undefined)
+  );
+  yield* put(sessionInvalid());
+  // We want to take a little time before restarting the application
+  // to let the action sessionInvalid be dispatched and handled.
+  yield* delay(WAIT_A_BIT_AFTER_SESSION_EXPIRED);
+  yield* call(restartCleanApplication);
+  return false;
 }
 
 export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
