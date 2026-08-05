@@ -42,30 +42,14 @@ import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 const WAIT_A_BIT_AFTER_SESSION_EXPIRED = 1000 as Millisecond;
 
 export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
-  maybePublicKey: O.Option<PublicKey>,
+  publicKey: PublicKey | undefined,
   maybeSessionInformation: O.Option<PublicSession>
 ) {
-  const lollipopCheckResult = pipe(
-    maybeSessionInformation,
-    O.chainNullableK(
-      sessionInformation => sessionInformation.lollipopAssertionRef
-    ),
-    O.chain(sessionLollipopAssertionRef =>
-      pipe(
-        maybePublicKey,
-        O.map(publicKey =>
-          pipe(
-            toBase64EncodedThumbprint(publicKey),
-            publicKeyThumbprint =>
-              `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`,
-            localLollipopAssertionRef =>
-              localLollipopAssertionRef === sessionLollipopAssertionRef
-          )
-        )
-      )
-    ),
-    O.getOrElse(() => false)
-  );
+  const lollipopCheckResult =
+    O.isSome(maybeSessionInformation) && publicKey != null
+      ? `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toBase64EncodedThumbprint(publicKey)}` ===
+        maybeSessionInformation.value.lollipopAssertionRef
+      : false;
 
   if (!lollipopCheckResult) {
     void mixpanelTrack(
