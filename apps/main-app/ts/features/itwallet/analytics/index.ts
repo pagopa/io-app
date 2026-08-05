@@ -1,3 +1,5 @@
+import type { IdentificationContext } from "../machine/eid/context";
+
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 import {
@@ -349,12 +351,22 @@ export const trackItwRequest = (method?: ItwIdMethod, itw_flow?: ItwFlow) => {
   }
 };
 
+/**
+ * Tracks primary authentication while keeping the CieID level separate from
+ * the normalized `cieid` authentication method.
+ */
 export const trackItwIdAuthenticationCompleted = (
-  ITW_ID_method: ItwIdMethod
+  identification: Exclude<IdentificationContext, { mode: "ciePin" }>
 ) => {
+  const ITW_ID_method =
+    identification.mode === "cieId" ? "cieid" : identification.mode;
+
   void mixpanelTrack(
     ITW_TECH_EVENTS.ITW_ID_AUTHENTICATION_COMPLETED,
-    buildEventProperties("TECH", undefined, { ITW_ID_method })
+    buildEventProperties("TECH", undefined, {
+      ITW_ID_method,
+      itw_auth_level: identification.level
+    })
   );
 };
 
