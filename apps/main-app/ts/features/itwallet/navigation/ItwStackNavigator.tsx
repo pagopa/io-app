@@ -142,7 +142,8 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.DISCOVERY.INFO}
         options={({ route }) => ({
           ...hiddenHeader,
-          animationEnabled: route.params?.animationEnabled
+          animation:
+            route.params?.animationEnabled === false ? "none" : undefined
         })}
       />
       <Stack.Screen
@@ -152,14 +153,15 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         component={withItwEnabled(ItwAlreadyActiveScreen)}
         name={ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN}
-        options={{ ...hiddenHeader, animationEnabled: false }}
+        options={{ ...hiddenHeader, animation: "none" }}
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
         component={ItwIdentificationModeSelectionScreen}
         name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
         options={({ route }) => ({
-          animationEnabled: route.params.animationEnabled
+          animation:
+            route.params.animationEnabled === false ? "none" : undefined
         })}
       />
       <Stack.Screen
@@ -228,7 +230,8 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION}
         options={({ route }) => ({
           ...hiddenHeader,
-          animationEnabled: route.params?.animationEnabled
+          animation:
+            route.params?.animationEnabled === false ? "none" : undefined
         })}
       />
       <Stack.Screen
@@ -236,7 +239,8 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER}
         options={({ route }) => ({
           ...hiddenHeader,
-          animationEnabled: route.params?.animationEnabled
+          animation:
+            route.params?.animationEnabled === false ? "none" : undefined
         })}
       />
       <Stack.Screen
