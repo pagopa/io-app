@@ -44,14 +44,12 @@ export const checkIOPermission = async (
  */
 export const requestWriteCalendarPermission = async (
   rationale?: RNPermissions.Rationale
-) =>
-  Platform.select({
-    android: requestIOPermission(
+) => {
+  if (Platform.OS === "android") {
+    return requestIOPermission(
       RNPermissions.PERMISSIONS.ANDROID.WRITE_CALENDAR,
       rationale
-    ),
-    // react-native-permissions currently has problems on iOS 17.
-    // Use expo-calendar instead
-    ios: Promise.resolve(true),
-    default: Promise.resolve(true)
-  });
+    );
+  }
+  return Promise.resolve(true);
+};
