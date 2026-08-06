@@ -2,15 +2,28 @@ import * as O from "fp-ts/lib/Option";
 
 import { OneIdentityConfig } from "../../../../../../../definitions/content/OneIdentityConfig";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { OneIdentityEnv } from "../../reducers/loginConfig";
 import {
-  FALLBACK_ONE_IDENTITY_IDPS_URLS,
   oneIdentityIdpsUrlSelector,
-  oneIdentityRolloutPercentageSelector
+  oneIdentityRolloutPercentageSelector,
+  testable
 } from "../remoteConfig";
 
-const makeState = (oneIdentity?: OneIdentityConfig): GlobalState =>
+const { FALLBACK_ONE_IDENTITY_IDPS_URLS } = testable!;
+
+const makeState = (
+  oneIdentity?: OneIdentityConfig,
+  oneIdentityEnv: OneIdentityEnv = "prod"
+): GlobalState =>
   ({
-    remoteConfig: oneIdentity === undefined ? O.none : O.some({ oneIdentity })
+    remoteConfig: oneIdentity === undefined ? O.none : O.some({ oneIdentity }),
+    features: {
+      loginFeatures: {
+        loginConfig: {
+          oneIdentityEnv
+        }
+      }
+    }
   }) as GlobalState;
 
 describe("oneIdentityRolloutPercentageSelector", () => {
@@ -89,10 +102,16 @@ describe("oneIdentityIdpsUrlSelector", () => {
     ({ statePayload, env, expected }) => {
       expect(
         oneIdentityIdpsUrlSelector(
-          makeState(statePayload),
-          env as "prod" | "uat"
+          makeState(statePayload, env as OneIdentityEnv)
         )
       ).toBe(expected);
     }
   );
+
+  it("should have the expected hardcoded fallback URLs", () => {
+    expect(FALLBACK_ONE_IDENTITY_IDPS_URLS).toEqual({
+      prod: "https://io.oneid.pagopa.it/idps",
+      uat: "https://uat.io.oneid.pagopa.it/idps"
+    });
+  });
 });

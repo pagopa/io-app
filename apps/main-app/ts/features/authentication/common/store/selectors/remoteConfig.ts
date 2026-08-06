@@ -2,7 +2,9 @@ import * as O from "fp-ts/lib/Option";
 
 import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { isTestEnv } from "../../../../../utils/environment";
 import { OneIdentityEnv } from "../reducers/loginConfig";
+import { oneIdentityEnvSelector } from "./loginConfig";
 
 const oneIdentityRemoteConfigSelector = (state: GlobalState) =>
   O.toUndefined(remoteConfigSelector(state))?.oneIdentity;
@@ -21,21 +23,25 @@ export const oneIdentityRolloutPercentageSelector = (state: GlobalState) => {
 /**
  * Fallback OneIdentity IDPs list URL for each environment.
  */
-export const FALLBACK_ONE_IDENTITY_IDPS_URLS: Record<OneIdentityEnv, string> = {
+const FALLBACK_ONE_IDENTITY_IDPS_URLS: Record<OneIdentityEnv, string> = {
   prod: "https://io.oneid.pagopa.it/idps",
   uat: "https://uat.io.oneid.pagopa.it/idps"
 };
 
 /**
- * Retrieves the OneIdentity IDPs list URL for the given environment.
+ * Retrieves the OneIdentity IDPs list URL for the current OneIdentity environment.
  */
-export const oneIdentityIdpsUrlSelector = (
-  state: GlobalState,
-  env: OneIdentityEnv
-): string => {
+export const oneIdentityIdpsUrlSelector = (state: GlobalState) => {
+  const env = oneIdentityEnvSelector(state);
   const oneIdentityConfig = oneIdentityRemoteConfigSelector(state);
   return (
     oneIdentityConfig?.environments?.[env]?.idpsUrl ??
     FALLBACK_ONE_IDENTITY_IDPS_URLS[env]
   );
 };
+
+export const testable = isTestEnv
+  ? {
+      FALLBACK_ONE_IDENTITY_IDPS_URLS
+    }
+  : undefined;
