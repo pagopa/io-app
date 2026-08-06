@@ -47,8 +47,9 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
   it("waits for authenticated startup before navigating or tracking", () => {
     mockSelectors({ credentialStatus: "valid" });
 
-    renderComponent(StartupStatusEnum.INITIAL);
+    const { getByText } = renderComponent(StartupStatusEnum.INITIAL);
 
+    expect(getByText(I18n.t("global.genericWaiting"))).toBeTruthy();
     expect(mockReplace).not.toHaveBeenCalled();
     expect(mockTrackItwAlreadyHasCredential).not.toHaveBeenCalled();
   });

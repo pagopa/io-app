@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect, useMemo } from "react";
 
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationProp,
@@ -95,16 +96,14 @@ export const ItwIssuanceCredentialLandingScreen = ({
       return;
     }
 
-    if (isCredentialValid) {
-      if (!isEidExpiredOrExpiring) {
-        trackItwAlreadyHasCredential(mixPanelCredential);
-      }
-      // Credential already present and valid, no need to issue it again
+    if (isEidExpiredOrExpiring) {
+      // PID not valid, show PID renewal screen before proceeding with credential issuance
       return;
     }
 
-    if (isEidExpiredOrExpiring) {
-      // PID not valid, show PID renewal screen before proceeding with credential issuance
+    if (isCredentialValid) {
+      trackItwAlreadyHasCredential(mixPanelCredential);
+      // Credential already present and valid, no need to issue it again
       return;
     }
 
@@ -146,6 +145,10 @@ export const ItwIssuanceCredentialLandingScreen = ({
     isEidExpiredOrExpiring,
     mixPanelCredential
   ]);
+
+  if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
+  }
 
   if (isEidExpiredOrExpiring) {
     return (
