@@ -1,8 +1,7 @@
 import { testSaga } from "redux-saga-test-plan";
 
-import { itwCredentialsStore } from "../../../credentials/store/actions";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
@@ -13,7 +12,7 @@ describe("registerStatusListFetchTaskSaga", () => {
   it("registers the fetch task immediately when the wallet is valid", () => {
     testSaga(registerStatusListFetchTaskSaga)
       .next()
-      .select(itwLifecycleIsValidSelector)
+      .select(itwLifecycleIsITWalletValidSelector)
       .next(true)
       .call(registerItwStatusListFetchTask);
   });
@@ -21,9 +20,9 @@ describe("registerStatusListFetchTaskSaga", () => {
   it("waits for wallet activation before registering the fetch task", () => {
     testSaga(registerStatusListFetchTaskSaga)
       .next()
-      .select(itwLifecycleIsValidSelector)
+      .select(itwLifecycleIsITWalletValidSelector)
       .next(false)
-      .take(itwCredentialsStore)
+      .inspect(effect => expect(effect).toMatchObject({ type: "TAKE" }))
       .next()
       .call(registerItwStatusListFetchTask);
   });
@@ -31,7 +30,7 @@ describe("registerStatusListFetchTaskSaga", () => {
   it("registers the fetch task again after reset and reactivation", () => {
     testSaga(registerStatusListFetchTaskSaga)
       .next()
-      .select(itwLifecycleIsValidSelector)
+      .select(itwLifecycleIsITWalletValidSelector)
       .next(true)
       .call(registerItwStatusListFetchTask)
       .next()
@@ -39,8 +38,26 @@ describe("registerStatusListFetchTaskSaga", () => {
       .next()
       .call(unregisterItwStatusListFetchTask)
       .next()
-      .select(itwLifecycleIsValidSelector)
+      .select(itwLifecycleIsITWalletValidSelector)
       .next(true)
+      .call(registerItwStatusListFetchTask);
+  });
+
+  it("waits for credential storage when the wallet is still invalid after reset", () => {
+    testSaga(registerStatusListFetchTaskSaga)
+      .next()
+      .select(itwLifecycleIsITWalletValidSelector)
+      .next(true)
+      .call(registerItwStatusListFetchTask)
+      .next()
+      .take(itwLifecycleStoresReset)
+      .next()
+      .call(unregisterItwStatusListFetchTask)
+      .next()
+      .select(itwLifecycleIsITWalletValidSelector)
+      .next(false)
+      .inspect(effect => expect(effect).toMatchObject({ type: "TAKE" }))
+      .next()
       .call(registerItwStatusListFetchTask);
   });
 });

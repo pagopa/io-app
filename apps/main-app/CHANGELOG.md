@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.10](https://github.com/pagopa/io-app/compare/3.38.0-rc.9...3.38.0-rc.10) (2026-08-05)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4727](https://pagopa.atlassian.net/browse/SIW-4727)] Implement credential consume for batch-issued credentials ([#8393](https://github.com/pagopa/io-app/issues/8393)) ([2568123](https://github.com/pagopa/io-app/commit/2568123dee219d6e54c0870b2e9d5c1a39d5897b))
+
+## [3.38.0-rc.9](https://github.com/pagopa/io-app/compare/3.38.0-rc.8...3.38.0-rc.9) (2026-08-04)
+
+
+### Features
+
+* [[IOPID-4101](https://pagopa.atlassian.net/browse/IOPID-4101)] migrate lollipop keyTag from Option<string> to native type ([#8372](https://github.com/pagopa/io-app/issues/8372)) ([d0c3e03](https://github.com/pagopa/io-app/commit/d0c3e03de25961ce06e9046e76e7b9802b56da8c))
+
+
+### Chores
+
+* [[IOPID-4114](https://pagopa.atlassian.net/browse/IOPID-4114)] Add developer login config screen ([#8394](https://github.com/pagopa/io-app/issues/8394)) ([26fc989](https://github.com/pagopa/io-app/commit/26fc989ff95b7ce2f0e8e7e4f89f2abd4124cef3))
+* [[IOPID-4115](https://pagopa.atlassian.net/browse/IOPID-4115)] Add Authentication playground screen ([#8397](https://github.com/pagopa/io-app/issues/8397)) ([6c3411b](https://github.com/pagopa/io-app/commit/6c3411b92780efdd7a51c02770dd521150e190a2))
+* [[IOPLT-1973](https://pagopa.atlassian.net/browse/IOPLT-1973)] Replace `react-native-haptic-feedback` with `pulsar` + Extend haptic feedback ([#8350](https://github.com/pagopa/io-app/issues/8350)) ([969ce87](https://github.com/pagopa/io-app/commit/969ce87f72066d1033b52eb6356cfbb2b8e75b30))
+
 ## [3.38.0-rc.8](https://github.com/pagopa/io-app/compare/3.38.0-rc.7...3.38.0-rc.8) (2026-08-03)
 
 

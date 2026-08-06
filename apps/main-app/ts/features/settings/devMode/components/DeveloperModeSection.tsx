@@ -14,7 +14,6 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ComponentProps, useContext } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
@@ -208,8 +207,7 @@ const DeveloperDataSection = () => {
   const publicKey = useIOSelector(lollipopPublicKeySelector);
   const deviceUniqueId = getDeviceId();
 
-  const publicKeyValue = O.toUndefined(publicKey);
-  const thumbprint = toThumbprint(publicKeyValue);
+  const thumbprint = toThumbprint(publicKey);
 
   const devDataCopyListItems: ReadonlyArray<DevDataCopyListItem> = [
     {

@@ -79,29 +79,23 @@ const readReport = path => {
   }
 };
 
-const renderSection = (title, ids, findings) => {
-  if (ids.length === 0) return "";
+const renderList = (ids, findings) => {
   const shown = ids.slice(0, MAX_ITEMS_PER_SECTION);
   const rest = ids.length - shown.length;
   const lines = shown.map(id => `- ${findings.get(id)}`);
   if (rest > 0) lines.push(`- …and ${rest} more`);
-  return `${title}\n\n${lines.join("\n")}\n\n`;
+  return `${lines.join("\n")}\n\n`;
 };
 
-const buildBody = ({ added, removed, headFindings, hasBaseline }) => {
-  const heading = `${MARKER}\n### Unused code check\n\n`;
+const renderSection = (title, ids, findings) =>
+  ids.length === 0 ? "" : `${title}\n\n${renderList(ids, findings)}`;
 
-  if (!hasBaseline) {
-    return (
-      `${heading}` +
-      `There was no baseline to compare against, so this branch could not be ` +
-      `checked for code left unused. This resolves itself once the baseline ` +
-      `has been recorded on \`master\`.\n`
-    );
-  }
+const buildBody = ({ added, removed, headFindings, baseFindings }) => {
+  const heading = `${MARKER}\n### Unused code check\n\n`;
+  const footer = `<sub>Advisory only. This check never blocks a merge. A renamed or moved item counts on both sides.</sub>\n`;
 
   if (added.length === 0 && removed.length === 0) {
-    return `${heading}No code was left unused by this branch.\n`;
+    return `${heading}Everything this check flagged earlier is now clear.\n\n${footer}`;
   }
 
   let body = heading;
@@ -126,15 +120,15 @@ const buildBody = ({ added, removed, headFindings, hasBaseline }) => {
   }
 
   if (removed.length > 0) {
-    // "also" only reads correctly when a findings section precedes it.
-    body += `This branch ${added.length > 0 ? "also " : ""}cleaned up **${
-      removed.length
-    } previously unused ${
-      removed.length === 1 ? "item" : "items"
-    }**. Thanks!\n\n`;
+    // "Also" only reads correctly when a findings section precedes it.
+    body +=
+      `${added.length > 0 ? "Also, " : ""}**${removed.length} previously ` +
+      `reported ${removed.length === 1 ? "item is" : "items are"} no longer ` +
+      `flagged as unused**, having been either referenced or removed:\n\n` +
+      renderList(removed, baseFindings);
   }
 
-  body += `<sub>Advisory only. This check never blocks a merge.</sub>\n`;
+  body += footer;
   return body;
 };
 
@@ -157,8 +151,12 @@ const github = async (path, init = {}) => {
 /**
  * Edits the previous Knip comment when one exists so the PR thread keeps a
  * single, always-current entry instead of one comment per push.
+ *
+ * `createIfMissing` is false when there is nothing to report: an existing
+ * comment still has to be corrected, but a PR that never had findings is left
+ * alone rather than told that nothing happened.
  */
-const upsertComment = async (repo, prNumber, body) => {
+const upsertComment = async (repo, prNumber, body, createIfMissing) => {
   const comments = await github(
     `/repos/${repo}/issues/${prNumber}/comments?per_page=100`
   );
@@ -176,6 +174,8 @@ const upsertComment = async (repo, prNumber, body) => {
     return;
   }
 
+  if (!createIfMissing) return;
+
   await github(`/repos/${repo}/issues/${prNumber}/comments`, {
     method: "POST",
     body: JSON.stringify({ body })
@@ -192,29 +192,26 @@ const main = async () => {
     return;
   }
 
+  // A missing baseline is transient, so the last report already on the PR is
+  // left standing rather than overwritten with a housekeeping notice.
   const baseReport = readReport(basePath);
+  if (!baseReport) {
+    console.log("No baseline to compare against, leaving the comment as is.");
+    return;
+  }
+
   const headFindings = toFindings(headReport);
-  const baseFindings = toFindings(baseReport ?? { issues: [] });
+  const baseFindings = toFindings(baseReport);
 
   const added = [...headFindings.keys()].filter(id => !baseFindings.has(id));
   const removed = [...baseFindings.keys()].filter(id => !headFindings.has(id));
 
-  // Without a baseline every finding counts as added, which would read as a
-  // huge regression in the log even though the comment reports nothing.
-  console.log(
-    baseReport === undefined
-      ? `no baseline to compare against (${headFindings.size} findings on this branch)`
-      : `new: ${added.length}, resolved: ${removed.length}`
-  );
+  console.log(`new: ${added.length}, resolved: ${removed.length}`);
 
-  const body = buildBody({
-    added,
-    removed,
-    headFindings,
-    hasBaseline: baseReport !== undefined
-  });
+  const body = buildBody({ added, removed, headFindings, baseFindings });
+  const hasFindingsToReport = added.length > 0 || removed.length > 0;
 
-  await upsertComment(repo, prNumber, body);
+  await upsertComment(repo, prNumber, body, hasFindingsToReport);
 };
 
 // Never fail the build: this check is informational by design.
