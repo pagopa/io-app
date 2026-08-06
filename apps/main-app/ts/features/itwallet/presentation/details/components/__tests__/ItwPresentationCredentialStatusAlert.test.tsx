@@ -14,6 +14,7 @@ import {
   CredentialMetadata,
   ItwCredentialStatus
 } from "../../../../common/utils/itwTypesUtils";
+import { useCredentialStatusMessage } from "../../../../credentials/hooks/useCredentialStatusMessage";
 import * as selectors from "../../../../credentials/store/selectors";
 import { ItwCredentialIssuanceMachineProvider } from "../../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
@@ -28,6 +29,8 @@ const mockBottomSheetPresent = jest.fn();
 const mockBottomSheetDismiss = jest.fn();
 const mockNavigate = jest.fn();
 
+jest.mock("../../../../credentials/hooks/useCredentialStatusMessage");
+
 jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
   ...jest.requireActual("../../../../../../navigation/params/AppParamsList"),
   useIONavigation: jest.fn()
@@ -41,15 +44,14 @@ jest.mock("../../../../../../utils/url", () => ({
   openWebUrl: jest.fn()
 }));
 
+const mockUseCredentialStatusMessage = jest.mocked(useCredentialStatusMessage);
+
 type TestCaseParams = [
   ItwCredentialStatus,
   Record<string, { description: string; title: string }> | undefined
 ];
 
-const mockMessage = {
-  "it-IT": { title: "__Scaduto__", description: "__Scaduto__" },
-  "en-US": { title: "__Expired__", description: "__Expired__" }
-};
+const mockMessage = { title: "__Scaduto__", description: "__Scaduto__" };
 
 const mockBottomSheetModal = () => {
   jest.spyOn(bottomSheet, "useIOBottomSheetModal").mockImplementation(
@@ -88,20 +90,15 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     ["expiring", undefined],
     ["expired", undefined],
     ["invalid", mockMessage],
-    [
-      "invalid",
-      { "it-IT": { title: "__Scaduto__", description: "__Scaduto__" } }
-    ],
-    ["invalid", { "ko-KO": { title: "__만료됨__", description: "__만료됨__" } }]
+    ["invalid", { title: "__Scaduto__", description: "__Scaduto__" }],
+    ["invalid", {}]
   ] as ReadonlyArray<TestCaseParams>)(
     "should match snapshot when the status is %s and the message is %s",
     (credentialStatus, message) => {
-      const selectorMock: ReturnType<
-        typeof selectors.itwCredentialStatusSelector
-      > = { status: credentialStatus, message };
       jest
         .spyOn(selectors, "itwCredentialStatusSelector")
-        .mockImplementation(() => selectorMock);
+        .mockImplementation(() => ({ status: credentialStatus }));
+      mockUseCredentialStatusMessage.mockReturnValue(message);
 
       const component = renderComponent();
       expect(component).toMatchSnapshot();
@@ -163,16 +160,10 @@ describe("ItwPresentationCredentialStatusAlert", () => {
   });
 
   it("should render static copy and double CTA for the expired mDL status", () => {
-    const selectorMock: ReturnType<
-      typeof selectors.itwCredentialStatusSelector
-    > = {
-      status: "expired",
-      message: mockMessage
-    };
-
     jest
       .spyOn(selectors, "itwCredentialStatusSelector")
-      .mockImplementation(() => selectorMock);
+      .mockImplementation(() => ({ status: "expired" }));
+    mockUseCredentialStatusMessage.mockReturnValue(mockMessage);
 
     const component = renderComponent();
 
@@ -183,16 +174,10 @@ describe("ItwPresentationCredentialStatusAlert", () => {
   });
 
   it("should render only the double CTA for the invalid mDL status", () => {
-    const selectorMock: ReturnType<
-      typeof selectors.itwCredentialStatusSelector
-    > = {
-      status: "invalid",
-      message: mockMessage
-    };
-
     jest
       .spyOn(selectors, "itwCredentialStatusSelector")
-      .mockImplementation(() => selectorMock);
+      .mockImplementation(() => ({ status: "invalid" }));
+    mockUseCredentialStatusMessage.mockReturnValue(mockMessage);
 
     const component = renderComponent({
       validity: {
@@ -211,21 +196,13 @@ describe("ItwPresentationCredentialStatusAlert", () => {
   it("should render suspended mDL review copy with acknowledgement action", () => {
     mockBottomSheetModal();
 
-    const selectorMock: ReturnType<
-      typeof selectors.itwCredentialStatusSelector
-    > = {
-      status: "invalid",
-      message: {
-        "it-IT": {
-          title: "__Issuer suspended title__",
-          description: "__Issuer suspended description__"
-        }
-      }
-    };
-
     jest
       .spyOn(selectors, "itwCredentialStatusSelector")
-      .mockImplementation(() => selectorMock);
+      .mockImplementation(() => ({ status: "invalid" }));
+    mockUseCredentialStatusMessage.mockReturnValue({
+      title: "__Issuer suspended title__",
+      description: "__Issuer suspended description__"
+    });
 
     const component = renderComponent({
       validity: {
@@ -258,16 +235,10 @@ describe("ItwPresentationCredentialStatusAlert", () => {
   });
 
   it("treats attribute_update as an issuer error until status list support is available", () => {
-    const selectorMock: ReturnType<
-      typeof selectors.itwCredentialStatusSelector
-    > = {
-      status: "invalid",
-      message: mockMessage
-    };
-
     jest
       .spyOn(selectors, "itwCredentialStatusSelector")
-      .mockImplementation(() => selectorMock);
+      .mockImplementation(() => ({ status: "invalid" }));
+    mockUseCredentialStatusMessage.mockReturnValue(mockMessage);
 
     const component = renderComponent({
       validity: {
@@ -288,16 +259,9 @@ describe("ItwPresentationCredentialStatusAlert", () => {
   it("tracks banner tap and bottom sheet opening for the expiring status alert", () => {
     mockBottomSheetModal();
 
-    const selectorMock: ReturnType<
-      typeof selectors.itwCredentialStatusSelector
-    > = {
-      status: "expiring",
-      message: undefined
-    };
-
     jest
       .spyOn(selectors, "itwCredentialStatusSelector")
-      .mockImplementation(() => selectorMock);
+      .mockImplementation(() => ({ status: "expiring" }));
 
     const component = renderComponent();
 
@@ -322,16 +286,9 @@ describe("ItwPresentationCredentialStatusAlert", () => {
   it("tracks the informational bottom sheet CTA for the expiring status alert", () => {
     mockBottomSheetModal();
 
-    const selectorMock: ReturnType<
-      typeof selectors.itwCredentialStatusSelector
-    > = {
-      status: "expiring",
-      message: undefined
-    };
-
     jest
       .spyOn(selectors, "itwCredentialStatusSelector")
-      .mockImplementation(() => selectorMock);
+      .mockImplementation(() => ({ status: "expiring" }));
 
     const component = renderComponent();
 
@@ -352,16 +309,10 @@ describe("ItwPresentationCredentialStatusAlert", () => {
   it("tracks renew start from the invalid status update action", () => {
     mockBottomSheetModal();
 
-    const selectorMock: ReturnType<
-      typeof selectors.itwCredentialStatusSelector
-    > = {
-      status: "invalid",
-      message: mockMessage
-    };
-
     jest
       .spyOn(selectors, "itwCredentialStatusSelector")
-      .mockImplementation(() => selectorMock);
+      .mockImplementation(() => ({ status: "invalid" }));
+    mockUseCredentialStatusMessage.mockReturnValue(mockMessage);
 
     const component = renderComponent({
       validity: {
@@ -388,16 +339,10 @@ describe("ItwPresentationCredentialStatusAlert", () => {
   it("tracks credential deletion from the issuer error bottom sheet with status and position", () => {
     mockBottomSheetModal();
 
-    const selectorMock: ReturnType<
-      typeof selectors.itwCredentialStatusSelector
-    > = {
-      status: "invalid",
-      message: mockMessage
-    };
-
     jest
       .spyOn(selectors, "itwCredentialStatusSelector")
-      .mockImplementation(() => selectorMock);
+      .mockImplementation(() => ({ status: "invalid" }));
+    mockUseCredentialStatusMessage.mockReturnValue(mockMessage);
 
     const component = renderComponent({
       validity: {
