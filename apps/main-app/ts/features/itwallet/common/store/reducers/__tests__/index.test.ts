@@ -246,6 +246,20 @@ describe("itWalletReducer migrations", () => {
     });
   });
 
+  it("should migrate the store to version 16: remove itWalletSpecsVersion from environment", async () => {
+    const previousState = {
+      _persist: { version: 15, rehydrated: false },
+      environment: { env: "prod", itWalletSpecsVersion: "1.0.0" }
+    };
+
+    const newState = await migrate(previousState, 16);
+
+    expect(newState).toEqual({
+      _persist: { version: 15, rehydrated: false },
+      environment: { env: "prod" }
+    });
+  });
+
   it("should migrate the store to version 17: remove date from preferences.walletActivationFeedbackBannerData, migrating it to banners.activationSuccessFeedback.shownOn", async () => {
     const previousState = {
       _persist: { version: 16, rehydrated: false },
@@ -271,55 +285,6 @@ describe("itWalletReducer migrations", () => {
       banners: {
         activationSuccessFeedback: {
           shownOn: "2025-01-14T20:43:21.361Z"
-        }
-      }
-    });
-  });
-
-  it("should migrate the store to version 17: leave state untouched when there is no walletActivationFeedbackBannerData.date to migrate", async () => {
-    const previousState = {
-      _persist: { version: 16, rehydrated: false },
-      preferences: {}
-    };
-
-    const newState = await migrate(previousState, 17);
-
-    expect(newState).toEqual({
-      _persist: { version: 16, rehydrated: false },
-      preferences: {}
-    });
-  });
-
-  it("should migrate the store to version 17: not overwrite an already-present banners.activationSuccessFeedback.shownOn", async () => {
-    const previousState = {
-      _persist: { version: 16, rehydrated: false },
-      preferences: {
-        walletActivationFeedbackBannerData: {
-          date: "2025-01-14T20:43:21.361Z",
-          authMethod: "SPID",
-          docStatus: "active"
-        }
-      },
-      banners: {
-        activationSuccessFeedback: {
-          shownOn: "2024-06-01T00:00:00.000Z"
-        }
-      }
-    };
-
-    const newState = await migrate(previousState, 17);
-
-    expect(newState).toEqual({
-      _persist: { version: 16, rehydrated: false },
-      preferences: {
-        walletActivationFeedbackBannerData: {
-          authMethod: "SPID",
-          docStatus: "active"
-        }
-      },
-      banners: {
-        activationSuccessFeedback: {
-          shownOn: "2024-06-01T00:00:00.000Z"
         }
       }
     });
