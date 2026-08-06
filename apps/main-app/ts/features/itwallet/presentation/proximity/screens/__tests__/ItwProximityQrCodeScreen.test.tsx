@@ -50,15 +50,20 @@ describe("ItwProximityPresentmentScreen", () => {
   });
 
   it("should render QR code when ready", () => {
+    const component = renderComponent(
+      {
+        machineState: "displayQrCode",
+        qrCodeString: "mock-qr-code-string"
+      },
+      { source: "WALLET_HOME" }
+    );
+
     expect(
-      renderComponent(
-        {
-          machineState: "displayQrCode",
-          qrCodeString: "mock-qr-code-string"
-        },
-        { source: "WALLET_HOME" }
+      component.getByLabelText(
+        "Immagine del codice QR da mostrare a chi verifica i documenti digitali"
       )
-    ).toMatchSnapshot();
+    ).toBeTruthy();
+    expect(component).toMatchSnapshot();
   });
 
   it("should render error state when QR code generation fails", () => {

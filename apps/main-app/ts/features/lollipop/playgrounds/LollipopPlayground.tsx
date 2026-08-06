@@ -49,11 +49,11 @@ const LollipopPlayground = () => {
       const bodyMessage = {
         message: body
       };
-      if (maybeSessionToken && O.isSome(maybePublicKey) && O.isSome(keyTag)) {
+      if (maybeSessionToken && O.isSome(maybePublicKey) && keyTag != null) {
         const { signMessage } = identityClientManager.getClient(apiUrlPrefix, {
           token: maybeSessionToken,
           keyInfo: {
-            keyTag: keyTag.value,
+            keyTag,
             publicKey: maybePublicKey.value,
             publicKeyThumbprint: toThumbprint(maybePublicKey.value)
           },

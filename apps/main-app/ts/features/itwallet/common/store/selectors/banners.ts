@@ -108,3 +108,9 @@ export const itwIsInboxDiscoveryBannerVisibleSelector =
  */
 export const itwIsActivationSuccessFeedbackBannerVisibleSelector =
   itwIsBannerVisibleSelector("activationSuccessFeedback");
+
+/**
+ * Returns whether the informational banner in MDL details is hidden. Defaults to false.
+ */
+export const itwIsMdlDetailsInfoBannerHiddenSelector =
+  itwIsBannerVisibleSelector("mdlDetailsInfo");

@@ -20,12 +20,12 @@ import { IOLogoPaymentType } from "../logos";
 import { IOSkeleton } from "../skeleton";
 import { BodySmall, H6 } from "../typography";
 import {
-  PressableBaseProps,
-  PressableListItemBase
+  PressableListItemBase,
+  PressableListItemBaseProps
 } from "./PressableListItemBase";
 
 export type ListItemTransaction = WithTestID<
-  PressableBaseProps & {
+  PressableListItemBaseProps & {
     accessible?: boolean;
     isLoading?: boolean;
     loadingAccessibilityLabel?: string;
@@ -111,6 +111,7 @@ const ListItemTransactionContent = ({
         space={IOListItemLogoMargin}
         style={{ alignItems: "center", flexShrink: 1 }}
       >
+        {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
         {paymentLogoIcon && (
           <View
             style={{

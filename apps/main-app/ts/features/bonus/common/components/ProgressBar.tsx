@@ -38,7 +38,7 @@ export const ProgressBar: FunctionComponent<Props> = props => {
     >
       <View
         style={{
-          ...StyleSheet.absoluteFillObject,
+          ...StyleSheet.absoluteFill,
           backgroundColor,
           width: calculateStylePercentage(props.progressPercentage)
         }}

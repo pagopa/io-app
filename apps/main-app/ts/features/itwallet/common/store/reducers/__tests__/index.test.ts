@@ -338,4 +338,19 @@ describe("itWalletReducer migrations", () => {
       preferences: {}
     });
   });
+
+  it("should migrate the store to version 19: remove debug state", async () => {
+    const previousState = {
+      _persist: { version: 18, rehydrated: false },
+      debug: { credentials: {} },
+      preferences: {}
+    };
+
+    const newState = await migrate(previousState, 19);
+
+    expect(newState).toEqual({
+      _persist: { version: 18, rehydrated: false },
+      preferences: {}
+    });
+  });
 });

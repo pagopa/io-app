@@ -1,7 +1,7 @@
 import type { VerifierRequest } from "../types";
 
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
-import { UntrustedRpError } from "../errors";
+import { MissingCredentialError, UntrustedRpError } from "../errors";
 import {
   generateAcceptedFields,
   getProximityDetails,
@@ -267,10 +267,20 @@ describe("getProximityDetails", () => {
     });
   });
 
-  it("throws if credential is not found for requested docType", () => {
+  it("throws with every missing credential docType", () => {
     const parsedRequest = {
       request: {
-        unknown_credential: {
+        unknown_credential_a: {
+          "org.iso.18013.5.1": { unknown_field: true },
+          isAuthenticated: true,
+          certificateData: mockCertificateData
+        },
+        [mockDocType]: {
+          "org.iso.18013.5.1.aamva": { family_name: false },
+          isAuthenticated: true,
+          certificateData: mockCertificateData
+        },
+        unknown_credential_b: {
           "org.iso.18013.5.1": { unknown_field: true },
           isAuthenticated: true,
           certificateData: mockCertificateData
@@ -278,12 +288,21 @@ describe("getProximityDetails", () => {
       }
     } as unknown as VerifierRequest;
 
-    expect(() =>
+    expect.assertions(1);
+    try {
       getProximityDetails({
         request: parsedRequest.request,
-        credentials: {}
-      })
-    ).toThrow();
+        credentials: mockCredentials
+      });
+    } catch (error) {
+      if (!(error instanceof MissingCredentialError)) {
+        throw error;
+      }
+      expect(error.credentialsDocType).toEqual([
+        "unknown_credential_a",
+        "unknown_credential_b"
+      ]);
+    }
   });
 
   it("returns parsed claims for a valid authenticated request", () => {
