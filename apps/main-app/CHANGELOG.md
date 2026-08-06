@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.10](https://github.com/pagopa/io-app/compare/3.38.0-rc.9...3.38.0-rc.10) (2026-08-05)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4727](https://pagopa.atlassian.net/browse/SIW-4727)] Implement credential consume for batch-issued credentials ([#8393](https://github.com/pagopa/io-app/issues/8393)) ([2568123](https://github.com/pagopa/io-app/commit/2568123dee219d6e54c0870b2e9d5c1a39d5897b))
+
 ## [3.38.0-rc.9](https://github.com/pagopa/io-app/compare/3.38.0-rc.8...3.38.0-rc.9) (2026-08-04)
 
 
