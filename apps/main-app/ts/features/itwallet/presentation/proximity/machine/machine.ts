@@ -18,7 +18,7 @@ import {
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { ProximityEvents } from "./events";
-import { mapEventToFailure } from "./failure";
+import { mapEventToFailure, ProximityFailureType } from "./failure";
 import { ItwPresentationTags } from "./tags";
 
 const notImplemented = () => {
@@ -37,6 +37,12 @@ export const itwProximityMachine = setup({
      */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    setConsentDeniedFailure: assign(() => ({
+      failure: {
+        type: ProximityFailureType.CONSENT_DENIED,
+        reason: undefined
+      }
+    })),
 
     /**
      * Navigation
@@ -433,7 +439,8 @@ export const itwProximityMachine = setup({
               }
             ],
             close: {
-              target: "#itwProximityMachine.Presentment.Terminating"
+              actions: "setConsentDeniedFailure",
+              target: "#itwProximityMachine.Failure"
             }
           }
         },
