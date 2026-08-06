@@ -1,6 +1,5 @@
 import { ContentWrapper } from "@io-app/design-system";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { useCallback, useState } from "react";
 import { ScrollView } from "react-native";
 
@@ -49,13 +48,13 @@ const LollipopPlayground = () => {
       const bodyMessage = {
         message: body
       };
-      if (maybeSessionToken && O.isSome(maybePublicKey) && keyTag != null) {
+      if (maybeSessionToken && maybePublicKey != null && keyTag != null) {
         const { signMessage } = identityClientManager.getClient(apiUrlPrefix, {
           token: maybeSessionToken,
           keyInfo: {
             keyTag,
-            publicKey: maybePublicKey.value,
-            publicKeyThumbprint: toThumbprint(maybePublicKey.value)
+            publicKey: maybePublicKey,
+            publicKeyThumbprint: toThumbprint(maybePublicKey)
           },
           signBody: state.doSignBody
         });
