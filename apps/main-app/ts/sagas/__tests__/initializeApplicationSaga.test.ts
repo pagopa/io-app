@@ -88,8 +88,8 @@ jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
 }));
 
-jest.mock("react-native-share", () => ({
-  open: jest.fn()
+jest.mock("expo-sharing", () => ({
+  shareAsync: jest.fn()
 }));
 
 jest.mock("../../api/SessionManagerClientManager");
