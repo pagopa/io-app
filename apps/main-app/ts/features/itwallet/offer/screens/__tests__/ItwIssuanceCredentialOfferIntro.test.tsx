@@ -165,7 +165,7 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <Stack.Navigator screenOptions={{ animationEnabled: false }}>
+      <Stack.Navigator screenOptions={{ animation: "none" }}>
         <Stack.Screen
           component={ItwIssuanceCredentialOfferIntroScreen}
           initialParams={{ itwCredentialOfferUri: T_CREDENTIAL_OFFER_URI }}

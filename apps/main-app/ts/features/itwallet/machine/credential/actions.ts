@@ -57,25 +57,29 @@ export const createCredentialIssuanceActionsImplementation = (
 
   navigateToCredentialIntroductionScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION,
+      pop: true
     });
   },
 
   navigateToTrustIssuerScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+      pop: true
     });
   },
 
   navigateToCredentialPreviewScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW,
+      pop: true
     });
   },
 
   navigateToFailureScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE,
+      pop: true
     });
   },
 
@@ -110,7 +114,8 @@ export const createCredentialIssuanceActionsImplementation = (
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: context.isItWalletValid
         ? ITW_ROUTES.L3_ONBOARDING
-        : ITW_ROUTES.ONBOARDING
+        : ITW_ROUTES.ONBOARDING,
+      pop: true
     });
   },
 
@@ -141,7 +146,8 @@ export const createCredentialIssuanceActionsImplementation = (
           surveyStep && surveyCredential
             ? { step: surveyStep, credential: surveyCredential }
             : undefined
-      }
+      },
+      pop: true
     });
   },
 
