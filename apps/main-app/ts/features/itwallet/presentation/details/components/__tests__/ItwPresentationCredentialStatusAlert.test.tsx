@@ -110,9 +110,7 @@ describe("ItwPresentationCredentialStatusAlert", () => {
 
   it.each`
     credentialStatus | eidStatus        | isOffline | isItwL3  | message        | expected
-    ${"jwtExpiring"} | ${"jwtExpiring"} | ${false}  | ${false} | ${undefined}   | ${CredentialAlertType.JWT_VERIFICATION}
-    ${"jwtExpiring"} | ${"jwtExpiring"} | ${false}  | ${true}  | ${undefined}   | ${CredentialAlertType.JWT_VERIFICATION}
-    ${"jwtExpiring"} | ${"jwtExpiring"} | ${true}   | ${false} | ${undefined}   | ${undefined}
+    ${"jwtExpiring"} | ${"jwtExpiring"} | ${false}  | ${false} | ${undefined}   | ${undefined}
     ${"jwtExpiring"} | ${"jwtExpired"}  | ${false}  | ${false} | ${undefined}   | ${undefined}
     ${"jwtExpired"}  | ${"jwtExpired"}  | ${false}  | ${false} | ${undefined}   | ${CredentialAlertType.EID_LIFECYCLE}
     ${"expiring"}    | ${"jwtExpired"}  | ${false}  | ${false} | ${undefined}   | ${CredentialAlertType.DOCUMENT_EXPIRING}

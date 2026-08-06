@@ -102,6 +102,7 @@ type JwtInvalidAlertProps = {
   isCredentialJwtExpired: boolean;
   isCredentialJwtExpiring: boolean;
   isEidExpired: boolean;
+  isEidInvalid: boolean;
   isItwL3: boolean;
   isOffline: boolean;
 };
@@ -109,6 +110,7 @@ type JwtInvalidAlertProps = {
 // Handles the alert types for credentials whose JWT is expiring or expired.
 const deriveJwtInvalidAlertType = ({
   isEidExpired,
+  isEidInvalid,
   isCredentialJwtExpiring,
   isCredentialJwtExpired,
   isOffline,
@@ -116,15 +118,11 @@ const deriveJwtInvalidAlertType = ({
 }: JwtInvalidAlertProps): CredentialAlertType | undefined => {
   /**
    * 1. Don't show any alert if:
-   * - The eID is expired AND the credential JWT is expiring, since the expired eID
-   *   takes over with its own alert. An eID that is only expiring does not hide it,
-   *   otherwise the credential would show the "action required" tag with no
-   *   explanation of the action.
-   * - OR the app is offline but the credential JWT is not yet expired, because the
-   *   alert asks to reissue the credential, which requires connectivity.
+   * - The eID is expired or expiring AND the credential JWT is expiring
+   * - OR the app is offline but the credential JWT is not yet expired
    */
   const shouldHideAlert =
-    (isEidExpired && isCredentialJwtExpiring) ||
+    (isEidInvalid && isCredentialJwtExpiring) ||
     (isOffline && !isCredentialJwtExpired);
 
   if (shouldHideAlert) {
@@ -163,9 +161,11 @@ export const deriveCredentialAlertType = (
   } = props;
 
   const isEidExpired = eidStatus === "jwtExpired";
+  const isEidExpiring = eidStatus === "jwtExpiring";
   const isCredentialJwtExpiring = credentialStatus === "jwtExpiring";
   const isCredentialJwtExpired = credentialStatus === "jwtExpired";
 
+  const isEidInvalid = isEidExpired || isEidExpiring;
   const isCredentialJwtInvalid =
     isCredentialJwtExpiring || isCredentialJwtExpired;
 
@@ -183,6 +183,7 @@ export const deriveCredentialAlertType = (
   if (isCredentialJwtInvalid) {
     return deriveJwtInvalidAlertType({
       isEidExpired,
+      isEidInvalid,
       isCredentialJwtExpiring,
       isCredentialJwtExpired,
       isOffline,

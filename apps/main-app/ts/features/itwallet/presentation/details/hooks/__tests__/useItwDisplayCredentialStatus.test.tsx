@@ -8,6 +8,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
 import * as ingressSelectors from "../../../../../ingress/store/selectors";
+import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
   ItwCredentialStatus,
   ItwJwtCredentialStatus
@@ -17,6 +18,7 @@ import { useItwDisplayCredentialStatus } from "../useItwDisplayCredentialStatus"
 
 type RenderHookParams = {
   credentialStatus: ItwCredentialStatus;
+  credentialType: string;
   eidStatus: ItwJwtCredentialStatus;
   offlineAccessReason?: OfflineAccessReasonEnum;
 };
@@ -33,13 +35,14 @@ describe("useItwDisplayCredentialStatus", () => {
     ${"jwtExpiring"} | ${undefined}                              | ${"jwtExpiring"}
     ${"jwtExpired"}  | ${undefined}                              | ${"invalid"}
     ${"valid"}       | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${"valid"}
-    ${"jwtExpiring"} | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${"jwtExpiring"}
+    ${"jwtExpiring"} | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${"valid"}
     ${"jwtExpired"}  | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${"invalid"}
   `(
     "returns $expected for a PID with status $credentialStatus and offline reason $offlineAccessReason",
     ({ credentialStatus, offlineAccessReason, expected }) => {
       const result = renderDisplayStatusHook({
         credentialStatus,
+        credentialType: CredentialType.PID,
         eidStatus: credentialStatus,
         offlineAccessReason
       });
@@ -51,6 +54,7 @@ describe("useItwDisplayCredentialStatus", () => {
   it("treats an undefined offline access reason as online", () => {
     const result = renderDisplayStatusHook({
       credentialStatus: "jwtExpiring",
+      credentialType: CredentialType.DRIVING_LICENSE,
       eidStatus: "valid",
       offlineAccessReason: undefined
     });
@@ -58,19 +62,32 @@ describe("useItwDisplayCredentialStatus", () => {
     expect(result).toBe("jwtExpiring");
   });
 
-  it("keeps the expiring status of a credential when the eID is expiring as well", () => {
+  it("keeps the expiring status of the PID when the eID is expiring", () => {
     const result = renderDisplayStatusHook({
       credentialStatus: "jwtExpiring",
+      credentialType: CredentialType.PID,
       eidStatus: "jwtExpiring",
       offlineAccessReason: undefined
     });
 
     expect(result).toBe("jwtExpiring");
   });
+
+  it("hides the expiring status of a credential when the eID is expiring", () => {
+    const result = renderDisplayStatusHook({
+      credentialStatus: "jwtExpiring",
+      credentialType: CredentialType.DRIVING_LICENSE,
+      eidStatus: "jwtExpiring",
+      offlineAccessReason: undefined
+    });
+
+    expect(result).toBe("valid");
+  });
 });
 
 const renderDisplayStatusHook = ({
   credentialStatus,
+  credentialType,
   eidStatus,
   offlineAccessReason
 }: RenderHookParams) => {
@@ -87,7 +104,7 @@ const renderDisplayStatusHook = ({
     <Provider store={store}>{children}</Provider>
   );
   const { result } = renderHook(
-    () => useItwDisplayCredentialStatus(credentialStatus),
+    () => useItwDisplayCredentialStatus(credentialStatus, credentialType),
     { wrapper }
   );
 
