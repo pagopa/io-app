@@ -337,9 +337,7 @@ const mockSelectors = ({
     .mockReturnValue(isWhitelisted);
   jest
     .spyOn(credentialsSelectors, "itwCredentialStatusSelector")
-    .mockImplementation(
-      () => ({ status: credentialStatus, message: undefined }) as any
-    );
+    .mockImplementation(() => ({ status: credentialStatus }) as any);
   jest
     .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
     .mockReturnValue(pidStatus as any);
