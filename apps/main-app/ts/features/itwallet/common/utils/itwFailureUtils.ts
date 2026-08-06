@@ -81,11 +81,12 @@ export const isAnprPid404Failure = (
  * This function **modifies the original error**.
  *
  * @param metadata.credentialId The credential configuration ID
+ * @param metadata.credentialType The credential type
  * @return A function that enriches the error and rethrows it
  * @throws The original error, with the new `metadata` property
  */
 export const enrichErrorWithMetadata =
-  (metadata: { credentialId: string }) => (err: unknown) => {
+  (metadata: WithCredentialMetadata["metadata"]) => (err: unknown) => {
     if (err instanceof Error) {
       // eslint-disable-next-line functional/immutable-data
       (err as WithCredentialMetadata).metadata = metadata;
@@ -102,3 +103,11 @@ export const isMrtdTaxIdCodeMismatchFailure = (
 ): e is Errors.IssuerResponseError =>
   Errors.isIssuerResponseError(e) &&
   mrtdTaxIdCodeMismatchFailure.safeParse(e).success;
+
+/**
+ * Shape of a credential status assertion response error.
+ */
+export const statusAssertionFailure = z.object({
+  error: z.string(),
+  error_description: z.string().optional()
+});
