@@ -110,7 +110,7 @@ export const itwIsActivationSuccessFeedbackBannerVisibleSelector =
   itwIsBannerVisibleSelector("activationSuccessFeedback");
 
 /**
- * Returns whether the informational banner in MDL details is hidden. Defaults to false.
+ * Returns whether the informational banner in MDL details is visible. Defaults to true.
  */
-export const itwIsMdlDetailsInfoBannerHiddenSelector =
+export const itwIsMdlDetailsInfoBannerVisibleSelector =
   itwIsBannerVisibleSelector("mdlDetailsInfo");
