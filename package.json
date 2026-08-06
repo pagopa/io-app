@@ -7,6 +7,7 @@
     "validate": "nx affected --targets=lint,test,tsc-noemit --configuration=ci --nx-bail",
     "prettify": "prettier --write \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
     "prettier:check": "prettier --check \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
+    "knip": "knip --reporter json --no-exit-code --no-progress",
     "postinstall": "nx prepack io-app-design-system"
   },
   "devDependencies": {
@@ -26,6 +27,7 @@
     "@swc/helpers": "~0.5.18",
     "eslint": "catalog:",
     "jest": "catalog:",
+    "knip": "6.31.0",
     "lefthook": "^2.1.10",
     "nx": "catalog:",
     "prettier": "catalog:",

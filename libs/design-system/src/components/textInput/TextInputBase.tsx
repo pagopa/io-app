@@ -95,13 +95,13 @@ const styles = StyleSheet.create({
     paddingVertical: inputPaddingVertical
   },
   textInputOuterBorder: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     borderRadius: inputRadius,
     borderCurve: "continuous",
     borderWidth: 1
   },
   textInputInnerBorder: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     borderRadius: inputRadius,
     borderCurve: "continuous",
     borderWidth: 2
@@ -165,7 +165,8 @@ const HelperRow = ({
     bottomMessageColor ?? bottomMessageColorDefault;
 
   const shouldShowCounter =
-    !!counterLimit &&
+    counterLimit != null &&
+    counterLimit > 0 &&
     (!showCounterOnlyWhenLimitReached || valueCount >= counterLimit);
 
   const helperRowStyle: ViewStyle = useMemo(() => {
@@ -296,7 +297,7 @@ export const TextInputBase = ({
   };
 
   const animatedLabelStyle = useAnimatedStyle(() => {
-    const enableTransition = focusedState.value || value.length > 0;
+    const enableTransition = focusedState.value === 1 || value.length > 0;
 
     return {
       transform: [
@@ -352,6 +353,10 @@ export const TextInputBase = ({
     inputRef.current?.focus();
   };
 
+  // `undefined` when no positive limit is set
+  const activeCounterLimit =
+    counterLimit != null && counterLimit > 0 ? counterLimit : undefined;
+
   const onChangeTextHandler = useCallback(
     (text: string) => {
       const actualTextLength =
@@ -360,8 +365,8 @@ export const TextInputBase = ({
       // Notify the user when the limit is reached
       // This is only for iOS, as Android handles it via accessibilityLiveRegion
       if (
-        counterLimit &&
-        actualTextLength >= counterLimit &&
+        activeCounterLimit != null &&
+        actualTextLength >= activeCounterLimit &&
         accessibilityAnnounceLimitReached &&
         Platform.OS === "ios"
       ) {
@@ -369,7 +374,7 @@ export const TextInputBase = ({
           accessibilityAnnounceLimitReached
         );
       }
-      if (counterLimit && actualTextLength > counterLimit) {
+      if (activeCounterLimit != null && actualTextLength > activeCounterLimit) {
         return;
       }
 
@@ -381,7 +386,12 @@ export const TextInputBase = ({
         onChangeText(text);
       }
     },
-    [counterLimit, onChangeText, inputType, accessibilityAnnounceLimitReached]
+    [
+      activeCounterLimit,
+      onChangeText,
+      inputType,
+      accessibilityAnnounceLimitReached
+    ]
   );
 
   const onBlurHandler = useCallback(() => {
@@ -406,7 +416,7 @@ export const TextInputBase = ({
 
   const inputValue = useMemo(
     () =>
-      derivedInputProps && derivedInputProps.valueFormat
+      derivedInputProps?.valueFormat
         ? derivedInputProps.valueFormat(value)
         : value,
     [value, derivedInputProps]
@@ -414,12 +424,12 @@ export const TextInputBase = ({
 
   // Calculate the adjusted maxLength to account for spaces
   const adjustedMaxLength = useMemo(() => {
-    if (counterLimit && derivedInputProps && derivedInputProps.valueFormat) {
-      const spacesCount = Math.floor(counterLimit / 4);
-      return counterLimit + spacesCount;
+    if (activeCounterLimit != null && derivedInputProps?.valueFormat) {
+      const spacesCount = Math.floor(activeCounterLimit / 4);
+      return activeCounterLimit + spacesCount;
     }
     return counterLimit;
-  }, [counterLimit, derivedInputProps]);
+  }, [counterLimit, activeCounterLimit, derivedInputProps]);
 
   return (
     <>
@@ -550,6 +560,7 @@ export const TextInputBase = ({
             {placeholder}
           </Animated.Text>
         </Animated.View>
+        {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
         {rightElement && (
           <Animated.View
             style={{
@@ -583,7 +594,7 @@ export const TextInputBase = ({
           {accessibilityLabel}
         </Text>
       )}
-      {(bottomMessage || counterLimit) && (
+      {(bottomMessage || activeCounterLimit != null) && (
         <HelperRow
           bottomMessage={bottomMessage}
           bottomMessageColor={bottomMessageColor}
