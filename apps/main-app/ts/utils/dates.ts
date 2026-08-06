@@ -98,12 +98,6 @@ export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
   return format(date, "MMM");
 }
 
-export function formatDateAsReminder(
-  date: Date
-): ReturnType<typeof dateFnsFormat> {
-  return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-}
-
 /**
  * Try to parse month and validate as month
  * @param month

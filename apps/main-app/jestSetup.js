@@ -80,7 +80,10 @@ jest.mock("expo-notifications", () => ({}));
 jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("expo-clipboard", () => mockClipboard);
-
+jest.mock("expo-calendar", () => ({
+  getCalendarsAsync: jest.fn().mockResolvedValue([]),
+  getEventsAsync: jest.fn().mockResolvedValue([]),
+}));
 // Mock react-native-worklets before reanimated setup
 // See: https://docs.swmansion.com/react-native-worklets/docs/guides/testing/
 jest.mock("react-native-worklets", () =>
