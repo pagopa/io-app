@@ -11,6 +11,42 @@ import {
 const EXPIRING_DAYS = 15;
 const SAFE_JWT_DAYS = 365;
 
+const toSimpleDate = (date: Date) =>
+  new SimpleDate(date.getFullYear(), date.getMonth(), date.getDate());
+
+/**
+ * Clears previous status mocks and makes both the digital and physical
+ * expiration dates safely valid before applying the requested status.
+ */
+const normalizeCredentialAsValid = (
+  credential: CredentialMetadata,
+  now: Date
+): CredentialMetadata => {
+  const safeExpirationDate = addDays(now, SAFE_JWT_DAYS);
+  const existingExpiry =
+    credential.parsedCredential[WellKnownClaim.expiry_date];
+
+  return {
+    ...credential,
+    validity: undefined,
+    jwt: {
+      ...credential.jwt,
+      expiration: safeExpirationDate.toISOString()
+    },
+    parsedCredential: {
+      ...credential.parsedCredential,
+      ...(existingExpiry === undefined
+        ? {}
+        : {
+            [WellKnownClaim.expiry_date]: {
+              ...existingExpiry,
+              value: toSimpleDate(safeExpirationDate)
+            }
+          })
+    } as CredentialMetadata["parsedCredential"]
+  };
+};
+
 /** Statuses available for the PID — only JWT-based, since the wallet card does not support status assertions on the eID. */
 export const PID_OVERRIDE_STATUSES: ReadonlyArray<ItwJwtCredentialStatus> = [
   "valid",
@@ -49,11 +85,12 @@ export const applyStatusToCredential = (
   status: ItwCredentialStatus
 ): CredentialMetadata => {
   const now = new Date();
+  const validCredential = normalizeCredentialAsValid(credential, now);
 
   switch (status) {
     case "expired":
       return {
-        ...credential,
+        ...validCredential,
         validity: {
           type: "status_assertion",
           status: "invalid",
@@ -64,40 +101,27 @@ export const applyStatusToCredential = (
     case "expiring": {
       const expiringDate = addDays(now, EXPIRING_DAYS);
       const existingExpiry =
-        credential.parsedCredential[WellKnownClaim.expiry_date];
+        validCredential.parsedCredential[WellKnownClaim.expiry_date];
       return {
-        ...credential,
-        validity: undefined,
-        // Ensure the JWT is well within validity so only the document triggers "expiring"
-        jwt: {
-          ...credential.jwt,
-          expiration: addDays(now, SAFE_JWT_DAYS).toISOString()
-        },
+        ...validCredential,
         parsedCredential: {
-          ...credential.parsedCredential,
-          [WellKnownClaim.expiry_date]: existingExpiry
-            ? {
-                ...existingExpiry,
-                value: new SimpleDate(
-                  expiringDate.getFullYear(),
-                  expiringDate.getMonth(),
-                  expiringDate.getDate()
-                )
-              }
-            : {
-                value: new SimpleDate(
-                  expiringDate.getFullYear(),
-                  expiringDate.getMonth(),
-                  expiringDate.getDate()
-                )
-              }
+          ...validCredential.parsedCredential,
+          [WellKnownClaim.expiry_date]:
+            existingExpiry !== undefined
+              ? {
+                  ...existingExpiry,
+                  value: toSimpleDate(expiringDate)
+                }
+              : {
+                  value: toSimpleDate(expiringDate)
+                }
         } as CredentialMetadata["parsedCredential"]
       };
     }
 
     case "invalid":
       return {
-        ...credential,
+        ...validCredential,
         validity: {
           type: "status_assertion",
           status: "invalid",
@@ -107,38 +131,29 @@ export const applyStatusToCredential = (
 
     case "jwtExpired":
       return {
-        ...credential,
-        validity: undefined,
+        ...validCredential,
         jwt: {
-          ...credential.jwt,
+          ...validCredential.jwt,
           expiration: subDays(now, 1).toISOString()
         }
       };
 
     case "jwtExpiring":
       return {
-        ...credential,
-        validity: undefined,
+        ...validCredential,
         jwt: {
-          ...credential.jwt,
+          ...validCredential.jwt,
           expiration: addDays(now, EXPIRING_DAYS).toISOString()
         }
       };
 
     case "unknown":
       return {
-        ...credential,
+        ...validCredential,
         validity: { type: "status_assertion", status: "unknown" }
       };
 
     case "valid":
-      return {
-        ...credential,
-        validity: undefined,
-        jwt: {
-          ...credential.jwt,
-          expiration: addDays(now, SAFE_JWT_DAYS).toISOString()
-        }
-      };
+      return validCredential;
   }
 };
