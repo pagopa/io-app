@@ -17,7 +17,7 @@ import { itwCredentialTypeFromDocTypeSelector } from "../../../credentialsCatalo
 import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent.tsx";
 import {
   trackItwProximityMandatoryCredentialMissing,
-  trackItwProximityUnofficialVerifierBottomSheet
+  trackItwProximityRpNotTrustedBottomSheet
 } from "../analytics/index.ts";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure.ts";
@@ -132,7 +132,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
                 "features.itWallet.presentation.proximity.relyingParty.untrustedRp.secondaryAction"
               ),
               onPress: () => {
-                trackItwProximityUnofficialVerifierBottomSheet();
+                trackItwProximityRpNotTrustedBottomSheet();
                 present();
               }
             }

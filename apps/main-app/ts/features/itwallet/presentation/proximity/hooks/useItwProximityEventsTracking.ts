@@ -9,9 +9,9 @@ import {
   trackItwProximityNfcSessionError,
   trackItwProximityNfcSessionTimeout,
   trackItwProximityRPGenericFailure,
+  trackItwProximityRpNotTrusted,
   trackItwProximityTimeout,
-  trackItwProximityUnexpectedFailure,
-  trackItwProximityUnofficialVerifier
+  trackItwProximityUnexpectedFailure
 } from "../analytics";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure";
 import { ItwProximityMachineContext } from "../machine/provider";
@@ -65,7 +65,7 @@ export const useItwProximityEventsTracking = ({ failure }: Params) => {
             : failure
         );
       case ProximityFailureType.UNTRUSTED_RP:
-        return trackItwProximityUnofficialVerifier(serializedFailure);
+        return trackItwProximityRpNotTrusted(serializedFailure);
     }
   }, [failure, hasGivenConsent, isNfcRetrieval]);
 };
