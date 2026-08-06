@@ -16,6 +16,7 @@ import {
   itwCredentialsEidStatusSelector,
   itwCredentialStatusSelector
 } from "../../credentials/store/selectors";
+import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
@@ -53,6 +54,9 @@ export const ItwIssuanceCredentialLandingScreen = ({
     itwCredentialStatusSelector(state, credentialType)
   );
   const pidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const introContent = useIOSelector(
+    itwCredentialIntroContentSelector(credentialType)
+  );
   const credentialName = useItwCredentialName(credentialType);
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credentialType, isItwL3),
@@ -106,7 +110,11 @@ export const ItwIssuanceCredentialLandingScreen = ({
 
     if (isItwValid) {
       // ITW active, proceed to credential issuance
-      navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
+      const targetScreen = introContent
+        ? ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION
+        : ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER;
+
+      navigation.replace(targetScreen, {
         animationEnabled: false,
         credentialType
       });
@@ -122,6 +130,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
     isItwValid,
     isWhitelisted,
     credentialType,
+    introContent,
     isCredentialValid,
     isEidExpiredOrExpiring,
     mixPanelCredential

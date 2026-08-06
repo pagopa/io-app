@@ -1,6 +1,6 @@
+import * as Calendar from "expo-calendar";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
-import { Calendar } from "react-native-calendar-events";
 
 import CalendarsListContainer from "../../../../components/CalendarsListContainer";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -25,7 +25,7 @@ const CalendarsPreferencesScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const preferredCalendarSaveSuccessDispatch = useCallback(
-    (calendar: Calendar) =>
+    (calendar: Calendar.Calendar) =>
       dispatch(
         preferredCalendarSaveSuccess({
           preferredCalendar: calendar

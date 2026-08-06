@@ -23,7 +23,6 @@ import CieIdAuthUrlError from "../../login/cie/screens/CieIdAuthUrlError";
 import CieIdErrorScreen from "../../login/cie/screens/CieIdErrorScreen";
 import CieIdLoginScreen from "../../login/cie/screens/CieIdLoginScreen";
 import CieIdNotInstalledScreen from "../../login/cie/screens/CieIdNotInstalledScreen";
-import CieLoginConfigScreen from "../../login/cie/screens/CieLoginConfigScreen";
 import CiePinScreen from "../../login/cie/screens/CiePinScreen";
 import CieUnexpectedErrorScreen from "../../login/cie/screens/CieUnexpectedErrorScreen";
 import CieWrongCardScreen from "../../login/cie/screens/CieWrongCardScreen";
@@ -36,6 +35,7 @@ import IdpLoginScreen from "../../login/idp/screens/IdpLoginScreen";
 import IdpSelectionScreen from "../../login/idp/screens/IdpSelectionScreen";
 import { LandingScreen } from "../../login/landing/screens/LandingScreen";
 import OptInScreen from "../../login/optIn/screens/OptInScreen";
+import { LoginConfigScreen } from "../screens/LoginConfigScreen";
 import TestAuthenticationScreen from "../screens/TestAuthenticationScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "./routes";
@@ -93,8 +93,8 @@ const AuthenticationStackNavigator = () => (
         name={AUTHENTICATION_ROUTES.ID_ACTIVATION_WIZARD}
       />
       <Stack.Screen
-        component={CieLoginConfigScreen}
-        name={AUTHENTICATION_ROUTES.CIE_LOGIN_CONFIG_SCREEN}
+        component={LoginConfigScreen}
+        name={AUTHENTICATION_ROUTES.LOGIN_CONFIG_SCREEN}
       />
     </Stack.Group>
     <Stack.Screen

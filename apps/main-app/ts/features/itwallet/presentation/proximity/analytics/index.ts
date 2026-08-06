@@ -96,10 +96,24 @@ export const trackItwProximityRpNotTrustedBottomSheet = () => {
   );
 };
 
+export const trackItwProximitySavePreferences = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_SAVE_PREFERENCES,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
 export const trackItwProximityRpNotTrustedDiscoverMore = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_RP_NOT_TRUSTED_DISCOVER_MORE,
     buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximityNfcActivation = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_NFC_ACTIVATION,
+    buildEventProperties("UX", "screen_view")
   );
 };
 
@@ -169,6 +183,34 @@ export const trackItwProximityContinuePresentation = ({
 export const trackItwProximityNfcStart = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_NFC_START,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximityNfcActivationClose = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_NFC_ACTIVATION_CLOSE,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximityNfcGoToSettings = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_NFC_GO_TO_SETTINGS,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximitySavePreferencesConfirm = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_SAVE_PREFERENCES_CONFIRM,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximitySavePreferencesDismiss = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_SAVE_PREFERENCES_DISMISS,
     buildEventProperties("UX", "action")
   );
 };

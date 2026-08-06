@@ -1,9 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as Calendar from "expo-calendar";
 /**
  * A reducer for persisted preferences.
  */
 import * as O from "fp-ts/lib/Option";
-import { Calendar } from "react-native-calendar-events";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
 
@@ -48,7 +48,7 @@ export type PersistedPreferencesState = Readonly<{
   isMixpanelEnabled: boolean | null;
   isPagoPATestEnabled: boolean;
   isPnTestEnabled: boolean;
-  preferredCalendar?: Calendar;
+  preferredCalendar?: Calendar.Calendar;
   preferredLanguage?: Locales;
   themePreference: ColorModeChoice;
   wasServiceAlertDisplayedOnce?: boolean;

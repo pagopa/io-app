@@ -1,18 +1,22 @@
-import {
-  HapticFeedbackTypes,
-  HapticOptions,
-  trigger
-} from "react-native-haptic-feedback";
+import { Presets } from "react-native-pulsar";
 
-const defaultOptions: HapticOptions = {
-  enableVibrateFallback: true,
-  ignoreAndroidSystemSettings: false
+/**
+ * The cross-platform system haptics exposed by Pulsar.
+ *
+ * The `Android` namespace is deliberately excluded: it groups platform-specific
+ * effects that have no iOS counterpart, so it must not leak into the shared API.
+ */
+type HapticType = Exclude<keyof typeof Presets.System, "Android">;
+
+/**
+ * Plays a system haptic feedback on the device.
+ *
+ * There is no per-call option: Pulsar detects the device haptic support level
+ * and silently degrades on unsupported hardware.
+ */
+const triggerHaptic = (type: HapticType) => {
+  Presets.System[type]();
 };
 
-const triggerHaptic = (
-  type: HapticFeedbackTypes | keyof typeof HapticFeedbackTypes,
-  options?: HapticOptions
-) => trigger(type, { ...defaultOptions, ...options });
-
-export { HapticFeedbackTypes as HapticTypes, triggerHaptic };
-export type { HapticOptions };
+export { triggerHaptic };
+export type { HapticType };
