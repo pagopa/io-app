@@ -3779,6 +3779,10 @@
             "subtitle": "I controlli di verifica hanno già dato esito negativo.\nSe pensi ci sia un errore, contatta l’ente promotore.",
             "title": "Non hai i requisiti per aderire a questa iniziativa"
           },
+          "USER_BONUS_ALREADY_USED": {
+            "subtitle": "Dai controlli effettuati risulta che lo hai già usato in passato.",
+            "title": "Hai già usato questo bonus"
+          },
           "USER_NOT_IN_WHITELIST": {
             "subtitle": "Il tuo Codice Fiscale non è incluso nella lista di chi ha diritto ai fondi previsti dall’iniziativa. Per maggiori informazioni, contatta l’ente promotore.",
             "title": "Questa iniziativa non è rivolta a te"

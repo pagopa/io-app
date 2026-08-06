@@ -3,7 +3,6 @@ import * as O from "fp-ts/lib/Option";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";
 import { StatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
-import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
 import { SelfConsentMultiTypeDTO } from "../../../../../definitions/idpay/SelfConsentMultiTypeDTO";
 import { SelfConsentTextDTO } from "../../../../../definitions/idpay/SelfConsentTextDTO";
 import { OnboardingFailure } from "../types/OnboardingFailure";
@@ -20,7 +19,7 @@ export type Context = {
   readonly selfDeclarationsBoolAnswers: Record<string, boolean>;
   readonly selfDeclarationsMultiAnswers: Record<
     number,
-    SelfConsentMultiDTO | SelfConsentMultiTypeDTO
+    SelfConsentMultiTypeDTO
   >;
   readonly selfDeclarationsMultiPage: number;
   readonly selfDeclarationsTextAnswers: Record<string, SelfConsentTextDTO>;

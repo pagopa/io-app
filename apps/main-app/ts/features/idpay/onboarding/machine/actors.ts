@@ -298,6 +298,8 @@ const mapErrorCodeToFailure = (
       return OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS;
     case OnboardingErrorCodeEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
       return OnboardingFailureEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS;
+    case OnboardingErrorCodeEnum.ONBOARDING_USER_BONUS_ALREADY_USED:
+      return OnboardingFailureEnum.ONBOARDING_USER_BONUS_ALREADY_USED;
     case OnboardingErrorCodeEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
       return OnboardingFailureEnum.ONBOARDING_USER_NOT_IN_WHITELIST;
     case OnboardingErrorCodeEnum.ONBOARDING_USER_UNSUBSCRIBED:

@@ -30,7 +30,7 @@ declare -a apis=(
   # Communication APIs
   "./definitions/communication https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_communication.yaml"
   # IDPay APIs
-  "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-securehub-infra-api-spec/refs/tags/v3.10.2/src/idpay/apim/api/idpay_appio_full/openapi.appio.full.yml"
+  "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-securehub-infra-api-spec/3422e805b906e893769d2446ef1c56d1612177e4/src/idpay/apim/api/idpay_appio_full/openapi.appio.full.yml"
   # Services APIs
   "./definitions/services https://raw.githubusercontent.com/pagopa/io-services-cms/io-services-app-backend@$IO_SERVICES_APP_BACKEND/apps/app-backend/api/external.yaml"
   # Fims APIs

@@ -1,5 +1,4 @@
 import { SelfConsentBoolDTO } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
-import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
 import { SelfConsentMultiTypeDTO } from "../../../../../definitions/idpay/SelfConsentMultiTypeDTO";
 import { SelfConsentTextDTO } from "../../../../../definitions/idpay/SelfConsentTextDTO";
 
@@ -41,7 +40,7 @@ type RetryConnectionEvent = {
 };
 
 type SelectMultiConsent = {
-  readonly data: SelfConsentMultiDTO | SelfConsentMultiTypeDTO;
+  readonly data: SelfConsentMultiTypeDTO;
   readonly type: "select-multi-consent";
 };
 

@@ -5,7 +5,6 @@ import { StateFrom } from "xstate";
 
 import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";
 import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
-import { SelfCriteriaMultiDTO } from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
 import { SelfCriteriaMultiTypeDTO } from "../../../../../definitions/idpay/SelfCriteriaMultiTypeDTO";
 import { SelfCriteriaTextDTO } from "../../../../../definitions/idpay/SelfCriteriaTextDTO";
 import * as Context from "./context";
@@ -41,10 +40,8 @@ const filterMultiCriteria = <T>(criteria: O.Option<OnboardingInitiativeDTO>) =>
     O.fold(
       () => [],
       some =>
-        some.beneficiaryRule?.selfDeclarationCriteria?.filter(
-          el =>
-            el &&
-            (SelfCriteriaMultiTypeDTO.is(el) || SelfCriteriaMultiDTO.is(el))
+        some.beneficiaryRule?.selfDeclarationCriteria?.filter(el =>
+          SelfCriteriaMultiTypeDTO.is(el)
         )
     )
   ) as Array<T>;
@@ -52,9 +49,7 @@ const filterMultiCriteria = <T>(criteria: O.Option<OnboardingInitiativeDTO>) =>
 export const multiRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
-    filterMultiCriteria<SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO>(
-      requiredCriteria
-    )
+    filterMultiCriteria<SelfCriteriaMultiTypeDTO>(requiredCriteria)
 );
 
 const filterCriteria = <T>(
@@ -116,15 +111,12 @@ export const stepperCountSelector = createSelector(
     (boolCriteria.length > 0 ? 1 : 0) +
     multiCriteria.length +
     textCriteria.length +
-    (pdndCriteria.length > 0 || familyCriteria ? 1 : 0)
+    (pdndCriteria.length > 0 || familyCriteria != null ? 1 : 0)
 );
 
 export const getMultiSelfDeclarationListFromContext = (
   context: Context.Context
-) =>
-  filterMultiCriteria<SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO>(
-    context.requiredCriteria
-  );
+) => filterMultiCriteria<SelfCriteriaMultiTypeDTO>(context.requiredCriteria);
 
 export const getBooleanSelfDeclarationListFromContext = (
   context: Context.Context
