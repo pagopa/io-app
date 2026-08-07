@@ -11,6 +11,7 @@ import {
   engagementCGNDiscoveryBannerSelector,
   fimsServiceConfiguration,
   fimsServiceIdInCookieDisabledListSelector,
+  fimsTrackingEnrichedUrlsSelector,
   fseDiscoveryBannerWebUrlSelector,
   generateDynamicUrlSelector,
   isAarInAppDelegationRemoteEnabledSelector,
@@ -335,6 +336,25 @@ describe("remoteConfig", () => {
         "unmatchingConfId"
       );
       expect(serviceConfiguration).toBeUndefined();
+    });
+  });
+
+  describe("fimsTrackingEnrichedUrlsSelector", () => {
+    it("should return the configured URL allowlist", () => {
+      const trackingEnrichedUrls = ["https://rp.example.it/fims/landing"];
+      const state = {
+        remoteConfig: O.some({
+          fims: { trackingEnrichedUrls }
+        })
+      } as GlobalState;
+
+      expect(fimsTrackingEnrichedUrlsSelector(state)).toEqual(
+        trackingEnrichedUrls
+      );
+    });
+
+    it("should return an empty allowlist when it is not configured", () => {
+      expect(fimsTrackingEnrichedUrlsSelector(noneStore)).toEqual([]);
     });
   });
 

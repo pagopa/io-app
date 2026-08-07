@@ -1,4 +1,8 @@
-import { isFIMSLink, removeFIMSPrefixFromUrl } from "..";
+import {
+  enrichFimsDestinationUrl,
+  isFIMSLink,
+  removeFIMSPrefixFromUrl
+} from "..";
 
 describe("index", () => {
   describe("removeFIMSPrefixFromUrl", () => {
@@ -58,4 +62,35 @@ describe("isIoFIMSLink", () => {
       expect(isIOFIMSLink).toBe(false);
     });
   });
+});
+
+describe("enrichFimsDestinationUrl", () => {
+  const allowedUrl = "https://rp.example.it/fims/landing";
+  const deviceId = "mixpanel-device-id";
+
+  it.each([
+    {
+      name: "the destination matches the allowlist",
+      destinationUrl: allowedUrl,
+      expectedUrl: `${allowedUrl}?device=${deviceId}`
+    },
+    {
+      name: "the destination contains query parameters and a fragment",
+      destinationUrl: `${allowedUrl}?token=one-shot#result`,
+      expectedUrl: `${allowedUrl}?token=one-shot&device=${deviceId}#result`
+    }
+  ])("enriches the URL when $name", ({ destinationUrl, expectedUrl }) => {
+    expect(
+      enrichFimsDestinationUrl(destinationUrl, [allowedUrl], deviceId)
+    ).toBe(expectedUrl);
+  });
+
+  it.each(["https://rp.example.it/fims/another-path", "not-a-url"])(
+    "returns an unchanged URL when it is not allowed: %s",
+    destinationUrl => {
+      expect(
+        enrichFimsDestinationUrl(destinationUrl, [allowedUrl], deviceId)
+      ).toBe(destinationUrl);
+    }
+  );
 });

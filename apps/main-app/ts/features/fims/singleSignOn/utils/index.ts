@@ -77,3 +77,26 @@ export const removeFIMSPrefixFromUrl = (fimsUrlWithProtocol: string) => {
 
 export const isFIMSLink = (href: string): boolean =>
   href.toLowerCase().startsWith(IO_FIMS_LINK_PREFIX);
+
+/**
+ * Adds the Mixpanel device ID only when the redirect destination is explicitly
+ * allowed by remote configuration. Query parameters and fragments do not take
+ * part in the allowlist comparison.
+ */
+export const enrichFimsDestinationUrl = (
+  destinationUrl: string,
+  trackingEnrichedUrls: ReadonlyArray<string>,
+  mixpanelDeviceId: string
+): string => {
+  try {
+    const parsedDestinationUrl = new URL(destinationUrl);
+    const destinationFullPath = `${parsedDestinationUrl.origin}${parsedDestinationUrl.pathname}`;
+    if (!trackingEnrichedUrls.includes(destinationFullPath)) {
+      return destinationUrl;
+    }
+    parsedDestinationUrl.searchParams.set("device", mixpanelDeviceId);
+    return parsedDestinationUrl.toString();
+  } catch {
+    return destinationUrl;
+  }
+};
