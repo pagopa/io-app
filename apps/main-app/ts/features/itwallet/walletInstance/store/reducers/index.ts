@@ -18,12 +18,12 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
+  itwKeyAttestationsRemoveById,
+  itwKeyAttestationsStore,
   itwSetWalletInstanceRemotelyActive,
   itwSetWalletInstanceRenewalError,
   itwUpdateWalletInstanceStatus,
-  itwWalletInstanceAttestationStore,
-  itwWalletUnitAttestationsRemoveById,
-  itwWalletUnitAttestationsStore
+  itwWalletInstanceAttestationStore
 } from "../actions";
 
 export type ItwWalletInstanceState = {
@@ -37,6 +37,12 @@ export type ItwWalletInstanceState = {
    */
   isRemotelyActive?: boolean;
   /**
+   * Record of Key Attestations keyed by ID. They are not stored on
+   * credentials to avoid duplication (one KA might contain multiple keys)
+   * and to avoid bloating the stored credential unnecessarily.
+   */
+  keyAttestations: Record<string, string>;
+  /**
    * Whether a wallet instance renewal has already failed.
    * Used to prevent re-entering the recovery block on subsequent actor retries.
    */
@@ -45,19 +51,13 @@ export type ItwWalletInstanceState = {
    * The Wallet Instance status fetched from the Wallet Provider backend
    */
   status: pot.Pot<WalletInstanceStatus, NetworkError>;
-  /**
-   * Record of Wallet Unit Attestations keyed by ID. They are not stored on
-   * credentials to avoid duplication (one WUA might contain multiple keys)
-   * and to avoid bloating the stored credential unnecessarily.
-   */
-  walletUnitAttestations: Record<string, string>;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
   status: pot.none,
   renewalError: false,
-  walletUnitAttestations: {},
+  keyAttestations: {},
   isRemotelyActive: undefined
 };
 
@@ -100,6 +100,27 @@ const reducer = (
   action: Action
 ): ItwWalletInstanceState => {
   switch (action.type) {
+    case getType(itwKeyAttestationsRemoveById): {
+      return {
+        ...state,
+        keyAttestations: Object.fromEntries(
+          Object.entries(state.keyAttestations).filter(
+            ([id]) => !action.payload.includes(id)
+          )
+        )
+      };
+    }
+
+    case getType(itwKeyAttestationsStore): {
+      return {
+        ...state,
+        keyAttestations: {
+          ...state.keyAttestations,
+          ...action.payload
+        }
+      };
+    }
+
     case getType(itwLifecycleStoresReset):
       return {
         ...itwWalletInstanceInitialState,
@@ -147,27 +168,6 @@ const reducer = (
         status: pot.none,
         attestation: action.payload,
         renewalError: false
-      };
-    }
-
-    case getType(itwWalletUnitAttestationsRemoveById): {
-      return {
-        ...state,
-        walletUnitAttestations: Object.fromEntries(
-          Object.entries(state.walletUnitAttestations).filter(
-            ([id]) => !action.payload.includes(id)
-          )
-        )
-      };
-    }
-
-    case getType(itwWalletUnitAttestationsStore): {
-      return {
-        ...state,
-        walletUnitAttestations: {
-          ...state.walletUnitAttestations,
-          ...action.payload
-        }
       };
     }
 

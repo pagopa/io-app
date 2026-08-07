@@ -34,7 +34,7 @@ const baseCredential: CredentialMetadata = {
     }
   },
   spec_version: "1.3.3",
-  walletUnitAttestationId: "wallet-unit-attestation-id"
+  keyAttestationId: "key-attestation-id"
 };
 
 const statuses: ReadonlyArray<ItwCredentialStatus> = [
@@ -90,7 +90,7 @@ describe("applyStatusToCredential", () => {
         keyTag: baseCredential.keyTag,
         keyTags: baseCredential.keyTags,
         spec_version: baseCredential.spec_version,
-        walletUnitAttestationId: baseCredential.walletUnitAttestationId
+        keyAttestationId: baseCredential.keyAttestationId
       });
       expect(result.issuerConf).toBe(baseCredential.issuerConf);
       expect(result.parsedCredential.given_name).toBe(

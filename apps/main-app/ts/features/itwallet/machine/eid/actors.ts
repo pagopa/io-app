@@ -23,7 +23,7 @@ import {
   getWalletInstanceAttestation,
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
-import { generateKeysWithWalletUnitAttestation } from "../../common/utils/itwCredentialIssuanceUtils";
+import { generateKeysWithKeyAttestation } from "../../common/utils/itwCredentialIssuanceUtils";
 import { isAssertionGenerationError } from "../../common/utils/itwFailureUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
@@ -45,8 +45,8 @@ import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import {
-  itwSetWalletInstanceRenewalError,
-  itwWalletUnitAttestationsStore
+  itwKeyAttestationsStore,
+  itwSetWalletInstanceRenewalError
 } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
@@ -74,7 +74,7 @@ export type RequestAccessTokenActorParams = WithItwVersion<{
 
 export type RequestEidActorOutput = {
   credential: CredentialBundle;
-  walletUnitAttestations: Record<string, string>;
+  keyAttestations: Record<string, string>;
 };
 
 export type RequestEidActorParams = WithItwVersion<{
@@ -93,7 +93,7 @@ export type StartAuthFlowActorParams = WithItwVersion<{
 
 export type StoreEidCredentialActorParams = {
   eid: CredentialBundle | undefined;
-  walletUnitAttestations?: Record<string, string>;
+  keyAttestations?: Record<string, string>;
 };
 
 export type ValidateMrtdPoPChallengeActorParams = WithItwVersion<{
@@ -358,7 +358,7 @@ export const createEidIssuanceActorsImplementation = (
   }),
 
   // To ensure a smooth experience when the session token expires, it is important to keep this actor
-  // retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
+  // retriable: it must fail as early as possible when `generateKeysWithKeyAttestation` is
   // rejected for session expired, so it can be reentered and retried from where it failed.
   requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
     async ({ input }) => {
@@ -370,19 +370,21 @@ export const createEidIssuanceActorsImplementation = (
       const sessionToken = sessionTokenSelector(store.getState());
       assert(sessionToken, "sessionToken is undefined");
 
-      // The Wallet Unit Attestation makes use of the integrity service
-      if (getIoWallet(input.itwVersion).WalletUnitAttestation.isSupported) {
+      // The Key Attestation makes use of the integrity service
+      if (getIoWallet(input.itwVersion).KeyAttestation.isSupported) {
         await ensureIntegrityServiceIsStoreReadyOrThrow(store);
       }
 
       // Take the first element as only one credential is authorized during PID issuance
-      const [authorizedCredential] =
-        await generateKeysWithWalletUnitAttestation(input.accessToken, {
+      const [authorizedCredential] = await generateKeysWithKeyAttestation(
+        input.accessToken,
+        {
           env,
           itwVersion: input.itwVersion,
           hardwareKeyTag: input.integrityKeyTag,
           sessionToken
-        });
+        }
+      );
 
       trackItwRequest(
         toItwIdMethod(input.identification),
@@ -397,13 +399,12 @@ export const createEidIssuanceActorsImplementation = (
         ...input.authenticationContext
       });
 
-      const { walletUnitAttestationId, walletUnitAttestation } =
-        authorizedCredential;
+      const { keyAttestationId, keyAttestation } = authorizedCredential;
       return {
         credential,
-        walletUnitAttestations:
-          walletUnitAttestationId && walletUnitAttestation
-            ? { [walletUnitAttestationId]: walletUnitAttestation }
+        keyAttestations:
+          keyAttestationId && keyAttestation
+            ? { [keyAttestationId]: keyAttestation }
             : {}
       };
     }
@@ -411,7 +412,7 @@ export const createEidIssuanceActorsImplementation = (
 
   storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
     async ({ input }) => {
-      const { eid, walletUnitAttestations } = input;
+      const { eid, keyAttestations } = input;
       assert(eid, "eID credential is undefined");
 
       // Waits for the credential store/replace to complete before proceeding
@@ -424,8 +425,8 @@ export const createEidIssuanceActorsImplementation = (
         );
       });
 
-      if (walletUnitAttestations) {
-        store.dispatch(itwWalletUnitAttestationsStore(walletUnitAttestations));
+      if (keyAttestations) {
+        store.dispatch(itwKeyAttestationsStore(keyAttestations));
       }
     }
   ),

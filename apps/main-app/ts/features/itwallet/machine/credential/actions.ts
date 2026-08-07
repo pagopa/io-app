@@ -26,8 +26,8 @@ import {
 } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
-  itwWalletInstanceAttestationStore,
-  itwWalletUnitAttestationsStore
+  itwKeyAttestationsStore,
+  itwWalletInstanceAttestationStore
 } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { Context } from "./context";
@@ -174,11 +174,9 @@ export const createCredentialIssuanceActionsImplementation = (
     store.dispatch(itwCredentialsReplaceByType(context.credentials, {}));
     // Clear older upgrade-failed flag for this credential after a successful issuance/upgrade.
     store.dispatch(itwClearCredentialUpgradeFailed(context.credentialType));
-    // Stores WUAs separately if present
-    if (context.walletUnitAttestations) {
-      store.dispatch(
-        itwWalletUnitAttestationsStore(context.walletUnitAttestations)
-      );
+    // Stores Key Attestations separately if present
+    if (context.keyAttestations) {
+      store.dispatch(itwKeyAttestationsStore(context.keyAttestations));
     }
   },
 

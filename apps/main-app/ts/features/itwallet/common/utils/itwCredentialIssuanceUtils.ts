@@ -10,7 +10,7 @@ import last from "lodash/last";
 import { v4 as uuidv4 } from "uuid";
 
 import { Env } from "./environment";
-import { getWalletUnitAttestation } from "./itwAttestationUtils";
+import { getKeyAttestation } from "./itwAttestationUtils";
 import { extractVerification } from "./itwCredentialUtils";
 import {
   DPOP_KEYTAG,
@@ -381,7 +381,7 @@ type RequestAndParseCredentialParams = {
 /**
  * Utility function that requests and parses an already authorized credential. For this reason,
  * the function requires the Issuer's access token with the authorization details. Key generation MUST
- * be handled outside the function by calling {@link generateKeysWithWalletUnitAttestation}.
+ * be handled outside the function by calling {@link generateKeysWithKeyAttestation}.
  *
  * @returns The credential bundle with the newly obtained credential
  */
@@ -395,8 +395,8 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
   env,
   itwVersion,
   keyTag,
-  walletUnitAttestationId,
-  walletUnitAttestation
+  keyAttestationId,
+  keyAttestation
 }) => {
   const ioWallet = getIoWallet(itwVersion);
   const { credential_configuration_id, credential_identifiers } = authDetails;
@@ -415,7 +415,7 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
       {
         dPopCryptoContext,
         credentialCryptoContext,
-        walletUnitAttestation
+        keyAttestation
       }
     ).catch(
       enrichErrorWithMetadata({
@@ -433,7 +433,7 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
     credentialCryptoContext,
     keyTag,
     credentialType,
-    walletUnitAttestationId,
+    keyAttestationId,
     env
   });
 };
@@ -447,8 +447,8 @@ type VerifyAndBuildCredentialBundleParams = {
   format: string;
   ioWallet: ReturnType<typeof getIoWallet>;
   issuerConf: IssuerConfiguration;
+  keyAttestationId?: string;
   keyTag: string;
-  walletUnitAttestationId?: string;
 };
 
 /**
@@ -469,7 +469,7 @@ const verifyAndBuildCredentialBundle = async ({
   credentialCryptoContext,
   keyTag,
   credentialType,
-  walletUnitAttestationId,
+  keyAttestationId,
   env
 }: VerifyAndBuildCredentialBundleParams): Promise<CredentialBundle> => {
   const { parsedCredential, issuedAt, expiration } =
@@ -503,19 +503,19 @@ const verifyAndBuildCredentialBundle = async ({
         credential,
         parsedCredential
       }),
-      walletUnitAttestationId
+      keyAttestationId
     }
   };
 };
 
 export type AuthorizedCredentialMetadata = {
   authDetails: CredentialAccessToken["authorization_details"][number];
+  keyAttestation?: string;
+  keyAttestationId?: string;
   keyTag: string;
-  walletUnitAttestation?: string;
-  walletUnitAttestationId?: string;
 };
 
-type GenerateKeysWithWalletUnitAttestation = (
+type GenerateKeysWithKeyAttestation = (
   accessToken: CredentialAccessToken,
   params: {
     env: Env;
@@ -526,11 +526,11 @@ type GenerateKeysWithWalletUnitAttestation = (
 ) => Promise<ReadonlyArray<AuthorizedCredentialMetadata>>;
 
 /**
- * Create the keys and the WUA for each credential to request. The exact credentials are taken from the authorization details
- * of the Issuer's access token, that contains the list of authorized credential identifiers. At present we always receive one
- * credential identifier, so we can generate one key/WUA per authorization detail.
+ * Create the keys and the Key Attestation (KA) for each credential to request. The exact credentials are taken from
+ * the authorization details of the Issuer's access token, that contains the list of authorized credential identifiers.
+ * At present we always receive one credential identifier, so we can generate one key/KA per authorization detail.
  *
- * If the WUA is not supported, only the keys are generated.
+ * If the KA is not supported, only the keys are generated.
  *
  * This function MUST be called before {@link requestAndParseCredential} because key generation is a preliminary step.
  *
@@ -539,9 +539,9 @@ type GenerateKeysWithWalletUnitAttestation = (
  * @param params.itwVersion IT-Wallet technical specs version
  * @param params.hardwareKeyTag The hardware key associated with the Wallet Instance
  * @param params.sessionToken The session token for the Wallet Provider API
- * @returns The authorization details enriched with the generated keys and WUA if supported
+ * @returns The authorization details enriched with the generated keys and KA if supported
  */
-export const generateKeysWithWalletUnitAttestation: GenerateKeysWithWalletUnitAttestation =
+export const generateKeysWithKeyAttestation: GenerateKeysWithKeyAttestation =
   async (accessToken, { env, itwVersion, hardwareKeyTag, sessionToken }) => {
     const ioWallet = getIoWallet(itwVersion);
 
@@ -549,27 +549,27 @@ export const generateKeysWithWalletUnitAttestation: GenerateKeysWithWalletUnitAt
       accessToken.authorization_details.map(async authDetails => {
         const keyTag = uuidv4().toString();
 
-        // If the WUA is supported, keys are generated via the KeyAttestationCryptoContext
-        // and sent to the Wallet Provider to get the Wallet Unit Attestation
-        if (ioWallet.WalletUnitAttestation.isSupported) {
-          const walletUnitAttestation = await getWalletUnitAttestation(
+        // If the KA is supported, keys are generated via the KeyAttestationCryptoContext
+        // and sent to the Wallet Provider to get the Key Attestation
+        if (ioWallet.KeyAttestation.isSupported) {
+          const keyAttestation = await getKeyAttestation(
             env,
             itwVersion,
             [keyTag],
             hardwareKeyTag,
             sessionToken
           );
-          // Unique ID to correlate multiple keys to the same WUA (ex. batch issuance)
-          const walletUnitAttestationId = uuidv4().toString();
+          // Unique ID to correlate multiple keys to the same KA (ex. batch issuance)
+          const keyAttestationId = uuidv4().toString();
           return {
             keyTag,
             authDetails,
-            walletUnitAttestation,
-            walletUnitAttestationId
+            keyAttestation,
+            keyAttestationId
           };
         }
 
-        // If the WUA is not supported, only generate the cryptographic key
+        // If the KA is not supported, only generate the cryptographic key
         await generate(keyTag);
         return { keyTag, authDetails };
       })
@@ -578,15 +578,15 @@ export const generateKeysWithWalletUnitAttestation: GenerateKeysWithWalletUnitAt
 
 export type AuthorizedBatchCredentialMetadata = {
   authDetails: CredentialAccessToken["authorization_details"][number];
+  keyAttestation?: string;
+  keyAttestationId?: string;
   /**
-   * One key per credential copy to obtain in the batch. All keys are attested by the same WUA.
+   * One key per credential copy to obtain in the batch. All keys are attested by the same KA.
    */
   keyTags: ReadonlyArray<string>;
-  walletUnitAttestation?: string;
-  walletUnitAttestationId?: string;
 };
 
-type GenerateBatchKeysWithWalletUnitAttestation = (
+type GenerateBatchKeysWithKeyAttestation = (
   accessToken: CredentialAccessToken,
   batchSize: number,
   params: {
@@ -598,19 +598,19 @@ type GenerateBatchKeysWithWalletUnitAttestation = (
 ) => Promise<ReadonlyArray<AuthorizedBatchCredentialMetadata>>;
 
 /**
- * Batch variant of {@link generateKeysWithWalletUnitAttestation}. For each authorization detail it
- * generates `batchSize` cryptographic keys and, when supported, a single Wallet Unit Attestation
- * that attests all of them (the WUA endpoint accepts multiple keys at once, correlated via
- * `walletUnitAttestationId`).
+ * Batch variant of {@link generateBatchKeysWithKeyAttestation}. For each authorization detail it
+ * generates `batchSize` cryptographic keys and, when supported, a single Key Attestation
+ * that attests all of them (the KA endpoint accepts multiple keys at once, correlated via
+ * `keyAttestationId`).
  *
  * This function MUST be called before {@link obtainCredentialsBatch} because key generation is a
  * preliminary step.
  *
  * @param accessToken The Issuer access token with the authorization details
  * @param batchSize The number of credential copies (and keys) to generate per authorization detail
- * @returns The authorization details enriched with the generated keys and WUA if supported
+ * @returns The authorization details enriched with the generated keys and KA if supported
  */
-export const generateBatchKeysWithWalletUnitAttestation: GenerateBatchKeysWithWalletUnitAttestation =
+export const generateBatchKeysWithKeyAttestation: GenerateBatchKeysWithKeyAttestation =
   async (
     accessToken,
     batchSize,
@@ -624,25 +624,25 @@ export const generateBatchKeysWithWalletUnitAttestation: GenerateBatchKeysWithWa
           uuidv4().toString()
         );
 
-        // If the WUA is supported, all keys are attested by a single Wallet Unit Attestation
-        if (ioWallet.WalletUnitAttestation.isSupported) {
-          const walletUnitAttestation = await getWalletUnitAttestation(
+        // If the KA is supported, all keys are attested by a single Key Attestation
+        if (ioWallet.KeyAttestation.isSupported) {
+          const keyAttestation = await getKeyAttestation(
             env,
             itwVersion,
             keyTags,
             hardwareKeyTag,
             sessionToken
           );
-          const walletUnitAttestationId = uuidv4().toString();
+          const keyAttestationId = uuidv4().toString();
           return {
             keyTags,
             authDetails,
-            walletUnitAttestation,
-            walletUnitAttestationId
+            keyAttestation,
+            keyAttestationId
           };
         }
 
-        // If the WUA is not supported, only generate the cryptographic keys
+        // If the KA is not supported, only generate the cryptographic keys
         await Promise.all(keyTags.map(generate));
         return { keyTags, authDetails };
       })
@@ -666,7 +666,7 @@ export type ObtainCredentialsBatch = (args: {
  * into {@link CredentialBundle}s. All copies of the same credential share the `credentialId`
  * (the issuer's `credential_configuration_id`); copies are told apart by their unique `keyTag`.
  *
- * Keys MUST be generated beforehand via {@link generateBatchKeysWithWalletUnitAttestation}.
+ * Keys MUST be generated beforehand via {@link generateBatchKeysWithKeyAttestation}.
  *
  * @returns The flattened list of obtained credential bundles
  */
@@ -687,8 +687,8 @@ export const obtainCredentialsBatch: ObtainCredentialsBatch = async ({
       async ({
         keyTags,
         authDetails,
-        walletUnitAttestation,
-        walletUnitAttestationId
+        keyAttestation,
+        keyAttestationId
       }): Promise<ReadonlyArray<CredentialBundle>> => {
         const { credential_configuration_id, credential_identifiers } =
           authDetails;
@@ -706,7 +706,7 @@ export const obtainCredentialsBatch: ObtainCredentialsBatch = async ({
             {
               dPopCryptoContext,
               credentialCryptoContexts,
-              walletUnitAttestation
+              keyAttestation
             }
           ).catch(
             enrichErrorWithMetadata({
@@ -726,7 +726,7 @@ export const obtainCredentialsBatch: ObtainCredentialsBatch = async ({
               credentialCryptoContext: credentialCryptoContexts[index],
               keyTag: keyTags[index],
               credentialType,
-              walletUnitAttestationId,
+              keyAttestationId,
               env
             })
           )

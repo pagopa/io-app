@@ -56,7 +56,7 @@ export type ObtainCredentialActorInput = Partial<
 
 export type ObtainCredentialActorOutput = {
   credentials: ReadonlyArray<CredentialBundle>;
-  walletUnitAttestations: Record<string, string>;
+  keyAttestations: Record<string, string>;
 };
 
 export type ObtainCredentialStatusActorInput = Pick<
@@ -87,20 +87,20 @@ export type VerifyTrustFederationActorInput = Pick<
 >;
 
 /**
- * Builds the dictionary of Wallet Unit Attestations generated during issuance, keyed by their
- * `walletUnitAttestationId`. Works for both single and batch issuance, where a batch shares a
- * single WUA across all its keys.
+ * Builds the dictionary of Key Attestations generated during issuance, keyed by their
+ * `keyAttestationId`. Works for both single and batch issuance, where a batch shares a
+ * single KUA across all its keys.
  */
-const extractWalletUnitAttestations = (
+const extractKeyAttestations = (
   authorizedCredentials: ReadonlyArray<{
-    walletUnitAttestation?: string;
-    walletUnitAttestationId?: string;
+    keyAttestation?: string;
+    keyAttestationId?: string;
   }>
 ): Record<string, string> =>
   authorizedCredentials.reduce(
     (acc, c) =>
-      c.walletUnitAttestationId && c.walletUnitAttestation
-        ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
+      c.keyAttestationId && c.keyAttestation
+        ? { ...acc, [c.keyAttestationId]: c.keyAttestation }
         : acc,
     {} as Record<string, string>
   );
@@ -289,7 +289,7 @@ export const createCredentialIssuanceActorsImplementation = (
   });
 
   // To ensure a smooth experience when the session token expires, it is important to keep this actor
-  // retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
+  // retriable: it must fail as early as possible when `generateKeysWithKeyAttestation` is
   // rejected for session expired, so it can be reentered and retried from where it failed.
   const obtainCredential = fromPromise<
     ObtainCredentialActorOutput,
@@ -307,8 +307,8 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(accessToken, "accessToken is undefined");
     assert(O.isSome(integrityKeyTag), "integriyKeyTag is undefined");
 
-    // The Wallet Unit Attestation makes use of the integrity service
-    if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
+    // The Key Attestation makes use of the integrity service
+    if (getIoWallet(itwVersion).KeyAttestation.isSupported) {
       await ensureIntegrityServiceIsStoreReadyOrThrow(store);
     }
 
@@ -329,7 +329,7 @@ export const createCredentialIssuanceActorsImplementation = (
 
     if (batchSize > 1) {
       const authorizedCredentials =
-        await credentialIssuanceUtils.generateBatchKeysWithWalletUnitAttestation(
+        await credentialIssuanceUtils.generateBatchKeysWithKeyAttestation(
           accessToken,
           batchSize,
           keyGenParams
@@ -347,14 +347,12 @@ export const createCredentialIssuanceActorsImplementation = (
 
       return {
         credentials,
-        walletUnitAttestations: extractWalletUnitAttestations(
-          authorizedCredentials
-        )
+        keyAttestations: extractKeyAttestations(authorizedCredentials)
       };
     }
 
     const authorizedCredentials =
-      await credentialIssuanceUtils.generateKeysWithWalletUnitAttestation(
+      await credentialIssuanceUtils.generateKeysWithKeyAttestation(
         accessToken,
         keyGenParams
       );
@@ -371,9 +369,7 @@ export const createCredentialIssuanceActorsImplementation = (
 
     return {
       credentials,
-      walletUnitAttestations: extractWalletUnitAttestations(
-        authorizedCredentials
-      )
+      keyAttestations: extractKeyAttestations(authorizedCredentials)
     };
   });
 

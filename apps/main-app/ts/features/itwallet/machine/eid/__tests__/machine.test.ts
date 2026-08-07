@@ -45,7 +45,7 @@ type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
 const T_INTEGRITY_KEY = "abc";
 const T_WIA = "abcdefg";
-const T_WUA = { wua1: "wua-jwt" };
+const T_KA = { ka1: "ka-jwt" };
 const T_ROUTE_NAME = "ITW_IDENTIFICATION_TEST_ROUTE";
 const T_ACCESS_TOKEN: CredentialAccessToken = {
   access_token: "mock_access_token",
@@ -63,7 +63,7 @@ const T_EID_REQUEST_OUTPUT: RequestEidActorOutput = {
     credential: "",
     metadata: ItwStoredCredentialsMocks.eid
   },
-  walletUnitAttestations: T_WUA
+  keyAttestations: T_KA
 };
 
 /**
@@ -489,7 +489,7 @@ describe("itwEidIssuanceMachine", () => {
       }),
       accessToken: T_ACCESS_TOKEN,
       eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
-      walletUnitAttestations: T_WUA
+      keyAttestations: T_KA
     });
 
     /**
@@ -1477,7 +1477,7 @@ describe("itwEidIssuanceMachine", () => {
           credential: "",
           metadata: ItwStoredCredentialsMocks.eid
         },
-        walletUnitAttestations: T_WUA
+        keyAttestations: T_KA
       })
     );
     issuedEidMatchesAuthenticatedUser.mockImplementation(() => false);
@@ -1746,7 +1746,7 @@ describe("itwEidIssuanceMachine", () => {
           credential: "",
           metadata: ItwStoredCredentialsMocks.eid
         },
-        walletUnitAttestations: T_WUA
+        keyAttestations: T_KA
       })
     );
 
@@ -1835,7 +1835,7 @@ describe("itwEidIssuanceMachine", () => {
       }),
       accessToken: T_ACCESS_TOKEN,
       eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
-      walletUnitAttestations: T_WUA
+      keyAttestations: T_KA
     });
   });
 
@@ -2717,7 +2717,7 @@ describe("itwEidIssuanceMachine", () => {
     requestEid.mockImplementation(() =>
       Promise.resolve({
         credential: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
-        walletUnitAttestations: T_WUA
+        keyAttestations: T_KA
       })
     );
     issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
@@ -2747,7 +2747,7 @@ describe("itwEidIssuanceMachine", () => {
     requestEid.mockImplementationOnce(() =>
       Promise.resolve({
         credential: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
-        walletUnitAttestations: T_WUA
+        keyAttestations: T_KA
       })
     );
     isSessionExpired.mockImplementation(() => true);
@@ -2802,7 +2802,7 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(intermediateSnapshot2.context).toMatchObject<Partial<Context>>({
       eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
-      walletUnitAttestations: T_WUA
+      keyAttestations: T_KA
     });
   });
 

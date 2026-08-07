@@ -12,8 +12,8 @@ import { watchItwCredentialsSaga } from "../../../credentials/saga";
 import { checkCredentialsStatusAssertion } from "../../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleItwCredentialsVaultCoherenceSaga } from "../../../credentials/saga/handleItwCredentialsVaultCoherenceSaga";
 import { handleItwCredentialsVaultMigrationSaga } from "../../../credentials/saga/handleItwCredentialsVaultMigrationSaga";
+import { handleKeyAttestationsCleanUp } from "../../../credentials/saga/handleKeyAttestationsCleanUp";
 import { handleWalletCredentialsRehydration } from "../../../credentials/saga/handleWalletCredentialsRehydration";
-import { handleWalletUnitAttestationsCleanUp } from "../../../credentials/saga/handleWalletUnitAttestationsCleanUp";
 import { watchItwCredentialsCatalogueSaga } from "../../../credentialsCatalogue/saga";
 import { checkHasNfcFeatureSaga } from "../../../identification/common/saga";
 import { watchItwLifecycleSaga } from "../../../lifecycle/saga";
@@ -55,7 +55,7 @@ describe("watchItwSaga", () => {
       .next()
       .fork(handleWalletCredentialsRehydration)
       .next()
-      .fork(handleWalletUnitAttestationsCleanUp)
+      .fork(handleKeyAttestationsCleanUp)
       .next()
       .fork(updateNfcInfoTrackingProperties)
       .next()

@@ -4,7 +4,7 @@ import { itwAllStoredCredentialsSelector } from "../../../credentials/store/sele
 
 /**
  * Collects the Status List URIs referenced by all current owners
- * (credentials, Wallet Instance Attestations, Wallet Unit Attestations).
+ * (credentials, Wallet Instance Attestations, Key Attestations).
  *
  * Returns `undefined` when owner metadata does not yet expose Status List
  * references, so that startup coherence can distinguish "no owners exist"

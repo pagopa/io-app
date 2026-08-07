@@ -13,6 +13,7 @@ import {
 
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
+import { CURRENT_ITW_SPECS_VERSION } from "../../common/utils/constants";
 import {
   CredentialAccessToken,
   WalletInstanceAttestations
@@ -302,11 +303,11 @@ export const itwEidIssuanceMachine = setup({
             credentialType: event.credentialType,
             // Override the IT-Wallet version from the global store set on machine init.
             // This is necessary because a user might use a different IT-Wallet version outside this machine:
-            // - User has 1.0 PID and is upgrading (1.0 -> 1.3)
-            // - User is whitelisted but falls back to L2 (1.3 -> 1.0)
+            // - User has 1.0 PID and is upgrading (1.0 -> 1.4)
+            // - User is whitelisted but falls back to L2 (1.4 -> 1.0)
             itwVersion:
               event.mode === "upgrade" || event.level === "l3"
-                ? "1.3.3"
+                ? CURRENT_ITW_SPECS_VERSION
                 : "1.0.0"
           })),
           target: "EvaluatingIssuanceMode"
@@ -1150,7 +1151,7 @@ export const itwEidIssuanceMachine = setup({
         RequestingEid: {
           tags: [ItwTags.Loading],
           description:
-            "Obtain the EID with the WUA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
+            "Obtain the EID with the KA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
           invoke: {
             src: "requestEid",
             input: ({ context }) => ({
@@ -1165,7 +1166,7 @@ export const itwEidIssuanceMachine = setup({
             onDone: {
               actions: assign(({ event }) => ({
                 eid: event.output.credential,
-                walletUnitAttestations: event.output.walletUnitAttestations
+                keyAttestations: event.output.keyAttestations
               })),
               target: "CheckingIdentityMatch"
             },
@@ -1220,7 +1221,7 @@ export const itwEidIssuanceMachine = setup({
             src: "storeEidCredential",
             input: ({ context }) => ({
               eid: context.eid,
-              walletUnitAttestations: context.walletUnitAttestations
+              keyAttestations: context.keyAttestations
             }),
             onDone: {
               target: "Completed",

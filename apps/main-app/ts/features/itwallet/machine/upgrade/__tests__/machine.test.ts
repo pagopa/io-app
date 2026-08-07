@@ -32,7 +32,7 @@ const makeUpgradeOutput = (
 ): UpgradeCredentialOutput => ({
   credentialType: credential.credentialType,
   credentials: [{ credential: "raw-jwt", metadata: credential }],
-  walletUnitAttestations: { wua1: "wua-jwt" }
+  keyAttestations: { ka1: "ka-jwt" }
 });
 
 describe("itwCredentialUpgradeMachine", () => {
@@ -61,7 +61,7 @@ describe("itwCredentialUpgradeMachine", () => {
       input: {
         credentials: [],
         issuanceMode: "upgrade",
-        itwVersion: "1.3.3"
+        itwVersion: "1.4.6"
       }
     });
     actor.start();
@@ -106,7 +106,7 @@ describe("itwCredentialUpgradeMachine", () => {
       input: {
         credentials,
         issuanceMode: "upgrade",
-        itwVersion: "1.3.3"
+        itwVersion: "1.4.6"
       }
     });
     actor.start();
@@ -153,7 +153,7 @@ describe("itwCredentialUpgradeMachine", () => {
       input: {
         credentials,
         issuanceMode: "upgrade",
-        itwVersion: "1.3.3"
+        itwVersion: "1.4.6"
       }
     });
     actor.start();
@@ -206,7 +206,7 @@ describe("itwCredentialUpgradeMachine", () => {
       input: {
         credentials,
         issuanceMode: "upgrade",
-        itwVersion: "1.3.3"
+        itwVersion: "1.4.6"
       }
     });
     actor.start();

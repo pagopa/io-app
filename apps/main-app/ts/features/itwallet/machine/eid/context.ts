@@ -91,6 +91,10 @@ export type Context = {
    */
   itwVersion: ItwVersion;
   /**
+   * An optional dictionary of Key Attestations generated for the issuance.
+   */
+  keyAttestations?: Record<string, string>;
+  /**
    * The level of eID issuance, which determines the authentication methods allowed and
    * the eID level that will be issued: Documenti su IO (L2) or IT Wallet (L2+, L3)
    */
@@ -108,10 +112,6 @@ export type Context = {
    * The wallet instance attestation JWT used to verify the wallet instance.
    */
   walletInstanceAttestation: undefined | WalletInstanceAttestations;
-  /**
-   * An optional dictionary of Wallet Unit Attestations generated for the issuance.
-   */
-  walletUnitAttestations?: Record<string, string>;
 };
 
 /**

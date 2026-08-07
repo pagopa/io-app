@@ -30,7 +30,7 @@ export type Context = {
    */
   failedCredentials: ReadonlyArray<CredentialMetadata>;
   /**
-   * The integrity key tag that will be used when requesting the Wallet Unit Attestation.
+   * The integrity key tag that will be used when requesting the Key Attestation.
    */
   integrityKeyTag: string | undefined;
   /**
