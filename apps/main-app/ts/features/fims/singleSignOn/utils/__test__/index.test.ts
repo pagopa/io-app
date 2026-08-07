@@ -1,4 +1,8 @@
-import { isFIMSLink, removeFIMSPrefixFromUrl } from "..";
+import {
+  enrichFimsDestinationUrl,
+  isFIMSLink,
+  removeFIMSPrefixFromUrl
+} from "..";
 
 describe("index", () => {
   describe("removeFIMSPrefixFromUrl", () => {
@@ -58,4 +62,53 @@ describe("isIoFIMSLink", () => {
       expect(isIOFIMSLink).toBe(false);
     });
   });
+});
+
+describe("enrichFimsDestinationUrl", () => {
+  const allowedUrl = "https://rp.example.it/fims/landing";
+  const deviceId = "mixpanel-device-id";
+
+  it.each([
+    {
+      name: "the destination matches the allowlist",
+      destinationUrl: allowedUrl,
+      trackingEnrichedUrls: [allowedUrl],
+      expectedUrl: `${allowedUrl}?mixpanelId=${deviceId}`
+    },
+    {
+      name: "the destination contains query parameters and a fragment",
+      destinationUrl: `${allowedUrl}?token=one-shot#result`,
+      trackingEnrichedUrls: [allowedUrl],
+      expectedUrl: `${allowedUrl}?token=one-shot&mixpanelId=${deviceId}#result`
+    },
+    {
+      name: "the allowlist uses a different case and trailing slash",
+      destinationUrl: "https://RP.EXAMPLE.IT/FIMS/LANDING?token=one-shot",
+      trackingEnrichedUrls: ["https://rp.example.it/fims/landing/"],
+      expectedUrl:
+        "https://RP.EXAMPLE.IT/FIMS/LANDING?token=one-shot&mixpanelId=mixpanel-device-id"
+    },
+    {
+      name: "the allowlist URL contains query parameters and a fragment",
+      destinationUrl: allowedUrl,
+      trackingEnrichedUrls: [`${allowedUrl}?configuration=value#section`],
+      expectedUrl: `${allowedUrl}?mixpanelId=${deviceId}`
+    }
+  ])(
+    "enriches the URL when $name",
+    ({ destinationUrl, trackingEnrichedUrls, expectedUrl }) => {
+      expect(
+        enrichFimsDestinationUrl(destinationUrl, trackingEnrichedUrls, deviceId)
+      ).toBe(expectedUrl);
+    }
+  );
+
+  it.each(["https://rp.example.it/fims/another-path", "not-a-url"])(
+    "returns an unchanged URL when it is not allowed: %s",
+    destinationUrl => {
+      expect(
+        enrichFimsDestinationUrl(destinationUrl, [allowedUrl], deviceId)
+      ).toBe(destinationUrl);
+    }
+  );
 });
