@@ -9,8 +9,7 @@ import type {
   Context,
   EidIssuanceLevel,
   IdentificationContext,
-  MrtdPoPContext,
-  StatusListEntry
+  MrtdPoPContext
 } from "./context";
 
 import { useIOStore } from "../../../../store/hooks";
@@ -76,7 +75,8 @@ export type ObtainEidWuaStatusListsActorInput = Pick<
   "itwVersion" | "walletUnitAttestations"
 >;
 
-export type ObtainEidWuaStatusListsActorOutput = ReadonlyArray<StatusListEntry>;
+export type ObtainEidWuaStatusListsActorOutput =
+  Context["walletUnitAttestationStatusLists"];
 
 export type RequestAccessTokenActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
@@ -105,7 +105,7 @@ export type StartAuthFlowActorParams = WithItwVersion<{
 export type StoreEidCredentialActorParams = {
   eid: CredentialBundle | undefined;
   walletUnitAttestations?: Record<string, string>;
-  wuaStatusLists: ReadonlyArray<StatusListEntry>;
+  walletUnitAttestationStatusLists?: Context["walletUnitAttestationStatusLists"];
 };
 
 export type ValidateMrtdPoPChallengeActorParams = WithItwVersion<{
@@ -432,7 +432,7 @@ export const createEidIssuanceActorsImplementation = (
       !ioWallet.WalletUnitAttestation.isSupported ||
       !ioWallet.CredentialStatus.statusList.isSupported
     ) {
-      return [];
+      return undefined;
     }
 
     assert(
@@ -448,21 +448,24 @@ export const createEidIssuanceActorsImplementation = (
             walletUnitAttestation,
             walletUnitAttestationId
           );
-          return [uri, parsedStatusList] as StatusListEntry;
+          return [uri, parsedStatusList] as const;
         }
       )
     );
 
-    return [...new Map(statusLists)];
+    return Object.fromEntries(statusLists);
   }),
 
   storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
     async ({ input }) => {
-      const { eid, walletUnitAttestations, wuaStatusLists } = input;
+      const { eid, walletUnitAttestations, walletUnitAttestationStatusLists } =
+        input;
       assert(eid, "eID credential is undefined");
 
       // Persist verified status lists before activating the wallet instance.
-      await StatusListRepository.upsertMany([...wuaStatusLists]);
+      await StatusListRepository.upsertMany(
+        Object.entries(walletUnitAttestationStatusLists ?? {})
+      );
 
       if (walletUnitAttestations) {
         store.dispatch(itwWalletUnitAttestationsStore(walletUnitAttestations));

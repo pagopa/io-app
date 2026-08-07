@@ -1198,7 +1198,7 @@ export const itwEidIssuanceMachine = setup({
             }),
             onDone: {
               actions: assign(({ event }) => ({
-                wuaStatusLists: event.output
+                walletUnitAttestationStatusLists: event.output
               })),
               target: "CheckingIdentityMatch"
             },
@@ -1246,7 +1246,8 @@ export const itwEidIssuanceMachine = setup({
             src: "storeEidCredential",
             input: ({ context }) => ({
               eid: context.eid,
-              wuaStatusLists: context.wuaStatusLists,
+              walletUnitAttestationStatusLists:
+                context.walletUnitAttestationStatusLists,
               walletUnitAttestations: context.walletUnitAttestations
             }),
             onDone: {

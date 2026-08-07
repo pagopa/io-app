@@ -11,9 +11,9 @@ import { StatusListRepository } from "../../../statusList/utils/repository";
 import { itwWalletUnitAttestationsStore } from "../../../walletInstance/store/actions";
 import {
   createEidIssuanceActorsImplementation,
+  ObtainEidWuaStatusListsActorOutput,
   StoreEidCredentialActorParams
 } from "../actors";
-import { StatusListEntry } from "../context";
 
 jest.mock("../../../common/utils/itwIoWallet", () => ({
   getIoWallet: jest.fn()
@@ -129,7 +129,7 @@ describe("eID issuance actors", () => {
         statusList: "status-list-jwt-2"
       });
 
-    const result = await runActor<ReadonlyArray<StatusListEntry>>(
+    const result = await runActor<ObtainEidWuaStatusListsActorOutput>(
       actors.obtainWuaStatusLists,
       {
         itwVersion: ITW_VERSION,
@@ -147,7 +147,9 @@ describe("eID issuance actors", () => {
       "wua-1-jwt",
       "wua-1"
     );
-    expect(result).toEqual([[WUA_STATUS_LIST_URI, STATUS_LIST_PAYLOAD_2]]);
+    expect(result).toEqual({
+      [WUA_STATUS_LIST_URI]: STATUS_LIST_PAYLOAD_2
+    });
   });
 
   it("fails when PID WUA is missing on supported versions", async () => {
@@ -158,7 +160,7 @@ describe("eID issuance actors", () => {
         itwVersion: ITW_VERSION,
         walletUnitAttestations: undefined
       })
-    ).rejects.toThrow("PID Wallet Unit Attestation is undefined");
+    ).rejects.toThrow("PID Wallet Unit Attestations are not defined or empty");
   });
 
   it("skips WUA status list verification when support is unavailable", async () => {
@@ -169,7 +171,7 @@ describe("eID issuance actors", () => {
         itwVersion: ITW_VERSION,
         walletUnitAttestations: undefined
       })
-    ).resolves.toEqual([]);
+    ).resolves.toBeUndefined();
     expect(mockGetWuaStatus).not.toHaveBeenCalled();
   });
 
@@ -194,7 +196,9 @@ describe("eID issuance actors", () => {
         ...EID
       },
       walletUnitAttestations: { "wua-1": "wua-1-jwt" },
-      wuaStatusLists: [[WUA_STATUS_LIST_URI, STATUS_LIST_PAYLOAD]]
+      walletUnitAttestationStatusLists: {
+        [WUA_STATUS_LIST_URI]: STATUS_LIST_PAYLOAD
+      }
     };
 
     await expect(runActor(actors.storeEidCredential, input)).resolves.toBe(
@@ -219,7 +223,9 @@ describe("eID issuance actors", () => {
         ...EID
       },
       walletUnitAttestations: { "wua-1": "wua-1-jwt" },
-      wuaStatusLists: [[WUA_STATUS_LIST_URI, STATUS_LIST_PAYLOAD]]
+      walletUnitAttestationStatusLists: {
+        [WUA_STATUS_LIST_URI]: STATUS_LIST_PAYLOAD
+      }
     };
 
     await expect(runActor(actors.storeEidCredential, input)).rejects.toBe(

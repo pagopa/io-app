@@ -114,9 +114,13 @@ export type Context = {
    */
   walletUnitAttestations?: Record<string, string>;
   /**
-   * Status Lists referenced by the WUAs generated for the issuance.
+   * Optional dictionary of Status Lists referenced by the Wallet Unit
+   * Attestations (WUAs), keyed by URI.
    */
-  wuaStatusLists: ReadonlyArray<StatusListEntry>;
+  walletUnitAttestationStatusLists?: Record<
+    string,
+    CredentialStatus.StatusList
+  >;
 };
 
 /**
@@ -170,11 +174,6 @@ export type MrtdPoPContext = {
   validationUrl: string;
 };
 
-export type StatusListEntry = [
-  uri: string,
-  payload: CredentialStatus.StatusList
-];
-
 export const InitialContext: Context = {
   itwVersion: "1.0.0", // Initial value to satisfy type constraints. It is assigned in the `onInit` action.
   mode: undefined,
@@ -191,5 +190,5 @@ export const InitialContext: Context = {
   failedCredentials: undefined,
   credentialType: undefined,
   accessToken: undefined,
-  wuaStatusLists: []
+  walletUnitAttestationStatusLists: undefined
 };
