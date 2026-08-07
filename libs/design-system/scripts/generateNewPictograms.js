@@ -112,19 +112,28 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
     }
 
     for (const file of files) {
+      // Check if the file is an SVG
+      if (!file.endsWith(".svg")) {
+        continue;
+      }
+
       const filePath = join(svgDir, file);
-      const fileStats = fs.statSync(filePath);
+
+      /* Stat and read through the same descriptor: re-opening by name would
+      leave a window for the file to change between the two operations. */
+      const fd = fs.openSync(filePath, "r");
+      let fileStats;
+      let data;
+      try {
+        fileStats = fs.fstatSync(fd);
+        data = fs.readFileSync(fd, "utf8");
+      } finally {
+        fs.closeSync(fd);
+      }
 
       /* Only process files with a more recent creation
       date later than the timestamp value */
       if (fileStats.mtime > new Date(timestamp)) {
-        const data = fs.readFileSync(filePath, "utf8");
-
-        // Check if the file is an SVG
-        if (!file.endsWith(".svg")) {
-          continue;
-        }
-
         // Using SVGO to optimize the SVG
         const result = optimize(data, {
           path: filePath,

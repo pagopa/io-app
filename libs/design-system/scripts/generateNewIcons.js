@@ -115,23 +115,32 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
     }
 
     for (const file of files) {
+      if (!file.endsWith(".svg")) {
+        continue;
+      }
+
       const filePath = join(svgDir, file);
-      const fileStats = fs.statSync(filePath);
+
+      /* Stat and read through the same descriptor: re-opening by name would
+      leave a window for the file to change between the two operations. */
+      const fd = fs.openSync(filePath, "r");
+      let fileStats;
+      let data;
+      try {
+        fileStats = fs.fstatSync(fd);
+        data = fs.readFileSync(fd, "utf8");
+      } finally {
+        fs.closeSync(fd);
+      }
 
       /* Only process files with a more recent creation
       date later than the timestamp value */
       if (fileStats.mtime > new Date(timestamp)) {
-        if (!file.endsWith(".svg")) {
-          continue;
-        }
-
         const excludedPrefixes = ["IconSystem", "IconBiom", "IconProduct"];
         if (excludedPrefixes.some(prefix => file.startsWith(prefix))) {
           console.log(`⚠️ Skipping excluded file: ${file}`);
           continue;
         }
-
-        const data = fs.readFileSync(filePath, "utf8");
 
         // Using SVGO to optimize the SVG
         const result = optimize(data, {
