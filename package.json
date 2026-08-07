@@ -45,7 +45,6 @@
     "patchedDependencies": {
       "react-native-barcode-builder@2.0.0": "patches/react-native-barcode-builder@2.0.0.patch",
       "react-native-device-info@14.0.4": "patches/react-native-device-info@14.0.4.patch",
-      "react-native-screen-brightness@2.0.0-alpha": "patches/react-native-screen-brightness@2.0.0-alpha.patch",
       "react-native-webview@13.16.0": "patches/react-native-webview@13.16.0.patch",
       "react-native-pdf@7.0.3": "patches/react-native-pdf@7.0.3.patch",
       "@gorhom/bottom-sheet@5.2.8": "patches/@gorhom__bottom-sheet@5.2.8.patch",
