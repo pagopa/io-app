@@ -1,9 +1,9 @@
 import { PathConfigMap } from "@react-navigation/native";
 
-import { AppParamsList } from "../../../navigation/params/AppParamsList";
-import { ITW_CREDENTIAL_OFFER_LINKING_PATH } from "../offer/utils";
+import { AppParamsList } from "../../../navigation/params/AppParamsList.ts";
+import { ITW_CREDENTIAL_OFFER_LINKING_PATH } from "../offer/utils/index.ts";
 import { ITW_REMOTE_ROUTES } from "../presentation/remote/navigation/routes.ts";
-import { ITW_ROUTES } from "./routes";
+import { ITW_ROUTES } from "./routes.ts";
 
 const safeDecodeURIComponent = (value: string): string => {
   try {
@@ -14,10 +14,10 @@ const safeDecodeURIComponent = (value: string): string => {
 };
 
 /**
- * Hook which returns the linking options for internal navigation routes for the IT Wallet.
- * This hook only defines the static linking configuration and does not conditionally enable or disable routes based on wallet status or lifecycle.
+ * Static linking options for internal navigation routes for the IT Wallet.
+ * This configuration does not conditionally enable or disable routes based on wallet status or lifecycle.
  */
-export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
+export const itwLinkingOptions: PathConfigMap<AppParamsList> = {
   [ITW_ROUTES.MAIN]: {
     path: "itw",
     screens: {
@@ -91,4 +91,9 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
       }
     }
   }
-});
+};
+
+/**
+ * React Navigation linking configuration shared by the root navigator and ITW deep-link handling.
+ */
+export const itwLinkingConfig = { screens: itwLinkingOptions };

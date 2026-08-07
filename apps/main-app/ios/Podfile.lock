@@ -45,6 +45,8 @@ PODS:
   - ExpoBackgroundTask (55.0.18):
     - ExpoModulesCore
     - ExpoTaskManager
+  - ExpoCalendar (55.0.17):
+    - ExpoModulesCore
   - ExpoClipboard (55.0.15):
     - ExpoModulesCore
   - ExpoDevice (55.0.17):
@@ -3372,8 +3374,6 @@ PODS:
     - React
   - RNBluetoothStateManager (1.3.5):
     - React-Core
-  - RNCalendarEvents (2.2.0):
-    - React
   - RNCAsyncStorage (2.0.0):
     - boost
     - DoubleConversion
@@ -3895,6 +3895,7 @@ DEPENDENCIES:
   - Expo (from `../../../node_modules/expo`)
   - ExpoAsset (from `../../../node_modules/expo-asset/ios`)
   - ExpoBackgroundTask (from `../../../node_modules/expo-background-task/ios`)
+  - ExpoCalendar (from `../../../node_modules/expo-calendar/ios`)
   - ExpoClipboard (from `../../../node_modules/expo-clipboard/ios`)
   - ExpoDevice (from `../../../node_modules/expo-device/ios`)
   - "ExpoDomWebView (from `../../../node_modules/@expo/dom-webview/ios`)"
@@ -4020,7 +4021,6 @@ DEPENDENCIES:
   - "ReactNativeBottomSheet (from `../../../node_modules/@swmansion/react-native-bottom-sheet`)"
   - ReactNativeExceptionHandler (from `../../../node_modules/react-native-exception-handler`)
   - RNBluetoothStateManager (from `../../../node_modules/react-native-bluetooth-state-manager`)
-  - RNCalendarEvents (from `../../../node_modules/react-native-calendar-events`)
   - "RNCAsyncStorage (from `../../../node_modules/@react-native-async-storage/async-storage`)"
   - RNDeviceInfo (from `../../../node_modules/react-native-device-info`)
   - RNFS (from `../../../node_modules/react-native-fs`)
@@ -4081,6 +4081,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-asset/ios"
   ExpoBackgroundTask:
     :path: "../../../node_modules/expo-background-task/ios"
+  ExpoCalendar:
+    :path: "../../../node_modules/expo-calendar/ios"
   ExpoClipboard:
     :path: "../../../node_modules/expo-clipboard/ios"
   ExpoDevice:
@@ -4330,8 +4332,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-exception-handler"
   RNBluetoothStateManager:
     :path: "../../../node_modules/react-native-bluetooth-state-manager"
-  RNCalendarEvents:
-    :path: "../../../node_modules/react-native-calendar-events"
   RNCAsyncStorage:
     :path: "../../../node_modules/@react-native-async-storage/async-storage"
   RNDeviceInfo:
@@ -4374,6 +4374,7 @@ SPEC CHECKSUMS:
   Expo: fb8cded217862a2c6fc046a6cc68aa83a2ed15f0
   ExpoAsset: 7721c5c4ae2a7c3c8147a046727ac6c020b05648
   ExpoBackgroundTask: 2c988fa88705c72b07f0e60d5661d566df611980
+  ExpoCalendar: a3a1a208327305361637b6127390e7b61c62bba5
   ExpoClipboard: 0e4b587fc6b5c5996b4ad4e5804d509e90aa6c75
   ExpoDevice: b8a65afe42c3c5934eb6983870672fe785b39dea
   ExpoDomWebView: b2e9d601f9cb77d3c97da73234e175b64be91928
@@ -4505,7 +4506,6 @@ SPEC CHECKSUMS:
   ReactNativeBottomSheet: 03b2317ce62b9f686e6caad94fe5124534791831
   ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
   RNBluetoothStateManager: 929f132d0dacf65cb4767a11e2803e47fdda9e73
-  RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9

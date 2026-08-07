@@ -1,5 +1,4 @@
 import { getPublicKey, PublicKey } from "@pagopa/io-react-native-crypto";
-import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 
 import {
@@ -31,8 +30,8 @@ jest.mock("../../utils/crypto", () => ({
 }));
 
 describe("generateKeyInfo", () => {
-  it("should return a full KeyInfo when both keyTag is defined and publicKey is Some", () => {
-    const result = generateKeyInfo("keyTag", O.some(mockPublicKey));
+  it("should return a full KeyInfo when both keyTag and publicKey are defined", () => {
+    const result = generateKeyInfo("keyTag", mockPublicKey);
     expect(result).toEqual({
       keyTag: "keyTag",
       publicKey: mockPublicKey,
@@ -41,7 +40,7 @@ describe("generateKeyInfo", () => {
   });
 
   it("should return an empty KeyInfo when keyTag is undefined", () => {
-    const result = generateKeyInfo(undefined, O.some(mockPublicKey));
+    const result = generateKeyInfo(undefined, mockPublicKey);
     expect(result).toEqual({
       keyTag: undefined,
       publicKey: undefined,
@@ -49,8 +48,8 @@ describe("generateKeyInfo", () => {
     });
   });
 
-  it("should return an empty KeyInfo when publicKey is None", () => {
-    const result = generateKeyInfo("keyTag", O.none);
+  it("should return an empty KeyInfo when publicKey is undefined", () => {
+    const result = generateKeyInfo("keyTag", undefined);
     expect(result).toEqual({
       keyTag: undefined,
       publicKey: undefined,
@@ -72,8 +71,8 @@ describe("getKeyInfo", () => {
       .select(lollipopKeyTagSelector)
       .next("keyTag")
       .select(lollipopPublicKeySelector)
-      .next(O.some(mockPublicKey))
-      .call(generateKeyInfo, "keyTag", O.some(mockPublicKey))
+      .next(mockPublicKey)
+      .call(generateKeyInfo, "keyTag", mockPublicKey)
       .next(keyInfo)
       .returns(keyInfo);
   });

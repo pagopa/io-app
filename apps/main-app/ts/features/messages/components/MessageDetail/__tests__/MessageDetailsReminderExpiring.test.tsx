@@ -13,8 +13,11 @@ const messageId = "01HSG6GR1JT2E23AJ5RBTAMZZP";
 
 jest.mock("rn-qr-generator", () => ({}));
 jest.mock("expo-screen-capture", () => ({}));
-jest.mock("react-native-calendar-events", () => ({
-  checkPermissions: () => new Promise(resolve => resolve("authorized"))
+jest.mock("expo-calendar", () => ({
+  getCalendarPermissionsAsync: () =>
+    new Promise(resolve => resolve({ status: "granted" })),
+  requestCalendarPermissionsAsync: () =>
+    new Promise(resolve => resolve({ status: "granted" }))
 }));
 
 const mockNavigation = jest.fn();

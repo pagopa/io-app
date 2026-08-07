@@ -1,5 +1,4 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { all, call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
@@ -20,10 +19,10 @@ import { itwUnverifiedCredentialsCounterLimitReached } from "../../common/store/
 import { getEnv } from "../../common/utils/environment";
 import {
   getCredentialStatusAssertion,
-  shouldRequestStatusAssertion,
-  StatusAssertionError
+  shouldRequestStatusAssertion
 } from "../../common/utils/itwCredentialStatusAssertionUtils";
 import { getRepresentativeVaultId } from "../../common/utils/itwCredentialUtils";
+import { statusAssertionFailure } from "../../common/utils/itwFailureUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
@@ -159,12 +158,8 @@ export function* updateCredentialStatusAssertionSaga(
     };
   } catch (e) {
     if (isIssuerResponseError(e, Codes.CredentialInvalidStatus)) {
-      const errorCode = pipe(
-        StatusAssertionError.decode(e.reason),
-        O.fromEither,
-        O.map(x => x.error),
-        O.toUndefined
-      );
+      const parsed = statusAssertionFailure.safeParse(e.reason);
+      const errorCode = parsed.success ? parsed.data.error : undefined;
 
       trackItwStatusCredentialAssertionFailure({
         credential: mixpanelCredential,
