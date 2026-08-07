@@ -12,19 +12,20 @@ export const selectItwEnv = (state: GlobalState) =>
 /**
  * True when the IT-Wallet pre-production environment is selected.
  *
- * In this case the CieID app-to-app flow must target the UAT CieID app
- * (a different Android package name), otherwise the production CieID app
- * would authenticate against production IdP endpoints, which are not
- * compatible with the pre-production IT-Wallet ecosystem.
+ * In this case the CieID app-to-app flow must target the UAT CieID app (a
+ * different Android package name), otherwise the production CieID app would
+ * authenticate against production IdP endpoints, which are not compatible with
+ * the pre-production IT-Wallet ecosystem.
  */
 export const selectItwIsCieIdUatEnv = (state: GlobalState) =>
   selectItwEnv(state) === "pre";
 
 /**
- * Select the IT-Wallet specification version depending on the user configuration.
+ * Select the IT-Wallet specification version depending on the user
+ * configuration.
  *
- * The version is derived from the whitelist status and the optional presence of a PID,
- * and it is used for every API call to the IT-Wallet ecosystem actors.
+ * The version is derived from the whitelist status and the optional presence of
+ * a PID, and it is used for every API call to the IT-Wallet ecosystem actors.
  */
 export const selectItwSpecsVersion = createSelector(
   itwIsL3EnabledSelector,

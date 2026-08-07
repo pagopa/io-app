@@ -10,9 +10,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { mapBonusIdFeatureFlag } from "../../utils";
 import { AvailableBonusTypesState } from "../reducers/availableBonusesTypes";
 
-/**
- * return all available bonus: visibile, hidden or experimental
- */
+/** Return all available bonus: visibile, hidden or experimental */
 const allAvailableBonusTypesSelector = (
   state: GlobalState
 ): AvailableBonusTypesState => state.bonus.availableBonusTypes;
@@ -22,8 +20,9 @@ const experimentalAndVisibleBonus = (bonus: BonusAvailable): boolean =>
     v => v === bonus.visibility
   );
 /**
- * return only these bonus the app supports: a bonus is supported when the relative feature flag
- * exists and it is ON and the relative available bonus is in state 'visible' or 'experimental'
+ * Return only these bonus the app supports: a bonus is supported when the
+ * relative feature flag exists and it is ON and the relative available bonus is
+ * in state 'visible' or 'experimental'
  */
 export const supportedAvailableBonusSelector = createSelector(
   allAvailableBonusTypesSelector,
@@ -64,7 +63,8 @@ export const isAvailableBonusNoneErrorSelector = createSelector(
 );
 
 /**
- * return the bonus type corresponding to the given idBonusType
+ * Return the bonus type corresponding to the given idBonusType
+ *
  * @param idBonusType
  */
 export const availableBonusTypesSelectorFromId = (idBonusType: number) =>

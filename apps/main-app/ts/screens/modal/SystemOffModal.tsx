@@ -1,7 +1,7 @@
 /**
- * this modal shows a warning to the user that some IO systems (backend side) could
- * not work properly. This is due to avoid user tries to access features or services potentially can't work
- * as expected
+ * This modal shows a warning to the user that some IO systems (backend side)
+ * could not work properly. This is due to avoid user tries to access features
+ * or services potentially can't work as expected
  */
 import { IOColors, useIOTheme } from "@io-app/design-system";
 import I18n from "i18next";

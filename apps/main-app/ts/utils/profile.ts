@@ -4,9 +4,7 @@ import { Municipality } from "../../definitions/content/Municipality";
 import { FiscalCode } from "../../definitions/identity/FiscalCode";
 import { pad } from "./dates";
 
-/**
- * Generic utilities for profile
- */
+/** Generic utilities for profile */
 type FiscalCodeDerivedData = Readonly<{
   birthDate?: Date;
   denominazione: string;

@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A screen that allows the user to login with an IDP.
- * The IDP page is opened in a WebView
+ * A screen that allows the user to login with an IDP. The IDP page is opened in
+ * a WebView
  */
 const ActiveSessionIdpLoginScreen = () => {
   const dispatch = useIODispatch();

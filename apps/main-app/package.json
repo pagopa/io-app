@@ -2,6 +2,18 @@
   "name": "@io-app/main-app",
   "version": "3.38.0-rc.11",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pagopa/io-app.git"
+  },
+  "browser": {
+    "crypto": "react-native-crypto",
+    "path": "path-browserify"
+  },
+  "react-native": {
+    "path": "path-browserify",
+    "crypto": "react-native-crypto"
+  },
   "scripts": {
     "start": "react-native start",
     "setup": "pnpm install && pnpm prepare",
@@ -225,20 +237,14 @@
     "typescript": "catalog:",
     "typescript-eslint": "^8.65.0"
   },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "oxfmt",
+      "eslint --fix"
+    ]
+  },
   "engines": {
     "node": ">=20"
-  },
-  "react-native": {
-    "path": "path-browserify",
-    "crypto": "react-native-crypto"
-  },
-  "browser": {
-    "crypto": "react-native-crypto",
-    "path": "path-browserify"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pagopa/io-app.git"
   },
   "standard-version": {
     "scripts": {

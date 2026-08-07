@@ -56,14 +56,12 @@ export const getZendeskConfig = (zendeskToken: string | undefined) =>
   pipe(
     zendeskToken,
     O.fromNullable,
-    O.map(
-      (zT: string): ZendeskAppConfig => ({
-        ...zendeskDefaultJwtConfig,
-        token: zT // this is actually not used by the zendesk sdk...
-        // https://github.com/pagopa/io-react-native-zendesk/blob/main/ios/RNZendeskChat.m#L180
-        // https://github.com/pagopa/io-react-native-zendesk/blob/main/index.d.ts#L75C3-L75C3
-      })
-    ),
+    O.map((zT: string): ZendeskAppConfig => ({
+      ...zendeskDefaultJwtConfig,
+      token: zT // this is actually not used by the zendesk sdk...
+      // https://github.com/pagopa/io-react-native-zendesk/blob/main/ios/RNZendeskChat.m#L180
+      // https://github.com/pagopa/io-react-native-zendesk/blob/main/index.d.ts#L75C3-L75C3
+    })),
     O.getOrElseW(() => zendeskDefaultAnonymousConfig)
   );
 
@@ -101,8 +99,8 @@ export const appendLog = ZendDesk.appendLog;
 export const hasOpenedTickets = ZendDesk.hasOpenedTickets;
 export const addTicketTag = ZendDesk.addTicketTag;
 /**
- * Only iOS: close the current Zendesk UI (ticket creation or tickets list)
- * On Android this function has no effect
+ * Only iOS: close the current Zendesk UI (ticket creation or tickets list) On
+ * Android this function has no effect
  */
 export const dismissSupport = ZendDesk.dismiss;
 export const zendeskCategoryId = "1900004702053";

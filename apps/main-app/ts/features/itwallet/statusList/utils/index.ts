@@ -9,9 +9,11 @@ import {
 import { InvalidTslCredentialStatus } from "./errors";
 
 /**
- * Function to get the credential status from its token status list (TSL). The list is fetched from the `uri` extracted from
- * the raw credential, it is verified and parsed, and then the credential status at `idx` is extracted.
- * When the status is not valid, the function throws so its behavior is consistent with `getCredentialStatusAssertion`.
+ * Function to get the credential status from its token status list (TSL). The
+ * list is fetched from the `uri` extracted from the raw credential, it is
+ * verified and parsed, and then the credential status at `idx` is extracted.
+ * When the status is not valid, the function throws so its behavior is
+ * consistent with `getCredentialStatusAssertion`.
  *
  * @param credentialBundle The bundle with the raw credential
  * @param itwVersion Current IT-Wallet specifications version

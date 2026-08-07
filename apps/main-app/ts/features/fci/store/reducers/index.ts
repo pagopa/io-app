@@ -63,8 +63,8 @@ const fciInitialState = innerFciReducer(undefined, fciClearStateRequest());
 
 const fciReducer = (state: FciState | undefined, action: Action): FciState => {
   /**
-   * when fciStartRequest starts a signature request with payload (on retry),
-   * it resets completely FCI state with only the fresh signature request, this
+   * When fciStartRequest starts a signature request with payload (on retry), it
+   * resets completely FCI state with only the fresh signature request, this
    * prevents 'DocumentUnavailableScreen' pot error or emitting double events.
    */
   if (isActionOf(fciStartRequest, action) && action.payload) {

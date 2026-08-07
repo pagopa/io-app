@@ -61,9 +61,7 @@ import { fromGeneratedToLocalSpidIdp } from "../utils/idps";
 import { configureReactotron } from "./configureReactotron";
 import { createReduxStartupGate } from "./reduxStartupGate";
 
-/**
- * Redux persist will migrate the store to the current version
- */
+/** Redux persist will migrate the store to the current version */
 const CURRENT_REDUX_STORE_VERSION = 49;
 
 // see redux-persist documentation:
@@ -249,7 +247,10 @@ const migrations: MigrationManifest = {
       .persistedPreferences;
     return {
       ...state,
-      persistedPreferences: { ...persistedPreferences, isMixpanelEnabled: null }
+      persistedPreferences: {
+        ...persistedPreferences,
+        isMixpanelEnabled: null
+      }
     };
   },
   // Version 16

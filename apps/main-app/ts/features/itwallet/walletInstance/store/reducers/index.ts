@@ -27,28 +27,24 @@ import {
 } from "../actions";
 
 export type ItwWalletInstanceState = {
-  /**
-   * The new Wallet Attestation in multiple formats
-   */
+  /** The new Wallet Attestation in multiple formats */
   attestation: undefined | WalletInstanceAttestations;
   /**
-   * Indicates whether the user has an already active wallet instance
-   * but the actual local wallet is not active.
+   * Indicates whether the user has an already active wallet instance but the
+   * actual local wallet is not active.
    */
   isRemotelyActive?: boolean;
   /**
-   * Whether a wallet instance renewal has already failed.
-   * Used to prevent re-entering the recovery block on subsequent actor retries.
+   * Whether a wallet instance renewal has already failed. Used to prevent
+   * re-entering the recovery block on subsequent actor retries.
    */
   renewalError: boolean;
-  /**
-   * The Wallet Instance status fetched from the Wallet Provider backend
-   */
+  /** The Wallet Instance status fetched from the Wallet Provider backend */
   status: pot.Pot<WalletInstanceStatus, NetworkError>;
   /**
    * Record of Wallet Unit Attestations keyed by ID. They are not stored on
-   * credentials to avoid duplication (one WUA might contain multiple keys)
-   * and to avoid bloating the stored credential unnecessarily.
+   * credentials to avoid duplication (one WUA might contain multiple keys) and
+   * to avoid bloating the stored credential unnecessarily.
    */
   walletUnitAttestations: Record<string, string>;
 };

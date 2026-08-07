@@ -29,9 +29,7 @@ import {
 } from "../utils/types";
 import { ItwBaseProperties } from "./propertyTypes";
 
-/**
- * Builds the base ITW properties for Mixpanel analytics.
- */
+/** Builds the base ITW properties for Mixpanel analytics. */
 export const buildItwBaseProperties = (
   state: GlobalState
 ): ItwBaseProperties => {
@@ -52,9 +50,10 @@ export const buildItwBaseProperties = (
 };
 
 /**
- * Builds PID properties for Mixpanel analytics
- * IT-Wallet (L3) -> PID status is mapped to ITW_PID, while ITW_ID_V2 is not sent to preserve historical data.
- * Documenti su IO (L2) -> PID status is mapped to ITW_ID_V2, while ITW_PID shoul be "not_available".
+ * Builds PID properties for Mixpanel analytics IT-Wallet (L3) -> PID status is
+ * mapped to ITW_PID, while ITW_ID_V2 is not sent to preserve historical data.
+ * Documenti su IO (L2) -> PID status is mapped to ITW_ID_V2, while ITW_PID
+ * shoul be "not_available".
  */
 export const buildPidProperties = (state: GlobalState) => {
   const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
@@ -72,9 +71,7 @@ export const buildPidProperties = (state: GlobalState) => {
   return isItwL3 ? v3Props : v2Props;
 };
 
-/**
- * IT-Wallet (L3) -> V2 properties are not sent to preserve historical data.
- */
+/** IT-Wallet (L3) -> V2 properties are not sent to preserve historical data. */
 export const buildCredentialProperties = (state: GlobalState) => {
   const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
 
@@ -118,9 +115,12 @@ export const buildCredentialProperties = (state: GlobalState) => {
 
 /**
  * Returns the Mixpanel status for a credential type, considering IT Wallet.
+ *
  * - If `isItwL3` is explicitly false, returns `"not_available"`.
- * - If `isItwL3` is true and the credential exists but is not an ITW credential, returns `"not_available"`.
- * - Otherwise, retrieves the credential from the store and maps it to Mixpanel status.
+ * - If `isItwL3` is true and the credential exists but is not an ITW credential,
+ *   returns `"not_available"`.
+ * - Otherwise, retrieves the credential from the store and maps it to Mixpanel
+ *   status.
  * - Returns `"not_available"` if the credential is missing.
  */
 const getMixpanelCredentialStatus = (
@@ -166,8 +166,8 @@ export const computeItwStatus = (
 };
 
 /**
- * Builds the aggregate Mixpanel status for third-party credentials.
- * The property ignores PID and historical L2 credentials because it tracks only
+ * Builds the aggregate Mixpanel status for third-party credentials. The
+ * property ignores PID and historical L2 credentials because it tracks only
  * credentials obtained through the third-party/catalogue channel.
  */
 export const buildThirdPartyCredentialProperty = (

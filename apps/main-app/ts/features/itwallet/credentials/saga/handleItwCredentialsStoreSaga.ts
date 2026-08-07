@@ -7,7 +7,8 @@ import { itwCredentialsStore } from "../store/actions";
 import { pickCredentialsToDisplay } from "../utils/format";
 
 /**
- * This saga handles the credential store action and ensures the consistency between stored credentials and wallet state.
+ * This saga handles the credential store action and ensures the consistency
+ * between stored credentials and wallet state.
  */
 export function* handleItwCredentialsStoreSaga(
   action: ReturnType<typeof itwCredentialsStore>

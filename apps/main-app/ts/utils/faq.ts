@@ -2,7 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
-/** map, for each FAQ category, the ids of the FAQs related to the category */
+/** Map, for each FAQ category, the ids of the FAQs related to the category */
 export const FAQs: Record<
   FAQsCategoriesType,
   ReadonlyArray<number> | undefined
@@ -67,8 +67,10 @@ export type FAQType = {
 };
 
 /**
- * Recover the title and the content of the FAQs related to the categories presented as input
- * @param category kind of FAQ to be returned as output
+ * Recover the title and the content of the FAQs related to the categories
+ * presented as input
+ *
+ * @param category Kind of FAQ to be returned as output
  */
 export const getFAQsFromCategories = (
   categories: ReadonlyArray<FAQsCategoriesType>

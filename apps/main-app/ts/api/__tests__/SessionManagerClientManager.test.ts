@@ -1,7 +1,10 @@
 import { TestSessionManagerClientManager } from "../SessionManagerClientManager";
 
 jest.mock("../../../definitions/session_manager/client", () => ({
-  createClient: jest.fn(() => ({ _type: "session_manager", id: Math.random() }))
+  createClient: jest.fn(() => ({
+    _type: "session_manager",
+    id: Math.random()
+  }))
 }));
 
 jest.mock("../../utils/fetch", () => ({

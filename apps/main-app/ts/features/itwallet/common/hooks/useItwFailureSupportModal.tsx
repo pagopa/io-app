@@ -83,7 +83,8 @@ type Props = {
 };
 
 /**
- * Hook that renders several support methods, with direct integration with Zendesk.
+ * Hook that renders several support methods, with direct integration with
+ * Zendesk.
  */
 export const useItwFailureSupportModal = ({
   failure,

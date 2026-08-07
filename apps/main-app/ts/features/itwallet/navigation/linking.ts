@@ -14,8 +14,9 @@ const safeDecodeURIComponent = (value: string): string => {
 };
 
 /**
- * Static linking options for internal navigation routes for the IT Wallet.
- * This configuration does not conditionally enable or disable routes based on wallet status or lifecycle.
+ * Static linking options for internal navigation routes for the IT Wallet. This
+ * configuration does not conditionally enable or disable routes based on wallet
+ * status or lifecycle.
  */
 export const itwLinkingOptions: PathConfigMap<AppParamsList> = {
   [ITW_ROUTES.MAIN]: {
@@ -24,16 +25,19 @@ export const itwLinkingOptions: PathConfigMap<AppParamsList> = {
       /**
        * Handles https://continua.io.pagopa.it/itw/discovery/info
        *
-       * Redirects to the discovery info screen to start the wallet activation flow.
+       * Redirects to the discovery info screen to start the wallet activation
+       * flow.
        */
       [ITW_ROUTES.LANDING.DISCOVERY]: {
         path: "discovery/info"
       },
 
       /**
-       * Handles https://continua.io.pagopa.it/itw/credential/issuance/:credentialType
+       * Handles
+       * https://continua.io.pagopa.it/itw/credential/issuance/:credentialType
        *
-       * Redirects to the credential issuance flow for the given credential type.
+       * Redirects to the credential issuance flow for the given credential
+       * type.
        */
       [ITW_ROUTES.LANDING.CREDENTIAL_ISSUANCE]: {
         path: "credential/issuance/:credentialType"
@@ -58,7 +62,8 @@ export const itwLinkingOptions: PathConfigMap<AppParamsList> = {
       },
 
       /**
-       * Handles https://continua.io.pagopa.it/itw/presentation/credential-detail/:credentialType
+       * Handles
+       * https://continua.io.pagopa.it/itw/presentation/credential-detail/:credentialType
        *
        * Opens the credential detail screen for the given credential type.
        */
@@ -66,7 +71,8 @@ export const itwLinkingOptions: PathConfigMap<AppParamsList> = {
         path: "presentation/credential-detail/:credentialType"
       },
       /**
-       * Handles <https://continua.io.pagopa.it/itw/credential-offer?itwCredentialOfferUri=>...
+       * Handles
+       * [https://continua.io.pagopa.it/itw/credential-offer?itwCredentialOfferUri=](https://continua.io.pagopa.it/itw/credential-offer?itwCredentialOfferUri=)...
        *
        * Starts the credential offer issuance flow from an external link.
        */
@@ -94,6 +100,7 @@ export const itwLinkingOptions: PathConfigMap<AppParamsList> = {
 };
 
 /**
- * React Navigation linking configuration shared by the root navigator and ITW deep-link handling.
+ * React Navigation linking configuration shared by the root navigator and ITW
+ * deep-link handling.
  */
 export const itwLinkingConfig = { screens: itwLinkingOptions };

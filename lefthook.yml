@@ -2,7 +2,7 @@ pre-commit:
   piped: true
   jobs:
     - name: format staged files
-      run: pnpm prettier --write {staged_files}
+      run: pnpm oxfmt {staged_files}
       glob:
         - "*.{ts,tsx}"
         - "apps/main-app/locales/**/*.json"
@@ -20,7 +20,7 @@ pre-push:
       run: pnpm nx affected --targets=lint,tsc-noemit --base=origin/master --head=HEAD --nx-bail
 
     - name: check pushed files formatting
-      run: pnpm prettier --check {push_files}
+      run: pnpm oxfmt --check {push_files}
       glob:
         - "*.{ts,tsx}"
         - "apps/main-app/locales/**/*.json"

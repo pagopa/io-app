@@ -4,7 +4,8 @@ import { Presets } from "react-native-pulsar";
  * The cross-platform system haptics exposed by Pulsar.
  *
  * The `Android` namespace is deliberately excluded: it groups platform-specific
- * effects that have no iOS counterpart, so it must not leak into the shared API.
+ * effects that have no iOS counterpart, so it must not leak into the shared
+ * API.
  */
 type HapticType = Exclude<keyof typeof Presets.System, "Android">;
 

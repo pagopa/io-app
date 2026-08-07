@@ -24,7 +24,8 @@ type useHeaderFirstLevelProps = {
 };
 
 /**
- * This hook sets the `HeaderFirstLevel` in a screen using the `useLayoutEffect` hook.
+ * This hook sets the `HeaderFirstLevel` in a screen using the `useLayoutEffect`
+ * hook.
  */
 export const useHeaderFirstLevel = ({
   currentRoute,

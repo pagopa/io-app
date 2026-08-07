@@ -13,10 +13,13 @@ type ItwCredentialClaimsListProps = {
 };
 
 /**
- * This component renders the list of claims for a credential.
- * It dinamically renders the list of claims passed as claims prop in the order they are passed.
- * @param data - the {@link CredentialMetadata} of the credential.
- * @param releaserVisible - if true, the releaser metadata is shown at the end of the list (default: true).
+ * This component renders the list of claims for a credential. It dinamically
+ * renders the list of claims passed as claims prop in the order they are
+ * passed.
+ *
+ * @param data - The {@link CredentialMetadata} of the credential.
+ * @param releaserVisible - If true, the releaser metadata is shown at the end
+ *   of the list (default: true).
  */
 const ItwCredentialPreviewClaimsList = ({
   data,

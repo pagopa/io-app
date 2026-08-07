@@ -21,17 +21,13 @@ type InstrumentEnrollmentSwitchProps = {
   wallet: Wallet;
 };
 
-/**
- * See @ListItemSwitch
- */
+/** See @ListItemSwitch */
 type ListItemSwitchIconProps =
   | { icon: IOIcons; paymentLogo?: never }
   | { icon?: never; paymentLogo: IOLogoPaymentType }
   | { icon?: never; paymentLogo?: never };
 
-/**
- * A component to enable/disable the enrollment of an instrument
- */
+/** A component to enable/disable the enrollment of an instrument */
 const IdPayInstrumentEnrollmentSwitch = (
   props: InstrumentEnrollmentSwitchProps
 ) => {

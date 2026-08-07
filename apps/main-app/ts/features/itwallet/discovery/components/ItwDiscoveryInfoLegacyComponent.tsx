@@ -23,8 +23,8 @@ import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
 
 /**
  * This is the component that shows the information about the discovery process
- * about the activation of the DIW. It uses a markdown component to render
- * the content of the screen.
+ * about the activation of the DIW. It uses a markdown component to render the
+ * content of the screen.
  *
  * @deprecated Superseded by the new `ItwDiscoveryInfoFallbackComponent`
  */

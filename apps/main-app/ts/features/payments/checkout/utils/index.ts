@@ -51,10 +51,10 @@ export const getPspFlagType = (
 };
 
 /**
- * Flags which kind of PSP is available to the user among the whole
- * pspList, regardless of which one is ultimately selected. Used for
- * `preselected_psp_flag`, so it stays stable even if the user changes
- * their selection or skips the pick-psp step entirely (single PSP).
+ * Flags which kind of PSP is available to the user among the whole pspList,
+ * regardless of which one is ultimately selected. Used for
+ * `preselected_psp_flag`, so it stays stable even if the user changes their
+ * selection or skips the pick-psp step entirely (single PSP).
  */
 export const getPreselectedPspFlagType = (
   pspList?: ReadonlyArray<Bundle>

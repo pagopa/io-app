@@ -126,6 +126,7 @@ type PreferenceByChannelSelectorType = (
 
 /**
  * Select the preference by channel
+ *
  * @param serviceId - The ID of the service to select the preference for
  * @param channel - The channel of the preference to select
  * @returns The preference value for the specified channel or undefined

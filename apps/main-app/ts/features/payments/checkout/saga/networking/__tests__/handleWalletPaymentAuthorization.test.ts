@@ -47,7 +47,10 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       .next()
       .next(T_SESSION_TOKEN)
       .next(
-        E.right({ status: 200, value: requestTransactionAuthorizationResponse })
+        E.right({
+          status: 200,
+          value: requestTransactionAuthorizationResponse
+        })
       )
       .put(
         paymentsStartPaymentAuthorizationAction.success(

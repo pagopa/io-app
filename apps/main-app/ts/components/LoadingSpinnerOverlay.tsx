@@ -26,9 +26,7 @@ type Props = Readonly<{
   onCancel?: () => void;
 }>;
 
-/**
- * A Component to display and overlay spinner conditionally
- */
+/** A Component to display and overlay spinner conditionally */
 const LoadingSpinnerOverlay = ({
   children,
   isLoading,

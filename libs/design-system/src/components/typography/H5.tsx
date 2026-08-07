@@ -5,9 +5,7 @@ import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 export const h5FontSize: IOFontSize = 14;
 export const h5LineHeight = 16;
 
-/**
- * `H5` typographic style
- */
+/** `H5` typographic style */
 export const H5 = ({ color: customColor, ...props }: TypographicStyleProps) => {
   const theme = useIOTheme();
 

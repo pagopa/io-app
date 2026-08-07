@@ -9,19 +9,16 @@ import { ItwCredentialPreviewClaimsList } from "./ItwCredentialPreviewClaimsList
 const cardSpacing: IOSpacingScale = 16;
 
 type Props = {
-  /**
-   * The credential whose claims are rendered inside the card.
-   */
+  /** The credential whose claims are rendered inside the card. */
   data: CredentialMetadata;
-  /**
-   * The credential name displayed in the card header.
-   */
+  /** The credential name displayed in the card header. */
   title: string;
 };
 
 /**
  * Renders the credential preview claims list inside a bordered card with a
- * static header displaying the credential name over the credential theme gradient.
+ * static header displaying the credential name over the credential theme
+ * gradient.
  */
 export const ItwCredentialPreviewClaimsCard = ({ title, data }: Props) => {
   const { background } = useCredentialCardConfig(data.credentialType);

@@ -111,10 +111,12 @@ type FaqManagerProps = Pick<
   contextualHelpConfig: ContextualHelpProps | undefined;
 };
 /**
- * This component must be used only here.
- * Make the {@link ZendeskSupportHelpCenter} compatible with {@link HeaderSecondLevel} and substitute the {@link ContextualHelp}
- * It show the title and the FAQ of the contextual help.
- * @constructor
+ * This component must be used only here. Make the
+ * {@link ZendeskSupportHelpCenter} compatible with {@link HeaderSecondLevel} and
+ * substitute the {@link ContextualHelp} It show the title and the FAQ of the
+ * contextual help.
+ *
+ * @class
  */
 const FaqManager = (props: FaqManagerProps) => {
   const dispatch = useIODispatch();
@@ -235,9 +237,10 @@ const FaqManager = (props: FaqManagerProps) => {
 };
 
 /**
- * Ingress screen to access the Zendesk assistance tool
- * the user can choose to open a new ticket, follow previous conversations or read the faqs
- * @constructor
+ * Ingress screen to access the Zendesk assistance tool the user can choose to
+ * open a new ticket, follow previous conversations or read the faqs
+ *
+ * @class
  */
 const ZendeskSupportHelpCenter = () => {
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
@@ -345,8 +348,9 @@ const ZendeskSupportHelpCenter = () => {
   );
 
   /**
-   * as first step request the config (categories + panicmode) that could
-   be used in the next steps (possible network error are handled in {@link ZendeskAskPermissions})
+   * As first step request the config (categories + panicmode) that could be
+   * used in the next steps (possible network error are handled in
+   * {@link ZendeskAskPermissions})
    */
   useEffect(() => {
     dispatch(getZendeskConfig.request());

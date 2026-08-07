@@ -29,10 +29,10 @@ export enum IdentificationBackActionType {
 }
 
 export enum IdentificationResult {
-  "cancel" = "cancel",
-  "failure" = "failure",
-  "pinreset" = "pinreset",
-  "success" = "success"
+  cancel = "cancel",
+  failure = "failure",
+  pinreset = "pinreset",
+  success = "success"
 }
 
 export type IdentificationCancelData = { label: string; onCancel: () => void };

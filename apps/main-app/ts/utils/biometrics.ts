@@ -12,11 +12,12 @@ import { isDebugBiometricIdentificationEnabled } from "../config";
 import { mixpanelTrack } from "../mixpanel";
 
 /**
- * Retrieve biometric settings from the base system. This function wraps the basic
- * method "isSensorAvailable" of react-native-fingerprint-scanner library and simplifies the possible returned values in
- * function of its usage.
+ * Retrieve biometric settings from the base system. This function wraps the
+ * basic method "isSensorAvailable" of react-native-fingerprint-scanner library
+ * and simplifies the possible returned values in function of its usage.
  *
- * More info about library can be found here: https://github.com/hieuvp/react-native-fingerprint-scanner
+ * More info about library can be found here:
+ * https://github.com/hieuvp/react-native-fingerprint-scanner
  */
 
 const biometricErrors = [
@@ -36,13 +37,15 @@ export type BiometricsValidType =
   "BIOMETRICS" | "FACE_ID" | "TOUCH_ID";
 
 /**
- * Retrieve biometric settings from the base system. This function wraps the basic
- * method "isSensorAvailable" of react-native-fingerprint-scanner library and simplifies the possible returned values in
- * function of its usage.
+ * Retrieve biometric settings from the base system. This function wraps the
+ * basic method "isSensorAvailable" of react-native-fingerprint-scanner library
+ * and simplifies the possible returned values in function of its usage.
  *
- * More info about library can be found here: https://github.com/hieuvp/react-native-fingerprint-scanner
+ * More info about library can be found here:
+ * https://github.com/hieuvp/react-native-fingerprint-scanner
  *
- * @param shouldTrackError - If true, tracks BIOMETRIC_ERROR event on Mixpanel when biometrics are unavailable. Default: true
+ * @param shouldTrackError - If true, tracks BIOMETRIC_ERROR event on Mixpanel
+ *   when biometrics are unavailable. Default: true
  */
 export const getBiometricsType = (
   shouldTrackError = true

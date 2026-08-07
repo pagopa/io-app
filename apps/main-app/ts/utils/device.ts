@@ -1,5 +1,5 @@
 /**
- * util file to expose those functions that get or set data from/to device
+ * Util file to expose those functions that get or set data from/to device
  * regardless of the specific library used
  */
 import { constFalse } from "fp-ts/lib/function";
