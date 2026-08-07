@@ -84,6 +84,10 @@ jest.mock("expo-calendar", () => ({
   getCalendarsAsync: jest.fn().mockResolvedValue([]),
   getEventsAsync: jest.fn().mockResolvedValue([]),
 }));
+jest.mock("expo-brightness", () => ({
+  getBrightnessAsync: jest.fn().mockResolvedValue(0),
+  setBrightnessAsync: jest.fn().mockResolvedValue(undefined),
+}));
 // Mock react-native-worklets before reanimated setup
 // See: https://docs.swmansion.com/react-native-worklets/docs/guides/testing/
 jest.mock("react-native-worklets", () =>
