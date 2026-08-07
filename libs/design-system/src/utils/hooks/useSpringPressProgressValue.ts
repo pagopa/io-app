@@ -23,11 +23,9 @@ export const useSpringPressProgressValue = (
   );
 
   const onPressIn = useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
     isPressed.value = 1;
   }, [isPressed]);
   const onPressOut = useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
     isPressed.value = 0;
   }, [isPressed]);
 

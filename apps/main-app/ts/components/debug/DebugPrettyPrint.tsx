@@ -11,9 +11,9 @@ import {
   useIOToast
 } from "@io-app/design-system";
 import { File, Paths } from "expo-file-system";
+import * as Sharing from "expo-sharing";
 import { useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import Share from "react-native-share";
 
 import { Prettify } from "../../types/helpers";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
@@ -75,11 +75,9 @@ export const DebugPrettyPrint = withDebugEnabled(
       try {
         const file = new File(Paths.cache, `${title}.json`);
         file.write(JSON.stringify(data, debugInfoReplacer(), 2));
-        await Share.open({
-          filename: `${title}.json`,
-          type: "application/json",
-          url: file.uri,
-          failOnCancel: false
+        await Sharing.shareAsync(`file://${file.uri}`, {
+          mimeType: "application/json",
+          dialogTitle: `${title}.json`
         });
         file.delete();
       } catch {

@@ -29,7 +29,6 @@ export const MessageDetailsReminderExpiring = ({
   const preferredCalendar = useIOSelector(preferredCalendarSelector);
 
   const navigate = useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
     didShowCalendarModalRef.current = true;
     navigation.navigate("MESSAGES_NAVIGATOR", {
       screen: "MESSAGE_DETAIL_CALENDAR",
@@ -46,7 +45,6 @@ export const MessageDetailsReminderExpiring = ({
   useFocusEffect(
     useCallback(() => {
       if (didShowCalendarModalRef.current) {
-        // eslint-disable-next-line functional/immutable-data
         didShowCalendarModalRef.current = false;
         // 1000 is a safe delay on low spec Android devices. Lower
         // values will not prevent the back button to steal focus

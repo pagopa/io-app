@@ -62,7 +62,6 @@ export const MessagePaymentBottomSheet = ({
     snapPoint: [snapPoint],
     onDismiss: () => dispatch(cancelQueuedPaymentUpdates({ messageId }))
   });
-  // eslint-disable-next-line functional/immutable-data
   presentPaymentsBottomSheetRef.current = present;
   return bottomSheet;
 };
