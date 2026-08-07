@@ -11,8 +11,8 @@ import {
   navigateToCgnActivationTimeout
 } from "../../../orchestration/navigation/actions";
 
-jest.mock("react-native-share", () => ({
-  open: jest.fn()
+jest.mock("expo-sharing", () => ({
+  shareAsync: jest.fn()
 }));
 
 describe("cgnActivationWorker", () => {
