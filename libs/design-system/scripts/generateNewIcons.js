@@ -70,7 +70,6 @@ Prerequisites:
 const path = require("path");
 const join = path.join;
 const { optimize } = require("svgo");
-const prettier = require("prettier");
 const fs = require("fs-extra");
 const { transform } = require("@svgr/core");
 
@@ -81,6 +80,17 @@ const templateFilePath = join(
   "../src/components/icons/svg/_IconTemplate.tsx"
 );
 const timestampFilePath = join(__dirname, "icons_timestamp.txt");
+
+/* Reuse the repo-wide config so generated components already match `prettify`. */
+const oxfmtOptions = fs.readJsonSync(join(__dirname, "../../../.oxfmtrc.json"));
+delete oxfmtOptions.$schema;
+
+/* `oxfmt` is ESM-only, hence the dynamic import from this CommonJS script. */
+const formatComponent = async (fileName, sourceText) => {
+  const { format } = await import("oxfmt");
+  const { code } = await format(fileName, sourceText, oxfmtOptions);
+  return code;
+};
 
 const convertTimestampToReadableFormat = timestamp =>
   new Date(timestamp).toLocaleString("it-IT", {
@@ -99,12 +109,12 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
   );
   console.log(`————————————————`);
 
-  fs.readdir(svgDir, (err, files) => {
+  fs.readdir(svgDir, async (err, files) => {
     if (err) {
       throw err;
     }
 
-    files.forEach(file => {
+    for (const file of files) {
       const filePath = join(svgDir, file);
       const fileStats = fs.statSync(filePath);
 
@@ -112,13 +122,13 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
       date later than the timestamp value */
       if (fileStats.mtime > new Date(timestamp)) {
         if (!file.endsWith(".svg")) {
-          return;
+          continue;
         }
 
         const excludedPrefixes = ["IconSystem", "IconBiom", "IconProduct"];
         if (excludedPrefixes.some(prefix => file.startsWith(prefix))) {
           console.log(`⚠️ Skipping excluded file: ${file}`);
-          return;
+          continue;
         }
 
         const data = fs.readFileSync(filePath, "utf8");
@@ -176,14 +186,15 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
 
         const fileWithTsxExtension = file.replace(".svg", ".tsx");
         const tsxFilePath = join(tsxDir, fileWithTsxExtension);
-        fs.writeFileSync(
-          tsxFilePath,
-          prettier.format(componentData, { parser: "typescript" })
+        const formattedComponentData = await formatComponent(
+          fileWithTsxExtension,
+          componentData
         );
+        fs.writeFileSync(tsxFilePath, formattedComponentData);
 
         console.log(`${file} → ${fileWithTsxExtension}`);
       }
-    });
+    }
 
     const newTimestamp = new Date();
     const convertedISOTimestamp = newTimestamp.toISOString();

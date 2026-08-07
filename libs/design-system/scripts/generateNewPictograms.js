@@ -61,7 +61,6 @@ Prerequisites:
 const path = require("path");
 const join = path.join;
 const { optimize } = require("svgo");
-const prettier = require("prettier");
 const fs = require("fs-extra");
 const { transform } = require("@svgr/core");
 
@@ -72,6 +71,17 @@ const templateFilePath = join(
   "../src/components/pictograms/svg/_PictogramTemplate.tsx"
 );
 const timestampFilePath = join(__dirname, "pictograms_timestamp.txt");
+
+/* Reuse the repo-wide config so generated components already match `prettify`. */
+const oxfmtOptions = fs.readJsonSync(join(__dirname, "../../../.oxfmtrc.json"));
+delete oxfmtOptions.$schema;
+
+/* `oxfmt` is ESM-only, hence the dynamic import from this CommonJS script. */
+const formatComponent = async (fileName, sourceText) => {
+  const { format } = await import("oxfmt");
+  const { code } = await format(fileName, sourceText, oxfmtOptions);
+  return code;
+};
 
 const colorMapValues = {
   "#0B3EE3": "{colorValues.hands}",
@@ -162,9 +172,10 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
         // Save the file with the same filename with `.tsx` extension
         const fileWithTsxExtension = file.replace(".svg", ".tsx");
         const tsxFilePath = join(tsxDir, fileWithTsxExtension);
-        const formattedComponentData = await prettier.format(componentData, {
-          parser: "typescript"
-        });
+        const formattedComponentData = await formatComponent(
+          fileWithTsxExtension,
+          componentData
+        );
         fs.writeFileSync(tsxFilePath, formattedComponentData);
 
         console.log(`${file} → ${fileWithTsxExtension}`);
