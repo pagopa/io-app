@@ -67,17 +67,14 @@ const T_EID_REQUEST_OUTPUT: RequestEidActorOutput = {
   },
   walletUnitAttestations: T_WUA
 };
-const T_WUA_STATUS_LISTS: ObtainEidWuaStatusListsActorOutput = [
-  [
-    "https://wallet-provider.example/status-list/1",
-    {
-      sub: "https://wallet-provider.example/status-list/1",
-      iat: 1700000000,
-      exp: 1700003600,
-      status_list: { bits: 1, lst: "eNrbuRgAAhcBXQ" }
-    }
-  ]
-];
+const T_WUA_STATUS_LISTS: ObtainEidWuaStatusListsActorOutput = {
+  "https://wallet-provider.example/status-list/1": {
+    sub: "https://wallet-provider.example/status-list/1",
+    iat: 1700000000,
+    exp: 1700003600,
+    status_list: { bits: 1, lst: "eNrbuRgAAhcBXQ" }
+  }
+};
 
 /**
  * Actions
@@ -247,7 +244,7 @@ describe("itwEidIssuanceMachine", () => {
     jest.clearAllMocks();
     jest.resetAllMocks();
     jest.useFakeTimers();
-    obtainWuaStatusLists.mockResolvedValue([]);
+    obtainWuaStatusLists.mockResolvedValue(undefined);
     storeEidCredentialActor.mockResolvedValue(undefined);
   });
 
@@ -1573,7 +1570,9 @@ describe("itwEidIssuanceMachine", () => {
         }
       })
     );
-    expect(finalSnapshot.context.wuaStatusLists).toEqual(T_WUA_STATUS_LISTS);
+    expect(finalSnapshot.context.walletUnitAttestationStatusLists).toEqual(
+      T_WUA_STATUS_LISTS
+    );
   });
 
   it("Should fail when obtaining WUA status lists fails", async () => {
