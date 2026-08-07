@@ -4360,6 +4360,7 @@ SPEC CHECKSUMS:
   ExpoModulesJSI: 964334271fc77832736f66ee1785761cdc778dbe
   ExpoNotifications: 61c46aa5df088ff0ad41de0504a86a92333aec55
   ExpoScreenCapture: aefcd749919380ee0b4d59bb60c1a150aac201c6
+  ExpoSharing: 40cd8fd65209bc35adc710ff7e42dd35913d2a0f
   ExpoTaskManager: a288a5a5eab33009b1fb7a413ba47ef7eac23fba
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 06b1c8278e6e1b31ef68e9e14c296b7872e79e48
