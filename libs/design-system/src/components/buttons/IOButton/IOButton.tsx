@@ -11,7 +11,6 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   LayoutAnimationConfig,
   useReducedMotion
@@ -22,6 +21,7 @@ import {
   enterTransitionInnerContentSmall,
   exitTransitionInnerContent
 } from "../../../core";
+import { triggerHaptic } from "../../../functions";
 import { useScaleAnimation } from "../../../hooks";
 import { WithTestID } from "../../../utils/types";
 import {
@@ -195,7 +195,6 @@ export const IOButton = ({
   const isMounted = useRef<boolean>(false);
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     isMounted.current = true;
   }, []);
 
@@ -206,7 +205,7 @@ export const IOButton = ({
       if (loading) {
         return;
       }
-      ReactNativeHapticFeedback.trigger("impactLight");
+      triggerHaptic("impactLight");
       onPress(event);
     },
     [loading, onPress]

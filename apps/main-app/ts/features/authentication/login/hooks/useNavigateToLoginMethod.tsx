@@ -17,7 +17,11 @@ import {
   isCieLoginUatEnabledSelector,
   isCieSupportedSelector
 } from "../../login/cie/store/selectors";
-import { cieFlowForDevServerEnabled, SpidLevel } from "../../login/cie/utils";
+import {
+  cieFlowForDevServerEnabled,
+  getCieIdEnvironment,
+  SpidLevel
+} from "../../login/cie/utils";
 import {
   ChosenIdentifier,
   Identifier
@@ -110,7 +114,10 @@ const useNavigateToLoginMethod = () => {
         dispatch(cieIDSetSelectedSecurityLevel(spidLevel));
       }
 
-      if (isCieIdAvailable(isCieUatEnabled) || cieFlowForDevServerEnabled) {
+      if (
+        isCieIdAvailable(getCieIdEnvironment(isCieUatEnabled)) ||
+        cieFlowForDevServerEnabled
+      ) {
         const params = {
           spidLevel,
           isUat: isCieUatEnabled

@@ -23,7 +23,7 @@ import {
   watchSessionRefreshInOfflineSaga
 } from "../../features/ingress/saga";
 import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
-import { watchItwOfflineSaga } from "../../features/itwallet/common/saga";
+import { watchItwSaga } from "../../features/itwallet/common/saga";
 import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
@@ -88,8 +88,8 @@ jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
 }));
 
-jest.mock("react-native-share", () => ({
-  open: jest.fn()
+jest.mock("expo-sharing", () => ({
+  shareAsync: jest.fn()
 }));
 
 jest.mock("../../api/SessionManagerClientManager");
@@ -124,7 +124,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -181,7 +181,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -234,7 +234,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -292,7 +292,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -361,7 +361,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -417,7 +417,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -479,7 +479,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded)
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()

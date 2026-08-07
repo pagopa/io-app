@@ -71,7 +71,6 @@ export const SendAarMessageDetailBottomSheetComponent = ({
     )
   });
 
-  // eslint-disable-next-line functional/immutable-data
   aarBottomSheetRef.current = present;
   return bottomSheet;
 };

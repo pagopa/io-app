@@ -86,7 +86,6 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
       Array.isArray(backgroundLogoUri) &&
       indexValue.current + 1 < backgroundLogoUri.length
     ) {
-      // eslint-disable-next-line functional/immutable-data
       indexValue.current = indexValue.current + 1;
       setImageSource(
         addCacheTimestampToUri(backgroundLogoUri[indexValue.current])

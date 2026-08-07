@@ -141,7 +141,6 @@ describe("itwCredentialIssuanceMachine", () => {
 
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
-  const isStatusError = jest.fn();
   const isSkipNavigation = jest.fn();
   const isEidExpired = jest.fn();
   const hasCredentialIntroContent = jest.fn();
@@ -197,7 +196,6 @@ describe("itwCredentialIssuanceMachine", () => {
     guards: {
       isSessionExpired,
       hasValidWalletInstanceAttestation,
-      isStatusError,
       isEidExpired,
       hasCredentialIntroContent
     }
@@ -828,6 +826,29 @@ describe("itwCredentialIssuanceMachine", () => {
       snapshot.matches("CredentialIntroduction")
     );
     expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("should clear the selected credential when leaving the introduction screen", async () => {
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    hasCredentialIntroContent.mockImplementation(() => true);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({
+      type: "select-credential",
+      credentialType: "education_degree",
+      mode: "issuance"
+    });
+
+    await waitForActor(actor, snapshot =>
+      snapshot.matches("CredentialIntroduction")
+    );
+
+    actor.send({ type: "back" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context.credentialType).toBeUndefined();
+    expect(navigateToCardOnboardingScreen).not.toHaveBeenCalled();
   });
 
   describe("Credential Offer flow", () => {
