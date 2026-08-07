@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.11](https://github.com/pagopa/io-app/compare/3.38.0-rc.10...3.38.0-rc.11) (2026-08-07)
+
+
+### Features
+
+* [[IOPID-4118](https://pagopa.atlassian.net/browse/IOPID-4118)] Add IDPs URL selector ([#8407](https://github.com/pagopa/io-app/issues/8407)) ([745b9bb](https://github.com/pagopa/io-app/commit/745b9bbf12ce694e3042a12b66714cfc159592a9))
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Use UAT CieID app in IT-Wallet pre environment ([#8405](https://github.com/pagopa/io-app/issues/8405)) ([4c4f0b8](https://github.com/pagopa/io-app/commit/4c4f0b8b5ce1482e8610cd2b4760ee88c2f999e0))
+* **IT-Wallet:** [[SIW-2162](https://pagopa.atlassian.net/browse/SIW-2162)] Refresh Status List tokens ([#8143](https://github.com/pagopa/io-app/issues/8143)) ([1af6c50](https://github.com/pagopa/io-app/commit/1af6c50f7cb420b037766fbf679c09fa3f8aa1c9))
+* **IT-Wallet:** [[SIW-4682](https://pagopa.atlassian.net/browse/SIW-4682)] Extract dynamic messages for status list codes ([#8359](https://github.com/pagopa/io-app/issues/8359)) ([e01aba0](https://github.com/pagopa/io-app/commit/e01aba06c2056d3d442e329fb8b271df3815960f))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)]: Unmounting CIE gif on focus loss ([#8403](https://github.com/pagopa/io-app/issues/8403)) ([a897282](https://github.com/pagopa/io-app/commit/a8972822699a34ed5ecf53a668ecc39f58f4294f))
+* **IT-Wallet:** [[SIW-4745](https://pagopa.atlassian.net/browse/SIW-4745)] Handle IT Wallet cold-start deeplinks ([#8377](https://github.com/pagopa/io-app/issues/8377)) ([dbeb53f](https://github.com/pagopa/io-app/commit/dbeb53f0f679050a15c31d8a7aa7d41f36d076a3))
+
 ## [3.38.0-rc.10](https://github.com/pagopa/io-app/compare/3.38.0-rc.9...3.38.0-rc.10) (2026-08-05)
 
 

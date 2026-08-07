@@ -111,9 +111,6 @@ patchedDependencies:
   react-native-barcode-builder@2.0.0:
     hash: 185bbf5a5ace23a4f4b0fe9ae693a101d9f5f95ffcbc30d34f6293080065bc33
     path: patches/react-native-barcode-builder@2.0.0.patch
-  react-native-calendar-events@2.2.0:
-    hash: 5e49b15e0c70b842c9638664963e1ee080e0fcbf723d5256d7602e788cd6667d
-    path: patches/react-native-calendar-events@2.2.0.patch
   react-native-device-info@14.0.4:
     hash: b5e3683f3a8950e16f58e0d657f1372e1981f5250008f5ef02f47e7602c8d435
     path: patches/react-native-device-info@14.0.4.patch
@@ -338,6 +335,9 @@ importers:
       expo-background-task:
         specifier: ~55.0.18
         version: 55.0.18(expo@55.0.26)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))
+      expo-calendar:
+        specifier: ~55.0.17
+        version: 55.0.17(expo@55.0.26)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))
       expo-clipboard:
         specifier: ~55.0.15
         version: 55.0.15(expo@55.0.26)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
@@ -419,9 +419,6 @@ importers:
       react-native-bluetooth-state-manager:
         specifier: ^1.3.5
         version: 1.3.5(prop-types@15.8.1)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))
-      react-native-calendar-events:
-        specifier: 2.2.0
-        version: 2.2.0(patch_hash=5e49b15e0c70b842c9638664963e1ee080e0fcbf723d5256d7602e788cd6667d)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))
       react-native-config:
         specifier: ^1.6.1
         version: 1.6.1(react-native-windows@0.80.1(@babel/core@7.29.0)(@types/react@19.2.16)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)(tslib@1.14.1)(typescript@6.0.3))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
@@ -6045,6 +6042,12 @@ packages:
     peerDependencies:
       expo: '*'
 
+  expo-calendar@55.0.17:
+    resolution: {integrity: sha512-+SixsYR4jrSvPsEEUpwGbpsMuui+g+GO5OdoWwv/SRtmmQ/n+klK8dOvgB7Tc5WzzvV3Io8sjfy5gc6SRVhSuw==}
+    peerDependencies:
+      expo: '*'
+      react-native: '*'
+
   expo-clipboard@55.0.15:
     resolution: {integrity: sha512-1TQ5wx3l8WJauFCuvL5NDEnB9VMboi9IUc5XM2/3/wf4sAKwif9TlFkB5GRah1a4U1yqUWJVT9hJa3rUFrHc8g==}
     peerDependencies:
@@ -9229,11 +9232,6 @@ packages:
     resolution: {integrity: sha512-mWQUM+zaBL3bjfhnSYTqo0fcm2vqItiBsSo2bUzkIZud+mHcJ+0unfWK6kn1JC9OV9LocxU7rRpKm7fE3dCkkw==}
     engines: {node: '>= 20.0.0'}
     hasBin: true
-
-  react-native-calendar-events@2.2.0:
-    resolution: {integrity: sha512-tNUbhT6Ief0JM4OQzQAaz1ri0+MCcAoHptBcEXCz2g7q3A05pg62PR2Dio4F9t2fCAD7Y2+QggdY1ycAsF3Tsg==}
-    peerDependencies:
-      react-native: '>=0.60.0'
 
   react-native-config@1.6.1:
     resolution: {integrity: sha512-HvKtxr6/Tq3iMdFx5REYZsjCtPi0RxQOMCs15+DqrUPTNFtWHuEuh+zw7fJp+dmuO79YMfdtlsPWIGTHtaXwjg==}
@@ -17917,6 +17915,11 @@ snapshots:
     transitivePeerDependencies:
       - react-native
 
+  expo-calendar@55.0.17(expo@55.0.26)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)):
+    dependencies:
+      expo: 55.0.26(@babel/core@7.29.0)(@expo/dom-webview@55.0.6)(react-native-webview@13.16.0(patch_hash=f50190f7feff67b44970713f309dbb5962fdcbd2e85b7d4ae8d248d4f1c06b0e)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0))(react-native-worklets@0.8.3(@babel/core@7.29.0)(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)(typescript@6.0.3)
+      react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
+
   expo-clipboard@55.0.15(expo@55.0.26)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0):
     dependencies:
       expo: 55.0.26(@babel/core@7.29.0)(@expo/dom-webview@55.0.6)(react-native-webview@13.16.0(patch_hash=f50190f7feff67b44970713f309dbb5962fdcbd2e85b7d4ae8d248d4f1c06b0e)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0))(react-native-worklets@0.8.3(@babel/core@7.29.0)(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)(typescript@6.0.3)
@@ -22262,10 +22265,6 @@ snapshots:
       - supports-color
       - typescript
       - utf-8-validate
-
-  react-native-calendar-events@2.2.0(patch_hash=5e49b15e0c70b842c9638664963e1ee080e0fcbf723d5256d7602e788cd6667d)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)):
-    dependencies:
-      react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
 
   react-native-config@1.6.1(react-native-windows@0.80.1(@babel/core@7.29.0)(@types/react@19.2.16)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)(tslib@1.14.1)(typescript@6.0.3))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0):
     dependencies:
