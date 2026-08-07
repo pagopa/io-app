@@ -228,8 +228,8 @@ importers:
         specifier: 1.3.6
         version: 1.3.6(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-cieid':
-        specifier: 0.4.0
-        version: 0.4.0(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
+        specifier: 0.5.2
+        version: 0.5.2(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-crypto':
         specifier: ^1.2.3
         version: 1.2.3(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
@@ -2902,8 +2902,8 @@ packages:
       react: '>=19.1'
       react-native: '>=0.81'
 
-  '@pagopa/io-react-native-cieid@0.4.0':
-    resolution: {integrity: sha512-hOAIoFFzZ0HMJ1EDbcTq0+ZePt6Fa+jtRgizxQpCEWEBrFcb2AeS+6ykwMEjlHDGxOC/22poT7i6zl5eGR6pXQ==}
+  '@pagopa/io-react-native-cieid@0.5.2':
+    resolution: {integrity: sha512-NJjrTgRn8o4dglQiPYI6VM/S/84n1hIIARGCh9Yf7vU4uJ/TlgizzKEPZsnY85pk6ODm59Yn6zRjvjjW5YW/bw==}
     peerDependencies:
       react: '>=19.1'
       react-native: '>=0.81'
@@ -13819,7 +13819,7 @@ snapshots:
       react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
       zod: 3.25.76
 
-  '@pagopa/io-react-native-cieid@0.4.0(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)':
+  '@pagopa/io-react-native-cieid@0.5.2(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)':
     dependencies:
       react: 19.2.0
       react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)

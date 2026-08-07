@@ -211,7 +211,7 @@ PODS:
     - Mixpanel-swift (= 5.2.0)
     - React-Core
   - OpenSSL-Universal (3.6.2000)
-  - pagopa-io-react-native-cieid (0.4.0):
+  - pagopa-io-react-native-cieid (0.5.2):
     - boost
     - DoubleConversion
     - fast_float
@@ -4402,7 +4402,7 @@ SPEC CHECKSUMS:
   Mixpanel-swift: de454db5987bf6f601106520a44663fc556e8cfa
   MixpanelReactNative: 1f0d8718b2be7174f719ed5db8e8f75d7975dea4
   OpenSSL-Universal: ecee7b138fa75a74ecf00d7ffd248fb584739b9e
-  pagopa-io-react-native-cieid: ff8a232612c44f72846202a4b857a4e16ff9db4d
+  pagopa-io-react-native-cieid: 3969ed1784e0b9041baf892b461be3640315acd1
   pagopa-io-react-native-crypto: eb62bb6767b44ea610ce169d855c89604b9e96d9
   pagopa-io-react-native-integrity: 3e84754db0333a531db86f83f786f60a6da22337
   pagopa-io-react-native-jwt: d268a7aa7a0c63e809386209e589224e0c0c04c0
