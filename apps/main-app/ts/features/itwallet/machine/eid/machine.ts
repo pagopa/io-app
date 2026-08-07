@@ -24,6 +24,8 @@ import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
+  ObtainStatusListsActorInput,
+  ObtainStatusListsActorOutput,
   RequestAccessTokenActorParams,
   RequestEidActorOutput,
   type RequestEidActorParams,
@@ -216,6 +218,10 @@ export const itwEidIssuanceMachine = setup({
     requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
       notImplemented
     ),
+    obtainStatusLists: fromPromise<
+      ObtainStatusListsActorOutput,
+      ObtainStatusListsActorInput
+    >(notImplemented),
     storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
       notImplemented
     ),
@@ -1167,7 +1173,7 @@ export const itwEidIssuanceMachine = setup({
                 eid: event.output.credential,
                 walletUnitAttestations: event.output.walletUnitAttestations
               })),
-              target: "CheckingIdentityMatch"
+              target: "ObtainingWuaStatusList"
             },
             onError: [
               {
@@ -1180,6 +1186,26 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.Failure"
               }
             ]
+          }
+        },
+        ObtainingWuaStatusList: {
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "obtainStatusLists",
+            input: ({ context }) => ({
+              itwVersion: context.itwVersion,
+              walletUnitAttestations: context.walletUnitAttestations
+            }),
+            onDone: {
+              actions: assign(({ event }) => ({
+                walletInstanceStatusList: event.output
+              })),
+              target: "CheckingIdentityMatch"
+            },
+            onError: {
+              target: "#itwEidIssuanceMachine.Failure",
+              actions: "setFailure"
+            }
           }
         },
         CheckingIdentityMatch: {
@@ -1220,6 +1246,7 @@ export const itwEidIssuanceMachine = setup({
             src: "storeEidCredential",
             input: ({ context }) => ({
               eid: context.eid,
+              walletInstanceStatusList: context.walletInstanceStatusList,
               walletUnitAttestations: context.walletUnitAttestations
             }),
             onDone: {
