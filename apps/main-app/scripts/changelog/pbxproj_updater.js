@@ -1,5 +1,5 @@
 /**
- * This is an updater for the utility "standard-version" that increase the CURRENT_PROJECT_VERSION value
+ * This is an updater for the utility "commit-and-tag-version" that increase the CURRENT_PROJECT_VERSION value
  * for pbxproj files. The value will follow the same rules applyied for CFBundleVersion in "plist_updater"
  */
 
