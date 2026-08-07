@@ -256,7 +256,25 @@ export default defineConfig([
             "StackActions.**"
           ],
           // Caches and memoization rely on mutable Map/Set
-          ignoreMapsAndSets: true
+          ignoreMapsAndSets: true,
+          overrides: [
+            {
+              specifiers: {
+                from: "package",
+                package: "@types/react",
+                pattern: "RefObject"
+              },
+              disable: true
+            },
+            {
+              specifiers: {
+                from: "package",
+                package: "react-native-reanimated",
+                pattern: "SharedValue"
+              },
+              disable: true
+            }
+          ]
         }
       ],
 

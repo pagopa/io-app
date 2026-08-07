@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fireEvent } from "@testing-library/react-native";
+import { fireEvent, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 
@@ -10,9 +10,8 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { PaymentsReceiptRoutes } from "../../navigation/routes";
 import ReceiptPreviewScreen from "../ReceiptPreviewScreen";
 
-// Mock Share.open Api
-jest.mock("react-native-share", () => ({
-  open: jest.fn(() => Promise.resolve())
+jest.mock("expo-sharing", () => ({
+  shareAsync: jest.fn(() => Promise.resolve())
 }));
 
 const renderComponent = (state: GlobalState) => {
@@ -48,7 +47,7 @@ describe("ReceiptPreviewScreen", () => {
     expect(getByText(I18n.t("global.genericError"))).toBeDefined();
   });
 
-  it("should display receipt preview when receipt is available", () => {
+  it("should display receipt preview when receipt is available", async () => {
     const loadedState: GlobalState = {
       ...globalState,
       features: {
@@ -74,6 +73,8 @@ describe("ReceiptPreviewScreen", () => {
 
     fireEvent.press(button);
 
-    expect(require("react-native-share").open).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(require("expo-sharing").shareAsync).toHaveBeenCalled();
+    });
   });
 });

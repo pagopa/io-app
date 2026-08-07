@@ -219,7 +219,6 @@ const ActiveSessionCieIdLoginWebView = ({
       return false;
     }
 
-    // eslint-disable-next-line functional/immutable-data
     isLoginUrlWithTokenRef.current = onLoginUriChanged(
       handleLoginFailure,
       handleLoginSuccess,

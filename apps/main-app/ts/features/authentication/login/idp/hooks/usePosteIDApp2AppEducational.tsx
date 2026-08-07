@@ -69,7 +69,6 @@ export const usePosteIDApp2AppEducational = ({
   );
 
   const handleOnDismiss = useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
     presentedRef.current = true;
   }, []);
 

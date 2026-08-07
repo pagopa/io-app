@@ -297,7 +297,6 @@ const EmailInsertScreen = () => {
 
   const continueOnPress = () => {
     Keyboard.dismiss();
-    // eslint-disable-next-line functional/immutable-data
     canShowLoadingSpinner.current = true;
     const isValid = isValidEmail();
     if ((typeof isValid === "boolean" && isValid) || isValid.isValid) {
@@ -313,7 +312,6 @@ const EmailInsertScreen = () => {
     } else {
       const message = getAccessibilityErrorLabel();
       if (message) {
-        // eslint-disable-next-line functional/immutable-data
         timeout.current = setTimeout(() => {
           AccessibilityInfo.announceForAccessibilityWithOptions(message, {
             queue: true
@@ -400,7 +398,6 @@ const EmailInsertScreen = () => {
   // let the user navigate the email validation screen
   useEffect(() => {
     if (userNavigateToEmailValidationScreen) {
-      // eslint-disable-next-line functional/immutable-data
       canShowLoadingSpinner.current = false;
       navigation.navigate(ROUTES.ONBOARDING, {
         screen: ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN,
@@ -461,7 +458,6 @@ const EmailInsertScreen = () => {
             sendEmailAtFirstRender =
               profile.value.email === prevUserProfile.value.email;
           }
-          // eslint-disable-next-line functional/immutable-data
           canShowLoadingSpinner.current = false;
           if (isOnboarding || isFirstOnboarding) {
             navigation.navigate(ROUTES.ONBOARDING, {
