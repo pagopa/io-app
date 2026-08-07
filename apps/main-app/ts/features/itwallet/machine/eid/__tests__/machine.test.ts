@@ -23,8 +23,8 @@ import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
-  ObtainEidWuaStatusListsActorInput,
-  ObtainEidWuaStatusListsActorOutput,
+  ObtainStatusListsActorInput,
+  ObtainStatusListsActorOutput,
   RequestAccessTokenActorParams,
   RequestEidActorOutput,
   RequestEidActorParams,
@@ -67,8 +67,10 @@ const T_EID_REQUEST_OUTPUT: RequestEidActorOutput = {
   },
   walletUnitAttestations: T_WUA
 };
-const T_WUA_STATUS_LISTS: ObtainEidWuaStatusListsActorOutput = {
-  "https://wallet-provider.example/status-list/1": {
+const T_WALLET_INSTANCE_STATUS_LIST: ObtainStatusListsActorOutput = {
+  idx: 0,
+  uri: "https://wallet-provider.example/status-list/1",
+  parsedStatusList: {
     sub: "https://wallet-provider.example/status-list/1",
     iat: 1700000000,
     exp: 1700003600,
@@ -130,7 +132,7 @@ const requestEid = jest.fn();
 const startAuthFlow = jest.fn();
 const initMrtdPoPChallenge = jest.fn();
 const validateMrtdPoPChallenge = jest.fn();
-const obtainWuaStatusLists = jest.fn();
+const obtainStatusLists = jest.fn();
 const storeEidCredentialActor = jest.fn();
 const waitForSessionRefresh = jest.fn();
 
@@ -209,10 +211,10 @@ describe("itwEidIssuanceMachine", () => {
       requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
         requestEid
       ),
-      obtainWuaStatusLists: fromPromise<
-        ObtainEidWuaStatusListsActorOutput,
-        ObtainEidWuaStatusListsActorInput
-      >(obtainWuaStatusLists),
+      obtainStatusLists: fromPromise<
+        ObtainStatusListsActorOutput,
+        ObtainStatusListsActorInput
+      >(obtainStatusLists),
       storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
         storeEidCredentialActor
       ),
@@ -244,7 +246,7 @@ describe("itwEidIssuanceMachine", () => {
     jest.clearAllMocks();
     jest.resetAllMocks();
     jest.useFakeTimers();
-    obtainWuaStatusLists.mockResolvedValue(undefined);
+    obtainStatusLists.mockResolvedValue(undefined);
     storeEidCredentialActor.mockResolvedValue(undefined);
   });
 
@@ -1542,7 +1544,7 @@ describe("itwEidIssuanceMachine", () => {
 
   it("Should obtain and store WUA status lists before checking the issued eID", async () => {
     requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
-    obtainWuaStatusLists.mockResolvedValue(T_WUA_STATUS_LISTS);
+    obtainStatusLists.mockResolvedValue(T_WALLET_INSTANCE_STATUS_LIST);
     issuedEidMatchesAuthenticatedUser.mockReturnValue(true);
 
     const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
@@ -1562,7 +1564,7 @@ describe("itwEidIssuanceMachine", () => {
       state.matches({ Issuance: "DisplayingPreview" })
     );
 
-    expect(obtainWuaStatusLists).toHaveBeenCalledWith(
+    expect(obtainStatusLists).toHaveBeenCalledWith(
       expect.objectContaining({
         input: {
           itwVersion: "1.3.3",
@@ -1570,15 +1572,15 @@ describe("itwEidIssuanceMachine", () => {
         }
       })
     );
-    expect(finalSnapshot.context.walletUnitAttestationStatusLists).toEqual(
-      T_WUA_STATUS_LISTS
+    expect(finalSnapshot.context.walletInstanceStatusList).toEqual(
+      T_WALLET_INSTANCE_STATUS_LIST
     );
   });
 
   it("Should fail when obtaining WUA status lists fails", async () => {
     const error = new Error("WUA status list verification failed");
     requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
-    obtainWuaStatusLists.mockRejectedValue(error);
+    obtainStatusLists.mockRejectedValue(error);
 
     const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
