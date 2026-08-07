@@ -356,6 +356,14 @@ describe("remoteConfig", () => {
     it("should return an empty allowlist when it is not configured", () => {
       expect(fimsTrackingEnrichedUrlsSelector(noneStore)).toEqual([]);
     });
+
+    it("should return an empty allowlist when the FIMS config is empty", () => {
+      const state = {
+        remoteConfig: O.some({ fims: {} })
+      } as GlobalState;
+
+      expect(fimsTrackingEnrichedUrlsSelector(state)).toEqual([]);
+    });
   });
 
   describe("messageSurveyBannerUriSelector", () => {
