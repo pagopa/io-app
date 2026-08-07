@@ -38,11 +38,7 @@
     "generate:pictograms": "node scripts/generateNewPictograms.js",
     "generate": "pnpm generate:icons && pnpm generate:pictograms"
   },
-  "keywords": [
-    "react-native",
-    "ios",
-    "android"
-  ],
+  "keywords": ["react-native", "ios", "android"],
   "repository": "https://github.com/pagopa/io-app.git",
   "author": "PagoPa (https://github.com/pagopa)",
   "license": "MIT",
@@ -68,7 +64,7 @@
     "del-cli": "^5.0.0",
     "eslint": "catalog:",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-functional": "^9.0.5",
+    "eslint-plugin-functional": "^10.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jest": "^29.15.5",
     "eslint-plugin-prettier": "^4.0.0",
@@ -99,9 +95,7 @@
     "node": ">= 20"
   },
   "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
+    "extends": ["@commitlint/config-conventional"]
   },
   "release-it": {
     "git": {

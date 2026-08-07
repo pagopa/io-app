@@ -68,7 +68,6 @@ export const IdPayOperationsListScreen = () => {
 
   useOnFirstRender(() => {
     fetchPage(0);
-    // eslint-disable-next-line functional/immutable-data
     isFirstRenderDispatchedRef.current = true;
   });
 
