@@ -63,19 +63,13 @@ export const getCredentialStatusFromStatusList = async (
 };
 
 /**
- * Fetches and validates the Wallet Unit Attestation status from its Status List Token.
- * The wallet provider JWKS is retrieved from the issuer's OpenID Federation metadata.
- *
- * @param itwVersion Current IT-Wallet specifications version
+ * Fetches the JWKS from the Wallet Provider's OpenID Federation metadata,
+ * which is used to verify the Status List Token.
  * @param walletUnitAttestation Encoded Wallet Unit Attestation
- * @param walletUnitAttestationId Wallet Unit Attestation identifier
- * @returns The extracted credential status and the parsed status list
- * @throws {InvalidTslCredentialStatus} When the Wallet Unit Attestation status is not valid
+ * @returns The JWKS keys from the Wallet Provider
  */
-export const getWuaStatusFromStatusList = async (
-  itwVersion: ItwVersion,
-  walletUnitAttestation: string,
-  walletUnitAttestationId: string
+export const getKeysForWuaStatusList = async (
+  walletUnitAttestation: string
 ) => {
   const decoded = decodeJwt(walletUnitAttestation);
 
@@ -95,13 +89,5 @@ export const getWuaStatusFromStatusList = async (
     };
   };
 
-  const keys = walletProviderJwt.metadata.wallet_solution.jwks.keys;
-
-  return getCredentialStatusFromStatusList(
-    itwVersion,
-    walletUnitAttestation,
-    walletUnitAttestationId,
-    "dc+sd-jwt",
-    keys
-  );
+  return walletProviderJwt.metadata.wallet_solution.jwks.keys;
 };

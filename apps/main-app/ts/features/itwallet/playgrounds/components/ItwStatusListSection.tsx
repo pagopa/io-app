@@ -117,14 +117,14 @@ export const ItwStatusListSection = () => {
   return (
     <>
       <View>
-        <BackgroundTaskSection />
-        <VSpacer size={16} />
         <ListItemHeader label="Status List" />
         <ListItemNav
           description={formatDate(timestamps?.at(-1))}
           onPress={() => modal.present()}
           value="Last check"
         />
+        <VSpacer size={16} />
+        <BackgroundTaskSection />
         <VSpacer size={16} />
         <ListItemHeader label="Stored TSL" />
         {storedTsls.length === 0 ? (

@@ -24,8 +24,8 @@ import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
-  ObtainEidWuaStatusListsActorInput,
-  ObtainEidWuaStatusListsActorOutput,
+  ObtainStatusListsActorInput,
+  ObtainStatusListsActorOutput,
   RequestAccessTokenActorParams,
   RequestEidActorOutput,
   type RequestEidActorParams,
@@ -218,9 +218,9 @@ export const itwEidIssuanceMachine = setup({
     requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
       notImplemented
     ),
-    obtainWuaStatusLists: fromPromise<
-      ObtainEidWuaStatusListsActorOutput,
-      ObtainEidWuaStatusListsActorInput
+    obtainStatusLists: fromPromise<
+      ObtainStatusListsActorOutput,
+      ObtainStatusListsActorInput
     >(notImplemented),
     storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
       notImplemented
@@ -1191,14 +1191,14 @@ export const itwEidIssuanceMachine = setup({
         ObtainingWuaStatusList: {
           tags: [ItwTags.Loading],
           invoke: {
-            src: "obtainWuaStatusLists",
+            src: "obtainStatusLists",
             input: ({ context }) => ({
               itwVersion: context.itwVersion,
               walletUnitAttestations: context.walletUnitAttestations
             }),
             onDone: {
               actions: assign(({ event }) => ({
-                walletUnitAttestationStatusLists: event.output
+                walletInstanceStatusList: event.output
               })),
               target: "CheckingIdentityMatch"
             },
@@ -1246,8 +1246,7 @@ export const itwEidIssuanceMachine = setup({
             src: "storeEidCredential",
             input: ({ context }) => ({
               eid: context.eid,
-              walletUnitAttestationStatusLists:
-                context.walletUnitAttestationStatusLists,
+              walletInstanceStatusList: context.walletInstanceStatusList,
               walletUnitAttestations: context.walletUnitAttestations
             }),
             onDone: {

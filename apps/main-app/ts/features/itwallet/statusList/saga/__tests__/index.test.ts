@@ -9,7 +9,7 @@ import { registerStatusListProperties } from "../../analytics";
 import { refreshStaleEntries } from "../../utils/refresh";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
 import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
-import { updateCredentialsStatusSaga } from "../updateCredentialsStatusSaga";
+import { updateCredentialsStatusSaga } from "../updateCredentialsStatusListSaga";
 
 describe("watchItwStatusListAuthenticatedSaga", () => {
   it("registers the background fetch task", () => {
