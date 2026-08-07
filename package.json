@@ -5,6 +5,7 @@
   "scripts": {
     "prepare": "lefthook install --reset-hooks-path",
     "validate": "nx affected --targets=lint,test,tsc-noemit --configuration=ci --nx-bail",
+    "validate-all": "nx run-many --targets=lint,test,tsc-noemit --configuration=ci --nx-bail",
     "prettify": "prettier --write \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
     "prettier:check": "prettier --check \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
     "knip": "knip --reporter json --no-exit-code --no-progress",
