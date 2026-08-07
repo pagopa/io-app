@@ -37,12 +37,6 @@ export const itwProximityMachine = setup({
      */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    setConsentDeniedFailure: assign(() => ({
-      failure: {
-        type: ProximityFailureType.CONSENT_DENIED,
-        reason: undefined
-      }
-    })),
 
     /**
      * Navigation
@@ -439,7 +433,12 @@ export const itwProximityMachine = setup({
               }
             ],
             close: {
-              actions: "setConsentDeniedFailure",
+              actions: assign(() => ({
+                failure: {
+                  type: ProximityFailureType.CONSENT_DENIED,
+                  reason: undefined
+                }
+              })),
               target: "#itwProximityMachine.Failure"
             }
           }
