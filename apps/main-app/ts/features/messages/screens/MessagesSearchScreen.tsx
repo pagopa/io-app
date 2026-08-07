@@ -22,12 +22,13 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../store/hooks";
 import {
   trackMessageSearchClosing,
-  trackMessageSearchPage
+  trackMessageSearchPage,
+  trackMessageSearchResult
 } from "../analytics";
 import { WrappedListItemMessage } from "../components/Home/WrappedListItemMessage";
 import { EmptyList } from "../components/Search/EmptyList";
+import { searchMessagesUncachedSelector } from "../store/reducers/allPaginated";
 import { UIMessage } from "../types";
-import { getMessageSearchResult } from "./searchUtils";
 
 const INPUT_PADDING: IOSpacingScale = 16;
 const MIN_QUERY_LENGTH = 3;
@@ -41,6 +42,7 @@ export const MessagesSearchScreen = () => {
   const [filteredMessages, setFilteredMessages] = useState<
     ReadonlyArray<UIMessage>
   >([]);
+  const isQueryTooShort = query.trim().length < MIN_QUERY_LENGTH;
 
   const containerStyle: ViewStyle = useMemo(
     () => ({
@@ -60,8 +62,8 @@ export const MessagesSearchScreen = () => {
     ),
     []
   );
-  const renderListEmptyComponent = () => {
-    if (query.trim().length < MIN_QUERY_LENGTH) {
+  const renderListEmptyComponent = useCallback(() => {
+    if (isQueryTooShort) {
       return (
         <EmptyList
           pictogram="searchLens"
@@ -83,7 +85,7 @@ export const MessagesSearchScreen = () => {
         <VSpacer size={16} />
       </View>
     );
-  };
+  }, [isQueryTooShort]);
 
   const handleCancel = useCallback(() => {
     trackMessageSearchClosing();
@@ -98,17 +100,26 @@ export const MessagesSearchScreen = () => {
   );
 
   useEffect(() => {
+    if (isQueryTooShort) {
+      setFilteredMessages(current => (current.length === 0 ? current : []));
+      return;
+    }
+
     const timeoutHandleId = setTimeout(() => {
-      const state = store.getState();
-      const searchResult = getMessageSearchResult(
+      const searchResult = searchMessagesUncachedSelector(
+        store.getState(),
         query,
-        MIN_QUERY_LENGTH,
-        state
+        MIN_QUERY_LENGTH
       );
+      const searchResultCount = searchResult.length;
+      if (searchResultCount > 0) {
+        trackMessageSearchResult(searchResultCount);
+      }
+
       setFilteredMessages(searchResult);
     }, 350);
     return () => clearTimeout(timeoutHandleId);
-  }, [query, setFilteredMessages, store]);
+  }, [isQueryTooShort, query, store]);
 
   return (
     <>
@@ -120,7 +131,7 @@ export const MessagesSearchScreen = () => {
           clearAccessibilityLabel={I18n.t("messages.search.input.clear")}
           keepCancelVisible={true}
           onCancel={handleCancel}
-          onChangeText={(inputText: string) => setQuery(inputText)}
+          onChangeText={setQuery}
           placeholder={I18n.t("messages.search.input.placeholderShort")}
           ref={searchInputRef}
           value={query}
