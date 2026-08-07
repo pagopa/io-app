@@ -13,8 +13,6 @@ import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tem
 import { addUserSelectedPaymentRptId } from "../store/actions";
 import { PaymentData, UIMessage, UIMessageDetails } from "../types";
 
-export const gapBetweenItemsInAGrid = 8;
-
 const networkErrorToError = (networkError: NetworkError) =>
   networkError.kind === "timeout" ? new Error("timeout") : networkError.value;
 

@@ -12,7 +12,7 @@ export const MessageBottomMenu = ({
   sendOpeningSource,
   sendUserType
 }: MessageBottomMenuProps) => (
-  <>
+  <View testID="MessageBottomMenu">
     <View>Mock MessageBottomMenu</View>
     {history.map((pieceOfHistory, index) => (
       <View key={`poh_${index}`}>
@@ -44,5 +44,5 @@ export const MessageBottomMenu = ({
       ))}
     <View>{`Opening Source: ${sendOpeningSource}`}</View>
     <View>{`User Type: ${sendUserType}`}</View>
-  </>
+  </View>
 );
