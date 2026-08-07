@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { isGestureEnabled } from "../../../../utils/navigation";
 import AuthenticationNavigator from "../../../authentication/common/navigation/AuthenticationNavigator";
+import { AuthenticationPlayground } from "../../../authentication/playgrounds/screens/AuthenticationPlayground";
 import { DesignSystemNavigator } from "../../../design-system/navigation/navigator";
 import LollipopPlayground from "../../../lollipop/playgrounds/LollipopPlayground";
 import ProfileAboutApp from "../../aboutApp/screens/ProfileAboutApp";
@@ -146,6 +147,10 @@ const SettingsStackNavigator = () => (
     <Stack.Screen
       component={LollipopPlayground}
       name={SETTINGS_ROUTES.LOLLIPOP_PLAYGROUND}
+    />
+    <Stack.Screen
+      component={AuthenticationPlayground}
+      name={SETTINGS_ROUTES.AUTHENTICATION_PLAYGROUND}
     />
     <Stack.Screen
       component={CgnLandingPlayground}

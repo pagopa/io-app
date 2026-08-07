@@ -77,7 +77,6 @@ const EmailForwardingScreen = () => {
   const handleSwitchValueChange = useCallback(
     (canSendEmail: boolean) => {
       setIsLoading(true);
-      // eslint-disable-next-line functional/immutable-data
       isCustomChannelEnabledChoice.current = false;
       if (canSendEmail) {
         disableOrEnableAllEmailNotifications();

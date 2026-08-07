@@ -10,7 +10,7 @@ import {
   ObtainAccessTokenActorInput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
-  ObtainStatusAssertionActorInput,
+  ObtainCredentialStatusActorInput,
   ProcessCredentialOfferActorInput,
   ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
@@ -81,9 +81,9 @@ export const itwCredentialIssuanceMachine = setup({
       ObtainCredentialActorOutput,
       ObtainCredentialActorInput
     >(notImplemented),
-    obtainStatusAssertion: fromPromise<
+    obtainCredentialStatus: fromPromise<
       ReadonlyArray<CredentialBundle>,
-      ObtainStatusAssertionActorInput
+      ObtainCredentialStatusActorInput
     >(notImplemented),
     processCredentialOffer: fromPromise<
       ProcessCredentialOfferActorOutput,
@@ -94,7 +94,6 @@ export const itwCredentialIssuanceMachine = setup({
   guards: {
     isSessionExpired: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
-    isStatusError: notImplemented,
     isEidExpired: notImplemented,
     hasCredentialIntroContent: notImplemented
   }
@@ -240,10 +239,7 @@ export const itwCredentialIssuanceMachine = setup({
         },
         back: {
           target: "Idle",
-          actions: [
-            assign({ credentialType: undefined }),
-            "navigateToCardOnboardingScreen"
-          ]
+          actions: [assign({ credentialType: undefined })]
         }
       }
     },
@@ -398,7 +394,7 @@ export const itwCredentialIssuanceMachine = setup({
               accessToken: context.accessToken
             }),
             onDone: {
-              target: "ObtainingStatusAssertion",
+              target: "ObtainingCredentialStatus",
               actions: assign(({ event }) => event.output)
             },
             onError: [
@@ -414,11 +410,12 @@ export const itwCredentialIssuanceMachine = setup({
             ]
           }
         },
-        ObtainingStatusAssertion: {
+        ObtainingCredentialStatus: {
           invoke: {
-            src: "obtainStatusAssertion",
+            src: "obtainCredentialStatus",
             input: ({ context }) => ({
-              credentials: context.credentials
+              credentials: context.credentials,
+              issuerConf: context.issuerConf
             }),
             onDone: {
               target: "Completed",

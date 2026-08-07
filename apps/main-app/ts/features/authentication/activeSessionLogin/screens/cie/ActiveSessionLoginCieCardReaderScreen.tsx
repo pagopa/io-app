@@ -9,6 +9,7 @@ import {
   IOButton,
   IOColors,
   IOPictograms,
+  triggerHaptic,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -23,9 +24,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import HapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
@@ -139,7 +137,6 @@ const ActiveSessionLoginCieCardReaderScreen = ({
 
   // To avoid re-triggering effects, we keep a ref to the reading state for the success handler
   const readingStateRef = useRef(readingState);
-  // eslint-disable-next-line functional/immutable-data
   readingStateRef.current = readingState;
 
   const choosenTool = useMemo(
@@ -201,7 +198,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
 
       setErrorMessage(cieDescription);
       setReadingState(ReadingState.error);
-      HapticFeedback.trigger(HapticFeedbackTypes.notificationError);
+      triggerHaptic("notificationError");
       navAction?.();
     },
     [dispatch, loginType]
@@ -302,7 +299,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         case "ON_TAG_DISCOVERED":
           if (readingStateRef.current !== ReadingState.reading) {
             setReadingState(ReadingState.reading);
-            HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
+            triggerHaptic("impactLight");
           }
           break;
         case "ON_TAG_LOST":

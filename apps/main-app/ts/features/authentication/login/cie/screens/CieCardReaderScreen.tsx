@@ -8,6 +8,7 @@ import {
   H3,
   IOButton,
   IOPictograms,
+  triggerHaptic,
   VSpacer
 } from "@io-app/design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
@@ -21,9 +22,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import HapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 
@@ -393,7 +391,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       case "ON_TAG_DISCOVERED":
         if (this.state.readingState !== ReadingState.reading) {
           this.setState({ readingState: ReadingState.reading }, () => {
-            HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
+            triggerHaptic("impactLight");
           });
         }
         break;
@@ -455,7 +453,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         errorMessage: cieDescription
       },
       () => {
-        HapticFeedback.trigger(HapticFeedbackTypes.notificationError);
+        triggerHaptic("notificationError");
         navigation?.();
       }
     );

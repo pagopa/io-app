@@ -1,4 +1,5 @@
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
+import type { ItwVersion } from "@pagopa/io-react-native-wallet";
+
 import * as O from "fp-ts/Option";
 import { fromPromise } from "xstate";
 
@@ -13,6 +14,7 @@ import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/it
 import {
   CredentialAccessToken,
   CredentialBundle,
+  CredentialFormat,
   CredentialMetadata,
   IssuerConfiguration,
   WalletInstanceAttestations
@@ -20,6 +22,7 @@ import {
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { CredentialsVault } from "../../credentials/utils/vault";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { getCredentialStatusFromStatusList } from "../../statusList/utils";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { EidIssuanceMode } from "../eid/context";
 import { createCommonActorsImplementation } from "../utils/actors";
@@ -151,8 +154,14 @@ export const createCredentialUpgradeActorsImplementation = (
     UpgradeCredentialOutput,
     UpgradeCredentialParams
   >(async ({ input }) => {
-    const { accessToken, issuerConf, clientId, credential, integrityKeyTag } =
-      input;
+    const {
+      accessToken,
+      issuerConf,
+      clientId,
+      credential,
+      integrityKeyTag,
+      itwVersion
+    } = input;
 
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");
@@ -162,7 +171,7 @@ export const createCredentialUpgradeActorsImplementation = (
     );
 
     // The Wallet Unit Attestation makes use of the integrity service
-    if (getIoWallet(input.itwVersion).WalletUnitAttestation.isSupported) {
+    if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
       await ensureIntegrityServiceIsStoreReadyOrThrow(store);
     }
 
@@ -171,7 +180,7 @@ export const createCredentialUpgradeActorsImplementation = (
         accessToken,
         {
           env,
-          itwVersion: input.itwVersion,
+          itwVersion,
           hardwareKeyTag: integrityKeyTag,
           sessionToken
         }
@@ -179,7 +188,7 @@ export const createCredentialUpgradeActorsImplementation = (
 
     const credentials = await credentialIssuanceUtils.obtainCredential({
       env,
-      itwVersion: input.itwVersion,
+      itwVersion,
       credentialType: credential.credentialType,
       issuerConf,
       clientId,
@@ -187,9 +196,15 @@ export const createCredentialUpgradeActorsImplementation = (
       authorizedCredentials
     });
 
+    const bundles = await enrichBundlesWithStatusList(
+      itwVersion,
+      issuerConf,
+      credentials
+    );
+
     return {
       credentialType: credential.credentialType,
-      credentials,
+      credentials: bundles,
       walletUnitAttestations: authorizedCredentials.reduce(
         (acc, c) =>
           c.walletUnitAttestationId && c.walletUnitAttestation
@@ -202,3 +217,53 @@ export const createCredentialUpgradeActorsImplementation = (
 
   ...createCommonActorsImplementation(store)
 });
+
+/**
+ * For each credential bundle fetch and validate its status list, then enrich it
+ * with the extracted status in `metadata.validity` and the status list content
+ * for subsequent storage.
+ *
+ * @param itwVersion The current IT-Wallet specs version
+ * @param issuerConf The Issuer Configuration to get the keys for verification
+ * @param bundles The credential bundles to enrich
+ * @returns The enriched credential bundles
+ */
+const enrichBundlesWithStatusList = async (
+  itwVersion: ItwVersion,
+  issuerConf: IssuerConfiguration,
+  bundles: ReadonlyArray<CredentialBundle>
+): Promise<ReadonlyArray<CredentialBundle>> => {
+  if (!getIoWallet(itwVersion).CredentialStatus.statusList.isSupported) {
+    return bundles;
+  }
+
+  return Promise.all(
+    bundles.map(async bundle => {
+      // TODO: [SIW-4681] Handle status list for mdoc credentials
+      if (bundle.metadata.format === CredentialFormat.MDOC) {
+        return bundle;
+      }
+
+      const { status, rawStatus, uri, idx, parsedStatusList } =
+        await getCredentialStatusFromStatusList(
+          bundle,
+          itwVersion,
+          issuerConf.keys
+        );
+
+      return {
+        credential: bundle.credential,
+        metadata: {
+          ...bundle.metadata,
+          validity: {
+            type: "status_list",
+            status,
+            rawStatus,
+            statusList: { uri, idx }
+          }
+        },
+        statusList: { uri, payload: parsedStatusList }
+      };
+    })
+  );
+};

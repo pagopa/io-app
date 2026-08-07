@@ -42,8 +42,9 @@ const NO_SUPPORTED_CREDENTIAL_CONFIGURATION_IDS_ERROR =
 /**
  * Credentials that must be obtained in batch (multiple copies in a single
  * issuance), keyed by credential type. Each entry declares the number of copies
- * the app wants to obtain. These are typically one-time-use credentials, where
- * each copy is consumed on a single presentation.
+ * the app wants to obtain, and whether a presented copy must be consumed
+ * (deleted, decreasing the batch count) once a presentation that includes it
+ * succeeds. These are typically one-time-use credentials.
  *
  * The desired count is an app-side preference: the effective batch size is
  * always clamped to the issuer's advertised `credential_issuance_batch_size`
@@ -51,9 +52,12 @@ const NO_SUPPORTED_CREDENTIAL_CONFIGURATION_IDS_ERROR =
  */
 export const BATCH_ISSUANCE_CREDENTIALS: Record<
   string,
-  { desiredCount: number }
+  { consumeOnPresentation: boolean; desiredCount: number }
 > = {
-  [CredentialType.PROOF_OF_AGE]: { desiredCount: 5 }
+  [CredentialType.PROOF_OF_AGE]: {
+    desiredCount: 5,
+    consumeOnPresentation: true
+  }
 };
 
 /**
@@ -426,7 +430,8 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
       }
     ).catch(
       enrichErrorWithMetadata({
-        credentialId: credential_configuration_id
+        credentialId: credential_configuration_id,
+        credentialType
       })
     );
 
@@ -730,7 +735,8 @@ export const obtainCredentialsBatch: ObtainCredentialsBatch = async ({
             }
           ).catch(
             enrichErrorWithMetadata({
-              credentialId: credential_configuration_id
+              credentialId: credential_configuration_id,
+              credentialType
             })
           );
 

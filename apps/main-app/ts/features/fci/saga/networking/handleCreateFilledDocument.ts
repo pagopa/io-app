@@ -22,7 +22,7 @@ import {
   fciLoadQtspFilledDocument,
   fciPollFilledDocument
 } from "../../store/actions";
-import { fciPollFilledDocumentReadySelector } from "../../store/reducers/fciPollFilledDocument";
+import { fciPollFilledDocumentSettledSelector } from "../../store/reducers/fciPollFilledDocument";
 
 // Polling frequency timeout
 const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
@@ -119,10 +119,13 @@ export function* watchFciPollSaga(
       yield* put(fciPollFilledDocument.cancel());
     } finally {
       if (yield* cancelled()) {
-        const isFilledDocumentReady: ReturnType<
-          typeof fciPollFilledDocumentReadySelector
-        > = yield* select(fciPollFilledDocumentReadySelector);
-        if (!isFilledDocumentReady) {
+        // isSettled checks if the document is ready AND if there's already an
+        // error we are aware of, so we dont double track it (as it is already
+        // tracked in the catch block above)
+        const isSettled: ReturnType<
+          typeof fciPollFilledDocumentSettledSelector
+        > = yield* select(fciPollFilledDocumentSettledSelector);
+        if (!isSettled) {
           yield* put(
             fciPollFilledDocument.failure(
               getNetworkError(new Error("Polling cancelled"))

@@ -66,7 +66,6 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   });
 
   const scrollHandler = useAnimatedScrollHandler(event => {
-    // eslint-disable-next-line functional/immutable-data
     translationY.value = event.contentOffset.y;
   });
 

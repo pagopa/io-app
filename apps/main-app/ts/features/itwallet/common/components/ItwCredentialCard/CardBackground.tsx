@@ -43,15 +43,12 @@ export const CardBackground = memo(({ background, color, overlay }: Props) => {
   return (
     <View
       onLayout={onLayout}
-      style={[
-        StyleSheet.absoluteFillObject,
-        { backgroundColor: IOColors.white }
-      ]}
+      style={[StyleSheet.absoluteFill, { backgroundColor: IOColors.white }]}
     >
       <Canvas
         key={isFocused ? "focused" : "unfocused"}
         pointerEvents="none"
-        style={StyleSheet.absoluteFillObject}
+        style={StyleSheet.absoluteFill}
       >
         <SkiaGradientBackground bg={background} {...size} />
         {overlay?.showCornerOverlay && (
@@ -115,7 +112,6 @@ export const LegacyCardBackground = ({
 
   useEffect(() => {
     if (image && size.width > 0 && size.height > 0) {
-      // eslint-disable-next-line functional/immutable-data
       loadingOverlayOpacity.value = withTiming(0, {
         duration: 200,
         easing: Easing.ease
@@ -131,15 +127,12 @@ export const LegacyCardBackground = ({
   return (
     <View
       onLayout={onLayout}
-      style={[
-        StyleSheet.absoluteFillObject,
-        { backgroundColor: IOColors.white }
-      ]}
+      style={[StyleSheet.absoluteFill, { backgroundColor: IOColors.white }]}
     >
       <Animated.View
         style={[
           loadingOverlayOpacityTransition,
-          StyleSheet.absoluteFillObject,
+          StyleSheet.absoluteFill,
           { backgroundColor: IOColors["grey-100"] }
         ]}
       />

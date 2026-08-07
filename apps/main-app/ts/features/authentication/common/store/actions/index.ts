@@ -11,6 +11,7 @@ import { IdpData } from "../../../../../../definitions/content/IdpData";
 import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
 import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
 import { SpidIdp } from "../../../../../utils/idps";
+import { LoginConfigActions } from "./loginConfig";
 
 export type CheckSessionResult = {
   isSessionValid: boolean;
@@ -103,4 +104,5 @@ export type AuthenticationActions =
   | ActionType<typeof sessionInformationLoadSuccess>
   | ActionType<typeof sessionInvalid>
   | ActionType<typeof testLoginCleanUp>
-  | ActionType<typeof testLoginRequest>;
+  | ActionType<typeof testLoginRequest>
+  | LoginConfigActions;

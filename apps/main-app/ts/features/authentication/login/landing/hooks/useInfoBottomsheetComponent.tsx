@@ -91,10 +91,8 @@ export const useInfoBottomsheetComponent = () => {
   // Secret login for App Store reviewers
   const onTapAppVersion = () => {
     if (tap.current <= TAPS_TO_INIT_TESTIDP_FLOW) {
-      // eslint-disable-next-line functional/immutable-data
       tap.current = tap.current + 1;
       if (tap.current === TAPS_TO_INIT_TESTIDP_FLOW) {
-        // eslint-disable-next-line functional/immutable-data
         tap.current = 0;
         initTestLoginFlow();
       }

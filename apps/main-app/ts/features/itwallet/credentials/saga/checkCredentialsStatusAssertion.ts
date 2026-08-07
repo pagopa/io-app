@@ -1,5 +1,4 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { all, call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
@@ -20,10 +19,10 @@ import { itwUnverifiedCredentialsCounterLimitReached } from "../../common/store/
 import { getEnv } from "../../common/utils/environment";
 import {
   getCredentialStatusAssertion,
-  shouldRequestStatusAssertion,
-  StatusAssertionError
+  shouldRequestStatusAssertion
 } from "../../common/utils/itwCredentialStatusAssertionUtils";
 import { getRepresentativeVaultId } from "../../common/utils/itwCredentialUtils";
+import { statusAssertionFailure } from "../../common/utils/itwFailureUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
@@ -54,7 +53,7 @@ export function* checkCredentialsStatusAssertion() {
   if (!isWalletValid) {
     return;
   }
-  // TODO: [SIW-3963] Handle status list integration
+
   if (!getIoWallet(itwVersion).CredentialStatus.statusAssertion.isSupported) {
     return;
   }
@@ -75,11 +74,11 @@ export function* checkCredentialsStatusAssertion() {
   );
 
   const failedCredentials = updatedCredentials.filter(
-    c => c.storedStatusAssertion?.credentialStatus === "unknown"
+    c => c.validity?.status === "unknown"
   );
 
   const successfulCredentials = updatedCredentials.filter(
-    c => c.storedStatusAssertion?.credentialStatus !== "unknown"
+    c => c.validity?.status !== "unknown"
   );
 
   const hasFailures = failedCredentials.length > 0;
@@ -144,7 +143,7 @@ export function* updateCredentialStatusAssertionSaga(
       );
     }
 
-    const { parsedStatusAssertion, statusAssertion } = yield* call(
+    const { parsedStatusAssertion } = yield* call(
       getCredentialStatusAssertion,
       { metadata, credential },
       getEnv(env),
@@ -152,20 +151,16 @@ export function* updateCredentialStatusAssertionSaga(
     );
     return {
       ...metadata,
-      storedStatusAssertion: {
-        credentialStatus: "valid",
-        statusAssertion,
-        parsedStatusAssertion
+      validity: {
+        type: "status_assertion",
+        status: "valid",
+        statusAssertion: parsedStatusAssertion
       }
     };
   } catch (e) {
     if (isIssuerResponseError(e, Codes.CredentialInvalidStatus)) {
-      const errorCode = pipe(
-        StatusAssertionError.decode(e.reason),
-        O.fromEither,
-        O.map(x => x.error),
-        O.toUndefined
-      );
+      const parsed = statusAssertionFailure.safeParse(e.reason);
+      const errorCode = parsed.success ? parsed.data.error : undefined;
 
       trackItwStatusCredentialAssertionFailure({
         credential: mixpanelCredential,
@@ -174,7 +169,7 @@ export function* updateCredentialStatusAssertionSaga(
 
       return {
         ...metadata,
-        storedStatusAssertion: { credentialStatus: "invalid", errorCode }
+        validity: { type: "status_assertion", status: "invalid", errorCode }
       };
     }
     // We do not have enough information on the status, the error was unexpected
@@ -186,7 +181,7 @@ export function* updateCredentialStatusAssertionSaga(
 
     return {
       ...metadata,
-      storedStatusAssertion: { credentialStatus: "unknown" }
+      validity: { type: "status_assertion", status: "unknown" }
     };
   }
 }

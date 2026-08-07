@@ -34,7 +34,6 @@ const useOnTransactionActivationEffect = (effect: EffectCallback) => {
   const delayRef = useRef(INITIAL_DELAY);
   const countRef = useRef(0);
 
-  /* eslint-disable functional/immutable-data */
   useEffect(() => {
     if (!requiresActivation.current) {
       // Skips the activation if the transactions is already activated for this payment istance

@@ -43,7 +43,6 @@ const useCgnActivation = (serviceId: ServiceId) => {
         () => IOToast.error(I18n.t("wallet.delete.failed"))
       );
     }
-    // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
   }, [unsubscriptionStatus, dispatch, serviceId]);
 

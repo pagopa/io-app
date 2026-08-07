@@ -35,7 +35,6 @@ export const ProgressLoader = ({
   const foregroundColor = customColor ?? theme["interactiveElem-default"];
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     progressWidth.value = withSpring(
       (progress / 100) * width,
       IOSpringValues.accordion

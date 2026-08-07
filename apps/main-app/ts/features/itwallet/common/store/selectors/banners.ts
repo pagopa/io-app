@@ -82,3 +82,10 @@ export const itwIsWalletDiscoveryBannerHiddenSelector =
  */
 export const itwIsInboxDiscoveryBannerHiddenSelector =
   itwIsBannerHiddenSelector("discovery_messages_inbox");
+
+/**
+ * Returns whether the informational banner in MDL details is hidden. Defaults
+ * to false.
+ */
+export const itwIsMdlDetailsInfoBannerHiddenSelector =
+  itwIsBannerHiddenSelector("mdlDetailsInfo");

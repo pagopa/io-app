@@ -4,7 +4,7 @@ These functions are primarily used to contain the logic of third-party libraries
 
 ### `triggerHaptic`
 
-This is the function that needs to be invoked in order to send haptic feedback to the device. The function exposes the underlying API of the [`react-native-haptic-feedback`](https://github.com/mkuczera/react-native-haptic-feedback).
+This is the function that needs to be invoked in order to send haptic feedback to the device. It wraps the system presets of [`react-native-pulsar`](https://github.com/software-mansion/pulsar), accepting any key of `Presets.System` except the Android-only namespace.
 
 #### Usage
 

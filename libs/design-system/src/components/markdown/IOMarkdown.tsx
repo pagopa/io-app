@@ -5,8 +5,7 @@ import type {
   IOMarkdownRenderRules,
   MarkdownNode,
   MarkdownNodeType,
-  RenderContext,
-  RenderRule
+  RenderContext
 } from "./types";
 
 import { useIOTheme } from "../../context";
@@ -85,7 +84,8 @@ export const IOMarkdown = ({
     [handleLinkPress, textAlign, small, theme]
   );
 
-  const mergedRules = useMemo<Record<MarkdownNodeType, RenderRule>>(
+  // Partial, since a caller can blank out a node type via `rules`
+  const mergedRules = useMemo<IOMarkdownRenderRules>(
     () => ({ ...DEFAULT_RULES, ...rules }),
     [rules]
   );

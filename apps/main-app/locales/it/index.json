@@ -943,8 +943,8 @@
         "title": "Firma tutto il documento"
       },
       "qtspErrorPage": {
-        "title": "Qualcosa non ha funzionato",
-        "subtitle": "Non siamo riusciti a recuperare i documenti. Riprova tra qualche minuto."
+        "subtitle": "Non siamo riusciti a recuperare i documenti. Riprova tra qualche minuto.",
+        "title": "Qualcosa non ha funzionato"
       },
       "qtspTos": {
         "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma **Namirial S.p.A.**",
@@ -1573,7 +1573,8 @@
         "credentialPreview": {
           "actions": {
             "primary": "Aggiungi al Portafoglio",
-            "secondary": "Annulla"
+            "secondary": "Annulla",
+            "somethingWrong": "Qualcosa non torna?"
           },
           "bottomSheet": {
             "about": {
@@ -1583,9 +1584,18 @@
             "authSource": {
               "subtitle": "È l’ente o la banca dati digitale che detiene i dati contenuti all'interno del tuo documento.",
               "title": "Chi è"
+            },
+            "somethingWrong": {
+              "body": "Se riscontri errori o incongruenze, ti invitiamo a segnalarli all'ente che detiene i dati e ne è responsabile.",
+              "bodyAuthSource": "Per questo documento digitale, l'ente di riferimento è {{authSource}}.",
+              "bodyFooter": "Una volta che i dati saranno stati corretti, potrai ripetere l'operazione di aggiunta del documento al portafoglio.",
+              "primaryAction": "Ho capito",
+              "title": "Qualcosa non torna sui dati del documento"
             }
           },
+          "detailsTitle": "Controlla i dettagli",
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",
+          "subtitle": "Se i dati sono corretti, aggiungi il documento al Portafoglio.",
           "title": "{{credential}}: ecco l'anteprima dei tuoi dati"
         },
         "credentialResult": {
@@ -1853,7 +1863,8 @@
             "suspended": {
               "action": "Scopri di più",
               "title": "La tua Patente di guida risulta non valida."
-            }
+            },
+            "title": "Lo sapevi?"
           },
           "statusAction": "Cosa posso fare?"
         },
@@ -2005,6 +2016,25 @@
           },
           "listItemHeader": "Dati del mio IT-Wallet ID"
         },
+        "missingCredentials": {
+          "one": {
+            "primaryAction": "Aggiungi documento",
+            "secondaryAction": "Chiudi",
+            "subtitle": "È richiesta la verifica di {{credentialName}}, che non è presente nel tuo Portafoglio IT-Wallet.",
+            "title": "Non puoi continuare perché manca un documento"
+          },
+          "other": {
+            "bottomSheet": {
+              "primaryAction": "Aggiungi documento",
+              "subtitle": "I seguenti documenti non sono presenti nel tuo Portafoglio IT-Wallet.",
+              "title": "Documenti mancanti"
+            },
+            "primaryAction": "Mostra documenti",
+            "secondaryAction": "Chiudi",
+            "subtitle": "Scopri i documenti mancanti necessari per questa verifica.",
+            "title": "Non puoi continuare perché mancano alcuni documenti"
+          }
+        },
         "proximity": {
           "bluetooth": {
             "activation": {
@@ -2088,6 +2118,7 @@
               "or": "oppure"
             },
             "qrCode": {
+              "accessibilityLabel": "Immagine del codice QR da mostrare a chi verifica i documenti digitali",
               "error": "Abbiamo avuto un problema nel generare il QR Code."
             },
             "title": "Avvia una verifica"
@@ -2210,14 +2241,6 @@
             "response": "Stiamo comunicando i tuoi dati a {{relyingParty}}",
             "subtitle": "Attendi qualche secondo...",
             "timeout": "Ancora un attimo di pazienza..."
-          },
-          "missingCredentialsScreen": {
-            "primaryAction_one": "Aggiungi documento al Portafoglio",
-            "primaryAction_other": "Aggiungi documenti al Portafoglio",
-            "secondaryAction": "Non ora",
-            "subtitle": "Aggiungi {{credentialNames}} al Portafoglio e poi riprova.",
-            "title_one": "Manca un documento per continuare",
-            "title_other": "Mancano alcuni documenti per continuare"
           },
           "purpose": "Finalità: {{purpose}}",
           "relyingParty": {
@@ -2430,6 +2453,9 @@
       },
       "attachmentDownloadFeedback": "Download in corso",
       "attachments": "Allegati",
+      "attachmentsExpirationAlert": {
+        "body": "I documenti sono disponibili online per un periodo limitato. Salvali sul tuo dispositivo!"
+      },
       "badge": {
         "dueDate": "Scaduto il {{date}} alle ore {{time}}"
       },
@@ -2450,9 +2476,6 @@
           },
           "title": "Non perderti i messaggi importanti"
         }
-      },
-      "attachmentsExpirationAlert": {
-        "body": "I documenti sono disponibili online per un periodo limitato. Salvali sul tuo dispositivo!"
       },
       "updateBottomSheet": {
         "subtitle": "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare.",

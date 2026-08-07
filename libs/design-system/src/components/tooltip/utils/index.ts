@@ -153,7 +153,7 @@ export const getArrowCoords = (
  * @param childrenHeight The `Tooltip`'s children height
  * @param tooltipHeight The `Tooltip`'s height
  * @returns If placement is `left` or `right` it returns the vertical
- *   tranlsation to align the `Tooltip` center with its `children` center,
+ *   translation to align the `Tooltip` center with its `children` center,
  *   otherwise `null` is returned
  */
 export const getTooltipVerticalAlignment = (
@@ -161,7 +161,11 @@ export const getTooltipVerticalAlignment = (
   childrenHeight: number,
   tooltipHeight?: number
 ) => {
-  if ((placement === "left" || placement === "right") && tooltipHeight) {
+  if (
+    (placement === "left" || placement === "right") &&
+    tooltipHeight != null &&
+    tooltipHeight > 0
+  ) {
     return {
       transform: [
         {

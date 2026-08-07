@@ -114,7 +114,7 @@ const tokensToAST = (
   enabledTypes: Set<string>,
   getKey: (prefix: string) => string
 ): Array<MarkdownNode> => {
-  if (!tokens || tokens.length === 0) {
+  if (tokens.length === 0) {
     return [];
   }
 

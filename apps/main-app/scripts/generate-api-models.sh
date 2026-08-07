@@ -2,7 +2,7 @@
 
 IO_BACKEND_VERSION=v20.0.0
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.107
+IO_SERVICES_METADATA_VERSION=1.1.2
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.23.1
 # IO Wallet user function version
@@ -47,7 +47,7 @@ declare -a apis=(
   "./definitions/pn/aar https://raw.githubusercontent.com/pagopa/io-messages/refs/tags/send-func@$SEND_FUNC_VERSION/apps/send-func/openapi/aar-notification.yaml"
   "./definitions/pn/lollipop-lambda https://raw.githubusercontent.com/pagopa/io-messages/refs/tags/send-func@$SEND_FUNC_VERSION/apps/send-func/openapi/lollipop-integration-check.yaml"
   # FCI APIs
-  "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_io_sign.yaml"
+  "./definitions/fci https://raw.githubusercontent.com/pagopa/io-sign/refs/tags/io-func-sign-user@2.9.2/apps/io-func-sign-user/api/external.yaml"
   # ITW APIs
   "./definitions/itw https://raw.githubusercontent.com/pagopa/io-wallet/io-wallet-user-func@$IO_WALLET_USER_FUNC_VERSION/apps/io-wallet-user-func/openapi-external/user_v1/swagger.yaml"
   # Connectivity APIs (used for connectivity checks)

@@ -12,7 +12,11 @@ import {
 } from "../../../common/utils/itwClaimsUtils";
 import { getRepresentativeVaultId } from "../../../common/utils/itwCredentialUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import { TimeoutError, UntrustedRpError } from "./errors";
+import {
+  MissingCredentialError,
+  TimeoutError,
+  UntrustedRpError
+} from "./errors";
 
 const WIA_DOC_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";
 
@@ -30,7 +34,7 @@ export const promiseWithTimeout = <T>(
 };
 
 type GetProximityDetails = (params: {
-  credentials: Record<string, CredentialMetadata>;
+  credentials: Partial<Record<string, CredentialMetadata>>;
   request: VerifierRequest["request"];
   requireAuthenticated?: boolean;
 }) => ProximityDetails;
@@ -92,17 +96,20 @@ export const getProximityDetails: GetProximityDetails = ({
     "No requested documents found in the Verifier request"
   );
 
-  return Object.entries(rest).map(
+  const proximityDetails = Object.entries(rest).map(
     ([docType, { isAuthenticated, certificateData, ...namespaces }]) => {
       // Stop the flow if the verifier (RP) is not trusted
       if (!isAuthenticated && requireAuthenticated) {
         throw new UntrustedRpError("Untrusted RP");
       }
 
+      const credential = credentialsByType[docType];
+      if (!credential) {
+        return undefined;
+      }
+
       const rpId = getVerifierIdentity(certificateData, requireAuthenticated);
 
-      const credential = credentialsByType[docType];
-      assert(credential, `Credential not found for docType: ${docType}`);
       // Extract required fields from the verifier request.
       // Each field is formatted as "namespace:field" to match the structure
       // of parsedCredential, which uses colon-separated keys.
@@ -126,6 +133,17 @@ export const getProximityDetails: GetProximityDetails = ({
         })
       };
     }
+  );
+
+  const missingCredentials = Object.keys(rest).filter(
+    docType => !credentialsByType[docType]
+  );
+  if (missingCredentials.length > 0) {
+    throw new MissingCredentialError(missingCredentials);
+  }
+
+  return proximityDetails.filter(
+    details => details !== undefined
   ) as ProximityDetails;
 };
 
@@ -140,7 +158,7 @@ export const getProximityDetails: GetProximityDetails = ({
  */
 export const getDocuments = async (
   request: VerifierRequest["request"],
-  credentials: Record<string, CredentialMetadata>,
+  credentials: Partial<Record<string, CredentialMetadata>>,
   getCredential: (vaultId: string) => Promise<string | undefined>
 ): Promise<Array<RequestedDocument>> => {
   const documents = await Promise.all(

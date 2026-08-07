@@ -1,5 +1,5 @@
 /** Action types and action creator related to persisted preferences */
-import { Calendar } from "react-native-calendar-events";
+import * as Calendar from "expo-calendar";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
@@ -13,7 +13,7 @@ export const preferenceFingerprintIsEnabledSaveSuccess = createStandardAction(
 
 export const preferredCalendarSaveSuccess = createStandardAction(
   "PREFERENCES_CALENDAR_SAVE_SUCCESS"
-)<{ preferredCalendar: Calendar }>();
+)<{ preferredCalendar: Calendar.Calendar }>();
 
 export const preferredCalendarRemoveSuccess = createStandardAction(
   "PREFERENCES_CALENDAR_REMOVE_SUCCESS"

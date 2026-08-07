@@ -43,7 +43,6 @@ export const useSendActivationBottomSheet = () => {
           )}
           loading={isActivating}
           onPress={() => {
-            // eslint-disable-next-line functional/immutable-data
             ctaPressed.current = true;
             trackSendActivationAccepted("tos_bottomsheet", flow);
             requestSendActivation();

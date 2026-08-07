@@ -74,7 +74,6 @@ export const useItwCredentialExitSurveyBottomSheet = ({
                 "features.itWallet.feedback.credentialExit.bottomSheet.primaryAction"
               )}
               onPress={() => {
-                // eslint-disable-next-line functional/immutable-data
                 skipDeclinedEvent.current = true;
                 trackItwSurveyRequestAccepted(trackingProps);
                 openWebUrl(surveyUrl);
@@ -100,7 +99,6 @@ export const useItwCredentialExitSurveyBottomSheet = ({
       if (!skipDeclinedEvent.current) {
         trackItwSurveyRequestDeclined(trackingProps);
       }
-      // eslint-disable-next-line functional/immutable-data
       skipDeclinedEvent.current = false;
     }
   });

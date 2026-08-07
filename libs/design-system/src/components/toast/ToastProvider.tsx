@@ -69,7 +69,6 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
 
   const addToast = useCallback((toast: Toast): number => {
     const id = (toastId.current ?? 0) + 1;
-    // eslint-disable-next-line functional/immutable-data
     toastId.current = id;
     setToasts(prevToasts => {
       if (prevToasts.length >= MAX_TOAST_STACK_SIZE) {
@@ -136,7 +135,6 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
 
 const InitializeToastRef = () => {
   const toast = useIOToast();
-  // eslint-disable-next-line functional/immutable-data
   IOToastRef.current = toast;
   return null;
 };

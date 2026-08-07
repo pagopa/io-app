@@ -236,7 +236,9 @@ const DateClaimItem = ({
 
   return (
     <ListItemInfo
-      accessibilityLabel={`${label} ${accessibilityStateText}`}
+      accessibilityLabel={
+        hidden ? `${label} ${accessibilityStateText}` : undefined
+      }
       endElement={endElement}
       key={`${label}-${displayValue}`}
       label={label}

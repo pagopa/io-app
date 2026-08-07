@@ -44,7 +44,6 @@ const CgnCTAStartOnboardingComponent: FC = () => {
     // cgnActivationStart navigate to ToS screen that needs cgb bonus from available bonus list
     if (availableBonus.length > 0 && cgnBonus && isFirstRender.current) {
       startCgn();
-      // eslint-disable-next-line functional/immutable-data
       isFirstRender.current = false;
     }
   }, [availableBonus, startCgn, cgnBonus]);

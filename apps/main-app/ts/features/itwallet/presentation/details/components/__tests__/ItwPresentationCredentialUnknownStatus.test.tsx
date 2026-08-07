@@ -22,8 +22,9 @@ jest.mock("@react-navigation/native", () => ({
 describe("ItwPresentationCredentialUnknownStatus", () => {
   const initialCredential = {
     credentialType: "mDL",
-    storedStatusAssertion: {
-      credentialStatus: "unknown"
+    validity: {
+      type: "status_assertion",
+      status: "unknown"
     }
   } as CredentialMetadata;
 
@@ -51,7 +52,7 @@ describe("ItwPresentationCredentialUnknownStatus", () => {
           credential={
             {
               credentialType: "mDL",
-              storedStatusAssertion: { credentialStatus: "unknown" }
+              validity: { type: "status_assertion", status: "unknown" }
             } as CredentialMetadata
           }
         />

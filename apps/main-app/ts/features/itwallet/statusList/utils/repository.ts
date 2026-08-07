@@ -60,6 +60,21 @@ const upsert = async (
   await AsyncStorage.setItem(entryKey(uri), JSON.stringify(payload));
 };
 
+/** Persists multiple Status List Token payloads, validating them before writing. */
+const upsertMany = async (
+  items: Array<[uri: string, payload: CredentialStatus.StatusList]>
+): Promise<void> => {
+  if (items.length === 0) {
+    return;
+  }
+  await AsyncStorage.multiSet(
+    items.map(([uri, payload]) => {
+      CredentialStatus.StatusList.parse(payload);
+      return [entryKey(uri), JSON.stringify(payload)];
+    })
+  );
+};
+
 /** Removes a single cached Status List Token by its URI. */
 const remove = async (uri: string): Promise<void> => {
   await AsyncStorage.removeItem(entryKey(uri));
@@ -87,6 +102,7 @@ export const StatusListRepository = {
   list,
   get,
   upsert,
+  upsertMany,
   remove,
   removeMany,
   clear

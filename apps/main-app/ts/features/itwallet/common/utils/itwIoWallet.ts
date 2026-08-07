@@ -1,8 +1,5 @@
 import { IoWallet, ItwVersion } from "@pagopa/io-react-native-wallet";
 
-import { useIOSelector } from "../../../../store/hooks";
-import { selectItwSpecsVersion } from "../store/selectors/environment";
-
 /**
  * This object contains all IoWallet instances that have been created, one per
  * specs version. It works as a registry of singleton instances, that are lazily
@@ -14,20 +11,6 @@ import { selectItwSpecsVersion } from "../store/selectors/environment";
 const instances: {
   [V in ItwVersion]?: IoWallet;
 } = {};
-
-/**
- * Convenience hook to get the {@link IoWallet} instance matching the current
- * IT-Wallet specs version.
- *
- * @example
- *   const ioWallet = useIoWallet();
- *
- * @returns IoWallet instance
- */
-export const useIoWallet = () => {
-  const itwSpecsVersion = useIOSelector(selectItwSpecsVersion);
-  return getIoWallet(itwSpecsVersion);
-};
 
 /**
  * Convenience function to get the {@link IoWallet} instance matching the

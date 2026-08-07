@@ -30,6 +30,7 @@ const T_CLIENT_ID = "clientId";
 const T_REQUEST_URI = "https://example.com";
 const T_STATE = "state";
 const T_REDIRECT_URI = "https://example.com/redirect";
+const T_PRESENTED_KEY_TAGS = ["key-tag-01"];
 const T_WIA: WalletInstanceAttestations = { jwt: "test-wia" };
 const T_CREDENTIALS: Record<string, CredentialMetadata> = {};
 
@@ -51,6 +52,7 @@ describe("itwRemoteMachine", () => {
   const closePresentation = jest.fn();
   const trackRemoteDataShare = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
+  const consumePresentedBatchCredentials = jest.fn();
 
   const isItWalletL3Active = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn().mockReturnValue(true);
@@ -76,7 +78,8 @@ describe("itwRemoteMachine", () => {
       navigateToAuthResponseScreen,
       closePresentation,
       trackRemoteDataShare,
-      storeWalletInstanceAttestation
+      storeWalletInstanceAttestation,
+      consumePresentedBatchCredentials
     },
     actors: {
       evaluateRelyingPartyTrust: fromPromise<
@@ -249,7 +252,8 @@ describe("itwRemoteMachine", () => {
       presentationDetails
     });
     sendAuthorizationResponse.mockResolvedValue({
-      redirectUri: T_REDIRECT_URI
+      redirectUri: T_REDIRECT_URI,
+      presentedKeyTags: T_PRESENTED_KEY_TAGS
     });
 
     /** Start the presentation */
@@ -360,10 +364,21 @@ describe("itwRemoteMachine", () => {
       requestObject,
       presentationDetails,
       selectedOptionalCredentials: new Set(["cred01", "cred02"]),
-      redirectUri: T_REDIRECT_URI
+      redirectUri: T_REDIRECT_URI,
+      presentedKeyTags: T_PRESENTED_KEY_TAGS
     });
 
     await waitFor(actor, snapshot => snapshot.matches("Success"));
+
+    /**
+     * Once the presentation succeeds, the presented keyTags are stored in
+     * context and the consumption of any batch-issued credential's presented
+     * copy is triggered
+     */
+    expect(actor.getSnapshot().context.presentedKeyTags).toStrictEqual(
+      T_PRESENTED_KEY_TAGS
+    );
+    expect(consumePresentedBatchCredentials).toHaveBeenCalledTimes(1);
 
     /** The user closes the presentation flow */
     actor.send({ type: "close" });

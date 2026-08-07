@@ -42,9 +42,8 @@ export enum WellKnownClaim {
   /** Claim that contains the first name, if applicable for the credential */
   given_name = "given_name",
   /**
-   * Claim used to display a QR Code for the Disability Card. It must be
-   * excluded from the common claims list and rendered using a
-   * {@link QRCodeImage} (currently used for the European Disability Card)
+   * Claim used to display the QR Code on the back of the European Disability
+   * Card. It must be excluded from common claims lists.
    */
   link_qr_code = "link_qr_code",
   /** Claim that contains the portrait image */

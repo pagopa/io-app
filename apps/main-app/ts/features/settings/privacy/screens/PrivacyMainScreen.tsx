@@ -169,7 +169,6 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       if (someWereLoading(choices)) {
         if (someHasError(choices) && canShowTooltipRef.current) {
           // This reference ensures to display the toast message once between re-execution of this effect
-          // eslint-disable-next-line functional/immutable-data
           canShowTooltipRef.current = false;
 
           IOToast.error(errorMessage);
@@ -218,7 +217,6 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
   const handleChoiceSelection = useCallback(
     (choice: UserDataProcessingChoiceEnum) => {
       if (pot.isError(userDataProcessing[choice])) {
-        // eslint-disable-next-line functional/immutable-data
         canShowTooltipRef.current = true;
         setRequestProcess(true);
         dispatch(loadUserDataProcessing.request(choice));

@@ -131,7 +131,7 @@ export const ItwCredentialCard = memo(
           {!isValid && (
             <View
               style={[
-                StyleSheet.absoluteFillObject,
+                StyleSheet.absoluteFill,
                 styles.statusOverlay,
                 {
                   backgroundColor:
