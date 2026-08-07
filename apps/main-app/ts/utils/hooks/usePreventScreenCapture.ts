@@ -52,7 +52,6 @@ export function usePreventScreenCapture(key?: string) {
 
       return () => {
         // Here we wait a little after the blur event for navigation transition animations.
-        // eslint-disable-next-line functional/immutable-data
         timeoutRef.current = setTimeout(() => allowScreenCapture(tag), 500);
       };
     }, [tag])
