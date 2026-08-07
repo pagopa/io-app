@@ -110,17 +110,18 @@ export type Context = {
    */
   walletInstanceAttestation: undefined | WalletInstanceAttestations;
   /**
+   * [1.3.3+] Optional Status Lists referenced by the Wallet Unit
+   * Attestations (WUAs). This is used to check the validity of the WI.
+   */
+  walletInstanceStatusList?: {
+    idx: number;
+    parsedStatusList: CredentialStatus.StatusList;
+    uri: string;
+  };
+  /**
    * An optional dictionary of Wallet Unit Attestations generated for the issuance.
    */
   walletUnitAttestations?: Record<string, string>;
-  /**
-   * Optional dictionary of Status Lists referenced by the Wallet Unit
-   * Attestations (WUAs), keyed by URI.
-   */
-  walletUnitAttestationStatusLists?: Record<
-    string,
-    CredentialStatus.StatusList
-  >;
 };
 
 /**
@@ -190,5 +191,5 @@ export const InitialContext: Context = {
   failedCredentials: undefined,
   credentialType: undefined,
   accessToken: undefined,
-  walletUnitAttestationStatusLists: undefined
+  walletInstanceStatusList: undefined
 };

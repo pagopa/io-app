@@ -45,10 +45,14 @@ import {
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { getWuaStatusFromStatusList } from "../../statusList/utils";
+import {
+  getCredentialStatusFromStatusList,
+  getKeysForWuaStatusList
+} from "../../statusList/utils";
 import { StatusListRepository } from "../../statusList/utils/repository";
 import {
   itwSetWalletInstanceRenewalError,
+  itwStoreWalletInstanceStatusList,
   itwWalletUnitAttestationsStore
 } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
@@ -70,13 +74,12 @@ export type InitMrtdPoPChallengeActorParams = WithItwVersion<{
   walletInstanceAttestation: string | undefined;
 }>;
 
-export type ObtainEidWuaStatusListsActorInput = Pick<
+export type ObtainStatusListsActorInput = Pick<
   Context,
   "itwVersion" | "walletUnitAttestations"
 >;
 
-export type ObtainEidWuaStatusListsActorOutput =
-  Context["walletUnitAttestationStatusLists"];
+export type ObtainStatusListsActorOutput = Context["walletInstanceStatusList"];
 
 export type RequestAccessTokenActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
@@ -104,8 +107,8 @@ export type StartAuthFlowActorParams = WithItwVersion<{
 
 export type StoreEidCredentialActorParams = {
   eid: CredentialBundle | undefined;
+  walletInstanceStatusList?: Context["walletInstanceStatusList"];
   walletUnitAttestations?: Record<string, string>;
-  walletUnitAttestationStatusLists?: Context["walletUnitAttestationStatusLists"];
 };
 
 export type ValidateMrtdPoPChallengeActorParams = WithItwVersion<{
@@ -421,9 +424,9 @@ export const createEidIssuanceActorsImplementation = (
     }
   ),
 
-  obtainWuaStatusLists: fromPromise<
-    ObtainEidWuaStatusListsActorOutput,
-    ObtainEidWuaStatusListsActorInput
+  obtainStatusLists: fromPromise<
+    ObtainStatusListsActorOutput,
+    ObtainStatusListsActorInput
   >(async ({ input }) => {
     const { itwVersion, walletUnitAttestations } = input;
 
@@ -440,32 +443,35 @@ export const createEidIssuanceActorsImplementation = (
       "PID Wallet Unit Attestations are not defined or empty"
     );
 
-    const statusLists = await Promise.all(
-      Object.entries(walletUnitAttestations).map(
-        async ([walletUnitAttestationId, walletUnitAttestation]) => {
-          const { uri, parsedStatusList } = await getWuaStatusFromStatusList(
-            itwVersion,
-            walletUnitAttestation,
-            walletUnitAttestationId
-          );
-          return [uri, parsedStatusList] as const;
-        }
-      )
-    );
+    // For the Status List we'll need just one of the WUAs, as they all
+    // reference the same Status List. We can take the first one.
+    const [walletUnitAttestationId, walletUnitAttestation] = Object.entries(
+      walletUnitAttestations
+    )[0];
 
-    return Object.fromEntries(statusLists);
+    // Fetch the JWKS from the Wallet Provider's OpenID Federation metadata,
+    const keys = await getKeysForWuaStatusList(walletUnitAttestation);
+
+    return await getCredentialStatusFromStatusList(
+      itwVersion,
+      walletUnitAttestation,
+      walletUnitAttestationId,
+      "dc+sd-jwt",
+      keys
+    );
   }),
 
   storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
     async ({ input }) => {
-      const { eid, walletUnitAttestations, walletUnitAttestationStatusLists } =
-        input;
+      const { eid, walletUnitAttestations, walletInstanceStatusList } = input;
       assert(eid, "eID credential is undefined");
 
       // Persist verified status lists before activating the wallet instance.
-      await StatusListRepository.upsertMany(
-        Object.entries(walletUnitAttestationStatusLists ?? {})
-      );
+      if (walletInstanceStatusList) {
+        const { parsedStatusList, idx, uri } = walletInstanceStatusList;
+        await StatusListRepository.upsert(uri, parsedStatusList);
+        store.dispatch(itwStoreWalletInstanceStatusList({ idx, uri }));
+      }
 
       if (walletUnitAttestations) {
         store.dispatch(itwWalletUnitAttestationsStore(walletUnitAttestations));
