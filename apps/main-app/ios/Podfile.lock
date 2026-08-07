@@ -3404,8 +3404,6 @@ PODS:
     - Yoga
   - RNDeviceInfo (14.0.4):
     - React-Core
-  - RNFS (2.18.0):
-    - React
   - RNGestureHandler (2.31.0):
     - boost
     - DoubleConversion
@@ -4023,7 +4021,6 @@ DEPENDENCIES:
   - RNBluetoothStateManager (from `../../../node_modules/react-native-bluetooth-state-manager`)
   - "RNCAsyncStorage (from `../../../node_modules/@react-native-async-storage/async-storage`)"
   - RNDeviceInfo (from `../../../node_modules/react-native-device-info`)
-  - RNFS (from `../../../node_modules/react-native-fs`)
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../../../node_modules/react-native-keychain`)
   - RNPermissions (from `../../../node_modules/react-native-permissions`)
@@ -4336,8 +4333,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@react-native-async-storage/async-storage"
   RNDeviceInfo:
     :path: "../../../node_modules/react-native-device-info"
-  RNFS:
-    :path: "../../../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../../../node_modules/react-native-gesture-handler"
   RNKeychain:
@@ -4508,7 +4503,6 @@ SPEC CHECKSUMS:
   RNBluetoothStateManager: 929f132d0dacf65cb4767a11e2803e47fdda9e73
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
-  RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 884f03ad24511911552480eb2058266db0b177ce
   RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19
