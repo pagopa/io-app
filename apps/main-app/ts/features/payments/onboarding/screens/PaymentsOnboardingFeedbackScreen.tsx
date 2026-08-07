@@ -121,7 +121,6 @@ const PaymentsOnboardingFeedbackScreen = () => {
     const payment_method_selected = availablePaymentMethods?.find(
       paymentMethod => paymentMethod.id === selectedPaymentMethodId
     )?.name;
-    // eslint-disable-next-line functional/immutable-data
     paymentMethodSelectedRef.current = payment_method_selected;
     analytics.trackAddOnboardingPaymentMethod(outcome, payment_method_selected);
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
