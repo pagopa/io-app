@@ -99,9 +99,9 @@
   },
   "release-it": {
     "git": {
-      "commitMessage": "chore: release ${version}",
+      "commitMessage": "chore: Design System release ${version}",
       "tagName": "Design System: v${version}",
-      "changelog": "pnpm auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs"
+      "changelog": "pnpm auto-changelog --append-git-log='-- .' --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs"
     },
     "hooks": {
       "after:bump": "pnpm auto-changelog -p && git add ."
