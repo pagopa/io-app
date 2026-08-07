@@ -73,7 +73,7 @@ export type InitMrtdPoPChallengeActorParams = WithItwVersion<{
 
 export type ObtainEidWuaStatusListsActorInput = Pick<
   Context,
-  "authenticationContext" | "itwVersion" | "walletUnitAttestations"
+  "itwVersion" | "walletUnitAttestations"
 >;
 
 export type ObtainEidWuaStatusListsActorOutput = ReadonlyArray<StatusListEntry>;
@@ -425,7 +425,7 @@ export const createEidIssuanceActorsImplementation = (
     ObtainEidWuaStatusListsActorOutput,
     ObtainEidWuaStatusListsActorInput
   >(async ({ input }) => {
-    const { itwVersion, walletUnitAttestations, authenticationContext } = input;
+    const { itwVersion, walletUnitAttestations } = input;
 
     const ioWallet = getIoWallet(itwVersion);
     if (
@@ -439,7 +439,6 @@ export const createEidIssuanceActorsImplementation = (
       walletUnitAttestations && Object.keys(walletUnitAttestations).length > 0,
       "PID Wallet Unit Attestations are not defined or empty"
     );
-    assert(authenticationContext, "authenticationContext is undefined");
 
     const statusLists = await Promise.all(
       Object.entries(walletUnitAttestations).map(
@@ -449,9 +448,7 @@ export const createEidIssuanceActorsImplementation = (
             walletUnitAttestation,
             walletUnitAttestationId
           );
-
-          const entry: StatusListEntry = [uri, parsedStatusList];
-          return entry;
+          return [uri, parsedStatusList] as StatusListEntry;
         }
       )
     );
