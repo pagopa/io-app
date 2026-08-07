@@ -223,11 +223,7 @@ export const fimsServiceConfiguration = createSelector(
 export const fimsTrackingEnrichedUrlsSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): ReadonlyArray<string> =>
-    pipe(
-      remoteConfig,
-      O.chainNullableK(config => config.fims.trackingEnrichedUrls),
-      O.getOrElse(() => emptyArray)
-    )
+    O.toUndefined(remoteConfig)?.fims.trackingEnrichedUrls ?? emptyArray
 );
 
 /**
