@@ -1,29 +1,25 @@
 This file describes the reason for the patches applied.
 
 ### react-native-pdf-npm-6.7.7-7aa1e3a631.patch
+
 Created on **16/07/2025**
 
 #### Reason:
+
 - Make PDF annotations on iOS read-only to align with Android behaviour;
 - Update Android dependencies to the latest versions to support 16KB page size.
 
-
 ### react-native-device-info-npm-14.0.4-9bb10f6c3d.patch
+
 Created on **15/12/2021**
 
 #### Reason:
+
 - Remove all those methods that use `ACCESS_WIFI_STATE` (Android) in order to exclude that permission
-    - `getIpAddress`
-    - `getIpAddressSync`
-    - `getMacAddress`
-    - `getMacAddressSync`
-
-### react-native-screen-brightness-npm-2.0.0-alpha-22c6aeb21e.patch
-Created on **16/08/2021**
-
-#### Reason:
-- implementation 'androidx.core:core:1.+' not compatible with the new gradle settings used by react-native 0.64.2
-
+  - `getIpAddress`
+  - `getIpAddressSync`
+  - `getMacAddress`
+  - `getMacAddressSync`
 
 ### @gorhom-bottom-sheet-npm-5.2.8-1ad4b8f529.patch
 
@@ -45,7 +41,6 @@ Updated on **04/03/2026**
   [#2282](https://github.com/gorhom/react-native-bottom-sheet/pull/2282)) attempting to fix this were closed
   without merging, so the patch remains necessary.
 
-
 ### react-native-webview-npm-13.13.5-802657184f.patch
 
 Updated on **13/07/2023**
@@ -53,7 +48,6 @@ Updated on **13/07/2023**
 #### Reason:
 
 - This patch applies security fixes to avoid access on camera and microphone without user permission.
-
 
 ### react-native-reanimated-npm-3.17.5-134bd4e99e.patch
 
