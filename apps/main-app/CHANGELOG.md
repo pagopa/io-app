@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.12](https://github.com/pagopa/io-app/compare/3.38.0-rc.11...3.38.0-rc.12) (2026-08-07)
+
+
+### Bug Fixes
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Adds missing purpose string on plist after calendar library switch ([#8413](https://github.com/pagopa/io-app/issues/8413)) ([f8fc105](https://github.com/pagopa/io-app/commit/f8fc105d3fdbbcce65cc9da5788f56abac743423))
+
 ## [3.38.0-rc.11](https://github.com/pagopa/io-app/compare/3.38.0-rc.10...3.38.0-rc.11) (2026-08-07)
 
 
