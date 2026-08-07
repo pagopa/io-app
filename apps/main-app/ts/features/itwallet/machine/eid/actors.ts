@@ -46,7 +46,7 @@ import {
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { getWalletUnitAttestationStatusFromStatusList } from "../../statusList/utils";
+import { getWuaStatusFromStatusList } from "../../statusList/utils";
 import { StatusListRepository } from "../../statusList/utils/repository";
 import {
   itwSetWalletInstanceRenewalError,
@@ -425,15 +425,9 @@ export const createEidIssuanceActorsImplementation = (
     ObtainEidWuaStatusListsActorOutput,
     ObtainEidWuaStatusListsActorInput
   >(async ({ input }) => {
-    const walletUnitAttestations = input.walletUnitAttestations;
-    if (
-      !walletUnitAttestations ||
-      Object.keys(walletUnitAttestations).length === 0
-    ) {
-      return [];
-    }
+    const { itwVersion, walletUnitAttestations, authenticationContext } = input;
 
-    const ioWallet = getIoWallet(input.itwVersion);
+    const ioWallet = getIoWallet(itwVersion);
     if (
       !ioWallet.WalletUnitAttestation.isSupported ||
       !ioWallet.CredentialStatus.statusList.isSupported
@@ -441,19 +435,20 @@ export const createEidIssuanceActorsImplementation = (
       return [];
     }
 
-    const authenticationContext = input.authenticationContext;
+    assert(
+      walletUnitAttestations && Object.keys(walletUnitAttestations).length > 0,
+      "PID Wallet Unit Attestations are not defined or empty"
+    );
     assert(authenticationContext, "authenticationContext is undefined");
 
     const statusLists = await Promise.all(
       Object.entries(walletUnitAttestations).map(
         async ([walletUnitAttestationId, walletUnitAttestation]) => {
-          const { uri, parsedStatusList } =
-            await getWalletUnitAttestationStatusFromStatusList(
-              walletUnitAttestationId,
-              walletUnitAttestation,
-              input.itwVersion,
-              authenticationContext.issuerConf.keys
-            );
+          const { uri, parsedStatusList } = await getWuaStatusFromStatusList(
+            itwVersion,
+            walletUnitAttestation,
+            walletUnitAttestationId
+          );
 
           const entry: StatusListEntry = [uri, parsedStatusList];
           return entry;

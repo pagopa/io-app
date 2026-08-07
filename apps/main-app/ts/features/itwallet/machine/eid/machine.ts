@@ -1173,7 +1173,7 @@ export const itwEidIssuanceMachine = setup({
                 eid: event.output.credential,
                 walletUnitAttestations: event.output.walletUnitAttestations
               })),
-              target: "ObtainingStatus"
+              target: "ObtainingStatusList"
             },
             onError: [
               {
@@ -1188,14 +1188,14 @@ export const itwEidIssuanceMachine = setup({
             ]
           }
         },
-        ObtainingStatus: {
+        ObtainingStatusList: {
           tags: [ItwTags.Loading],
           invoke: {
             src: "obtainWuaStatusLists",
             input: ({ context }) => ({
-              authenticationContext: context.authenticationContext,
               itwVersion: context.itwVersion,
-              walletUnitAttestations: context.walletUnitAttestations
+              walletUnitAttestations: context.walletUnitAttestations,
+              authenticationContext: context.authenticationContext
             }),
             onDone: {
               actions: assign(({ event }) => ({
