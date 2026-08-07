@@ -9,20 +9,18 @@ export default [
       '**/{__tests__,__mocks__}/**/*.{ts,tsx}'
     ],
     rules: {
-      // Consumers must use the public design-system API instead of its monorepo path or private modules.
+      // Consumers must use the public design-system API instead of its monorepo path or internals
       'no-restricted-imports': [
         'error',
         {
           patterns: [
             {
               group: [
-                'libs/design-system/**',
-                '**/libs/design-system/**',
-                '@io-app/design-system/**',
-                '@pagopa/io-app-design-system/**'
+                '**/libs/design-system/**', // Avoid monorepo path
+                '@io-app/design-system/**' // Avoid internals
               ],
               message:
-                'Import from "@io-app/design-system" to use the design system public API.'
+                'Import from "@io-app/design-system" to use the design system.'
             }
           ]
         }
