@@ -1,10 +1,11 @@
-import RNFS from "react-native-fs";
+import { Paths } from "expo-file-system";
 
 import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
 import { apiUrlPrefix } from "../../../config";
 
+// Paths.cache.uri has a trailing slash; strip it for consistent path joining
 export const AttachmentsDirectoryPath =
-  RNFS.CachesDirectoryPath + "/attachments";
+  Paths.cache.uri.replace(/\/$/, "") + "/attachments";
 
 /**
  * Builds the save path for the given attachment
