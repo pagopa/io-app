@@ -10,9 +10,9 @@ import {
   IOText,
   useIOToast
 } from "@io-app/design-system";
+import { File, Paths } from "expo-file-system";
 import { useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import RNFS from "react-native-fs";
 import Share from "react-native-share";
 
 import { Prettify } from "../../types/helpers";
@@ -73,22 +73,15 @@ export const DebugPrettyPrint = withDebugEnabled(
 
     const shareData = async () => {
       try {
-        // Create a temporary file path
-        const filePath = `${RNFS.CachesDirectoryPath}/${title}.json`;
-        // Write JSON data to the file
-        await RNFS.writeFile(
-          filePath,
-          JSON.stringify(data, debugInfoReplacer(), 2),
-          "utf8"
-        );
+        const file = new File(Paths.cache, `${title}.json`);
+        file.write(JSON.stringify(data, debugInfoReplacer(), 2));
         await Share.open({
           filename: `${title}.json`,
           type: "application/json",
-          url: filePath,
+          url: file.uri,
           failOnCancel: false
         });
-
-        await RNFS.unlink(filePath);
+        file.delete();
       } catch {
         toast.error("Error sharing debug data");
       }
