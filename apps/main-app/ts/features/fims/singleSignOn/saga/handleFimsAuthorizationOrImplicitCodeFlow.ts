@@ -49,28 +49,6 @@ import {
 
 // note: IAB => InAppBrowser
 
-export function* enrichFimsRedirectUrl(
-  redirectUrl: string
-): Generator<ReduxSagaEffect, string, any> {
-  const trackingEnrichedUrls = yield* select(fimsTrackingEnrichedUrlsSelector);
-  const mixpanelEnabled = yield* select(isMixpanelEnabled);
-  if (!mixpanelEnabled || trackingEnrichedUrls.length === 0) {
-    return redirectUrl;
-  }
-
-  try {
-    const mixpanelDeviceId = yield* call(getDeviceId);
-    return yield* call(
-      enrichFimsDestinationUrl,
-      redirectUrl,
-      trackingEnrichedUrls,
-      mixpanelDeviceId
-    );
-  } catch {
-    return redirectUrl;
-  }
-}
-
 export function* handleFimsAuthorizationOrImplicitCodeFlow(
   action: ActionType<
     (typeof fimsSignAndRetrieveInAppBrowserUrlAction)["request"]
@@ -450,3 +428,25 @@ const inAppBrowserErrorToHumanReadable = (error: unknown) => {
   }
   return JSON.stringify(error);
 };
+
+export function* enrichFimsRedirectUrl(
+  redirectUrl: string
+): Generator<ReduxSagaEffect, string, any> {
+  const trackingEnrichedUrls = yield* select(fimsTrackingEnrichedUrlsSelector);
+  const mixpanelEnabled = yield* select(isMixpanelEnabled);
+  if (!mixpanelEnabled || trackingEnrichedUrls.length === 0) {
+    return redirectUrl;
+  }
+
+  try {
+    const mixpanelDeviceId = yield* call(getDeviceId);
+    return yield* call(
+      enrichFimsDestinationUrl,
+      redirectUrl,
+      trackingEnrichedUrls,
+      mixpanelDeviceId
+    );
+  } catch {
+    return redirectUrl;
+  }
+}
