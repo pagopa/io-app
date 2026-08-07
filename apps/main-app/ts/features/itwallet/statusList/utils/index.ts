@@ -49,7 +49,7 @@ export const getCredentialStatusFromStatusList = async (
   const canonicalStatus = status.toLowerCase();
 
   if (canonicalStatus !== "valid") {
-    throw new InvalidTslCredentialStatus(metadata.credentialId, rawStatus);
+    throw new InvalidTslCredentialStatus(credentialId, rawStatus);
   }
 
   return {

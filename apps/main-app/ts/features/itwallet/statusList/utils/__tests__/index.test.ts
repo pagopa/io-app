@@ -110,7 +110,7 @@ describe("getCredentialStatusFromStatusList", () => {
         CREDENTIAL_FORMAT,
         KEYS
       )
-    ).rejects.toEqual(new InvalidTslCredentialStatus(CREDENTIAL_ID));
+    ).rejects.toEqual(new InvalidTslCredentialStatus(CREDENTIAL_ID, "0x00"));
   });
 
   it("throws when Status List is unsupported", async () => {
