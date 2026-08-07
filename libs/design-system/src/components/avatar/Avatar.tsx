@@ -75,7 +75,6 @@ export const Avatar = ({ logoUri, size }: Avatar) => {
 
   const onError = () => {
     if (Array.isArray(logoUri) && indexValue.current + 1 < logoUri.length) {
-      // eslint-disable-next-line functional/immutable-data
       indexValue.current = indexValue.current + 1;
       setImageSource(addCacheTimestampToUri(logoUri[indexValue.current]));
       return;

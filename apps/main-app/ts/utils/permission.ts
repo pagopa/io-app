@@ -39,20 +39,17 @@ export const checkIOPermission = async (
 
 /**
  * Wrapper function to request the permission to create an event in the calendar
- * Note: currently unavailable on iOS17, use react-native-calendar-events instead
+ * Note: currently unavailable on iOS17, use expo-calendar instead
  * @returns boolean that indicates wether the user has granted the permission or not
  */
 export const requestWriteCalendarPermission = async (
   rationale?: RNPermissions.Rationale
-) =>
-  Platform.select({
-    android: requestIOPermission(
+) => {
+  if (Platform.OS === "android") {
+    return requestIOPermission(
       RNPermissions.PERMISSIONS.ANDROID.WRITE_CALENDAR,
       rationale
-    ),
-    // react-native-permissions currently has problems on iOS 17.
-    // Use react-native-calendar-events instead
-    // https://github.com/vonovak/react-native-add-calendar-event/issues/180
-    ios: Promise.resolve(true),
-    default: Promise.resolve(true)
-  });
+    );
+  }
+  return Promise.resolve(true);
+};
