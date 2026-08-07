@@ -288,6 +288,18 @@ describe("enrichFimsRedirectUrl", () => {
       .isDone();
   });
 
+  it("should return the redirect URL when the allowlist is empty", () => {
+    testSaga(enrichFimsRedirectUrl, redirectUrl)
+      .next()
+      .select(fimsTrackingEnrichedUrlsSelector)
+      .next([])
+      .select(isMixpanelEnabled)
+      .next(true)
+      .returns(redirectUrl)
+      .next()
+      .isDone();
+  });
+
   it("should return the redirect URL when retrieving the device ID fails", () => {
     testSaga(enrichFimsRedirectUrl, redirectUrl)
       .next()
@@ -313,8 +325,8 @@ describe("enrichFimsRedirectUrl", () => {
       .call(getDeviceId)
       .next(deviceId)
       .call(enrichFimsDestinationUrl, redirectUrl, [redirectUrl], deviceId)
-      .next(`${redirectUrl}?device=${deviceId}`)
-      .returns(`${redirectUrl}?device=${deviceId}`)
+      .next(`${redirectUrl}?mixpanelId=${deviceId}`)
+      .returns(`${redirectUrl}?mixpanelId=${deviceId}`)
       .next()
       .isDone();
   });
