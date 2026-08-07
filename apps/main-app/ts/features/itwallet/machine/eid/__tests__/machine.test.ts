@@ -67,6 +67,17 @@ const T_EID_REQUEST_OUTPUT: RequestEidActorOutput = {
   },
   walletUnitAttestations: T_WUA
 };
+const T_WUA_STATUS_LISTS: ObtainEidWuaStatusListsActorOutput = [
+  [
+    "https://wallet-provider.example/status-list/1",
+    {
+      sub: "https://wallet-provider.example/status-list/1",
+      iat: 1700000000,
+      exp: 1700003600,
+      status_list: { bits: 1, lst: "eNrbuRgAAhcBXQ" }
+    }
+  ]
+];
 
 /**
  * Actions
@@ -1529,6 +1540,61 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context.failure).toStrictEqual({
       type: IssuanceFailureType.NOT_MATCHING_IDENTITY,
       reason: "IT Wallet identity does not match IO identity"
+    });
+  });
+
+  it("Should obtain and store WUA status lists before checking the issued eID", async () => {
+    requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
+    obtainWuaStatusLists.mockResolvedValue(T_WUA_STATUS_LISTS);
+    issuedEidMatchesAuthenticatedUser.mockReturnValue(true);
+
+    const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "WaitingForSessionRefresh" },
+      context: {
+        itwVersion: "1.3.3",
+        walletUnitAttestations: T_WUA
+      }
+    });
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+    actor.send({ type: "session-refresh-complete" });
+
+    const finalSnapshot = await waitForActor(actor, state =>
+      state.matches({ Issuance: "DisplayingPreview" })
+    );
+
+    expect(obtainWuaStatusLists).toHaveBeenCalledWith(
+      expect.objectContaining({
+        input: {
+          itwVersion: "1.3.3",
+          walletUnitAttestations: T_WUA
+        }
+      })
+    );
+    expect(finalSnapshot.context.wuaStatusLists).toEqual(T_WUA_STATUS_LISTS);
+  });
+
+  it("Should fail when obtaining WUA status lists fails", async () => {
+    const error = new Error("WUA status list verification failed");
+    requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
+    obtainWuaStatusLists.mockRejectedValue(error);
+
+    const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "WaitingForSessionRefresh" }
+    });
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+    actor.send({ type: "session-refresh-complete" });
+
+    await waitForActor(actor, state => state.matches("Failure"));
+
+    expect(actor.getSnapshot().context.failure).toStrictEqual({
+      type: IssuanceFailureType.UNEXPECTED,
+      reason: error
     });
   });
 
