@@ -17,7 +17,7 @@ import {
 } from "../../../walletInstance/store/actions";
 import {
   createEidIssuanceActorsImplementation,
-  ObtainStatusListsActorOutput,
+  ObtainStatusListActorOutput,
   StoreEidCredentialActorParams
 } from "../actors";
 
@@ -126,8 +126,8 @@ describe("eID issuance actors", () => {
       statusList: "status-list-jwt"
     });
 
-    const result = await runActor<ObtainStatusListsActorOutput>(
-      actors.obtainStatusLists,
+    const result = await runActor<ObtainStatusListActorOutput>(
+      actors.obtainStatusList,
       {
         itwVersion: ITW_VERSION,
         walletUnitAttestations: {
@@ -159,7 +159,7 @@ describe("eID issuance actors", () => {
     mockGetIoWallet.mockReturnValue(createWallet() as never);
 
     await expect(
-      runActor(actors.obtainStatusLists, {
+      runActor(actors.obtainStatusList, {
         itwVersion: ITW_VERSION,
         walletUnitAttestations: undefined
       })
@@ -170,7 +170,7 @@ describe("eID issuance actors", () => {
     mockGetIoWallet.mockReturnValue(createWallet(false) as never);
 
     await expect(
-      runActor(actors.obtainStatusLists, {
+      runActor(actors.obtainStatusList, {
         itwVersion: ITW_VERSION,
         walletUnitAttestations: undefined
       })
@@ -185,7 +185,7 @@ describe("eID issuance actors", () => {
     mockGetCredentialStatus.mockRejectedValue(error);
 
     await expect(
-      runActor(actors.obtainStatusLists, {
+      runActor(actors.obtainStatusList, {
         itwVersion: ITW_VERSION,
         walletUnitAttestations: { "wua-1": "wua-1-jwt" }
       })

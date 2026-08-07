@@ -74,12 +74,12 @@ export type InitMrtdPoPChallengeActorParams = WithItwVersion<{
   walletInstanceAttestation: string | undefined;
 }>;
 
-export type ObtainStatusListsActorInput = Pick<
+export type ObtainStatusListActorInput = Pick<
   Context,
   "itwVersion" | "walletUnitAttestations"
 >;
 
-export type ObtainStatusListsActorOutput = Context["walletInstanceStatusList"];
+export type ObtainStatusListActorOutput = Context["walletInstanceStatusList"];
 
 export type RequestAccessTokenActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
@@ -424,9 +424,9 @@ export const createEidIssuanceActorsImplementation = (
     }
   ),
 
-  obtainStatusLists: fromPromise<
-    ObtainStatusListsActorOutput,
-    ObtainStatusListsActorInput
+  obtainStatusList: fromPromise<
+    ObtainStatusListActorOutput,
+    ObtainStatusListActorInput
   >(async ({ input }) => {
     const { itwVersion, walletUnitAttestations } = input;
 

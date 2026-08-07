@@ -23,8 +23,8 @@ import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
-  ObtainStatusListsActorInput,
-  ObtainStatusListsActorOutput,
+  ObtainStatusListActorInput,
+  ObtainStatusListActorOutput,
   RequestAccessTokenActorParams,
   RequestEidActorOutput,
   RequestEidActorParams,
@@ -67,7 +67,7 @@ const T_EID_REQUEST_OUTPUT: RequestEidActorOutput = {
   },
   walletUnitAttestations: T_WUA
 };
-const T_WALLET_INSTANCE_STATUS_LIST: ObtainStatusListsActorOutput = {
+const T_WALLET_INSTANCE_STATUS_LIST: ObtainStatusListActorOutput = {
   idx: 0,
   uri: "https://wallet-provider.example/status-list/1",
   parsedStatusList: {
@@ -132,7 +132,7 @@ const requestEid = jest.fn();
 const startAuthFlow = jest.fn();
 const initMrtdPoPChallenge = jest.fn();
 const validateMrtdPoPChallenge = jest.fn();
-const obtainStatusLists = jest.fn();
+const obtainStatusList = jest.fn();
 const storeEidCredentialActor = jest.fn();
 const waitForSessionRefresh = jest.fn();
 
@@ -211,10 +211,10 @@ describe("itwEidIssuanceMachine", () => {
       requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
         requestEid
       ),
-      obtainStatusLists: fromPromise<
-        ObtainStatusListsActorOutput,
-        ObtainStatusListsActorInput
-      >(obtainStatusLists),
+      obtainStatusList: fromPromise<
+        ObtainStatusListActorOutput,
+        ObtainStatusListActorInput
+      >(obtainStatusList),
       storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
         storeEidCredentialActor
       ),
@@ -246,7 +246,7 @@ describe("itwEidIssuanceMachine", () => {
     jest.clearAllMocks();
     jest.resetAllMocks();
     jest.useFakeTimers();
-    obtainStatusLists.mockResolvedValue(undefined);
+    obtainStatusList.mockResolvedValue(undefined);
     storeEidCredentialActor.mockResolvedValue(undefined);
   });
 
@@ -1544,7 +1544,7 @@ describe("itwEidIssuanceMachine", () => {
 
   it("Should obtain and store WUA status lists before checking the issued eID", async () => {
     requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
-    obtainStatusLists.mockResolvedValue(T_WALLET_INSTANCE_STATUS_LIST);
+    obtainStatusList.mockResolvedValue(T_WALLET_INSTANCE_STATUS_LIST);
     issuedEidMatchesAuthenticatedUser.mockReturnValue(true);
 
     const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
@@ -1564,7 +1564,7 @@ describe("itwEidIssuanceMachine", () => {
       state.matches({ Issuance: "DisplayingPreview" })
     );
 
-    expect(obtainStatusLists).toHaveBeenCalledWith(
+    expect(obtainStatusList).toHaveBeenCalledWith(
       expect.objectContaining({
         input: {
           itwVersion: "1.3.3",
@@ -1580,7 +1580,7 @@ describe("itwEidIssuanceMachine", () => {
   it("Should fail when obtaining WUA status lists fails", async () => {
     const error = new Error("WUA status list verification failed");
     requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
-    obtainStatusLists.mockRejectedValue(error);
+    obtainStatusList.mockRejectedValue(error);
 
     const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {

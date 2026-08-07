@@ -24,8 +24,8 @@ import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
-  ObtainStatusListsActorInput,
-  ObtainStatusListsActorOutput,
+  ObtainStatusListActorInput,
+  ObtainStatusListActorOutput,
   RequestAccessTokenActorParams,
   RequestEidActorOutput,
   type RequestEidActorParams,
@@ -218,9 +218,9 @@ export const itwEidIssuanceMachine = setup({
     requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
       notImplemented
     ),
-    obtainStatusLists: fromPromise<
-      ObtainStatusListsActorOutput,
-      ObtainStatusListsActorInput
+    obtainStatusList: fromPromise<
+      ObtainStatusListActorOutput,
+      ObtainStatusListActorInput
     >(notImplemented),
     storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
       notImplemented
@@ -1191,7 +1191,7 @@ export const itwEidIssuanceMachine = setup({
         ObtainingWuaStatusList: {
           tags: [ItwTags.Loading],
           invoke: {
-            src: "obtainStatusLists",
+            src: "obtainStatusList",
             input: ({ context }) => ({
               itwVersion: context.itwVersion,
               walletUnitAttestations: context.walletUnitAttestations

@@ -13,7 +13,7 @@ import { InvalidTslCredentialStatus } from "./errors";
  *
  * @param credentialBundle The bundle with the raw credential
  * @param itwVersion Current IT-Wallet specifications version
- * @param keys The Credential Issuer JWKS used to verify the Status List Token
+ * @param keys The JWKS to verify the status list
  * @returns The extracted credential status and the status list
  * @throws {InvalidTslCredentialStatus}
  */
