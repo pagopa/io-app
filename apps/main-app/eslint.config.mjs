@@ -4,10 +4,6 @@ export default [
   ...baseConfig,
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    ignores: [
-      '**/*.test.{ts,tsx}',
-      '**/{__tests__,__mocks__}/**/*.{ts,tsx}'
-    ],
     rules: {
       // Consumers must use the public design-system API instead of its monorepo path or internals
       'no-restricted-imports': [
