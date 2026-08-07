@@ -67,7 +67,7 @@ const itwReducer = combineReducers({
   banners: bannersReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 18;
+const CURRENT_REDUX_ITW_STORE_VERSION = 19;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -184,11 +184,23 @@ export const migrations: MigrationManifest = {
   // Removed itWalletSpecsVersion from environment
   "16": (state: PersistedState): PersistedState =>
     _.omit(state, "environment.itWalletSpecsVersion"),
+  // Removed date from preferences.walletActivationFeedbackBannerData, migrating it to
+  // banners.activationSuccessFeedback.shownOn so the original 7-day shown-window is preserved
+  "17": (state: PersistedState): PersistedState => {
+    const date = _.get(
+      state,
+      "preferences.walletActivationFeedbackBannerData.date"
+    );
+    if (date && !_.get(state, "banners.activationSuccessFeedback.shownOn")) {
+      _.set(state, "banners.activationSuccessFeedback.shownOn", date);
+    }
+    return _.omit(state, "preferences.walletActivationFeedbackBannerData.date");
+  },
   // Removed isPendingReview from preferences
-  "17": (state: PersistedState): PersistedState =>
+  "18": (state: PersistedState): PersistedState =>
     _.omit(state, "preferences.isPendingReview"),
   // Removed the duplicated playground credential status state
-  "18": (state: PersistedState): PersistedState => _.omit(state, "debug")
+  "19": (state: PersistedState): PersistedState => _.omit(state, "debug")
 };
 
 const itwPersistConfig: PersistConfig = {
