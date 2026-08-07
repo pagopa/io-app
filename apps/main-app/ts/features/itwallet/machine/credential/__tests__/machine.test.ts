@@ -141,7 +141,6 @@ describe("itwCredentialIssuanceMachine", () => {
 
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
-  const isStatusError = jest.fn();
   const isSkipNavigation = jest.fn();
   const isEidExpired = jest.fn();
   const hasCredentialIntroContent = jest.fn();
@@ -197,7 +196,6 @@ describe("itwCredentialIssuanceMachine", () => {
     guards: {
       isSessionExpired,
       hasValidWalletInstanceAttestation,
-      isStatusError,
       isEidExpired,
       hasCredentialIntroContent
     }

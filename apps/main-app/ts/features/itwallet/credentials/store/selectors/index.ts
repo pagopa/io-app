@@ -9,10 +9,7 @@ import {
   getFirstNameFromCredential,
   getFiscalCodeFromCredential
 } from "../../../common/utils/itwClaimsUtils";
-import {
-  getCredentialStatus,
-  getCredentialStatusObject
-} from "../../../common/utils/itwCredentialStatusUtils";
+import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialFormat,
@@ -237,14 +234,13 @@ export const itwHasWalletAtLeastTwoCredentialsSelector = createSelector(
 );
 
 /**
- * Get the credential status and the error message corresponding to the status assertion error, if present.
- * The message is dynamic and extracted from the issuer configuration.
+ * Get the credential status corresponding to the status list/status assertion error, if present.
  *
  * Note: the credential type is passed as second argument to reuse the same selector and cache per credential type.
  *
  * @param state - The global state.
  * @param type - The credential type.
- * @returns The credential status and the error message corresponding to the status assertion error, if present.
+ * @returns The credential status corresponding to the status assertion error, if present.
  */
 export const itwCredentialStatusSelector = createSelector(
   itwCredentialsSelector,
@@ -252,18 +248,20 @@ export const itwCredentialStatusSelector = createSelector(
   (credentials, type) => {
     // This should never happen
     if (credentials[type] === undefined) {
-      return { status: undefined, message: undefined };
+      return { status: undefined };
     }
 
-    return getCredentialStatusObject(credentials[type]);
+    return { status: getCredentialStatus(credentials[type]) };
   }
 );
 
 /**
- * Returns the credential status and the error message corresponding to the status assertion error, if present.
+ * Returns the credential status for the eID.
+ *
+ * Note that this status is determined only by the SD-JWT credential, and does not use status assertion/status list.
  *
  * @param state - The global state.
- * @returns The credential status and the error message corresponding to the status assertion error, if present.
+ * @returns The eID's JWT status.
  */
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,
@@ -322,24 +320,6 @@ export const itwCredentialsListByTypeSelector = (key: string) =>
     (credentials): ReadonlyArray<CredentialMetadata> =>
       credentials.filter(c => c.credentialType === key)
   );
-
-/**
- * Returns whether the wallet has at least one credential that is expiring or expired.
- *
- * @param state - The global state.
- * @returns Whether the wallet has at least one expiring or expired credential.
- */
-export const itwHasExpiringCredentialsSelector = createSelector(
-  itwCredentialsSelector,
-  credentials => {
-    const statuses = Object.values(credentials).map(credential =>
-      getCredentialStatus(credential)
-    );
-    return statuses.some(
-      status => status === "jwtExpiring" || status === "jwtExpired"
-    );
-  }
-);
 
 /**
  * Convenience selector that returns true if the user has a mDL credential stored.
