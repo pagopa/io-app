@@ -4,8 +4,30 @@ export default [
   ...baseConfig,
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    // Override or add rules here
-    rules: {}
+    ignores: [
+      '**/*.test.{ts,tsx}',
+      '**/{__tests__,__mocks__}/**/*.{ts,tsx}'
+    ],
+    rules: {
+      // Consumers must use the public design-system API instead of its monorepo path or private modules.
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                'libs/design-system/**',
+                '**/libs/design-system/**',
+                '@io-app/design-system/**',
+                '@pagopa/io-app-design-system/**'
+              ],
+              message:
+                'Import from "@io-app/design-system" to use the design system public API.'
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     ignores: [
