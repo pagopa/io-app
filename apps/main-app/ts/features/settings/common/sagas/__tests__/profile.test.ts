@@ -51,8 +51,8 @@ jest.mock("@react-native-async-storage/async-storage", () => ({
   AsyncStorage: jest.fn()
 }));
 
-jest.mock("react-native-share", () => ({
-  open: jest.fn()
+jest.mock("expo-sharing", () => ({
+  shareAsync: jest.fn()
 }));
 
 const fiscalCodeHash = hash(`${mockedProfile.fiscal_code}xxx`);
