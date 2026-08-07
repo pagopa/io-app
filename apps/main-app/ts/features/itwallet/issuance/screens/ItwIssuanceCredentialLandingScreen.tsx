@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect, useMemo } from "react";
 
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationProp,
@@ -9,6 +10,10 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
+import {
+  isStartupLoaded,
+  StartupStatusEnum
+} from "../../../../store/reducers/startup";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors";
@@ -57,6 +62,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
   const introContent = useIOSelector(
     itwCredentialIntroContentSelector(credentialType)
   );
+  const startupStatus = useIOSelector(isStartupLoaded);
   const credentialName = useItwCredentialName(credentialType);
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credentialType, isItwL3),
@@ -85,16 +91,19 @@ export const ItwIssuanceCredentialLandingScreen = ({
   );
 
   useEffect(() => {
-    if (isCredentialValid) {
-      if (!isEidExpiredOrExpiring) {
-        trackItwAlreadyHasCredential(mixPanelCredential);
-      }
-      // Credential already present and valid, no need to issue it again
+    if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
+      // Skip navigation until the startup process is completed and the user is authenticated
       return;
     }
 
     if (isEidExpiredOrExpiring) {
       // PID not valid, show PID renewal screen before proceeding with credential issuance
+      return;
+    }
+
+    if (isCredentialValid) {
+      trackItwAlreadyHasCredential(mixPanelCredential);
+      // Credential already present and valid, no need to issue it again
       return;
     }
 
@@ -126,6 +135,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
       getMixPanelCredential(credentialType, isWhitelisted)
     );
   }, [
+    startupStatus,
     navigation,
     isItwValid,
     isWhitelisted,
@@ -135,6 +145,10 @@ export const ItwIssuanceCredentialLandingScreen = ({
     isEidExpiredOrExpiring,
     mixPanelCredential
   ]);
+
+  if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
+  }
 
   if (isEidExpiredOrExpiring) {
     return (

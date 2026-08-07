@@ -57,7 +57,6 @@ export const useItwEidFeedbackBottomSheet = ({
                   "features.itWallet.feedback.reissuance.bottomSheet.primaryAction"
                 )}
                 onPress={() => {
-                  // eslint-disable-next-line functional/immutable-data
                   skipDeclinedEvent.current = true;
                   trackItwSurveyRequestAccepted(trackingProps);
                   openWebUrl(IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE);
@@ -88,7 +87,6 @@ export const useItwEidFeedbackBottomSheet = ({
       if (!skipDeclinedEvent.current) {
         trackItwSurveyRequestDeclined(trackingProps);
       }
-      // eslint-disable-next-line functional/immutable-data
       skipDeclinedEvent.current = false;
     }
   });

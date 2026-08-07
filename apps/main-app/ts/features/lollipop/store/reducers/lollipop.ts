@@ -2,7 +2,6 @@ import { PublicKey } from "@pagopa/io-react-native-crypto";
 /**
  * A reducer for lollipop.
  */
-import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { v4 as uuid } from "uuid";
@@ -40,7 +39,7 @@ const ephemeralInitialState = () => ({
 
 export type InMemoryLollipopData = {
   ephemeralKey: EphemeralKey;
-  publicKey: O.Option<PublicKey>;
+  publicKey: PublicKey | undefined;
   supportedDevice: boolean;
 };
 export type LollipopState = InMemoryLollipopData & PersistedLollipopData;
@@ -51,7 +50,7 @@ export type PersistedLollipopData = {
 
 export const initialLollipopState: LollipopState = {
   keyTag: undefined,
-  publicKey: O.none,
+  publicKey: undefined,
   supportedDevice: true,
   ephemeralKey: ephemeralInitialState()
 };
@@ -82,7 +81,7 @@ export default function lollipopReducer(
       return {
         ...state,
         keyTag: state.ephemeralKey.ephemeralKeyTag,
-        publicKey: O.fromNullable(state.ephemeralKey.ephemeralPublicKey),
+        publicKey: state.ephemeralKey.ephemeralPublicKey,
         ephemeralKey: ephemeralInitialState()
       };
     case getType(lollipopKeyTagSave):
@@ -93,7 +92,7 @@ export default function lollipopReducer(
     case getType(lollipopRemovePublicKey):
       return {
         ...state,
-        publicKey: O.none
+        publicKey: undefined
       };
     case getType(lollipopSetEphemeralPublicKey):
       return {
@@ -106,7 +105,7 @@ export default function lollipopReducer(
     case getType(lollipopSetPublicKey):
       return {
         ...state,
-        publicKey: O.some(action.payload.publicKey)
+        publicKey: action.payload.publicKey
       };
     case getType(lollipopSetSupportedDevice):
       return {
