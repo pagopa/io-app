@@ -1,10 +1,7 @@
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { CredentialStatus } from "@pagopa/io-react-native-wallet";
 
-import {
-  getCredentialStatusFromStatusList,
-  getWuaStatusFromStatusList
-} from "..";
+import { getCredentialStatusFromStatusList, getKeysForWuaStatusList } from "..";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { InvalidTslCredentialStatus } from "../errors";
 
@@ -24,7 +21,6 @@ declare const global: { fetch: typeof fetch };
 const CREDENTIAL_ID = "credential-id";
 const CREDENTIAL = "credential-jwt";
 const CREDENTIAL_FORMAT = "dc+sd-jwt";
-const WUA_ID = "wua-id";
 const WUA = "wua-jwt";
 const ITW_VERSION = "1.3.3";
 const ISSUER = "https://wallet-provider.example";
@@ -128,14 +124,12 @@ describe("getCredentialStatusFromStatusList", () => {
   });
 });
 
-describe("getWuaStatusFromStatusList", () => {
+describe("getKeysForWuaStatusList", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("retrieves wallet provider keys and returns valid WUA status", async () => {
-    const wallet = makeWallet();
-    mockGetIoWallet.mockReturnValue(wallet as never);
+  it("retrieves wallet provider keys", async () => {
     mockDecodeJwt
       .mockReturnValueOnce({ payload: { iss: ISSUER } } as never)
       .mockReturnValueOnce({
@@ -151,28 +145,12 @@ describe("getWuaStatusFromStatusList", () => {
       text: jest.fn().mockResolvedValue(FEDERATION_JWT)
     } as never);
 
-    await expect(
-      getWuaStatusFromStatusList(ITW_VERSION, WUA, WUA_ID)
-    ).resolves.toEqual({
-      idx: STATUS_LIST_INDEX,
-      parsedStatusList: statusListPayload,
-      rawStatus: "0x00",
-      status: "valid",
-      statusList: STATUS_LIST,
-      uri: STATUS_LIST_URI
-    });
+    await expect(getKeysForWuaStatusList(WUA)).resolves.toEqual(KEYS);
 
     expect(mockDecodeJwt).toHaveBeenNthCalledWith(1, WUA);
     expect(fetchSpy).toHaveBeenCalledWith(
       `${ISSUER}/.well-known/openid-federation`
     );
     expect(mockDecodeJwt).toHaveBeenNthCalledWith(2, FEDERATION_JWT);
-    expect(wallet.CredentialStatus.statusList.get).toHaveBeenCalledWith(
-      WUA,
-      CREDENTIAL_FORMAT
-    );
-    expect(
-      wallet.CredentialStatus.statusList.verifyAndParse
-    ).toHaveBeenCalledWith(KEYS, STATUS_LIST);
   });
 });

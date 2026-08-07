@@ -7,7 +7,7 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsStore } from "../../../credentials/store/actions";
 import { itwAllStoredCredentialsSelector } from "../../../credentials/store/selectors";
-import { updateCredentialsStatusSaga } from "../updateCredentialsStatusListSaga";
+import { updateCredentialsStatusSaga } from "../updateCredentialsStatusSaga";
 
 const mockGetStatus = jest.fn();
 
