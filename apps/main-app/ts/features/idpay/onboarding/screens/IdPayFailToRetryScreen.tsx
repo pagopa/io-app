@@ -7,7 +7,7 @@ import I18n from "i18next";
 import { memo, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../../components/SectionStatus/modal";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

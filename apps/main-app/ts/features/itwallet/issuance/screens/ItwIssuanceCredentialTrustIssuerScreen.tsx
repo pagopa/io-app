@@ -16,7 +16,7 @@ import { useCallback, useRef } from "react";
 import type { CredentialIssuanceMode } from "../../machine/credential/context";
 
 import IOMarkdown from "../../../../components/IOMarkdown";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";

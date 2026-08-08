@@ -127,5 +127,3 @@ export const LoadingScreenContent = ({
     </SafeAreaView>
   );
 };
-
-export default LoadingScreenContent;

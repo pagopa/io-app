@@ -48,7 +48,7 @@ describe("SendAarErrorScreen", () => {
     .spyOn(NFC_NOT_SUPPORTED_COMPONENT, "SendAarNfcNotSupportedComponent")
     .mockImplementation();
   const loadingScreenSpy = jest
-    .spyOn(LOADING_SCREEN, "default")
+    .spyOn(LOADING_SCREEN, "LoadingScreenContent")
     .mockImplementation(() => <></>);
   jest.spyOn(ERROR_MAPPINGS, "getAarErrorBehaviour").mockImplementation(() => ({
     track: jest.fn(),
