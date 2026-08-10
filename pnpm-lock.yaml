@@ -30,6 +30,24 @@ catalogs:
     eslint:
       specifier: ^9.39.4
       version: 9.39.4
+    eslint-config-prettier:
+      specifier: ^10.1.8
+      version: 10.1.8
+    eslint-plugin-functional:
+      specifier: ^10.0.0
+      version: 10.0.0
+    eslint-plugin-import:
+      specifier: ^2.32.0
+      version: 2.32.0
+    eslint-plugin-jest:
+      specifier: ^29.15.5
+      version: 29.16.0
+    eslint-plugin-prettier:
+      specifier: ^5.5.6
+      version: 5.5.6
+    eslint-plugin-react-native-a11y:
+      specifier: ^3.3.0
+      version: 3.3.0
     jest:
       specifier: ~30.3.0
       version: 30.3.0
@@ -228,8 +246,8 @@ importers:
         specifier: 1.3.6
         version: 1.3.6(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-cieid':
-        specifier: 0.4.0
-        version: 0.4.0(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
+        specifier: 0.5.2
+        version: 0.5.2(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-crypto':
         specifier: ^1.2.3
         version: 1.2.3(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
@@ -685,28 +703,31 @@ importers:
         specifier: 'catalog:'
         version: 9.39.4(jiti@2.7.0)
       eslint-config-prettier:
-        specifier: ^10.1.8
+        specifier: 'catalog:'
         version: 10.1.8(eslint@9.39.4(jiti@2.7.0))
       eslint-plugin-ft-flow:
-        specifier: latest
+        specifier: ^3.0.11
         version: 3.0.11(eslint@9.39.4(jiti@2.7.0))(hermes-eslint@0.32.1)
       eslint-plugin-functional:
-        specifier: ^10.0.0
+        specifier: 'catalog:'
         version: 10.0.0(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)
       eslint-plugin-i18next:
         specifier: ^6.1.3
         version: 6.1.3
       eslint-plugin-import:
-        specifier: latest
+        specifier: 'catalog:'
         version: 2.32.0(@typescript-eslint/parser@8.65.0(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3))(eslint@9.39.4(jiti@2.7.0))
       eslint-plugin-jest:
-        specifier: ^29.15.5
+        specifier: 'catalog:'
         version: 29.16.0(@typescript-eslint/eslint-plugin@8.65.0(@typescript-eslint/parser@8.65.0(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3))(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3))(eslint@9.39.4(jiti@2.7.0))(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@10.17.28)(typescript@6.0.3)))(typescript@6.0.3)
       eslint-plugin-react:
         specifier: ^7.28.0
         version: 7.37.5(eslint@9.39.4(jiti@2.7.0))
+      eslint-plugin-react-hooks:
+        specifier: ^4.3.0
+        version: 4.6.2(eslint@9.39.4(jiti@2.7.0))
       eslint-plugin-react-native-a11y:
-        specifier: ^3.3.0
+        specifier: 'catalog:'
         version: 3.3.0(eslint@9.39.4(jiti@2.7.0))
       eslint-plugin-sonarjs:
         specifier: ^3.0.7
@@ -842,22 +863,22 @@ importers:
         specifier: 'catalog:'
         version: 9.39.4(jiti@2.7.0)
       eslint-config-prettier:
-        specifier: ^8.5.0
-        version: 8.10.0(eslint@9.39.4(jiti@2.7.0))
+        specifier: 'catalog:'
+        version: 10.1.8(eslint@9.39.4(jiti@2.7.0))
       eslint-plugin-functional:
-        specifier: ^10.0.0
+        specifier: 'catalog:'
         version: 10.0.0(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)
       eslint-plugin-import:
-        specifier: ^2.27.5
+        specifier: 'catalog:'
         version: 2.32.0(@typescript-eslint/parser@8.65.0(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3))(eslint@9.39.4(jiti@2.7.0))
       eslint-plugin-jest:
-        specifier: ^29.15.5
+        specifier: 'catalog:'
         version: 29.16.0(@typescript-eslint/eslint-plugin@8.65.0(@typescript-eslint/parser@8.65.0(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3))(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3))(eslint@9.39.4(jiti@2.7.0))(jest@30.3.0(@types/node@20.5.1)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@20.5.1)(typescript@5.9.3)))(typescript@6.0.3)
       eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.5(eslint-config-prettier@8.10.0(eslint@9.39.4(jiti@2.7.0)))(eslint@9.39.4(jiti@2.7.0))(prettier@3.8.2)
+        specifier: 'catalog:'
+        version: 5.5.6(@types/eslint@8.56.10)(eslint-config-prettier@10.1.8(eslint@9.39.4(jiti@2.7.0)))(eslint@9.39.4(jiti@2.7.0))(prettier@3.8.2)
       eslint-plugin-react-native-a11y:
-        specifier: ^3.3.0
+        specifier: 'catalog:'
         version: 3.3.0(eslint@9.39.4(jiti@2.7.0))
       fs-extra:
         specifier: ^11.1.1
@@ -2912,8 +2933,8 @@ packages:
       react: '>=19.1'
       react-native: '>=0.81'
 
-  '@pagopa/io-react-native-cieid@0.4.0':
-    resolution: {integrity: sha512-hOAIoFFzZ0HMJ1EDbcTq0+ZePt6Fa+jtRgizxQpCEWEBrFcb2AeS+6ykwMEjlHDGxOC/22poT7i6zl5eGR6pXQ==}
+  '@pagopa/io-react-native-cieid@0.5.2':
+    resolution: {integrity: sha512-NJjrTgRn8o4dglQiPYI6VM/S/84n1hIIARGCh9Yf7vU4uJ/TlgizzKEPZsnY85pk6ODm59Yn6zRjvjjW5YW/bw==}
     peerDependencies:
       react: '>=19.1'
       react-native: '>=0.81'
@@ -5870,17 +5891,6 @@ packages:
     peerDependencies:
       eslint: ^8.45.0 || ^9.0.0 || ^10.0.0
 
-  eslint-plugin-prettier@4.2.5:
-    resolution: {integrity: sha512-9Ni+xgemM2IWLq6aXEpP2+V/V30GeA/46Ar629vcMqVPodFFWC9skHu/D1phvuqtS8bJCFnNf01/qcmqYEwNfg==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      eslint: '>=7.28.0'
-      eslint-config-prettier: '*'
-      prettier: '>=2.0.0'
-    peerDependenciesMeta:
-      eslint-config-prettier:
-        optional: true
-
   eslint-plugin-prettier@5.5.6:
     resolution: {integrity: sha512-ifetmTcxWfz+4qRW3pH/ujdTq2jQIj59AxJMIN26K5avYgU8dxycUETQonWiW+wPrYXA0j3Try0l1CnwVQtDqQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -5894,6 +5904,12 @@ packages:
         optional: true
       eslint-config-prettier:
         optional: true
+
+  eslint-plugin-react-hooks@4.6.2:
+    resolution: {integrity: sha512-QzliNJq4GinDBcD8gPB5v0wh6g8q3SUi6EFF0x8N/BL9PoVs0atuGc47ozMRyOWAKdwaZ5OnbOEa3WR+dSGKuQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
 
   eslint-plugin-react-hooks@7.0.1:
     resolution: {integrity: sha512-O0d0m04evaNzEPoSW+59Mezf8Qt0InfgGIBJnpC0h3NH/WjUAR7BIKUfysC6todmtiZ/A0oUVS8Gce0WhBrHsA==}
@@ -13855,7 +13871,7 @@ snapshots:
       react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
       zod: 3.25.76
 
-  '@pagopa/io-react-native-cieid@0.4.0(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)':
+  '@pagopa/io-react-native-cieid@0.5.2(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)':
     dependencies:
       react: 19.2.0
       react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
@@ -17697,14 +17713,6 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-prettier@4.2.5(eslint-config-prettier@8.10.0(eslint@9.39.4(jiti@2.7.0)))(eslint@9.39.4(jiti@2.7.0))(prettier@3.8.2):
-    dependencies:
-      eslint: 9.39.4(jiti@2.7.0)
-      prettier: 3.8.2
-      prettier-linter-helpers: 1.0.1
-    optionalDependencies:
-      eslint-config-prettier: 8.10.0(eslint@9.39.4(jiti@2.7.0))
-
   eslint-plugin-prettier@5.5.6(@types/eslint@8.56.10)(eslint-config-prettier@10.1.8(eslint@9.39.4(jiti@2.7.0)))(eslint@9.39.4(jiti@2.7.0))(prettier@3.8.2):
     dependencies:
       eslint: 9.39.4(jiti@2.7.0)
@@ -17714,6 +17722,10 @@ snapshots:
     optionalDependencies:
       '@types/eslint': 8.56.10
       eslint-config-prettier: 10.1.8(eslint@9.39.4(jiti@2.7.0))
+
+  eslint-plugin-react-hooks@4.6.2(eslint@9.39.4(jiti@2.7.0)):
+    dependencies:
+      eslint: 9.39.4(jiti@2.7.0)
 
   eslint-plugin-react-hooks@7.0.1(eslint@9.39.4(jiti@2.7.0)):
     dependencies:
