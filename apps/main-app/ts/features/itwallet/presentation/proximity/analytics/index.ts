@@ -82,13 +82,6 @@ export const trackItwProximityPresentationCompleted = ({
   );
 };
 
-export const trackItwProximityUnofficialVerifierBottomSheet = () => {
-  void mixpanelTrack(
-    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_UNOFFICIAL_VERIFIER_BOTTOMSHEET,
-    buildEventProperties("UX", "screen_view")
-  );
-};
-
 export const trackItwProximityRpNotTrustedBottomSheet = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_RP_NOT_TRUSTED_BOTTOMSHEET,
@@ -289,16 +282,6 @@ export const trackItwProximityUnexpectedFailure = ({
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNEXPECTED_FAILURE,
     buildEventProperties("KO", "screen_view", { origin, reason, type })
-  );
-};
-
-export const trackItwProximityUnofficialVerifier = ({
-  reason,
-  type
-}: ItwProximityFailure) => {
-  void mixpanelTrack(
-    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNOFFICIAL_VERIFIER,
-    buildEventProperties("KO", "screen_view", { reason, type })
   );
 };
 
