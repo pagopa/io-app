@@ -101,14 +101,18 @@ export const biometricAuthenticationRequest = (
       if (result.success) {
         onSuccess();
         // We need to explicitly release the listener to avoid bugs on android platform
-        void LocalAuthentication.cancelAuthenticate();
+        if (Platform.OS === "android") {
+          void LocalAuthentication.cancelAuthenticate();
+        }
       } else {
         void mixpanelTrack("BIOMETRIC_ERROR", { error: result.error });
         if (isDebugBiometricIdentificationEnabled) {
           Alert.alert("identification.biometric.title", `KO: ${result.error}`);
         }
         onError(result.error);
-        void LocalAuthentication.cancelAuthenticate();
+        if (Platform.OS === "android") {
+          void LocalAuthentication.cancelAuthenticate();
+        }
       }
     })
     .catch(e => {
@@ -118,7 +122,9 @@ export const biometricAuthenticationRequest = (
       }
       onError(e);
       // We need to explicitly release the listener to avoid bugs on android platform
-      void LocalAuthentication.cancelAuthenticate();
+      if (Platform.OS === "android") {
+        void LocalAuthentication.cancelAuthenticate();
+      }
     });
 
 type BiometricState = "Available" | "NotEnrolled" | "NotSupported";

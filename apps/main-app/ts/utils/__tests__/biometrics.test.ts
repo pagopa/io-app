@@ -96,12 +96,10 @@ describe("biometricAuthenticationRequest function", () => {
         LocalAuthentication,
         "authenticateAsync"
       );
-      const spyRelease = jest.spyOn(LocalAuthentication, "cancelAuthenticate");
       const spyOnSuccess = jest.fn();
       await biometricAuthenticationRequest(spyOnSuccess, jest.fn());
       expect(spyAuthenticate).toHaveBeenCalled();
       expect(spyOnSuccess).toHaveBeenCalledWith();
-      expect(spyRelease).toHaveBeenCalled();
     });
   });
 
@@ -112,22 +110,20 @@ describe("biometricAuthenticationRequest function", () => {
         "authenticateAsync"
       );
       spyAuthenticate.mockRejectedValue("error");
-      const spyRelease = jest.spyOn(LocalAuthentication, "cancelAuthenticate");
       const spyOnError = jest.fn();
       await biometricAuthenticationRequest(jest.fn(), spyOnError);
       expect(spyAuthenticate).toHaveBeenCalled();
       expect(spyOnError).toHaveBeenCalledWith("error");
-      expect(spyRelease).toHaveBeenCalled();
     });
   });
 });
 
 describe("mayUserActivateBiometric function", () => {
   it.each`
-    input           | expected
-    ${"Touch ID"}   | ${"ACTIVATED"}
-    ${"Biometrics"} | ${"ACTIVATED"}
-    ${"Unknown"}    | ${"ACTIVATED"}
+    input        | expected
+    ${[1]}       | ${"ACTIVATED"}
+    ${[3]}       | ${"ACTIVATED"}
+    ${"Unknown"} | ${"ACTIVATED"}
   `("returns $expected when $input is given", async ({ input, expected }) => {
     const spy = jest.spyOn(
       LocalAuthentication,
@@ -207,7 +203,7 @@ describe("mayUserActivateBiometric function", () => {
     ];
 
     for (const error of errorsArray) {
-      spy.mockResolvedValue(Promise.reject(error));
+      spy.mockResolvedValue(Promise.resolve({ success: false, error }));
       try {
         await Biometric.biometricFunctionForTests.mayUserActivateBiometricWithDependency(
           getBiometricsTypeFaceIDMock
