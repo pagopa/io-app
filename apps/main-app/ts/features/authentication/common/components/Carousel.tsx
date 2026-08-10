@@ -84,10 +84,8 @@ const CarouselDots = (props: CarouselDotsProps) => {
       accessibilityElementsHidden={false}
       importantForAccessibility="yes"
       onTouchEnd={(_: GestureResponderEvent) => {
-        // eslint-disable-next-line functional/immutable-data
         dotTouchCount.current++;
         if (dotTouchCount.current === 3) {
-          // eslint-disable-next-line functional/immutable-data
           dotTouchCount.current = 0;
           dotEasterEggCallback?.();
         }

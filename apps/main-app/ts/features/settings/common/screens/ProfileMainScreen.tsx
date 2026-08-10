@@ -143,7 +143,6 @@ const ProfileMainScreenFC = () => {
       setTapsOnAppVersion(0);
       show(I18n.t("profile.main.developerModeOn"));
     } else {
-      // eslint-disable-next-line functional/immutable-data
       idResetTap.current = setInterval(
         resetAppTapCounter,
         RESET_COUNTER_TIMEOUT

@@ -195,7 +195,6 @@ export const IOButton = ({
   const isMounted = useRef<boolean>(false);
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     isMounted.current = true;
   }, []);
 
