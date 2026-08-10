@@ -274,7 +274,7 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
 });
 
 describe("enrichFimsRedirectUrl", () => {
-  const redirectUrl = "https://rp.example.it/fims/landing";
+  const redirectUrl = "https://trusted.test/callback";
 
   it("should return the redirect URL when Mixpanel is disabled", () => {
     testSaga(enrichFimsRedirectUrl, redirectUrl)

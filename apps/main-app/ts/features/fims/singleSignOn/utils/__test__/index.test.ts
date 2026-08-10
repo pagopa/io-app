@@ -65,7 +65,7 @@ describe("isIoFIMSLink", () => {
 });
 
 describe("enrichFimsDestinationUrl", () => {
-  const allowedUrl = "https://rp.example.it/fims/landing";
+  const allowedUrl = "https://trusted.test/callback";
   const deviceId = "mixpanel-device-id";
 
   it.each([
@@ -83,10 +83,10 @@ describe("enrichFimsDestinationUrl", () => {
     },
     {
       name: "the allowlist uses a different case and trailing slash",
-      destinationUrl: "https://RP.EXAMPLE.IT/FIMS/LANDING?token=one-shot",
-      trackingEnrichedUrls: ["https://rp.example.it/fims/landing/"],
+      destinationUrl: "https://TRUSTED.TEST/CALLBACK?token=one-shot",
+      trackingEnrichedUrls: ["https://trusted.test/callback/"],
       expectedUrl:
-        "https://RP.EXAMPLE.IT/FIMS/LANDING?token=one-shot&mixpanelId=mixpanel-device-id"
+        "https://TRUSTED.TEST/CALLBACK?token=one-shot&mixpanelId=mixpanel-device-id"
     },
     {
       name: "the allowlist URL contains query parameters and a fragment",
@@ -104,10 +104,10 @@ describe("enrichFimsDestinationUrl", () => {
   );
 
   it.each([
-    "https://rp.example.it/fims/another-path",
-    "https://attacker.example/https://rp.example.it/fims/landing",
-    "https://attacker.example/?redirect=https://rp.example.it/fims/landing",
-    "https://attacker.example/#https://rp.example.it/fims/landing",
+    "https://trusted.test/another-path",
+    `https://attacker.test/${allowedUrl}`,
+    `https://attacker.test/?redirect=${allowedUrl}`,
+    `https://attacker.test/#${allowedUrl}`,
     "not-a-url"
   ])("returns an unchanged URL when it is not allowed: %s", destinationUrl => {
     expect(
@@ -122,14 +122,11 @@ describe("enrichFimsDestinationUrl", () => {
     },
     {
       name: "the only allowlist URL does not match",
-      trackingEnrichedUrls: ["https://rp.example.it/fims/another-path"]
+      trackingEnrichedUrls: ["https://trusted.test/another-path"]
     },
     {
       name: "only the second allowlist URL matches",
-      trackingEnrichedUrls: [
-        "https://rp.example.it/fims/another-path",
-        allowedUrl
-      ]
+      trackingEnrichedUrls: ["https://trusted.test/another-path", allowedUrl]
     }
   ])("handles $name", ({ trackingEnrichedUrls }) => {
     const expectedUrl = trackingEnrichedUrls.includes(allowedUrl)

@@ -341,7 +341,7 @@ describe("remoteConfig", () => {
 
   describe("fimsTrackingEnrichedUrlsSelector", () => {
     it("should return the configured URL allowlist", () => {
-      const trackingEnrichedUrls = ["https://rp.example.it/fims/landing"];
+      const trackingEnrichedUrls = ["https://trusted.test/callback"];
       const state = {
         remoteConfig: O.some({
           fims: { trackingEnrichedUrls }
