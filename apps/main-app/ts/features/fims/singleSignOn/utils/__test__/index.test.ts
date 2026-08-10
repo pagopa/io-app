@@ -111,4 +111,30 @@ describe("enrichFimsDestinationUrl", () => {
       ).toBe(destinationUrl);
     }
   );
+
+  it.each([
+    {
+      name: "the allowlist is empty",
+      trackingEnrichedUrls: []
+    },
+    {
+      name: "the only allowlist URL does not match",
+      trackingEnrichedUrls: ["https://rp.example.it/fims/another-path"]
+    },
+    {
+      name: "only the second allowlist URL matches",
+      trackingEnrichedUrls: [
+        "https://rp.example.it/fims/another-path",
+        allowedUrl
+      ]
+    }
+  ])("handles $name", ({ trackingEnrichedUrls }) => {
+    const expectedUrl = trackingEnrichedUrls.includes(allowedUrl)
+      ? `${allowedUrl}?mixpanelId=${deviceId}`
+      : allowedUrl;
+
+    expect(
+      enrichFimsDestinationUrl(allowedUrl, trackingEnrichedUrls, deviceId)
+    ).toBe(expectedUrl);
+  });
 });
