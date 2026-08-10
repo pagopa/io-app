@@ -6,7 +6,6 @@
  */
 
 import * as SecureStore from "expo-secure-store";
-import * as O from "fp-ts/lib/Option";
 
 import { PinString } from "../types/PinString";
 
@@ -36,12 +35,12 @@ export async function deleteSecureItem(key: string): Promise<void> {
 /**
  * Returns the unlock code from the secure store.
  */
-export async function getPin(): Promise<O.Option<PinString>> {
+export async function getPin(): Promise<PinString | undefined> {
   const value = await SecureStore.getItemAsync(PIN_KEY, DEFAULT_OPTIONS);
-  if (value !== null && value.length > 0) {
-    return O.fromEither(PinString.decode(value));
+  if (value !== null && PinString.is(value)) {
+    return value;
   }
-  return O.none;
+  return undefined;
 }
 
 /**
