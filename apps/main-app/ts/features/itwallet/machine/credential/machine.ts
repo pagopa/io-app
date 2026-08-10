@@ -102,7 +102,6 @@ export const itwCredentialIssuanceMachine = setup({
   guards: {
     isSessionExpired: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
-    isStatusError: notImplemented,
     isEidExpired: notImplemented,
     hasCredentialIntroContent: notImplemented
   }

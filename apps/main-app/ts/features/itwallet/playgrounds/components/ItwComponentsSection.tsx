@@ -17,7 +17,7 @@ import { ItwBrandedSkiaGradient } from "../../common/components/ItwBrandedSkiaGr
 import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
-import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
@@ -160,7 +160,7 @@ const ItwSkeumorphicCredentialItem = ({
 }) => {
   const navigation = useIONavigation();
   const [isFlipped, setFlipped] = useState(false);
-  const { status = "valid" } = getCredentialStatusObject(credential);
+  const status = getCredentialStatus(credential);
 
   const handleOnPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {

@@ -30,7 +30,7 @@
   <!-- Force removal of READ_MEDIA_IMAGES since the expo-screen-capture is not using the specific callback https://docs.expo.dev/versions/latest/sdk/screen-capture/#example-callback-for-screen-capture -->
   <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" tools:node="remove"/>
 
-  <!-- Required by react-native-calendar-events -->
+  <!-- Required by expo-calendar -->
   <uses-permission android:name="android.permission.READ_CALENDAR" />
   <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 

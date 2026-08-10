@@ -76,7 +76,6 @@ const ReceiptListScreen = () => {
   };
 
   const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
-    // eslint-disable-next-line functional/immutable-data
     scrollTranslationY.value = contentOffset.y;
   });
 
