@@ -68,13 +68,11 @@ export const useItwEidLifecycleAlertTracking = ({
     const onFocus = () => {
       if (!hasTrackedRef.current) {
         trackItwBannerVisualized(trackingProperties);
-        // eslint-disable-next-line functional/immutable-data
         hasTrackedRef.current = true;
       }
     };
 
     const onBlur = () => {
-      // eslint-disable-next-line functional/immutable-data
       hasTrackedRef.current = false;
     };
 

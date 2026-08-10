@@ -164,7 +164,6 @@ export const WrappedListItemMessage = ({
           // a dobule navigation towards the message details
           return;
         }
-        // eslint-disable-next-line functional/immutable-data
         lastNavigationDate.current = now;
 
         if (isSearchSource(source)) {
