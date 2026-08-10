@@ -300,20 +300,6 @@ describe("enrichFimsRedirectUrl", () => {
       .isDone();
   });
 
-  it("should return the redirect URL when retrieving the device ID fails", () => {
-    testSaga(enrichFimsRedirectUrl, redirectUrl)
-      .next()
-      .select(fimsTrackingEnrichedUrlsSelector)
-      .next([redirectUrl])
-      .select(isMixpanelEnabled)
-      .next(true)
-      .call(getDeviceId)
-      .throw(new Error("Device ID unavailable"))
-      .returns(redirectUrl)
-      .next()
-      .isDone();
-  });
-
   it("should enrich an allowed redirect URL", () => {
     const deviceId = "mixpanel-device-id";
     testSaga(enrichFimsRedirectUrl, redirectUrl)

@@ -438,15 +438,11 @@ export function* enrichFimsRedirectUrl(
     return redirectUrl;
   }
 
-  try {
-    const mixpanelDeviceId = yield* call(getDeviceId);
-    return yield* call(
-      enrichFimsDestinationUrl,
-      redirectUrl,
-      trackingEnrichedUrls,
-      mixpanelDeviceId
-    );
-  } catch {
-    return redirectUrl;
-  }
+  const mixpanelDeviceId = yield* call(getDeviceId);
+  return yield* call(
+    enrichFimsDestinationUrl,
+    redirectUrl,
+    trackingEnrichedUrls,
+    mixpanelDeviceId
+  );
 }
