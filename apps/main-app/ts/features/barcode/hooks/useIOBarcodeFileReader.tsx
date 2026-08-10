@@ -1,13 +1,10 @@
 import { Divider, ListItemNav, VSpacer } from "@io-app/design-system";
 import {
+  DocumentPickerAsset,
   DocumentPickerOptions,
-  DocumentPickerResponse,
-  NonEmptyArray,
-  pick,
-  types
-} from "@react-native-documents/picker";
+  getDocumentAsync
+} from "expo-document-picker";
 import * as A from "fp-ts/lib/Array";
-import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
@@ -101,9 +98,8 @@ const imageLibraryOptions: ImageLibraryOptions = {
 };
 
 const documentPickerOptions: DocumentPickerOptions = {
-  presentationStyle: "fullScreen",
-  mode: "open",
-  type: [types.pdf]
+  type: "application/pdf",
+  copyToCacheDirectory: true
 };
 
 const useIOBarcodeFileReader = ({
@@ -186,12 +182,10 @@ const useIOBarcodeFileReader = ({
   /**
    * Handles the Barcode decoding from a PDF document
    */
-  const onDocumentSelected = async (
-    documentPickerResponse: NonEmptyArray<DocumentPickerResponse>
-  ) => {
-    const { uri, type } = documentPickerResponse[0];
+  const onDocumentSelected = async (asset: DocumentPickerAsset) => {
+    const { uri, mimeType } = asset;
 
-    if (type !== "application/pdf") {
+    if (mimeType !== "application/pdf") {
       // If the file is not a PDF document, show an error
       return onBarcodeError({ reason: "INVALID_FILE" }, "file");
     }
@@ -237,11 +231,16 @@ const useIOBarcodeFileReader = ({
    */
   const showDocumentPicker = async () => {
     setIsLoading(true);
-    await pipe(
-      TE.tryCatch(() => pick(documentPickerOptions), E.toError),
-      TE.map(onDocumentSelected),
-      TE.mapLeft(() => setIsLoading(false))
-    )();
+    try {
+      const result = await getDocumentAsync(documentPickerOptions);
+      if (result.canceled || result.assets.length === 0) {
+        setIsLoading(false);
+        return;
+      }
+      void onDocumentSelected(result.assets[0]);
+    } catch {
+      setIsLoading(false);
+    }
   };
 
   const handleImageUploadPressed = async () => {
