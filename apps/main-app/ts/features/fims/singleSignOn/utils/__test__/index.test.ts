@@ -109,14 +109,11 @@ describe("enrichFimsDestinationUrl", () => {
     "https://attacker.example/?redirect=https://rp.example.it/fims/landing",
     "https://attacker.example/#https://rp.example.it/fims/landing",
     "not-a-url"
-  ])(
-    "returns an unchanged URL when it is not allowed: %s",
-    destinationUrl => {
-      expect(
-        enrichFimsDestinationUrl(destinationUrl, [allowedUrl], deviceId)
-      ).toBe(destinationUrl);
-    }
-  );
+  ])("returns an unchanged URL when it is not allowed: %s", destinationUrl => {
+    expect(
+      enrichFimsDestinationUrl(destinationUrl, [allowedUrl], deviceId)
+    ).toBe(destinationUrl);
+  });
 
   it.each([
     {
