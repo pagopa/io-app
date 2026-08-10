@@ -103,7 +103,13 @@ describe("enrichFimsDestinationUrl", () => {
     }
   );
 
-  it.each(["https://rp.example.it/fims/another-path", "not-a-url"])(
+  it.each([
+    "https://rp.example.it/fims/another-path",
+    "https://attacker.example/https://rp.example.it/fims/landing",
+    "https://attacker.example/?redirect=https://rp.example.it/fims/landing",
+    "https://attacker.example/#https://rp.example.it/fims/landing",
+    "not-a-url"
+  ])(
     "returns an unchanged URL when it is not allowed: %s",
     destinationUrl => {
       expect(
