@@ -118,21 +118,20 @@ describe("enrichFimsDestinationUrl", () => {
   it.each([
     {
       name: "the allowlist is empty",
-      trackingEnrichedUrls: []
+      trackingEnrichedUrls: [],
+      expectedUrl: allowedUrl
     },
     {
       name: "the only allowlist URL does not match",
-      trackingEnrichedUrls: ["https://trusted.test/another-path"]
+      trackingEnrichedUrls: ["https://trusted.test/another-path"],
+      expectedUrl: allowedUrl
     },
     {
       name: "only the second allowlist URL matches",
-      trackingEnrichedUrls: ["https://trusted.test/another-path", allowedUrl]
+      trackingEnrichedUrls: ["https://trusted.test/another-path", allowedUrl],
+      expectedUrl: `${allowedUrl}?mixpanelId=${deviceId}`
     }
-  ])("handles $name", ({ trackingEnrichedUrls }) => {
-    const expectedUrl = trackingEnrichedUrls.includes(allowedUrl)
-      ? `${allowedUrl}?mixpanelId=${deviceId}`
-      : allowedUrl;
-
+  ])("handles $name", ({ trackingEnrichedUrls, expectedUrl }) => {
     expect(
       enrichFimsDestinationUrl(allowedUrl, trackingEnrichedUrls, deviceId)
     ).toBe(expectedUrl);
