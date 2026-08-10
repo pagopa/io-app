@@ -33,8 +33,8 @@ patchedDependencies:
   "@react-navigation/stack@6.4.1": "patches/@react-navigation__stack.patch"
 
 allowBuilds:
-  '@shopify/react-native-skia': true
-  '@swc/core': true
+  "@shopify/react-native-skia": true
+  "@swc/core": true
   core-js: true
   lefthook: true
   nx: true
