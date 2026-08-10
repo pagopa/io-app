@@ -368,6 +368,9 @@ importers:
       expo-image-picker:
         specifier: ~55.0.22
         version: 55.0.22(expo@55.0.26)
+      expo-local-authentication:
+        specifier: ~55.0.16
+        version: 55.0.16(expo@55.0.26)
       expo-notifications:
         specifier: ~55.0.23
         version: 55.0.23(expo@55.0.26)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)(typescript@6.0.3)
@@ -458,9 +461,6 @@ importers:
       react-native-exception-handler:
         specifier: ^2.10.8
         version: 2.10.8(patch_hash=fd242598519fc7e652937710695c34417af98515385035ef8db1bb9921e896a8)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
-      react-native-fingerprint-scanner:
-        specifier: git+https://github.com/hieuvp/react-native-fingerprint-scanner.git#9cecc0db326471c571553ea85f7c016fee2f803d
-        version: https://codeload.github.com/hieuvp/react-native-fingerprint-scanner/tar.gz/9cecc0db326471c571553ea85f7c016fee2f803d(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))
       react-native-fs:
         specifier: ^2.18.0
         version: 2.18.0(react-native-windows@0.80.1(@babel/core@7.29.0)(@types/react@19.2.16)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)(tslib@1.14.1)(typescript@6.0.3))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))
@@ -6120,6 +6120,11 @@ packages:
       expo: '*'
       react: '*'
 
+  expo-local-authentication@55.0.16:
+    resolution: {integrity: sha512-609BLOspLqv2iwRFQkbNiCDtLtLJG/SdRD6yKy7FEDO95wHgPpuEdh4uE3h0orO5cQZzUOPlcgLEIDW7wq3uRw==}
+    peerDependencies:
+      expo: '*'
+
   expo-modules-autolinking@55.0.24:
     resolution: {integrity: sha512-A0OyMbTPZqibYrwqj98HFYTNSvl4NSS4Zt+R5A8qiAx3nM0mc81e6Iqw7Wl4J8M/t36lJ+cT3WuVTz5Oszj6Hw==}
     hasBin: true
@@ -9306,12 +9311,6 @@ packages:
     peerDependencies:
       react: '*'
       react-native: '*'
-
-  react-native-fingerprint-scanner@https://codeload.github.com/hieuvp/react-native-fingerprint-scanner/tar.gz/9cecc0db326471c571553ea85f7c016fee2f803d:
-    resolution: {tarball: https://codeload.github.com/hieuvp/react-native-fingerprint-scanner/tar.gz/9cecc0db326471c571553ea85f7c016fee2f803d}
-    version: 6.0.0
-    peerDependencies:
-      react-native: '>=0.60 <1.0.0'
 
   react-native-fs@2.18.0:
     resolution: {integrity: sha512-9iQhkUNnN2JNED0in06JwZy88YEVyIGKWz4KLlQYxa5Y2U0U2AZh9FUHtA04oWj+xt2LlHh0LFPCzhmNsAsUDg==}
@@ -18015,6 +18014,11 @@ snapshots:
       expo: 55.0.26(@babel/core@7.29.0)(@expo/dom-webview@55.0.6)(react-native-webview@13.16.0(patch_hash=f50190f7feff67b44970713f309dbb5962fdcbd2e85b7d4ae8d248d4f1c06b0e)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0))(react-native-worklets@0.8.3(@babel/core@7.29.0)(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)(typescript@6.0.3)
       react: 19.2.0
 
+  expo-local-authentication@55.0.16(expo@55.0.26):
+    dependencies:
+      expo: 55.0.26(@babel/core@7.29.0)(@expo/dom-webview@55.0.6)(react-native-webview@13.16.0(patch_hash=f50190f7feff67b44970713f309dbb5962fdcbd2e85b7d4ae8d248d4f1c06b0e)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0))(react-native-worklets@0.8.3(@babel/core@7.29.0)(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)(typescript@6.0.3)
+      invariant: 2.2.4
+
   expo-modules-autolinking@55.0.24(typescript@6.0.3):
     dependencies:
       '@expo/require-utils': 55.0.5(typescript@6.0.3)
@@ -22366,10 +22370,6 @@ snapshots:
   react-native-exception-handler@2.10.8(patch_hash=fd242598519fc7e652937710695c34417af98515385035ef8db1bb9921e896a8)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0):
     dependencies:
       react: 19.2.0
-      react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
-
-  react-native-fingerprint-scanner@https://codeload.github.com/hieuvp/react-native-fingerprint-scanner/tar.gz/9cecc0db326471c571553ea85f7c016fee2f803d(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)):
-    dependencies:
       react-native: 0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)
 
   react-native-fs@2.18.0(react-native-windows@0.80.1(@babel/core@7.29.0)(@types/react@19.2.16)(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)(tslib@1.14.1)(typescript@6.0.3))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0)):
