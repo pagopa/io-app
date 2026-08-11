@@ -83,7 +83,7 @@ const PaymentConfig = t.interface({
 export type PaymentConfig = t.TypeOf<typeof PaymentConfig>;
 
 const ErrorCodes = WithinRangeInteger(400, 600);
-export type ErrorCodes = t.TypeOf<typeof ErrorCodes>;
+type ErrorCodes = t.TypeOf<typeof ErrorCodes>;
 const responseError = t.interface({
   // the probability that server will response with an error
   chance: WithinRangeNumber(0, 1),

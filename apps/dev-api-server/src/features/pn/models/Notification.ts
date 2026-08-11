@@ -18,7 +18,14 @@ export interface NotificationHistory {
   relatedTimelineElements: Array<string>;
   status: NotificationHistoryStatus;
 }
-export type NotificationHistoryStatus =
+export interface NotificationRecipient {
+  denomination: string;
+  paymentId: string | undefined;
+  recipientFiscalCode: string;
+  type: NotificationRecipientType;
+}
+
+type NotificationHistoryStatus =
   | "ACCEPTED"
   | "CANCELLED"
   | "DELIVERED"
@@ -30,11 +37,4 @@ export type NotificationHistoryStatus =
   | "UNREACHABLE"
   | "VIEWED";
 
-export interface NotificationRecipient {
-  denomination: string;
-  paymentId: string | undefined;
-  recipientFiscalCode: string;
-  type: NotificationRecipientType;
-}
-
-export type NotificationRecipientType = "PF" | "PG";
+type NotificationRecipientType = "PF" | "PG";
