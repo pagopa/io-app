@@ -81,9 +81,9 @@ const persistConfig: PersistConfig = {
   version: CURRENT_REDUX_WALLET_PLACEHOLDERS_STORE_VERSION
 };
 
-export const walletReducerPersistor = persistReducer<
-  WalletPlaceholdersState,
-  Action
->(persistConfig, reducer);
+const walletReducerPersistor = persistReducer<WalletPlaceholdersState, Action>(
+  persistConfig,
+  reducer
+);
 
 export default walletReducerPersistor;

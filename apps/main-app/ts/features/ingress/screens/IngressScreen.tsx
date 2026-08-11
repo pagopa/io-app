@@ -14,7 +14,7 @@ import { InitializedProfile } from "../../../../definitions/identity/Initialized
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { versionInfoDataSelector } from "../../../common/versionInfo/store/reducers/versionInfo";
 import { IOVersionInfo } from "../../../common/versionInfo/types/IOVersionInfo";
-import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
 import { startupLoadSuccess } from "../../../store/actions/startup";
