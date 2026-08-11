@@ -123,10 +123,6 @@ GeneratedDotEnv.m
 
 # dev-api-server local artifacts
 apps/dev-api-server/pnpm-debug.log
-apps/dev-api-server/coverage/
-apps/dev-api-server/config/
-apps/dev-api-server/generated/
 apps/dev-api-server/*.js
 apps/dev-api-server/*.js.map
 apps/dev-api-server/local.*
-apps/dev-api-server/.vscode
