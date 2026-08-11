@@ -211,7 +211,7 @@
     "fs-extra": "^7.0.0",
     "jest": "catalog:",
     "mockdate": "^3.0.2",
-    "mockttp": "2.4.0",
+    "mockttp": "4.6.0",
     "node-fetch": "^2.6.7",
     "plist": "^3.0.5",
     "react-native-get-random-values": "^1.11.0",
