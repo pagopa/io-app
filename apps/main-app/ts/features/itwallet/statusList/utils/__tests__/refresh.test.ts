@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { STORAGE_KEY_LAST_CHECK_TIME } from "../consts";
 import {
+  ensureFreshStatusList,
   refreshStaleEntries,
   refreshStatusListToken,
   refreshWithBoundedParallelism
@@ -246,5 +247,58 @@ describe("refreshStaleEntries", () => {
     await expect(
       AsyncStorage.getItem(STORAGE_KEY_LAST_CHECK_TIME)
     ).resolves.toBe(JSON.stringify([now]));
+  });
+});
+
+describe("ensureFreshStatusList", () => {
+  const now = 1690000000000;
+
+  beforeEach(async () => {
+    jest.restoreAllMocks();
+    mockGetByUri.mockReset();
+    await AsyncStorage.clear();
+    jest.spyOn(Date, "now").mockReturnValue(now);
+  });
+
+  it("returns the cached token without refreshing it when it is fresh", async () => {
+    const payload = makeValidPayload(URI, { exp: now / 1000 + 3600 });
+    await StatusListRepository.upsert(URI, payload);
+
+    await expect(ensureFreshStatusList(context, URI)).resolves.toMatchObject({
+      sub: URI
+    });
+    expect(mockGetByUri).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    { name: "stale", cached: makeValidPayload(URI, { exp: 1000 }) },
+    { name: "missing", cached: undefined }
+  ])("refreshes the token when the cached one is $name", async ({ cached }) => {
+    if (cached) {
+      await StatusListRepository.upsert(URI, cached);
+    }
+    const refreshed = makeValidPayload(URI, { exp: now / 1000 + 3600 });
+    mockStatusListToken(fakeJwt(refreshed));
+
+    await expect(ensureFreshStatusList(context, URI)).resolves.toMatchObject({
+      sub: URI,
+      exp: refreshed.exp
+    });
+    expect(mockGetByUri).toHaveBeenCalledWith(URI);
+  });
+
+  it.each([
+    { name: "the refresh fails", cached: undefined },
+    {
+      name: "the refreshed token is still stale",
+      cached: makeValidPayload(URI, { exp: 1000 })
+    }
+  ])("throws when $name", async ({ cached }) => {
+    if (cached) {
+      await StatusListRepository.upsert(URI, cached);
+    }
+    mockGetByUri.mockRejectedValue(new Error("status list fetch failed"));
+
+    await expect(ensureFreshStatusList(context, URI)).rejects.toThrow();
   });
 });
