@@ -1,9 +1,9 @@
+import { FeaturedService } from "@io-app/api-types/generated/definitions/services/FeaturedService";
+import { FeaturedServices } from "@io-app/api-types/generated/definitions/services/FeaturedServices";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { FeaturedService } from "../../../../../../definitions/services/FeaturedService";
-import { FeaturedServices } from "../../../../../../definitions/services/FeaturedServices";
 import { servicesClientManager } from "../../../../../api/ServicesClientManager";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { featuredServicesGet } from "../../store/actions";

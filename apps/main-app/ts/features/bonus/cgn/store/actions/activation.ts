@@ -1,10 +1,10 @@
+import { CgnActivationDetail } from "@io-app/api-types/generated/definitions/cgn/CgnActivationDetail";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
 import { CgnActivationProgressEnum } from "../reducers/activation";
 
 type ActivationStatus = {

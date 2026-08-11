@@ -1,3 +1,4 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { Divider, IOVisualCostants, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { StackActions } from "@react-navigation/native";
@@ -5,7 +6,6 @@ import I18n from "i18next";
 import { ComponentProps, useEffect, useState } from "react";
 import { FlatList } from "react-native";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";

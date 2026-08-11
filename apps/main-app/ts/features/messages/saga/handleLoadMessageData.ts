@@ -1,3 +1,8 @@
+import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
+import { RemoteContentDetails } from "@io-app/api-types/generated/definitions/communication/RemoteContentDetails";
+import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as B from "fp-ts/lib/boolean";
@@ -7,11 +12,6 @@ import * as O from "fp-ts/lib/Option";
 import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 
-import { TagEnum } from "../../../../definitions/communication/MessageCategoryPN";
-import { RemoteContentDetails } from "../../../../definitions/communication/RemoteContentDetails";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/communication/ThirdPartyMessageWithContent";
-import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
 import { isFIMSLink } from "../../fims/singleSignOn/utils";

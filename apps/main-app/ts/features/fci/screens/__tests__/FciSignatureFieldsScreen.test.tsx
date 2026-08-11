@@ -1,6 +1,6 @@
+import { DocumentDetailView } from "@io-app/api-types/generated/definitions/fci/DocumentDetailView";
 import { createStore, Store } from "redux";
 
-import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";

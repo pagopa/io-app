@@ -1,10 +1,10 @@
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
 
-import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
 import { applicationChangeState } from "../../../../../store/actions/application";
 // import WebView from "react-native-webview";
 // import {
