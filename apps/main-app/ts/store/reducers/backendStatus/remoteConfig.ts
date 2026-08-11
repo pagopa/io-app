@@ -220,6 +220,12 @@ export const fimsServiceConfiguration = createSelector(
     )
 );
 
+export const fimsTrackingEnrichedUrlsSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): ReadonlyArray<string> =>
+    O.toUndefined(remoteConfig)?.fims.trackingEnrichedUrls ?? emptyArray
+);
+
 /**
  * Checks if a service should share iOS cookies in the FIMS flow.
  * Returns true if the serviceId is in the iOSCookieDisabledServiceIds list,
