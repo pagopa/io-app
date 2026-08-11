@@ -23,11 +23,11 @@ jobs:
         uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
       - id: run-dev-api-server-affected-checks
         run: |
-          pnpm nx affected -t generate --projects=@io-app/dev-api-server
-          pnpm nx affected -t tsc-noemit --projects=@io-app/dev-api-server
-          pnpm nx affected -t lint --projects=@io-app/dev-api-server
-          pnpm nx affected -t prettier:check --projects=@io-app/dev-api-server
-          pnpm nx affected -t test:ci --projects=@io-app/dev-api-server
+          pnpm nx affected -t generate --projects=@io-app/dev-api-server --excludeTaskDependencies
+          pnpm nx affected -t tsc-noemit --projects=@io-app/dev-api-server --excludeTaskDependencies
+          pnpm nx affected -t lint --projects=@io-app/dev-api-server --excludeTaskDependencies
+          pnpm nx affected -t prettier:check --projects=@io-app/dev-api-server --excludeTaskDependencies
+          pnpm nx affected -t test:ci --projects=@io-app/dev-api-server --excludeTaskDependencies
       - id: coverage
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
