@@ -25,6 +25,9 @@ import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
 jest.mock("expo-screen-capture", () => ({}));
+jest.mock("expo-image-picker", () => ({
+  launchImageLibraryAsync: jest.fn().mockResolvedValue({ canceled: true, assets: null })
+}));
 jest.mock("expo-background-task", () => ({
   BackgroundTaskStatus: { Available: 2, Restricted: 1 },
   BackgroundTaskResult: { Success: 1, Failed: 2 },
@@ -77,6 +80,9 @@ jest.mock("react-native-quick-crypto", () => ({}));
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("expo-notifications", () => ({}));
+jest.mock("expo-document-picker", () => ({
+  getDocumentAsync: jest.fn()
+}));
 jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("expo-sharing", () => ({ shareAsync: jest.fn() }));
 jest.mock("expo-clipboard", () => mockClipboard);
