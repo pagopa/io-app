@@ -19,14 +19,11 @@ runs:
           ${{ runner.os }}-nx-cache-
     - id: generate-api-client
       if: inputs.generate-api == 'true'
-      # dev-api-server has its own generated definitions, separate from main-app's
-      run: |
-        pnpm nx run main-app:generate
-        pnpm nx run @io-app/dev-api-server:generate
+      run: pnpm nx run @io-app/api-types:generate
       shell: bash
     - id: upload-clients-artifact
       if: inputs.generate-api == 'true'
       uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
       with:
         name: api-client
-        path: apps/main-app/definitions/
+        path: libs/api-types/generated/
