@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <script>
+    function printReferrer(){
+      console.log("referrer",document.referrer)
+      document.getElementById("referrer").innerText = document.referrer;
+    }
+  </script>
+  <style>
+      .item{
+          border: 1px solid gray;
+          padding: 8px;
+          margin-bottom: 12px;
+      }
+  </style>
+</head>
+<body>
+<h1>Merchants Landing Page</h1>
+<div class="item">
+  <h3>Referrer header</h3>
+  <div id="referrer"></div>
+  <script>printReferrer();</script>
+</div>
+</body>
+</html>
