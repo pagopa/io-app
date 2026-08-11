@@ -35,17 +35,17 @@ describe("ItwCardOnboardingL2Screen", () => {
       .mockReturnValue((() => mockSelectorResult) as any);
   });
 
-  it("it should render the screen correctly", () => {
+  it("should render the screen correctly", () => {
     const component = renderComponent();
     expect(component).toBeTruthy();
   });
 
-  it("it should render the restricted mode section", () => {
+  it("should render the restricted mode section", () => {
     const { getByTestId } = renderComponent();
     expect(getByTestId("restricted-mode-section-testID")).toBeTruthy();
   });
 
-  it("it should render restricted credentials modules", () => {
+  it("should render restricted credentials modules", () => {
     const { getByTestId } = renderComponent();
 
     expect(
@@ -53,7 +53,7 @@ describe("ItwCardOnboardingL2Screen", () => {
     ).toBeTruthy();
   });
 
-  it("it should navigate to L3 onboarding page=1 when add bonus button is pressed", () => {
+  it("should navigate to L3 onboarding page=1 when add bonus button is pressed", () => {
     const { getByTestId } = renderComponent();
 
     act(() => {

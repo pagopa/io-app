@@ -7,7 +7,7 @@ import {
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 
 describe("IDPay screen details utils tests", () => {
-  describe("IdPayCardStatus ", () => {
+  describe("IdPayCardStatus", () => {
     it("should render ACTIVE status correctly", () => {
       const initiative: InitiativeDTO = {
         initiativeId: "1",
