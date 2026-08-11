@@ -218,6 +218,9 @@ importers:
 
   apps/dev-api-server:
     dependencies:
+      '@io-app/api-types':
+        specifier: workspace:*
+        version: link:../../libs/api-types
       '@mattrglobal/http-signatures':
         specifier: ^4.0.1
         version: 4.2.0
@@ -958,6 +961,25 @@ importers:
       typescript-eslint:
         specifier: ^8.65.0
         version: 8.65.0(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)
+
+  libs/api-types:
+    dependencies:
+      '@pagopa/ts-commons':
+        specifier: ^10.15.0
+        version: 10.15.0
+      fp-ts:
+        specifier: ^2.16.9
+        version: 2.16.11
+      io-ts:
+        specifier: ^2.2.22
+        version: 2.2.22(fp-ts@2.16.11)
+    devDependencies:
+      '@pagopa/openapi-codegen-ts':
+        specifier: ^14.0.0
+        version: 14.2.0(chokidar@3.6.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
 
   libs/design-system:
     dependencies:
