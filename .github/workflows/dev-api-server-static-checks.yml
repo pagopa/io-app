@@ -21,7 +21,7 @@ jobs:
         uses: ./.github/actions/setup-composite
       - id: run-dev-api-server-checks
         run: |
-          pnpm nx run @io-app/dev-api-server:generate
+          pnpm nx run @io-app/api-types:generate
           pnpm nx run @io-app/dev-api-server:tsc-noemit
           pnpm nx run @io-app/dev-api-server:lint
           pnpm nx run @io-app/dev-api-server:prettier:check
