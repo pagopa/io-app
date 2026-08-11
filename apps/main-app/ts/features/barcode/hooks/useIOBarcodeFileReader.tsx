@@ -4,6 +4,7 @@ import {
   DocumentPickerOptions,
   getDocumentAsync
 } from "expo-document-picker";
+import * as ImagePicker from "expo-image-picker";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -12,11 +13,6 @@ import * as TE from "fp-ts/lib/TaskEither";
 import I18n from "i18next";
 import { JSX, useState } from "react";
 import { Alert, Linking, View } from "react-native";
-import {
-  ImageLibraryOptions,
-  ImagePickerResponse,
-  launchImageLibrary
-} from "react-native-image-picker";
 
 import { useIOStore } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -92,9 +88,9 @@ type IOBarcodeFileReaderConfiguration = {
   ) => void;
 };
 
-const imageLibraryOptions: ImageLibraryOptions = {
-  mediaType: "photo",
-  includeBase64: true
+const imageLibraryOptions: ImagePicker.ImagePickerOptions = {
+  mediaTypes: "images",
+  base64: true
 };
 
 const documentPickerOptions: DocumentPickerOptions = {
@@ -126,35 +122,16 @@ const useIOBarcodeFileReader = ({
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
    */
-  const onImageSelected = async (response: ImagePickerResponse) => {
-    if (response.didCancel) {
+  const onImageSelected = async (result: ImagePicker.ImagePickerResult) => {
+    if (result.canceled) {
       setIsLoading(false);
-      return;
-    }
-
-    if (response.errorCode) {
-      Alert.alert(
-        I18n.t("wallet.QRtoPay.settingsAlert.title"),
-        I18n.t("wallet.QRtoPay.settingsAlert.message"),
-        [
-          {
-            text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
-            onPress: () => void Linking.openSettings()
-          }
-        ],
-        { cancelable: false }
-      );
       return;
     }
 
     setIsLoading(true);
 
     await pipe(
-      response.assets,
+      result.assets,
       O.fromNullable,
       O.chain(A.head),
       O.map(({ base64 }) => base64),
@@ -176,7 +153,28 @@ const useIOBarcodeFileReader = ({
   const showImagePicker = async () => {
     setIsLoading(true);
 
-    void launchImageLibrary(imageLibraryOptions, onImageSelected);
+    try {
+      const result =
+        await ImagePicker.launchImageLibraryAsync(imageLibraryOptions);
+      await onImageSelected(result);
+    } catch {
+      setIsLoading(false);
+      Alert.alert(
+        I18n.t("wallet.QRtoPay.settingsAlert.title"),
+        I18n.t("wallet.QRtoPay.settingsAlert.message"),
+        [
+          {
+            text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
+            onPress: () => void Linking.openSettings()
+          }
+        ],
+        { cancelable: false }
+      );
+    }
   };
 
   /**
