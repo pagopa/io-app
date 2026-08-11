@@ -89,12 +89,6 @@ enum ButtonPressedEnum {
   OPEN_NEW_REQUEST = "OPEN_NEW_REQUEST"
 }
 
-export type ContextualHelpData = {
-  content: string;
-  faqs?: ReadonlyArray<Faq>;
-  title: string;
-};
-
 export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
 
 type FaqManagerProps = Pick<ZendeskStartPayload, "startingRoute"> & {

@@ -89,37 +89,6 @@ export const idpsRemoteValueSelector = createSelector(
 );
 
 /**
- * return an option with Idp contextual help data if they are loaded and defined
- * @param id
- */
-export const idpContextualHelpDataFromIdSelector = (
-  id: SpidIdp["id"] | undefined
-) =>
-  createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, O.Option<Idp>>(
-    contextualHelpDataSelector,
-    contextualHelpData =>
-      pipe(
-        id,
-        O.fromNullable,
-        O.fold(
-          () => O.none,
-          () =>
-            pot.getOrElse(
-              pot.map(contextualHelpData, data => {
-                const locale = getRemoteLocale();
-                return pipe(
-                  data[locale],
-                  O.fromNullable,
-                  O.chain(l => O.fromNullable(l.idps[id as keyof IdpData]))
-                );
-              }),
-              O.none
-            )
-        )
-      )
-  );
-
-/**
  * return a pot with screen contextual help data if they are loaded and defined otherwise
  * @param id
  */
