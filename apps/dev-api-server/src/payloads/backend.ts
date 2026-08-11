@@ -1,6 +1,7 @@
-import { ToolEnum } from "../../generated/definitions/content/AssistanceToolConfig";
-import { BackendStatus } from "../../generated/definitions/content/BackendStatus";
-import { LevelEnum } from "../../generated/definitions/content/SectionStatus";
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { LevelEnum } from "@io-app/api-types/generated/definitions/content/SectionStatus";
+
 import { baseRelyingPartyPath } from "../features/fims/services/relyingPartyService";
 import {
   sendOptInServiceId,
@@ -411,12 +412,6 @@ export const backendStatus: BackendStatus = {
         android: "3.0.0.0"
       },
       feedback_uri: "https://pagopa.qualtrics.com/jfe/form/SV_0VCZTkYbfozt9ki"
-    },
-    ioMarkdown: {
-      min_app_version: {
-        ios: "3.0.0.0",
-        android: "3.0.0.0"
-      }
     },
     zendeskCacBanner: {
       min_app_version: {
