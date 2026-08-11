@@ -18,7 +18,6 @@ import {
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { idpsRemoteValueSelector } from "../../../../../store/reducers/content";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { idps as idpsFallback, SpidIdp } from "../../../../../utils/idps";
 import {
@@ -34,11 +33,6 @@ import { AuthenticationParamsList } from "../../../common/navigation/params/Auth
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpSelected } from "../../../common/store/actions";
 import IdpsGrid from "../components/IdpsGrid";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "authentication.idp_selection.contextualHelpTitle",
-  body: "authentication.idp_selection.contextualHelpContent"
-};
 
 export const randomOrderIdps = <T extends object>(
   array: Array<T> | ReadonlyArray<T>
@@ -157,9 +151,7 @@ const IdpSelectionScreen = (): ReactElement => {
   };
   useHeaderSecondLevel({
     title: "",
-    contextualHelpMarkdown,
-    supportRequest: true,
-    faqCategories: ["authentication_IPD_selection"]
+    supportRequest: true
   });
 
   return (

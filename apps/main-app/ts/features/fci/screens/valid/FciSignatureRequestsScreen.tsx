@@ -10,7 +10,6 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
   addTicketCustomField,
   assistanceToolRemoteConfig,
@@ -77,7 +76,6 @@ const FciSignatureRequestsScreen = () => {
 
   useHeaderSecondLevel({
     title: I18n.t("features.fci.requests.header"),
-    contextualHelp: emptyContextualHelp,
     supportRequest: true
   });
 

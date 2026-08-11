@@ -157,11 +157,11 @@ export const getContextualHelpDataFromRouteSelector = (route: string) =>
   createSelector<
     GlobalState,
     pot.Pot<ContextualHelp, Error>,
-    pot.Pot<O.Option<ScreenCHData>, Error>
+    pot.Pot<ScreenCHData | undefined, Error>
   >([contextualHelpDataSelector], contextualHelpData =>
     pot.map(contextualHelpData, data => {
       if (route === undefined) {
-        return O.none;
+        return undefined;
       }
       const locale = getCurrentLocale();
       const localeData = data[locale];
@@ -172,7 +172,7 @@ export const getContextualHelpDataFromRouteSelector = (route: string) =>
             )
           : undefined;
 
-      return O.fromNullable(screenData);
+      return screenData;
     })
   );
 

@@ -22,9 +22,7 @@ import {
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
 // import { trackSpidLoginError } from "../../../../../utils/analytics";
-import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -84,10 +82,6 @@ const ActiveSessionIdpLoginScreen = () => {
   const { replace } = useIONavigation();
 
   const selectedIdp = useIOSelector(idpSelectedActiveSessionLoginSelector);
-  const selectedIdpTextData = useIOSelector(
-    idpContextualHelpDataFromIdSelector(selectedIdp?.id),
-    _isEqual
-  );
 
   const activeSessionUserLogged = useIOSelector(
     activeSessionUserLoggedSelector
@@ -303,16 +297,6 @@ const ActiveSessionIdpLoginScreen = () => {
     }
   }, [navigateToAuthErrorScreen, requestState]);
 
-  const contextualHelp = useMemo(() => {
-    if (O.isNone(selectedIdpTextData)) {
-      return {
-        title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-        body: I18n.t("authentication.idp_login.contextualHelpContent")
-      };
-    }
-    return emptyContextualHelp;
-  }, [selectedIdpTextData]);
-
   const hasError = pot.isError(requestState);
 
   /* Wrapped with `useMemo` to prevent unnecessary executions of `useLayoutEffect`
@@ -324,12 +308,10 @@ const ActiveSessionIdpLoginScreen = () => {
             title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
               selectedIdp?.name
             }`,
-            supportRequest: true,
-            contextualHelp,
-            faqCategories: ["authentication_SPID"]
+            supportRequest: true
           }
         : { title: "", canGoBack: false },
-    [activeSessionUserLogged, selectedIdp?.name, contextualHelp]
+    [activeSessionUserLogged, selectedIdp?.name]
   );
 
   useHeaderSecondLevel(headerProps);

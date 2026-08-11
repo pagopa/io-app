@@ -15,7 +15,6 @@ import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIOSelector } from "../../../../store/hooks.ts";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { trackOpenItwTos } from "../../analytics";
@@ -76,7 +75,6 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
   });
 
   useHeaderSecondLevel({
-    contextualHelp: emptyContextualHelp,
     supportRequest: true,
     title: "",
     goBack: () => {

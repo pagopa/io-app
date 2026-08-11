@@ -14,7 +14,6 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIdPayInfoCieBottomSheet } from "../../code/components/IdPayInfoCieBottomSheet";
 import { IdPayCodeParamsList } from "../../code/navigation/params";
 import { IdPayCodeRoutes } from "../../code/navigation/routes";
@@ -108,7 +107,6 @@ export const IdPayDiscountInstrumentsScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelp={emptyContextualHelp}
       description={I18n.t(
         "idpay.configuration.instruments.paymentMethods.body",
         {

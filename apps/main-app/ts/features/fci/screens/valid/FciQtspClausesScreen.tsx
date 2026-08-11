@@ -11,7 +11,6 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
@@ -98,7 +97,6 @@ const FciQtspClausesScreen = () => {
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    contextualHelp: emptyContextualHelp,
     headerShown: isPollFilledDocumentReady
   });
 
@@ -163,7 +161,6 @@ const FciQtspClausesScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       actions={actions}
-      contextualHelp={emptyContextualHelp}
       description={I18n.t("features.fci.qtspTos.subTitle")}
       headerActionsProp={{ showHelp: true }}
       testID={"FciQtspClausesTestID"}

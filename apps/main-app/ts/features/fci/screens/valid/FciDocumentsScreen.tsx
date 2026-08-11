@@ -25,7 +25,6 @@ import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackFciDocOpeningSuccess,
@@ -283,7 +282,6 @@ const FciDocumentsScreen = () => {
   useHeaderSecondLevel({
     title: I18n.t("features.fci.title"),
     supportRequest: true,
-    contextualHelp: emptyContextualHelp,
     goBack: () => {
       if (currentDoc <= 0) {
         present();
