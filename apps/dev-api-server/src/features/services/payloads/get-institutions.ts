@@ -1,11 +1,11 @@
+import { Institution } from "@io-app/api-types/generated/definitions/services/Institution";
+import { InstitutionsResource } from "@io-app/api-types/generated/definitions/services/InstitutionsResource";
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
 import * as A from "fp-ts/lib/Array";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 
-import { Institution } from "../../../../generated/definitions/services/Institution";
-import { InstitutionsResource } from "../../../../generated/definitions/services/InstitutionsResource";
-import { ScopeTypeEnum } from "../../../../generated/definitions/services/ScopeType";
 import ServicesDB from "../persistence/servicesDatabase";
 import { getInstitutions, InstitutionWithScope } from "../utils/institutions";
 

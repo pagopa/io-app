@@ -1,4 +1,15 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { CardInfo } from "@io-app/api-types/generated/definitions/pagopa/CardInfo";
+import { EnableableFunctionsEnum } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
+import { Transaction } from "@io-app/api-types/generated/definitions/pagopa/Transaction";
+import { TransactionListResponse } from "@io-app/api-types/generated/definitions/pagopa/TransactionListResponse";
+import { TypeEnum } from "@io-app/api-types/generated/definitions/pagopa/Wallet";
+import { WalletPaymentStatusRequest } from "@io-app/api-types/generated/definitions/pagopa/WalletPaymentStatusRequest";
+import { WalletResponse } from "@io-app/api-types/generated/definitions/pagopa/WalletResponse";
+import {
+  WalletTypeEnum,
+  WalletV2
+} from "@io-app/api-types/generated/definitions/pagopa/WalletV2";
 /**
  * this router handles all requests about wallets
  */
@@ -8,17 +19,6 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { CardInfo } from "../../generated/definitions/pagopa/CardInfo";
-import { EnableableFunctionsEnum } from "../../generated/definitions/pagopa/EnableableFunctions";
-import { Transaction } from "../../generated/definitions/pagopa/Transaction";
-import { TransactionListResponse } from "../../generated/definitions/pagopa/TransactionListResponse";
-import { TypeEnum } from "../../generated/definitions/pagopa/Wallet";
-import { WalletPaymentStatusRequest } from "../../generated/definitions/pagopa/WalletPaymentStatusRequest";
-import { WalletResponse } from "../../generated/definitions/pagopa/WalletResponse";
-import {
-  WalletTypeEnum,
-  WalletV2
-} from "../../generated/definitions/pagopa/WalletV2";
 import { ioDevServerConfig } from "../config";
 import { addHandler } from "../payloads/response";
 import {

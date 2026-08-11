@@ -1,10 +1,10 @@
+import { SendActivation } from "@io-app/api-types/generated/definitions/communication/SendActivation";
+import { PNActivation } from "@io-app/api-types/generated/definitions/pn/PNActivation";
 import { NonNegativeInteger } from "@pagopa/ts-commons/lib/numbers";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { Request, Response, Router } from "express";
 import * as E from "fp-ts/lib/Either";
 
-import { SendActivation } from "../../../../generated/definitions/communication/SendActivation";
-import { PNActivation } from "../../../../generated/definitions/pn/PNActivation";
 import { ioDevServerConfig } from "../../../config";
 import { getProblemJson } from "../../../payloads/error";
 import { addHandler } from "../../../payloads/response";

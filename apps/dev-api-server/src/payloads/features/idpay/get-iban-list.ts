@@ -1,4 +1,5 @@
-import { IbanListDTO } from "../../../../generated/definitions/idpay/IbanListDTO";
+import { IbanListDTO } from "@io-app/api-types/generated/definitions/idpay/IbanListDTO";
+
 import { ibanList } from "../../../persistence/idpay";
 
 export const getIbanListResponse = (): IbanListDTO => ({

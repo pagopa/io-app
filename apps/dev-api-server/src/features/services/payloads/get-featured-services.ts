@@ -1,9 +1,9 @@
+import { FeaturedService } from "@io-app/api-types/generated/definitions/services/FeaturedService";
+import { FeaturedServices } from "@io-app/api-types/generated/definitions/services/FeaturedServices";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 
-import { FeaturedService } from "../../../../generated/definitions/services/FeaturedService";
-import { FeaturedServices } from "../../../../generated/definitions/services/FeaturedServices";
 import { ioDevServerConfig } from "../../../config";
 import { cgnServiceId } from "../persistence/services/special/cgn-service";
 import ServicesDB from "../persistence/servicesDatabase";

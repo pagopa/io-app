@@ -1,10 +1,10 @@
 /* eslint-disable functional/immutable-data */
 import { fakerIT as faker } from "@faker-js/faker";
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { Either, isLeft, left, right } from "fp-ts/lib/Either";
 import { ulid } from "ulid";
 
-import { PaymentFaultV2Enum } from "../../../../generated/definitions/communication/PaymentFaultV2";
 import { IPaymentsDatabase } from "../../../persistence/payments";
 import { rptIdFromPaymentDataWithRequiredPayee } from "../../../utils/payment";
 import { Document, DocumentCategory } from "../models/Document";

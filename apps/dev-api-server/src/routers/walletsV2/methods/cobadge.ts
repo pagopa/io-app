@@ -1,19 +1,19 @@
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { Request, Response, Router } from "express";
-import * as E from "fp-ts/lib/Either";
-import fs from "fs";
-
-import { CardInfo } from "../../../../generated/definitions/pagopa/walletv2/CardInfo";
-import { CobadegPaymentInstrumentsRequest } from "../../../../generated/definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
-import { CobadgeResponse } from "../../../../generated/definitions/pagopa/walletv2/CobadgeResponse";
+import { CardInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv2/CardInfo";
+import { CobadegPaymentInstrumentsRequest } from "@io-app/api-types/generated/definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
+import { CobadgeResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv2/CobadgeResponse";
 import {
   PaymentInstrument,
   PaymentNetworkEnum,
   ProductTypeEnum,
   ValidityStatusEnum
-} from "../../../../generated/definitions/pagopa/walletv2/PaymentInstrument";
-import { RestCobadgeResponse } from "../../../../generated/definitions/pagopa/walletv2/RestCobadgeResponse";
-import { WalletTypeEnum } from "../../../../generated/definitions/pagopa/walletv2/WalletV2";
+} from "@io-app/api-types/generated/definitions/pagopa/walletv2/PaymentInstrument";
+import { RestCobadgeResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv2/RestCobadgeResponse";
+import { WalletTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv2/WalletV2";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { Request, Response, Router } from "express";
+import * as E from "fp-ts/lib/Either";
+import fs from "fs";
+
 import { assetsFolder } from "../../../config";
 import { addHandler } from "../../../payloads/response";
 import { readFileAsJSON } from "../../../utils/file";

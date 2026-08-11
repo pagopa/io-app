@@ -1,6 +1,5 @@
+import { OtpCode } from "@io-app/api-types/generated/definitions/cgn/OtpCode";
 import { randomBytes } from "crypto";
-
-import { OtpCode } from "../../../../generated/definitions/cgn/OtpCode";
 
 // Bonus codes are made of characters picked from the following alphabet
 export const ALPHABET = "ACEFGHLMNPRUV3469";

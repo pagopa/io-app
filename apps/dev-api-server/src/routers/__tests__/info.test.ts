@@ -1,8 +1,8 @@
+import { VersionPerPlatform } from "@io-app/api-types/generated/definitions/content/VersionPerPlatform";
 import * as E from "fp-ts/lib/Either";
 import { string, type } from "io-ts";
 import supertest from "supertest";
 
-import { VersionPerPlatform } from "../../../generated/definitions/content/VersionPerPlatform";
 import app from "../../server";
 
 // this type has since been removed

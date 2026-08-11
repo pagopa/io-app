@@ -1,3 +1,11 @@
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { EmailAddress } from "@io-app/api-types/generated/definitions/identity/EmailAddress";
+import { PreferredLanguages } from "@io-app/api-types/generated/definitions/identity/PreferredLanguages";
+import { PushNotificationsContentType } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatus } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { AmountEuroCents as ImportoEuroCents } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/AmountEuroCents";
+import { SubscriptionState } from "@io-app/api-types/generated/definitions/trial_system/SubscriptionState";
+import { TrialId } from "@io-app/api-types/generated/definitions/trial_system/TrialId";
 import {
   NonNegativeNumber,
   WithinRangeInteger,
@@ -7,14 +15,6 @@ import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
 
-import { PaymentFaultV2Enum } from "../../generated/definitions/communication/PaymentFaultV2";
-import { EmailAddress } from "../../generated/definitions/identity/EmailAddress";
-import { PreferredLanguages } from "../../generated/definitions/identity/PreferredLanguages";
-import { PushNotificationsContentType } from "../../generated/definitions/identity/PushNotificationsContentType";
-import { ReminderStatus } from "../../generated/definitions/identity/ReminderStatus";
-import { AmountEuroCents as ImportoEuroCents } from "../../generated/definitions/pagopa/ecommerce/AmountEuroCents";
-import { SubscriptionState } from "../../generated/definitions/trial_system/SubscriptionState";
-import { TrialId } from "../../generated/definitions/trial_system/TrialId";
 import { FIMSConfig } from "../features/fims/types/config";
 import { MessagesConfig } from "../features/messages/types/messagesConfig";
 import { WalletConfiguration } from "../features/payments/types/configuration";

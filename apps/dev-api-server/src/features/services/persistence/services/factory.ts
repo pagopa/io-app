@@ -1,16 +1,16 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { ServicePreference } from "@io-app/api-types/generated/definitions/identity/ServicePreference";
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { ServiceMetadata } from "@io-app/api-types/generated/definitions/services/ServiceMetadata";
+import { StandardServiceCategoryEnum } from "@io-app/api-types/generated/definitions/services/StandardServiceCategory";
 import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "@pagopa/ts-commons/lib/strings";
 import * as A from "fp-ts/lib/Array";
 
-import { ServicePreference } from "../../../../../generated/definitions/identity/ServicePreference";
-import { ScopeTypeEnum } from "../../../../../generated/definitions/services/ScopeType";
-import { ServiceDetails } from "../../../../../generated/definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../generated/definitions/services/ServiceId";
-import { ServiceMetadata } from "../../../../../generated/definitions/services/ServiceMetadata";
-import { StandardServiceCategoryEnum } from "../../../../../generated/definitions/services/StandardServiceCategory";
 import { getRandomValue } from "../../../../utils/random";
 import { validatePayload } from "../../../../utils/validator";
 import { frontMatter2CTA2 } from "../../../../utils/variables";

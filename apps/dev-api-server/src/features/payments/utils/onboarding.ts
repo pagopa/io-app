@@ -1,7 +1,7 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { PaymentMethodsResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { WalletCreateResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletCreateResponse";
 
-import { PaymentMethodsResponse } from "../../../../generated/definitions/pagopa/walletv3/PaymentMethodsResponse";
-import { WalletCreateResponse } from "../../../../generated/definitions/pagopa/walletv3/WalletCreateResponse";
 import { serverUrl } from "../../../utils/server";
 import { allPaymentMethods } from "../payloads/paymentMethods";
 

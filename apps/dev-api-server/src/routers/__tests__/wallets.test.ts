@@ -1,12 +1,12 @@
+import { EnableableFunctionsEnum } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
+import { PspDataListResponse } from "@io-app/api-types/generated/definitions/pagopa/PspDataListResponse";
+import { Psp } from "@io-app/api-types/generated/definitions/pagopa/walletv2/Psp";
+import { SessionResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv2/SessionResponse";
+import { TransactionListResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv2/TransactionListResponse";
+import { WalletListResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv2/WalletListResponse";
 import * as E from "fp-ts/lib/Either";
 import supertest, { Response } from "supertest";
 
-import { EnableableFunctionsEnum } from "../../../generated/definitions/pagopa/EnableableFunctions";
-import { PspDataListResponse } from "../../../generated/definitions/pagopa/PspDataListResponse";
-import { Psp } from "../../../generated/definitions/pagopa/walletv2/Psp";
-import { SessionResponse } from "../../../generated/definitions/pagopa/walletv2/SessionResponse";
-import { TransactionListResponse } from "../../../generated/definitions/pagopa/walletv2/TransactionListResponse";
-import { WalletListResponse } from "../../../generated/definitions/pagopa/walletv2/WalletListResponse";
 import { sessionToken } from "../../payloads/wallet";
 import app from "../../server";
 import { PatchedWalletV2 } from "../../types/PatchedWalletV2";

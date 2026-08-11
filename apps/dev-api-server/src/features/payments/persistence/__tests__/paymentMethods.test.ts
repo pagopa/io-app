@@ -1,6 +1,7 @@
-import { PaymentMethodManagementTypeEnum } from "../../../../../generated/definitions/pagopa/walletv3/PaymentMethodManagementType";
-import { PaymentMethodStatusEnum } from "../../../../../generated/definitions/pagopa/walletv3/PaymentMethodStatus";
-import { WalletInfoDetails } from "../../../../../generated/definitions/pagopa/walletv3/WalletInfoDetails";
+import { PaymentMethodManagementTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/PaymentMethodManagementType";
+import { PaymentMethodStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/PaymentMethodStatus";
+import { WalletInfoDetails } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfoDetails";
+
 import {
   generateRandomCardBrand,
   generateWalletDetailsByPaymentMethod,

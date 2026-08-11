@@ -1,70 +1,70 @@
 import { fakerIT as faker } from "@faker-js/faker";
-import * as O from "fp-ts/lib/Option";
-import { range } from "lodash";
-import { ulid } from "ulid";
-
 import {
   CheckIbanStatusEnum,
   IbanDTO
-} from "../../generated/definitions/idpay/IbanDTO";
+} from "@io-app/api-types/generated/definitions/idpay/IbanDTO";
 import {
   ChannelEnum,
   IbanOperationDTO,
   OperationTypeEnum as IbanOperationTypeEnum
-} from "../../generated/definitions/idpay/IbanOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/IbanOperationDTO";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum,
   VoucherStatusEnum
-} from "../../generated/definitions/idpay/InitiativeDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import {
   InstrumentDTO,
   StatusEnum as InstrumentStatus,
   InstrumentTypeEnum
-} from "../../generated/definitions/idpay/InstrumentDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import {
   InstrumentOperationDTO,
   InstrumentTypeEnum as InstrumentOperationInstrumentTypeEnum,
   OperationTypeEnum as InstrumentOperationTypeEnum
-} from "../../generated/definitions/idpay/InstrumentOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InstrumentOperationDTO";
 import {
   OnboardingOperationDTO,
   OperationTypeEnum as OnboardingOperationTypeEnum
-} from "../../generated/definitions/idpay/OnboardingOperationDTO";
-import { OperationListDTO } from "../../generated/definitions/idpay/OperationListDTO";
+} from "@io-app/api-types/generated/definitions/idpay/OnboardingOperationDTO";
+import { OperationListDTO } from "@io-app/api-types/generated/definitions/idpay/OperationListDTO";
 import {
   ReadmittedOperationDTO,
   OperationTypeEnum as ReadmittedOperationTypeEnum
-} from "../../generated/definitions/idpay/ReadmittedOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/ReadmittedOperationDTO";
 import {
   RefundOperationDTO,
   OperationTypeEnum as RefundOperationTypeEnum
-} from "../../generated/definitions/idpay/RefundOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/RefundOperationDTO";
 import {
   InstrumentTypeEnum as OperationInstrumentTypeEnum,
   RejectedInstrumentOperationDTO,
   OperationTypeEnum as RejectedInstrumentOperationTypeEnum
-} from "../../generated/definitions/idpay/RejectedInstrumentOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/RejectedInstrumentOperationDTO";
 import {
   SuspendOperationDTO,
   OperationTypeEnum as SuspendOperationTypeEnum
-} from "../../generated/definitions/idpay/SuspendOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/SuspendOperationDTO";
 import {
   StatusEnum,
   TransactionBarCodeResponse
-} from "../../generated/definitions/idpay/TransactionBarCodeResponse";
+} from "@io-app/api-types/generated/definitions/idpay/TransactionBarCodeResponse";
 import {
   ChannelEnum as TransactionChannelEnum,
   TransactionOperationDTO,
   OperationTypeEnum as TransactionOperationTypeEnum,
   StatusEnum as TransactionStatusEnum
-} from "../../generated/definitions/idpay/TransactionOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
 import {
   StatusEnum as OnboardedInitiativeStatusEnum,
   UserOnboardingStatusDTO
-} from "../../generated/definitions/idpay/UserOnboardingStatusDTO";
-import { WalletV2 } from "../../generated/definitions/pagopa/WalletV2";
+} from "@io-app/api-types/generated/definitions/idpay/UserOnboardingStatusDTO";
+import { WalletV2 } from "@io-app/api-types/generated/definitions/pagopa/WalletV2";
+import * as O from "fp-ts/lib/Option";
+import { range } from "lodash";
+import { ulid } from "ulid";
+
 import { ioDevServerConfig } from "../config";
 import { InitiativeDataDTOWithServiceId } from "../payloads/features/idpay/types";
 import { getRandomEnumValue } from "../payloads/utils/random";

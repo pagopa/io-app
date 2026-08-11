@@ -1,4 +1,5 @@
-import { CreatedMessageWithContentAndEnrichedData } from "../../../generated/definitions/communication/CreatedMessageWithContentAndEnrichedData";
+import { CreatedMessageWithContentAndEnrichedData } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndEnrichedData";
+
 import MessagesDB from "../../features/messages/persistence/messagesDatabase";
 
 const buildMessage = (id: string) =>

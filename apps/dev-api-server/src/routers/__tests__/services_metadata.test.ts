@@ -1,8 +1,8 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { Zendesk } from "@io-app/api-types/generated/definitions/content/Zendesk";
 import * as E from "fp-ts/lib/Either";
 import supertest from "supertest";
 
-import { BackendStatus } from "../../../generated/definitions/content/BackendStatus";
-import { Zendesk } from "../../../generated/definitions/content/Zendesk";
 import { staticContentRootPath } from "../../config";
 import app from "../../server";
 

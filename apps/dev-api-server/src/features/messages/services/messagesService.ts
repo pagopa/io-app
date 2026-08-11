@@ -1,3 +1,17 @@
+import { CreatedMessageWithContent } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndAttachments";
+import { CreatedMessageWithContentAndEnrichedData } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndEnrichedData";
+import { HasPreconditionEnum } from "@io-app/api-types/generated/definitions/communication/HasPrecondition";
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { TagEnum as TagEnumBase } from "@io-app/api-types/generated/definitions/communication/MessageCategoryBase";
+import { TagEnum as TagEnumPayment } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPayment";
+import {
+  MessageCategoryPN,
+  TagEnum as TagEnumPN
+} from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
+import { PublicMessage } from "@io-app/api-types/generated/definitions/communication/PublicMessage";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as B from "fp-ts/lib/boolean";
 import { Either, isLeft, isRight, left, right } from "fp-ts/lib/Either";
@@ -7,20 +21,6 @@ import path from "path";
 import { ParsedQs } from "qs";
 import { __, match, not } from "ts-pattern";
 
-import { CreatedMessageWithContent } from "../../../../generated/definitions/communication/CreatedMessageWithContent";
-import { CreatedMessageWithContentAndAttachments } from "../../../../generated/definitions/communication/CreatedMessageWithContentAndAttachments";
-import { CreatedMessageWithContentAndEnrichedData } from "../../../../generated/definitions/communication/CreatedMessageWithContentAndEnrichedData";
-import { HasPreconditionEnum } from "../../../../generated/definitions/communication/HasPrecondition";
-import { MessageCategory } from "../../../../generated/definitions/communication/MessageCategory";
-import { TagEnum as TagEnumBase } from "../../../../generated/definitions/communication/MessageCategoryBase";
-import { TagEnum as TagEnumPayment } from "../../../../generated/definitions/communication/MessageCategoryPayment";
-import {
-  MessageCategoryPN,
-  TagEnum as TagEnumPN
-} from "../../../../generated/definitions/communication/MessageCategoryPN";
-import { PublicMessage } from "../../../../generated/definitions/communication/PublicMessage";
-import { ThirdPartyAttachment } from "../../../../generated/definitions/communication/ThirdPartyAttachment";
-import { ThirdPartyMessageWithContent } from "../../../../generated/definitions/communication/ThirdPartyMessageWithContent";
 import { ioDevServerConfig } from "../../../config";
 import { getProblemJson } from "../../../payloads/error";
 import { IoDevServerConfig } from "../../../types/config";

@@ -1,13 +1,13 @@
+import { EnableableFunctionsEnum } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
+import { BPay } from "@io-app/api-types/generated/definitions/pagopa/walletv2/BPay";
+import { BPayInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv2/BPayInfo";
+import { BPayRequest } from "@io-app/api-types/generated/definitions/pagopa/walletv2/BPayRequest";
+import { WalletTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv2/WalletV2";
 import { Router } from "express";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { EnableableFunctionsEnum } from "../../../../generated/definitions/pagopa/EnableableFunctions";
-import { BPay } from "../../../../generated/definitions/pagopa/walletv2/BPay";
-import { BPayInfo } from "../../../../generated/definitions/pagopa/walletv2/BPayInfo";
-import { BPayRequest } from "../../../../generated/definitions/pagopa/walletv2/BPayRequest";
-import { WalletTypeEnum } from "../../../../generated/definitions/pagopa/walletv2/WalletV2";
 import { addHandler } from "../../../payloads/response";
 import { generateWalletV2FromSatispayOrBancomatPay } from "../../../payloads/wallet_v2";
 import { appendWalletV1Prefix } from "../../../utils/wallet";

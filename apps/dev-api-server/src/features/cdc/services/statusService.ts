@@ -1,6 +1,6 @@
+import { CitizenStatus } from "@io-app/api-types/generated/definitions/cdc/CitizenStatus";
 import { Either, left, right } from "fp-ts/lib/Either";
 
-import { CitizenStatus } from "../../../../generated/definitions/cdc/CitizenStatus";
 import { ioDevServerConfig } from "../../../config";
 import { getProblemJson } from "../../../payloads/error";
 import { ExpressFailure } from "../../../utils/expressDTO";

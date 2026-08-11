@@ -1,5 +1,5 @@
-import { OrganizationFiscalCode } from "../../../../generated/definitions/communication/OrganizationFiscalCode";
-import { PaymentNoticeNumber } from "../../../../generated/definitions/communication/PaymentNoticeNumber";
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/communication/OrganizationFiscalCode";
+import { PaymentNoticeNumber } from "@io-app/api-types/generated/definitions/communication/PaymentNoticeNumber";
 
 export type NotificationPaymentInfo = {
   creditorTaxId: OrganizationFiscalCode;

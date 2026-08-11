@@ -1,9 +1,9 @@
+import { WalletApplicationUpdateRequest } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletApplicationUpdateRequest";
+import { WalletCreateRequest } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletCreateRequest";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { WalletApplicationUpdateRequest } from "../../../../generated/definitions/pagopa/walletv3/WalletApplicationUpdateRequest";
-import { WalletCreateRequest } from "../../../../generated/definitions/pagopa/walletv3/WalletCreateRequest";
 import { uuidv4 } from "../../../utils/strings";
 import WalletDB from "../persistence/userWallet";
 import {

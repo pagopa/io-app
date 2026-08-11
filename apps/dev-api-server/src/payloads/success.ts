@@ -1,4 +1,5 @@
-import { SuccessResponse } from "../../generated/definitions/communication/SuccessResponse";
+import { SuccessResponse } from "@io-app/api-types/generated/definitions/communication/SuccessResponse";
+
 import { validatePayload } from "../utils/validator";
 import { IOResponse } from "./response";
 

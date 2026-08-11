@@ -1,9 +1,9 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { AutocompleteResultItem } from "@io-app/api-types/generated/definitions/cgn/geo/AutocompleteResultItem";
+import { LookupResponse } from "@io-app/api-types/generated/definitions/cgn/geo/LookupResponse";
 import { Router } from "express";
 import { range } from "fp-ts/lib/NonEmptyArray";
 
-import { AutocompleteResultItem } from "../../../../generated/definitions/cgn/geo/AutocompleteResultItem";
-import { LookupResponse } from "../../../../generated/definitions/cgn/geo/LookupResponse";
 import { addHandler } from "../../../payloads/response";
 import { addApiV1Prefix } from "../../../utils/strings";
 

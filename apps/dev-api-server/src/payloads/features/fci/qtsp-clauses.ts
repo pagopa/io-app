@@ -1,7 +1,7 @@
+import { QtspClause } from "@io-app/api-types/generated/definitions/fci/QtspClause";
+import { QtspClausesMetadataDetailView } from "@io-app/api-types/generated/definitions/fci/QtspClausesMetadataDetailView";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { QtspClause } from "../../../../generated/definitions/fci/QtspClause";
-import { QtspClausesMetadataDetailView } from "../../../../generated/definitions/fci/QtspClausesMetadataDetailView";
 import { templateUrl } from "./qtsp-filled-document";
 
 export const qtspClauses: QtspClausesMetadataDetailView = {

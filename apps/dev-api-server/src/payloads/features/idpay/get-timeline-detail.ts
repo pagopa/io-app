@@ -1,10 +1,10 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { OperationDTO } from "@io-app/api-types/generated/definitions/idpay/OperationDTO";
+import { OperationListDTO } from "@io-app/api-types/generated/definitions/idpay/OperationListDTO";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ulid } from "ulid";
 
-import { OperationDTO } from "../../../../generated/definitions/idpay/OperationDTO";
-import { OperationListDTO } from "../../../../generated/definitions/idpay/OperationListDTO";
 import { initiativeTimeline } from "../../../persistence/idpay";
 
 const generateRandomOperationDetailDTO = (

@@ -1,16 +1,16 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import {
+  AuthPaymentResponseDTO,
+  StatusEnum as PaymentStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/AuthPaymentResponseDTO";
+import {
+  CodeEnum,
+  TransactionErrorDTO
+} from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ulid } from "ulid";
 
-import {
-  AuthPaymentResponseDTO,
-  StatusEnum as PaymentStatusEnum
-} from "../../../../generated/definitions/idpay/AuthPaymentResponseDTO";
-import {
-  CodeEnum,
-  TransactionErrorDTO
-} from "../../../../generated/definitions/idpay/TransactionErrorDTO";
 import { getRandomEnumValue } from "../../../payloads/utils/random";
 import { initiatives } from "../../../persistence/idpay";
 import { addIdPayHandler } from "./router";

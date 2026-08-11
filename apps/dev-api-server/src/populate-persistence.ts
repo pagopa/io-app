@@ -1,4 +1,9 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { CreatedMessageWithContent } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndAttachments";
+import { FiscalCode } from "@io-app/api-types/generated/definitions/communication/FiscalCode";
+import { MessageStatusAttributes } from "@io-app/api-types/generated/definitions/communication/MessageStatusAttributes";
+import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as A from "fp-ts/lib/Array";
 import * as B from "fp-ts/lib/boolean";
@@ -8,11 +13,6 @@ import * as O from "fp-ts/lib/Option";
 import fs from "fs";
 import _ from "lodash";
 
-import { CreatedMessageWithContent } from "../generated/definitions/communication/CreatedMessageWithContent";
-import { CreatedMessageWithContentAndAttachments } from "../generated/definitions/communication/CreatedMessageWithContentAndAttachments";
-import { FiscalCode } from "../generated/definitions/communication/FiscalCode";
-import { MessageStatusAttributes } from "../generated/definitions/communication/MessageStatusAttributes";
-import { ThirdPartyMessageWithContent } from "../generated/definitions/communication/ThirdPartyMessageWithContent";
 import { ioDevServerConfig } from "./config";
 import MessagesDB from "./features/messages/persistence/messagesDatabase";
 import {

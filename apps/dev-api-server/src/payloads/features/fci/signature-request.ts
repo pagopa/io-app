@@ -1,14 +1,14 @@
+import { TypeEnum as ClausesTypeEnum } from "@io-app/api-types/generated/definitions/fci/Clause";
+import { DocumentDetailView } from "@io-app/api-types/generated/definitions/fci/DocumentDetailView";
+import { DocumentMetadata } from "@io-app/api-types/generated/definitions/fci/DocumentMetadata";
+import { DossierTitle } from "@io-app/api-types/generated/definitions/fci/DossierTitle";
+import { IssuerEnvironmentEnum } from "@io-app/api-types/generated/definitions/fci/IssuerEnvironment";
+import { SignatureFieldToBeCreatedAttrs } from "@io-app/api-types/generated/definitions/fci/SignatureFieldToBeCreatedAttrs";
+import { SignatureRequestDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import { EmailString, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { ulid } from "ulid";
 
-import { TypeEnum as ClausesTypeEnum } from "../../../../generated/definitions/fci/Clause";
-import { DocumentDetailView } from "../../../../generated/definitions/fci/DocumentDetailView";
-import { DocumentMetadata } from "../../../../generated/definitions/fci/DocumentMetadata";
-import { DossierTitle } from "../../../../generated/definitions/fci/DossierTitle";
-import { IssuerEnvironmentEnum } from "../../../../generated/definitions/fci/IssuerEnvironment";
-import { SignatureFieldToBeCreatedAttrs } from "../../../../generated/definitions/fci/SignatureFieldToBeCreatedAttrs";
-import { SignatureRequestDetailView } from "../../../../generated/definitions/fci/SignatureRequestDetailView";
-import { SignatureRequestStatusEnum } from "../../../../generated/definitions/fci/SignatureRequestStatus";
 import { staticContentRootPath } from "../../../config";
 import { serverUrl } from "../../../utils/server";
 

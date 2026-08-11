@@ -1,12 +1,11 @@
 import { fakerIT as faker } from "@faker-js/faker";
-import { ulid } from "ulid";
-
-import { CartItem } from "../../../../generated/definitions/pagopa/transactions/CartItem";
+import { CartItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/CartItem";
 import {
   InfoNotice,
   OriginEnum,
   PaymentMethodEnum
-} from "../../../../generated/definitions/pagopa/transactions/InfoNotice";
+} from "@io-app/api-types/generated/definitions/pagopa/biz-events/InfoNotice";
+import { ulid } from "ulid";
 
 export const PAYMENT_METHODS_TRANSACTIONS_MOCK = [
   {

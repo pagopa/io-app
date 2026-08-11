@@ -1,12 +1,12 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { InitializedProfile } from "../../generated/definitions/identity/InitializedProfile";
-import { PushNotificationsContentTypeEnum } from "../../generated/definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../generated/definitions/identity/ReminderStatus";
-import { ServicesPreferencesModeEnum } from "../../generated/definitions/identity/ServicesPreferencesMode";
 import { ioDevServerConfig } from "../config";
 
 const profileAttrConfig = ioDevServerConfig.profile.attrs;

@@ -1,10 +1,10 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { DossierTitle } from "@io-app/api-types/generated/definitions/fci/DossierTitle";
+import { SignatureRequestList } from "@io-app/api-types/generated/definitions/fci/SignatureRequestList";
+import { SignatureRequestListView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestListView";
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import { ulid } from "ulid";
 
-import { DossierTitle } from "../../../../generated/definitions/fci/DossierTitle";
-import { SignatureRequestList } from "../../../../generated/definitions/fci/SignatureRequestList";
-import { SignatureRequestListView } from "../../../../generated/definitions/fci/SignatureRequestListView";
-import { SignatureRequestStatusEnum } from "../../../../generated/definitions/fci/SignatureRequestStatus";
 import { getRandomEnumValue } from "../../utils/random";
 
 const now = new Date();

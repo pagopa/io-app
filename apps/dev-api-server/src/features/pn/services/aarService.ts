@@ -1,8 +1,8 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { AARQRCodeCheckResponse } from "@io-app/api-types/generated/definitions/pn/aar/AARQRCodeCheckResponse";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { Either, isLeft, isRight, left } from "fp-ts/lib/Either";
 
-import { InitializedProfile } from "../../../../generated/definitions/identity/InitializedProfile";
-import { AARQRCodeCheckResponse } from "../../../../generated/definitions/pn/aar/AARQRCodeCheckResponse";
 import { ioDevServerConfig } from "../../../config";
 import { getProblemJson } from "../../../payloads/error";
 import { getProfile } from "../../../persistence/profile/profile";

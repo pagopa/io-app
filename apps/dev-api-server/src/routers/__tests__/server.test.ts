@@ -1,7 +1,7 @@
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 import * as E from "fp-ts/lib/Either";
 import supertest from "supertest";
 
-import { PublicSession } from "../../../generated/definitions/session_manager/PublicSession";
 import { ioDevServerConfig } from "../../config";
 import { AppUrlLoginScheme, redirectUrl } from "../../payloads/login";
 import { getLoginSessionToken } from "../../persistence/sessionInfo";

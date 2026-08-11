@@ -1,7 +1,7 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { ServiceId } from "../../../../generated/definitions/services/ServiceId";
 import { ioDevServerConfig } from "../../../config";
 import { authorizationMiddleware } from "../../../middleware/authorizationMiddleware";
 import { addHandler } from "../../../payloads/response";

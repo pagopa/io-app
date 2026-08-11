@@ -1,11 +1,11 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { PreconditionContent } from "@io-app/api-types/generated/definitions/pn/PreconditionContent";
+import { ThirdPartyMessage } from "@io-app/api-types/generated/definitions/pn/ThirdPartyMessage";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { Either, isLeft, left, right } from "fp-ts/lib/Either";
 import { isSome } from "fp-ts/lib/Option";
 
-import { PaymentFaultV2Enum } from "../../../../generated/definitions/communication/PaymentFaultV2";
-import { PreconditionContent } from "../../../../generated/definitions/pn/PreconditionContent";
-import { ThirdPartyMessage } from "../../../../generated/definitions/pn/ThirdPartyMessage";
 import { getProblemJson } from "../../../payloads/error";
 import { PaymentsDatabase } from "../../../persistence/payments";
 import { isProcessedPayment } from "../../../types/PaymentStatus";

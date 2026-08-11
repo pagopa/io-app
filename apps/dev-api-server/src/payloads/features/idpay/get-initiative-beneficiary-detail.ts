@@ -1,12 +1,12 @@
 import { fakerIT as faker } from "@faker-js/faker";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
 import {
   InitiativeDetailDTO,
   StatusEnum
-} from "../../../../generated/definitions/idpay/InitiativeDetailDTO";
-import { InitiativeDTO } from "../../../../generated/definitions/idpay/InitiativeDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDetailDTO";
+import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import ServicesDB from "../../../features/services/persistence/servicesDatabase";
 import { initiatives } from "../../../persistence/idpay";
 

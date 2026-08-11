@@ -1,11 +1,11 @@
+import { CreatedMessageWithoutContent } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithoutContent";
+import { EnrichedMessage } from "@io-app/api-types/generated/definitions/communication/EnrichedMessage";
+import { PaginatedPublicMessagesCollection } from "@io-app/api-types/generated/definitions/communication/PaginatedPublicMessagesCollection";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import supertest from "supertest";
 
-import { CreatedMessageWithoutContent } from "../../../generated/definitions/communication/CreatedMessageWithoutContent";
-import { EnrichedMessage } from "../../../generated/definitions/communication/EnrichedMessage";
-import { PaginatedPublicMessagesCollection } from "../../../generated/definitions/communication/PaginatedPublicMessagesCollection";
 import { ioDevServerConfig } from "../../config";
 import MessagesDB from "../../features/messages/persistence/messagesDatabase";
 import ServicesDB from "../../features/services/persistence/servicesDatabase";

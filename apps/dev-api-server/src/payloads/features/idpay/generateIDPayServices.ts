@@ -1,11 +1,11 @@
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "@pagopa/ts-commons/lib/strings";
 import _ from "lodash";
 
-import { ScopeTypeEnum } from "../../../../generated/definitions/services/ScopeType";
-import { ServiceDetails } from "../../../../generated/definitions/services/ServiceDetails";
 import {
   createServiceFromFactory,
   createServiceMetadataFromFactory

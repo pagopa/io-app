@@ -1,10 +1,10 @@
+import { GuestMethodLastUsageTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/GuestMethodLastUsageType";
+import { WalletLastUsageTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletLastUsageType";
+import { WalletApplicationStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletApplicationStatus";
+import { WalletClientStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletClientStatus";
+import { WalletStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletStatus";
 import * as E from "fp-ts/lib/Either";
 
-import { GuestMethodLastUsageTypeEnum } from "../../../../../generated/definitions/pagopa/ecommerce/GuestMethodLastUsageType";
-import { WalletLastUsageTypeEnum } from "../../../../../generated/definitions/pagopa/ecommerce/WalletLastUsageType";
-import { WalletApplicationStatusEnum } from "../../../../../generated/definitions/pagopa/walletv3/WalletApplicationStatus";
-import { WalletClientStatusEnum } from "../../../../../generated/definitions/pagopa/walletv3/WalletClientStatus";
-import { WalletStatusEnum } from "../../../../../generated/definitions/pagopa/walletv3/WalletStatus";
 import userWallet from "../userWallet";
 
 describe("userWallet", () => {

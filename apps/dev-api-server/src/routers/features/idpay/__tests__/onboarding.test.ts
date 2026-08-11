@@ -1,6 +1,6 @@
+import { StatusEnum as InitiativeStatusEnum } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
 import supertest from "supertest";
 
-import { StatusEnum as InitiativeStatusEnum } from "../../../../../generated/definitions/idpay/OnboardingStatusDTO";
 import {
   IDPayInitiativeID,
   IDPayServiceID

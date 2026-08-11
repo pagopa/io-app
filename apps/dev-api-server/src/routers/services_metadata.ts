@@ -1,3 +1,9 @@
+import { SpidIdps } from "@io-app/api-types/generated/definitions/content/SpidIdps";
+import { VersionInfo } from "@io-app/api-types/generated/definitions/content/VersionInfo";
+import { Zendesk } from "@io-app/api-types/generated/definitions/content/Zendesk";
+import { ZendeskSubcategoriesErrors } from "@io-app/api-types/generated/definitions/content/ZendeskSubcategoriesErrors";
+import { CoBadgeServices } from "@io-app/api-types/generated/definitions/pagopa/cobadge/configuration/CoBadgeServices";
+import { PrivativeServices } from "@io-app/api-types/generated/definitions/pagopa/privative/configuration/PrivativeServices";
 /**
  * this router serves all data and assets provided by io-services-metadata https://github.com/pagopa/io-services-metadata
  */
@@ -7,12 +13,6 @@ import * as B from "fp-ts/lib/boolean";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 
-import { SpidIdps } from "../../generated/definitions/content/SpidIdps";
-import { VersionInfo } from "../../generated/definitions/content/VersionInfo";
-import { Zendesk } from "../../generated/definitions/content/Zendesk";
-import { ZendeskSubcategoriesErrors } from "../../generated/definitions/content/ZendeskSubcategoriesErrors";
-import { CoBadgeServices } from "../../generated/definitions/pagopa/cobadge/configuration/CoBadgeServices";
-import { PrivativeServices } from "../../generated/definitions/pagopa/privative/configuration/PrivativeServices";
 import { assetsFolder, staticContentRootPath } from "../config";
 import { sendServiceId } from "../features/pn/services/dataService";
 import { cgnServiceId } from "../features/services/persistence/services/special/cgn-service";

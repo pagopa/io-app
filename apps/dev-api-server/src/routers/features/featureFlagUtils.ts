@@ -1,11 +1,11 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { VersionPerPlatform } from "@io-app/api-types/generated/definitions/content/VersionPerPlatform";
 import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { compare } from "compare-versions";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { BackendStatus } from "../../../generated/definitions/content/BackendStatus";
-import { VersionPerPlatform } from "../../../generated/definitions/content/VersionPerPlatform";
 import { backendStatus } from "../../payloads/backend";
 import { getAppOs, getAppVersion } from "../../persistence/appInfo";
 

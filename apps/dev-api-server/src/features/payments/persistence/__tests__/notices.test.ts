@@ -1,7 +1,7 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { NoticeListItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListItem";
 import * as O from "fp-ts/lib/Option";
 
-import { NoticeListItem } from "../../../../../generated/definitions/pagopa/transactions/NoticeListItem";
 import noticesAPI from "../notices";
 
 describe("Notices API", () => {

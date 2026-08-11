@@ -1,9 +1,9 @@
+import { CIEValidationData } from "@io-app/api-types/generated/definitions/pn/aar/CIEValidationData";
+import { MandateCreationResponse } from "@io-app/api-types/generated/definitions/pn/aar/MandateCreationResponse";
+import { RequestCheckQrMandateDto } from "@io-app/api-types/generated/definitions/pn/aar/RequestCheckQrMandateDto";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { Either, isLeft, left, right } from "fp-ts/lib/Either";
 
-import { CIEValidationData } from "../../../../generated/definitions/pn/aar/CIEValidationData";
-import { MandateCreationResponse } from "../../../../generated/definitions/pn/aar/MandateCreationResponse";
-import { RequestCheckQrMandateDto } from "../../../../generated/definitions/pn/aar/RequestCheckQrMandateDto";
 import { getProblemJson } from "../../../payloads/error";
 import { ExpressFailure } from "../../../utils/expressDTO";
 import { Mandate } from "../models/Mandate";

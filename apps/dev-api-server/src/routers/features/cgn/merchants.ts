@@ -1,4 +1,11 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { DiscountBucketCode } from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountBucketCode";
+import { OfflineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchant";
+import { OfflineMerchantSearchRequest } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchantSearchRequest";
+import { OnlineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchant";
+import { OnlineMerchantSearchRequest } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchantSearchRequest";
+import { ProductCategoryEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
+import { SearchRequest } from "@io-app/api-types/generated/definitions/cgn/merchants/SearchRequest";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Router } from "express";
 import { reverse, sortBy } from "fp-ts/lib/Array";
@@ -7,13 +14,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { contramap } from "fp-ts/lib/Ord";
 
-import { DiscountBucketCode } from "../../../../generated/definitions/cgn/merchants/DiscountBucketCode";
-import { OfflineMerchant } from "../../../../generated/definitions/cgn/merchants/OfflineMerchant";
-import { OfflineMerchantSearchRequest } from "../../../../generated/definitions/cgn/merchants/OfflineMerchantSearchRequest";
-import { OnlineMerchant } from "../../../../generated/definitions/cgn/merchants/OnlineMerchant";
-import { OnlineMerchantSearchRequest } from "../../../../generated/definitions/cgn/merchants/OnlineMerchantSearchRequest";
-import { ProductCategoryEnum } from "../../../../generated/definitions/cgn/merchants/ProductCategory";
-import { SearchRequest } from "../../../../generated/definitions/cgn/merchants/SearchRequest";
 import { getProblemJson } from "../../../payloads/error";
 import {
   generateMerchantsAll,

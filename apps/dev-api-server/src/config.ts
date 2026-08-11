@@ -1,3 +1,8 @@
+import { EmailAddress } from "@io-app/api-types/generated/definitions/identity/EmailAddress";
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { TrialId } from "@io-app/api-types/generated/definitions/trial_system/TrialId";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
@@ -6,11 +11,6 @@ import * as E from "fp-ts/lib/Either";
 import _ from "lodash";
 import * as path from "path";
 
-import { EmailAddress } from "../generated/definitions/identity/EmailAddress";
-import { PreferredLanguageEnum } from "../generated/definitions/identity/PreferredLanguage";
-import { PushNotificationsContentTypeEnum } from "../generated/definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../generated/definitions/identity/ReminderStatus";
-import { TrialId } from "../generated/definitions/trial_system/TrialId";
 import {
   IoDevServerConfig,
   ProfileAttrs,

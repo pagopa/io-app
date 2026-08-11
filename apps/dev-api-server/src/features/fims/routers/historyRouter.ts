@@ -1,10 +1,10 @@
+import { Access } from "@io-app/api-types/generated/definitions/fims_history/Access";
+import { ExportRequest } from "@io-app/api-types/generated/definitions/fims_history/ExportRequest";
 import { Router } from "express";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { ulid } from "ulid";
 
-import { Access } from "../../../../generated/definitions/fims_history/Access";
-import { ExportRequest } from "../../../../generated/definitions/fims_history/ExportRequest";
 import { getProblemJson } from "../../../payloads/error";
 import { addHandler } from "../../../payloads/response";
 import { addApiFimsV1Prefix } from "../../../utils/strings";

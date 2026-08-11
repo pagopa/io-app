@@ -1,8 +1,8 @@
+import { IbanPutDTO } from "@io-app/api-types/generated/definitions/idpay/IbanPutDTO";
+import { StatusEnum as InitiativeStatusEnum } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { flow, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { IbanPutDTO } from "../../../../generated/definitions/idpay/IbanPutDTO";
-import { StatusEnum as InitiativeStatusEnum } from "../../../../generated/definitions/idpay/InitiativeDTO";
 import { getIdPayError } from "../../../payloads/features/idpay/error";
 import { getInitiativeBeneficiaryDetailResponse } from "../../../payloads/features/idpay/get-initiative-beneficiary-detail";
 import { getInitiativeWithInstrumentResponse } from "../../../payloads/features/idpay/get-initiatives-with-instrument";

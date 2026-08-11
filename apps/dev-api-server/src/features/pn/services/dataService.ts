@@ -1,12 +1,12 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { CreatedMessageWithContentAndAttachments } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndAttachments";
+import { HasPreconditionEnum } from "@io-app/api-types/generated/definitions/communication/HasPrecondition";
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { SpecialServiceCategoryEnum } from "@io-app/api-types/generated/definitions/services/SpecialServiceCategory";
+import { StandardServiceCategoryEnum } from "@io-app/api-types/generated/definitions/services/StandardServiceCategory";
 
-import { CreatedMessageWithContentAndAttachments } from "../../../../generated/definitions/communication/CreatedMessageWithContentAndAttachments";
-import { HasPreconditionEnum } from "../../../../generated/definitions/communication/HasPrecondition";
-import { ScopeTypeEnum } from "../../../../generated/definitions/services/ScopeType";
-import { ServiceDetails } from "../../../../generated/definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../generated/definitions/services/ServiceId";
-import { SpecialServiceCategoryEnum } from "../../../../generated/definitions/services/SpecialServiceCategory";
-import { StandardServiceCategoryEnum } from "../../../../generated/definitions/services/StandardServiceCategory";
 import { getNewMessage } from "../../../populate-persistence";
 import { IoDevServerConfig } from "../../../types/config";
 import { validatePayload } from "../../../utils/validator";

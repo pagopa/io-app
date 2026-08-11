@@ -1,11 +1,11 @@
+import { ServicePreference } from "@io-app/api-types/generated/definitions/identity/ServicePreference";
+import { UpsertServicePreference } from "@io-app/api-types/generated/definitions/identity/UpsertServicePreference";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { Router } from "express";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { ServicePreference } from "../../generated/definitions/identity/ServicePreference";
-import { UpsertServicePreference } from "../../generated/definitions/identity/UpsertServicePreference";
-import { ServiceId } from "../../generated/definitions/services/ServiceId";
 import { ioDevServerConfig } from "../config";
 import ServicesDB from "../features/services/persistence/servicesDatabase";
 import { addHandler } from "../payloads/response";

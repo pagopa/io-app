@@ -1,4 +1,28 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { EnableableFunctionsEnum } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
+import { PayPalAccountPspInfo } from "@io-app/api-types/generated/definitions/pagopa/PayPalAccountPspInfo";
+import { PayPalInfo } from "@io-app/api-types/generated/definitions/pagopa/PayPalInfo";
+import {
+  Wallet,
+  TypeEnum as WalletV1TypeEnum
+} from "@io-app/api-types/generated/definitions/pagopa/Wallet";
+import {
+  WalletTypeEnum,
+  WalletV2
+} from "@io-app/api-types/generated/definitions/pagopa/WalletV2";
+import { Abi } from "@io-app/api-types/generated/definitions/pagopa/walletv2/Abi";
+import { BPay } from "@io-app/api-types/generated/definitions/pagopa/walletv2/BPay";
+import { BPayInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv2/BPayInfo";
+import {
+  Card,
+  ProductTypeEnum,
+  ValidityStateEnum
+} from "@io-app/api-types/generated/definitions/pagopa/walletv2/Card";
+import {
+  CardInfo,
+  TypeEnum
+} from "@io-app/api-types/generated/definitions/pagopa/walletv2/CardInfo";
+import { SatispayInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv2/SatispayInfo";
 import { format } from "date-fns";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -8,30 +32,6 @@ import * as t from "io-ts";
 import sha256 from "sha256";
 import { match } from "ts-pattern";
 
-import { EnableableFunctionsEnum } from "../../generated/definitions/pagopa/EnableableFunctions";
-import { PayPalAccountPspInfo } from "../../generated/definitions/pagopa/PayPalAccountPspInfo";
-import { PayPalInfo } from "../../generated/definitions/pagopa/PayPalInfo";
-import {
-  Wallet,
-  TypeEnum as WalletV1TypeEnum
-} from "../../generated/definitions/pagopa/Wallet";
-import {
-  WalletTypeEnum,
-  WalletV2
-} from "../../generated/definitions/pagopa/WalletV2";
-import { Abi } from "../../generated/definitions/pagopa/walletv2/Abi";
-import { BPay } from "../../generated/definitions/pagopa/walletv2/BPay";
-import { BPayInfo } from "../../generated/definitions/pagopa/walletv2/BPayInfo";
-import {
-  Card,
-  ProductTypeEnum,
-  ValidityStateEnum
-} from "../../generated/definitions/pagopa/walletv2/Card";
-import {
-  CardInfo,
-  TypeEnum
-} from "../../generated/definitions/pagopa/walletv2/CardInfo";
-import { SatispayInfo } from "../../generated/definitions/pagopa/walletv2/SatispayInfo";
 import { assetsFolder, ioDevServerConfig } from "../config";
 import { getAuthenticationProvider } from "../persistence/sessionInfo";
 import { readFileAsJSON } from "../utils/file";

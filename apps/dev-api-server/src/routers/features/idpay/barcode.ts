@@ -1,7 +1,7 @@
+import { TransactionBarCodeRequest } from "@io-app/api-types/generated/definitions/idpay/TransactionBarCodeRequest";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { TransactionBarCodeRequest } from "../../../../generated/definitions/idpay/TransactionBarCodeRequest";
 import { getIdPayError } from "../../../payloads/features/idpay/error";
 import { getWalletDetailResponse } from "../../../payloads/features/idpay/get-wallet-detail";
 import { getIdPayBarcodeTransaction } from "../../../persistence/idpay";

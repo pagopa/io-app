@@ -1,6 +1,6 @@
+import { EmailAddress } from "@io-app/api-types/generated/definitions/identity/EmailAddress";
 import * as t from "io-ts";
 
-import { EmailAddress } from "../../../generated/definitions/identity/EmailAddress";
 import {
   toPayload,
   validateAndCreatePayload,

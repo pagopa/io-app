@@ -1,10 +1,10 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { NoticeDetailResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeDetailResponse";
+import { NoticeListItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListItem";
+import { TransactionInfo } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/TransactionInfo";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { TransactionInfo } from "../../../../generated/definitions/pagopa/ecommerce/TransactionInfo";
-import { NoticeDetailResponse } from "../../../../generated/definitions/pagopa/transactions/NoticeDetailResponse";
-import { NoticeListItem } from "../../../../generated/definitions/pagopa/transactions/NoticeListItem";
 import { ioDevServerConfig } from "../../../config";
 import { generateRandomInfoNotice } from "../utils/transactions";
 
