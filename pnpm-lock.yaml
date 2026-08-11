@@ -8807,11 +8807,6 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  mime@2.4.6:
-    resolution: {integrity: sha512-RZKhC3EmpBchfTGBVb8fb+RL2cWyw/32lshnsETttkBAyAUXSGHxbEJWWRXc751DrIxG1q04b8QwMbAwkRPpUA==}
-    engines: {node: '>=4.0.0'}
-    hasBin: true
-
   mime@2.6.0:
     resolution: {integrity: sha512-USPkMeET31rOMiarsBNIHZKLGgvKc/LrjofAnBlOttf5ajRvqiRA8QsenbcooctK6d6Ts6aqZXBA+XbkKthiQg==}
     engines: {node: '>=4.0.0'}
@@ -13190,7 +13185,7 @@ snapshots:
       progress: 2.0.3
       prompts: 2.4.2
       resolve-from: 5.0.0
-      semver: 7.7.4
+      semver: 7.8.5
       send: 0.19.0(supports-color@8.1.1)
       slugify: 1.6.9
       source-map-support: 0.5.21
@@ -13249,7 +13244,7 @@ snapshots:
       getenv: 2.0.0
       glob: 13.0.6
       resolve-from: 5.0.0
-      semver: 7.7.4
+      semver: 7.8.5
       slugify: 1.6.9
       xcode: 3.0.1
       xml2js: 0.6.0
@@ -13324,7 +13319,7 @@ snapshots:
       ignore: 5.3.2
       minimatch: 10.2.5
       resolve-from: 5.0.0
-      semver: 7.7.4
+      semver: 7.8.5
     transitivePeerDependencies:
       - supports-color
 
@@ -13448,7 +13443,7 @@ snapshots:
       debug: 4.4.3(supports-color@8.1.1)
       expo: 55.0.26(bfc951f27ef81ad56915a61455cc9685)
       resolve-from: 5.0.0
-      semver: 7.7.4
+      semver: 7.8.5
       xml2js: 0.6.0
     transitivePeerDependencies:
       - supports-color
@@ -13761,7 +13756,7 @@ snapshots:
     dependencies:
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       jest-mock: 29.7.0
 
   '@jest/environment@30.3.0':
@@ -13786,7 +13781,7 @@ snapshots:
     dependencies:
       '@jest/types': 29.6.3
       '@sinonjs/fake-timers': 10.3.0
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       jest-message-util: 29.7.0
       jest-mock: 29.7.0
       jest-util: 29.7.0
@@ -13813,7 +13808,7 @@ snapshots:
 
   '@jest/pattern@30.0.1':
     dependencies:
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       jest-regex-util: 30.0.1
 
   '@jest/reporters@30.3.0(supports-color@8.1.1)':
@@ -13922,7 +13917,7 @@ snapshots:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       '@types/yargs': 15.0.20
       chalk: 4.1.2
 
@@ -13931,7 +13926,7 @@ snapshots:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       '@types/yargs': 17.0.35
       chalk: 4.1.2
 
@@ -13941,7 +13936,7 @@ snapshots:
       '@jest/schemas': 30.0.5
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       '@types/yargs': 17.0.35
       chalk: 4.1.2
 
@@ -14890,7 +14885,7 @@ snapshots:
       execa: 5.1.1
       node-stream-zip: 1.11.2
       ora: 5.4.1
-      semver: 7.7.4
+      semver: 7.8.5
       wcwidth: 1.0.1
       yaml: 2.9.0
     transitivePeerDependencies:
@@ -14910,7 +14905,7 @@ snapshots:
       execa: 5.1.1
       node-stream-zip: 1.11.2
       ora: 5.4.1
-      semver: 7.7.4
+      semver: 7.8.5
       wcwidth: 1.0.1
       yaml: 2.9.0
     transitivePeerDependencies:
@@ -14959,7 +14954,7 @@ snapshots:
   '@react-native-community/cli-server-api@17.0.0(supports-color@8.1.1)':
     dependencies:
       '@react-native-community/cli-tools': 17.0.0
-      body-parser: 1.20.4(supports-color@8.1.1)
+      body-parser: 1.20.6(supports-color@8.1.1)
       compression: 1.8.1(supports-color@8.1.1)
       connect: 3.7.0(supports-color@8.1.1)
       errorhandler: 1.5.1
@@ -14976,7 +14971,7 @@ snapshots:
   '@react-native-community/cli-server-api@20.0.0(supports-color@8.1.1)':
     dependencies:
       '@react-native-community/cli-tools': 20.0.0
-      body-parser: 1.20.4(supports-color@8.1.1)
+      body-parser: 1.20.6(supports-color@8.1.1)
       compression: 1.8.1(supports-color@8.1.1)
       connect: 3.7.0(supports-color@8.1.1)
       errorhandler: 1.5.1
@@ -14998,10 +14993,10 @@ snapshots:
       execa: 5.1.1
       find-up: 5.0.0
       launch-editor: 2.12.0
-      mime: 2.4.6
+      mime: 2.6.0
       ora: 5.4.1
       prompts: 2.4.2
-      semver: 7.7.4
+      semver: 7.8.5
 
   '@react-native-community/cli-tools@20.0.0':
     dependencies:
@@ -15011,10 +15006,10 @@ snapshots:
       execa: 5.1.1
       find-up: 5.0.0
       launch-editor: 2.12.0
-      mime: 2.4.6
+      mime: 2.6.0
       ora: 5.4.1
       prompts: 2.4.2
-      semver: 7.7.4
+      semver: 7.8.5
 
   '@react-native-community/cli-types@17.0.0':
     dependencies:
@@ -15040,7 +15035,7 @@ snapshots:
       fs-extra: 8.1.0
       graceful-fs: 4.2.11
       prompts: 2.4.2
-      semver: 7.7.4
+      semver: 7.8.5
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -15063,7 +15058,7 @@ snapshots:
       fs-extra: 8.1.0
       graceful-fs: 4.2.11
       prompts: 2.4.2
-      semver: 7.7.4
+      semver: 7.8.5
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -15097,7 +15092,7 @@ snapshots:
       ora: 3.4.0
       prompts: 2.4.2
       react-native: 0.83.6(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
-      semver: 7.7.4
+      semver: 7.8.5
       shelljs: 0.8.5
       username: 5.1.0
       xml-formatter: 2.6.1
@@ -15239,7 +15234,7 @@ snapshots:
       metro: 0.82.5(supports-color@8.1.1)
       metro-config: 0.82.5(supports-color@8.1.1)
       metro-core: 0.82.5
-      semver: 7.7.4
+      semver: 7.8.5
     optionalDependencies:
       '@react-native-community/cli': 17.0.0(supports-color@8.1.1)(typescript@6.0.3)
     transitivePeerDependencies:
@@ -15255,7 +15250,7 @@ snapshots:
       metro: 0.83.7(supports-color@8.1.1)
       metro-config: 0.83.7(supports-color@8.1.1)
       metro-core: 0.83.7
-      semver: 7.7.4
+      semver: 7.8.5
     optionalDependencies:
       '@react-native-community/cli': 20.0.0(supports-color@8.1.1)(typescript@6.0.3)
       '@react-native/metro-config': 0.83.6(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1)
@@ -17446,7 +17441,7 @@ snapshots:
 
   chrome-launcher@0.15.2(supports-color@8.1.1):
     dependencies:
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.4.2(supports-color@8.1.1)
@@ -17455,7 +17450,7 @@ snapshots:
 
   chromium-edge-launcher@0.2.0(supports-color@8.1.1):
     dependencies:
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.4.2(supports-color@8.1.1)
@@ -20810,7 +20805,7 @@ snapshots:
       '@jest/environment': 29.7.0
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       jest-mock: 29.7.0
       jest-util: 29.7.0
 
@@ -20845,7 +20840,7 @@ snapshots:
   jest-haste-map@30.3.0:
     dependencies:
       '@jest/types': 30.3.0
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       anymatch: 3.1.3
       fb-watchman: 2.0.2
       graceful-fs: 4.2.11
@@ -20896,7 +20891,7 @@ snapshots:
   jest-mock@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       jest-util: 29.7.0
 
   jest-mock@30.3.0:
@@ -21014,7 +21009,7 @@ snapshots:
   jest-util@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
@@ -21023,7 +21018,7 @@ snapshots:
   jest-util@30.3.0:
     dependencies:
       '@jest/types': 30.3.0
-      '@types/node': 10.17.28
+      '@types/node': 22.20.1
       chalk: 4.1.2
       ci-info: 4.4.0
       graceful-fs: 4.2.11
@@ -22343,8 +22338,6 @@ snapshots:
 
   mime@1.6.0: {}
 
-  mime@2.4.6: {}
-
   mime@2.6.0: {}
 
   mimic-fn@1.2.0: {}
@@ -22591,7 +22584,7 @@ snapshots:
     dependencies:
       hosted-git-info: 7.0.2
       proc-log: 4.2.0
-      semver: 7.7.4
+      semver: 7.8.5
       validate-npm-package-name: 5.0.1
 
   npm-run-all@4.1.5:
@@ -23876,7 +23869,7 @@ snapshots:
       react-refresh: 0.14.2
       regenerator-runtime: 0.13.7
       scheduler: 0.26.0
-      semver: 7.7.4
+      semver: 7.8.5
       source-map-support: 0.5.21
       stacktrace-parser: 0.1.10
       whatwg-fetch: 3.3.1
@@ -23912,7 +23905,7 @@ snapshots:
       convert-source-map: 2.0.0
       react: 19.2.0
       react-native: 0.83.6(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
-      semver: 7.7.4
+      semver: 7.8.5
     transitivePeerDependencies:
       - supports-color
 
@@ -23958,7 +23951,7 @@ snapshots:
       react-refresh: 0.14.2
       regenerator-runtime: 0.13.7
       scheduler: 0.27.0
-      semver: 7.7.4
+      semver: 7.8.5
       stacktrace-parser: 0.1.10
       whatwg-fetch: 3.3.1
       ws: 7.5.10
