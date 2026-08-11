@@ -6,7 +6,6 @@ import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { registerStatusListProperties } from "../analytics";
 import { refreshStaleEntries } from "../utils/refresh";
 import { checkStatusListCoherenceSaga } from "./checkStatusListCoherenceSaga";
-import { checkWalletInstanceStatusSaga } from "./checkWalletInstanceStatusSaga";
 import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
 import { updateCredentialsStatusSaga } from "./updateCredentialsStatusSaga";
 
@@ -27,8 +26,6 @@ export function* watchItwStatusListSaga(): SagaIterator {
   yield* call(checkStatusListCoherenceSaga);
   // Check for stale Status List Tokens and refresh them in the background
   yield* call(refreshStaleEntries, { itwVersion });
-  // Checks the validity of the WI using the stored Status List Token
-  yield* call(checkWalletInstanceStatusSaga, { itwVersion });
   // Update the validity of credentials whose status list is available in the cache
   yield* call(updateCredentialsStatusSaga, { itwVersion });
   // Register Status List super properties

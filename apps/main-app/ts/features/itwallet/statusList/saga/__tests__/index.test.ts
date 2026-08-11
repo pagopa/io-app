@@ -8,7 +8,6 @@ import { selectItwSpecsVersion } from "../../../common/store/selectors/environme
 import { registerStatusListProperties } from "../../analytics";
 import { refreshStaleEntries } from "../../utils/refresh";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
-import { checkWalletInstanceStatusSaga } from "../checkWalletInstanceStatusSaga";
 import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
 import { updateCredentialsStatusSaga } from "../updateCredentialsStatusSaga";
 
@@ -39,8 +38,6 @@ describe("watchItwStatusListSaga", () => {
       .call(checkStatusListCoherenceSaga)
       .next()
       .call(refreshStaleEntries, { itwVersion: "1.3.3" })
-      .next()
-      .call(checkWalletInstanceStatusSaga, { itwVersion: "1.3.3" })
       .next()
       .call(updateCredentialsStatusSaga, { itwVersion: "1.3.3" })
       .next()
