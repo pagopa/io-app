@@ -14,7 +14,7 @@ type Route = { description?: string; method: SupportedMethod; path: string };
 
 // eslint-disable-next-line functional/no-let
 export let routes: ReadonlyArray<Route> = [];
-export const addNewRoute = (
+const addNewRoute = (
   method: SupportedMethod,
   path: string,
   description?: string

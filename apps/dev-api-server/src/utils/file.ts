@@ -13,7 +13,7 @@ export const sendFileFromRootPath = (filePath: string, res: Response) => {
   });
 };
 
-export const readBinaryFileSegment = (
+const readBinaryFileSegment = (
   filename: string,
   length: number
 ): E.Either<string, Buffer> => {

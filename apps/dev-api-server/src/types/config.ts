@@ -75,7 +75,7 @@ export const WalletMethodConfig = t.interface({
 });
 export type WalletMethodConfig = t.TypeOf<typeof WalletMethodConfig>;
 
-export const PaymentConfig = t.interface({
+const PaymentConfig = t.interface({
   // integer including decimals - ie: 22.22 = 2222
   amount: ImportoEuroCents,
   pspFeeAmount: t.number
@@ -91,7 +91,7 @@ const responseError = t.interface({
   codes: t.readonlyArray(ErrorCodes)
 });
 
-export const SpecialServicesConfig = t.interface({
+const SpecialServicesConfig = t.interface({
   cgn: t.boolean,
   cdc: t.boolean,
   fci: t.boolean

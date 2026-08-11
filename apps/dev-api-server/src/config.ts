@@ -22,7 +22,7 @@ import { serverUrl } from "./utils/server";
 export const staticContentRootPath = "/static_contents";
 const root = path.resolve(".");
 export const assetsFolder = path.join(root, "assets");
-export const configFolder = path.join(root, "config");
+const configFolder = path.join(root, "config");
 
 const defaultProfileAttrs: ProfileAttrs = {
   name: "Maria Giovanna",

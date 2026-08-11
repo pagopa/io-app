@@ -10,23 +10,6 @@ import {
 } from "../payloads/features/fci/signature-request";
 import { serverUrl } from "./server";
 
-export const frontMatterMyPortal = `---
-it:
-    cta_1: 
-        text: "email"
-        action: "iohandledlink://mailto:test@test.it"
-    cta_2: 
-        text: "myportal"
-        action: "ioit://SERVICE_WEBVIEW?url=http://127.0.0.1:3000/myportal_playground.html"
-en:
-    cta_1: 
-        text: "email"
-        action: "iohandledlink://mailto:test@test.it"
-    cta_2: 
-        text: "payments"
-        action: "ioit://WALLET_HOME"
----`;
-
 export const frontMatter2CTA2 = `---
 it:
     cta_1: 
@@ -42,17 +25,6 @@ en:
     cta_2: 
         text: "internal webview"
         action: "ioit://SERVICE_WEBVIEW?url=https://www.google.com"
----`;
-
-export const frontMatterInvalid = `---
-it:
-    invalid_1: 
-        text: "premi"
-        action: "ioit://SERVICES_HOME"
-en:
-    cta_1: 
-        text: "go1"
-        action: "dummy://PROFILE_MAIN"
 ---`;
 
 export const frontMatter1CTABonusCgn = `---
@@ -87,23 +59,6 @@ en:
     cta_2: 
         text: "Vai alla carta (legacy)"
         action: "ioit://CGN_DETAILS"
----`;
-
-export const frontMatter1CTAV2BonusCgnCategories = `---
-it:
-    cta_1: 
-        text: "Vai alle categorie di CGN"
-        action: "ioit://cgn-details/categories"
-    cta_2: 
-        text: "Vai agli operatori di Cultura"
-        action: "ioit://cgn-details/categories-merchant/cultureAndEntertainment"
-en:
-    cta_1: 
-        text: "Go to the CGN categories"
-        action: "ioit://cgn-details/categories"
-    cta_2: 
-        text: "Go to Culture operators"
-        action: "ioit://cgn-details/categories-merchant/cultureAndEntertainment"
 ---`;
 
 export const frontMatter1CTAFims = `---

@@ -170,7 +170,7 @@ export const withContent = (
 
 export const defaultContentType = "application/octet-stream";
 
-export const thirdPartyAttachmentFromAbsolutePathArray =
+const thirdPartyAttachmentFromAbsolutePathArray =
   (count: number, idOffset = 0, category: AttachmentCategory = "DOCUMENT") =>
   (absolutePaths: Array<string>) =>
     pipe(
@@ -212,7 +212,7 @@ const attachmentUrlFromAbsolutePath = (absolutePath: string) =>
     pipe(absolutePath, S.replace(executionDirectoryAbsolutePath, ""))
   );
 
-export const getRemoteAttachments = (
+const getRemoteAttachments = (
   attachmentCount: number
 ): ReadonlyArray<ThirdPartyAttachment> =>
   pipe(

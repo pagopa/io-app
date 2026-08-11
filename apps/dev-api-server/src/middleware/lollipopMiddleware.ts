@@ -23,9 +23,7 @@ type LollipopHTTPStatusError = {
   problemJson: string;
 };
 
-export const DEFAULT_LOLLIPOP_HASH_ALGORITHM = "sha256";
-
-export const isLollipopConfigEnabled = () =>
+const isLollipopConfigEnabled = () =>
   ioDevServerConfig.features.lollipop.enabled;
 
 export const lollipopMiddleware =
