@@ -42,7 +42,7 @@ export type IssuanceFailure =
 /**
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
-export type ReasonTypeByFailure = {
+type ReasonTypeByFailure = {
   [IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY]: Errors.IssuerResponseError;
   [IssuanceFailureType.CIE_NOT_REGISTERED]: string;
   [IssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;

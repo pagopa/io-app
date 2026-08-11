@@ -20,7 +20,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 
 export type CredentialCtaProps = ButtonBlockProps;
 
-export type ItwPresentationDetailsScreenBaseProps = {
+type ItwPresentationDetailsScreenBaseProps = {
   children?: ReactNode;
   credential: CredentialMetadata;
   ctaProps?: CredentialCtaProps;

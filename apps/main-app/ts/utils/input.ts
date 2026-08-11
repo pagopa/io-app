@@ -80,8 +80,6 @@ export type CreditCardState = Readonly<{
   securityCode: O.Option<string>;
 }>;
 
-export type CreditCardStateKeys = keyof CreditCardState;
-
 // TODO: update this function including all the form errors when fp-ts will be updated.
 // Refers to https://dev.to/gcanti/getting-started-with-fp-ts-either-vs-validation-5eja
 /**

@@ -59,7 +59,7 @@ export type UpgradeCredentialParams = WithItwVersion<
   }
 >;
 
-export type WithItwVersion<T = { [K: string]: any }> = T & {
+type WithItwVersion<T = { [K: string]: any }> = T & {
   itwVersion: ItwVersion;
 };
 

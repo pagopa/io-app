@@ -13,10 +13,6 @@ import {
   sendAarFlowStates
 } from "../utils/stateUtils";
 
-export type SendAarFlowHandlerType = {
-  qrCode: string;
-};
-
 type SendAarFlowManager = {
   currentFlowData: AarFlowState;
   goToNextState: () => void;

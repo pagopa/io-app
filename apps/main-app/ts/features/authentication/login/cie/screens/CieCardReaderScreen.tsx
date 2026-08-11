@@ -62,15 +62,15 @@ import {
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { getCieUatEndpoint } from "../utils/endpoints";
 
-export type CieCardReaderNavigationProps = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "CIE_CARD_READER_SCREEN"
->;
-
 export type CieCardReaderScreenNavigationParams = {
   authorizationUri: string;
   ciePin: string;
 };
+
+type CieCardReaderNavigationProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "CIE_CARD_READER_SCREEN"
+>;
 
 type Props = CieCardReaderNavigationProps &
   ReduxProps &

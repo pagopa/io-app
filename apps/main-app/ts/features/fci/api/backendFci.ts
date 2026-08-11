@@ -21,6 +21,4 @@ const createFciClientWithLollipop = (
   });
 
 export type FciClient = ReturnType<typeof createFciClient>;
-export type FciLollipopClient = ReturnType<typeof createFciClientWithLollipop>;
-
 export { createFciClient, createFciClientWithLollipop };

@@ -7,11 +7,11 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { FciNetworkError } from "../../utils/errors.ts";
 import { fciClearStateRequest, fciDownloadPreview } from "../actions";
 
-export type FciDownload = {
+export type FciDownloadPreviewState = pot.Pot<FciDownload, FciNetworkError>;
+
+type FciDownload = {
   path: string;
 };
-
-export type FciDownloadPreviewState = pot.Pot<FciDownload, FciNetworkError>;
 
 const initialState: FciDownloadPreviewState = pot.none;
 
