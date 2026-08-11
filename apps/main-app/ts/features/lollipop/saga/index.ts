@@ -5,10 +5,7 @@ import {
   PublicKey
 } from "@pagopa/io-react-native-crypto";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
 import { call, delay, put, select } from "typed-redux-saga/macro";
 import { v4 as uuid } from "uuid";
 
@@ -103,6 +100,21 @@ export function* generateLollipopKeySaga() {
   }
 }
 
+export function* getKeyInfo() {
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const publicKey = yield* select(lollipopPublicKeySelector);
+  return yield* call(generateKeyInfo, keyTag, publicKey);
+}
+
+function* checkPublicKeyExists(keyTag: string) {
+  try {
+    const publicKey = yield* call(getPublicKey, keyTag);
+    return publicKey != null;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Generates a new crypto key pair.
  */
@@ -144,22 +156,6 @@ function* deletePreviousCryptoKeyPair(keyTag: string | undefined) {
     return;
   }
   yield* call(deleteCryptoKeyPair, keyTag);
-}
-
-const checkPublicKeyExists = (keyTag: string) =>
-  pipe(
-    TE.tryCatch(
-      () => getPublicKey(keyTag),
-      () => false
-    ),
-    TE.map(_ => true),
-    TE.getOrElse(() => T.of(false))
-  )();
-
-export function* getKeyInfo() {
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const publicKey = yield* select(lollipopPublicKeySelector);
-  return yield* call(generateKeyInfo, keyTag, publicKey);
 }
 
 /**
