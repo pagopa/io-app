@@ -181,7 +181,6 @@
     "@types/jest": "catalog:",
     "@types/lodash": "^4.14.157",
     "@types/node": "^10.1.0",
-    "@types/node-fetch": "^2.1.7",
     "@types/pako": "^2.0.0",
     "@types/react": "catalog:",
     "@types/react-native-background-timer": "^2.0.0",
