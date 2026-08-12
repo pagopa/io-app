@@ -63,6 +63,8 @@ PODS:
     - ExpoModulesCore
   - ExpoKeepAwake (55.0.8):
     - ExpoModulesCore
+  - ExpoLocalAuthentication (55.0.16):
+    - ExpoModulesCore
   - ExpoLogBox (55.0.12):
     - React-Core
   - ExpoModulesCore (55.0.25):
@@ -2398,8 +2400,6 @@ PODS:
     - Yoga
   - react-native-cookies (6.2.1):
     - React-Core
-  - react-native-fingerprint-scanner (6.0.0):
-    - React
   - react-native-get-random-values (1.11.0):
     - React-Core
   - react-native-keyboard-controller (1.21.8):
@@ -3826,6 +3826,7 @@ DEPENDENCIES:
   - ExpoFont (from `../../../node_modules/expo-font/ios`)
   - ExpoImagePicker (from `../../../node_modules/expo-image-picker/ios`)
   - ExpoKeepAwake (from `../../../node_modules/expo-keep-awake/ios`)
+  - ExpoLocalAuthentication (from `../../../node_modules/expo-local-authentication/ios`)
   - "ExpoLogBox (from `../../../node_modules/@expo/log-box`)"
   - ExpoModulesCore (from `../../../node_modules/expo-modules-core`)
   - ExpoModulesJSI (from `../../../node_modules/expo-modules-core`)
@@ -3892,7 +3893,6 @@ DEPENDENCIES:
   - react-native-blob-util (from `../../../node_modules/react-native-blob-util`)
   - react-native-config (from `../../../node_modules/react-native-config`)
   - "react-native-cookies (from `../../../node_modules/@react-native-cookies/cookies`)"
-  - react-native-fingerprint-scanner (from `../../../node_modules/react-native-fingerprint-scanner`)
   - react-native-get-random-values (from `../../../node_modules/react-native-get-random-values`)
   - react-native-keyboard-controller (from `../../../node_modules/react-native-keyboard-controller`)
   - "react-native-netinfo (from `../../../node_modules/@react-native-community/netinfo`)"
@@ -4021,6 +4021,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-image-picker/ios"
   ExpoKeepAwake:
     :path: "../../../node_modules/expo-keep-awake/ios"
+  ExpoLocalAuthentication:
+    :path: "../../../node_modules/expo-local-authentication/ios"
   ExpoLogBox:
     :path: "../../../node_modules/@expo/log-box"
   ExpoModulesCore:
@@ -4152,8 +4154,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-config"
   react-native-cookies:
     :path: "../../../node_modules/@react-native-cookies/cookies"
-  react-native-fingerprint-scanner:
-    :path: "../../../node_modules/react-native-fingerprint-scanner"
   react-native-get-random-values:
     :path: "../../../node_modules/react-native-get-random-values"
   react-native-keyboard-controller:
@@ -4305,6 +4305,7 @@ SPEC CHECKSUMS:
   ExpoFont: a7e34a75bdfb703fa07a0e87807f836236608c76
   ExpoImagePicker: f82edc16bb8eeb6260c2759b0015afc0ab45a3d0
   ExpoKeepAwake: d0eb7a0719500d2a43fbf29b6f79e84d70c75ebf
+  ExpoLocalAuthentication: c4abaae8709b8b15727f2e8dd6d74c5ad38acb0c
   ExpoLogBox: a678d36477ab9544fe63e0b5328a0716539b6774
   ExpoModulesCore: cc07ebf5b947a239f1669cb5856d905cb2b093f7
   ExpoModulesJSI: 964334271fc77832736f66ee1785761cdc778dbe
@@ -4377,7 +4378,6 @@ SPEC CHECKSUMS:
   react-native-blob-util: 04189c38b188b2b76ee453be34765241c552547f
   react-native-config: 2249b7e68644c86ea68358f5a0d746d1c648f900
   react-native-cookies: d648ab7025833b977c0b19e142503034f5f29411
-  react-native-fingerprint-scanner: 91bf6825709dd7bd3abc4588a4772eb097a2b2d8
   react-native-get-random-values: d16467cf726c618e9c7a8c3c39c31faa2244bbba
   react-native-keyboard-controller: d543b2ca3fd062e794b4087a3fe0340159545503
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
