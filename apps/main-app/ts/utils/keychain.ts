@@ -26,13 +26,6 @@ export async function deletePin(): Promise<boolean> {
 }
 
 /**
- * Removes a value from the secure store by key.
- */
-export async function deleteSecureItem(key: string): Promise<void> {
-  return SecureStore.deleteItemAsync(key, DEFAULT_OPTIONS);
-}
-
-/**
  * Returns the unlock code from the secure store.
  */
 export async function getPin(): Promise<PinString | undefined> {
@@ -54,6 +47,6 @@ export async function setPin(pin: PinString): Promise<boolean> {
 /**
  * Stores a value with the default secure storage options applied.
  */
-export async function setSecureItem(key: string, value: string): Promise<void> {
+async function setSecureItem(key: string, value: string): Promise<void> {
   return SecureStore.setItemAsync(key, value, DEFAULT_OPTIONS);
 }
