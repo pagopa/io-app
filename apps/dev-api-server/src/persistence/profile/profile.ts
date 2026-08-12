@@ -8,7 +8,6 @@ import { Profile } from "../../../generated/definitions/identity/Profile";
 import { UpdateProfile412ErrorTypesEnum } from "../../../generated/definitions/identity/UpdateProfile412ErrorTypes";
 import { getProblemJson } from "../../payloads/error";
 import { getProfileInitialData } from "../../payloads/profile";
-import { mockUserMetadata } from "../../payloads/userMetadata";
 import { getRandomValue } from "../../utils/random";
 import { CustomResponse, ResponseProblem } from "../../utils/responseTypes";
 import { getAuthenticationProvider } from "../sessionInfo";
