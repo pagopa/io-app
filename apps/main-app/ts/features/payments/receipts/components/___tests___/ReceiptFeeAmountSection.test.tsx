@@ -1,10 +1,10 @@
-import { render } from "@testing-library/react-native";
-import I18n from "i18next";
-
 import {
   InfoNotice,
   OriginEnum
-} from "../../../../../../definitions/pagopa/biz-events/InfoNotice";
+} from "@io-app/api-types/generated/definitions/pagopa/biz-events/InfoNotice";
+import { render } from "@testing-library/react-native";
+import I18n from "i18next";
+
 import ReceiptFeeAmountSection from "../ReceiptFeeAmountSection";
 
 describe("ReceiptFeeAmountSection", () => {

@@ -1,14 +1,14 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createStore, Store } from "redux";
-
 import {
   InitiativeDTO,
   StatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import {
   InstrumentDTO,
   InstrumentTypeEnum
-} from "../../../../../../definitions/idpay/InstrumentDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { createStore, Store } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

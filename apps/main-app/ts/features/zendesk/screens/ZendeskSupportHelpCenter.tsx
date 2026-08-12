@@ -1,3 +1,4 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import {
   AccordionItem,
   Banner,
@@ -27,7 +28,6 @@ import {
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
-import { InitializedProfile } from "../../../../definitions/identity/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
 import {
   IOScrollView,

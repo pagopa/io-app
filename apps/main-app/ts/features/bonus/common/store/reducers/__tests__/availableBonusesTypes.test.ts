@@ -1,8 +1,8 @@
+import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
+import { BonusesAvailable } from "@io-app/api-types/generated/definitions/content/BonusesAvailable";
+import { BonusVisibilityEnum } from "@io-app/api-types/generated/definitions/content/BonusVisibility";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { BonusAvailable } from "../../../../../../../definitions/content/BonusAvailable";
-import { BonusesAvailable } from "../../../../../../../definitions/content/BonusesAvailable";
-import { BonusVisibilityEnum } from "../../../../../../../definitions/content/BonusVisibility";
 import {
   availableBonuses,
   contentBonusVacanzeIT

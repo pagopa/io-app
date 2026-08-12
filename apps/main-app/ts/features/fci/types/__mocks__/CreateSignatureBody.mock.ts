@@ -1,8 +1,8 @@
+import { CreateSignatureBody } from "@io-app/api-types/generated/definitions/fci/CreateSignatureBody";
+import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
+import { QtspClauses } from "@io-app/api-types/generated/definitions/fci/QtspClauses";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { CreateSignatureBody } from "../../../../../definitions/fci/CreateSignatureBody";
-import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
-import { QtspClauses } from "../../../../../definitions/fci/QtspClauses";
 import { mockQtspClausesMetadata } from "./QtspClausesMetadata.mock";
 import { mockDocuments } from "./SignatureRequestDetailView.mock";
 

@@ -1,3 +1,5 @@
+import { ZendeskSubCategoriesMap } from "@io-app/api-types/generated/definitions/content/ZendeskSubCategoriesMap";
+
 import {
   formatAndValidateDueDate,
   getPaymentPhaseFromStep,
@@ -6,7 +8,6 @@ import {
   getSubCategoryFromFaultCode,
   trimAndLimitValue
 } from "..";
-import { ZendeskSubCategoriesMap } from "../../../../../../definitions/content/ZendeskSubCategoriesMap";
 import { WalletPaymentStepEnum } from "../../types";
 
 const mockCategories: ZendeskSubCategoriesMap = {

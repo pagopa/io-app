@@ -1,3 +1,5 @@
+import { NoticeDetailResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeDetailResponse";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/biz-events/WalletInfo";
 import {
   Alert,
   ContentWrapper,
@@ -17,8 +19,6 @@ import I18n from "i18next";
 import { capitalize } from "lodash";
 import { View } from "react-native";
 
-import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
-import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { capitalizeTextName } from "../../../../utils/strings";

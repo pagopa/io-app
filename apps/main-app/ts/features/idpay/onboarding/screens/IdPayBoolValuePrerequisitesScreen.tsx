@@ -1,3 +1,5 @@
+import { _typeEnum as SelfConsentBoolTypeEnum } from "@io-app/api-types/generated/definitions/idpay/SelfConsentBoolDTO";
+import { SelfCriteriaBoolDTO } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaBoolDTO";
 import {
   Divider,
   IOToast,
@@ -9,8 +11,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { View } from "react-native";
 
-import { _typeEnum as SelfConsentBoolTypeEnum } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
-import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";

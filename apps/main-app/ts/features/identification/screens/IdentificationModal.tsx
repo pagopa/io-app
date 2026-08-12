@@ -211,7 +211,7 @@ export const IdentificationModal = () => {
           onIdentificationSuccessHandler(true);
         },
         e => {
-          if (e.name === "DeviceLocked" || e.name === "DeviceLockedPermanent") {
+          if (e === "lockout") {
             setIsBiometricLocked(true);
           }
         }

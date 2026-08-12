@@ -1,8 +1,8 @@
+import { FilledDocumentDetailView } from "@io-app/api-types/generated/definitions/fci/FilledDocumentDetailView";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";

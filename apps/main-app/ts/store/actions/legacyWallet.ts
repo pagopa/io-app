@@ -1,8 +1,7 @@
+import { PaymentFaultV2Enum as PaymentProblemErrorEnum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { PaymentRequestsGetResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
-import { PaymentFaultV2Enum as PaymentProblemErrorEnum } from "../../../definitions/communication/PaymentFaultV2";
-import { PaymentRequestsGetResponse } from "../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 
 export type PaymentStartOrigin =
   | "donation"

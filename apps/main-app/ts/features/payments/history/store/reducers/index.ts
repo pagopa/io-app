@@ -1,3 +1,4 @@
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
@@ -6,7 +7,6 @@ import _ from "lodash";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import { Action } from "../../../../../store/actions/types";
 import { createSetTransform } from "../../../../../store/transforms/setTransform";

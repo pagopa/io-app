@@ -1,3 +1,5 @@
+import { InfoNotice } from "@io-app/api-types/generated/definitions/pagopa/biz-events/InfoNotice";
+import { NoticeListItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListItem";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 
@@ -11,8 +13,6 @@ import {
   removeAsterisks,
   restoreTransactionsToOriginalOrder
 } from "..";
-import { InfoNotice } from "../../../../../../definitions/pagopa/biz-events/InfoNotice";
-import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { getNetworkError, NetworkError } from "../../../../../utils/errors";
 import {
   DownloadReceiptOutcomeErrorEnum,

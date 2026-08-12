@@ -1,11 +1,11 @@
-import { fireEvent, render } from "@testing-library/react-native";
-import { Alert, Platform } from "react-native";
-
 import {
   InitiativeDTO,
   StatusEnum,
   VoucherStatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { fireEvent, render } from "@testing-library/react-native";
+import { Alert, Platform } from "react-native";
+
 import IdPayRemoveFromWalletButton from "../IdPayRemoveFromWalletButton";
 const mockNavigation = jest.fn();
 
