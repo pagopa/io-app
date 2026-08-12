@@ -84,7 +84,7 @@ const biometricAuthenticationFailureHandler = (
   if (isDebugBiometricIdentificationEnabled) {
     Alert.alert("identification.biometric.title", `KO: ${error}`);
   }
-  onError(error);
+  onError(error as LocalAuthentication.LocalAuthenticationError);
   if (Platform.OS === "android") {
     void LocalAuthentication.cancelAuthenticate();
   }
