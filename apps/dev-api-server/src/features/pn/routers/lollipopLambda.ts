@@ -11,7 +11,6 @@ import { checkAndValidateLollipopHeaders } from "../services/lollipopService";
 const lollipopLambdaPath = "/aws/send/lollipop-test";
 
 export const generateLollipopLambdaGetPath = () => lollipopLambdaPath;
-export const generateLollipopLambdaPostPath = () => lollipopLambdaPath;
 
 export const sendLollipopLambdaRouter = Router();
 

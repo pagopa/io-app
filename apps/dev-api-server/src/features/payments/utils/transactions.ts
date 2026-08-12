@@ -8,7 +8,7 @@ import {
   PaymentMethodEnum
 } from "../../../../generated/definitions/pagopa/transactions/InfoNotice";
 
-export const PAYMENT_METHODS_TRANSACTIONS_MOCK = [
+const PAYMENT_METHODS_TRANSACTIONS_MOCK = [
   {
     logo: "https://assets.cdn.platform.pagopa.it/creditcard/visa.png",
     brand: "VISA",

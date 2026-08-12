@@ -80,7 +80,7 @@ const PaymentConfig = t.interface({
   amount: ImportoEuroCents,
   pspFeeAmount: t.number
 });
-export type PaymentConfig = t.TypeOf<typeof PaymentConfig>;
+type PaymentConfig = t.TypeOf<typeof PaymentConfig>;
 
 const ErrorCodes = WithinRangeInteger(400, 600);
 type ErrorCodes = t.TypeOf<typeof ErrorCodes>;
@@ -97,7 +97,7 @@ const SpecialServicesConfig = t.interface({
   fci: t.boolean
 });
 
-export const ServicesConfig = t.intersection([
+const ServicesConfig = t.intersection([
   t.interface({
     // configure some API response error code
     response: t.interface({
@@ -248,4 +248,4 @@ export const IoDevServerConfig = t.interface({
 });
 export type AllorRandomValueKeys = keyof IoDevServerConfig;
 export type IoDevServerConfig = t.TypeOf<typeof IoDevServerConfig>;
-export type SpecialServicesConfig = t.TypeOf<typeof SpecialServicesConfig>;
+type SpecialServicesConfig = t.TypeOf<typeof SpecialServicesConfig>;
