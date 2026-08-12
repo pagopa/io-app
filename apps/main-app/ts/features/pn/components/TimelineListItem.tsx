@@ -1,3 +1,4 @@
+import { NotificationStatusHistory } from "@io-app/api-types/generated/definitions/pn/NotificationStatusHistory";
 import {
   Alert,
   IOMaxFontSizeMultiplier,
@@ -8,7 +9,6 @@ import I18n from "i18next";
 import { useMemo, useState } from "react";
 import { Dimensions, useWindowDimensions, View } from "react-native";
 
-import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
 import { useIOSelector } from "../../../store/hooks";
 import {
   isAarInAppDelegationRemoteEnabledSelector,

@@ -1,10 +1,10 @@
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { ContentWrapper, VStack } from "@io-app/design-system";
 import { useFocusEffect, useLinkTo } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { CTA } from "../../../../types/LocalizedCTAs";

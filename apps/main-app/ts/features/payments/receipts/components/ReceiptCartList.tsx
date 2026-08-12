@@ -1,3 +1,4 @@
+import { CartItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/CartItem";
 import {
   HStack,
   IOSkeleton,
@@ -6,7 +7,6 @@ import {
 } from "@io-app/design-system";
 import { View } from "react-native";
 
-import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { formatAmountText } from "../utils";
 

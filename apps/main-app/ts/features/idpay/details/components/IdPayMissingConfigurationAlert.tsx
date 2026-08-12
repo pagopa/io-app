@@ -1,10 +1,10 @@
+import { StatusEnum as InitiativeStatusEnum } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { Alert, VSpacer } from "@io-app/design-system";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import I18n from "i18next";
 import { createRef } from "react";
 import { View } from "react-native";
 
-import { StatusEnum as InitiativeStatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { IdPayConfigurationParamsList } from "../../configuration/navigation/params";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";

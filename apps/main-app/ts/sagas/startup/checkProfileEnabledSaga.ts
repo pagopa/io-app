@@ -1,9 +1,9 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
-import { InitializedProfile } from "../../../definitions/identity/InitializedProfile";
 import {
   profileFirstLogin,
   profileUpsert

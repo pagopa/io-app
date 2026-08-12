@@ -1,3 +1,5 @@
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -16,8 +18,6 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
-import { UserDataProcessingChoiceEnum } from "../../definitions/identity/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../definitions/identity/UserDataProcessingStatus";
 import { communicationClientManager } from "../api/CommunicationClientManager";
 import { identityClientManager } from "../api/IdentityClientManager";
 import { sessionManagerClientManager } from "../api/SessionManagerClientManager";

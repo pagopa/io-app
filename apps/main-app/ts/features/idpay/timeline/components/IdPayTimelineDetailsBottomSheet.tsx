@@ -1,3 +1,8 @@
+import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { OperationListDTO } from "@io-app/api-types/generated/definitions/idpay/OperationListDTO";
+import { OperationTypeEnum as RefundOperationTypeEnum } from "@io-app/api-types/generated/definitions/idpay/RefundOperationDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
+import { ChannelEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
 import { H6, IOSkeleton, Pictogram, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { enumType } from "@pagopa/ts-commons/lib/types";
@@ -9,11 +14,6 @@ import * as t from "io-ts";
 import { useState } from "react";
 import { View } from "react-native";
 
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
-import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
-import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../definitions/idpay/TransactionDetailDTO";
-import { ChannelEnum } from "../../../../../definitions/idpay/TransactionOperationDTO";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   IOBottomSheetModal,

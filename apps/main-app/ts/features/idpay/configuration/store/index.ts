@@ -1,11 +1,11 @@
+import { StatusEnum } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
+import { InstrumentListDTO } from "@io-app/api-types/generated/definitions/idpay/InstrumentListDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { StatusEnum } from "../../../../../definitions/idpay/InstrumentDTO";
-import { InstrumentListDTO } from "../../../../../definitions/idpay/InstrumentListDTO";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";

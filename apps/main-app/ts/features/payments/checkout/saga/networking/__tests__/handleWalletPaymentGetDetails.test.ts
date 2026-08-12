@@ -1,9 +1,9 @@
+import { PaymentRequestsGetResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { PaymentRequestsGetResponse } from "../../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
-import { RptId } from "../../../../../../../definitions/pagopa/ecommerce/RptId";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { paymentsGetPaymentDetailsAction } from "../../../store/actions/networking";
