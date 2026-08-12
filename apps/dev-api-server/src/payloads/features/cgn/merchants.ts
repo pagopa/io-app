@@ -186,7 +186,7 @@ const generateDiscount = (
   };
 };
 
-export const generateMerchantDetail = (
+const generateMerchantDetail = (
   merchant: OfflineMerchant | OnlineMerchant
 ): Merchant => {
   if (OnlineMerchant.is(merchant)) {

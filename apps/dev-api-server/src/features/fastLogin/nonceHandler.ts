@@ -5,7 +5,7 @@ import * as O from "fp-ts/lib/Option";
 
 import { getDateMsDifference } from "../../utils/date";
 
-export const NONCE_EXPYRING_MS = 60000;
+const NONCE_EXPYRING_MS = 60000;
 
 export type NonceInfo = {
   instantiationDate: Date;

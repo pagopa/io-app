@@ -4,20 +4,19 @@ import { addHandler, SupportedMethod } from "../../../payloads/response";
 
 export const walletRouter = Router();
 
-export const PAYMENT_WALLET_PREFIX = "/io-payment-wallet/v1";
-export const ECOMMERCE_PREFIX = "/ecommerce/io/v2";
-export const NOTICES_PREFIX = "/bizevents/notices-service-jwt/v1";
-export const PLATFORM_PREFIX = "/session-wallet/v1";
+const PAYMENT_WALLET_PREFIX = "/io-payment-wallet/v1";
+const ECOMMERCE_PREFIX = "/ecommerce/io/v2";
+const NOTICES_PREFIX = "/bizevents/notices-service-jwt/v1";
+const PLATFORM_PREFIX = "/session-wallet/v1";
 
-export const addPaymentWalletPrefix = (path: string) =>
+const addPaymentWalletPrefix = (path: string) =>
   `${PAYMENT_WALLET_PREFIX}${path}`;
 
-export const addECommercePrefix = (path: string) =>
-  `${ECOMMERCE_PREFIX}${path}`;
+const addECommercePrefix = (path: string) => `${ECOMMERCE_PREFIX}${path}`;
 
-export const addNoticesPrefix = (path: string) => `${NOTICES_PREFIX}${path}`;
+const addNoticesPrefix = (path: string) => `${NOTICES_PREFIX}${path}`;
 
-export const addPlatformPrefix = (path: string) => `${PLATFORM_PREFIX}${path}`;
+const addPlatformPrefix = (path: string) => `${PLATFORM_PREFIX}${path}`;
 
 export const addPaymentWalletHandler = (
   method: SupportedMethod,

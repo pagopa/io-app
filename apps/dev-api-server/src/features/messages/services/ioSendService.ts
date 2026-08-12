@@ -47,7 +47,7 @@ export const generateRequestHeaders = (
   ...ioSourceHeaderFromRequestHeaders(headers)
 });
 
-export const ioSourceHeaderFromRequestHeaders = (
+const ioSourceHeaderFromRequestHeaders = (
   headers: IncomingHttpHeaders
 ): Record<string, string> => {
   const ioSourceHeader = headers["x-pagopa-pn-io-src"];
@@ -59,7 +59,7 @@ export const ioSourceHeaderFromRequestHeaders = (
   return {};
 };
 
-export const contentTypeHeaderFromHeaders = (
+const contentTypeHeaderFromHeaders = (
   headers: IncomingHttpHeaders,
   defaultValue = "application/json"
 ) => {

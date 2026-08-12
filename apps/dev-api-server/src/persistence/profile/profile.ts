@@ -60,11 +60,6 @@ export const updateProfile = (req: Request): ProfileOperationsType["post"] => {
   };
 };
 
-export const getUserMetadata = () => ({
-  ...mockUserMetadata,
-  version: currentProfile.version
-});
-
 export const resetUserProfile = () =>
   (currentProfile = { ...getProfileInitialData(getAuthenticationProvider()) });
 

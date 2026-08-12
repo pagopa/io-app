@@ -79,7 +79,7 @@ export const notificationOrMandateDataFromQRCode = (
   );
 };
 
-export const fakeDenominationFromFiscalCode = (fiscalCode: string) => {
+const fakeDenominationFromFiscalCode = (fiscalCode: string) => {
   const nameInitial = fiscalCode.length > 0 ? fiscalCode[0] : "J";
   const surnameInitial = fiscalCode.length > 3 ? fiscalCode[3] : "S";
   return `${fakeNameFromCharacter(nameInitial)} ${fakeSurnameFromCharacter(

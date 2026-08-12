@@ -3,11 +3,11 @@ import { randomBytes } from "crypto";
 import { OtpCode } from "../../../../generated/definitions/cgn/OtpCode";
 
 // Bonus codes are made of characters picked from the following alphabet
-export const ALPHABET = "ACEFGHLMNPRUV3469";
+const ALPHABET = "ACEFGHLMNPRUV3469";
 const ALPHABET_LEN = ALPHABET.length;
 
 // Bonus codes have a length of 12 characthers
-export const BONUSCODE_LENGTH = 12;
+const BONUSCODE_LENGTH = 12;
 
 /**
  * Generates a new random bonus code
