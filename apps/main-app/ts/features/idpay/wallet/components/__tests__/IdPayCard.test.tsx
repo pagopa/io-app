@@ -1,12 +1,12 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import configureMockStore from "redux-mock-store";
-
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
-import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { WalletDTO } from "@io-app/api-types/generated/definitions/idpay/WalletDTO";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

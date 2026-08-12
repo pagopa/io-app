@@ -2,6 +2,91 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.14](https://github.com/pagopa/io-app/compare/3.38.0-rc.13...3.38.0-rc.14) (2026-08-11)
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Update mockhttp ([#8435](https://github.com/pagopa/io-app/issues/8435)) ([d8dbd1c](https://github.com/pagopa/io-app/commit/d8dbd1ce14acd878ced9553158fc45a3a6562265))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Update pnpm to version 11 ([#8429](https://github.com/pagopa/io-app/issues/8429)) ([d63033e](https://github.com/pagopa/io-app/commit/d63033e89f9f6625459b7d58c1c7323e97bdefe6))
+
+## [3.38.0-rc.13](https://github.com/pagopa/io-app/compare/3.38.0-rc.12...3.38.0-rc.13) (2026-08-10)
+
+
+### Features
+
+* [[IEG-3134](https://pagopa.atlassian.net/browse/IEG-3134)] [FIMS] Pass the Mixpanel ID to enabled FIMS destinations ([#8417](https://github.com/pagopa/io-app/issues/8417)) ([f944c2b](https://github.com/pagopa/io-app/commit/f944c2bbc046007a48d8ca8393e04cc304e7c6cb)), closes [/#diff-bbcaa878d6ddd74dcce6ecdc79cdc69a9b374700bfa387a58e9553a59ead7f4dR223-R232](https://github.com/pagopa///issues/diff-bbcaa878d6ddd74dcce6ecdc79cdc69a9b374700bfa387a58e9553a59ead7f4dR223-R232) [/#diff-c334d60ada2ac4436f621e9955fb4059dffe762285635b8ed3c0309929a6ee8cR342-R360](https://github.com/pagopa///issues/diff-c334d60ada2ac4436f621e9955fb4059dffe762285635b8ed3c0309929a6ee8cR342-R360) [/#diff-a32c47cbb3037b97820e15cb4ee3a0620c07f10d4d0f0fa2b18f58d5bdb4b27dR66-R96](https://github.com/pagopa///issues/diff-a32c47cbb3037b97820e15cb4ee3a0620c07f10d4d0f0fa2b18f58d5bdb4b27dR66-R96) [/#diff-3001b79a0db6924c3ab679508a9eaa178201a1846eeff04ed8348cde3640069eR275-R321](https://github.com/pagopa///issues/diff-3001b79a0db6924c3ab679508a9eaa178201a1846eeff04ed8348cde3640069eR275-R321)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4731](https://pagopa.atlassian.net/browse/SIW-4731)] Fix ITW_ID_method for CieID L2/L3 in ITW_UX_SUCCESS ([#8412](https://github.com/pagopa/io-app/issues/8412)) ([d5dbc63](https://github.com/pagopa/io-app/commit/d5dbc635f5231c4690413ac1bca3867198c6545a))
+
+
+### Chores
+
+* [[IOPLT-1978](https://pagopa.atlassian.net/browse/IOPLT-1978)] Align `eslint` plugins between DS and main app ([#8358](https://github.com/pagopa/io-app/issues/8358)) ([689b536](https://github.com/pagopa/io-app/commit/689b536d2f70c4e6963c6a2ca8f2963b643ba2f9))
+
+## [3.38.0-rc.12](https://github.com/pagopa/io-app/compare/3.38.0-rc.11...3.38.0-rc.12) (2026-08-09)
+
+
+### Features
+
+* [[IEL-726](https://pagopa.atlassian.net/browse/IEL-726)] update FCI API endpoint to use new io-func-sign-user version ([#8390](https://github.com/pagopa/io-app/issues/8390)) ([254fc1b](https://github.com/pagopa/io-app/commit/254fc1bed03d538798df3f8e8f6ddfc18b35f9bc))
+* [[SIW-4810](https://pagopa.atlassian.net/browse/SIW-4810)] Implement CieID environment selection logic and updated related components ([#8420](https://github.com/pagopa/io-app/issues/8420)) ([f10b450](https://github.com/pagopa/io-app/commit/f10b450b448a7db47fc7b2d8e8f6dac57898c4fd))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Show correct credential status on the card right after issuance ([#8401](https://github.com/pagopa/io-app/issues/8401)) ([fae04ca](https://github.com/pagopa/io-app/commit/fae04ca1ed7bab3fda34e32cfa7f372bbcc3a405))
+* **IT-Wallet:** [[SIW-4716](https://pagopa.atlassian.net/browse/SIW-4716)] Enhance offline functionality with proximity features  ([#8368](https://github.com/pagopa/io-app/issues/8368)) ([9589721](https://github.com/pagopa/io-app/commit/9589721f3f8ad860fc3ce2baa63915489fba5f02))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Adds missing purpose string on plist after calendar library switch ([#8413](https://github.com/pagopa/io-app/issues/8413)) ([f8fc105](https://github.com/pagopa/io-app/commit/f8fc105d3fdbbcce65cc9da5788f56abac743423))
+* [[IOPLT-1986](https://pagopa.atlassian.net/browse/IOPLT-1986)] Fix ESLint warnings in Design System section ([#8381](https://github.com/pagopa/io-app/issues/8381)) ([d12e577](https://github.com/pagopa/io-app/commit/d12e577637f767d24e8dc64eb7043664a15ca8ba))
+
+
+### Chores
+
+* [[IOPLT-1977](https://pagopa.atlassian.net/browse/IOPLT-1977)] Allow ref and `SharedValue` mutation by type ([#8357](https://github.com/pagopa/io-app/issues/8357)) ([48c2793](https://github.com/pagopa/io-app/commit/48c279311f35be0ddb91f9fb9a5f8353841d692c))
+* [[IOPLT-2000](https://pagopa.atlassian.net/browse/IOPLT-2000)] Bump `i18next` and `react-i18next` to ensure full TS compatibility ([#8416](https://github.com/pagopa/io-app/issues/8416)) ([a04db3d](https://github.com/pagopa/io-app/commit/a04db3d2fa564d1b47f99e63c488b8c78f24ddb4))
+* [[IOPTL-000](https://pagopa.atlassian.net/browse/IOPTL-000)] Prevent relative imports from design system ([#8419](https://github.com/pagopa/io-app/issues/8419)) ([01c71a0](https://github.com/pagopa/io-app/commit/01c71a02ad6c4931bbf8b949115f8ad773a9ccf5))
+
+## [3.38.0-rc.11](https://github.com/pagopa/io-app/compare/3.38.0-rc.10...3.38.0-rc.11) (2026-08-07)
+
+
+### Features
+
+* [[IOPID-4118](https://pagopa.atlassian.net/browse/IOPID-4118)] Add IDPs URL selector ([#8407](https://github.com/pagopa/io-app/issues/8407)) ([745b9bb](https://github.com/pagopa/io-app/commit/745b9bbf12ce694e3042a12b66714cfc159592a9))
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Use UAT CieID app in IT-Wallet pre environment ([#8405](https://github.com/pagopa/io-app/issues/8405)) ([4c4f0b8](https://github.com/pagopa/io-app/commit/4c4f0b8b5ce1482e8610cd2b4760ee88c2f999e0))
+* **IT-Wallet:** [[SIW-2162](https://pagopa.atlassian.net/browse/SIW-2162)] Refresh Status List tokens ([#8143](https://github.com/pagopa/io-app/issues/8143)) ([1af6c50](https://github.com/pagopa/io-app/commit/1af6c50f7cb420b037766fbf679c09fa3f8aa1c9))
+* **IT-Wallet:** [[SIW-4682](https://pagopa.atlassian.net/browse/SIW-4682)] Extract dynamic messages for status list codes ([#8359](https://github.com/pagopa/io-app/issues/8359)) ([e01aba0](https://github.com/pagopa/io-app/commit/e01aba06c2056d3d442e329fb8b271df3815960f))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)]: Unmounting CIE gif on focus loss ([#8403](https://github.com/pagopa/io-app/issues/8403)) ([a897282](https://github.com/pagopa/io-app/commit/a8972822699a34ed5ecf53a668ecc39f58f4294f))
+* **IT-Wallet:** [[SIW-4745](https://pagopa.atlassian.net/browse/SIW-4745)] Handle IT Wallet cold-start deeplinks ([#8377](https://github.com/pagopa/io-app/issues/8377)) ([dbeb53f](https://github.com/pagopa/io-app/commit/dbeb53f0f679050a15c31d8a7aa7d41f36d076a3))
+
+## [3.38.0-rc.10](https://github.com/pagopa/io-app/compare/3.38.0-rc.9...3.38.0-rc.10) (2026-08-05)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4727](https://pagopa.atlassian.net/browse/SIW-4727)] Implement credential consume for batch-issued credentials ([#8393](https://github.com/pagopa/io-app/issues/8393)) ([2568123](https://github.com/pagopa/io-app/commit/2568123dee219d6e54c0870b2e9d5c1a39d5897b))
+
+## [3.38.0-rc.9](https://github.com/pagopa/io-app/compare/3.38.0-rc.8...3.38.0-rc.9) (2026-08-04)
+
+
+### Features
+
+* [[IOPID-4101](https://pagopa.atlassian.net/browse/IOPID-4101)] migrate lollipop keyTag from Option<string> to native type ([#8372](https://github.com/pagopa/io-app/issues/8372)) ([d0c3e03](https://github.com/pagopa/io-app/commit/d0c3e03de25961ce06e9046e76e7b9802b56da8c))
+
+
+### Chores
+
+* [[IOPID-4114](https://pagopa.atlassian.net/browse/IOPID-4114)] Add developer login config screen ([#8394](https://github.com/pagopa/io-app/issues/8394)) ([26fc989](https://github.com/pagopa/io-app/commit/26fc989ff95b7ce2f0e8e7e4f89f2abd4124cef3))
+* [[IOPID-4115](https://pagopa.atlassian.net/browse/IOPID-4115)] Add Authentication playground screen ([#8397](https://github.com/pagopa/io-app/issues/8397)) ([6c3411b](https://github.com/pagopa/io-app/commit/6c3411b92780efdd7a51c02770dd521150e190a2))
+* [[IOPLT-1973](https://pagopa.atlassian.net/browse/IOPLT-1973)] Replace `react-native-haptic-feedback` with `pulsar` + Extend haptic feedback ([#8350](https://github.com/pagopa/io-app/issues/8350)) ([969ce87](https://github.com/pagopa/io-app/commit/969ce87f72066d1033b52eb6356cfbb2b8e75b30))
+
 ## [3.38.0-rc.8](https://github.com/pagopa/io-app/compare/3.38.0-rc.7...3.38.0-rc.8) (2026-08-03)
 
 

@@ -1,12 +1,11 @@
+import {
+  StatusEnum,
+  VoucherStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { Badge, Divider, H6, IOListItemStyles } from "@io-app/design-system";
 import I18n from "i18next";
 import { ComponentProps } from "react";
 import { View } from "react-native";
-
-import {
-  StatusEnum,
-  VoucherStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
 
 const getStatusBadgeVariant = (
   status: StatusEnum | VoucherStatusEnum

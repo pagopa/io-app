@@ -1,3 +1,4 @@
+import { SignatureRequestDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
 import {
   AmountInEuroCents,
   PaymentNoticeQrCodeFromString,
@@ -10,7 +11,6 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { pnAarQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../store/reducers/types";
 import { decodePosteDataMatrix } from "../../../utils/payment";

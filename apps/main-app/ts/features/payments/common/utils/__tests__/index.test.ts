@@ -1,7 +1,7 @@
+import { Bundle } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/Bundle";
 import { format } from "date-fns";
 
 import { getSortedPspList, isPaymentMethodExpired } from "..";
-import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 
 describe("isPaymentMethodExpired", () => {
   it("should return true if payment method is expired", () => {

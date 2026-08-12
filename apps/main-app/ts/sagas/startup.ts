@@ -1,3 +1,5 @@
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -16,8 +18,6 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
-import { UserDataProcessingChoiceEnum } from "../../definitions/identity/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../definitions/identity/UserDataProcessingStatus";
 import { communicationClientManager } from "../api/CommunicationClientManager";
 import { identityClientManager } from "../api/IdentityClientManager";
 import { sessionManagerClientManager } from "../api/SessionManagerClientManager";
@@ -74,7 +74,7 @@ import {
 } from "../features/ingress/saga";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import {
-  watchItwOfflineSaga,
+  watchItwAuthenticatedSaga,
   watchItwSaga
 } from "../features/itwallet/common/saga";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
@@ -239,7 +239,7 @@ export function* initializeApplicationSaga(
   // OFFLINE WALLET MINI-APP CHECKS
 
   // Start watching for ITW sagas that do not require internet connection or a valid session
-  yield* fork(watchItwOfflineSaga);
+  yield* fork(watchItwSaga);
 
   // Before continuing with the startup flow, we check if the app started offline.
   // In that case (offline wallet or timeout), we skip the saga to prevent triggering
@@ -687,7 +687,7 @@ export function* initializeApplicationSaga(
   }
 
   // Start watching for itw saga
-  yield* fork(watchItwSaga);
+  yield* fork(watchItwAuthenticatedSaga);
 
   // Here we can be sure that the session information is loaded and valid
   const walletToken = maybeSessionInformation.value.walletToken as string;

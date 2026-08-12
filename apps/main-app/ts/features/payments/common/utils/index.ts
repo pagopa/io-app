@@ -1,3 +1,8 @@
+import { LevelEnum } from "@io-app/api-types/generated/definitions/content/SectionStatus";
+import { NoticeListItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListItem";
+import { Bundle } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/Bundle";
+import { WalletApplicationStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletApplicationStatus";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
 import {
   IOLogoPaymentType,
   IOPaymentLogos,
@@ -8,11 +13,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import _ from "lodash";
 
-import { LevelEnum } from "../../../../../definitions/content/SectionStatus";
-import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
-import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { contentRepoUrl } from "../../../../config";
 import { getDateFromExpiryDate, isExpiredDate } from "../../../../utils/dates";
 import { findFirstCaseInsensitive } from "../../../../utils/object";

@@ -1,9 +1,9 @@
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import I18n from "i18next";
 import { RefObject } from "react";
 import { Dimensions } from "react-native";
 
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { useIODispatch } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
@@ -62,7 +62,6 @@ export const MessagePaymentBottomSheet = ({
     snapPoint: [snapPoint],
     onDismiss: () => dispatch(cancelQueuedPaymentUpdates({ messageId }))
   });
-  // eslint-disable-next-line functional/immutable-data
   presentPaymentsBottomSheetRef.current = present;
   return bottomSheet;
 };

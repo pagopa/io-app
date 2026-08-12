@@ -1,7 +1,7 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as O from "fp-ts/lib/Option";
 import { expectSaga } from "redux-saga-test-plan";
 
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import * as profileProperties from "../../../../../mixpanelConfig/profileProperties";
 import { loadServicePreference } from "../../../details/store/actions/preference";
 import { ServicePreferenceResponse } from "../../../details/types/ServicePreferenceResponse";

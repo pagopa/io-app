@@ -1,3 +1,4 @@
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
 import {
   FooterActions,
   FooterActionsMeasurements,
@@ -8,7 +9,6 @@ import I18n from "i18next";
 import { RefObject, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";

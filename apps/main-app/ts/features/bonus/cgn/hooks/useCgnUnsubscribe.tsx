@@ -43,7 +43,6 @@ export function useCgnUnsubscribe() {
       IOToast.error(I18n.t("wallet.delete.failed"));
     }
 
-    // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
   }, [unsubscriptionStatus, navigation, dispatch]);
 
