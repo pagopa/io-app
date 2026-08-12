@@ -13,12 +13,6 @@ type GenerateOnboardingWalletDataParams = {
 export const generateOnboardablePaymentMethods = (): PaymentMethodsResponse =>
   allPaymentMethods;
 
-export const getWalletTypeFromPaymentMethodId = (
-  paymentMethodId: string
-): string =>
-  allPaymentMethods.paymentMethods?.find(({ id }) => id === paymentMethodId)
-    ?.paymentTypeCode || "CARDS";
-
 export const WALLET_ONBOARDING_PATH = "/wallets/outcomes";
 export const generateOnboardingWalletData = ({
   paymentMethodId,

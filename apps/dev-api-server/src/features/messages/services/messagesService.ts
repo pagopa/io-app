@@ -38,7 +38,7 @@ import { sendServiceId } from "../../pn/services/dataService";
 import ServicesDB from "../../services/persistence/servicesDatabase";
 import { nextMessageIdAndCreationDate } from "../utils";
 
-export const getMessageCategory = (
+const getMessageCategory = (
   message: CreatedMessageWithContent
 ): MessageCategory => {
   if ("category" in message) {

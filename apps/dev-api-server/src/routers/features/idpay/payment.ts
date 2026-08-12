@@ -45,7 +45,7 @@ const generateRandomTransactionError = (
   message: faker.lorem.sentence()
 });
 
-export const codeToFailure: {
+const codeToFailure: {
   [key: number]: { code: CodeEnum; status: number };
 } = {
   1: { status: 404, code: CodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED },

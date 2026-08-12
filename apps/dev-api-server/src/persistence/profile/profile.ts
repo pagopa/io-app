@@ -8,7 +8,6 @@ import * as R from "fp-ts/lib/Record";
 
 import { getProblemJson } from "../../payloads/error";
 import { getProfileInitialData } from "../../payloads/profile";
-import { mockUserMetadata } from "../../payloads/userMetadata";
 import { getRandomValue } from "../../utils/random";
 import { CustomResponse, ResponseProblem } from "../../utils/responseTypes";
 import { getAuthenticationProvider } from "../sessionInfo";
@@ -59,11 +58,6 @@ export const updateProfile = (req: Request): ProfileOperationsType["post"] => {
     payload: currentProfile
   };
 };
-
-export const getUserMetadata = () => ({
-  ...mockUserMetadata,
-  version: currentProfile.version
-});
 
 export const resetUserProfile = () =>
   (currentProfile = { ...getProfileInitialData(getAuthenticationProvider()) });

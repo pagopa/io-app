@@ -13,9 +13,6 @@ export interface ProcessedPayment {
   readonly type: "processed";
 }
 
-export const isProcessablePayment = (
-  paymentStatus: PaymentStatus
-): paymentStatus is ProcessablePayment => paymentStatus.type === "processable";
 export const isProcessedPayment = (
   paymentStatus: PaymentStatus
 ): paymentStatus is ProcessedPayment => paymentStatus.type === "processed";
@@ -33,7 +30,7 @@ export const processedPayment = (status: {
   status
 });
 
-export const foldW =
+const foldW =
   <A, B>(
     onProcessed: (processedPayment: ProcessedPayment) => A,
     onProcessable: (processablePayment: ProcessablePayment) => B

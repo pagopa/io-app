@@ -14,7 +14,7 @@ export const relyingPartiesConfig = (
 
 export const baseRelyingPartyPath = () => "/fims/relyingParty";
 
-export const tokenPayloadToUrl = (
+const tokenPayloadToUrl = (
   tokenPayload: Record<string, unknown>,
   baseUrl: string
 ) => {
