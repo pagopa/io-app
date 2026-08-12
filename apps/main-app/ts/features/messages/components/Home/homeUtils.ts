@@ -1,9 +1,9 @@
+import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { StyleSheet } from "react-native";
 import { ActionType } from "typesafe-actions";
 
-import { TagEnum } from "../../../../../definitions/communication/MessageCategoryPN";
 import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import NavigationService from "../../../../navigation/NavigationService";
 import { GlobalState } from "../../../../store/reducers/types";

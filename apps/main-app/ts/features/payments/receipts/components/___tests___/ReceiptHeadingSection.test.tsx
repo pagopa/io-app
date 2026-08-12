@@ -1,7 +1,7 @@
+import { OriginEnum } from "@io-app/api-types/generated/definitions/pagopa/biz-events/InfoNotice";
+import { NoticeDetailResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeDetailResponse";
 import { createStore } from "redux";
 
-import { OriginEnum } from "../../../../../../definitions/pagopa/biz-events/InfoNotice";
-import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";

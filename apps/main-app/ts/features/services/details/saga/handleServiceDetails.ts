@@ -1,8 +1,8 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServicesClient } from "../../../../api/ServicesClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";

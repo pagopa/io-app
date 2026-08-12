@@ -1,9 +1,9 @@
+import { SignatureRequestListView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestListView";
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import { Badge, BodySmall, Divider, H6, HSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
-import { SignatureRequestListView } from "../../../../definitions/fci/SignatureRequestListView";
-import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 
 type Props = {

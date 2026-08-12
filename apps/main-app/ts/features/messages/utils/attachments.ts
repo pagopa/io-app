@@ -1,6 +1,6 @@
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
 import { Paths } from "expo-file-system";
 
-import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
 import { apiUrlPrefix } from "../../../config";
 
 // Paths.cache.uri has a trailing slash; strip it for consistent path joining

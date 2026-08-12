@@ -1,3 +1,4 @@
+import { Consent } from "@io-app/api-types/generated/definitions/fims_sso/Consent";
 import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import {
   ActionType,
@@ -5,7 +6,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { FimsErrorStateType } from "../reducers";
 
 export type FimsGetConsentsListRequestType = {

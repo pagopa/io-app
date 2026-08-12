@@ -1,9 +1,9 @@
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 import { File as MockFile } from "expo-file-system";
 import I18n from "i18next";
 
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import NavigationService from "../../../../navigation/NavigationService";
 import { isAarAttachmentTtlError } from "../../../pn/aar/utils/aarErrorMappings";
 import {

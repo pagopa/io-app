@@ -1,12 +1,12 @@
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect*", "testSaga*"] }] */
 
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { appCurrentStateSelector } from "../../../../store/reducers/appState";

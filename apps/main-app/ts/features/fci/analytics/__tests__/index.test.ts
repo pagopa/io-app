@@ -1,8 +1,8 @@
+import { IssuerEnvironmentEnum } from "@io-app/api-types/generated/definitions/fci/IssuerEnvironment";
+import { StatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureDetailView";
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import { EmailString, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { IssuerEnvironmentEnum } from "../../../../../definitions/fci/IssuerEnvironment";
-import { StatusEnum } from "../../../../../definitions/fci/SignatureDetailView";
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 import * as mixpanelModule from "../../../../mixpanel";
 import {
   fciClearStateRequest,

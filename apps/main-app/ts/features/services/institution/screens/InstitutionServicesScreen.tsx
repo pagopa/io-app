@@ -1,3 +1,5 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { ServiceMinified } from "@io-app/api-types/generated/definitions/services/ServiceMinified";
 import {
   Divider,
   IOColors,
@@ -14,8 +16,6 @@ import { ListRenderItemInfo, RefreshControl } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { ServiceMinified } from "../../../../../definitions/services/ServiceMinified";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel

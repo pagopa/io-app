@@ -1,10 +1,10 @@
+import { WalletApplicationStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletApplicationStatus";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 
-import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
