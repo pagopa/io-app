@@ -38,6 +38,7 @@ allowBuilds:
   core-js: true
   lefthook: true
   nx: true
+  tls-impersonate: false
   unrs-resolver: true
 
 catalog:
