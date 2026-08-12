@@ -1,6 +1,5 @@
 import { fakerIT as faker } from "@faker-js/faker";
 import { Request } from "express";
-
 import { ioDevServerConfig } from "../config";
 import { AuthenticationProvider } from "../payloads/profile";
 import { createOrRefreshSessionTokens } from "../payloads/session";
