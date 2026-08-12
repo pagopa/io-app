@@ -19,5 +19,6 @@ addHandler(
   lollipopRouter,
   "post",
   addApiIdentityV1Prefix("/first-lollipop/sign"),
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   handlePostLollipopSign
 );
