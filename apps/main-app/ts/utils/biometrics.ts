@@ -76,6 +76,20 @@ export const isBiometricsValidType = (
 ): biometrics is BiometricsValidType =>
   !biometricErrors.some(err => biometrics === err);
 
+const biometricAuthenticationFailureHandler = (
+  error: unknown,
+  onError: (e: LocalAuthentication.LocalAuthenticationError) => void
+) => {
+  void mixpanelTrack("BIOMETRIC_ERROR", { error });
+  if (isDebugBiometricIdentificationEnabled) {
+    Alert.alert("identification.biometric.title", `KO: ${error}`);
+  }
+  onError(error);
+  if (Platform.OS === "android") {
+    void LocalAuthentication.cancelAuthenticate();
+  }
+};
+
 export const biometricAuthenticationRequest = (
   onSuccess: () => void,
   onError: (e: LocalAuthentication.LocalAuthenticationError) => void
@@ -105,26 +119,11 @@ export const biometricAuthenticationRequest = (
           void LocalAuthentication.cancelAuthenticate();
         }
       } else {
-        void mixpanelTrack("BIOMETRIC_ERROR", { error: result.error });
-        if (isDebugBiometricIdentificationEnabled) {
-          Alert.alert("identification.biometric.title", `KO: ${result.error}`);
-        }
-        onError(result.error);
-        if (Platform.OS === "android") {
-          void LocalAuthentication.cancelAuthenticate();
-        }
+        biometricAuthenticationFailureHandler(result.error, onError);
       }
     })
     .catch(e => {
-      void mixpanelTrack("BIOMETRIC_ERROR", { error: e });
-      if (isDebugBiometricIdentificationEnabled) {
-        Alert.alert("identification.biometric.title", `KO: ${e}`);
-      }
-      onError(e);
-      // We need to explicitly release the listener to avoid bugs on android platform
-      if (Platform.OS === "android") {
-        void LocalAuthentication.cancelAuthenticate();
-      }
+      biometricAuthenticationFailureHandler(e, onError);
     });
 
 type BiometricState = "Available" | "NotEnrolled" | "NotSupported";
