@@ -17,9 +17,9 @@ import {
 } from "../../services/persistence/services/factory";
 
 export const sendOptInServiceId = "01G74SW1PSM6XY2HM5EGZHZZET" as ServiceId;
-export const sendOptInServiceName = "SEND - Novità e aggiornamenti";
+const sendOptInServiceName = "SEND - Novità e aggiornamenti";
 export const sendServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
-export const sendServiceName = "SEND - Notifiche digitali";
+const sendServiceName = "SEND - Notifiche digitali";
 
 const sendOptInMessageCTA = `---
 it:

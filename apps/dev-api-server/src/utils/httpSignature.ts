@@ -134,7 +134,7 @@ export const isSignAlgorithmValid = (
     )
   );
 
-export const signatureVerifier =
+const signatureVerifier =
   (publicKey: JsonWebKey) =>
   async (
     _: { alg: AlgorithmTypes; keyid: string },

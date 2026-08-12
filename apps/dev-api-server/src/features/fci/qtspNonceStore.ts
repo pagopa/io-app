@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 
 import { ioDevServerConfig } from "../../config";
 
-export const QTSP_NONCE_EXPIRING_MS =
+const QTSP_NONCE_EXPIRING_MS =
   ioDevServerConfig.messages.fci.response.nonceDurationSeconds * 1000;
 
 const qtspNonceExpirations = new Map<string, Date>();

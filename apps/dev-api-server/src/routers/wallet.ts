@@ -56,7 +56,7 @@ export const walletCount =
 export const walletRouter = Router();
 // wallets and transactions
 
-export const wallets = getWallets(walletCount);
+const wallets = getWallets(walletCount);
 export const transactionPageSize = 10;
 export const transactionsTotal = 42;
 export const transactions: ReadonlyArray<Transaction> = getTransactions(

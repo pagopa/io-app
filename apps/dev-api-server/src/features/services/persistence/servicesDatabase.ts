@@ -15,7 +15,7 @@ import { createCdcService } from "./services/special/cdc-service";
 import { cgnServiceId, createCgnService } from "./services/special/cgn-service";
 import { createFciService } from "./services/special/fci-service";
 
-export type ServiceSummary = {
+type ServiceSummary = {
   scope: ScopeTypeEnum;
   service_id: ServiceId;
 };

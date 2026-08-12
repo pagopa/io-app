@@ -205,16 +205,16 @@ const getOrganizationIndex = (serviceIndex: number, aggregationCount: number) =>
 const getOrganizationFiscalCode = (organizationsCount: number) =>
   `${organizationsCount}`.padStart(11, "0") as OrganizationFiscalCode;
 
-export type ServicePreferenceSource = {
-  isSpecialService: boolean;
-  serviceId: ServiceId;
-};
-
 export type SpecialServiceGenerator = (
   createService: (serviceId: string) => ServiceDetails,
   createServiceMetadata: (scope: ScopeTypeEnum) => ServiceMetadata,
   organizationFiscalCode: OrganizationFiscalCode
 ) => ServiceDetails;
+
+type ServicePreferenceSource = {
+  isSpecialService: boolean;
+  serviceId: ServiceId;
+};
 
 export default {
   createLocalServices,
