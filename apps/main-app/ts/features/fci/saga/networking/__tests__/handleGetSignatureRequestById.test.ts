@@ -1,10 +1,10 @@
+import { EnvironmentEnum } from "@io-app/api-types/generated/definitions/fci/Environment";
+import { SignatureRequestDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
 import { left, right } from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 
-import { EnvironmentEnum } from "../../../../../../definitions/fci/Environment";
-import { SignatureRequestDetailView } from "../../../../../../definitions/fci/SignatureRequestDetailView";
 import { getNetworkError } from "../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {

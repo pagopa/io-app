@@ -1,3 +1,4 @@
+import { Institution } from "@io-app/api-types/generated/definitions/services/Institution";
 import {
   AvatarSearchProps,
   ContentWrapper,
@@ -20,7 +21,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Platform, ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Institution } from "../../../../../definitions/services/Institution";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";

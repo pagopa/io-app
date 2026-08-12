@@ -1,9 +1,9 @@
+import { InstrumentDTO } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 
-import { InstrumentDTO } from "../../../../../definitions/idpay/InstrumentDTO";
 import { ConfigurationMode } from "../types";
 import { IdPayConfigurationMachine } from "./machine";
 

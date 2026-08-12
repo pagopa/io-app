@@ -1,6 +1,5 @@
+import { BonusesAvailable } from "@io-app/api-types/generated/definitions/content/BonusesAvailable";
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
-import { BonusesAvailable } from "../../../../../../definitions/content/BonusesAvailable";
 
 /**
  * Request the list of all the types of bonus

@@ -1,3 +1,4 @@
+import { AccessHistoryPage } from "@io-app/api-types/generated/definitions/fims_history/AccessHistoryPage";
 import {
   Divider,
   FooterActions,
@@ -7,7 +8,6 @@ import {
 import { FlashList } from "@shopify/flash-list";
 import I18n from "i18next";
 
-import { AccessHistoryPage } from "../../../../../definitions/fims_history/AccessHistoryPage";
 import { useIOSelector } from "../../../../store/hooks";
 import { useFimsHistoryExport } from "../hooks/useFimsHistoryResultToasts";
 import {

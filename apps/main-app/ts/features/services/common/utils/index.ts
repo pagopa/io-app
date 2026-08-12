@@ -1,6 +1,6 @@
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 import { ImageURISource } from "react-native";
 
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { contentRepoUrl } from "../../../../config";
 
 const LOGO_SIZE = 180;

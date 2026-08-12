@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import { Pot } from "@pagopa/ts-commons/lib/pot";
-// eslint-disable-next-line no-restricted-imports
 import { Effect } from "redux-saga/effects";
 import { PayloadAC, PayloadMetaAC } from "typesafe-actions/dist/type-helpers";
 

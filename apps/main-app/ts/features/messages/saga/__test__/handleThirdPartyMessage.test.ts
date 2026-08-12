@@ -1,15 +1,15 @@
-import * as E from "fp-ts/lib/Either";
-import { testSaga } from "redux-saga-test-plan";
-
 import {
   TagEnum,
   TagEnum as TEBASE
-} from "../../../../../definitions/communication/MessageCategoryBase";
-import { TagEnum as TEPAYMENT } from "../../../../../definitions/communication/MessageCategoryPayment";
-import { TagEnum as TESEND } from "../../../../../definitions/communication/MessageCategoryPN";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/communication/ThirdPartyMessageWithContent";
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+} from "@io-app/api-types/generated/definitions/communication/MessageCategoryBase";
+import { TagEnum as TEPAYMENT } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPayment";
+import { TagEnum as TESEND } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
+import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import * as E from "fp-ts/lib/Either";
+import { testSaga } from "redux-saga-test-plan";
+
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import * as SEND_ANALYTICS from "../../../pn/analytics";

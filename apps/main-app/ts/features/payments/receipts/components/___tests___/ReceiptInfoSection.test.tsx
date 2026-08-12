@@ -1,12 +1,12 @@
+import {
+  OriginEnum,
+  PaymentMethodEnum
+} from "@io-app/api-types/generated/definitions/pagopa/biz-events/InfoNotice";
+import { NoticeDetailResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeDetailResponse";
 import { fireEvent, render } from "@testing-library/react-native";
 import * as Clipboard from "expo-clipboard";
 import I18n from "i18next";
 
-import {
-  OriginEnum,
-  PaymentMethodEnum
-} from "../../../../../../definitions/pagopa/biz-events/InfoNotice";
-import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import ReceiptInfoSection from "../ReceiptInfoSection";
 
 const mockTransaction: NoticeDetailResponse = {
