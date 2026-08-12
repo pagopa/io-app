@@ -1,9 +1,9 @@
 /* eslint-disable functional/immutable-data */
+import { Subscription } from "@io-app/api-types/generated/definitions/trial_system/Subscription";
+import { SubscriptionStateEnum } from "@io-app/api-types/generated/definitions/trial_system/SubscriptionState";
+import { TrialId } from "@io-app/api-types/generated/definitions/trial_system/TrialId";
 import { Router } from "express";
 
-import { Subscription } from "../../../../generated/definitions/trial_system/Subscription";
-import { SubscriptionStateEnum } from "../../../../generated/definitions/trial_system/SubscriptionState";
-import { TrialId } from "../../../../generated/definitions/trial_system/TrialId";
 import { ioDevServerConfig } from "../../../config";
 import { addHandler } from "../../../payloads/response";
 import { addApiV1Prefix } from "../../../utils/strings";

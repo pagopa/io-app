@@ -1,12 +1,12 @@
-import { flow, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
-import { OnboardingDTO } from "../../../../generated/definitions/idpay/OnboardingDTO";
+import { OnboardingDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingDTO";
 import {
   CodeEnum as OnboardingErrorCodeEnum,
   OnboardingErrorDTO
-} from "../../../../generated/definitions/idpay/OnboardingErrorDTO";
-import { StatusEnum as OnboardedInitiativeStatusEnum } from "../../../../generated/definitions/idpay/UserOnboardingStatusDTO";
+} from "@io-app/api-types/generated/definitions/idpay/OnboardingErrorDTO";
+import { StatusEnum as OnboardedInitiativeStatusEnum } from "@io-app/api-types/generated/definitions/idpay/UserOnboardingStatusDTO";
+import { flow, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import {
   getCheckPrerequisitesResponseByInitiativeId,
   getPrerequisitesErrorByInitiativeId

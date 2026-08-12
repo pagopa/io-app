@@ -1,8 +1,8 @@
+import { AssertionRef } from "@io-app/api-types/generated/definitions/session_manager/AssertionRef";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as jose from "jose";
 
-import { AssertionRef } from "../../generated/definitions/session_manager/AssertionRef";
 import { ioDevServerConfig } from "../config";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM } from "../routers/public";
 import { getDateMsDifference } from "../utils/date";

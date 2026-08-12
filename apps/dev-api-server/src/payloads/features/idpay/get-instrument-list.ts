@@ -1,8 +1,8 @@
+import { InstrumentDTO } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
+import { InstrumentListDTO } from "@io-app/api-types/generated/definitions/idpay/InstrumentListDTO";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { InstrumentDTO } from "../../../../generated/definitions/idpay/InstrumentDTO";
-import { InstrumentListDTO } from "../../../../generated/definitions/idpay/InstrumentListDTO";
 import { instruments } from "../../../persistence/idpay";
 
 export const getInstrumentListResponse = (

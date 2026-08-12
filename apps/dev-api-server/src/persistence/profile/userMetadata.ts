@@ -1,15 +1,15 @@
+import { UserDataProcessing } from "@io-app/api-types/generated/definitions/identity/UserDataProcessing";
+import {
+  UserDataProcessingChoice,
+  UserDataProcessingChoiceEnum
+} from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingChoiceRequest } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoiceRequest";
+import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import { Request } from "express";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { UserDataProcessing } from "../../../generated/definitions/identity/UserDataProcessing";
-import {
-  UserDataProcessingChoice,
-  UserDataProcessingChoiceEnum
-} from "../../../generated/definitions/identity/UserDataProcessingChoice";
-import { UserDataProcessingChoiceRequest } from "../../../generated/definitions/identity/UserDataProcessingChoiceRequest";
-import { UserDataProcessingStatusEnum } from "../../../generated/definitions/identity/UserDataProcessingStatus";
 import { getProblemJson } from "../../payloads/error";
 import { CustomResponse, ResponseProblem } from "../../utils/responseTypes";
 import { validatePayload } from "../../utils/validator";

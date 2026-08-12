@@ -1,11 +1,11 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { Profile } from "@io-app/api-types/generated/definitions/identity/Profile";
+import { UpdateProfile412ErrorTypesEnum } from "@io-app/api-types/generated/definitions/identity/UpdateProfile412ErrorTypes";
 import { Request } from "express";
 import * as E from "fp-ts/lib/Either";
 import * as R from "fp-ts/lib/Record";
 
-import { InitializedProfile } from "../../../generated/definitions/identity/InitializedProfile";
-import { Profile } from "../../../generated/definitions/identity/Profile";
-import { UpdateProfile412ErrorTypesEnum } from "../../../generated/definitions/identity/UpdateProfile412ErrorTypes";
 import { getProblemJson } from "../../payloads/error";
 import { getProfileInitialData } from "../../payloads/profile";
 import { getRandomValue } from "../../utils/random";

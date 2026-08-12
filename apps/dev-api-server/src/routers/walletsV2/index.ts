@@ -1,15 +1,15 @@
-import { Router } from "express";
-
-import { DeletedWalletsResponse } from "../../../generated/definitions/pagopa/DeletedWalletsResponse";
-import { EnableableFunctionsEnum } from "../../../generated/definitions/pagopa/EnableableFunctions";
+import { DeletedWalletsResponse } from "@io-app/api-types/generated/definitions/pagopa/DeletedWalletsResponse";
+import { EnableableFunctionsEnum } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
 import {
   WalletTypeEnum,
   WalletV2
-} from "../../../generated/definitions/pagopa/WalletV2";
-import { AbiListResponse } from "../../../generated/definitions/pagopa/walletv2/AbiListResponse";
-import { RestBPayResponse } from "../../../generated/definitions/pagopa/walletv2/RestBPayResponse";
-import { RestPanResponse } from "../../../generated/definitions/pagopa/walletv2/RestPanResponse";
-import { WalletV2ListResponse } from "../../../generated/definitions/pagopa/WalletV2ListResponse";
+} from "@io-app/api-types/generated/definitions/pagopa/WalletV2";
+import { AbiListResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv2/AbiListResponse";
+import { RestBPayResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv2/RestBPayResponse";
+import { RestPanResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv2/RestPanResponse";
+import { WalletV2ListResponse } from "@io-app/api-types/generated/definitions/pagopa/WalletV2ListResponse";
+import { Router } from "express";
+
 import { ioDevServerConfig } from "../../config";
 import { addHandler } from "../../payloads/response";
 import { pspListV1, pspListV2 } from "../../payloads/wallet";

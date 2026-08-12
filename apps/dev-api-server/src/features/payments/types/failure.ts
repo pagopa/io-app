@@ -1,46 +1,45 @@
-import * as t from "io-ts";
-
-import { PaymentFaultV2Enum } from "../../../../generated/definitions/communication/PaymentFaultV2";
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
 import {
   FaultCodeCategoryEnum as GatewayEnum,
   GatewayFaultPaymentProblemJson
-} from "../../../../generated/definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
-import { PartyConfigurationFaultEnum } from "../../../../generated/definitions/pagopa/ecommerce/PartyConfigurationFault";
+} from "@io-app/api-types/generated/definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
+import { PartyConfigurationFaultEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PartyConfigurationFault";
 import {
   PartyConfigurationFaultPaymentProblemJson,
   FaultCodeCategoryEnum as PartyEnum
-} from "../../../../generated/definitions/pagopa/ecommerce/PartyConfigurationFaultPaymentProblemJson";
-import { PaymentCanceledStatusFaultEnum } from "../../../../generated/definitions/pagopa/ecommerce/PaymentCanceledStatusFault";
+} from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PartyConfigurationFaultPaymentProblemJson";
+import { PaymentCanceledStatusFaultEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentCanceledStatusFault";
 import {
   FaultCodeCategoryEnum as CancelledEnum,
   PaymentCanceledStatusFaultPaymentProblemJson
-} from "../../../../generated/definitions/pagopa/ecommerce/PaymentCanceledStatusFaultPaymentProblemJson";
-import { PaymentDuplicatedStatusFaultEnum } from "../../../../generated/definitions/pagopa/ecommerce/PaymentDuplicatedStatusFault";
+} from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentCanceledStatusFaultPaymentProblemJson";
+import { PaymentDuplicatedStatusFaultEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentDuplicatedStatusFault";
 import {
   FaultCodeCategoryEnum as DuplicatedEnum,
   PaymentDuplicatedStatusFaultPaymentProblemJson
-} from "../../../../generated/definitions/pagopa/ecommerce/PaymentDuplicatedStatusFaultPaymentProblemJson";
-import { PaymentExpiredStatusFaultEnum } from "../../../../generated/definitions/pagopa/ecommerce/PaymentExpiredStatusFault";
+} from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentDuplicatedStatusFaultPaymentProblemJson";
+import { PaymentExpiredStatusFaultEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentExpiredStatusFault";
 import {
   FaultCodeCategoryEnum as ExpiredEnum,
   PaymentExpiredStatusFaultPaymentProblemJson
-} from "../../../../generated/definitions/pagopa/ecommerce/PaymentExpiredStatusFaultPaymentProblemJson";
-import { PaymentOngoingStatusFaultEnum } from "../../../../generated/definitions/pagopa/ecommerce/PaymentOngoingStatusFault";
+} from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentExpiredStatusFaultPaymentProblemJson";
+import { PaymentOngoingStatusFaultEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentOngoingStatusFault";
 import {
   FaultCodeCategoryEnum as OngoingEnum,
   PaymentOngoingStatusFaultPaymentProblemJson
-} from "../../../../generated/definitions/pagopa/ecommerce/PaymentOngoingStatusFaultPaymentProblemJson";
-import { ValidationFaultPaymentDataErrorProblemJson } from "../../../../generated/definitions/pagopa/ecommerce/ValidationFaultPaymentDataErrorProblemJson";
-import { ValidationFaultPaymentUnavailableEnum } from "../../../../generated/definitions/pagopa/ecommerce/ValidationFaultPaymentUnavailable";
+} from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentOngoingStatusFaultPaymentProblemJson";
+import { ValidationFaultPaymentDataErrorProblemJson } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/ValidationFaultPaymentDataErrorProblemJson";
+import { ValidationFaultPaymentUnavailableEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/ValidationFaultPaymentUnavailable";
 import {
   FaultCodeCategoryEnum as ValidationEnum,
   ValidationFaultPaymentUnavailableProblemJson
-} from "../../../../generated/definitions/pagopa/ecommerce/ValidationFaultPaymentUnavailableProblemJson";
-import { ValidationFaultPaymentUnknownEnum } from "../../../../generated/definitions/pagopa/ecommerce/ValidationFaultPaymentUnknown";
+} from "@io-app/api-types/generated/definitions/pagopa/ecommerce/ValidationFaultPaymentUnavailableProblemJson";
+import { ValidationFaultPaymentUnknownEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/ValidationFaultPaymentUnknown";
 import {
   FaultCodeCategoryEnum as UnknownEnum,
   ValidationFaultPaymentUnknownProblemJson
-} from "../../../../generated/definitions/pagopa/ecommerce/ValidationFaultPaymentUnknownProblemJson";
+} from "@io-app/api-types/generated/definitions/pagopa/ecommerce/ValidationFaultPaymentUnknownProblemJson";
+import * as t from "io-ts";
 
 export type WalletPaymentFailure = t.TypeOf<typeof WalletPaymentFailure>;
 export const WalletPaymentFailure = t.union([

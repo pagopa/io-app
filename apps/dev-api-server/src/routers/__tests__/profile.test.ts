@@ -1,10 +1,10 @@
+import { Municipality } from "@io-app/api-types/generated/definitions/content/Municipality";
+import { EmailAddress } from "@io-app/api-types/generated/definitions/identity/EmailAddress";
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { Profile } from "@io-app/api-types/generated/definitions/identity/Profile";
 import * as E from "fp-ts/lib/Either";
 import supertest from "supertest";
 
-import { Municipality } from "../../../generated/definitions/content/Municipality";
-import { EmailAddress } from "../../../generated/definitions/identity/EmailAddress";
-import { InitializedProfile } from "../../../generated/definitions/identity/InitializedProfile";
-import { Profile } from "../../../generated/definitions/identity/Profile";
 import { ioDevServerConfig } from "../../config";
 import app from "../../server";
 import { addApiIdentityV1Prefix } from "../../utils/strings";

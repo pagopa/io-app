@@ -1,31 +1,31 @@
 import { fakerIT as faker } from "@faker-js/faker";
-import * as O from "fp-ts/lib/Option";
-import { ulid } from "ulid";
-
 import {
   CodeEnum as AutomatedCriteriaCodeEnum,
   AutomatedCriteriaDTO,
   OperatorEnum
-} from "../../../../generated/definitions/idpay/AutomatedCriteriaDTO";
+} from "@io-app/api-types/generated/definitions/idpay/AutomatedCriteriaDTO";
 import {
   CodeEnum as OnboardingErrorCodeEnum,
   OnboardingErrorDTO
-} from "../../../../generated/definitions/idpay/OnboardingErrorDTO";
-import { OnboardingInitiativeDTO } from "../../../../generated/definitions/idpay/OnboardingInitiativeDTO";
-import { RowDataDTO } from "../../../../generated/definitions/idpay/RowDataDTO";
+} from "@io-app/api-types/generated/definitions/idpay/OnboardingErrorDTO";
+import { OnboardingInitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingInitiativeDTO";
+import { RowDataDTO } from "@io-app/api-types/generated/definitions/idpay/RowDataDTO";
 import {
   SelfCriteriaBoolDTO,
   _typeEnum as SelfDeclarationBoolType
-} from "../../../../generated/definitions/idpay/SelfCriteriaBoolDTO";
+} from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaBoolDTO";
 import {
   SelfCriteriaMultiDTO,
   _typeEnum as SelfDeclarationMultiType
-} from "../../../../generated/definitions/idpay/SelfCriteriaMultiDTO";
+} from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiDTO";
 import {
   CodeEnum as SelfCriteriaMultiCodeEnum,
   _typeEnum as SelfCriteriaMultiTypeDTO
-} from "../../../../generated/definitions/idpay/SelfCriteriaMultiTypeDTO";
-import { _typeEnum as SelfDeclaratioTextType } from "../../../../generated/definitions/idpay/SelfCriteriaTextDTO";
+} from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiTypeDTO";
+import { _typeEnum as SelfDeclaratioTextType } from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaTextDTO";
+import * as O from "fp-ts/lib/Option";
+import { ulid } from "ulid";
+
 import { getRandomEnumValue } from "../../utils/random";
 import { IDPayInitiativeID } from "./types";
 

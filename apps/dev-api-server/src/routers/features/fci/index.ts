@@ -1,10 +1,10 @@
+import { EnvironmentEnum } from "@io-app/api-types/generated/definitions/fci/Environment";
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import { Router } from "express";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/pipeable";
 import { isEqual } from "lodash";
 
-import { EnvironmentEnum } from "../../../../generated/definitions/fci/Environment";
-import { SignatureRequestStatusEnum } from "../../../../generated/definitions/fci/SignatureRequestStatus";
 import { ioDevServerConfig, staticContentRootPath } from "../../../config";
 import {
   generateAndStoreQtspNonce,

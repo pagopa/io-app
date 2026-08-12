@@ -1,8 +1,8 @@
+import { ErrorResponse } from "@io-app/api-types/generated/definitions/pn/lollipop-lambda/ErrorResponse";
+import { SuccessResponse } from "@io-app/api-types/generated/definitions/pn/lollipop-lambda/SuccessResponse";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { Either, isLeft, left } from "fp-ts/lib/Either";
 
-import { ErrorResponse } from "../../../../generated/definitions/pn/lollipopLambda/ErrorResponse";
-import { SuccessResponse } from "../../../../generated/definitions/pn/lollipopLambda/SuccessResponse";
 import { getProblemJson } from "../../../payloads/error";
 import { ExpressFailure } from "../../../utils/expressDTO";
 import { SendConfig } from "../types/sendConfig";

@@ -1,21 +1,21 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { PspDataListResponse } from "@io-app/api-types/generated/definitions/pagopa/PspDataListResponse";
+import { Transaction } from "@io-app/api-types/generated/definitions/pagopa/Transaction";
+import { CreditCard } from "@io-app/api-types/generated/definitions/pagopa/walletv2/CreditCard";
+import {
+  LinguaEnum,
+  Psp
+} from "@io-app/api-types/generated/definitions/pagopa/walletv2/Psp";
+import { SessionResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv2/SessionResponse";
+import {
+  TypeEnum,
+  Wallet
+} from "@io-app/api-types/generated/definitions/pagopa/walletv2/Wallet";
+import { WalletListResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv2/WalletListResponse";
 import { pipe } from "fp-ts/lib/function";
 import { range } from "fp-ts/lib/NonEmptyArray";
 import * as O from "fp-ts/lib/Option";
 
-import { PspDataListResponse } from "../../generated/definitions/pagopa/PspDataListResponse";
-import { Transaction } from "../../generated/definitions/pagopa/Transaction";
-import { CreditCard } from "../../generated/definitions/pagopa/walletv2/CreditCard";
-import {
-  LinguaEnum,
-  Psp
-} from "../../generated/definitions/pagopa/walletv2/Psp";
-import { SessionResponse } from "../../generated/definitions/pagopa/walletv2/SessionResponse";
-import {
-  TypeEnum,
-  Wallet
-} from "../../generated/definitions/pagopa/walletv2/Wallet";
-import { WalletListResponse } from "../../generated/definitions/pagopa/walletv2/WalletListResponse";
 import { assetsFolder } from "../config";
 import { readFileAsJSON } from "../utils/file";
 import { creditCardBrands, getCreditCardLogo } from "../utils/payment";

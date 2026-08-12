@@ -1,7 +1,7 @@
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "typed-redux-saga/macro";
 
-import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { removeExpiredPaymentsOngoingFailedAction } from "../../history/store/actions";
 import { selectPaymentsOngoingFailed } from "../../history/store/selectors";
 

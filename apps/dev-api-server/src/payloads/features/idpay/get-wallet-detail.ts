@@ -1,7 +1,7 @@
+import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { InitiativeDTO } from "../../../../generated/definitions/idpay/InitiativeDTO";
 import { initiatives, instruments } from "../../../persistence/idpay";
 
 export const getWalletDetailResponse = (

@@ -1,4 +1,5 @@
-import { Municipality } from "../../generated/definitions/content/Municipality";
+import { Municipality } from "@io-app/api-types/generated/definitions/content/Municipality";
+
 import { validatePayload } from "../utils/validator";
 
 const mockMunicipality: Municipality = {

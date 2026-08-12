@@ -1,14 +1,14 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
 import {
   InitiativesStatusDTO,
   StatusEnum as InitiativeStatusEnum
-} from "../../../../generated/definitions/idpay/InitiativesStatusDTO";
-import { InitiativesWithInstrumentDTO } from "../../../../generated/definitions/idpay/InitiativesWithInstrumentDTO";
-import { EnableableFunctionsEnum } from "../../../../generated/definitions/pagopa/EnableableFunctions";
-import { WalletV2 } from "../../../../generated/definitions/pagopa/WalletV2";
-import { CardInfo } from "../../../../generated/definitions/pagopa/walletv2/CardInfo";
+} from "@io-app/api-types/generated/definitions/idpay/InitiativesStatusDTO";
+import { InitiativesWithInstrumentDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativesWithInstrumentDTO";
+import { EnableableFunctionsEnum } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
+import { WalletV2 } from "@io-app/api-types/generated/definitions/pagopa/WalletV2";
+import { CardInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv2/CardInfo";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import { initiatives, instruments } from "../../../persistence/idpay";
 import { getWalletV2 } from "../../../routers/walletsV2";
 

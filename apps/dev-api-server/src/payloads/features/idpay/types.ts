@@ -1,4 +1,4 @@
-import { InitiativeDataDTO } from "../../../../generated/definitions/idpay/InitiativeDataDTO";
+import { InitiativeDataDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDataDTO";
 
 export enum IDPayInitiativeID {
   OK = 1,

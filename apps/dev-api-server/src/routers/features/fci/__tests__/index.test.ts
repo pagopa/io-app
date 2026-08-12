@@ -1,7 +1,7 @@
+import { EnvironmentEnum } from "@io-app/api-types/generated/definitions/fci/Environment";
 import supertest from "supertest";
 import { ulid } from "ulid";
 
-import { EnvironmentEnum } from "../../../../../generated/definitions/fci/Environment";
 import { getQtspNonceExpirations } from "../../../../features/fci/qtspNonceStore";
 import { createSignatureBody } from "../../../../payloads/features/fci/create-signature-body";
 import { createFilledDocumentBody } from "../../../../payloads/features/fci/qtsp-filled-document";

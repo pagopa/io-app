@@ -1,3 +1,8 @@
+import { EnableableFunctionsEnum } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
+import { BancomatCardsRequest } from "@io-app/api-types/generated/definitions/pagopa/walletv2/BancomatCardsRequest";
+import { Card } from "@io-app/api-types/generated/definitions/pagopa/walletv2/Card";
+import { Message } from "@io-app/api-types/generated/definitions/pagopa/walletv2/Message";
+import { WalletTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv2/WalletV2";
 import { Router } from "express";
 import * as E from "fp-ts/lib/Either";
 import { constUndefined, pipe } from "fp-ts/lib/function";
@@ -5,11 +10,6 @@ import * as O from "fp-ts/lib/Option";
 import fs from "fs";
 import * as t from "io-ts";
 
-import { EnableableFunctionsEnum } from "../../../../generated/definitions/pagopa/EnableableFunctions";
-import { BancomatCardsRequest } from "../../../../generated/definitions/pagopa/walletv2/BancomatCardsRequest";
-import { Card } from "../../../../generated/definitions/pagopa/walletv2/Card";
-import { Message } from "../../../../generated/definitions/pagopa/walletv2/Message";
-import { WalletTypeEnum } from "../../../../generated/definitions/pagopa/walletv2/WalletV2";
 import { assetsFolder } from "../../../config";
 import { addHandler } from "../../../payloads/response";
 import { generateWalletV2FromCard } from "../../../payloads/wallet_v2";

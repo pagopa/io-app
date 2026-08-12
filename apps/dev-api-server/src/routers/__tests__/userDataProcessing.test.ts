@@ -1,10 +1,10 @@
+import { ProblemJson } from "@io-app/api-types/generated/definitions/identity/ProblemJson";
+import { UserDataProcessing } from "@io-app/api-types/generated/definitions/identity/UserDataProcessing";
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import * as E from "fp-ts/lib/Either";
 import supertest from "supertest";
 
-import { ProblemJson } from "../../../generated/definitions/identity/ProblemJson";
-import { UserDataProcessing } from "../../../generated/definitions/identity/UserDataProcessing";
-import { UserDataProcessingChoiceEnum } from "../../../generated/definitions/identity/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../generated/definitions/identity/UserDataProcessingStatus";
 import app from "../../server";
 import { addApiIdentityV1Prefix } from "../../utils/strings";
 

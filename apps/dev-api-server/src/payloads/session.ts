@@ -1,8 +1,8 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
+import { SpidLevel } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
 import QueryString from "qs";
 
-import { PublicSession } from "../../generated/definitions/session_manager/PublicSession";
-import { SpidLevel } from "../../generated/definitions/session_manager/SpidLevel";
 import { getRandomValue } from "../utils/random";
 import { validatePayload } from "../utils/validator";
 import { IOResponse } from "./response";

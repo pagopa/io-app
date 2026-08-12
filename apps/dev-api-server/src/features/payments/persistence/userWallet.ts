@@ -1,21 +1,21 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { GuestMethodLastUsageType } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/GuestMethodLastUsageType";
+import { UserLastPaymentMethodResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
+import {
+  WalletLastUsageType,
+  WalletLastUsageTypeEnum
+} from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletLastUsageType";
+import { WalletApplication } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletApplication";
+import { WalletApplicationInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletApplicationInfo";
+import { WalletApplicationStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletApplicationStatus";
+import { WalletClientStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletClientStatus";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
+import { WalletInfoDetails } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfoDetails";
+import { WalletStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletStatus";
 import { format } from "date-fns";
 import * as E from "fp-ts/lib/Either";
 import _ from "lodash";
 
-import { GuestMethodLastUsageType } from "../../../../generated/definitions/pagopa/ecommerce/GuestMethodLastUsageType";
-import { UserLastPaymentMethodResponse } from "../../../../generated/definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
-import {
-  WalletLastUsageType,
-  WalletLastUsageTypeEnum
-} from "../../../../generated/definitions/pagopa/ecommerce/WalletLastUsageType";
-import { WalletApplication } from "../../../../generated/definitions/pagopa/walletv3/WalletApplication";
-import { WalletApplicationInfo } from "../../../../generated/definitions/pagopa/walletv3/WalletApplicationInfo";
-import { WalletApplicationStatusEnum } from "../../../../generated/definitions/pagopa/walletv3/WalletApplicationStatus";
-import { WalletClientStatusEnum } from "../../../../generated/definitions/pagopa/walletv3/WalletClientStatus";
-import { WalletInfo } from "../../../../generated/definitions/pagopa/walletv3/WalletInfo";
-import { WalletInfoDetails } from "../../../../generated/definitions/pagopa/walletv3/WalletInfoDetails";
-import { WalletStatusEnum } from "../../../../generated/definitions/pagopa/walletv3/WalletStatus";
 import { uuidv4 } from "../../../utils/strings";
 import { generateWalletDetailsByPaymentMethod } from "./paymentMethods";
 

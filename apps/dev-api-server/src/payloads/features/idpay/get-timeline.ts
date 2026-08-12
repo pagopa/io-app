@@ -1,9 +1,9 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { TimelineDTO } from "@io-app/api-types/generated/definitions/idpay/TimelineDTO";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 
-import { TimelineDTO } from "../../../../generated/definitions/idpay/TimelineDTO";
 import { initiativeTimeline } from "../../../persistence/idpay";
 
 export const getTimelineResponse = (

@@ -1,10 +1,10 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { PaymentRequestsGetResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { PaymentRequestsGetResponse } from "../../../../generated/definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
-import { RptId } from "../../../../generated/definitions/pagopa/ecommerce/RptId";
-import { ServiceDetails } from "../../../../generated/definitions/services/ServiceDetails";
 import ServicesDB from "../../services/persistence/servicesDatabase";
 
 export const getPaymentRequestsGetResponse = (

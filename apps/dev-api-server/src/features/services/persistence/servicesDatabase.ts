@@ -1,7 +1,8 @@
-import { ServicePreference } from "../../../../generated/definitions/identity/ServicePreference";
-import { ScopeTypeEnum } from "../../../../generated/definitions/services/ScopeType";
-import { ServiceDetails } from "../../../../generated/definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../generated/definitions/services/ServiceId";
+import { ServicePreference } from "@io-app/api-types/generated/definitions/identity/ServicePreference";
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import { generateIDPayServices } from "../../../payloads/features/idpay/generateIDPayServices";
 import { isCgnActivated } from "../../../routers/features/cgn";
 import { IoDevServerConfig } from "../../../types/config";

@@ -1,9 +1,8 @@
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-
 import {
   SignatureDetailView,
   StatusEnum as SignatureRequestStatus
-} from "../../../../generated/definitions/fci/SignatureDetailView";
+} from "@io-app/api-types/generated/definitions/fci/SignatureDetailView";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 const now = new Date();
 

@@ -1,7 +1,7 @@
+import { CartItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/CartItem";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
-import { CartItem } from "../../../../../../definitions/pagopa/biz-events/CartItem";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

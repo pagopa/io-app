@@ -2,12 +2,12 @@
  * this router serves fastLogin API
  */
 
+import { FastLoginResponse } from "@io-app/api-types/generated/definitions/session_manager/FastLoginResponse";
 import { Router } from "express";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { FastLoginResponse } from "../../../../generated/definitions/session_manager/FastLoginResponse";
 import { refreshTokenWithFastLogin } from "../../../features/fastLogin/fastLoginHandler";
 import {
   generateNewNonce,

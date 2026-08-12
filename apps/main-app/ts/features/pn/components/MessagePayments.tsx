@@ -1,3 +1,5 @@
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   IOButton,
   IOSkeleton,
@@ -14,8 +16,6 @@ import I18n from "i18next";
 import { MutableRefObject } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../store/hooks";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";

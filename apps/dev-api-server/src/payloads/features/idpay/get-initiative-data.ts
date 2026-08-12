@@ -1,8 +1,8 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { InitiativeDataDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDataDTO";
 import * as O from "fp-ts/lib/Option";
 import { ulid } from "ulid";
 
-import { InitiativeDataDTO } from "../../../../generated/definitions/idpay/InitiativeDataDTO";
 import {
   IDPayInitiativeID,
   IDPayServiceID,

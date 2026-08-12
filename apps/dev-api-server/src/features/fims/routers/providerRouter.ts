@@ -1,9 +1,9 @@
+import { Consent } from "@io-app/api-types/generated/definitions/fims_sso/Consent";
 import { Request, Response, Router } from "express";
 import * as E from "fp-ts/lib/Either";
 import { TokenSigner } from "jsontokens";
 import { v4 } from "uuid";
 
-import { Consent } from "../../../../generated/definitions/fims_sso/Consent";
 import { addHandler } from "../../../payloads/response";
 import { FIMSToken } from "../../../payloads/session";
 import { isSessionTokenValid } from "../../../persistence/sessionInfo";

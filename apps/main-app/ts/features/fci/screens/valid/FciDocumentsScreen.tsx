@@ -1,3 +1,5 @@
+import { TypeEnum as ClauseType } from "@io-app/api-types/generated/definitions/fci/Clause";
+import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
 import {
   FooterActionsInline,
   IOColors,
@@ -20,8 +22,6 @@ import { ComponentProps, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Pdf, { PdfRef } from "react-native-pdf";
 
-import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
-import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

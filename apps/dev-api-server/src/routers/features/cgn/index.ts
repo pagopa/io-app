@@ -1,4 +1,19 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { Card } from "@io-app/api-types/generated/definitions/cgn/Card";
+import { StatusEnum as ActivatedStatusEnum } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
+import {
+  CardPending,
+  StatusEnum as PendingStatusEnum
+} from "@io-app/api-types/generated/definitions/cgn/CardPending";
+import { CcdbNumber } from "@io-app/api-types/generated/definitions/cgn/CcdbNumber";
+import { StatusEnum } from "@io-app/api-types/generated/definitions/cgn/CgnActivationDetail";
+import {
+  EycaActivationDetail,
+  StatusEnum as EycaStatusEnum
+} from "@io-app/api-types/generated/definitions/cgn/EycaActivationDetail";
+import { EycaCard } from "@io-app/api-types/generated/definitions/cgn/EycaCard";
+import { Otp } from "@io-app/api-types/generated/definitions/cgn/Otp";
+import { ServicePreference } from "@io-app/api-types/generated/definitions/identity/ServicePreference";
 import { NonNegativeInteger } from "@pagopa/ts-commons/lib/numbers";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -7,21 +22,6 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { Card } from "../../../../generated/definitions/cgn/Card";
-import { StatusEnum as ActivatedStatusEnum } from "../../../../generated/definitions/cgn/CardActivated";
-import {
-  CardPending,
-  StatusEnum as PendingStatusEnum
-} from "../../../../generated/definitions/cgn/CardPending";
-import { CcdbNumber } from "../../../../generated/definitions/cgn/CcdbNumber";
-import { StatusEnum } from "../../../../generated/definitions/cgn/CgnActivationDetail";
-import {
-  EycaActivationDetail,
-  StatusEnum as EycaStatusEnum
-} from "../../../../generated/definitions/cgn/EycaActivationDetail";
-import { EycaCard } from "../../../../generated/definitions/cgn/EycaCard";
-import { Otp } from "../../../../generated/definitions/cgn/Otp";
-import { ServicePreference } from "../../../../generated/definitions/identity/ServicePreference";
 import { ioDevServerConfig } from "../../../config";
 import { genRandomOtpCode } from "../../../features/cgn/utils";
 import { cgnServiceId } from "../../../features/services/persistence/services/special/cgn-service";

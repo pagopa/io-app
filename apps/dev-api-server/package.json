@@ -16,8 +16,7 @@
     "prettify": "prettier --write \"src/**/*.{ts,tsx}\"",
     "prettier:check": "prettier --check \"src/**/*.{ts,tsx}\"",
     "knip": "pnpm --dir ../.. knip",
-    "tsc-noemit": "tsc --noEmit",
-    "generate": "./scripts/generate-api-models.sh"
+    "tsc-noemit": "tsc --noEmit"
   },
   "jest": {
     "preset": "ts-jest",
@@ -28,6 +27,7 @@
   },
   "dependencies": {
     "@mattrglobal/http-signatures": "^4.0.1",
+    "@io-app/api-types": "workspace:*",
     "@pagopa/ts-commons": "^10.15.0",
     "axios": "^1.10.0",
     "body-parser": "^1.19.2",

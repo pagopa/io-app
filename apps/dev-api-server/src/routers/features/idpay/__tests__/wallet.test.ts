@@ -1,7 +1,7 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { IbanPutDTO } from "@io-app/api-types/generated/definitions/idpay/IbanPutDTO";
 import supertest from "supertest";
 
-import { IbanPutDTO } from "../../../../../generated/definitions/idpay/IbanPutDTO";
 import { ioDevServerConfig } from "../../../../config";
 import ServicesDB from "../../../../features/services/persistence/servicesDatabase";
 import {

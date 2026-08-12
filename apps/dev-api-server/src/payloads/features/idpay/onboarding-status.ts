@@ -1,11 +1,11 @@
 import { fakerIT as faker } from "@faker-js/faker";
-import { flow, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
 import {
   OnboardingStatusDTO,
   StatusEnum as OnboardingStatusEnum
-} from "../../../../generated/definitions/idpay/OnboardingStatusDTO";
+} from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
+import { flow, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import { IDPayInitiativeID } from "./types";
 import { initiativeIdFromString } from "./utils";
 

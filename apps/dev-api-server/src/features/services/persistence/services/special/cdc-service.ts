@@ -1,14 +1,14 @@
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { ServiceMetadata } from "@io-app/api-types/generated/definitions/services/ServiceMetadata";
+import { SpecialServiceCategoryEnum } from "@io-app/api-types/generated/definitions/services/SpecialServiceCategory";
+import { SpecialServiceMetadata } from "@io-app/api-types/generated/definitions/services/SpecialServiceMetadata";
 import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "@pagopa/ts-commons/lib/strings";
 
-import { ScopeTypeEnum } from "../../../../../../generated/definitions/services/ScopeType";
-import { ServiceDetails } from "../../../../../../generated/definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../../generated/definitions/services/ServiceId";
-import { ServiceMetadata } from "../../../../../../generated/definitions/services/ServiceMetadata";
-import { SpecialServiceCategoryEnum } from "../../../../../../generated/definitions/services/SpecialServiceCategory";
-import { SpecialServiceMetadata } from "../../../../../../generated/definitions/services/SpecialServiceMetadata";
 import { SpecialServiceGenerator } from "../factory";
 
 const cdcServiceId = "01G2AFTME08TS0QD2P2S682CJ0" as ServiceId;

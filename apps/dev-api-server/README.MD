@@ -62,7 +62,7 @@ $ pnpm nx run @io-app/main-app:setup
 
 # Generate API definitions
 # Run this only while setting up and when io-backend specs change
-$ pnpm nx run @io-app/dev-api-server:generate
+$ pnpm nx run @io-app/api-types:generate
 
 # Start the server
 $ pnpm nx run @io-app/dev-api-server:start

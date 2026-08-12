@@ -1,8 +1,8 @@
+import { NotificationAttachmentDownloadMetadataResponse } from "@io-app/api-types/generated/definitions/pn/NotificationAttachmentDownloadMetadataResponse";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { Request } from "express";
 import { Either, isLeft, left, right } from "fp-ts/lib/Either";
 
-import { NotificationAttachmentDownloadMetadataResponse } from "../../../../generated/definitions/pn/NotificationAttachmentDownloadMetadataResponse";
 import { getProblemJson } from "../../../payloads/error";
 import { ExpressFailure } from "../../../utils/expressDTO";
 import { serverUrl } from "../../../utils/server";

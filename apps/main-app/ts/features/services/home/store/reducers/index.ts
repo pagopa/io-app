@@ -1,10 +1,10 @@
+import { FeaturedServices } from "@io-app/api-types/generated/definitions/services/FeaturedServices";
+import { Institution } from "@io-app/api-types/generated/definitions/services/Institution";
+import { Institutions } from "@io-app/api-types/generated/definitions/services/Institutions";
+import { InstitutionsResource } from "@io-app/api-types/generated/definitions/services/InstitutionsResource";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { FeaturedServices } from "../../../../../../definitions/services/FeaturedServices";
-import { Institution } from "../../../../../../definitions/services/Institution";
-import { Institutions } from "../../../../../../definitions/services/Institutions";
-import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {

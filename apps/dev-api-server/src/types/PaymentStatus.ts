@@ -1,5 +1,5 @@
-import { PaymentFaultV2Enum } from "../../generated/definitions/communication/PaymentFaultV2";
-import { PaymentInfoResponse } from "../../generated/definitions/communication/PaymentInfoResponse";
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { PaymentInfoResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoResponse";
 
 export declare type PaymentStatus = ProcessablePayment | ProcessedPayment;
 

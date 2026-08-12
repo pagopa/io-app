@@ -1,4 +1,8 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { Access } from "@io-app/api-types/generated/definitions/fims_history/Access";
+import { AccessHistoryPage } from "@io-app/api-types/generated/definitions/fims_history/AccessHistoryPage";
+import { Redirect } from "@io-app/api-types/generated/definitions/fims_history/Redirect";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { Request } from "express";
 import * as E from "fp-ts/lib/Either";
@@ -6,10 +10,6 @@ import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { ulid } from "ulid";
 
-import { Access } from "../../../../generated/definitions/fims_history/Access";
-import { AccessHistoryPage } from "../../../../generated/definitions/fims_history/AccessHistoryPage";
-import { Redirect } from "../../../../generated/definitions/fims_history/Redirect";
-import { ServiceDetails } from "../../../../generated/definitions/services/ServiceDetails";
 import ServicesDB from "../../services/persistence/servicesDatabase";
 import { FIMSConfig } from "../types/config";
 import { LastExportRequest } from "../types/lastExportRequest";

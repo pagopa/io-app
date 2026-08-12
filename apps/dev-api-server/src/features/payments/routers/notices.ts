@@ -1,7 +1,7 @@
+import { NoticeListWrapResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListWrapResponse";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { NoticeListWrapResponse } from "../../../../generated/definitions/pagopa/transactions/NoticeListWrapResponse";
 import { ioDevServerConfig } from "../../../config";
 import { sendFileFromRootPath } from "../../../utils/file";
 import NoticesDB from "../persistence/notices";

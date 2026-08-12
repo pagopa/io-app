@@ -1,11 +1,10 @@
+import { BPayInfo } from "@io-app/api-types/generated/definitions/pagopa/BPayInfo";
+import { CardInfo } from "@io-app/api-types/generated/definitions/pagopa/CardInfo";
+import { EnableableFunctions } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
+import { SatispayInfo } from "@io-app/api-types/generated/definitions/pagopa/SatispayInfo";
+import { WalletTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/WalletV2";
 import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
-
-import { BPayInfo } from "../../generated/definitions/pagopa/BPayInfo";
-import { CardInfo } from "../../generated/definitions/pagopa/CardInfo";
-import { EnableableFunctions } from "../../generated/definitions/pagopa/EnableableFunctions";
-import { SatispayInfo } from "../../generated/definitions/pagopa/SatispayInfo";
-import { WalletTypeEnum } from "../../generated/definitions/pagopa/WalletV2";
 // required attributes
 const PatchedPaymentMethodInfo = t.union([CardInfo, SatispayInfo, BPayInfo]);
 const WalletV2O = t.partial({

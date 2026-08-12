@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { CreatedMessageWithContentAndAttachments } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndAttachments";
+import { PaginatedPublicMessagesCollection } from "@io-app/api-types/generated/definitions/communication/PaginatedPublicMessagesCollection";
+import { PublicMessage } from "@io-app/api-types/generated/definitions/communication/PublicMessage";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import axios from "axios";
 import { Router } from "express";
 import * as E from "fp-ts/lib/Either";
 import { promises as fsPromises } from "fs";
 
-import { CreatedMessageWithContentAndAttachments } from "../../../../generated/definitions/communication/CreatedMessageWithContentAndAttachments";
-import { PaginatedPublicMessagesCollection } from "../../../../generated/definitions/communication/PaginatedPublicMessagesCollection";
-import { PublicMessage } from "../../../../generated/definitions/communication/PublicMessage";
 import { getProblemJson } from "../../../payloads/error";
 import { addHandler } from "../../../payloads/response";
 

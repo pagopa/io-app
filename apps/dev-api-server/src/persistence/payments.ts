@@ -1,14 +1,14 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { PaymentAmount } from "@io-app/api-types/generated/definitions/communication/PaymentAmount";
+import { PaymentDataWithRequiredPayee } from "@io-app/api-types/generated/definitions/communication/PaymentDataWithRequiredPayee";
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { PaymentInfoResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoResponse";
+import { PaymentNoticeNumber } from "@io-app/api-types/generated/definitions/communication/PaymentNoticeNumber";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { PaymentAmount } from "../../generated/definitions/communication/PaymentAmount";
-import { PaymentDataWithRequiredPayee } from "../../generated/definitions/communication/PaymentDataWithRequiredPayee";
-import { PaymentFaultV2Enum } from "../../generated/definitions/communication/PaymentFaultV2";
-import { PaymentInfoResponse } from "../../generated/definitions/communication/PaymentInfoResponse";
-import { PaymentNoticeNumber } from "../../generated/definitions/communication/PaymentNoticeNumber";
 import {
   PaymentStatus,
   processablePayment,

@@ -1,6 +1,7 @@
-import { CreateSignatureBody } from "../../../../generated/definitions/fci/CreateSignatureBody";
-import { DocumentToSign } from "../../../../generated/definitions/fci/DocumentToSign";
-import { QtspClauses } from "../../../../generated/definitions/fci/QtspClauses";
+import { CreateSignatureBody } from "@io-app/api-types/generated/definitions/fci/CreateSignatureBody";
+import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
+import { QtspClauses } from "@io-app/api-types/generated/definitions/fci/QtspClauses";
+
 import { qtspClauses } from "./qtsp-clauses";
 import { qtspFilledDocument } from "./qtsp-filled-document";
 import { documents, SIGNATURE_REQUEST_ID } from "./signature-request";

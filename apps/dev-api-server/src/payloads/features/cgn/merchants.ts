@@ -1,23 +1,23 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { Address } from "@io-app/api-types/generated/definitions/cgn/merchants/Address";
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
+import {
+  DiscountCodeType,
+  DiscountCodeTypeEnum
+} from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountCodeType";
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
+import { OfflineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchant";
+import { OfflineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchants";
+import { OnlineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchant";
+import { OnlineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchants";
+import {
+  ProductCategory,
+  ProductCategoryEnum
+} from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
 import { NonNegativeInteger } from "@pagopa/ts-commons/lib/numbers";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { range } from "fp-ts/lib/NonEmptyArray";
 
-import { Address } from "../../../../generated/definitions/cgn/merchants/Address";
-import { Discount } from "../../../../generated/definitions/cgn/merchants/Discount";
-import {
-  DiscountCodeType,
-  DiscountCodeTypeEnum
-} from "../../../../generated/definitions/cgn/merchants/DiscountCodeType";
-import { Merchant } from "../../../../generated/definitions/cgn/merchants/Merchant";
-import { OfflineMerchant } from "../../../../generated/definitions/cgn/merchants/OfflineMerchant";
-import { OfflineMerchants } from "../../../../generated/definitions/cgn/merchants/OfflineMerchants";
-import { OnlineMerchant } from "../../../../generated/definitions/cgn/merchants/OnlineMerchant";
-import { OnlineMerchants } from "../../../../generated/definitions/cgn/merchants/OnlineMerchants";
-import {
-  ProductCategory,
-  ProductCategoryEnum
-} from "../../../../generated/definitions/cgn/merchants/ProductCategory";
 import { getRandomValue } from "../../../utils/random";
 import { serverUrl } from "../../../utils/server";
 import { ALL_NATIONAL_ADDRESSES_TEXT } from "./utils";

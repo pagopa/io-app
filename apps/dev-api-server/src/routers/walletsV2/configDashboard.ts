@@ -1,9 +1,9 @@
+import { BPayInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv2/BPayInfo";
+import { CardInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv2/CardInfo";
+import { SatispayInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv2/SatispayInfo";
+import { WalletTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv2/WalletV2";
 import { Router } from "express";
 
-import { BPayInfo } from "../../../generated/definitions/pagopa/walletv2/BPayInfo";
-import { CardInfo } from "../../../generated/definitions/pagopa/walletv2/CardInfo";
-import { SatispayInfo } from "../../../generated/definitions/pagopa/walletv2/SatispayInfo";
-import { WalletTypeEnum } from "../../../generated/definitions/pagopa/walletv2/WalletV2";
 import { ioDevServerConfig } from "../../config";
 import { addHandler } from "../../payloads/response";
 import {

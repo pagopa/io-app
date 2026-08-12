@@ -1,7 +1,7 @@
 import { fakerIT as faker } from "@faker-js/faker";
+import { CodeEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
 import supertest from "supertest";
 
-import { CodeEnum } from "../../../../../generated/definitions/idpay/TransactionErrorDTO";
 import app from "../../../../server";
 import { addIdPayPrefix } from "../router";
 

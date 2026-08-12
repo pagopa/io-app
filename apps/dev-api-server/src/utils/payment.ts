@@ -1,7 +1,7 @@
-import { PaymentDataBase } from "../../generated/definitions/communication/PaymentDataBase";
-import { PaymentDataWithRequiredPayee } from "../../generated/definitions/communication/PaymentDataWithRequiredPayee";
-import { PaymentFaultV2Enum } from "../../generated/definitions/communication/PaymentFaultV2";
-import { ServiceDetails } from "../../generated/definitions/services/ServiceDetails";
+import { PaymentDataBase } from "@io-app/api-types/generated/definitions/communication/PaymentDataBase";
+import { PaymentDataWithRequiredPayee } from "@io-app/api-types/generated/definitions/communication/PaymentDataWithRequiredPayee";
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 
 export const enum CreditCardBrandEnum {
   "AMEX" = "AMEX",

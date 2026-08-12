@@ -1,9 +1,8 @@
+import { Institution } from "@io-app/api-types/generated/definitions/services/Institution";
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
-
-import { Institution } from "../../../../generated/definitions/services/Institution";
-import { ScopeTypeEnum } from "../../../../generated/definitions/services/ScopeType";
-import { ServiceDetails } from "../../../../generated/definitions/services/ServiceDetails";
 
 export type InstitutionWithScope = Institution & { scope?: ScopeTypeEnum };
 

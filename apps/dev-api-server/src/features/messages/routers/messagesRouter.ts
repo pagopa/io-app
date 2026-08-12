@@ -1,4 +1,15 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { HasPreconditionEnum } from "@io-app/api-types/generated/definitions/communication/HasPrecondition";
+import { PartyConfigurationFaultPaymentProblemJson as PaymentInfoUnavailableResponse } from "@io-app/api-types/generated/definitions/communication/PartyConfigurationFaultPaymentProblemJson";
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { PaymentInfoBadGatewayResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoBadGatewayResponse";
+import { PaymentInfoConflictResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoConflictResponse";
+import { PaymentInfoNotFoundResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoNotFoundResponse";
+import { PaymentInfoResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoResponse";
+import { ThirdPartyMessagePrecondition } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessagePrecondition";
+import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
+import { NotificationAttachmentDownloadMetadataResponse } from "@io-app/api-types/generated/definitions/pn/NotificationAttachmentDownloadMetadataResponse";
+import { ThirdPartyMessage } from "@io-app/api-types/generated/definitions/pn/ThirdPartyMessage";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { Request, Response, Router } from "express";
 import * as E from "fp-ts/lib/Either";
@@ -6,17 +17,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 
-import { HasPreconditionEnum } from "../../../../generated/definitions/communication/HasPrecondition";
-import { PartyConfigurationFaultPaymentProblemJson as PaymentInfoUnavailableResponse } from "../../../../generated/definitions/communication/PartyConfigurationFaultPaymentProblemJson";
-import { PaymentFaultV2Enum } from "../../../../generated/definitions/communication/PaymentFaultV2";
-import { PaymentInfoBadGatewayResponse } from "../../../../generated/definitions/communication/PaymentInfoBadGatewayResponse";
-import { PaymentInfoConflictResponse } from "../../../../generated/definitions/communication/PaymentInfoConflictResponse";
-import { PaymentInfoNotFoundResponse } from "../../../../generated/definitions/communication/PaymentInfoNotFoundResponse";
-import { PaymentInfoResponse } from "../../../../generated/definitions/communication/PaymentInfoResponse";
-import { ThirdPartyMessagePrecondition } from "../../../../generated/definitions/communication/ThirdPartyMessagePrecondition";
-import { ThirdPartyMessageWithContent } from "../../../../generated/definitions/communication/ThirdPartyMessageWithContent";
-import { NotificationAttachmentDownloadMetadataResponse } from "../../../../generated/definitions/pn/NotificationAttachmentDownloadMetadataResponse";
-import { ThirdPartyMessage } from "../../../../generated/definitions/pn/ThirdPartyMessage";
 import { ioDevServerConfig } from "../../../config";
 import { lollipopMiddleware } from "../../../middleware/lollipopMiddleware";
 import { getProblemJson } from "../../../payloads/error";
