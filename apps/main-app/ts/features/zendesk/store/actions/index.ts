@@ -1,13 +1,13 @@
+import { Zendesk } from "@io-app/api-types/generated/definitions/content/Zendesk";
+import { ZendeskCategory } from "@io-app/api-types/generated/definitions/content/ZendeskCategory";
+import { ZendeskSubcategoriesErrors } from "@io-app/api-types/generated/definitions/content/ZendeskSubcategoriesErrors";
+import { ZendeskSubCategory } from "@io-app/api-types/generated/definitions/content/ZendeskSubCategory";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { Zendesk } from "../../../../../definitions/content/Zendesk";
-import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
-import { ZendeskSubcategoriesErrors } from "../../../../../definitions/content/ZendeskSubcategoriesErrors";
-import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown

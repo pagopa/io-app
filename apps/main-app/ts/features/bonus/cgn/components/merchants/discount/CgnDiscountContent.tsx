@@ -1,7 +1,7 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
 import { ContentWrapper, Divider, ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
 
-import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { formatDateAsShortFormat } from "../../../../../../utils/dates";
 
 type CgnDiscountContentProps = {

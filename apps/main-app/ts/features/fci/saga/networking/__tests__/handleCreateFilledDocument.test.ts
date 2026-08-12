@@ -1,10 +1,10 @@
+import { CreateFilledDocument } from "@io-app/api-types/generated/definitions/fci/CreateFilledDocument";
+import { FilledDocumentDetailView } from "@io-app/api-types/generated/definitions/fci/FilledDocumentDetailView";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { left, right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 
-import { CreateFilledDocument } from "../../../../../../definitions/fci/CreateFilledDocument";
-import { FilledDocumentDetailView } from "../../../../../../definitions/fci/FilledDocumentDetailView";
 import { getNetworkError } from "../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { fciLoadQtspFilledDocument } from "../../../store/actions";

@@ -19,7 +19,10 @@ import {
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
+import { fimsTrackingEnrichedUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { isMixpanelEnabled } from "../../../../store/reducers/persistedPreferences";
 import { ReduxSagaEffect } from "../../../../types/utils";
+import { getDeviceId } from "../../../../utils/device";
 import { LollipopConfig } from "../../../lollipop";
 import { generateKeyInfo } from "../../../lollipop/saga";
 import {
@@ -35,6 +38,7 @@ import {
   fimsEphemeralSessionOniOSSelector,
   relyingPartyServiceIdSelector
 } from "../store/selectors";
+import { enrichFimsDestinationUrl } from "../utils";
 import {
   absoluteRedirectUrlFromHttpClientResponse,
   computeAndTrackAuthenticationError,
@@ -102,13 +106,17 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
   yield* call(handleFimsResourcesDeallocation);
   yield* call(computeAndTrackInAppBrowserOpening);
 
+  const enrichedInAppBrowserRedirectUrl = yield* call(
+    enrichFimsRedirectUrl,
+    inAppBrowserRedirectUrl
+  );
   const ephemeralSessionOniOS = yield* select(
     fimsEphemeralSessionOniOSSelector
   );
   try {
     yield* call(
       openAuthenticationSession,
-      inAppBrowserRedirectUrl,
+      enrichedInAppBrowserRedirectUrl,
       "iossoapi",
       !ephemeralSessionOniOS
     );
@@ -420,3 +428,21 @@ const inAppBrowserErrorToHumanReadable = (error: unknown) => {
   }
   return JSON.stringify(error);
 };
+
+export function* enrichFimsRedirectUrl(
+  redirectUrl: string
+): Generator<ReduxSagaEffect, string, any> {
+  const trackingEnrichedUrls = yield* select(fimsTrackingEnrichedUrlsSelector);
+  const mixpanelEnabled = yield* select(isMixpanelEnabled);
+  if (!mixpanelEnabled || trackingEnrichedUrls.length === 0) {
+    return redirectUrl;
+  }
+
+  const mixpanelDeviceId = yield* call(getDeviceId);
+  return yield* call(
+    enrichFimsDestinationUrl,
+    redirectUrl,
+    trackingEnrichedUrls,
+    mixpanelDeviceId
+  );
+}

@@ -1,6 +1,6 @@
+import { AuthPaymentResponseDTO } from "@io-app/api-types/generated/definitions/idpay/AuthPaymentResponseDTO";
 import * as O from "fp-ts/lib/Option";
 
-import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { PaymentFailure } from "../types/PaymentFailure";
 
 export interface Context {

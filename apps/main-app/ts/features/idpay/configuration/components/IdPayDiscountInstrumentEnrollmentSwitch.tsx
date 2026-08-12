@@ -1,15 +1,14 @@
 import {
+  InstrumentTypeEnum,
+  StatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
+import {
   Badge,
   IOIcons,
   ListItemSwitch,
   SwitchAction
 } from "@io-app/design-system";
 import I18n from "i18next";
-
-import {
-  InstrumentTypeEnum,
-  StatusEnum
-} from "../../../../../definitions/idpay/InstrumentDTO";
 
 type PaymentMethodSwitchProps = (
   | {

@@ -1,9 +1,9 @@
+import { MessageBodyMarkdown } from "@io-app/api-types/generated/definitions/communication/MessageBodyMarkdown";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { ServiceMetadata } from "@io-app/api-types/generated/definitions/services/ServiceMetadata";
 import FM, { FrontMatterResult } from "front-matter";
 import { Linking } from "react-native";
 
-import { MessageBodyMarkdown } from "../../../../definitions/communication/MessageBodyMarkdown";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
-import { ServiceMetadata } from "../../../../definitions/services/ServiceMetadata";
 import {
   deriveCustomHandledLink,
   isIoInternalLink
