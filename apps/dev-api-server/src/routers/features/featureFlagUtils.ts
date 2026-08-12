@@ -20,7 +20,7 @@ type FeatureFlagWithMinAppVersion<T> = Extract<
   }[keyof T]
 >;
 
-export const isVersionValidAndActive = (version: string | undefined) =>
+const isVersionValidAndActive = (version: string | undefined) =>
   pipe(
     version,
     PatternString(`^(?!0(.0)*$)\\d+(\\.\\d+)*$`).decode,

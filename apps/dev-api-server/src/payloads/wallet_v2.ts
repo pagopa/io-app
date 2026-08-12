@@ -55,7 +55,7 @@ let defaultCardConfig: CardConfig = { prefix: "00000000000", index: 0 };
 
 // eslint-disable-next-line functional/no-let
 let incrementalIdWallet = 1;
-export const getNextIdWallet = (): number => {
+const getNextIdWallet = (): number => {
   incrementalIdWallet++;
   return incrementalIdWallet;
 };
@@ -355,7 +355,7 @@ export const generateWalletV2FromPaypal = (
   };
 };
 
-export const generateWalletV1FromPayPal = (idWallet: number): Wallet => ({
+const generateWalletV1FromPayPal = (idWallet: number): Wallet => ({
   idWallet,
   type: WalletV1TypeEnum.EXTERNAL_PS,
   favourite: false,
@@ -365,7 +365,7 @@ export const generateWalletV1FromPayPal = (idWallet: number): Wallet => ({
   registeredNexi: false
 });
 
-export const generateWalletV1FromCardInfo = (
+const generateWalletV1FromCardInfo = (
   idWallet: number,
   info: CardInfo
 ): Wallet => ({

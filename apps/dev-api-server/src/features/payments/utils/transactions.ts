@@ -7,7 +7,7 @@ import {
 } from "@io-app/api-types/generated/definitions/pagopa/biz-events/InfoNotice";
 import { ulid } from "ulid";
 
-export const PAYMENT_METHODS_TRANSACTIONS_MOCK = [
+const PAYMENT_METHODS_TRANSACTIONS_MOCK = [
   {
     logo: "https://assets.cdn.platform.pagopa.it/creditcard/visa.png",
     brand: "VISA",

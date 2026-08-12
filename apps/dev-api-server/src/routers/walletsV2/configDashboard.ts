@@ -34,7 +34,7 @@ addHandler(dashboardWalletV2Router, "post", "/walletv2/config", (req, res) => {
 });
 
 // get all payment methods compliant with BPD (dashboard web)
-export const getBPDPaymentMethod = () =>
+const getBPDPaymentMethod = () =>
   getWalletV2().map(bpd => {
     if (
       bpd.walletType === WalletTypeEnum.Card ||

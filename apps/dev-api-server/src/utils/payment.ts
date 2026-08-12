@@ -3,8 +3,6 @@ import { PaymentDataWithRequiredPayee } from "@io-app/api-types/generated/defini
 import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
 import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 
-import { NotificationPaymentInfo } from "../features/pn/types/notificationPaymentInfo";
-
 export const enum CreditCardBrandEnum {
   "AMEX" = "AMEX",
   "DINERS" = "DINERS",
@@ -61,11 +59,6 @@ export const rptIdFromPaymentDataWithRequiredPayee = (
   paymentDataWithRequiredPayee: PaymentDataWithRequiredPayee
 ): string =>
   `${paymentDataWithRequiredPayee.payee.fiscal_code}${paymentDataWithRequiredPayee.notice_number}`;
-
-export const rptIdFromNotificationPaymentInfo = (
-  notificationPaymentInfo: NotificationPaymentInfo
-): string =>
-  `${notificationPaymentInfo.creditorTaxId}${notificationPaymentInfo.noticeCode}`;
 
 export const rptIdFromServiceAndPaymentData = (
   service: ServiceDetails,

@@ -2,7 +2,7 @@ import * as t from "io-ts";
 
 import { FailureHttpResponseCode } from "../../../types/httpResponseCode";
 
-export const HistoryConfig = t.intersection([
+const HistoryConfig = t.intersection([
   t.type({
     count: t.number,
     exportProcessingTimeMilliseconds: t.number,

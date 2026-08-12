@@ -30,7 +30,7 @@ export const generateAccessHistoryData = (
   );
 };
 
-export const generateAccess = (
+const generateAccess = (
   index: number,
   services: Array<ServiceDetails>,
   relyingPartyNameForService: Map<string, Redirect>
@@ -91,7 +91,7 @@ export const nextAccessHistoryPageFromRequest = (
   return generateAccessHistoryPage(history, 0, lastItemIndex);
 };
 
-export const generateAccessHistoryPage = (
+const generateAccessHistoryPage = (
   history: ReadonlyArray<Access>,
   sliceStart: number,
   sliceEnd: number
