@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.16](https://github.com/pagopa/io-app/compare/3.38.0-rc.15...3.38.0-rc.16) (2026-08-13)
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] removed `prettify` script from `dev-server` ([#8451](https://github.com/pagopa/io-app/issues/8451)) ([834209c](https://github.com/pagopa/io-app/commit/834209ce0cd3c7aba02cd2a7c602668a132ae885))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Update release-it ([#8437](https://github.com/pagopa/io-app/issues/8437)) ([f3a3a6f](https://github.com/pagopa/io-app/commit/f3a3a6fab036003f3bc83072b97380716cf33661))
+
 ## [3.38.0-rc.15](https://github.com/pagopa/io-app/compare/3.38.0-rc.14...3.38.0-rc.15) (2026-08-12)
 
 
