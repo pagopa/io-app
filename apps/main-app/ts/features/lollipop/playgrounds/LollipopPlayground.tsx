@@ -1,14 +1,14 @@
+import { LollipopContentDigest } from "@io-app/api-types/generated/definitions/identity/LollipopContentDigest";
+import { LollipopMethodEnum } from "@io-app/api-types/generated/definitions/identity/LollipopMethod";
+import { LollipopOriginalURL } from "@io-app/api-types/generated/definitions/identity/LollipopOriginalURL";
+import { LollipopSignature } from "@io-app/api-types/generated/definitions/identity/LollipopSignature";
+import { LollipopSignatureInput } from "@io-app/api-types/generated/definitions/identity/LollipopSignatureInput";
+import { ProblemJson } from "@io-app/api-types/generated/definitions/identity/ProblemJson";
 import { ContentWrapper } from "@io-app/design-system";
 import * as E from "fp-ts/lib/Either";
 import { useCallback, useState } from "react";
 import { ScrollView } from "react-native";
 
-import { LollipopContentDigest } from "../../../../definitions/identity/LollipopContentDigest";
-import { LollipopMethodEnum } from "../../../../definitions/identity/LollipopMethod";
-import { LollipopOriginalURL } from "../../../../definitions/identity/LollipopOriginalURL";
-import { LollipopSignature } from "../../../../definitions/identity/LollipopSignature";
-import { LollipopSignatureInput } from "../../../../definitions/identity/LollipopSignatureInput";
-import { ProblemJson } from "../../../../definitions/identity/ProblemJson";
 import { identityClientManager } from "../../../api/IdentityClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";

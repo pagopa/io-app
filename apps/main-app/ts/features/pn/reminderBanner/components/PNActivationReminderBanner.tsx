@@ -23,7 +23,6 @@ export const PNActivationReminderBanner = ({ handleOnClose }: Props) => {
   const maybeDispatchBannerShown = useCallback(() => {
     if (isFirstRender.current) {
       sendBannerMixpanelEvents.bannerShown();
-      // eslint-disable-next-line functional/immutable-data
       isFirstRender.current = false;
     }
   }, [isFirstRender]);

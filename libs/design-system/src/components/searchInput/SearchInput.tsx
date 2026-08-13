@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { Ref, useCallback, useImperativeHandle, useRef, useState } from "react";
 import {
   ColorValue,

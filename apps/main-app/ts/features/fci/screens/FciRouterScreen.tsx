@@ -1,3 +1,5 @@
+import { ProblemJson } from "@io-app/api-types/generated/definitions/fci/ProblemJson";
+import { SignatureRequestDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -6,8 +8,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ReactElement, useEffect } from "react";
 
-import { ProblemJson } from "../../../../definitions/fci/ProblemJson";
-import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { withAppRequiredUpdate } from "../../../components/helpers/withAppRequiredUpdate";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";

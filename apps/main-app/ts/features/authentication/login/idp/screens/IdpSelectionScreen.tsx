@@ -98,10 +98,8 @@ const IdpSelectionScreen = (): ReactElement => {
   // collected after the data is updated (so when it isReady again).
   if (isReady(idps)) {
     if (!_.isEqual(firstIdpsRef.current, idps.value)) {
-      // eslint-disable-next-line functional/immutable-data
       randomIdps.current = randomOrderIdps(idps.value);
     }
-    // eslint-disable-next-line functional/immutable-data
     firstIdpsRef.current = idps.value;
   }
 

@@ -1,5 +1,4 @@
 import { AppStateStatus } from "react-native";
-// eslint-disable-next-line no-restricted-imports
 import { ActionPattern } from "redux-saga/effects";
 import { ActionType, createStandardAction } from "typesafe-actions";
 

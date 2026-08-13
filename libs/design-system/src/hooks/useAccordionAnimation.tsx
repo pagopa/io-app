@@ -25,7 +25,7 @@ export const useAccordionAnimation = ({
 
   const toggleAccordion = useCallback(() => {
     // Re-enable animation when the user interacts with the accordion
-    animationEnabled.value = true; // eslint-disable-line functional/immutable-data
+    animationEnabled.value = true;
     setExpanded(isExpanded => !isExpanded);
   }, [animationEnabled]);
 
@@ -50,7 +50,7 @@ export const useAccordionAnimation = ({
       const { height: onLayoutHeight } = event.nativeEvent.layout;
 
       if (onLayoutHeight > 0 && bodyHeight.value !== onLayoutHeight) {
-        bodyHeight.value = onLayoutHeight; // eslint-disable-line functional/immutable-data
+        bodyHeight.value = onLayoutHeight;
       }
     },
     [bodyHeight]

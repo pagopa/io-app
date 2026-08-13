@@ -31,7 +31,6 @@ export const CountdownProvider = (props: CountdownProviderProps) => {
   const isRunningTimer = useRef<boolean>(false);
 
   const startTimer = useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
     isRunningTimer.current = true;
     BackgroundTimer.runBackgroundTimer(() => {
       setTimerCount(prevCount => (prevCount > 0 ? prevCount - 1 : 0));
@@ -41,7 +40,6 @@ export const CountdownProvider = (props: CountdownProviderProps) => {
   const resetTimer = useCallback(() => {
     setTimerCount(timerTiming);
     BackgroundTimer.stopBackgroundTimer();
-    // eslint-disable-next-line functional/immutable-data
     isRunningTimer.current = false;
   }, [timerTiming]);
 

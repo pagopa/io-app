@@ -1,9 +1,9 @@
+import { Bundle } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/Bundle";
+import { PaymentMethodResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodResponse";
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletInfo";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
-import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
-import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { PaymentStartOrigin, WalletPaymentStepEnum } from "../../types";
 import { WalletPaymentOutcomeEnum } from "../../types/PaymentOutcomeEnum";
 
