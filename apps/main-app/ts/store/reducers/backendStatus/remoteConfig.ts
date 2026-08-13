@@ -1,3 +1,12 @@
+import { AppFeedbackConfig } from "@io-app/api-types/generated/definitions/content/AppFeedbackConfig";
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { BancomatPayConfig } from "@io-app/api-types/generated/definitions/content/BancomatPayConfig";
+import { Banner } from "@io-app/api-types/generated/definitions/content/Banner";
+import { BarcodesScannerConfig } from "@io-app/api-types/generated/definitions/content/BarcodesScannerConfig";
+import { FimsServiceConfiguration } from "@io-app/api-types/generated/definitions/content/FimsServiceConfiguration";
+import { OSPerPlatform } from "@io-app/api-types/generated/definitions/content/OSPerPlatform";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
@@ -5,15 +14,6 @@ import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { BancomatPayConfig } from "../../../../definitions/content/BancomatPayConfig";
-import { Banner } from "../../../../definitions/content/Banner";
-import { BarcodesScannerConfig } from "../../../../definitions/content/BarcodesScannerConfig";
-import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
-import { OSPerPlatform } from "../../../../definitions/content/OSPerPlatform";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
@@ -218,6 +218,12 @@ export const fimsServiceConfiguration = createSelector(
       O.flatten,
       O.toUndefined
     )
+);
+
+export const fimsTrackingEnrichedUrlsSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): ReadonlyArray<string> =>
+    O.toUndefined(remoteConfig)?.fims.trackingEnrichedUrls ?? emptyArray
 );
 
 /**

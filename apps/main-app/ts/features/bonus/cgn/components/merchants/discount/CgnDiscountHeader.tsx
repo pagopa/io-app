@@ -1,3 +1,4 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
 import {
   Badge,
   H3,
@@ -10,7 +11,6 @@ import I18n from "i18next";
 import { useEffect, useRef } from "react";
 import { View } from "react-native";
 
-import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
 import { useCgnStyle } from "../../../hooks/useCgnStyle";
 import { CategoryTag } from "../ModuleCgnDiscount";

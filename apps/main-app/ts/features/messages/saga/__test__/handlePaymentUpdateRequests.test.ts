@@ -1,11 +1,11 @@
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as E from "fp-ts/lib/Either";
 import { Channel, channel } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
 import { fork } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 
-import { PaymentFaultV2Enum } from "../../../../../definitions/communication/PaymentFaultV2";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as MIXPANEL from "../../../../mixpanel";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { Action } from "../../../../store/actions/types";

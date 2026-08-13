@@ -168,7 +168,6 @@ const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
   });
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     orbitProgress.value = withRepeat(
       withTiming(1, {
         duration: ORBIT_DURATION,

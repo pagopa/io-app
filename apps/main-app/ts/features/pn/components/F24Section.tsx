@@ -1,7 +1,7 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { Body, ListItemHeader, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../store/hooks";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
 import { thirdPartyMessageAttachmentsSelector } from "../../messages/store/reducers/thirdPartyById";

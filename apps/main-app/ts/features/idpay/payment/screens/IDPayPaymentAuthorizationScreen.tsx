@@ -1,3 +1,4 @@
+import { AuthPaymentResponseDTO } from "@io-app/api-types/generated/definitions/idpay/AuthPaymentResponseDTO";
 import {
   Divider,
   H3,
@@ -14,7 +15,6 @@ import I18n from "i18next";
 import { useEffect } from "react";
 import { View } from "react-native";
 
-import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";

@@ -33,7 +33,11 @@ import {
   originSchemasWhiteList,
   WHITELISTED_DOMAINS
 } from "../shared/utils";
-import { getCieIDLoginUri, isAuthenticationUrl } from "../utils";
+import {
+  getCieIdEnvironment,
+  getCieIDLoginUri,
+  isAuthenticationUrl
+} from "../utils";
 import {
   CIE_ID_ERROR,
   CIE_ID_ERROR_MESSAGE,
@@ -187,7 +191,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
               checkIfUrlIsWhitelisted(result.url);
             }
           },
-          isUat
+          getCieIdEnvironment(isUat)
         );
       }
     },

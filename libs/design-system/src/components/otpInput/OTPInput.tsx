@@ -98,13 +98,11 @@ export const OTPInput = ({
     if (!isValid) {
       setHasError(true);
       triggerHaptic("notificationError");
-      // eslint-disable-next-line functional/immutable-data
       translate.value = shakeAnimation();
 
       if (timerRef.current != null) {
         clearTimeout(timerRef.current);
       }
-      // eslint-disable-next-line functional/immutable-data
       timerRef.current = setTimeout(() => {
         setHasError(false);
         onValueChange("");

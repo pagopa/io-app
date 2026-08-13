@@ -95,7 +95,6 @@ const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
 
   const width = useSharedValue(100);
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     width.value = progress * 100;
   });
   const scalingWidth = useAnimatedStyle(() => ({

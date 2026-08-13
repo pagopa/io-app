@@ -1,6 +1,6 @@
 import { TestServicesClientManager } from "../ServicesClientManager";
 
-jest.mock("../../../definitions/services/client", () => ({
+jest.mock("@io-app/api-types/generated/definitions/services/client", () => ({
   createClient: jest.fn(() => ({ _type: "services", id: Math.random() }))
 }));
 

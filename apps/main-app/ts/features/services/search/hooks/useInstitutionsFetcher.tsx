@@ -39,7 +39,6 @@ export const useInstitutionsFetcher = () => {
       // If this is the first page, start a new search session
       // by generating a new uuid
       if (page === 0) {
-        // eslint-disable-next-line functional/immutable-data
         sessionId.current = uuid();
       }
 
