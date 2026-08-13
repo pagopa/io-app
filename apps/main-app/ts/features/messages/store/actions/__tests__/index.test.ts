@@ -1,3 +1,8 @@
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { PaymentInfoResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoResponse";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import {
   addUserSelectedPaymentRptId,
   cancelGetMessageDataAction,
@@ -22,10 +27,6 @@ import {
   updatePaymentForMessage,
   upsertMessageStatusAttributes
 } from "..";
-import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
-import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
-import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { UIMessage, UIMessageDetails } from "../../../types";
 import {
   MessagePaymentError,

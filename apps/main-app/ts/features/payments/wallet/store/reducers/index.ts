@@ -1,7 +1,7 @@
+import { Wallets } from "@io-app/api-types/generated/definitions/pagopa/walletv3/Wallets";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { paymentsDeleteMethodAction } from "../../../details/store/actions";

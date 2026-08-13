@@ -1,11 +1,11 @@
+import { HasPreconditionEnum } from "@io-app/api-types/generated/definitions/communication/HasPrecondition";
+import { RemoteContentDetails } from "@io-app/api-types/generated/definitions/communication/RemoteContentDetails";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
 
-import { HasPreconditionEnum } from "../../../../../definitions/communication/HasPrecondition";
-import { RemoteContentDetails } from "../../../../../definitions/communication/RemoteContentDetails";
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
 import {

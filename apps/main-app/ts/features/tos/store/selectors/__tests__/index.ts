@@ -1,9 +1,9 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { TosConfig } from "@io-app/api-types/generated/definitions/content/TosConfig";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import * as O from "fp-ts/lib/Option";
 
 import { getTosUrl, getTosVersion } from "../../..";
-import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
-import { TosConfig } from "../../../../../../definitions/content/TosConfig";
 import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 

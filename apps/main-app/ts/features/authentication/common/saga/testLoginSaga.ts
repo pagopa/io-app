@@ -1,3 +1,5 @@
+import { AccessToken } from "@io-app/api-types/generated/definitions/session_manager/AccessToken";
+import { PasswordLogin } from "@io-app/api-types/generated/definitions/session_manager/PasswordLogin";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
@@ -6,8 +8,6 @@ import * as t from "io-ts";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
-import { AccessToken } from "../../../../../definitions/session_manager/AccessToken";
-import { PasswordLogin } from "../../../../../definitions/session_manager/PasswordLogin";
 import { BackendPublicClient } from "../../../../api/backendPublic";
 import { apiUrlPrefix } from "../../../../config";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";

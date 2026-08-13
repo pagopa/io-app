@@ -1,6 +1,6 @@
+import { CitizenStatus } from "@io-app/api-types/generated/definitions/cdc/CitizenStatus";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
-import { CitizenStatus } from "../../../../../../../definitions/cdc/CitizenStatus";
 import { NetworkError } from "../../../../../../utils/errors";
 
 export const getCdcStatusWallet = createAsyncAction(

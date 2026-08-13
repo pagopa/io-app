@@ -1,7 +1,7 @@
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
 import { useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
 
-import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {

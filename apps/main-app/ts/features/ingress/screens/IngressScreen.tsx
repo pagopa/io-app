@@ -1,4 +1,6 @@
 /* eslint-disable functional/immutable-data */
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
@@ -10,8 +12,6 @@ import { isEqual } from "lodash";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
 
-import { InitializedProfile } from "../../../../definitions/identity/InitializedProfile";
-import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { versionInfoDataSelector } from "../../../common/versionInfo/store/reducers/versionInfo";
 import { IOVersionInfo } from "../../../common/versionInfo/types/IOVersionInfo";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
