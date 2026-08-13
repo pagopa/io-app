@@ -27,6 +27,11 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
   const listItemHeaderLabel = I18n.t(
     "features.itWallet.presentation.itWalletId.listItemHeader"
   );
+  const toggleValuesAccessibilityLabel = I18n.t(
+    claimsHidden
+      ? "features.itWallet.presentation.itWalletId.listItemHeaderShowValues"
+      : "features.itWallet.presentation.itWalletId.listItemHeaderHideValues"
+  );
   const claims = useMemo(
     () =>
       parseClaims(credential.parsedCredential, {
@@ -40,11 +45,11 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
       type: "iconButton",
       componentProps: {
         icon: claimsHidden ? "eyeHide" : "eyeShow",
-        accessibilityLabel: listItemHeaderLabel,
+        accessibilityLabel: toggleValuesAccessibilityLabel,
         onPress: () => setClaimsHidden(state => !state)
       }
     }),
-    [claimsHidden, listItemHeaderLabel]
+    [claimsHidden, toggleValuesAccessibilityLabel]
   );
 
   return (
