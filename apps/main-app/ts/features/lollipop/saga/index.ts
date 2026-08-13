@@ -6,7 +6,6 @@ import {
   PublicKey
 } from "@pagopa/io-react-native-crypto";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as O from "fp-ts/lib/Option";
 import { call, delay, put, select } from "typed-redux-saga/macro";
 import { v4 as uuid } from "uuid";
 
@@ -40,13 +39,13 @@ const WAIT_A_BIT_AFTER_SESSION_EXPIRED = 1000 as Millisecond;
 
 export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
   publicKey: PublicKey | undefined,
-  maybeSessionInformation: O.Option<PublicSession>
+  maybeSessionInformation: PublicSession | undefined
 ) {
-  if (O.isSome(maybeSessionInformation) && publicKey) {
+  if (maybeSessionInformation != null && publicKey) {
     const publicKeyThumbprint = toBase64EncodedThumbprint(publicKey);
     const localAssertionRef = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`;
     const doesLocalAssertionRefMatchSession =
-      localAssertionRef === maybeSessionInformation.value.lollipopAssertionRef;
+      localAssertionRef === maybeSessionInformation.lollipopAssertionRef;
     if (doesLocalAssertionRefMatchSession) {
       return true;
     }
