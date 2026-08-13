@@ -1,10 +1,10 @@
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
 import { Body, H6, VSpacer } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, ReactElement, useCallback } from "react";
 import { View } from "react-native";
 
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IdPayInstrumentInitiativesList } from "../../../idpay/wallet/components/IdPayInstrumentInitiativesList";

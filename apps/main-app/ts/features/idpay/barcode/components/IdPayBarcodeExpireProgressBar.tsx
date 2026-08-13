@@ -1,10 +1,10 @@
+import { TransactionBarCodeResponse } from "@io-app/api-types/generated/definitions/idpay/TransactionBarCodeResponse";
 import { BodySmall, VSpacer } from "@io-app/design-system";
 import { format } from "date-fns";
 import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { ProgressBar } from "../../../bonus/common/components/ProgressBar";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
 

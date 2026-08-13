@@ -1,3 +1,6 @@
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+
 import {
   NotificationModalFlow,
   SendOpeningSource,
@@ -23,8 +26,6 @@ import {
   trackSystemNotificationPermissionScreenOutcome,
   trackSystemNotificationPermissionScreenShown
 } from "..";
-import { PushNotificationsContentTypeEnum } from "../../../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../definitions/identity/ReminderStatus";
 import * as Mixpanel from "../../../../mixpanel";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";

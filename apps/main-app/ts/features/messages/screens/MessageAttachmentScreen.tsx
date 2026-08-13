@@ -1,4 +1,5 @@
-import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessageAttachment } from "../components/MessageAttachment/MessageAttachment";

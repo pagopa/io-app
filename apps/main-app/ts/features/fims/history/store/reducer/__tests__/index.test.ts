@@ -1,3 +1,5 @@
+import { Access } from "@io-app/api-types/generated/definitions/fims_history/Access";
+import { AccessHistoryPage } from "@io-app/api-types/generated/definitions/fims_history/AccessHistoryPage";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import reducer, {
@@ -5,8 +7,6 @@ import reducer, {
   FimsHistoryState,
   INITIAL_STATE
 } from "..";
-import { Access } from "../../../../../../../definitions/fims_history/Access";
-import { AccessHistoryPage } from "../../../../../../../definitions/fims_history/AccessHistoryPage";
 import {
   isError,
   isReady,

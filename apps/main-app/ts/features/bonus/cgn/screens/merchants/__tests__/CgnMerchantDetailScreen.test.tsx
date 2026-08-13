@@ -1,10 +1,10 @@
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
+import { ProductCategoryEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { act } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 
-import { Merchant } from "../../../../../../../definitions/cgn/merchants/Merchant";
-import { ProductCategoryEnum } from "../../../../../../../definitions/cgn/merchants/ProductCategory";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";

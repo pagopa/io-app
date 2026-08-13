@@ -1,11 +1,11 @@
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import { OperationDTO } from "@io-app/api-types/generated/definitions/idpay/OperationDTO";
+import { StatusEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
+import { OperationTypeEnum as TransactionOperationType } from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { PreferredLanguageEnum } from "../../../../../../definitions/identity/PreferredLanguage";
-import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
-import { StatusEnum } from "../../../../../../definitions/idpay/TransactionDetailDTO";
-import { OperationTypeEnum as TransactionOperationType } from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { idpayTimelineDetailsGet } from "../../store/actions";
 import { handleGetTimelineDetails } from "../handleGetTimelineDetails";

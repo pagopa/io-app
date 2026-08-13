@@ -1,7 +1,7 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { act, fireEvent } from "@testing-library/react-native";
 import { AnyAction, createStore, Dispatch } from "redux";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as IOHooks from "../../../../store/hooks";
