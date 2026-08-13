@@ -1,4 +1,5 @@
-import { createClient } from "../../../../../../definitions/cdc/client";
+import { createClient } from "@io-app/api-types/generated/definitions/cdc/client";
+
 import { defaultRetryingFetch } from "../../../../../utils/fetch";
 
 export const createCdcClient = (baseUrl: string, sessionToken: string) =>

@@ -1,3 +1,4 @@
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 import {
   deleteKey,
   generate,
@@ -9,7 +10,6 @@ import * as O from "fp-ts/lib/Option";
 import { call, delay, put, select } from "typed-redux-saga/macro";
 import { v4 as uuid } from "uuid";
 
-import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { mixpanelTrack } from "../../../mixpanel";
 import { restartCleanApplication } from "../../../sagas/commons";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";

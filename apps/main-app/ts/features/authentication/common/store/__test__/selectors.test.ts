@@ -1,6 +1,6 @@
+import { SpidLevelEnum } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
 import * as O from "fp-ts/lib/Option";
 
-import { SpidLevelEnum } from "../../../../../../definitions/session_manager/SpidLevel";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { format } from "../../../../../utils/dates";
 import {

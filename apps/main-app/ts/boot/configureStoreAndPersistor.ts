@@ -1,3 +1,4 @@
+import { SpidIdps } from "@io-app/api-types/generated/definitions/content/SpidIdps";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as O from "fp-ts/lib/Option";
@@ -22,7 +23,6 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 
-import { SpidIdps } from "../../definitions/content/SpidIdps";
 import {
   isReady,
   remoteReady,

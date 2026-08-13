@@ -1,3 +1,8 @@
+import { ContextualHelp } from "@io-app/api-types/generated/definitions/content/ContextualHelp";
+import { Idp } from "@io-app/api-types/generated/definitions/content/Idp";
+import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
+import { Municipality as MunicipalityMetadata } from "@io-app/api-types/generated/definitions/content/Municipality";
+import { ScreenCHData } from "@io-app/api-types/generated/definitions/content/ScreenCHData";
 /**
  * Implements the reducers for static content.
  */
@@ -7,11 +12,6 @@ import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
-import { Idp } from "../../../definitions/content/Idp";
-import { IdpData } from "../../../definitions/content/IdpData";
-import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
-import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import {
   isReady,
   remoteError,

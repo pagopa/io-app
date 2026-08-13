@@ -1,3 +1,12 @@
+import { BonusesAvailable } from "@io-app/api-types/generated/definitions/content/BonusesAvailable";
+import { ContextualHelp } from "@io-app/api-types/generated/definitions/content/ContextualHelp";
+import { Municipality as MunicipalityMedadata } from "@io-app/api-types/generated/definitions/content/Municipality";
+import { SpidIdps } from "@io-app/api-types/generated/definitions/content/SpidIdps";
+import { VersionInfo } from "@io-app/api-types/generated/definitions/content/VersionInfo";
+import { Zendesk } from "@io-app/api-types/generated/definitions/content/Zendesk";
+import { ZendeskSubcategoriesErrors } from "@io-app/api-types/generated/definitions/content/ZendeskSubcategoriesErrors";
+import { CoBadgeServices } from "@io-app/api-types/generated/definitions/pagopa/cobadge/configuration/CoBadgeServices";
+import { AbiListResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv2/AbiListResponse";
 /**
  * This module implements the types and a client for retrieving the static
  * content published at https://github.com/pagopa/io-services-metadata
@@ -9,15 +18,6 @@ import {
   IGetApiRequestType
 } from "@pagopa/ts-commons/lib/requests";
 
-import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
-import { ContextualHelp } from "../../definitions/content/ContextualHelp";
-import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
-import { SpidIdps } from "../../definitions/content/SpidIdps";
-import { VersionInfo } from "../../definitions/content/VersionInfo";
-import { Zendesk } from "../../definitions/content/Zendesk";
-import { ZendeskSubcategoriesErrors } from "../../definitions/content/ZendeskSubcategoriesErrors";
-import { CoBadgeServices } from "../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
-import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
 import { contentRepoUrl } from "../config";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";

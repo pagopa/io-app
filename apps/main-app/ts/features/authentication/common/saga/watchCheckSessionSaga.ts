@@ -1,3 +1,4 @@
+import { GetSessionStateT } from "@io-app/api-types/generated/definitions/session_manager/requestTypes";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { TypeOfApiResponseStatus } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
@@ -6,7 +7,6 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 
-import { GetSessionStateT } from "../../../../../definitions/session_manager/requestTypes";
 import { SessionManagerClient } from "../../../../api/SessionManagerClientManager";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { isTestEnv } from "../../../../utils/environment";

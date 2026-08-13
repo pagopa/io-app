@@ -1,3 +1,4 @@
+import { InitiativeRewardTypeEnum } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import {
   Avatar,
   Body,
@@ -17,7 +18,6 @@ import {
   View
 } from "react-native";
 
-import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import WalletCardShape from "../../../../../img/features/idpay/wallet_card.svg";
 import DarkModeWalletCardShape from "../../../../../img/features/idpay/wallet_card_dark.svg";
 import { useIOSelector } from "../../../../store/hooks";
