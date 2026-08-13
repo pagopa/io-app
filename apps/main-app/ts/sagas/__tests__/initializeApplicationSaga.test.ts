@@ -1,7 +1,7 @@
+import { VersionInfo } from "@io-app/api-types/generated/definitions/content/VersionInfo";
 import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 
-import { VersionInfo } from "../../../definitions/content/VersionInfo";
 import {
   isAppSupportedSelector,
   versionInfoDataSelector

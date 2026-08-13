@@ -1,4 +1,8 @@
 import {
+  InitiativeDTO,
+  StatusEnum as InitiativeStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import {
   IOSkeleton,
   ListItemHeader,
   ListItemNav,
@@ -10,10 +14,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { View } from "react-native";
 
-import {
-  InitiativeDTO,
-  StatusEnum as InitiativeStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
 import {
   AppParamsList,
   IOStackNavigationProp

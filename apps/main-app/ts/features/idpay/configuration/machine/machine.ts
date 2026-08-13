@@ -1,3 +1,14 @@
+import { IbanDTO } from "@io-app/api-types/generated/definitions/idpay/IbanDTO";
+import { IbanListDTO } from "@io-app/api-types/generated/definitions/idpay/IbanListDTO";
+import { IbanPutDTO } from "@io-app/api-types/generated/definitions/idpay/IbanPutDTO";
+import {
+  InitiativeDTO,
+  StatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import {
+  InstrumentDTO,
+  StatusEnum as InstrumentStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { flow, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -10,17 +21,6 @@ import {
   setup
 } from "xstate";
 
-import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
-import { IbanListDTO } from "../../../../../definitions/idpay/IbanListDTO";
-import { IbanPutDTO } from "../../../../../definitions/idpay/IbanPutDTO";
-import {
-  InitiativeDTO,
-  StatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
-import {
-  InstrumentDTO,
-  StatusEnum as InstrumentStatusEnum
-} from "../../../../../definitions/idpay/InstrumentDTO";
 import { Wallet } from "../../../../types/pagopa";
 import { IdPayTags } from "../../common/machine/tags";
 import { ConfigurationMode, InstrumentStatusByIdWallet } from "../types";

@@ -1,3 +1,5 @@
+import { AmountEuroCents } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/AmountEuroCents";
+import { FaultCodeCategoryEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { H2, IOToast, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -9,8 +11,6 @@ import I18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
 
-import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
-import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

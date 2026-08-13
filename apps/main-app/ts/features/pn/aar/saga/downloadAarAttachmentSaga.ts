@@ -1,11 +1,11 @@
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { AARProblemJson } from "@io-app/api-types/generated/definitions/pn/aar/AARProblemJson";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { isLeft } from "fp-ts/lib/Either";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { call, cancelled, delay, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
-import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { apiUrlPrefix, fetchTimeout } from "../../../../config";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";

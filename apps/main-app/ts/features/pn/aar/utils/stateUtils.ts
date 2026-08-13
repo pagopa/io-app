@@ -1,6 +1,6 @@
-import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
-import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { AARProblemJson } from "@io-app/api-types/generated/definitions/pn/aar/AARProblemJson";
+import { ThirdPartyMessage } from "@io-app/api-types/generated/definitions/pn/aar/ThirdPartyMessage";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 
 export type AarFlowStateName =
   SendAarFlowStatesType[keyof SendAarFlowStatesType];

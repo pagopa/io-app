@@ -1,4 +1,5 @@
-import { ServicesPreferencesModeEnum } from "../../../../../definitions/identity/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
+
 import { ColorModeChoice } from "../../../../hooks/useAppThemeConfiguration";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
