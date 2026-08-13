@@ -1,7 +1,7 @@
+import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
+import { ThirdPartyMessage } from "@io-app/api-types/generated/definitions/pn/ThirdPartyMessage";
 import { isLeft } from "fp-ts/lib/Either";
 
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/communication/ThirdPartyMessageWithContent";
-import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 import { PNMessage } from "./types";
 
 export const toSENDMessage = (

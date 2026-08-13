@@ -1,7 +1,7 @@
+import { SpidLevelEnum } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
 import { act, fireEvent, render } from "@testing-library/react-native";
 import { EmitterSubscription, Linking } from "react-native";
 
-import { SpidLevelEnum } from "../../../../../../../definitions/session_manager/SpidLevel";
 import { withStore } from "../../../../../../utils/jest/withStore";
 import * as loginHooks from "../../../../../lollipop/hooks/useLollipopLoginSource";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";

@@ -1,3 +1,4 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   Divider,
   IOToast,
@@ -9,7 +10,6 @@ import I18n from "i18next";
 import { ComponentProps, useCallback, useEffect } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPremiumMessagesOptInOutEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";

@@ -1,3 +1,4 @@
+import { ZendeskSubCategory } from "@io-app/api-types/generated/definitions/content/ZendeskSubCategory";
 import {
   Banner,
   ContentWrapper,
@@ -10,7 +11,6 @@ import {
 import I18n from "i18next";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 
-import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";

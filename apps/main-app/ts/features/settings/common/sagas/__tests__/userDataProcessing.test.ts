@@ -1,10 +1,10 @@
+import { UserDataProcessing } from "@io-app/api-types/generated/definitions/identity/UserDataProcessing";
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 
-import { UserDataProcessing } from "../../../../../../definitions/identity/UserDataProcessing";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/identity/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../../definitions/identity/UserDataProcessingStatus";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {
   deleteUserDataProcessing,

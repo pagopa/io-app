@@ -1,14 +1,14 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { Config } from "@io-app/api-types/generated/definitions/content/Config";
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/services/OrganizationFiscalCode";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { Body } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import { createStore } from "redux";
 
-import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
-import { Config } from "../../../../../../definitions/content/Config";
-import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";

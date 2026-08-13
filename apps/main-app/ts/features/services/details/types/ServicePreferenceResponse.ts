@@ -1,4 +1,5 @@
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import { EnabledChannels } from "../../../../utils/profile";
 
 export type ServicePreference = EnabledChannels & { settings_version: number };

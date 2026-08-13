@@ -1,7 +1,7 @@
+import { AARProblemJson } from "@io-app/api-types/generated/definitions/pn/aar/AARProblemJson";
 import _ from "lodash";
 import { ComponentType } from "react";
 
-import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { isTestEnv } from "../../../../utils/environment";
 import {
   trackSendAarMandateCieDataError,
