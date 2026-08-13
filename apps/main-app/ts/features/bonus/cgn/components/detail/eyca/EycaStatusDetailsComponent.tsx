@@ -1,9 +1,9 @@
+import { EycaCardActivated } from "@io-app/api-types/generated/definitions/cgn/EycaCardActivated";
+import { EycaCardExpired } from "@io-app/api-types/generated/definitions/cgn/EycaCardExpired";
+import { EycaCardRevoked } from "@io-app/api-types/generated/definitions/cgn/EycaCardRevoked";
 import { Divider, ListItemInfo, ListItemInfoCopy } from "@io-app/design-system";
 import I18n from "i18next";
 
-import { EycaCardActivated } from "../../../../../../../definitions/cgn/EycaCardActivated";
-import { EycaCardExpired } from "../../../../../../../definitions/cgn/EycaCardExpired";
-import { EycaCardRevoked } from "../../../../../../../definitions/cgn/EycaCardRevoked";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import { formatDateAsShortFormat } from "../../../../../../utils/dates";
 import { getAccessibleExpirationDate } from "../../../utils/dates";

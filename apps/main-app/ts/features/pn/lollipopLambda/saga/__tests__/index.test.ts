@@ -1,12 +1,12 @@
+import { ErrorResponse } from "@io-app/api-types/generated/definitions/pn/lollipop-lambda/ErrorResponse";
+import { MethodEnum } from "@io-app/api-types/generated/definitions/pn/lollipop-lambda/RequestInfo";
+import { SuccessResponse } from "@io-app/api-types/generated/definitions/pn/lollipop-lambda/SuccessResponse";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { Effect } from "redux-saga/effects";
 import { call, take } from "typed-redux-saga/macro";
 
 import { testable, watchSendLollipopLambda } from "..";
-import { ErrorResponse } from "../../../../../../definitions/pn/lollipop-lambda/ErrorResponse";
-import { MethodEnum } from "../../../../../../definitions/pn/lollipop-lambda/RequestInfo";
-import { SuccessResponse } from "../../../../../../definitions/pn/lollipop-lambda/SuccessResponse";
 import { apiUrlPrefix } from "../../../../../config";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";

@@ -1,9 +1,9 @@
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
+import { SpidLevelEnum } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { PushNotificationsContentTypeEnum } from "../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../definitions/identity/ReminderStatus";
-import { ServicesPreferencesModeEnum } from "../../../definitions/identity/ServicesPreferencesMode";
-import { SpidLevelEnum } from "../../../definitions/session_manager/SpidLevel";
 import mockedProfile from "../../__mocks__/initializedProfile";
 import { NotificationPreferenceConfiguration } from "../../features/settings/common/analytics";
 import { applicationChangeState } from "../../store/actions/application";

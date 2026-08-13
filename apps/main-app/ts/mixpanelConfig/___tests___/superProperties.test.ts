@@ -1,9 +1,9 @@
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { MixpanelProperties } from "mixpanel-react-native";
 import { Appearance } from "react-native";
 
-import { PushNotificationsContentTypeEnum } from "../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../definitions/identity/ReminderStatus";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { GlobalState } from "../../store/reducers/types";
 import * as ACCESSIBILITY from "../../utils/accessibility";

@@ -1,3 +1,4 @@
+import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -12,7 +13,6 @@ import {
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 
-import { IdpData } from "../../../../../../definitions/content/IdpData";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
 import { apiUrlPrefix } from "../../../../../config";

@@ -1,13 +1,13 @@
+import { LollipopMethodEnum } from "@io-app/api-types/generated/definitions/fci/LollipopMethod";
+import { LollipopOriginalURL } from "@io-app/api-types/generated/definitions/fci/LollipopOriginalURL";
+import { LollipopSignature } from "@io-app/api-types/generated/definitions/fci/LollipopSignature";
+import { LollipopSignatureInput } from "@io-app/api-types/generated/definitions/fci/LollipopSignatureInput";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { LollipopMethodEnum } from "../../../../../definitions/fci/LollipopMethod";
-import { LollipopOriginalURL } from "../../../../../definitions/fci/LollipopOriginalURL";
-import { LollipopSignature } from "../../../../../definitions/fci/LollipopSignature";
-import { LollipopSignatureInput } from "../../../../../definitions/fci/LollipopSignatureInput";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";

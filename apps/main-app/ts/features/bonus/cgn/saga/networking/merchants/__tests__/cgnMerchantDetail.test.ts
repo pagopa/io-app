@@ -1,11 +1,11 @@
+import { DiscountCodeTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountCodeType";
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
+import { SupportTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/SupportType";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 
-import { DiscountCodeTypeEnum } from "../../../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { Merchant } from "../../../../../../../../definitions/cgn/merchants/Merchant";
-import { SupportTypeEnum } from "../../../../../../../../definitions/cgn/merchants/SupportType";
 import { getGenericError } from "../../../../../../../utils/errors";
 import { cgnSelectedMerchant } from "../../../../store/actions/merchants";
 import { cgnMerchantDetail } from "../cgnMerchantDetail";

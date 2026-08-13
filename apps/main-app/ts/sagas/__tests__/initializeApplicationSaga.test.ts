@@ -1,7 +1,7 @@
+import { VersionInfo } from "@io-app/api-types/generated/definitions/content/VersionInfo";
 import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 
-import { VersionInfo } from "../../../definitions/content/VersionInfo";
 import {
   isAppSupportedSelector,
   versionInfoDataSelector
@@ -88,8 +88,8 @@ jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
 }));
 
-jest.mock("react-native-share", () => ({
-  open: jest.fn()
+jest.mock("expo-sharing", () => ({
+  shareAsync: jest.fn()
 }));
 
 jest.mock("../../api/SessionManagerClientManager");

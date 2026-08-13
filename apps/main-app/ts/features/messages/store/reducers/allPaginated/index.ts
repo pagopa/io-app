@@ -1,3 +1,4 @@
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
@@ -9,7 +10,6 @@ import type {
   MessagePagePot
 } from "./types.ts";
 
-import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory.ts";
 import { Action } from "../../../../../store/actions/types";
 import { paymentsByRptIdSelector } from "../../../../../store/reducers/entities/payments";
 import { GlobalState } from "../../../../../store/reducers/types";

@@ -1,8 +1,8 @@
+import { EnvironmentEnum } from "@io-app/api-types/generated/definitions/fci/Environment";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
-import { EnvironmentEnum } from "../../../../../definitions/fci/Environment";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { fciClearStateRequest, fciEnvironmentSet } from "../actions";

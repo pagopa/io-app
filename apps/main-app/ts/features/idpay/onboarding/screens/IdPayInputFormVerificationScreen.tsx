@@ -1,12 +1,12 @@
+import {
+  SelfCriteriaTextDTO,
+  _typeEnum as SelfCriteriaTextTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaTextDTO";
 import { H6, IOToast, TextInput, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
 import PagerView from "react-native-pager-view";
 
-import {
-  SelfCriteriaTextDTO,
-  _typeEnum as SelfCriteriaTextTypeEnum
-} from "../../../../../definitions/idpay/SelfCriteriaTextDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
