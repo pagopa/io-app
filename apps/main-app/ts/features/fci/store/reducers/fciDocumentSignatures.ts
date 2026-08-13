@@ -1,9 +1,9 @@
+import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { updateAt } from "fp-ts/lib/ReadonlyArray";
 import { getType } from "typesafe-actions";
 
-import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {

@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.15](https://github.com/pagopa/io-app/compare/3.38.0-rc.14...3.38.0-rc.15) (2026-08-12)
+
+
+### Bug Fixes
+
+* [[IOPLT-2006](https://pagopa.atlassian.net/browse/IOPLT-2006)] `hermes-engine` checksums in `Podfile.lock` ([#8447](https://github.com/pagopa/io-app/issues/8447)) ([cc21e2d](https://github.com/pagopa/io-app/commit/cc21e2dc21b6cbedefa945c329a50404e025f222))
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Remove @types/node-fetch ([#8438](https://github.com/pagopa/io-app/issues/8438)) ([1b0792c](https://github.com/pagopa/io-app/commit/1b0792cacfbebd6d80606cf402a5c3081d0daf26))
+* [[IOPLT-2002](https://pagopa.atlassian.net/browse/IOPLT-2002)] Migrate dev server in monorepo ([#8432](https://github.com/pagopa/io-app/issues/8432)) ([a37b073](https://github.com/pagopa/io-app/commit/a37b073d5621ce5ecd2394b446ba1d5186fdf721))
+
+## [3.38.0-rc.14](https://github.com/pagopa/io-app/compare/3.38.0-rc.13...3.38.0-rc.14) (2026-08-11)
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Update mockhttp ([#8435](https://github.com/pagopa/io-app/issues/8435)) ([d8dbd1c](https://github.com/pagopa/io-app/commit/d8dbd1ce14acd878ced9553158fc45a3a6562265))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Update pnpm to version 11 ([#8429](https://github.com/pagopa/io-app/issues/8429)) ([d63033e](https://github.com/pagopa/io-app/commit/d63033e89f9f6625459b7d58c1c7323e97bdefe6))
+
 ## [3.38.0-rc.13](https://github.com/pagopa/io-app/compare/3.38.0-rc.12...3.38.0-rc.13) (2026-08-10)
 
 

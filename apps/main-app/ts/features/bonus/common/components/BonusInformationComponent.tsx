@@ -1,3 +1,5 @@
+import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
+import { BonusAvailableContent } from "@io-app/api-types/generated/definitions/content/BonusAvailableContent";
 import {
   Body,
   ContentWrapper,
@@ -17,8 +19,6 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 
-import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
-import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import {
   IOScrollView,

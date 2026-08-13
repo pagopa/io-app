@@ -1,6 +1,5 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
-
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 export type FavouriteServicesSortType =
   | "addedAt_asc"

@@ -1,4 +1,5 @@
-import * as fimsClient from "../../../../../../definitions/fims_history/client";
+import * as fimsClient from "@io-app/api-types/generated/definitions/fims_history/client";
+
 import * as fetchUtils from "../../../../../utils/fetch";
 import { createFimsClient } from "../client";
 

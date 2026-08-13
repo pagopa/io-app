@@ -1,3 +1,4 @@
+import { TransactionBarCodeResponse } from "@io-app/api-types/generated/definitions/idpay/TransactionBarCodeResponse";
 import {
   Body,
   H3,
@@ -19,7 +20,6 @@ import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";

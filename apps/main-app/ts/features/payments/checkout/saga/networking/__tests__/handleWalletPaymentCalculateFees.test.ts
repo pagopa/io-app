@@ -1,10 +1,10 @@
+import { CalculateFeeRequest } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/CalculateFeeRequest";
+import { CalculateFeeResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/CalculateFeeResponse";
+import { PaymentMethodStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodStatus";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { CalculateFeeRequest } from "../../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
-import { CalculateFeeResponse } from "../../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
-import { PaymentMethodStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
 import { preferredLanguageSelector } from "../../../../../../store/reducers/persistedPreferences";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";

@@ -1,12 +1,12 @@
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { ServiceMetadata } from "@io-app/api-types/generated/definitions/services/ServiceMetadata";
+import { SpecialServiceMetadata } from "@io-app/api-types/generated/definitions/services/SpecialServiceMetadata";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import { ServiceMetadata } from "../../../../../../definitions/services/ServiceMetadata";
-import { SpecialServiceMetadata } from "../../../../../../definitions/services/SpecialServiceMetadata";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { isStrictSome } from "../../../../../utils/pot";

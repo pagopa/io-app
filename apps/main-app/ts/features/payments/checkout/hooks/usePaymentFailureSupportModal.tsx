@@ -1,3 +1,4 @@
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
 import {
   ListItemAction,
   ListItemHeader,
@@ -15,7 +16,6 @@ import I18n from "i18next";
 import { JSX, useEffect } from "react";
 import { Linking } from "react-native";
 
-import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { isReady } from "../../../../common/model/RemoteValue";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";

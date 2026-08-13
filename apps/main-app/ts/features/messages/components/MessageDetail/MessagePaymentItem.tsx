@@ -1,3 +1,6 @@
+import { PaymentAmount } from "@io-app/api-types/generated/definitions/communication/PaymentAmount";
+import { PaymentInfoResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoResponse";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   ModulePaymentNotice,
   PaymentNoticeStatus,
@@ -10,9 +13,6 @@ import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { View } from "react-native";
 
-import { PaymentAmount } from "../../../../../definitions/communication/PaymentAmount";
-import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { fold, RemoteValue } from "../../../../common/model/RemoteValue";
 import {
   useIODispatch,
