@@ -35,7 +35,6 @@ import {
   loadIdps
 } from "../actions/content";
 import { Action } from "../actions/types";
-import { currentRouteSelector } from "./navigation";
 import { GlobalState } from "./types";
 
 /**
@@ -118,36 +117,6 @@ export const idpContextualHelpDataFromIdSelector = (
         )
       )
   );
-
-/**
- * return a pot with screen contextual help data if they are loaded and defined otherwise
- * @param id
- */
-export const screenContextualHelpDataSelector = createSelector<
-  GlobalState,
-  pot.Pot<ContextualHelp, Error>,
-  string,
-  pot.Pot<O.Option<ScreenCHData>, Error>
->(
-  [contextualHelpDataSelector, currentRouteSelector],
-  (contextualHelpData, currentRoute) =>
-    pot.map(contextualHelpData, data => {
-      if (currentRoute === undefined) {
-        return O.none;
-      }
-      const locale = getCurrentLocale();
-
-      const localeData = data[locale];
-      const screenData =
-        localeData !== undefined
-          ? localeData.screens.find(
-              s =>
-                s.route_name.toLowerCase() === currentRoute.toLocaleLowerCase()
-            )
-          : undefined;
-      return O.fromNullable(screenData);
-    })
-);
 
 /**
  * Return a pot with screen contextual help data given a route if they are loaded and defined otherwise return undefined
