@@ -120,6 +120,7 @@
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "catalog:",
     "react-native-keyboard-controller": "^1.21.7",
+    "react-native-keychain": "^10.0.0",
     "react-native-linear-gradient": "catalog:",
     "react-native-notifications-utils": "^0.3.0",
     "react-native-pager-view": "^7.0.1",
