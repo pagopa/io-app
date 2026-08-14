@@ -40,13 +40,6 @@ export async function getPin(): Promise<PinString | undefined> {
  * Saves the provided unlock code in the secure store.
  */
 export async function setPin(pin: PinString): Promise<boolean> {
-  await setSecureItem(PIN_KEY, pin);
+  await SecureStore.setItemAsync(PIN_KEY, pin, DEFAULT_OPTIONS);
   return true;
-}
-
-/**
- * Stores a value with the default secure storage options applied.
- */
-async function setSecureItem(key: string, value: string): Promise<void> {
-  return SecureStore.setItemAsync(key, value, DEFAULT_OPTIONS);
 }
