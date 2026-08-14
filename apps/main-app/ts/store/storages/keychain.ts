@@ -1,4 +1,5 @@
 import * as SecureStore from "expo-secure-store";
+import * as LegacyKeychain from "react-native-keychain";
 import { Storage } from "redux-persist";
 
 // expo-secure-store only allows [A-Za-z0-9._-] https://docs.expo.dev/versions/latest/sdk/securestore/?utm_source=chatgpt.com#securestoresetitemasynckey-value-options; encode other chars as -XX (hex)
@@ -34,6 +35,22 @@ async function getChunked(base: string): Promise<string | undefined> {
     return undefined;
   }
   return complete.join("");
+}
+
+// TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
+async function migrateLegacyItem(
+  sanitizedKey: string,
+  originalKey: string
+): Promise<string | undefined> {
+  const legacy = await LegacyKeychain.getGenericPassword({
+    service: originalKey
+  });
+  if (typeof legacy === "boolean") {
+    return undefined;
+  }
+  await setChunked(sanitizedKey, legacy.password);
+  await LegacyKeychain.resetGenericPassword({ service: originalKey });
+  return legacy.password;
 }
 
 async function removeChunked(base: string): Promise<void> {
@@ -75,7 +92,11 @@ export default function createSecureStorage(): Storage {
   return {
     getItem: async key => {
       try {
-        return await getChunked(sanitizeKey(key));
+        const value = await getChunked(sanitizeKey(key));
+        if (value !== undefined) {
+          return value;
+        }
+        return await migrateLegacyItem(sanitizeKey(key), key);
       } catch (err) {
         getKeychainError = JSON.stringify(err);
         return undefined;

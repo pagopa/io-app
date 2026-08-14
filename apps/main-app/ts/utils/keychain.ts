@@ -6,6 +6,7 @@
  */
 
 import * as SecureStore from "expo-secure-store";
+import * as LegacyKeychain from "react-native-keychain";
 
 import { PinString } from "../types/PinString";
 
@@ -33,7 +34,7 @@ export async function getPin(): Promise<PinString | undefined> {
   if (value !== null && PinString.is(value)) {
     return value;
   }
-  return undefined;
+  return await migrateLegacyPin();
 }
 
 /**
@@ -42,4 +43,16 @@ export async function getPin(): Promise<PinString | undefined> {
 export async function setPin(pin: PinString): Promise<boolean> {
   await SecureStore.setItemAsync(PIN_KEY, pin, DEFAULT_OPTIONS);
   return true;
+}
+
+// TODO: IOPLT-2010 remove once all users have migrated off react-native-keychain (one release after this one)
+async function migrateLegacyPin(): Promise<PinString | undefined> {
+  const credentials = await LegacyKeychain.getGenericPassword();
+  if (typeof credentials === "boolean" || !PinString.is(credentials.password)) {
+    return undefined;
+  }
+  const pin = credentials.password;
+  await setPin(pin);
+  await LegacyKeychain.resetGenericPassword();
+  return pin;
 }
