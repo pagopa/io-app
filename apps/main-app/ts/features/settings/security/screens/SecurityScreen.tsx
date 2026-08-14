@@ -23,8 +23,6 @@ import {
   isBiometricsValidType,
   mayUserActivateBiometric
 } from "../../../../utils/biometrics";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
-import { FAQsCategoriesType } from "../../../../utils/faq";
 import { FIMS_ROUTES } from "../../../fims/common/navigation";
 import { fimsIsHistoryEnabledSelector } from "../../../fims/history/store/selectors";
 import { identificationRequest } from "../../../identification/store/actions";
@@ -35,17 +33,6 @@ import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined
 } from "../shared/analytics";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.contextualHelpTitle",
-  body: "profile.preferences.contextualHelpContent"
-};
-
-const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
-  "profile",
-  "privacy",
-  "authentication_SPID"
-];
 
 const SecurityScreen = (): ReactElement => {
   const dispatch = useIODispatch();
@@ -160,9 +147,7 @@ const SecurityScreen = (): ReactElement => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelpMarkdown={contextualHelpMarkdown}
       description={I18n.t("profile.security.subtitle")}
-      faqCategories={FAQ_CATEGORIES}
       headerActionsProp={{ showHelp: true }}
       title={{
         label: I18n.t("profile.security.title")

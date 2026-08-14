@@ -26,7 +26,6 @@ import {
   useIOStore
 } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { setFastLoginOptSessionLogin } from "../../../activeSessionLogin/store/actions";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
@@ -47,10 +46,6 @@ export enum Identifier {
   SPID = "SPID",
   TEST = "TEST"
 }
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "authentication.opt_in.contextualHelpTitle",
-  body: "authentication.opt_in.contextualHelpContent"
-};
 
 export type ChosenIdentifier =
   | {
@@ -64,8 +59,7 @@ export type ChosenIdentifier =
 const OptInScreen = () => {
   useHeaderSecondLevel({
     title: "",
-    supportRequest: true,
-    contextualHelpMarkdown
+    supportRequest: true
   });
 
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
