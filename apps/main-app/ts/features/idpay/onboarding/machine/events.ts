@@ -1,7 +1,7 @@
-import { SelfConsentBoolDTO } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
-import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
-import { SelfConsentMultiTypeDTO } from "../../../../../definitions/idpay/SelfConsentMultiTypeDTO";
-import { SelfConsentTextDTO } from "../../../../../definitions/idpay/SelfConsentTextDTO";
+import { SelfConsentBoolDTO } from "@io-app/api-types/generated/definitions/idpay/SelfConsentBoolDTO";
+import { SelfConsentMultiDTO } from "@io-app/api-types/generated/definitions/idpay/SelfConsentMultiDTO";
+import { SelfConsentMultiTypeDTO } from "@io-app/api-types/generated/definitions/idpay/SelfConsentMultiTypeDTO";
+import { SelfConsentTextDTO } from "@io-app/api-types/generated/definitions/idpay/SelfConsentTextDTO";
 
 export type IdPayOnboardingEvents =
   | Back

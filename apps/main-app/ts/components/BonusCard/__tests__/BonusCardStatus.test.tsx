@@ -1,12 +1,12 @@
+import {
+  InitiativeDTO,
+  VoucherStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { render } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Provider } from "react-redux";
 import { createStore, Store } from "redux";
 
-import {
-  InitiativeDTO,
-  VoucherStatusEnum
-} from "../../../../definitions/idpay/InitiativeDTO";
 import { IdPayCardStatus } from "../../../features/idpay/details/utils";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";

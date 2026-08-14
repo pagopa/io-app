@@ -1,9 +1,9 @@
+import { SpidLevel } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
 import { Optional } from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
-import { SpidLevel } from "../../../../../../definitions/session_manager/SpidLevel";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { format } from "../../../../../utils/dates";
 import { SpidIdp } from "../../../../../utils/idps";

@@ -1,12 +1,12 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { Config } from "@io-app/api-types/generated/definitions/content/Config";
+import { VersionPerPlatform } from "@io-app/api-types/generated/definitions/content/VersionPerPlatform";
 import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Platform } from "react-native";
 
-import { BackendStatus } from "../../../definitions/content/BackendStatus";
-import { Config } from "../../../definitions/content/Config";
-import { VersionPerPlatform } from "../../../definitions/content/VersionPerPlatform";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 
 // This type defines the parameters for a function so that the name of the parameter must

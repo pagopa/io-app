@@ -40,7 +40,7 @@
   <!-- Required by react-native-vision-camera -->
   <uses-permission android:name="android.permission.CAMERA" />
 
-  <!-- Required by react-native-fingerprint-scanner -->
+  <!-- Required by expo-local-authentication -->
   <uses-permission android:name="android.permission.USE_FINGERPRINT" />
   <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
@@ -156,7 +156,7 @@
     </activity>
 
     <!-- Trigger Google Play services to install the backported photo picker module. -->
-    <!-- This is needed by react-native-image-picker because we target a minSdkVersion < 30. In can be removed when we target minSdkVersion >= 30. 
+    <!-- Required by expo-image-picker for the backported photo picker on Android < 30.
     https://developer.android.com/training/data-storage/shared/photopicker#device-availability -->
     <service android:name="com.google.android.gms.metadata.ModuleDependencies"
             android:enabled="false"

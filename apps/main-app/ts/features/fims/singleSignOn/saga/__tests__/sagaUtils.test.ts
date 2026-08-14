@@ -1,3 +1,6 @@
+import { Consent } from "@io-app/api-types/generated/definitions/fims_sso/Consent";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   deallocate,
   HttpCallConfig,
@@ -11,9 +14,6 @@ import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { StackActions } from "@react-navigation/native";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 
-import { Consent } from "../../../../../../definitions/fims_sso/Consent";
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";

@@ -1,8 +1,8 @@
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
 import { messageId_1 } from "../../__mocks__/messages";

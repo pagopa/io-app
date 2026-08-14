@@ -1,9 +1,9 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { Config } from "@io-app/api-types/generated/definitions/content/Config";
 import { ITuple2, Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import * as O from "fp-ts/lib/Option";
 import { DeepPartial } from "redux";
 
-import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
-import { Config } from "../../../../../../definitions/content/Config";
 import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getAppVersion } from "../../../../../utils/appVersion";
