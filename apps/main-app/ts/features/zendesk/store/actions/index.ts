@@ -8,10 +8,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { Zendesk } from "../../../../../definitions/content/Zendesk";
-import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
-import { ZendeskSubcategoriesErrors } from "../../../../../definitions/content/ZendeskSubcategoriesErrors";
-import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
 import { NetworkError } from "../../../../utils/errors";
 
 export type ZendeskAssistanceType = Partial<{

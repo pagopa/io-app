@@ -1,3 +1,4 @@
+import { Faq } from "@io-app/api-types/generated/definitions/content/Faq";
 import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import {
   AccordionItem,
@@ -28,8 +29,6 @@ import {
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
-import { Faq } from "../../../../definitions/content/Faq";
-import { InitializedProfile } from "../../../../definitions/identity/InitializedProfile";
 import {
   IOScrollView,
   IOScrollViewActions

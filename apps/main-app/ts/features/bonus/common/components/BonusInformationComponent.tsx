@@ -20,8 +20,6 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 
-import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
-import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import {
   IOScrollView,
   IOScrollViewActions
