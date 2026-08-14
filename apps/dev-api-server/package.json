@@ -13,8 +13,6 @@
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint-autofix": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "start": "ts-node src/start.ts",
-    "prettify": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "prettier:check": "prettier --check \"src/**/*.{ts,tsx}\"",
     "knip": "pnpm --dir ../.. knip",
     "tsc-noemit": "tsc --noEmit"
   },
