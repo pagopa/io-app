@@ -21,9 +21,9 @@ import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { trackItwOfflineBottomSheet } from "../features/itwallet/wallet/analytics";
 import { useAppRestartAction } from "../features/itwallet/wallet/hooks/useAppRestartAction";
 import { mixpanelTrack } from "../mixpanel";
+import { useCurrentRouteName } from "../navigation/NavigationService";
 import { useIOSelector } from "../store/hooks";
 import { statusMessageByRouteSelector } from "../store/reducers/backendStatus/statusMessages";
-import { currentRouteSelector } from "../store/reducers/navigation";
 import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
 import { buildEventProperties } from "../utils/analytics";
 import { useIOBottomSheetModal } from "../utils/hooks/bottomSheet";
@@ -88,7 +88,7 @@ const buildMPEventProperties = (
  * @returns the derived connectivity state based on the current connectivity status,
  */
 export const useDerivedConnectivityState = () => {
-  const currentRoute = useIOSelector(currentRouteSelector);
+  const currentRoute = useCurrentRouteName();
   const isConnected = useIOSelector(isConnectedSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
   const startupStatus = useIOSelector(isStartupLoaded);
@@ -148,8 +148,10 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
   const derivedConnectivityState = useDerivedConnectivityState();
   const prevDerivedConnectivityState = usePrevious(derivedConnectivityState);
 
-  const currentStatusMessage = useIOSelector(statusMessageByRouteSelector);
-  const currentRoute = useIOSelector(currentRouteSelector);
+  const currentRoute = useCurrentRouteName();
+  const currentStatusMessage = useIOSelector(
+    statusMessageByRouteSelector(currentRoute)
+  );
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
 
   const locale = getFullLocale();
