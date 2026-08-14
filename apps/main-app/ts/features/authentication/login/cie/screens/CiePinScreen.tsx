@@ -1,3 +1,4 @@
+import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import {
   Banner,
   Body,
@@ -28,7 +29,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { IdpData } from "../../../../../../definitions/content/IdpData";
 import {
   BottomTopAnimation,
   LightModalContext

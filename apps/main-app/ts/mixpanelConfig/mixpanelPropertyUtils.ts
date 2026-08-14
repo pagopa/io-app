@@ -1,8 +1,8 @@
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
-import { ServicesPreferencesModeEnum } from "../../definitions/identity/ServicesPreferencesMode";
 import {
   idpSelector,
   spidLevelFromSessionInfoSelector

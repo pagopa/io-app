@@ -1,3 +1,5 @@
+import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
+import { BonusAvailableContent } from "@io-app/api-types/generated/definitions/content/BonusAvailableContent";
 import {
   Body,
   ContentWrapper,

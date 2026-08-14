@@ -1,10 +1,10 @@
+import { AmountEuroCents } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/AmountEuroCents";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { render } from "@testing-library/react-native";
 import { Text } from "react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 
-import { AmountEuroCents } from "../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

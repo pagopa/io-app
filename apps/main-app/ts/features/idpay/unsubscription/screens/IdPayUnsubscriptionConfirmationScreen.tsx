@@ -1,3 +1,4 @@
+import { InitiativeRewardTypeEnum } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import {
   Body,
   FooterActionsInline,
@@ -9,7 +10,6 @@ import I18n from "i18next";
 import { useEffect } from "react";
 import { View } from "react-native";
 
-import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";

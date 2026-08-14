@@ -1,9 +1,9 @@
+import { EmailAddress } from "@io-app/api-types/generated/definitions/identity/EmailAddress";
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
-import { PreferredLanguageEnum } from "../../../../../../definitions/identity/PreferredLanguage";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import {
   profileLoadFailure,
   profileLoadRequest,

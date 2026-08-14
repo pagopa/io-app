@@ -1,15 +1,15 @@
+import {
+  StatusEnum,
+  TransactionBarCodeResponse
+} from "@io-app/api-types/generated/definitions/idpay/TransactionBarCodeResponse";
+import {
+  CodeEnum,
+  TransactionErrorDTO
+} from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import {
-  StatusEnum,
-  TransactionBarCodeResponse
-} from "../../../../../../definitions/idpay/TransactionBarCodeResponse";
-import {
-  CodeEnum,
-  TransactionErrorDTO
-} from "../../../../../../definitions/idpay/TransactionErrorDTO";
 import { getNetworkError } from "../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";

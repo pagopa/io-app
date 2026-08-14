@@ -1,3 +1,7 @@
+import { Zendesk } from "@io-app/api-types/generated/definitions/content/Zendesk";
+import { ZendeskCategory } from "@io-app/api-types/generated/definitions/content/ZendeskCategory";
+import { ZendeskSubcategoriesErrors } from "@io-app/api-types/generated/definitions/content/ZendeskSubcategoriesErrors";
+import { ZendeskSubCategory } from "@io-app/api-types/generated/definitions/content/ZendeskSubCategory";
 import {
   ActionType,
   createAsyncAction,

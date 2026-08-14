@@ -1,3 +1,4 @@
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import {
   Banner,
   ContentWrapper,
@@ -8,7 +9,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 
-import { ServicesPreferencesModeEnum } from "../../../../definitions/identity/ServicesPreferencesMode";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import {

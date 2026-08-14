@@ -90,6 +90,17 @@ jest.mock("expo-calendar", () => ({
   getCalendarsAsync: jest.fn().mockResolvedValue([]),
   getEventsAsync: jest.fn().mockResolvedValue([]),
 }));
+
+jest.mock("expo-local-authentication", () => ({
+  AuthenticationType: {
+    FINGERPRINT: 1,
+    FACIAL_RECOGNITION: 2,
+    IRIS: 3
+  },
+  supportedAuthenticationTypesAsync: jest.fn().mockResolvedValue(Promise.resolve([])),
+  authenticateAsync: jest.fn().mockResolvedValue(Promise.resolve({ success: true })),
+  cancelAuthenticate: jest.fn().mockResolvedValue(Promise.resolve()),
+}));
 // Mock react-native-worklets before reanimated setup
 // See: https://docs.swmansion.com/react-native-worklets/docs/guides/testing/
 jest.mock("react-native-worklets", () =>

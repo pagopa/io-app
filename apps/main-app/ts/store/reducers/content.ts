@@ -1,17 +1,14 @@
+import { ContextualHelp } from "@io-app/api-types/generated/definitions/content/ContextualHelp";
+import { Municipality as MunicipalityMetadata } from "@io-app/api-types/generated/definitions/content/Municipality";
+import { ScreenCHData } from "@io-app/api-types/generated/definitions/content/ScreenCHData";
 /**
  * Implements the reducers for static content.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
-import { Idp } from "../../../definitions/content/Idp";
-import { IdpData } from "../../../definitions/content/IdpData";
-import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
-import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import {
   isReady,
   remoteError,
@@ -20,7 +17,6 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../common/model/RemoteValue";
-import { getRemoteLocale } from "../../features/messages/utils/ctas";
 import { clearCache } from "../../features/settings/common/store/actions";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import {

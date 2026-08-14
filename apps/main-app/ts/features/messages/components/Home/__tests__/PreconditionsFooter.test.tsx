@@ -1,8 +1,8 @@
+import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryBase";
 import { fireEvent } from "@testing-library/react-native";
 import { constUndefined } from "fp-ts/lib/function";
 import { createStore } from "redux";
 
-import { TagEnum } from "../../../../../../definitions/communication/MessageCategoryBase";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";

@@ -1,3 +1,5 @@
+import { TransactionBarCodeResponse } from "@io-app/api-types/generated/definitions/idpay/TransactionBarCodeResponse";
+import { TransactionErrorDTO } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
 import {
   Body,
   bodyFontSize,
@@ -22,8 +24,6 @@ import { JSX } from "react";
 import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 
-import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
-import { TransactionErrorDTO } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";

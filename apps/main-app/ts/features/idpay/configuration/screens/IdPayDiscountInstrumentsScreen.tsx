@@ -1,3 +1,4 @@
+import { InstrumentTypeEnum } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import { Divider } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
@@ -9,7 +10,6 @@ import {
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
-import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";

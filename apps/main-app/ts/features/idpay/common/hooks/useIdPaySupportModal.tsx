@@ -1,4 +1,5 @@
-import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {

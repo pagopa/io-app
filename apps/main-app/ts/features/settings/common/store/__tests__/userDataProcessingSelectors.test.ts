@@ -1,6 +1,6 @@
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/identity/UserDataProcessingChoice";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   isUserDataProcessingDeleteErrorSelector,

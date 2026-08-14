@@ -1,3 +1,4 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import {
   AccordionItem,
   Banner,
