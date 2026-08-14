@@ -33,12 +33,7 @@ import {
 import { useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-import {
-  ContextualHelpProps,
-  ContextualHelpPropsMarkdown
-} from "../../../utils/contextualHelp";
 import { isTestEnv } from "../../../utils/environment";
-import { FAQsCategoriesType } from "../../../utils/faq";
 import {
   BarcodeAnalyticsFlow,
   trackBarcodeCameraAuthorizationDenied,
@@ -60,9 +55,6 @@ import {
 import { CameraPermissionView } from "./CameraPermissionView";
 
 type HelpProps = {
-  contextualHelp?: ContextualHelpProps;
-  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   hideHelpButton?: boolean;
 };
 
@@ -120,9 +112,6 @@ const BarcodeScanBaseScreenComponent = ({
   onManualInputPressed,
   isLoading = false,
   isDisabled = false,
-  faqCategories,
-  contextualHelp,
-  contextualHelpMarkdown,
   hideHelpButton,
   barcodeAnalyticsFlow
 }: Props) => {
@@ -138,13 +127,7 @@ const BarcodeScanBaseScreenComponent = ({
   const canShowHelp = useIOSelector(canShowHelpSelector);
 
   /* Taken from `useHeaderSecondLevel` */
-  const startSupportRequest = useOfflineToastGuard(
-    useStartSupportRequest({
-      faqCategories,
-      contextualHelpMarkdown,
-      contextualHelp
-    })
-  );
+  const startSupportRequest = useOfflineToastGuard(useStartSupportRequest());
 
   /**
    * Updates the app state when it changes.
