@@ -7,8 +7,6 @@ import { ComponentProps, useCallback, useMemo } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
-import { FAQsCategoriesType } from "../../../../utils/faq";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import {
   hasProfileEmailSelector,
@@ -18,17 +16,6 @@ import {
 } from "../../common/store/selectors";
 
 type EndElementProps = ComponentProps<typeof ListItemInfo>["endElement"];
-
-const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
-  "profile",
-  "privacy",
-  "authentication_SPID"
-];
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.contextualHelpTitle",
-  body: "profile.preferences.contextualHelpContent"
-};
 
 const ProfileDataScreen = () => {
   const { navigate } = useIONavigation();
@@ -91,9 +78,7 @@ const ProfileDataScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelpMarkdown={contextualHelpMarkdown}
       description={I18n.t("profile.data.subtitle")}
-      faqCategories={FAQ_CATEGORIES}
       headerActionsProp={{ showHelp: true }}
       title={{
         label: I18n.t("profile.data.title")

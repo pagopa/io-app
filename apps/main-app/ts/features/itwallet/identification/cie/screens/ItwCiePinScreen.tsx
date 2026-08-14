@@ -22,7 +22,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { isCieLoginUatEnabledSelector } from "../../../../authentication/login/cie/store/selectors";
@@ -32,11 +31,6 @@ import { trackItWalletCiePinEnter } from "../../analytics";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
 const CIE_PIN_LENGTH = 8;
-
-const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
-  title: "authentication.cie.pin.contextualHelpTitle",
-  body: "authentication.cie.pin.contextualHelpBody"
-});
 
 export const ItwCiePinScreen = () => {
   usePreventScreenCapture();
@@ -75,8 +69,7 @@ export const ItwCiePinScreen = () => {
 
   useHeaderSecondLevel({
     title: withTrailingPoliceCarLightEmojii("", useCieUat),
-    supportRequest: true,
-    contextualHelpMarkdown: getContextualHelp()
+    supportRequest: true
   });
 
   const onPinChanged = (value: string) => {

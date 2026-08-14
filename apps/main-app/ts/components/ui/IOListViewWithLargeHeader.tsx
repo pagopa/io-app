@@ -38,9 +38,6 @@ export const IOListViewWithLargeHeader = <T,>({
   actions,
   goBack,
   canGoback = true,
-  contextualHelp,
-  contextualHelpMarkdown,
-  faqCategories,
   ignoreSafeAreaMargin = false,
   refreshControlProps,
   includeContentMargins = true,
@@ -66,9 +63,6 @@ export const IOListViewWithLargeHeader = <T,>({
 
   const headerPropsWithoutGoBack = {
     title: title.label,
-    contextualHelp,
-    contextualHelpMarkdown,
-    faqCategories,
     ...headerActionsProp
   };
 
