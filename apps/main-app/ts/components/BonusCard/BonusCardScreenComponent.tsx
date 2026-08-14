@@ -10,7 +10,6 @@ import Animated, { useAnimatedRef } from "react-native-reanimated";
 
 import { useDetectSmallScreen } from "../../hooks/useDetectSmallScreen";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import { useIOSelector } from "../../store/hooks";
 import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences";
 import { IOScrollView, IOScrollViewActions } from "../ui/IOScrollView";
@@ -24,8 +23,7 @@ export type BonusCardColorSchemeValues = {
 };
 
 export type BonusScreenComponentProps = BaseProps &
-  Exclude<BonusCard, "cardSpecificColors"> &
-  SupportRequestParams;
+  Exclude<BonusCard, "cardSpecificColors">;
 
 type BaseProps = {
   actions?: IOScrollViewActions;
@@ -57,9 +55,6 @@ const BonusCardScreenComponent = ({
   title,
   headerAction,
   actions,
-  faqCategories,
-  contextualHelpMarkdown,
-  contextualHelp,
   children,
   cardColors,
   ...cardProps
@@ -80,9 +75,6 @@ const BonusCardScreenComponent = ({
     transparent: !screenReaderEnabled,
     supportRequest: true,
     backgroundColor: cardColorSchemeValues.background,
-    faqCategories,
-    contextualHelpMarkdown,
-    contextualHelp,
     secondAction: headerAction,
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef,

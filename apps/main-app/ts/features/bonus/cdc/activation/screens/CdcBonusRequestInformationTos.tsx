@@ -4,7 +4,6 @@ import { useRef } from "react";
 
 import { useIOSelector } from "../../../../../store/hooks";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
-import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import { getDeviceId } from "../../../../../utils/device";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
@@ -49,7 +48,6 @@ const CdcBonusRequestInformationTos = () => {
   return (
     <BonusInformationComponent
       bonus={cdcInfo}
-      contextualHelp={emptyContextualHelp}
       imageStyle={{
         aspectRatio: 2,
         resizeMode: "contain",

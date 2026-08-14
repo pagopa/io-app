@@ -70,7 +70,6 @@ const PaymentsOnboardingSelectMethodScreen = () => {
       description={I18n.t(
         "wallet.onboarding.paymentMethodsList.header.subtitle"
       )}
-      faqCategories={["wallet", "wallet_methods"]}
       headerActionsProp={{
         showHelp: true
       }}
