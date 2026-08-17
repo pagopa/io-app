@@ -1,9 +1,9 @@
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as S from "fp-ts/lib/string";
 import * as t from "io-ts";
 import { getType } from "typesafe-actions";
 
-import { MessageCategory } from "../../../../definitions/communication/MessageCategory";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { pageSize } from "../../../config";
 import {
   enqueueMixpanelEvent,
@@ -85,6 +85,12 @@ export const trackOpenMessage = (
     fci_message_type: fciMessageType,
     fci_result: fciResult
   });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackMessageNotFoundScreen = () => {
+  const eventName = "MESSAGE_NOT_AVAILABLE";
+  const props = buildEventProperties("KO", "screen_view");
   void mixpanelTrack(eventName, props);
 };
 

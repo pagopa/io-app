@@ -2,10 +2,15 @@ import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import * as LoginUtils from "@pagopa/io-react-native-login-utils";
 import { testSaga } from "redux-saga-test-plan";
 
+import { fimsTrackingEnrichedUrlsSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
+import { getDeviceId } from "../../../../../utils/device";
 import { fimsSignAndRetrieveInAppBrowserUrlAction } from "../../store/actions";
 import { fimsEphemeralSessionOniOSSelector } from "../../store/selectors";
+import { enrichFimsDestinationUrl } from "../../utils";
 import {
   computeAndTrackInAppBrowserOpening,
+  enrichFimsRedirectUrl,
   handleFimsAuthorizationOrImplicitCodeFlow,
   handleInAppBrowserErrorIfNeeded,
   postToRelyingPartyWithImplicitCodeFlow,
@@ -50,6 +55,11 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
+        .call(
+          enrichFimsRedirectUrl,
+          "https://relyingParty.url/inAppBrowserLandingPage"
+        )
+        .next("https://relyingParty.url/inAppBrowserLandingPage")
         .select(fimsEphemeralSessionOniOSSelector)
         .next(false)
         .call(
@@ -93,6 +103,11 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
+        .call(
+          enrichFimsRedirectUrl,
+          "https://relyingParty.url/inAppBrowserLandingPage"
+        )
+        .next("https://relyingParty.url/inAppBrowserLandingPage")
         .select(fimsEphemeralSessionOniOSSelector)
         .next(true)
         .call(
@@ -235,6 +250,11 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .call(computeAndTrackInAppBrowserOpening)
         .next()
+        .call(
+          enrichFimsRedirectUrl,
+          "https://relyingParty.url/inAppBrowserLandingPage"
+        )
+        .next("https://relyingParty.url/inAppBrowserLandingPage")
         .select(fimsEphemeralSessionOniOSSelector)
         .next(false)
         .call(
@@ -250,5 +270,50 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .next()
         .isDone();
     });
+  });
+});
+
+describe("enrichFimsRedirectUrl", () => {
+  const redirectUrl = "https://trusted.test/callback";
+
+  it("should return the redirect URL when Mixpanel is disabled", () => {
+    testSaga(enrichFimsRedirectUrl, redirectUrl)
+      .next()
+      .select(fimsTrackingEnrichedUrlsSelector)
+      .next([redirectUrl])
+      .select(isMixpanelEnabled)
+      .next(false)
+      .returns(redirectUrl)
+      .next()
+      .isDone();
+  });
+
+  it("should return the redirect URL when the allowlist is empty", () => {
+    testSaga(enrichFimsRedirectUrl, redirectUrl)
+      .next()
+      .select(fimsTrackingEnrichedUrlsSelector)
+      .next([])
+      .select(isMixpanelEnabled)
+      .next(true)
+      .returns(redirectUrl)
+      .next()
+      .isDone();
+  });
+
+  it("should enrich an allowed redirect URL", () => {
+    const deviceId = "mixpanel-device-id";
+    testSaga(enrichFimsRedirectUrl, redirectUrl)
+      .next()
+      .select(fimsTrackingEnrichedUrlsSelector)
+      .next([redirectUrl])
+      .select(isMixpanelEnabled)
+      .next(true)
+      .call(getDeviceId)
+      .next(deviceId)
+      .call(enrichFimsDestinationUrl, redirectUrl, [redirectUrl], deviceId)
+      .next(`${redirectUrl}?mixpanelId=${deviceId}`)
+      .returns(`${redirectUrl}?mixpanelId=${deviceId}`)
+      .next()
+      .isDone();
   });
 });

@@ -28,6 +28,7 @@ import authenticationReducer, {
   INITIAL_STATE as authenticationInitialState,
   AuthenticationState
 } from "../../features/authentication/common/store/reducers";
+import { loginConfigInitialState } from "../../features/authentication/common/store/reducers/loginConfig";
 import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
@@ -227,7 +228,6 @@ export function createRootReducer(
             crossSessions: state.crossSessions,
             // data should be kept across multiple sessions
             entities: {
-              organizations: state.entities.organizations,
               paymentByRptId: state.entities.paymentByRptId,
               calendarEvents: state.entities.calendarEvents,
               _persist: state.entities._persist
@@ -267,6 +267,10 @@ export function createRootReducer(
                     state.features.loginFeatures.cieLogin
                       .isCieIDTourGuideEnabled,
                   _persist: state.features.loginFeatures.cieLogin._persist
+                },
+                loginConfig: {
+                  ...loginConfigInitialState,
+                  _persist: state.features.loginFeatures.loginConfig._persist
                 },
                 activeSessionLogin: {
                   ...activeSessionLoginInitialState,

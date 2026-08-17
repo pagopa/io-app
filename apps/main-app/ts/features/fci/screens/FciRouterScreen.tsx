@@ -1,3 +1,5 @@
+import { ProblemJson } from "@io-app/api-types/generated/definitions/fci/ProblemJson";
+import { SignatureRequestDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -6,12 +8,9 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ReactElement, useEffect } from "react";
 
-import { ProblemJson } from "../../../../definitions/fci/ProblemJson";
-import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
+import { withAppRequiredUpdate } from "../../../components/helpers/withAppRequiredUpdate";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isFciEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { isTestEnv } from "../../../utils/environment";
 import {
   getErrorFromNetworkError,
   getGenericError,
@@ -34,36 +33,22 @@ import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureReque
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
+  // Used on retry only on status != WAIT_FOR_SIGNATURE
+  skipInitialFetch?: boolean;
 }>;
 
 const FciSignatureScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
 ): ReactElement => {
-  // TODO: add a check to validate signatureRequestId using io-ts
-  // https://pagopa.atlassian.net/browse/SFEQS-1705?atlOrigin=eyJpIjoiOWY2NDA4YmQ0ZTQ0NGRjZTk5MGNlZDczZGIxMDllMmIiLCJwIjoiaiJ9
-  const signatureRequestId = props.route.params.signatureRequestId;
+  const { signatureRequestId, skipInitialFetch } = props.route.params;
   const dispatch = useIODispatch();
   const fciSignatureRequest = useIOSelector(fciSignatureRequestSelector);
-  const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
-  const fciEnabled = isTestEnv || fciEnabledSelector;
 
   useEffect(() => {
-    if (fciEnabled) {
+    if (!skipInitialFetch) {
       dispatch(fciSignatureRequestFromId.request(signatureRequestId));
     }
-  }, [dispatch, signatureRequestId, fciEnabled]);
-
-  if (!fciEnabled) {
-    return (
-      <SignatureStatusComponent
-        onPress={() => dispatch(fciEndRequest())}
-        pictogram={"umbrella"}
-        subTitle={I18n.t("features.fci.errors.generic.update.subTitle")}
-        testID="GenericErrorComponentTestID"
-        title={I18n.t("features.fci.errors.generic.update.title")}
-      />
-    );
-  }
+  }, [dispatch, signatureRequestId, skipInitialFetch]);
 
   const LoadingView = () => (
     <LoadingComponent testID={"FciRouterLoadingScreenTestID"} />
@@ -140,4 +125,4 @@ const FciSignatureScreen = (
   );
 };
 
-export default FciSignatureScreen;
+export default withAppRequiredUpdate(FciSignatureScreen, "fci");

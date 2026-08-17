@@ -6,6 +6,7 @@ import {
   isAssertionGenerationError,
   isFederationError
 } from "../../common/utils/itwFailureUtils.ts";
+import { InvalidTslCredentialStatus } from "../../statusList/utils/errors.ts";
 import { CredentialIssuanceEvents } from "./events";
 
 const {
@@ -16,7 +17,8 @@ const {
 
 export enum CredentialIssuanceFailureType {
   HARDWARE_KEY_INVALID = "HARDWARE_KEY_INVALID",
-  INVALID_STATUS = "INVALID_STATUS",
+  INVALID_STATUS_BY_ASSERTION = "INVALID_STATUS_BY_ASSERTION",
+  INVALID_STATUS_BY_TSL = "INVALID_STATUS_BY_TSL",
   ISSUER_GENERIC = "ISSUER_GENERIC",
   UNEXPECTED = "UNEXPECTED",
   UNTRUSTED_ISS = "UNTRUSTED_ISS",
@@ -34,7 +36,8 @@ export type CredentialIssuanceFailure =
  */
 export type ReasonTypeByFailure = {
   [CredentialIssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
-  [CredentialIssuanceFailureType.INVALID_STATUS]: WithCredentialMetadata<Errors.IssuerResponseError>;
+  [CredentialIssuanceFailureType.INVALID_STATUS_BY_ASSERTION]: WithCredentialMetadata<Errors.IssuerResponseError>;
+  [CredentialIssuanceFailureType.INVALID_STATUS_BY_TSL]: WithCredentialMetadata<InvalidTslCredentialStatus>;
   [CredentialIssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
   [CredentialIssuanceFailureType.UNEXPECTED]: unknown;
   [CredentialIssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
@@ -74,9 +77,16 @@ export const mapEventToFailure = (
     };
   }
 
+  if (error instanceof InvalidTslCredentialStatus) {
+    return {
+      type: CredentialIssuanceFailureType.INVALID_STATUS_BY_TSL,
+      reason: error
+    };
+  }
+
   if (isIssuerResponseError(error, Codes.CredentialInvalidStatus)) {
     return {
-      type: CredentialIssuanceFailureType.INVALID_STATUS,
+      type: CredentialIssuanceFailureType.INVALID_STATUS_BY_ASSERTION,
       reason: error
     };
   }

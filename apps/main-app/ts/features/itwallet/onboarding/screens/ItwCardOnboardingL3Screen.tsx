@@ -25,7 +25,6 @@ import {
   useIONavigation
 } from "../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { openWebUrl } from "../../../../utils/url.ts";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation.ts";
 import {
@@ -40,10 +39,8 @@ import {
 } from "../../analytics";
 import { PoweredByItWalletText } from "../../common/components/PoweredByItWalletText.tsx";
 import { selectItwEnv } from "../../common/store/selectors/environment.ts";
-import {
-  itwIsActivationDisabledSelector,
-  itwIsL3EnabledSelector
-} from "../../common/store/selectors/preferences.ts";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/index.ts";
+import { itwIsActivationDisabledSelector } from "../../common/store/selectors/preferences.ts";
 import {
   isL2Credential,
   isUpcomingCredential
@@ -84,8 +81,6 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelp={emptyContextualHelp}
-      faqCategories={["wallet", "wallet_methods"]}
       headerActionsProp={{ showHelp: true }}
       title={{
         label: I18n.t("features.wallet.onboarding.title")

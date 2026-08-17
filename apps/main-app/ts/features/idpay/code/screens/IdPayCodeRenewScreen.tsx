@@ -10,7 +10,6 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { identificationRequest } from "../../../identification/store/actions";
 import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
 import { IdPayCodeRoutes } from "../navigation/routes";
@@ -53,13 +52,11 @@ export const IdPayCodeRenewScreen = () => {
   useHeaderSecondLevel({
     title: "",
     canGoBack: true,
-    contextualHelp: emptyContextualHelp,
     supportRequest: true
   });
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelp={emptyContextualHelp}
       description={I18n.t("idpay.code.renew.screen.body")}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins

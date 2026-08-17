@@ -53,7 +53,6 @@ export const ItwAlreadyActiveScreen = () => {
         ),
         onPress: navigateToWallet
       }}
-      isHeaderVisible={false}
       pictogram="itWallet"
       secondaryAction={{
         label: I18n.t("global.buttons.close"),

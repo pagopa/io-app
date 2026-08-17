@@ -1,4 +1,4 @@
-import { Body, VSpacer } from "@io-app/design-system";
+import { Body, FooterActions, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 
 import {
@@ -6,10 +6,17 @@ import {
   OperationResultScreenContentProps
 } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
+import { useIOSelector } from "../../../../../store/hooks.ts";
+import { generateDynamicUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig.ts";
+import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../../urls.ts";
+import { isDefined } from "../../../../../utils/guards.ts";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
+import { openWebUrl } from "../../../../../utils/url.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
+import { itwCredentialTypeFromDocTypeSelector } from "../../../credentialsCatalogue/store/selectors/index.ts";
+import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent.tsx";
 import { trackItwProximityUnofficialVerifierBottomSheet } from "../analytics/index.ts";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure.ts";
@@ -29,10 +36,22 @@ type ContentViewProps = { failure: ProximityFailure };
 
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwProximityMachineContext.useActorRef();
+  const getCredentialTypeFromDocType = useIOSelector(
+    itwCredentialTypeFromDocTypeSelector
+  );
+  const faqUrl = useIOSelector(state =>
+    generateDynamicUrlSelector(
+      state,
+      "io_showcase",
+      DOCUMENTS_ON_IO_FAQ_12_URL_BODY
+    )
+  );
 
   useDebugInfo({
     failure: serializeFailureReason(failure)
   });
+
+  useItwProximityEventsTracking({ failure });
 
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: (
@@ -47,6 +66,17 @@ const ContentView = ({ failure }: ContentViewProps) => {
     ),
     title: I18n.t(
       "features.itWallet.presentation.proximity.relyingParty.untrustedRp.bottomSheet.title"
+    ),
+    footer: (
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("global.buttons.findOutMore"),
+            onPress: () => openWebUrl(faqUrl)
+          }
+        }}
+      />
     )
   });
 
@@ -85,16 +115,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
               onPress: () => machineRef.send({ type: "close" })
             }
           };
-        case ProximityFailureType.UNEXPECTED:
-          return {
-            title: I18n.t("features.itWallet.generic.error.title"),
-            subtitle: I18n.t("features.itWallet.generic.error.body"),
-            pictogram: "workInProgress",
-            action: {
-              label: I18n.t("global.buttons.close"),
-              onPress: () => machineRef.send({ type: "close" })
-            }
-          };
         case ProximityFailureType.UNTRUSTED_RP:
           return {
             title: I18n.t(
@@ -120,12 +140,32 @@ const ContentView = ({ failure }: ContentViewProps) => {
               }
             }
           };
+        case ProximityFailureType.UNEXPECTED:
+        default:
+          return {
+            title: I18n.t("features.itWallet.generic.error.title"),
+            subtitle: I18n.t("features.itWallet.generic.error.body"),
+            pictogram: "workInProgress",
+            action: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
       }
     };
 
-  useItwProximityEventsTracking({ failure });
-
   const resultScreenProps = getOperationResultScreenContentProps();
+
+  if (failure.type === ProximityFailureType.MISSING_CREDENTIALS) {
+    return (
+      <ItwPresentationMissingCredentialsFailureContent
+        missingCredentials={failure.reason.credentialsDocType
+          .map(getCredentialTypeFromDocType)
+          .filter(isDefined)}
+        onClose={() => machineRef.send({ type: "close" })}
+      />
+    );
+  }
 
   return (
     <>

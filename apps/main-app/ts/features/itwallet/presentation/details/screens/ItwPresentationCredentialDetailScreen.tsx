@@ -7,7 +7,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import I18n from "i18next";
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
@@ -18,17 +18,16 @@ import {
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import { identificationRequest } from "../../../../identification/store/actions";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { trackCredentialRenewStart } from "../../../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText.tsx";
-import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
-import {
-  itwIsL3EnabledSelector,
-  itwIsPendingReviewSelector
-} from "../../../common/store/selectors/preferences.ts";
+import { isItwProximityEnabledSelector } from "../../../common/store/selectors";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors/index.ts";
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
@@ -85,7 +84,6 @@ type Props = IOStackNavigationRouteProps<
  */
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const navigation = useIONavigation();
-  const dispatch = useIODispatch();
   const { credentialType } = route.params;
 
   const isL3 = useIOSelector(itwIsL3EnabledSelector);
@@ -103,24 +101,8 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const credentialOption = useIOSelector(
     itwCredentialSelector(normalizedCredentialType)
   );
-  const isPendingReview = useIOSelector(itwIsPendingReviewSelector);
 
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      /* The initial state of isPendingReview is undefined,
-       * it means the driving license detail has never been viewed.
-       * It is set to true only the first time the driving license detail is viewed.
-       */
-      if (
-        normalizedCredentialType === CredentialType.DRIVING_LICENSE &&
-        isPendingReview === undefined
-      ) {
-        dispatch(itwSetReviewPending(true));
-      }
-    }, [normalizedCredentialType, isPendingReview, dispatch])
-  );
 
   if (!isWalletValid) {
     return (
@@ -195,6 +177,10 @@ export const ItwPresentationCredentialDetail = ({
 
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
+  const isConnected = useIOSelector(isConnectedSelector);
+  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+  const isOffline = offlineAccessReason !== undefined || !isConnected;
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -284,7 +270,7 @@ export const ItwPresentationCredentialDetail = ({
       };
     }
 
-    if (itwFeaturesEnabled && isPresentableCredential) {
+    if ((isProximityEnabled || isOffline) && isPresentableCredential) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.present"),
         icon: "productITWallet",
@@ -324,9 +310,10 @@ export const ItwPresentationCredentialDetail = ({
   }, [
     credential.credentialType,
     shouldShowMdlUpdateCta,
-    itwFeaturesEnabled,
     isL3Credential,
     isPresentableCredential,
+    isProximityEnabled,
+    isOffline,
     contentClaim,
     navigation,
     mixPanelCredential,

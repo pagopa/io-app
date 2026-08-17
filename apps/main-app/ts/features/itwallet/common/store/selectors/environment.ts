@@ -1,13 +1,29 @@
+import { CieIdEnvironment } from "@pagopa/io-react-native-cieid";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
 import { GlobalState } from "../../../../../store/reducers/types";
 import { itwCredentialsEidSelector } from "../../../credentials/store/selectors";
-import { itwIsL3EnabledSelector } from "./preferences";
+import { itwIsL3EnabledSelector } from "./index";
 
 export const selectItwEnv = (state: GlobalState) =>
   state.features.itWallet.environment.env ?? "prod";
+
+/**
+ * The CieID app environment that the app-to-app flow must target.
+ *
+ * The IT-Wallet pre-production environment is paired with the `coll` CieID app
+ * (`it.ipzs.cieid.coll`, a different Android package name), otherwise the
+ * production CieID app would authenticate against production IdP endpoints,
+ * which are not compatible with the pre-production IT-Wallet ecosystem.
+ *
+ * Note that this is not the `preprod` CieID environment
+ * (`it.ipzs.cieid.collaudo`), which is only used by the CIE login UAT flag.
+ */
+export const selectItwCieIdEnvironment = (
+  state: GlobalState
+): CieIdEnvironment => (selectItwEnv(state) === "pre" ? "coll" : "production");
 
 /**
  * Select the IT-Wallet specification version depending on the user configuration.

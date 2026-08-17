@@ -26,9 +26,6 @@ import identificationReducer, {
 import issuanceReducer, {
   ItwIssuanceState
 } from "../../../issuance/store/reducers";
-import itwDebugReducer, {
-  ItwDebugState
-} from "../../../playgrounds/store/reducer";
 import itwProximityReducer, {
   ItwProximityState
 } from "../../../presentation/proximity/store/reducers";
@@ -46,7 +43,6 @@ export type ItWalletState = {
   banners: ItwBannersState;
   credentials: ItwCredentialsState & PersistPartial;
   credentialsCatalogue: ItwCredentialsCatalogueState;
-  debug: ItwDebugState;
   environment: ItwEnvironmentState;
   identification: ItwIdentificationState;
   issuance: ItwIssuanceState & PersistPartial;
@@ -68,11 +64,10 @@ const itwReducer = combineReducers({
   securePreferences: securePreferencesReducer,
   credentialsCatalogue: itwCredentialsCatalogueReducer,
   proximity: itwProximityReducer,
-  banners: bannersReducer,
-  debug: itwDebugReducer
+  banners: bannersReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 16;
+const CURRENT_REDUX_ITW_STORE_VERSION = 18;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -188,7 +183,12 @@ export const migrations: MigrationManifest = {
     _.omit(state, "preferences.isItwSimplifiedActivationRequired"),
   // Removed itWalletSpecsVersion from environment
   "16": (state: PersistedState): PersistedState =>
-    _.omit(state, "environment.itWalletSpecsVersion")
+    _.omit(state, "environment.itWalletSpecsVersion"),
+  // Removed isPendingReview from preferences
+  "17": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.isPendingReview"),
+  // Removed the duplicated playground credential status state
+  "18": (state: PersistedState): PersistedState => _.omit(state, "debug")
 };
 
 const itwPersistConfig: PersistConfig = {
@@ -198,8 +198,7 @@ const itwPersistConfig: PersistConfig = {
     "preferences",
     "environment",
     "credentialsCatalogue",
-    "banners",
-    "debug"
+    "banners"
   ] satisfies Array<keyof ItWalletState>,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })

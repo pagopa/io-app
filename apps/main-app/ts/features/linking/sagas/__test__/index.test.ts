@@ -1,9 +1,8 @@
-import { CommonActions } from "@react-navigation/native";
 import { testSaga } from "redux-saga-test-plan";
 
 import { handleStoredLinkingUrlIfNeeded } from "..";
-import NavigationService from "../../../../navigation/NavigationService";
-import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
+import { waitForMainNavigator } from "../../../../navigation/saga/navigation";
+import { handleItwStoredDeepLink } from "../../../itwallet/common/saga/linking";
 import { initiateAarFlow } from "../../../pn/aar/store/actions";
 import { isSendAarLink } from "../../../pn/aar/utils/deepLinking";
 import { clearLinkingUrl } from "../../actions";
@@ -11,8 +10,10 @@ import { storedLinkingUrlSelector } from "../../reducers";
 
 describe("handleStoredLinkingUrlIfNeeded", () => {
   const aarUrl = "https://example.com/aar";
-  const credentialOfferUrl =
-    "openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fissuer.example.com%22%7D";
+  const itwDiscoveryUrl = "https://continua.io.pagopa.it/itw/discovery/info";
+  const itwDiscoveryDeepLink = {
+    path: "itw/discovery/info"
+  };
 
   it("should navigate to the AAR screen and clear the linking url state when there is a valid AAR url returned by the linking selector", () => {
     testSaga(handleStoredLinkingUrlIfNeeded)
@@ -44,25 +45,33 @@ describe("handleStoredLinkingUrlIfNeeded", () => {
       .isDone();
   });
 
-  it("should navigate to the credential offer intro and clear the linking url state when there is a credential offer URL", () => {
+  it("should hand off a queued ITW deeplink after the main navigator is ready", () => {
     testSaga(handleStoredLinkingUrlIfNeeded)
       .next()
       .select(storedLinkingUrlSelector)
-      .next(credentialOfferUrl)
-      .select(isSendAarLink, credentialOfferUrl)
+      .next(itwDiscoveryUrl)
+      .select(isSendAarLink, itwDiscoveryUrl)
       .next(false)
+      .call(waitForMainNavigator)
+      .next()
+      .call(handleItwStoredDeepLink, itwDiscoveryDeepLink)
+      .next(true)
       .put(clearLinkingUrl())
       .next()
-      .call(
-        NavigationService.dispatchNavigationAction,
-        CommonActions.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
-          params: {
-            itwCredentialOfferUri: credentialOfferUrl
-          }
-        })
-      )
-      .next()
       .returns(true);
+  });
+
+  it("should preserve a queued ITW deeplink when navigation cannot be created", () => {
+    testSaga(handleStoredLinkingUrlIfNeeded)
+      .next()
+      .select(storedLinkingUrlSelector)
+      .next(itwDiscoveryUrl)
+      .select(isSendAarLink, itwDiscoveryUrl)
+      .next(false)
+      .call(waitForMainNavigator)
+      .next()
+      .call(handleItwStoredDeepLink, itwDiscoveryDeepLink)
+      .next(false)
+      .isDone();
   });
 });

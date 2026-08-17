@@ -1,9 +1,9 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Alert } from "react-native";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   fold,
   isLoading as isRemoteLoading
@@ -44,7 +44,6 @@ const useCgnActivation = (serviceId: ServiceId) => {
         () => IOToast.error(I18n.t("wallet.delete.failed"))
       );
     }
-    // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
   }, [unsubscriptionStatus, dispatch, serviceId]);
 

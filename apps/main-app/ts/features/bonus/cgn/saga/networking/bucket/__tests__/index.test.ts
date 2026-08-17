@@ -1,8 +1,8 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { testSaga } from "redux-saga-test-plan";
 
 import { cgnBucketConsuption } from "..";
-import { Discount } from "../../../../../../../../definitions/cgn/merchants/Discount";
 import { getGenericError } from "../../../../../../../utils/errors";
 import { cgnCodeFromBucket } from "../../../../store/actions/bucket";
 import { setMerchantDiscountCode } from "../../../../store/actions/merchants";

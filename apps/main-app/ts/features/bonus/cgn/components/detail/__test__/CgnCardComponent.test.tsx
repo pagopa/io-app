@@ -1,15 +1,15 @@
+import { Card } from "@io-app/api-types/generated/definitions/cgn/Card";
+import { StatusEnum as CgnActivatedStatusEnum } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
+import { StatusEnum as CgnExpiredStatusEnum } from "@io-app/api-types/generated/definitions/cgn/CardExpired";
+import { StatusEnum as CgnPendingStatusEnum } from "@io-app/api-types/generated/definitions/cgn/CardPending";
+import {
+  CardRevoked,
+  StatusEnum as CgnRevokedStatusEnum
+} from "@io-app/api-types/generated/definitions/cgn/CardRevoked";
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 
-import { Card } from "../../../../../../../definitions/cgn/Card";
-import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
-import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definitions/cgn/CardExpired";
-import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CardPending";
-import {
-  CardRevoked,
-  StatusEnum as CgnRevokedStatusEnum
-} from "../../../../../../../definitions/cgn/CardRevoked";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";

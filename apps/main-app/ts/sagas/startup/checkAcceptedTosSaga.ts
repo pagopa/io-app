@@ -1,8 +1,8 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import { StackActions } from "@react-navigation/native";
 import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
-import { InitializedProfile } from "../../../definitions/identity/InitializedProfile";
 import { tosAccepted } from "../../features/onboarding/store/actions";
 import { profileUpsert } from "../../features/settings/common/store/actions";
 import { isProfileFirstOnBoarding } from "../../features/settings/common/store/utils/guards";

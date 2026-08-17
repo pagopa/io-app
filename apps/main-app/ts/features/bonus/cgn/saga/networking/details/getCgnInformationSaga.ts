@@ -1,8 +1,8 @@
+import { StatusEnum } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { StatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../../authentication/fastLogin/saga/utils";

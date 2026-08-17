@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { useIOThemeContext } from "@io-app/design-system";
 import {
   Canvas,

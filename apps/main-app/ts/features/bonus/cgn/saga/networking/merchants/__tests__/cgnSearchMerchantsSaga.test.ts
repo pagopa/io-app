@@ -1,8 +1,8 @@
+import { SearchResult } from "@io-app/api-types/generated/definitions/cgn/merchants/SearchResult";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
 
-import { SearchResult } from "../../../../../../../../definitions/cgn/merchants/SearchResult";
 import { getGenericError } from "../../../../../../../utils/errors";
 import { cgnSearchMerchants } from "../../../../store/actions/merchants";
 import { cgnSearchMerchantsSaga } from "../cgnSearchMerchantsSaga";

@@ -1,10 +1,10 @@
+import { DiscountCodeTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountCodeType";
+import { OnlineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchants";
+import { ProductCategoryEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
 
-import { DiscountCodeTypeEnum } from "../../../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { OnlineMerchants } from "../../../../../../../../definitions/cgn/merchants/OnlineMerchants";
-import { ProductCategoryEnum } from "../../../../../../../../definitions/cgn/merchants/ProductCategory";
 import { getGenericError } from "../../../../../../../utils/errors";
 import { cgnOnlineMerchants } from "../../../../store/actions/merchants";
 import { cgnOnlineMerchantsSaga } from "../cgnOnlineMerchantsSaga";

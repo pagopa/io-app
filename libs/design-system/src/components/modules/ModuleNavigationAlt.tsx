@@ -88,7 +88,7 @@ export const ModuleNavigationAlt = (
   );
 
   const imageComponent = () => {
-    if (!image) {
+    if (image == null) {
       return null;
     }
 
@@ -153,7 +153,6 @@ export const ModuleNavigationAlt = (
             <View>
               <BodySmall
                 color={theme["interactiveElem-default"]}
-                lineBreakMode="middle"
                 numberOfLines={2}
                 style={{ flexShrink: 1 }}
                 weight="Semibold"

@@ -1,7 +1,7 @@
+import { TypeEnum as ClauseTypeEnum } from "@io-app/api-types/generated/definitions/fci/Clause";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 
-import { TypeEnum as ClauseTypeEnum } from "../../../../../definitions/fci/Clause";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getNetworkErrorMessage, NetworkError } from "../../../../utils/errors";
@@ -78,7 +78,6 @@ const FciThankyouScreen = () => {
         label: I18n.t("features.fci.thankYouPage.cta"),
         testID: "FciTypCloseButton"
       }}
-      isHeaderVisible={false}
       pictogram={"success"}
       subtitle={I18n.t("features.fci.thankYouPage.content")}
       testID={"FciTypSuccessTestID"}

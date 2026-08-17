@@ -24,7 +24,8 @@ import {
   CREDENTIAL_STATUS_MAP,
   ItwCredentialMixpanelStatus,
   ItwStatus,
-  ItwThirdPartyCredentials
+  ItwThirdPartyCredentials,
+  ItwWalletListCredential
 } from "../utils/types";
 import { ItwBaseProperties } from "./propertyTypes";
 
@@ -44,6 +45,7 @@ export const buildItwBaseProperties = (
       itwLifecycleIsITWalletValidSelector(state)
     ),
     ITW_THIRD_PARTY_CREDENTIAL: buildThirdPartyCredentialProperty(state),
+    ITW_WALLET_LIST_CREDENTIAL: buildWalletListCredentialProperty(state),
     ...pidProps,
     ...credentialProps
   };
@@ -190,6 +192,27 @@ export const buildThirdPartyCredentialProperty = (
     : "not_valid";
 };
 
+export const buildWalletListCredentialProperty = (
+  state: GlobalState
+): ItwWalletListCredential => {
+  const catalogueByType = itwCredentialsCatalogueByTypesSelector(state);
+
+  const walletListCredentials = Object.values(
+    itwCredentialsSelector(state)
+  ).filter(({ credentialType }) =>
+    isWalletListCredentialType(credentialType, catalogueByType)
+  );
+
+  if (walletListCredentials.length === 0) {
+    return "not_available";
+  }
+
+  return walletListCredentials.some(credential =>
+    validCredentialStatuses.includes(getCredentialStatus(credential))
+  )
+    ? "valid"
+    : "not_valid";
+};
 const isThirdPartyCredentialType = (
   credentialType: string,
   catalogueByType: ReturnType<typeof itwCredentialsCatalogueByTypesSelector>
@@ -198,3 +221,10 @@ const isThirdPartyCredentialType = (
   !isL2Credential(credentialType) &&
   (isNewCredential(credentialType) ||
     catalogueByType?.[credentialType] !== undefined);
+const isWalletListCredentialType = (
+  credentialType: string,
+  catalogueByType: ReturnType<typeof itwCredentialsCatalogueByTypesSelector>
+) =>
+  credentialType !== CredentialType.PID &&
+  !isL2Credential(credentialType) &&
+  catalogueByType?.[credentialType] !== undefined;

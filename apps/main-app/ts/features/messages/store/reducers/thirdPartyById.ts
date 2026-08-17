@@ -1,11 +1,11 @@
+import { HasPreconditionEnum } from "@io-app/api-types/generated/definitions/communication/HasPrecondition";
+import { RemoteContentDetails } from "@io-app/api-types/generated/definitions/communication/RemoteContentDetails";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
 
-import { HasPreconditionEnum } from "../../../../../definitions/communication/HasPrecondition";
-import { RemoteContentDetails } from "../../../../../definitions/communication/RemoteContentDetails";
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
 import {
@@ -126,6 +126,9 @@ export const hasAttachmentsSelector = (
   ioMessageId: string
 ) => thirdPartyMessageAttachmentsSelector(state, ioMessageId).length > 0;
 
+// caching here is necessary to avoid creating a new array on every call, thus resulting in unnecessary re-renders
+const emptyArray: ReadonlyArray<ThirdPartyAttachment> = [];
+
 export const thirdPartyMessageAttachmentsSelector = (
   state: GlobalState,
   ioMessageId: string
@@ -133,7 +136,7 @@ export const thirdPartyMessageAttachmentsSelector = (
   const messagePot = thirdPartyFromIdSelector(state, ioMessageId);
   const attachments =
     pot.toUndefined(messagePot)?.third_party_message.attachments;
-  return attachments ?? [];
+  return attachments ?? emptyArray;
 };
 
 const messageContentSelector = <T>(

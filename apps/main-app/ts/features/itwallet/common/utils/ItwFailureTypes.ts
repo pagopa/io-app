@@ -26,7 +26,7 @@ export type ReasonTypeByFailure = {
  * thrown by `io-react-native-wallet` with the credential configuration ID.
  */
 export type WithCredentialMetadata<E = Error> = E & {
-  metadata?: { credentialId: string };
+  metadata?: { credentialId: string; credentialType: string };
 };
 
 type TypedRemoteFailures = {

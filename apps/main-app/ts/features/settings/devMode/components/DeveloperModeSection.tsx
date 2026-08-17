@@ -206,6 +206,7 @@ const DeveloperDataSection = () => {
   );
   const publicKey = useIOSelector(lollipopPublicKeySelector);
   const deviceUniqueId = getDeviceId();
+
   const thumbprint = toThumbprint(publicKey);
 
   const devDataCopyListItems: ReadonlyArray<DevDataCopyListItem> = [
@@ -323,6 +324,13 @@ const PlaygroundsSection = () => {
   const isSendEnabled = useIOSelector(isPnRemoteEnabledSelector);
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
+    {
+      value: "Authentication",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.AUTHENTICATION_PLAYGROUND
+        })
+    },
     {
       value: "Lollipop",
       onPress: () =>

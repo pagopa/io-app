@@ -245,4 +245,40 @@ describe("itWalletReducer migrations", () => {
       preferences: {}
     });
   });
+
+  it("should migrate the store to version 17: remove isPendingReview from preferences", async () => {
+    const previousState = {
+      _persist: { version: 16, rehydrated: false },
+      preferences: { isPendingReview: true }
+    };
+
+    const newState = await migrate(previousState, 17);
+
+    expect(newState).toEqual({
+      _persist: { version: 16, rehydrated: false },
+      preferences: {}
+    });
+  });
+
+  it("should migrate the store to version 18 and remove the playground debug state", async () => {
+    const previousState = {
+      _persist: { version: 17, rehydrated: false },
+      debug: {
+        credentialStatusOverrides: { mDL: "jwtExpired" },
+        savedCredentials: { MDL: { credentialId: "MDL" } }
+      },
+      preferences: {},
+      environment: { env: "pre" },
+      banners: {}
+    };
+
+    const newState = await migrate(previousState, 18);
+
+    expect(newState).toEqual({
+      _persist: { version: 17, rehydrated: false },
+      preferences: {},
+      environment: { env: "pre" },
+      banners: {}
+    });
+  });
 });

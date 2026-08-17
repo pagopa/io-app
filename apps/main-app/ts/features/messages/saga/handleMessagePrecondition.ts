@@ -1,11 +1,10 @@
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { MessageCategory } from "../../../../definitions/communication/MessageCategory";
 import { CommunicationClient } from "../../../api/CommunicationClientManager";
-import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { isTestEnv } from "../../../utils/environment";
 import { convertUnknownToError } from "../../../utils/errors";
@@ -95,12 +94,9 @@ function* messagePreconditionWorker(
     if (E.isRight(result)) {
       if (result.right.status === 200) {
         const content = result.right.value;
-        const isIOMarkdownEnabled = yield* select(
-          isIOMarkdownEnabledForMessagesAndServicesSelector
-        );
         yield* put(
           loadingContentPreconditionStatusAction(
-            toLoadingContentPayload(content, isIOMarkdownEnabled)
+            toLoadingContentPayload(content)
           )
         );
         return;

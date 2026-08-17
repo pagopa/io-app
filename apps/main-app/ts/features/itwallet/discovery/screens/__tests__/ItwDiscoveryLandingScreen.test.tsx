@@ -1,10 +1,12 @@
 import configureMockStore from "redux-mock-store";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { appReducer } from "../../../../../store/reducers";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
+import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwDiscoveryLandingScreen } from "../ItwDiscoveryLandingScreen";
@@ -19,6 +21,12 @@ jest.mock("@react-navigation/native", () => ({
 describe("ItwDiscoveryLandingScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  it("waits for authenticated startup before navigating", () => {
+    renderComponent(StartupStatusEnum.INITIAL);
+
+    expect(mockReplace).not.toHaveBeenCalled();
   });
 
   test.each`
@@ -50,7 +58,7 @@ describe("ItwDiscoveryLandingScreen", () => {
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(isWalletActive);
       jest
-        .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+        .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
         .mockReturnValue(isWhitelisted);
 
       renderComponent();
@@ -64,8 +72,15 @@ describe("ItwDiscoveryLandingScreen", () => {
   );
 });
 
-const renderComponent = () => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
+const renderComponent = (startupStatus = StartupStatusEnum.AUTHENTICATED) => {
+  const stateAfterApplicationChange = appReducer(
+    undefined,
+    applicationChangeState("active")
+  );
+  const globalState = appReducer(
+    stateAfterApplicationChange,
+    startupLoadSuccess(startupStatus)
+  );
   const mockStore = configureMockStore<GlobalState>();
   const store = mockStore(globalState);
 

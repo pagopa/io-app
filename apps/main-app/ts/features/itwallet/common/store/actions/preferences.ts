@@ -3,10 +3,6 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 import { IdentificationContext } from "../../../machine/eid/context.ts";
 import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
-export const itwSetReviewPending = createStandardAction(
-  "ITW_SET_REVIEW_PENDING"
-)<boolean>();
-
 export const itwSetAuthLevel = createStandardAction("ITW_SET_AUTH_LEVEL")<
   ItwAuthLevel | undefined
 >();
@@ -63,5 +59,4 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwSetIdentificationMode>
   | ActionType<typeof itwSetPidReissuingSurveyHidden>
-  | ActionType<typeof itwSetReviewPending>
   | ActionType<typeof itwSetWalletActivationFeedbackBannerData>;

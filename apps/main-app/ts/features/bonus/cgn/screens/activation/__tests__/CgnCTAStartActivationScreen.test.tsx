@@ -1,11 +1,11 @@
+import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
+import { BonusVisibilityEnum } from "@io-app/api-types/generated/definitions/content/BonusVisibility";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
 
-import { BonusAvailable } from "../../../../../../../definitions/content/BonusAvailable";
-import { BonusVisibilityEnum } from "../../../../../../../definitions/content/BonusVisibility";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { backendStatusLoadSuccess } from "../../../../../../store/actions/backendStatus";
 import { useIODispatch } from "../../../../../../store/hooks";

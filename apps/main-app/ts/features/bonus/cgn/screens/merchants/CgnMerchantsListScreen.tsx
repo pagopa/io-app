@@ -1,6 +1,10 @@
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
+import { OfflineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchant";
+import { OnlineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchant";
 import {
   Badge,
   ContentWrapper,
+  Divider,
   H6,
   HSpacer,
   ListItemNav
@@ -11,9 +15,6 @@ import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
-import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import {
   getValueOrElse,
   isError,
@@ -35,6 +36,8 @@ import {
 import { mixAndSortMerchants } from "../../utils/merchants";
 
 export type MerchantsAll = OfflineMerchant | OnlineMerchant;
+
+const MerchantsItemSeparatorComponent = () => <Divider />;
 
 export const CgnMerchantsListScreen = () => {
   const navigator = useIONavigation();
@@ -131,8 +134,10 @@ export const CgnMerchantsListScreen = () => {
   return {
     data,
     renderItem,
+    ItemSeparatorComponent: MerchantsItemSeparatorComponent,
     refreshControlProps,
     ListFooterComponent: <></>,
+    ListFooterComponentStyle: undefined,
     ListEmptyComponent
   };
 };

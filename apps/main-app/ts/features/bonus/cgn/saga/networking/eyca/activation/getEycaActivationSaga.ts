@@ -1,7 +1,7 @@
+import { StatusEnum } from "@io-app/api-types/generated/definitions/cgn/EycaActivationDetail";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { call, put } from "typed-redux-saga/macro";
 
-import { StatusEnum } from "../../../../../../../../definitions/cgn/EycaActivationDetail";
 import {
   ReduxSagaEffect,
   SagaCallReturnType

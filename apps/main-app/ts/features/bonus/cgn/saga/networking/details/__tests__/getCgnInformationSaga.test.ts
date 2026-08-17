@@ -1,7 +1,7 @@
+import { Card } from "@io-app/api-types/generated/definitions/cgn/Card";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { testSaga } from "redux-saga-test-plan";
 
-import { Card } from "../../../../../../../../definitions/cgn/Card";
 import { getGenericError } from "../../../../../../../utils/errors";
 import { walletAddCards } from "../../../../../../wallet/store/actions/cards";
 import { cgnDetails } from "../../../../store/actions/details";

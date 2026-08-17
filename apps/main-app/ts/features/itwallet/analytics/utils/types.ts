@@ -120,6 +120,8 @@ export type ItwStatus =
 
 export type ItwThirdPartyCredentials = "not_available" | "not_valid" | "valid";
 
+export type ItwWalletListCredential = "not_available" | "not_valid" | "valid";
+
 export type TrackITWalletIDMethodSelected = {
   itw_flow: ItwFlow;
   ITW_ID_method: ItwIdMethod;
@@ -217,4 +219,5 @@ type QualtricsSurveyId =
   | "confirm_eid_flow_exit"
   | "confirm_eid_flow_success"
   | "itw_credential_exit"
-  | "itw_eid_activation_exit";
+  | "itw_pid_activation_exit"
+  | "itw_pid_activation_success";

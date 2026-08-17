@@ -63,7 +63,7 @@ describe("FimsUpdateAppAlert", () => {
     const mockStartSupportRequest = jest.fn();
     const useStartSupportRequestSpy = jest
       .spyOn(otherHooks, "useStartSupportRequest")
-      .mockImplementation(_ => mockStartSupportRequest);
+      .mockImplementation(() => mockStartSupportRequest);
 
     renderComponent();
 
@@ -71,8 +71,8 @@ describe("FimsUpdateAppAlert", () => {
 
     // Check `useStartSupportRequest`
     expect(useStartSupportRequestSpy.mock.calls.length).toBe(1);
-    expect(useStartSupportRequestSpy.mock.calls[0].length).toBe(1);
-    expect(useStartSupportRequestSpy.mock.calls[0][0]).toEqual({});
+    expect(useStartSupportRequestSpy.mock.calls[0].length).toBe(0);
+    expect(useStartSupportRequestSpy.mock.calls[0]).toEqual([]);
 
     // Check navigation.setOptions with parameters
     expect(mockSetOptions.mock.calls.length).toBe(1);

@@ -1,11 +1,10 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 import type {
   FavouriteServicesSortType,
   FavouriteServiceType
 } from "../../../favouriteServices/types";
-
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 export const addFavouriteServiceRequest = createStandardAction(
   "ADD_FAVOURITE_SERVICE_REQUEST"

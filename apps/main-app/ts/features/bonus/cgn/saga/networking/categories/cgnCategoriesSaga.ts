@@ -1,9 +1,9 @@
+import { PublishedProductCategories } from "@io-app/api-types/generated/definitions/cgn/merchants/PublishedProductCategories";
+import { PublishedProductCategoriesWithNewDiscountsCount } from "@io-app/api-types/generated/definitions/cgn/merchants/PublishedProductCategoriesWithNewDiscountsCount";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { PublishedProductCategories } from "../../../../../../../definitions/cgn/merchants/PublishedProductCategories";
-import { PublishedProductCategoriesWithNewDiscountsCount } from "../../../../../../../definitions/cgn/merchants/PublishedProductCategoriesWithNewDiscountsCount";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import {
   getGenericError,

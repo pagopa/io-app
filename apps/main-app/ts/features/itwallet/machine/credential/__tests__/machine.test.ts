@@ -9,10 +9,7 @@ import {
   waitFor as waitForActor
 } from "xstate";
 
-import {
-  ItwStatusAssertionMocks,
-  ItwStoredCredentialsMocks
-} from "../../../common/utils/itwMocksUtils";
+import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
@@ -27,7 +24,7 @@ import {
   ObtainAccessTokenActorInput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
-  ObtainStatusAssertionActorInput,
+  ObtainCredentialStatusActorInput,
   ProcessCredentialOfferActorInput,
   ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
@@ -81,10 +78,11 @@ const T_EVALUATED_DCQL_QUERY: EvaluatedDcqlQueryResult = [
     vct: "pid"
   }
 ];
-const T_STORED_STATUS_ASSERTION: CredentialMetadata["storedStatusAssertion"] = {
-  credentialStatus: "valid",
-  statusAssertion: "abcdefghijklmnopqrstuvwxyz",
-  parsedStatusAssertion: ItwStatusAssertionMocks.mdl
+const T_VALIDITY: CredentialMetadata["validity"] = {
+  type: "status_list",
+  status: "valid",
+  rawStatus: "0x00",
+  statusList: { idx: 0, uri: "status-list-uri" }
 };
 
 const T_OFFER_URI =
@@ -137,13 +135,12 @@ describe("itwCredentialIssuanceMachine", () => {
   const requestCredential = jest.fn();
   const obtainAccessToken = jest.fn();
   const obtainCredential = jest.fn();
-  const obtainStatusAssertion = jest.fn();
+  const obtainCredentialStatus = jest.fn();
   const processCredentialOffer = jest.fn();
   const waitForSessionRefresh = jest.fn();
 
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
-  const isStatusError = jest.fn();
   const isSkipNavigation = jest.fn();
   const isEidExpired = jest.fn();
   const hasCredentialIntroContent = jest.fn();
@@ -186,10 +183,10 @@ describe("itwCredentialIssuanceMachine", () => {
         ObtainCredentialActorOutput,
         ObtainCredentialActorInput
       >(obtainCredential),
-      obtainStatusAssertion: fromPromise<
+      obtainCredentialStatus: fromPromise<
         ReadonlyArray<CredentialBundle>,
-        ObtainStatusAssertionActorInput
-      >(obtainStatusAssertion),
+        ObtainCredentialStatusActorInput
+      >(obtainCredentialStatus),
       waitForSessionRefresh: fromCallback(waitForSessionRefresh),
       processCredentialOffer: fromPromise<
         ProcessCredentialOfferActorOutput,
@@ -199,7 +196,6 @@ describe("itwCredentialIssuanceMachine", () => {
     guards: {
       isSessionExpired,
       hasValidWalletInstanceAttestation,
-      isStatusError,
       isEidExpired,
       hasCredentialIntroContent
     }
@@ -300,13 +296,13 @@ describe("itwCredentialIssuanceMachine", () => {
       })
     );
 
-    obtainStatusAssertion.mockImplementation(() =>
+    obtainCredentialStatus.mockImplementation(() =>
       Promise.resolve([
         {
           credential: "",
           metadata: {
             ...ItwStoredCredentialsMocks.mdl,
-            storedStatusAssertion: T_STORED_STATUS_ASSERTION
+            validity: T_VALIDITY
           }
         }
       ])
@@ -338,12 +334,12 @@ describe("itwCredentialIssuanceMachine", () => {
 
     // Step 3: get the status assertion
     const intermediateState3 = await waitForActor(actor, snapshot =>
-      snapshot.matches({ Issuance: "ObtainingStatusAssertion" })
+      snapshot.matches({ Issuance: "ObtainingCredentialStatus" })
     );
     expect(intermediateState3.value).toStrictEqual({
-      Issuance: "ObtainingStatusAssertion"
+      Issuance: "ObtainingCredentialStatus"
     });
-    expect(obtainStatusAssertion).toHaveBeenCalledTimes(1);
+    expect(obtainCredentialStatus).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().value).toStrictEqual(
       "DisplayingCredentialPreview"
@@ -356,7 +352,7 @@ describe("itwCredentialIssuanceMachine", () => {
             credential: "",
             metadata: {
               ...ItwStoredCredentialsMocks.mdl,
-              storedStatusAssertion: T_STORED_STATUS_ASSERTION
+              validity: T_VALIDITY
             }
           }
         ]
@@ -674,7 +670,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(intermediateSnapshot.tags).toStrictEqual(new Set([ItwTags.Issuing]));
     expect(obtainAccessToken).toHaveBeenCalledTimes(1);
     expect(obtainCredential).toHaveBeenCalledTimes(1);
-    expect(obtainStatusAssertion).not.toHaveBeenCalled();
+    expect(obtainCredentialStatus).not.toHaveBeenCalled();
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
@@ -830,6 +826,29 @@ describe("itwCredentialIssuanceMachine", () => {
       snapshot.matches("CredentialIntroduction")
     );
     expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("should clear the selected credential when leaving the introduction screen", async () => {
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    hasCredentialIntroContent.mockImplementation(() => true);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({
+      type: "select-credential",
+      credentialType: "education_degree",
+      mode: "issuance"
+    });
+
+    await waitForActor(actor, snapshot =>
+      snapshot.matches("CredentialIntroduction")
+    );
+
+    actor.send({ type: "back" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context.credentialType).toBeUndefined();
+    expect(navigateToCardOnboardingScreen).not.toHaveBeenCalled();
   });
 
   describe("Credential Offer flow", () => {
@@ -1088,11 +1107,11 @@ describe("itwCredentialIssuanceMachine", () => {
 
     const intermediateSnapshot2 = await waitForActor(actor, s =>
       s.matches({
-        Issuance: "ObtainingStatusAssertion"
+        Issuance: "ObtainingCredentialStatus"
       })
     );
     expect(intermediateSnapshot2.value).toEqual({
-      Issuance: "ObtainingStatusAssertion"
+      Issuance: "ObtainingCredentialStatus"
     });
     expect(intermediateSnapshot2.context).toMatchObject<Partial<Context>>({
       credentials: [

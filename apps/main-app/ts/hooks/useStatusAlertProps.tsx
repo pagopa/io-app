@@ -1,11 +1,16 @@
-import { AlertEdgeToEdgeProps, IOMarkdown } from "@io-app/design-system";
+import { LevelEnum } from "@io-app/api-types/generated/definitions/content/StatusMessage";
+import {
+  AlertEdgeToEdgeProps,
+  IOButton,
+  IOMarkdown,
+  VStack
+} from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { GestureResponderEvent } from "react-native";
 
-import { LevelEnum } from "../../definitions/content/StatusMessage";
 import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import { AUTHENTICATION_ROUTES } from "../features/authentication/common/navigation/routes";
 import { isConnectedSelector } from "../features/connectivity/store/selectors";
@@ -159,10 +164,19 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
       ? offlineAccessReason
       : OfflineAccessReasonEnum.DEVICE_OFFLINE
   );
+  const handleBannerAppRestart = useAppRestartAction("bottom_sheet");
   const commonOfflineModal = useIOBottomSheetModal({
     title: I18n.t("global.offline.bottomSheet.title"),
     component: (
-      <IOMarkdown content={I18n.t("global.offline.bottomSheet.content")} />
+      <VStack space={24}>
+        <IOMarkdown content={I18n.t("global.offline.bottomSheet.content")} />
+        <IOButton
+          accessibilityLabel={I18n.t("global.offline.bottomSheet.footerAction")}
+          label={I18n.t("global.offline.bottomSheet.footerAction")}
+          onPress={handleBannerAppRestart}
+          variant="solid"
+        />
+      </VStack>
     )
   });
 

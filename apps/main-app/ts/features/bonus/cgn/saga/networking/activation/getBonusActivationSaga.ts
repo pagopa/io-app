@@ -1,8 +1,8 @@
+import { StatusEnum } from "@io-app/api-types/generated/definitions/cgn/CgnActivationDetail";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
-import { StatusEnum } from "../../../../../../../definitions/cgn/CgnActivationDetail";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import {
   ReduxSagaEffect,

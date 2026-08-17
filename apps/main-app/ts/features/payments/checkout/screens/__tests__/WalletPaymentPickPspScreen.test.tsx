@@ -1,12 +1,12 @@
+import { Bundle } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/Bundle";
+import { PaymentMethodStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodStatus";
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
 import { act, fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { View } from "react-native";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 
-import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
-import { PaymentMethodStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

@@ -96,12 +96,12 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
   );
   console.log(`————————————————`);
 
-  fs.readdir(svgDir, (err, files) => {
+  fs.readdir(svgDir, async (err, files) => {
     if (err) {
       throw err;
     }
 
-    files.forEach(file => {
+    for (const file of files) {
       const filePath = join(svgDir, file);
       const fileStats = fs.statSync(filePath);
 
@@ -112,7 +112,7 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
 
         // Check if the file is an SVG
         if (!file.endsWith(".svg")) {
-          return;
+          continue;
         }
 
         // Using SVGO to optimize the SVG
@@ -162,14 +162,14 @@ fs.readFile(timestampFilePath, "utf8", (err, timestamp) => {
         // Save the file with the same filename with `.tsx` extension
         const fileWithTsxExtension = file.replace(".svg", ".tsx");
         const tsxFilePath = join(tsxDir, fileWithTsxExtension);
-        fs.writeFileSync(
-          tsxFilePath,
-          prettier.format(componentData, { parser: "typescript" })
-        );
+        const formattedComponentData = await prettier.format(componentData, {
+          parser: "typescript"
+        });
+        fs.writeFileSync(tsxFilePath, formattedComponentData);
 
         console.log(`${file} → ${fileWithTsxExtension}`);
       }
-    });
+    }
 
     const newTimestamp = new Date();
     const convertedISOTimestamp = newTimestamp.toISOString();

@@ -1,8 +1,8 @@
+import { OfflineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchants";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
 
-import { OfflineMerchants } from "../../../../../../../../definitions/cgn/merchants/OfflineMerchants";
 import { getGenericError } from "../../../../../../../utils/errors";
 import { cgnOfflineMerchants } from "../../../../store/actions/merchants";
 import { cgnOfflineMerchantsSaga } from "../cgnOfflineMerchantsSaga";

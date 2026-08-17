@@ -1,9 +1,9 @@
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
 import { IOPictograms } from "@io-app/design-system";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import I18n from "i18next";
 import { Linking } from "react-native";
 
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -147,7 +147,6 @@ const SignatureStatusComponent = ({
 
   return (
     <OperationResultScreenContent
-      isHeaderVisible={false}
       onSubtitleLinkPress={url => void Linking.openURL(url)}
       pictogram={pictogram}
       subtitle={composedSubtitle}

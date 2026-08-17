@@ -22,6 +22,7 @@ import {
   buildItwBaseProperties,
   buildPidProperties,
   buildThirdPartyCredentialProperty,
+  buildWalletListCredentialProperty,
   computeItwStatus
 } from "./basePropertyBuilder";
 import {
@@ -99,7 +100,8 @@ export const updatePropertiesWalletRevoked = () => {
   const finalProps: WalletRevokedAnalyticsEvent = {
     ...credentialsResetProps,
     ITW_STATUS_V2: "not_active",
-    ITW_THIRD_PARTY_CREDENTIAL: "not_available"
+    ITW_THIRD_PARTY_CREDENTIAL: "not_available",
+    ITW_WALLET_LIST_CREDENTIAL: "not_available"
   };
 
   forceUpdateItwProfileProperties(finalProps);
@@ -145,16 +147,20 @@ export const updateOfflineAccessReason = (
 };
 
 /**
- * Recomputes and syncs the aggregate third-party credential property.
- * It must update both Profile and Super properties so future events and user
- * profile data stay aligned after credential store/remove operations.
+ * Recomputes and syncs the aggregate IT Wallet credential properties
+ * (third-party + wallet list).
+ * It updates both Profile and Super properties so future events and user profile
+ * data stay aligned after credential store/remove operations and catalogue refresh.
  */
 export const updateThirdPartyCredentialProperty = (state: GlobalState) => {
   const thirdPartyCredentialProperty = buildThirdPartyCredentialProperty(state);
+  const walletListCredentialProperty = buildWalletListCredentialProperty(state);
   forceUpdateItwProfileProperties({
-    ITW_THIRD_PARTY_CREDENTIAL: thirdPartyCredentialProperty
+    ITW_THIRD_PARTY_CREDENTIAL: thirdPartyCredentialProperty,
+    ITW_WALLET_LIST_CREDENTIAL: walletListCredentialProperty
   });
   forceUpdateItwSuperProperties({
-    ITW_THIRD_PARTY_CREDENTIAL: thirdPartyCredentialProperty
+    ITW_THIRD_PARTY_CREDENTIAL: thirdPartyCredentialProperty,
+    ITW_WALLET_LIST_CREDENTIAL: walletListCredentialProperty
   });
 };

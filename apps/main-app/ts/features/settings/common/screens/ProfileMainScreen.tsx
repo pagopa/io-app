@@ -42,7 +42,7 @@ import {
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import { isDevEnv } from "../../../../utils/environment";
 import { openWebUrl } from "../../../../utils/url";
-import { itwIsL3EnabledSelector } from "../../../itwallet/common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../../itwallet/common/store/selectors";
 import { itwLifecycleIsOperationalOrValid } from "../../../itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import DeveloperModeSection from "../../devMode/components/DeveloperModeSection";
@@ -143,7 +143,6 @@ const ProfileMainScreenFC = () => {
       setTapsOnAppVersion(0);
       show(I18n.t("profile.main.developerModeOn"));
     } else {
-      // eslint-disable-next-line functional/immutable-data
       idResetTap.current = setInterval(
         resetAppTapCounter,
         RESET_COUNTER_TIMEOUT
@@ -331,11 +330,6 @@ const ProfileMainScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelpMarkdown={{
-        title: "profile.main.contextualHelpTitle",
-        body: "profile.main.contextualHelpContent"
-      }}
-      faqCategories={["profile"]}
       headerActionsProp={{ showHelp: true }}
       testID="ProfileMainScreen"
       title={{
