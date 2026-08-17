@@ -1,6 +1,6 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { useCallback, useEffect, useMemo } from "react";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   AppParamsList,
   IOStackNavigationProp,

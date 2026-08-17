@@ -1,3 +1,4 @@
+import { DiscountCodeTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountCodeType";
 import { IOToast } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
@@ -6,7 +7,6 @@ import { useCallback, useEffect, useMemo } from "react";
 import { Platform, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
-import { DiscountCodeTypeEnum } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import {

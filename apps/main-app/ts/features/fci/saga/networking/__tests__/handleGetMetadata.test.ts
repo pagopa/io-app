@@ -1,8 +1,8 @@
+import { Metadata } from "@io-app/api-types/generated/definitions/fci/Metadata";
 import { left, right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 
-import { Metadata } from "../../../../../../definitions/fci/Metadata";
 import { getNetworkError } from "../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { fciMetadataRequest } from "../../../store/actions";

@@ -1,10 +1,10 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
 import { WithinRangeInteger } from "@pagopa/ts-commons/lib/numbers";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
-import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { getCategorySpecs } from "../../../utils/filters";
 
 export const normalizedDiscountPercentage = (discount?: number) =>

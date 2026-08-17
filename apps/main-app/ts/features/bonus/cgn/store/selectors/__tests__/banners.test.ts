@@ -1,7 +1,7 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import MockDate from "mockdate";
 import { createStore, Store } from "redux";
 
-import { InitializedProfile } from "../../../../../../../definitions/identity/InitializedProfile";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { backendStatusLoadSuccess } from "../../../../../../store/actions/backendStatus";
 import { appReducer } from "../../../../../../store/reducers";

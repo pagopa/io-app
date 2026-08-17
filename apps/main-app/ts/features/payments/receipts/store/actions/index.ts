@@ -1,11 +1,11 @@
+import { NoticeDetailResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeDetailResponse";
+import { NoticeListWrapResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListWrapResponse";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
-import { NoticeListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeListWrapResponse";
 import { NetworkError } from "../../../../../utils/errors";
 import { HideReceiptTrigger } from "../../analytics";
 import { ReceiptDownloadFailure, ReceiptsCategoryFilter } from "../../types";

@@ -1,3 +1,4 @@
+import { Bundle } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/Bundle";
 import {
   Body,
   H2,
@@ -14,7 +15,6 @@ import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Animated, { LinearTransition } from "react-native-reanimated";
 
-import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

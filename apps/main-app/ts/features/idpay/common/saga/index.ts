@@ -1,9 +1,9 @@
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
 
-import { PreferredLanguageEnum } from "../../../../../definitions/identity/PreferredLanguage";
 import {
   idPayApiBaseUrl,
   idPayApiUatBaseUrl,

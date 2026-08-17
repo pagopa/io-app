@@ -1,8 +1,8 @@
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { TagEnum as SENDTagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
+import { ThirdPartyMessagePrecondition } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessagePrecondition";
 import { getType } from "typesafe-actions";
 
-import { MessageCategory } from "../../../../../definitions/communication/MessageCategory";
-import { TagEnum as SENDTagEnum } from "../../../../../definitions/communication/MessageCategoryPN";
-import { ThirdPartyMessagePrecondition } from "../../../../../definitions/communication/ThirdPartyMessagePrecondition";
 import { Action } from "../../../../store/actions/types";
 import { isPnAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";

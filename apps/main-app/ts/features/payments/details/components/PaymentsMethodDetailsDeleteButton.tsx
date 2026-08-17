@@ -1,9 +1,9 @@
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
 import { IOToast, ListItemAction } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { Alert, Platform } from "react-native";
 
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {

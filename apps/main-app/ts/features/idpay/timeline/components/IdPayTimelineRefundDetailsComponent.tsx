@@ -1,4 +1,6 @@
 import { useBottomSheet } from "@gorhom/bottom-sheet";
+import { RefundDetailDTO } from "@io-app/api-types/generated/definitions/idpay/RefundDetailDTO";
+import { OperationTypeEnum } from "@io-app/api-types/generated/definitions/idpay/RefundOperationDTO";
 import {
   Alert,
   Divider,
@@ -13,8 +15,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
-import { RefundDetailDTO } from "../../../../../definitions/idpay/RefundDetailDTO";
-import { OperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
 import NavigationService from "../../../../navigation/NavigationService";
 import { useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";

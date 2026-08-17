@@ -1,8 +1,8 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { backendStatusLoadSuccess } from "../../actions/backendStatus";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";

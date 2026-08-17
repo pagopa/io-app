@@ -1,3 +1,4 @@
+import { InstrumentTypeEnum } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import { Divider } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
@@ -9,12 +10,10 @@ import {
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
-import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIdPayInfoCieBottomSheet } from "../../code/components/IdPayInfoCieBottomSheet";
 import { IdPayCodeParamsList } from "../../code/navigation/params";
 import { IdPayCodeRoutes } from "../../code/navigation/routes";
@@ -108,7 +107,6 @@ export const IdPayDiscountInstrumentsScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelp={emptyContextualHelp}
       description={I18n.t(
         "idpay.configuration.instruments.paymentMethods.body",
         {

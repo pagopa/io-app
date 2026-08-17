@@ -21,7 +21,6 @@ export const IdPayConfigurationSuccessScreen = () => {
   useHeaderSecondLevel({
     title: "",
     goBack: () => navigation.goBack(),
-    contextualHelp: undefined,
     supportRequest: true
   });
 
