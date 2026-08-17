@@ -32,7 +32,12 @@ type ItwIridescentBorderProps = {
   variant?: ItwSkiaBrandedGradientVariant;
 };
 
-const brandedBoxGradientColors = ["#FFFFFF", "#FBFDFF", "#F6FBFF", "#F2F9FF"];
+const brandedBoxGradientColors: [string, string, ...Array<string>] = [
+  "#FFFFFF",
+  "#FBFDFF",
+  "#F6FBFF",
+  "#F2F9FF"
+];
 
 /* Light */
 const lightScaleMultiplier = 1;

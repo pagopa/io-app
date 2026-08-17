@@ -363,8 +363,10 @@ export const IOScrollView = ({
               ]}
             >
               <LinearGradient
-                colors={colors}
-                locations={locations}
+                colors={
+                  colors as [ColorValue, ColorValue, ...Array<ColorValue>]
+                }
+                locations={locations as [number, number, ...Array<number>]}
                 style={{
                   height: gradientAreaHeight - safeBackgroundBlockHeight
                 }}
