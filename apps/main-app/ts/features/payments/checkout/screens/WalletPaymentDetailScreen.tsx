@@ -37,7 +37,6 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { cleanTransactionDescription } from "../../../../utils/payment";
@@ -179,7 +178,6 @@ const WalletPaymentDetailContent = ({
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    contextualHelp: emptyContextualHelp,
     ignoreAccessibilityCheck: isAmountInfoVisible
   });
 
