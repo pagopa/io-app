@@ -8,6 +8,7 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import {
   Keyboard,
@@ -18,7 +19,6 @@ import {
   TextInput,
   View
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import IOMarkdown from "../../../../components/IOMarkdown";

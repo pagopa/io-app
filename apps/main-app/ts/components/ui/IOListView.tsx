@@ -5,6 +5,7 @@ import {
   IOVisualCostants,
   useIOTheme
 } from "@io-app/design-system";
+import { LinearGradient } from "expo-linear-gradient";
 import { ComponentProps, ReactElement, useState } from "react";
 import {
   ColorValue,
@@ -15,7 +16,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import Animated, { AnimatedRef } from "react-native-reanimated";
 
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";

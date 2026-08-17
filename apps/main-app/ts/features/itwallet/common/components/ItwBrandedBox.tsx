@@ -6,9 +6,9 @@ import {
   RadialGradient as SkiaRadialGradient,
   vec
 } from "@shopify/react-native-skia";
+import { LinearGradient } from "expo-linear-gradient";
 import { PropsWithChildren } from "react";
 import { LayoutRectangle, StyleSheet, View } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import {
   Extrapolation,
   interpolate,

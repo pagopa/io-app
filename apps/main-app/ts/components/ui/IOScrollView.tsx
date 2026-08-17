@@ -11,6 +11,7 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   ComponentProps,
   Fragment,
@@ -30,7 +31,6 @@ import {
   ViewStyle
 } from "react-native";
 import { easeGradient } from "react-native-easing-gradient";
-import LinearGradient from "react-native-linear-gradient";
 import Animated, {
   AnimatedRef,
   Easing,
