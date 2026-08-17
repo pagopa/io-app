@@ -1,7 +1,7 @@
+import { SignatureDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureDetailView";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { SignatureDetailView } from "../../../../../definitions/fci/SignatureDetailView";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";

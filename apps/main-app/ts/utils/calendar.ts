@@ -1,3 +1,4 @@
+import { CreatedMessageWithContentAndAttachments } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndAttachments";
 import { IOToast } from "@io-app/design-system";
 import * as Calendar from "expo-calendar";
 import * as E from "fp-ts/lib/Either";
@@ -7,7 +8,6 @@ import * as TE from "fp-ts/lib/TaskEither";
 import I18n from "i18next";
 import { Platform } from "react-native";
 
-import { CreatedMessageWithContentAndAttachments } from "../../definitions/communication/CreatedMessageWithContentAndAttachments";
 import { TranslationKeys } from "../i18n";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
 import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";

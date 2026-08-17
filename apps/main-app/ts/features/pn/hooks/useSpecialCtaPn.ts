@@ -1,8 +1,8 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {

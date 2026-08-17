@@ -1,11 +1,11 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
+import { OfflineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchants";
+import { OnlineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchants";
+import { SearchResult } from "@io-app/api-types/generated/definitions/cgn/merchants/SearchResult";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
-import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
-import { SearchResult } from "../../../../../../definitions/cgn/merchants/SearchResult";
 import {
   remoteError,
   remoteLoading,

@@ -1,3 +1,4 @@
+import { PasswordLogin } from "@io-app/api-types/generated/definitions/session_manager/PasswordLogin";
 import {
   Alert,
   Body,
@@ -17,7 +18,6 @@ import I18n from "i18next";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
 
-import { PasswordLogin } from "../../../../../definitions/session_manager/PasswordLogin";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

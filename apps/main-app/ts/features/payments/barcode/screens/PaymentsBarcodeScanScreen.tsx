@@ -12,7 +12,6 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
@@ -30,11 +29,6 @@ import {
 import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 import { PaymentsCheckoutRoutes } from "../../checkout/navigation/routes";
 import { PaymentsBarcodeRoutes } from "../navigation/routes";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "wallet.QRtoPay.contextualHelpTitle",
-  body: "wallet.QRtoPay.contextualHelpContent"
-};
 
 const PaymentsBarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -139,8 +133,6 @@ const PaymentsBarcodeScanScreen = () => {
           barcodeAnalyticsFlow="avviso"
           barcodeFormats={barcodeFormats}
           barcodeTypes={barcodeTypes}
-          contextualHelpMarkdown={contextualHelpMarkdown}
-          faqCategories={["wallet"]}
           isDisabled={isFilePickerVisible || isFileReaderLoading}
           isLoading={isFileReaderLoading}
           onBarcodeError={handleBarcodeError}

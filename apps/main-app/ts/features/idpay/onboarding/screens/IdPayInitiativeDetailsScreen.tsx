@@ -1,3 +1,4 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   ContentWrapper,
   ForceScrollDownView,
@@ -10,7 +11,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect } from "react";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";

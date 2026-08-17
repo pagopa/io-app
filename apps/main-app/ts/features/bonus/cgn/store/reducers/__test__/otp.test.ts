@@ -1,4 +1,5 @@
-import { OtpCode } from "../../../../../../../definitions/cgn/OtpCode";
+import { OtpCode } from "@io-app/api-types/generated/definitions/cgn/OtpCode";
+
 import {
   isReady,
   remoteError,

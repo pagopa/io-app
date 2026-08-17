@@ -4,11 +4,6 @@ import I18n from "i18next";
 import { ComponentProps, useCallback, useLayoutEffect, useMemo } from "react";
 
 import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
-import {
-  ContextualHelpProps,
-  ContextualHelpPropsMarkdown
-} from "../utils/contextualHelp.ts";
-import { FAQsCategoriesType } from "../utils/faq";
 import { useOfflineToastGuard } from "./useOfflineToastGuard.ts";
 import { useStartSupportRequest } from "./useStartSupportRequest";
 
@@ -46,9 +41,6 @@ type NoAdditionalActions = {
 type PropsWithoutSupport = HeaderHookManagedProps &
   NoAdditionalActions &
   SpecificHookProps & {
-    contextualHelp?: never;
-    contextualHelpMarkdown?: never;
-    faqCategories?: never;
     onStartSupportRequest?: never;
     supportRequest?: false;
   };
@@ -56,9 +48,6 @@ type PropsWithoutSupport = HeaderHookManagedProps &
 type PropsWithSupport = HeaderHookManagedProps &
   SpecificHookProps &
   WithAdditionalActions & {
-    contextualHelp?: ContextualHelpProps;
-    contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-    faqCategories?: ReadonlyArray<FAQsCategoriesType>;
     onStartSupportRequest?: () => boolean;
     supportRequest: true;
   };
@@ -93,9 +82,6 @@ export const useHeaderSecondLevel = ({
   title,
   backAccessibilityLabel,
   backTestID,
-  contextualHelp,
-  contextualHelpMarkdown,
-  faqCategories,
   goBack,
   headerShown = true,
   canGoBack = true,
@@ -112,13 +98,7 @@ export const useHeaderSecondLevel = ({
   animatedRef
 }: HeaderSecondLevelHookProps) => {
   const { isAlertVisible } = useIOAlertVisible();
-  const startSupportRequest = useOfflineToastGuard(
-    useStartSupportRequest({
-      faqCategories,
-      contextualHelpMarkdown,
-      contextualHelp
-    })
-  );
+  const startSupportRequest = useOfflineToastGuard(useStartSupportRequest());
 
   // Conditionally run startSupportRequest allowing overrides with onStartSupportRequest
   const handleStartSupportRequest = useCallback(() => {

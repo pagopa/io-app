@@ -1,8 +1,8 @@
+import { Institution } from "@io-app/api-types/generated/definitions/services/Institution";
+import { InstitutionsResource } from "@io-app/api-types/generated/definitions/services/InstitutionsResource";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { Institution } from "../../../../../../definitions/services/Institution";
-import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { searchPaginatedInstitutionsGet } from "../actions";

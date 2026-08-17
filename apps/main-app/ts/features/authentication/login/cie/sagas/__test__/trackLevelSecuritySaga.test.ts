@@ -1,9 +1,9 @@
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
+import { SpidLevelEnum } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
 import * as O from "fp-ts/Option";
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga/effects";
 
-import { PublicSession } from "../../../../../../../definitions/session_manager/PublicSession";
-import { SpidLevelEnum } from "../../../../../../../definitions/session_manager/SpidLevel";
 import { idpSelector } from "../../../../common/store/selectors";
 import { IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 import { trackCieIdSecurityLevelMismatch } from "../../analytics";

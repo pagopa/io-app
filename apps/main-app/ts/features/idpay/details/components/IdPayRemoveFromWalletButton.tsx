@@ -1,12 +1,12 @@
+import {
+  InitiativeDTO,
+  VoucherStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { ListItemAction } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect } from "react";
 import { Alert, Platform } from "react-native";
 
-import {
-  InitiativeDTO,
-  VoucherStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IdPayUnsubscriptionRoutes } from "../../unsubscription/navigation/routes";
