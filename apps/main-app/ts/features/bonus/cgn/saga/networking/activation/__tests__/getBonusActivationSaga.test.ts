@@ -1,7 +1,7 @@
+import { StatusEnum } from "@io-app/api-types/generated/definitions/cgn/CgnActivationDetail";
+import { InstanceId } from "@io-app/api-types/generated/definitions/cgn/InstanceId";
 import { testSaga } from "redux-saga-test-plan";
 
-import { StatusEnum } from "../../../../../../../../definitions/cgn/CgnActivationDetail";
-import { InstanceId } from "../../../../../../../../definitions/cgn/InstanceId";
 import { readablePrivacyReport } from "../../../../../../../utils/reporters";
 import { startTimer } from "../../../../../../../utils/timer";
 import { cgnActivationStatus } from "../../../../store/actions/activation";

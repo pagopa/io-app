@@ -1,7 +1,7 @@
+import { Card } from "@io-app/api-types/generated/definitions/cgn/Card";
+import { CardPending } from "@io-app/api-types/generated/definitions/cgn/CardPending";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { Card } from "../../../../../../../definitions/cgn/Card";
-import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { getGenericError } from "../../../../../../utils/errors";
 import { cgnDetails } from "../../actions/details";
