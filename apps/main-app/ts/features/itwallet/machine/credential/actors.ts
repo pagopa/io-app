@@ -430,6 +430,11 @@ export const createCredentialIssuanceActorsImplementation = (
         bundle,
         itwVersion,
         issuerConf.keys
+      ).catch(
+        enrichErrorWithMetadata({
+          credentialId: bundle.metadata.credentialId,
+          credentialType: bundle.metadata.credentialType
+        })
       );
 
     return {
@@ -459,7 +464,8 @@ export const createCredentialIssuanceActorsImplementation = (
       itwVersion
     ).catch(
       enrichErrorWithMetadata({
-        credentialId: bundle.metadata.credentialId
+        credentialId: bundle.metadata.credentialId,
+        credentialType: bundle.metadata.credentialType
       })
     );
 

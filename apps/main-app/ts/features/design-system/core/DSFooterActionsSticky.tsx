@@ -55,7 +55,6 @@ export const DSFooterActionsSticky = () => {
     useState<LayoutRectangle["y"]>(0);
 
   const handleScroll = useAnimatedScrollHandler(({ contentOffset }) => {
-    // eslint-disable-next-line functional/immutable-data
     scrollY.value = contentOffset.y;
   });
 

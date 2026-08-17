@@ -1,3 +1,5 @@
+import { ThirdPartyMessage } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessage";
+import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
 import { Dispatch } from "redux";
 
 import {
@@ -8,8 +10,6 @@ import {
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
 } from "..";
-import { ThirdPartyMessage } from "../../../../../definitions/communication/ThirdPartyMessage";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/communication/ThirdPartyMessageWithContent";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { startPaymentFlowWithRptIdWorkaround } from "../../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";

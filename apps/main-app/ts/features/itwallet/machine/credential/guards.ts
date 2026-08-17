@@ -7,7 +7,6 @@ import { itwCredentialsEidStatusSelector } from "../../credentials/store/selecto
 import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
-import { CredentialIssuanceFailureType } from "./failure";
 
 export const createCredentialIssuanceGuardsImplementation = (
   store: ReturnType<typeof useIOStore>,
@@ -23,9 +22,6 @@ export const createCredentialIssuanceGuardsImplementation = (
     }
     return isWalletInstanceAttestationValid(itwVersion, attestation);
   },
-
-  isStatusError: ({ context }: { context: Context }) =>
-    context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS,
 
   isEidExpired: () => {
     const eidStatus = itwCredentialsEidStatusSelector(store.getState());

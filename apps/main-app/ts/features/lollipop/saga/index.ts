@@ -1,3 +1,4 @@
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 import {
   deleteKey,
   generate,
@@ -12,7 +13,6 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { call, delay, put, select } from "typed-redux-saga/macro";
 import { v4 as uuid } from "uuid";
 
-import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { mixpanelTrack } from "../../../mixpanel";
 import { restartCleanApplication } from "../../../sagas/commons";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
@@ -42,45 +42,29 @@ import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 const WAIT_A_BIT_AFTER_SESSION_EXPIRED = 1000 as Millisecond;
 
 export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
-  maybePublicKey: O.Option<PublicKey>,
+  publicKey: PublicKey | undefined,
   maybeSessionInformation: O.Option<PublicSession>
 ) {
-  const lollipopCheckResult = pipe(
-    maybeSessionInformation,
-    O.chainNullableK(
-      sessionInformation => sessionInformation.lollipopAssertionRef
-    ),
-    O.chain(sessionLollipopAssertionRef =>
-      pipe(
-        maybePublicKey,
-        O.map(publicKey =>
-          pipe(
-            toBase64EncodedThumbprint(publicKey),
-            publicKeyThumbprint =>
-              `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`,
-            localLollipopAssertionRef =>
-              localLollipopAssertionRef === sessionLollipopAssertionRef
-          )
-        )
-      )
-    ),
-    O.getOrElse(() => false)
-  );
-
-  if (!lollipopCheckResult) {
-    void mixpanelTrack(
-      "LOGIN_UNEXPECTED_REQUEST_ID",
-      buildEventProperties("KO", undefined)
-    );
-    yield* put(sessionInvalid());
-    // We want to take a little time before restarting the application
-    // to let the action sessionInvalid be dispatched and handled.
-    yield* delay(WAIT_A_BIT_AFTER_SESSION_EXPIRED);
-    yield* call(restartCleanApplication);
-    return false;
+  if (O.isSome(maybeSessionInformation) && publicKey) {
+    const publicKeyThumbprint = toBase64EncodedThumbprint(publicKey);
+    const localAssertionRef = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`;
+    const doesLocalAssertionRefMatchSession =
+      localAssertionRef === maybeSessionInformation.value.lollipopAssertionRef;
+    if (doesLocalAssertionRefMatchSession) {
+      return true;
+    }
   }
 
-  return true;
+  void mixpanelTrack(
+    "LOGIN_UNEXPECTED_REQUEST_ID",
+    buildEventProperties("KO", undefined)
+  );
+  yield* put(sessionInvalid());
+  // We want to take a little time before restarting the application
+  // to let the action sessionInvalid be dispatched and handled.
+  yield* delay(WAIT_A_BIT_AFTER_SESSION_EXPIRED);
+  yield* call(restartCleanApplication);
+  return false;
 }
 
 export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
@@ -203,16 +187,12 @@ function* generateCryptoKeyPair(keyTag: string) {
 
 export const generateKeyInfo = (
   keyTag: string | undefined,
-  maybePublicKey: O.Option<PublicKey>
+  maybePublicKey: PublicKey | undefined
 ) => {
-  if (!keyTag) {
+  if (!keyTag || maybePublicKey == null) {
     return defaultKeyInfo();
   }
-  return pipe(
-    maybePublicKey,
-    O.map(publicKey => keyInfoFromKeyTagAndPublicKey(keyTag, publicKey)),
-    O.getOrElse(defaultKeyInfo)
-  );
+  return keyInfoFromKeyTagAndPublicKey(keyTag, maybePublicKey);
 };
 
 const keyInfoFromKeyTagAndPublicKey = (

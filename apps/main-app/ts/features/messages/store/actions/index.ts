@@ -1,3 +1,6 @@
+import { PaymentInfoResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoResponse";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   ActionType,
   createAction,
@@ -5,9 +8,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { UIMessage, UIMessageDetails } from "../../types";
 import { MessageListCategory } from "../../types/messageListCategory";
 import { MessagePaymentError } from "../../types/paymentErrors";

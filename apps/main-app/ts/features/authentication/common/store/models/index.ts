@@ -1,4 +1,5 @@
-import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
+
 import { SpidIdp } from "../../../../../utils/idps";
 
 export type AuthenticationState =

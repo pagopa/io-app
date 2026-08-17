@@ -1,9 +1,9 @@
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { call, put } from "typed-redux-saga/macro";
 
-import { PublicSession } from "../../../../../definitions/session_manager/PublicSession";
 import { SessionManagerClient } from "../../../../api/SessionManagerClientManager";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";

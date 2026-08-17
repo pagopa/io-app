@@ -1,8 +1,8 @@
+import { QtspClause } from "@io-app/api-types/generated/definitions/fci/QtspClause";
 import { Provider } from "react-redux";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 
-import { QtspClause } from "../../../../../definitions/fci/QtspClause";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";

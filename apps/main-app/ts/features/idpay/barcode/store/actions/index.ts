@@ -1,7 +1,7 @@
+import { TransactionBarCodeResponse } from "@io-app/api-types/generated/definitions/idpay/TransactionBarCodeResponse";
+import { TransactionErrorDTO } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
-import { TransactionBarCodeResponse } from "../../../../../../definitions/idpay/TransactionBarCodeResponse";
-import { TransactionErrorDTO } from "../../../../../../definitions/idpay/TransactionErrorDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
 type IdPayGenerateBarcodePayload = {

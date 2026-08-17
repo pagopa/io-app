@@ -1,12 +1,12 @@
+import { InitiativesWithInstrumentDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativesWithInstrumentDTO";
+import { ListUsersOnboardingStatusDTO } from "@io-app/api-types/generated/definitions/idpay/ListUsersOnboardingStatusDTO";
+import { WalletDTO } from "@io-app/api-types/generated/definitions/idpay/WalletDTO";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { InitiativesWithInstrumentDTO } from "../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
-import { ListUsersOnboardingStatusDTO } from "../../../../../../definitions/idpay/ListUsersOnboardingStatusDTO";
-import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
 export type IdPayInitiativesFromInstrumentPayloadType = {

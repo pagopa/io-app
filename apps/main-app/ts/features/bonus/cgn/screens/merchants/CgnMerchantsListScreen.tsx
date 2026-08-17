@@ -1,3 +1,6 @@
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
+import { OfflineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchant";
+import { OnlineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchant";
 import {
   Badge,
   ContentWrapper,
@@ -12,9 +15,6 @@ import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
-import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import {
   getValueOrElse,
   isError,

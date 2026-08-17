@@ -1,7 +1,7 @@
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

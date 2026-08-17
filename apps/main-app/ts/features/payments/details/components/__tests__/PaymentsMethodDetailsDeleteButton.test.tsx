@@ -1,3 +1,8 @@
+import { Range } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/Range";
+import { PaymentMethodManagementTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/PaymentMethodManagementType";
+import { PaymentMethodStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/PaymentMethodStatus";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
+import { WalletStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletStatus";
 import { IOToast } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent, render } from "@testing-library/react-native";
@@ -7,11 +12,6 @@ import { Alert } from "react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 
-import { Range } from "../../../../../../definitions/pagopa/ecommerce/Range";
-import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodManagementType";
-import { PaymentMethodStatusEnum } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodStatus";
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
 import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/profileProperties";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { Store } from "../../../../../store/actions/types";

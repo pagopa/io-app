@@ -1,11 +1,11 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { Sections } from "@io-app/api-types/generated/definitions/content/Sections";
+import { SectionStatus } from "@io-app/api-types/generated/definitions/content/SectionStatus";
 import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { Sections } from "../../../../definitions/content/Sections";
-import { SectionStatus } from "../../../../definitions/content/SectionStatus";
 import { LocalizedMessageKeys } from "../../../i18n";
 import { backendStatusLoadSuccess } from "../../actions/backendStatus";
 import { Action } from "../../actions/types";
