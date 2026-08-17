@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.17](https://github.com/pagopa/io-app/compare/3.38.0-rc.16...3.38.0-rc.17) (2026-08-14)
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Removed unused deprecated functions ([#8459](https://github.com/pagopa/io-app/issues/8459)) ([76db8a3](https://github.com/pagopa/io-app/commit/76db8a3ab5eaeb16fc2c9cc7b4ea35bd59071ea5))
+* [[IOPLT-1963](https://pagopa.atlassian.net/browse/IOPLT-1963)] replaced deprecated `MutableRefObject` with `RefObject` ([#8314](https://github.com/pagopa/io-app/issues/8314)) ([a36f33b](https://github.com/pagopa/io-app/commit/a36f33b92a4368202ab42b6e58b08f8503d8b2e6))
+
 ## [3.38.0-rc.16](https://github.com/pagopa/io-app/compare/3.38.0-rc.15...3.38.0-rc.16) (2026-08-13)
 
 
