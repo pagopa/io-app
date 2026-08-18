@@ -1,8 +1,5 @@
 import { PublicKey, sign } from "@pagopa/io-react-native-crypto";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as A from "fp-ts/lib/Array";
-import { pipe } from "fp-ts/lib/function";
-import * as TE from "fp-ts/lib/TaskEither";
 import URLParse from "url-parse";
 
 import {
@@ -172,31 +169,30 @@ export const customContentSignatureBases = (
   });
 };
 
-export const customContentToSignPromises = (
+export const customContentToSignPromises = async (
   customContent: CutsomContentToSignInput
-): Array<TE.TaskEither<Error, SignPromiseResult>> =>
-  pipe(
-    customContentSignatureBases(customContent),
-    A.map(customContentBase =>
-      pipe(
-        TE.tryCatch(
-          () => sign(customContentBase.signatureBase, customContent.keyTag),
-          error => new Error(`Failed to sign: ${error}`)
+): Promise<Array<SignPromiseResult>> => {
+  const customContentSignature = customContentSignatureBases(customContent);
+  return Promise.all(
+    customContentSignature.map(async customContentBase => {
+      const signedValue = await sign(
+        customContentBase.signatureBase,
+        customContent.keyTag
+      );
+      return {
+        headerIndex: customContentBase.headerIndex,
+        headerPrefix: customContentBase.headerPrefix,
+        headerName: customContentBase.headerName,
+        headerValue: customContentBase.headerValue,
+        signature: toSignatureHeaderValue(
+          signedValue,
+          customContentBase.headerIndex
         ),
-        TE.map(value => ({
-          headerIndex: customContentBase.headerIndex,
-          headerPrefix: customContentBase.headerPrefix,
-          headerName: customContentBase.headerName,
-          headerValue: customContentBase.headerValue,
-          signature: toSignatureHeaderValue(
-            value,
-            customContentBase.headerIndex
-          ),
-          signatureInput: customContentBase.signatureInput
-        }))
-      )
-    )
+        signatureInput: customContentBase.signatureInput
+      };
+    })
   );
+};
 
 export type CustomContentBaseSignature = SignatureBaseResult & {
   headerIndex: number;

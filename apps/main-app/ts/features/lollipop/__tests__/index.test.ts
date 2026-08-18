@@ -1,6 +1,5 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as global from "@pagopa/io-react-native-crypto";
-import * as TE from "fp-ts/lib/TaskEither";
 import URLParse from "url-parse";
 
 import {
@@ -60,8 +59,8 @@ describe("getSignAlgorithm", () => {
 
 describe("chainSignPromises", () => {
   it("should resolve all promises and return results", async () => {
-    const promises = [
-      TE.right({
+    const promises = Promise.all([
+      Promise.resolve({
         headerIndex: 0,
         headerPrefix: "prefix",
         headerName: "name",
@@ -69,7 +68,7 @@ describe("chainSignPromises", () => {
         signature: "sig",
         signatureInput: "input"
       }),
-      TE.right({
+      Promise.resolve({
         headerIndex: 1,
         headerPrefix: "prefix2",
         headerName: "name2",
@@ -77,15 +76,15 @@ describe("chainSignPromises", () => {
         signature: "sig2",
         signatureInput: "input2"
       })
-    ];
+    ]);
 
     const result = await chainSignPromises(promises);
     expect(result).toHaveLength(2);
   });
 
   it("should return an empty array if any promise fails", async () => {
-    const promises = [
-      TE.right({
+    const promises = Promise.all([
+      Promise.resolve({
         headerIndex: 0,
         headerPrefix: "prefix",
         headerName: "name",
@@ -93,8 +92,8 @@ describe("chainSignPromises", () => {
         signature: "sig",
         signatureInput: "input"
       }),
-      TE.left(new Error("Failure"))
-    ];
+      Promise.reject(new Error("Failure"))
+    ]);
 
     const result = await chainSignPromises(promises);
     expect(result).toEqual([]);

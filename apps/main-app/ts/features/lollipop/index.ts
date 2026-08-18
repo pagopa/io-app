@@ -1,5 +1,4 @@
 import { deleteKey, generate, PublicKey } from "@pagopa/io-react-native-crypto";
-import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
@@ -35,6 +34,19 @@ export type SignPromiseResult = {
 };
 
 /**
+ * Await the given promise, returning an empty array if it fails.
+ */
+export const chainSignPromises = async (
+  promise: Promise<Array<SignPromiseResult>>
+): Promise<Array<SignPromiseResult>> => {
+  try {
+    return await promise;
+  } catch {
+    return [];
+  }
+};
+
+/**
  * Returns the http-signature algorithm used to sign the signature base specified by
  * the signature-input header.
  */
@@ -58,18 +70,6 @@ export function toSignatureComponents(
     originalUrl: inputUrl.toString()
   };
 }
-
-/**
- * Chains all custom sign promises passed as its input array.
- */
-export const chainSignPromises = (
-  promises: Array<TE.TaskEither<Error, SignPromiseResult>>
-) =>
-  pipe(
-    promises,
-    A.sequence(TE.ApplicativePar),
-    TE.getOrElse(() => T.of([] as Array<SignPromiseResult>))
-  )();
 
 /**
  * Regenerate publicKey, it returns a Promise
