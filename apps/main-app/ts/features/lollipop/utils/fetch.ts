@@ -2,7 +2,6 @@ import { PublicKey, sign } from "@pagopa/io-react-native-crypto";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import URLParse from "url-parse";
 
@@ -136,47 +135,42 @@ export const lollipopRequestInit = async (
 
 export const customContentSignatureBases = (
   customContent: CutsomContentToSignInput
-): Array<CustomContentBaseSignature> =>
-  pipe(
-    customContent.customContentToSign,
-    O.fromNullable,
-    O.fold(
-      () => [],
-      contentToSign =>
-        pipe(
-          Object.keys(contentToSign),
-          A.mapWithIndex((index, headerPrefix) => {
-            const headerIndex = index + 2;
-            const headerName = `x-pagopa-lollipop-custom-${headerPrefix}`;
-            const headerValue = contentToSign[headerPrefix];
-            const customHeader = {
-              [headerName]: headerValue
-            };
+): Array<CustomContentBaseSignature> => {
+  const { customContentToSign } = customContent;
+  if (!customContentToSign) {
+    return [];
+  }
+  const customContentToSignKeys = Object.keys(customContentToSign);
+  return customContentToSignKeys.map((headerPrefix, index) => {
+    const headerIndex = index + 2;
+    const headerName = `x-pagopa-lollipop-custom-${headerPrefix}`;
+    const headerValue = customContentToSign[headerPrefix];
+    const customHeader = {
+      [headerName]: headerValue
+    };
 
-            const customHeaderSignatureConfig = forgeSignatureConfig(
-              customContent.signatureConfigForgeInput,
-              customContent.keyInfo,
-              [headerName]
-            );
+    const customHeaderSignatureConfig = forgeSignatureConfig(
+      customContent.signatureConfigForgeInput,
+      customContent.keyInfo,
+      [headerName]
+    );
 
-            const { signatureBase, signatureInput } = generateSignatureBase(
-              customHeader,
-              customHeaderSignatureConfig,
-              headerIndex
-            );
+    const { signatureBase, signatureInput } = generateSignatureBase(
+      customHeader,
+      customHeaderSignatureConfig,
+      headerIndex
+    );
 
-            return {
-              signatureBase,
-              signatureInput,
-              headerIndex,
-              headerPrefix,
-              headerName,
-              headerValue
-            };
-          })
-        )
-    )
-  );
+    return {
+      signatureBase,
+      signatureInput,
+      headerIndex,
+      headerPrefix,
+      headerName,
+      headerValue
+    };
+  });
+};
 
 export const customContentToSignPromises = (
   customContent: CutsomContentToSignInput
