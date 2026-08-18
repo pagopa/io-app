@@ -3,9 +3,9 @@ import { Paths } from "expo-file-system";
 
 import { apiUrlPrefix } from "../../../config";
 
-// Paths.cache.uri has a trailing slash; strip it for consistent path joining
+// Paths.cache.uri is a file:// URI with a trailing slash; react-native-blob-util needs a plain path
 export const AttachmentsDirectoryPath =
-  Paths.cache.uri.replace(/\/$/, "") + "/attachments";
+  Paths.cache.uri.replace(/^file:\/\//, "").replace(/\/$/, "") + "/attachments";
 
 /**
  * Builds the save path for the given attachment

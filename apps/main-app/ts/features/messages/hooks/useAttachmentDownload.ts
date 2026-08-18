@@ -104,7 +104,7 @@ export const useAttachmentDownload = (
 
   const handleAttachmentDownloadSuccess = useCallback(
     async (downloadPath: string) => {
-      if (new File(downloadPath).exists) {
+      if (new File(`file://${downloadPath}`).exists) {
         doNavigate();
       } else {
         dispatch(clearRequestedAttachmentDownload());
@@ -141,7 +141,7 @@ export const useAttachmentDownload = (
     // Make sure to cancel whatever download may already be running
     dispatch(cancelPreviousAttachmentDownload());
 
-    if (download && new File(download.path).exists) {
+    if (download && new File(`file://${download.path}`).exists) {
       doNavigate();
     } else {
       dispatch(

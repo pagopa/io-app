@@ -9,7 +9,7 @@ import { AttachmentsDirectoryPath } from "../utils/attachments";
  * Clears cached files for all the attachments
  */
 export function* handleClearAllAttachments() {
-  const dir = new File(AttachmentsDirectoryPath);
+  const dir = new File(`file://${AttachmentsDirectoryPath}`);
   if (dir.exists) {
     yield* call([dir, dir.delete]);
   }
@@ -24,7 +24,7 @@ export function* handleClearAttachment(
 ) {
   const path = action.payload.path;
   if (path) {
-    const file = new File(path);
+    const file = new File(`file://${path}`);
     if (file.exists) {
       yield* call([file, file.delete]);
     }

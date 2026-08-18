@@ -9,7 +9,7 @@ import { getFileNameFromUrl } from "../../components/DocumentViewer";
 import { fciDownloadPreview } from "../../store/actions";
 
 export const FciDownloadPreviewDirectoryPath =
-  Paths.cache.uri.replace(/\/$/, "") + "/fci";
+  Paths.cache.uri.replace(/^file:\/\//, "").replace(/\/$/, "") + "/fci";
 
 /**
  * Builds the save path for the given attachment
