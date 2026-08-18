@@ -9,10 +9,10 @@ import {
   restrainRetryAfterIntervalInMilliseconds
 } from "../attachments";
 
-jest.mock("react-native-fs", () => ({
-  get CachesDirectoryPath() {
-    return "";
-  }
+jest.mock("expo-file-system", () => ({
+  Paths: { cache: { uri: "/" } },
+  File: jest.fn(),
+  Directory: jest.fn()
 }));
 
 jest.mock("../../../../config", () => ({
