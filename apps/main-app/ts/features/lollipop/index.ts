@@ -1,7 +1,9 @@
-import { deleteKey, generate, PublicKey } from "@pagopa/io-react-native-crypto";
-import { pipe } from "fp-ts/lib/function";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
+import {
+  CryptoError,
+  deleteKey,
+  generate,
+  PublicKey
+} from "@pagopa/io-react-native-crypto";
 import URLParse from "url-parse";
 
 import { AppDispatch } from "../../App";
@@ -75,35 +77,35 @@ export function toSignatureComponents(
  * Regenerate publicKey, it returns a Promise
  * with publicKey, if it was succesfully generated
  */
-export const handleRegenerateEphemeralKey = (
+export const handleRegenerateEphemeralKey = async (
   keyTag: string,
   isMixpanelEnabled: boolean | null,
   dispatch: AppDispatch
-) =>
-  pipe(
-    keyTag,
-    taskRegenerateKey,
-    TE.fold(
-      error => {
-        trackLollipopIdpLoginFailure(error.message);
-        if (isMixpanelEnabled) {
-          trackLollipopKeyGenerationFailure(error.message);
-        }
-        dispatch(lollipopRemoveEphemeralPublicKey());
-        return T.of(undefined);
-      },
-      key => {
-        dispatch(lollipopSetEphemeralPublicKey({ publicKey: key }));
-        if (isMixpanelEnabled) {
-          trackLollipopKeyGenerationSuccess(key.kty);
-        }
-        return T.of(key);
-      }
-    )
-  )();
+) => {
+  try {
+    const regeneratedKeyTag = await regenerateKey(keyTag);
 
-export const taskRegenerateKey = (keyTag: string) =>
-  pipe(
-    TE.tryCatch(() => deleteKey(keyTag), toCryptoError),
-    TE.chain(() => TE.tryCatch(() => generate(keyTag), toCryptoError))
-  );
+    dispatch(lollipopSetEphemeralPublicKey({ publicKey: regeneratedKeyTag }));
+    if (isMixpanelEnabled) {
+      trackLollipopKeyGenerationSuccess(regeneratedKeyTag.kty);
+    }
+    return regeneratedKeyTag;
+  } catch (error) {
+    const cryptoError = error as CryptoError;
+    trackLollipopIdpLoginFailure(cryptoError.message);
+    if (isMixpanelEnabled) {
+      trackLollipopKeyGenerationFailure(cryptoError.message);
+    }
+    dispatch(lollipopRemoveEphemeralPublicKey());
+    return undefined;
+  }
+};
+
+export const regenerateKey = async (keyTag: string) => {
+  try {
+    await deleteKey(keyTag);
+    return generate(keyTag);
+  } catch (error) {
+    throw toCryptoError(error);
+  }
+};
