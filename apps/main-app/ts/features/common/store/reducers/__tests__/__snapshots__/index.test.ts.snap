@@ -184,6 +184,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "status": {
         "kind": "PotNone",
       },
+      "statusList": undefined,
       "walletUnitAttestations": {},
     },
   },
