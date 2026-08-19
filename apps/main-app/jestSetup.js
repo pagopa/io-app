@@ -90,6 +90,9 @@ jest.mock("expo-calendar", () => ({
   getCalendarsAsync: jest.fn().mockResolvedValue([]),
   getEventsAsync: jest.fn().mockResolvedValue([]),
 }));
+jest.mock("expo-linear-gradient", () => ({
+  LinearGradient: "LinearGradient"
+}));
 
 jest.mock("expo-local-authentication", () => ({
   AuthenticationType: {
