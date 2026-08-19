@@ -1,7 +1,6 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { Response } from "express";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import fs from "fs";
 import { Validation } from "io-ts";
 
@@ -65,15 +64,15 @@ export const readFileAndDecode = <T>(
   filename: string,
   decode: (i: T) => Validation<T>,
   res: Response
-): Response =>
-  pipe(
-    readFileAsJSON(filename),
-    decode,
-    E.fold(
-      errors => res.status(500).send(readableReport(errors)),
-      v => res.json(v)
-    )
-  );
+) => {
+  const jsonFromFile = readFileAsJSON(filename);
+  const decodeEither = decode(jsonFromFile);
+  if (E.isLeft(decodeEither)) {
+    res.status(500).send(readableReport(decodeEither.left));
+    return;
+  }
+  res.json(decodeEither.right);
+};
 
 export const contentTypeMapping: Record<string, string> = {
   pdf: "application/pdf",
