@@ -384,7 +384,7 @@ export const createEidIssuanceActionsImplementation = (
       "identification mode can not be ciePin"
     );
 
-    trackItwIdAuthenticationCompleted(toItwIdMethod(context.identification));
+    trackItwIdAuthenticationCompleted(context.identification);
   },
 
   // Track SPID+CIE final phase
