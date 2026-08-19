@@ -538,6 +538,7 @@ const EmailInsertScreen = () => {
             <TextInputValidation
               accessibilityErrorLabel={getAccessibilityErrorLabel()}
               accessibilityLabel={I18n.t("email.newinsert.label")}
+              accessibilityValidLabel={validEmailLabel}
               errorMessage={invalidEmailLabel}
               onChangeText={handleOnChangeEmailText}
               onValidate={isValidEmail}
