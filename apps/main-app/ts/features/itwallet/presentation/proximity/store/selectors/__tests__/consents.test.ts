@@ -1,12 +1,15 @@
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { ConsentData } from "../../types";
+import { ConsentData, StoredConsentData } from "../../types";
 import { generateConsentKey } from "../../utils";
 import {
+  itwProximityConsentByKeySelector,
   itwProximityConsentExistsSelector,
   itwProximityConsentsByCredentialTypeSelector,
   itwProximityConsentsByRpIdSelector,
+  itwProximityConsentsEntriesByCredentialTypeSelector,
   itwProximityConsentsEntriesSelector,
-  itwProximityConsentsSelector
+  itwProximityConsentsSelector,
+  itwProximityShouldShowConsentManagementSelector
 } from "../consents";
 
 const mdlConsent: ConsentData = {
@@ -44,7 +47,7 @@ const healthCardOnlyConsent: ConsentData = {
 };
 
 const buildState = (
-  consents: Record<string, ConsentData>
+  consents: Record<string, StoredConsentData>
 ): Pick<GlobalState, "features"> =>
   ({
     features: {
@@ -106,6 +109,95 @@ describe("proximity consent selectors", () => {
           [healthKey, healthCardOnlyConsent]
         ])
       );
+    });
+  });
+
+  describe("itwProximityConsentsEntriesByCredentialTypeSelector", () => {
+    it("filters by credential type and sorts dated entries newest first with legacy entries last", () => {
+      const newestConsent: StoredConsentData = {
+        ...mdlConsent,
+        rpId: "rp-newest",
+        savedAt: "2026-07-20T12:00:00.000Z"
+      };
+      const olderConsent: StoredConsentData = {
+        ...multiCredentialConsent,
+        rpId: "rp-older",
+        savedAt: "2026-07-19T12:00:00.000Z"
+      };
+      const legacyConsent: StoredConsentData = {
+        ...mdlConsent,
+        rpId: "rp-legacy"
+      };
+      const unrelatedConsent: StoredConsentData = {
+        ...healthCardOnlyConsent,
+        rpId: "rp-unrelated",
+        savedAt: "2026-07-21T12:00:00.000Z"
+      };
+      const newestKey = generateConsentKey(newestConsent);
+      const olderKey = generateConsentKey(olderConsent);
+      const legacyKey = generateConsentKey(legacyConsent);
+      const state = buildState({
+        [legacyKey]: legacyConsent,
+        [olderKey]: olderConsent,
+        [generateConsentKey(unrelatedConsent)]: unrelatedConsent,
+        [newestKey]: newestConsent
+      });
+
+      const result = itwProximityConsentsEntriesByCredentialTypeSelector("MDL")(
+        state as GlobalState
+      );
+
+      expect(result).toEqual([
+        [newestKey, newestConsent],
+        [olderKey, olderConsent],
+        [legacyKey, legacyConsent]
+      ]);
+    });
+
+    it("returns an empty array when no consent involves the credential", () => {
+      const result = itwProximityConsentsEntriesByCredentialTypeSelector(
+        "NonExistentType"
+      )(stateWithConsents as GlobalState);
+
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe("itwProximityConsentByKeySelector", () => {
+    it("returns the consent matching the deterministic key", () => {
+      expect(
+        itwProximityConsentByKeySelector(mdlKey)(
+          stateWithConsents as GlobalState
+        )
+      ).toEqual(mdlConsent);
+    });
+
+    it("returns undefined when the key does not exist", () => {
+      expect(
+        itwProximityConsentByKeySelector("missing")(
+          stateWithConsents as GlobalState
+        )
+      ).toBeUndefined();
+    });
+  });
+
+  describe("itwProximityShouldShowConsentManagementSelector", () => {
+    it("returns true when a consent exists for the credential", () => {
+      const state = buildState({ [mdlKey]: mdlConsent });
+
+      expect(
+        itwProximityShouldShowConsentManagementSelector("MDL")(
+          state as GlobalState
+        )
+      ).toBe(true);
+    });
+
+    it("returns false when no consent exists for the credential", () => {
+      expect(
+        itwProximityShouldShowConsentManagementSelector("MDL")(
+          emptyState as GlobalState
+        )
+      ).toBe(false);
     });
   });
 
