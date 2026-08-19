@@ -2,7 +2,13 @@ import { OfflineMerchant } from "@io-app/api-types/generated/definitions/cgn/mer
 import { OfflineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchants";
 import { OnlineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchant";
 import { OnlineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchants";
+import { useMemo } from "react";
 
+import {
+  getValueOrElse,
+  isReady,
+  RemoteValue
+} from "../../../../common/model/RemoteValue";
 import { MerchantsAll } from "../screens/merchants/CgnMerchantsListScreen";
 
 export const mixAndSortMerchants = (
@@ -31,4 +37,24 @@ export const mixAndSortMerchants = (
     );
 
   return [...merchantsWithNewDiscounts, ...merchantsWithoutNewDiscounts];
+};
+
+// Merges and sorts online/offline merchants only once both remote values are ready
+export const useMixedSortedMerchants = (
+  onlineMerchants: RemoteValue<OnlineMerchants["items"], unknown>,
+  offlineMerchants: RemoteValue<OfflineMerchants["items"], unknown>
+) => {
+  const bothMerchantsReady =
+    isReady(onlineMerchants) && isReady(offlineMerchants);
+
+  return useMemo(
+    () =>
+      bothMerchantsReady
+        ? mixAndSortMerchants(
+            getValueOrElse(onlineMerchants, []),
+            getValueOrElse(offlineMerchants, [])
+          )
+        : [],
+    [bothMerchantsReady, onlineMerchants, offlineMerchants]
+  );
 };
