@@ -1,12 +1,10 @@
-import {
-  BodySmall,
-  H3,
-  IOPictograms,
-  Pictogram,
-  useIOTheme,
-  VSpacer
-} from "@io-app/design-system";
+import { BodySmall, H3, useIOTheme, VSpacer } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
+
+import {
+  AnimatedPictogram,
+  IOAnimatedPictograms
+} from "../../../../components/ui/AnimatedPictogram";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +17,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  pictogram: IOPictograms;
+  pictogram: IOAnimatedPictograms;
   subtitle?: string;
   title: string;
 };
@@ -33,7 +31,7 @@ export const PreconditionsFeedback = ({
 
   return (
     <View style={styles.container}>
-      <Pictogram name={pictogram} size={120} />
+      <AnimatedPictogram name={pictogram} size={120} />
       <VSpacer size={24} />
       <H3
         color={theme["textHeading-secondary"]}
