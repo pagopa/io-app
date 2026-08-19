@@ -48,6 +48,7 @@ export const ItwCiePreparationNfcScreen = () => {
         `features.itWallet.identification.cie.prepare.nfc.description`
       )}
       imageSrc={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif")}
+      posterSrc={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc_poster.png")}
       title={I18n.t(`features.itWallet.identification.cie.prepare.nfc.title`)}
     >
       {infoBottomSheet.bottomSheet}
