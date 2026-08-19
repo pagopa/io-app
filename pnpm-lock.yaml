@@ -716,8 +716,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       semver:
-        specifier: ^5.7.2
-        version: 5.7.2
+        specifier: ^7.0.0
+        version: 7.8.5
       sha.js:
         specifier: ^2.4.11
         version: 2.4.12
@@ -8146,6 +8146,7 @@ packages:
 
   jsrsasign@11.1.0:
     resolution: {integrity: sha512-Ov74K9GihaK9/9WncTe1mPmvrO7Py665TUfUKvraXBpu+xcTWitrtuOwcjf4KMU9maPaYn0OuaWy0HOzy/GBXg==}
+    deprecated: This package is no longer maintained.
 
   jsx-ast-utils-x@0.1.0:
     resolution: {integrity: sha512-eQQBjBnsVtGacsG9uJNB8qOr3yA8rga4wAaGG1qRcBzSIvfhERLrWxMAM1hp5fcS6Abo8M4+bUBTekYR0qTPQw==}
@@ -17934,7 +17935,7 @@ snapshots:
       '@simple-libs/stream-utils': 2.0.0
       argue-cli: 3.1.0
       conventional-commits-filter: 6.0.1
-      semver: 7.7.4
+      semver: 7.8.5
 
   conventional-changelog@3.1.21:
     dependencies:
@@ -24621,7 +24622,7 @@ snapshots:
       find-up: 4.1.0
       fs-access: 1.0.1
       git-semver-tags: 4.0.0
-      semver: 7.7.4
+      semver: 7.8.5
       stringify-package: 1.0.1
       yargs: 15.4.1
 
