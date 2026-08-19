@@ -1,6 +1,7 @@
+/* eslint-disable functional/immutable-data */
+import * as ScreenBrightness from "expo-brightness";
 import { useCallback, useEffect, useRef } from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
-import ScreenBrightness from "react-native-screen-brightness";
 
 // The maximum brightness
 const HIGH_BRIGHTNESS = 1;
@@ -74,14 +75,15 @@ export function useMaxBrightness({
   const getBrightness = useCallback(
     async () =>
       Platform.select({
-        ios: () => ScreenBrightness.getBrightness(),
+        ios: async () => await ScreenBrightness.getBrightnessAsync(),
         default: async () => {
-          const appBrightness = await ScreenBrightness.getAppBrightness();
+          const appBrightness = await ScreenBrightness.getBrightnessAsync();
           if (appBrightness < 0) {
             // On Android, if the app brightness is less than 0 mean that is using the preferred brightness (auto)
             autoBrightness.current = true;
             // In this case we use the preferred brightness of the device, which spans from 0 to 255
-            const brightness = await ScreenBrightness.getBrightness();
+            const brightness =
+              await ScreenBrightness.getSystemBrightnessAsync();
             // Then we normalize it to the 0-1 range
             return brightness / ANDROID_MAX_BRIGHTNESS;
           }
@@ -108,13 +110,16 @@ export function useMaxBrightness({
     }
     const brightness = initialBrightness.current;
     await Platform.select({
-      ios: () => ScreenBrightness.setBrightness(brightness),
+      ios: async () => await ScreenBrightness.setBrightnessAsync(brightness),
       default: async () => {
         if (autoBrightness.current) {
           // Restore auto brightness
-          return await ScreenBrightness.setAppBrightness(-1);
+          return await ScreenBrightness.setBrightnessAsync(-1);
         } else {
-          return await ScreenBrightness.setAppBrightness(brightness);
+          const { status } = await ScreenBrightness.requestPermissionsAsync();
+          if (status === "granted") {
+            return await ScreenBrightness.setSystemBrightnessAsync(brightness);
+          }
         }
       }
     })();
@@ -130,10 +135,7 @@ export function useMaxBrightness({
    */
   const setBrightness = useCallback(
     async (brightness: number) =>
-      Platform.select({
-        ios: () => ScreenBrightness.setBrightness(brightness),
-        default: async () => await ScreenBrightness.setAppBrightness(brightness)
-      })(),
+      await ScreenBrightness.setBrightnessAsync(brightness),
     []
   );
 
