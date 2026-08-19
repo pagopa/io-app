@@ -4,9 +4,11 @@ import { Env } from "../environment";
 import { getWalletUnitAttestation } from "../itwAttestationUtils";
 import {
   generateKeysWithWalletUnitAttestation,
-  requestCredential
+  requestCredential,
+  shouldRefillBatch
 } from "../itwCredentialIssuanceUtils";
 import { getIoWallet } from "../itwIoWallet";
+import { CredentialType } from "../itwMocksUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
@@ -329,4 +331,54 @@ describe("requestCredential", () => {
 
     expect(startUserAuthorization).not.toHaveBeenCalled();
   });
+});
+
+describe("shouldRefillBatch", () => {
+  type Scenario = {
+    credentialType: string;
+    expected: boolean;
+    keyTags?: Array<string>;
+    name: string;
+  };
+
+  const scenarios: ReadonlyArray<Scenario> = [
+    {
+      name: "a batch credential with more copies than the threshold",
+      credentialType: CredentialType.PROOF_OF_AGE,
+      keyTags: ["kt-1", "kt-2", "kt-3"],
+      expected: false
+    },
+    {
+      name: "a batch credential exactly at the threshold",
+      credentialType: CredentialType.PROOF_OF_AGE,
+      keyTags: ["kt-1", "kt-2"],
+      expected: true
+    },
+    {
+      name: "a batch credential below the threshold",
+      credentialType: CredentialType.PROOF_OF_AGE,
+      keyTags: ["kt-1"],
+      expected: true
+    },
+    {
+      name: "a credential type not configured for batch issuance",
+      credentialType: CredentialType.DRIVING_LICENSE,
+      keyTags: ["kt-1"],
+      expected: false
+    },
+    {
+      name: "a credential without keyTags",
+      credentialType: CredentialType.PROOF_OF_AGE,
+      expected: false
+    }
+  ];
+
+  test.each(scenarios)(
+    "should return $expected for $name",
+    ({ credentialType, keyTags, expected }) => {
+      expect(
+        shouldRefillBatch({ credentialType, keyTag: "kt-1", keyTags })
+      ).toBe(expected);
+    }
+  );
 });
