@@ -2,20 +2,29 @@ import { act, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 
-import { applicationChangeState } from "../../../store/actions/application";
+import {
+  applicationChangeState,
+  startApplicationInitialization
+} from "../../../store/actions/application";
 import * as ioHook from "../../../store/hooks";
 import { appReducer } from "../../../store/reducers";
 import * as backendStatusSelectors from "../../../store/reducers/backendStatus/remoteConfig";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
+import { setConnectionStatus } from "../../connectivity/store/actions";
 import * as selectors from "../../connectivity/store/selectors";
 import { identificationRequest } from "../../identification/store/actions";
 import { IdentificationBackActionType } from "../../identification/store/reducers";
 import * as itwSelectors from "../../itwallet/common/store/selectors";
 import { IngressScreen } from "../screens/IngressScreen";
+import { isBlockingScreenSelector } from "../store/selectors";
 
 jest.useFakeTimers();
 
 describe(IngressScreen, () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it("Should be defined", () => {
     const component = renderComponent();
 
@@ -140,6 +149,84 @@ describe(IngressScreen, () => {
       ).toBeTruthy();
       expect(getFirstText()).toBeNull();
       expect(getSecondText()).toBeNull();
+    });
+  });
+
+  describe("IngressScreen recovering from offline -> online", () => {
+    beforeEach(() => {
+      jest.clearAllTimers();
+      jest.clearAllMocks();
+    });
+
+    it("resets the stale isBlockingScreen flag and restarts the bootstrap saga once connectivity is restored", async () => {
+      jest
+        .spyOn(itwSelectors, "itwOfflineAccessAvailableSelector")
+        .mockImplementation(() => false);
+      const isConnectedMock = jest
+        .spyOn(selectors, "isConnectedSelector")
+        .mockImplementation(() => false);
+
+      const initialState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+      const store = createStore(appReducer, initialState as any);
+      const dispatchSpy = jest.spyOn(store, "dispatch");
+
+      const { findByTestId, queryByTestId } =
+        renderScreenWithNavigationStoreContext(
+          IngressScreen,
+          "NO_ROUTE",
+          {},
+          store
+        );
+
+      await findByTestId("device-connection-lost-id");
+      expect(isBlockingScreenSelector(store.getState())).toBe(true);
+
+      // Connectivity is restored.
+      isConnectedMock.mockImplementation(() => true);
+      act(() => {
+        store.dispatch(setConnectionStatus(true));
+      });
+
+      await waitFor(() => {
+        expect(isBlockingScreenSelector(store.getState())).toBe(false);
+      });
+      expect(dispatchSpy).toHaveBeenCalledWith(
+        startApplicationInitialization()
+      );
+      expect(queryByTestId("device-connection-lost-id")).toBeNull();
+      expect(queryByTestId("device-blocking-screen-id")).toBeNull();
+    });
+
+    it("does not touch isBlockingScreen when the app was never offline", async () => {
+      jest
+        .spyOn(itwSelectors, "itwOfflineAccessAvailableSelector")
+        .mockImplementation(() => false);
+
+      const initialState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+      const store = createStore(appReducer, initialState as any);
+      const dispatchSpy = jest.spyOn(store, "dispatch");
+
+      renderScreenWithNavigationStoreContext(
+        IngressScreen,
+        "NO_ROUTE",
+        {},
+        store
+      );
+
+      act(() => {
+        store.dispatch(setConnectionStatus(true));
+      });
+
+      expect(isBlockingScreenSelector(store.getState())).toBe(false);
+      expect(dispatchSpy).not.toHaveBeenCalledWith(
+        startApplicationInitialization()
+      );
     });
   });
 });
