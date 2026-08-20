@@ -21,6 +21,10 @@ import { isBlockingScreenSelector } from "../store/selectors";
 jest.useFakeTimers();
 
 describe(IngressScreen, () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it("Should be defined", () => {
     const component = renderComponent();
 
