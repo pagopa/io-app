@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.18](https://github.com/pagopa/io-app/compare/3.38.0-rc.17...3.38.0-rc.18) (2026-08-18)
+
 ## [3.38.0-rc.17](https://github.com/pagopa/io-app/compare/3.38.0-rc.16...3.38.0-rc.17) (2026-08-14)
 
 
