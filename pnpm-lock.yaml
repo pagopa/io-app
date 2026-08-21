@@ -937,16 +937,6 @@ importers:
         version: 8.65.0(eslint@9.39.4(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3)
 
   libs/api-types:
-    dependencies:
-      '@pagopa/ts-commons':
-        specifier: ^10.15.0
-        version: 10.15.0(supports-color@8.1.1)
-      fp-ts:
-        specifier: ^2.16.9
-        version: 2.16.11
-      io-ts:
-        specifier: ^2.2.22
-        version: 2.2.22(fp-ts@2.16.11)
     devDependencies:
       '@pagopa/openapi-codegen-ts':
         specifier: ^14.0.0
