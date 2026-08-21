@@ -1,4 +1,3 @@
-import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -42,7 +41,7 @@ export function* handleGetEycaStatus(
       eycaInformationRequest,
       getEycaStatusAction
     )) as unknown as SagaCallReturnType<typeof getEycaStatus>;
-    if (E.isLeft(eycaInformationResult)) {
+    if ("left" in eycaInformationResult) {
       yield* put(
         cgnEycaStatus.failure(
           getGenericError(

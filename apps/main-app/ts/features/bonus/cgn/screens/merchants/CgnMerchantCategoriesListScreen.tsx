@@ -35,10 +35,7 @@ export type CategoryRow = {
   id: string;
 };
 
-type CategorySpecs = Extract<
-  ReturnType<typeof getCategorySpecs>,
-  { value: unknown }
->["value"];
+type CategorySpecs = NonNullable<ReturnType<typeof getCategorySpecs>>;
 
 type RenderableCategory = {
   category: ProductCategoryWithNewDiscountsCount;
@@ -56,11 +53,9 @@ const getRenderableCategories = (
   categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount>
 ): ReadonlyArray<RenderableCategory> =>
   categories.flatMap(category => {
-    const specsOption = getCategorySpecs(category.productCategory);
+    const specs = getCategorySpecs(category.productCategory);
 
-    return "value" in specsOption
-      ? [{ category, specs: specsOption.value }]
-      : [];
+    return specs ? [{ category, specs }] : [];
   });
 
 const getCategoryRows = (

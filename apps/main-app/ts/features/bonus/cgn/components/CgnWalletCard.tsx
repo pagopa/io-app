@@ -1,6 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -16,13 +14,11 @@ const WrappedCgnCard = (props: CgnWalletCardProps) => {
   const navigation = useIONavigation();
   const profilePot = useIOSelector(profileSelector);
 
-  const isUnder31 = pipe(
-    pot.toOption(profilePot),
-    O.chainNullableK(({ date_of_birth }) => date_of_birth),
-    O.map(birthDate => new Date().getFullYear() - birthDate.getFullYear()),
-    O.map(years => years < 31),
-    O.getOrElse(() => false)
-  );
+  const birthDate = pot.toUndefined(profilePot)?.date_of_birth;
+  const isUnder31 =
+    birthDate !== undefined
+      ? new Date().getFullYear() - birthDate.getFullYear() < 31
+      : false;
 
   const handleCardPress = () => {
     navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
