@@ -248,7 +248,7 @@ importers:
         version: 4.0.1
       lodash:
         specifier: ^4.17.21
-        version: 4.17.21
+        version: 4.18.1
       morgan:
         specifier: ^1.10.1
         version: 1.11.0(supports-color@8.1.1)
@@ -564,7 +564,7 @@ importers:
         version: 0.1.4
       lodash:
         specifier: ^4.17.21
-        version: 4.17.21
+        version: 4.18.1
       mixpanel-react-native:
         specifier: 3.3.0
         version: 3.3.0(@react-native-async-storage/async-storage@2.0.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)))(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))
@@ -6542,6 +6542,7 @@ packages:
   eslint@9.39.4:
     resolution: {integrity: sha512-XoMjdBOwe/esVgEvLmNsD3IRHkm7fbKIUGvrleloJXUZgDHig2IPWNniv+GwjyJXzuNqVjlr5+4yVUZjycJwfQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -8146,6 +8147,7 @@ packages:
 
   jsrsasign@11.1.0:
     resolution: {integrity: sha512-Ov74K9GihaK9/9WncTe1mPmvrO7Py665TUfUKvraXBpu+xcTWitrtuOwcjf4KMU9maPaYn0OuaWy0HOzy/GBXg==}
+    deprecated: This package is no longer maintained.
 
   jsx-ast-utils-x@0.1.0:
     resolution: {integrity: sha512-eQQBjBnsVtGacsG9uJNB8qOr3yA8rga4wAaGG1qRcBzSIvfhERLrWxMAM1hp5fcS6Abo8M4+bUBTekYR0qTPQw==}
@@ -8436,6 +8438,9 @@ packages:
 
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+
+  lodash@4.18.1:
+    resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
 
   log-symbols@2.2.0:
     resolution: {integrity: sha512-VeIAFslyIerEJLXHziedo2basKbMKtTw3vfn5IzG0XTjhAVEJyNHnL2p7vc+wBDSdQuUpNw3M2u6xb9QsAY5Eg==}
@@ -14292,7 +14297,7 @@ snapshots:
       '@oclif/errors': 1.3.6
       chalk: 4.1.2
       indent-string: 4.0.0
-      lodash: 4.17.21
+      lodash: 4.18.1
       string-width: 4.2.3
       strip-ansi: 6.0.1
       widest-line: 3.1.0
@@ -17655,7 +17660,7 @@ snapshots:
       indent-string: 4.0.0
       is-wsl: 2.2.0
       js-yaml: 3.14.0
-      lodash: 4.17.21
+      lodash: 4.18.1
       natural-orderby: 2.0.3
       object-treeify: 1.1.33
       password-prompt: 1.1.3
@@ -17859,13 +17864,13 @@ snapshots:
   conventional-changelog-conventionalcommits@4.3.0:
     dependencies:
       compare-func: 1.3.4
-      lodash: 4.17.21
+      lodash: 4.18.1
       q: 1.5.1
 
   conventional-changelog-conventionalcommits@4.6.3:
     dependencies:
       compare-func: 2.0.0
-      lodash: 4.17.21
+      lodash: 4.18.1
       q: 1.5.1
 
   conventional-changelog-conventionalcommits@6.1.0:
@@ -17882,7 +17887,7 @@ snapshots:
       git-raw-commits: 2.0.0
       git-remote-origin-url: 2.0.0
       git-semver-tags: 4.0.0
-      lodash: 4.17.21
+      lodash: 4.18.1
       normalize-package-data: 2.5.0
       q: 1.5.1
       read-pkg: 3.0.0
@@ -17922,7 +17927,7 @@ snapshots:
       dateformat: 3.0.3
       handlebars: 4.7.7
       json-stringify-safe: 5.0.1
-      lodash: 4.17.21
+      lodash: 4.18.1
       meow: 7.0.1
       semver: 6.3.1
       split: 1.0.1
@@ -17974,7 +17979,7 @@ snapshots:
     dependencies:
       JSONStream: 1.3.5
       is-text-path: 1.0.1
-      lodash: 4.17.21
+      lodash: 4.18.1
       meow: 7.0.1
       split2: 2.2.0
       through2: 3.0.2
@@ -18725,14 +18730,14 @@ snapshots:
     dependencies:
       '@babel/eslint-parser': 7.27.0(@babel/core@7.29.0(supports-color@8.1.1))(eslint@9.39.4(jiti@2.7.0)(supports-color@8.1.1))
       eslint: 9.39.4(jiti@2.7.0)(supports-color@8.1.1)
-      lodash: 4.17.21
+      lodash: 4.18.1
       string-natural-compare: 3.0.1
 
   eslint-plugin-ft-flow@3.0.11(eslint@9.39.4(jiti@2.7.0)(supports-color@8.1.1))(hermes-eslint@0.32.1):
     dependencies:
       eslint: 9.39.4(jiti@2.7.0)(supports-color@8.1.1)
       hermes-eslint: 0.32.1
-      lodash: 4.17.21
+      lodash: 4.18.1
       string-natural-compare: 3.0.1
 
   eslint-plugin-functional@10.0.0(eslint@9.39.4(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3):
@@ -18751,7 +18756,7 @@ snapshots:
 
   eslint-plugin-i18next@6.1.3:
     dependencies:
-      lodash: 4.17.21
+      lodash: 4.18.1
       requireindex: 1.1.0
 
   eslint-plugin-import@2.32.0(@typescript-eslint/parser@5.62.0(eslint@9.39.4(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3))(eslint@9.39.4(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1):
@@ -21357,6 +21362,8 @@ snapshots:
 
   lodash@4.17.21: {}
 
+  lodash@4.18.1: {}
+
   log-symbols@2.2.0:
     dependencies:
       chalk: 2.4.2
@@ -22354,7 +22361,7 @@ snapshots:
       http2-wrapper: 2.2.1
       https-proxy-agent: 7.0.6(supports-color@8.1.1)
       isomorphic-ws: 4.0.1(ws@8.20.0)
-      lodash: 4.17.21
+      lodash: 4.18.1
       milliparsec: 5.1.1
       native-duplexpair: 1.0.0
       pac-proxy-agent: 7.2.0(supports-color@8.1.1)
