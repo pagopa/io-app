@@ -938,9 +938,6 @@ importers:
 
   libs/api-types:
     dependencies:
-      '@pagopa/ts-commons':
-        specifier: ^10.15.0
-        version: 10.15.0(supports-color@8.1.1)
       fp-ts:
         specifier: ^2.16.9
         version: 2.16.11
