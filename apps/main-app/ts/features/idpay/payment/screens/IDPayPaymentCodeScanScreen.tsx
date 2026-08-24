@@ -8,7 +8,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
@@ -96,7 +95,6 @@ const IDPayPaymentCodeScan = () => {
           barcodeAnalyticsFlow="idpay"
           barcodeFormats={barcodeFormats}
           barcodeTypes={barcodeTypes}
-          contextualHelp={emptyContextualHelp}
           isDisabled={isFilePickerVisible || isFileReaderLoading}
           isLoading={isFileReaderLoading}
           onBarcodeError={handleBarcodeError}
