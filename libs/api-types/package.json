@@ -12,5 +12,9 @@
   "devDependencies": {
     "@pagopa/openapi-codegen-ts": "^14.0.0",
     "typescript": "catalog:"
+  },
+  "dependencies": {
+    "fp-ts": "^2.16.9",
+    "io-ts": "^2.2.22"
   }
 }
