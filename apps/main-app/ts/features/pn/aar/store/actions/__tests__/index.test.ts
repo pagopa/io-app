@@ -1,3 +1,6 @@
+import { MessageBodyMarkdown } from "@io-app/api-types/generated/definitions/communication/MessageBodyMarkdown";
+import { MessageSubject } from "@io-app/api-types/generated/definitions/communication/MessageSubject";
+import { ThirdPartyMessage } from "@io-app/api-types/generated/definitions/pn/ThirdPartyMessage";
 import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import {
@@ -7,9 +10,6 @@ import {
   setAarFlowState,
   terminateAarFlow
 } from "..";
-import { MessageBodyMarkdown } from "../../../../../../../definitions/communication/MessageBodyMarkdown";
-import { MessageSubject } from "../../../../../../../definitions/communication/MessageSubject";
-import { ThirdPartyMessage } from "../../../../../../../definitions/pn/ThirdPartyMessage";
 import { AarFlowState, sendAarFlowStates } from "../../../utils/stateUtils";
 
 describe("AarFlowStateActions", () => {

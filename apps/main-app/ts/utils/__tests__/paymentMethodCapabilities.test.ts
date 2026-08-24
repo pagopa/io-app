@@ -1,4 +1,5 @@
-import { EnableableFunctionsEnum } from "../../../definitions/pagopa/EnableableFunctions";
+import { EnableableFunctionsEnum } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
+
 import { CreditCardPaymentMethod, PaymentMethod } from "../../types/pagopa";
 import {
   hasPaymentFeature,

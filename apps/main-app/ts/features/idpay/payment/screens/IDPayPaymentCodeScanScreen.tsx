@@ -1,17 +1,13 @@
-import { IOToast } from "@io-app/design-system";
+import { IOToast, triggerHaptic } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { Alert, View } from "react-native";
-import ReactNativeHapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
 
 import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
@@ -53,7 +49,7 @@ const IDPayPaymentCodeScan = () => {
 
     const barcode = barcodes[0];
 
-    ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+    triggerHaptic("notificationSuccess");
 
     analytics.trackBarcodeScanSuccess("idpay", barcode, origin);
 
@@ -99,7 +95,6 @@ const IDPayPaymentCodeScan = () => {
           barcodeAnalyticsFlow="idpay"
           barcodeFormats={barcodeFormats}
           barcodeTypes={barcodeTypes}
-          contextualHelp={emptyContextualHelp}
           isDisabled={isFilePickerVisible || isFileReaderLoading}
           isLoading={isFileReaderLoading}
           onBarcodeError={handleBarcodeError}

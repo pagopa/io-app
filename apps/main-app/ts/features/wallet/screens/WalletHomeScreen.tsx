@@ -181,7 +181,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     useCallback(() => {
       if (isNewElementAdded.current) {
         IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
-        // eslint-disable-next-line functional/immutable-data
         isNewElementAdded.current = false;
       }
       if (isRequiredEidFeedback.current) {
@@ -190,7 +189,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
           survey_page: route.name
         });
         itwFeedbackBottomSheet.present();
-        // eslint-disable-next-line functional/immutable-data
         isRequiredEidFeedback.current = false;
       }
     }, [

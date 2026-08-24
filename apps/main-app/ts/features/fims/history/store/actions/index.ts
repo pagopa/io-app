@@ -1,10 +1,10 @@
+import { AccessHistoryPage } from "@io-app/api-types/generated/definitions/fims_history/AccessHistoryPage";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { AccessHistoryPage } from "../../../../../../definitions/fims_history/AccessHistoryPage";
 import { FimsExportSuccessStates } from "../reducer";
 
 export type FimsHistoryGetPayloadType = {

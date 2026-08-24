@@ -1,3 +1,4 @@
+import { CitizenStatus } from "@io-app/api-types/generated/definitions/cdc/CitizenStatus";
 import {
   Avatar,
   Body,
@@ -11,7 +12,6 @@ import { format } from "date-fns";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
-import { CitizenStatus } from "../../../../../../definitions/cdc/CitizenStatus.ts";
 import WalletCardShape from "../../../../../../img/features/cdc/cdc_wallet_card.svg";
 import DarkModeWalletCardShape from "../../../../../../img/features/cdc/cdc_wallet_card_dark.svg";
 import { contentRepoUrl } from "../../../../../config.ts";

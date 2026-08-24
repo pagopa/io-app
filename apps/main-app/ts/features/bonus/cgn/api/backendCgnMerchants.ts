@@ -1,10 +1,4 @@
 import {
-  ApiHeaderJson,
-  composeHeaderProducers,
-  createFetchRequestForApi
-} from "@pagopa/ts-commons/lib/requests";
-
-import {
   countDefaultDecoder,
   CountT,
   getDiscountBucketCodeDefaultDecoder,
@@ -19,7 +13,13 @@ import {
   GetPublishedProductCategoriesT,
   searchDefaultDecoder,
   SearchT
-} from "../../../../../definitions/cgn/merchants/requestTypes";
+} from "@io-app/api-types/generated/definitions/cgn/merchants/requestTypes";
+import {
+  ApiHeaderJson,
+  composeHeaderProducers,
+  createFetchRequestForApi
+} from "@pagopa/ts-commons/lib/requests";
+
 import { tokenHeaderProducer, withBearerToken } from "../../../../utils/api";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 

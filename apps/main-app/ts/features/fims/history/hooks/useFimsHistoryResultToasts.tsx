@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { IOToast } from "@io-app/design-system";
 import { constVoid } from "fp-ts/lib/function";
 import I18n from "i18next";

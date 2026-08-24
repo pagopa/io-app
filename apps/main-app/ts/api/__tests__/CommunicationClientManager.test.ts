@@ -1,9 +1,12 @@
 import { KeyInfo } from "../../features/lollipop/utils/crypto";
 import { TestCommunicationClientManager } from "../CommunicationClientManager";
 
-jest.mock("../../../definitions/communication/client", () => ({
-  createClient: jest.fn(() => ({ _type: "communication", id: Math.random() }))
-}));
+jest.mock(
+  "@io-app/api-types/generated/definitions/communication/client",
+  () => ({
+    createClient: jest.fn(() => ({ _type: "communication", id: Math.random() }))
+  })
+);
 
 jest.mock("../../features/lollipop/utils/fetch", () => ({
   lollipopFetch: jest.fn(() => jest.fn())

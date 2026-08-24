@@ -1,8 +1,8 @@
+import { InfoNotice } from "@io-app/api-types/generated/definitions/pagopa/biz-events/InfoNotice";
 import { Body, IOSkeleton, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { View } from "react-native";
 
-import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { formatAmountText, isValidPspName } from "../utils";
 
 type Props = {

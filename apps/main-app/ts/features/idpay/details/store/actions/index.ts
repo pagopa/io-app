@@ -1,9 +1,9 @@
+import { InitiativeDetailDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDetailDTO";
+import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { OnboardingStatusDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
+import { TimelineDTO } from "@io-app/api-types/generated/definitions/idpay/TimelineDTO";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
-import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { OnboardingStatusDTO } from "../../../../../../definitions/idpay/OnboardingStatusDTO";
-import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
 type IdPayInitiativeGetPayloadType = { initiativeId: string };

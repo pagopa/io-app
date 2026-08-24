@@ -1,9 +1,9 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { FooterActions, useIOToast } from "@io-app/design-system";
 import { useLinkTo } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useCallback } from "react";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   useIODispatch,
   useIOSelector,
