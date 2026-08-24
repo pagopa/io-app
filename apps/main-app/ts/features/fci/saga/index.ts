@@ -213,7 +213,7 @@ function* clearFciDownloadPreview(
 }
 
 function* deletePath(path: string) {
-  const file = new File(`file://${path}`);
+  const file = new File(path);
   if (file.exists) {
     yield* call([file, file.delete]);
   }
