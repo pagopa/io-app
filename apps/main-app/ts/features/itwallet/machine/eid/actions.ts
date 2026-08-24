@@ -315,7 +315,11 @@ export const createEidIssuanceActionsImplementation = (
     // - credential-triggered activation (credentialType set): user skips success page
     // - upgrade flow (mode === "upgrade")
     // Regular issuance with "Add document" CTA keeps the banner on the success page directly.
-    if (!context.credentialType && context.mode !== "upgrade") {
+    // This survey is reserved to IT-Wallet (L3): "Documenti su IO" (L2/l2-fallback) must never trigger it.
+    if (
+      context.level !== "l3" ||
+      (!context.credentialType && context.mode !== "upgrade")
+    ) {
       return;
     }
     const docStatus = context.mode === "upgrade" ? "active" : "not_active";
