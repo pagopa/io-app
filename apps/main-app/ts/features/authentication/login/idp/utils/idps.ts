@@ -3,18 +3,17 @@ import { Idp, Idps } from "../types/idps";
 
 /**
  * Base URL of the CDN serving OneIdentity IDPs logos. The image for a given
- * IDP is available at `<CDN>/<base64(entityID)>.png`, and its dark-mode
- * variant at `<CDN>/<base64(entityID)>-dark.png`.
+ * IDP is available at `<CDN>/<base64url(entityID)>.png`, and its dark-mode
+ * variant at `<CDN>/<base64url(entityID)>-dark.png`.
  */
 const IDPS_LOGO_CDN_URL = "https://assets.oneid.pagopa.it/assets/idps";
 
 /**
  * Computes the light and dark logo URLs for a given OneIdentity IDP
- * based on its base64-encoded `entityID`.
+ * based on its base64url-encoded `entityID`.
  */
 const getIdpLogos = (entityID: Idp["entityID"]) => {
-  const base64EntityId = Buffer.from(entityID).toString("base64");
-  const encodedId = encodeURIComponent(base64EntityId);
+  const encodedId = Buffer.from(entityID).toString("base64url");
 
   const baseUrl = `${IDPS_LOGO_CDN_URL}/${encodedId}`;
 
