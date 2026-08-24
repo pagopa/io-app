@@ -120,7 +120,6 @@ const ForceScrollDownView = ({
       contentHeight.value - (threshold ?? 0),
     (crossed, previous) => {
       if (crossed !== previous) {
-        // eslint-disable-next-line functional/immutable-data
         isButtonVisible.value = withSpring(
           crossed && scrollEnabled ? 0 : 1,
           IOSpringValues.button
@@ -137,7 +136,6 @@ const ForceScrollDownView = ({
    * state with the new content height.
    */
   const handleContentSizeChange = useCallback(
-    // eslint-disable-next-line functional/immutable-data
     (_w: number, h: number) => (contentHeight.value = h),
     [contentHeight]
   );
@@ -148,7 +146,6 @@ const ForceScrollDownView = ({
    */
   const handleLayout = useCallback(
     (event: LayoutChangeEvent) =>
-      // eslint-disable-next-line functional/immutable-data
       (scrollViewHeight.value = event.nativeEvent.layout.height),
     [scrollViewHeight]
   );
@@ -160,7 +157,6 @@ const ForceScrollDownView = ({
   const handleScrollDownPress = useCallback(() => {
     scheduleOnUI(() => {
       "worklet";
-      // eslint-disable-next-line functional/immutable-data
       isButtonVisible.value = withSpring(0, IOSpringValues.button);
       const targetY = Math.max(0, contentHeight.value - scrollViewHeight.value);
       scrollTo(scrollViewRef, 0, targetY, true);

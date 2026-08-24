@@ -1,8 +1,8 @@
+import { FaultCodeCategoryEnum as EcommerceFaultCodeCategoryEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import * as E from "fp-ts/lib/Either";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { FaultCodeCategoryEnum as EcommerceFaultCodeCategoryEnum } from "../../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { PaymentClient } from "../../../common/api/client";

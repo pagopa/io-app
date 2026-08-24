@@ -1,4 +1,5 @@
-import { IdpData } from "../../../../../definitions/content/IdpData";
+import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
+
 import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../store/reducers/types";

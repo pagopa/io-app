@@ -75,7 +75,6 @@ const FeaturedServicesCarousel = ({
       const { x } = nativeEvent.contentOffset;
 
       if (x !== snappedOffsetRef.current) {
-        // eslint-disable-next-line functional/immutable-data
         snappedOffsetRef.current = x;
         triggerHaptic("impactLight");
       }

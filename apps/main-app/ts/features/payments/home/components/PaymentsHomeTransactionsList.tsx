@@ -1,3 +1,4 @@
+import { NoticeListItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListItem";
 import {
   BannerErrorState,
   ContentWrapper,
@@ -11,7 +12,6 @@ import { Fragment, useCallback, useEffect, useRef } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 
-import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";

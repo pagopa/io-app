@@ -1,7 +1,7 @@
+import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 
-import { BonusAvailable } from "../../../../../../definitions/content/BonusAvailable";
 import { AvailableBonusItem } from "../AvailableBonusItem";
 
 const bonusMockContent = {

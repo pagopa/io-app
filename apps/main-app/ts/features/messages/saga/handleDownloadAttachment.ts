@@ -1,3 +1,4 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import I18n from "i18next";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import {
@@ -11,7 +12,6 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { fetchTimeout } from "../../../config";
 import { ReduxSagaEffect } from "../../../types/utils";
 import { isTestEnv } from "../../../utils/environment";

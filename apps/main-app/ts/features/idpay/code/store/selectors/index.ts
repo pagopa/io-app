@@ -1,7 +1,7 @@
+import { InstrumentTypeEnum } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 
-import { InstrumentTypeEnum } from "../../../../../../definitions/idpay/InstrumentDTO";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { idpayDiscountInitiativeInstrumentsSelector } from "../../../configuration/store";
 import { idpayInitiativeIdSelector } from "../../../details/store";

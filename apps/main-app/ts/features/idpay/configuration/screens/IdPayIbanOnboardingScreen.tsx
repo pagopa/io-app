@@ -9,7 +9,6 @@ import I18n from "i18next";
 import { useState } from "react";
 
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import { IbanSchema } from "../types";
@@ -49,7 +48,6 @@ export const IdPayIbanOnboardingScreen = () => {
           }
         }
       }}
-      contextualHelp={emptyContextualHelp}
       description={I18n.t("idpay.configuration.iban.onboarding.body")}
       headerActionsProp={{
         showHelp: true

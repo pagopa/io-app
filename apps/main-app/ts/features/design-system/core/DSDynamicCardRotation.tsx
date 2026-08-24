@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { H6, hexToRgba, IOColors, VSpacer } from "@io-app/design-system";
 import {
   Canvas,

@@ -1,8 +1,8 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import _ from "lodash";
 import MockDate from "mockdate";
 import { createStore } from "redux";
 
-import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";

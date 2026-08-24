@@ -1,9 +1,9 @@
+import { Zendesk } from "@io-app/api-types/generated/definitions/content/Zendesk";
+import { ZendeskCategory } from "@io-app/api-types/generated/definitions/content/ZendeskCategory";
+import { ZendeskSubCategory } from "@io-app/api-types/generated/definitions/content/ZendeskSubCategory";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 
-import { Zendesk } from "../../../../../../definitions/content/Zendesk";
-import { ZendeskCategory } from "../../../../../../definitions/content/ZendeskCategory";
-import { ZendeskSubCategory } from "../../../../../../definitions/content/ZendeskSubCategory";
 import {
   remoteError,
   remoteLoading,

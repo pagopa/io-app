@@ -1,10 +1,10 @@
+import { InstrumentListDTO } from "@io-app/api-types/generated/definitions/idpay/InstrumentListDTO";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { InstrumentListDTO } from "../../../../../../definitions/idpay/InstrumentListDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
 export type IdPayInitiativeInstrumentsGetPayloadType = {

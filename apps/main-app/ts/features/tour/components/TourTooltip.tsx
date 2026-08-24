@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import {
   Body,
   H6,

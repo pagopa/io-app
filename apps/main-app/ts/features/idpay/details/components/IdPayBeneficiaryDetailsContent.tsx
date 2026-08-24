@@ -1,3 +1,13 @@
+import { InitiativeDetailDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDetailDTO";
+import {
+  InitiativeDTO,
+  InitiativeRewardTypeEnum,
+  VoucherStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import {
+  RewardValueDTO,
+  RewardValueTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/RewardValueDTO";
 import {
   Divider,
   IOSkeleton,
@@ -16,16 +26,6 @@ import I18n from "i18next";
 import { useCallback } from "react";
 import { View } from "react-native";
 
-import { InitiativeDetailDTO } from "../../../../../definitions/idpay/InitiativeDetailDTO";
-import {
-  InitiativeDTO,
-  InitiativeRewardTypeEnum,
-  VoucherStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
-import {
-  RewardValueDTO,
-  RewardValueTypeEnum
-} from "../../../../../definitions/idpay/RewardValueDTO";
 import {
   AppParamsList,
   IOStackNavigationProp

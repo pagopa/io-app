@@ -1,3 +1,5 @@
+import { Faq } from "@io-app/api-types/generated/definitions/content/Faq";
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import {
   AccordionItem,
   Banner,
@@ -5,6 +7,7 @@ import {
   FooterActions,
   H4,
   HeaderSecondLevel,
+  IOMarkdown,
   IOMarkdownLite,
   IOToast,
   ListItemInfo,
@@ -13,7 +16,6 @@ import {
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import _ from "lodash";
@@ -27,8 +29,6 @@ import {
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
-import { InitializedProfile } from "../../../../definitions/identity/InitializedProfile";
-import IOMarkdown from "../../../components/IOMarkdown";
 import {
   IOScrollView,
   IOScrollViewActions
@@ -45,13 +45,7 @@ import {
   isCaCBannerEnabledSelector
 } from "../../../store/reducers/backendStatus/remoteConfig";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
-import {
-  ContextualHelpProps,
-  getContextualHelpConfig,
-  getContextualHelpData,
-  reloadContextualHelpDataThreshold
-} from "../../../utils/contextualHelp";
-import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
+import { reloadContextualHelpDataThreshold } from "../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import {
@@ -95,20 +89,10 @@ enum ButtonPressedEnum {
   OPEN_NEW_REQUEST = "OPEN_NEW_REQUEST"
 }
 
-export type ContextualHelpData = {
-  content: string;
-  faqs?: ReadonlyArray<FAQType>;
-  title: string;
-};
-
 export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
 
-type FaqManagerProps = Pick<
-  ZendeskStartPayload,
-  "faqCategories" | "startingRoute"
-> & {
+type FaqManagerProps = Pick<ZendeskStartPayload, "startingRoute"> & {
   contentLoaded?: boolean;
-  contextualHelpConfig: ContextualHelpProps | undefined;
 };
 /**
  * This component must be used only here.
@@ -122,13 +106,13 @@ const FaqManager = (props: FaqManagerProps) => {
   const potContextualData = useIOSelector(
     getContextualHelpDataFromRouteSelector(props.startingRoute)
   );
-  const maybeContextualData = pot.getOrElse(potContextualData, O.none);
+  const contextualHelpData = pot.getOrElse(potContextualData, undefined);
 
   const theme = useIOTheme();
 
   const [lastContextualDataUpdate, setLastContextualDataUpdate] =
     useState<Date>(new Date());
-  const { contextualHelpConfig, faqCategories } = props;
+
   useEffect(() => {
     const now = new Date();
     // if the contextual data is empty or is in error and last reload was done before the threshold -> try to reload
@@ -143,30 +127,9 @@ const FaqManager = (props: FaqManagerProps) => {
     }
   }, [dispatch, lastContextualDataUpdate, potContextualData]);
 
-  const defaultData: ContextualHelpData = pipe(
-    contextualHelpConfig,
-    O.fromNullable,
-    O.fold(
-      () => ({
-        title: "",
-        faqs: getFAQsFromCategories(faqCategories ?? []),
-        content: ""
-      }),
-      cHC => ({
-        title: cHC.title,
-        faqs: getFAQsFromCategories(faqCategories ?? []),
-        content: cHC.body
-      })
-    )
-  );
-  const contextualHelpData: ContextualHelpData = getContextualHelpData(
-    maybeContextualData,
-    defaultData
-  );
-
-  const renderFaqItem = ({ item }: ListRenderItemInfo<FAQType>) => (
+  const renderFaqItem = ({ item }: ListRenderItemInfo<Faq>) => (
     <AccordionItem
-      body={<IOMarkdown content={item.content} />}
+      body={<IOMarkdown content={item.body} />}
       title={item.title}
     />
   );
@@ -195,42 +158,44 @@ const FaqManager = (props: FaqManagerProps) => {
   };
 
   return (
-    <>
-      {!isStringNullyOrEmpty(contextualHelpData.title) && (
-        <H4 accessible={true} color={theme["textHeading-default"]}>
-          {contextualHelpData.title}
-        </H4>
-      )}
-      {contextualHelpData.content && (
-        <>
-          <VSpacer size={16} />
-          <IOMarkdown content={contextualHelpData.content} />
-        </>
-      )}
-      <VSpacer size={16} />
-      {isCacBannerEnabled && (
-        <Banner
-          action={bannerCaCConfig?.action?.label?.[localeFallback] ?? ""}
-          color="neutral"
-          content={bannerCaCConfig?.description?.[localeFallback]}
-          onPress={handleBannerPress}
-          pictogramName="help"
-          title={bannerCaCConfig?.title?.[localeFallback]}
-        />
-      )}
-      <VSpacer size={16} />
-      {contextualHelpData.faqs && (
-        <FlatList
-          data={contextualHelpData.faqs}
-          ItemSeparatorComponent={() => <VSpacer size={8} />}
-          keyExtractor={c => c.title}
-          ListFooterComponent={<VSpacer size={8} />}
-          ListHeaderComponent={<VSpacer size={8} />}
-          renderItem={renderFaqItem}
-          scrollEnabled={false}
-        />
-      )}
-    </>
+    contextualHelpData && (
+      <>
+        {!isStringNullyOrEmpty(contextualHelpData.title) && (
+          <H4 accessible={true} color={theme["textHeading-default"]}>
+            {contextualHelpData.title}
+          </H4>
+        )}
+        {contextualHelpData.content && (
+          <>
+            <VSpacer size={16} />
+            <IOMarkdown content={contextualHelpData.content} />
+          </>
+        )}
+        <VSpacer size={16} />
+        {isCacBannerEnabled && (
+          <Banner
+            action={bannerCaCConfig?.action?.label?.[localeFallback] ?? ""}
+            color="neutral"
+            content={bannerCaCConfig?.description?.[localeFallback]}
+            onPress={handleBannerPress}
+            pictogramName="help"
+            title={bannerCaCConfig?.title?.[localeFallback]}
+          />
+        )}
+        <VSpacer size={16} />
+        {contextualHelpData.faqs && (
+          <FlatList
+            data={contextualHelpData.faqs}
+            ItemSeparatorComponent={() => <VSpacer size={8} />}
+            keyExtractor={c => c.title}
+            ListFooterComponent={<VSpacer size={8} />}
+            ListHeaderComponent={<VSpacer size={8} />}
+            renderItem={renderFaqItem}
+            scrollEnabled={false}
+          />
+        )}
+      </>
+    )
   );
 };
 
@@ -265,20 +230,7 @@ const ZendeskSupportHelpCenter = () => {
   const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
   const [pressedButton, setPressedButton] = useState<ButtonPressedEnum>();
   // Navigation prop
-  const {
-    faqCategories,
-    contextualHelp,
-    contextualHelpMarkdown,
-    startingRoute,
-    assistanceType
-  } = route.params || {};
-  //   !contextualHelpMarkdown
-  // );
-
-  const contextualHelpConfig = getContextualHelpConfig(
-    contextualHelp,
-    contextualHelpMarkdown
-  );
+  const { startingRoute, assistanceType } = route.params;
 
   /*
   Check for Actions
@@ -419,11 +371,7 @@ const ZendeskSupportHelpCenter = () => {
       testID={"ZendeskSupportHelpCenterScreen"}
     >
       <ContentWrapper>
-        <FaqManager
-          contextualHelpConfig={contextualHelpConfig}
-          faqCategories={faqCategories}
-          startingRoute={startingRoute}
-        />
+        <FaqManager startingRoute={startingRoute} />
 
         {showRequestSupportContacts && (
           <>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript">
+        const outcomeList = [
+            ["0", "SUCCESS"],
+            ["1", "GENERIC_ERROR"],
+            ["2", "AUTH_ERROR"],
+            ["4", "TIMEOUT"],
+            ["8", "CANCELED_BY_USER"],
+            ["14", "INVALID_SESSION"],
+            ["15", "ALREADY_ONBOARDED"],
+            ["16", "BPAY_NOT_FOUND"],
+            ["25", "PSP_ERROR_ONBOARDING"],
+            ["99", "BE_KO"]
+        ];
+
+        let contextualOnboardingChoice = null;
+
+        const setOnboardingChoice = (choice) => {
+            contextualOnboardingChoice = choice;
+            const yesBtn = document.getElementById("onboardYes");
+            const noBtn = document.getElementById("onboardNo");
+            if (yesBtn && noBtn) {
+                if (choice === true) {
+                    yesBtn.style.backgroundColor = "#4CAF50";
+                    yesBtn.style.opacity = "1";
+                    noBtn.style.backgroundColor = "#e67f00";
+                    noBtn.style.opacity = "0.6";
+                } else {
+                    yesBtn.style.backgroundColor = "#e67f00";
+                    yesBtn.style.opacity = "0.6";
+                    noBtn.style.backgroundColor = "#f44336";
+                    noBtn.style.opacity = "1";
+                }
+            }
+            const simulateBtnContainer = document.getElementById("simulate_outcome_container");
+            if (simulateBtnContainer) {
+                simulateBtnContainer.style.display = "block";
+            }
+        }
+
+        const simulateOutcome = () => {
+          const urlParams = new URLSearchParams(window.location.search);
+          const paymentMethodId = urlParams.get('paymentMethodId');
+          const isContextualOnboarding = urlParams.get('contextualOnboarding') === 'true';
+            const container = document.getElementById("outcomeSelect");
+            if (container.value === "0") {
+              const wantsToOnboard = contextualOnboardingChoice === true;
+              const body = {
+                paymentMethodId,
+                isContextualOnboarding,
+                wantsToOnboard
+              };
+              
+              fetch('/io-payment-wallet/v1/wallets/mock', {
+                method: 'POST',
+                body: JSON.stringify(body),
+                headers: new Headers({
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                })
+              })
+              .then(response => response.json())
+              .then(response => {
+                const baseUrl = 'iowallet://127.0.0.1:3000/wallets/outcomes';
+                const params = new URLSearchParams({ outcome: container.value });
+                
+                if (!isContextualOnboarding || wantsToOnboard) {
+                  params.append('walletId', response.walletId);
+                }
+                
+                if (isContextualOnboarding && wantsToOnboard) {
+                  params.append('transactionId', response.transactionId);
+                } else if (isContextualOnboarding && !wantsToOnboard) {
+                  params.append('orderId', response.orderId);
+                }
+                
+                window.location = `${baseUrl}?${params.toString()}`;
+              })
+              .catch(err => alert(err))
+            } else {
+              window.location = `iowallet://127.0.0.1:3000/wallets/outcomes?outcome=${container.value}`;
+            }
+        }
+
+        function onLoad() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isContextualOnboarding = urlParams.get('contextualOnboarding') === 'true';
+            
+            const options = outcomeList.map(v => `<option value="${v[0]}">${v[0]} - ${v[1]}</option>`).join();
+            const select = `<select id="outcomeSelect" style="width: 400px;height: 60px;font-size: 32px">${options}</select>`;
+            const container = document.getElementById("select_container");
+            container.innerHTML = `<div>${select}</div>`;
+            
+            if (isContextualOnboarding) {
+                const onboardingContainer = document.getElementById("onboarding_choice_container");
+                if (onboardingContainer) {
+                    onboardingContainer.style.display = "block";
+                }
+                const simulateBtnContainer = document.getElementById("simulate_outcome_container");
+                if (simulateBtnContainer) {
+                    simulateBtnContainer.style.display = "none";
+                }
+            }
+        }
+
+    </script>
+  <meta charset="UTF-8">
+  <title>Wallet - Onboarding</title>
+</head>
+<body onload="onLoad()">
+
+<div align="center" style="width: 100%; height:100%;margin: auto; margin-top: 20%;">
+  <h1 style="font-size: 62px;">WALLET ONBOARDING</h1>
+  <div style="width: 100%; margin-top: 20px">
+    <div style="margin-top: 40px; font-size: 42px; margin-bottom: 20px;">
+        Select outcome
+    </div>
+    <div id="select_container">
+    </div>
+    <div id="onboarding_choice_container" style="display: none; margin-top: 40px;">
+      <div style="font-size: 42px; margin-bottom: 20px;">
+        Do you want to onboard this payment method?
+      </div>
+      <div style="display: flex; gap: 20px; justify-content: center; align-items: center;">
+        <div
+           id="onboardYes"
+           onclick="setOnboardingChoice(true)"
+           style="padding: 16px; width: 200px; font-size: 28px; color: white; background-color: #e67f00; text-decoration: none; cursor: pointer; opacity: 0.6;">
+          YES
+        </div>
+        <div
+           id="onboardNo"
+           onclick="setOnboardingChoice(false)"
+           style="padding: 16px; width: 200px; font-size: 28px; color: white; background-color: #e67f00; text-decoration: none; cursor: pointer; opacity: 0.6;">
+          NO
+        </div>
+      </div>
+    </div>
+    <div id="simulate_outcome_container" style="margin-top: 60px; ">
+      <div
+         onclick="simulateOutcome()"
+         style="padding: 16px; width: 350px; font-size: 30px; color: white; background-color: #e67f00; text-decoration: none; cursor: pointer;">
+        SIMULATE OUTCOME
+			</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,12 +1,12 @@
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { TagEnum as BaseTagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryBase";
+import { TagEnum as PaymentTagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPayment";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { fireEvent } from "@testing-library/react-native";
 import { createElement, type ReactElement } from "react";
 import { createStore } from "redux";
 
-import { MessageCategory } from "../../../../../definitions/communication/MessageCategory";
-import { TagEnum as BaseTagEnum } from "../../../../../definitions/communication/MessageCategoryBase";
-import { TagEnum as PaymentTagEnum } from "../../../../../definitions/communication/MessageCategoryPayment";
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { backendStatusLoadSuccess } from "../../../../store/actions/backendStatus";
 import { type Action } from "../../../../store/actions/types";
