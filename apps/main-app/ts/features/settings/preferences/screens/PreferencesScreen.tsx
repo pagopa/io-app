@@ -14,7 +14,6 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { openAppSettings } from "../../../../utils/appSettings";
 import { checkAndRequestPermission } from "../../../../utils/calendar";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { requestWriteCalendarPermission } from "../../../../utils/permission";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
@@ -23,11 +22,6 @@ type PreferencesNavListItem = Pick<
   "description" | "onPress" | "testID"
 > & {
   value: string;
-};
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.contextualHelpTitle",
-  body: "profile.preferences.contextualHelpContent"
 };
 
 const PreferencesScreen = () => {
@@ -172,9 +166,7 @@ const PreferencesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelpMarkdown={contextualHelpMarkdown}
       description={I18n.t("profile.preferences.subtitle")}
-      faqCategories={["profile", "privacy", "authentication_SPID"]}
       headerActionsProp={{ showHelp: true }}
       ref={titleRef}
       title={{

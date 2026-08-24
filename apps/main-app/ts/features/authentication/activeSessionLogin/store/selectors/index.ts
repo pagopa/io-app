@@ -92,10 +92,7 @@ export const isSessionExpiringSelector = createSelector(
     pipe(
       O.Do,
       O.bind("expirationDate", () =>
-        pipe(
-          sessionInfo,
-          O.chainNullableK(({ expirationDate }) => expirationDate)
-        )
+        O.fromNullable(sessionInfo?.expirationDate)
       ),
       O.bind("threshold", () =>
         pipe(

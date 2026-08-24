@@ -1,3 +1,5 @@
+import { unknownToString } from "../../../../utils/errors";
+
 export type FetchFailureReason =
   | "aborted"
   | "network-error"
@@ -6,7 +8,7 @@ export type FetchFailureReason =
   | "timeout";
 
 export type FetchFailureResponse = {
-  error?: Error;
+  message: string;
   reason: FetchFailureReason;
   /**
    * The last response received from the server. Only set when `reason`
@@ -57,73 +59,6 @@ export const isNoAttemptsResponse = (
 ): response is FetchFailureResponse =>
   isFailureResponse(response) && response.reason === "no-attempts";
 
-/**
- * Error thrown by `unwrapFetchResponse`. Carries structured context
- * (`reason`, `statusCode`, `response`) so callers don't lose it in the
- * `catch` block, and a stable `code` usable for telemetry/logging even
- * when `instanceof` doesn't survive (e.g. across a serialization
- * boundary). `message` is a human-readable description; the same
- * `reason`/`statusCode` are also embedded in the serialized `message`
- * (via `JSON.stringify`) for log pipelines that only capture the message
- * string.
- */
-export class FetchResponseError extends Error {
-  code = "FETCH_RESPONSE_ERROR";
-  reason: string;
-  response?: Response;
-  statusCode?: number;
-
-  constructor({
-    message,
-    reason,
-    statusCode,
-    response
-  }: {
-    message: string;
-    reason: string;
-    response?: Response;
-    statusCode?: number;
-  }) {
-    super(JSON.stringify({ message, reason, statusCode }));
-    this.reason = reason;
-    this.statusCode = statusCode;
-    this.response = response;
-  }
-}
-
-/**
- * Extracts the native HTTP `Response` from the custom fetch result.
- * Always throws `FetchResponseError`, populated differently depending on the
- * case: for a network error/timeout/abort/exhausted retries, it includes
- * `reason` (one of `FetchFailureReason`) and `response` when available;
- * for a non-2xx HTTP status, it includes `reason: "unexpected-status-code"`,
- * `statusCode` and `response`. Callers can always inspect this context in
- * the `catch` block via `instanceof FetchResponseError`, instead of losing it as
- * with a generic `Error`.
- */
-export const unwrapFetchResponse = (result: FetchResponse): Response => {
-  if (isFailureResponse(result)) {
-    throw new FetchResponseError({
-      message:
-        "unwrapFetchResponse: no response was received (network error, timeout, abort, or retries exhausted)",
-      reason: result.reason,
-      statusCode: result.response?.status,
-      response: result.response
-    });
-  }
-
-  if (!result.response.ok) {
-    throw new FetchResponseError({
-      message: `unwrapFetchResponse: request completed with HTTP status ${result.response.status}`,
-      reason: "unexpected-status-code",
-      statusCode: result.response.status,
-      response: result.response
-    });
-  }
-
-  return result.response;
-};
-
 export type RetriableFetchOptions = {
   /**
    * Maximum number of attempts (first call included).
@@ -144,7 +79,7 @@ export type RetriableFetchOptions = {
 
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;
 const DEFAULT_FETCH_MAX_ATTEMPTS = 3;
-const DEFAULT_RETRY_ON_STATUS_CODES = [429, 502, 503, 504];
+const DEFAULT_RETRY_ON_STATUS_CODES = [429];
 const BACKOFF_BASE_DELAY_MS = 200;
 const BACKOFF_MAX_DELAY_MS = 5000;
 
@@ -278,9 +213,7 @@ export function createRetriableFetch(
       return Promise.resolve({
         type: "failure",
         reason: "no-attempts",
-        error: new Error(
-          `maxAttempts must be a positive integer (received ${maxAttempts}): no fetch attempt was performed.`
-        )
+        message: `maxAttempts must be a positive integer (received ${maxAttempts}): no fetch attempt was performed.`
       });
     }
 
@@ -295,7 +228,7 @@ export function createRetriableFetch(
       attemptIndex: number
     ): Promise<FetchResponse> => {
       if (manualAbortSignal?.aborted) {
-        return { type: "failure", reason: "aborted" };
+        return { type: "failure", reason: "aborted", message: "aborted" };
       }
 
       // Per-attempt controller: enforces the timeout, and is also
@@ -313,7 +246,7 @@ export function createRetriableFetch(
 
       const handleFailure = async (
         reason: "network-error" | "retryable-status" | "timeout",
-        error: Error,
+        message: string,
         retryContext?: {
           readonly response?: Response;
           readonly retryAfterMs?: number;
@@ -326,7 +259,7 @@ export function createRetriableFetch(
           return {
             type: "failure",
             reason,
-            error,
+            message,
             response: retryContext?.response
           };
         }
@@ -347,7 +280,11 @@ export function createRetriableFetch(
 
         // A manual abort during the wait takes priority over the retry.
         if (manualAbortSignal?.aborted) {
-          return { type: "failure", reason: "aborted" };
+          return {
+            type: "failure",
+            reason: "aborted",
+            message: "aborted"
+          };
         }
 
         return performAttempt(attemptIndex + 1);
@@ -365,10 +302,18 @@ export function createRetriableFetch(
           signal: attemptAbortController.signal
         });
 
+        // The manual abort may have fired after the response already
+        // settled (a race `fetch()` itself can't catch): discard it
+        // rather than resolving a request the caller gave up on.
+        if (manualAbortSignal?.aborted) {
+          await response.body?.cancel().catch(() => {
+            // Best-effort cleanup: safe to ignore.
+          });
+          return { type: "failure", reason: "aborted", message: "aborted" };
+        }
+
         if (retryOnStatusCodes.includes(response.status)) {
-          const error = new Error(
-            `Received retryable status code ${response.status}`
-          );
+          const error = `Received retryable status code ${response.status}`;
           return handleFailure("retryable-status", error, {
             retryAfterMs: getRetryAfterMs(response),
             response
@@ -378,7 +323,11 @@ export function createRetriableFetch(
         return { type: "success", response };
       } catch (error) {
         if (manualAbortSignal?.aborted) {
-          return { type: "failure", reason: "aborted" };
+          return {
+            type: "failure",
+            reason: "aborted",
+            message: "aborted"
+          };
         }
 
         // `attemptAbortController` only aborts from the manual-abort
@@ -386,10 +335,8 @@ export function createRetriableFetch(
         // it's aborted here the attempt must have timed out.
         const isTimeout = attemptAbortController.signal.aborted;
         const normalizedError = isTimeout
-          ? new Error(`Request timed out after ${safeTimeoutMs}ms`)
-          : error instanceof Error
-            ? error
-            : new Error(String(error));
+          ? `Request timed out after ${safeTimeoutMs}ms`
+          : unknownToString(error);
 
         return handleFailure(
           isTimeout ? "timeout" : "network-error",
