@@ -6,6 +6,7 @@ import { useMemo } from "react";
 
 import {
   getValueOrElse,
+  isError,
   isReady,
   RemoteValue
 } from "../../../../common/model/RemoteValue";
@@ -39,22 +40,24 @@ export const mixAndSortMerchants = (
   return [...merchantsWithNewDiscounts, ...merchantsWithoutNewDiscounts];
 };
 
-// Merges and sorts online/offline merchants only once both remote values are ready
+// Merges and sorts online/offline merchants once both requests have settled,
+// preserving the ready source's data even if the other one has failed
 export const useMixedSortedMerchants = (
   onlineMerchants: RemoteValue<OnlineMerchants["items"], unknown>,
   offlineMerchants: RemoteValue<OfflineMerchants["items"], unknown>
 ) => {
-  const bothMerchantsReady =
-    isReady(onlineMerchants) && isReady(offlineMerchants);
+  const bothMerchantsSettled =
+    (isReady(onlineMerchants) || isError(onlineMerchants)) &&
+    (isReady(offlineMerchants) || isError(offlineMerchants));
 
   return useMemo(
     () =>
-      bothMerchantsReady
+      bothMerchantsSettled
         ? mixAndSortMerchants(
             getValueOrElse(onlineMerchants, []),
             getValueOrElse(offlineMerchants, [])
           )
         : [],
-    [bothMerchantsReady, onlineMerchants, offlineMerchants]
+    [bothMerchantsSettled, onlineMerchants, offlineMerchants]
   );
 };
