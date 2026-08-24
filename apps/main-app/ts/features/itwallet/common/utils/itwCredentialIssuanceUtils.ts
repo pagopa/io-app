@@ -73,7 +73,9 @@ export const BATCH_ISSUANCE_CREDENTIALS: Record<
  * Returns the remaining copies that trigger a renewal, or `undefined` for credentials that are
  * not obtained in batch.
  */
-const getBatchRefillThreshold = (credentialType: string): number | undefined =>
+export const getBatchRefillThreshold = (
+  credentialType: string
+): number | undefined =>
   BATCH_ISSUANCE_CREDENTIALS[credentialType]?.refillThreshold;
 
 /**

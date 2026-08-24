@@ -1,7 +1,8 @@
+import { deleteKey } from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
-import { throwError } from "redux-saga-test-plan/providers";
+import { dynamic, throwError } from "redux-saga-test-plan/providers";
 
 import * as authSelectors from "../../../../authentication/common/store/selectors";
 import * as connectivitySelectors from "../../../../connectivity/store/selectors";
@@ -21,18 +22,21 @@ import { itwWalletUnitAttestationsStore } from "../../../walletInstance/store/ac
 import * as walletInstanceSelectors from "../../../walletInstance/store/selectors";
 import {
   itwCredentialsBatchRefillRequest,
-  itwCredentialsReplaceByType
+  itwCredentialsRemove
 } from "../../store/actions";
 import * as credentialsSelectors from "../../store/selectors";
 import { CredentialsVault } from "../../utils/vault";
 import { handleItwCredentialsBatchRefillSaga } from "../handleItwCredentialsBatchRefillSaga";
-import { handleItwCredentialsReplaceByTypeSaga } from "../handleItwCredentialsReplaceByTypeSaga";
+import { handleItwCredentialsStoreBundleSaga } from "../handleItwCredentialsStoreBundleSaga";
 
 jest.mock("../../utils/vault", () => ({
-  CredentialsVault: { get: jest.fn() }
+  CredentialsVault: { get: jest.fn(), removeAll: jest.fn() }
 }));
 jest.mock("../../../common/utils/itwIoWallet", () => ({
   getIoWallet: jest.fn()
+}));
+jest.mock("@pagopa/io-react-native-crypto", () => ({
+  deleteKey: jest.fn()
 }));
 
 const T_SESSION_TOKEN = "session-token";
@@ -143,6 +147,8 @@ const mockHappyPath = () => {
     WalletUnitAttestation: { isSupported: true }
   } as ReturnType<typeof getIoWallet>);
   jest.mocked(CredentialsVault.get).mockResolvedValue("raw-pid");
+  jest.mocked(CredentialsVault.removeAll).mockResolvedValue(undefined);
+  jest.mocked(deleteKey).mockResolvedValue(undefined);
 };
 
 const issuanceProviders = (issuerConf: IssuerConfiguration = T_ISSUER_CONF) =>
@@ -169,8 +175,23 @@ const issuanceProviders = (issuerConf: IssuerConfiguration = T_ISSUER_CONF) =>
       matchers.call.fn(credentialIssuanceUtils.attachCredentialsStatus),
       newBundles
     ],
-    [matchers.call.fn(handleItwCredentialsReplaceByTypeSaga), undefined]
+    [matchers.call.fn(handleItwCredentialsStoreBundleSaga), undefined]
   ] as Parameters<ReturnType<typeof expectSaga>["provide"]>[0];
+
+/**
+ * Reproduces how `handleItwCredentialsStoreBundleSaga` reports a persistence failure: it does not
+ * throw, it invokes the `onError` callback carried by the action meta.
+ */
+const failingStoreProvider = (error: Error) => [
+  matchers.call.fn(handleItwCredentialsStoreBundleSaga),
+  dynamic(effect => {
+    const [storeAction] = effect.args as [
+      { meta: { onError?: (e: Error) => void } }
+    ];
+    storeAction.meta.onError?.(error);
+    return undefined;
+  })
+];
 
 describe("handleItwCredentialsBatchRefillSaga", () => {
   beforeEach(() => {
@@ -179,16 +200,20 @@ describe("handleItwCredentialsBatchRefillSaga", () => {
     mockHappyPath();
   });
 
-  it("replaces the batch and stores the Wallet Unit Attestations on success", () =>
-    expectSaga(handleItwCredentialsBatchRefillSaga, action)
+  it("stores the new batch, the Wallet Unit Attestations and discards the residual copies", async () => {
+    await expectSaga(handleItwCredentialsBatchRefillSaga, action)
       .withState({})
       .provide(issuanceProviders())
-      .call(
-        handleItwCredentialsReplaceByTypeSaga,
-        itwCredentialsReplaceByType(newBundles, {})
-      )
+      .call.fn(handleItwCredentialsStoreBundleSaga)
       .put(itwWalletUnitAttestationsStore({ "wua-id": "wua-jwt" }))
-      .run());
+      .call(CredentialsVault.removeAll, ["kt-1", "kt-2"])
+      .put(itwCredentialsRemove([proofOfAge]))
+      .run();
+
+    expect(deleteKey).toHaveBeenCalledWith("kt-1");
+    expect(deleteKey).toHaveBeenCalledWith("kt-2");
+    expect(deleteKey).not.toHaveBeenCalledWith("kt-10");
+  });
 
   it("does not renew the batch when the wallet is not valid", () => {
     jest
@@ -199,7 +224,7 @@ describe("handleItwCredentialsBatchRefillSaga", () => {
       .withState({})
       .provide(issuanceProviders())
       .not.call.fn(credentialIssuanceUtils.requestCredential)
-      .not.call.fn(handleItwCredentialsReplaceByTypeSaga)
+      .not.call.fn(handleItwCredentialsStoreBundleSaga)
       .run();
   });
 
@@ -262,11 +287,25 @@ describe("handleItwCredentialsBatchRefillSaga", () => {
         } as IssuerConfiguration)
       )
       .not.call.fn(credentialIssuanceUtils.obtainCredentialsBatch)
-      .not.call.fn(handleItwCredentialsReplaceByTypeSaga)
+      .not.call.fn(handleItwCredentialsStoreBundleSaga)
       .run());
 
-  it("leaves the existing pool untouched when the issuance fails", () =>
+  it("does not renew the batch when the new pool would start under its own refill threshold", () =>
+    // A batch of 2 copies with a refill threshold of 2 would ask to be renewed as soon as it is
+    // stored, looping a full issuance on every trigger.
     expectSaga(handleItwCredentialsBatchRefillSaga, action)
+      .withState({})
+      .provide(
+        issuanceProviders({
+          credential_issuance_batch_size: 2
+        } as IssuerConfiguration)
+      )
+      .not.call.fn(credentialIssuanceUtils.obtainCredentialsBatch)
+      .not.call.fn(handleItwCredentialsStoreBundleSaga)
+      .run());
+
+  it("leaves the existing pool untouched and deletes the generated keys when the issuance fails", async () => {
+    await expectSaga(handleItwCredentialsBatchRefillSaga, action)
       .withState({})
       .provide([
         [
@@ -275,7 +314,29 @@ describe("handleItwCredentialsBatchRefillSaga", () => {
         ],
         ...issuanceProviders()
       ] as Parameters<ReturnType<typeof expectSaga>["provide"]>[0])
-      .not.call.fn(handleItwCredentialsReplaceByTypeSaga)
+      .not.call.fn(handleItwCredentialsStoreBundleSaga)
       .not.put.actionType(itwWalletUnitAttestationsStore.toString())
-      .run());
+      .not.call.fn(CredentialsVault.removeAll)
+      .run();
+
+    expect(deleteKey).toHaveBeenCalledWith("kt-10");
+    expect(deleteKey).toHaveBeenCalledWith("kt-11");
+    expect(deleteKey).not.toHaveBeenCalledWith("kt-1");
+  });
+
+  it("keeps the residual copies when storing the new batch fails", async () => {
+    await expectSaga(handleItwCredentialsBatchRefillSaga, action)
+      .withState({})
+      .provide([
+        failingStoreProvider(new Error("vault unavailable")),
+        ...issuanceProviders()
+      ] as Parameters<ReturnType<typeof expectSaga>["provide"]>[0])
+      .not.put.actionType(itwWalletUnitAttestationsStore.toString())
+      .not.call.fn(CredentialsVault.removeAll)
+      .not.put.actionType(itwCredentialsRemove.toString())
+      .run();
+
+    expect(deleteKey).not.toHaveBeenCalledWith("kt-1");
+    expect(deleteKey).toHaveBeenCalledWith("kt-10");
+  });
 });

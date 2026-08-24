@@ -1,5 +1,6 @@
+import { deleteKey } from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
-import { call, put, select } from "typed-redux-saga/macro";
+import { all, call, put, select } from "typed-redux-saga/macro";
 
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";
@@ -16,13 +17,22 @@ import {
   attachCredentialsStatus,
   completeAuthFlow,
   generateBatchKeysWithWalletUnitAttestation,
+  getBatchRefillThreshold,
   getEffectiveBatchSize,
   obtainCredentialsBatch,
   requestCredential,
   shouldRefillBatch
 } from "../../common/utils/itwCredentialIssuanceUtils";
+import {
+  getCredentialKeyTags,
+  getCredentialVaultIds
+} from "../../common/utils/itwCredentialUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
-import { CredentialBundle } from "../../common/utils/itwTypesUtils";
+import {
+  CredentialBundle,
+  CredentialMetadata,
+  IssuerConfiguration
+} from "../../common/utils/itwTypesUtils";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceStatusSelector
@@ -38,14 +48,19 @@ import {
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import {
   itwCredentialsBatchRefillRequest,
-  itwCredentialsReplaceByType
+  itwCredentialsRemove,
+  itwCredentialsStoreBundle
 } from "../store/actions";
 import {
   itwCredentialsEidSelector,
   itwCredentialsListByTypeSelector
 } from "../store/selectors";
 import { CredentialsVault } from "../utils/vault";
-import { handleItwCredentialsReplaceByTypeSaga } from "./handleItwCredentialsReplaceByTypeSaga";
+import { handleItwCredentialsStoreBundleSaga } from "./handleItwCredentialsStoreBundleSaga";
+
+type AuthorizedCredentials = Awaited<
+  ReturnType<typeof generateBatchKeysWithWalletUnitAttestation>
+>;
 
 /**
  * Collects the Wallet Unit Attestations generated during the renewal, keyed by their id.
@@ -69,8 +84,11 @@ const extractWalletUnitAttestations = (
  * refill threshold. It walks the standard issuance path headlessly: no navigation, no consent
  * prompt, no loader, since the consent given to the Issuer at first issuance still holds.
  *
- * The current pool stays untouched until the new batch is obtained and verified, then the two are
- * swapped atomically via `itwCredentialsReplaceByType`.
+ * The swap is store-then-discard: the residual copies stay usable until the new pool is durably
+ * written to the vault, so an interrupted renewal can never leave the user without a credential.
+ * The two pools share the same `credentialId` (the Issuer's `credential_configuration_id`), so
+ * storing the new metadata replaces the old one in Redux, while the old copies live under their
+ * own vault ids and are discarded afterwards.
  *
  * Failures abort the renewal silently: the user keeps the residual copies and the next trigger
  * retries, as long as the pool is still under threshold.
@@ -162,10 +180,16 @@ export function* handleItwCredentialsBatchRefillSaga(
       credentialType,
       issuerConf.credential_issuance_batch_size
     );
+    const refillThreshold = getBatchRefillThreshold(credentialType);
 
-    // The Issuer dropped batch support: renewing with a single copy would silently degrade the
-    // pool, so skip the renewal entirely.
-    if (batchSize <= 1) {
+    // Renewing with a single copy would silently degrade the pool, and a pool that does not
+    // exceed its own refill threshold would ask to be renewed as soon as it is stored, looping a
+    // full issuance on every trigger. In both cases skip the renewal entirely.
+    if (
+      batchSize <= 1 ||
+      refillThreshold === undefined ||
+      batchSize <= refillThreshold
+    ) {
       return;
     }
 
@@ -180,43 +204,33 @@ export function* handleItwCredentialsBatchRefillSaga(
       evaluatedDcqlQuery
     });
 
-    const authorizedCredentials = yield* call(
-      generateBatchKeysWithWalletUnitAttestation,
-      accessToken,
-      batchSize,
+    const { authorizedCredentials, verifiedCredentials } = yield* call(
+      obtainVerifiedBatch,
       {
+        accessToken,
+        batchSize,
+        clientId,
+        credentialType,
         env,
-        itwVersion,
         hardwareKeyTag: integrityKeyTag.value,
+        issuerConf,
+        itwVersion,
         sessionToken
       }
     );
 
-    const credentials: ReadonlyArray<CredentialBundle> = yield* call(
-      obtainCredentialsBatch,
-      {
-        authorizedCredentials,
-        env,
-        itwVersion,
-        accessToken,
-        credentialType,
-        issuerConf,
-        clientId
-      }
+    // The residual copies are read again right before the swap: a presentation may have consumed
+    // one while the issuance was in flight, and only the copies still stored must be discarded.
+    const staleCredentials = yield* select(
+      itwCredentialsListByTypeSelector(credentialType)
     );
 
-    const verifiedCredentials = yield* call(attachCredentialsStatus, {
-      credentials,
-      env,
-      itwVersion,
-      issuerConf
-    });
-
-    // Called instead of dispatched so that it completes before the WUAs are stored, and any
-    // failure reaches the catch below.
+    // Called instead of dispatched so that a persistence failure aborts the swap: until the new
+    // pool is durably stored the residual copies are the only usable ones and must not be touched.
     yield* call(
-      handleItwCredentialsReplaceByTypeSaga,
-      itwCredentialsReplaceByType(verifiedCredentials, {})
+      storeNewBatch,
+      verifiedCredentials,
+      authorizedCredentials.flatMap(({ keyTags }) => keyTags)
     );
 
     yield* put(
@@ -224,8 +238,65 @@ export function* handleItwCredentialsBatchRefillSaga(
         extractWalletUnitAttestations(authorizedCredentials)
       )
     );
+
+    yield* call(discardStaleCopies, staleCredentials, verifiedCredentials);
   } catch {
     // Silent by design: never surface a background failure nor touch the existing pool.
+    return;
+  }
+}
+
+/**
+ * Deletes the given crypto keys from the device keystore, ignoring keys that are already gone.
+ */
+function* deleteKeys(keyTags: ReadonlyArray<string>) {
+  yield* all(
+    keyTags.map(keyTag =>
+      call(function* () {
+        try {
+          yield* call(deleteKey, keyTag);
+        } catch {
+          return;
+        }
+      })
+    )
+  );
+}
+
+/**
+ * Discards the copies replaced by the renewal, removing their vault entries, their Redux metadata
+ * and their crypto keys.
+ *
+ * Best effort by design: it runs after the new pool is durably stored, so a failure here can only
+ * leave orphaned material behind, never an unusable credential, and must not abort the renewal.
+ */
+function* discardStaleCopies(
+  staleCredentials: ReadonlyArray<CredentialMetadata>,
+  newCredentials: ReadonlyArray<CredentialBundle>
+) {
+  // Both pools share the same `credentialId`, so the new copies are told apart by their keyTags.
+  const newKeyTags = new Set(
+    newCredentials.map(({ metadata }) => metadata.keyTag)
+  );
+  const obsoleteCredentials = staleCredentials.filter(
+    credential =>
+      !getCredentialKeyTags(credential).some(keyTag => newKeyTags.has(keyTag))
+  );
+
+  if (obsoleteCredentials.length === 0) {
+    return;
+  }
+
+  try {
+    yield* call(
+      CredentialsVault.removeAll,
+      obsoleteCredentials.flatMap(getCredentialVaultIds)
+    );
+    // The new metadata already replaced the stale one under the same `credentialId`, so this only
+    // removes the entries of credentials that the renewal did not overwrite.
+    yield* put(itwCredentialsRemove(obsoleteCredentials));
+    yield* call(deleteKeys, obsoleteCredentials.flatMap(getCredentialKeyTags));
+  } catch {
     return;
   }
 }
@@ -262,4 +333,100 @@ function* getValidWalletInstanceAttestation(
   yield* put(itwWalletInstanceAttestationStore(attestation));
 
   return attestation;
+}
+
+/**
+ * Runs the part of the issuance that generates device keys, so that they never outlive a failed
+ * renewal: any error deletes the freshly generated keys before propagating, otherwise every
+ * retry would leave a full batch of orphaned keys in the device keystore.
+ *
+ * Keys are retained only when the batch is obtained and verified, i.e. when it is about to be
+ * stored and the keys become the ones backing the new pool.
+ */
+function* obtainVerifiedBatch(args: {
+  accessToken: Awaited<ReturnType<typeof completeAuthFlow>>["accessToken"];
+  batchSize: number;
+  clientId: string;
+  credentialType: string;
+  env: ReturnType<typeof getEnv>;
+  hardwareKeyTag: string;
+  issuerConf: IssuerConfiguration;
+  itwVersion: ReturnType<typeof selectItwSpecsVersion>;
+  sessionToken: string;
+}) {
+  const {
+    accessToken,
+    batchSize,
+    clientId,
+    credentialType,
+    env,
+    hardwareKeyTag,
+    issuerConf,
+    itwVersion,
+    sessionToken
+  } = args;
+
+  const authorizedCredentials: AuthorizedCredentials = yield* call(
+    generateBatchKeysWithWalletUnitAttestation,
+    accessToken,
+    batchSize,
+    { env, itwVersion, hardwareKeyTag, sessionToken }
+  );
+
+  try {
+    const credentials: ReadonlyArray<CredentialBundle> = yield* call(
+      obtainCredentialsBatch,
+      {
+        authorizedCredentials,
+        env,
+        itwVersion,
+        accessToken,
+        credentialType,
+        issuerConf,
+        clientId
+      }
+    );
+
+    const verifiedCredentials = yield* call(attachCredentialsStatus, {
+      credentials,
+      env,
+      itwVersion,
+      issuerConf
+    });
+
+    return { authorizedCredentials, verifiedCredentials };
+  } catch (e) {
+    yield* call(
+      deleteKeys,
+      authorizedCredentials.flatMap(({ keyTags }) => keyTags)
+    );
+    throw e;
+  }
+}
+
+/**
+ * Stores the new pool, propagating any persistence failure to the caller.
+ *
+ * `handleItwCredentialsStoreBundleSaga` reports failures through `onError` instead of throwing,
+ * so the callback rethrows: a swallowed failure here would let the renewal discard the residual
+ * copies without a stored replacement. A failed store leaves no metadata behind, so the keys
+ * generated for the new pool are deleted as well.
+ */
+function* storeNewBatch(
+  credentials: ReadonlyArray<CredentialBundle>,
+  generatedKeyTags: ReadonlyArray<string>
+) {
+  try {
+    yield* call(
+      handleItwCredentialsStoreBundleSaga,
+      itwCredentialsStoreBundle(credentials, {
+        onError: error => {
+          throw error;
+        }
+      })
+    );
+  } catch (e) {
+    yield* call(deleteKeys, generatedKeyTags);
+    throw e;
+  }
 }
