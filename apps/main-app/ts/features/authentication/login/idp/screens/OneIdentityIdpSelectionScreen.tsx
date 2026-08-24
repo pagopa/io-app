@@ -61,10 +61,11 @@ export const OneIdentityIdpSelectionScreen = ({
     trackSpidLoginIdpSelection(loginFlow);
   });
 
-  useHeaderSecondLevel({
-    title: "",
-    supportRequest: true
-  });
+  useHeaderSecondLevel(
+    state.status === "failure"
+      ? { title: "", supportRequest: false, canGoBack: false }
+      : { title: "", supportRequest: true }
+  );
 
   const HeaderComponent = useMemo(
     () => (
@@ -112,6 +113,11 @@ export const OneIdentityIdpSelectionScreen = ({
   );
 
   const ListEmptyComponent = useCallback(() => <IdpsGridSkeleton />, []);
+
+  // TODO: handle error state and show a proper error message
+  if (state.status === "failure") {
+    return null;
+  }
 
   return (
     <IdpsGrid
