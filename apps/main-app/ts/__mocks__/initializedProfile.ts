@@ -1,8 +1,7 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
+import { Version } from "@io-app/api-types/generated/definitions/identity/Version";
 import { EmailString, FiscalCode } from "@pagopa/ts-commons/lib/strings";
-
-import { InitializedProfile } from "../../definitions/identity/InitializedProfile";
-import { ServicesPreferencesModeEnum } from "../../definitions/identity/ServicesPreferencesMode";
-import { Version } from "../../definitions/identity/Version";
 
 const mockedProfile: InitializedProfile = {
   service_preferences_settings: {

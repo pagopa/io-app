@@ -1,16 +1,16 @@
+import { Card } from "@io-app/api-types/generated/definitions/cgn/Card";
+import { StatusEnum as ActivatedStatusEnum } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
+import { StatusEnum as ExpiredStatusEnum } from "@io-app/api-types/generated/definitions/cgn/CardExpired";
+import {
+  CardRevoked,
+  StatusEnum as RevokedStatusEnum
+} from "@io-app/api-types/generated/definitions/cgn/CardRevoked";
+import { CcdbNumber } from "@io-app/api-types/generated/definitions/cgn/CcdbNumber";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 
-import { Card } from "../../../../../../definitions/cgn/Card";
-import { StatusEnum as ActivatedStatusEnum } from "../../../../../../definitions/cgn/CardActivated";
-import { StatusEnum as ExpiredStatusEnum } from "../../../../../../definitions/cgn/CardExpired";
-import {
-  CardRevoked,
-  StatusEnum as RevokedStatusEnum
-} from "../../../../../../definitions/cgn/CardRevoked";
-import { CcdbNumber } from "../../../../../../definitions/cgn/CcdbNumber";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { backendStatusLoadSuccess } from "../../../../../store/actions/backendStatus";

@@ -1,6 +1,5 @@
+import { AppFeedbackUri } from "@io-app/api-types/generated/definitions/content/AppFeedbackUri";
 import { ActionType, createStandardAction } from "typesafe-actions";
-
-import { AppFeedbackUri } from "../../../../../definitions/content/AppFeedbackUri";
 
 export type TopicKeys = keyof AppFeedbackUri;
 

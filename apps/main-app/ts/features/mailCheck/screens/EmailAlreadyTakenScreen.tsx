@@ -9,7 +9,6 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getFlowType } from "../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { acknowledgeOnEmailValidation } from "../../settings/common/store/actions";
 import { isProfileFirstOnBoardingSelector } from "../../settings/common/store/selectors";
@@ -24,11 +23,6 @@ export type EmailAlreadyUsedScreenParamList = {
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
-};
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "email.cduScreens.emailAlreadyTaken.title",
-  body: "email.cduScreens.emailAlreadyTaken.help.body"
 };
 
 const EmailAlreadyTakenScreen = () => {
@@ -63,8 +57,7 @@ const EmailAlreadyTakenScreen = () => {
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    canGoBack: false,
-    contextualHelpMarkdown
+    canGoBack: false
   });
 
   return (

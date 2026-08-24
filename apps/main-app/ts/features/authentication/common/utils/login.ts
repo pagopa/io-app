@@ -1,10 +1,10 @@
+import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 
-import { IdpData } from "../../../../../definitions/content/IdpData";
 import { spidRelayState } from "../../../../config";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { isLocalEnv } from "../../../../utils/environment";

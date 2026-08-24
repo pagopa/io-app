@@ -15,7 +15,6 @@ import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { Wallet } from "../../../../types/pagopa";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
 import { isLoadingSelector } from "../../common/machine/selectors";
@@ -210,7 +209,6 @@ export const IdPayInstrumentsEnrollmentScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       actions={renderFooterActionProps()}
-      contextualHelp={emptyContextualHelp}
       description={I18n.t(
         "idpay.configuration.instruments.paymentMethods.body",
         {

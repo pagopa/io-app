@@ -2,11 +2,11 @@ jest.mock("../../hooks/useFimsHistoryResultToasts.tsx");
 jest.mock("../FimsHistoryLoaders.tsx");
 jest.mock("../FimsHistoryListItemPicker.tsx");
 
+import { AccessHistoryPage } from "@io-app/api-types/generated/definitions/fims_history/AccessHistoryPage";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
-import { AccessHistoryPage } from "../../../../../../definitions/fims_history/AccessHistoryPage";
 import {
   remoteLoading,
   remoteReady

@@ -1,3 +1,6 @@
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/communication/OrganizationFiscalCode";
+import { PaymentRequestsGetResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
 import {
   Divider,
   H3,
@@ -25,9 +28,6 @@ import { ComponentProps, useCallback, useLayoutEffect, useState } from "react";
 import { AccessibilityInfo, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { OrganizationFiscalCode } from "../../../../../definitions/communication/OrganizationFiscalCode";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
-import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -37,7 +37,6 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { cleanTransactionDescription } from "../../../../utils/payment";
@@ -179,7 +178,6 @@ const WalletPaymentDetailContent = ({
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    contextualHelp: emptyContextualHelp,
     ignoreAccessibilityCheck: isAmountInfoVisible
   });
 

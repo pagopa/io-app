@@ -1,3 +1,4 @@
+import { FilledDocumentDetailView } from "@io-app/api-types/generated/definitions/fci/FilledDocumentDetailView";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
@@ -12,7 +13,6 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";

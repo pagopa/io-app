@@ -1,6 +1,6 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
 import * as O from "fp-ts/lib/Option";
 
-import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
 import { backendStatusLoadSuccess } from "../../../actions/backendStatus";
 import { baseRawBackendStatus } from "../../__mock__/backendStatus";
 import { BackedInfoState, backendInfoReducer } from "../backendInfo";

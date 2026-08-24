@@ -18,7 +18,9 @@ import {
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import { identificationRequest } from "../../../../identification/store/actions";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { trackCredentialRenewStart } from "../../../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
@@ -176,6 +178,9 @@ export const ItwPresentationCredentialDetail = ({
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isProximityEnabled = useIOSelector(isItwProximityEnabledSelector);
+  const isConnected = useIOSelector(isConnectedSelector);
+  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+  const isOffline = offlineAccessReason !== undefined || !isConnected;
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -265,7 +270,7 @@ export const ItwPresentationCredentialDetail = ({
       };
     }
 
-    if (isProximityEnabled && isPresentableCredential) {
+    if ((isProximityEnabled || isOffline) && isPresentableCredential) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.present"),
         icon: "productITWallet",
@@ -308,6 +313,7 @@ export const ItwPresentationCredentialDetail = ({
     isL3Credential,
     isPresentableCredential,
     isProximityEnabled,
+    isOffline,
     contentClaim,
     navigation,
     mixPanelCredential,

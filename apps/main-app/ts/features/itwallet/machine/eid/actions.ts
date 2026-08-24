@@ -347,7 +347,9 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     trackSaveCredentialSuccess({
       credential: context.level === "l3" ? "ITW_PID" : "ITW_ID_V2",
-      ITW_ID_method: context.identification?.mode,
+      ITW_ID_method: context.identification
+        ? toItwIdMethod(context.identification)
+        : undefined,
       credential_details: itwMixPanelCredentialDetailsSelector(store.getState())
     });
   },

@@ -1,8 +1,9 @@
-import { ZendeskSubCategoriesMap } from "../../../../../definitions/content/ZendeskSubCategoriesMap";
-import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-import { PaymentMethodManagementTypeEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
-import { PaymentMethodResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
-import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
+import { ZendeskSubCategoriesMap } from "@io-app/api-types/generated/definitions/content/ZendeskSubCategoriesMap";
+import { Bundle } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/Bundle";
+import { PaymentMethodManagementTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodManagementType";
+import { PaymentMethodResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodResponse";
+import { PaymentMethodStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodStatus";
+
 import { format } from "../../../../utils/dates";
 import {
   PaymentAnalyticsPhase,
