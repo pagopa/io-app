@@ -13,9 +13,6 @@ import { Action, ActionType, isActionOf } from "typesafe-actions";
 
 import { setConnectionStatus } from "../../../connectivity/store/actions";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";
-import { setOfflineAccessReason } from "../../../ingress/store/actions";
-import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
-import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import {
   syncItwAnalyticsProperties,
   updateNfcInfoTrackingProperties,
@@ -36,7 +33,6 @@ import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkC
 import { warmUpIntegrityServiceSaga } from "../../lifecycle/saga/checkIntegrityServiceReadySaga";
 import {
   checkWalletInstanceInconsistencySaga,
-  checkWalletInstanceStateOfflineSaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import {
@@ -50,7 +46,7 @@ import {
 } from "../store/actions/preferences";
 import { isItwCredential } from "../utils/itwCredentialUtils";
 import { watchItwEnvironment } from "./environment";
-import { watchItwOfflineAccess } from "./offlineAccess";
+import { watchItwOfflineSaga } from "./offlineAccess";
 
 /**
  * Watcher for ITW sagas that require internet connection and a valid session
@@ -91,23 +87,10 @@ export function* watchItwAuthenticatedSaga(): SagaIterator {
 }
 
 /**
- * Waits for device-offline access, then checks the valid Wallet Instance against
- * its cached Status List without making network requests.
- */
-export function* watchItwOfflineSaga(): SagaIterator {
-  // Checks for offline signal before running offline-only sagas
-  yield* waitForOffline();
-
-  yield* call(checkWalletInstanceStateOfflineSaga);
-}
-
-/**
  * Watcher for ITW sagas that do not require internet connection or a valid session
  */
 export function* watchItwSaga(): SagaIterator {
-  // Handle offline access counter increment and reset
-  yield* fork(watchItwOfflineAccess);
-  // Check the Wallet Instance from its cached Status List when offline.
+  // Handle offline access and check the Wallet Instance from its cached Status List.
   yield* fork(watchItwOfflineSaga);
   // Handle environment changes
   yield* fork(watchItwEnvironment);
@@ -189,26 +172,5 @@ export function* waitForConnection() {
   yield* take(
     (action: Action): action is ReturnType<typeof setConnectionStatus> =>
       isActionOf(setConnectionStatus, action) && action.payload === true
-  );
-}
-
-/**
- * Waits for device-offline access before proceeding.
- * Returns immediately when the offline reason is already `DEVICE_OFFLINE`;
- * otherwise waits for `setOfflineAccessReason(DEVICE_OFFLINE)`.
- *
- * @returns A generator that yields until device-offline access is active.
- */
-export function* waitForOffline() {
-  const offlineAccessReason = yield* select(offlineAccessReasonSelector);
-
-  if (offlineAccessReason === OfflineAccessReasonEnum.DEVICE_OFFLINE) {
-    return;
-  }
-
-  yield* take(
-    (action: Action): action is ReturnType<typeof setOfflineAccessReason> =>
-      isActionOf(setOfflineAccessReason, action) &&
-      action.payload === OfflineAccessReasonEnum.DEVICE_OFFLINE
   );
 }
