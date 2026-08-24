@@ -26,19 +26,13 @@ const mockNavigate = jest.fn();
 const mockIdps: Idps = [
   {
     entityID: "https://idp1.example.com",
-    pointer: "1",
     status: "public",
-    idpSSOEndpoints: {},
-    certificates: [],
     friendlyName: "IDP One",
     active: true
   },
   {
     entityID: "https://idp2.example.com",
-    pointer: "2",
     status: "public",
-    idpSSOEndpoints: {},
-    certificates: [],
     friendlyName: "IDP Two",
     active: true
   }
@@ -65,17 +59,14 @@ describe("OneIdentityIdpSelectionScreen", () => {
     expect(skeletonItems.length).toBe(5);
   });
 
-  it("should render the loading skeleton when the fetch fails", () => {
+  it("should render nothing when the fetch fails", () => {
     mockUseGetIdps.mockReturnValue({
       state: { status: "failure", error: new Error("network error") }
     });
 
-    const { getAllByLabelText } = renderComponent();
+    const { queryByTestId } = renderComponent();
 
-    const skeletonItems = getAllByLabelText(
-      I18n.t("authentication.idp_selection.idps.loadingAccessibilityLabel")
-    );
-    expect(skeletonItems.length).toBe(5);
+    expect(queryByTestId("idps-grid")).toBeNull();
   });
 
   it("should render the fetched IDPs on success", () => {
