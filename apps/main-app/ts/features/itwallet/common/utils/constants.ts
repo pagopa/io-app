@@ -6,9 +6,8 @@ import { type ItwVersion } from "@pagopa/io-react-native-wallet";
 export const CURRENT_ITW_SPECS_VERSION: ItwVersion = "1.4.6";
 
 /**
- * The minimum IT-Wallet technical specifications version that makes credentials compatible
- * with the current IT-Wallet version: this can evolve in a backward-compatible way,
- * so credentials issued with a version greater or equal to the minimum can still be used.
+ * The minimum IT-Wallet specification version that is backward-compatible with {@link CURRENT_ITW_SPECS_VERSION}.
+ * The current IT-Wallet version may increase while still supporting credentials issued with the minimum version.
  */
 export const MIN_ITW_SPECS_VERSION = "1.3.3";
 

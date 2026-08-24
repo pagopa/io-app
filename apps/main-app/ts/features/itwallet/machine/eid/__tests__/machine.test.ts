@@ -2869,10 +2869,10 @@ describe("itwEidIssuanceMachine itwVersion routing", () => {
     mode            | level            | expected
     ${"issuance"}   | ${"l2"}          | ${"1.0.0"}
     ${"issuance"}   | ${"l2-fallback"} | ${"1.0.0"}
-    ${"issuance"}   | ${"l3"}          | ${"1.3.3"}
-    ${"upgrade"}    | ${"l3"}          | ${"1.3.3"}
+    ${"issuance"}   | ${"l3"}          | ${"1.4.6"}
+    ${"upgrade"}    | ${"l3"}          | ${"1.4.6"}
     ${"reissuance"} | ${"l2"}          | ${"1.0.0"}
-    ${"reissuance"} | ${"l3"}          | ${"1.3.3"}
+    ${"reissuance"} | ${"l3"}          | ${"1.4.6"}
   `(
     "Mode: $mode, level: $level -> ITW: $expected",
     ({ mode, level, expected }) => {

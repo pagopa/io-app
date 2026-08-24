@@ -30,7 +30,7 @@ const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 12;
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
     // TODO SIW-4623: get itw version in the background task
-    await refreshStaleEntries({ itwVersion: "1.3.3" });
+    await refreshStaleEntries({ itwVersion: "1.4.6" });
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch {
     return BackgroundTask.BackgroundTaskResult.Failed;

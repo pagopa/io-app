@@ -44,11 +44,11 @@ export const selectItwSpecsVersion = createSelector(
     if (!isWhitelisted) {
       return "1.0.0";
     }
-    // Otherwise the specification version is determined by the current EID
-    // Users with an EID issued with the min version can safely use the current version.
+    // Otherwise the specification version is determined by the current eID: users
+    // with an eID issued with the min version can safely use the current version.
     const eid = O.toUndefined(eidOption);
     if (eid) {
-      return semver.satisfies(eid.spec_version, `>=${MIN_ITW_SPECS_VERSION}`)
+      return semver.gte(eid.spec_version, MIN_ITW_SPECS_VERSION)
         ? CURRENT_ITW_SPECS_VERSION
         : "1.0.0";
     }

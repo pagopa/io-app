@@ -103,7 +103,7 @@ describe("test decodeIOBarcode function", () => {
     beforeEach(() => {
       jest
         .spyOn(itWalletEnvSelectors, "selectItwSpecsVersion")
-        .mockReturnValue("1.3.3");
+        .mockReturnValue("1.4.6");
     });
 
     it("should return O.some on valid QRCode content", () => {
@@ -241,7 +241,7 @@ describe("test decodeIOBarcode function", () => {
   describe("test ITW_CREDENTIAL_OFFER barcode type", () => {
     jest
       .spyOn(itWalletEnvSelectors, "selectItwSpecsVersion")
-      .mockReturnValue("1.3.3");
+      .mockReturnValue("1.4.6");
 
     describe("custom schemes", () => {
       it("should return O.some on valid openid-credential-offer:// URI", () => {
