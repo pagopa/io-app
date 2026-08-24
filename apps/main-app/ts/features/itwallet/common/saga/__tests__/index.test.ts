@@ -1,17 +1,8 @@
 import { testSaga } from "redux-saga-test-plan";
 
-import {
-  waitForConnection,
-  waitForOffline,
-  watchItwAuthenticatedSaga,
-  watchItwOfflineSaga,
-  watchItwSaga
-} from "..";
+import { waitForConnection, watchItwAuthenticatedSaga, watchItwSaga } from "..";
 import { setConnectionStatus } from "../../../../connectivity/store/actions";
 import { isConnectedSelector } from "../../../../connectivity/store/selectors";
-import { setOfflineAccessReason } from "../../../../ingress/store/actions";
-import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
-import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
   syncItwAnalyticsProperties,
   updateNfcInfoTrackingProperties,
@@ -31,7 +22,6 @@ import { checkCurrentWalletInstanceStateSaga } from "../../../lifecycle/saga/che
 import { warmUpIntegrityServiceSaga } from "../../../lifecycle/saga/checkIntegrityServiceReadySaga";
 import {
   checkWalletInstanceInconsistencySaga,
-  checkWalletInstanceStateOfflineSaga,
   checkWalletInstanceStateSaga
 } from "../../../lifecycle/saga/checkWalletInstanceStateSaga";
 import {
@@ -40,7 +30,7 @@ import {
 } from "../../../statusList/saga";
 import { checkFiscalCodeEnabledSaga } from "../../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
 import { watchItwEnvironment } from "../environment";
-import { watchItwOfflineAccess } from "../offlineAccess";
+import { watchItwOfflineSaga } from "../offlineAccess";
 
 type TakeEffect<TAction> = {
   payload: {
@@ -51,8 +41,6 @@ type TakeEffect<TAction> = {
 describe("watchItwSaga", () => {
   it("starts offline-safe watchers and waits for connectivity before Status List checks", () => {
     testSaga(watchItwSaga)
-      .next()
-      .fork(watchItwOfflineAccess)
       .next()
       .fork(watchItwOfflineSaga)
       .next()
@@ -132,44 +120,6 @@ describe("watchItwAuthenticatedSaga", () => {
   });
 });
 
-describe("waitForOffline", () => {
-  it("continues immediately when already using device-offline access", () => {
-    testSaga(waitForOffline)
-      .next()
-      .select(offlineAccessReasonSelector)
-      .next(OfflineAccessReasonEnum.DEVICE_OFFLINE)
-      .isDone();
-  });
-
-  it.each([undefined, OfflineAccessReasonEnum.SESSION_EXPIRED])(
-    "waits for device-offline access when current reason is %s",
-    offlineAccessReason => {
-      testSaga(waitForOffline)
-        .next()
-        .select(offlineAccessReasonSelector)
-        .next(offlineAccessReason)
-        .inspect(effect => {
-          expect(effect).toMatchObject({ type: "TAKE" });
-          const takeEffect = effect as TakeEffect<
-            ReturnType<typeof setOfflineAccessReason>
-          >;
-          expect(
-            takeEffect.payload.pattern(
-              setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE)
-            )
-          ).toBe(true);
-          expect(
-            takeEffect.payload.pattern(
-              setOfflineAccessReason(OfflineAccessReasonEnum.SESSION_EXPIRED)
-            )
-          ).toBe(false);
-        })
-        .next(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE))
-        .isDone();
-    }
-  );
-});
-
 describe("waitForConnection", () => {
   it("continues immediately when already connected", () => {
     testSaga(waitForConnection)
@@ -197,18 +147,6 @@ describe("waitForConnection", () => {
         );
       })
       .next(setConnectionStatus(true))
-      .isDone();
-  });
-});
-
-describe("watchItwOfflineSaga", () => {
-  it("checks the wallet instance after device-offline access starts", () => {
-    testSaga(watchItwOfflineSaga)
-      .next()
-      .select(offlineAccessReasonSelector)
-      .next(OfflineAccessReasonEnum.DEVICE_OFFLINE)
-      .call(checkWalletInstanceStateOfflineSaga)
-      .next()
       .isDone();
   });
 });
