@@ -1,3 +1,5 @@
+import { AARProblemJson } from "@io-app/api-types/generated/definitions/pn/aar/AARProblemJson";
+
 import {
   aarProblemJsonAnalyticsReport,
   type SendAarScreen,
@@ -60,7 +62,6 @@ import {
   trackSendQRCodeScanRedirectConfirmed,
   trackSendQRCodeScanRedirectDismissed
 } from "..";
-import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import * as mixpanel from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import { SendUserType } from "../../../../pushNotifications/analytics";

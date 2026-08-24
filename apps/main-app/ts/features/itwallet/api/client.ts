@@ -1,6 +1,6 @@
+import { createClient } from "@io-app/api-types/generated/definitions/itw/client";
 import { URL as PolyfillURL } from "react-native-url-polyfill";
 
-import { createClient } from "../../../../definitions/itw/client";
 import { toFetchTimeout } from "../../../utils/fetch";
 
 /**

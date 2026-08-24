@@ -1,3 +1,6 @@
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   ContentWrapper,
   Icon,
@@ -14,9 +17,6 @@ import I18n from "i18next";
 import { useRef } from "react";
 import { ScrollView } from "react-native";
 
-import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";
 import { SendMessageSurveyBanner } from "../../messages/components/MessageSurveyBanner";

@@ -1,3 +1,4 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 /**
  * A reducer for the Profile.
  * It only manages SUCCESS actions because all UI state properties (like loading/error)
@@ -6,7 +7,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
 import { Action } from "../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../utils/environment";
 import { loginSuccess } from "../../../../authentication/common/store/actions";

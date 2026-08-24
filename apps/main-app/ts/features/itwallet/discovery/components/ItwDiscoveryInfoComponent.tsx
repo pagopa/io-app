@@ -30,7 +30,6 @@ import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIOSelector } from "../../../../store/hooks.ts";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { trackOpenItwTos } from "../../analytics";
@@ -75,7 +74,6 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   );
 
   useHeaderSecondLevel({
-    contextualHelp: emptyContextualHelp,
     supportRequest: true,
     title: "",
     goBack: () => {

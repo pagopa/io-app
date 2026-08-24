@@ -1,10 +1,10 @@
+import { LollipopMethodEnum } from "@io-app/api-types/generated/definitions/identity/LollipopMethod";
+import { LollipopOriginalURL } from "@io-app/api-types/generated/definitions/identity/LollipopOriginalURL";
+import { LollipopSignature } from "@io-app/api-types/generated/definitions/identity/LollipopSignature";
+import { LollipopSignatureInput } from "@io-app/api-types/generated/definitions/identity/LollipopSignatureInput";
+import { createClient } from "@io-app/api-types/generated/definitions/session_manager/client";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 
-import { LollipopMethodEnum } from "../../../../../definitions/identity/LollipopMethod";
-import { LollipopOriginalURL } from "../../../../../definitions/identity/LollipopOriginalURL";
-import { LollipopSignature } from "../../../../../definitions/identity/LollipopSignature";
-import { LollipopSignatureInput } from "../../../../../definitions/identity/LollipopSignatureInput";
-import { createClient } from "../../../../../definitions/session_manager/client";
 import { fetchMaxRetries, fetchTimeout } from "../../../../config";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { LollipopConfig } from "../../../lollipop";

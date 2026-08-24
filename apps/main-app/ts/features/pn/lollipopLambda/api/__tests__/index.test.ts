@@ -9,9 +9,12 @@ jest.mock("../../../../lollipop/utils/fetch", () => ({
 }));
 
 const mockCreateClient = jest.fn();
-jest.mock("../../../../../../definitions/pn/lollipop-lambda/client", () => ({
-  createClient: jest.fn(input => mockCreateClient(input))
-}));
+jest.mock(
+  "@io-app/api-types/generated/definitions/pn/lollipop-lambda/client",
+  () => ({
+    createClient: jest.fn(input => mockCreateClient(input))
+  })
+);
 
 describe("createSendLollipopLambdaClient", () => {
   afterEach(() => {

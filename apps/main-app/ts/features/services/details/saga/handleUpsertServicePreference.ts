@@ -1,3 +1,5 @@
+import { ServicePreference } from "@io-app/api-types/generated/definitions/identity/ServicePreference";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -5,8 +7,6 @@ import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { ServicePreference } from "../../../../../definitions/identity/ServicePreference";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";

@@ -10,9 +10,23 @@ import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 
 import BoxedRefreshIndicator from "./ui/BoxedRefreshIndicator";
-import { Overlay } from "./ui/Overlay";
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  overlay: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    justifyContent: "center"
+  },
+  content: {
+    zIndex: 0
+  },
   textCaption: {
     padding: 24
   }
@@ -39,13 +53,19 @@ const LoadingSpinnerOverlay = ({
   const theme = useIOTheme();
 
   return (
-    <Overlay
-      backgroundColor={hexToRgba(
-        IOColors[theme["appBackground-primary"]],
-        loadingOpacity
-      )}
-      foreground={
-        isLoading && (
+    <View style={styles.container} testID="overlayComponent">
+      {isLoading && (
+        <View
+          style={[
+            styles.overlay,
+            {
+              backgroundColor: hexToRgba(
+                IOColors[theme["appBackground-primary"]],
+                loadingOpacity
+              )
+            }
+          ]}
+        >
           <BoxedRefreshIndicator
             action={
               onCancel && (
@@ -71,11 +91,10 @@ const LoadingSpinnerOverlay = ({
               </View>
             }
           />
-        )
-      }
-    >
-      {children}
-    </Overlay>
+        </View>
+      )}
+      <View style={[styles.container, styles.content]}>{children}</View>
+    </View>
   );
 };
 

@@ -1,13 +1,13 @@
-import { within } from "@testing-library/react-native";
-import I18n from "i18next";
-import configureMockStore from "redux-mock-store";
-
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
-import { RewardValueTypeEnum } from "../../../../../../definitions/idpay/RewardValueDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { RewardValueTypeEnum } from "@io-app/api-types/generated/definitions/idpay/RewardValueDTO";
+import { within } from "@testing-library/react-native";
+import I18n from "i18next";
+import configureMockStore from "redux-mock-store";
+
 import { setLocale } from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
