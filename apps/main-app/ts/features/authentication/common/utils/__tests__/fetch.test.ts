@@ -197,7 +197,7 @@ describe("createRetriableFetch", () => {
     const fetchSpy = jest
       .spyOn(globalThis, "fetch")
       .mockResolvedValueOnce(
-        jsonResponse(503, {
+        jsonResponse(429, {
           // HTTP-date has second-level precision, so allow a little
           // slack around the nominal 3s delay to avoid a flaky test.
           "Retry-After": new Date(now + 3000).toUTCString()
