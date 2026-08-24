@@ -11,7 +11,6 @@ import { StyleSheet, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { trackShowCredentialsList } from "../../analytics";
 import { isL2Credential } from "../../common/utils/itwCredentialUtils.ts";
 import { makeItwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
@@ -25,11 +24,9 @@ const ItwCardOnboardingL2Screen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelp={emptyContextualHelp}
       description={I18n.t(
         "features.itWallet.onboarding.restrictedMode.description"
       )}
-      faqCategories={["wallet", "wallet_methods"]}
       headerActionsProp={{ showHelp: true }}
       title={{
         label: I18n.t("features.itWallet.onboarding.restrictedMode.title")

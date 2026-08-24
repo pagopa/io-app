@@ -16,7 +16,6 @@ import PagerView from "react-native-pager-view";
 
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackIDPayOnboardingAlert,
@@ -152,7 +151,6 @@ const MultiValuePrerequisiteItemScreenContent = ({
           label: I18n.t("global.buttons.continue")
         }
       }}
-      contextualHelp={emptyContextualHelp}
       goBack={handleGoBack}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins
