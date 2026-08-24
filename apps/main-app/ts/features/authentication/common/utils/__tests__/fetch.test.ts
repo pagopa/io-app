@@ -1,12 +1,10 @@
 import {
   createRetriableFetch,
-  FetchResponseError,
   isAbortedResponse,
   isFailureResponse,
   isNoAttemptsResponse,
   isSuccessResponse,
-  isTimeoutResponse,
-  unwrapFetchResponse
+  isTimeoutResponse
 } from "../fetch";
 
 const jsonResponse = (
@@ -339,72 +337,5 @@ describe("createRetriableFetch", () => {
 
     const response = await responsePromise;
     expect(isSuccessResponse(response)).toBe(true);
-  });
-});
-
-describe("unwrapFetchResponse", () => {
-  it("should return the Response on success", () => {
-    const response = jsonResponse(200);
-
-    expect(unwrapFetchResponse({ type: "success", response })).toBe(response);
-  });
-
-  it("should throw a FetchResponseError with reason 'unexpected-status-code' for a non-OK status", () => {
-    const response = jsonResponse(500);
-
-    try {
-      unwrapFetchResponse({ type: "success", response });
-      throw new Error("unwrapFetchResponse did not throw");
-    } catch (e) {
-      expect(e).toBeInstanceOf(FetchResponseError);
-      const fetchResponseError = e as FetchResponseError;
-      expect(fetchResponseError.code).toBe("FETCH_RESPONSE_ERROR");
-      expect(fetchResponseError.reason).toBe("unexpected-status-code");
-      expect(fetchResponseError.statusCode).toBe(500);
-      expect(fetchResponseError.response).toBe(response);
-    }
-  });
-
-  it.each<{
-    reason: "aborted" | "network-error" | "no-attempts" | "timeout";
-  }>([
-    { reason: "aborted" },
-    { reason: "network-error" },
-    { reason: "no-attempts" },
-    { reason: "timeout" }
-  ])(
-    "should throw a FetchResponseError with reason '$reason' and no response/statusCode",
-    ({ reason }) => {
-      try {
-        unwrapFetchResponse({ type: "failure", reason });
-        throw new Error("unwrapFetchResponse did not throw");
-      } catch (e) {
-        expect(e).toBeInstanceOf(FetchResponseError);
-        const fetchResponseError = e as FetchResponseError;
-        expect(fetchResponseError.code).toBe("FETCH_RESPONSE_ERROR");
-        expect(fetchResponseError.reason).toBe(reason);
-        expect(fetchResponseError.statusCode).toBeUndefined();
-        expect(fetchResponseError.response).toBeUndefined();
-      }
-    }
-  );
-
-  it("should throw a FetchResponseError with reason 'retryable-status' and the last response/statusCode when retries are exhausted", () => {
-    const response = jsonResponse(503);
-
-    try {
-      unwrapFetchResponse({
-        type: "failure",
-        reason: "retryable-status",
-        response
-      });
-      throw new Error("unwrapFetchResponse did not throw");
-    } catch (e) {
-      expect(e).toBeInstanceOf(FetchResponseError);
-      const fetchResponseError = e as FetchResponseError;
-      expect(fetchResponseError.reason).toBe("retryable-status");
-      expect(fetchResponseError.statusCode).toBe(503);
-      expect(fetchResponseError.response).toBe(response);
-    }
   });
 });

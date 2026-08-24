@@ -45,10 +45,10 @@ const successResponse = (status: number, body: unknown): FetchResponse => ({
   } as unknown as Response
 });
 
-const networkFailureResponse = (error: Error): FetchResponse => ({
+const networkFailureResponse = (message: string): FetchResponse => ({
   type: "failure",
   reason: "network-error",
-  error
+  message
 });
 
 const renderUseGetIdpsHook = () => {
@@ -110,16 +110,12 @@ describe("useGetIdps", () => {
 
     expect(result.current.state).toEqual({
       status: "failure",
-      error: expect.objectContaining({
-        reason: "unexpected-status-code",
-        statusCode: 500
-      })
+      error: "Unexpected HTTP status 500"
     });
   });
 
   it("should return a 'failure' state when the fetch fails with a network error", async () => {
-    const networkError = new Error("Network Error");
-    mockFetchIdps.mockResolvedValue(networkFailureResponse(networkError));
+    mockFetchIdps.mockResolvedValue(networkFailureResponse("Network Error"));
 
     const { result } = renderUseGetIdpsHook();
 
@@ -129,9 +125,7 @@ describe("useGetIdps", () => {
 
     expect(result.current.state).toEqual({
       status: "failure",
-      error: expect.objectContaining({
-        reason: "network-error"
-      })
+      error: "Network Error"
     });
   });
 
@@ -147,7 +141,7 @@ describe("useGetIdps", () => {
 
     expect(result.current.state).toEqual({
       status: "failure",
-      error: expect.objectContaining({ name: "ZodError" })
+      error: expect.stringContaining("Invalid input")
     });
   });
 });
