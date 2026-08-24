@@ -30,10 +30,7 @@ const MOCK_URL = "https://example.com/idps.json";
 const mockIdps: Idps = [
   {
     entityID: "https://idp.oneid.pagopa.it",
-    pointer: "LATEST_SPID",
     status: "OK",
-    idpSSOEndpoints: {},
-    certificates: [],
     friendlyName: "Test IDP",
     active: true
   }

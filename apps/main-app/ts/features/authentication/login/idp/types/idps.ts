@@ -5,10 +5,7 @@ import { z } from "zod";
  */
 export const IdpSchema = z.object({
   entityID: z.string(),
-  pointer: z.string(),
   status: z.string(),
-  idpSSOEndpoints: z.record(z.string(), z.string()),
-  certificates: z.array(z.string()),
   friendlyName: z.string(),
   active: z.boolean()
 });
