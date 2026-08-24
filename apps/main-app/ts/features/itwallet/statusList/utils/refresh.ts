@@ -71,37 +71,6 @@ export const refreshWithBoundedParallelism = async (
 };
 
 /**
- * Returns a fresh cached Status List Token for the given URI, refreshing it on demand
- * when it is missing from the cache or stale.
- *
- * Unlike {@link refreshStaleEntries}, which is best-effort and owner-blind, this is used
- * when a caller cannot proceed without an up-to-date list, hence it throws when the token
- * is still missing or stale after the refresh attempt.
- *
- * @throws When the Status List Token cannot be refreshed and no fresh cached entry exists
- */
-export const ensureFreshStatusList = async (
-  context: StatusListContext,
-  uri: string
-): Promise<CredentialStatus.StatusList> => {
-  const cached = await StatusListRepository.get(uri);
-
-  if (cached && !isStale(cached, Date.now())) {
-    return cached;
-  }
-
-  await refreshStatusListToken(context, uri);
-  const refreshed = await StatusListRepository.get(uri);
-
-  assert(
-    refreshed !== undefined && !isStale(refreshed, Date.now()),
-    `Status List Token ${uri} is missing or stale`
-  );
-
-  return refreshed;
-};
-
-/**
  * Owner-blind cache refresh, usable both at startup and from the background task.
  *
  * 1. Lists the cache once

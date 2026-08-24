@@ -16,7 +16,8 @@ import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { ensureFreshStatusList } from "../../statusList/utils/refresh";
+import { StatusListRepository } from "../../statusList/utils/repository";
+import { isStale } from "../../statusList/utils/validity";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import { ItwWalletInstanceState } from "../../walletInstance/store/reducers";
 import { itwWalletInstanceStatusListSelector } from "../../walletInstance/store/selectors";
@@ -25,7 +26,10 @@ import {
   trackItwWalletBadState,
   trackItwWalletInstanceRevocation
 } from "../analytics";
-import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
+import {
+  itwLifecycleIsOperationalOrValid,
+  itwLifecycleIsValidSelector
+} from "../store/selectors";
 import { checkIntegrityServiceReadySaga } from "./checkIntegrityServiceReadySaga";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
@@ -65,11 +69,38 @@ export function* checkWalletInstanceInconsistencySaga(): Generator<
 }
 
 /**
+ * Checks a valid wallet instance from its cached Status List while offline.
+ */
+export function* checkWalletInstanceStateOfflineSaga(): Generator<
+  ReduxSagaEffect,
+  void
+> {
+  const isWalletInstanceValid = yield* select(itwLifecycleIsValidSelector);
+  const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
+
+  if (!isWalletInstanceValid || O.isNone(integrityKeyTag)) {
+    return;
+  }
+
+  const itwVersion = yield* select(selectItwSpecsVersion);
+  const statusListEntry = yield* select(itwWalletInstanceStatusListSelector);
+  const isStatusListSupported =
+    getIoWallet(itwVersion).CredentialStatus.statusList.isSupported;
+
+  if (statusListEntry && isStatusListSupported) {
+    yield* call(
+      getStatusListStatusOrResetWalletInstance,
+      statusListEntry,
+      integrityKeyTag.value
+    );
+  }
+}
+
+/**
  * Saga responsible to check whether the wallet instance has not been revoked
  * or deleted. When this happens, the wallet is reset on the users's device.
  *
- * The status is read from the Wallet Unit Attestation's Status List when available [1.3.3+],
- * otherwise from the Wallet Provider's status endpoint [1.0.0].
+ * Online checks always use the Wallet Provider's status endpoint.
  */
 export function* checkWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
@@ -85,36 +116,16 @@ export function* checkWalletInstanceStateSaga(): Generator<
     return;
   }
 
-  const itwVersion = yield* select(selectItwSpecsVersion);
-  const statusListEntry = yield* select(itwWalletInstanceStatusListSelector);
-  const isStatusListSupported =
-    getIoWallet(itwVersion).CredentialStatus.statusList.isSupported;
-
-  // The Status List does not involve the device integrity, so it is checked right away.
-  if (statusListEntry && isStatusListSupported) {
-    yield* call(
-      getStatusListStatusOrResetWalletInstance,
-      statusListEntry,
-      integrityKeyTag.value
-    );
-    return;
-  }
-
-  // Wallet instances created before the Status List support still rely on the status endpoint,
-  // which requires the integrity service to be ready.
   if (yield* call(checkIntegrityServiceReadySaga)) {
     yield* call(getStatusOrResetWalletInstance, integrityKeyTag.value);
   }
 }
 
 /**
- * [1.3.3+] Reads the wallet instance status from the Wallet Unit Attestation's Status List,
- * refreshing the cached token first when it is missing or stale, so the status is never
- * evaluated against outdated data.
+ * [1.3.3+] Reads the wallet instance status from a fresh cached Status List.
  *
  * A non-valid entry resets the wallet, exactly as a revoked status assertion does.
- * When the Status List cannot be refreshed the status stays unknown: the wallet is left
- * untouched and the failure is stored, because being offline must not wipe a valid wallet.
+ * Missing or stale cached data is ignored because no network request is allowed offline.
  */
 export function* getStatusListStatusOrResetWalletInstance(
   { idx, uri }: NonNullable<ItwWalletInstanceState["statusList"]>,
@@ -129,7 +140,12 @@ export function* getStatusListStatusOrResetWalletInstance(
       `Status List is not supported by API ${itwVersion}`
     );
 
-    const statusList = yield* call(ensureFreshStatusList, { itwVersion }, uri);
+    const statusList = yield* call(StatusListRepository.get, uri);
+    // ponytail: offline path never refreshes; online refresh owns cache freshness.
+    if (!statusList || isStale(statusList, Date.now())) {
+      return;
+    }
+
     const { status } = statusListApi.getStatus(statusList.status_list, idx);
     const isRevoked = status.toLowerCase() !== VALID_STATUS;
 

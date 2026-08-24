@@ -11,11 +11,12 @@ import { selectItwSpecsVersion } from "../../../common/store/selectors/environme
 import { getWalletInstanceStatus } from "../../../common/utils/itwAttestationUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { itwIntegrityServiceStatusSelector } from "../../../issuance/store/selectors";
-import { ensureFreshStatusList } from "../../../statusList/utils/refresh";
+import { StatusListRepository } from "../../../statusList/utils/repository";
 import { itwUpdateWalletInstanceStatus } from "../../../walletInstance/store/actions";
 import { checkIntegrityServiceReadySaga } from "../checkIntegrityServiceReadySaga";
 import {
   checkWalletInstanceInconsistencySaga,
+  checkWalletInstanceStateOfflineSaga,
   checkWalletInstanceStateSaga,
   getStatusListStatusOrResetWalletInstance,
   getStatusOrResetWalletInstance
@@ -27,6 +28,11 @@ jest.mock("@pagopa/io-react-native-crypto", () => ({
 }));
 
 const mockGetStatus = jest.fn();
+const mockPid = {
+  credentialType: "pid",
+  credentialId: "dc_sd_jwt_PersonIdentificationData",
+  format: "dc+sd-jwt"
+} as CredentialMetadata;
 
 jest.mock("../../../common/utils/itwIoWallet", () => ({
   getIoWallet: jest.fn((version: string) => ({
@@ -40,11 +46,6 @@ jest.mock("../../../common/utils/itwIoWallet", () => ({
 }));
 
 describe("checkWalletInstanceStateSaga", () => {
-  const mockPid = {
-    credentialType: "pid",
-    credentialId: "dc_sd_jwt_PersonIdentificationData",
-    format: "dc+sd-jwt"
-  } as CredentialMetadata;
   // TODO: improve the mocked store's typing, do not use DeepPartial
   it("Does not check the wallet state when the wallet is INSTALLED", () => {
     const store: DeepPartial<GlobalState> = {
@@ -262,7 +263,7 @@ describe("checkWalletInstanceStateSaga", () => {
   });
 });
 
-describe("checkWalletInstanceStateSaga - Status List [1.3.3+]", () => {
+describe("checkWalletInstanceStateOfflineSaga - Status List [1.3.3+]", () => {
   const integrityKeyTag = "3396d31e-ac6a-4357-8083-cb5d3cda4d74";
   const statusListEntry = {
     idx: 4,
@@ -271,6 +272,7 @@ describe("checkWalletInstanceStateSaga - Status List [1.3.3+]", () => {
   const statusListToken = {
     sub: statusListEntry.uri,
     iat: 1690000000,
+    exp: Date.now() / 1000 + 3600,
     status_list: { bits: 2, lst: "eNrbuRgAAhcBXQ" }
   };
 
@@ -281,7 +283,9 @@ describe("checkWalletInstanceStateSaga - Status List [1.3.3+]", () => {
     features: {
       itWallet: {
         issuance: { integrityKeyTag: O.some(integrityKeyTag) },
-        credentials: { credentials: {} },
+        credentials: {
+          credentials: { [mockPid.credentialId]: mockPid }
+        },
         environment: { env: "prod" },
         preferences: {},
         walletInstance: { statusList }
@@ -303,12 +307,11 @@ describe("checkWalletInstanceStateSaga - Status List [1.3.3+]", () => {
     ({ status, isRevoked }) => {
       mockGetStatus.mockReturnValue({ status, rawStatus: "0x01" });
 
-      const saga = expectSaga(checkWalletInstanceStateSaga)
+      const saga = expectSaga(checkWalletInstanceStateOfflineSaga)
         .withState(getStore(statusListEntry))
         .provide([
           [matchers.select(selectItwSpecsVersion), "1.3.3"],
-          [matchers.call.fn(checkIntegrityServiceReadySaga), true],
-          [matchers.call.fn(ensureFreshStatusList), statusListToken]
+          [matchers.call.fn(StatusListRepository.get), statusListToken]
         ])
         .not.call.fn(getWalletInstanceStatus)
         .not.call.fn(checkIntegrityServiceReadySaga)
@@ -330,22 +333,26 @@ describe("checkWalletInstanceStateSaga - Status List [1.3.3+]", () => {
     }
   );
 
-  it("Stores a failure and keeps the wallet when the status list cannot be refreshed", () =>
-    expectSaga(checkWalletInstanceStateSaga)
-      .withState(getStore(statusListEntry))
-      .provide([
-        [matchers.select(selectItwSpecsVersion), "1.3.3"],
-        [matchers.call.fn(checkIntegrityServiceReadySaga), true],
-        [
-          matchers.call.fn(ensureFreshStatusList),
-          throwError(new Error("Status List Token is missing or stale"))
-        ]
-      ])
-      .not.call.fn(handleWalletInstanceResetSaga)
-      .put.like({
-        action: { type: itwUpdateWalletInstanceStatus.failure.toString() }
-      })
-      .run());
+  it.each([
+    { name: "missing", cached: undefined },
+    {
+      name: "stale",
+      cached: { ...statusListToken, exp: Date.now() / 1000 - 1 }
+    }
+  ])(
+    "Silently skips the check when the cached status list is $name",
+    ({ cached }) =>
+      expectSaga(checkWalletInstanceStateOfflineSaga)
+        .withState(getStore(statusListEntry))
+        .provide([
+          [matchers.select(selectItwSpecsVersion), "1.3.3"],
+          [matchers.call.fn(StatusListRepository.get), cached]
+        ])
+        .not.call.fn(handleWalletInstanceResetSaga)
+        .not.put.actionType(itwUpdateWalletInstanceStatus.success.toString())
+        .not.put.actionType(itwUpdateWalletInstanceStatus.failure.toString())
+        .run()
+  );
 
   it.each([
     {
@@ -358,23 +365,28 @@ describe("checkWalletInstanceStateSaga - Status List [1.3.3+]", () => {
       itwVersion: "1.0.0",
       statusList: statusListEntry
     }
-  ])(
-    "Falls back to the status endpoint when $name",
-    ({ itwVersion, statusList }) =>
-      expectSaga(checkWalletInstanceStateSaga)
-        .withState(getStore(statusList))
-        .provide([
-          [matchers.select(selectItwSpecsVersion), itwVersion],
-          [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
-          [matchers.call.fn(checkIntegrityServiceReadySaga), true],
-          [
-            matchers.call.fn(getWalletInstanceStatus),
-            { id: integrityKeyTag, is_revoked: false }
-          ]
-        ])
-        .call.fn(getStatusOrResetWalletInstance)
-        .not.call.fn(getStatusListStatusOrResetWalletInstance)
-        .not.call.fn(handleWalletInstanceResetSaga)
-        .run()
+  ])("Skips the offline check when $name", ({ itwVersion, statusList }) =>
+    expectSaga(checkWalletInstanceStateOfflineSaga)
+      .withState(getStore(statusList))
+      .provide([[matchers.select(selectItwSpecsVersion), itwVersion]])
+      .not.call.fn(getStatusListStatusOrResetWalletInstance)
+      .not.call.fn(getStatusOrResetWalletInstance)
+      .not.call.fn(handleWalletInstanceResetSaga)
+      .run()
   );
+
+  it("Uses the backend status endpoint when online", () =>
+    expectSaga(checkWalletInstanceStateSaga)
+      .withState(getStore(statusListEntry))
+      .provide([
+        [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
+        [matchers.call.fn(checkIntegrityServiceReadySaga), true],
+        [
+          matchers.call.fn(getWalletInstanceStatus),
+          { id: integrityKeyTag, is_revoked: false }
+        ]
+      ])
+      .call.fn(getStatusOrResetWalletInstance)
+      .not.call.fn(getStatusListStatusOrResetWalletInstance)
+      .run());
 });
