@@ -1,4 +1,4 @@
-import { fromIdpToLocalSpidIdp } from "../idps";
+import { fromIdpToLocalSpidIdp, randomOrderIdps } from "../idps";
 
 describe("fromIdpToLocalSpidIdp", () => {
   it("should return an empty array if the input is empty", () => {
@@ -31,5 +31,28 @@ describe("fromIdpToLocalSpidIdp", () => {
         profileUrl: ""
       }
     ]);
+  });
+});
+
+describe("randomOrderIdps", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it("should return an empty array if the input is empty", () => {
+    expect(randomOrderIdps([])).toEqual([]);
+  });
+
+  it("should shuffle the array", () => {
+    // With `Math.random` always returning 0, every swap picks index 0
+    // as `j`: this pins down the exact (deterministic) output of the
+    // Fisher-Yates algorithm, instead of just checking it's *a*
+    // permutation.
+    jest.spyOn(Math, "random").mockReturnValue(0);
+
+    const input = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
+    const result = randomOrderIdps(input);
+
+    expect(result).toEqual([{ id: 2 }, { id: 3 }, { id: 4 }, { id: 1 }]);
   });
 });
