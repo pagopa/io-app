@@ -41,6 +41,7 @@ import preferencesReducer, { ItwPreferencesState } from "./preferences";
 import securePreferencesReducer, {
   ItwSecurePreferencesState
 } from "./securePreferences";
+import uiReducer, { ItwUiState } from "./ui";
 
 export type ItWalletState = {
   banners: ItwBannersState;
@@ -53,6 +54,7 @@ export type ItWalletState = {
   preferences: ItwPreferencesState;
   proximity: ItwProximityState & PersistPartial;
   securePreferences: ItwSecurePreferencesState & PersistPartial;
+  ui: ItwUiState;
   walletInstance: ItwWalletInstanceState & PersistPartial;
 };
 
@@ -69,7 +71,8 @@ const itwReducer = combineReducers({
   credentialsCatalogue: itwCredentialsCatalogueReducer,
   proximity: itwProximityReducer,
   banners: bannersReducer,
-  debug: itwDebugReducer
+  debug: itwDebugReducer,
+  ui: uiReducer
 });
 
 const CURRENT_REDUX_ITW_STORE_VERSION = 16;
