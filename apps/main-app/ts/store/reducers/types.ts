@@ -28,6 +28,7 @@ import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { SearchState } from "./search";
 import { StartupState } from "./startup";
+import { UiState } from "./ui";
 
 export type GlobalState = Readonly<{
   appState: AppState;
@@ -56,6 +57,7 @@ export type GlobalState = Readonly<{
   sectionStatus: SectionStatusState;
   startup: StartupState;
   statusMessages: StatusMessagesState;
+  ui: UiState;
   userDataProcessing: UserDataProcessingState;
   versionInfo: VersionInfoState;
 }>;

@@ -4,6 +4,7 @@ import { ActionArgs, assertEvent, assign } from "xstate";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
+import { uiShowCredentialExitSurvey } from "../../../../store/actions/ui";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { isRouteInNavigationState } from "../../../../utils/navigation";
@@ -134,14 +135,18 @@ export const createCredentialIssuanceActionsImplementation = (
     assertEvent(event, "close");
     const { surveyStep, surveyCredential } = event;
 
+    if (surveyStep && surveyCredential) {
+      store.dispatch(
+        uiShowCredentialExitSurvey({
+          step: surveyStep,
+          credential: surveyCredential
+        })
+      );
+    }
+
     navigation.navigate(ROUTES.MAIN, {
       screen: ROUTES.WALLET_HOME,
-      params: {
-        credentialExitSurvey:
-          surveyStep && surveyCredential
-            ? { step: surveyStep, credential: surveyCredential }
-            : undefined
-      }
+      params: {}
     });
   },
 

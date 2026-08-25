@@ -5,6 +5,10 @@ import { ActionArgs, assertEvent, assign } from "xstate";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
+import {
+  uiShowActivationExitSurvey,
+  uiShowItwFeedbackBottomSheet
+} from "../../../../store/actions/ui";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { isRouteInNavigationState } from "../../../../utils/navigation";
@@ -257,12 +261,16 @@ export const createEidIssuanceActionsImplementation = (
 
     const surveyStep = event.type === "close" ? event.surveyStep : undefined;
 
+    if (isReissuance && !isSurveyHidden) {
+      store.dispatch(uiShowItwFeedbackBottomSheet());
+    }
+    if (surveyStep) {
+      store.dispatch(uiShowActivationExitSurvey({ step: surveyStep }));
+    }
+
     navigation.navigate(ROUTES.MAIN, {
       screen: ROUTES.WALLET_HOME,
-      params: {
-        requiredEidFeedback: isReissuance && !isSurveyHidden,
-        activationExitSurvey: surveyStep ? { step: surveyStep } : undefined
-      }
+      params: {}
     });
   },
 

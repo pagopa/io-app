@@ -17,7 +17,17 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
 import ROUTES from "../../../navigation/routes";
+import {
+  uiHideActivationExitSurvey,
+  uiHideCredentialExitSurvey,
+  uiHideItwFeedbackBottomSheet
+} from "../../../store/actions/ui";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import {
+  uiActivationExitSurveySelector,
+  uiCredentialExitSurveySelector,
+  uiItwFeedbackBottomSheetSelector
+} from "../../../store/reducers/ui";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   trackItwSurveyRequest,
@@ -25,15 +35,8 @@ import {
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors";
-import { MixPanelCredential } from "../../itwallet/analytics/utils/types";
-import {
-  EidActivationExitStep,
-  useItwActivationExitSurveyBottomSheet
-} from "../../itwallet/common/hooks/useItwActivationExitSurveyBottomSheet.tsx";
-import {
-  CredentialExitStep,
-  useItwCredentialExitSurveyBottomSheet
-} from "../../itwallet/common/hooks/useItwCredentialExitSurveyBottomSheet.tsx";
+import { useItwActivationExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwActivationExitSurveyBottomSheet.tsx";
+import { useItwCredentialExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwCredentialExitSurveyBottomSheet.tsx";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
 import {
@@ -57,17 +60,8 @@ import {
 } from "../store/selectors";
 
 export type WalletHomeNavigationParams = Readonly<{
-  // Triggers the activation exit survey bottom sheet once the user returns to this screen
-  activationExitSurvey?: { step: EidActivationExitStep };
-  // Triggers the credential exit survey bottom sheet once the user returns to this screen
-  credentialExitSurvey?: {
-    credential: MixPanelCredential;
-    step: CredentialExitStep;
-  };
   // Triggers the "New element added" toast display once the user returns to this screen
   newMethodAdded?: boolean;
-  // Triggers the "Required EID feedback" bottom sheet display once the user returns to this screen
-  requiredEidFeedback?: boolean;
 }>;
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -90,8 +84,12 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
-  const isRequiredEidFeedback = useRef(
-    route.params?.requiredEidFeedback || false
+  const isRequiredEidFeedback = useIOSelector(uiItwFeedbackBottomSheetSelector);
+  const activationExitSurveyState = useIOSelector(
+    uiActivationExitSurveySelector
+  );
+  const credentialExitSurveyState = useIOSelector(
+    uiCredentialExitSurveySelector
   );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
   const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
@@ -100,11 +98,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     }
   });
   const activationExitSurvey = useItwActivationExitSurveyBottomSheet({
-    step: route.params?.activationExitSurvey?.step
+    step: activationExitSurveyState?.step
   });
   const credentialExitSurvey = useItwCredentialExitSurveyBottomSheet({
-    step: route.params?.credentialExitSurvey?.step,
-    credential: route.params?.credentialExitSurvey?.credential
+    step: credentialExitSurveyState?.step,
+    credential: credentialExitSurveyState?.credential
   });
 
   // We need to use a local state to separate the UI state from the redux state
@@ -183,36 +181,50 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
         isNewElementAdded.current = false;
       }
-      if (isRequiredEidFeedback.current) {
+    }, [isNewElementAdded])
+  );
+
+  /**
+   * Handles the EID feedback bottom sheet display, triggered by the eID
+   * issuance machine via the "ui" store instead of navigation params.
+   */
+  useFocusEffect(
+    useCallback(() => {
+      if (isRequiredEidFeedback) {
         trackItwSurveyRequest({
           survey_id: "confirm_eid_flow_exit",
           survey_page: route.name
         });
         itwFeedbackBottomSheet.present();
-        isRequiredEidFeedback.current = false;
+        dispatch(uiHideItwFeedbackBottomSheet());
       }
-    }, [
-      isNewElementAdded,
-      isRequiredEidFeedback,
-      itwFeedbackBottomSheet,
-      route.name
-    ])
+    }, [dispatch, isRequiredEidFeedback, itwFeedbackBottomSheet, route.name])
   );
 
+  /**
+   * Handles the activation exit survey bottom sheet display, triggered by the
+   * eID issuance machine via the "ui" store instead of navigation params.
+   */
   useFocusEffect(
     useCallback(() => {
-      if (route.params?.activationExitSurvey) {
+      if (activationExitSurveyState) {
         activationExitSurvey.present();
+        dispatch(uiHideActivationExitSurvey());
       }
-    }, [activationExitSurvey, route.params?.activationExitSurvey])
+    }, [activationExitSurvey, activationExitSurveyState, dispatch])
   );
 
+  /**
+   * Handles the credential exit survey bottom sheet display, triggered by the
+   * credential issuance machine via the "ui" store instead of navigation params.
+   */
   useFocusEffect(
     useCallback(() => {
-      if (route.params?.credentialExitSurvey) {
+      if (credentialExitSurveyState) {
         credentialExitSurvey.present();
+        dispatch(uiHideCredentialExitSurvey());
       }
-    }, [credentialExitSurvey, route.params?.credentialExitSurvey])
+    }, [credentialExitSurvey, credentialExitSurveyState, dispatch])
   );
 
   const handleRefreshWallet = useCallback(() => {
