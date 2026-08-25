@@ -69,8 +69,9 @@ export function useMaxBrightness({
     }
     const brightness = initialBrightness.current;
     await Platform.select({
-      ios: async () => await ScreenBrightness.setBrightnessAsync(brightness),
-      default: async () => await ScreenBrightness.restoreSystemBrightnessAsync()
+      android: async () =>
+        await ScreenBrightness.restoreSystemBrightnessAsync(),
+      default: async () => await ScreenBrightness.setBrightnessAsync(brightness)
     })();
   }, []);
 
