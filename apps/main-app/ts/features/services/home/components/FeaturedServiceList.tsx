@@ -1,9 +1,9 @@
+import { FeaturedService } from "@io-app/api-types/generated/definitions/services/FeaturedService";
 import { BannerErrorState, ListItemHeader } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 
-import { FeaturedService } from "../../../../../definitions/services/FeaturedService";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";

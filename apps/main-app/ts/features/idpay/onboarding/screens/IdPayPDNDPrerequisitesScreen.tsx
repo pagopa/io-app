@@ -5,7 +5,6 @@ import I18n from "i18next";
 import { Fragment, useState } from "react";
 
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackIDPayOnboardingPDNDAcceptance } from "../analytics";
@@ -78,7 +77,6 @@ const IdPayPDNDPrerequisitesScreen = () => {
           onPress: continueOnPress
         }
       }}
-      contextualHelp={emptyContextualHelp}
       description={I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
         service: initiativeName
       })}

@@ -1,3 +1,4 @@
+import { InitiativeRewardTypeEnum } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import {
   BannerErrorState,
   Body,
@@ -13,7 +14,6 @@ import I18n from "i18next";
 import { ComponentProps, Fragment } from "react";
 import { View } from "react-native";
 
-import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import {
   AppParamsList,
   IOStackNavigationProp

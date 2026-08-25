@@ -1,3 +1,7 @@
+import { MessageStatusArchivingChange } from "@io-app/api-types/generated/definitions/communication/MessageStatusArchivingChange";
+import { MessageStatusBulkChange } from "@io-app/api-types/generated/definitions/communication/MessageStatusBulkChange";
+import { MessageStatusChange } from "@io-app/api-types/generated/definitions/communication/MessageStatusChange";
+import { MessageStatusReadingChange } from "@io-app/api-types/generated/definitions/communication/MessageStatusReadingChange";
 import I18n from "i18next";
 import {
   call,
@@ -9,10 +13,6 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 
-import { MessageStatusArchivingChange } from "../../../../definitions/communication/MessageStatusArchivingChange";
-import { MessageStatusBulkChange } from "../../../../definitions/communication/MessageStatusBulkChange";
-import { MessageStatusChange } from "../../../../definitions/communication/MessageStatusChange";
-import { MessageStatusReadingChange } from "../../../../definitions/communication/MessageStatusReadingChange";
 import { CommunicationClient } from "../../../api/CommunicationClientManager";
 import { SagaCallReturnType } from "../../../types/utils";
 import { getError } from "../../../utils/errors";

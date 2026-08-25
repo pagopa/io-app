@@ -1,3 +1,12 @@
+import { AppVersion } from "@io-app/api-types/generated/definitions/identity/AppVersion";
+import { EmailAddress } from "@io-app/api-types/generated/definitions/identity/EmailAddress";
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
@@ -8,15 +17,6 @@ import { expectSaga, testSaga } from "redux-saga-test-plan";
 import sha from "sha.js";
 import { getType } from "typesafe-actions";
 
-import { AppVersion } from "../../../../../../definitions/identity/AppVersion";
-import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
-import { PreferredLanguageEnum } from "../../../../../../definitions/identity/PreferredLanguage";
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../../definitions/identity/ReminderStatus";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/identity/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../../definitions/identity/UserDataProcessingStatus";
 import mockedProfile from "../../../../../__mocks__/initializedProfile";
 import {
   differentProfileLoggedIn,
@@ -51,8 +51,8 @@ jest.mock("@react-native-async-storage/async-storage", () => ({
   AsyncStorage: jest.fn()
 }));
 
-jest.mock("react-native-share", () => ({
-  open: jest.fn()
+jest.mock("expo-sharing", () => ({
+  shareAsync: jest.fn()
 }));
 
 const fiscalCodeHash = hash(`${mockedProfile.fiscal_code}xxx`);

@@ -1,8 +1,7 @@
+import { StatusEnum } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-
-import { StatusEnum } from "../../../../definitions/idpay/InstrumentDTO";
 
 type InstrumentStatusLabels = {
   [key in StatusEnum]: string;

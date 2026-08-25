@@ -4,15 +4,15 @@ import NavigationService from "../../../../../../../navigation/NavigationService
 import CGN_ROUTES from "../../../../navigation/routes";
 import { cgnActivationStatus } from "../../../../store/actions/activation";
 import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";
-import { cgnActivationWorker } from "../../../orchestration/activation/handleActivationSaga";
+import { cgnActivationWorker } from "../../../orchestration/activation/cgnActivationWorker";
 import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationLoading,
   navigateToCgnActivationTimeout
 } from "../../../orchestration/navigation/actions";
 
-jest.mock("react-native-share", () => ({
-  open: jest.fn()
+jest.mock("expo-sharing", () => ({
+  shareAsync: jest.fn()
 }));
 
 describe("cgnActivationWorker", () => {

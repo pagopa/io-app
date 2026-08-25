@@ -43,7 +43,6 @@ const UpdateAppModal: FC = () => {
   useEffect(() => {
     if (isError) {
       AccessibilityInfo.announceForAccessibility(errorMessage);
-      // eslint-disable-next-line functional/immutable-data
       timeoutRef.current = setTimeout(() => setIsError(false), 5000);
     }
 

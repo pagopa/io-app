@@ -57,7 +57,6 @@ export const ItwPresentationCredentialUnknownStatus = ({
     if (isRetrying && previousAssertionRef.current !== credential.validity) {
       setIsRetryComplete(true);
       setIsRetrying(false);
-      // eslint-disable-next-line functional/immutable-data
       previousAssertionRef.current = credential.validity;
     }
   }, [credential.validity, isRetrying]);

@@ -1,3 +1,4 @@
+import { Institution } from "@io-app/api-types/generated/definitions/services/Institution";
 import {
   BannerErrorState,
   Divider,
@@ -17,7 +18,6 @@ import Animated, {
   LinearTransition
 } from "react-native-reanimated";
 
-import { Institution } from "../../../../../definitions/services/Institution";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { IdPayInitiativeWaitingList } from "../../../idpay/wallet/components/IdPayInitiativeWaitingList";
