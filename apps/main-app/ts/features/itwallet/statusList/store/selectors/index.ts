@@ -1,23 +1,38 @@
 import { GlobalState } from "../../../../../store/reducers/types";
+import { selectItwSpecsVersion } from "../../../common/store/selectors/environment";
+import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { CredentialValidity } from "../../../common/utils/itwTypesUtils";
 import { itwAllStoredCredentialsSelector } from "../../../credentials/store/selectors";
+import { itwKeyAttestationsSelector } from "../../../walletInstance/store/selectors";
 
 /**
  * Collects the Status List URIs referenced by all current owners
- * (credentials, Wallet Instance Attestations, Key Attestations).
+ * (credentials and Key Attestations).
  *
- * Returns `undefined` when owner metadata does not yet expose Status List
- * references, so that startup coherence can distinguish "no owners exist"
- * from "owner metadata not available" and avoid wiping the cache.
- *
- * TODO: [SIW-2162] Wire actual URI extraction once owner types expose
- * Status List references in their Redux state.
+ * Invalid or unsupported owner data is ignored because it cannot reference a
+ * Status List that can be used by the wallet.
  */
 export const itwStatusListReferencedUrisSelector = (
   state: GlobalState
 ): ReadonlyArray<string> => {
+  const wallet = getIoWallet(selectItwSpecsVersion(state));
+
   const credentials = itwAllStoredCredentialsSelector(state);
-  return credentials
+  const credentialUris = credentials
     .filter(c => c.validity?.type === "status_list")
     .map(c => (c.validity as CredentialValidity).statusList.uri);
+
+  const keyAttestations = itwKeyAttestationsSelector(state);
+  const keyAttestationUris = Object.values(keyAttestations).flatMap(ka => {
+    try {
+      if (!wallet.KeyAttestation.isSupported) {
+        return [];
+      }
+      return [wallet.KeyAttestation.decode(ka).status.status_list.uri];
+    } catch {
+      return [];
+    }
+  });
+
+  return [...credentialUris, ...keyAttestationUris];
 };

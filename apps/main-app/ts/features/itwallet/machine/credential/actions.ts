@@ -18,6 +18,7 @@ import {
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
+import { itwSetCredentialExitSurvey } from "../../common/store/actions/ui";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import {
@@ -134,14 +135,18 @@ export const createCredentialIssuanceActionsImplementation = (
     assertEvent(event, "close");
     const { surveyStep, surveyCredential } = event;
 
+    if (surveyStep && surveyCredential) {
+      store.dispatch(
+        itwSetCredentialExitSurvey({
+          step: surveyStep,
+          credential: surveyCredential
+        })
+      );
+    }
+
     navigation.navigate(ROUTES.MAIN, {
       screen: ROUTES.WALLET_HOME,
-      params: {
-        credentialExitSurvey:
-          surveyStep && surveyCredential
-            ? { step: surveyStep, credential: surveyCredential }
-            : undefined
-      }
+      params: {}
     });
   },
 

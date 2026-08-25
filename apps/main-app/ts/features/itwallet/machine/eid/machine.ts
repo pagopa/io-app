@@ -25,6 +25,8 @@ import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
+  ObtainStatusListActorInput,
+  ObtainStatusListActorOutput,
   RequestAccessTokenActorParams,
   RequestEidActorOutput,
   type RequestEidActorParams,
@@ -217,6 +219,10 @@ export const itwEidIssuanceMachine = setup({
     requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
       notImplemented
     ),
+    obtainStatusList: fromPromise<
+      ObtainStatusListActorOutput,
+      ObtainStatusListActorInput
+    >(notImplemented),
     storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
       notImplemented
     ),
@@ -1168,7 +1174,7 @@ export const itwEidIssuanceMachine = setup({
                 eid: event.output.credential,
                 keyAttestations: event.output.keyAttestations
               })),
-              target: "CheckingIdentityMatch"
+              target: "ObtainingWuaStatusList"
             },
             onError: [
               {
@@ -1181,6 +1187,26 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.Failure"
               }
             ]
+          }
+        },
+        ObtainingWuaStatusList: {
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "obtainStatusList",
+            input: ({ context }) => ({
+              itwVersion: context.itwVersion,
+              keyAttestations: context.keyAttestations
+            }),
+            onDone: {
+              actions: assign(({ event }) => ({
+                walletInstanceStatusList: event.output
+              })),
+              target: "CheckingIdentityMatch"
+            },
+            onError: {
+              target: "#itwEidIssuanceMachine.Failure",
+              actions: "setFailure"
+            }
           }
         },
         CheckingIdentityMatch: {
@@ -1221,7 +1247,8 @@ export const itwEidIssuanceMachine = setup({
             src: "storeEidCredential",
             input: ({ context }) => ({
               eid: context.eid,
-              keyAttestations: context.keyAttestations
+              keyAttestations: context.keyAttestations,
+              walletInstanceStatusList: context.walletInstanceStatusList
             }),
             onDone: {
               target: "Completed",

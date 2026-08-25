@@ -1,6 +1,7 @@
 import type {
   AuthorizationDetail,
   CredentialIssuance,
+  CredentialStatus,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 
@@ -112,6 +113,15 @@ export type Context = {
    * The wallet instance attestation JWT used to verify the wallet instance.
    */
   walletInstanceAttestation: undefined | WalletInstanceAttestations;
+  /**
+   * [1.3.3+] Optional Status Lists referenced by the Wallet Unit
+   * Attestations (WUAs). This is used to check the validity of the WI.
+   */
+  walletInstanceStatusList?: {
+    idx: number;
+    parsedStatusList: CredentialStatus.StatusList;
+    uri: string;
+  };
 };
 
 /**
@@ -180,5 +190,6 @@ export const InitialContext: Context = {
   credentialsToUpgrade: [],
   failedCredentials: undefined,
   credentialType: undefined,
-  accessToken: undefined
+  accessToken: undefined,
+  walletInstanceStatusList: undefined
 };

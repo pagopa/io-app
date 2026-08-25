@@ -6,6 +6,7 @@ import { fromPromise } from "xstate";
 import type {
   AuthenticationContext,
   CieContext,
+  Context,
   EidIssuanceLevel,
   IdentificationContext,
   MrtdPoPContext
@@ -45,8 +46,14 @@ import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import {
+  getCredentialStatusFromStatusList,
+  getKeysForWuaStatusList
+} from "../../statusList/utils";
+import { StatusListRepository } from "../../statusList/utils/repository";
+import {
   itwKeyAttestationsStore,
-  itwSetWalletInstanceRenewalError
+  itwSetWalletInstanceRenewalError,
+  itwStoreWalletInstanceStatusList
 } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
@@ -66,6 +73,13 @@ export type InitMrtdPoPChallengeActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
   walletInstanceAttestation: string | undefined;
 }>;
+
+export type ObtainStatusListActorInput = Pick<
+  Context,
+  "itwVersion" | "keyAttestations"
+>;
+
+export type ObtainStatusListActorOutput = Context["walletInstanceStatusList"];
 
 export type RequestAccessTokenActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
@@ -94,6 +108,7 @@ export type StartAuthFlowActorParams = WithItwVersion<{
 export type StoreEidCredentialActorParams = {
   eid: CredentialBundle | undefined;
   keyAttestations?: Record<string, string>;
+  walletInstanceStatusList?: Context["walletInstanceStatusList"];
 };
 
 export type ValidateMrtdPoPChallengeActorParams = WithItwVersion<{
@@ -410,10 +425,57 @@ export const createEidIssuanceActorsImplementation = (
     }
   ),
 
+  obtainStatusList: fromPromise<
+    ObtainStatusListActorOutput,
+    ObtainStatusListActorInput
+  >(async ({ input }) => {
+    const { itwVersion, keyAttestations } = input;
+
+    const ioWallet = getIoWallet(itwVersion);
+    if (
+      !ioWallet.KeyAttestation.isSupported ||
+      !ioWallet.CredentialStatus.statusList.isSupported
+    ) {
+      return undefined;
+    }
+
+    assert(
+      keyAttestations && Object.keys(keyAttestations).length > 0,
+      "PID Key Attestations are not defined or empty"
+    );
+
+    // For the Status List we'll need just one of the KAs, as they all
+    // reference the same Status List. We can take the first one.
+    const [keyAttestationId, keyAttestation] =
+      Object.entries(keyAttestations)[0];
+
+    // Fetch the JWKS from the Wallet Provider's OpenID Federation metadata,
+    const keys = await getKeysForWuaStatusList(keyAttestation);
+
+    return await getCredentialStatusFromStatusList(
+      itwVersion,
+      keyAttestation,
+      keyAttestationId,
+      "dc+sd-jwt",
+      keys
+    );
+  }),
+
   storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
     async ({ input }) => {
-      const { eid, keyAttestations } = input;
+      const { eid, keyAttestations, walletInstanceStatusList } = input;
       assert(eid, "eID credential is undefined");
+
+      // Persist verified status lists before activating the wallet instance.
+      if (walletInstanceStatusList) {
+        const { parsedStatusList, idx, uri } = walletInstanceStatusList;
+        await StatusListRepository.upsert(uri, parsedStatusList);
+        store.dispatch(itwStoreWalletInstanceStatusList({ idx, uri }));
+      }
+
+      if (keyAttestations) {
+        store.dispatch(itwKeyAttestationsStore(keyAttestations));
+      }
 
       // Waits for the credential store/replace to complete before proceeding
       await new Promise<void>((resolve, reject) => {
@@ -424,10 +486,6 @@ export const createEidIssuanceActorsImplementation = (
           })
         );
       });
-
-      if (keyAttestations) {
-        store.dispatch(itwKeyAttestationsStore(keyAttestations));
-      }
     }
   ),
 
