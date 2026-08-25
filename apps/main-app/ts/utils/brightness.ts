@@ -6,10 +6,6 @@ import { AppState, AppStateStatus, Platform } from "react-native";
 // The maximum brightness
 const HIGH_BRIGHTNESS = 1;
 
-// The maximum brightness for Android
-// Read more: https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS
-const ANDROID_MAX_BRIGHTNESS = 255;
-
 // This duration is chosen to be long enough to be noticeable but short enough to not be annoying
 const DEFAULT_TRANSITION_DURATION = 1500;
 
@@ -55,43 +51,6 @@ export function useMaxBrightness({
   const currentAppState = useRef<AppStateStatus | null>(null);
   // Store the initial brightness
   const initialBrightness = useRef<null | number>(null);
-  // Only for Android, store if the app was using auto brightness mode
-  const autoBrightness = useRef<boolean | null>(null);
-
-  /**
-   * Gets the current screen brightness level.
-   *
-   * On iOS: Returns the system-wide brightness level between 0 and 1.
-   *
-   * On Android: First checks the app-specific brightness. If auto-brightness is enabled
-   * (indicated by value < 0), retrieves and normalizes the system brightness from the 0-255 range
-   * to a 0-1 range. Otherwise returns the app-specific brightness value.
-   *
-   * @returns Promise<number> Resolves to brightness value between 0 (darkest) and 1 (brightest)
-   *
-   * @see {@link https://developer.android.com/reference/android/view/WindowManager.LayoutParams#screenBrightness|Android WindowManager.LayoutParams}
-   * @see {@link https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS|Android Settings.System}
-   */
-  const getBrightness = useCallback(
-    async () =>
-      Platform.select({
-        ios: async () => await ScreenBrightness.getBrightnessAsync(),
-        default: async () => {
-          const appBrightness = await ScreenBrightness.getBrightnessAsync();
-          if (appBrightness < 0) {
-            // On Android, if the app brightness is less than 0 mean that is using the preferred brightness (auto)
-            autoBrightness.current = true;
-            // In this case we use the preferred brightness of the device, which spans from 0 to 255
-            const brightness =
-              await ScreenBrightness.getSystemBrightnessAsync();
-            // Then we normalize it to the 0-1 range
-            return brightness / ANDROID_MAX_BRIGHTNESS;
-          }
-          return appBrightness;
-        }
-      })(),
-    []
-  );
 
   /**
    * Restores the screen brightness to its original value before any modifications.
@@ -111,17 +70,7 @@ export function useMaxBrightness({
     const brightness = initialBrightness.current;
     await Platform.select({
       ios: async () => await ScreenBrightness.setBrightnessAsync(brightness),
-      default: async () => {
-        if (autoBrightness.current) {
-          // Restore auto brightness
-          return await ScreenBrightness.setBrightnessAsync(-1);
-        } else {
-          const { status } = await ScreenBrightness.requestPermissionsAsync();
-          if (status === "granted") {
-            return await ScreenBrightness.setSystemBrightnessAsync(brightness);
-          }
-        }
-      }
+      default: async () => await ScreenBrightness.restoreSystemBrightnessAsync()
     })();
   }, []);
 
@@ -225,7 +174,7 @@ export function useMaxBrightness({
     const initialize = async () => {
       try {
         // Store initial brightness
-        initialBrightness.current = await getBrightness();
+        initialBrightness.current = await ScreenBrightness.getBrightnessAsync();
         // Set to max brightness
         await setMaxBrightness();
         // Listen for app state changes
@@ -244,7 +193,7 @@ export function useMaxBrightness({
       void restoreInitialBrightness();
       appStateSubscription?.remove();
     };
-  }, [getBrightness, restoreInitialBrightness, setMaxBrightness]);
+  }, [restoreInitialBrightness, setMaxBrightness]);
 }
 
 /**

@@ -946,7 +946,7 @@ importers:
     devDependencies:
       '@pagopa/openapi-codegen-ts':
         specifier: ^14.0.0
-        version: 14.2.0(chokidar@3.6.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))(supports-color@8.1.1)
+        version: 14.2.0(chokidar@3.6.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))(supports-color@7.2.0)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -16125,6 +16125,24 @@ snapshots:
       '@openid4vc/utils': 0.4.3
       zod: 4.3.6
 
+  '@pagopa/openapi-codegen-ts@14.2.0(chokidar@3.6.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))(supports-color@7.2.0)':
+    dependencies:
+      '@pagopa/ts-commons': 10.15.0(supports-color@7.2.0)
+      fp-ts: 2.16.11
+      fs-extra: 6.0.1
+      io-ts: 2.2.22(fp-ts@2.16.11)
+      nunjucks: 3.2.4(chokidar@3.6.0)
+      openapi-types: 10.0.0
+      prettier: 1.19.1
+      safe-identifier: 0.4.2
+      swagger-parser: 10.0.3(openapi-types@10.0.0)
+      write-yaml-file: 4.2.0
+      yargs: 15.4.1
+    transitivePeerDependencies:
+      - chokidar
+      - encoding
+      - supports-color
+
   '@pagopa/openapi-codegen-ts@14.2.0(chokidar@3.6.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))(supports-color@8.1.1)':
     dependencies:
       '@pagopa/ts-commons': 10.15.0(supports-color@8.1.1)
@@ -16144,6 +16162,22 @@ snapshots:
       - supports-color
 
   '@pagopa/react-native-cie@1.5.0': {}
+
+  '@pagopa/ts-commons@10.15.0(supports-color@7.2.0)':
+    dependencies:
+      abort-controller: 3.0.0
+      agentkeepalive: 4.2.1(supports-color@7.2.0)
+      applicationinsights: 1.8.10
+      fp-ts: 2.16.11
+      io-ts: 2.2.22(fp-ts@2.16.11)
+      jose: 4.11.2
+      json-set-map: 1.1.2
+      node-fetch: 2.6.12
+      semver: 7.7.4
+      validator: 13.7.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
 
   '@pagopa/ts-commons@10.15.0(supports-color@8.1.1)':
     dependencies:
@@ -18415,6 +18449,14 @@ snapshots:
   agent-base@7.1.4: {}
 
   agent-base@9.0.0: {}
+
+  agentkeepalive@4.2.1(supports-color@7.2.0):
+    dependencies:
+      debug: 4.4.3(supports-color@7.2.0)
+      depd: 1.1.2
+      humanize-ms: 1.2.1
+    transitivePeerDependencies:
+      - supports-color
 
   agentkeepalive@4.2.1(supports-color@8.1.1):
     dependencies:
