@@ -5,9 +5,9 @@ import { MixPanelCredential } from "../../../analytics/utils/types";
 import { EidActivationExitStep } from "../../hooks/useItwActivationExitSurveyBottomSheet.tsx";
 import { CredentialExitStep } from "../../hooks/useItwCredentialExitSurveyBottomSheet.tsx";
 import {
-  uiSetActivationExitSurvey,
-  uiSetCredentialExitSurvey,
-  uiSetItwFeedbackBottomSheetVisible
+  itwSetActivationExitSurvey,
+  itwSetCredentialExitSurvey,
+  itwSetFeedbackBottomSheetVisible
 } from "../actions/ui";
 
 export type ItwUiState = Readonly<{
@@ -29,13 +29,13 @@ const reducer = (
   action: Action
 ): ItwUiState => {
   switch (action.type) {
-    case getType(uiSetActivationExitSurvey):
+    case getType(itwSetActivationExitSurvey):
       return { ...state, activationExitSurvey: action.payload };
 
-    case getType(uiSetCredentialExitSurvey):
+    case getType(itwSetCredentialExitSurvey):
       return { ...state, credentialExitSurvey: action.payload };
 
-    case getType(uiSetItwFeedbackBottomSheetVisible):
+    case getType(itwSetFeedbackBottomSheetVisible):
       return { ...state, itwFeedbackBottomSheet: action.payload };
 
     default:

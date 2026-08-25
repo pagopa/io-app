@@ -18,7 +18,7 @@ import {
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
-import { uiSetCredentialExitSurvey } from "../../common/store/actions/ui";
+import { itwSetCredentialExitSurvey } from "../../common/store/actions/ui";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import {
@@ -137,7 +137,7 @@ export const createCredentialIssuanceActionsImplementation = (
 
     if (surveyStep && surveyCredential) {
       store.dispatch(
-        uiSetCredentialExitSurvey({
+        itwSetCredentialExitSurvey({
           step: surveyStep,
           credential: surveyCredential
         })

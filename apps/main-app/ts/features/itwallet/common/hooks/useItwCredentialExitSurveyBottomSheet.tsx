@@ -16,8 +16,8 @@ import {
   MixPanelCredential,
   TrackQualtricsSurvey
 } from "../../analytics/utils/types";
-import { uiSetCredentialExitSurvey } from "../store/actions/ui";
-import { uiCredentialExitSurveySelector } from "../store/selectors/ui";
+import { itwSetCredentialExitSurvey } from "../store/actions/ui";
+import { itwCredentialExitSurveySelector } from "../store/selectors/ui";
 import { IT_WALLET_SURVEY_CREDENTIAL_EXIT } from "../utils/constants";
 
 export type CredentialExitStep = "data_share" | "doc_preview";
@@ -39,7 +39,7 @@ export const useItwCredentialExitSurveyBottomSheet = () => {
   const dispatch = useIODispatch();
   const { name: routeName } = useRoute();
   const credentialExitSurveyState = useIOSelector(
-    uiCredentialExitSurveySelector
+    itwCredentialExitSurveySelector
   );
   const step: CredentialExitStep =
     credentialExitSurveyState?.step ?? "data_share";
@@ -119,7 +119,7 @@ export const useItwCredentialExitSurveyBottomSheet = () => {
     useCallback(() => {
       if (credentialExitSurveyState) {
         presentSurvey();
-        dispatch(uiSetCredentialExitSurvey(undefined));
+        dispatch(itwSetCredentialExitSurvey(undefined));
       }
     }, [credentialExitSurveyState, dispatch, presentSurvey])
   );

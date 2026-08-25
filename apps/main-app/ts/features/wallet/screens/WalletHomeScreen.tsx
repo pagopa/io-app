@@ -29,12 +29,12 @@ import { useItwActivationExitSurveyBottomSheet } from "../../itwallet/common/hoo
 import { useItwCredentialExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwCredentialExitSurveyBottomSheet.tsx";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
-import { uiSetItwFeedbackBottomSheetVisible } from "../../itwallet/common/store/actions/ui";
+import { itwSetFeedbackBottomSheetVisible } from "../../itwallet/common/store/actions/ui";
 import {
   isItwProximityEnabledSelector,
   itwIsL3EnabledSelector
 } from "../../itwallet/common/store/selectors";
-import { uiItwFeedbackBottomSheetSelector } from "../../itwallet/common/store/selectors/ui";
+import { itwFeedbackBottomSheetVisibleSelector } from "../../itwallet/common/store/selectors/ui";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
@@ -76,7 +76,9 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
-  const isRequiredEidFeedback = useIOSelector(uiItwFeedbackBottomSheetSelector);
+  const isRequiredEidFeedback = useIOSelector(
+    itwFeedbackBottomSheetVisibleSelector
+  );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
   const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
     onPrimaryAction: () => {
@@ -176,7 +178,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
           survey_page: route.name
         });
         itwFeedbackBottomSheet.present();
-        dispatch(uiSetItwFeedbackBottomSheetVisible(false));
+        dispatch(itwSetFeedbackBottomSheetVisible(false));
       }
     }, [dispatch, isRequiredEidFeedback, itwFeedbackBottomSheet, route.name])
   );

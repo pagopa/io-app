@@ -26,8 +26,8 @@ import {
   itwSetWalletActivationFeedbackBannerData
 } from "../../common/store/actions/preferences";
 import {
-  uiSetActivationExitSurvey,
-  uiSetItwFeedbackBottomSheetVisible
+  itwSetActivationExitSurvey,
+  itwSetFeedbackBottomSheetVisible
 } from "../../common/store/actions/ui";
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
@@ -262,9 +262,9 @@ export const createEidIssuanceActionsImplementation = (
     const surveyStep = event.type === "close" ? event.surveyStep : undefined;
 
     if (isReissuance && !isSurveyHidden) {
-      store.dispatch(uiSetItwFeedbackBottomSheetVisible(true));
+      store.dispatch(itwSetFeedbackBottomSheetVisible(true));
     } else if (surveyStep) {
-      store.dispatch(uiSetActivationExitSurvey({ step: surveyStep }));
+      store.dispatch(itwSetActivationExitSurvey({ step: surveyStep }));
     }
 
     navigation.navigate(ROUTES.MAIN, {

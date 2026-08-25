@@ -14,8 +14,8 @@ import {
 } from "../../analytics";
 import { TrackQualtricsSurvey } from "../../analytics/utils/types";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { uiSetActivationExitSurvey } from "../store/actions/ui";
-import { uiActivationExitSurveySelector } from "../store/selectors/ui";
+import { itwSetActivationExitSurvey } from "../store/actions/ui";
+import { itwActivationExitSurveySelector } from "../store/selectors/ui";
 import { IT_WALLET_SURVEY_EID_ACTIVATION_EXIT } from "../utils/constants";
 
 export type EidActivationExitStep =
@@ -44,7 +44,7 @@ export const useItwActivationExitSurveyBottomSheet = () => {
   const { name: routeName } = useRoute();
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const activationExitSurveyState = useIOSelector(
-    uiActivationExitSurveySelector
+    itwActivationExitSurveySelector
   );
   const step: EidActivationExitStep =
     activationExitSurveyState?.step ?? "intro";
@@ -124,7 +124,7 @@ export const useItwActivationExitSurveyBottomSheet = () => {
     useCallback(() => {
       if (activationExitSurveyState) {
         presentSurvey();
-        dispatch(uiSetActivationExitSurvey(undefined));
+        dispatch(itwSetActivationExitSurvey(undefined));
       }
     }, [activationExitSurveyState, dispatch, presentSurvey])
   );
