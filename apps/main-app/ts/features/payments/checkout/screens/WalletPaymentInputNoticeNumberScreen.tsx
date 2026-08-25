@@ -14,7 +14,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   decodePaymentNoticeNumber,
@@ -73,7 +72,6 @@ const WalletPaymentInputNoticeNumberScreen = () => {
     <>
       <IOScrollViewWithLargeHeader
         canGoback={true}
-        contextualHelp={emptyContextualHelp}
         description={I18n.t("wallet.payment.manual.noticeNumber.subtitle")}
         headerActionsProp={{ showHelp: true }}
         ignoreAccessibilityCheck

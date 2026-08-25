@@ -41,10 +41,10 @@ allowBuilds:
 
 catalog:
   # --- Nx ---
-  nx: "22.7.2"
-  "@nx/eslint": "22.7.2"
-  "@nx/jest": "22.7.2"
-  "@nx/js": "22.7.2"
+  nx: "23.1.1"
+  "@nx/eslint": "23.1.1"
+  "@nx/jest": "23.1.1"
+  "@nx/js": "23.1.1"
 
   # --- TypeScript ---
   typescript: "6.0.3"

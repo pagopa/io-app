@@ -35,7 +35,6 @@ import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton.t
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackFciShowSignatureFields,
@@ -309,8 +308,7 @@ const FciSignatureFieldsScreen = () => {
 
   useHeaderSecondLevel({
     title: I18n.t("features.fci.title"),
-    supportRequest: true,
-    contextualHelp: emptyContextualHelp
+    supportRequest: true
   });
 
   if (isError) {

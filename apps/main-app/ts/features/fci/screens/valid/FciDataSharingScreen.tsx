@@ -8,7 +8,6 @@ import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { capitalize } from "../../../../utils/strings";
@@ -73,7 +72,6 @@ const FciDataSharingScreen = (): ReactElement => {
   return (
     <IOScrollViewWithLargeHeader
       actions={actions}
-      contextualHelp={emptyContextualHelp}
       description={I18n.t("features.fci.shareDataScreen.content")}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins={true}
