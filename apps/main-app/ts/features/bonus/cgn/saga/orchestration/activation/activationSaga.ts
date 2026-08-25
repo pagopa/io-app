@@ -12,27 +12,8 @@ import { SagaCallReturnType } from "../../../../../../types/utils";
 import { ITW_ROUTES } from "../../../../../itwallet/navigation/routes";
 import { MESSAGES_ROUTES } from "../../../../../messages/navigation/routes";
 import CGN_ROUTES from "../../../navigation/routes";
-import {
-  cgnActivationBack,
-  cgnActivationCancel,
-  cgnActivationComplete,
-  cgnActivationFailure
-} from "../../../store/actions/activation";
-import {
-  navigateToCgnActivationInformationTos,
-  navigateToCgnDetails
-} from "../navigation/actions";
-
-function* cgnActivationWorkUnit() {
-  return yield* call(executeWorkUnit, {
-    startScreenNavigation: navigateToCgnActivationInformationTos,
-    startScreenName: CGN_ROUTES.ACTIVATION.INFORMATION_TOS,
-    complete: cgnActivationComplete,
-    back: cgnActivationBack,
-    cancel: cgnActivationCancel,
-    failure: cgnActivationFailure
-  });
-}
+import { navigateToCgnDetails } from "../navigation/actions";
+import { cgnActivationWorkUnit } from "./cgnActivationWorkUnit";
 
 const INITIAL_SCREENS_TO_WALLET_HOME: ReadonlyArray<string> = [
   ITW_ROUTES.ONBOARDING,
