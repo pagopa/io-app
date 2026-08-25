@@ -154,7 +154,10 @@ export const ItwIdentificationModeSelectionScreen = ({
   const dismissalDialog = useItwDismissalDialog({
     customLabels: { body: "" },
     handleDismiss: () =>
-      machineRef.send({ type: "close", surveyStep: "select_method" })
+      machineRef.send({
+        type: "close",
+        surveyStep: isL3 ? "select_method" : undefined
+      })
   });
 
   return (
