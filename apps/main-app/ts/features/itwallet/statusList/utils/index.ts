@@ -66,13 +66,11 @@ export const getCredentialStatusFromStatusList = async (
 /**
  * Fetches the JWKS from the Wallet Provider's OpenID Federation metadata,
  * which is used to verify the Status List Token.
- * @param walletUnitAttestation Encoded Wallet Unit Attestation
+ * @param keyAttestation Encoded Key Attestation
  * @returns The JWKS keys from the Wallet Provider
  */
-export const getKeysForWuaStatusList = async (
-  walletUnitAttestation: string
-) => {
-  const decoded = decodeJwt(walletUnitAttestation);
+export const getKeysForKaStatusList = async (keyAttestation: string) => {
+  const decoded = decodeJwt(keyAttestation);
 
   const { payload } = await fetch(
     `${decoded.payload.iss}/.well-known/openid-federation`

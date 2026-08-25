@@ -1542,7 +1542,7 @@ describe("itwEidIssuanceMachine", () => {
     });
   });
 
-  it("Should obtain and store WUA status lists before checking the issued eID", async () => {
+  it("Should obtain and store KA status lists before checking the issued eID", async () => {
     requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
     obtainStatusList.mockResolvedValue(T_WALLET_INSTANCE_STATUS_LIST);
     issuedEidMatchesAuthenticatedUser.mockReturnValue(true);
@@ -1551,8 +1551,8 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { Issuance: "WaitingForSessionRefresh" },
       context: {
-        itwVersion: "1.3.3",
-        walletUnitAttestations: T_WUA
+        itwVersion: "1.4.6",
+        keyAttestations: T_KA
       }
     });
 
@@ -1567,8 +1567,8 @@ describe("itwEidIssuanceMachine", () => {
     expect(obtainStatusList).toHaveBeenCalledWith(
       expect.objectContaining({
         input: {
-          itwVersion: "1.3.3",
-          walletUnitAttestations: T_WUA
+          itwVersion: "1.4.6",
+          keyAttestations: T_KA
         }
       })
     );
@@ -1577,8 +1577,8 @@ describe("itwEidIssuanceMachine", () => {
     );
   });
 
-  it("Should fail when obtaining WUA status lists fails", async () => {
-    const error = new Error("WUA status list verification failed");
+  it("Should fail when obtaining KA status lists fails", async () => {
+    const error = new Error("KA status list verification failed");
     requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
     obtainStatusList.mockRejectedValue(error);
 
