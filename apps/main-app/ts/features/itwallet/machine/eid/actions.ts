@@ -263,8 +263,7 @@ export const createEidIssuanceActionsImplementation = (
 
     if (isReissuance && !isSurveyHidden) {
       store.dispatch(uiSetItwFeedbackBottomSheetVisible(true));
-    }
-    if (surveyStep) {
+    } else if (surveyStep) {
       store.dispatch(uiSetActivationExitSurvey({ step: surveyStep }));
     }
 
