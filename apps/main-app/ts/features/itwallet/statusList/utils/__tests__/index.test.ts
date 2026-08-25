@@ -1,5 +1,6 @@
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { CredentialStatus } from "@pagopa/io-react-native-wallet";
+import { ZodError } from "zod";
 
 import { getCredentialStatusFromStatusList, getKeysForWuaStatusList } from "..";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
@@ -152,5 +153,28 @@ describe("getKeysForWuaStatusList", () => {
       `${ISSUER}/.well-known/openid-federation`
     );
     expect(mockDecodeJwt).toHaveBeenNthCalledWith(2, FEDERATION_JWT);
+  });
+
+  it.each([
+    ["missing metadata", {}],
+    [
+      "invalid JWKS keys",
+      {
+        metadata: {
+          wallet_solution: {
+            jwks: { keys: [{ kid: "missing-kty" }] }
+          }
+        }
+      }
+    ]
+  ])("rejects %s", async (_, payload) => {
+    mockDecodeJwt
+      .mockReturnValueOnce({ payload: { iss: ISSUER } } as never)
+      .mockReturnValueOnce({ payload } as never);
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      text: jest.fn().mockResolvedValue(FEDERATION_JWT)
+    } as never);
+
+    await expect(getKeysForWuaStatusList(WUA)).rejects.toBeInstanceOf(ZodError);
   });
 });

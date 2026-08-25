@@ -5,6 +5,7 @@ import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import { InvalidTslCredentialStatus } from "./errors";
+import { WalletProviderMetadataSchema } from "./schemas";
 
 /**
  * Function to get the credential status from its token status list (TSL). The list is fetched from the `uri` extracted from
@@ -79,15 +80,7 @@ export const getKeysForWuaStatusList = async (
     .then(res => res.text())
     .then(decodeJwt);
 
-  // This type should be parsed and validated more robustly (or even moved to the library),
-  // but for simplicity it is casted to the expected shape as this is just an example.
-  const walletProviderJwt = payload as {
-    metadata: {
-      wallet_solution: {
-        jwks: { keys: CredentialIssuance.IssuerConfig["keys"] };
-      };
-    };
-  };
+  const walletProviderJwt = WalletProviderMetadataSchema.parse(payload);
 
   return walletProviderJwt.metadata.wallet_solution.jwks.keys;
 };
