@@ -118,7 +118,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     fireEvent.press(
       getByText(
         I18n.t(
-          "features.itWallet.issuance.walletInstanceNotActive.primaryAction"
+          "features.itWallet.issuance.credentialOffer.activation.primaryAction"
         )
       )
     );

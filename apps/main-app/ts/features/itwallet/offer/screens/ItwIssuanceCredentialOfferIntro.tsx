@@ -157,7 +157,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
       <OperationResultScreenContent
         action={{
           label: I18n.t(
-            "features.itWallet.issuance.walletInstanceNotActive.primaryAction"
+            "features.itWallet.issuance.credentialOffer.activation.primaryAction"
           ),
           onPress: () => {
             machineRef.send({ type: "close" });
@@ -170,9 +170,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
         }}
         pictogram="itWallet"
         secondaryAction={{
-          label: I18n.t(
-            "features.itWallet.issuance.walletInstanceNotActive.secondaryAction"
-          ),
+          label: I18n.t("global.buttons.cancel"),
           onPress: () => {
             machineRef.send({ type: "close" });
             navigation.popToTop();
