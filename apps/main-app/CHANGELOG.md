@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.19](https://github.com/pagopa/io-app/compare/3.38.0-rc.18...3.38.0-rc.19) (2026-08-24)
+
+
+### Bug Fixes
+
+* [[IEG-3155](https://pagopa.atlassian.net/browse/IEG-3155)] CGN header accessibility focus on landing ([#8469](https://github.com/pagopa/io-app/issues/8469)) ([8d2229d](https://github.com/pagopa/io-app/commit/8d2229d028355f710886a071394fedd2c9ec4dd5))
+
+
+### Chores
+
+* [[IOPLT-2016](https://pagopa.atlassian.net/browse/IOPLT-2016)] Removed unused dependencies from `api-types` library ([#8472](https://github.com/pagopa/io-app/issues/8472)) ([d8cef91](https://github.com/pagopa/io-app/commit/d8cef9192628fd0b0f6fc34f09f60677a8f80349))
+* **deps:** [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Update `nx` version to 23 ([#8464](https://github.com/pagopa/io-app/issues/8464)) ([ad80186](https://github.com/pagopa/io-app/commit/ad80186121ae33a82d9ac8fe5aa95a76f48ada0b))
+
 ## [3.38.0-rc.18](https://github.com/pagopa/io-app/compare/3.38.0-rc.17...3.38.0-rc.18) (2026-08-18)
 
 ## [3.38.0-rc.17](https://github.com/pagopa/io-app/compare/3.38.0-rc.16...3.38.0-rc.17) (2026-08-14)
