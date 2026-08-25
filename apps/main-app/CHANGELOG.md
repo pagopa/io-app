@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.37.1-rc.0](https://github.com/pagopa/io-app/compare/3.37.0-rc.13...3.37.1-rc.0) (2026-08-25)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4830](https://pagopa.atlassian.net/browse/SIW-4830)] restrict ITW surveys to L3, move triggers to redux ([#8474](https://github.com/pagopa/io-app/issues/8474)) ([4dc4bcd](https://github.com/pagopa/io-app/commit/4dc4bcd4fcca4359c3a49536eb13fd0917fc92e8))
+
+
+### Chores
+
+* **release:** align Android version code ([df620b8](https://github.com/pagopa/io-app/commit/df620b88377ff754c301d6c45802d8c8375a7403))
+
 ## [3.38.0-rc.19](https://github.com/pagopa/io-app/compare/3.38.0-rc.18...3.38.0-rc.19) (2026-08-24)
 
 
