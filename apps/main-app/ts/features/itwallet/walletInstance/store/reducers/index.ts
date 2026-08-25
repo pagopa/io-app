@@ -103,7 +103,7 @@ export const migrations: MigrationManifest = {
   // Add statusList
   "5": (state: MigrationState) => ({
     ...state,
-    isRemotelyActive: undefined
+    statusList: undefined
   })
 };
 
