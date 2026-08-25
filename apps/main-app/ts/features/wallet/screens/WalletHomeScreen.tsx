@@ -29,20 +29,12 @@ import { useItwActivationExitSurveyBottomSheet } from "../../itwallet/common/hoo
 import { useItwCredentialExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwCredentialExitSurveyBottomSheet.tsx";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
-import {
-  uiSetActivationExitSurvey,
-  uiSetCredentialExitSurvey,
-  uiSetItwFeedbackBottomSheetVisible
-} from "../../itwallet/common/store/actions/ui";
+import { uiSetItwFeedbackBottomSheetVisible } from "../../itwallet/common/store/actions/ui";
 import {
   isItwProximityEnabledSelector,
   itwIsL3EnabledSelector
 } from "../../itwallet/common/store/selectors";
-import {
-  uiActivationExitSurveySelector,
-  uiCredentialExitSurveySelector,
-  uiItwFeedbackBottomSheetSelector
-} from "../../itwallet/common/store/selectors/ui";
+import { uiItwFeedbackBottomSheetSelector } from "../../itwallet/common/store/selectors/ui";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
@@ -85,25 +77,14 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useIOSelector(uiItwFeedbackBottomSheetSelector);
-  const activationExitSurveyState = useIOSelector(
-    uiActivationExitSurveySelector
-  );
-  const credentialExitSurveyState = useIOSelector(
-    uiCredentialExitSurveySelector
-  );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
   const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
     onPrimaryAction: () => {
       dispatch(itwSetPidReissuingSurveyHidden(true));
     }
   });
-  const activationExitSurvey = useItwActivationExitSurveyBottomSheet({
-    step: activationExitSurveyState?.step
-  });
-  const credentialExitSurvey = useItwCredentialExitSurveyBottomSheet({
-    step: credentialExitSurveyState?.step,
-    credential: credentialExitSurveyState?.credential
-  });
+  const activationExitSurvey = useItwActivationExitSurveyBottomSheet();
+  const credentialExitSurvey = useItwCredentialExitSurveyBottomSheet();
 
   // We need to use a local state to separate the UI state from the redux state
   // This prevents to display the refresh indicator when the refresh is triggered by other components
@@ -185,8 +166,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   );
 
   /**
-   * Handles the EID feedback bottom sheet display, triggered by the eID
-   * issuance machine via the "ui" store instead of navigation params.
+   * Handles the EID feedback bottom sheet display
    */
   useFocusEffect(
     useCallback(() => {
@@ -199,32 +179,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         dispatch(uiSetItwFeedbackBottomSheetVisible(false));
       }
     }, [dispatch, isRequiredEidFeedback, itwFeedbackBottomSheet, route.name])
-  );
-
-  /**
-   * Handles the activation exit survey bottom sheet display, triggered by the
-   * eID issuance machine via the "ui" store instead of navigation params.
-   */
-  useFocusEffect(
-    useCallback(() => {
-      if (activationExitSurveyState) {
-        activationExitSurvey.present();
-        dispatch(uiSetActivationExitSurvey(undefined));
-      }
-    }, [activationExitSurvey, activationExitSurveyState, dispatch])
-  );
-
-  /**
-   * Handles the credential exit survey bottom sheet display, triggered by the
-   * credential issuance machine via the "ui" store instead of navigation params.
-   */
-  useFocusEffect(
-    useCallback(() => {
-      if (credentialExitSurveyState) {
-        credentialExitSurvey.present();
-        dispatch(uiSetCredentialExitSurvey(undefined));
-      }
-    }, [credentialExitSurvey, credentialExitSurveyState, dispatch])
   );
 
   const handleRefreshWallet = useCallback(() => {
