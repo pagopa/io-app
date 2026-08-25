@@ -4,7 +4,6 @@ import { ActionArgs, assertEvent, assign } from "xstate";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { uiShowCredentialExitSurvey } from "../../../../store/actions/ui";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { isRouteInNavigationState } from "../../../../utils/navigation";
@@ -19,6 +18,7 @@ import {
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
+import { uiSetCredentialExitSurvey } from "../../common/store/actions/ui";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import {
@@ -137,7 +137,7 @@ export const createCredentialIssuanceActionsImplementation = (
 
     if (surveyStep && surveyCredential) {
       store.dispatch(
-        uiShowCredentialExitSurvey({
+        uiSetCredentialExitSurvey({
           step: surveyStep,
           credential: surveyCredential
         })

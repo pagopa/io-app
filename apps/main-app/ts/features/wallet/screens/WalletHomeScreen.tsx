@@ -17,17 +17,7 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
 import ROUTES from "../../../navigation/routes";
-import {
-  uiHideActivationExitSurvey,
-  uiHideCredentialExitSurvey,
-  uiHideItwFeedbackBottomSheet
-} from "../../../store/actions/ui";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import {
-  uiActivationExitSurveySelector,
-  uiCredentialExitSurveySelector,
-  uiItwFeedbackBottomSheetSelector
-} from "../../../store/reducers/ui";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   trackItwSurveyRequest,
@@ -40,9 +30,19 @@ import { useItwCredentialExitSurveyBottomSheet } from "../../itwallet/common/hoo
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
 import {
+  uiSetActivationExitSurvey,
+  uiSetCredentialExitSurvey,
+  uiSetItwFeedbackBottomSheetVisible
+} from "../../itwallet/common/store/actions/ui";
+import {
   isItwProximityEnabledSelector,
   itwIsL3EnabledSelector
 } from "../../itwallet/common/store/selectors";
+import {
+  uiActivationExitSurveySelector,
+  uiCredentialExitSurveySelector,
+  uiItwFeedbackBottomSheetSelector
+} from "../../itwallet/common/store/selectors/ui";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
@@ -196,7 +196,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
           survey_page: route.name
         });
         itwFeedbackBottomSheet.present();
-        dispatch(uiHideItwFeedbackBottomSheet());
+        dispatch(uiSetItwFeedbackBottomSheetVisible(false));
       }
     }, [dispatch, isRequiredEidFeedback, itwFeedbackBottomSheet, route.name])
   );
@@ -209,7 +209,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     useCallback(() => {
       if (activationExitSurveyState) {
         activationExitSurvey.present();
-        dispatch(uiHideActivationExitSurvey());
+        dispatch(uiSetActivationExitSurvey(undefined));
       }
     }, [activationExitSurvey, activationExitSurveyState, dispatch])
   );
@@ -222,7 +222,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     useCallback(() => {
       if (credentialExitSurveyState) {
         credentialExitSurvey.present();
-        dispatch(uiHideCredentialExitSurvey());
+        dispatch(uiSetCredentialExitSurvey(undefined));
       }
     }, [credentialExitSurvey, credentialExitSurveyState, dispatch])
   );

@@ -77,7 +77,6 @@ import preferencesReducer from "./preferences";
 import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";
-import uiReducer from "./ui";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -141,7 +140,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   bonus: bonusReducer,
   assistanceTools: assistanceToolsReducer,
   startup: startupReducer,
-  ui: uiReducer,
   //
   // persisted state
   //

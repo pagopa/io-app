@@ -68,7 +68,6 @@ import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PreferencesActions } from "./preferences";
 import { SearchActions } from "./search";
 import { StartupActions } from "./startup";
-import { UiActions } from "./ui";
 
 export type Action =
   | AarFlowStateActions
@@ -121,7 +120,6 @@ export type Action =
   | SpidConfigActions
   | StartupActions
   | TourActions
-  | UiActions
   | UserBehaviourActions
   | UserDataProcessingActions
   | UtmLinkActions

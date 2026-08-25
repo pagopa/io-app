@@ -5,10 +5,6 @@ import { ActionArgs, assertEvent, assign } from "xstate";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import {
-  uiShowActivationExitSurvey,
-  uiShowItwFeedbackBottomSheet
-} from "../../../../store/actions/ui";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { isRouteInNavigationState } from "../../../../utils/navigation";
@@ -29,6 +25,10 @@ import {
   itwSetIdentificationMode,
   itwSetWalletActivationFeedbackBannerData
 } from "../../common/store/actions/preferences";
+import {
+  uiSetActivationExitSurvey,
+  uiSetItwFeedbackBottomSheetVisible
+} from "../../common/store/actions/ui";
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
@@ -262,10 +262,10 @@ export const createEidIssuanceActionsImplementation = (
     const surveyStep = event.type === "close" ? event.surveyStep : undefined;
 
     if (isReissuance && !isSurveyHidden) {
-      store.dispatch(uiShowItwFeedbackBottomSheet());
+      store.dispatch(uiSetItwFeedbackBottomSheetVisible(true));
     }
     if (surveyStep) {
-      store.dispatch(uiShowActivationExitSurvey({ step: surveyStep }));
+      store.dispatch(uiSetActivationExitSurvey({ step: surveyStep }));
     }
 
     navigation.navigate(ROUTES.MAIN, {
