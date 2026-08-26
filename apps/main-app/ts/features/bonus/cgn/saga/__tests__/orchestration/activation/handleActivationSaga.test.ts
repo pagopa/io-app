@@ -4,7 +4,7 @@ import NavigationService from "../../../../../../../navigation/NavigationService
 import CGN_ROUTES from "../../../../navigation/routes";
 import { cgnActivationStatus } from "../../../../store/actions/activation";
 import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";
-import { cgnActivationWorker } from "../../../orchestration/activation/handleActivationSaga";
+import { cgnActivationWorker } from "../../../orchestration/activation/cgnActivationWorker";
 import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationLoading,

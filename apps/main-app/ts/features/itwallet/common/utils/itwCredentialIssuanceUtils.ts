@@ -3,6 +3,7 @@ import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { getRedirects } from "@pagopa/io-react-native-login-utils";
 import {
   createCryptoContextFor,
+  type CredentialIssuance,
   type ItwVersion,
   RemotePresentation
 } from "@pagopa/io-react-native-wallet";
@@ -845,8 +846,10 @@ export const attachCredentialsStatus: AttachCredentialsStatus = async ({
 
     const { status, rawStatus, uri, idx, parsedStatusList } =
       await getCredentialStatusFromStatusList(
-        bundle,
         itwVersion,
+        bundle.credential,
+        bundle.metadata.credentialId,
+        bundle.metadata.format as CredentialIssuance.CredentialFormat,
         conf.keys
       ).catch(
         enrichErrorWithMetadata({
