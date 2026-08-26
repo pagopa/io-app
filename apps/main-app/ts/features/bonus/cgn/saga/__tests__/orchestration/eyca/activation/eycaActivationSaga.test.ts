@@ -4,12 +4,10 @@ import { testSaga } from "redux-saga-test-plan";
 import { getGenericError } from "../../../../../../../../utils/errors";
 import { cgnEycaActivation } from "../../../../../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../../../../../store/actions/eyca/details";
-import {
-  getActivation,
-  handleEycaActivationSaga,
-  handleStartActivation
-} from "../../../../networking/eyca/activation/getEycaActivationSaga";
-import { eycaActivationWorker } from "../../../../orchestration/eyca/eycaActivationSaga";
+import { getActivation } from "../../../../networking/eyca/activation/getActivation";
+import { handleEycaActivationSaga } from "../../../../networking/eyca/activation/handleEycaActivationSaga";
+import { handleStartActivation } from "../../../../networking/eyca/activation/handleStartActivation";
+import { eycaActivationWorker } from "../../../../orchestration/eyca/eycaActivationWorker";
 import {
   navigateToCgnDetails,
   navigateToEycaActivationLoading
@@ -83,10 +81,27 @@ describe("eycaActivationWorker", () => {
       .next()
       .call(getActivation, getEycaActivation)
       .next(returnedStatus)
-      .put(cgnEycaStatus.request())
+      .put(
+        cgnEycaActivation.failure(
+          getGenericError(new Error(`response status 500`))
+        )
+      )
       .next()
-      .call(navigateToCgnDetails)
-      .next();
+      .isDone();
+  });
+
+  it("should dispatch a failure and not refresh details/navigate on a timeout status check", () => {
+    const returnedStatus = left({ kind: "timeout" } as const);
+
+    testSaga(eycaActivationWorker, getEycaActivation, startEycaActivation)
+      .next()
+      .call(navigateToEycaActivationLoading)
+      .next()
+      .call(getActivation, getEycaActivation)
+      .next(returnedStatus)
+      .put(cgnEycaActivation.failure({ kind: "timeout" } as const))
+      .next()
+      .isDone();
   });
 
   it("couldn't activate user's EYCA activation error", () => {
