@@ -1174,7 +1174,7 @@ export const itwEidIssuanceMachine = setup({
                 eid: event.output.credential,
                 keyAttestations: event.output.keyAttestations
               })),
-              target: "ObtainingWuaStatusList"
+              target: "ObtainingKaStatusList"
             },
             onError: [
               {
@@ -1189,7 +1189,7 @@ export const itwEidIssuanceMachine = setup({
             ]
           }
         },
-        ObtainingWuaStatusList: {
+        ObtainingKaStatusList: {
           tags: [ItwTags.Loading],
           invoke: {
             src: "obtainStatusList",

@@ -59,10 +59,8 @@ export type Context = {
    */
   mode: CredentialIssuanceMode;
   requestedCredential: RequestObject | undefined;
-
   resolvedCredentialOffer: CredentialOfferResolved | undefined;
   responseMode: string | undefined;
-
   /**
    * The wallet instance attestation of the wallet. If expired, it will be requested a new one.
    */

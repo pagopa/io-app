@@ -114,8 +114,8 @@ export type Context = {
    */
   walletInstanceAttestation: undefined | WalletInstanceAttestations;
   /**
-   * [1.3.3+] Optional Status Lists referenced by the Wallet Unit
-   * Attestations (WUAs). This is used to check the validity of the WI.
+   * [1.3.3+] Optional Status Lists referenced by the Key
+   * Attestations (KAs). This is used to check the validity of the WI.
    */
   walletInstanceStatusList?: {
     idx: number;

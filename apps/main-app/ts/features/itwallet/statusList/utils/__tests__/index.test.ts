@@ -125,7 +125,7 @@ describe("getCredentialStatusFromStatusList", () => {
   });
 });
 
-describe("getKeysForWuaStatusList", () => {
+describe("getKeysForKaStatusList", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
