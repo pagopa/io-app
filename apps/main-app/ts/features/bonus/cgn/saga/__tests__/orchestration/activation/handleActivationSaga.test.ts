@@ -9,10 +9,8 @@ import {
   cgnActivationStatus
 } from "../../../../store/actions/activation";
 import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";
-import {
-  cgnActivationWorker,
-  handleCgnActivationSaga
-} from "../../../orchestration/activation/handleActivationSaga";
+import { cgnActivationWorker } from "../../../orchestration/activation/cgnActivationWorker";
+import { handleCgnActivationSaga } from "../../../orchestration/activation/handleActivationSaga";
 import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationLoading,

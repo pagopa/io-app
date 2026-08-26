@@ -4,7 +4,7 @@ import { SagaCallReturnType } from "../../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../../utils/errors";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
-import { getActivation } from "./getEycaActivationSaga";
+import { getActivation } from "./getActivation";
 
 export function* getEycaActivationStatusSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
