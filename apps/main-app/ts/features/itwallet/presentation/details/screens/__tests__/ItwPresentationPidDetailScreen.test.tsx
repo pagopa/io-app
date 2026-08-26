@@ -1,4 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
+import { addDays } from "date-fns";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
@@ -16,6 +17,7 @@ const mockToastError = jest.fn();
 const mockToastInfo = jest.fn();
 const mockToastSuccess = jest.fn();
 const mockTrackItwStartDeactivation = jest.fn();
+const JWT_EXPIRING_DAYS = 15;
 
 jest.mock("@io-app/design-system", () => ({
   ...jest.requireActual<typeof import("@io-app/design-system")>(
@@ -56,6 +58,15 @@ describe("ItwPresentationPidDetailScreen", () => {
     const { queryByTestId } = renderComponent(false);
 
     expect(queryByTestId("itwEidLifecycleAlertTestID_valid")).toBeNull();
+  });
+
+  it("renders the action required tag when the PID JWT is expiring", () => {
+    const eidExpiration = addDays(new Date(), JWT_EXPIRING_DAYS).toISOString();
+    const { getByText } = renderComponent(false, true, eidExpiration);
+
+    expect(
+      getByText(I18n.t("features.itWallet.card.status.verificationExpiring"))
+    ).not.toBeNull();
   });
 
   it("does not render the IT-Wallet ID discovery banner when it has been dismissed", () => {
@@ -107,14 +118,18 @@ describe("ItwPresentationPidDetailScreen", () => {
   });
 });
 
-const renderComponent = (isBannerHidden: boolean, isConnected = true) => {
+const renderComponent = (
+  isBannerHidden: boolean,
+  isConnected = true,
+  eidExpiration = "2126-04-27T00:00:00.000Z"
+) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const validEid = {
+  const eidCredential = {
     ...ItwStoredCredentialsMocks.eid,
     jwt: {
       ...ItwStoredCredentialsMocks.eid.jwt,
       issuedAt: "2026-04-27T00:00:00.000Z",
-      expiration: "2126-04-27T00:00:00.000Z"
+      expiration: eidExpiration
     }
   };
   const state: GlobalState = {
@@ -138,7 +153,7 @@ const renderComponent = (isBannerHidden: boolean, isConnected = true) => {
         credentials: {
           ...globalState.features.itWallet.credentials,
           credentials: {
-            [validEid.credentialId]: validEid
+            [eidCredential.credentialId]: eidCredential
           }
         }
       }

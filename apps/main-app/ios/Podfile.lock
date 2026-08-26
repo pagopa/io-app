@@ -45,6 +45,8 @@ PODS:
   - ExpoBackgroundTask (55.0.18):
     - ExpoModulesCore
     - ExpoTaskManager
+  - ExpoBrightness (55.0.15):
+    - ExpoModulesCore
   - ExpoCalendar (55.0.17):
     - ExpoModulesCore
   - ExpoClipboard (55.0.15):
@@ -2726,8 +2728,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-screen-brightness (2.0.0-alpha):
-    - React
   - react-native-skia (2.6.4):
     - boost
     - DoubleConversion
@@ -3896,6 +3896,7 @@ DEPENDENCIES:
   - Expo (from `../../../node_modules/expo`)
   - ExpoAsset (from `../../../node_modules/expo-asset/ios`)
   - ExpoBackgroundTask (from `../../../node_modules/expo-background-task/ios`)
+  - ExpoBrightness (from `../../../node_modules/expo-brightness/ios`)
   - ExpoCalendar (from `../../../node_modules/expo-calendar/ios`)
   - ExpoClipboard (from `../../../node_modules/expo-clipboard/ios`)
   - ExpoDevice (from `../../../node_modules/expo-device/ios`)
@@ -3984,7 +3985,6 @@ DEPENDENCIES:
   - react-native-quick-crypto (from `../../../node_modules/react-native-quick-crypto`)
   - react-native-randombytes (from `../../../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
-  - react-native-screen-brightness (from `../../../node_modules/react-native-screen-brightness`)
   - "react-native-skia (from `../../../node_modules/@shopify/react-native-skia`)"
   - react-native-splash-screen (from `../../../node_modules/react-native-splash-screen`)
   - react-native-webview (from `../../../node_modules/react-native-webview`)
@@ -4084,6 +4084,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-asset/ios"
   ExpoBackgroundTask:
     :path: "../../../node_modules/expo-background-task/ios"
+  ExpoBrightness:
+    :path: "../../../node_modules/expo-brightness/ios"
   ExpoCalendar:
     :path: "../../../node_modules/expo-calendar/ios"
   ExpoClipboard:
@@ -4259,8 +4261,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-randombytes"
   react-native-safe-area-context:
     :path: "../../../node_modules/react-native-safe-area-context"
-  react-native-screen-brightness:
-    :path: "../../../node_modules/react-native-screen-brightness"
   react-native-skia:
     :path: "../../../node_modules/@shopify/react-native-skia"
   react-native-splash-screen:
@@ -4379,6 +4379,7 @@ SPEC CHECKSUMS:
   Expo: fb8cded217862a2c6fc046a6cc68aa83a2ed15f0
   ExpoAsset: 7721c5c4ae2a7c3c8147a046727ac6c020b05648
   ExpoBackgroundTask: 2c988fa88705c72b07f0e60d5661d566df611980
+  ExpoBrightness: 6080760e05eb3dcd9765024472d4c78a50f3b201
   ExpoCalendar: a3a1a208327305361637b6127390e7b61c62bba5
   ExpoClipboard: 0e4b587fc6b5c5996b4ad4e5804d509e90aa6c75
   ExpoDevice: b8a65afe42c3c5934eb6983870672fe785b39dea
@@ -4474,7 +4475,6 @@ SPEC CHECKSUMS:
   react-native-quick-crypto: dac9db2adb0a61b4881909b6db7c51eaaada66a8
   react-native-randombytes: 4eeddad82d1fd57adda1cd5beffe67d041c9d6de
   react-native-safe-area-context: befb5404eb8a16fdc07fa2bebab3568ecabcbb8a
-  react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
   react-native-skia: 80db9e2f8f8b16f8f22b563f0a3874c14026c1e2
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
   react-native-webview: 654f794a7686b47491cf43aa67f7f428bea00eed

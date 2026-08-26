@@ -90,7 +90,10 @@ jest.mock("expo-calendar", () => ({
   getCalendarsAsync: jest.fn().mockResolvedValue([]),
   getEventsAsync: jest.fn().mockResolvedValue([]),
 }));
-
+jest.mock("expo-brightness", () => ({
+  getBrightnessAsync: jest.fn().mockResolvedValue(0),
+  setBrightnessAsync: jest.fn().mockResolvedValue(undefined),
+}));
 jest.mock("expo-local-authentication", () => ({
   AuthenticationType: {
     FINGERPRINT: 1,
