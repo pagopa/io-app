@@ -116,7 +116,6 @@ patchedDependencies:
   react-native-device-info@14.0.4: b5e3683f3a8950e16f58e0d657f1372e1981f5250008f5ef02f47e7602c8d435
   react-native-exception-handler@^2.10.8: fd242598519fc7e652937710695c34417af98515385035ef8db1bb9921e896a8
   react-native-pdf@7.0.3: da79e4de07c9520dd9a872e9ce02ce04892636879226c505ffdc9c01593fbe50
-  react-native-screen-brightness@2.0.0-alpha: 9a49a110389d9e8521cffe1b4ab4bca35ae5db913681970ca19d87f7aa53fa7c
   react-native-webview@13.16.0: f50190f7feff67b44970713f309dbb5962fdcbd2e85b7d4ae8d248d4f1c06b0e
 
 importers:
@@ -466,6 +465,9 @@ importers:
       expo-background-task:
         specifier: ~55.0.18
         version: 55.0.18(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))
+      expo-brightness:
+        specifier: ~55.0.15
+        version: 55.0.15(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))
       expo-calendar:
         specifier: ~55.0.17
         version: 55.0.17(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))
@@ -628,9 +630,6 @@ importers:
       react-native-safe-area-context:
         specifier: 'catalog:'
         version: 5.7.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
-      react-native-screen-brightness:
-        specifier: ^2.0.0-alpha
-        version: 2.0.0-alpha(patch_hash=9a49a110389d9e8521cffe1b4ab4bca35ae5db913681970ca19d87f7aa53fa7c)
       react-native-screens:
         specifier: 4.16.0
         version: 4.16.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
@@ -6557,6 +6556,12 @@ packages:
     peerDependencies:
       expo: '*'
 
+  expo-brightness@55.0.15:
+    resolution: {integrity: sha512-ecl68zQfNvKEiYx8LK/MGABQgO6IO8vO4H7eSvYEZYiD3ZD4+m22d506DoFHmoDHwpriM85dCTnARk+5is0zxQ==}
+    peerDependencies:
+      expo: '*'
+      react-native: '*'
+
   expo-calendar@55.0.17:
     resolution: {integrity: sha512-+SixsYR4jrSvPsEEUpwGbpsMuui+g+GO5OdoWwv/SRtmmQ/n+klK8dOvgB7Tc5WzzvV3Io8sjfy5gc6SRVhSuw==}
     peerDependencies:
@@ -9939,9 +9944,6 @@ packages:
     peerDependencies:
       react: '*'
       react-native: '*'
-
-  react-native-screen-brightness@2.0.0-alpha:
-    resolution: {integrity: sha512-NdJPptcWiFwG9aypm0awYv9d/aoZSJetXPFkx6w/UuNX9SRr5YTKXMSND/2lwuSOw6uGU9mQ0f4dBuGZSNgzow==}
 
   react-native-screens@4.16.0:
     resolution: {integrity: sha512-yIAyh7F/9uWkOzCi1/2FqvNvK6Wb9Y1+Kzn16SuGfN9YFJDTbwlzGRvePCNTOX0recpLQF3kc2FmvMUhyTCH1Q==}
@@ -20842,6 +20844,11 @@ snapshots:
     transitivePeerDependencies:
       - react-native
 
+  expo-brightness@55.0.15(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)):
+    dependencies:
+      expo: 55.0.26(647755e85e266c3eea547ba434358210)
+      react-native: 0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
+
   expo-calendar@55.0.17(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)):
     dependencies:
       expo: 55.0.26(647755e85e266c3eea547ba434358210)
@@ -25874,8 +25881,6 @@ snapshots:
     dependencies:
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
-
-  react-native-screen-brightness@2.0.0-alpha(patch_hash=9a49a110389d9e8521cffe1b4ab4bca35ae5db913681970ca19d87f7aa53fa7c): {}
 
   react-native-screens@4.16.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0):
     dependencies:
