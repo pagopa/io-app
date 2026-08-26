@@ -287,14 +287,25 @@ function* discardStaleCopies(
     return;
   }
 
+  // `itwCredentialsRemove` deletes by `credentialId`, and the new pool is stored under the same
+  // `credentialId` as the pool it replaces: removing the stale entry would wipe the metadata just
+  // stored, leaving the user with no credential at all. Only ids the renewal did not overwrite
+  // are removed from Redux; the others are already replaced by the new metadata.
+  const overwrittenIds = new Set(
+    newCredentials.map(({ metadata }) => metadata.credentialId)
+  );
+  const credentialsToRemove = obsoleteCredentials.filter(
+    ({ credentialId }) => !overwrittenIds.has(credentialId)
+  );
+
   try {
     yield* call(
       CredentialsVault.removeAll,
       obsoleteCredentials.flatMap(getCredentialVaultIds)
     );
-    // The new metadata already replaced the stale one under the same `credentialId`, so this only
-    // removes the entries of credentials that the renewal did not overwrite.
-    yield* put(itwCredentialsRemove(obsoleteCredentials));
+    if (credentialsToRemove.length > 0) {
+      yield* put(itwCredentialsRemove(credentialsToRemove));
+    }
     yield* call(deleteKeys, obsoleteCredentials.flatMap(getCredentialKeyTags));
   } catch {
     return;

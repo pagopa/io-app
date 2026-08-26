@@ -207,12 +207,43 @@ describe("handleItwCredentialsBatchRefillSaga", () => {
       .call.fn(handleItwCredentialsStoreBundleSaga)
       .put(itwWalletUnitAttestationsStore({ "wua-id": "wua-jwt" }))
       .call(CredentialsVault.removeAll, ["kt-1", "kt-2"])
-      .put(itwCredentialsRemove([proofOfAge]))
       .run();
 
     expect(deleteKey).toHaveBeenCalledWith("kt-1");
     expect(deleteKey).toHaveBeenCalledWith("kt-2");
     expect(deleteKey).not.toHaveBeenCalledWith("kt-10");
+  });
+
+  it("does not remove the stored credential when the new pool reuses its credentialId", () =>
+    // Regression: `itwCredentialsRemove` deletes by `credentialId`, so discarding the residual
+    // copies used to wipe the metadata of the batch that had just been stored.
+    expectSaga(handleItwCredentialsBatchRefillSaga, action)
+      .withState({})
+      .provide(issuanceProviders())
+      .call.fn(handleItwCredentialsStoreBundleSaga)
+      .not.put.actionType(itwCredentialsRemove.toString())
+      .run());
+
+  it("removes from Redux only the residual credentials the new pool did not overwrite", async () => {
+    const otherFormatCopy: CredentialMetadata = {
+      ...proofOfAge,
+      credentialId: "mso_mdoc_proof_of_age",
+      keyTag: "kt-3",
+      keyTags: ["kt-3"]
+    };
+
+    jest
+      .spyOn(credentialsSelectors, "itwCredentialsListByTypeSelector")
+      .mockReturnValue((() => [proofOfAge, otherFormatCopy]) as never);
+
+    await expectSaga(handleItwCredentialsBatchRefillSaga, action)
+      .withState({})
+      .provide(issuanceProviders())
+      .call(CredentialsVault.removeAll, ["kt-1", "kt-2", "kt-3"])
+      .put(itwCredentialsRemove([otherFormatCopy]))
+      .run();
+
+    expect(deleteKey).toHaveBeenCalledWith("kt-3");
   });
 
   it("does not renew the batch when the wallet is not valid", () => {
