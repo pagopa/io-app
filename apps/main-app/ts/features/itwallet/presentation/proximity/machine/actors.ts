@@ -193,8 +193,11 @@ export const createProximityActorsImplementation = (env: Env) => {
       credentials,
       CredentialsVault.get
     );
-    // We accept all the fields requested by the verifier app
-    const acceptedFields = generateAcceptedFields(verifierRequest.request);
+    const includedDocTypes = new Set(documents.map(({ docType }) => docType));
+    const acceptedFields = generateAcceptedFields(
+      verifierRequest.request,
+      includedDocTypes
+    );
 
     const generatedResponse = await ISO18013_5.generateResponse(
       documents,
