@@ -30,43 +30,17 @@ jest.mock("../../../../store/hooks", () => ({
   useIOSelector: (selector: () => any) => selector()
 }));
 
-jest.mock("../../../../store/reducers/crossSessions", () => ({
-  hashedProfileFiscalCodeSelector: jest.fn()
-}));
-
-jest.mock("../../../../store/reducers/persistedPreferences", () => ({
-  isMixpanelEnabled: jest.fn()
-}));
-
-jest.mock("../../../../utils/analytics", () => ({
-  trackLollipopIdpLoginFailure: jest.fn()
-}));
-
-jest.mock("../../../authentication/activeSessionLogin/store/selectors", () => ({
-  isActiveSessionFastLoginEnabledSelector: jest.fn(),
-  isActiveSessionLoginSelector: jest.fn()
-}));
-
-jest.mock("../../../authentication/common/store/selectors", () => ({
-  selectedIdentityProviderSelector: jest.fn()
-}));
-
-jest.mock("../../../authentication/common/utils/login", () => ({
-  getLoginHeaders: jest.fn()
-}));
-
-jest.mock("../../../authentication/fastLogin/store/selectors", () => ({
-  isFastLoginEnabledSelector: jest.fn()
-}));
-
+jest.mock("../../../../store/reducers/crossSessions");
+jest.mock("../../../../store/reducers/persistedPreferences");
+jest.mock("../../../../utils/analytics");
+jest.mock("../../../authentication/activeSessionLogin/store/selectors");
+jest.mock("../../../authentication/common/store/selectors");
+jest.mock("../../../authentication/common/utils/login");
+jest.mock("../../../authentication/fastLogin/store/selectors");
 jest.mock("../../../authentication/login/cie/utils", () => ({
   cieFlowForDevServerEnabled: false
 }));
-
-jest.mock("../../store/reducers/lollipop", () => ({
-  ephemeralKeyTagSelector: jest.fn(),
-  ephemeralPublicKeySelector: jest.fn()
-}));
+jest.mock("../../store/reducers/lollipop");
 
 jest.mock("../../utils/login", () => ({
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER: "sha256",
