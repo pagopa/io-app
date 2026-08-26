@@ -8081,6 +8081,7 @@ packages:
 
   jsrsasign@11.1.0:
     resolution: {integrity: sha512-Ov74K9GihaK9/9WncTe1mPmvrO7Py665TUfUKvraXBpu+xcTWitrtuOwcjf4KMU9maPaYn0OuaWy0HOzy/GBXg==}
+    deprecated: This package is no longer maintained.
 
   jsx-ast-utils-x@0.1.0:
     resolution: {integrity: sha512-eQQBjBnsVtGacsG9uJNB8qOr3yA8rga4wAaGG1qRcBzSIvfhERLrWxMAM1hp5fcS6Abo8M4+bUBTekYR0qTPQw==}
