@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import * as ScreenBrightness from "expo-brightness";
 import { useCallback, useEffect, useRef } from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
