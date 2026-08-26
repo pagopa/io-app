@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.20](https://github.com/pagopa/io-app/compare/3.38.0-rc.19...3.38.0-rc.20) (2026-08-25)
+
+
+### Features
+
+* [[SIW-3593](https://pagopa.atlassian.net/browse/SIW-3593)] Get and verify WI/WUA TSL ([#8396](https://github.com/pagopa/io-app/issues/8396)) ([7a2109e](https://github.com/pagopa/io-app/commit/7a2109e4ce5062c317b50431ca24a3a3eabb26d4))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4830](https://pagopa.atlassian.net/browse/SIW-4830)] restrict ITW surveys to L3, move triggers to redux ([#8474](https://github.com/pagopa/io-app/issues/8474)) ([5a683a5](https://github.com/pagopa/io-app/commit/5a683a51810121ce65997a1ae5d717b66f946ebf))
+
+
+### Chores
+
+* [[IOPLT-2013](https://pagopa.atlassian.net/browse/IOPLT-2013)] Removed unused dependencies from `dev-server` ([#8471](https://github.com/pagopa/io-app/issues/8471)) ([be74b97](https://github.com/pagopa/io-app/commit/be74b97f131b114b4d075d5159bd1c41e02b7e04))
+
 ## [3.38.0-rc.19](https://github.com/pagopa/io-app/compare/3.38.0-rc.18...3.38.0-rc.19) (2026-08-24)
 
 

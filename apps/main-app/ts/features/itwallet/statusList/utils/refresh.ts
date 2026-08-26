@@ -23,13 +23,13 @@ export const refreshStatusListToken = async (
   uri: string
 ): Promise<boolean> => {
   try {
-    const statusListApi = getIoWallet(itwVersion).CredentialStatus.statusList;
+    const ioWallet = getIoWallet(itwVersion);
     assert(
-      statusListApi.isSupported,
+      ioWallet.CredentialStatus.statusList.isSupported,
       `Status List is not supported by IT-Wallet v${itwVersion}`
     );
 
-    const statusList = await statusListApi.getByUri(uri);
+    const statusList = await ioWallet.CredentialStatus.statusList.getByUri(uri);
     // TODO [SIW-4542] add JWT verification
     // const parsed = await statusListApi.verifyAndParse(jwks, statusList);
     const decoded = decodeJwt(statusList).payload;
