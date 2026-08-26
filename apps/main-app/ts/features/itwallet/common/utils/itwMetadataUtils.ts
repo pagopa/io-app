@@ -32,7 +32,7 @@ export const getForcedItwAuthSource = (
 
 /**
  * Get the localized auth source organization name for a catalogue credential.
- * Resolves `organization_name_l10n_id` via the provided translations when available,
+ * Resolves `data_origin_l10n_id` via the provided translations when available,
  * falling back to the static `organization_name` field.
  *
  * @param credential - Catalogue metadata for the credential
@@ -47,8 +47,8 @@ export const getItwAuthSource = (
     O.fromNullable,
     O.map(source => {
       const l10nName =
-        source.organization_name_l10n_id &&
-        translations?.[source.organization_name_l10n_id];
+        source.data_origin_l10n_id &&
+        translations?.[source.data_origin_l10n_id];
       return l10nName ?? source.organization_name;
     }),
     O.toUndefined
