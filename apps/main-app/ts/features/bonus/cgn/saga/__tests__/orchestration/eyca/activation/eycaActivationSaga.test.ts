@@ -81,10 +81,27 @@ describe("eycaActivationWorker", () => {
       .next()
       .call(getActivation, getEycaActivation)
       .next(returnedStatus)
-      .put(cgnEycaStatus.request())
+      .put(
+        cgnEycaActivation.failure(
+          getGenericError(new Error(`response status 500`))
+        )
+      )
       .next()
-      .call(navigateToCgnDetails)
-      .next();
+      .isDone();
+  });
+
+  it("should dispatch a failure and not refresh details/navigate on a timeout status check", () => {
+    const returnedStatus = left({ kind: "timeout" } as const);
+
+    testSaga(eycaActivationWorker, getEycaActivation, startEycaActivation)
+      .next()
+      .call(navigateToEycaActivationLoading)
+      .next()
+      .call(getActivation, getEycaActivation)
+      .next(returnedStatus)
+      .put(cgnEycaActivation.failure({ kind: "timeout" } as const))
+      .next()
+      .isDone();
   });
 
   it("couldn't activate user's EYCA activation error", () => {

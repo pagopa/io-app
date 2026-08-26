@@ -36,29 +36,30 @@ export function* eycaActivationWorker(
     getEycaActivation
   );
 
-  if (E.isRight(eycaActivation)) {
-    if (eycaActivation.right === "PROCESSING") {
-      yield* call(handleEycaActivationSaga, getEycaActivation);
+  if (E.isLeft(eycaActivation)) {
+    yield* put(cgnEycaActivation.failure(eycaActivation.left));
+    return;
+  }
+
+  if (eycaActivation.right === "PROCESSING") {
+    yield* call(handleEycaActivationSaga, getEycaActivation);
+  } else {
+    const startActivation: SagaCallReturnType<typeof handleStartActivation> =
+      yield* call(handleStartActivation, startEycaActivation);
+    // activation not handled error, stop
+    if (E.isLeft(startActivation)) {
+      yield* put(cgnEycaActivation.failure(startActivation.left));
+      return;
     } else {
-      const startActivation: SagaCallReturnType<typeof handleStartActivation> =
-        yield* call(handleStartActivation, startEycaActivation);
-      // activation not handled error, stop
-      if (E.isLeft(startActivation)) {
-        yield* put(cgnEycaActivation.failure(startActivation.left));
+      // could be: ALREADY_ACTIVE, INELIGIBLE
+      if (
+        ["ALREADY_ACTIVE", "INELIGIBLE"].some(v => v === startActivation.right)
+      ) {
+        yield* put(cgnEycaActivation.success(startActivation.right));
+        yield* call(navigateToCgnDetails);
         return;
       } else {
-        // could be: ALREADY_ACTIVE, INELIGIBLE
-        if (
-          ["ALREADY_ACTIVE", "INELIGIBLE"].some(
-            v => v === startActivation.right
-          )
-        ) {
-          yield* put(cgnEycaActivation.success(startActivation.right));
-          yield* call(navigateToCgnDetails);
-          return;
-        } else {
-          yield* call(handleEycaActivationSaga, getEycaActivation);
-        }
+        yield* call(handleEycaActivationSaga, getEycaActivation);
       }
     }
   }
