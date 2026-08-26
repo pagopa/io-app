@@ -1,8 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { STORAGE_KEY_LAST_CHECK_TIME } from "../consts";
 import {
+  STORAGE_KEY_ITW_SPECS_VERSION,
+  STORAGE_KEY_LAST_CHECK_TIME
+} from "../consts";
+import {
+  getItwSpecsVersion,
   getLastStatusListCheckTimestamps,
+  storeItwSpecsVersion,
   storeLastStatusListCheckTimestamp
 } from "../storage";
 
@@ -11,6 +16,31 @@ jest.mock("@react-native-async-storage/async-storage", () =>
 );
 
 beforeEach(() => AsyncStorage.clear());
+
+describe("IT-Wallet specs version storage", () => {
+  it("stores and retrieves the specs version", async () => {
+    await storeItwSpecsVersion("1.3.3");
+
+    await expect(
+      AsyncStorage.getItem(STORAGE_KEY_ITW_SPECS_VERSION)
+    ).resolves.toBe("1.3.3");
+    await expect(getItwSpecsVersion()).resolves.toBe("1.3.3");
+  });
+
+  it("throws when no specs version is stored", async () => {
+    await expect(getItwSpecsVersion()).rejects.toThrow(
+      "IT-Wallet specs version not found"
+    );
+  });
+
+  it("propagates AsyncStorage errors", async () => {
+    jest
+      .spyOn(AsyncStorage, "getItem")
+      .mockRejectedValueOnce(new Error("boom"));
+
+    await expect(getItwSpecsVersion()).rejects.toThrow("boom");
+  });
+});
 
 describe("storeLastStatusListCheckTimestamp", () => {
   it("stores the timestamp list under the expected key", async () => {
