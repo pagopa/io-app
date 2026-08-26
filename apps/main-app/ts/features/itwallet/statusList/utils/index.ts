@@ -5,7 +5,10 @@ import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import { InvalidTslCredentialStatus } from "./errors";
-import { WalletProviderMetadataSchema } from "./schemas";
+import {
+  CredentialIssuerMetadataSchema,
+  WalletProviderMetadataSchema
+} from "./schemas";
 
 /**
  * Function to get the credential status from its token status list (TSL). The list is fetched from the `uri` extracted from
@@ -40,6 +43,8 @@ export const getCredentialStatusFromStatusList = async (
     keys,
     statusList
   );
+  assert(parsed.sub === uri, `Status List Token sub does not match URI ${uri}`);
+
   const { status, rawStatus } = ioWallet.CredentialStatus.statusList.getStatus(
     parsed.status_list,
     idx
@@ -63,24 +68,61 @@ export const getCredentialStatusFromStatusList = async (
   };
 };
 
+const getFederationEntityConfiguration = async (token: string) => {
+  const { payload } = decodeJwt(token);
+  const issuer = new URL(String(payload.iss));
+  assert(
+    issuer.protocol === "https:",
+    "Status List issuer must use the HTTPS protocol"
+  );
+
+  const federationUrl = `${issuer.href.replace(
+    /\/$/,
+    ""
+  )}/.well-known/openid-federation`;
+  const response = await fetch(federationUrl);
+  assert(
+    response.ok,
+    `Unable to fetch OpenID Federation metadata from ${federationUrl}`
+  );
+
+  return decodeJwt(await response.text()).payload;
+};
+
 /**
- * Fetches the JWKS from the Wallet Provider's OpenID Federation metadata,
- * which is used to verify the Status List Token.
+ * Resolves Status Issuer JWKS from its OpenID Federation metadata.
+ * Status List Token payload is decoded only to discover its issuer; signature
+ * verification is performed separately with returned keys. Both Credential
+ * Issuer and Wallet Provider metadata are supported because each can own
+ * Status List Tokens cached by wallet.
+ *
+ * @param statusListToken Encoded Status List Token
+ * @returns Status Issuer keys used to verify Status List Token
+ */
+export const getKeysForStatusListToken = async (statusListToken: string) => {
+  const payload = await getFederationEntityConfiguration(statusListToken);
+  const credentialIssuer = CredentialIssuerMetadataSchema.safeParse(payload);
+
+  if (credentialIssuer.success) {
+    return credentialIssuer.data.metadata.openid_credential_issuer.jwks.keys;
+  }
+
+  const walletProvider = WalletProviderMetadataSchema.parse(payload);
+  return walletProvider.metadata.wallet_solution.jwks.keys;
+};
+
+/**
+ * Fetches JWKS from Wallet Provider's OpenID Federation metadata,
+ * used to verify Wallet Unit Attestation Status List Token.
+ *
  * @param walletUnitAttestation Encoded Wallet Unit Attestation
- * @returns The JWKS keys from the Wallet Provider
+ * @returns JWKS keys from Wallet Provider
  */
 export const getKeysForWuaStatusList = async (
   walletUnitAttestation: string
 ) => {
-  const decoded = decodeJwt(walletUnitAttestation);
+  const payload = await getFederationEntityConfiguration(walletUnitAttestation);
+  const walletProvider = WalletProviderMetadataSchema.parse(payload);
 
-  const { payload } = await fetch(
-    `${decoded.payload.iss}/.well-known/openid-federation`
-  )
-    .then(res => res.text())
-    .then(decodeJwt);
-
-  const walletProviderJwt = WalletProviderMetadataSchema.parse(payload);
-
-  return walletProviderJwt.metadata.wallet_solution.jwks.keys;
+  return walletProvider.metadata.wallet_solution.jwks.keys;
 };

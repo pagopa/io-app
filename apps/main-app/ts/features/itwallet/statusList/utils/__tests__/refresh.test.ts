@@ -1,6 +1,7 @@
 import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { getKeysForStatusListToken } from "..";
 import { STORAGE_KEY_LAST_CHECK_TIME } from "../consts";
 import {
   refreshStaleEntries,
@@ -11,6 +12,11 @@ import { StatusListRepository } from "../repository";
 import { type StatusListContext } from "../types";
 
 const mockGetByUri = jest.fn<Promise<string>, [string]>();
+const mockVerifyAndParse = jest.fn();
+
+jest.mock("..", () => ({
+  getKeysForStatusListToken: jest.fn()
+}));
 
 jest.mock("@react-native-async-storage/async-storage", () =>
   require("@react-native-async-storage/async-storage/jest/async-storage-mock")
@@ -21,25 +27,18 @@ jest.mock("../../../common/utils/itwIoWallet", () => ({
     CredentialStatus: {
       statusList: {
         isSupported: true,
-        getByUri: mockGetByUri
+        getByUri: mockGetByUri,
+        verifyAndParse: mockVerifyAndParse
       }
     }
   }))
 }));
 
-/**
- * Mock the JWT decode function to extract the payload from a fake JWT.
- * The fake JWT format is: base64url(header).base64url(payload).signature
- */
-jest.mock("@pagopa/io-react-native-jwt", () => ({
-  decode: (jwt: string) => {
-    const parts = jwt.split(".");
-    const payload = JSON.parse(Buffer.from(parts[1], "base64url").toString());
-    return { payload };
-  }
-}));
-
 const URI = "https://issuer.example/status/1";
+const STATUS_LIST_TOKEN = "status-list-token";
+const KEYS = [{ kty: "EC" as const, kid: "status-list-key" }];
+
+const mockGetKeysForStatusListToken = jest.mocked(getKeysForStatusListToken);
 
 const context: StatusListContext = { itwVersion: "1.3.3" };
 
@@ -49,7 +48,7 @@ const makeValidPayload = (
 ): CredentialStatus.StatusList => ({
   sub: uri,
   iat: 1680000000,
-  exp: 1700000000,
+  exp: 2291720170,
   status_list: { bits: 2 as const, lst: "eNrbuRgAAhcBXQ" },
   ...overrides
 });
@@ -66,8 +65,12 @@ const fakeJwt = (payload: Record<string, unknown>): string => {
   return `${header}.${body}.signature`;
 };
 
-const mockStatusListToken = (jwt: string) => {
-  mockGetByUri.mockResolvedValue(jwt);
+const mockStatusListToken = (
+  payload: CredentialStatus.StatusList,
+  token: string = STATUS_LIST_TOKEN
+) => {
+  mockGetByUri.mockResolvedValue(token);
+  mockVerifyAndParse.mockResolvedValue(payload);
 };
 
 const flushPromises = () =>
@@ -79,16 +82,23 @@ describe("refreshStatusListToken", () => {
   beforeEach(async () => {
     jest.restoreAllMocks();
     mockGetByUri.mockReset();
+    mockVerifyAndParse.mockReset();
+    mockGetKeysForStatusListToken.mockReset();
+    mockGetKeysForStatusListToken.mockResolvedValue(KEYS);
     await AsyncStorage.clear();
   });
 
-  it("gets, decodes, validates, and persists a valid token", async () => {
+  it("gets, verifies, validates, and persists a valid token", async () => {
     const payload = makeValidPayload();
-    mockStatusListToken(fakeJwt(payload));
+    mockStatusListToken(payload);
 
     const result = await refreshStatusListToken(context, URI);
 
     expect(result).toBe(true);
+    expect(mockGetKeysForStatusListToken).toHaveBeenCalledWith(
+      STATUS_LIST_TOKEN
+    );
+    expect(mockVerifyAndParse).toHaveBeenCalledWith(KEYS, STATUS_LIST_TOKEN);
 
     const cached = await StatusListRepository.get(URI);
     expect(cached).toBeDefined();
@@ -104,12 +114,26 @@ describe("refreshStatusListToken", () => {
     await expect(StatusListRepository.get(URI)).resolves.toBeFalsy();
   });
 
-  it("returns false for malformed payload", async () => {
-    mockStatusListToken(fakeJwt({ sub: URI }));
+  it("returns false when signature verification fails", async () => {
+    mockGetByUri.mockResolvedValue(STATUS_LIST_TOKEN);
+    mockVerifyAndParse.mockRejectedValue(new Error("invalid signature"));
 
     const result = await refreshStatusListToken(context, URI);
 
     expect(result).toBe(false);
+    await expect(StatusListRepository.get(URI)).resolves.toBeFalsy();
+  });
+
+  it("returns false when issuer keys cannot be resolved", async () => {
+    mockGetByUri.mockResolvedValue(STATUS_LIST_TOKEN);
+    mockGetKeysForStatusListToken.mockRejectedValue(
+      new Error("missing issuer keys")
+    );
+
+    const result = await refreshStatusListToken(context, URI);
+
+    expect(result).toBe(false);
+    expect(mockVerifyAndParse).not.toHaveBeenCalled();
   });
 
   it("returns false when payload sub does not match requested sub", async () => {
@@ -117,7 +141,7 @@ describe("refreshStatusListToken", () => {
       ...makeValidPayload(),
       sub: "https://issuer.example/status/wrong"
     };
-    mockStatusListToken(fakeJwt(wrongSub));
+    mockStatusListToken(wrongSub);
 
     const result = await refreshStatusListToken(context, URI);
 
@@ -149,7 +173,7 @@ describe("refreshStatusListToken", () => {
     await StatusListRepository.upsert(URI, oldPayload);
 
     const newPayload = { ...makeValidPayload(), iat: 1690000000 };
-    mockStatusListToken(fakeJwt(newPayload));
+    mockStatusListToken(newPayload);
 
     const result = await refreshStatusListToken(context, URI);
 
@@ -162,6 +186,13 @@ describe("refreshStatusListToken", () => {
 describe("refreshWithBoundedParallelism", () => {
   beforeEach(async () => {
     mockGetByUri.mockReset();
+    mockVerifyAndParse.mockReset();
+    mockVerifyAndParse.mockImplementation((_, token: string) => {
+      const parts = token.split(".");
+      return JSON.parse(Buffer.from(parts[1], "base64url").toString());
+    });
+    mockGetKeysForStatusListToken.mockReset();
+    mockGetKeysForStatusListToken.mockResolvedValue(KEYS);
     await AsyncStorage.clear();
   });
 
@@ -207,6 +238,13 @@ describe("refreshStaleEntries", () => {
   beforeEach(async () => {
     jest.restoreAllMocks();
     mockGetByUri.mockReset();
+    mockVerifyAndParse.mockReset();
+    mockVerifyAndParse.mockImplementation((_, token: string) => {
+      const parts = token.split(".");
+      return JSON.parse(Buffer.from(parts[1], "base64url").toString());
+    });
+    mockGetKeysForStatusListToken.mockReset();
+    mockGetKeysForStatusListToken.mockResolvedValue(KEYS);
     await AsyncStorage.clear();
   });
 

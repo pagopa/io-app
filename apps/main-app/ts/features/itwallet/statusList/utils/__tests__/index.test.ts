@@ -2,7 +2,11 @@ import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { ZodError } from "zod";
 
-import { getCredentialStatusFromStatusList, getKeysForWuaStatusList } from "..";
+import {
+  getCredentialStatusFromStatusList,
+  getKeysForStatusListToken,
+  getKeysForWuaStatusList
+} from "..";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { InvalidTslCredentialStatus } from "../errors";
 
@@ -34,7 +38,7 @@ const KEYS = [{ kty: "EC" as const, kid: "wallet-provider-key" }];
 const statusListPayload: CredentialStatus.StatusList = {
   sub: STATUS_LIST_URI,
   iat: 1700000000,
-  exp: 1700003600,
+  exp: 2291720170,
   status_list: { bits: 1, lst: "eNrbuRgAAhcBXQ" }
 };
 
@@ -96,6 +100,28 @@ describe("getCredentialStatusFromStatusList", () => {
     );
   });
 
+  it("throws when Status List Token sub does not match its URI", async () => {
+    const wallet = makeWallet();
+    wallet.CredentialStatus.statusList.verifyAndParse.mockResolvedValue({
+      ...statusListPayload,
+      sub: `${ISSUER}/status-list/wrong`
+    });
+    mockGetIoWallet.mockReturnValue(wallet as never);
+
+    await expect(
+      getCredentialStatusFromStatusList(
+        ITW_VERSION,
+        CREDENTIAL,
+        CREDENTIAL_ID,
+        CREDENTIAL_FORMAT,
+        KEYS
+      )
+    ).rejects.toThrow(
+      `Status List Token sub does not match URI ${STATUS_LIST_URI}`
+    );
+    expect(wallet.CredentialStatus.statusList.getStatus).not.toHaveBeenCalled();
+  });
+
   it("throws when credential status is not valid", async () => {
     mockGetIoWallet.mockReturnValue(makeWallet("INVALID") as never);
 
@@ -125,8 +151,97 @@ describe("getCredentialStatusFromStatusList", () => {
   });
 });
 
+describe("getKeysForStatusListToken", () => {
+  beforeEach(() => {
+    jest.restoreAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it("retrieves Credential Issuer keys", async () => {
+    mockDecodeJwt
+      .mockReturnValueOnce({ payload: { iss: ISSUER } } as never)
+      .mockReturnValueOnce({
+        payload: {
+          metadata: {
+            openid_credential_issuer: {
+              jwks: { keys: KEYS }
+            }
+          }
+        }
+      } as never);
+    const fetchSpy = jest.spyOn(global, "fetch").mockResolvedValue({
+      ok: true,
+      text: jest.fn().mockResolvedValue(FEDERATION_JWT)
+    } as never);
+
+    await expect(getKeysForStatusListToken(STATUS_LIST)).resolves.toEqual(KEYS);
+
+    expect(mockDecodeJwt).toHaveBeenNthCalledWith(1, STATUS_LIST);
+    expect(fetchSpy).toHaveBeenCalledWith(
+      `${ISSUER}/.well-known/openid-federation`
+    );
+    expect(mockDecodeJwt).toHaveBeenNthCalledWith(2, FEDERATION_JWT);
+  });
+
+  it("retrieves Wallet Provider keys for WUA Status Lists", async () => {
+    mockDecodeJwt
+      .mockReturnValueOnce({ payload: { iss: ISSUER } } as never)
+      .mockReturnValueOnce({
+        payload: {
+          metadata: {
+            wallet_solution: {
+              jwks: { keys: KEYS }
+            }
+          }
+        }
+      } as never);
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      ok: true,
+      text: jest.fn().mockResolvedValue(FEDERATION_JWT)
+    } as never);
+
+    await expect(getKeysForStatusListToken(STATUS_LIST)).resolves.toEqual(KEYS);
+  });
+
+  it("rejects invalid Status Issuer metadata", async () => {
+    mockDecodeJwt
+      .mockReturnValueOnce({ payload: { iss: ISSUER } } as never)
+      .mockReturnValueOnce({ payload: { metadata: {} } } as never);
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      ok: true,
+      text: jest.fn().mockResolvedValue(FEDERATION_JWT)
+    } as never);
+
+    await expect(getKeysForStatusListToken(STATUS_LIST)).rejects.toBeInstanceOf(
+      ZodError
+    );
+  });
+
+  it("rejects non-HTTPS issuers without fetching metadata", async () => {
+    mockDecodeJwt.mockReturnValueOnce({
+      payload: { iss: "http://wallet-provider.example" }
+    } as never);
+    const fetchSpy = jest.spyOn(global, "fetch");
+
+    await expect(getKeysForStatusListToken(STATUS_LIST)).rejects.toThrow(
+      "Status List issuer must use the HTTPS protocol"
+    );
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it("rejects unsuccessful metadata responses", async () => {
+    mockDecodeJwt.mockReturnValueOnce({ payload: { iss: ISSUER } } as never);
+    jest.spyOn(global, "fetch").mockResolvedValue({ ok: false } as never);
+
+    await expect(getKeysForStatusListToken(STATUS_LIST)).rejects.toThrow(
+      `Unable to fetch OpenID Federation metadata from ${ISSUER}/.well-known/openid-federation`
+    );
+  });
+});
+
 describe("getKeysForWuaStatusList", () => {
   beforeEach(() => {
+    jest.restoreAllMocks();
     jest.clearAllMocks();
   });
 
@@ -143,6 +258,7 @@ describe("getKeysForWuaStatusList", () => {
         }
       } as never);
     const fetchSpy = jest.spyOn(global, "fetch").mockResolvedValue({
+      ok: true,
       text: jest.fn().mockResolvedValue(FEDERATION_JWT)
     } as never);
 
@@ -172,6 +288,7 @@ describe("getKeysForWuaStatusList", () => {
       .mockReturnValueOnce({ payload: { iss: ISSUER } } as never)
       .mockReturnValueOnce({ payload } as never);
     jest.spyOn(global, "fetch").mockResolvedValue({
+      ok: true,
       text: jest.fn().mockResolvedValue(FEDERATION_JWT)
     } as never);
 

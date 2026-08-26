@@ -1,6 +1,4 @@
-import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
-import { CredentialStatus } from "@pagopa/io-react-native-wallet";
-
+import { getKeysForStatusListToken } from ".";
 import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { StatusListRepository } from "./repository";
@@ -30,10 +28,11 @@ export const refreshStatusListToken = async (
     );
 
     const statusList = await ioWallet.CredentialStatus.statusList.getByUri(uri);
-    // TODO [SIW-4542] add JWT verification
-    // const parsed = await statusListApi.verifyAndParse(jwks, statusList);
-    const decoded = decodeJwt(statusList).payload;
-    const parsed = CredentialStatus.StatusList.parse(decoded);
+    const keys = await getKeysForStatusListToken(statusList);
+    const parsed = await ioWallet.CredentialStatus.statusList.verifyAndParse(
+      keys,
+      statusList
+    );
 
     assert(
       parsed.sub === uri,
