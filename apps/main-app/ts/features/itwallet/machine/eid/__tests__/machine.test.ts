@@ -23,6 +23,8 @@ import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
+  ObtainStatusListActorInput,
+  ObtainStatusListActorOutput,
   RequestAccessTokenActorParams,
   RequestEidActorOutput,
   RequestEidActorParams,
@@ -64,6 +66,16 @@ const T_EID_REQUEST_OUTPUT: RequestEidActorOutput = {
     metadata: ItwStoredCredentialsMocks.eid
   },
   walletUnitAttestations: T_WUA
+};
+const T_WALLET_INSTANCE_STATUS_LIST: ObtainStatusListActorOutput = {
+  idx: 0,
+  uri: "https://wallet-provider.example/status-list/1",
+  parsedStatusList: {
+    sub: "https://wallet-provider.example/status-list/1",
+    iat: 1700000000,
+    exp: 1700003600,
+    status_list: { bits: 1, lst: "eNrbuRgAAhcBXQ" }
+  }
 };
 
 /**
@@ -120,6 +132,7 @@ const requestEid = jest.fn();
 const startAuthFlow = jest.fn();
 const initMrtdPoPChallenge = jest.fn();
 const validateMrtdPoPChallenge = jest.fn();
+const obtainStatusList = jest.fn();
 const storeEidCredentialActor = jest.fn();
 const waitForSessionRefresh = jest.fn();
 
@@ -198,6 +211,10 @@ describe("itwEidIssuanceMachine", () => {
       requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
         requestEid
       ),
+      obtainStatusList: fromPromise<
+        ObtainStatusListActorOutput,
+        ObtainStatusListActorInput
+      >(obtainStatusList),
       storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
         storeEidCredentialActor
       ),
@@ -229,6 +246,7 @@ describe("itwEidIssuanceMachine", () => {
     jest.clearAllMocks();
     jest.resetAllMocks();
     jest.useFakeTimers();
+    obtainStatusList.mockResolvedValue(undefined);
     storeEidCredentialActor.mockResolvedValue(undefined);
   });
 
@@ -1083,7 +1101,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(createWalletInstance).toHaveBeenCalledTimes(0);
     expect(getWalletAttestation).toHaveBeenCalledTimes(0);
 
-    // Accept IPZS privacy
+    // Accept privacy and ToS from IPZS privacy screen
     actor.send({ type: "accept-ipzs-privacy" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
@@ -1524,6 +1542,63 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context.failure).toStrictEqual({
       type: IssuanceFailureType.NOT_MATCHING_IDENTITY,
       reason: "IT Wallet identity does not match IO identity"
+    });
+  });
+
+  it("Should obtain and store WUA status lists before checking the issued eID", async () => {
+    requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
+    obtainStatusList.mockResolvedValue(T_WALLET_INSTANCE_STATUS_LIST);
+    issuedEidMatchesAuthenticatedUser.mockReturnValue(true);
+
+    const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "WaitingForSessionRefresh" },
+      context: {
+        itwVersion: "1.3.3",
+        walletUnitAttestations: T_WUA
+      }
+    });
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+    actor.send({ type: "session-refresh-complete" });
+
+    const finalSnapshot = await waitForActor(actor, state =>
+      state.matches({ Issuance: "DisplayingPreview" })
+    );
+
+    expect(obtainStatusList).toHaveBeenCalledWith(
+      expect.objectContaining({
+        input: {
+          itwVersion: "1.3.3",
+          walletUnitAttestations: T_WUA
+        }
+      })
+    );
+    expect(finalSnapshot.context.walletInstanceStatusList).toEqual(
+      T_WALLET_INSTANCE_STATUS_LIST
+    );
+  });
+
+  it("Should fail when obtaining WUA status lists fails", async () => {
+    const error = new Error("WUA status list verification failed");
+    requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
+    obtainStatusList.mockRejectedValue(error);
+
+    const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "WaitingForSessionRefresh" }
+    });
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+    actor.send({ type: "session-refresh-complete" });
+
+    await waitForActor(actor, state => state.matches("Failure"));
+
+    expect(actor.getSnapshot().context.failure).toStrictEqual({
+      type: IssuanceFailureType.UNEXPECTED,
+      reason: error
     });
   });
 

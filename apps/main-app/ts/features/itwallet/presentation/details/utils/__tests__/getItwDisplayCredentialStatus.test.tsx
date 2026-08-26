@@ -9,7 +9,9 @@ describe("getItwDisplayCredentialStatus", () => {
       ${"jwtExpired"}  | ${"valid"}       | ${true}   | ${"jwtExpired"}
       ${"expired"}     | ${"valid"}       | ${true}   | ${"expired"}
       ${"jwtExpired"}  | ${"jwtExpired"}  | ${true}   | ${"invalid"}
+      ${"jwtExpiring"} | ${"jwtExpiring"} | ${true}   | ${"valid"}
       ${"jwtExpiring"} | ${"jwtExpiring"} | ${false}  | ${"valid"}
+      ${"jwtExpiring"} | ${undefined}     | ${false}  | ${"valid"}
       ${"valid"}       | ${"jwtExpired"}  | ${false}  | ${"valid"}
       ${"jwtExpired"}  | ${"jwtExpired"}  | ${false}  | ${"invalid"}
       ${"jwtExpiring"} | ${"jwtExpired"}  | ${false}  | ${"jwtExpiring"}
@@ -23,7 +25,32 @@ describe("getItwDisplayCredentialStatus", () => {
         const result = getItwDisplayCredentialStatus(
           credentialStatus,
           eidStatus,
-          isOffline
+          isOffline,
+          false
+        );
+        expect(result).toBe(expected);
+      }
+    );
+  });
+
+  // The PID shares its status with the eID, so both parameters always match
+  describe("PID", () => {
+    it.each`
+      credentialStatus | isOffline | expected
+      ${"valid"}       | ${false}  | ${"valid"}
+      ${"valid"}       | ${true}   | ${"valid"}
+      ${"jwtExpiring"} | ${false}  | ${"jwtExpiring"}
+      ${"jwtExpiring"} | ${true}   | ${"valid"}
+      ${"jwtExpired"}  | ${false}  | ${"invalid"}
+      ${"jwtExpired"}  | ${true}   | ${"invalid"}
+    `(
+      "should return '$expected' for credentialStatus=$credentialStatus, offline=$isOffline",
+      ({ credentialStatus, isOffline, expected }) => {
+        const result = getItwDisplayCredentialStatus(
+          credentialStatus,
+          credentialStatus,
+          isOffline,
+          true
         );
         expect(result).toBe(expected);
       }
