@@ -1,13 +1,13 @@
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { StandardServiceCategoryEnum } from "@io-app/api-types/generated/definitions/services/StandardServiceCategory";
 import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "@pagopa/ts-commons/lib/strings";
 import { merge } from "lodash";
 
-import { ScopeTypeEnum } from "../../../../../definitions/services/ScopeType";
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { StandardServiceCategoryEnum } from "../../../../../definitions/services/StandardServiceCategory";
 import { ServiceType } from "../types";
 
 const SERVICE_ID = "serviceId" as ServiceId;

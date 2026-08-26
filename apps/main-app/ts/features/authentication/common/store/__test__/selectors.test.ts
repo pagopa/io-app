@@ -1,6 +1,6 @@
+import { SpidLevelEnum } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
 import * as O from "fp-ts/lib/Option";
 
-import { SpidLevelEnum } from "../../../../../../definitions/session_manager/SpidLevel";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { format } from "../../../../../utils/dates";
 import {
@@ -78,10 +78,10 @@ describe("authentication selectors", () => {
     expect(fimsTokenSelector(state)).toBe("fims");
   });
 
-  it("should return session info as Option if logged in with session info", () => {
+  it("should return session info as data if logged in with session info", () => {
     const state = createLoggedInWithSessionInfoState();
     expect(sessionInfoSelector(state)).toEqual(
-      O.some((state.authentication as any).sessionInfo)
+      (state.authentication as any).sessionInfo
     );
   });
 

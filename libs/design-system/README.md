@@ -211,7 +211,7 @@ The library requires the following peer dependencies to be installed by the cons
 * [`react-native-reanimated`](https://github.com/software-mansion/react-native-reanimated) (`>=4.0.0`): Handles all the component animations
 * [`react-native-worklets`](https://github.com/software-mansion/react-native-worklets): Runs the `reanimated` worklets
 * [`react-native-svg`](https://github.com/software-mansion/react-native-svg): Handles all the vector asset components (icons, pictograms and logos)
-* [`react-native-haptic-feedback`](https://github.com/mkuczera/react-native-haptic-feedback): Handles all the haptic feedbacks
+* [`react-native-pulsar`](https://github.com/software-mansion/pulsar): Handles all the haptic feedbacks
 * [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context): Handles all safe area spacing attributes
 * [`react-native-linear-gradient`](https://github.com/react-native-linear-gradient/react-native-linear-gradient)
 * [`react-native-easing-gradient`](https://github.com/phamfoo/react-native-easing-gradient): Generates easing gradients

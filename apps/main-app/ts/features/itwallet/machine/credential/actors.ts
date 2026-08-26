@@ -1,4 +1,5 @@
 import type {
+  CredentialIssuance,
   CredentialOffer,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
@@ -427,9 +428,16 @@ export const createCredentialIssuanceActorsImplementation = (
 
     const { status, rawStatus, uri, idx, parsedStatusList } =
       await getCredentialStatusFromStatusList(
-        bundle,
         itwVersion,
+        bundle.credential,
+        bundle.metadata.credentialId,
+        bundle.metadata.format as CredentialIssuance.CredentialFormat,
         issuerConf.keys
+      ).catch(
+        enrichErrorWithMetadata({
+          credentialId: bundle.metadata.credentialId,
+          credentialType: bundle.metadata.credentialType
+        })
       );
 
     return {
@@ -459,7 +467,8 @@ export const createCredentialIssuanceActorsImplementation = (
       itwVersion
     ).catch(
       enrichErrorWithMetadata({
-        credentialId: bundle.metadata.credentialId
+        credentialId: bundle.metadata.credentialId,
+        credentialType: bundle.metadata.credentialType
       })
     );
 

@@ -1,3 +1,6 @@
+import { FimsServiceConfiguration } from "@io-app/api-types/generated/definitions/content/FimsServiceConfiguration";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { ComponentType } from "react";
@@ -11,9 +14,6 @@ import {
   useFIMSFromServiceId,
   useFIMSRemoteServiceConfiguration
 } from "..";
-import { FimsServiceConfiguration } from "../../../../../../definitions/content/FimsServiceConfiguration";
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import {
   AppParamsList,
   IOStackNavigationProp

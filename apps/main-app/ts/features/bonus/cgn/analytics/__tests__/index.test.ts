@@ -1,8 +1,8 @@
+import { StatusEnum } from "@io-app/api-types/generated/definitions/cgn/CardPending";
+import { OtpCode } from "@io-app/api-types/generated/definitions/cgn/OtpCode";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import trackCgnAction from "..";
-import { StatusEnum } from "../../../../../../definitions/cgn/CardPending";
-import { OtpCode } from "../../../../../../definitions/cgn/OtpCode";
 import * as MIXPANEL from "../../../../../mixpanel";
 import {
   cgnActivationBack,

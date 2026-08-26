@@ -5,7 +5,7 @@ import {
   trackItwStatusListFetchRegistered,
   trackItwStatusListFetchRegisterFailure
 } from "../analytics";
-import { storeLastStatusListCheckTimestamp } from "../utils/storage";
+import { refreshStaleEntries } from "../utils/refresh";
 
 /**
  * Identifier for the ITW Status List background fetch task.
@@ -29,11 +29,8 @@ const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 12;
  */
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
-    const now = Date.now();
-    await storeLastStatusListCheckTimestamp(now);
-
-    // TODO Add Status List fetch logic here
-
+    // TODO SIW-4623: get itw version in the background task
+    await refreshStaleEntries({ itwVersion: "1.3.3" });
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch {
     return BackgroundTask.BackgroundTaskResult.Failed;

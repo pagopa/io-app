@@ -26,9 +26,6 @@ import identificationReducer, {
 import issuanceReducer, {
   ItwIssuanceState
 } from "../../../issuance/store/reducers";
-import itwDebugReducer, {
-  ItwDebugState
-} from "../../../playgrounds/store/reducer";
 import itwProximityReducer, {
   ItwProximityState
 } from "../../../presentation/proximity/store/reducers";
@@ -41,18 +38,19 @@ import preferencesReducer, { ItwPreferencesState } from "./preferences";
 import securePreferencesReducer, {
   ItwSecurePreferencesState
 } from "./securePreferences";
+import uiReducer, { ItwUiState } from "./ui";
 
 export type ItWalletState = {
   banners: ItwBannersState;
   credentials: ItwCredentialsState & PersistPartial;
   credentialsCatalogue: ItwCredentialsCatalogueState;
-  debug: ItwDebugState;
   environment: ItwEnvironmentState;
   identification: ItwIdentificationState;
   issuance: ItwIssuanceState & PersistPartial;
   preferences: ItwPreferencesState;
   proximity: ItwProximityState & PersistPartial;
   securePreferences: ItwSecurePreferencesState & PersistPartial;
+  ui: ItwUiState;
   walletInstance: ItwWalletInstanceState & PersistPartial;
 };
 
@@ -69,10 +67,10 @@ const itwReducer = combineReducers({
   credentialsCatalogue: itwCredentialsCatalogueReducer,
   proximity: itwProximityReducer,
   banners: bannersReducer,
-  debug: itwDebugReducer
+  ui: uiReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 17;
+const CURRENT_REDUX_ITW_STORE_VERSION = 18;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -191,7 +189,9 @@ export const migrations: MigrationManifest = {
     _.omit(state, "environment.itWalletSpecsVersion"),
   // Removed isPendingReview from preferences
   "17": (state: PersistedState): PersistedState =>
-    _.omit(state, "preferences.isPendingReview")
+    _.omit(state, "preferences.isPendingReview"),
+  // Removed the duplicated playground credential status state
+  "18": (state: PersistedState): PersistedState => _.omit(state, "debug")
 };
 
 const itwPersistConfig: PersistConfig = {
@@ -201,8 +201,7 @@ const itwPersistConfig: PersistConfig = {
     "preferences",
     "environment",
     "credentialsCatalogue",
-    "banners",
-    "debug"
+    "banners"
   ] satisfies Array<keyof ItWalletState>,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })

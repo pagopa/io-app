@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { View } from "react-native";
-import RNReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import { useIOTheme } from "../../context";
 import { IOColors, IOSelectionTickVisualParams } from "../../core";
@@ -40,7 +39,6 @@ export const ListItemRadioWithAmount = ({
   const [toggleValue, setToggleValue] = useState(selected ?? false);
 
   const pressHandler = () => {
-    RNReactNativeHapticFeedback.trigger("impactLight");
     setToggleValue(val => !val);
     if (onValueChange !== undefined) {
       onValueChange(!toggleValue);

@@ -1,7 +1,6 @@
+import { CreateFilledDocument } from "@io-app/api-types/generated/definitions/fci/CreateFilledDocument";
+import { FilledDocumentDetailView } from "@io-app/api-types/generated/definitions/fci/FilledDocumentDetailView";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-
-import { CreateFilledDocument } from "../../../../../definitions/fci/CreateFilledDocument";
-import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 
 export const createFilledDocumentBody: CreateFilledDocument = {
   document_url:

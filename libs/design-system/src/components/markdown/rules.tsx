@@ -70,7 +70,6 @@ const flattenInlineNodes = (
           })
         ];
       case "hardbreak":
-
       case "softbreak":
         return [...acc, { key: node.key, text: "\n", style: inherited }];
 

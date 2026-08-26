@@ -254,6 +254,26 @@ export default defineConfig([
             "navigation.**",
             "navigate.**",
             "StackActions.**"
+          ],
+          // Caches and memoization rely on mutable Map/Set
+          ignoreMapsAndSets: true,
+          overrides: [
+            {
+              specifiers: {
+                from: "package",
+                package: "@types/react",
+                pattern: "RefObject"
+              },
+              disable: true
+            },
+            {
+              specifiers: {
+                from: "package",
+                package: "react-native-reanimated",
+                pattern: "SharedValue"
+              },
+              disable: true
+            }
           ]
         }
       ],

@@ -1,9 +1,9 @@
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { createActorContext } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ReactNode } from "react";
 
-import { PreferredLanguageEnum } from "../../../../../definitions/identity/PreferredLanguage";
 import {
   idPayApiBaseUrl,
   idPayApiUatBaseUrl,

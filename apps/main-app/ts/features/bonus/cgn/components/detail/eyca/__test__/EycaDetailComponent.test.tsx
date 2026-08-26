@@ -1,12 +1,12 @@
+import { StatusEnum as AcivatedStatus } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
+import { StatusEnum as PendingStatus } from "@io-app/api-types/generated/definitions/cgn/CardPending";
+import { CcdbNumber } from "@io-app/api-types/generated/definitions/cgn/CcdbNumber";
+import { EycaCard } from "@io-app/api-types/generated/definitions/cgn/EycaCard";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 
-import { StatusEnum as AcivatedStatus } from "../../../../../../../../definitions/cgn/CardActivated";
-import { StatusEnum as PendingStatus } from "../../../../../../../../definitions/cgn/CardPending";
-import { CcdbNumber } from "../../../../../../../../definitions/cgn/CcdbNumber";
-import { EycaCard } from "../../../../../../../../definitions/cgn/EycaCard";
 import { applicationChangeState } from "../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../store/reducers/types";

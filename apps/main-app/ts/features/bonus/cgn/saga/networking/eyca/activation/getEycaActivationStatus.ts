@@ -4,7 +4,7 @@ import { call, put } from "typed-redux-saga/macro";
 import { SagaCallReturnType } from "../../../../../../../types/utils";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
-import { getActivation } from "./getEycaActivationSaga";
+import { getActivation } from "./getActivation";
 
 export function* getEycaActivationStatusSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
