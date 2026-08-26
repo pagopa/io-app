@@ -26,6 +26,10 @@ import {
   itwSetIdentificationMode,
   itwSetWalletActivationFeedbackBannerData
 } from "../../common/store/actions/preferences";
+import {
+  itwSetActivationExitSurvey,
+  itwSetFeedbackBottomSheetVisible
+} from "../../common/store/actions/ui";
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
@@ -258,12 +262,15 @@ export const createEidIssuanceActionsImplementation = (
 
     const surveyStep = event.type === "close" ? event.surveyStep : undefined;
 
+    if (isReissuance && !isSurveyHidden) {
+      store.dispatch(itwSetFeedbackBottomSheetVisible(true));
+    } else if (surveyStep) {
+      store.dispatch(itwSetActivationExitSurvey({ step: surveyStep }));
+    }
+
     navigation.navigate(ROUTES.MAIN, {
       screen: ROUTES.WALLET_HOME,
-      params: {
-        requiredEidFeedback: isReissuance && !isSurveyHidden,
-        activationExitSurvey: surveyStep ? { step: surveyStep } : undefined
-      }
+      params: {}
     });
   },
 
@@ -316,7 +323,11 @@ export const createEidIssuanceActionsImplementation = (
     // - credential-triggered activation (credentialType set): user skips success page
     // - upgrade flow (mode === "upgrade")
     // Regular issuance with "Add document" CTA keeps the banner on the success page directly.
-    if (!context.credentialType && context.mode !== "upgrade") {
+    // This survey is reserved to IT-Wallet (L3): "Documenti su IO" (L2/l2-fallback) must never trigger it.
+    if (
+      context.level !== "l3" ||
+      (!context.credentialType && context.mode !== "upgrade")
+    ) {
       return;
     }
     const docStatus = context.mode === "upgrade" ? "active" : "not_active";
