@@ -1,6 +1,6 @@
 import { ContentWrapper, VStack } from "@io-app/design-system";
 import { useIsFocused } from "@react-navigation/core";
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren } from "react";
 import {
   Dimensions,
   Image,
@@ -12,19 +12,11 @@ import {
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 
-// Caps how long the looping GIF illustration plays before it freezes on its
-// static poster frame, keeping it under the 5s threshold WCAG 2.2.2 allows
-// for automatically moving content with no pause/stop control.
-const ANIMATION_DURATION_MS = 4000;
-
 type Props = {
   actions?: IOScrollViewActions;
   description: string;
   goBack?: () => void;
   imageSrc: ImageSourcePropType;
-  // Static frame the animated `imageSrc` GIF freezes on once
-  // `ANIMATION_DURATION_MS` elapses. Omit when `imageSrc` is already static.
-  posterSrc?: ImageSourcePropType;
   title: string;
 };
 
@@ -32,28 +24,17 @@ export const ItwCiePreparationScreenContent = ({
   title,
   description,
   imageSrc,
-  posterSrc,
   actions,
   children,
   goBack
 }: PropsWithChildren<Props>) => {
+  // The image source can be an animated GIF. Since native GIF playback isn't
+  // driven by React re-renders, the animation keeps running as long as the
+  // `Image` view stays mounted, which is still the case when this screen is
+  // pushed to the back stack after navigating forward. Unmounting the image
+  // while the screen isn't focused stops the animation instead of letting it
+  // run indefinitely in the background.
   const isFocused = useIsFocused();
-  const [isAnimationPlaying, setAnimationPlaying] = useState(true);
-
-  // The GIF has no native pause control and no fixed loop count, so the
-  // "playing" window is re-armed on every focus and torn down on blur,
-  // switching the `Image` source to a static poster once it elapses.
-  useEffect(() => {
-    if (!isFocused || posterSrc === undefined) {
-      return undefined;
-    }
-    setAnimationPlaying(true);
-    const timeout = setTimeout(
-      () => setAnimationPlaying(false),
-      ANIMATION_DURATION_MS
-    );
-    return () => clearTimeout(timeout);
-  }, [isFocused, posterSrc]);
 
   return (
     <IOScrollViewWithLargeHeader
@@ -71,11 +52,7 @@ export const ItwCiePreparationScreenContent = ({
               <Image
                 accessibilityIgnoresInvertColors
                 resizeMode="contain"
-                source={
-                  isAnimationPlaying || posterSrc === undefined
-                    ? imageSrc
-                    : posterSrc
-                }
+                source={imageSrc}
                 style={styles.image}
               />
             )}

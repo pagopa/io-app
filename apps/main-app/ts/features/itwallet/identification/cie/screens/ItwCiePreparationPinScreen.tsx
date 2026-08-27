@@ -40,7 +40,6 @@ export const ItwCiePreparationPinScreen = () => {
         `features.itWallet.identification.cie.prepare.pin.description`
       )}
       imageSrc={require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif")}
-      posterSrc={require("../../../../../../img/features/itWallet/identification/itw_cie_pin_poster.png")}
       title={I18n.t(`features.itWallet.identification.cie.prepare.pin.title`)}
     >
       <IOButton
