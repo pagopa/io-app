@@ -21,6 +21,7 @@ import {
   useSVG,
   vec
 } from "@shopify/react-native-skia";
+import { LinearGradient } from "expo-linear-gradient";
 import I18n from "i18next";
 import { useState } from "react";
 import {
@@ -32,7 +33,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import Animated, {
   Extrapolation,
   interpolate,
@@ -99,9 +99,15 @@ export const ItwCredentialTrustmark = ({
   const buttonBackgroundGradientOpacity = isLightMode ? 1 : 0.25;
 
   const buttonBackgroundGradient = {
-    colors: ["#CCCCCC", "#F2F2F2", "#E9E9E9", "#E0E0E0"],
-    locations: [0, 0.35, 0.7, 1],
-    center: { x: 0.5, y: 0.7 }
+    colors: ["#CCCCCC", "#F2F2F2", "#E9E9E9", "#E0E0E0"] as [
+      ColorValue,
+      ColorValue,
+      ...Array<ColorValue>
+    ],
+    locations: [0, 0.35, 0.7, 1] as [number, number, ...Array<number>],
+    // Bottom-to-top gradient, matching the previous 1° angle from react-native-linear-gradient
+    start: { x: 0.5, y: 1 },
+    end: { x: 0.5, y: 0 }
   };
 
   const buttonInnerBorderColor: ColorValue = hexToRgba(
@@ -304,15 +310,14 @@ export const ItwCredentialTrustmark = ({
         style={[styles.container, scaleAnimatedStyle]}
       >
         <LinearGradient
-          angle={1}
-          angleCenter={buttonBackgroundGradient.center}
           colors={buttonBackgroundGradient.colors}
+          end={buttonBackgroundGradient.end}
           locations={buttonBackgroundGradient.locations}
+          start={buttonBackgroundGradient.start}
           style={[
             styles.gradientView,
             { opacity: buttonBackgroundGradientOpacity }
           ]}
-          useAngle
         />
         <View
           style={[

@@ -1,10 +1,10 @@
 import { Body, IOButton, VStack } from "@io-app/design-system";
-import { useRoute } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import {
@@ -14,6 +14,8 @@ import {
 } from "../../analytics";
 import { TrackQualtricsSurvey } from "../../analytics/utils/types";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { itwSetActivationExitSurvey } from "../store/actions/ui";
+import { itwActivationExitSurveySelector } from "../store/selectors/ui";
 import { IT_WALLET_SURVEY_EID_ACTIVATION_EXIT } from "../utils/constants";
 
 export type EidActivationExitStep =
@@ -30,23 +32,22 @@ export type EidActivationExitStep =
  */
 const eidActivationExitSession = { shown: false };
 
-type Props = {
-  step?: EidActivationExitStep;
-};
-
 /**
  * Shows a Qualtrics survey bottom sheet when the user exits the EID
  * activation flow. The survey includes the step at which the user dropped off
  * and the current Documenti su IO status.
  *
- * The bottom sheet is shown at most once per app session. If already shown,
- * `onAfterDismiss` is invoked immediately.
+ * The bottom sheet is shown at most once per app session.
  */
-export const useItwActivationExitSurveyBottomSheet = ({
-  step = "intro"
-}: Props = {}) => {
+export const useItwActivationExitSurveyBottomSheet = () => {
+  const dispatch = useIODispatch();
   const { name: routeName } = useRoute();
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const activationExitSurveyState = useIOSelector(
+    itwActivationExitSurveySelector
+  );
+  const step: EidActivationExitStep =
+    activationExitSurveyState?.step ?? "intro";
   const docStatus = isWalletValid ? "active" : "not_active";
 
   const skipDeclinedEvent = useRef(false);
@@ -119,5 +120,14 @@ export const useItwActivationExitSurveyBottomSheet = ({
     present();
   }, [present, trackingProps]);
 
-  return { bottomSheet, present: presentSurvey };
+  useFocusEffect(
+    useCallback(() => {
+      if (activationExitSurveyState) {
+        presentSurvey();
+        dispatch(itwSetActivationExitSurvey(undefined));
+      }
+    }, [activationExitSurveyState, dispatch, presentSurvey])
+  );
+
+  return { bottomSheet };
 };
