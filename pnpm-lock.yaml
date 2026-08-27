@@ -48,6 +48,9 @@ catalogs:
     eslint-plugin-react-native-a11y:
       specifier: ^3.3.0
       version: 3.3.0
+    expo-linear-gradient:
+      specifier: ~55.0.16
+      version: 55.0.16
     jest:
       specifier: ~30.3.0
       version: 30.3.0
@@ -69,9 +72,6 @@ catalogs:
     react-native-gesture-handler:
       specifier: ^2.28.0
       version: 2.31.0
-    react-native-linear-gradient:
-      specifier: ^2.8.3
-      version: 2.8.3
     react-native-pulsar:
       specifier: ^1.6.1
       version: 1.6.1
@@ -486,6 +486,9 @@ importers:
       expo-image-picker:
         specifier: ~55.0.22
         version: 55.0.22(expo@55.0.26)
+      expo-linear-gradient:
+        specifier: 'catalog:'
+        version: 55.0.16(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       expo-local-authentication:
         specifier: ~55.0.16
         version: 55.0.16(expo@55.0.26)
@@ -591,9 +594,6 @@ importers:
       react-native-keychain:
         specifier: ^10.0.0
         version: 10.0.0
-      react-native-linear-gradient:
-        specifier: 'catalog:'
-        version: 2.8.3(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       react-native-notifications-utils:
         specifier: ^0.3.0
         version: 0.3.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
@@ -914,6 +914,9 @@ importers:
 
   libs/design-system:
     dependencies:
+      expo-linear-gradient:
+        specifier: 'catalog:'
+        version: 55.0.16(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.1
@@ -923,9 +926,6 @@ importers:
       react-native-gesture-handler:
         specifier: 'catalog:'
         version: 2.31.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
-      react-native-linear-gradient:
-        specifier: 'catalog:'
-        version: 2.8.3(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       react-native-pulsar:
         specifier: 'catalog:'
         version: 1.6.1(react-native-worklets@0.8.3(@babel/core@7.29.0(supports-color@8.1.1))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
@@ -6611,6 +6611,13 @@ packages:
       expo: '*'
       react: '*'
 
+  expo-linear-gradient@55.0.16:
+    resolution: {integrity: sha512-zzNB2Hdv+i3zIO8GPN1oU6BeqRJXQSwKgmdJXNf735Fsplxk1bjmqdYNXHamge7uHTb6M+X6aY9Mtjbrf/4S2g==}
+    peerDependencies:
+      expo: '*'
+      react: '*'
+      react-native: '*'
+
   expo-local-authentication@55.0.16:
     resolution: {integrity: sha512-609BLOspLqv2iwRFQkbNiCDtLtLJG/SdRD6yKy7FEDO95wHgPpuEdh4uE3h0orO5cQZzUOPlcgLEIDW7wq3uRw==}
     peerDependencies:
@@ -8074,6 +8081,7 @@ packages:
 
   jsrsasign@11.1.0:
     resolution: {integrity: sha512-Ov74K9GihaK9/9WncTe1mPmvrO7Py665TUfUKvraXBpu+xcTWitrtuOwcjf4KMU9maPaYn0OuaWy0HOzy/GBXg==}
+    deprecated: This package is no longer maintained.
 
   jsx-ast-utils-x@0.1.0:
     resolution: {integrity: sha512-eQQBjBnsVtGacsG9uJNB8qOr3yA8rga4wAaGG1qRcBzSIvfhERLrWxMAM1hp5fcS6Abo8M4+bUBTekYR0qTPQw==}
@@ -9848,12 +9856,6 @@ packages:
   react-native-keychain@10.0.0:
     resolution: {integrity: sha512-YzPKSAnSzGEJ12IK6CctNLU79T1W15WDrElRQ+1/FsOazGX9ucFPTQwgYe8Dy8jiSEDJKM4wkVa3g4lD2Z+Pnw==}
     engines: {node: '>=16'}
-
-  react-native-linear-gradient@2.8.3:
-    resolution: {integrity: sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==}
-    peerDependencies:
-      react: '*'
-      react-native: '*'
 
   react-native-notifications-utils@0.3.0:
     resolution: {integrity: sha512-URKVdNeDxlZopZ+F2X3qi9x6pjn+o+JXzSR82E9OfGlYfPKq4oMrYEYRSptIBQwwnloc4amMERcBH8x7DFIqdA==}
@@ -20819,6 +20821,12 @@ snapshots:
       expo: 55.0.26(9fd3b5662dfe9cb20f6f19a7593bb130)
       react: 19.2.0
 
+  expo-linear-gradient@55.0.16(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0):
+    dependencies:
+      expo: 55.0.26(647755e85e266c3eea547ba434358210)
+      react: 19.2.0
+      react-native: 0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
+
   expo-local-authentication@55.0.16(expo@55.0.26):
     dependencies:
       expo: 55.0.26(647755e85e266c3eea547ba434358210)
@@ -25679,11 +25687,6 @@ snapshots:
       react-native-reanimated: 4.3.1(react-native-worklets@0.8.3(@babel/core@7.29.0(supports-color@8.1.1))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
 
   react-native-keychain@10.0.0: {}
-
-  react-native-linear-gradient@2.8.3(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0):
-    dependencies:
-      react: 19.2.0
-      react-native: 0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
 
   react-native-notifications-utils@0.3.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0):
     dependencies:

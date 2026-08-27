@@ -76,7 +76,7 @@ catalog:
 
   # --- Design System ---
   react-native-worklets: "^0.8.3"
-  react-native-linear-gradient: "^2.8.3"
+  expo-linear-gradient: "~55.0.16"
   react-native-easing-gradient: "^1.1.1"
   react-native-gesture-handler: "^2.28.0"
   react-native-pulsar: "^1.6.1"
