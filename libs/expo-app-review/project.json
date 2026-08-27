@@ -1,0 +1,14 @@
+{
+    "name": "@io-app/expo-app-review",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/expo-app-review",
+    "projectType": "library",
+    "targets": {
+        "tsc-noemit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "pnpm --filter @io-app/expo-app-review run tsc-noemit"
+            }
+        }
+    }
+}
