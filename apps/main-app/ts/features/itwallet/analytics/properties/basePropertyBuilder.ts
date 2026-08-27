@@ -212,16 +212,16 @@ export const buildWalletListCredentialProperty = (
 
 const isThirdPartyCredential = ({
   credentialType,
-  obtainedVia
+  origin
 }: CredentialMetadata) =>
   credentialType !== CredentialType.PID &&
   !isL2Credential(credentialType) &&
-  obtainedVia === "credentialOffer";
+  origin === "credentialOffer";
 
 const isWalletListCredential = ({
   credentialType,
-  obtainedVia
+  origin
 }: CredentialMetadata) =>
   credentialType !== CredentialType.PID &&
   !isL2Credential(credentialType) &&
-  obtainedVia === "catalogue";
+  origin === "catalogue";

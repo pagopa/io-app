@@ -80,7 +80,7 @@ export type CredentialMetadata = {
    * this field was introduced, and for flows that are neither (e.g. PID, upgrade/reissuance).
    * Used to attribute the credential to the correct aggregate analytics property.
    */
-  obtainedVia?: "catalogue" | "credentialOffer";
+  origin?: "catalogue" | "credentialOffer";
   parsedCredential: ParsedCredential;
   spec_version: string;
   validity?: CredentialValidity | LegacyCredentialValidity;

@@ -10,7 +10,7 @@ type AnyRecord = Record<string, any>;
 
 type MigrationState = PersistedState & Record<string, any>;
 
-export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 11;
+export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 12;
 
 export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
@@ -306,6 +306,28 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
         state.legacyCredentials
       ),
       credentials: migrateStatusAssertionToValidity(state.credentials)
+    };
+  },
+
+  // Version 12
+  // Rename `obtainedVia` to `origin`
+  "12": (state: MigrationState) => {
+    const renameObtainedViaToOrigin = (credentials: AnyRecord) =>
+      Object.fromEntries(
+        Object.entries<AnyRecord>(credentials).map(
+          ([key, { obtainedVia, ...credential }]) => [
+            key,
+            obtainedVia !== undefined
+              ? { ...credential, origin: obtainedVia }
+              : credential
+          ]
+        )
+      );
+
+    return {
+      ...state,
+      legacyCredentials: renameObtainedViaToOrigin(state.legacyCredentials),
+      credentials: renameObtainedViaToOrigin(state.credentials)
     };
   }
 };

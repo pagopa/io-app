@@ -101,7 +101,7 @@ describe("buildThirdPartyCredentialProperty", () => {
 
   it("returns valid when at least one credential obtained via credential offer is valid", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
-      obtainedVia: "credentialOffer"
+      origin: "credentialOffer"
     });
     const state = getStateWithCredentials({
       [credential.credentialId]: credential
@@ -112,7 +112,7 @@ describe("buildThirdPartyCredentialProperty", () => {
 
   it("returns not_valid when credentials obtained via credential offer are present but none are valid", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
-      obtainedVia: "credentialOffer",
+      origin: "credentialOffer",
       validity: {
         type: "status_assertion",
         status: "invalid"
@@ -127,7 +127,7 @@ describe("buildThirdPartyCredentialProperty", () => {
 
   it("does not consider a credential obtained via the catalogue as a third-party credential", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
-      obtainedVia: "catalogue"
+      origin: "catalogue"
     });
     const state = getStateWithCredentials({
       [credential.credentialId]: credential
@@ -138,7 +138,7 @@ describe("buildThirdPartyCredentialProperty", () => {
 
   it("does not consider historical L2 credentials as third-party credentials", () => {
     const credential = getMockedCredential(CredentialType.DRIVING_LICENSE, {
-      obtainedVia: "credentialOffer"
+      origin: "credentialOffer"
     });
     const state = getStateWithCredentials({
       [credential.credentialId]: credential
@@ -160,7 +160,7 @@ describe("buildWalletListCredentialProperty", () => {
 
   it("returns valid when at least one credential obtained via the catalogue is valid", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
-      obtainedVia: "catalogue"
+      origin: "catalogue"
     });
     const state = getStateWithCredentials({
       [credential.credentialId]: credential
@@ -171,7 +171,7 @@ describe("buildWalletListCredentialProperty", () => {
 
   it("returns not_valid when credentials obtained via the catalogue are present but none are valid", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
-      obtainedVia: "catalogue",
+      origin: "catalogue",
       validity: {
         type: "status_assertion",
         status: "invalid"
@@ -186,7 +186,7 @@ describe("buildWalletListCredentialProperty", () => {
 
   it("does not consider a credential obtained via credential offer as a wallet list credential", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
-      obtainedVia: "credentialOffer"
+      origin: "credentialOffer"
     });
     const state = getStateWithCredentials({
       [credential.credentialId]: credential
@@ -197,10 +197,10 @@ describe("buildWalletListCredentialProperty", () => {
 
   it("does not consider PID or historical L2 credentials as wallet list credentials", () => {
     const pid = getMockedCredential(CredentialType.PID, {
-      obtainedVia: "catalogue"
+      origin: "catalogue"
     });
     const l2Credential = getMockedCredential(CredentialType.DRIVING_LICENSE, {
-      obtainedVia: "catalogue"
+      origin: "catalogue"
     });
     const state = getStateWithCredentials({
       [pid.credentialId]: pid,
@@ -213,7 +213,7 @@ describe("buildWalletListCredentialProperty", () => {
   it("differs from third-party tracking for the same credential type obtained via different flows", () => {
     const catalogueCredential = getMockedCredential(
       CredentialType.EDUCATION_DEGREE,
-      { obtainedVia: "catalogue" }
+      { origin: "catalogue" }
     );
     const state = getStateWithCredentials({
       [catalogueCredential.credentialId]: catalogueCredential
