@@ -992,6 +992,46 @@ describe("itwEidIssuanceMachine", () => {
     /** Last part is the same as the previous test */
   });
 
+  it("Should clear stale authentication context before entering the PIN", () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: {
+        UserIdentification: {
+          CiePin: "PreparationPin"
+        }
+      },
+      context: {
+        authenticationContext: {
+          authUrl: "https://auth.test.it",
+          callbackUrl: "https://wallet.test.it/cb",
+          clientId: "client",
+          codeVerifier: "verifier",
+          credentialDefinition: {},
+          issuerConf: {},
+          redirectUri: "https://wallet.test.it/cb"
+        },
+        cieContext: {
+          isNFCEnabled: true,
+          isCIEAuthenticationSupported: true
+        }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+    actor.send({ type: "next" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CiePin: "InsertingCardPin"
+      }
+    });
+    expect(actor.getSnapshot().context.authenticationContext).toBeUndefined();
+  });
+
   it("Should skip Wallet Instance creation", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
