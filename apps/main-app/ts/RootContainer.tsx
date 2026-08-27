@@ -53,7 +53,7 @@ const RootContainerInner = ({ store }: { store: Store }) => {
   // Mount/unmount: set up app-state listener, accessibility, notifications, splash
   useEffect(() => {
     void setupAndroidNotificationChannel();
-    // eslint-disable-next-line functional/immutable-data
+
     clearNotificationHandlersRef.current =
       configurePushNotificationListeners(store);
 

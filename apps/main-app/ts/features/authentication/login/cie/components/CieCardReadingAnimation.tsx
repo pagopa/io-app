@@ -63,7 +63,7 @@ const CieCardReadingAnimation = ({
       easing: Easing.linear,
       duration: 10000
     });
-    // eslint-disable-next-line functional/immutable-data
+
     progressAnimation.current = Animated.sequence([firstAnim, secondAnim]);
     progressAnimatedValue.current.addListener(({ value }) => {
       setProgressBarValue(value);
@@ -88,7 +88,6 @@ const CieCardReadingAnimation = ({
 
   // Keep ref in sync with the latest startAnimation to support recursive loop calls
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     startAnimationRef.current = startAnimation;
   }, [startAnimation]);
 
@@ -109,7 +108,7 @@ const CieCardReadingAnimation = ({
   const prevReadingStateRef = useRef(readingState);
   useEffect(() => {
     const prevState = prevReadingStateRef.current;
-    // eslint-disable-next-line functional/immutable-data
+
     prevReadingStateRef.current = readingState;
 
     if (

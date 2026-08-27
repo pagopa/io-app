@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /**
  * Provides a mechanism to display non-native modals (i.e. overlays)
  * on top of the root component.
@@ -210,14 +211,12 @@ export const LightModalProvider = ({ children }: PropsWithChildren<Props>) => {
   }, []);
 
   const setOnHiddenModal = useCallback((callback: () => void) => {
-    // eslint-disable-next-line functional/immutable-data
     onHiddenModalRef.current = callback;
   }, []);
 
   const hideModal = useCallback(() => {
     fadeAnim.setValue(0);
     FadeInAnimation.stop();
-    // eslint-disable-next-line functional/immutable-data
     pendingHideRef.current = true;
     setComponent(null);
   }, []);
@@ -226,7 +225,6 @@ export const LightModalProvider = ({ children }: PropsWithChildren<Props>) => {
   // setState callback behavior.
   useEffect(() => {
     if (component === null && pendingHideRef.current) {
-      // eslint-disable-next-line functional/immutable-data
       pendingHideRef.current = false;
       onHiddenModalRef.current();
     }
