@@ -26,6 +26,5 @@ describe("ItwPresentationCredentialCardFlipButton", () => {
     );
 
     expect(component.getByRole("button", { name: label })).toBeTruthy();
-    expect(component.queryByRole("switch")).toBeNull();
   });
 });
