@@ -851,25 +851,23 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                   ]
                                 }
                               >
-                                <BVLinearGradient
-                                  angle={90}
+                                <LinearGradient
                                   colors={
                                     [
-                                      16777215,
-                                      4294967295,
+                                      "rgba(255,255,255,0)",
+                                      "#FFFFFF",
                                     ]
                                   }
-                                  endPoint={
+                                  end={
                                     {
-                                      "x": 0.5,
-                                      "y": 1,
+                                      "x": 1,
+                                      "y": 0.5,
                                     }
                                   }
-                                  locations={null}
-                                  startPoint={
+                                  start={
                                     {
-                                      "x": 0.5,
-                                      "y": 0,
+                                      "x": 0,
+                                      "y": 0.5,
                                     }
                                   }
                                   style={
@@ -881,7 +879,6 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                       "width": 24,
                                     }
                                   }
-                                  useAngle={true}
                                 />
                                 <View
                                   style={

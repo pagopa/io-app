@@ -1,4 +1,5 @@
 import {
+  BodyMonospace,
   Divider,
   IOButton,
   ListItemHeader,
@@ -8,6 +9,7 @@ import {
   useIOToast,
   VSpacer
 } from "@io-app/design-system";
+import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { format } from "date-fns";
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
@@ -19,6 +21,7 @@ import { isDevEnv } from "../../../../utils/environment";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ITW_STATUS_LIST_FETCH_TASK } from "../../statusList/tasks";
+import { StatusListRepository } from "../../statusList/utils/repository";
 import { getLastStatusListCheckTimestamps } from "../../statusList/utils/storage";
 
 const formatDate = (timestamp: number | undefined): string =>
@@ -38,14 +41,33 @@ const formatAge = (lastFetchTime: number | undefined): string => {
   return `${diffInHours}h ${diffInMinutes}m`;
 };
 
+const formatTslTimestamp = (timestamp: number | undefined): string =>
+  timestamp !== undefined
+    ? format(new Date(timestamp * 1000), "DD/MM/YY HH:mm:ss")
+    : "n/a";
+
+const getAlertMessage = (error: unknown) =>
+  error instanceof Error ? error.message : String(error);
+
 export const ItwStatusListSection = () => {
   const [timestamps, setTimestamps] = useState<ReadonlyArray<number>>();
+  const [storedTsls, setStoredTsls] = useState<
+    ReadonlyArray<CredentialStatus.StatusList>
+  >([]);
+  const [selectedTsl, setSelectedTsl] = useState<CredentialStatus.StatusList>();
+  const toast = useIOToast();
 
   useEffect(() => {
     getLastStatusListCheckTimestamps()
       .then(setTimestamps)
       .catch(() => setTimestamps(undefined));
-  }, []);
+
+    StatusListRepository.list()
+      .then(setStoredTsls)
+      .catch(error =>
+        toast.error(`Status List storage failed: ${getAlertMessage(error)}`)
+      );
+  }, [toast]);
 
   const modal = useIOBottomSheetModal({
     title: "Status List",
@@ -82,6 +104,16 @@ export const ItwStatusListSection = () => {
     )
   });
 
+  const parsedTslModal = useIOBottomSheetModal({
+    title: "Parsed TSL",
+    component:
+      selectedTsl === undefined ? null : (
+        <BodyMonospace selectable>
+          {JSON.stringify(selectedTsl, null, 2)}
+        </BodyMonospace>
+      )
+  });
+
   return (
     <>
       <View>
@@ -93,8 +125,27 @@ export const ItwStatusListSection = () => {
         />
         <VSpacer size={16} />
         <BackgroundTaskSection />
+        <VSpacer size={16} />
+        <ListItemHeader label="Stored TSL" />
+        {storedTsls.length === 0 ? (
+          <ListItemInfo label="Entries" value="No stored TSL" />
+        ) : (
+          storedTsls.map(tsl => (
+            <ListItemNav
+              accessibilityLabel={tsl.sub}
+              description={`Expires ${formatTslTimestamp(tsl.exp)}`}
+              key={tsl.sub}
+              onPress={() => {
+                setSelectedTsl(tsl);
+                parsedTslModal.present();
+              }}
+              value={tsl.sub}
+            />
+          ))
+        )}
       </View>
       {modal.bottomSheet}
+      {parsedTslModal.bottomSheet}
     </>
   );
 };
@@ -102,9 +153,6 @@ export const ItwStatusListSection = () => {
 const BackgroundTaskSection = () => {
   const toast = useIOToast();
   const [isTaskRegistered, setIsTaskRegistered] = useState<boolean>();
-
-  const getAlertMessage = (error: unknown) =>
-    error instanceof Error ? error.message : String(error);
 
   const getTaskRegistrationLabel = (isRegistered?: boolean) => {
     if (isRegistered === undefined) {

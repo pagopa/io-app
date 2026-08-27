@@ -20,6 +20,7 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
   itwSetWalletInstanceRemotelyActive,
   itwSetWalletInstanceRenewalError,
+  itwStoreWalletInstanceStatusList,
   itwUpdateWalletInstanceStatus,
   itwWalletInstanceAttestationStore,
   itwWalletUnitAttestationsRemoveById,
@@ -35,7 +36,7 @@ export type ItwWalletInstanceState = {
    * Indicates whether the user has an already active wallet instance
    * but the actual local wallet is not active.
    */
-  isRemotelyActive?: boolean;
+  isRemotelyActive: boolean | undefined;
   /**
    * Whether a wallet instance renewal has already failed.
    * Used to prevent re-entering the recovery block on subsequent actor retries.
@@ -46,6 +47,11 @@ export type ItwWalletInstanceState = {
    */
   status: pot.Pot<WalletInstanceStatus, NetworkError>;
   /**
+   * [1.3.3+] The Status List entry for the wallet instance, if available.
+   * This is used to check the validity of the wallet instance.
+   */
+  statusList: undefined | { idx: number; uri: string };
+  /**
    * Record of Wallet Unit Attestations keyed by ID. They are not stored on
    * credentials to avoid duplication (one WUA might contain multiple keys)
    * and to avoid bloating the stored credential unnecessarily.
@@ -55,21 +61,22 @@ export type ItwWalletInstanceState = {
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
-  status: pot.none,
+  isRemotelyActive: undefined,
   renewalError: false,
-  walletUnitAttestations: {},
-  isRemotelyActive: undefined
+  status: pot.none,
+  statusList: undefined,
+  walletUnitAttestations: {}
 };
 
 type MigrationState = PersistedState & Record<string, any>;
 
-const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 4;
+const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 5;
 
 export const migrations: MigrationManifest = {
   // Convert status into a pot for better async handling
   "0": (state: MigrationState) => ({
     ...state,
-    status: state.status ? pot.some(state.status) : pot.none
+    status: state.status !== undefined ? pot.some(state.status) : pot.none
   }),
   // Move the old Wallet Attestation into the new structure
   "1": (state: MigrationState) => ({
@@ -90,6 +97,11 @@ export const migrations: MigrationManifest = {
   }),
   // Add isRemotelyActive
   "4": (state: MigrationState) => ({
+    ...state,
+    isRemotelyActive: undefined
+  }),
+  // Add statusList
+  "5": (state: MigrationState) => ({
     ...state,
     isRemotelyActive: undefined
   })
@@ -119,6 +131,13 @@ const reducer = (
         ...state,
         renewalError: action.payload
       };
+
+    case getType(itwStoreWalletInstanceStatusList): {
+      return {
+        ...state,
+        statusList: action.payload
+      };
+    }
 
     case getType(itwUpdateWalletInstanceStatus.cancel): {
       return {

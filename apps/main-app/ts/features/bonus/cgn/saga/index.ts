@@ -26,10 +26,8 @@ import {
 } from "../store/actions/merchants";
 import { cgnGenerateOtp as cgnGenerateOtpAction } from "../store/actions/otp";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
-import {
-  cgnActivationSaga,
-  handleCgnStatusPolling
-} from "./networking/activation/getBonusActivationSaga";
+import { cgnActivationSaga } from "./networking/activation/getBonusActivationSaga";
+import { handleCgnStatusPolling } from "./networking/activation/handleCgnStatusPolling";
 import { cgnBucketConsuption } from "./networking/bucket";
 import { cgnCategoriesSaga } from "./networking/categories/cgnCategoriesSaga";
 import { cgnGetInformationSaga } from "./networking/details/getCgnInformationSaga";

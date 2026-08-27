@@ -37,7 +37,10 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const { status: credentialStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const status = useItwDisplayCredentialStatus(credentialStatus);
+  const status = useItwDisplayCredentialStatus(
+    credentialStatus,
+    credential.credentialType
+  );
 
   const handleFlipButtonPress = useCallback(() => {
     trackWalletShowBack(
