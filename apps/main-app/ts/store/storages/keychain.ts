@@ -4,10 +4,10 @@ import { Storage } from "redux-persist";
 
 // expo-secure-store only allows [A-Za-z0-9._-] https://docs.expo.dev/versions/latest/sdk/securestore/?utm_source=chatgpt.com#securestoresetitemasynckey-value-options; encode other chars as -XX (hex)
 const sanitizeKey = (key: string): string =>
-  key.replace(
-    /[^A-Za-z0-9._-]/g,
-    c => `-${c.charCodeAt(0).toString(16).toUpperCase()}`
-  );
+  `k.${key
+    .split("")
+    .map(char => char.charCodeAt(0).toString(16).padStart(4, "0"))
+    .join("")}`;
 
 // Stay under iOS limit ~2048-byte https://docs.expo.dev/versions/latest/sdk/securestore/
 const CHUNK_SIZE = 1800;
