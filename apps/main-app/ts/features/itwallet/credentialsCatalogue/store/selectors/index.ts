@@ -1,7 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { isAfter } from "date-fns";
-import { constTrue, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
 import { Locales } from "../../../../../i18n";
@@ -77,32 +75,24 @@ export const itwCredentialsCatalogueSelector = createSelector(
  * Normally, the catalogue is fetched every 24 hours according to the `expires` HTTP header.
  * If the fetch fails, it is still possible to select the persisted catalogue, but it may be stale.
  */
-export const itwIsCredentialsCatalogueStale = (state: GlobalState) =>
-  pipe(
-    itwCredentialsCatalogueSelector(state),
-    O.fromNullable,
-    O.map(catalogue => isAfter(new Date(), new Date(catalogue.exp * 1000))),
-    O.getOrElse(constTrue)
-  );
+export const itwIsCredentialsCatalogueStale = (state: GlobalState) => {
+  const catalogue = itwCredentialsCatalogueSelector(state);
+  // A missing catalogue is considered stale, so that a new fetch is attempted
+  return catalogue ? isAfter(new Date(), new Date(catalogue.exp * 1000)) : true;
+};
 
 /**
  * Return a dictionary that maps each credential type to its metadata in the catalogue.
  */
 export const itwCredentialsCatalogueByTypesSelector = createSelector(
   itwCredentialsCatalogueSelector,
-  maybeCatalogue =>
-    pipe(
-      O.fromNullable(maybeCatalogue),
-      O.map(catalogue =>
-        catalogue.credentials.reduce(
-          (acc, credential) => ({
-            ...acc,
-            [credential.credential_type]: credential
-          }),
-          {} as Record<string, DigitalCredentialMetadata>
-        )
-      ),
-      O.toUndefined
+  catalogue =>
+    catalogue?.credentials.reduce(
+      (acc, credential) => ({
+        ...acc,
+        [credential.credential_type]: credential
+      }),
+      {} as Record<string, DigitalCredentialMetadata>
     )
 );
 

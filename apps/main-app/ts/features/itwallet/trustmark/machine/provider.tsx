@@ -1,6 +1,5 @@
 import { useIOToast } from "@io-app/design-system";
 import { createActorContext } from "@xstate/react";
-import { pipe } from "fp-ts/lib/function";
 import { PropsWithChildren } from "react";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -30,7 +29,7 @@ export const ItwTrustmarkMachineProvider = ({
   const navigation = useIONavigation();
   const toast = useIOToast();
 
-  const env = pipe(useIOSelector(selectItwEnv), getEnv);
+  const env = getEnv(useIOSelector(selectItwEnv));
   const itwVersion = useIOSelector(selectItwSpecsVersion);
 
   const trustmarkMachine = itwTrustmarkMachine.provide({

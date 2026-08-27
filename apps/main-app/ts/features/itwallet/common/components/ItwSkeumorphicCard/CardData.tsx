@@ -1,7 +1,5 @@
 /* eslint-disable dot-notation */
 /* eslint-disable @typescript-eslint/dot-notation */
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { ElementType, Fragment, memo } from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -295,19 +293,17 @@ type CardDataProps = {
   valuesHidden: boolean;
 };
 
-const CardData = ({ credential, side, valuesHidden }: CardDataProps) =>
-  pipe(
-    O.fromNullable(dataComponentMap[credential.credentialType]),
-    O.map(components => components[side]),
-    O.map(DataComponent => (
-      <DataComponent
-        claims={credential.parsedCredential}
-        key={`credential_data_${credential.credentialType}_${side}`}
-        valuesHidden={valuesHidden}
-      />
-    )),
-    O.toNullable
-  );
+const CardData = ({ credential, side, valuesHidden }: CardDataProps) => {
+  const DataComponent = dataComponentMap[credential.credentialType]?.[side];
+
+  return DataComponent ? (
+    <DataComponent
+      claims={credential.parsedCredential}
+      key={`credential_data_${credential.credentialType}_${side}`}
+      valuesHidden={valuesHidden}
+    />
+  ) : null;
+};
 
 const styles = StyleSheet.create({
   container: {

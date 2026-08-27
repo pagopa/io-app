@@ -18,8 +18,8 @@ import * as catalogSelectors from "../../../credentialsCatalogue/store/selectors
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import {
-  selectCredentialTypeOption,
-  selectResolvedCredentialOfferOption
+  selectCredentialType,
+  selectResolvedCredentialOffer
 } from "../../../machine/credential/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -65,7 +65,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     jest
       .spyOn(ItwCredentialIssuanceMachineContext, "useSelector")
       .mockImplementation(selector => {
-        if (selector === selectResolvedCredentialOfferOption) {
+        if (selector === selectResolvedCredentialOffer) {
           return someOption({
             offer: { credential_issuer: T_TRUST_ISSUER_BASE_URL },
             grantDetails: {
@@ -77,7 +77,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
           }) as any;
         }
 
-        if (selector === selectCredentialTypeOption) {
+        if (selector === selectCredentialType) {
           return someOption(T_CREDENTIAL_TYPE) as any;
         }
 

@@ -1,7 +1,3 @@
-import * as A from "fp-ts/lib/Array";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as S from "fp-ts/lib/string";
 import { type ActionArgs, assign, type DoneActorEvent } from "xstate";
 
 import type { WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils.ts";
@@ -99,18 +95,20 @@ export const createRemoteActionsImplementation = (
        * - "multiple_purpose" if there are multiple distinct valid purposes
        * A purpose is considered valid only if it's a non-empty, non-whitespace string.
        */
-      const request_type = pipe(
-        requestedCredentials,
-        A.map(item => item.purpose),
-        A.filterMap(O.fromPredicate(p => !!p?.trim())),
-        A.uniq(S.Eq),
-        purposes =>
-          purposes.length === 0
-            ? "no_purpose"
-            : purposes.length === 1
-              ? "unique_purpose"
-              : "multiple_purpose"
-      );
+      const purposes = [
+        ...new Set(
+          requestedCredentials
+            .map(item => item.purpose)
+            .filter((purpose): purpose is string => !!purpose?.trim())
+        )
+      ];
+
+      const request_type =
+        purposes.length === 0
+          ? "no_purpose"
+          : purposes.length === 1
+            ? "unique_purpose"
+            : "multiple_purpose";
 
       trackItwRemoteDataShare({
         data_type,

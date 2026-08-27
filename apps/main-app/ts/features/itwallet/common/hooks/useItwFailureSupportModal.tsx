@@ -8,8 +8,6 @@ import {
   VStack
 } from "@io-app/design-system";
 import { Errors } from "@pagopa/io-react-native-wallet";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Fragment, JSX } from "react";
 import { Linking, View } from "react-native";
@@ -129,55 +127,43 @@ export const useItwFailureSupportModal = ({
     }
 
     return [
-      pipe(
-        O.fromNullable(contactMethods.mobile),
-        O.fold(constNull, value => (
-          <ListItemAction
-            icon="phone"
-            label={I18n.t("features.itWallet.support.phone", {
-              phoneNumber: value
-            })}
-            onPress={() => void Linking.openURL(`tel:${value}`)}
-            testID="contact-method-mobile"
-            variant="primary"
-          />
-        ))
-      ),
-      pipe(
-        O.fromNullable(contactMethods.email),
-        O.fold(constNull, value => (
-          <ListItemAction
-            icon="chat"
-            label={I18n.t("features.itWallet.support.email")}
-            onPress={() => void Linking.openURL(`mailto:${value}`)}
-            testID="contact-method-email"
-            variant="primary"
-          />
-        ))
-      ),
-      pipe(
-        O.fromNullable(contactMethods.website),
-        O.fold(constNull, value => (
-          <ListItemAction
-            icon="website"
-            label={I18n.t("features.itWallet.support.website")}
-            onPress={() => void Linking.openURL(value)}
-            testID="contact-method-website"
-            variant="primary"
-          />
-        ))
-      ),
-      pipe(
-        O.fromNullable(contactMethods.landline),
-        O.fold(constNull, value => (
-          <ListItemInfo
-            icon="phone"
-            label={I18n.t("features.itWallet.support.landline")}
-            testID="contact-method-landline"
-            value={value}
-          />
-        ))
-      )
+      contactMethods.mobile ? (
+        <ListItemAction
+          icon="phone"
+          label={I18n.t("features.itWallet.support.phone", {
+            phoneNumber: contactMethods.mobile
+          })}
+          onPress={() => void Linking.openURL(`tel:${contactMethods.mobile}`)}
+          testID="contact-method-mobile"
+          variant="primary"
+        />
+      ) : null,
+      contactMethods.email ? (
+        <ListItemAction
+          icon="chat"
+          label={I18n.t("features.itWallet.support.email")}
+          onPress={() => void Linking.openURL(`mailto:${contactMethods.email}`)}
+          testID="contact-method-email"
+          variant="primary"
+        />
+      ) : null,
+      contactMethods.website ? (
+        <ListItemAction
+          icon="website"
+          label={I18n.t("features.itWallet.support.website")}
+          onPress={() => void Linking.openURL(contactMethods.website as string)}
+          testID="contact-method-website"
+          variant="primary"
+        />
+      ) : null,
+      contactMethods.landline ? (
+        <ListItemInfo
+          icon="phone"
+          label={I18n.t("features.itWallet.support.landline")}
+          testID="contact-method-landline"
+          value={contactMethods.landline}
+        />
+      ) : null
     ]
       .filter(isDefined)
       .map((component, index, list) => (

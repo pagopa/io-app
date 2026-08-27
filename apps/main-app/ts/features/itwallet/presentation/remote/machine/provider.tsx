@@ -1,5 +1,4 @@
 import { createActorContext } from "@xstate/react";
-import { pipe } from "fp-ts/function";
 import { JSX } from "react";
 
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
@@ -23,7 +22,7 @@ export const ItwRemoteMachineContext = createActorContext(itwRemoteMachine);
 export const ItwRemoteMachineProvider = (props: Props) => {
   const navigation = useIONavigation();
   const store = useIOStore();
-  const env = pipe(useIOSelector(selectItwEnv), getEnv);
+  const env = getEnv(useIOSelector(selectItwEnv));
   const itwVersion = useIOSelector(selectItwSpecsVersion);
 
   const remoteMachine = itwRemoteMachine.provide({

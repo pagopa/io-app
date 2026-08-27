@@ -6,7 +6,6 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { Image, StyleSheet, View } from "react-native";
@@ -32,9 +31,9 @@ import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
-  selectCredentialTypeOption,
+  selectCredentialType,
   selectIsLoading,
-  selectResolvedCredentialOfferOption
+  selectResolvedCredentialOffer
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -71,16 +70,14 @@ type ContentViewProps = {
 const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const resolvedCredentialOfferOption =
+  const resolvedCredentialOffer =
     ItwCredentialIssuanceMachineContext.useSelector(
-      selectResolvedCredentialOfferOption
+      selectResolvedCredentialOffer
     );
-  const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
+  const credentialType =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const credentialType = O.toUndefined(credentialTypeOption);
   const introductionContent = useIOSelector(
     itwCredentialIntroContentSelector(credentialType)
   );
@@ -95,13 +92,13 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
 
   useFocusEffect(
     useCallback(() => {
-      if (O.isNone(resolvedCredentialOfferOption)) {
+      if (resolvedCredentialOffer === undefined) {
         machineRef.send({
           type: "start-credential-offer",
           itwCredentialOfferUri: credentialOfferUri
         });
       }
-    }, [machineRef, credentialOfferUri, resolvedCredentialOfferOption])
+    }, [machineRef, credentialOfferUri, resolvedCredentialOffer])
   );
 
   const handleContinue = useCallback(() => {
@@ -118,7 +115,8 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     storedCredential !== undefined &&
     getCredentialStatus(storedCredential) === "valid";
 
-  const isResolved = O.isSome(resolvedCredentialOfferOption) && credentialType;
+  const isResolved =
+    resolvedCredentialOffer !== undefined && credentialType !== undefined;
   const shouldSkipIntro =
     isResolved && !isCredentialAlreadyAdded && !introductionContent;
 

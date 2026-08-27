@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -27,7 +26,7 @@ describe("ItwIssuanceCredentialIntroductionScreen", () => {
     // No credential type resolved yet in the machine context: renders the
     // generic error fallback, which is irrelevant to what these tests assert
     // (whether "select-credential" was sent on mount).
-    spyUseSelector.mockReturnValue(O.none as any);
+    spyUseSelector.mockReturnValue(undefined as any);
   });
 
   const renderComponent = (params?: {

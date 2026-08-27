@@ -1,6 +1,4 @@
 import { useIOToast } from "@io-app/design-system";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Linking } from "react-native";
 
@@ -27,7 +25,7 @@ import {
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
-  selectFailureOption,
+  selectFailure,
   selectIdentification,
   selectIssuanceLevel
 } from "../../machine/eid/selectors";
@@ -54,16 +52,12 @@ const failureLinkMapper: Partial<Record<IssuanceFailureType, string>> = {
 };
 
 export const ItwIssuanceEidFailureScreen = () => {
-  const failureOption =
-    ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
+  const failure = ItwEidIssuanceMachineContext.useSelector(selectFailure);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  return pipe(
-    failureOption,
-    O.fold(constNull, failure => <ContentView failure={failure} />)
-  );
+  return failure ? <ContentView failure={failure} /> : null;
 };
 
 type ContentViewProps = { failure: IssuanceFailure };

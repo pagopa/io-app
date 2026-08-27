@@ -6,8 +6,6 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { Image, StyleSheet, View } from "react-native";
@@ -26,7 +24,7 @@ import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/st
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
-  selectCredentialTypeOption,
+  selectCredentialType,
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
@@ -52,9 +50,8 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
   const { credentialType, mode } = props.route.params ?? {};
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
+  const machineCredentialType =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
 
   useHeaderSecondLevel({
     title: ""
@@ -74,14 +71,11 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
     }, [credentialType, machineRef, mode])
   );
 
-  return pipe(
-    credentialTypeOption,
-    O.fold(
-      () => <ItwGenericErrorContent />, // This should never happen
-      resolvedCredentialType => (
-        <ContentView credentialType={resolvedCredentialType} />
-      )
-    )
+  // A missing credential type should never happen at this point
+  return machineCredentialType ? (
+    <ContentView credentialType={machineCredentialType} />
+  ) : (
+    <ItwGenericErrorContent />
   );
 };
 
