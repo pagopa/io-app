@@ -1,5 +1,3 @@
-import { sequenceS } from "fp-ts/lib/Apply";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
@@ -23,7 +21,7 @@ export const itwLifecycleIsInstalledSelector = (state: GlobalState) =>
  */
 export const itwLifecycleIsOperationalSelector = (state: GlobalState) =>
   O.isSome(state.features.itWallet.issuance.integrityKeyTag) &&
-  O.isNone(itwCredentialsEidSelector(state));
+  itwCredentialsEidSelector(state) === undefined;
 
 /**
  * The wallet instance is registered, there is an associated integrity key tag
@@ -31,7 +29,7 @@ export const itwLifecycleIsOperationalSelector = (state: GlobalState) =>
  */
 export const itwLifecycleIsValidSelector = (state: GlobalState) =>
   O.isSome(state.features.itWallet.issuance.integrityKeyTag) &&
-  O.isSome(itwCredentialsEidSelector(state));
+  itwCredentialsEidSelector(state) !== undefined;
 
 /**
  * Convenience selector that joins the states operational or valid.
@@ -54,17 +52,12 @@ export const itwLifecycleIsITWalletValidSelector = createSelector(
   ],
   (
     integrityKeyTagOption,
-    eidOption,
+    eid,
     isFiscalCodeWhitelisted,
     isMinAppVersionSupported
   ) =>
     (isFiscalCodeWhitelisted || isMinAppVersionSupported) &&
-    pipe(
-      sequenceS(O.Monad)({
-        eid: eidOption,
-        integrityKeyTag: integrityKeyTagOption
-      }),
-      O.map(({ eid }) => isItwCredential(eid)),
-      O.getOrElse(() => false)
-    )
+    O.isSome(integrityKeyTagOption) &&
+    eid !== undefined &&
+    isItwCredential(eid)
 );

@@ -108,15 +108,15 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     machineRef.send({ type: "confirm-credential-offer" });
   }, [machineRef]);
 
-  const storedCredentialOption = useIOSelector(
+  const storedCredential = useIOSelector(
     itwCredentialSelector(credentialType ?? "")
   );
 
   // Continuing the offer flow would silently overwrite the stored credential,
   // so it is blocked when the credential is already in the wallet and valid.
   const isCredentialAlreadyAdded =
-    O.isSome(storedCredentialOption) &&
-    getCredentialStatus(storedCredentialOption.value) === "valid";
+    storedCredential !== undefined &&
+    getCredentialStatus(storedCredential) === "valid";
 
   const isResolved = O.isSome(resolvedCredentialOfferOption) && credentialType;
   const shouldSkipIntro =

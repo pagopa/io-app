@@ -1,6 +1,5 @@
 import { useIOToast } from "@io-app/design-system";
 import { differenceInSeconds } from "date-fns";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ActionArgs, assign } from "xstate";
 
@@ -32,9 +31,7 @@ export const createItwTrustmarkActionsImplementation = (
     walletInstanceAttestation: itwWalletInstanceAttestationSelector(
       store.getState()
     ),
-    credential: O.toUndefined(
-      itwCredentialSelector(context.credentialType)(store.getState())
-    )
+    credential: itwCredentialSelector(context.credentialType)(store.getState())
   }));
 
   const storeWalletInstanceAttestation = ({

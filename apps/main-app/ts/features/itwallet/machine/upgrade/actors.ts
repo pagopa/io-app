@@ -84,17 +84,17 @@ export const createCredentialUpgradeActorsImplementation = (
       "Integrity key tag is not present in the store"
     );
 
-    const pidOption = itwCredentialsEidSelector(state);
-    assert(O.isSome(pidOption), "PID credential is not present in the store");
+    const pidMetadata = itwCredentialsEidSelector(state);
+    assert(pidMetadata, "PID credential is not present in the store");
 
     const pid = await CredentialsVault.get(
-      getRepresentativeVaultId(pidOption.value)
+      getRepresentativeVaultId(pidMetadata)
     );
     assert(pid, "PID credential not found in secure storage");
 
     return {
       pid: {
-        metadata: pidOption.value,
+        metadata: pidMetadata,
         credential: pid
       },
       walletInstanceAttestation,

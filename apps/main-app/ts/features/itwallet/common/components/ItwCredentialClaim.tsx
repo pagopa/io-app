@@ -1,7 +1,4 @@
 import { Divider, ListItemInfo } from "@io-app/design-system";
-import * as E from "fp-ts/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import { Fragment, useMemo } from "react";
 import { Image } from "react-native";
@@ -14,28 +11,15 @@ import { getMixPanelCredential } from "../../analytics/utils/index.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import {
-  BoolClaim,
   ClaimDisplayFormat,
-  ClaimValue,
   DrivingPrivilegeClaimType,
-  DrivingPrivilegesClaim,
-  DrivingPrivilegesCustomClaim,
-  EmptyStringClaim,
   extractFiscalCode,
-  FiscalCodeClaim,
   getSafeText,
-  ImageClaim,
   isExpirationDateClaim,
-  NestedArrayClaim,
-  NestedObjectClaim,
+  parseClaimValue,
   parseClaims,
-  PdfClaim,
-  PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
-  SimpleDate,
-  SimpleDateClaim,
-  SimpleListClaim,
-  StringClaim
+  SimpleDate
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { ItwCredentialMultiClaim } from "./ItwCredentialMultiClaim.tsx";
@@ -446,26 +430,21 @@ export const ItwCredentialClaim = ({
   hidden?: boolean;
   isPreview?: boolean;
 }) =>
-  pipe(
-    claim.value,
-    ClaimValue.decode,
-    E.fold(
-      () => <UnknownClaimItem label={claim.label} />,
-
-      decoded => {
-        if (PlaceOfBirthClaim.is(decoded)) {
+  parseClaimValue(claim.value).match(
+    parsed => {
+      switch (parsed.kind) {
+        case "placeOfBirth":
           return (
             <PlaceOfBirthClaimItem
-              claim={decoded}
+              claim={parsed.value}
               hidden={hidden}
               label={claim.label}
             />
           );
-        }
-        if (SimpleDateClaim.is(decoded)) {
+        case "date":
           return (
             <DateClaimItem
-              claim={decoded}
+              claim={parsed.value}
               hidden={hidden}
               label={claim.label}
               status={
@@ -475,24 +454,18 @@ export const ItwCredentialClaim = ({
               }
             />
           );
-        }
-        if (ImageClaim.is(decoded)) {
+        case "image":
           return (
             <ImageClaimItem
-              claim={decoded}
+              claim={parsed.value}
               hidden={hidden}
               label={claim.label}
             />
           );
-        }
-        if (PdfClaim.is(decoded)) {
+        case "pdf":
           return <AttachmentsClaimItem hidden={hidden} name={claim.label} />;
-        }
-        if (
-          DrivingPrivilegesClaim.is(decoded) ||
-          DrivingPrivilegesCustomClaim.is(decoded)
-        ) {
-          return decoded.map((elem, index) => (
+        case "drivingPrivileges":
+          return parsed.value.map((elem, index) => (
             <Fragment key={`${index}_${claim.label}_${elem.driving_privilege}`}>
               {index !== 0 && <Divider />}
               <DrivingPrivilegesClaimItem
@@ -503,26 +476,18 @@ export const ItwCredentialClaim = ({
               />
             </Fragment>
           ));
-        }
-        if (FiscalCodeClaim.is(decoded)) {
-          const fiscalCode = pipe(
-            decoded,
-            extractFiscalCode,
-            O.getOrElseW(() => decoded)
-          );
+        case "fiscalCode":
           return (
             <PlainTextClaimItem
-              claim={fiscalCode}
+              claim={extractFiscalCode(parsed.value) ?? parsed.value}
               hidden={hidden}
               label={claim.label}
             />
           );
-        }
-        if (NestedObjectClaim.is(decoded)) {
-          const nestedClaims = parseClaims(decoded);
+        case "nestedObject":
           return (
             <>
-              {nestedClaims.map((nestedClaim, index) => (
+              {parseClaims(parsed.value).map((nestedClaim, index) => (
                 <Fragment key={`${index}_${claim.id}_${nestedClaim.id}`}>
                   {index > 0 && <Divider />}
                   <ItwCredentialClaim
@@ -536,9 +501,7 @@ export const ItwCredentialClaim = ({
               ))}
             </>
           );
-        }
-        if (NestedArrayClaim.is(decoded)) {
-          const nestedParsedClaims = decoded.map(item => parseClaims(item));
+        case "nestedArray":
           return (
             <ItwCredentialMultiClaim
               claim={claim}
@@ -546,48 +509,40 @@ export const ItwCredentialClaim = ({
               credentialType={credentialType}
               hidden={hidden}
               isPreview={isPreview}
-              nestedClaims={nestedParsedClaims}
+              nestedClaims={parsed.value.map(item => parseClaims(item))}
             />
           );
-        }
-        if (BoolClaim.is(decoded)) {
+        case "bool":
           return (
             <BoolClaimItem
-              claim={decoded}
+              claim={parsed.value}
               hidden={hidden}
               label={claim.label}
             />
           );
-        }
-        if (SimpleListClaim.is(decoded)) {
+        case "list":
           return (
             <PlainTextClaimItem
-              claim={decoded.join(", ")}
+              claim={parsed.value.join(", ")}
               hidden={hidden}
               label={claim.label}
             />
           );
-        }
-        if (EmptyStringClaim.is(decoded)) {
-          return null; // We want to hide the claim if it's empty
-        }
-        if (StringClaim.is(decoded)) {
-          // This is needed because otherwise empty string will be rendered as a claim due to the decoded value being HIDDEN_CLAIM_TEXT
-          if (hidden && EmptyStringClaim.is(decoded)) {
-            return null;
-          }
+        // We want to hide the claim if it's empty
+        case "emptyString":
+          return null;
+        case "string":
+        case "url":
           return (
             <PlainTextClaimItem
-              claim={decoded}
+              claim={parsed.value}
               credentialType={credentialType}
               hidden={hidden}
               isCopyable={!isPreview}
               label={claim.label}
             />
-          ); // must be the last one to be checked due to overlap with IPatternStringTag
-        }
-
-        return <UnknownClaimItem _claim={decoded} label={claim.label} />;
+          );
       }
-    )
+    },
+    () => <UnknownClaimItem label={claim.label} />
   );

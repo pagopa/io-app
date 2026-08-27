@@ -231,9 +231,8 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
 
-    const eidOption = itwCredentialsEidSelector(store.getState());
-    assert("value" in eidOption, "eID is undefined");
-    const eid = eidOption.value;
+    const eid = itwCredentialsEidSelector(store.getState());
+    assert(eid, "eID is undefined");
 
     // Retrieve the PID credential before showing the trust issuer screen so the
     // requested DCQL claims can be evaluated and displayed to the user.

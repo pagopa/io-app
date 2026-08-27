@@ -110,7 +110,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
   it("blocks the flow when the offered credential is already in the wallet and valid", () => {
     jest
       .spyOn(credentialsSelectors, "itwCredentialSelector")
-      .mockReturnValue((() => someOption({})) as any);
+      .mockReturnValue((() => ({})) as any);
     jest
       .spyOn(credentialStatusUtils, "getCredentialStatus")
       .mockReturnValue("valid");
@@ -130,7 +130,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
   it("continues the flow when the stored credential is no longer valid", () => {
     jest
       .spyOn(credentialsSelectors, "itwCredentialSelector")
-      .mockReturnValue((() => someOption({})) as any);
+      .mockReturnValue((() => ({})) as any);
     jest
       .spyOn(credentialStatusUtils, "getCredentialStatus")
       .mockReturnValue("expired");

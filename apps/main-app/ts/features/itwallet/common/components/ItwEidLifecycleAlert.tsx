@@ -1,8 +1,5 @@
 import { Alert } from "@io-app/design-system";
 import { format } from "date-fns";
-import { sequenceT } from "fp-ts/lib/Apply";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 import { View } from "react-native";
@@ -51,7 +48,7 @@ export const ItwEidLifecycleAlert = ({
   currentScreenName,
   skipViewTracking
 }: Props) => {
-  const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const eid = useIOSelector(itwCredentialsEidSelector);
   const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
@@ -164,10 +161,11 @@ export const ItwEidLifecycleAlert = ({
     );
   };
 
-  return pipe(
-    sequenceT(O.Monad)(eidOption, O.fromNullable(maybeEidStatus)),
-    O.fold(constNull, ([eid, eidStatus]) => (
-      <Content eid={eid} eidStatus={eidStatus} isItwCredential={isItw} />
-    ))
+  if (!eid || !maybeEidStatus) {
+    return null;
+  }
+
+  return (
+    <Content eid={eid} eidStatus={maybeEidStatus} isItwCredential={isItw} />
   );
 };

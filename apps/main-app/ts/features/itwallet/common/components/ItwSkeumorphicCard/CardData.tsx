@@ -6,12 +6,7 @@ import { ElementType, Fragment, memo } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { QrCodeImage } from "../../../../../components/QrCodeImage";
-import {
-  DrivingPrivilegesClaim,
-  DrivingPrivilegesClaimType,
-  DrivingPrivilegesCustomClaim,
-  StringClaim
-} from "../../utils/itwClaimsUtils";
+import { DrivingPrivilegesClaimType } from "../../utils/itwClaimsUtils";
 import {
   CredentialMetadata,
   ParsedCredential
@@ -197,7 +192,7 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
       <CardClaimRenderer
         claim={claims["driving_privileges"]}
         component={renderData}
-        is={DrivingPrivilegesCustomClaim.is}
+        kinds={["drivingPrivileges"]}
       />
       {/*
       This is the renderer of the old MDL back driving privileges data
@@ -206,7 +201,7 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
       <CardClaimRenderer
         claim={claims["driving_privileges_details"]}
         component={renderData}
-        is={DrivingPrivilegesClaim.is}
+        kinds={["drivingPrivileges"]}
       />
       <CardClaim
         claim={claims["restrictions_conditions"]}
@@ -281,7 +276,7 @@ const DcBackData = ({ claims }: DataComponentProps) => (
           <QrCodeImage size={"28.5%"} value={qrCode} />
         </CardClaimContainer>
       )}
-      is={StringClaim.is}
+      kinds={["string", "url"]}
     />
   </View>
 );

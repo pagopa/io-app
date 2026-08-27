@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { useMemo } from "react";
 
 import { useIOSelector } from "../../../../store/hooks";
@@ -33,13 +32,11 @@ export const useCredentialStatusMessage = (
 ): CredentialStatusMessage | undefined => {
   const ioWallet = useIoWallet();
 
-  const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
+  const credential = useIOSelector(itwCredentialSelector(credentialType));
   const catalog = useIOSelector(itwCredentialsCatalogueByTypesSelector);
   const catalogTranslations = useIOSelector(
     itwCatalogueTranslationsByLocaleSelector
   );
-
-  const credential = O.toUndefined(credentialOption);
 
   return useMemo(() => {
     if (!credential) {

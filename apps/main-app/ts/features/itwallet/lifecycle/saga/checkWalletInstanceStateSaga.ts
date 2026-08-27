@@ -36,7 +36,7 @@ export function* checkWalletInstanceInconsistencySaga(): Generator<
   const eid = yield* select(itwCredentialsEidSelector);
   const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
 
-  if (O.isSome(eid) && O.isNone(integrityKeyTag)) {
+  if (eid !== undefined && O.isNone(integrityKeyTag)) {
     yield* call(handleWalletInstanceResetSaga);
     trackItwWalletBadState();
     return false;

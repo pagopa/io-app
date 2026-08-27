@@ -74,7 +74,7 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   const { credentialType, isUpgrade, mode } =
     ("route" in props ? props.route.params : props) ?? {};
 
-  const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const eid = useIOSelector(itwCredentialsEidSelector);
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const requiredClaimsOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -110,12 +110,16 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   return pipe(
     sequenceS(O.Monad)({
       credentialType: credentialTypeOption,
-      requiredClaimNames: requiredClaimsOption,
-      eid: eidOption
+      requiredClaimNames: requiredClaimsOption
     }),
     O.fold(
       () => <ItwGenericErrorContent />,
-      innerProps => <ContentView {...innerProps} />
+      innerProps =>
+        eid ? (
+          <ContentView {...innerProps} eid={eid} />
+        ) : (
+          <ItwGenericErrorContent />
+        )
     )
   );
 };
