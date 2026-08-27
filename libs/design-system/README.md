@@ -213,7 +213,7 @@ The library requires the following peer dependencies to be installed by the cons
 * [`react-native-svg`](https://github.com/software-mansion/react-native-svg): Handles all the vector asset components (icons, pictograms and logos)
 * [`react-native-pulsar`](https://github.com/software-mansion/pulsar): Handles all the haptic feedbacks
 * [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context): Handles all safe area spacing attributes
-* [`react-native-linear-gradient`](https://github.com/react-native-linear-gradient/react-native-linear-gradient)
+* [`expo-linear-gradient`](https://docs.expo.dev/versions/latest/sdk/linear-gradient/)
 * [`react-native-easing-gradient`](https://github.com/phamfoo/react-native-easing-gradient): Generates easing gradients
 * [`react-native-gesture-handler`](https://github.com/software-mansion/react-native-gesture-handler)
 
