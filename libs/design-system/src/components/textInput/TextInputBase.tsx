@@ -1,3 +1,4 @@
+import { LinearGradient } from "expo-linear-gradient";
 import {
   ReactNode,
   useCallback,
@@ -18,7 +19,6 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import Animated, {
   Easing,
   interpolateColor,
@@ -569,8 +569,9 @@ export const TextInputBase = ({
             }}
           >
             <LinearGradient
-              angle={90}
               colors={[hexToRgba(appBackground, 0), appBackground]}
+              end={{ x: 1, y: 0.5 }}
+              start={{ x: 0, y: 0.5 }}
               style={{
                 width: inputRightElementMargin * 3,
                 position: "absolute",
@@ -578,7 +579,6 @@ export const TextInputBase = ({
                 top: 0,
                 bottom: 0
               }}
-              useAngle={true}
             />
             <HSpacer size={inputRightElementMargin} />
             {rightElement}
