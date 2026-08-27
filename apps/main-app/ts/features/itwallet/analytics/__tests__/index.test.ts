@@ -12,13 +12,13 @@ const authenticationScenarios = [
   {
     identification: { level: "L2", mode: "cieId" },
     itwAuthLevel: "L2",
-    itwIdMethod: "cieid",
+    itwIdMethod: "cieId",
     name: "CieID L2"
   },
   {
     identification: { level: "L3", mode: "cieId" },
     itwAuthLevel: "L3",
-    itwIdMethod: "cieid",
+    itwIdMethod: "cieId",
     name: "CieID L3"
   }
 ] as const;

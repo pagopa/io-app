@@ -351,20 +351,14 @@ export const trackItwRequest = (method?: ItwIdMethod, itw_flow?: ItwFlow) => {
   }
 };
 
-/**
- * Tracks primary authentication while keeping the CieID level separate from
- * the normalized `cieid` authentication method.
- */
+/** Tracks the primary authentication method and its assurance level. */
 export const trackItwIdAuthenticationCompleted = (
   identification: Exclude<IdentificationContext, { mode: "ciePin" }>
 ) => {
-  const ITW_ID_method =
-    identification.mode === "cieId" ? "cieid" : identification.mode;
-
   void mixpanelTrack(
     ITW_TECH_EVENTS.ITW_ID_AUTHENTICATION_COMPLETED,
     buildEventProperties("TECH", undefined, {
-      ITW_ID_method,
+      ITW_ID_method: identification.mode,
       itw_auth_level: identification.level
     })
   );
