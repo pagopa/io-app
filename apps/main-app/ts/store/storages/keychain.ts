@@ -59,12 +59,12 @@ async function removeChunked(base: string): Promise<void> {
     return;
   }
   const count = parseInt(countStr, 10);
-  await Promise.all([
-    SecureStore.deleteItemAsync(metaKey(base), OPTIONS),
-    ...Array.from({ length: count }, (_, i) =>
+  await Promise.all(
+    Array.from({ length: count }, (_, i) =>
       SecureStore.deleteItemAsync(chunkKey(base, i), OPTIONS)
     )
-  ]);
+  );
+  await SecureStore.deleteItemAsync(metaKey(base), OPTIONS);
 }
 
 async function setChunked(base: string, value: string): Promise<void> {
