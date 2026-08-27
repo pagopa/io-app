@@ -75,7 +75,6 @@ describe("ItwDiscoveryInfoScreen", () => {
 
 const renderComponent = (level: EidIssuanceLevel | undefined) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 

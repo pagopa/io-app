@@ -4,12 +4,15 @@ import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { View } from "react-native";
 
+import { useIODispatch } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import {
   trackItwSurveyRequest,
   trackItwSurveyRequestAccepted
 } from "../../analytics";
 import { TrackQualtricsSurvey } from "../../analytics/utils/types";
+import { itwCloseBanner } from "../store/actions/banners";
+import { itwClearWalletActivationFeedbackBannerData } from "../store/actions/preferences";
 import { IT_WALLET_SURVEY_EID_ACTIVATION_SUCCESS } from "../utils/constants";
 
 type Props = {
@@ -28,6 +31,7 @@ const ItwActivationSuccessFeedbackBanner = ({
 }: Props) => {
   const [isVisible, setIsVisible] = useState(true);
   const { name: routeName } = useRoute();
+  const dispatch = useIODispatch();
 
   const trackingProps: TrackQualtricsSurvey = useMemo(
     () => ({
@@ -66,6 +70,8 @@ const ItwActivationSuccessFeedbackBanner = ({
         )}
         labelClose={I18n.t("global.buttons.close")}
         onClose={() => {
+          dispatch(itwClearWalletActivationFeedbackBannerData());
+          dispatch(itwCloseBanner("activationSuccessFeedback"));
           setIsVisible(false);
         }}
         onPress={handleOnPress}

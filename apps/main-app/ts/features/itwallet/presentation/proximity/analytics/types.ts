@@ -14,6 +14,15 @@ export type ItwProximityGenericFailure = ItwProximityFailure & {
   proximity_sharing_status: "post" | "pre";
 };
 
+export type ItwProximityHttpFailure = {
+  reason: unknown;
+};
+
+export type ItwProximityMandatoryCredentialMissing = {
+  missing_credential: string;
+  missing_credential_number: number;
+};
+
 export type ItwProximityQrCode = {
   qr_code_status: "generation_failed" | "PID_expired" | "valid";
   source: "ITW_CREDENTIAL_DETAIL" | "WALLET_HOME";

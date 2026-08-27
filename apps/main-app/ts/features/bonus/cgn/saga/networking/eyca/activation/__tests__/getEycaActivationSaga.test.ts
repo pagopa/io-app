@@ -5,11 +5,9 @@ import { getGenericError } from "../../../../../../../../utils/errors";
 import { startTimer } from "../../../../../../../../utils/timer";
 import { withRefreshApiCall } from "../../../../../../../authentication/fastLogin/saga/utils";
 import { cgnEycaActivation } from "../../../../../store/actions/eyca/activation";
-import {
-  getActivation,
-  handleEycaActivationSaga,
-  handleStartActivation
-} from "../getEycaActivationSaga";
+import { getActivation } from "../getActivation";
+import { handleEycaActivationSaga } from "../handleEycaActivationSaga";
+import { handleStartActivation } from "../handleStartActivation";
 
 describe("handleEycaActivationSaga", () => {
   const getEycaActivation = jest.fn();
