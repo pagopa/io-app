@@ -8,7 +8,8 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ReactElement, useEffect } from "react";
 
-import { withAppRequiredUpdate } from "../../../components/helpers/withAppRequiredUpdate";
+import { useAppRequiredUpdate } from "../../../components/helpers/withAppRequiredUpdate";
+import { UpdateAppAlert } from "../../../components/UpdateAppAlert";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
@@ -37,7 +38,7 @@ export type FciRouterScreenNavigationParams = Readonly<{
   skipInitialFetch?: boolean;
 }>;
 
-const FciSignatureScreen = (
+const FciSignatureScreenComponent = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
 ): ReactElement => {
   const { signatureRequestId, skipInitialFetch } = props.route.params;
@@ -125,4 +126,14 @@ const FciSignatureScreen = (
   );
 };
 
-export default withAppRequiredUpdate(FciSignatureScreen, "fci");
+const FciSignatureScreen = (
+  props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
+) => {
+  const requiresUpdate = useAppRequiredUpdate("fci");
+  if (requiresUpdate) {
+    return <UpdateAppAlert />;
+  }
+  return <FciSignatureScreenComponent {...props} />;
+};
+
+export default FciSignatureScreen;
