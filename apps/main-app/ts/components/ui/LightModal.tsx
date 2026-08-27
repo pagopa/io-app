@@ -9,7 +9,6 @@ import {
   PropsWithChildren,
   ReactNode,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -140,10 +139,7 @@ export type AnimationLightModal =
   | typeof ScaleAnimation
   | typeof TopBottomAnimation;
 
-export const LightModalConsumer = LightModalContext.Consumer;
-
-/** Hook to access the LightModal context. */
-export const useLightModalContext = () => useContext(LightModalContext);
+const LightModalConsumer = LightModalContext.Consumer;
 
 export const LightModalProvider = ({ children }: PropsWithChildren<Props>) => {
   const [component, setComponent] = useState<ReactNode>(null);
