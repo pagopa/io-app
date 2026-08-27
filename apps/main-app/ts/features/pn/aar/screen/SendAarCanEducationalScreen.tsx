@@ -117,12 +117,6 @@ export const SendAarCanEducationalScreen = ({
           }
         }}
         alwaysBounceVertical={false}
-        contextualHelp={{
-          title: i18n.t(
-            "features.pn.aar.flow.delegated.cieContextualHelp.title"
-          ),
-          body: i18n.t("features.pn.aar.flow.delegated.cieContextualHelp.body")
-        }}
         description={i18n.t("features.pn.aar.flow.cieCanAdvisory.description")}
         goBack={handleGoBack}
         headerActionsProp={{ showHelp: true }}

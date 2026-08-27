@@ -1,7 +1,7 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import { act, fireEvent, RenderAPI } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
 
-import { InitializedProfile } from "../../../../../definitions/identity/InitializedProfile";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import * as mixpanel from "../../../../mixpanel";
 import ROUTES from "../../../../navigation/routes";

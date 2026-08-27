@@ -1,4 +1,8 @@
 import {
+  TransactionDetailDTO,
+  OperationTypeEnum as TransactionTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
+import {
   Alert,
   Divider,
   IOLogoPaymentType,
@@ -12,10 +16,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { View } from "react-native";
 
-import {
-  TransactionDetailDTO,
-  OperationTypeEnum as TransactionTypeEnum
-} from "../../../../../definitions/idpay/TransactionDetailDTO";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";

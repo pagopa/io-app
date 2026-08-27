@@ -98,13 +98,11 @@ export const OTPInput = ({
     if (!isValid) {
       setHasError(true);
       triggerHaptic("notificationError");
-      // eslint-disable-next-line functional/immutable-data
       translate.value = shakeAnimation();
 
-      if (timerRef.current) {
+      if (timerRef.current != null) {
         clearTimeout(timerRef.current);
       }
-      // eslint-disable-next-line functional/immutable-data
       timerRef.current = setTimeout(() => {
         setHasError(false);
         onValueChange("");
@@ -114,19 +112,19 @@ export const OTPInput = ({
 
   useEffect(
     () => () => {
-      if (timerRef.current) {
+      if (timerRef.current != null) {
         clearTimeout(timerRef.current);
       }
     },
     []
   );
 
-  const handleChange = (value: string) => {
-    if (value.length > length) {
+  const handleChange = (nextValue: string) => {
+    if (nextValue.length > length) {
       return;
     }
-    onValueChange(value);
-    handleValidate(value);
+    onValueChange(nextValue);
+    handleValidate(nextValue);
   };
 
   const handleKeyPress = (e: TextInputKeyPressEvent) => {

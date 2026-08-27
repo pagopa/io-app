@@ -1,3 +1,5 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import {
   trackCTAFrontMatterDecodingError,
   trackMessageNotFoundScreen,
@@ -6,7 +8,6 @@ import {
   trackMessagePaymentFailure,
   trackOpenMessage
 } from "..";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as MIXPANEL from "../../../../mixpanel";
 
 describe("index", () => {

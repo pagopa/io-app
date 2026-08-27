@@ -156,10 +156,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "kind": "PotNone",
       },
     },
-    "debug": {
-      "credentialStatusOverrides": {},
-      "savedCredentials": undefined,
-    },
     "environment": {
       "env": "prod",
     },
@@ -181,6 +177,11 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "offlineAccessCounter": 0,
       "unverifiedCredentialsAccessCounter": 0,
     },
+    "ui": {
+      "activationExitSurvey": undefined,
+      "credentialExitSurvey": undefined,
+      "itwFeedbackBottomSheet": false,
+    },
     "walletInstance": {
       "attestation": undefined,
       "isRemotelyActive": undefined,
@@ -188,6 +189,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "status": {
         "kind": "PotNone",
       },
+      "statusList": undefined,
       "walletUnitAttestations": {},
     },
   },
@@ -233,6 +235,10 @@ exports[`featuresPersistor should match snapshot 1`] = `
         },
         "userInteractionForSessionExpiredNeeded": false,
       },
+    },
+    "loginConfig": {
+      "oneIdentityEnv": "prod",
+      "oneIdentityLocalFeatureFlag": undefined,
     },
     "loginInfo": {
       "userFromSuccessLogin": false,

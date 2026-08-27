@@ -1,4 +1,8 @@
 import {
+  TransactionDetailDTO,
+  StatusEnum as TransactionStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
+import {
   Alert,
   Divider,
   ListItemHeader,
@@ -11,10 +15,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { View } from "react-native";
 
-import {
-  TransactionDetailDTO,
-  StatusEnum as TransactionStatusEnum
-} from "../../../../../definitions/idpay/TransactionDetailDTO";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";

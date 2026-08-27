@@ -1,9 +1,9 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { NotificationStatusHistory } from "@io-app/api-types/generated/definitions/pn/NotificationStatusHistory";
 import { fireEvent, render } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 
-import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
-import { NotificationStatusHistory } from "../../../../../definitions/pn/NotificationStatusHistory";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import * as SELECTORS from "../../../../store/reducers/backendStatus/remoteConfig";

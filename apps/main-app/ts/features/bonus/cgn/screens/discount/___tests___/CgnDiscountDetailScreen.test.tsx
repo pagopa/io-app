@@ -1,11 +1,11 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
+import { DiscountCodeTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountCodeType";
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
+import { SupportTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/SupportType";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { act, fireEvent, userEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
-import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
-import { DiscountCodeTypeEnum } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { Merchant } from "../../../../../../../definitions/cgn/merchants/Merchant";
-import { SupportTypeEnum } from "../../../../../../../definitions/cgn/merchants/SupportType";
 import { remoteReady } from "../../../../../../common/model/RemoteValue";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";

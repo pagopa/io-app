@@ -20,6 +20,11 @@ type ItwEidFeedbackBottomSheetProps = {
 
 /**
  * Hook to open the feedback bottom sheet for the EID reissuance feature.
+ *
+ * Unlike the other exit survey hooks, presentation is NOT auto-triggered
+ * internally: it's used both from a redux-driven trigger (WalletHomeScreen)
+ * and from a direct user action (ItwPresentationEidVerificationExpiredScreen),
+ * so `present` stays exposed for the caller to invoke explicitly.
  * @param onPrimaryAction - Optional primary action to be executed when the primary button is pressed.
  * @param onSecondaryAction - Optional secondary action to be executed when the secondary button is pressed.
  */
@@ -57,7 +62,6 @@ export const useItwEidFeedbackBottomSheet = ({
                   "features.itWallet.feedback.reissuance.bottomSheet.primaryAction"
                 )}
                 onPress={() => {
-                  // eslint-disable-next-line functional/immutable-data
                   skipDeclinedEvent.current = true;
                   trackItwSurveyRequestAccepted(trackingProps);
                   openWebUrl(IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE);
@@ -88,7 +92,6 @@ export const useItwEidFeedbackBottomSheet = ({
       if (!skipDeclinedEvent.current) {
         trackItwSurveyRequestDeclined(trackingProps);
       }
-      // eslint-disable-next-line functional/immutable-data
       skipDeclinedEvent.current = false;
     }
   });

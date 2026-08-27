@@ -1,7 +1,7 @@
+import { PaymentMethodResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv3/PaymentMethodResponse";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 
-import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -70,7 +70,6 @@ const PaymentsOnboardingSelectMethodScreen = () => {
       description={I18n.t(
         "wallet.onboarding.paymentMethodsList.header.subtitle"
       )}
-      faqCategories={["wallet", "wallet_methods"]}
       headerActionsProp={{
         showHelp: true
       }}

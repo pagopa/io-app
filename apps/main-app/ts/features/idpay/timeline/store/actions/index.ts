@@ -1,8 +1,8 @@
+import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { OperationDTO } from "@io-app/api-types/generated/definitions/idpay/OperationDTO";
+import { OperationListDTO } from "@io-app/api-types/generated/definitions/idpay/OperationListDTO";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
-import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
-import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
 type IdPayTimelineDetailsGetPayloadType = {

@@ -833,7 +833,14 @@ L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
                             <View
                               style={
                                 {
-                                  "height": 0,
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
                                 }
                               }
                             />
@@ -1727,7 +1734,14 @@ L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
                             <View
                               style={
                                 {
-                                  "height": 0,
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
                                 }
                               }
                             />
@@ -2880,7 +2894,14 @@ L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
                             <View
                               style={
                                 {
-                                  "height": 0,
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
                                 }
                               }
                             />

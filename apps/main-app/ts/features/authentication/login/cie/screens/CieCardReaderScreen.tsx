@@ -10,6 +10,7 @@ import {
   IOButton,
   IOColors,
   IOPictograms,
+  triggerHaptic,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -29,9 +30,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import HapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import {
@@ -82,12 +80,6 @@ export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
 };
 
-type SetErrorParameter = {
-  errorDescription?: string;
-  eventReason: CieAuthenticationErrorReason;
-  navigation?: () => void;
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -101,6 +93,12 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
+
+type SetErrorParameter = {
+  errorDescription?: string;
+  eventReason: CieAuthenticationErrorReason;
+  navigation?: () => void;
+};
 
 const getPictogramName = (state: ReadingState): IOPictograms => {
   switch (state) {
@@ -118,9 +116,6 @@ const getPictogramName = (state: ReadingState): IOPictograms => {
   }
 };
 
-/**
- * This screen is shown while reading the CIE card.
- */
 const CieCardReaderScreen = () => {
   const navigation =
     useNavigation<
@@ -154,7 +149,6 @@ const CieCardReaderScreen = () => {
   // Ref to access latest readingState inside cieManager callbacks without stale closures
   const readingStateRef = useRef(readingState);
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     readingStateRef.current = readingState;
   }, [readingState]);
 
@@ -215,7 +209,7 @@ const CieCardReaderScreen = () => {
       });
       setErrorMessage(cieDescription);
       setReadingState(ReadingState.error);
-      HapticFeedback.trigger(HapticFeedbackTypes.notificationError);
+      triggerHaptic("notificationError");
       nav?.();
     },
     [dispatchAnalyticEvent]
@@ -225,9 +219,7 @@ const CieCardReaderScreen = () => {
   const setErrorRef = useRef(setError);
   const navigationRef = useRef(navigation);
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     setErrorRef.current = setError;
-    // eslint-disable-next-line functional/immutable-data
     navigationRef.current = navigation;
   }, [setError, navigation]);
 
@@ -297,7 +289,7 @@ const CieCardReaderScreen = () => {
         case "ON_TAG_DISCOVERED":
           if (readingStateRef.current !== ReadingState.reading) {
             setReadingState(ReadingState.reading);
-            HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
+            triggerHaptic("impactLight");
           }
           break;
         case "ON_TAG_LOST":
@@ -331,7 +323,7 @@ const CieCardReaderScreen = () => {
         return;
       }
       handleSendAssistanceLog(choosenTool, "authentication SUCCESS");
-      // eslint-disable-next-line functional/immutable-data
+
       cieConsentUriRef.current = cieConsentUri;
       setReadingState(ReadingState.completed);
     },
