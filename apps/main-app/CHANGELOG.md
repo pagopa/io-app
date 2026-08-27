@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.21](https://github.com/pagopa/io-app/compare/3.38.0-rc.20...3.38.0-rc.21) (2026-08-26)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4429](https://pagopa.atlassian.net/browse/SIW-4429)] missing expiring label for PID and mDL ([#8392](https://github.com/pagopa/io-app/issues/8392)) ([53f2694](https://github.com/pagopa/io-app/commit/53f26947940b4452049a2b0e22c0acdbf2a80170))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3706](https://pagopa.atlassian.net/browse/SIW-3706)] Enhance accessibility for markdown links ([#8235](https://github.com/pagopa/io-app/issues/8235)) ([d464e7c](https://github.com/pagopa/io-app/commit/d464e7c04407ddf7bfa126543c2467b0c0f0d2de))
+* **IT-Wallet:** [[SIW-4487](https://pagopa.atlassian.net/browse/SIW-4487)] Add consent denied handling in proximity flow ([#8408](https://github.com/pagopa/io-app/issues/8408)) ([6aa36b1](https://github.com/pagopa/io-app/commit/6aa36b14d9483962719b71d03a5031935529bf06))
+* **release:** 3.37.1-rc.0 ([#8477](https://github.com/pagopa/io-app/issues/8477)) ([16b3a39](https://github.com/pagopa/io-app/commit/16b3a3975011de49ddc84ab6d6bf52f2f8e9800e))
+
 ## [3.38.0-rc.20](https://github.com/pagopa/io-app/compare/3.38.0-rc.19...3.38.0-rc.20) (2026-08-25)
 
 
@@ -18,6 +32,13 @@ All notable changes to this project will be documented in this file. See [standa
 ### Chores
 
 * [[IOPLT-2013](https://pagopa.atlassian.net/browse/IOPLT-2013)] Removed unused dependencies from `dev-server` ([#8471](https://github.com/pagopa/io-app/issues/8471)) ([be74b97](https://github.com/pagopa/io-app/commit/be74b97f131b114b4d075d5159bd1c41e02b7e04))
+
+### [3.37.1-rc.0](https://github.com/pagopa/io-app/compare/3.37.0-rc.13...3.37.1-rc.0) (2026-08-25)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4830](https://pagopa.atlassian.net/browse/SIW-4830)] restrict ITW surveys to L3, move triggers to redux ([#8474](https://github.com/pagopa/io-app/issues/8474)) ([4dc4bcd](https://github.com/pagopa/io-app/commit/4dc4bcd4fcca4359c3a49536eb13fd0917fc92e8))
 
 ## [3.38.0-rc.19](https://github.com/pagopa/io-app/compare/3.38.0-rc.18...3.38.0-rc.19) (2026-08-24)
 
