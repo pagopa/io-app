@@ -78,10 +78,10 @@ describe("authentication selectors", () => {
     expect(fimsTokenSelector(state)).toBe("fims");
   });
 
-  it("should return session info as Option if logged in with session info", () => {
+  it("should return session info as data if logged in with session info", () => {
     const state = createLoggedInWithSessionInfoState();
     expect(sessionInfoSelector(state)).toEqual(
-      O.some((state.authentication as any).sessionInfo)
+      (state.authentication as any).sessionInfo
     );
   });
 

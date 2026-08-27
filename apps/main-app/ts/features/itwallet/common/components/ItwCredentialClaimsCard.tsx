@@ -5,6 +5,7 @@ import {
   IOSpacingScale,
   useIOThemeContext
 } from "@io-app/design-system";
+import { LinearGradient } from "expo-linear-gradient";
 import { PropsWithChildren, ReactNode } from "react";
 import {
   AccessibilityState,
@@ -14,7 +15,6 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import Animated, { AnimatedStyle } from "react-native-reanimated";
 
 import { useItWalletTheme } from "../utils/theme";

@@ -1,5 +1,5 @@
+import type { LinearGradient } from "expo-linear-gradient"; // Used by `getGradientColorValues` function
 import type { ComponentProps } from "react";
-import type LinearGradient from "react-native-linear-gradient"; // Used by `getGradientColorValues` function
 
 import { ColorValue } from "react-native";
 
