@@ -15,15 +15,7 @@ const ItwPresentationCredentialCardHideValuesButton = ({
   valuesHidden,
   handleOnPress
 }: ItwPresentationCredentialCardHideValuesButtonProps) => (
-  <View
-    accessibilityLabel={I18n.t(
-      "features.itWallet.presentation.credentialDetails.card.showValues"
-    )}
-    accessibilityRole="switch"
-    accessibilityState={{ checked: !valuesHidden }}
-    accessible={true}
-    style={styles.button}
-  >
+  <View style={styles.button}>
     <IOButton
       icon={valuesHidden ? "eyeShow" : "eyeHide"}
       iconPosition="end"
