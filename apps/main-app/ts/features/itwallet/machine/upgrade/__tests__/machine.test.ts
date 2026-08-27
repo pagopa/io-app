@@ -1,4 +1,11 @@
-import { createActor, fromCallback, fromPromise, waitFor } from "xstate";
+import {
+  createActor,
+  fromCallback,
+  fromPromise,
+  getInitialMicrosteps,
+  getMicrosteps,
+  waitFor
+} from "xstate";
 
 import { ItwSessionExpiredError } from "../../../api/client";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
@@ -9,6 +16,7 @@ import {
   UpgradeCredentialOutput,
   UpgradeCredentialParams
 } from "../actors";
+import { getInitialContext } from "../context";
 import { itwCredentialUpgradeMachine } from "../machine";
 
 const mockLoadContext = jest.fn(() => Promise.resolve({} as LoadContextOutput));
@@ -35,7 +43,82 @@ const makeUpgradeOutput = (
   walletUnitAttestations: { wua1: "wua-jwt" }
 });
 
+const firstCredential = makeCredential({ credentialType: "A" });
+const secondCredential = makeCredential({ credentialType: "B" });
+const eventlessTransitionScenarios = [
+  {
+    name: "another credential remains",
+    credentials: [firstCredential, secondCredential],
+    expectedStates: ["Checking", "RequestAccessToken"]
+  },
+  {
+    name: "the last credential completes",
+    credentials: [firstCredential],
+    expectedStates: ["Checking", "Completed"]
+  }
+];
+
+const makeMachineInput = (credentials: ReadonlyArray<CredentialMetadata>) => ({
+  credentials,
+  issuanceMode: "upgrade" as const,
+  itwVersion: "1.3.3" as const
+});
+
+const getUpgradeCompletionMicrosteps = (
+  credentials: ReadonlyArray<CredentialMetadata>
+) => {
+  const input = makeMachineInput(credentials);
+  const snapshot = itwCredentialUpgradeMachine.resolveState({
+    value: "UpgradeCredential",
+    context: {
+      ...getInitialContext(input),
+      credentialIndex: 0
+    }
+  });
+
+  return getMicrosteps(itwCredentialUpgradeMachine, snapshot, {
+    type: "xstate.done.actor.upgradeCredential",
+    actorId: "upgradeCredential",
+    output: makeUpgradeOutput(credentials[0])
+  });
+};
+
 describe("itwCredentialUpgradeMachine", () => {
+  test.each(eventlessTransitionScenarios)(
+    "should include the eventless transition when $name",
+    ({ credentials, expectedStates }) => {
+      const microsteps = getUpgradeCompletionMicrosteps(credentials);
+
+      expect(microsteps.map(([snapshot]) => snapshot.value)).toEqual(
+        expectedStates
+      );
+    }
+  );
+
+  it("should calibrate its iteration limit against legitimate microsteps", () => {
+    const input = makeMachineInput([firstCredential, secondCredential]);
+    const initialMicrosteps = getInitialMicrosteps(
+      itwCredentialUpgradeMachine,
+      input
+    );
+
+    expect(initialMicrosteps.map(([snapshot]) => snapshot.value)).toEqual([
+      "LoadingContext"
+    ]);
+
+    const eventlessMicrostepDepths = eventlessTransitionScenarios.map(
+      ({ credentials }) => getUpgradeCompletionMicrosteps(credentials).length
+    );
+    const legitimateMicrostepDepth = Math.max(
+      initialMicrosteps.length,
+      ...eventlessMicrostepDepths
+    );
+
+    expect(itwCredentialUpgradeMachine.options.maxIterations).toBe(
+      legitimateMicrostepDepth
+    );
+  });
+
   it("should immediately complete if there are no credentials", async () => {
     const mockRequestAccessToken = jest.fn();
     const mockUpgradeCredential = jest.fn(() =>
