@@ -352,7 +352,6 @@ exports[`CieRequestAuthenticationOverlay should render correctly and match snaps
                           style={
                             [
                               {
-                                "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
                                 "justifyContent": "center",
                                 "left": 0,
@@ -363,7 +362,6 @@ exports[`CieRequestAuthenticationOverlay should render correctly and match snaps
                               },
                               {
                                 "backgroundColor": "rgba(255,255,255,1)",
-                                "opacity": 1,
                               },
                             ]
                           }
@@ -692,7 +690,6 @@ exports[`CieRequestAuthenticationOverlay should render correctly and match snaps
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
@@ -716,7 +713,6 @@ exports[`CieRequestAuthenticationOverlay should render correctly and match snaps
                                       {
                                         "alignItems": "center",
                                         "borderCurve": "continuous",
-                                        "elevation": 0,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
                                         "overflow": "hidden",
