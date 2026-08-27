@@ -244,7 +244,7 @@ const RemoveAccountDetails = () => {
     ];
 
   return (
-    <KeyboardStickyView offset={{ closed: 0 }}>
+    <KeyboardStickyView offset={{ closed: 0 }} style={{ flex: 1 }}>
       <IOScrollViewWithLargeHeader
         description={I18n.t("profile.main.privacy.removeAccount.details.body")}
         ignoreAccessibilityCheck
