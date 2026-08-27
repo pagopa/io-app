@@ -1,3 +1,4 @@
+import { CreateSignatureBody } from "@io-app/api-types/generated/definitions/fci/CreateSignatureBody";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -15,7 +16,6 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 
-import { CreateSignatureBody } from "../../../../definitions/fci/CreateSignatureBody";
 import { apiUrlPrefix } from "../../../config";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";

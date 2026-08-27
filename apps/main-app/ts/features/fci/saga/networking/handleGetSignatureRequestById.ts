@@ -1,3 +1,4 @@
+import { Environment } from "@io-app/api-types/generated/definitions/fci/Environment";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -5,7 +6,6 @@ import { SagaIterator } from "redux-saga";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { Environment } from "../../../../../definitions/fci/Environment";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";

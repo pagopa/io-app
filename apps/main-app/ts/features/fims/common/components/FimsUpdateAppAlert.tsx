@@ -32,7 +32,7 @@ export const FimsUpdateAppAlert = () => {
 
 const useOnlySupportRequestHeader = () => {
   const navigation = useIONavigation();
-  const startSupportRequest = useStartSupportRequest({});
+  const startSupportRequest = useStartSupportRequest();
 
   useEffect(() => {
     navigation.setOptions({

@@ -1,14 +1,14 @@
+import { CreatedMessageWithContent } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContent";
+import { FiscalCode } from "@io-app/api-types/generated/definitions/communication/FiscalCode";
+import { MessageBodyMarkdown } from "@io-app/api-types/generated/definitions/communication/MessageBodyMarkdown";
+import { NewMessageContent } from "@io-app/api-types/generated/definitions/communication/NewMessageContent";
+import { TimeToLiveSeconds } from "@io-app/api-types/generated/definitions/communication/TimeToLiveSeconds";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { ServiceMetadata } from "@io-app/api-types/generated/definitions/services/ServiceMetadata";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import FM from "front-matter";
 import { Linking } from "react-native";
 
-import { CreatedMessageWithContent } from "../../../../../definitions/communication/CreatedMessageWithContent";
-import { FiscalCode } from "../../../../../definitions/communication/FiscalCode";
-import { MessageBodyMarkdown } from "../../../../../definitions/communication/MessageBodyMarkdown";
-import { NewMessageContent } from "../../../../../definitions/communication/NewMessageContent";
-import { TimeToLiveSeconds } from "../../../../../definitions/communication/TimeToLiveSeconds";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { ServiceMetadata } from "../../../../../definitions/services/ServiceMetadata";
 import { Locales, setLocale } from "../../../../i18n";
 import { CTA, CTAS, LocalizedCTAs } from "../../../../types/LocalizedCTAs";
 import * as ANALYTICS from "../../analytics";

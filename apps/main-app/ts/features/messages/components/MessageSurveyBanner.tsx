@@ -1,8 +1,8 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { Banner, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import i18next from "i18next";
 
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../store/hooks";
 import { messageSurveyBannerUriSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";

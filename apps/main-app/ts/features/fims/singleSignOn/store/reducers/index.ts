@@ -1,10 +1,10 @@
+import { Consent } from "@io-app/api-types/generated/definitions/fims_sso/Consent";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
-import { Consent } from "../../../../../../definitions/fims_sso/Consent";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { startApplicationInitialization } from "../../../../../store/actions/application";
 import { Action } from "../../../../../store/actions/types";
 import { shouldRestartFimsAuthAfterFastLoginFailure } from "../../utils";

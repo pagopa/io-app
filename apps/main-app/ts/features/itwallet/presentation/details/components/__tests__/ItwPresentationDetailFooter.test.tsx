@@ -99,8 +99,7 @@ describe("ItwPresentationDetailsFooter", () => {
     jest
       .spyOn(credentialSelectors, "itwCredentialStatusSelector")
       .mockImplementation(() => ({
-        status: "expired",
-        message: undefined
+        status: "expired"
       }));
 
     const { getByTestId } = renderComponent(CredentialType.DRIVING_LICENSE);

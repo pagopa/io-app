@@ -1,10 +1,10 @@
+import { InstitutionsResource } from "@io-app/api-types/generated/definitions/services/InstitutionsResource";
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/services/OrganizationFiscalCode";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
-import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
 import { servicesClientManager } from "../../../../../api/ServicesClientManager";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {

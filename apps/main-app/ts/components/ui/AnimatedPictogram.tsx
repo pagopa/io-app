@@ -138,7 +138,6 @@ export const AnimatedPictogram = ({ name, size, loop }: AnimatedPictogram) => {
   const clock = useClock();
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     animationStartTime.value = clock.value;
   }, [name, animationStartTime, clock]);
 

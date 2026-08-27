@@ -1,9 +1,9 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { HeaderSecondLevel } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton";
 import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
@@ -75,7 +75,7 @@ const useCorrectHeader = (
   userType: SendUserType
 ) => {
   const { setOptions, goBack } = useIONavigation();
-  const startSupportRequest = useOfflineToastGuard(useStartSupportRequest({}));
+  const startSupportRequest = useOfflineToastGuard(useStartSupportRequest());
 
   const aarAction: HeaderSecondLevel = {
     title: "",

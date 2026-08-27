@@ -88,7 +88,7 @@ export const ModuleNavigationAlt = (
   );
 
   const imageComponent = () => {
-    if (!image) {
+    if (image == null) {
       return null;
     }
 

@@ -1,7 +1,7 @@
+import { CreatedMessageWithContentAndAttachments } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndAttachments";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/communication/CreatedMessageWithContentAndAttachments";
 import { SagaCallReturnType } from "../../../types/utils";
 import { getError } from "../../../utils/errors";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";

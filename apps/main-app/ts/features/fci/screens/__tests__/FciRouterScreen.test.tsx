@@ -1,10 +1,10 @@
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { act } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { createStore, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 import mockedProfile from "../../../../__mocks__/initializedProfile";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";

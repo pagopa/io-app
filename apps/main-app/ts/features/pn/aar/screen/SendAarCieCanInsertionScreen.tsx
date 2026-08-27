@@ -169,14 +169,6 @@ export const SendAarCieCanInsertionScreen = ({
       >
         <IOScrollViewWithLargeHeader
           alwaysBounceVertical={false}
-          contextualHelp={{
-            title: i18n.t(
-              "features.pn.aar.flow.delegated.cieContextualHelp.title"
-            ),
-            body: i18n.t(
-              "features.pn.aar.flow.delegated.cieContextualHelp.body"
-            )
-          }}
           description={i18n.t(
             "features.pn.aar.flow.cieCanInsertion.description"
           )}

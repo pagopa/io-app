@@ -1,9 +1,9 @@
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+import { ZendeskCategory } from "@io-app/api-types/generated/definitions/content/ZendeskCategory";
 import * as ZendDesk from "@pagopa/io-react-native-zendesk";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
-import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { getValueOrElse } from "../common/model/RemoteValue";
 import { zendeskEnabled } from "../config";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";

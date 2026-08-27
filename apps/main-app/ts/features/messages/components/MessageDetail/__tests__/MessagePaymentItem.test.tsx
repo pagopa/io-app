@@ -1,9 +1,9 @@
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { PaymentInfoResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoResponse";
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { createStore } from "redux";
 
-import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
-import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
-import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

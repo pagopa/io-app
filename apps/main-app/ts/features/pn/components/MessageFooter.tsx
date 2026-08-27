@@ -1,3 +1,4 @@
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
 import {
   FooterActions,
   FooterActionsMeasurements,
@@ -5,10 +6,9 @@ import {
   useIOToast
 } from "@io-app/design-system";
 import I18n from "i18next";
-import { MutableRefObject, useCallback, useEffect } from "react";
+import { RefObject, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
@@ -27,7 +27,7 @@ export type MessageFooterProps = {
   messageId: string;
   onMeasure: (measurements: FooterActionsMeasurements) => void;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
-  presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
+  presentPaymentsBottomSheetRef: RefObject<(() => void) | undefined>;
   sendOpeningSource: SendOpeningSource;
   sendUserType: SendUserType;
 };

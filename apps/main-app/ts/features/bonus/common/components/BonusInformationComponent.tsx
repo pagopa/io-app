@@ -1,8 +1,11 @@
+import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
+import { BonusAvailableContent } from "@io-app/api-types/generated/definitions/content/BonusAvailableContent";
 import {
   Body,
   ContentWrapper,
   H2,
   IOButtonBlockSpecificProps,
+  IOMarkdown,
   useIOThemeContext,
   VSpacer
 } from "@io-app/design-system";
@@ -10,21 +13,17 @@ import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { ComponentProps, Ref, useContext, useImperativeHandle } from "react";
+import { Ref, useContext, useImperativeHandle } from "react";
 import { Image, ImageStyle, StyleProp } from "react-native";
 import Animated, {
   useAnimatedRef,
   useSharedValue
 } from "react-native-reanimated";
 
-import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
-import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
-import IOMarkdown from "../../../../components/IOMarkdown";
 import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../../components/ui/IOScrollView";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { maybeNotNullyString } from "../../../../utils/strings";
@@ -35,7 +34,7 @@ export type BonusInformationComponentRef = {
   scrollTo: (y: number) => void;
 };
 
-type OwnProps = {
+type Props = {
   bonus: BonusAvailable;
   imageStyle?: StyleProp<ImageStyle>;
   onBack?: () => void;
@@ -45,12 +44,6 @@ type OwnProps = {
   ref?: Ref<BonusInformationComponentRef>;
   secondaryAction?: SecondaryAction;
 };
-
-type Props = OwnProps &
-  Pick<
-    ComponentProps<typeof IOScrollViewWithLargeHeader>,
-    "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
-  >;
 
 type SecondaryAction = { text: string; type: "back" };
 

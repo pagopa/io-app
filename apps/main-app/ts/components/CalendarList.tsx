@@ -1,30 +1,35 @@
 import { ContentWrapper, RadioGroup, RadioItem } from "@io-app/design-system";
+import * as Calendar from "expo-calendar";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Calendar } from "react-native-calendar-events";
 
 import { useIOSelector } from "../store/hooks";
 import { preferredCalendarSelector } from "../store/reducers/persistedPreferences";
 import { convertLocalCalendarName } from "../utils/calendar";
 
 type CalendarListProps = {
-  calendars: Array<Calendar>;
+  calendars: Array<Calendar.Calendar>;
   isLoading: boolean;
-  onCalendarSelected: (calendar: Calendar) => void;
+  onCalendarSelected: (calendar: Calendar.Calendar) => void;
 };
 
 const getCalendarsByAccount = (
-  calendars: Array<Calendar>
+  calendars: Array<Calendar.Calendar>
 ): Array<RadioItem<string>> =>
-  pipe(
-    calendars,
-    A.filter(calendar => calendar.allowsModifications),
-    A.map(calendar => ({
-      id: calendar.id,
-      value: convertLocalCalendarName(calendar.title),
-      description: calendar.source
-    }))
+  calendars.reduce<Array<RadioItem<string>>>(
+    (acc, calendar) =>
+      calendar.allowsModifications
+        ? [
+            ...acc,
+            {
+              id: calendar.id,
+              value: convertLocalCalendarName(calendar.title),
+              description: calendar.source.name
+            }
+          ]
+        : acc,
+    []
   );
 
 export const CalendarList = ({

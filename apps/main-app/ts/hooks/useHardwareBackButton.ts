@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useRef } from "react";
 import { BackHandler } from "react-native";

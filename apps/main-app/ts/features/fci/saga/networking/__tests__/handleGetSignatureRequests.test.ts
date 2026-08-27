@@ -1,8 +1,8 @@
+import { SignatureRequestList } from "@io-app/api-types/generated/definitions/fci/SignatureRequestList";
 import { left, right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 
-import { SignatureRequestList } from "../../../../../../definitions/fci/SignatureRequestList";
 import { getNetworkError } from "../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { fciSignaturesListRequest } from "../../../store/actions";

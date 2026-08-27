@@ -1,6 +1,6 @@
+import { ProductCategoryWithNewDiscountsCount } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { NetworkError } from "../../../../../utils/errors";
 
 export const cgnCategories = createAsyncAction(

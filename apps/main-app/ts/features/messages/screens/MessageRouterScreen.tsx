@@ -121,7 +121,6 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
 
   useEffect(() => {
     if (isFirstRendering.current) {
-      // eslint-disable-next-line functional/immutable-data
       isFirstRendering.current = false;
       getMessageDataCallback();
     } else if (messageSuccessDataOrUndefined) {

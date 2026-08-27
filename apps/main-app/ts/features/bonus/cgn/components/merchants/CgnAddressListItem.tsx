@@ -1,7 +1,7 @@
+import { Address } from "@io-app/api-types/generated/definitions/cgn/merchants/Address";
 import { ListItemInfo, ListItemInfoCopy } from "@io-app/design-system";
 import I18n from "i18next";
 
-import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 
 type CgnAddressListItemProps = {
