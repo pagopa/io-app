@@ -35,6 +35,16 @@ describe("ItwActivationSuccessFeedbackBanner", () => {
     );
   });
 
+  it("hides the banner locally when the close button is pressed, since the parent does not unmount it on its own", () => {
+    const { getByLabelText, queryByTestId } = renderComponent();
+
+    fireEvent.press(getByLabelText(I18n.t("global.buttons.close")));
+
+    expect(
+      queryByTestId("itwActivationSuccessFeedbackBannerTestID")
+    ).toBeNull();
+  });
+
   test.each([
     { docStatus: "active" as const, authMethod: "cieidL3" },
     { docStatus: "not_active" as const, authMethod: "ciepin" },

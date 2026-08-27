@@ -1,7 +1,7 @@
 import { Banner } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { View } from "react-native";
 
 import { useIODispatch } from "../../../../store/hooks";
@@ -29,6 +29,7 @@ const ItwActivationSuccessFeedbackBanner = ({
   authMethod,
   style: customStyle
 }: Props) => {
+  const [isVisible, setIsVisible] = useState(true);
   const { name: routeName } = useRoute();
   const dispatch = useIODispatch();
 
@@ -53,6 +54,10 @@ const ItwActivationSuccessFeedbackBanner = ({
     openWebUrl(surveyUrl);
   }, [trackingProps, surveyUrl]);
 
+  if (!isVisible) {
+    return null;
+  }
+
   return (
     <View style={customStyle}>
       <Banner
@@ -67,6 +72,7 @@ const ItwActivationSuccessFeedbackBanner = ({
         onClose={() => {
           dispatch(itwClearWalletActivationFeedbackBannerData());
           dispatch(itwCloseBanner("activationSuccessFeedback"));
+          setIsVisible(false);
         }}
         onPress={handleOnPress}
         pictogramName="feedback"
