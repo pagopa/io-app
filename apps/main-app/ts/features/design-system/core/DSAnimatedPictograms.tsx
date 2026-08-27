@@ -7,9 +7,9 @@ import {
   RadioGroup,
   useIOTheme
 } from "@io-app/design-system";
+import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useState } from "react";
 import { ScrollView, View } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import {
