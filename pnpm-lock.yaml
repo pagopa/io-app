@@ -100,8 +100,8 @@ catalogs:
       specifier: 6.0.3
       version: 6.0.3
     xstate:
-      specifier: ^5
-      version: 5.17.4
+      specifier: ^5.32.6
+      version: 5.32.6
 
 overrides:
   pretty-format>react-is: 19.0.0
@@ -445,8 +445,8 @@ importers:
         specifier: ^14.0.4
         version: 14.0.4(supports-color@8.1.1)
       '@xstate/react':
-        specifier: ^5.0.5
-        version: 5.0.5(@types/react@19.2.16)(react@19.2.0)(xstate@5.17.4)
+        specifier: ^6.1.0
+        version: 6.1.0(@types/react@19.2.16)(react@19.2.0)(xstate@5.32.6)
       async-mutex:
         specifier: ^0.1.3
         version: 0.1.4
@@ -707,7 +707,7 @@ importers:
         version: 0.5.0
       xstate:
         specifier: 'catalog:'
-        version: 5.17.4
+        version: 5.32.6
       zod:
         specifier: 4.3.6
         version: 4.3.6
@@ -4642,11 +4642,11 @@ packages:
     engines: {node: '>=10.0.0'}
     deprecated: this version has critical issues, please update to the latest version
 
-  '@xstate/react@5.0.5':
-    resolution: {integrity: sha512-MfF/cPHa3lNKJmGFpUycMbNP25qBXyZXrxc8VYNroAu0Nnk0DV5WzAkTcQXma0xEC4dSwsoA+YQuKbZATtqvgg==}
+  '@xstate/react@6.1.0':
+    resolution: {integrity: sha512-ep9F0jGTI63B/jE8GHdMpUqtuz7yRebNaKv8EMUaiSi29NOglywc2X2YSOV/ygbIK+LtmgZ0q9anoEA2iBSEOw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      xstate: ^5.19.4
+      xstate: ^5.28.0
     peerDependenciesMeta:
       xstate:
         optional: true
@@ -11279,8 +11279,8 @@ packages:
     resolution: {integrity: sha512-fg03WRxtkCV6ohClePNAECYsmpKKTv5L8y/X3Dn1hQrec3POx2jHZ/0P2qQ6HvsrU1BmeqXcof3NGGueG6LxwQ==}
     engines: {node: '>=0.6.0'}
 
-  xstate@5.17.4:
-    resolution: {integrity: sha512-KM2FYVOUJ04HlOO4TY3wEXqoYPR/XsDu+ewm+IWw0vilXqND0jVfvv04tEFwp8Mkk7I/oHXM8t1Ex9xJyUS4ZA==}
+  xstate@5.32.6:
+    resolution: {integrity: sha512-WfA8WNrh6r9osuGwVm+aIPM4jmMW2LKHV1Yv9thYpOtL4HVF/kobh95K/O8v2jDCpDmP2EoY+6uvuqHXCZ6ZLw==}
 
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
@@ -17852,13 +17852,13 @@ snapshots:
 
   '@xmldom/xmldom@0.8.10': {}
 
-  '@xstate/react@5.0.5(@types/react@19.2.16)(react@19.2.0)(xstate@5.17.4)':
+  '@xstate/react@6.1.0(@types/react@19.2.16)(react@19.2.0)(xstate@5.32.6)':
     dependencies:
       react: 19.2.0
       use-isomorphic-layout-effect: 1.1.2(@types/react@19.2.16)(react@19.2.0)
       use-sync-external-store: 1.6.0(react@19.2.0)
     optionalDependencies:
-      xstate: 5.17.4
+      xstate: 5.32.6
     transitivePeerDependencies:
       - '@types/react'
 
@@ -27198,7 +27198,7 @@ snapshots:
 
   xpath@0.0.27: {}
 
-  xstate@5.17.4: {}
+  xstate@5.32.6: {}
 
   xtend@4.0.2: {}
 
