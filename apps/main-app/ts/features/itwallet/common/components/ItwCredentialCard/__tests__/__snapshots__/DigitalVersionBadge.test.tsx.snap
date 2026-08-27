@@ -33,8 +33,8 @@ exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in s
     }
   >
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -104,8 +104,8 @@ exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in s
       }
     />
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -175,8 +175,8 @@ exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in s
       }
     />
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -232,8 +232,8 @@ exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard
     }
   >
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -303,8 +303,8 @@ exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard
       }
     />
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -374,8 +374,8 @@ exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard
       }
     />
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -433,8 +433,8 @@ exports[`DigitalVersionBadge should render correctly education_degree in state d
     }
   >
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -504,8 +504,8 @@ exports[`DigitalVersionBadge should render correctly education_degree in state f
       }
     />
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -575,8 +575,8 @@ exports[`DigitalVersionBadge should render correctly education_degree in state g
       }
     />
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -632,8 +632,8 @@ exports[`DigitalVersionBadge should render correctly education_enrollment in sta
     }
   >
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -703,8 +703,8 @@ exports[`DigitalVersionBadge should render correctly education_enrollment in sta
       }
     />
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -774,8 +774,8 @@ exports[`DigitalVersionBadge should render correctly education_enrollment in sta
       }
     />
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -831,8 +831,8 @@ exports[`DigitalVersionBadge should render correctly mDL in state default 1`] = 
     }
   >
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -902,8 +902,8 @@ exports[`DigitalVersionBadge should render correctly mDL in state faded 1`] = `
       }
     />
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -973,8 +973,8 @@ exports[`DigitalVersionBadge should render correctly mDL in state greyscale 1`] 
       }
     />
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -1030,8 +1030,8 @@ exports[`DigitalVersionBadge should render correctly residency in state default 
     }
   >
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -1101,8 +1101,8 @@ exports[`DigitalVersionBadge should render correctly residency in state faded 1`
       }
     />
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
@@ -1172,8 +1172,8 @@ exports[`DigitalVersionBadge should render correctly residency in state greyscal
       }
     />
     <Text
-      allowFontScaling={false}
       ellipsizeMode="tail"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         {
