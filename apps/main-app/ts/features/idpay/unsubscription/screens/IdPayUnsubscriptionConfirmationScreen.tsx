@@ -1,3 +1,4 @@
+import { InitiativeRewardTypeEnum } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import {
   Body,
   FooterActionsInline,
@@ -9,13 +10,11 @@ import I18n from "i18next";
 import { useEffect } from "react";
 import { View } from "react-native";
 
-import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { IdPayUnsubscriptionParamsList } from "../navigation/params";
 import { IdPayUnsubscriptionRoutes } from "../navigation/routes";
@@ -156,7 +155,6 @@ const IdPayUnsubscriptionConfirmationScreen = () => {
           disabled: !checks.areFulfilled
         }
       }}
-      contextualHelp={emptyContextualHelp}
       description={I18n.t("idpay.unsubscription.subtitle")}
       goBack={handleClosePress}
       headerActionsProp={{

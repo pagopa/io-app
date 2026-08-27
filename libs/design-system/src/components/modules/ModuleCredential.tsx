@@ -87,7 +87,7 @@ const ModuleContent = ({
             size={IOSelectionListItemVisualParams.iconSize}
           />
         ) : (
-          image && (
+          image != null && (
             <Image
               accessibilityIgnoresInvertColors={true}
               source={image}

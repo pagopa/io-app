@@ -1,3 +1,4 @@
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
 import {
   RptId as PagoPaRptId,
   RptIdFromString as PagoPaRptIdFromString
@@ -6,7 +7,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Dispatch } from "redux";
 
-import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { NavigationParams } from "../../../../navigation/NavigationService";
 import { AppParamsList } from "../../../../navigation/params/AppParamsList";
 import { Action } from "../../../../store/actions/types";

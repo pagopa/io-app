@@ -1,3 +1,4 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   Avatar,
   Body,
@@ -10,7 +11,6 @@ import i18n from "i18next";
 import { useCallback } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";

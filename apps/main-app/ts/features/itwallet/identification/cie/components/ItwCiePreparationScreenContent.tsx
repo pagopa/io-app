@@ -1,4 +1,5 @@
 import { ContentWrapper, VStack } from "@io-app/design-system";
+import { useIsFocused } from "@react-navigation/core";
 import { PropsWithChildren, ReactNode } from "react";
 import {
   Dimensions,
@@ -29,31 +30,41 @@ export const ItwCiePreparationScreenContent = ({
   actions,
   children,
   goBack
-}: PropsWithChildren<Props>) => (
-  <IOScrollViewWithLargeHeader
-    actions={actions}
-    description={description}
-    goBack={goBack}
-    headerActionsProp={{ showHelp: true }}
-    title={{ label: title }}
-  >
-    <ContentWrapper>
-      <VStack space={16}>
-        {children}
-        <View style={styles.imageContainer}>
-          {imageComponent ?? (
-            <Image
-              accessibilityIgnoresInvertColors
-              resizeMode="contain"
-              source={imageSrc}
-              style={styles.image}
-            />
-          )}
-        </View>
-      </VStack>
-    </ContentWrapper>
-  </IOScrollViewWithLargeHeader>
-);
+}: PropsWithChildren<Props>) => {
+  // The image source can be an animated GIF. Since native GIF playback isn't
+  // driven by React re-renders, the animation keeps running as long as the
+  // `Image` view stays mounted, which is still the case when this screen is
+  // pushed to the back stack after navigating forward. Unmounting the image
+  // while the screen isn't focused stops the animation instead of letting it
+  // run indefinitely in the background.
+  const isFocused = useIsFocused();
+
+  return (
+    <IOScrollViewWithLargeHeader
+      actions={actions}
+      description={description}
+      goBack={goBack}
+      headerActionsProp={{ showHelp: true }}
+      title={{ label: title }}
+    >
+      <ContentWrapper>
+        <VStack space={16}>
+          {children}
+          <View style={styles.imageContainer}>
+            {isFocused && imageComponent && (
+              <Image
+                accessibilityIgnoresInvertColors
+                resizeMode="contain"
+                source={imageSrc}
+                style={styles.image}
+              />
+            )}
+          </View>
+        </VStack>
+      </ContentWrapper>
+    </IOScrollViewWithLargeHeader>
+  );
+};
 
 const screenHeight = Dimensions.get("window").height;
 

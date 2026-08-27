@@ -1,3 +1,4 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   Divider,
   IOVisualCostants,
@@ -8,7 +9,6 @@ import I18n from "i18next";
 import { useCallback } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { serviceMetadataByIdSelector } from "../store/selectors";

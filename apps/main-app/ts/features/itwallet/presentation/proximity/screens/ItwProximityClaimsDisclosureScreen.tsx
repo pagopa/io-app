@@ -87,8 +87,12 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
 
+  const handleDismiss = useCallback(() => {
+    machineRef.send({ type: "close" });
+  }, [machineRef]);
+
   const dismissalDialog = useItwDismissalDialog({
-    handleDismiss: () => machineRef.send({ type: "close" }),
+    handleDismiss,
     customLabels: {
       body: I18n.t(
         "features.itWallet.presentation.proximity.selectiveDisclosure.alert.message"
@@ -115,7 +119,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
         />
       )
     });
-  }, [navigation, machineRef, dismissalDialog]);
+  }, [navigation, dismissalDialog]);
 
   const handleConfirm = () => {
     trackItwProximityContinuePresentation({ proximity_flow: proximityFlow });
@@ -161,7 +165,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
             requesterLogoUri={require("../../../../../../img/features/itWallet/issuer/IPZS.png")}
           />
           <VStack space={16}>
-            <H2>
+            <H2 accessibilityRole="header">
               {I18n.t(
                 "features.itWallet.presentation.proximity.selectiveDisclosure.title"
               )}

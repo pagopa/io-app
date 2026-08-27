@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import {
   HeaderSecondLevel,
   hexToRgba,
@@ -12,6 +11,7 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   ComponentProps,
   Fragment,
@@ -31,7 +31,6 @@ import {
   ViewStyle
 } from "react-native";
 import { easeGradient } from "react-native-easing-gradient";
-import LinearGradient from "react-native-linear-gradient";
 import Animated, {
   AnimatedRef,
   Easing,
@@ -123,7 +122,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end"
   },
   gradientContainer: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFill
   },
   buttonContainer: {
     paddingHorizontal: IOVisualCostants.appMarginDefault,
@@ -364,8 +363,10 @@ export const IOScrollView = ({
               ]}
             >
               <LinearGradient
-                colors={colors}
-                locations={locations}
+                colors={
+                  colors as [ColorValue, ColorValue, ...Array<ColorValue>]
+                }
+                locations={locations as [number, number, ...Array<number>]}
                 style={{
                   height: gradientAreaHeight - safeBackgroundBlockHeight
                 }}

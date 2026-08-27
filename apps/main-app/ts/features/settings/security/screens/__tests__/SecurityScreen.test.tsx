@@ -1,4 +1,5 @@
 import { act, fireEvent } from "@testing-library/react-native";
+import * as LocalAuthentication from "expo-local-authentication";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
 import { ActionType } from "typesafe-actions";
@@ -38,6 +39,9 @@ describe("Test SecurityScreen", () => {
     jest.resetAllMocks();
     jest.clearAllMocks();
     mockAccessibilityInfo(false);
+    jest
+      .spyOn(LocalAuthentication, "supportedAuthenticationTypesAsync")
+      .mockResolvedValue([]);
     jest.useFakeTimers();
   });
 
@@ -167,9 +171,8 @@ describe("Test SecurityScreen", () => {
 
   it("should enable biometric section when biometrics are available", async () => {
     jest
-
-      .spyOn(require("../../../../../utils/biometrics"), "getBiometricsType")
-      .mockResolvedValueOnce("FaceID");
+      .spyOn(LocalAuthentication, "supportedAuthenticationTypesAsync")
+      .mockResolvedValue([2]);
 
     const { component } = renderComponent();
     await act(async () => {
@@ -184,10 +187,8 @@ describe("Test SecurityScreen", () => {
 
   it("should silently fail when getBiometricsType rejects", async () => {
     jest
-
-      .spyOn(require("../../../../../utils/biometrics"), "getBiometricsType")
-      .mockRejectedValueOnce(new Error("mock error"));
-
+      .spyOn(LocalAuthentication, "supportedAuthenticationTypesAsync")
+      .mockRejectedValue(new Error("mock error"));
     const { component } = renderComponent();
     await Promise.resolve();
     expect(component).toBeDefined();

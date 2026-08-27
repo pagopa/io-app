@@ -1,7 +1,7 @@
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
+import { NotificationStatusHistory } from "@io-app/api-types/generated/definitions/pn/NotificationStatusHistory";
 import { createStore } from "redux";
 
-import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
-import { NotificationStatusHistory } from "../../../../../definitions/pn/NotificationStatusHistory";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";

@@ -1,8 +1,8 @@
+import { UserDataProcessing } from "@io-app/api-types/generated/definitions/identity/UserDataProcessing";
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { UserDataProcessing } from "../../../../../../definitions/identity/UserDataProcessing";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/identity/UserDataProcessingChoice";
 import { Action } from "../../../../../store/actions/types";
 import { computedProp } from "../../../../../types/utils";
 import { clearCache } from "../actions";

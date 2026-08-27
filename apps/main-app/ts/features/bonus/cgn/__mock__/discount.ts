@@ -1,4 +1,4 @@
-import { Discount } from "../../../../../definitions/cgn/merchants/Discount";
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
 
 export const mockDiscount: Discount = {
   id: "discountId" as Discount["id"],
