@@ -83,6 +83,20 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
+        case ProximityFailureType.CONSENT_DENIED:
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.proximity.consentDenied.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.proximity.consentDenied.subtitle"
+            ),
+            pictogram: "accessDenied",
+            action: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
         case ProximityFailureType.RELYING_PARTY_GENERIC:
           return {
             title: I18n.t(
