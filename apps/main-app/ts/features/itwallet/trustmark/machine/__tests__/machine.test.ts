@@ -20,6 +20,7 @@ const onInit = jest.fn();
 const storeWalletInstanceAttestation = jest.fn();
 const handleSessionExpired = jest.fn();
 const showRetryFailureToast = jest.fn();
+const trackTrustmarkFailure = jest.fn();
 
 const getWalletAttestationActor = jest.fn();
 const getCredentialTrustmarkActor = jest.fn();
@@ -32,7 +33,8 @@ const mockedMachine = itwTrustmarkMachine.provide({
     onInit: assign(onInit),
     storeWalletInstanceAttestation,
     handleSessionExpired,
-    showRetryFailureToast
+    showRetryFailureToast,
+    trackTrustmarkFailure
   },
   actors: {
     getWalletAttestationActor: fromPromise<GetWalletAttestationActorOutput>(

@@ -1,73 +1,11 @@
-import { assign, fromPromise, not, setup } from "xstate";
+import { assign, not } from "xstate";
 
-import { type WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils";
-import {
-  EvaluateRelyingPartyTrustInput,
-  EvaluateRelyingPartyTrustOutput,
-  GetPresentationDetailsInput,
-  GetPresentationDetailsOutput,
-  GetRequestObjectInput,
-  GetRequestObjectOutput,
-  SendAuthorizationResponseInput,
-  SendAuthorizationResponseOutput
-} from "./actors";
-import { Context, InitialContext } from "./context";
-import { RemoteEvents } from "./events";
-import { mapEventToFailure, RemoteFailureType } from "./failure";
+import { InitialContext } from "./context";
+import { RemoteFailureType } from "./failure";
+import { itwRemoteMachineSetup } from "./setup";
 import { ItwPresentationTags } from "./tags";
 
-const notImplemented = () => {
-  throw new Error("Not implemented");
-};
-
-export const itwRemoteMachine = setup({
-  types: {
-    context: {} as Context,
-    events: {} as RemoteEvents
-  },
-  actions: {
-    onInit: notImplemented,
-    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    navigateToFailureScreen: notImplemented,
-    navigateToDiscoveryScreen: notImplemented,
-    navigateToClaimsDisclosureScreen: notImplemented,
-    navigateToIdentificationModeScreen: notImplemented,
-    navigateToAuthResponseScreen: notImplemented,
-    navigateToBarcodeScanScreen: notImplemented,
-    closePresentation: notImplemented,
-    trackRemoteDataShare: notImplemented,
-    storeWalletInstanceAttestation: notImplemented,
-    handleSessionExpired: notImplemented,
-    consumePresentedBatchCredentials: notImplemented
-  },
-  actors: {
-    evaluateRelyingPartyTrust: fromPromise<
-      EvaluateRelyingPartyTrustOutput,
-      EvaluateRelyingPartyTrustInput
-    >(notImplemented),
-    getRequestObject: fromPromise<
-      GetRequestObjectOutput,
-      GetRequestObjectInput
-    >(notImplemented),
-    getPresentationDetails: fromPromise<
-      GetPresentationDetailsOutput,
-      GetPresentationDetailsInput
-    >(notImplemented),
-    sendAuthorizationResponse: fromPromise<
-      SendAuthorizationResponseOutput,
-      SendAuthorizationResponseInput
-    >(notImplemented),
-    getWalletAttestation:
-      fromPromise<WalletInstanceAttestations>(notImplemented)
-  },
-  guards: {
-    isItWalletL3Active: notImplemented,
-    isSessionExpired: notImplemented,
-    hasValidWalletInstanceAttestation: notImplemented,
-    isOpenIdFederationClient: notImplemented,
-    isX509HashClient: notImplemented
-  }
-}).createMachine({
+export const itwRemoteMachine = itwRemoteMachineSetup.createMachine({
   id: "itwRemoteMachine",
   context: { ...InitialContext },
   initial: "Idle",
