@@ -1,6 +1,5 @@
 import { Body, FooterActions, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
-import { useEffect } from "react";
 
 import {
   OperationResultScreenContent,
@@ -18,10 +17,7 @@ import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisa
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
 import { itwCredentialTypeFromDocTypeSelector } from "../../../credentialsCatalogue/store/selectors/index.ts";
 import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent.tsx";
-import {
-  trackItwProximityMandatoryCredentialMissing,
-  trackItwProximityRpNotTrustedBottomSheet
-} from "../analytics/index.ts";
+import { trackItwProximityRpNotTrustedBottomSheet } from "../analytics/index.ts";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
@@ -55,21 +51,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
     failure: serializeFailureReason(failure)
   });
 
-  useItwProximityEventsTracking({ failure });
-
-  useEffect(() => {
-    if (failure.type === ProximityFailureType.MISSING_CREDENTIALS) {
-      const missingCredentials = failure.reason.credentialsDocType
-        .map(getCredentialTypeFromDocType)
-        .filter(isDefined);
-
-      trackItwProximityMandatoryCredentialMissing({
-        missing_credential: missingCredentials.join(" - "),
-        missing_credential_number: missingCredentials.length
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- run only when the failure changes
-  }, [failure]);
+  useItwProximityEventsTracking({
+    failure,
+    getCredentialTypeFromDocType
+  });
 
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: (
