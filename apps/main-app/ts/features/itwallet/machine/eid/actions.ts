@@ -11,6 +11,7 @@ import { isRouteInNavigationState } from "../../../../utils/navigation";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import {
   trackItWalletIDMethodSelected,
+  trackItWalletIntroScreen,
   trackItwDeactivated,
   trackItwIdAuthenticationCompleted,
   trackItwIdVerifiedDocument,
@@ -352,6 +353,12 @@ export const createEidIssuanceActionsImplementation = (
         )
       )
     );
+  },
+
+  trackIntroScreen: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    trackItWalletIntroScreen(context.level === "l3" ? "L3" : "L2");
   },
 
   trackWalletInstanceCreation: ({

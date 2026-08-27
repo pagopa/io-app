@@ -8,6 +8,8 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
+import { trackItwTrustmarkRenewFailure } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
@@ -87,10 +89,19 @@ export const createItwTrustmarkActionsImplementation = (
     );
   };
 
+  const trackTrustmarkFailure = ({
+    context
+  }: ActionArgs<Context, TrustmarkEvents, TrustmarkEvents>) => {
+    trackItwTrustmarkRenewFailure(
+      getMixPanelCredential(context.credentialType, false)
+    );
+  };
+
   return {
     onInit,
     storeWalletInstanceAttestation,
     handleSessionExpired,
-    showRetryFailureToast
+    showRetryFailureToast,
+    trackTrustmarkFailure
   };
 };
