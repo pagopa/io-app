@@ -23,9 +23,9 @@ import {
   useImage,
   vec
 } from "@shopify/react-native-skia";
+import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useMemo, useState } from "react";
 import { Dimensions, Platform, ScrollView, View } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";

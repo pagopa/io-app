@@ -1,8 +1,6 @@
 PODS:
   - Alamofire (5.11.2)
   - boost (1.84.0)
-  - BVLinearGradient (2.8.3):
-    - React-Core
   - CieSDK (0.1.21)
   - DoubleConversion (1.1.6)
   - EXApplication (55.0.15):
@@ -64,6 +62,8 @@ PODS:
   - ExpoImagePicker (55.0.22):
     - ExpoModulesCore
   - ExpoKeepAwake (55.0.8):
+    - ExpoModulesCore
+  - ExpoLinearGradient (55.0.16):
     - ExpoModulesCore
   - ExpoLocalAuthentication (55.0.16):
     - ExpoModulesCore
@@ -3861,7 +3861,6 @@ PODS:
 
 DEPENDENCIES:
   - boost (from `../../../node_modules/react-native/third-party-podspecs/boost.podspec`)
-  - BVLinearGradient (from `../../../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../../../node_modules/expo-application/ios`)
   - EXConstants (from `../../../node_modules/expo-constants/ios`)
@@ -3878,6 +3877,7 @@ DEPENDENCIES:
   - ExpoFont (from `../../../node_modules/expo-font/ios`)
   - ExpoImagePicker (from `../../../node_modules/expo-image-picker/ios`)
   - ExpoKeepAwake (from `../../../node_modules/expo-keep-awake/ios`)
+  - ExpoLinearGradient (from `../../../node_modules/expo-linear-gradient/ios`)
   - ExpoLocalAuthentication (from `../../../node_modules/expo-local-authentication/ios`)
   - "ExpoLogBox (from `../../../node_modules/@expo/log-box`)"
   - ExpoModulesCore (from `../../../node_modules/expo-modules-core`)
@@ -4041,8 +4041,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   boost:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/boost.podspec"
-  BVLinearGradient:
-    :path: "../../../node_modules/react-native-linear-gradient"
   DoubleConversion:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXApplication:
@@ -4075,6 +4073,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-image-picker/ios"
   ExpoKeepAwake:
     :path: "../../../node_modules/expo-keep-awake/ios"
+  ExpoLinearGradient:
+    :path: "../../../node_modules/expo-linear-gradient/ios"
   ExpoLocalAuthentication:
     :path: "../../../node_modules/expo-local-authentication/ios"
   ExpoLogBox:
@@ -4342,7 +4342,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 400275dd1c6d87d95a041861d2a59da4b520a203
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
-  BVLinearGradient: cb006ba232a1f3e4f341bb62c42d1098c284da70
   CieSDK: 832ee98a89d0fc79c1a429c6ad8f31a056741d59
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   EXApplication: 82a44fa8236bb644a805ee21e64054eeb01d22ea
@@ -4360,6 +4359,7 @@ SPEC CHECKSUMS:
   ExpoFont: a7e34a75bdfb703fa07a0e87807f836236608c76
   ExpoImagePicker: f82edc16bb8eeb6260c2759b0015afc0ab45a3d0
   ExpoKeepAwake: d0eb7a0719500d2a43fbf29b6f79e84d70c75ebf
+  ExpoLinearGradient: caf2c659e6ea0c473ece8f6164eaeae05740664d
   ExpoLocalAuthentication: c4abaae8709b8b15727f2e8dd6d74c5ad38acb0c
   ExpoLogBox: a678d36477ab9544fe63e0b5328a0716539b6774
   ExpoModulesCore: cc07ebf5b947a239f1669cb5856d905cb2b093f7

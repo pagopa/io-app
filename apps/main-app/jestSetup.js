@@ -94,6 +94,11 @@ jest.mock("expo-brightness", () => ({
   getBrightnessAsync: jest.fn().mockResolvedValue(0),
   setBrightnessAsync: jest.fn().mockResolvedValue(undefined),
 }));
+
+jest.mock("expo-linear-gradient", () => ({
+  LinearGradient: "LinearGradient"
+}));
+
 jest.mock("expo-local-authentication", () => ({
   AuthenticationType: {
     FINGERPRINT: 1,
