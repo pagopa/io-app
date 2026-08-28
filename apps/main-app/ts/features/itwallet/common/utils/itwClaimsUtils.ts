@@ -637,7 +637,7 @@ export const extractClaim =
     claimId: string,
     schema: S = z.string() as unknown as S
   ) =>
-  (credential: ParsedCredential | undefined): z.output<S> | undefined => {
+  (credential: ParsedCredential | undefined): undefined | z.output<S> => {
     const value = credential?.[claimId]?.value;
     return value === undefined
       ? undefined
@@ -747,29 +747,6 @@ export const getClaimDisplayValue = (
   return parseClaimValue(claim.value).match<ClaimDisplayValue>(
     parsed => {
       switch (parsed.kind) {
-        case "placeOfBirth":
-          return {
-            renderAs: "text",
-            value: `${parsed.value.locality} (${parsed.value.country})`
-          };
-        case "date":
-          return { renderAs: "text", value: parsed.value.toString() };
-        case "image":
-          return { renderAs: "image", value: parsed.value };
-        case "drivingPrivileges":
-          return { renderAs: "drivingPrivileges", value: parsed.value };
-        case "fiscalCode":
-          return {
-            renderAs: "text",
-            value: extractFiscalCode(parsed.value) ?? parsed.value
-          };
-        case "nestedObject":
-          return { renderAs: "nestedObject", value: parseClaims(parsed.value) };
-        case "nestedArray":
-          return {
-            renderAs: "nestedObjectArray",
-            value: parsed.value.map(obj => parseClaims(obj))
-          };
         case "bool":
           return {
             renderAs: "text",
@@ -779,8 +756,35 @@ export const getClaimDisplayValue = (
                 : "features.itWallet.presentation.credentialDetails.boolClaim.false"
             )
           };
+        case "date":
+          return { renderAs: "text", value: parsed.value.toString() };
+        case "drivingPrivileges":
+          return { renderAs: "drivingPrivileges", value: parsed.value };
+        case "emptyString":
+        case "pdf":
+        case "url":
+          return { renderAs: "text", value: parsed.value };
+        case "fiscalCode":
+          return {
+            renderAs: "text",
+            value: extractFiscalCode(parsed.value) ?? parsed.value
+          };
+        case "image":
+          return { renderAs: "image", value: parsed.value };
         case "list":
           return { renderAs: "list", value: parsed.value };
+        case "nestedArray":
+          return {
+            renderAs: "nestedObjectArray",
+            value: parsed.value.map(obj => parseClaims(obj))
+          };
+        case "nestedObject":
+          return { renderAs: "nestedObject", value: parseClaims(parsed.value) };
+        case "placeOfBirth":
+          return {
+            renderAs: "text",
+            value: `${parsed.value.locality} (${parsed.value.country})`
+          };
         case "string":
           // The portrait is transported as a raw base64 payload, without the data URL prefix
           return claim.id.includes(WellKnownClaim.portrait)
@@ -789,10 +793,6 @@ export const getClaimDisplayValue = (
                 value: `data:image/jpeg;base64,${addPadding(parsed.value)}`
               }
             : { renderAs: "text", value: parsed.value };
-        case "pdf":
-        case "url":
-        case "emptyString":
-          return { renderAs: "text", value: parsed.value };
       }
     },
     () => notAvailable

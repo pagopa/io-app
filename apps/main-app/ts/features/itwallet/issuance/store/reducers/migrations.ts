@@ -5,15 +5,22 @@ type MigrationState = PersistedState & Record<string, any>;
 export const CURRENT_REDUX_ITW_ISSUANCE_STORE_VERSION = 0;
 
 /**
- * Shape of an `fp-ts` Option once it has been serialized by redux-persist.
+ * Discriminant of an `fp-ts` Option once it has been serialized by redux-persist.
+ * The leading underscore comes from the `fp-ts` wire format, it is not our naming.
  */
-type SerializedOption = { _tag: "None" } | { _tag: "Some"; value: unknown };
+const OPTION_TAG = "_tag";
 
-const isSerializedOption = (value: unknown): value is SerializedOption =>
-  typeof value === "object" &&
-  value !== null &&
-  "_tag" in value &&
-  (value._tag === "Some" || value._tag === "None");
+type SerializedOption =
+  | { [OPTION_TAG]: "None" }
+  | { [OPTION_TAG]: "Some"; value: unknown };
+
+const isSerializedOption = (value: unknown): value is SerializedOption => {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+  const tag = (value as Record<string, unknown>)[OPTION_TAG];
+  return tag === "Some" || tag === "None";
+};
 
 /**
  * Unwraps a persisted `fp-ts` Option into a plain optional value.
@@ -25,7 +32,9 @@ const unwrapPersistedOption = (value: unknown): unknown => {
   if (!isSerializedOption(value)) {
     return value;
   }
-  return value._tag === "Some" ? value.value : undefined;
+  return OPTION_TAG in value && value[OPTION_TAG] === "Some"
+    ? value.value
+    : undefined;
 };
 
 export const itwIssuanceStateMigrations: MigrationManifest = {

@@ -69,14 +69,23 @@ const CardClaim = ({
     () =>
       parseClaimValue(claim?.value).match(parsed => {
         switch (parsed.kind) {
-          // Nested claims are not rendered directly on the card
-          case "nestedObject":
-          case "nestedArray":
-            return null;
+          case "bool":
+          case "emptyString":
+          case "fiscalCode":
+          case "pdf":
+          case "string":
+          case "url":
+            return <ClaimLabel {...labelProps}>{parsed.value}</ClaimLabel>;
           case "date":
             return (
               <ClaimLabel {...labelProps}>
                 {parsed.value.toString(dateFormat)}
+              </ClaimLabel>
+            );
+          case "drivingPrivileges":
+            return (
+              <ClaimLabel {...labelProps}>
+                {parsed.value.map(p => p.driving_privilege).join(" ")}
               </ClaimLabel>
             );
           case "image":
@@ -86,25 +95,16 @@ const CardClaim = ({
                 blur={labelProps.hidden ? 7 : 0}
               />
             );
-          case "drivingPrivileges":
-            return (
-              <ClaimLabel {...labelProps}>
-                {parsed.value.map(p => p.driving_privilege).join(" ")}
-              </ClaimLabel>
-            );
+          case "list":
+            return <ClaimLabel {...labelProps}>{parsed.value}</ClaimLabel>;
+          // Nested claims are not rendered directly on the card
+          case "nestedArray":
+          case "nestedObject":
+            return null;
           case "placeOfBirth":
             return (
               <ClaimLabel {...labelProps}>{parsed.value.locality}</ClaimLabel>
             );
-          case "list":
-            return <ClaimLabel {...labelProps}>{parsed.value}</ClaimLabel>;
-          case "bool":
-          case "emptyString":
-          case "fiscalCode":
-          case "pdf":
-          case "string":
-          case "url":
-            return <ClaimLabel {...labelProps}>{parsed.value}</ClaimLabel>;
         }
       }, renderNothing),
     [claim, labelProps, dateFormat]

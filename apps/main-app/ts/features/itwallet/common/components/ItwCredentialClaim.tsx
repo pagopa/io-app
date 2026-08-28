@@ -16,8 +16,8 @@ import {
   extractFiscalCode,
   getSafeText,
   isExpirationDateClaim,
-  parseClaimValue,
   parseClaims,
+  parseClaimValue,
   PlaceOfBirthClaimType,
   SimpleDate
 } from "../utils/itwClaimsUtils";
@@ -433,9 +433,9 @@ export const ItwCredentialClaim = ({
   parseClaimValue(claim.value).match(
     parsed => {
       switch (parsed.kind) {
-        case "placeOfBirth":
+        case "bool":
           return (
-            <PlaceOfBirthClaimItem
+            <BoolClaimItem
               claim={parsed.value}
               hidden={hidden}
               label={claim.label}
@@ -454,16 +454,6 @@ export const ItwCredentialClaim = ({
               }
             />
           );
-        case "image":
-          return (
-            <ImageClaimItem
-              claim={parsed.value}
-              hidden={hidden}
-              label={claim.label}
-            />
-          );
-        case "pdf":
-          return <AttachmentsClaimItem hidden={hidden} name={claim.label} />;
         case "drivingPrivileges":
           return parsed.value.map((elem, index) => (
             <Fragment key={`${index}_${claim.label}_${elem.driving_privilege}`}>
@@ -476,12 +466,42 @@ export const ItwCredentialClaim = ({
               />
             </Fragment>
           ));
+        // We want to hide the claim if it's empty
+        case "emptyString":
+          return null;
         case "fiscalCode":
           return (
             <PlainTextClaimItem
               claim={extractFiscalCode(parsed.value) ?? parsed.value}
               hidden={hidden}
               label={claim.label}
+            />
+          );
+        case "image":
+          return (
+            <ImageClaimItem
+              claim={parsed.value}
+              hidden={hidden}
+              label={claim.label}
+            />
+          );
+        case "list":
+          return (
+            <PlainTextClaimItem
+              claim={parsed.value.join(", ")}
+              hidden={hidden}
+              label={claim.label}
+            />
+          );
+        case "nestedArray":
+          return (
+            <ItwCredentialMultiClaim
+              claim={claim}
+              credentialStatus={credentialStatus}
+              credentialType={credentialType}
+              hidden={hidden}
+              isPreview={isPreview}
+              nestedClaims={parsed.value.map(item => parseClaims(item))}
             />
           );
         case "nestedObject":
@@ -501,36 +521,16 @@ export const ItwCredentialClaim = ({
               ))}
             </>
           );
-        case "nestedArray":
+        case "pdf":
+          return <AttachmentsClaimItem hidden={hidden} name={claim.label} />;
+        case "placeOfBirth":
           return (
-            <ItwCredentialMultiClaim
-              claim={claim}
-              credentialStatus={credentialStatus}
-              credentialType={credentialType}
-              hidden={hidden}
-              isPreview={isPreview}
-              nestedClaims={parsed.value.map(item => parseClaims(item))}
-            />
-          );
-        case "bool":
-          return (
-            <BoolClaimItem
+            <PlaceOfBirthClaimItem
               claim={parsed.value}
               hidden={hidden}
               label={claim.label}
             />
           );
-        case "list":
-          return (
-            <PlainTextClaimItem
-              claim={parsed.value.join(", ")}
-              hidden={hidden}
-              label={claim.label}
-            />
-          );
-        // We want to hide the claim if it's empty
-        case "emptyString":
-          return null;
         case "string":
         case "url":
           return (
