@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.24](https://github.com/pagopa/io-app/compare/3.38.0-rc.23...3.38.0-rc.24) (2026-08-28)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4618](https://pagopa.atlassian.net/browse/SIW-4618)] Implement tracking for wallet instance reset failures ([#8513](https://github.com/pagopa/io-app/issues/8513)) ([ae8154b](https://github.com/pagopa/io-app/commit/ae8154b64e669018e8045cd4b3590bd213de964c))
+* [[IOPID-4119](https://pagopa.atlassian.net/browse/IOPID-4119)] Add One Identity Idp selection screen ([#8426](https://github.com/pagopa/io-app/issues/8426)) ([dd69f18](https://github.com/pagopa/io-app/commit/dd69f18dc4f7f0145a2bf861a40033aca0b250cd))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4623](https://pagopa.atlassian.net/browse/SIW-4623)] Use correct specs version in background task ([#8483](https://github.com/pagopa/io-app/issues/8483)) ([13378c4](https://github.com/pagopa/io-app/commit/13378c4494e0b92a652595dfb446615c30acf8e8))
+* [[SIW-4735](https://pagopa.atlassian.net/browse/SIW-4735)] Distinguish catalogue vs credential offer in credential analytics ([#8428](https://github.com/pagopa/io-app/issues/8428)) ([bd0d680](https://github.com/pagopa/io-app/commit/bd0d6807ca9ad13ec563cdf64be1344c8eabcdbc))
+* **IT-Wallet:** [[SIW-3795](https://pagopa.atlassian.net/browse/SIW-3795)] Fix mdl skeu buttons accessibility ([#8486](https://github.com/pagopa/io-app/issues/8486)) ([c2084b3](https://github.com/pagopa/io-app/commit/c2084b3e92f241602587d6193f917c83f2317e8d))
+* **IT-Wallet:** [[SIW-4802](https://pagopa.atlassian.net/browse/SIW-4802)] Add wallet activation and identity confirmation prompts for credential offer ([#8478](https://github.com/pagopa/io-app/issues/8478)) ([e1e76f1](https://github.com/pagopa/io-app/commit/e1e76f1230e39db0cd54afb0e15a3a333b03edd2))
+* **IT-Wallet:** [[SIW-4832](https://pagopa.atlassian.net/browse/SIW-4832)] Handle partial proximity requests ([#8481](https://github.com/pagopa/io-app/issues/8481)) ([51b4290](https://github.com/pagopa/io-app/commit/51b42900c8013d6b20ee6eaf742b15cf2cf4d1a7))
+
 ## [3.38.0-rc.23](https://github.com/pagopa/io-app/compare/3.38.0-rc.22...3.38.0-rc.23) (2026-08-28)
 
 
