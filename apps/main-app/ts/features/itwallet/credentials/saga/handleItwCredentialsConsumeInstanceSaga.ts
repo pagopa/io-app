@@ -2,9 +2,11 @@ import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { call, put, select } from "typed-redux-saga/macro";
 
 import { walletRemoveCards } from "../../../wallet/store/actions/cards";
+import { shouldRefillBatch } from "../../common/utils/itwCredentialIssuanceUtils";
 import { getCredentialKeyTags } from "../../common/utils/itwCredentialUtils";
 import { trackItwVaultCredentialRemoveFailed } from "../analytics";
 import {
+  itwCredentialsBatchRefillRequest,
   itwCredentialsConsumeInstance,
   itwCredentialsRemove,
   itwCredentialsStore
@@ -56,15 +58,24 @@ export function* handleItwCredentialsConsumeInstanceSaga(
 
     if (remainingKeyTags.length > 0) {
       // Copies remain: rotate the representative copy and decrease the batch count
-      yield* put(
-        itwCredentialsStore([
-          {
-            ...credential,
-            keyTag: remainingKeyTags[0],
-            keyTags: remainingKeyTags
-          }
-        ])
-      );
+      const updated = {
+        ...credential,
+        keyTag: remainingKeyTags[0],
+        keyTags: remainingKeyTags
+      };
+
+      yield* put(itwCredentialsStore([updated]));
+
+      // The pool reached the refill threshold: ask for a silent renewal. This is a fire-and-forget
+      // side effect of a presentation that already succeeded, so it can neither delay nor fail it.
+      if (shouldRefillBatch(updated)) {
+        yield* put(
+          itwCredentialsBatchRefillRequest({
+            credentialType: updated.credentialType,
+            trigger: "presentation"
+          })
+        );
+      }
     } else {
       // The last copy was just consumed: fully remove the credential.
       yield* put(itwCredentialsRemove([credential]));
