@@ -937,6 +937,13 @@ export const itwEidIssuanceMachine = setup({
           actions: "trackItwIdAuthenticationCompleted"
         },
         {
+          guard: ({ context }) =>
+            context.identification?.mode === "cieId" &&
+            context.identification.level === "L3",
+          target: "Issuance",
+          actions: "trackItwIdAuthenticationCompleted"
+        },
+        {
           target: "Issuance"
         }
       ]
