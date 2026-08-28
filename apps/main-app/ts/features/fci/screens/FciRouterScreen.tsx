@@ -34,22 +34,18 @@ import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureReque
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
-  // Used on retry only on status != WAIT_FOR_SIGNATURE
-  skipInitialFetch?: boolean;
 }>;
 
 const FciSignatureScreenComponent = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
 ): ReactElement => {
-  const { signatureRequestId, skipInitialFetch } = props.route.params;
+  const { signatureRequestId } = props.route.params;
   const dispatch = useIODispatch();
   const fciSignatureRequest = useIOSelector(fciSignatureRequestSelector);
 
   useEffect(() => {
-    if (!skipInitialFetch) {
-      dispatch(fciSignatureRequestFromId.request(signatureRequestId));
-    }
-  }, [dispatch, signatureRequestId, skipInitialFetch]);
+    dispatch(fciSignatureRequestFromId.request(signatureRequestId));
+  }, [dispatch, signatureRequestId]);
 
   const LoadingView = () => (
     <LoadingComponent testID={"FciRouterLoadingScreenTestID"} />

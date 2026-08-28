@@ -290,8 +290,18 @@ jest.mock("uuid", () => ({
   }
 }));
 
-jest.mock("react-native-bluetooth-state-manager", () => ({
-  getState: jest.fn().mockResolvedValue(true)
+jest.mock("react-native-ble-plx", () => ({
+  BleManager: jest.fn().mockImplementation(() => ({
+    state: jest.fn().mockResolvedValue("PoweredOn")
+  })),
+  State: {
+    Unknown: "Unknown",
+    Resetting: "Resetting",
+    Unsupported: "Unsupported",
+    Unauthorized: "Unauthorized",
+    PoweredOff: "PoweredOff",
+    PoweredOn: "PoweredOn"
+  }
 }));
 
 jest.mock("@pagopa/io-react-native-iso18013", () => ({

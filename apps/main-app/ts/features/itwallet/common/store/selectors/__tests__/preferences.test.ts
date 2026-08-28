@@ -9,7 +9,7 @@ import {
   itwAuthLevelSelector,
   itwIdentificationModeSelector,
   itwIsPidReissuingSurveyHiddenSelector,
-  itwWalletActivationFeedbackBannerSelector
+  itwWalletActivationFeedbackBannerDataSelector
 } from "../preferences";
 
 describe("itwAuthLevelSelector", () => {
@@ -118,71 +118,33 @@ describe("itwIsPidReissuingSurveyHiddenSelector", () => {
   });
 });
 
-const buildStateWithBannerData = (
-  data: ItwWalletActivationFeedbackBannerData | undefined
-) => {
-  const base = appReducer(undefined, applicationChangeState("active"));
-  return _.set(
-    base,
-    "features.itWallet.preferences.walletActivationFeedbackBannerData",
-    data
-  );
-};
-
-describe("itwWalletActivationFeedbackBannerSelector", () => {
-  afterEach(() => {
-    MockDate.reset();
-  });
-
+describe("itwWalletActivationFeedbackBannerDataSelector", () => {
   it("returns undefined when no data is stored", () => {
-    const state = buildStateWithBannerData(undefined);
-    expect(itwWalletActivationFeedbackBannerSelector(state)).toBeUndefined();
+    const state = appReducer(undefined, applicationChangeState("active"));
+    expect(
+      itwWalletActivationFeedbackBannerDataSelector(state)
+    ).toBeUndefined();
   });
 
-  it("returns the data when stored within 7 days", () => {
-    MockDate.set("2026-07-01T12:00:00.000Z");
+  it("returns the stored data regardless of visibility", () => {
     const data: ItwWalletActivationFeedbackBannerData = {
-      date: "2026-06-28T12:00:00.000Z", // 3 days ago
       docStatus: "not_active",
       authMethod: "spid"
     };
-    const state = buildStateWithBannerData(data);
-    expect(itwWalletActivationFeedbackBannerSelector(state)).toEqual(data);
-  });
-
-  it("returns the data on the boundary (exactly 7 days ago)", () => {
-    MockDate.set("2026-07-01T12:00:00.000Z");
-    const data: ItwWalletActivationFeedbackBannerData = {
-      date: "2026-06-24T12:00:00.000Z", // exactly 7 days ago
-      docStatus: "active",
-      authMethod: "cieidL2"
+    const base = appReducer(undefined, applicationChangeState("active"));
+    const state = {
+      ...base,
+      features: {
+        ...base.features,
+        itWallet: {
+          ...base.features?.itWallet,
+          preferences: {
+            ...base.features?.itWallet?.preferences,
+            walletActivationFeedbackBannerData: data
+          }
+        }
+      }
     };
-    const state = buildStateWithBannerData(data);
-    expect(itwWalletActivationFeedbackBannerSelector(state)).toEqual(data);
-  });
-
-  it("returns undefined when the data is more than 7 days old", () => {
-    MockDate.set("2026-07-01T12:00:00.000Z");
-    const data: ItwWalletActivationFeedbackBannerData = {
-      date: "2026-06-23T11:59:59.000Z", // just over 7 days ago
-      docStatus: "not_active",
-      authMethod: "ciepin"
-    };
-    const state = buildStateWithBannerData(data);
-    expect(itwWalletActivationFeedbackBannerSelector(state)).toBeUndefined();
-  });
-
-  it("returns data for all authMethod values within 7 days", () => {
-    MockDate.set("2026-07-01T00:00:00.000Z");
-    const authMethods = ["spid", "ciepin", "cieidL2", "cieidL3"] as const;
-    authMethods.forEach(authMethod => {
-      const data: ItwWalletActivationFeedbackBannerData = {
-        date: "2026-07-01T00:00:00.000Z",
-        docStatus: "not_active",
-        authMethod
-      };
-      const state = buildStateWithBannerData(data);
-      expect(itwWalletActivationFeedbackBannerSelector(state)).toEqual(data);
-    });
+    expect(itwWalletActivationFeedbackBannerDataSelector(state)).toEqual(data);
   });
 });
