@@ -25,13 +25,6 @@ jest.mock("@react-native-cookies/cookies", () => ({
   removeSessionCookies: jest.fn(() => Promise.resolve(true))
 }));
 
-jest.mock("@pagopa/io-react-native-login-utils", () => ({
-  LoginUtilsError: jest.fn().mockImplementation(() => ({
-    userInfo: { statusCode: "500" }
-  })),
-  isLoginUtilsError: jest.fn().mockReturnValue(false)
-}));
-
 jest.mock("../../../../../../components/helpers/withLoadingSpinner", () => ({
   withLoadingSpinner: (Component: any) => (props: any) => (
     <Component {...props} />

@@ -1,7 +1,3 @@
-import {
-  isLoginUtilsError,
-  LoginUtilsError
-} from "@pagopa/io-react-native-login-utils";
 import * as B from "fp-ts/lib/boolean";
 import { pipe } from "fp-ts/lib/function";
 import {
@@ -200,41 +196,32 @@ export function trackLollipopKeyGenerationSuccess(keyType?: string) {
 // SPID Login
 export function trackSpidLoginError(
   idpName: string | undefined,
-  error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
+  error: Error | WebViewErrorEvent | WebViewHttpErrorEvent
 ) {
   const eventName = "SPID_ERROR";
-  if (isLoginUtilsError(error)) {
+  if (isWebViewHttpErrorEvent(error)) {
+    const { description, statusCode, url } = error.nativeEvent;
     void mixpanelTrack(eventName, {
       idp: idpName,
-      code: error.userInfo?.statusCode,
-      description: error.userInfo?.error,
-      domain: error.userInfo?.url
+      code: statusCode,
+      description,
+      domain: toUrlWithoutQueryParams(url)
     });
-  } else {
-    if (isWebViewHttpErrorEvent(error)) {
-      const { description, statusCode, url } = error.nativeEvent;
-      void mixpanelTrack(eventName, {
-        idp: idpName,
-        code: statusCode,
-        description,
-        domain: toUrlWithoutQueryParams(url)
-      });
-    } else if (isWebViewErrorEvent(error)) {
-      const { code, description, domain } = error.nativeEvent;
-      void mixpanelTrack(eventName, {
-        idp: idpName,
-        code,
-        description,
-        domain
-      });
-    } else if (error.message !== undefined) {
-      void mixpanelTrack(eventName, {
-        idp: idpName,
-        code: error.message,
-        description: error.message,
-        domain: error.message
-      });
-    }
+  } else if (isWebViewErrorEvent(error)) {
+    const { code, description, domain } = error.nativeEvent;
+    void mixpanelTrack(eventName, {
+      idp: idpName,
+      code,
+      description,
+      domain
+    });
+  } else if (error.message !== undefined) {
+    void mixpanelTrack(eventName, {
+      idp: idpName,
+      code: error.message,
+      description: error.message,
+      domain: error.message
+    });
   }
 }
 
