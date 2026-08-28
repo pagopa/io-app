@@ -1,19 +1,36 @@
-import { assign, fromPromise, setup } from "xstate";
+import { assign, setup } from "xstate";
 
-import { type WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils";
 import {
-  EvaluateRelyingPartyTrustInput,
-  EvaluateRelyingPartyTrustOutput,
-  GetPresentationDetailsInput,
-  GetPresentationDetailsOutput,
-  GetRequestObjectInput,
-  GetRequestObjectOutput,
-  SendAuthorizationResponseInput,
-  SendAuthorizationResponseOutput
+  closePresentationAction,
+  consumePresentedBatchCredentialsAction,
+  handleSessionExpiredAction,
+  navigateToAuthResponseScreenAction,
+  navigateToBarcodeScanScreenAction,
+  navigateToClaimsDisclosureScreenAction,
+  navigateToDiscoveryScreenAction,
+  navigateToFailureScreenAction,
+  onInitAction,
+  storeWalletInstanceAttestationAction,
+  trackRemoteDataShareAction
+} from "./actions";
+import {
+  evaluateRelyingPartyTrustActor,
+  getPresentationDetailsActor,
+  getRequestObjectActor,
+  getWalletAttestationActor,
+  sendAuthorizationResponseActor
 } from "./actors";
 import { Context } from "./context";
 import { RemoteEvents } from "./events";
 import { mapEventToFailure } from "./failure";
+import {
+  hasValidWalletInstanceAttestationGuard,
+  isItWalletL3ActiveGuard,
+  isOpenIdFederationClientGuard,
+  isSessionExpiredGuard,
+  isX509HashClientGuard
+} from "./guards";
+import { Input } from "./input";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -23,48 +40,36 @@ const notImplemented = () => {
 export const itwRemoteMachineSetup = setup({
   types: {
     context: {} as Context,
-    events: {} as RemoteEvents
+    events: {} as RemoteEvents,
+    input: {} as Input
   },
   actions: {
-    onInit: notImplemented,
+    onInit: onInitAction,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    navigateToFailureScreen: notImplemented,
-    navigateToDiscoveryScreen: notImplemented,
-    navigateToClaimsDisclosureScreen: notImplemented,
+    navigateToFailureScreen: navigateToFailureScreenAction,
+    navigateToDiscoveryScreen: navigateToDiscoveryScreenAction,
+    navigateToClaimsDisclosureScreen: navigateToClaimsDisclosureScreenAction,
     navigateToIdentificationModeScreen: notImplemented,
-    navigateToAuthResponseScreen: notImplemented,
-    navigateToBarcodeScanScreen: notImplemented,
-    closePresentation: notImplemented,
-    trackRemoteDataShare: notImplemented,
-    storeWalletInstanceAttestation: notImplemented,
-    handleSessionExpired: notImplemented,
-    consumePresentedBatchCredentials: notImplemented
+    navigateToAuthResponseScreen: navigateToAuthResponseScreenAction,
+    navigateToBarcodeScanScreen: navigateToBarcodeScanScreenAction,
+    closePresentation: closePresentationAction,
+    trackRemoteDataShare: trackRemoteDataShareAction,
+    storeWalletInstanceAttestation: storeWalletInstanceAttestationAction,
+    handleSessionExpired: handleSessionExpiredAction,
+    consumePresentedBatchCredentials: consumePresentedBatchCredentialsAction
   },
   actors: {
-    evaluateRelyingPartyTrust: fromPromise<
-      EvaluateRelyingPartyTrustOutput,
-      EvaluateRelyingPartyTrustInput
-    >(notImplemented),
-    getRequestObject: fromPromise<
-      GetRequestObjectOutput,
-      GetRequestObjectInput
-    >(notImplemented),
-    getPresentationDetails: fromPromise<
-      GetPresentationDetailsOutput,
-      GetPresentationDetailsInput
-    >(notImplemented),
-    sendAuthorizationResponse: fromPromise<
-      SendAuthorizationResponseOutput,
-      SendAuthorizationResponseInput
-    >(notImplemented),
-    getWalletAttestation:
-      fromPromise<WalletInstanceAttestations>(notImplemented)
+    evaluateRelyingPartyTrust: evaluateRelyingPartyTrustActor,
+    getRequestObject: getRequestObjectActor,
+    getPresentationDetails: getPresentationDetailsActor,
+    sendAuthorizationResponse: sendAuthorizationResponseActor,
+    getWalletAttestation: getWalletAttestationActor
   },
   guards: {
-    isItWalletL3Active: notImplemented,
-    isSessionExpired: notImplemented,
-    hasValidWalletInstanceAttestation: notImplemented,
-    isOpenIdFederationClient: notImplemented,
-    isX509HashClient: notImplemented
+    isItWalletL3Active: isItWalletL3ActiveGuard,
+    isSessionExpired: isSessionExpiredGuard,
+    hasValidWalletInstanceAttestation: hasValidWalletInstanceAttestationGuard,
+    isOpenIdFederationClient: isOpenIdFederationClientGuard,
+    isX509HashClient: isX509HashClientGuard
   }
 });

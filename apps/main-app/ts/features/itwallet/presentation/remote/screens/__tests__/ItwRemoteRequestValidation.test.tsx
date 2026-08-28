@@ -11,6 +11,7 @@ import { GlobalState } from "../../../../../../store/reducers/types.ts";
 import { reproduceSequence } from "../../../../../../utils/tests.ts";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
 import { identificationSuccess } from "../../../../../identification/store/actions/index.ts";
+import { RemoteMachineDeps } from "../../machine/input.ts";
 import { itwRemoteMachine } from "../../machine/machine.ts";
 import { ItwRemoteMachineContext } from "../../machine/provider.tsx";
 import { ItwRemoteParamsList } from "../../navigation/ItwRemoteParamsList.ts";
@@ -191,7 +192,10 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwRemoteMachineContext.Provider logic={logic}>
+      <ItwRemoteMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: {} as RemoteMachineDeps } }}
+      >
         <ItwRemoteRequestValidationScreen
           navigation={mockNavigation}
           route={route}

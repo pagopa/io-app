@@ -10,6 +10,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { EidIssuanceMachineDeps } from "../../../../machine/eid/input";
 import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
@@ -102,7 +103,9 @@ const renderComponent = () => {
     actions: { onInit: jest.fn() }
   });
 
-  const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+  const initialSnapshot = createActor(logic, {
+    input: { deps: {} as EidIssuanceMachineDeps }
+  }).getSnapshot();
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwEidIssuanceMachineContext.Provider

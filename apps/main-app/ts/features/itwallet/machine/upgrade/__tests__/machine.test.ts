@@ -9,7 +9,10 @@ import {
   UpgradeCredentialOutput,
   UpgradeCredentialParams
 } from "../actors";
+import { CredentialUpgradeMachineDeps } from "../input";
 import { itwCredentialUpgradeMachine } from "../machine";
+
+const T_DEPS = {} as CredentialUpgradeMachineDeps;
 
 const mockLoadContext = jest.fn(() => Promise.resolve({} as LoadContextOutput));
 
@@ -61,7 +64,8 @@ describe("itwCredentialUpgradeMachine", () => {
       input: {
         credentials: [],
         issuanceMode: "upgrade",
-        itwVersion: "1.3.3"
+        itwVersion: "1.3.3",
+        deps: T_DEPS
       }
     });
     actor.start();
@@ -106,7 +110,8 @@ describe("itwCredentialUpgradeMachine", () => {
       input: {
         credentials,
         issuanceMode: "upgrade",
-        itwVersion: "1.3.3"
+        itwVersion: "1.3.3",
+        deps: T_DEPS
       }
     });
     actor.start();
@@ -153,7 +158,8 @@ describe("itwCredentialUpgradeMachine", () => {
       input: {
         credentials,
         issuanceMode: "upgrade",
-        itwVersion: "1.3.3"
+        itwVersion: "1.3.3",
+        deps: T_DEPS
       }
     });
     actor.start();
@@ -206,7 +212,8 @@ describe("itwCredentialUpgradeMachine", () => {
       input: {
         credentials,
         issuanceMode: "upgrade",
-        itwVersion: "1.3.3"
+        itwVersion: "1.3.3",
+        deps: T_DEPS
       }
     });
     actor.start();

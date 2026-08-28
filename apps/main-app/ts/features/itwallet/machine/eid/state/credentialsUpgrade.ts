@@ -22,7 +22,11 @@ export const credentialsUpgradeState =
             return {
               itwVersion: context.itwVersion,
               credentials: context.credentialsToUpgrade,
-              issuanceMode: context.mode
+              issuanceMode: context.mode,
+              deps: {
+                env: context.deps.env,
+                store: context.deps.store
+              }
             };
           },
           onDone: {

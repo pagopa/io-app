@@ -13,6 +13,7 @@ import {
   IssuanceFailure,
   IssuanceFailureType
 } from "../../../machine/eid/failure";
+import { EidIssuanceMachineDeps } from "../../../machine/eid/input";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -129,7 +130,13 @@ const renderComponent = (
   level?: EidIssuanceLevel
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+  const initialSnapshot = createActor(itwEidIssuanceMachine, {
+    input: {
+      deps: {
+        store: { getState: () => initialState }
+      } as EidIssuanceMachineDeps
+    }
+  }).getSnapshot();
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,
     value: "Failure",

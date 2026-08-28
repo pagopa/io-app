@@ -7,6 +7,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
+import { EidIssuanceMachineDeps } from "../../../machine/eid/input";
 import {
   ItwEidIssuanceMachine,
   itwEidIssuanceMachine
@@ -81,7 +82,13 @@ const renderComponent = ({
   value: { Issuance: "CheckingIdentityMatch" | "DisplayingPreview" };
 }) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+  const initialSnapshot = createActor(itwEidIssuanceMachine, {
+    input: {
+      deps: {
+        store: { getState: () => initialState }
+      } as EidIssuanceMachineDeps
+    }
+  }).getSnapshot();
   const snapshot: MachineSnapshot = {
     ...initialSnapshot,
     value,

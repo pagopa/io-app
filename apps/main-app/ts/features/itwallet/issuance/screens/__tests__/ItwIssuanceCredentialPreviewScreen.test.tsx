@@ -8,6 +8,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { Context } from "../../../machine/credential/context";
+import { CredentialIssuanceMachineDeps } from "../../../machine/credential/input";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -60,9 +61,10 @@ describe("ItwIssuanceCredentialPreviewScreen", () => {
 
 const renderComponent = (contextOverrides: Partial<Context> = {}) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(
-    itwCredentialIssuanceMachine
-  ).getSnapshot();
+  const store = createStore(appReducer, initialState as any);
+  const initialSnapshot = createActor(itwCredentialIssuanceMachine, {
+    input: { deps: { store } as CredentialIssuanceMachineDeps }
+  }).getSnapshot();
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,
     context: {
@@ -79,6 +81,6 @@ const renderComponent = (contextOverrides: Partial<Context> = {}) => {
     ),
     ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW,
     {},
-    createStore(appReducer, initialState as any)
+    store
   );
 };

@@ -10,6 +10,7 @@ import * as envSelectors from "../../../common/store/selectors/environment";
 import { EnvType } from "../../../common/utils/environment";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
+import { CredentialIssuanceMachineDeps } from "../../../machine/credential/input";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -140,7 +141,10 @@ const renderComponent = (params?: undefined | { page?: number }) => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: {} as CredentialIssuanceMachineDeps } }}
+      >
         <ItwCardOnboardingL3Screen
           navigation={{} as any}
           route={{ key: "x", name: ITW_ROUTES.L3_ONBOARDING, params } as any}

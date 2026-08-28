@@ -12,13 +12,11 @@ import type {
   MrtdPoPContext
 } from "./context";
 
-import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import { trackItwRequest } from "../../analytics";
 import { toItwIdMethod } from "../../analytics/utils/types";
-import { Env } from "../../common/utils/environment";
 import {
   getIntegrityHardwareKeyTag,
   getWalletInstanceAttestation,
@@ -56,21 +54,21 @@ import {
   itwWalletUnitAttestationsStore
 } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
-import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
-import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
-import { itwCredentialUpgradeMachine } from "../upgrade/machine";
-import { createCommonActorsImplementation } from "../utils/actors";
+import { EidIssuanceMachineDeps } from "./input";
 
 export type CreateWalletInstanceActorParams = WithItwVersion<{
+  deps: EidIssuanceMachineDeps;
   isRenewal: boolean;
 }>;
 
 export type GetWalletAttestationActorParams = WithItwVersion<{
+  deps: EidIssuanceMachineDeps;
   integrityKeyTag: string | undefined;
 }>;
 
 export type InitMrtdPoPChallengeActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
+  deps: EidIssuanceMachineDeps;
   walletInstanceAttestation: string | undefined;
 }>;
 
@@ -83,6 +81,7 @@ export type ObtainStatusListActorOutput = Context["walletInstanceStatusList"];
 
 export type RequestAccessTokenActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
+  deps: EidIssuanceMachineDeps;
   walletInstanceAttestation: string | undefined;
 }>;
 
@@ -94,18 +93,21 @@ export type RequestEidActorOutput = {
 export type RequestEidActorParams = WithItwVersion<{
   accessToken: CredentialAccessToken | undefined;
   authenticationContext: AuthenticationContext | undefined;
+  deps: EidIssuanceMachineDeps;
   identification: IdentificationContext | undefined;
   integrityKeyTag: string | undefined;
   level: EidIssuanceLevel | undefined;
 }>;
 
 export type StartAuthFlowActorParams = WithItwVersion<{
+  deps: EidIssuanceMachineDeps;
   identification: IdentificationContext | undefined;
   walletInstanceAttestation: string | undefined;
   withMRTDPoP: boolean;
 }>;
 
 export type StoreEidCredentialActorParams = {
+  deps: EidIssuanceMachineDeps;
   eid: CredentialBundle | undefined;
   walletInstanceStatusList?: Context["walletInstanceStatusList"];
   walletUnitAttestations?: Record<string, string>;
@@ -113,6 +115,7 @@ export type StoreEidCredentialActorParams = {
 
 export type ValidateMrtdPoPChallengeActorParams = WithItwVersion<{
   authenticationContext: AuthenticationContext | undefined;
+  deps: EidIssuanceMachineDeps;
   mrtdContext: MrtdPoPContext | undefined;
   walletInstanceAttestation: string | undefined;
 }>;
@@ -121,378 +124,377 @@ export type WithItwVersion<T = { [K: string]: any }> = T & {
   itwVersion: ItwVersion;
 };
 
-/**
- * Creates the actors for the eid issuance machine
- * @param env - The environment to use for the IT Wallet API calls
- * @param store the IOStore
- * @returns the actors
- */
-export const createEidIssuanceActorsImplementation = (
-  env: Env,
-  store: ReturnType<typeof useIOStore>
-) => ({
-  getCieStatus: fromPromise<CieContext>(async () => {
-    const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([
-      cieUtils.isNfcEnabled(),
-      CieUtils.isCieAuthenticationSupported()
-    ]);
-    return {
-      isNFCEnabled,
-      isCIEAuthenticationSupported
-    };
-  }),
+export const getCieStatusActor = fromPromise<CieContext>(async () => {
+  const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([
+    cieUtils.isNfcEnabled(),
+    CieUtils.isCieAuthenticationSupported()
+  ]);
+  return {
+    isNFCEnabled,
+    isCIEAuthenticationSupported
+  };
+});
 
-  verifyTrustFederation: fromPromise<void, WithItwVersion>(
-    async ({ input }) => {
-      const ioWallet = getIoWallet(input.itwVersion);
-      // Evaluate the issuer trust
-      const trustAnchorEntityConfig =
-        await ioWallet.Trust.getTrustAnchorEntityConfiguration(
-          env.WALLET_TA_BASE_URL
-        );
+export const verifyTrustFederationActor = fromPromise<
+  void,
+  WithItwVersion<{ deps: EidIssuanceMachineDeps }>
+>(async ({ input }) => {
+  const { env } = input.deps;
+  const ioWallet = getIoWallet(input.itwVersion);
+  // Evaluate the issuer trust
+  const trustAnchorEntityConfig =
+    await ioWallet.Trust.getTrustAnchorEntityConfiguration(
+      env.WALLET_TA_BASE_URL
+    );
 
-      // Create the trust chain for the PID provider
-      const builtChainJwts = await ioWallet.Trust.buildTrustChain(
-        env.WALLET_PID_PROVIDER_BASE_URL.value(input.itwVersion),
-        trustAnchorEntityConfig
-      );
+  // Create the trust chain for the PID provider
+  const builtChainJwts = await ioWallet.Trust.buildTrustChain(
+    env.WALLET_PID_PROVIDER_BASE_URL.value(input.itwVersion),
+    trustAnchorEntityConfig
+  );
 
-      // Perform full validation on the built chain
-      await ioWallet.Trust.verifyTrustChain(
-        trustAnchorEntityConfig,
-        builtChainJwts,
-        {
-          connectTimeout: 10000,
-          readTimeout: 10000,
-          requireCrl: true
-        }
-      );
+  // Perform full validation on the built chain
+  await ioWallet.Trust.verifyTrustChain(
+    trustAnchorEntityConfig,
+    builtChainJwts,
+    {
+      connectTimeout: 10000,
+      readTimeout: 10000,
+      requireCrl: true
     }
-  ),
+  );
+});
 
-  createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
-    async ({ input }) => {
-      const sessionToken = sessionTokenSelector(store.getState());
-      assert(sessionToken, "sessionToken is undefined");
+export const createWalletInstanceActor = fromPromise<
+  string,
+  CreateWalletInstanceActorParams
+>(async ({ input }) => {
+  const { env, store } = input.deps;
+  const sessionToken = sessionTokenSelector(store.getState());
+  assert(sessionToken, "sessionToken is undefined");
 
-      // Reset the wallet store to prevent having dirty state before registering a new wallet instance.
-      // This is skipped for renewal otherwise the entire wallet is lost if the user abandons the flow.
-      if (!input.isRenewal) {
-        store.dispatch(itwLifecycleStoresReset());
-      }
+  // Reset the wallet store to prevent having dirty state before registering a new wallet instance.
+  // This is skipped for renewal otherwise the entire wallet is lost if the user abandons the flow.
+  if (!input.isRenewal) {
+    store.dispatch(itwLifecycleStoresReset());
+  }
 
-      // Await the integrity preparation before requesting the integrity key tag
-      await ensureIntegrityServiceIsStoreReadyOrThrow(store);
+  // Await the integrity preparation before requesting the integrity key tag
+  await ensureIntegrityServiceIsStoreReadyOrThrow(store);
 
-      const hardwareKeyTag = await getIntegrityHardwareKeyTag();
-      await registerWalletInstance(
-        env,
-        input.itwVersion,
-        hardwareKeyTag,
-        sessionToken,
-        { isRenewal: input.isRenewal }
-      );
+  const hardwareKeyTag = await getIntegrityHardwareKeyTag();
+  await registerWalletInstance(
+    env,
+    input.itwVersion,
+    hardwareKeyTag,
+    sessionToken,
+    { isRenewal: input.isRenewal }
+  );
 
-      return hardwareKeyTag;
-    }
-  ),
+  return hardwareKeyTag;
+});
 
-  getWalletAttestation: fromPromise<
-    WalletInstanceAttestations,
-    GetWalletAttestationActorParams
-  >(async ({ input }) => {
-    const sessionToken = sessionTokenSelector(store.getState());
-    assert(sessionToken, "sessionToken is undefined");
-    assert(input.integrityKeyTag, "integrityKeyTag is undefined");
+export const getWalletAttestationActor = fromPromise<
+  WalletInstanceAttestations,
+  GetWalletAttestationActorParams
+>(async ({ input }) => {
+  const { env, store } = input.deps;
+  const sessionToken = sessionTokenSelector(store.getState());
+  assert(sessionToken, "sessionToken is undefined");
+  assert(input.integrityKeyTag, "integrityKeyTag is undefined");
 
-    try {
-      return await getWalletInstanceAttestation(
-        env,
-        input.itwVersion,
-        input.integrityKeyTag,
-        sessionToken
-      );
-    } catch (firstError) {
-      // On iOS, the stored DCAppAttest key can become invalid (DCErrorInvalidKey,
-      // com.apple.devicecheck.error 3), causing GENERATION_ASSERTION_FAILED during
-      // assertion generation. We recover by creating a new wallet instance with a
-      // fresh key and retrying the attestation once.
-      const isRenewalError = itwWalletInstanceRenewalErrorSelector(
-        store.getState()
-      );
-
-      // If the error is not related to assertion generation or if we've already attempted a renewal, we throw the error and prompt the user to retry.
-      if (!isAssertionGenerationError(firstError) || isRenewalError) {
-        throw firstError;
-      }
-
-      // Otherwise, we attempt to recover by creating a new wallet instance,
-      // which will generate a new hardware key tag,
-      // and retrying the attestation with the new key tag.
-      const newHardwareKeyTag = await getIntegrityHardwareKeyTag();
-      store.dispatch(itwStoreIntegrityKeyTag(newHardwareKeyTag));
-      await registerWalletInstance(
-        env,
-        input.itwVersion,
-        newHardwareKeyTag,
-        sessionToken,
-        { isRenewal: true }
-      );
-
-      return await getWalletInstanceAttestation(
-        env,
-        input.itwVersion,
-        newHardwareKeyTag,
-        sessionToken
-      )
-        .then(attestation => {
-          // Track the successful renewal in Mixpanel
-          trackWalletInstanceRenewalSuccess();
-          return attestation;
-        })
-        .catch(error => {
-          // If the attestation retrieval fails again after renewing the wallet instance,
-          // we set a flag in the store to prevent further renewal attempts and prompt the user with an error.
-          store.dispatch(itwSetWalletInstanceRenewalError(true));
-          // Track the renewal failure in Mixpanel
-          trackWalletInstanceRenewalFailure(error);
-          throw error;
-        });
-    }
-  }),
-
-  revokeWalletInstance: fromPromise<void, WithItwVersion>(async ({ input }) => {
-    const state = store.getState();
-    const sessionToken = sessionTokenSelector(state);
-    const integrityKeyTag = itwIntegrityKeyTagSelector(state);
-
-    if (O.isNone(integrityKeyTag)) {
-      return;
-    }
-    assert(sessionToken, "sessionToken is undefined");
-
-    await revokeCurrentWalletInstance(
+  try {
+    return await getWalletInstanceAttestation(
       env,
       input.itwVersion,
+      input.integrityKeyTag,
+      sessionToken
+    );
+  } catch (firstError) {
+    // On iOS, the stored DCAppAttest key can become invalid (DCErrorInvalidKey,
+    // com.apple.devicecheck.error 3), causing GENERATION_ASSERTION_FAILED during
+    // assertion generation. We recover by creating a new wallet instance with a
+    // fresh key and retrying the attestation once.
+    const isRenewalError = itwWalletInstanceRenewalErrorSelector(
+      store.getState()
+    );
+
+    // If the error is not related to assertion generation or if we've already attempted a renewal, we throw the error and prompt the user to retry.
+    if (!isAssertionGenerationError(firstError) || isRenewalError) {
+      throw firstError;
+    }
+
+    // Otherwise, we attempt to recover by creating a new wallet instance,
+    // which will generate a new hardware key tag,
+    // and retrying the attestation with the new key tag.
+    const newHardwareKeyTag = await getIntegrityHardwareKeyTag();
+    store.dispatch(itwStoreIntegrityKeyTag(newHardwareKeyTag));
+    await registerWalletInstance(
+      env,
+      input.itwVersion,
+      newHardwareKeyTag,
       sessionToken,
-      integrityKeyTag.value
+      { isRenewal: true }
     );
 
-    // Removes all credentials stored in the secure storage, as they are all linked
-    // to the revoked wallet instance
-    await CredentialsVault.clear();
-  }),
-
-  startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
-    async ({ input }) => {
-      assert(
-        input.walletInstanceAttestation,
-        "walletInstanceAttestation is undefined"
-      );
-      assert(input.identification, "identification is undefined");
-
-      const authenticationContext = await issuanceUtils.startAuthFlow({
-        env,
-        itwVersion: input.itwVersion,
-        walletAttestation: input.walletInstanceAttestation,
-        identification: input.identification,
-        withMRTDPoP: input.withMRTDPoP
+    return await getWalletInstanceAttestation(
+      env,
+      input.itwVersion,
+      newHardwareKeyTag,
+      sessionToken
+    )
+      .then(attestation => {
+        // Track the successful renewal in Mixpanel
+        trackWalletInstanceRenewalSuccess();
+        return attestation;
+      })
+      .catch(error => {
+        // If the attestation retrieval fails again after renewing the wallet instance,
+        // we set a flag in the store to prevent further renewal attempts and prompt the user with an error.
+        store.dispatch(itwSetWalletInstanceRenewalError(true));
+        // Track the renewal failure in Mixpanel
+        trackWalletInstanceRenewalFailure(error);
+        throw error;
       });
+  }
+});
 
-      return {
-        ...authenticationContext,
-        callbackUrl: "" // This is not important in this phase, it will be set after completing the auth flow
-      };
-    }
-  ),
+export const revokeWalletInstanceActor = fromPromise<
+  void,
+  WithItwVersion<{ deps: EidIssuanceMachineDeps }>
+>(async ({ input }) => {
+  const { env, store } = input.deps;
+  const state = store.getState();
+  const sessionToken = sessionTokenSelector(state);
+  const integrityKeyTag = itwIntegrityKeyTagSelector(state);
 
-  initMrtdPoPChallenge: fromPromise<
-    MrtdPoPContext,
-    InitMrtdPoPChallengeActorParams
-  >(async ({ input }) => {
-    assert(input.authenticationContext, "authenticationContext is undefined");
-    assert(
-      input.walletInstanceAttestation,
-      "walletInstanceAttestation is undefined"
-    );
+  if (O.isNone(integrityKeyTag)) {
+    return;
+  }
+  assert(sessionToken, "sessionToken is undefined");
 
-    return mrtdUtils.initMrtdPoPChallenge({
+  await revokeCurrentWalletInstance(
+    env,
+    input.itwVersion,
+    sessionToken,
+    integrityKeyTag.value
+  );
+
+  // Removes all credentials stored in the secure storage, as they are all linked
+  // to the revoked wallet instance
+  await CredentialsVault.clear();
+});
+
+export const startAuthFlowActor = fromPromise<
+  AuthenticationContext,
+  StartAuthFlowActorParams
+>(async ({ input }) => {
+  const { env } = input.deps;
+  assert(
+    input.walletInstanceAttestation,
+    "walletInstanceAttestation is undefined"
+  );
+  assert(input.identification, "identification is undefined");
+
+  const authenticationContext = await issuanceUtils.startAuthFlow({
+    env,
+    itwVersion: input.itwVersion,
+    walletAttestation: input.walletInstanceAttestation,
+    identification: input.identification,
+    withMRTDPoP: input.withMRTDPoP
+  });
+
+  return {
+    ...authenticationContext,
+    callbackUrl: "" // This is not important in this phase, it will be set after completing the auth flow
+  };
+});
+
+export const initMrtdPoPChallengeActor = fromPromise<
+  MrtdPoPContext,
+  InitMrtdPoPChallengeActorParams
+>(async ({ input }) => {
+  assert(input.authenticationContext, "authenticationContext is undefined");
+  assert(
+    input.walletInstanceAttestation,
+    "walletInstanceAttestation is undefined"
+  );
+
+  return mrtdUtils.initMrtdPoPChallenge({
+    itwVersion: input.itwVersion,
+    issuerConf: input.authenticationContext.issuerConf,
+    walletInstanceAttestation: input.walletInstanceAttestation,
+    authRedirectUrl: input.authenticationContext.callbackUrl
+  });
+});
+
+export const validateMrtdPoPChallengeActor = fromPromise<
+  string,
+  ValidateMrtdPoPChallengeActorParams
+>(async ({ input }) => {
+  assert(input.authenticationContext, "authenticationContext is undefined");
+  assert(
+    input.walletInstanceAttestation,
+    "walletInstanceAttestation is undefined"
+  );
+  assert(input.mrtdContext, "mrtdContext is undefined");
+  assert(input.mrtdContext.ias, "IAS is undefined");
+  assert(input.mrtdContext.mrtd, "MRTD is undefined");
+
+  const { callbackUrl } = await mrtdUtils.validateMrtdPoPChallenge({
+    itwVersion: input.itwVersion,
+    issuerConf: input.authenticationContext.issuerConf,
+    walletInstanceAttestation: input.walletInstanceAttestation,
+    mrtd_auth_session: input.mrtdContext.mrtd_auth_session,
+    mrtd_pop_nonce: input.mrtdContext.mrtd_pop_nonce,
+    validationUrl: input.mrtdContext.validationUrl,
+    ias: input.mrtdContext.ias,
+    mrtd: input.mrtdContext.mrtd
+  });
+
+  return callbackUrl;
+});
+
+export const requestAccessTokenActor = fromPromise<
+  CredentialAccessToken,
+  RequestAccessTokenActorParams
+>(async ({ input }) => {
+  assert(
+    input.walletInstanceAttestation,
+    "walletInstanceAttestation is undefined"
+  );
+  assert(
+    input.authenticationContext,
+    "authenticationContext must exist when the identification mode is ciePin"
+  );
+
+  const { accessToken } = await issuanceUtils.completeAuthFlow({
+    ...input.authenticationContext,
+    itwVersion: input.itwVersion,
+    walletAttestation: input.walletInstanceAttestation
+  });
+  return accessToken;
+});
+
+// To ensure a smooth experience when the session token expires, it is important to keep this actor
+// retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
+// rejected for session expired, so it can be reentered and retried from where it failed.
+export const requestEidActor = fromPromise<
+  RequestEidActorOutput,
+  RequestEidActorParams
+>(async ({ input }) => {
+  const { env, store } = input.deps;
+  assert(input.identification, "identification is undefined");
+  assert(input.integrityKeyTag, "integrityKeyTag is undefined");
+  assert(input.accessToken, "accessToken is undefined");
+  assert(input.authenticationContext, "authenticationContext is undefined");
+
+  const sessionToken = sessionTokenSelector(store.getState());
+  assert(sessionToken, "sessionToken is undefined");
+
+  // The Wallet Unit Attestation makes use of the integrity service
+  if (getIoWallet(input.itwVersion).WalletUnitAttestation.isSupported) {
+    await ensureIntegrityServiceIsStoreReadyOrThrow(store);
+  }
+
+  // Take the first element as only one credential is authorized during PID issuance
+  const [authorizedCredential] = await generateKeysWithWalletUnitAttestation(
+    input.accessToken,
+    {
+      env,
       itwVersion: input.itwVersion,
-      issuerConf: input.authenticationContext.issuerConf,
-      walletInstanceAttestation: input.walletInstanceAttestation,
-      authRedirectUrl: input.authenticationContext.callbackUrl
-    });
-  }),
-
-  validateMrtdPoPChallenge: fromPromise<
-    string,
-    ValidateMrtdPoPChallengeActorParams
-  >(async ({ input }) => {
-    assert(input.authenticationContext, "authenticationContext is undefined");
-    assert(
-      input.walletInstanceAttestation,
-      "walletInstanceAttestation is undefined"
-    );
-    assert(input.mrtdContext, "mrtdContext is undefined");
-    assert(input.mrtdContext.ias, "IAS is undefined");
-    assert(input.mrtdContext.mrtd, "MRTD is undefined");
-
-    const { callbackUrl } = await mrtdUtils.validateMrtdPoPChallenge({
-      itwVersion: input.itwVersion,
-      issuerConf: input.authenticationContext.issuerConf,
-      walletInstanceAttestation: input.walletInstanceAttestation,
-      mrtd_auth_session: input.mrtdContext.mrtd_auth_session,
-      mrtd_pop_nonce: input.mrtdContext.mrtd_pop_nonce,
-      validationUrl: input.mrtdContext.validationUrl,
-      ias: input.mrtdContext.ias,
-      mrtd: input.mrtdContext.mrtd
-    });
-
-    return callbackUrl;
-  }),
-
-  requestAccessToken: fromPromise<
-    CredentialAccessToken,
-    RequestAccessTokenActorParams
-  >(async ({ input }) => {
-    assert(
-      input.walletInstanceAttestation,
-      "walletInstanceAttestation is undefined"
-    );
-    assert(
-      input.authenticationContext,
-      "authenticationContext must exist when the identification mode is ciePin"
-    );
-
-    const { accessToken } = await issuanceUtils.completeAuthFlow({
-      ...input.authenticationContext,
-      itwVersion: input.itwVersion,
-      walletAttestation: input.walletInstanceAttestation
-    });
-    return accessToken;
-  }),
-
-  // To ensure a smooth experience when the session token expires, it is important to keep this actor
-  // retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
-  // rejected for session expired, so it can be reentered and retried from where it failed.
-  requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
-    async ({ input }) => {
-      assert(input.identification, "identification is undefined");
-      assert(input.integrityKeyTag, "integrityKeyTag is undefined");
-      assert(input.accessToken, "accessToken is undefined");
-      assert(input.authenticationContext, "authenticationContext is undefined");
-
-      const sessionToken = sessionTokenSelector(store.getState());
-      assert(sessionToken, "sessionToken is undefined");
-
-      // The Wallet Unit Attestation makes use of the integrity service
-      if (getIoWallet(input.itwVersion).WalletUnitAttestation.isSupported) {
-        await ensureIntegrityServiceIsStoreReadyOrThrow(store);
-      }
-
-      // Take the first element as only one credential is authorized during PID issuance
-      const [authorizedCredential] =
-        await generateKeysWithWalletUnitAttestation(input.accessToken, {
-          env,
-          itwVersion: input.itwVersion,
-          hardwareKeyTag: input.integrityKeyTag,
-          sessionToken
-        });
-
-      trackItwRequest(
-        toItwIdMethod(input.identification),
-        input.level === "l3" ? "L3" : "L2"
-      );
-
-      const credential = await issuanceUtils.getPid({
-        authorizedCredential,
-        itwVersion: input.itwVersion,
-        env,
-        accessToken: input.accessToken,
-        ...input.authenticationContext
-      });
-
-      const { walletUnitAttestationId, walletUnitAttestation } =
-        authorizedCredential;
-      return {
-        credential,
-        walletUnitAttestations:
-          walletUnitAttestationId && walletUnitAttestation
-            ? { [walletUnitAttestationId]: walletUnitAttestation }
-            : {}
-      };
+      hardwareKeyTag: input.integrityKeyTag,
+      sessionToken
     }
-  ),
+  );
 
-  obtainStatusList: fromPromise<
-    ObtainStatusListActorOutput,
-    ObtainStatusListActorInput
-  >(async ({ input }) => {
-    const { itwVersion, walletUnitAttestations } = input;
+  trackItwRequest(
+    toItwIdMethod(input.identification),
+    input.level === "l3" ? "L3" : "L2"
+  );
 
-    const ioWallet = getIoWallet(itwVersion);
-    if (
-      !ioWallet.WalletUnitAttestation.isSupported ||
-      !ioWallet.CredentialStatus.statusList.isSupported
-    ) {
-      return undefined;
-    }
+  const credential = await issuanceUtils.getPid({
+    authorizedCredential,
+    itwVersion: input.itwVersion,
+    env,
+    accessToken: input.accessToken,
+    ...input.authenticationContext
+  });
 
-    assert(
-      walletUnitAttestations && Object.keys(walletUnitAttestations).length > 0,
-      "PID Wallet Unit Attestations are not defined or empty"
+  const { walletUnitAttestationId, walletUnitAttestation } =
+    authorizedCredential;
+  return {
+    credential,
+    walletUnitAttestations:
+      walletUnitAttestationId && walletUnitAttestation
+        ? { [walletUnitAttestationId]: walletUnitAttestation }
+        : {}
+  };
+});
+
+export const obtainStatusListActor = fromPromise<
+  ObtainStatusListActorOutput,
+  ObtainStatusListActorInput
+>(async ({ input }) => {
+  const { itwVersion, walletUnitAttestations } = input;
+
+  const ioWallet = getIoWallet(itwVersion);
+  if (
+    !ioWallet.WalletUnitAttestation.isSupported ||
+    !ioWallet.CredentialStatus.statusList.isSupported
+  ) {
+    return undefined;
+  }
+
+  assert(
+    walletUnitAttestations && Object.keys(walletUnitAttestations).length > 0,
+    "PID Wallet Unit Attestations are not defined or empty"
+  );
+
+  // For the Status List we'll need just one of the WUAs, as they all
+  // reference the same Status List. We can take the first one.
+  const [walletUnitAttestationId, walletUnitAttestation] = Object.entries(
+    walletUnitAttestations
+  )[0];
+
+  // Fetch the JWKS from the Wallet Provider's OpenID Federation metadata,
+  const keys = await getKeysForWuaStatusList(walletUnitAttestation);
+
+  return await getCredentialStatusFromStatusList(
+    itwVersion,
+    walletUnitAttestation,
+    walletUnitAttestationId,
+    "dc+sd-jwt",
+    keys
+  );
+});
+
+export const storeEidCredentialActor = fromPromise<
+  void,
+  StoreEidCredentialActorParams
+>(async ({ input }) => {
+  const { store } = input.deps;
+  const { eid, walletUnitAttestations, walletInstanceStatusList } = input;
+  assert(eid, "eID credential is undefined");
+
+  // Persist verified status lists before activating the wallet instance.
+  if (walletInstanceStatusList) {
+    const { parsedStatusList, idx, uri } = walletInstanceStatusList;
+    await StatusListRepository.upsert(uri, parsedStatusList);
+    store.dispatch(itwStoreWalletInstanceStatusList({ idx, uri }));
+  }
+
+  if (walletUnitAttestations) {
+    store.dispatch(itwWalletUnitAttestationsStore(walletUnitAttestations));
+  }
+
+  // Waits for the credential store/replace to complete before proceeding
+  await new Promise<void>((resolve, reject) => {
+    store.dispatch(
+      itwCredentialsReplaceByType([eid], {
+        onComplete: resolve,
+        onError: reject
+      })
     );
-
-    // For the Status List we'll need just one of the WUAs, as they all
-    // reference the same Status List. We can take the first one.
-    const [walletUnitAttestationId, walletUnitAttestation] = Object.entries(
-      walletUnitAttestations
-    )[0];
-
-    // Fetch the JWKS from the Wallet Provider's OpenID Federation metadata,
-    const keys = await getKeysForWuaStatusList(walletUnitAttestation);
-
-    return await getCredentialStatusFromStatusList(
-      itwVersion,
-      walletUnitAttestation,
-      walletUnitAttestationId,
-      "dc+sd-jwt",
-      keys
-    );
-  }),
-
-  storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
-    async ({ input }) => {
-      const { eid, walletUnitAttestations, walletInstanceStatusList } = input;
-      assert(eid, "eID credential is undefined");
-
-      // Persist verified status lists before activating the wallet instance.
-      if (walletInstanceStatusList) {
-        const { parsedStatusList, idx, uri } = walletInstanceStatusList;
-        await StatusListRepository.upsert(uri, parsedStatusList);
-        store.dispatch(itwStoreWalletInstanceStatusList({ idx, uri }));
-      }
-
-      if (walletUnitAttestations) {
-        store.dispatch(itwWalletUnitAttestationsStore(walletUnitAttestations));
-      }
-
-      // Waits for the credential store/replace to complete before proceeding
-      await new Promise<void>((resolve, reject) => {
-        store.dispatch(
-          itwCredentialsReplaceByType([eid], {
-            onComplete: resolve,
-            onError: reject
-          })
-        );
-      });
-    }
-  ),
-
-  credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
-    actions: createCredentialUpgradeActionsImplementation(store),
-    actors: createCredentialUpgradeActorsImplementation(env, store)
-  }),
-
-  ...createCommonActorsImplementation(store)
+  });
 });

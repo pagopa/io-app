@@ -4,6 +4,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { CredentialIssuanceMachineDeps } from "../../../machine/credential/input";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -31,7 +32,10 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: {} as CredentialIssuanceMachineDeps } }}
+      >
         <ItwIssuanceCredentialTrustIssuerScreen />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),

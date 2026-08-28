@@ -10,9 +10,6 @@ import {
   selectItwSpecsVersion
 } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
-import { createCredentialIssuanceActionsImplementation } from "./actions.ts";
-import { createCredentialIssuanceActorsImplementation } from "./actors.ts";
-import { createCredentialIssuanceGuardsImplementation } from "./guards.ts";
 import { itwCredentialIssuanceMachine } from "./machine.ts";
 
 export const ItwCredentialIssuanceMachineContext = createActorContext(
@@ -29,19 +26,14 @@ export const ItwCredentialIssuanceMachineProvider = (
   const env = pipe(useIOSelector(selectItwEnv), getEnv);
   const itwVersion = useIOSelector(selectItwSpecsVersion);
 
-  const credentialIssuanceMachine = itwCredentialIssuanceMachine.provide({
-    guards: createCredentialIssuanceGuardsImplementation(store, itwVersion),
-    actions: createCredentialIssuanceActionsImplementation(
-      navigation,
-      store,
-      toast
-    ),
-    actors: createCredentialIssuanceActorsImplementation(env, itwVersion, store)
-  });
-
   return (
     <ItwCredentialIssuanceMachineContext.Provider
-      logic={credentialIssuanceMachine}
+      logic={itwCredentialIssuanceMachine}
+      options={{
+        input: {
+          deps: { env, itwVersion, navigation, store, toast }
+        }
+      }}
     >
       {props.children}
     </ItwCredentialIssuanceMachineContext.Provider>

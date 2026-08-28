@@ -1,11 +1,8 @@
-import { useIOToast } from "@io-app/design-system";
 import { differenceInSeconds } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ActionArgs, assign } from "xstate";
 
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { trackItwTrustmarkRenewFailure } from "../../analytics";
@@ -16,92 +13,85 @@ import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store
 import { Context } from "./context";
 import { TrustmarkEvents } from "./events";
 
-export const createItwTrustmarkActionsImplementation = (
-  store: ReturnType<typeof useIOStore>,
-  navigation: ReturnType<typeof useIONavigation>,
-  toast: ReturnType<typeof useIOToast>
-) => {
-  /**
-   * Initializes the trustmark machine
-   */
-  const onInit = assign<
-    Context,
-    TrustmarkEvents,
-    unknown,
-    TrustmarkEvents,
-    any
-  >(({ context }) => ({
+/**
+ * Initializes the trustmark machine from the Redux store.
+ */
+export const onInitAction = assign<
+  Context,
+  TrustmarkEvents,
+  unknown,
+  TrustmarkEvents,
+  any
+>(({ context }) => {
+  const { store } = context.deps;
+  return {
     walletInstanceAttestation: itwWalletInstanceAttestationSelector(
       store.getState()
     ),
     credential: O.toUndefined(
       itwCredentialSelector(context.credentialType)(store.getState())
     )
-  }));
-
-  const storeWalletInstanceAttestation = ({
-    context
-  }: ActionArgs<Context, TrustmarkEvents, TrustmarkEvents>) => {
-    assert(
-      context.walletInstanceAttestation,
-      "walletInstanceAttestation is undefined"
-    );
-    store.dispatch(
-      itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
-    );
   };
+});
 
-  /**
-   * Handles the session expired event by dispatching the session expired action and navigating back to the credential details screen
-   */
-  const handleSessionExpired = () => {
-    store.dispatch(checkCurrentSession.success({ isSessionValid: false }));
-    navigation.pop();
-  };
+export const storeWalletInstanceAttestationAction = ({
+  context
+}: ActionArgs<Context, TrustmarkEvents, TrustmarkEvents>) => {
+  assert(
+    context.walletInstanceAttestation,
+    "walletInstanceAttestation is undefined"
+  );
+  context.deps.store.dispatch(
+    itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
+  );
+};
 
-  /**
-   * Shows a failure toast
-   */
-  const showRetryFailureToast = ({
-    context
-  }: ActionArgs<Context, TrustmarkEvents, TrustmarkEvents>) => {
-    const timeDiffInSeconds = differenceInSeconds(
-      context.nextAttemptAt || new Date(),
-      new Date()
-    );
+/**
+ * Handles the session expired event by dispatching the session expired action and navigating back to the credential details screen
+ */
+export const handleSessionExpiredAction = ({
+  context
+}: ActionArgs<Context, TrustmarkEvents, TrustmarkEvents>) => {
+  context.deps.store.dispatch(
+    checkCurrentSession.success({ isSessionValid: false })
+  );
+  context.deps.navigation.pop();
+};
 
-    const time =
-      timeDiffInSeconds > 60
-        ? Math.ceil(timeDiffInSeconds / 60)
-        : timeDiffInSeconds;
+/**
+ * Shows a failure toast
+ */
+export const showRetryFailureToastAction = ({
+  context
+}: ActionArgs<Context, TrustmarkEvents, TrustmarkEvents>) => {
+  const timeDiffInSeconds = differenceInSeconds(
+    context.nextAttemptAt || new Date(),
+    new Date()
+  );
 
-    const timeString = I18n.t(
-      timeDiffInSeconds > 60 ? "date.time.minutes" : "date.time.seconds",
-      {
-        count: time
-      }
-    );
+  const time =
+    timeDiffInSeconds > 60
+      ? Math.ceil(timeDiffInSeconds / 60)
+      : timeDiffInSeconds;
 
-    toast.error(
-      I18n.t("features.itWallet.trustmark.failure.toast", {
-        time: timeString
-      })
-    );
-  };
+  const timeString = I18n.t(
+    timeDiffInSeconds > 60 ? "date.time.minutes" : "date.time.seconds",
+    {
+      count: time
+    }
+  );
 
-  const trackTrustmarkFailure = ({
-    context
-  }: ActionArgs<Context, TrustmarkEvents, TrustmarkEvents>) => {
-    trackItwTrustmarkRenewFailure(
-      getMixPanelCredential(context.credentialType, false)
-    );
-  };
+  context.deps.toast.error(
+    I18n.t("features.itWallet.trustmark.failure.toast", {
+      time: timeString
+    })
+  );
+};
 
-  return {
-    onInit,
-    storeWalletInstanceAttestation,
-    handleSessionExpired,
-    showRetryFailureToast,
-    trackTrustmarkFailure
-  };
+export const trackTrustmarkFailureAction = ({
+  context
+}: ActionArgs<Context, TrustmarkEvents, TrustmarkEvents>) => {
+  trackItwTrustmarkRenewFailure(
+    getMixPanelCredential(context.credentialType, false)
+  );
 };

@@ -18,7 +18,8 @@ export const mrtdPoPState = itwEidIssuanceMachineSetup.createStateConfig({
         input: ({ context }) => ({
           itwVersion: context.itwVersion,
           authenticationContext: context.authenticationContext,
-          walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+          walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+          deps: context.deps
         }),
         onDone: {
           target: "DisplayingCanPreparationInstructions",
@@ -143,7 +144,8 @@ export const mrtdPoPState = itwEidIssuanceMachineSetup.createStateConfig({
           itwVersion: context.itwVersion,
           authenticationContext: context.authenticationContext,
           mrtdContext: context.mrtdContext,
-          walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+          walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+          deps: context.deps
         }),
         onDone: {
           target: "#itwEidIssuanceMachine.MrtdPoP.Authorization",

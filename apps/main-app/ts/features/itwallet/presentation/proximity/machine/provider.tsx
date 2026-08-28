@@ -7,9 +7,6 @@ import { useIOSelector, useIOStore } from "../../../../../store/hooks.ts";
 import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug.ts";
 import { selectItwEnv } from "../../../common/store/selectors/environment.ts";
 import { getEnv } from "../../../common/utils/environment.ts";
-import { createProximityActionsImplementation } from "./actions.ts";
-import { createProximityActorsImplementation } from "./actors.ts";
-import { createProximityGuardsImplementation } from "./guards.ts";
 import { itwProximityMachine } from "./machine.ts";
 
 export const ItwProximityMachineContext =
@@ -23,14 +20,13 @@ export const ItwProximityMachineProvider = ({
 
   const env = getEnv(useIOSelector(selectItwEnv));
 
-  const proximityMachine = itwProximityMachine.provide({
-    actions: createProximityActionsImplementation(navigation, store),
-    actors: createProximityActorsImplementation(env),
-    guards: createProximityGuardsImplementation(store)
-  });
-
   return (
-    <ItwProximityMachineContext.Provider logic={proximityMachine}>
+    <ItwProximityMachineContext.Provider
+      logic={itwProximityMachine}
+      options={{
+        input: { deps: { env, navigation, store } }
+      }}
+    >
       <DebugData />
       {children}
     </ItwProximityMachineContext.Provider>
@@ -49,10 +45,11 @@ const DebugData = () => {
 const MachineDebugData = () => {
   const state = ItwProximityMachineContext.useSelector(({ value }) => value);
   const context = ItwProximityMachineContext.useSelector(({ context: c }) => c);
+  const { deps: _, ...debugContext } = context;
 
   useDebugInfo({
     state,
-    ...context
+    ...debugContext
   });
 
   return null;

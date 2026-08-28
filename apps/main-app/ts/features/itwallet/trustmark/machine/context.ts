@@ -3,6 +3,7 @@ import {
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { TrustmarkFailure } from "./failure";
+import { TrustmarkMachineDeps } from "./input";
 
 export type Context = {
   /**
@@ -17,6 +18,10 @@ export type Context = {
    * The credential type to get the trustmark for
    */
   credentialType: string;
+  /**
+   * Runtime dependencies injected via machine input
+   */
+  deps: TrustmarkMachineDeps;
   /**
    * The expiration date of the trustmark
    */

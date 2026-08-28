@@ -1,22 +1,18 @@
-import { assign, fromCallback, fromPromise, setup } from "xstate";
+import { assign, setup } from "xstate";
 
 import { ItwSessionExpiredError } from "../../api/client";
+import { waitForSessionRefreshActor } from "../utils/actors";
+import { handleSessionExpiredAction, storeCredentialAction } from "./actions";
 import {
-  LoadContextOutput,
-  RequestAccessTokenOutput,
-  RequestAccessTokenParams,
-  UpgradeCredentialOutput,
-  UpgradeCredentialParams
+  loadContextActor,
+  requestAccessTokenActor,
+  upgradeCredentialActor
 } from "./actors";
 import { Context } from "./context";
 import { CredentialUpgradeEvents } from "./events";
 import { mapUpgradeEventToFailure } from "./failure";
 import { Input } from "./input";
 import { Output } from "./output";
-
-const notImplemented = () => {
-  throw new Error("Not implemented");
-};
 
 /** Defines typed credential-upgrade actors while providers inject runtime side effects. */
 export const itwUpgradeSetup = setup({
@@ -27,7 +23,7 @@ export const itwUpgradeSetup = setup({
     output: {} as Output
   },
   actions: {
-    storeCredential: notImplemented,
+    storeCredential: storeCredentialAction,
     pickNextCredential: assign({
       credentialIndex: ({ context }) => context.credentialIndex + 1
     }),
@@ -48,19 +44,13 @@ export const itwUpgradeSetup = setup({
         return [...context.failedCredentials, failedCredential];
       }
     }),
-    handleSessionExpired: notImplemented
+    handleSessionExpired: handleSessionExpiredAction
   },
   actors: {
-    requestAccessToken: fromPromise<
-      RequestAccessTokenOutput,
-      RequestAccessTokenParams
-    >(notImplemented),
-    loadContext: fromPromise<LoadContextOutput>(notImplemented),
-    upgradeCredential: fromPromise<
-      UpgradeCredentialOutput,
-      UpgradeCredentialParams
-    >(notImplemented),
-    waitForSessionRefresh: fromCallback(notImplemented)
+    requestAccessToken: requestAccessTokenActor,
+    loadContext: loadContextActor,
+    upgradeCredential: upgradeCredentialActor,
+    waitForSessionRefresh: waitForSessionRefreshActor
   },
   guards: {
     isSessionExpired: ({ event }) =>

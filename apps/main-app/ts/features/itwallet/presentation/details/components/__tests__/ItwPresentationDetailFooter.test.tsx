@@ -16,6 +16,7 @@ import {
 } from "../../../../common/utils/itwMocksUtils.ts";
 import * as credentialSelectors from "../../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
+import { CredentialIssuanceMachineDeps } from "../../../../machine/credential/input.ts";
 import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider.tsx";
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
@@ -140,7 +141,10 @@ const renderComponent = (credentialType: CredentialType) => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
+      <ItwCredentialIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: {} as CredentialIssuanceMachineDeps } }}
+      >
         <ItwPresentationDetailsFooter
           credential={{
             ...ItwStoredCredentialsMocks.dc,
