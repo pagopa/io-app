@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.23](https://github.com/pagopa/io-app/compare/3.38.0-rc.22...3.38.0-rc.23) (2026-08-28)
+
+
+### Features
+
+* [[IOPID-4144](https://pagopa.atlassian.net/browse/IOPID-4144)] Add OneIdentity Idps fetching and validation ([#8421](https://github.com/pagopa/io-app/issues/8421)) ([afbb78f](https://github.com/pagopa/io-app/commit/afbb78f0a2f25145808e3a3147b376799e3cc3df))
+* **IT-Wallet:** [[SIW-4720](https://pagopa.atlassian.net/browse/SIW-4720)] Implement batch credential refill logic  ([#8453](https://github.com/pagopa/io-app/issues/8453)) ([d0f2918](https://github.com/pagopa/io-app/commit/d0f29180773b4a9e3a0981748e35d0515a14b8f0))
+* **IT-Wallet:** [[SIW-4732](https://pagopa.atlassian.net/browse/SIW-4732)] CieID L3 tracking ([#8404](https://github.com/pagopa/io-app/issues/8404)) ([ce73ae7](https://github.com/pagopa/io-app/commit/ce73ae72110d761087628c9963dc0cd45bbdd191))
+
+
+### Bug Fixes
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] `react-native-ble-plx` permissions and build issues ([#8506](https://github.com/pagopa/io-app/issues/8506)) ([08124b3](https://github.com/pagopa/io-app/commit/08124b35f3440753543b6fbd1a7d4502cc4100d7))
+
 ## [3.38.0-rc.22](https://github.com/pagopa/io-app/compare/3.38.0-rc.21...3.38.0-rc.22) (2026-08-28)
 
 
