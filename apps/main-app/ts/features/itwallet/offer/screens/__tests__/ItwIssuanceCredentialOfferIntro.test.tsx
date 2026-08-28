@@ -36,7 +36,6 @@ const T_TRUST_ISSUER_BASE_URL = "https://eaa.wallet.ipzs.it";
 const TEST_NAVIGATOR_ROUTE = "TEST_NAVIGATOR";
 
 const Stack = createStackNavigator<ItwParamsList>();
-const someOption = <T,>(value: T) => ({ _tag: "Some" as const, value });
 
 describe("ItwIssuanceCredentialOfferIntroScreen", () => {
   const machineSend = jest.fn();
@@ -66,7 +65,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       .spyOn(ItwCredentialIssuanceMachineContext, "useSelector")
       .mockImplementation(selector => {
         if (selector === selectResolvedCredentialOffer) {
-          return someOption({
+          return {
             offer: { credential_issuer: T_TRUST_ISSUER_BASE_URL },
             grantDetails: {
               authorizationCodeGrant: {
@@ -74,11 +73,11 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
                 scope: T_CREDENTIAL_TYPE
               }
             }
-          }) as any;
+          } as any;
         }
 
         if (selector === selectCredentialType) {
-          return someOption(T_CREDENTIAL_TYPE) as any;
+          return T_CREDENTIAL_TYPE as any;
         }
 
         return undefined as any;

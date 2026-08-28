@@ -44,6 +44,17 @@ describe("parseClaimValue", () => {
       "drivingPrivileges"
     ],
     [
+      "the mDL driving privileges, flat mDoc format",
+      [
+        {
+          vehicle_category_code: "B",
+          issue_date: "2013-10-19",
+          expiry_date: "2034-04-04"
+        }
+      ],
+      "drivingPrivileges"
+    ],
+    [
       "the mDL driving privileges, legacy JSON string format",
       '[{"driving_privilege":"AM","issue_date":"1935-01-23","expiry_date":"2035-02-16","restrictions_conditions":""}]',
       "drivingPrivileges"

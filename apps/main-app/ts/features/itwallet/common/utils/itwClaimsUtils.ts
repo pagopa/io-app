@@ -604,7 +604,7 @@ const FISCAL_CODE_REGEX =
 /**
  * Extract a fiscal code from any string.
  * @param s - the input string
- * @returns An option with the extracted fiscal code
+ * @returns The extracted fiscal code, `undefined` when the string does not contain one
  */
 export const extractFiscalCode = (s: string): string | undefined =>
   s.match(FISCAL_CODE_REGEX)?.[0];

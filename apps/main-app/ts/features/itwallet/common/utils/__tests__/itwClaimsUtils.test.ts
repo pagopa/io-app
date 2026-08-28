@@ -403,6 +403,25 @@ describe("DrivingPrivilegesCustomClaim", () => {
       );
     }
   });
+  it("normalizes the flat mDoc format", () => {
+    const res = DrivingPrivilegesCustomClaim.safeParse([
+      {
+        vehicle_category_code: "B",
+        issue_date: "2013-10-19",
+        expiry_date: "2034-04-04"
+      }
+    ]);
+
+    expect(res.success).toBe(true);
+    if (res.success) {
+      expect(res.data).toHaveLength(1);
+      expect(res.data[0].driving_privilege).toBe("B");
+      // The flat format carries no restriction codes
+      expect(res.data[0].restrictions_conditions).toBeNull();
+      expect(res.data[0].issue_date.toString()).toBe("19/10/2013");
+      expect(res.data[0].expiry_date.toString()).toBe("04/04/2034");
+    }
+  });
 });
 
 describe("DrivingPrivilegesValueRaw", () => {
