@@ -2,6 +2,72 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.22](https://github.com/pagopa/io-app/compare/3.38.0-rc.21...3.38.0-rc.22) (2026-08-28)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4725](https://pagopa.atlassian.net/browse/SIW-4725)] add proximity failure tracking events ([#8409](https://github.com/pagopa/io-app/issues/8409)) ([dd8ed2f](https://github.com/pagopa/io-app/commit/dd8ed2f85cd4d03ea51a0a88da0be99a504473c4))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4836](https://pagopa.atlassian.net/browse/SIW-4836)] Get Authentic Source data origin from the correct field ([#8482](https://github.com/pagopa/io-app/issues/8482)) ([cdf15fc](https://github.com/pagopa/io-app/commit/cdf15fc418fcd2230725cfab74c4c2a1fc35a818))
+* [[IEL-739](https://pagopa.atlassian.net/browse/IEL-739)] Error handling on fetch in FCI retry saga ([#8380](https://github.com/pagopa/io-app/issues/8380)) ([84288ad](https://github.com/pagopa/io-app/commit/84288ad5abf65318432f17e1c55eb1f465b3d047))
+* **IT-Wallet:** [[SIW-4667](https://pagopa.atlassian.net/browse/SIW-4667)] persist Qualtrics banner dismissal on Wallet Home ([#8300](https://github.com/pagopa/io-app/issues/8300)) ([7e9e3b3](https://github.com/pagopa/io-app/commit/7e9e3b33765ee4f6e2536aa82d27e792810e78b6))
+* **IT-Wallet:** [[SIW-4761](https://pagopa.atlassian.net/browse/SIW-4761)] Fix id request payload (mixpanel) ([#8476](https://github.com/pagopa/io-app/issues/8476)) ([6b83156](https://github.com/pagopa/io-app/commit/6b831561ccd213a0815b391b12daea219852e637))
+
+## [3.38.0-rc.21](https://github.com/pagopa/io-app/compare/3.38.0-rc.20...3.38.0-rc.21) (2026-08-26)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4429](https://pagopa.atlassian.net/browse/SIW-4429)] missing expiring label for PID and mDL ([#8392](https://github.com/pagopa/io-app/issues/8392)) ([53f2694](https://github.com/pagopa/io-app/commit/53f26947940b4452049a2b0e22c0acdbf2a80170))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3706](https://pagopa.atlassian.net/browse/SIW-3706)] Enhance accessibility for markdown links ([#8235](https://github.com/pagopa/io-app/issues/8235)) ([d464e7c](https://github.com/pagopa/io-app/commit/d464e7c04407ddf7bfa126543c2467b0c0f0d2de))
+* **IT-Wallet:** [[SIW-4487](https://pagopa.atlassian.net/browse/SIW-4487)] Add consent denied handling in proximity flow ([#8408](https://github.com/pagopa/io-app/issues/8408)) ([6aa36b1](https://github.com/pagopa/io-app/commit/6aa36b14d9483962719b71d03a5031935529bf06))
+* **release:** 3.37.1-rc.0 ([#8477](https://github.com/pagopa/io-app/issues/8477)) ([16b3a39](https://github.com/pagopa/io-app/commit/16b3a3975011de49ddc84ab6d6bf52f2f8e9800e))
+
+## [3.38.0-rc.20](https://github.com/pagopa/io-app/compare/3.38.0-rc.19...3.38.0-rc.20) (2026-08-25)
+
+
+### Features
+
+* [[SIW-3593](https://pagopa.atlassian.net/browse/SIW-3593)] Get and verify WI/WUA TSL ([#8396](https://github.com/pagopa/io-app/issues/8396)) ([7a2109e](https://github.com/pagopa/io-app/commit/7a2109e4ce5062c317b50431ca24a3a3eabb26d4))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4830](https://pagopa.atlassian.net/browse/SIW-4830)] restrict ITW surveys to L3, move triggers to redux ([#8474](https://github.com/pagopa/io-app/issues/8474)) ([5a683a5](https://github.com/pagopa/io-app/commit/5a683a51810121ce65997a1ae5d717b66f946ebf))
+
+
+### Chores
+
+* [[IOPLT-2013](https://pagopa.atlassian.net/browse/IOPLT-2013)] Removed unused dependencies from `dev-server` ([#8471](https://github.com/pagopa/io-app/issues/8471)) ([be74b97](https://github.com/pagopa/io-app/commit/be74b97f131b114b4d075d5159bd1c41e02b7e04))
+
+### [3.37.1-rc.0](https://github.com/pagopa/io-app/compare/3.37.0-rc.13...3.37.1-rc.0) (2026-08-25)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4830](https://pagopa.atlassian.net/browse/SIW-4830)] restrict ITW surveys to L3, move triggers to redux ([#8474](https://github.com/pagopa/io-app/issues/8474)) ([4dc4bcd](https://github.com/pagopa/io-app/commit/4dc4bcd4fcca4359c3a49536eb13fd0917fc92e8))
+
+## [3.38.0-rc.19](https://github.com/pagopa/io-app/compare/3.38.0-rc.18...3.38.0-rc.19) (2026-08-24)
+
+
+### Bug Fixes
+
+* [[IEG-3155](https://pagopa.atlassian.net/browse/IEG-3155)] CGN header accessibility focus on landing ([#8469](https://github.com/pagopa/io-app/issues/8469)) ([8d2229d](https://github.com/pagopa/io-app/commit/8d2229d028355f710886a071394fedd2c9ec4dd5))
+
+
+### Chores
+
+* [[IOPLT-2016](https://pagopa.atlassian.net/browse/IOPLT-2016)] Removed unused dependencies from `api-types` library ([#8472](https://github.com/pagopa/io-app/issues/8472)) ([d8cef91](https://github.com/pagopa/io-app/commit/d8cef9192628fd0b0f6fc34f09f60677a8f80349))
+* **deps:** [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Update `nx` version to 23 ([#8464](https://github.com/pagopa/io-app/issues/8464)) ([ad80186](https://github.com/pagopa/io-app/commit/ad80186121ae33a82d9ac8fe5aa95a76f48ada0b))
+
 ## [3.38.0-rc.18](https://github.com/pagopa/io-app/compare/3.38.0-rc.17...3.38.0-rc.18) (2026-08-18)
 
 ## [3.38.0-rc.17](https://github.com/pagopa/io-app/compare/3.38.0-rc.16...3.38.0-rc.17) (2026-08-14)

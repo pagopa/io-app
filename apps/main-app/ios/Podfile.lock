@@ -1,8 +1,6 @@
 PODS:
   - Alamofire (5.11.2)
   - boost (1.84.0)
-  - BVLinearGradient (2.8.3):
-    - React-Core
   - CieSDK (0.1.21)
   - DoubleConversion (1.1.6)
   - EXApplication (55.0.15):
@@ -45,6 +43,8 @@ PODS:
   - ExpoBackgroundTask (55.0.18):
     - ExpoModulesCore
     - ExpoTaskManager
+  - ExpoBrightness (55.0.15):
+    - ExpoModulesCore
   - ExpoCalendar (55.0.17):
     - ExpoModulesCore
   - ExpoClipboard (55.0.15):
@@ -62,6 +62,8 @@ PODS:
   - ExpoImagePicker (55.0.22):
     - ExpoModulesCore
   - ExpoKeepAwake (55.0.8):
+    - ExpoModulesCore
+  - ExpoLinearGradient (55.0.16):
     - ExpoModulesCore
   - ExpoLocalAuthentication (55.0.16):
     - ExpoModulesCore
@@ -218,6 +220,7 @@ PODS:
   - MixpanelReactNative (3.3.0):
     - Mixpanel-swift (= 5.2.0)
     - React-Core
+  - MultiplatformBleAdapter (0.2.0)
   - OpenSSL-Universal (3.6.2000)
   - pagopa-io-react-native-cieid (0.5.2):
     - boost
@@ -2391,6 +2394,35 @@ PODS:
     - Yoga
   - react-native-background-timer (2.1.1):
     - React
+  - react-native-ble-plx (3.5.1):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - MultiplatformBleAdapter (= 0.2.0)
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
   - react-native-blob-util (0.24.6):
     - boost
     - DoubleConversion
@@ -2696,8 +2728,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-screen-brightness (2.0.0-alpha):
-    - React
   - react-native-skia (2.6.4):
     - boost
     - DoubleConversion
@@ -3373,8 +3403,6 @@ PODS:
     - Yoga
   - ReactNativeExceptionHandler (2.10.8):
     - React
-  - RNBluetoothStateManager (1.3.5):
-    - React-Core
   - RNCAsyncStorage (2.0.0):
     - boost
     - DoubleConversion
@@ -3861,13 +3889,13 @@ PODS:
 
 DEPENDENCIES:
   - boost (from `../../../node_modules/react-native/third-party-podspecs/boost.podspec`)
-  - BVLinearGradient (from `../../../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../../../node_modules/expo-application/ios`)
   - EXConstants (from `../../../node_modules/expo-constants/ios`)
   - Expo (from `../../../node_modules/expo`)
   - ExpoAsset (from `../../../node_modules/expo-asset/ios`)
   - ExpoBackgroundTask (from `../../../node_modules/expo-background-task/ios`)
+  - ExpoBrightness (from `../../../node_modules/expo-brightness/ios`)
   - ExpoCalendar (from `../../../node_modules/expo-calendar/ios`)
   - ExpoClipboard (from `../../../node_modules/expo-clipboard/ios`)
   - ExpoDevice (from `../../../node_modules/expo-device/ios`)
@@ -3877,6 +3905,7 @@ DEPENDENCIES:
   - ExpoFont (from `../../../node_modules/expo-font/ios`)
   - ExpoImagePicker (from `../../../node_modules/expo-image-picker/ios`)
   - ExpoKeepAwake (from `../../../node_modules/expo-keep-awake/ios`)
+  - ExpoLinearGradient (from `../../../node_modules/expo-linear-gradient/ios`)
   - ExpoLocalAuthentication (from `../../../node_modules/expo-local-authentication/ios`)
   - "ExpoLogBox (from `../../../node_modules/@expo/log-box`)"
   - ExpoModulesCore (from `../../../node_modules/expo-modules-core`)
@@ -3942,6 +3971,7 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../../../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - React-mutationobservernativemodule (from `../../../node_modules/react-native/ReactCommon/react/nativemodule/mutationobserver`)
   - react-native-background-timer (from `../../../node_modules/react-native-background-timer`)
+  - react-native-ble-plx (from `../../../node_modules/react-native-ble-plx`)
   - react-native-blob-util (from `../../../node_modules/react-native-blob-util`)
   - react-native-config (from `../../../node_modules/react-native-config`)
   - "react-native-cookies (from `../../../node_modules/@react-native-cookies/cookies`)"
@@ -3955,7 +3985,6 @@ DEPENDENCIES:
   - react-native-quick-crypto (from `../../../node_modules/react-native-quick-crypto`)
   - react-native-randombytes (from `../../../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
-  - react-native-screen-brightness (from `../../../node_modules/react-native-screen-brightness`)
   - "react-native-skia (from `../../../node_modules/@shopify/react-native-skia`)"
   - react-native-splash-screen (from `../../../node_modules/react-native-splash-screen`)
   - react-native-webview (from `../../../node_modules/react-native-webview`)
@@ -3995,7 +4024,6 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../../../node_modules/react-native/ReactCommon`)
   - "ReactNativeBottomSheet (from `../../../node_modules/@swmansion/react-native-bottom-sheet`)"
   - ReactNativeExceptionHandler (from `../../../node_modules/react-native-exception-handler`)
-  - RNBluetoothStateManager (from `../../../node_modules/react-native-bluetooth-state-manager`)
   - "RNCAsyncStorage (from `../../../node_modules/@react-native-async-storage/async-storage`)"
   - RNDeviceInfo (from `../../../node_modules/react-native-device-info`)
   - RNFS (from `../../../node_modules/react-native-fs`)
@@ -4020,6 +4048,7 @@ SPEC REPOS:
     - IOWalletProximity
     - JOSESwift
     - Mixpanel-swift
+    - MultiplatformBleAdapter
     - OpenSSL-Universal
     - Pulsar-haptics
     - React-Codegen
@@ -4041,8 +4070,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   boost:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/boost.podspec"
-  BVLinearGradient:
-    :path: "../../../node_modules/react-native-linear-gradient"
   DoubleConversion:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXApplication:
@@ -4055,6 +4082,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-asset/ios"
   ExpoBackgroundTask:
     :path: "../../../node_modules/expo-background-task/ios"
+  ExpoBrightness:
+    :path: "../../../node_modules/expo-brightness/ios"
   ExpoCalendar:
     :path: "../../../node_modules/expo-calendar/ios"
   ExpoClipboard:
@@ -4073,6 +4102,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-image-picker/ios"
   ExpoKeepAwake:
     :path: "../../../node_modules/expo-keep-awake/ios"
+  ExpoLinearGradient:
+    :path: "../../../node_modules/expo-linear-gradient/ios"
   ExpoLocalAuthentication:
     :path: "../../../node_modules/expo-local-authentication/ios"
   ExpoLogBox:
@@ -4202,6 +4233,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native/ReactCommon/react/nativemodule/mutationobserver"
   react-native-background-timer:
     :path: "../../../node_modules/react-native-background-timer"
+  react-native-ble-plx:
+    :path: "../../../node_modules/react-native-ble-plx"
   react-native-blob-util:
     :path: "../../../node_modules/react-native-blob-util"
   react-native-config:
@@ -4228,8 +4261,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-randombytes"
   react-native-safe-area-context:
     :path: "../../../node_modules/react-native-safe-area-context"
-  react-native-screen-brightness:
-    :path: "../../../node_modules/react-native-screen-brightness"
   react-native-skia:
     :path: "../../../node_modules/@shopify/react-native-skia"
   react-native-splash-screen:
@@ -4308,8 +4339,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@swmansion/react-native-bottom-sheet"
   ReactNativeExceptionHandler:
     :path: "../../../node_modules/react-native-exception-handler"
-  RNBluetoothStateManager:
-    :path: "../../../node_modules/react-native-bluetooth-state-manager"
   RNCAsyncStorage:
     :path: "../../../node_modules/@react-native-async-storage/async-storage"
   RNDeviceInfo:
@@ -4342,7 +4371,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 400275dd1c6d87d95a041861d2a59da4b520a203
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
-  BVLinearGradient: cb006ba232a1f3e4f341bb62c42d1098c284da70
   CieSDK: 832ee98a89d0fc79c1a429c6ad8f31a056741d59
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   EXApplication: 82a44fa8236bb644a805ee21e64054eeb01d22ea
@@ -4350,6 +4378,7 @@ SPEC CHECKSUMS:
   Expo: fb8cded217862a2c6fc046a6cc68aa83a2ed15f0
   ExpoAsset: 7721c5c4ae2a7c3c8147a046727ac6c020b05648
   ExpoBackgroundTask: 2c988fa88705c72b07f0e60d5661d566df611980
+  ExpoBrightness: 6080760e05eb3dcd9765024472d4c78a50f3b201
   ExpoCalendar: a3a1a208327305361637b6127390e7b61c62bba5
   ExpoClipboard: 0e4b587fc6b5c5996b4ad4e5804d509e90aa6c75
   ExpoDevice: b8a65afe42c3c5934eb6983870672fe785b39dea
@@ -4359,6 +4388,7 @@ SPEC CHECKSUMS:
   ExpoFont: a7e34a75bdfb703fa07a0e87807f836236608c76
   ExpoImagePicker: f82edc16bb8eeb6260c2759b0015afc0ab45a3d0
   ExpoKeepAwake: d0eb7a0719500d2a43fbf29b6f79e84d70c75ebf
+  ExpoLinearGradient: caf2c659e6ea0c473ece8f6164eaeae05740664d
   ExpoLocalAuthentication: c4abaae8709b8b15727f2e8dd6d74c5ad38acb0c
   ExpoLogBox: a678d36477ab9544fe63e0b5328a0716539b6774
   ExpoModulesCore: cc07ebf5b947a239f1669cb5856d905cb2b093f7
@@ -4381,6 +4411,7 @@ SPEC CHECKSUMS:
   JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79
   Mixpanel-swift: de454db5987bf6f601106520a44663fc556e8cfa
   MixpanelReactNative: 1f0d8718b2be7174f719ed5db8e8f75d7975dea4
+  MultiplatformBleAdapter: b1fddd0d499b96b607e00f0faa8e60648343dc1d
   OpenSSL-Universal: ecee7b138fa75a74ecf00d7ffd248fb584739b9e
   pagopa-io-react-native-cieid: 3969ed1784e0b9041baf892b461be3640315acd1
   pagopa-io-react-native-crypto: eb62bb6767b44ea610ce169d855c89604b9e96d9
@@ -4430,6 +4461,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: a16f4cf13979dafdf60d5c51993928374ad8b4e9
   React-mutationobservernativemodule: 0b13c5342cb1c4dc613ef8d0869d25056e19dd89
   react-native-background-timer: 007ff829f79644caf2ed013e22f0563560336f86
+  react-native-ble-plx: 152b07bdf772c95e30c0251649d462b5154a0e13
   react-native-blob-util: 04189c38b188b2b76ee453be34765241c552547f
   react-native-config: 2249b7e68644c86ea68358f5a0d746d1c648f900
   react-native-cookies: d648ab7025833b977c0b19e142503034f5f29411
@@ -4443,7 +4475,6 @@ SPEC CHECKSUMS:
   react-native-quick-crypto: dac9db2adb0a61b4881909b6db7c51eaaada66a8
   react-native-randombytes: 4eeddad82d1fd57adda1cd5beffe67d041c9d6de
   react-native-safe-area-context: befb5404eb8a16fdc07fa2bebab3568ecabcbb8a
-  react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
   react-native-skia: 80db9e2f8f8b16f8f22b563f0a3874c14026c1e2
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
   react-native-webview: 654f794a7686b47491cf43aa67f7f428bea00eed
@@ -4483,7 +4514,6 @@ SPEC CHECKSUMS:
   ReactCommon: d71e3b6d0134b09c1ec8e656f81daefae6902a97
   ReactNativeBottomSheet: 03b2317ce62b9f686e6caad94fe5124534791831
   ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
-  RNBluetoothStateManager: 929f132d0dacf65cb4767a11e2803e47fdda9e73
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
