@@ -1,5 +1,5 @@
+import { getRedirects } from "@io-app/login-utils";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { getRedirects } from "@pagopa/io-react-native-login-utils";
 import pako from "pako";
 import URLParse from "url-parse";
 import { parseStringPromise } from "xml2js";

@@ -20,7 +20,7 @@ jest.mock("../..", () => {
       .mockResolvedValue(jwkPublicKey as PublicKey)
   };
 });
-jest.mock("@pagopa/io-react-native-login-utils", () => ({
+jest.mock("@io-app/login-utils", () => ({
   getRedirects: jest.fn().mockRejectedValue({
     userInfo: {
       Error: "fake network error",
