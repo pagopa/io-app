@@ -531,6 +531,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Luogo di Nascita Nascosto"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -625,6 +626,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Numero identificativo dell'istituzione (TEAM) Nascosto"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -719,6 +721,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Data di Nascita Nascosto"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -813,6 +816,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Provincia Nascosto"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -907,6 +911,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Nazione Nascosto"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1001,6 +1006,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Sesso Nascosto"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1095,6 +1101,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Data di Scadenza Nascosto"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1189,6 +1196,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Numero identificativo della tessera (TEAM) Nascosto"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1283,6 +1291,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Nome Nascosto"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1377,6 +1386,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Codice Fiscale Nascosto"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1471,6 +1481,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Cognome Nascosto"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1564,6 +1575,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessible={false}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -2555,6 +2567,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Luogo di Nascita Rome (IT)"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -2839,6 +2852,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Data di Nascita; 06/01/1991"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -3503,6 +3517,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Data di Scadenza; 22/02/2025; Scaduta"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -4031,6 +4046,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <View
                           accessibilityLabel="Codice Fiscale RSSMRA80A10H501A"
                           accessible={true}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -4314,6 +4330,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessible={false}
+                          focusable={false}
                           style={
                             {
                               "marginHorizontal": -24,
