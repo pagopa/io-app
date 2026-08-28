@@ -1,5 +1,5 @@
 import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
-import * as LoginUtils from "@pagopa/io-react-native-login-utils";
+import * as LoginUtils from "expo-web-browser";
 import { testSaga } from "redux-saga-test-plan";
 
 import { fimsTrackingEnrichedUrlsSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
@@ -63,7 +63,7 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .select(fimsEphemeralSessionOniOSSelector)
         .next(false)
         .call(
-          LoginUtils.openAuthenticationSession,
+          LoginUtils.openAuthSessionAsync,
           "https://relyingParty.url/inAppBrowserLandingPage",
           "iossoapi",
           true
@@ -111,7 +111,7 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .select(fimsEphemeralSessionOniOSSelector)
         .next(true)
         .call(
-          LoginUtils.openAuthenticationSession,
+          LoginUtils.openAuthSessionAsync,
           "https://relyingParty.url/inAppBrowserLandingPage",
           "iossoapi",
           false
@@ -258,7 +258,7 @@ describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
         .select(fimsEphemeralSessionOniOSSelector)
         .next(false)
         .call(
-          LoginUtils.openAuthenticationSession,
+          LoginUtils.openAuthSessionAsync,
           "https://relyingParty.url/inAppBrowserLandingPage",
           "iossoapi",
           true

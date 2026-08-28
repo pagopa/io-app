@@ -7,9 +7,10 @@ import {
   nativeRequest,
   setCookie
 } from "@pagopa/io-react-native-http-client";
-import { supportsInAppBrowser } from "@pagopa/io-react-native-login-utils";
+import { getCustomTabsSupportingBrowsersAsync } from "expo-web-browser";
 import * as E from "fp-ts/lib/Either";
 import { identity, pipe } from "fp-ts/lib/function";
+import { Platform } from "react-native";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 
@@ -59,8 +60,13 @@ export function* handleFimsGetConsentsList(
   // Check that the device has a supported InApp Browser
   // (e.g., on Android, you can disable all browsers and the
   // underlying CustomTabs implementation will not work)
-  const inAppBrowserSupported = yield* call(supportsInAppBrowser);
-  if (!inAppBrowserSupported) {
+  const customTabsSupportingBrowsers = yield* call(
+    getCustomTabsSupportingBrowsersAsync
+  );
+  if (
+    Platform.OS === "android" &&
+    customTabsSupportingBrowsers.browserPackages.length === 0
+  ) {
     const debugMessage = `InApp Browser not supported`;
     yield* call(computeAndTrackAuthenticationError, debugMessage);
 

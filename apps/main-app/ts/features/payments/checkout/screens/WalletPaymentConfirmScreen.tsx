@@ -5,9 +5,9 @@ import {
   ModuleCheckout,
   VSpacer
 } from "@io-app/design-system";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
+import { openAuthSessionAsync } from "expo-web-browser";
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -208,7 +208,7 @@ const WalletPaymentConfirmScreen = () => {
     O.getOrElse(() => "")
   );
 
-  const onLinkPress = (url: string) => openAuthenticationSession(url, "https");
+  const onLinkPress = (url: string) => openAuthSessionAsync(url, "https");
 
   return (
     <IOScrollView

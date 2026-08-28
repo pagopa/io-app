@@ -1,5 +1,5 @@
 import { Banner, VSpacer } from "@io-app/design-system";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import { openAuthSessionAsync } from "expo-web-browser";
 import { useRef } from "react";
 import { View } from "react-native";
 
@@ -32,7 +32,7 @@ const WalletPaymentFeebackBanner = () => {
     mixpanelTrack("VOC_USER_EXIT", {
       screen_name: "PAYMENT_OUTCOMECODE_MESSAGE"
     });
-    return openAuthenticationSession(feedbackBannerConfig.action.url, "");
+    return openAuthSessionAsync(feedbackBannerConfig.action.url);
   };
 
   if (!isBannerEnabled || !feedbackBannerConfig) {
