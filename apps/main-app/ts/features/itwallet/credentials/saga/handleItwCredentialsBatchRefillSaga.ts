@@ -1,5 +1,4 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
-import * as O from "fp-ts/lib/Option";
 import { all, call, put, select } from "typed-redux-saga/macro";
 
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -119,7 +118,7 @@ export function* handleItwCredentialsBatchRefillSaga(
     const sessionToken = yield* select(sessionTokenSelector);
     const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
 
-    if (!sessionToken || O.isNone(integrityKeyTag)) {
+    if (!sessionToken || integrityKeyTag === undefined) {
       return;
     }
 
@@ -138,11 +137,10 @@ export function* handleItwCredentialsBatchRefillSaga(
     }
 
     // The PID is presented to the Issuer to satisfy its DCQL query.
-    const eidOption = yield* select(itwCredentialsEidSelector);
-    if (O.isNone(eidOption)) {
+    const eid = yield* select(itwCredentialsEidSelector);
+    if (eid === undefined) {
       return;
     }
-    const eid = eidOption.value;
 
     const pidCredential = yield* call(CredentialsVault.get, eid.credentialId);
     if (!pidCredential) {
@@ -153,7 +151,7 @@ export function* handleItwCredentialsBatchRefillSaga(
       getValidWalletInstanceAttestation,
       env,
       itwVersion,
-      integrityKeyTag.value,
+      integrityKeyTag,
       sessionToken
     );
 
@@ -212,7 +210,7 @@ export function* handleItwCredentialsBatchRefillSaga(
         clientId,
         credentialType,
         env,
-        hardwareKeyTag: integrityKeyTag.value,
+        hardwareKeyTag: integrityKeyTag,
         issuerConf,
         itwVersion,
         sessionToken

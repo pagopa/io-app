@@ -1,5 +1,4 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
-import * as O from "fp-ts/lib/Option";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { dynamic, throwError } from "redux-saga-test-plan/providers";
@@ -125,13 +124,13 @@ const mockHappyPath = () => {
     .mockReturnValue((() => [proofOfAge]) as never);
   jest
     .spyOn(credentialsSelectors, "itwCredentialsEidSelector")
-    .mockReturnValue(O.some(eid) as never);
+    .mockReturnValue(eid as never);
   jest
     .spyOn(authSelectors, "sessionTokenSelector")
     .mockReturnValue(T_SESSION_TOKEN as never);
   jest
     .spyOn(issuanceSelectors, "itwIntegrityKeyTagSelector")
-    .mockReturnValue(O.some(T_KEY_TAG));
+    .mockReturnValue(T_KEY_TAG);
   jest
     .spyOn(issuanceSelectors, "itwIntegrityServiceStatusSelector")
     .mockReturnValue("ready");
