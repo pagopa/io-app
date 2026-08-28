@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.23](https://github.com/pagopa/io-app/compare/3.38.0-rc.22...3.38.0-rc.23) (2026-08-28)
+
+
+### Features
+
+* [[IOPID-4144](https://pagopa.atlassian.net/browse/IOPID-4144)] Add OneIdentity Idps fetching and validation ([#8421](https://github.com/pagopa/io-app/issues/8421)) ([afbb78f](https://github.com/pagopa/io-app/commit/afbb78f0a2f25145808e3a3147b376799e3cc3df))
+* **IT-Wallet:** [[SIW-4720](https://pagopa.atlassian.net/browse/SIW-4720)] Implement batch credential refill logic  ([#8453](https://github.com/pagopa/io-app/issues/8453)) ([d0f2918](https://github.com/pagopa/io-app/commit/d0f29180773b4a9e3a0981748e35d0515a14b8f0))
+* **IT-Wallet:** [[SIW-4732](https://pagopa.atlassian.net/browse/SIW-4732)] CieID L3 tracking ([#8404](https://github.com/pagopa/io-app/issues/8404)) ([ce73ae7](https://github.com/pagopa/io-app/commit/ce73ae72110d761087628c9963dc0cd45bbdd191))
+
+
+### Bug Fixes
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] `react-native-ble-plx` permissions and build issues ([#8506](https://github.com/pagopa/io-app/issues/8506)) ([08124b3](https://github.com/pagopa/io-app/commit/08124b35f3440753543b6fbd1a7d4502cc4100d7))
+
+## [3.38.0-rc.22](https://github.com/pagopa/io-app/compare/3.38.0-rc.21...3.38.0-rc.22) (2026-08-28)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4725](https://pagopa.atlassian.net/browse/SIW-4725)] add proximity failure tracking events ([#8409](https://github.com/pagopa/io-app/issues/8409)) ([dd8ed2f](https://github.com/pagopa/io-app/commit/dd8ed2f85cd4d03ea51a0a88da0be99a504473c4))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4836](https://pagopa.atlassian.net/browse/SIW-4836)] Get Authentic Source data origin from the correct field ([#8482](https://github.com/pagopa/io-app/issues/8482)) ([cdf15fc](https://github.com/pagopa/io-app/commit/cdf15fc418fcd2230725cfab74c4c2a1fc35a818))
+* [[IEL-739](https://pagopa.atlassian.net/browse/IEL-739)] Error handling on fetch in FCI retry saga ([#8380](https://github.com/pagopa/io-app/issues/8380)) ([84288ad](https://github.com/pagopa/io-app/commit/84288ad5abf65318432f17e1c55eb1f465b3d047))
+* **IT-Wallet:** [[SIW-4667](https://pagopa.atlassian.net/browse/SIW-4667)] persist Qualtrics banner dismissal on Wallet Home ([#8300](https://github.com/pagopa/io-app/issues/8300)) ([7e9e3b3](https://github.com/pagopa/io-app/commit/7e9e3b33765ee4f6e2536aa82d27e792810e78b6))
+* **IT-Wallet:** [[SIW-4761](https://pagopa.atlassian.net/browse/SIW-4761)] Fix id request payload (mixpanel) ([#8476](https://github.com/pagopa/io-app/issues/8476)) ([6b83156](https://github.com/pagopa/io-app/commit/6b831561ccd213a0815b391b12daea219852e637))
+
 ## [3.38.0-rc.21](https://github.com/pagopa/io-app/compare/3.38.0-rc.20...3.38.0-rc.21) (2026-08-26)
 
 
