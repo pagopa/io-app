@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.22](https://github.com/pagopa/io-app/compare/3.38.0-rc.21...3.38.0-rc.22) (2026-08-28)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4725](https://pagopa.atlassian.net/browse/SIW-4725)] add proximity failure tracking events ([#8409](https://github.com/pagopa/io-app/issues/8409)) ([dd8ed2f](https://github.com/pagopa/io-app/commit/dd8ed2f85cd4d03ea51a0a88da0be99a504473c4))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4836](https://pagopa.atlassian.net/browse/SIW-4836)] Get Authentic Source data origin from the correct field ([#8482](https://github.com/pagopa/io-app/issues/8482)) ([cdf15fc](https://github.com/pagopa/io-app/commit/cdf15fc418fcd2230725cfab74c4c2a1fc35a818))
+* [[IEL-739](https://pagopa.atlassian.net/browse/IEL-739)] Error handling on fetch in FCI retry saga ([#8380](https://github.com/pagopa/io-app/issues/8380)) ([84288ad](https://github.com/pagopa/io-app/commit/84288ad5abf65318432f17e1c55eb1f465b3d047))
+* **IT-Wallet:** [[SIW-4667](https://pagopa.atlassian.net/browse/SIW-4667)] persist Qualtrics banner dismissal on Wallet Home ([#8300](https://github.com/pagopa/io-app/issues/8300)) ([7e9e3b3](https://github.com/pagopa/io-app/commit/7e9e3b33765ee4f6e2536aa82d27e792810e78b6))
+* **IT-Wallet:** [[SIW-4761](https://pagopa.atlassian.net/browse/SIW-4761)] Fix id request payload (mixpanel) ([#8476](https://github.com/pagopa/io-app/issues/8476)) ([6b83156](https://github.com/pagopa/io-app/commit/6b831561ccd213a0815b391b12daea219852e637))
+
 ## [3.38.0-rc.21](https://github.com/pagopa/io-app/compare/3.38.0-rc.20...3.38.0-rc.21) (2026-08-26)
 
 

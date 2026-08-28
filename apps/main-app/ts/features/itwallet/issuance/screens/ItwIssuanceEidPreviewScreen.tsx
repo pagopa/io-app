@@ -93,9 +93,11 @@ const ContentView = ({ eid }: ContentViewProps) => {
         credential_type: "unique"
       });
       if (identification) {
+        // `identification.level` is the authentication level; the issued PID can
+        // still be L3, as determined from its credential metadata.
         trackItwRequestSuccess(
           toItwIdMethod(identification),
-          identification.level,
+          isL3 ? "L3" : identification.level,
           isL3 ? "L3" : "L2"
         );
       }

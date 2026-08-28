@@ -9,6 +9,7 @@ import {
   watchItwAnalyticsSaga
 } from "../../../analytics/saga";
 import { watchItwCredentialsSaga } from "../../../credentials/saga";
+import { checkCredentialsBatchRefill } from "../../../credentials/saga/checkCredentialsBatchRefill";
 import { checkCredentialsStatusAssertion } from "../../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleItwCredentialsVaultCoherenceSaga } from "../../../credentials/saga/handleItwCredentialsVaultCoherenceSaga";
 import { handleItwCredentialsVaultMigrationSaga } from "../../../credentials/saga/handleItwCredentialsVaultMigrationSaga";
@@ -112,6 +113,8 @@ describe("watchItwAuthenticatedSaga", () => {
       .call(checkCurrentWalletInstanceStateSaga)
       .next()
       .call(checkCredentialsStatusAssertion)
+      .next()
+      .call(checkCredentialsBatchRefill)
       .next()
       .isDone();
   });
