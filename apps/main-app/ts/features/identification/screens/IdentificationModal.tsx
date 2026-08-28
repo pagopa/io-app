@@ -12,8 +12,6 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import _ from "lodash";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
@@ -149,11 +147,8 @@ export const IdentificationModal = () => {
   }, [dispatch]);
 
   const onIdentificationFailureHandler = useCallback(() => {
-    const forceLogout = pipe(
-      identificationFailState,
-      O.map(failState => failState.remainingAttempts === 1),
-      O.getOrElse(() => false)
-    );
+    const forceLogout = identificationFailState?.remainingAttempts === 1;
+
     if (forceLogout) {
       showRetryText.current = false;
       onPinResetHandler();
@@ -303,14 +298,14 @@ export const IdentificationModal = () => {
   let showLockModal = false;
   // eslint-disable-next-line functional/no-let
   let remainingAttempts = maxAttempts;
-  if (O.isSome(identificationFailState)) {
-    showLockModal = identificationFailState.value.showLockModal ?? false;
-    remainingAttempts = identificationFailState.value.remainingAttempts;
+  if (identificationFailState != null) {
+    showLockModal = identificationFailState.showLockModal ?? false;
+    remainingAttempts = identificationFailState.remainingAttempts;
     timeSpanBetweenAttemptsInSeconds =
-      identificationFailState.value.timespanBetweenAttempts;
+      identificationFailState.timespanBetweenAttempts;
     const nowInMs = new Date().getTime();
     const nextLegalAttemptInMs =
-      identificationFailState.value.nextLegalAttempt.getTime();
+      identificationFailState.nextLegalAttempt.getTime();
     const elapsedTimeInMs = nextLegalAttemptInMs - nowInMs;
     // This screen is refreshing at every app state change.
     // So we can rely on the elapsed time to show the lock modal.
