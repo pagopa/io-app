@@ -34,7 +34,7 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          issuance: { integrityKeyTag: O.none },
+          issuance: { integrityKeyTag: undefined },
           preferences: {},
           credentials: { credentials: {} }
         }
@@ -55,7 +55,7 @@ describe("checkWalletInstanceStateSaga", () => {
         itWallet: {
           issuance: {
             integrityServiceStatus: "ready",
-            integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
+            integrityKeyTag: "aac6e82a-e27e-4293-9b55-94a9fab22763"
           },
           credentials: { credentials: {} },
           environment: {
@@ -86,7 +86,7 @@ describe("checkWalletInstanceStateSaga", () => {
       features: {
         itWallet: {
           issuance: {
-            integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
+            integrityKeyTag: "aac6e82a-e27e-4293-9b55-94a9fab22763"
           },
           credentials: { credentials: {} },
           environment: {
@@ -116,7 +116,7 @@ describe("checkWalletInstanceStateSaga", () => {
       features: {
         itWallet: {
           issuance: {
-            integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
+            integrityKeyTag: "3396d31e-ac6a-4357-8083-cb5d3cda4d74"
           },
           credentials: {
             credentials: { [mockPid.credentialId]: mockPid }
@@ -148,7 +148,7 @@ describe("checkWalletInstanceStateSaga", () => {
       features: {
         itWallet: {
           issuance: {
-            integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
+            integrityKeyTag: "3396d31e-ac6a-4357-8083-cb5d3cda4d74"
           },
           credentials: {
             credentials: { [mockPid.credentialId]: mockPid }
@@ -178,7 +178,7 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          issuance: { integrityKeyTag: O.none },
+          issuance: { integrityKeyTag: undefined },
           credentials: {
             credentials: { [mockPid.credentialId]: mockPid }
           },
@@ -201,7 +201,7 @@ describe("checkWalletInstanceStateSaga", () => {
       features: {
         itWallet: {
           issuance: {
-            integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
+            integrityKeyTag: "aac6e82a-e27e-4293-9b55-94a9fab22763"
           },
           credentials: { credentials: {} },
           environment: { env: "prod" },

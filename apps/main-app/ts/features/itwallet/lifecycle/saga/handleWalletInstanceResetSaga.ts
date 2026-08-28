@@ -1,5 +1,4 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
-import * as O from "fp-ts/lib/Option";
 import { all, call, put, select } from "typed-redux-saga/macro";
 
 import { isIos } from "../../../../utils/platform";
@@ -31,7 +30,7 @@ export function* handleWalletInstanceResetSaga() {
     // Remove all keys within the wallet.
     // On iOS skip the integrity key tag as it is managed by the App Attest service.
     const itwKeyTags = [
-      isIos ? undefined : O.toUndefined(integrityKeyTag),
+      isIos ? undefined : integrityKeyTag,
       eid?.keyTag,
       ...Object.values(credentials).map(c => c.keyTag)
     ].filter((keyTag): keyTag is string => keyTag !== undefined);

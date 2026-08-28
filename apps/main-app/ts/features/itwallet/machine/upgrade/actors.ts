@@ -3,7 +3,6 @@ import type {
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 
-import * as O from "fp-ts/Option";
 import { fromPromise } from "xstate";
 
 import { useIOStore } from "../../../../store/hooks";
@@ -78,11 +77,8 @@ export const createCredentialUpgradeActorsImplementation = (
       walletInstanceAttestation,
       "walletInstanceAttestation is not present in the store"
     );
-    const integrityKeyTagOption = itwIntegrityKeyTagSelector(state);
-    assert(
-      O.isSome(integrityKeyTagOption),
-      "Integrity key tag is not present in the store"
-    );
+    const integrityKeyTag = itwIntegrityKeyTagSelector(state);
+    assert(integrityKeyTag, "Integrity key tag is not present in the store");
 
     const pidMetadata = itwCredentialsEidSelector(state);
     assert(pidMetadata, "PID credential is not present in the store");
@@ -98,7 +94,7 @@ export const createCredentialUpgradeActorsImplementation = (
         credential: pid
       },
       walletInstanceAttestation,
-      integrityKeyTag: integrityKeyTagOption.value
+      integrityKeyTag
     };
   }),
 

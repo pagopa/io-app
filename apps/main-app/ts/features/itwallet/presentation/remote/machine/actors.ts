@@ -1,5 +1,4 @@
 import { ItwVersion, RemotePresentation } from "@pagopa/io-react-native-wallet";
-import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 
 import { useIOStore } from "../../../../../store/hooks";
@@ -296,9 +295,7 @@ export const createRemoteActorsImplementation = (
       await ensureIntegrityServiceIsStoreReadyOrThrow(store);
 
       const sessionToken = sessionTokenSelector(store.getState());
-      const integrityKeyTag = O.toUndefined(
-        itwIntegrityKeyTagSelector(store.getState())
-      );
+      const integrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
 
       assert(sessionToken, "sessionToken is undefined");
       assert(integrityKeyTag, "integrityKeyTag is undefined");

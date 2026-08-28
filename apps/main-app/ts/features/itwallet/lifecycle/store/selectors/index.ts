@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -13,14 +12,14 @@ import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
  * The user cannot get any credential.
  */
 export const itwLifecycleIsInstalledSelector = (state: GlobalState) =>
-  O.isNone(state.features.itWallet.issuance.integrityKeyTag);
+  state.features.itWallet.issuance.integrityKeyTag === undefined;
 
 /**
  * The wallet instance is registered and there is an associated integrity key tag.
  * The user can get a wallet attestation and an eID.
  */
 export const itwLifecycleIsOperationalSelector = (state: GlobalState) =>
-  O.isSome(state.features.itWallet.issuance.integrityKeyTag) &&
+  state.features.itWallet.issuance.integrityKeyTag !== undefined &&
   itwCredentialsEidSelector(state) === undefined;
 
 /**
@@ -28,7 +27,7 @@ export const itwLifecycleIsOperationalSelector = (state: GlobalState) =>
  * and the user has been issued a valid eID. The user can now get other credentials.
  */
 export const itwLifecycleIsValidSelector = (state: GlobalState) =>
-  O.isSome(state.features.itWallet.issuance.integrityKeyTag) &&
+  state.features.itWallet.issuance.integrityKeyTag !== undefined &&
   itwCredentialsEidSelector(state) !== undefined;
 
 /**
@@ -50,14 +49,9 @@ export const itwLifecycleIsITWalletValidSelector = createSelector(
     itwIsFiscalCodeWhitelisted,
     isItwMinAppVersionSupportedSelector
   ],
-  (
-    integrityKeyTagOption,
-    eid,
-    isFiscalCodeWhitelisted,
-    isMinAppVersionSupported
-  ) =>
+  (integrityKeyTag, eid, isFiscalCodeWhitelisted, isMinAppVersionSupported) =>
     (isFiscalCodeWhitelisted || isMinAppVersionSupported) &&
-    O.isSome(integrityKeyTagOption) &&
+    integrityKeyTag !== undefined &&
     eid !== undefined &&
     isItwCredential(eid)
 );

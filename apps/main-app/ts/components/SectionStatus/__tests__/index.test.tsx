@@ -68,7 +68,7 @@ const mockSectionStatusState = (
           credentials: { [CredentialType.PID]: {} as CredentialMetadata },
           legacyCredentials: {}
         } as ItwCredentialsState,
-        issuance: { integrityKeyTag: O.some("key-tag") }
+        issuance: { integrityKeyTag: "key-tag" }
       } as ItWalletState
     } as PersistedFeaturesState
   }) as unknown as GlobalState;
@@ -191,7 +191,7 @@ describe("Section Status Component should return null", () => {
               credentials: { [CredentialType.PID]: {} as CredentialMetadata },
               legacyCredentials: {}
             } as ItwCredentialsState,
-            issuance: { integrityKeyTag: O.some("key-tag") }
+            issuance: { integrityKeyTag: "key-tag" }
           } as ItWalletState
         } as PersistedFeaturesState
       })
