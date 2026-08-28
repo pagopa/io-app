@@ -8,18 +8,13 @@ import {
   useIOThemeContext,
   VStack
 } from "@io-app/design-system";
+import { setNavigationBarColor } from "@io-app/expo-navigation-bar-manager";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { constVoid } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { ReactElement, useState } from "react";
-import {
-  Appearance,
-  NativeModules,
-  Platform,
-  useColorScheme,
-  View
-} from "react-native";
+import { Appearance, Platform, useColorScheme, View } from "react-native";
 
 import { FONT_PERSISTENCE_KEY } from "../../../../common/context/DSTypefaceContext";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -39,20 +34,15 @@ import {
   trackAppearancePreferenceTypefaceUpdate
 } from "../../common/analytics";
 
-const { NavigationBarManager } = NativeModules;
-
 export const updateNavigationBarColor = (theme?: ColorModeChoice) => {
-  if (Platform.OS === "android" && NavigationBarManager && theme) {
+  if (Platform.OS === "android" && theme) {
     const resolvedTheme = theme === "auto" ? "light" : theme;
     const backgroundColor =
       resolvedTheme === "dark"
         ? IOColors[IOThemeDark["appBackground-primary"]]
         : IOColors[IOThemeLight["appBackground-primary"]];
 
-    NavigationBarManager.setNavigationBarColor(
-      resolvedTheme,
-      backgroundColor
-    ).catch(constVoid);
+    setNavigationBarColor(resolvedTheme, backgroundColor).catch(constVoid);
   }
 };
 
