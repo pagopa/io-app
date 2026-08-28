@@ -1531,6 +1531,11 @@
           "subtitle": "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce.",
           "title": "Aggiungi il documento al Portafoglio"
         },
+        "credentialIntroduction": {
+          "dismissalDialog": {
+            "body": "Se interrompi il documento non verrà aggiunto. Potrai aggiungerlo in un secondo momento."
+          }
+        },
         "credentialOffer": {
           "intro": {
             "fallbackTitle": "Aggiungi un documento al tuo Portafoglio"
