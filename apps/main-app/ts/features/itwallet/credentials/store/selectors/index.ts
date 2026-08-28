@@ -9,6 +9,7 @@ import {
   getFirstNameFromCredential,
   getFiscalCodeFromCredential
 } from "../../../common/utils/itwClaimsUtils";
+import { shouldRefillBatch } from "../../../common/utils/itwCredentialIssuanceUtils";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
@@ -319,6 +320,20 @@ export const itwCredentialsListByTypeSelector = (key: string) =>
     (credentials): ReadonlyArray<CredentialMetadata> =>
       credentials.filter(c => c.credentialType === key)
   );
+
+/**
+ * Returns the types of the one-time-use credentials that are down to their refill threshold.
+ *
+ * Types are deduplicated: the same credential may be stored in multiple formats, but it is
+ * renewed once for all of them.
+ */
+export const itwCredentialsToRefillSelector = createSelector(
+  itwAllStoredCredentialsSelector,
+  (credentials): ReadonlyArray<string> =>
+    Array.from(
+      new Set(credentials.filter(shouldRefillBatch).map(c => c.credentialType))
+    )
+);
 
 /**
  * Convenience selector that returns true if the user has a mDL credential stored.
