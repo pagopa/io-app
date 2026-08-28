@@ -86,9 +86,9 @@ describe("ItwIssuanceCredentialIntroductionScreen", () => {
     it("asks for confirmation on back when the flow comes from the wallet activation", () => {
       spyEidUseSelector.mockReturnValue("mDL" as any);
 
-      const { getByLabelText } = renderComponent();
+      const { getAllByLabelText } = renderComponent();
 
-      fireEvent.press(getByLabelText(I18n.t("global.buttons.back")));
+      getAllByLabelText(I18n.t("global.buttons.back")).forEach(fireEvent.press);
 
       expect(spyAlert).toHaveBeenCalledWith(
         I18n.t("features.itWallet.generic.alert.title"),
@@ -100,9 +100,9 @@ describe("ItwIssuanceCredentialIntroductionScreen", () => {
     });
 
     it("does not ask for confirmation on back when adding a credential to an active wallet", () => {
-      const { getByLabelText } = renderComponent();
+      const { getAllByLabelText } = renderComponent();
 
-      fireEvent.press(getByLabelText(I18n.t("global.buttons.back")));
+      getAllByLabelText(I18n.t("global.buttons.back")).forEach(fireEvent.press);
 
       expect(spyAlert).not.toHaveBeenCalled();
     });
