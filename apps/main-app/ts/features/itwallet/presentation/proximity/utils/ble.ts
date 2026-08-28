@@ -51,15 +51,24 @@ export const checkBluetoothPermissions = async () => {
   return true;
 };
 
-// Shared instance used only to query the current Bluetooth adapter state.
-const bleManager = new BleManager();
+// This workaround ensures that the BleManager instance is created lazily,
+// preventing the Bluetooth permission prompt from appearing immediately upon module import.
+// eslint-disable-next-line functional/no-let
+let bleManager: BleManager | undefined;
+
+const getBleManager = () => {
+  if (!bleManager) {
+    bleManager = new BleManager();
+  }
+  return bleManager;
+};
 
 /**
  * Checks if Bluetooth is currently activated on the device.
  * @returns A promise that resolves to true if Bluetooth is powered on, or false otherwise.
  */
 export const checkBluetoothActivation = async () => {
-  const bluetoothState = await bleManager.state();
+  const bluetoothState = await getBleManager().state();
   return bluetoothState === State.PoweredOn;
 };
 
