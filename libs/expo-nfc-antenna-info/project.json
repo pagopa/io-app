@@ -1,0 +1,14 @@
+{
+  "name": "@io-app/expo-nfc-antenna-info",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/expo-nfc-antenna-info",
+  "projectType": "library",
+  "targets": {
+    "tsc-noemit": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm --filter @io-app/expo-nfc-antenna-info run tsc-noemit"
+      }
+    }
+  }
+}
