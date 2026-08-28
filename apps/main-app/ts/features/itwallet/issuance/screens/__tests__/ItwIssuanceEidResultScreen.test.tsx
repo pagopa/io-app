@@ -10,6 +10,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import { Context, EidIssuanceLevel } from "../../../machine/eid/context";
+import { EidIssuanceMachineDeps } from "../../../machine/eid/input";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -323,7 +324,13 @@ const renderComponent = (
   contextOverrides: Partial<Context> = {}
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+  const initialSnapshot = createActor(itwEidIssuanceMachine, {
+    input: {
+      deps: {
+        store: { getState: () => initialState }
+      } as EidIssuanceMachineDeps
+    }
+  }).getSnapshot();
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,
     context: {

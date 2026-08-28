@@ -1,19 +1,25 @@
 import { addSeconds, differenceInSeconds, isPast } from "date-fns";
-import { assign, fromPromise, setup } from "xstate";
+import { assign, setup } from "xstate";
 
 import {
-  GetCredentialTrustmarkUrlActorInput,
-  GetCredentialTrustmarkUrlActorOutput,
-  GetWalletAttestationActorOutput
+  handleSessionExpiredAction,
+  onInitAction,
+  showRetryFailureToastAction,
+  storeWalletInstanceAttestationAction,
+  trackTrustmarkFailureAction
+} from "./actions";
+import {
+  getCredentialTrustmarkActor,
+  getWalletAttestationActor
 } from "./actors";
 import { Context } from "./context";
 import { TrustmarkEvents } from "./events";
 import { mapEventToFailure } from "./failure";
+import {
+  hasValidWalletInstanceAttestationGuard,
+  isSessionExpiredGuard
+} from "./guards";
 import { Input } from "./input";
-
-const notImplemented = () => {
-  throw new Error("Not implemented");
-};
 
 /**
  * Amount in seconds to wait before retrying
@@ -29,9 +35,9 @@ export const itwTrustmarkMachineSetup = setup({
     events: {} as TrustmarkEvents
   },
   actions: {
-    onInit: notImplemented,
-    storeWalletInstanceAttestation: notImplemented,
-    handleSessionExpired: notImplemented,
+    onInit: onInitAction,
+    storeWalletInstanceAttestation: storeWalletInstanceAttestationAction,
+    handleSessionExpired: handleSessionExpiredAction,
     updateExpirationSeconds: assign(({ context }) => ({
       expirationSeconds: context.expirationDate
         ? differenceInSeconds(context.expirationDate, new Date())
@@ -58,22 +64,18 @@ export const itwTrustmarkMachineSetup = setup({
     setFailure: assign({
       failure: ({ event }) => mapEventToFailure(event)
     }),
-    showRetryFailureToast: notImplemented,
-    trackTrustmarkFailure: notImplemented
+    showRetryFailureToast: showRetryFailureToastAction,
+    trackTrustmarkFailure: trackTrustmarkFailureAction
   },
   actors: {
-    getWalletAttestationActor:
-      fromPromise<GetWalletAttestationActorOutput>(notImplemented),
-    getCredentialTrustmarkActor: fromPromise<
-      GetCredentialTrustmarkUrlActorOutput,
-      GetCredentialTrustmarkUrlActorInput
-    >(notImplemented)
+    getWalletAttestationActor,
+    getCredentialTrustmarkActor
   },
   guards: {
     isTrustmarkExpired: ({ context }) =>
       context.expirationDate ? isPast(context.expirationDate) : true,
-    isSessionExpired: notImplemented,
-    hasValidWalletInstanceAttestation: notImplemented,
+    isSessionExpired: isSessionExpiredGuard,
+    hasValidWalletInstanceAttestation: hasValidWalletInstanceAttestationGuard,
     hasBackoffTimePassed: ({ context }) =>
       context.nextAttemptAt ? isPast(context.nextAttemptAt) : true
   }

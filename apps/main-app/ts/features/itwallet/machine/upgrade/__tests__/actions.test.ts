@@ -7,12 +7,13 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
-import { createCredentialUpgradeActionsImplementation } from "../actions";
+import { storeCredentialAction } from "../actions";
 import { Context } from "../context";
 import { CredentialUpgradeEvents } from "../events";
+import { CredentialUpgradeMachineDeps } from "../input";
 
 describe("itwCredentialUpgradeMachine actions", () => {
-  describe("storeCredential", () => {
+  describe("storeCredentialAction", () => {
     it("should store the new credential removing the old one", () => {
       const mockDispatch = jest.fn();
       const mockStore = {
@@ -20,10 +21,10 @@ describe("itwCredentialUpgradeMachine actions", () => {
         dispatch: mockDispatch
       } as ReturnType<typeof useIOStore>;
 
-      const { storeCredential } =
-        createCredentialUpgradeActionsImplementation(mockStore);
-
-      storeCredential({
+      storeCredentialAction({
+        context: {
+          deps: { store: mockStore } as CredentialUpgradeMachineDeps
+        } as Context,
         event: {
           type: "xstate.done.actor.upgradeCredential",
           actorId: "upgradeCredential",

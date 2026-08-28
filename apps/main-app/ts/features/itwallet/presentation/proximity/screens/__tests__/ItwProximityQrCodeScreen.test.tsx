@@ -8,6 +8,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { trackItwProximityQrCode } from "../../analytics";
 import { ProximityFailureType } from "../../machine/failure";
+import { ProximityMachineDeps } from "../../machine/input";
 import { itwProximityMachine } from "../../machine/machine";
 import { ItwProximityMachineContext } from "../../machine/provider";
 import { ItwPresentationTags } from "../../machine/tags";
@@ -35,7 +36,8 @@ const mockShouldShowExpiredProximityCredentialsBannerSelector = jest.fn(
 );
 jest.mock("../../store/selectors/credentials", () => ({
   shouldShowExpiredProximityCredentialsBannerSelector: () =>
-    mockShouldShowExpiredProximityCredentialsBannerSelector()
+    mockShouldShowExpiredProximityCredentialsBannerSelector(),
+  itwPresentableCredentialsByDocTypeSelector: () => ({})
 }));
 
 describe("ItwProximityPresentmentScreen", () => {
@@ -148,7 +150,10 @@ const renderComponent = (
   routeParams: ItwProximityPresentmentScreenNavigationParams
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
+  const store = createStore(appReducer, initialState as any);
+  const initialSnapshot = createActor(itwProximityMachine, {
+    input: { deps: { store } as ProximityMachineDeps }
+  }).getSnapshot();
 
   const snapshot = buildSnapshot(initialSnapshot, options);
 
@@ -179,7 +184,7 @@ const renderComponent = (
     ),
     ITW_PROXIMITY_ROUTES.PRESENTMENT,
     {},
-    createStore(appReducer, initialState as any)
+    store
   );
 };
 

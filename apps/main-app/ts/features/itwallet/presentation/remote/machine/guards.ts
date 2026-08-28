@@ -1,6 +1,3 @@
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
-
-import { useIOStore } from "../../../../../store/hooks.ts";
 import { ItwSessionExpiredError } from "../../../api/client.ts";
 import { itwIsL3EnabledSelector } from "../../../common/store/selectors";
 import { isItwEnabledSelector } from "../../../common/store/selectors/remoteConfig.ts";
@@ -16,39 +13,40 @@ type GuardArgs = {
   event: RemoteEvents;
 };
 
-export const createRemoteGuardsImplementation = (
-  itwVersion: ItwVersion,
-  store: ReturnType<typeof useIOStore>
-) => ({
-  isItWalletL3Active: () =>
-    isItwEnabledSelector(store.getState()) &&
-    itwIsL3EnabledSelector(store.getState()) &&
-    itwLifecycleIsITWalletValidSelector(store.getState()),
+export const isItWalletL3ActiveGuard = ({ context }: GuardArgs) => {
+  const state = context.deps.store.getState();
+  return (
+    isItwEnabledSelector(state) &&
+    itwIsL3EnabledSelector(state) &&
+    itwLifecycleIsITWalletValidSelector(state)
+  );
+};
 
-  hasValidWalletInstanceAttestation: () => {
-    const attestation = itwWalletInstanceAttestationSelector(
-      store.getState()
-    )?.jwt;
-    return (
-      attestation !== undefined &&
-      isWalletInstanceAttestationValid(itwVersion, attestation)
-    );
-  },
+export const hasValidWalletInstanceAttestationGuard = ({
+  context
+}: GuardArgs) => {
+  const attestation = itwWalletInstanceAttestationSelector(
+    context.deps.store.getState()
+  )?.jwt;
+  return (
+    attestation !== undefined &&
+    isWalletInstanceAttestationValid(context.deps.itwVersion, attestation)
+  );
+};
 
-  isSessionExpired: ({ event }: GuardArgs) =>
-    "error" in event && event.error instanceof ItwSessionExpiredError,
+export const isSessionExpiredGuard = ({ event }: GuardArgs) =>
+  "error" in event && event.error instanceof ItwSessionExpiredError;
 
-  /**
-   * Valid OpenID Federation clients:
-   * - `openid_federation:https://rp.example`
-   * - `https://rp.example` (no prefix)
-   */
-  isOpenIdFederationClient: ({ context }: GuardArgs) =>
-    Boolean(
-      context.payload?.client_id.startsWith(ClientIdPrefix.OPENID_FEDERATION) ||
-      context.payload?.client_id.startsWith("https://")
-    ),
+/**
+ * Valid OpenID Federation clients:
+ * - `openid_federation:https://rp.example`
+ * - `https://rp.example` (no prefix)
+ */
+export const isOpenIdFederationClientGuard = ({ context }: GuardArgs) =>
+  Boolean(
+    context.payload?.client_id.startsWith(ClientIdPrefix.OPENID_FEDERATION) ||
+    context.payload?.client_id.startsWith("https://")
+  );
 
-  isX509HashClient: ({ context }: GuardArgs) =>
-    Boolean(context.payload?.client_id.startsWith(ClientIdPrefix.X509_HASH))
-});
+export const isX509HashClientGuard = ({ context }: GuardArgs) =>
+  Boolean(context.payload?.client_id.startsWith(ClientIdPrefix.X509_HASH));

@@ -5,6 +5,7 @@ import { createActor } from "xstate";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { RemoteMachineDeps } from "../../machine/input";
 import { itwRemoteMachine } from "../../machine/machine";
 import { ItwRemoteMachineContext } from "../../machine/provider";
 import { ITW_REMOTE_ROUTES } from "../../navigation/routes";
@@ -61,8 +62,12 @@ describe("ItwRemoteAuthResponseScreen", () => {
 });
 
 const renderComponent = (flowType: ItwRemoteFlowType, redirectUri?: string) => {
-  const initialSnapshot = createActor(itwRemoteMachine).getSnapshot();
   const initialState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, initialState as any);
+  const T_DEPS = { store } as RemoteMachineDeps;
+  const initialSnapshot = createActor(itwRemoteMachine, {
+    input: { deps: T_DEPS }
+  }).getSnapshot();
 
   const hydratedSnapshot: typeof initialSnapshot = {
     ...initialSnapshot,
@@ -74,7 +79,8 @@ const renderComponent = (flowType: ItwRemoteFlowType, redirectUri?: string) => {
     }
   };
   const actor = createActor(itwRemoteMachine, {
-    snapshot: hydratedSnapshot
+    snapshot: hydratedSnapshot,
+    input: { deps: T_DEPS }
   });
   actor.start();
   const snapshot = actor.getSnapshot();
@@ -87,6 +93,6 @@ const renderComponent = (flowType: ItwRemoteFlowType, redirectUri?: string) => {
     ),
     ITW_REMOTE_ROUTES.AUTH_RESPONSE,
     {},
-    createStore(appReducer, initialState as any)
+    store
   );
 };
