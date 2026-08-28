@@ -1,4 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../../store/actions/application.ts";
@@ -26,6 +27,18 @@ describe("ItwPresentationClaimsSection", () => {
 
     fireEvent(toggleButton, "onPress");
     expect(component).toMatchSnapshot();
+  });
+
+  it("should expose a single control to toggle claim visibility", () => {
+    const component = renderComponent();
+
+    expect(
+      component.getAllByLabelText(
+        I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.hideClaimValues"
+        )
+      )
+    ).toHaveLength(1);
   });
 
   it("should not render the European Disability Card QR code in the claims list", () => {
