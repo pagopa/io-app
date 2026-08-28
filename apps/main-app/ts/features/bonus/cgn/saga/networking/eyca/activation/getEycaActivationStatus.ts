@@ -12,7 +12,11 @@ export function* getEycaActivationStatusSaga(
   try {
     const activationInfo: SagaCallReturnType<typeof getActivation> =
       yield* call(getActivation, getEycaActivation);
-    yield* put(cgnEycaActivation.success(activationInfo));
+    if (activationInfo.isErr()) {
+      yield* put(cgnEycaActivation.failure(activationInfo.error));
+      return;
+    }
+    yield* put(cgnEycaActivation.success(activationInfo.value));
   } catch (e) {
     yield* put(cgnEycaActivation.failure(getNetworkError(e)));
   }

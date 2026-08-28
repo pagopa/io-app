@@ -1,8 +1,8 @@
+import { ok } from "neverthrow";
 import { testSaga } from "redux-saga-test-plan";
 
 import { getNetworkError } from "../../../../../../../../utils/errors";
 import { cgnEycaActivation } from "../../../../../store/actions/eyca/activation";
-import { CgnEycaActivationStatus } from "../../../../../store/reducers/eyca/activation";
 import { getActivation } from "../getActivation";
 import { getEycaActivationStatusSaga } from "../getEycaActivationStatus";
 
@@ -25,8 +25,8 @@ describe("getEycaActivationStatus", () => {
     testSaga(getEycaActivationStatusSaga, getEycaActivation)
       .next()
       .call(getActivation, getEycaActivation)
-      .next("COMPLETED")
-      .put(cgnEycaActivation.success("COMPLETED" as CgnEycaActivationStatus))
+      .next(ok("COMPLETED"))
+      .put(cgnEycaActivation.success("COMPLETED"))
       .next()
       .isDone();
   });
