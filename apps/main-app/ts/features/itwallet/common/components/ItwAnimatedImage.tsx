@@ -24,7 +24,7 @@ export type ItwAnimatedImageProps = Omit<
 };
 
 /**
- * Renders an IT Wallet GIF with accessible play and stop controls.
+ * Renders a GIF with accessible play and stop controls.
  *
  * Playback stops automatically after `maxDurationMs`. When reduced motion is
  * enabled, the component shows `staticSource` and disables playback. All
