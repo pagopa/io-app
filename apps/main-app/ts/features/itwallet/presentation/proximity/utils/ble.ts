@@ -1,6 +1,6 @@
 import { Linking, Platform } from "react-native";
 import AndroidOpenSettings from "react-native-android-open-settings";
-import BluetoothStateManager from "react-native-bluetooth-state-manager";
+import { BleManager, State } from "react-native-ble-plx";
 import {
   checkMultiple,
   Permission,
@@ -51,13 +51,16 @@ export const checkBluetoothPermissions = async () => {
   return true;
 };
 
+// Shared instance used only to query the current Bluetooth adapter state.
+const bleManager = new BleManager();
+
 /**
  * Checks if Bluetooth is currently activated on the device.
  * @returns A promise that resolves to true if Bluetooth is powered on, or false otherwise.
  */
 export const checkBluetoothActivation = async () => {
-  const bluetoothState = await BluetoothStateManager.getState();
-  return bluetoothState === "PoweredOn";
+  const bluetoothState = await bleManager.state();
+  return bluetoothState === State.PoweredOn;
 };
 
 /**

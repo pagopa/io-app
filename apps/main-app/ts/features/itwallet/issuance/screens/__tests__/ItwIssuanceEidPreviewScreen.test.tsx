@@ -13,10 +13,16 @@ import {
 } from "../../../machine/eid/machine";
 import { ItwTags } from "../../../machine/tags";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import { trackItwRequestSuccess } from "../../analytics";
 import { ItwIssuanceEidPreviewScreen } from "../ItwIssuanceEidPreviewScreen";
 
 const mockSend = jest.fn();
 const mockUseSelector = jest.fn();
+
+jest.mock("../../analytics", () => ({
+  ...jest.requireActual("../../analytics"),
+  trackItwRequestSuccess: jest.fn()
+}));
 
 type MachineSelector<T> = (snapshot: MachineSnapshot) => T;
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
@@ -50,12 +56,27 @@ describe("ItwIssuanceEidPreviewScreen", () => {
       queryByText(I18n.t("features.itWallet.issuance.eidPreview.title"))
     ).toBeNull();
   });
+
+  it("tracks an L3 eID when IT-Wallet is activated with CieID L2", () => {
+    renderComponent({
+      value: { Issuance: "DisplayingPreview" },
+      tags: new Set(),
+      level: "l3",
+      identification: { level: "L2", mode: "cieId" }
+    });
+
+    expect(trackItwRequestSuccess).toHaveBeenCalledWith("cieid_L2", "L3", "L3");
+  });
 });
 
 const renderComponent = ({
   value,
-  tags
+  tags,
+  level = "l2",
+  identification
 }: {
+  identification?: { level: "L2"; mode: "cieId" };
+  level?: "l2" | "l3";
   tags: Set<ItwTags>;
   value: { Issuance: "CheckingIdentityMatch" | "DisplayingPreview" };
 }) => {
@@ -67,10 +88,18 @@ const renderComponent = ({
     tags,
     context: {
       ...initialSnapshot.context,
-      level: "l2",
+      level,
+      identification,
       eid: {
         credential: "",
-        metadata: ItwStoredCredentialsMocks.eid
+        metadata: {
+          ...ItwStoredCredentialsMocks.eid,
+          spec_version: level === "l3" ? "1.3.3" : "1.0.0",
+          verification:
+            level === "l3"
+              ? { assurance_level: "high", trust_framework: "it_wallet" }
+              : undefined
+        }
       }
     }
   };
