@@ -2,6 +2,7 @@ import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import _ from "lodash";
 import { createActor, StateFrom } from "xstate";
 
+import { RemoteMachineDeps } from "../input.ts";
 import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
 import { selectUnverifiedRequestObject } from "../selectors.ts";
 
@@ -13,8 +14,12 @@ const mockDecodeJwt = jest.mocked(decodeJwt);
 
 type MachineSnapshot = StateFrom<ItwRemoteMachine>;
 
+const T_DEPS = {} as RemoteMachineDeps;
+
 const createSnapshot = (requestObjectEncodedJwt?: string): MachineSnapshot => {
-  const initialSnapshot = createActor(itwRemoteMachine).getSnapshot();
+  const initialSnapshot = createActor(itwRemoteMachine, {
+    input: { deps: T_DEPS }
+  }).getSnapshot();
 
   return _.merge(undefined, initialSnapshot, {
     context: { requestObjectEncodedJwt }

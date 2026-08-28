@@ -3,6 +3,7 @@ import { createActor, fromCallback, fromPromise, waitFor } from "xstate";
 import { ItwSessionExpiredError } from "../../../api/client";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
+  LoadContextInput,
   LoadContextOutput,
   RequestAccessTokenOutput,
   RequestAccessTokenParams,
@@ -52,7 +53,9 @@ describe("itwCredentialUpgradeMachine", () => {
           RequestAccessTokenOutput,
           RequestAccessTokenParams
         >(mockRequestAccessToken),
-        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
+        loadContext: fromPromise<LoadContextOutput, LoadContextInput>(
+          mockLoadContext
+        ),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -92,7 +95,9 @@ describe("itwCredentialUpgradeMachine", () => {
           RequestAccessTokenOutput,
           RequestAccessTokenParams
         >(mockRequestAccessToken),
-        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
+        loadContext: fromPromise<LoadContextOutput, LoadContextInput>(
+          mockLoadContext
+        ),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -142,7 +147,9 @@ describe("itwCredentialUpgradeMachine", () => {
           RequestAccessTokenOutput,
           RequestAccessTokenParams
         >(mockRequestAccessToken),
-        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
+        loadContext: fromPromise<LoadContextOutput, LoadContextInput>(
+          mockLoadContext
+        ),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
@@ -193,7 +200,9 @@ describe("itwCredentialUpgradeMachine", () => {
           RequestAccessTokenOutput,
           RequestAccessTokenParams
         >(mockRequestAccessToken),
-        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
+        loadContext: fromPromise<LoadContextOutput, LoadContextInput>(
+          mockLoadContext
+        ),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams
