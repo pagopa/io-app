@@ -2071,6 +2071,10 @@
             "subtitle": "Attendi qualche secondo...",
             "title": "In attesa di connessione per la verifica..."
           },
+          "consentDenied": {
+            "subtitle": "Puoi avviare una nuova verifica premendo “Avvia verifica” dalla sezione Portafoglio.",
+            "title": "Hai interrotto la verifica"
+          },
           "engagement": {
             "banner": {
               "action": "Scopri di più",

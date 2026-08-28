@@ -51,7 +51,10 @@ const ItwPresentationDetailsHeader = ({
     credential.credentialType === CredentialType.PID
       ? (eidStatus ?? "valid")
       : (credentialRawStatus ?? "valid");
-  const displayStatus = useItwDisplayCredentialStatus(rawStatus);
+  const displayStatus = useItwDisplayCredentialStatus(
+    rawStatus,
+    credential.credentialType
+  );
   const tagPropsByStatus = useTagPropsByStatus();
   const statusTagProps = tagPropsByStatus[displayStatus];
 
