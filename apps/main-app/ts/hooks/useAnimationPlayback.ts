@@ -1,29 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
 
-type UseCiePreparationAnimationPlaybackParams = {
+type UseAnimationPlaybackParams = {
   autoPlay: boolean;
   maxDurationMs: number;
   reduceMotion: boolean;
 };
 
-/**
- * Handles playback state for animated CIE preparation media.
- *
- * Responsibilities:
- * - start/stop playback
- * - auto-stop after `maxDurationMs`
- * - stop immediately when reduced-motion is enabled
- * - expose a stable key that can be used to force GIF restart on play
- */
-export const useCiePreparationAnimationPlayback = ({
+/** Controls timed animation playback while respecting reduced motion. */
+export const useAnimationPlayback = ({
   autoPlay,
   maxDurationMs,
   reduceMotion
-}: UseCiePreparationAnimationPlaybackParams) => {
+}: UseAnimationPlaybackParams) => {
   const [playIteration, setPlayIteration] = useState(0);
   const [isPlaying, setIsPlaying] = useState(() => autoPlay && !reduceMotion);
 
-  // Never play if reduced motion is enabled, even if autoPlay is true.
   useEffect(() => {
     if (reduceMotion) {
       setIsPlaying(false);
@@ -55,7 +46,6 @@ export const useCiePreparationAnimationPlayback = ({
     });
   }, [reduceMotion]);
 
-  // Increasing `playIteration` changes the key and restarts the GIF.
   const imageKey = isPlaying ? `playing-${playIteration}` : "paused";
 
   return {

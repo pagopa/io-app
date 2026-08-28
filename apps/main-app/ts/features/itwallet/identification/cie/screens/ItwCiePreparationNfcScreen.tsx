@@ -2,13 +2,13 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
 
+import { ItwAnimatedImage } from "../../../common/components/ItwAnimatedImage";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectIdentification
 } from "../../../machine/eid/selectors";
 import { trackItwCiePinTutorialCie } from "../../analytics";
-import { ItwCiePreparationAnimatedImage } from "../components/ItwCiePreparationAnimatedImage";
 import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
@@ -49,8 +49,16 @@ export const ItwCiePreparationNfcScreen = () => {
         `features.itWallet.identification.cie.prepare.nfc.description`
       )}
       imageComponent={
-        <ItwCiePreparationAnimatedImage
-          animatedSource={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif")}
+        <ItwAnimatedImage
+          accessibilityIgnoresInvertColors
+          pauseAccessibilityLabel={I18n.t(
+            "features.itWallet.identification.cie.prepare.animation.pause"
+          )}
+          playAccessibilityLabel={I18n.t(
+            "features.itWallet.identification.cie.prepare.animation.play"
+          )}
+          resizeMode="contain"
+          source={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif")}
           staticSource={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc_static.png")}
         />
       }

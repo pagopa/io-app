@@ -1,6 +1,6 @@
 import { ContentWrapper, VStack } from "@io-app/design-system";
 import { useIsFocused } from "@react-navigation/core";
-import { PropsWithChildren, ReactNode } from "react";
+import { PropsWithChildren, ReactElement } from "react";
 import {
   Dimensions,
   Image,
@@ -18,8 +18,8 @@ type Props = {
   goBack?: () => void;
   title: string;
 } & (
-  | { imageComponent: ReactNode; imageSrc?: never }
-  | { imageComponent?: ReactNode; imageSrc: ImageSourcePropType }
+  | { imageComponent: ReactElement; imageSrc?: never }
+  | { imageComponent?: never; imageSrc: ImageSourcePropType }
 );
 
 export const ItwCiePreparationScreenContent = ({
@@ -38,6 +38,16 @@ export const ItwCiePreparationScreenContent = ({
   // while the screen isn't focused stops the animation instead of letting it
   // run indefinitely in the background.
   const isFocused = useIsFocused();
+  const image = imageSrc ? (
+    <Image
+      accessibilityIgnoresInvertColors
+      resizeMode="contain"
+      source={imageSrc}
+      style={styles.image}
+    />
+  ) : (
+    imageComponent
+  );
 
   return (
     <IOScrollViewWithLargeHeader
@@ -50,16 +60,7 @@ export const ItwCiePreparationScreenContent = ({
       <ContentWrapper>
         <VStack space={16}>
           {children}
-          <View style={styles.imageContainer}>
-            {isFocused && imageComponent && (
-              <Image
-                accessibilityIgnoresInvertColors
-                resizeMode="contain"
-                source={imageSrc}
-                style={styles.image}
-              />
-            )}
-          </View>
+          <View style={styles.imageContainer}>{isFocused && image}</View>
         </VStack>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
