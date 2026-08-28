@@ -3,6 +3,7 @@ import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import { itwCredentialsConsumeInstance } from "../../../../credentials/store/actions";
 import { consumePresentedBatchCredentialsAction } from "../actions";
 import { Context, InitialContext } from "../context";
+import { RemoteMachineDeps } from "../input";
 
 const baseCredential: CredentialMetadata = {
   credentialType: CredentialType.PROOF_OF_AGE,
@@ -51,7 +52,10 @@ describe("consumePresentedBatchCredentialsAction", () => {
     consumePresentedBatchCredentialsAction({
       context: {
         ...InitialContext,
-        deps: { store, navigation: {} as never },
+        deps: {
+          store,
+          navigation: {} as never
+        } as unknown as RemoteMachineDeps,
         presentedKeyTags: ["key-tag-01", "pid-key-tag"]
       } as Context
     } as never);
@@ -69,7 +73,10 @@ describe("consumePresentedBatchCredentialsAction", () => {
     consumePresentedBatchCredentialsAction({
       context: {
         ...InitialContext,
-        deps: { store, navigation: {} as never },
+        deps: {
+          store,
+          navigation: {} as never
+        } as unknown as RemoteMachineDeps,
         presentedKeyTags: ["pid-key-tag"]
       } as Context
     } as never);
@@ -82,7 +89,10 @@ describe("consumePresentedBatchCredentialsAction", () => {
     consumePresentedBatchCredentialsAction({
       context: {
         ...InitialContext,
-        deps: { store, navigation: {} as never },
+        deps: {
+          store,
+          navigation: {} as never
+        } as unknown as RemoteMachineDeps,
         presentedKeyTags: ["unknown-key-tag"]
       } as Context
     } as never);
@@ -95,7 +105,10 @@ describe("consumePresentedBatchCredentialsAction", () => {
     consumePresentedBatchCredentialsAction({
       context: {
         ...InitialContext,
-        deps: { store, navigation: {} as never },
+        deps: {
+          store,
+          navigation: {} as never
+        } as unknown as RemoteMachineDeps,
         presentedKeyTags: []
       } as Context
     } as never);

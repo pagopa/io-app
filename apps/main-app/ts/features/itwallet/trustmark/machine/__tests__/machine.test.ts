@@ -11,6 +11,7 @@ import { ItwTags } from "../../../machine/tags";
 import {
   GetCredentialTrustmarkUrlActorInput,
   GetCredentialTrustmarkUrlActorOutput,
+  GetWalletAttestationActorInput,
   GetWalletAttestationActorOutput
 } from "../actors";
 import { type Context } from "../context";
@@ -40,9 +41,10 @@ const mockedMachine = itwTrustmarkMachine.provide({
     trackTrustmarkFailure
   },
   actors: {
-    getWalletAttestationActor: fromPromise<GetWalletAttestationActorOutput>(
-      getWalletAttestationActor
-    ),
+    getWalletAttestationActor: fromPromise<
+      GetWalletAttestationActorOutput,
+      GetWalletAttestationActorInput
+    >(getWalletAttestationActor),
     getCredentialTrustmarkActor: fromPromise<
       GetCredentialTrustmarkUrlActorOutput,
       GetCredentialTrustmarkUrlActorInput
