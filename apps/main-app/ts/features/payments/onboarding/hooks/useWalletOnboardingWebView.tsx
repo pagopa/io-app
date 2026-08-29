@@ -1,5 +1,5 @@
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { openAuthSessionAsync } from "expo-web-browser";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
@@ -115,12 +115,16 @@ export const useWalletOnboardingWebView = ({
       try {
         const result =
           Platform.OS === "ios"
-            ? await openAuthenticationSession(
-                url,
-                ONBOARDING_CALLBACK_URL_SCHEMA
-              )
+            ? await openAuthSessionAsync(url, ONBOARDING_CALLBACK_URL_SCHEMA)
             : await startWebviewContextualOnboardingSession(url);
-        handleOnboardingResult(result, isContextual);
+        if (typeof result === "string") {
+          handleOnboardingResult(result, isContextual);
+          return;
+        }
+
+        if (result.type === "success") {
+          handleOnboardingResult(result.url, isContextual);
+        }
       } catch {
         onOnboardingOutcome({
           outcome: WalletOnboardingOutcomeEnum.CANCELED_BY_USER

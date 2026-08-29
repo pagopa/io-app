@@ -1,0 +1,24 @@
+{
+  "name": "@io-app/login-utils",
+  "version": "1.0.0",
+  "description": "Utility module to handle redirects on login flows",
+  "private": true,
+  "main": "index.ts",
+  "types": "index.ts",
+  "react-native": "index.ts",
+  "source": "index.ts",
+  "files": [
+    "index.ts",
+    "android",
+    "ios",
+    "expo-module.config.json",
+    "*.podspec"
+  ],
+  "scripts": {
+    "tsc-noemit": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "expo-modules-core": "^55.0.25",
+    "typescript": "catalog:"
+  }
+}

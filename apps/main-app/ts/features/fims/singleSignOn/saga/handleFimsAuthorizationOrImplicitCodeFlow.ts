@@ -5,10 +5,7 @@ import {
   isCancelledFailure,
   nativeRequest
 } from "@pagopa/io-react-native-http-client";
-import {
-  isLoginUtilsError,
-  openAuthenticationSession
-} from "@pagopa/io-react-native-login-utils";
+import { openAuthSessionAsync } from "expo-web-browser";
 import * as E from "fp-ts/lib/Either";
 import { Parser as HTMLParser2 } from "htmlparser2";
 import I18n from "i18next";
@@ -115,10 +112,12 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
   );
   try {
     yield* call(
-      openAuthenticationSession,
+      openAuthSessionAsync,
       enrichedInAppBrowserRedirectUrl,
       "iossoapi",
-      !ephemeralSessionOniOS
+      {
+        preferEphemeralSession: ephemeralSessionOniOS
+      }
     );
   } catch (error: unknown) {
     yield* call(handleInAppBrowserErrorIfNeeded, error);
@@ -409,25 +408,15 @@ export function* computeAndTrackInAppBrowserOpening() {
 }
 
 export function* handleInAppBrowserErrorIfNeeded(error: unknown) {
-  if (!isInAppBrowserClosedError(error)) {
-    const debugMessage = `InApp Browser opening failed: ${inAppBrowserErrorToHumanReadable(
-      error
-    )}`;
-    yield* call(computeAndTrackAuthenticationError, debugMessage);
-    yield* call(IOToast.error, I18n.t("FIMS.consentsScreen.inAppBrowserError"));
-  }
+  const debugMessage = `InApp Browser opening failed: ${inAppBrowserErrorToHumanReadable(
+    error
+  )}`;
+  yield* call(computeAndTrackAuthenticationError, debugMessage);
+  yield* call(IOToast.error, I18n.t("FIMS.consentsScreen.inAppBrowserError"));
 }
 
-const isInAppBrowserClosedError = (error: unknown) =>
-  isLoginUtilsError(error) &&
-  error.userInfo.error === "NativeAuthSessionClosed";
-
-const inAppBrowserErrorToHumanReadable = (error: unknown) => {
-  if (isLoginUtilsError(error)) {
-    return `${error.code} ${error.userInfo.error}`;
-  }
-  return JSON.stringify(error);
-};
+const inAppBrowserErrorToHumanReadable = (error: unknown) =>
+  JSON.stringify(error);
 
 export function* enrichFimsRedirectUrl(
   redirectUrl: string

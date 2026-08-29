@@ -1,8 +1,4 @@
 import { IOColors, useIOTheme } from "@io-app/design-system";
-import {
-  isLoginUtilsError,
-  LoginUtilsError
-} from "@pagopa/io-react-native-login-utils";
 import CookieManager from "@react-native-cookies/cookies";
 import I18n from "i18next";
 import {
@@ -171,9 +167,7 @@ const CieWebView = (props: Props) => {
   const { onSuccess } = props;
 
   const handleOnError = useCallback(
-    (
-      e: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
-    ) => {
+    (e: Error | WebViewErrorEvent | WebViewHttpErrorEvent) => {
       trackSpidLoginError("cie", e);
       setInternalState(state => generateErrorState(state));
     },
@@ -265,7 +259,7 @@ const CieWebView = (props: Props) => {
         url
       });
     } catch (error) {
-      if (error instanceof Error || isLoginUtilsError(error)) {
+      if (error instanceof Error) {
         handleOnError(error);
       }
     }

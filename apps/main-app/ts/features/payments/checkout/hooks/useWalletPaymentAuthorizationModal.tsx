@@ -1,8 +1,7 @@
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { openAuthSessionAsync } from "expo-web-browser";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import * as TE from "fp-ts/lib/TaskEither";
 import { useCallback, useEffect, useState } from "react";
 import URLParse from "url-parse";
 
@@ -100,7 +99,7 @@ export const useWalletPaymentAuthorizationModal = ({
   const startInAppBrowserPaymentSession = useCallback(
     (url: string) => {
       dispatch(storePaymentsBrowserTypeAction("inapp_browser"));
-      return openAuthenticationSession(url, WALLET_WEBVIEW_OUTCOME_SCHEMA);
+      return openAuthSessionAsync(url, WALLET_WEBVIEW_OUTCOME_SCHEMA);
     },
     [dispatch]
   );
@@ -110,27 +109,37 @@ export const useWalletPaymentAuthorizationModal = ({
       return;
     }
 
-    void pipe(
-      authorizationUrlPot,
-      pot.toOption,
-      TE.fromOption(() => undefined),
-      TE.chain(url =>
-        TE.tryCatch(
-          () => {
-            setIsPendingAuthorization(true);
-            return isWebViewEnabled
-              ? startWebviewPaymentSession(url)
-              : startInAppBrowserPaymentSession(url);
-          },
-          () => {
+    if (pot.isSome(authorizationUrlPot)) {
+      const authorizationUrl = authorizationUrlPot.value;
+
+      try {
+        setIsPendingAuthorization(true);
+        const paymentSession = isWebViewEnabled
+          ? startWebviewPaymentSession(authorizationUrl)
+          : startInAppBrowserPaymentSession(authorizationUrl);
+
+        paymentSession
+          .then(result => {
+            if (typeof result === "string") {
+              handleAuthorizationResult(result);
+              return;
+            }
+            if (result.type === "success") {
+              handleAuthorizationResult(result.url);
+              return;
+            }
+          })
+          .catch(() => {
             handleAuthorizationOutcome(
               WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER
             );
-          }
-        )
-      ),
-      TE.map(handleAuthorizationResult)
-    )();
+          });
+      } catch {
+        handleAuthorizationOutcome(
+          WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER
+        );
+      }
+    }
   }, [
     isError,
     isLoading,

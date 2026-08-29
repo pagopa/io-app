@@ -23,7 +23,7 @@ jest.mock("../..", () => {
       .mockResolvedValue(wrongJwkPublicKey as PublicKey)
   };
 });
-jest.mock("@pagopa/io-react-native-login-utils", () => ({
+jest.mock("@io-app/login-utils", () => ({
   getRedirects: jest.fn().mockResolvedValue([url])
 }));
 
