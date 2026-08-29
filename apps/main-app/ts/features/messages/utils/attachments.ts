@@ -1,10 +1,11 @@
 import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
-import RNFS from "react-native-fs";
+import { Paths } from "expo-file-system";
 
 import { apiUrlPrefix } from "../../../config";
 
+// Paths.cache.uri is a file:// URI with a trailing slash; react-native-blob-util needs a plain path
 export const AttachmentsDirectoryPath =
-  RNFS.CachesDirectoryPath + "/attachments";
+  Paths.cache.uri.replace(/^file:\/\//, "").replace(/\/$/, "") + "/attachments";
 
 /**
  * Builds the save path for the given attachment

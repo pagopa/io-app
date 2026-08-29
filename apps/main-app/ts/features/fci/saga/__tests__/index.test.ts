@@ -44,10 +44,17 @@ import {
 } from "../index";
 import { FciDownloadPreviewDirectoryPath } from "../networking/handleDownloadDocument";
 
-// Mock react-native-fs
-jest.mock("react-native-fs", () => ({
-  exists: jest.fn(() => Promise.resolve(true)),
-  unlink: jest.fn(() => Promise.resolve())
+// Mock expo-file-system
+const mockFileDelete = jest.fn();
+const mockFileExists = true;
+jest.mock("expo-file-system", () => ({
+  File: jest.fn().mockImplementation(() => ({
+    exists: mockFileExists,
+    delete: mockFileDelete,
+    uri: ""
+  })),
+  Paths: { cache: { uri: "file:///cache/" } },
+  Directory: jest.fn()
 }));
 
 // Ensure testable is defined in test environment
@@ -411,12 +418,12 @@ describe("FCI Saga Tests", () => {
 
     it("should delete the specified path", async () => {
       const action = fciClearAllFiles({ path: testPath });
-      const RNFS = require("react-native-fs");
+      const { File } = require("expo-file-system");
 
       await expectSaga(clearAllFciFiles, action).run();
 
-      expect(RNFS.exists).toHaveBeenCalledWith(testPath);
-      expect(RNFS.unlink).toHaveBeenCalledWith(testPath);
+      expect(File).toHaveBeenCalledWith(testPath);
+      expect(mockFileDelete).toHaveBeenCalled();
     });
   });
 

@@ -1,8 +1,8 @@
 import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
+import { File as MockFile } from "expo-file-system";
 import I18n from "i18next";
-import RNFS from "react-native-fs";
 
 import NavigationService from "../../../../navigation/NavigationService";
 import { isAarAttachmentTtlError } from "../../../pn/aar/utils/aarErrorMappings";
@@ -51,9 +51,16 @@ jest.mock("@io-app/design-system", () => ({
   })
 }));
 
-jest.mock("react-native-fs", () => ({
-  exists: jest.fn()
+jest.mock("expo-file-system", () => ({
+  File: jest.fn(),
+  Paths: { cache: { uri: "file:///cache/" } },
+  Directory: jest.fn()
 }));
+
+const mockFileInstance = (exists: boolean) =>
+  jest
+    .mocked(MockFile)
+    .mockReturnValue({ exists, delete: jest.fn(), uri: "" } as any);
 
 jest.mock("../../store/reducers/downloads");
 
@@ -161,7 +168,7 @@ describe("useAttachmentDownload", () => {
     it("should navigate directly if download is defined and file exists on disk", async () => {
       const downloadPath = "/tmp/test.pdf";
       setupSelectors({ download: { path: downloadPath } });
-      (RNFS.exists as jest.Mock).mockResolvedValue(true);
+      mockFileInstance(true);
 
       const { result } = renderUseAttachmentDownload();
 
@@ -169,7 +176,7 @@ describe("useAttachmentDownload", () => {
         await result.current.onModuleAttachmentPress();
       });
 
-      expect(RNFS.exists).toHaveBeenCalledWith(downloadPath);
+      expect(MockFile).toHaveBeenCalledWith(downloadPath);
       expect(mockDispatch).toHaveBeenCalledWith(
         clearRequestedAttachmentDownload()
       );
@@ -224,7 +231,7 @@ describe("useAttachmentDownload", () => {
       }) => {
         setupSelectors({ download });
         if (download) {
-          (RNFS.exists as jest.Mock).mockResolvedValue(false);
+          mockFileInstance(false);
         }
 
         const { result } = renderUseAttachmentDownload(
@@ -250,7 +257,7 @@ describe("useAttachmentDownload", () => {
     it("should navigate to PN route when it is a send attachment", async () => {
       const downloadPath = "/tmp/test.pdf";
       setupSelectors({ download: { path: downloadPath } });
-      (RNFS.exists as jest.Mock).mockResolvedValue(true);
+      mockFileInstance(true);
 
       const { result } = renderUseAttachmentDownload("message", "recipient");
 
@@ -281,7 +288,7 @@ describe("useAttachmentDownload", () => {
     it("should call onPreNavigate before navigating", async () => {
       const downloadPath = "/tmp/test.pdf";
       setupSelectors({ download: { path: downloadPath } });
-      (RNFS.exists as jest.Mock).mockResolvedValue(true);
+      mockFileInstance(true);
 
       const onPreNavigate = jest.fn();
       const { result } = renderUseAttachmentDownload(
@@ -317,7 +324,7 @@ describe("useAttachmentDownload", () => {
     });
 
     it("should prioritize download success over error when both are present", async () => {
-      (RNFS.exists as jest.Mock).mockResolvedValue(true);
+      mockFileInstance(true);
       setupSelectors({
         download: { path: "/tmp/test.pdf" },
         downloadError: new Error("should be ignored"),
@@ -353,7 +360,7 @@ describe("useAttachmentDownload", () => {
     ])(
       "should $desc after download completes",
       async ({ fileExists, shouldNavigate }) => {
-        (RNFS.exists as jest.Mock).mockResolvedValue(fileExists);
+        mockFileInstance(fileExists);
         setupSelectors({
           download: { path: "/tmp/test.pdf" },
           isRequested: true
