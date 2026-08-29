@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.38.0-rc.25](https://github.com/pagopa/io-app/compare/3.38.0-rc.24...3.38.0-rc.25) (2026-08-29)
+
+
+### Chores
+
+* [[IOPLT-2005](https://pagopa.atlassian.net/browse/IOPLT-2005)] Bump `@xstate/react` to v5 ([#8446](https://github.com/pagopa/io-app/issues/8446)) ([d9f96d4](https://github.com/pagopa/io-app/commit/d9f96d41d38298834acd198fb9d164ab49b6e9df))
+
 ## [3.38.0-rc.24](https://github.com/pagopa/io-app/compare/3.38.0-rc.23...3.38.0-rc.24) (2026-08-28)
 
 
