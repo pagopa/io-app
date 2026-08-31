@@ -44,7 +44,10 @@ export const AnimatedTick = ({
   };
 
   return (
-    <Svg viewBox={`0 0 24 24`} {...(size ? { width: size, height: size } : {})}>
+    <Svg
+      viewBox={`0 0 24 24`}
+      {...(size != null && size > 0 ? { width: size, height: size } : {})}
+    >
       <AnimatedPath
         animatedProps={animatedProps}
         d={TickSVGPath}

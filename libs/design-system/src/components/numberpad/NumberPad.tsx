@@ -108,7 +108,7 @@ export const NumberPad = ({
             </ButtonWrapper>
           );
         }
-        if (biometricType && mapIconSpecByBiometric[biometricType]) {
+        if (biometricType) {
           return (
             <ButtonWrapper key={item}>
               <IconButton

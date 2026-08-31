@@ -1,3 +1,6 @@
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletInfo";
+import { WalletStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletStatus";
+import { PaymentMethodResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv3/PaymentMethodResponse";
 import {
   Alert,
   ListItemHeader,
@@ -12,9 +15,6 @@ import I18n from "i18next";
 import _, { capitalize } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 
-import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { WalletStatusEnum } from "../../../../../definitions/pagopa/ecommerce/WalletStatus";
-import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { centsToAmount } from "../../../../utils/stringBuilder";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";

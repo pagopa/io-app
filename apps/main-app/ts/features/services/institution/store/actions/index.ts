@@ -1,6 +1,6 @@
+import { InstitutionServicesResource } from "@io-app/api-types/generated/definitions/services/InstitutionServicesResource";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
-import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
 import { NetworkError } from "../../../../../utils/errors";
 
 export type PaginatedServicesGetPayload = {

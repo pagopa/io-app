@@ -1,3 +1,6 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { AccessToken } from "@io-app/api-types/generated/definitions/session_manager/AccessToken";
+import { PasswordLogin } from "@io-app/api-types/generated/definitions/session_manager/PasswordLogin";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import {
   ApiHeaderJson,
@@ -8,9 +11,6 @@ import {
   IPostApiRequestType
 } from "@pagopa/ts-commons/lib/requests";
 
-import { BackendStatus } from "../../definitions/content/BackendStatus";
-import { AccessToken } from "../../definitions/session_manager/AccessToken";
-import { PasswordLogin } from "../../definitions/session_manager/PasswordLogin";
 import { getLoginHeaders } from "../features/authentication/common/utils/login";
 import { defaultRetryingFetch } from "../utils/fetch";
 

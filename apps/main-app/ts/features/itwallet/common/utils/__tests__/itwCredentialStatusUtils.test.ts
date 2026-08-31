@@ -1,8 +1,17 @@
+import { IoWallet } from "@pagopa/io-react-native-wallet";
 import MockDate from "mockdate";
 
-import { getCredentialStatus } from "../itwCredentialStatusUtils";
-import { ItwStoredCredentialsMocks } from "../itwMocksUtils";
-import { CredentialMetadata } from "../itwTypesUtils";
+import { DigitalCredentialMetadata } from "../itwCredentialsCatalogueUtils";
+import {
+  getCredentialStatus,
+  getCredentialStatusMessageFromCatalog,
+  getCredentialStatusMessageFromIssuerConf
+} from "../itwCredentialStatusUtils";
+import {
+  ItwCredentialFromCatalogueMocks,
+  ItwStoredCredentialsMocks
+} from "../itwMocksUtils";
+import { CredentialMetadata, IssuerConfiguration } from "../itwTypesUtils";
 
 const options: Parameters<typeof getCredentialStatus>[1] = {
   expiringDays: 14
@@ -332,5 +341,183 @@ describe("getCredentialStatus", () => {
       };
       expect(getCredentialStatus(mockCredential, options)).toEqual("unknown");
     });
+  });
+});
+
+describe("getCredentialStatusMessageFromCatalog", () => {
+  const ioWallet = new IoWallet({ version: "1.3.3" });
+
+  const SUSPENDED_STATUS = "0x02";
+  const TITLE_L10N_ID = "credential.status.suspended.title";
+  const DESCRIPTION_L10N_ID = "credential.status.suspended.description";
+
+  const catalogMetadata: DigitalCredentialMetadata = {
+    ...ItwCredentialFromCatalogueMocks,
+    validity_info: {
+      ...ItwCredentialFromCatalogueMocks.validity_info,
+      allowed_states: [
+        {
+          [SUSPENDED_STATUS]: "suspended",
+          title_l10n_id: TITLE_L10N_ID,
+          description_l10n_id: DESCRIPTION_L10N_ID
+        }
+      ]
+    }
+  };
+
+  const catalogTranslations = {
+    [TITLE_L10N_ID]: "Credenziale sospesa",
+    [DESCRIPTION_L10N_ID]: "La credenziale è stata sospesa dall'ente emittente."
+  };
+
+  it("should return the translated message for a status listed in the catalog", () => {
+    expect(
+      getCredentialStatusMessageFromCatalog({
+        ioWallet,
+        rawStatus: SUSPENDED_STATUS,
+        catalogMetadata,
+        catalogTranslations
+      })
+    ).toEqual({
+      title: "Credenziale sospesa",
+      description: "La credenziale è stata sospesa dall'ente emittente."
+    });
+  });
+
+  // The status list returns uppercase status bits, the catalog uses lowercase keys
+  it("should match the raw status regardless of its case", () => {
+    expect(
+      getCredentialStatusMessageFromCatalog({
+        ioWallet,
+        rawStatus: "0X02",
+        catalogMetadata,
+        catalogTranslations
+      })
+    ).toEqual({
+      title: "Credenziale sospesa",
+      description: "La credenziale è stata sospesa dall'ente emittente."
+    });
+  });
+
+  it.each([
+    {
+      name: "rawStatus, catalogMetadata and catalogTranslations are missing",
+      params: {
+        rawStatus: undefined,
+        catalogMetadata: undefined,
+        catalogTranslations: undefined
+      }
+    },
+    {
+      name: "the raw status is not among the allowed states",
+      params: {
+        rawStatus: "0x0B",
+        catalogMetadata,
+        catalogTranslations
+      }
+    }
+  ])("should return undefined when $name", ({ params }) => {
+    expect(
+      getCredentialStatusMessageFromCatalog({ ioWallet, ...params })
+    ).toBeUndefined();
+  });
+
+  it.each([
+    { name: "no translations are available", catalogTranslations: undefined },
+    {
+      name: "the l10n ids have no matching translation",
+      catalogTranslations: { "another.l10n.id": "Another message" }
+    }
+  ])(
+    "should return an empty message when $name",
+    ({ catalogTranslations: translations }) => {
+      expect(
+        getCredentialStatusMessageFromCatalog({
+          ioWallet,
+          rawStatus: SUSPENDED_STATUS,
+          catalogMetadata,
+          catalogTranslations: translations
+        })
+      ).toEqual({ title: undefined, description: undefined });
+    }
+  );
+});
+
+describe("getCredentialStatusMessageFromIssuerConf", () => {
+  const CREDENTIAL_ID = "dc_sd_jwt_mDL";
+  const ERROR_CODE = "credential_suspended";
+
+  const italianMessage = {
+    title: "Patente sospesa",
+    description: "La tua patente è stata sospesa."
+  };
+  const englishMessage = {
+    title: "Suspended driving license",
+    description: "Your driving license has been suspended."
+  };
+
+  const buildIssuerConf = (
+    display: Array<{ description: string; locale: string; title: string }>
+  ) =>
+    ({
+      credential_configurations_supported: {
+        [CREDENTIAL_ID]: {
+          issuance_errors_supported: {
+            [ERROR_CODE]: { display }
+          }
+        }
+      }
+    }) as unknown as IssuerConfiguration;
+
+  const issuerConf = buildIssuerConf([
+    { locale: "it-IT", ...italianMessage },
+    { locale: "en-US", ...englishMessage }
+  ]);
+
+  it("should return the message matching the current locale", async () => {
+    expect(
+      getCredentialStatusMessageFromIssuerConf({
+        errorCode: ERROR_CODE,
+        credentialId: CREDENTIAL_ID,
+        issuerConf
+      })
+    ).toEqual(italianMessage);
+  });
+
+  it.each([
+    {
+      name: "errorCode, credentialId and issuerConf are missing",
+      params: {
+        errorCode: undefined,
+        credentialId: undefined,
+        issuerConf: undefined
+      }
+    },
+    {
+      name: "the error code is not supported by the issuer",
+      params: {
+        errorCode: "credential_revoked",
+        credentialId: CREDENTIAL_ID,
+        issuerConf
+      }
+    },
+    {
+      name: "the issuer has no message for the current locale",
+      params: {
+        errorCode: ERROR_CODE,
+        credentialId: CREDENTIAL_ID,
+        issuerConf: buildIssuerConf([{ locale: "en-US", ...englishMessage }])
+      }
+    },
+    {
+      name: "the credential cannot be found in the issuer configuration",
+      params: {
+        errorCode: ERROR_CODE,
+        credentialId: "unknown_credential",
+        issuerConf
+      }
+    }
+  ])("should return undefined when $name", ({ params }) => {
+    expect(getCredentialStatusMessageFromIssuerConf(params)).toBeUndefined();
   });
 });

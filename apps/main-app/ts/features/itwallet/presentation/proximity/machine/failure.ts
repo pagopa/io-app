@@ -6,6 +6,7 @@ import {
 import { ProximityEvents } from "./events";
 
 export enum ProximityFailureType {
+  CONSENT_DENIED = "CONSENT_DENIED",
   MISSING_CREDENTIALS = "MISSING_CREDENTIALS",
   RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
   TIMEOUT = "TIMEOUT",
@@ -23,6 +24,7 @@ export type ProximityFailure =
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
 type ReasonTypeByFailure = {
+  [ProximityFailureType.CONSENT_DENIED]: undefined;
   [ProximityFailureType.MISSING_CREDENTIALS]: MissingCredentialError;
   [ProximityFailureType.RELYING_PARTY_GENERIC]: Error;
   [ProximityFailureType.TIMEOUT]: TimeoutError;

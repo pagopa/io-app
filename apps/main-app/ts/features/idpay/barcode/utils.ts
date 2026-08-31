@@ -1,4 +1,4 @@
-import { TransactionBarCodeResponse } from "../../../../definitions/idpay/TransactionBarCodeResponse";
+import { TransactionBarCodeResponse } from "@io-app/api-types/generated/definitions/idpay/TransactionBarCodeResponse";
 
 export const calculateIdPayBarcodeSecondsToExpire = (
   barcode: TransactionBarCodeResponse

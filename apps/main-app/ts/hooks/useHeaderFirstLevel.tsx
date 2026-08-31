@@ -27,13 +27,12 @@ type useHeaderFirstLevelProps = {
  * This hook sets the `HeaderFirstLevel` in a screen using the `useLayoutEffect` hook.
  */
 export const useHeaderFirstLevel = ({
-  currentRoute,
   headerProps
 }: useHeaderFirstLevelProps) => {
   const navigation = useIONavigation();
   const { actions: incomingActions, ...rest } = headerProps;
 
-  const actionHelp = useHeaderFirstLevelActionPropHelp(currentRoute);
+  const actionHelp = useHeaderFirstLevelActionPropHelp();
   const actionSettings = useHeaderFirstLevelActionPropSettings();
   const { isAlertVisible } = useIOAlertVisible();
   const actions: HeaderFirstLevel["actions"] = useMemo(() => {

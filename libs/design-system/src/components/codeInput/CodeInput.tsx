@@ -86,14 +86,13 @@ export const CodeInput = ({
         : filledDotColorThemeBased;
 
   useEffect(() => {
-    if (onValidate && value.length === length) {
+    if (value.length === length) {
       const isValid = onValidate(value);
 
       if (!isValid) {
         setStatus("error");
         triggerHaptic("notificationError");
 
-        // eslint-disable-next-line functional/immutable-data
         translate.value = shakeAnimation();
 
         const timer = setTimeout(() => {

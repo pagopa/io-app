@@ -24,8 +24,55 @@ jobs:
         uses: ./.github/actions/setup-composite
       - name: Sets the base and head SHAs required for `nx affected` command
         uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
-      - id: run-validate
+      - id: generate-api-models
+        run: pnpm nx run @io-app/api-types:generate
+      - id: run-affected-checks
+        if: github.event_name == 'pull_request'
         run: pnpm validate
+      - id: run-all-checks
+        if: github.event_name != 'pull_request'
+        run: pnpm validate-all
+      - id: knip
+        name: Check unused files and/or references
+        # Advisory only: reports code this PR left unused, and can never block a
+        # merge. Reuses the checkout and install above rather than paying for a
+        # second one in a dedicated workflow. Skipped outside pull requests,
+        # where there is nothing to comment on.
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          mkdir -p knip-pr
+          # --silent keeps pnpm's script banner out of the redirected JSON.
+          # `--no-exit-code` means findings still exit 0, so a failure here is
+          # knip itself breaking. Downstream that only shows up as a missing
+          # comment, hence the annotation: it is the one trace left on the PR.
+          if ! pnpm --silent knip > knip-pr/head.json; then
+            echo "::warning::Knip could not run, so this PR has no unused-code report. See the Static checks logs."
+            exit 1
+          fi
+          # On pull_request the checkout is a merge commit, so HEAD^1 is the exact
+          # base commit this PR merges into. Pinning the baseline to that commit
+          # avoids blaming a PR for dead code introduced by whatever landed on
+          # master in the meantime. It is resolvable here and nowhere else, so it
+          # travels with the report.
+          jq -n --arg pr "$PR_NUMBER" --arg base "$(git rev-parse HEAD^1)" \
+            '{pr: $pr, base: $base}' > knip-pr/meta.json
+      - id: upload-knip
+        name: Upload the unused-code report
+        # The comment is posted by the Unused code report workflow, not here:
+        # this one is reachable through workflow_call from the release
+        # workflows, and a called workflow can only downgrade the caller's
+        # token, never elevate it to the `pull-requests: write` that needs.
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: knip-pr
+          path: knip-pr
+          retention-days: 1
+          if-no-files-found: ignore
       - id: codecov-script
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:

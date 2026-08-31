@@ -1,6 +1,6 @@
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
 import { ATTACHMENT_CATEGORY } from "../types/attachmentCategory";
 
 export const mockPdfAttachment: ThirdPartyAttachment = {

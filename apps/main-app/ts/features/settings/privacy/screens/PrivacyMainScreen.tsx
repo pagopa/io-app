@@ -1,3 +1,5 @@
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import {
   Divider,
   IOToast,
@@ -16,8 +18,6 @@ import {
 } from "react";
 import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
 
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/identity/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../definitions/identity/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
@@ -171,7 +171,6 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       if (someWereLoading(choices)) {
         if (someHasError(choices) && canShowTooltipRef.current) {
           // This reference ensures to display the toast message once between re-execution of this effect
-          // eslint-disable-next-line functional/immutable-data
           canShowTooltipRef.current = false;
 
           IOToast.error(errorMessage);
@@ -220,7 +219,6 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
   const handleChoiceSelection = useCallback(
     (choice: UserDataProcessingChoiceEnum) => {
       if (pot.isError(userDataProcessing[choice])) {
-        // eslint-disable-next-line functional/immutable-data
         canShowTooltipRef.current = true;
         setRequestProcess(true);
         dispatch(loadUserDataProcessing.request(choice));

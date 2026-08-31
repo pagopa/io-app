@@ -1,7 +1,5 @@
 import { Alert, IOButton, IOToast, VStack } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { memo, useCallback, useMemo } from "react";
 import { View } from "react-native";
@@ -16,17 +14,15 @@ import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors
 import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
-import {
-  ClaimsLocales,
-  getClaimsFullLocale,
-  getCredentialExpireDays
-} from "../../../common/utils/itwClaimsUtils.ts";
+import { getCredentialExpireDays } from "../../../common/utils/itwClaimsUtils.ts";
+import { CredentialStatusMessage } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
   CredentialMetadata,
   ItwCredentialStatus,
   ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
+import { useCredentialStatusMessage } from "../../../credentials/hooks/useCredentialStatusMessage";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialStatusSelector
@@ -79,7 +75,7 @@ type CredentialAlertProps = {
   isItwL3: boolean;
   isMdlSuspended?: boolean;
   isOffline: boolean;
-  message: Record<string, { description: string; title: string }> | undefined;
+  message?: CredentialStatusMessage;
 };
 
 type CredentialStatusAlertProps = {
@@ -224,9 +220,10 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const navigation = useIONavigation();
   const { name: currentScreenName } = useRoute();
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
-  const { status, message } = useIOSelector(state =>
+  const { status } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  const message = useCredentialStatusMessage(credential.credentialType);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
 
@@ -324,14 +321,14 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
         />
       );
     case CredentialAlertType.ISSUER_DYNAMIC_ERROR:
-      return message ? (
+      return (
         <IssuerDynamicErrorAlert
           credential={credential}
           message={message}
           onTrack={trackCredentialAlertEvent}
           status={status}
         />
-      ) : null;
+      );
     case CredentialAlertType.JWT_VERIFICATION:
       return (
         <JwtVerificationAlert
@@ -511,7 +508,7 @@ const MdlSuspendedAlert = ({
 
 type IssuerDynamicErrorAlertProps = {
   credential: CredentialMetadata;
-  message: Record<string, { description: string; title: string }>;
+  message?: CredentialStatusMessage;
   onTrack: TrackCredentialAlert;
   status?: ItwCredentialStatus;
 };
@@ -522,7 +519,11 @@ const IssuerDynamicErrorAlert = ({
   onTrack,
   status
 }: IssuerDynamicErrorAlertProps) => {
-  const localizedMessage = getLocalizedMessageOrFallback(message);
+  const localizedMessage = {
+    title: message?.title ?? I18n.t("features.itWallet.card.status.unknown"),
+    description:
+      message?.description ?? I18n.t("features.itWallet.card.status.unknown")
+  };
   const bottomSheet = useItwIssuerDynamicErrorBottomSheet({
     credential,
     localizedMessage,
@@ -543,19 +544,6 @@ const IssuerDynamicErrorAlert = ({
     </>
   );
 };
-
-const getLocalizedMessageOrFallback = (
-  message: IssuerDynamicErrorAlertProps["message"]
-) =>
-  pipe(
-    message[getClaimsFullLocale()],
-    O.fromNullable,
-    O.alt(() => O.fromNullable(message[ClaimsLocales.it])),
-    O.getOrElse(() => ({
-      title: I18n.t("features.itWallet.card.status.unknown"),
-      description: I18n.t("features.itWallet.card.status.unknown")
-    }))
-  );
 
 const Memoized = memo(ItwPresentationCredentialStatusAlert);
 

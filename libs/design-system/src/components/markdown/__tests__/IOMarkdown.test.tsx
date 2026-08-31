@@ -21,7 +21,7 @@ const getFirstParagraphStyles = (
   const tree = toJSON();
   const root = Array.isArray(tree) ? tree[0] : tree;
   const paragraph = root?.children?.[0];
-  if (!paragraph || typeof paragraph === "string") {
+  if (paragraph == null || typeof paragraph === "string") {
     return [];
   }
   return [paragraph?.props?.style].flat();

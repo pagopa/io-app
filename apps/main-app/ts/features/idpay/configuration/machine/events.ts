@@ -1,5 +1,6 @@
-import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
-import { IbanPutDTO } from "../../../../../definitions/idpay/IbanPutDTO";
+import { IbanDTO } from "@io-app/api-types/generated/definitions/idpay/IbanDTO";
+import { IbanPutDTO } from "@io-app/api-types/generated/definitions/idpay/IbanPutDTO";
+
 import { ConfigurationMode } from "../types";
 
 export type IdPayConfigurationEvents =

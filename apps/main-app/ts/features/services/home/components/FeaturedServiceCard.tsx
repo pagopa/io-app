@@ -72,6 +72,7 @@ const FeaturedServiceCard = ({
   return (
     <CardPressableBase
       accessibilityLabel={accessibilityLabel}
+      hapticType="impactMedium"
       onPress={onPress}
       testID={`${testID}-pressable`}
     >

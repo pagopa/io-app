@@ -1,0 +1,50 @@
+name: Unused code report
+on:
+  workflow_run:
+    workflows:
+      - Static checks
+    types:
+      - completed
+permissions:
+  contents: read
+jobs:
+  comment:
+    name: Report unused files and/or references
+    # Static checks also runs on merge_group, where there is no PR to comment on.
+    if: github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Needed to fetch the Knip reports from the Static checks and baseline runs.
+      actions: read
+      # Needed to post the advisory Knip comment.
+      pull-requests: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch }}
+      cancel-in-progress: true
+    steps:
+      - id: checkout
+        # Deliberately the default branch and not the pull request: this job
+        # holds write permissions and must never run code authored in the PR.
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: report
+        name: Compare against the baseline and comment
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          # Absent whenever Static checks never got as far as a report.
+          gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" --name knip-pr --dir knip-pr || exit 0
+          BASE_SHA=$(jq -r .base knip-pr/meta.json)
+          export PR_NUMBER=$(jq -r .pr knip-pr/meta.json)
+          # Looked up by file name: a rename of the workflow would silently
+          # degrade every PR to "no baseline", with no error to notice.
+          BASELINE_RUN=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow knip-baseline.yml \
+            --commit "$BASE_SHA" --status success --limit 1 --json databaseId --jq '.[0].databaseId')
+          echo "base commit: $BASE_SHA / baseline run: ${BASELINE_RUN:-none}"
+          if [ -n "$BASELINE_RUN" ]; then
+            gh run download "$BASELINE_RUN" --repo "$GITHUB_REPOSITORY" --name knip-baseline --dir baseline || true
+          fi
+          node .github/scripts/knip-report.mjs knip-pr/head.json baseline/knip-baseline.json

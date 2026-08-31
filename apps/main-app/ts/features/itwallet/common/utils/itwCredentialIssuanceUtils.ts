@@ -3,15 +3,23 @@ import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { getRedirects } from "@pagopa/io-react-native-login-utils";
 import {
   createCryptoContextFor,
+  type CredentialIssuance,
   type ItwVersion,
   RemotePresentation
 } from "@pagopa/io-react-native-wallet";
 import last from "lodash/last";
 import { v4 as uuidv4 } from "uuid";
 
+import { assert } from "../../../../utils/assert";
+import { getCredentialStatusFromStatusList } from "../../statusList/utils";
 import { Env } from "./environment";
 import { getWalletUnitAttestation } from "./itwAttestationUtils";
-import { extractVerification } from "./itwCredentialUtils";
+import { getCredentialStatusAssertion } from "./itwCredentialStatusAssertionUtils";
+import {
+  extractVerification,
+  getCredentialKeyTags,
+  isBatchCredential
+} from "./itwCredentialUtils";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
@@ -24,6 +32,7 @@ import {
   CredentialAccessToken,
   CredentialBundle,
   CredentialFormat,
+  CredentialMetadata,
   CredentialOfferResolved,
   EvaluatedDcqlQueryResult,
   IssuerConfiguration,
@@ -39,18 +48,54 @@ const NO_SUPPORTED_CREDENTIAL_CONFIGURATION_IDS_ERROR =
   "No supported credential configuration IDs found for the resolved credential offer";
 
 /**
- * Credentials that must be obtained in batch (multiple copies in a single issuance), keyed by
- * credential type. Each entry declares the number of copies the app wants to obtain. These are
- * typically one-time-use credentials, where each copy is consumed on a single presentation.
- *
- * The desired count is an app-side preference: the effective batch size is always clamped to the
- * issuer's advertised `credential_issuance_batch_size` (see {@link getEffectiveBatchSize}).
+ * One-time-use credentials, obtained in batch and configured with:
+ * - `desiredCount`: how many copies to ask for, clamped to the issuer's advertised
+ *   `credential_issuance_batch_size` (see {@link getEffectiveBatchSize});
+ * - `consumeOnPresentation`: whether a presented copy is deleted after a successful presentation;
+ * - `refillThreshold`: remaining copies that trigger a silent renewal. Must be lower than
+ *   `desiredCount`, otherwise a fresh batch would immediately ask to be renewed.
  */
 export const BATCH_ISSUANCE_CREDENTIALS: Record<
   string,
-  { desiredCount: number }
+  {
+    consumeOnPresentation: boolean;
+    desiredCount: number;
+    refillThreshold: number;
+  }
 > = {
-  [CredentialType.PROOF_OF_AGE]: { desiredCount: 5 }
+  [CredentialType.PROOF_OF_AGE]: {
+    desiredCount: 5,
+    consumeOnPresentation: true,
+    refillThreshold: 2
+  }
+};
+
+/**
+ * Returns the remaining copies that trigger a renewal, or `undefined` for credentials that are
+ * not obtained in batch.
+ */
+export const getBatchRefillThreshold = (
+  credentialType: string
+): number | undefined =>
+  BATCH_ISSUANCE_CREDENTIALS[credentialType]?.refillThreshold;
+
+/**
+ * Tells whether a batch credential is down to its `refillThreshold` and must be renewed.
+ * Returns `false` for credentials that are not obtained in batch.
+ *
+ * The remaining copies are the only source of truth: since no renewal state is persisted, an
+ * interrupted renewal is simply picked up again by the next trigger.
+ */
+export const shouldRefillBatch = (
+  credential: Pick<CredentialMetadata, "credentialType" | "keyTag" | "keyTags">
+): boolean => {
+  const threshold = getBatchRefillThreshold(credential.credentialType);
+
+  if (threshold === undefined || !isBatchCredential(credential)) {
+    return false;
+  }
+
+  return getCredentialKeyTags(credential).length <= threshold;
 };
 
 /**
@@ -415,7 +460,8 @@ const requestAndParseCredential: RequestAndParseCredential = async ({
       }
     ).catch(
       enrichErrorWithMetadata({
-        credentialId: credential_configuration_id
+        credentialId: credential_configuration_id,
+        credentialType
       })
     );
 
@@ -705,7 +751,8 @@ export const obtainCredentialsBatch: ObtainCredentialsBatch = async ({
             }
           ).catch(
             enrichErrorWithMetadata({
-              credentialId: credential_configuration_id
+              credentialId: credential_configuration_id,
+              credentialType
             })
           );
 
@@ -730,4 +777,112 @@ export const obtainCredentialsBatch: ObtainCredentialsBatch = async ({
   );
 
   return bundlesByAuthDetail.flat();
+};
+
+export type AttachCredentialsStatus = (args: {
+  credentials: ReadonlyArray<CredentialBundle>;
+  env: Env;
+  issuerConf?: IssuerConfiguration;
+  itwVersion: ItwVersion;
+}) => Promise<ReadonlyArray<CredentialBundle>>;
+
+/**
+ * Enriches freshly obtained credential bundles with their validity, using the status mechanism
+ * supported by the current IT-Wallet specifications version: status assertion when available,
+ * token status list otherwise. mDoc credentials are returned untouched.
+ *
+ * The issuer configuration is required only by the status list mechanism, which needs the issuer
+ * JWKS to verify the fetched list.
+ *
+ * @throws When the credential status cannot be retrieved or the credential is not valid
+ */
+export const attachCredentialsStatus: AttachCredentialsStatus = async ({
+  credentials,
+  env,
+  itwVersion,
+  issuerConf
+}) => {
+  const ioWallet = getIoWallet(itwVersion);
+
+  const withStatusAssertion = async (
+    bundle: CredentialBundle
+  ): Promise<CredentialBundle> => {
+    if (bundle.metadata.format === CredentialFormat.MDOC) {
+      return bundle;
+    }
+
+    const { parsedStatusAssertion } = await getCredentialStatusAssertion(
+      bundle,
+      env,
+      itwVersion
+    ).catch(
+      enrichErrorWithMetadata({
+        credentialId: bundle.metadata.credentialId,
+        credentialType: bundle.metadata.credentialType
+      })
+    );
+
+    return {
+      credential: bundle.credential,
+      metadata: {
+        ...bundle.metadata,
+        validity: {
+          type: "status_assertion",
+          status: "valid",
+          statusAssertion: parsedStatusAssertion
+        }
+      }
+    };
+  };
+
+  const withStatusList = async (
+    bundle: CredentialBundle,
+    conf: IssuerConfiguration
+  ): Promise<CredentialBundle> => {
+    // TODO: [SIW-4681] Handle status list for mdoc credentials
+    if (bundle.metadata.format === CredentialFormat.MDOC) {
+      return bundle;
+    }
+
+    const { status, rawStatus, uri, idx, parsedStatusList } =
+      await getCredentialStatusFromStatusList(
+        itwVersion,
+        bundle.credential,
+        bundle.metadata.credentialId,
+        bundle.metadata.format as CredentialIssuance.CredentialFormat,
+        conf.keys
+      ).catch(
+        enrichErrorWithMetadata({
+          credentialId: bundle.metadata.credentialId,
+          credentialType: bundle.metadata.credentialType
+        })
+      );
+
+    return {
+      credential: bundle.credential,
+      metadata: {
+        ...bundle.metadata,
+        validity: {
+          type: "status_list",
+          status,
+          rawStatus,
+          statusList: { uri, idx }
+        }
+      },
+      statusList: { uri, payload: parsedStatusList }
+    };
+  };
+
+  return await Promise.all(
+    credentials.map(async credential => {
+      if (ioWallet.CredentialStatus.statusAssertion.isSupported) {
+        return withStatusAssertion(credential);
+      }
+      if (ioWallet.CredentialStatus.statusList.isSupported) {
+        assert(issuerConf, "issuerConf is undefined");
+        return withStatusList(credential, issuerConf);
+      }
+      return credential;
+    })
+  );
 };

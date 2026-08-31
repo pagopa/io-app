@@ -1,0 +1,14 @@
+[
+  {
+    "abi": "03110",
+    "default": true,
+    "email": "",
+    "ragioneSociale": "PayPal - psp - test 1"
+  },
+  {
+    "abi": "03111",
+    "default": true,
+    "email": "",
+    "ragioneSociale": "PayPal - psp - test 2"
+  }
+]

@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import {
   Rect,
   LinearGradient as SkiaLinearGradient,

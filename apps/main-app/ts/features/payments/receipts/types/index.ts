@@ -1,4 +1,4 @@
-import { ProblemJson } from "../../../../../definitions/pagopa/biz-events/ProblemJson";
+import { ProblemJson } from "@io-app/api-types/generated/definitions/pagopa/biz-events/ProblemJson";
 
 export const receiptsCategoryFilters = ["all", "payer", "debtor"] as const;
 // Enum representing possible error codes when downloading a receipt

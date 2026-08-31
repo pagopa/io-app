@@ -1,22 +1,16 @@
+import * as LocalAuthentication from "expo-local-authentication";
 import I18n from "i18next";
 import { Alert, Platform } from "react-native";
-import FingerprintScanner, {
-  AuthenticateAndroid,
-  AuthenticateIOS,
-  Biometrics,
-  Errors,
-  FingerprintScannerError
-} from "react-native-fingerprint-scanner";
 
 import { isDebugBiometricIdentificationEnabled } from "../config";
 import { mixpanelTrack } from "../mixpanel";
 
 /**
  * Retrieve biometric settings from the base system. This function wraps the basic
- * method "isSensorAvailable" of react-native-fingerprint-scanner library and simplifies the possible returned values in
+ * method "supportedAuthenticationTypesAsync" of expo-local-authentication library and simplifies the possible returned values in
  * function of its usage.
  *
- * More info about library can be found here: https://github.com/hieuvp/react-native-fingerprint-scanner
+ * More info about library can be found here: https://github.com/expo/expo/tree/main/packages/expo-local-authentication
  */
 
 const biometricErrors = [
@@ -37,28 +31,36 @@ type BiometricsErrorType = (typeof biometricErrors)[number];
 
 /**
  * Retrieve biometric settings from the base system. This function wraps the basic
- * method "isSensorAvailable" of react-native-fingerprint-scanner library and simplifies the possible returned values in
+ * method "supportedAuthenticationTypesAsync" of expo-local-authentication library and simplifies the possible returned values in
  * function of its usage.
  *
- * More info about library can be found here: https://github.com/hieuvp/react-native-fingerprint-scanner
+ * More info about library can be found here: https://github.com/expo/expo/tree/main/packages/expo-local-authentication
  *
  * @param shouldTrackError - If true, tracks BIOMETRIC_ERROR event on Mixpanel when biometrics are unavailable. Default: true
  */
 export const getBiometricsType = (
   shouldTrackError = true
 ): Promise<BiometricsType> =>
-  FingerprintScanner.isSensorAvailable()
-    .then((biometryType: Biometrics) => {
-      switch (biometryType) {
-        case "Biometrics":
-          return "BIOMETRICS";
-        case "Face ID":
-          return "FACE_ID";
-        case "Touch ID":
-          return "TOUCH_ID";
-        default:
-          return "UNKNOWN";
+  LocalAuthentication.supportedAuthenticationTypesAsync()
+    .then((biometryType: Array<LocalAuthentication.AuthenticationType>) => {
+      if (
+        biometryType.includes(
+          LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION
+        )
+      ) {
+        return "FACE_ID";
       }
+      if (
+        biometryType.includes(
+          LocalAuthentication.AuthenticationType.FINGERPRINT
+        )
+      ) {
+        return "TOUCH_ID";
+      }
+      if (biometryType.includes(LocalAuthentication.AuthenticationType.IRIS)) {
+        return "BIOMETRICS";
+      }
+      return "UNKNOWN";
     })
     .catch(e => {
       if (shouldTrackError) {
@@ -74,49 +76,64 @@ export const isBiometricsValidType = (
 ): biometrics is BiometricsValidType =>
   !biometricErrors.some(err => biometrics === err);
 
+const biometricAuthenticationFailureHandler = (
+  error: unknown,
+  onError: (e: LocalAuthentication.LocalAuthenticationError) => void
+) => {
+  void mixpanelTrack("BIOMETRIC_ERROR", { error });
+  if (isDebugBiometricIdentificationEnabled) {
+    Alert.alert("identification.biometric.title", `KO: ${error}`);
+  }
+  onError(error as LocalAuthentication.LocalAuthenticationError);
+  if (Platform.OS === "android") {
+    void LocalAuthentication.cancelAuthenticate();
+  }
+};
+
 export const biometricAuthenticationRequest = (
   onSuccess: () => void,
-  onError: (e: FingerprintScannerError) => void
+  onError: (e: LocalAuthentication.LocalAuthenticationError) => void
 ): Promise<void> =>
-  FingerprintScanner.authenticate(
+  LocalAuthentication.authenticateAsync(
     Platform.select({
       ios: {
-        description: I18n.t("identification.biometric.popup.sensorDescription"),
-        fallbackEnabled: false
-      } as AuthenticateIOS,
+        promptMessage: I18n.t(
+          "identification.biometric.popup.sensorDescription"
+        ),
+        disableDeviceFallback: true
+      },
       default: {
-        title: I18n.t("identification.biometric.popup.title"),
-        description: I18n.t("identification.biometric.popup.sensorDescription"),
-        cancelButton: I18n.t("global.buttons.cancel")
-      } as AuthenticateAndroid
+        promptSubtitle: I18n.t("identification.biometric.popup.title"),
+        promptMessage: I18n.t(
+          "identification.biometric.popup.sensorDescription"
+        ),
+        cancelLabel: I18n.t("global.buttons.cancel")
+      }
     })
   )
-    .then(() => {
-      onSuccess();
-      // We need to explicitly release the listener to avoid bugs on android platform
-      void FingerprintScanner.release();
-    })
-    .catch((e: FingerprintScannerError) => {
-      void mixpanelTrack("BIOMETRIC_ERROR", { error: e });
-      if (isDebugBiometricIdentificationEnabled) {
-        Alert.alert("identification.biometric.title", `KO: ${e.name}`);
+    .then((result: LocalAuthentication.LocalAuthenticationResult) => {
+      if (result.success) {
+        onSuccess();
+        // We need to explicitly release the listener to avoid bugs on android platform
+        if (Platform.OS === "android") {
+          void LocalAuthentication.cancelAuthenticate();
+        }
+      } else {
+        biometricAuthenticationFailureHandler(result.error, onError);
       }
-      onError(e);
-      // We need to explicitly release the listener to avoid bugs on android platform
-      void FingerprintScanner.release();
+    })
+    .catch(e => {
+      biometricAuthenticationFailureHandler(e, onError);
     });
 
 type BiometricState = "Available" | "NotEnrolled" | "NotSupported";
 
 export const getBiometricState = async (): Promise<BiometricState> => {
   try {
-    await FingerprintScanner.isSensorAvailable();
-    return "Available";
-  } catch (e) {
-    const error = e as FingerprintScannerError;
-    return error.name === "FingerprintScannerNotEnrolled"
-      ? "NotEnrolled"
-      : "NotSupported";
+    const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+    return isEnrolled ? "Available" : "NotEnrolled";
+  } catch {
+    return "NotSupported";
   }
 };
 
@@ -133,14 +150,14 @@ const mayUserActivateBiometricWithDependency = (
     getBiometricsTypeInternal
       .then(value => {
         if (value === "FACE_ID") {
-          FingerprintScanner.authenticate({
-            description: I18n.t(
+          LocalAuthentication.authenticateAsync({
+            promptMessage: I18n.t(
               "identification.biometric.popup.sensorDescription"
             ),
-            fallbackEnabled: false
-          } as AuthenticateIOS)
+            disableDeviceFallback: true
+          })
             .then(_ => resolve("ACTIVATED"))
-            .catch((err: Errors) => {
+            .catch((err: LocalAuthentication.LocalAuthenticationError) => {
               reject(handleErrorDuringBiometricActivation(err));
             });
         } else {
@@ -160,9 +177,9 @@ export const biometricFunctionForTests = {
 };
 
 function handleErrorDuringBiometricActivation(
-  err: Errors
+  err: LocalAuthentication.LocalAuthenticationError
 ): BiometriActivationUserType {
-  if (err.name === "FingerprintScannerNotAvailable") {
+  if (err === "not_available") {
     return "PERMISSION_DENIED";
   }
   return "AUTH_FAILED";

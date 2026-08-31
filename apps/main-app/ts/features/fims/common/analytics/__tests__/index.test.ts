@@ -1,3 +1,6 @@
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import {
   computeAndTrackDataShare,
   computeAndTrackDataShareAccepted,
@@ -11,8 +14,6 @@ import {
   trackHistoryScreen,
   trackInAppBrowserOpening
 } from "..";
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import * as mixpanel from "../../../../../mixpanel";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";

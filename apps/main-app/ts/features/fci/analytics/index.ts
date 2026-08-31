@@ -1,7 +1,7 @@
+import { SignatureRequestDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import { getType } from "typesafe-actions";
 
-import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import { mixpanelTrack } from "../../../mixpanel";
 import { Action } from "../../../store/actions/types";
 import { buildEventProperties } from "../../../utils/analytics";

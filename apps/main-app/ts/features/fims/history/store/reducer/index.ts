@@ -1,7 +1,7 @@
+import { AccessHistoryPage } from "@io-app/api-types/generated/definitions/fims_history/AccessHistoryPage";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { AccessHistoryPage } from "../../../../../../definitions/fims_history/AccessHistoryPage";
 import {
   remoteError,
   remoteLoading,

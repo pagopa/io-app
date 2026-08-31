@@ -1,3 +1,4 @@
+import { LevelEnum } from "@io-app/api-types/generated/definitions/content/SectionStatus";
 import { Alert } from "@io-app/design-system";
 import I18n from "i18next";
 import {
@@ -9,7 +10,6 @@ import {
 } from "react";
 import { View } from "react-native";
 
-import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../store/hooks";
 import {

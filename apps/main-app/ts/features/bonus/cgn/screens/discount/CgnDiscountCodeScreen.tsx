@@ -1,3 +1,4 @@
+import { Otp } from "@io-app/api-types/generated/definitions/cgn/Otp";
 import {
   FooterActions,
   H2,
@@ -13,7 +14,6 @@ import { useEffect, useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 
-import { Otp } from "../../../../../../definitions/cgn/Otp";
 import { isReady } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView";

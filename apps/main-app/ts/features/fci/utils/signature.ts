@@ -1,3 +1,5 @@
+import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
+import { QtspClauses } from "@io-app/api-types/generated/definitions/fci/QtspClauses";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -7,8 +9,6 @@ import * as t from "io-ts";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import sha from "sha.js";
 
-import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
-import { QtspClauses } from "../../../../definitions/fci/QtspClauses";
 import { constants } from "../../lollipop/httpSignature/constants";
 import { savePath } from "../saga/networking/handleDownloadDocument";
 

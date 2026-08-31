@@ -1,9 +1,9 @@
+import { CartItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/CartItem";
+import { UserDetail } from "@io-app/api-types/generated/definitions/pagopa/biz-events/UserDetail";
 import { Divider, H6, ListItemInfoCopy } from "@io-app/design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 
-import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
-import { UserDetail } from "../../../../../definitions/pagopa/biz-events/UserDetail";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";

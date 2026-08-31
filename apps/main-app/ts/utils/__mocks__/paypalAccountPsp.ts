@@ -1,4 +1,4 @@
-import { PayPalAccountPspInfo } from "../../../definitions/pagopa/PayPalAccountPspInfo";
+import { PayPalAccountPspInfo } from "@io-app/api-types/generated/definitions/pagopa/PayPalAccountPspInfo";
 
 export const pspAccountList: ReadonlyArray<PayPalAccountPspInfo> = [
   {

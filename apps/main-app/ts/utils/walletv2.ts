@@ -1,3 +1,11 @@
+import { EnableableFunctions } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
+import { PayPalInfo } from "@io-app/api-types/generated/definitions/pagopa/PayPalInfo";
+import { TypeEnum as WalletTypeEnumV1 } from "@io-app/api-types/generated/definitions/pagopa/Wallet";
+import { WalletTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/WalletV2";
+import {
+  CardInfo,
+  TypeEnum
+} from "@io-app/api-types/generated/definitions/pagopa/walletv2/CardInfo";
 import { pipe } from "fp-ts/lib/function";
 /**
  * Return true if function is enabled for the wallet (aka payment method)
@@ -5,11 +13,6 @@ import { pipe } from "fp-ts/lib/function";
  */
 import * as O from "fp-ts/lib/Option";
 
-import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
-import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
-import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
-import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
-import { CardInfo, TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 import {
   PatchedPaymentMethodInfo,
   PatchedWalletV2,

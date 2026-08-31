@@ -1,11 +1,11 @@
+import { NoticeListItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListItem";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
+import { Wallets } from "@io-app/api-types/generated/definitions/pagopa/walletv3/Wallets";
+import { WalletStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
 
-import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
-import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";

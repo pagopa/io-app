@@ -11,10 +11,6 @@ const DESIGN_SYSTEM_ROUTES = {
     HAPTIC_FEEDBACK: {
       route: "DESIGN_SYSTEM_HAPTIC",
       title: "Haptic Feedback"
-    },
-    HAPTIC_FEEDBACK_PULSAR: {
-      route: "DESIGN_SYSTEM_HAPTIC_PULSAR",
-      title: "Haptic Feedback (Pulsar)"
     }
   },
   COMPONENTS: {

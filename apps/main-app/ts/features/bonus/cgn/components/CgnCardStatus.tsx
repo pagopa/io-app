@@ -1,11 +1,11 @@
+import { Card } from "@io-app/api-types/generated/definitions/cgn/Card";
+import { CardActivated } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
+import { CardExpired } from "@io-app/api-types/generated/definitions/cgn/CardExpired";
+import { CardRevoked } from "@io-app/api-types/generated/definitions/cgn/CardRevoked";
 import { LabelMini, Tag, useIOTheme } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment } from "react";
 
-import { Card } from "../../../../../definitions/cgn/Card";
-import { CardActivated } from "../../../../../definitions/cgn/CardActivated";
-import { CardExpired } from "../../../../../definitions/cgn/CardExpired";
-import { CardRevoked } from "../../../../../definitions/cgn/CardRevoked";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 
 export function CgnCardStatus({ card }: { card: Card }) {

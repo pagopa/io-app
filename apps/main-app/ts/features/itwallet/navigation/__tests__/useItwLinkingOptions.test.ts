@@ -1,11 +1,8 @@
-import { renderHook } from "@testing-library/react-native";
-
+import { itwLinkingOptions } from "../linking";
 import { ITW_ROUTES } from "../routes";
-import { useItwLinkingOptions } from "../useItwLinkingOptions";
 
 const getCredentialOfferUriParser = () => {
-  const { result } = renderHook(() => useItwLinkingOptions());
-  const itwLinkingOptions = result.current[ITW_ROUTES.MAIN] as {
+  const linkingOptions = itwLinkingOptions[ITW_ROUTES.MAIN] as {
     screens: Record<
       string,
       {
@@ -16,11 +13,11 @@ const getCredentialOfferUriParser = () => {
     >;
   };
 
-  return itwLinkingOptions.screens[ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO]
+  return linkingOptions.screens[ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO]
     .parse.itwCredentialOfferUri;
 };
 
-describe("useItwLinkingOptions", () => {
+describe("itwLinkingOptions", () => {
   describe("credential offer route", () => {
     it("decodes encoded credential offer URI params", () => {
       const parseItwCredentialOfferUri = getCredentialOfferUriParser();

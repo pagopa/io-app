@@ -1,3 +1,5 @@
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
 import {
   Body,
   ContentWrapper,
@@ -12,8 +14,6 @@ import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { PushNotificationsContentTypeEnum } from "../../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../definitions/identity/ReminderStatus";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";

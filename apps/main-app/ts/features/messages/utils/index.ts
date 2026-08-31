@@ -1,10 +1,10 @@
+import { RemoteContentDetails } from "@io-app/api-types/generated/definitions/communication/RemoteContentDetails";
+import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { Dispatch } from "redux";
 
-import { RemoteContentDetails } from "../../../../definitions/communication/RemoteContentDetails";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/communication/ThirdPartyMessageWithContent";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { Action } from "../../../store/actions/types";

@@ -1,3 +1,4 @@
+import { AmountEuroCents } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/AmountEuroCents";
 import {
   Body,
   ListItemHeader,
@@ -14,7 +15,6 @@ import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
 
-import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";

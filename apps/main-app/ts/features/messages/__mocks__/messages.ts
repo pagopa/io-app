@@ -1,8 +1,9 @@
-import { MessageCategory } from "../../../../definitions/communication/MessageCategory";
-import { OrganizationFiscalCode } from "../../../../definitions/communication/OrganizationFiscalCode";
-import { TimeToLiveSeconds } from "../../../../definitions/communication/TimeToLiveSeconds";
-import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/communication/OrganizationFiscalCode";
+import { TimeToLiveSeconds } from "@io-app/api-types/generated/definitions/communication/TimeToLiveSeconds";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import {
   NextPageMessagesSuccessPayload,
   PreviousPageMessagesSuccessPayload,

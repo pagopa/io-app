@@ -1,5 +1,6 @@
-import { Access } from "../../../../../definitions/fims_history/Access";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { Access } from "@io-app/api-types/generated/definitions/fims_history/Access";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+
 import { potFoldWithDefault } from "../../../../utils/pot";
 import { useAutoFetchingServiceByIdPot } from "../../common/hooks";
 import {

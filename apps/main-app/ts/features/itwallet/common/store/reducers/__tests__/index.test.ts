@@ -246,6 +246,20 @@ describe("itWalletReducer migrations", () => {
     });
   });
 
+  it("should migrate the store to version 16: remove itWalletSpecsVersion from environment", async () => {
+    const previousState = {
+      _persist: { version: 15, rehydrated: false },
+      environment: { env: "prod", itWalletSpecsVersion: "1.0.0" }
+    };
+
+    const newState = await migrate(previousState, 16);
+
+    expect(newState).toEqual({
+      _persist: { version: 15, rehydrated: false },
+      environment: { env: "prod" }
+    });
+  });
+
   it("should migrate the store to version 17: remove isPendingReview from preferences", async () => {
     const previousState = {
       _persist: { version: 16, rehydrated: false },
@@ -257,6 +271,85 @@ describe("itWalletReducer migrations", () => {
     expect(newState).toEqual({
       _persist: { version: 16, rehydrated: false },
       preferences: {}
+    });
+  });
+
+  it("should migrate the store to version 18: remove debug state", async () => {
+    const previousState = {
+      _persist: { version: 17, rehydrated: false },
+      debug: { credentials: {} },
+      preferences: {}
+    };
+
+    const newState = await migrate(previousState, 18);
+
+    expect(newState).toEqual({
+      _persist: { version: 17, rehydrated: false },
+      preferences: {}
+    });
+  });
+
+  it("should migrate the store to version 19: remove date from preferences.walletActivationFeedbackBannerData, migrating it to banners.activationSuccessFeedback.shownOn", async () => {
+    const previousState = {
+      _persist: { version: 18, rehydrated: false },
+      preferences: {
+        walletActivationFeedbackBannerData: {
+          date: "2025-01-14T20:43:21.361Z",
+          authMethod: "SPID",
+          docStatus: "active"
+        }
+      }
+    };
+
+    const newState = await migrate(previousState, 19);
+
+    expect(newState).toEqual({
+      _persist: { version: 18, rehydrated: false },
+      preferences: {
+        walletActivationFeedbackBannerData: {
+          authMethod: "SPID",
+          docStatus: "active"
+        }
+      },
+      banners: {
+        activationSuccessFeedback: {
+          shownOn: "2025-01-14T20:43:21.361Z"
+        }
+      }
+    });
+  });
+
+  // Non-regression test: an installation already persisted at version 18 (i.e. one that
+  // shipped before this date migration was introduced) must still run migration "19" and
+  // populate banners.activationSuccessFeedback.shownOn, otherwise the Wallet Home banner
+  // selector would treat the banner as never shown and permanently hide it.
+  it("should migrate a store already at version 18 to version 19 and still populate shownOn", async () => {
+    const previousState = {
+      _persist: { version: 18, rehydrated: false },
+      preferences: {
+        walletActivationFeedbackBannerData: {
+          date: "2025-01-14T20:43:21.361Z",
+          authMethod: "SPID",
+          docStatus: "active"
+        }
+      }
+    };
+
+    const newState = await migrate(previousState, 19);
+
+    expect(newState).toEqual({
+      _persist: { version: 18, rehydrated: false },
+      preferences: {
+        walletActivationFeedbackBannerData: {
+          authMethod: "SPID",
+          docStatus: "active"
+        }
+      },
+      banners: {
+        activationSuccessFeedback: {
+          shownOn: "2025-01-14T20:43:21.361Z"
+        }
+      }
     });
   });
 });

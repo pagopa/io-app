@@ -189,14 +189,12 @@ const ContentView = ({
   // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens
   const trackScrollToBottom = (crossed: boolean) => {
     if (crossed && !hasScrolledToBottom.current) {
-      // eslint-disable-next-line functional/immutable-data
       hasScrolledToBottom.current = true;
       trackIssuanceCredentialScrollToBottom(
         mixPanelCredential,
         ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
       );
     } else if (!crossed && hasScrolledToBottom.current) {
-      // eslint-disable-next-line functional/immutable-data
       hasScrolledToBottom.current = false;
     }
   };

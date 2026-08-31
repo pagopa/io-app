@@ -57,7 +57,7 @@ const ModuleBaseContent = ({
       {paymentLogo ? (
         <LogoPayment name={paymentLogo} />
       ) : (
-        image && (
+        image != null && (
           <Image
             accessibilityIgnoresInvertColors={true}
             source={image}

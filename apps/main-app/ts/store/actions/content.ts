@@ -1,8 +1,8 @@
+import { ContextualHelp } from "@io-app/api-types/generated/definitions/content/ContextualHelp";
+import { Municipality as MunicipalityMetadata } from "@io-app/api-types/generated/definitions/content/Municipality";
+import { SpidIdps } from "@io-app/api-types/generated/definitions/content/SpidIdps";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
-import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
-import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
-import { SpidIdps } from "../../../definitions/content/SpidIdps";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 
 type MunicipalityFailure = {

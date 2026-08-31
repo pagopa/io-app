@@ -1,10 +1,10 @@
+import { EmailAddress } from "@io-app/api-types/generated/definitions/identity/EmailAddress";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore, PreloadedState } from "redux";
 
-import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

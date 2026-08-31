@@ -68,7 +68,7 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
     />
   );
 
-  const imageComponent = image && (
+  const imageComponent = image != null && (
     <Image
       accessibilityIgnoresInvertColors={true}
       source={image}

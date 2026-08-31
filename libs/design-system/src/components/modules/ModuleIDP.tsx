@@ -3,7 +3,10 @@ import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { useIOTheme, useIOThemeContext } from "../../context";
 import { IOListItemLogoMargin } from "../../core";
 import { addCacheTimestampToUri } from "../../utils/image";
+import { VStack } from "../layout";
+import { IOSkeleton } from "../skeleton";
 import { IOText } from "../typography";
+import { ModuleStatic } from "./ModuleStatic";
 import {
   PressableModuleBase,
   PressableModuleBaseProps
@@ -13,17 +16,26 @@ type IDPLogoColorMode = {
   dark?: ImageSourcePropType;
   light: ImageSourcePropType;
 };
-interface ModuleIDP extends PressableModuleBaseProps {
+
+type ModuleIDPContentProps = PressableModuleBaseProps & {
   accessibilityLabel?: string;
+  isLoading?: false;
   logo: IDPLogoColorMode;
   name: string;
-}
+};
+
+type ModuleIDPLoadingProps = {
+  isLoading: true;
+  loadingAccessibilityLabel?: string;
+};
+
+type ModuleIDPProps = ModuleIDPContentProps | ModuleIDPLoadingProps;
 
 const styles = StyleSheet.create({
   idpLogo: {
     marginStart: IOListItemLogoMargin,
     width: 120,
-    height: 30,
+    height: 28,
     resizeMode: "contain"
   }
 });
@@ -33,7 +45,7 @@ const useIDPLogo = (logo: IDPLogoColorMode): ImageSourcePropType => {
 
   const logoIDPLightMode = addCacheTimestampToUri(logo.light);
 
-  if (!logo.dark) {
+  if (logo.dark == null) {
     return logoIDPLightMode;
   }
 
@@ -42,14 +54,25 @@ const useIDPLogo = (logo: IDPLogoColorMode): ImageSourcePropType => {
   return themeType === "dark" ? logoIDPDarkMode : logoIDPLightMode;
 };
 
-export const ModuleIDP = ({
-  name,
+export const ModuleIDP = (props: ModuleIDPProps) => {
+  if (props.isLoading) {
+    return (
+      <ModuleIDPSkeleton
+        loadingAccessibilityLabel={props.loadingAccessibilityLabel}
+      />
+    );
+  }
+  return <ModuleIDPContent {...props} />;
+};
+
+const ModuleIDPContent = ({
   logo,
-  withLooseSpacing = false,
+  name,
   onPress,
   testID,
+  withLooseSpacing,
   accessibilityLabel
-}: ModuleIDP) => {
+}: ModuleIDPContentProps) => {
   const theme = useIOTheme();
   const IDPLogoSource = useIDPLogo(logo);
 
@@ -82,3 +105,19 @@ export const ModuleIDP = ({
     </PressableModuleBase>
   );
 };
+
+const ModuleIDPSkeleton = ({
+  loadingAccessibilityLabel
+}: Pick<ModuleIDPLoadingProps, "loadingAccessibilityLabel">) => (
+  <ModuleStatic
+    accessibilityLabel={loadingAccessibilityLabel}
+    accessibilityState={{ busy: true }}
+    accessible={true}
+    endBlock={<IOSkeleton radius={8} shape="square" size={24} />}
+    startBlock={
+      <VStack space={4}>
+        <IOSkeleton height={10} radius={8} shape="rectangle" width={100} />
+      </VStack>
+    }
+  />
+);

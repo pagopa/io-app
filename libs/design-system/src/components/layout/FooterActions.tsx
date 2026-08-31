@@ -229,9 +229,11 @@ const renderActions = (
   } = actions;
   return (
     <Fragment>
+      {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
       {primaryAction && (
         <IOButton fullWidth variant="solid" {...primaryAction} />
       )}
+      {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
       {type === "TwoButtons" && secondaryAction && (
         <View style={{ alignSelf: "center", marginBottom: extraBottomMargin }}>
           <VSpacer size={spaceBetweenActionAndLink} />
@@ -240,12 +242,14 @@ const renderActions = (
       )}
       {type === "ThreeButtons" && (
         <>
+          {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
           {secondaryAction && (
             <>
               <VSpacer size={spaceBetweenActions} />
               <IOButton fullWidth variant="outline" {...secondaryAction} />
             </>
           )}
+          {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
           {tertiaryAction && (
             <View
               style={{ alignSelf: "center", marginBottom: extraBottomMargin }}

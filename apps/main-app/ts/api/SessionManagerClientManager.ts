@@ -1,4 +1,8 @@
-import { Client, createClient } from "../../definitions/session_manager/client";
+import {
+  Client,
+  createClient
+} from "@io-app/api-types/generated/definitions/session_manager/client";
+
 import { isTestEnv } from "../utils/environment";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { ApiClientManager, BaseClientOptions } from "./ApiClientManager";
