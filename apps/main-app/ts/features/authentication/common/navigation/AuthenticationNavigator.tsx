@@ -14,6 +14,7 @@ import ActiveSessionLoginCieCardReaderScreen from "../../activeSessionLogin/scre
 import ActiveSessionLoginCieConsentDataUsageScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieConsentDataUsageScreen";
 import ActiveSessionCieIdLoginScreen from "../../activeSessionLogin/screens/cieId/ActiveSessionCieIdLoginScreen";
 import ActiveSessionIdpLoginScreen from "../../activeSessionLogin/screens/spid/ActiveSessionIdpLoginScreen";
+import { OneIdentityActiveSessionIdpLoginScreen } from "../../activeSessionLogin/screens/spid/OneIdentityActiveSessionIdpLoginScreen";
 import AuthErrorScreen from "../../login/authError/screens/AuthErrorScreen";
 import ActivateNfcScreen from "../../login/cie/screens/ActivateNfcScreen";
 import { CieCardReaderScreenWrapper } from "../../login/cie/screens/CieCardReaderScreenWrapper";
@@ -34,6 +35,7 @@ import IDActivationWizard from "../../login/cie/screens/wizards/IDActivationWiza
 import SpidWizard from "../../login/cie/screens/wizards/SpidWizard";
 import IdpLoginScreen from "../../login/idp/screens/IdpLoginScreen";
 import IdpSelectionScreen from "../../login/idp/screens/IdpSelectionScreen";
+import { OneIdentityIdpLoginScreen } from "../../login/idp/screens/OneIdentityIdpLoginScreen";
 import { OneIdentityIdpSelectionScreen } from "../../login/idp/screens/OneIdentityIdpSelectionScreen";
 import { LandingScreen } from "../../login/landing/screens/LandingScreen";
 import OptInScreen from "../../login/optIn/screens/OptInScreen";
@@ -122,11 +124,17 @@ const AuthenticationStackNavigator = () => {
       />
 
       <Stack.Screen
-        component={IdpLoginScreen}
+        component={
+          oneIdentityLoginEnabled ? OneIdentityIdpLoginScreen : IdpLoginScreen
+        }
         name={AUTHENTICATION_ROUTES.IDP_LOGIN}
       />
       <Stack.Screen
-        component={ActiveSessionIdpLoginScreen}
+        component={
+          oneIdentityLoginEnabled
+            ? OneIdentityActiveSessionIdpLoginScreen
+            : ActiveSessionIdpLoginScreen
+        }
         name={AUTHENTICATION_ROUTES.IDP_LOGIN_ACTIVE_SESSION_LOGIN}
       />
 
