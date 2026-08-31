@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "expo-modules-core": "^55.0.25",
+    "react-native": "catalog:",
     "typescript": "catalog:"
   }
 }
