@@ -8,9 +8,11 @@ import {
   IOSpacingScale,
   IOVisualCostants,
   ModuleIDP,
-  VSpacer
+  VSpacer,
+  VStack
 } from "@io-app/design-system";
-import { ComponentProps, FunctionComponent, ReactElement } from "react";
+import I18n from "i18next";
+import { ComponentProps, ReactElement } from "react";
 import {
   FlatList,
   ListRenderItemInfo,
@@ -21,8 +23,9 @@ import {
 
 import { SpidIdp } from "../../../../../utils/idps";
 
-type OwnProps = {
+type IdpsGridProps = {
   contentContainerStyle?: StyleProp<ViewStyle>;
+  emptyComponent?: ComponentProps<typeof FlatList>["ListEmptyComponent"];
   footerComponent?: ComponentProps<typeof FlatList>["ListFooterComponent"];
   headerComponent?: ComponentProps<typeof FlatList>["ListHeaderComponent"];
   headerComponentStyle?: StyleProp<ViewStyle>;
@@ -33,8 +36,6 @@ type OwnProps = {
   testID?: string;
 };
 
-type Props = OwnProps;
-
 const GRID_GUTTER: IOSpacingScale = 8;
 
 const styles = StyleSheet.create({
@@ -43,10 +44,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const keyExtractor = (idp: SpidIdp): string => idp.id;
-
 const renderItem =
-  (props: Props) =>
+  (props: IdpsGridProps) =>
   (info: ListRenderItemInfo<SpidIdp>): ReactElement => {
     const { onIdpSelected } = props;
     const { item } = info;
@@ -69,19 +68,34 @@ const renderItem =
     );
   };
 
-const IdpsGrid: FunctionComponent<Props> = (props: Props) => (
+const IdpsGrid = (props: IdpsGridProps) => (
   <FlatList
     contentContainerStyle={styles.contentContainer}
     data={props.idps}
     horizontal={false}
     ItemSeparatorComponent={() => <VSpacer size={GRID_GUTTER} />}
-    keyExtractor={keyExtractor}
+    ListEmptyComponent={props.emptyComponent}
     ListFooterComponent={props.footerComponent}
     ListHeaderComponent={props.headerComponent}
+    ListHeaderComponentStyle={props.headerComponentStyle}
     numColumns={1}
     renderItem={renderItem(props)}
     testID={props.testID}
   />
+);
+
+export const IdpsGridSkeleton = () => (
+  <VStack space={GRID_GUTTER}>
+    {Array.from({ length: 5 }).map((_, i) => (
+      <ModuleIDP
+        isLoading
+        key={`module-idp-item-${i}`}
+        loadingAccessibilityLabel={I18n.t(
+          "authentication.idp_selection.idps.loadingAccessibilityLabel"
+        )}
+      />
+    ))}
+  </VStack>
 );
 
 export default IdpsGrid;

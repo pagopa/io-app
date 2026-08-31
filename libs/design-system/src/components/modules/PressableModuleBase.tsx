@@ -1,10 +1,10 @@
 import { ComponentProps, PropsWithChildren, useCallback } from "react";
 import { GestureResponderEvent, Pressable } from "react-native";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated, { useReducedMotion } from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
 import { IOColors, IOModuleIDPSavedVSpacing, IOModuleStyles } from "../../core";
+import { triggerHaptic } from "../../functions";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 
@@ -39,7 +39,7 @@ export const PressableModuleBase = ({
   const handleOnPress = useCallback(
     (event: GestureResponderEvent) => {
       if (onPress) {
-        ReactNativeHapticFeedback.trigger("impactLight");
+        triggerHaptic("impactLight");
         onPress(event);
       }
     },

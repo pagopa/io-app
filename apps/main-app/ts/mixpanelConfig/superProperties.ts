@@ -25,8 +25,10 @@ import {
 } from "../utils/device";
 import { unknownToString } from "../utils/errors.ts";
 import {
+  authSecurityLevelHandler,
   cdcStatusHandler,
   cgnStatusHandler,
+  loginMethodHandler,
   loginSessionConfigHandler,
   notificationConfigurationHandler,
   paymentMethodsHandler,
@@ -40,6 +42,7 @@ type ConnectivityStatus = "offline" | "online";
 
 type SuperProperties = {
   appReadableVersion: string;
+  AUTH_SECURITY_LEVEL: string;
   biometricTechnology: BiometricsType;
   CDC_STATUS: number;
   CGN_STATUS: TrackCgnStatus;
@@ -48,6 +51,7 @@ type SuperProperties = {
   fontScale: number;
   isScreenLockSet: boolean;
   isScreenReaderEnabled: boolean;
+  LOGIN_METHOD: string;
   LOGIN_SESSION: LoginSessionDuration;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
   NOTIFICATION_PERMISSION: NotificationPermissionType;
@@ -68,6 +72,8 @@ export const updateMixpanelSuperProperties = async (
     const fontScale = await getFontScale();
     const biometricTechnology = await getBiometricsType(false);
     const isScreenLockSet = await isScreenLockSetFunc();
+    const AUTH_SECURITY_LEVEL = authSecurityLevelHandler(state);
+    const LOGIN_METHOD = loginMethodHandler(state);
     const LOGIN_SESSION = loginSessionConfigHandler(state);
     const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
     const notificationsEnabled = await checkNotificationPermissions();
@@ -85,6 +91,8 @@ export const updateMixpanelSuperProperties = async (
       colorScheme: Appearance.getColorScheme(),
       biometricTechnology,
       isScreenLockSet,
+      AUTH_SECURITY_LEVEL,
+      LOGIN_METHOD,
       LOGIN_SESSION,
       NOTIFICATION_CONFIGURATION,
       NOTIFICATION_PERMISSION:

@@ -141,7 +141,6 @@ const ProfileMainScreenFC = () => {
       setTapsOnAppVersion(0);
       show(I18n.t("profile.main.developerModeOn"));
     } else {
-      // eslint-disable-next-line functional/immutable-data
       idResetTap.current = setInterval(
         resetAppTapCounter,
         RESET_COUNTER_TIMEOUT
@@ -329,11 +328,6 @@ const ProfileMainScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelpMarkdown={{
-        title: "profile.main.contextualHelpTitle",
-        body: "profile.main.contextualHelpContent"
-      }}
-      faqCategories={["profile"]}
       headerActionsProp={{ showHelp: true }}
       testID="ProfileMainScreen"
       title={{

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <meta charset="UTF-8">
+  <title>WalletV2 configuration</title>
+<style>
+  .form_item{
+      margin-top: 10px;
+  }
+  .form_number{
+      width: 50px;
+  }
+  .divider{
+      height: 1px;
+      margin-top: 14px;
+      background-color: #b8b8b8;
+  }
+  .presets
+  {
+      font-style: italic;
+      color: #a72e00;
+      background-color: #cfcfcf;
+      padding-left: 4px;
+      padding-right: 4px;
+      border-radius: 2px;
+  }
+</style>
+  <script>
+    // wallet v2
+    var wcc = undefined;
+    var wcc_cb = undefined;
+    var wbc = undefined;
+    var cbc = undefined;
+    var wsp = undefined;
+    var wbp = undefined;
+    var wpr = undefined;
+    var csp = undefined;
+    var cbp = undefined;
+    var ccb = undefined;
+    var cpr = undefined;
+
+    const setForm = (config) => {
+      wcc.val(config.walletCreditCard);
+      wcc_cb.val(config.walletCreditCardCoBadge);
+      wbc.val(config.walletBancomat);
+      wpr.val(config.privative);
+      cbc.val(config.citizenBancomat);
+      wsp.val(config.satispay);
+      wbp.val(config.bPay);
+      cbp.val(config.citizenBPay);
+      ccb.val(config.citizenCreditCardCoBadge);
+      if(config.citizenSatispay){
+        csp.attr('checked', config.citizenSatispay ? 'checked' : '');
+      }
+      else{
+        csp.removeAttr('checked');
+      }
+      if(config.citizenPrivative){
+        cpr.attr('checked', config.citizenPrivative ? 'checked' : '');
+      }
+      else{
+        cpr.removeAttr('checked');
+      }
+
+
+    }
+
+    const updateConfig = () => {
+      const config = {
+        walletBancomat: parseInt(wbc.val(),10),
+        walletCreditCard: parseInt(wcc.val(),10),
+        walletCreditCardCoBadge: parseInt(wcc_cb.val(),10),
+        privative: parseInt(wpr.val(),10),
+        satispay: parseInt(wsp.val(),10),
+        citizenBancomat: parseInt(cbc.val(),10),
+        bPay: parseInt(wbp.val(),10),
+        citizenSatispay: csp.is(":checked"),
+        citizenBPay: parseInt(cbp.val(),10),
+        citizenCreditCardCoBadge: parseInt(ccb.val(),10),
+        citizenPrivative: cpr.is(":checked"),
+      }
+      $.ajax({
+        type: 'POST',
+        url: "/walletv2/config",
+        data: JSON.stringify(config),
+        success: function(data) {
+          setForm(data);
+          alert("done! refresh your wallet!");
+          buildWalletDetailTable();
+          },
+        contentType: "application/json",
+        dataType: 'json'
+      });
+    }
+
+    const resetConfig = () => {
+      $.getJSON("/walletv2/reset", function(data) {
+          setForm(data);
+        }
+      );
+    }
+
+    const initWalletV2 = () => {
+      wcc = $("#walletCreditCard");
+      wcc_cb = $("#walletCreditCardCoBadge");
+      wbc = $("#walletBancomat");
+      wsp = $("#walletSatispay");
+      wbp = $("#walletBPay");
+      wpr = $("#walletPrivative");
+      cbc = $("#citizenBancomat");
+      csp = $("#citizenSatispay");
+      cbp = $("#citizenBPay");
+      ccb = $("#citizenCobadge");
+      cpr = $("#citizenPrivative");
+      $.getJSON("/walletv2/config", function(data) {
+          setForm(data);
+        }
+      );
+    }
+
+    const buildWalletDetailTable = () => {
+      const container = $("#winning_transactions");
+      $.getJSON("/walletv2/table-details", function(pans) {
+        const style = 'style="border: 1px solid black;"';
+        const formattedPans = pans.map(p => `<tr><td ${style}>${p.type}</td><td ${style}>${p.hpan}</td><td align="center" ${style}>${p.pan}</td><td align="center" ${style}>${p.abiCode ?? ""}</td><td align="center" ${style}>${p.pagopa ?? ""}</td></tr>`);
+        const header = "<tr><th>type</th><th>hash pan</th><th>last 4 digits</th><th>abi</th><th>pagopa</th></tr>";
+        $("#walletPaymentMethods").html(`<table ${style}>${header}${formattedPans.join("")}</table>`);
+        }
+      );
+    }
+
+    $(document).ready(function() {
+      initWalletV2();
+      buildWalletDetailTable();
+    });
+  </script>
+</head>
+<body>
+
+<table style="padding:16px;border: 1px solid black;">
+  <tr>
+    <td colspan="2">
+      <b>WalletV2 configuration</b>
+    </td>
+  </tr>
+  <tr>
+  <tr class="form_item">
+    <td><label>wallet Credit Card</label></td>
+    <td><input type="number" min="0" class="form_number" id="walletCreditCard"/>
+  </tr>
+
+  <tr class="form_item">
+    <td><label>wallet Credit Card (co-badge)</label></td>
+    <td><input type="number" min="0" class="form_number" id="walletCreditCardCoBadge"/>
+  </tr>
+
+  <tr class="form_item">
+    <td><label>wallet Bancomat</label></td>
+    <td><input type="number" min="0" class="form_number" id="walletBancomat"/></td>
+  </tr>
+
+  <tr class="form_item">
+    <td><label>wallet Satispay</label></td>
+    <td><input type="number" min="0" class="form_number" id="walletSatispay"/></td>
+  </tr>
+
+  <tr class="form_item">
+    <td><label>wallet Bpay</label></td>
+    <td><input type="number" min="0" class="form_number" id="walletBPay"/></td>
+  </tr>
+
+  <tr class="form_item">
+    <td><label>wallet Privative</label></td>
+    <td><input type="number" min="0" class="form_number" id="walletPrivative"/></td>
+  </tr>
+
+  <tr class="form_item">
+    <td><label>owned Bancomat (pans)</label></td>
+    <td><input type="number" min="0" class="form_number" id="citizenBancomat"/></td>
+  </tr>
+  <tr class="form_item">
+    <td><label>owned BancomatPay (pans)</label></td>
+    <td><input type="number" min="0" class="form_number" id="citizenBPay"/></td>
+  </tr>
+  <tr class="form_item">
+    <td><label>owned Cobadge (pans)</label></td>
+    <td><input type="number" min="0" class="form_number" id="citizenCobadge"/></td>
+  </tr>
+  <tr class="form_item">
+    <td><label>owned Satispay</label></td>
+    <td><input type="checkbox" id="citizenSatispay"/></td>
+  </tr>
+  <tr class="form_item">
+    <td><label>owned Privative</label></td>
+    <td><input type="checkbox"id="citizenPrivative"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <button value="update" onclick="updateConfig()">flush</button>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <button value="reset" onclick="resetConfig()">reset</button>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <div><b>Wallet</b></div>
+      <div id="walletPaymentMethods"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

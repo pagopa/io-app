@@ -156,7 +156,6 @@ export const IdentificationModal = () => {
       O.getOrElse(() => false)
     );
     if (forceLogout) {
-      // eslint-disable-next-line functional/immutable-data
       showRetryText.current = false;
       onPinResetHandler();
     } else {
@@ -213,7 +212,7 @@ export const IdentificationModal = () => {
           onIdentificationSuccessHandler(true);
         },
         e => {
-          if (e.name === "DeviceLocked" || e.name === "DeviceLockedPermanent") {
+          if (e === "lockout") {
             setIsBiometricLocked(true);
           }
         }
@@ -267,11 +266,9 @@ export const IdentificationModal = () => {
   const onPinValidated = useCallback(
     (isValidated: boolean) => {
       if (isValidated) {
-        // eslint-disable-next-line functional/immutable-data
         showRetryText.current = false;
         onIdentificationSuccessHandler(false);
       } else {
-        // eslint-disable-next-line functional/immutable-data
         showRetryText.current = true;
         onIdentificationFailureHandler();
       }

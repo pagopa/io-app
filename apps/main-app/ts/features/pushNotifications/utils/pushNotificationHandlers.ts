@@ -75,7 +75,11 @@ const handleForegroundMessageReload = (store: Store) => {
   if (pot.isNone(inboxIndexes)) {
     // collection is empty, refresh
     store.dispatch(
-      reloadAllMessages.request({ pageSize, filter: {}, fromUserAction: false })
+      reloadAllMessages.request({
+        pageSize,
+        filter: {},
+        fromUserAction: false
+      })
     );
   } else if (pot.isSome(inboxIndexes)) {
     // current collection exists, fetch the maximum number of new

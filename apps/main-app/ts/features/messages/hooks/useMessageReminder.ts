@@ -1,10 +1,10 @@
+import * as Calendar from "expo-calendar";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { Calendar } from "react-native-calendar-events";
 
 import { useIOSelector } from "../../../store/hooks";
 import { calendarEventByMessageIdSelector } from "../../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
@@ -44,7 +44,7 @@ export const useMessageReminder = (
   const upsertReminder = async (
     dueDate: Date,
     subject: string,
-    preferredCalendar: Calendar | undefined
+    preferredCalendar: Calendar.Calendar | undefined
   ) => {
     const permissionGranted = await requestCalendarPermission();
 

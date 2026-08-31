@@ -1,7 +1,7 @@
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
 import { Alert } from "@io-app/design-system";
 import I18n from "i18next";
 
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPaymentMethodExpired } from "../../common/utils";

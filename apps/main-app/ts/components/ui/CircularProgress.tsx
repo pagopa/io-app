@@ -34,7 +34,6 @@ export const CircularProgress = ({
   useEffect(() => {
     // Transforms progress 0-100 into 0-1
     const progressValue = Math.max(Math.min(progress / 100, 1), 0);
-    // eslint-disable-next-line functional/immutable-data
     progressLength.value = Math.round(CIRCLE_LENGTH * (1 - progressValue));
   }, [progressLength, CIRCLE_LENGTH, progress]);
 

@@ -5,7 +5,6 @@ export function usePrevious<T>(value: T) {
   const ref = useRef<T>(undefined);
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     ref.current = value;
   }, [value]);
 

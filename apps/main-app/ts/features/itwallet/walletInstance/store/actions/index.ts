@@ -9,6 +9,7 @@ import {
   WalletInstanceAttestations,
   WalletInstanceStatus
 } from "../../../common/utils/itwTypesUtils";
+import { ItwWalletInstanceState } from "../reducers";
 
 /** This action stores the Wallet Instance Attestation */
 export const itwWalletInstanceAttestationStore = createStandardAction(
@@ -46,9 +47,15 @@ export const itwSetWalletInstanceRemotelyActive = createStandardAction(
   "ITW_SET_WALLET_INSTANCE_REMOTELY_ACTIVE"
 )<boolean | undefined>();
 
+/** This action sets whether a wallet instance is remotely active. */
+export const itwStoreWalletInstanceStatusList = createStandardAction(
+  "ITW_STORE_WALLET_INSTANCE_STATUS_LIST"
+)<ItwWalletInstanceState["statusList"]>();
+
 export type ItwWalletInstanceActions =
   | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetWalletInstanceRenewalError>
+  | ActionType<typeof itwStoreWalletInstanceStatusList>
   | ActionType<typeof itwUpdateWalletInstanceStatus>
   | ActionType<typeof itwWalletInstanceAttestationStore>
   | ActionType<typeof itwWalletUnitAttestationsRemoveById>

@@ -1,13 +1,11 @@
-import {
-  PressableBaseProps,
-  useScaleAnimation,
-  WithTestID
-} from "@io-app/design-system";
+import { useScaleAnimation, WithTestID } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
-import { Pressable } from "react-native";
+import { Pressable, PressableProps } from "react-native";
 import Animated from "react-native-reanimated";
 
-export type WalletCardPressableBaseProps = WithTestID<PressableBaseProps>;
+export type WalletCardPressableBaseProps = WithTestID<
+  Pick<PressableProps, "accessibilityLabel" | "onPress">
+>;
 
 export const WalletCardPressableBase = ({
   onPress,

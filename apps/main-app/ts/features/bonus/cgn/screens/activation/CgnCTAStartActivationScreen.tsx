@@ -3,7 +3,7 @@ import I18n from "i18next";
 import { FC, useCallback, useEffect, useRef } from "react";
 import { Alert } from "react-native";
 
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -44,7 +44,6 @@ const CgnCTAStartOnboardingComponent: FC = () => {
     // cgnActivationStart navigate to ToS screen that needs cgb bonus from available bonus list
     if (availableBonus.length > 0 && cgnBonus && isFirstRender.current) {
       startCgn();
-      // eslint-disable-next-line functional/immutable-data
       isFirstRender.current = false;
     }
   }, [availableBonus, startCgn, cgnBonus]);

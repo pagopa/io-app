@@ -1,3 +1,9 @@
+import { TypeEnum as ClauseTypeEnum } from "@io-app/api-types/generated/definitions/fci/Clause";
+import { DocumentDetailView } from "@io-app/api-types/generated/definitions/fci/DocumentDetailView";
+import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
+import { ExistingSignatureFieldAttrs } from "@io-app/api-types/generated/definitions/fci/ExistingSignatureFieldAttrs";
+import { SignatureField } from "@io-app/api-types/generated/definitions/fci/SignatureField";
+import { SignatureFieldToBeCreatedAttrs } from "@io-app/api-types/generated/definitions/fci/SignatureFieldToBeCreatedAttrs";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { contramap } from "fp-ts/lib/Ord";
@@ -8,12 +14,6 @@ import I18n from "i18next";
 import { PDFDocument, rgb } from "pdf-lib";
 import ReactNativeBlobUtil from "react-native-blob-util";
 
-import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
-import { DocumentDetailView } from "../../../../definitions/fci/DocumentDetailView";
-import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
-import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
-import { SignatureField } from "../../../../definitions/fci/SignatureField";
-import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
 import { TranslationKeys } from "../../../i18n";
 import { SignatureFieldAttrType } from "../components/DocumentWithSignature";
 import { savePath } from "../saga/networking/handleDownloadDocument";

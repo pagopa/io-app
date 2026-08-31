@@ -140,7 +140,7 @@ export const BonusCard = (props: BonusCardWithColorSchemeValues) => {
     <View style={[styles.container, { paddingTop }]}>
       {!props.isLoading && props.cardBackground ? (
         <>
-          <View style={{ ...StyleSheet.absoluteFillObject }}>
+          <View style={{ ...StyleSheet.absoluteFill }}>
             {props.cardBackground}
           </View>
           <BonusCardShape

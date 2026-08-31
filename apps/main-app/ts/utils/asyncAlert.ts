@@ -2,8 +2,10 @@ import I18n from "i18next";
 import { Alert, AlertButton, AlertOptions } from "react-native";
 
 /**
- * The result of the Alert. - onPress: one button was pressed - onDismiss: The
- * user tapped on empty space, dismissing the alert
+ * The result of the Alert.
+ *
+ * - OnPress: one button was pressed
+ * - OnDismiss: The user tapped on empty space, dismissing the alert
  */
 type AlertResult =
   | { kind: "onDismiss" }

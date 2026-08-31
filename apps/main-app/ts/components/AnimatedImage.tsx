@@ -23,7 +23,6 @@ export const AnimatedImage = ({ style, ...props }: AnimatedImageProps) => {
   const opacity = useSharedValue(0);
 
   const handleOnLoad = () => {
-    // eslint-disable-next-line functional/immutable-data
     opacity.value = 1;
   };
 

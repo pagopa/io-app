@@ -1,11 +1,11 @@
+import { AmountEuroCents } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/AmountEuroCents";
+import { PaymentMethodStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodStatus";
+import { TransactionStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/TransactionStatus";
+import { WalletLastUsageTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletLastUsageType";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 
-import { AmountEuroCents } from "../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
-import { PaymentMethodStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
-import { TransactionStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/TransactionStatus";
-import { WalletLastUsageTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletLastUsageType";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { getNetworkError } from "../../../../../utils/errors";
@@ -42,7 +42,6 @@ describe("payments checkout reducer index.ts", () => {
    * failure states.
    *
    * @example
-   *   ```typescript
    *   testActionPattern(
    *     myActionCreator,
    *     { id: 1 }, // requestParams
@@ -50,7 +49,6 @@ describe("payments checkout reducer index.ts", () => {
    *     { data: "success", loading: false }, // expectedSuccessState
    *     state => state.myFeature // stateSelector
    *   );
-   *   ```;
    *
    * @param actionCreator - An object containing the action creators for
    *   request, success, and failure.

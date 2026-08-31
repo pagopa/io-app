@@ -1,3 +1,11 @@
+import {
+  SelfCriteriaMultiDTO,
+  _typeEnum as SelfCriteriaMultiTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiDTO";
+import {
+  SelfCriteriaMultiTypeDTO,
+  _typeEnum as SelfCriteriaMultiTypeVariationEnum
+} from "@io-app/api-types/generated/definitions/idpay/SelfCriteriaMultiTypeDTO";
 import { IOToast, RadioGroup, VSpacer } from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -6,17 +14,8 @@ import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
 
-import {
-  SelfCriteriaMultiDTO,
-  _typeEnum as SelfCriteriaMultiTypeEnum
-} from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
-import {
-  SelfCriteriaMultiTypeDTO,
-  _typeEnum as SelfCriteriaMultiTypeVariationEnum
-} from "../../../../../definitions/idpay/SelfCriteriaMultiTypeDTO";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackIDPayOnboardingAlert,
@@ -151,7 +150,6 @@ const MultiValuePrerequisiteItemScreenContent = ({
           label: I18n.t("global.buttons.continue")
         }
       }}
-      contextualHelp={emptyContextualHelp}
       goBack={handleGoBack}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins

@@ -1,17 +1,28 @@
 import I18n from "i18next";
+import { useEffect } from "react";
 import { Alert, Platform } from "react-native";
 
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import {
+  trackItwProximityNfcActivation,
+  trackItwProximityNfcActivationClose,
+  trackItwProximityNfcGoToSettings
+} from "../analytics";
 import { ItwProximityMachineContext } from "../machine/provider";
 import { checkNfcActivation, openNfcPreferences } from "../utils/nfc";
 
 export const ItwNfcActivationScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
 
+  useEffect(() => {
+    trackItwProximityNfcActivation();
+  }, []);
+
   useHeaderSecondLevel({
     title: "",
     goBack: () => {
+      trackItwProximityNfcActivationClose();
       machineRef.send({ type: "close" });
     }
   });
@@ -36,6 +47,7 @@ export const ItwNfcActivationScreen = () => {
             "features.itWallet.presentation.proximity.nfc.activation.alert.action"
           ),
           onPress: () => {
+            trackItwProximityNfcGoToSettings();
             void openNfcPreferences();
           }
         },
@@ -44,6 +56,7 @@ export const ItwNfcActivationScreen = () => {
             "features.itWallet.presentation.proximity.nfc.activation.alert.close"
           ),
           onPress: () => {
+            trackItwProximityNfcActivationClose();
             machineRef.send({ type: "close" });
           },
           style: "cancel"
@@ -61,6 +74,7 @@ export const ItwNfcActivationScreen = () => {
             "features.itWallet.presentation.proximity.nfc.activation.actions.primary"
           ),
           onPress: () => {
+            trackItwProximityNfcGoToSettings();
             void openNfcPreferences();
           }
         },

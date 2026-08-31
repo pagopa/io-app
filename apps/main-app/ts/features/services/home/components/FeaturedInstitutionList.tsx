@@ -1,9 +1,9 @@
+import { Institution } from "@io-app/api-types/generated/definitions/services/Institution";
 import { BannerErrorState, ListItemHeader } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 
-import { Institution } from "../../../../../definitions/services/Institution";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";

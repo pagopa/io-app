@@ -48,12 +48,10 @@ const Dismissable = ({
 
   const pan = Gesture.Pan()
     .onUpdate(event => {
-      // eslint-disable-next-line functional/immutable-data
       translateX.value = event.translationX;
     })
     .onEnd(event => {
       if (Math.abs(event.translationX) > dismissThreshold) {
-        // eslint-disable-next-line functional/immutable-data
         translateX.value = withTiming(
           windowWidth * Math.sign(event.translationX),
           {
@@ -66,7 +64,6 @@ const Dismissable = ({
           }
         );
       } else {
-        // eslint-disable-next-line functional/immutable-data
         translateX.value = withSpring(0, { mass: 0.5 });
       }
     })

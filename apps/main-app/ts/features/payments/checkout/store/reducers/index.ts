@@ -1,18 +1,18 @@
+import { Bundle } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/Bundle";
+import { PaymentMethodResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodResponse";
+import { PaymentMethodsResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodsResponse";
+import { PaymentRequestsGetResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
+import { TransactionInfo } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/TransactionInfo";
+import { UserLastPaymentMethodResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletInfo";
+import { Wallets } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/Wallets";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import { getType, isActionOf } from "typesafe-actions";
 
-import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
-import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
-import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
-import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
-import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
-import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
-import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { getSortedPspList } from "../../../common/utils";

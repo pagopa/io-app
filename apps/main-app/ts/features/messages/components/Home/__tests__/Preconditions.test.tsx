@@ -1,7 +1,7 @@
+import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryBase";
 import { constUndefined } from "fp-ts/lib/function";
 import { createStore } from "redux";
 
-import { TagEnum } from "../../../../../../definitions/communication/MessageCategoryBase";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import * as bottomSheet from "../../../../../utils/hooks/bottomSheet";

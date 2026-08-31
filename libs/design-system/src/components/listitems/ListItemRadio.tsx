@@ -1,6 +1,5 @@
 import { ComponentProps, ReactNode, useState } from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
@@ -9,6 +8,7 @@ import {
   IOSelectionListItemVisualParams,
   IOSelectionTickVisualParams
 } from "../../core";
+import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
@@ -91,7 +91,7 @@ export const ListItemRadio = ({
   const theme = useIOTheme();
 
   const toggleRadioItem = () => {
-    ReactNativeHapticFeedback.trigger("impactLight");
+    triggerHaptic("impactLight");
     setToggleValue(!toggleValue);
     if (onValueChange !== undefined) {
       onValueChange(!toggleValue);
@@ -239,6 +239,7 @@ export const ListItemRadio = ({
               />
             </View>
           </View>
+          {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
           {description && (
             <View>
               <VSpacer

@@ -1,10 +1,10 @@
 import { IOToast } from "@io-app/design-system";
-import Clipboard from "@react-native-clipboard/clipboard";
+import * as Clipboard from "expo-clipboard";
 import I18n from "i18next";
 
 /** Copy a text to the device clipboard and give a feedback. */
 export const clipboardSetStringWithFeedback = (text: string) => {
-  Clipboard.setString(text);
+  void Clipboard.setStringAsync(text);
 
   IOToast.success(I18n.t("clipboard.copyFeedback"));
 };

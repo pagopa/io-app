@@ -1,8 +1,8 @@
+import { NoticeListItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListItem";
 import { NavigationContainer } from "@react-navigation/native";
 import { fireEvent, render } from "@testing-library/react-native";
 import { JSX } from "react";
 
-import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { ReceiptListItemTransaction } from "../ReceiptListItemTransaction";
 
 jest.mock("../../../../../store/hooks", () => ({

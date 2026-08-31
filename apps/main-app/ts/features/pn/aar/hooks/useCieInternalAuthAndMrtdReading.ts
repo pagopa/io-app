@@ -1,3 +1,4 @@
+import { triggerHaptic } from "@io-app/design-system";
 import {
   CieManager,
   type InternalAuthAndMrtdResponse,
@@ -8,9 +9,6 @@ import { constNull } from "fp-ts/lib/function";
 import i18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
-import HapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
 
 import { getProgressEmojis } from "../../../common/utils/cie";
 
@@ -85,7 +83,7 @@ export const useCieInternalAuthAndMrtdReading = () => {
         // Trigger a light haptic feedback on the start of the reading
         // when the tag is discovered
         if (event.name === "ON_TAG_DISCOVERED") {
-          HapticFeedback.trigger(HapticFeedbackTypes.impactHeavy);
+          triggerHaptic("impactHeavy");
         }
         setReadState({ status: ReadStatus.READING, progress: event.progress });
       }),

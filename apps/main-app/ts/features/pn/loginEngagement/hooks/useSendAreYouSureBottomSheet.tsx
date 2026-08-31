@@ -76,7 +76,6 @@ export const useSendAreYouSureBottomSheet = () => {
             )}
             loading={isActivating}
             onPress={() => {
-              // eslint-disable-next-line functional/immutable-data
               ctaPressed.current = true;
               trackSendActivationAccepted("nurturing_bottomsheet", flow);
               requestSendActivation();
@@ -89,7 +88,6 @@ export const useSendAreYouSureBottomSheet = () => {
                 "features.pn.loginEngagement.send.areYouSureBottomSheet.secondaryAction"
               )}
               onPress={() => {
-                // eslint-disable-next-line functional/immutable-data
                 ctaPressed.current = true;
                 trackSendActivationDeclined(flow);
                 dispatch(setSendEngagementScreenHasBeenDismissed());

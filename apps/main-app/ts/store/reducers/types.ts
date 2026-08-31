@@ -6,7 +6,7 @@ import { CieState } from "../../features/authentication/login/cie/store/reducers
 import { BonusState } from "../../features/bonus/common/store/reducers";
 import { PersistedFeaturesState } from "../../features/common/store/reducers";
 import { PersistedIdentificationState } from "../../features/identification/store/reducers";
-import { PersistedLollipopState } from "../../features/lollipop/store";
+import { LollipopReducerState } from "../../features/lollipop/store";
 import { EmailValidationState } from "../../features/mailCheck/store/reducers/emailValidation";
 import { OnboardingState } from "../../features/onboarding/store/reducers";
 import { PersistedNotificationsState } from "../../features/pushNotifications/store/reducers";
@@ -44,7 +44,7 @@ export type GlobalState = Readonly<{
   features: PersistedFeaturesState;
   identification: PersistedIdentificationState;
   installation: InstallationState;
-  lollipop: PersistedLollipopState;
+  lollipop: LollipopReducerState;
   navigation: NavigationState;
   notifications: PersistedNotificationsState;
   onboarding: OnboardingState;

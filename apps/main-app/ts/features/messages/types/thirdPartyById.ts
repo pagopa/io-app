@@ -1,4 +1,4 @@
-import type { ThirdPartyMessageWithContent } from "../../../../definitions/communication/ThirdPartyMessageWithContent";
+import type { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
 
 export type EphemeralAarThirdPartyMessage = ThirdPartyMessageWithContent & {
   kind: ThirdPartyKind["AAR"];

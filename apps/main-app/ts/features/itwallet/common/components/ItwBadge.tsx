@@ -76,7 +76,6 @@ const AnimatedStrokeGradient = () => {
   const progress = useSharedValue(0);
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     progress.value = withRepeat(
       withTiming(1, { duration: 30000, easing: Easing.out(Easing.ease) }),
       -1,

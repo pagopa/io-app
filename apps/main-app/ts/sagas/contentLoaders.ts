@@ -1,3 +1,5 @@
+import { ContextualHelp } from "@io-app/api-types/generated/definitions/content/ContextualHelp";
+import { Municipality as MunicipalityMedadata } from "@io-app/api-types/generated/definitions/content/Municipality";
 /** This module implements the sagas to retrive data from the content client: */
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
@@ -7,8 +9,6 @@ import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
-import { ContextualHelp } from "../../definitions/content/ContextualHelp";
-import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { ContentClient } from "../api/content";
 import { loadAvailableBonuses } from "../features/bonus/common/store/actions/availableBonusesTypes";
 import {

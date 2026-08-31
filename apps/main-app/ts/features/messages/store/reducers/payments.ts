@@ -1,6 +1,6 @@
+import { PaymentInfoResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoResponse";
 import { getType } from "typesafe-actions";
 
-import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
 import {
   isError,
   isLoading,

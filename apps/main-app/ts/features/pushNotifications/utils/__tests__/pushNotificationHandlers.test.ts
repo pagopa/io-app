@@ -237,7 +237,11 @@ describe("handleForegroundMessageReload", () => {
     handleForegroundMessageReload(store);
 
     expect(dispatch).toHaveBeenCalledWith(
-      reloadAllMessages.request({ pageSize, filter: {}, fromUserAction: false })
+      reloadAllMessages.request({
+        pageSize,
+        filter: {},
+        fromUserAction: false
+      })
     );
   });
 

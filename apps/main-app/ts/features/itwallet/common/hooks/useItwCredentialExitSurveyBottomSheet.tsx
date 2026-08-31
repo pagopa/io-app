@@ -1,9 +1,10 @@
 import { Body, IOButton, VStack } from "@io-app/design-system";
-import { useRoute } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import {
@@ -15,6 +16,8 @@ import {
   MixPanelCredential,
   TrackQualtricsSurvey
 } from "../../analytics/utils/types";
+import { itwSetCredentialExitSurvey } from "../store/actions/ui";
+import { itwCredentialExitSurveySelector } from "../store/selectors/ui";
 import { IT_WALLET_SURVEY_CREDENTIAL_EXIT } from "../utils/constants";
 
 export type CredentialExitStep = "data_share" | "doc_preview";
@@ -25,11 +28,6 @@ export type CredentialExitStep = "data_share" | "doc_preview";
  */
 const credentialExitSurveyShownInSession = new Set<MixPanelCredential>();
 
-type Props = {
-  credential?: MixPanelCredential;
-  step?: CredentialExitStep;
-};
-
 /**
  * Shows a Qualtrics survey bottom sheet when the user exits a credential
  * issuance flow. The survey includes the step at which the user dropped off and
@@ -37,11 +35,16 @@ type Props = {
  *
  * The bottom sheet is shown at most once per credential per app session.
  */
-export const useItwCredentialExitSurveyBottomSheet = ({
-  step = "data_share",
-  credential = "UNKNOWN"
-}: Props = {}) => {
+export const useItwCredentialExitSurveyBottomSheet = () => {
+  const dispatch = useIODispatch();
   const { name: routeName } = useRoute();
+  const credentialExitSurveyState = useIOSelector(
+    itwCredentialExitSurveySelector
+  );
+  const step: CredentialExitStep =
+    credentialExitSurveyState?.step ?? "data_share";
+  const credential: MixPanelCredential =
+    credentialExitSurveyState?.credential ?? "UNKNOWN";
 
   const skipDeclinedEvent = useRef(false);
 
@@ -74,7 +77,6 @@ export const useItwCredentialExitSurveyBottomSheet = ({
                 "features.itWallet.feedback.credentialExit.bottomSheet.primaryAction"
               )}
               onPress={() => {
-                // eslint-disable-next-line functional/immutable-data
                 skipDeclinedEvent.current = true;
                 trackItwSurveyRequestAccepted(trackingProps);
                 openWebUrl(surveyUrl);
@@ -100,7 +102,6 @@ export const useItwCredentialExitSurveyBottomSheet = ({
       if (!skipDeclinedEvent.current) {
         trackItwSurveyRequestDeclined(trackingProps);
       }
-      // eslint-disable-next-line functional/immutable-data
       skipDeclinedEvent.current = false;
     }
   });
@@ -114,5 +115,14 @@ export const useItwCredentialExitSurveyBottomSheet = ({
     present();
   }, [credential, present, trackingProps]);
 
-  return { bottomSheet, present: presentSurvey };
+  useFocusEffect(
+    useCallback(() => {
+      if (credentialExitSurveyState) {
+        presentSurvey();
+        dispatch(itwSetCredentialExitSurvey(undefined));
+      }
+    }, [credentialExitSurveyState, dispatch, presentSurvey])
+  );
+
+  return { bottomSheet };
 };

@@ -1,9 +1,9 @@
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+import { ZendeskCategory } from "@io-app/api-types/generated/definitions/content/ZendeskCategory";
 import * as ZendDesk from "@pagopa/io-react-native-zendesk";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
-import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { getValueOrElse } from "../common/model/RemoteValue";
 import { zendeskEnabled } from "../config";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";
@@ -56,14 +56,12 @@ export const getZendeskConfig = (zendeskToken: string | undefined) =>
   pipe(
     zendeskToken,
     O.fromNullable,
-    O.map(
-      (zT: string): ZendeskAppConfig => ({
-        ...zendeskDefaultJwtConfig,
-        token: zT // this is actually not used by the zendesk sdk...
-        // https://github.com/pagopa/io-react-native-zendesk/blob/main/ios/RNZendeskChat.m#L180
-        // https://github.com/pagopa/io-react-native-zendesk/blob/main/index.d.ts#L75C3-L75C3
-      })
-    ),
+    O.map((zT: string): ZendeskAppConfig => ({
+      ...zendeskDefaultJwtConfig,
+      token: zT // this is actually not used by the zendesk sdk...
+      // https://github.com/pagopa/io-react-native-zendesk/blob/main/ios/RNZendeskChat.m#L180
+      // https://github.com/pagopa/io-react-native-zendesk/blob/main/index.d.ts#L75C3-L75C3
+    })),
     O.getOrElseW(() => zendeskDefaultAnonymousConfig)
   );
 

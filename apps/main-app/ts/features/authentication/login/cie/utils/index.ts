@@ -1,3 +1,5 @@
+import { CieIdEnvironment } from "@pagopa/io-react-native-cieid";
+
 import { cieLoginFlowWithDevServerEnabled } from "../../../../../config";
 import { isDevEnv } from "../../../../../utils/environment";
 
@@ -5,6 +7,10 @@ export type SpidLevel = "SpidL2" | "SpidL3";
 
 export const cieFlowForDevServerEnabled =
   isDevEnv && cieLoginFlowWithDevServerEnabled;
+
+/** Maps the CIE login UAT flag to the CieID app environment to open. */
+export const getCieIdEnvironment = (isUat: boolean): CieIdEnvironment =>
+  isUat ? "preprod" : "production";
 
 export const getCieIDLoginUri = (
   spidLevel: SpidLevel,

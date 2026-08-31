@@ -1,3 +1,4 @@
+import { FilledDocumentDetailView } from "@io-app/api-types/generated/definitions/fci/FilledDocumentDetailView";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
@@ -12,7 +13,6 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
@@ -22,7 +22,7 @@ import {
   fciLoadQtspFilledDocument,
   fciPollFilledDocument
 } from "../../store/actions";
-import { fciPollFilledDocumentReadySelector } from "../../store/reducers/fciPollFilledDocument";
+import { fciPollFilledDocumentSettledSelector } from "../../store/reducers/fciPollFilledDocument";
 
 // Polling frequency timeout
 const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
@@ -119,10 +119,13 @@ export function* watchFciPollSaga(
       yield* put(fciPollFilledDocument.cancel());
     } finally {
       if (yield* cancelled()) {
-        const isFilledDocumentReady: ReturnType<
-          typeof fciPollFilledDocumentReadySelector
-        > = yield* select(fciPollFilledDocumentReadySelector);
-        if (!isFilledDocumentReady) {
+        // isSettled checks if the document is ready AND if there's already an
+        // error we are aware of, so we dont double track it (as it is already
+        // tracked in the catch block above)
+        const isSettled: ReturnType<
+          typeof fciPollFilledDocumentSettledSelector
+        > = yield* select(fciPollFilledDocumentSettledSelector);
+        if (!isSettled) {
           yield* put(
             fciPollFilledDocument.failure(
               getNetworkError(new Error("Polling cancelled"))

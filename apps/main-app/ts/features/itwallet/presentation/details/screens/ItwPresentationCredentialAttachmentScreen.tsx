@@ -5,11 +5,11 @@ import {
   useIOToast
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import * as Sharing from "expo-sharing";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
-import Share from "react-native-share";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
@@ -76,12 +76,9 @@ export const ItwPresentationCredentialAttachmentScreen = ({
     ({ fileName, uri, type }: AttachmentData) =>
     async () => {
       try {
-        await Share.open({
-          activityItemSources: [],
-          filename: getFileNameWithExtension(fileName, type),
-          type,
-          url: uri,
-          failOnCancel: false
+        await Sharing.shareAsync(uri, {
+          mimeType: type,
+          dialogTitle: getFileNameWithExtension(fileName, type)
         });
       } catch {
         toast.show(I18n.t("messagePDFPreview.errors.sharing"));

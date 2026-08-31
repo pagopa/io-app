@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { IOColors, useIOTheme, useIOThemeContext } from "@io-app/design-system";
 import {
   LinkingOptions,
@@ -16,12 +15,9 @@ import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import { IngressScreen } from "../features/ingress/screens/IngressScreen";
+import { itwLinkingOptions } from "../features/itwallet/navigation/linking";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
-import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
-import {
-  ITW_CREDENTIAL_OFFER_LINKING_PREFIXES,
-  parseCredentialOfferLink
-} from "../features/itwallet/offer/utils";
+import { ITW_CREDENTIAL_OFFER_LINKING_PREFIXES } from "../features/itwallet/offer/utils";
 import { storeLinkingUrl } from "../features/linking/actions";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -143,7 +139,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
             }
           }
         },
-        ...useItwLinkingOptions(),
+        ...itwLinkingOptions,
         ...fciLinkingOptions,
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...idPayLinkingOptions,
@@ -180,11 +176,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
          * app wake and thus there is no risk of overwriting any previously
          * stored deep link
          */
-        dispatch(
-          storeLinkingUrl(
-            parseCredentialOfferLink(initialUrl)?.internalRoute ?? initialUrl
-          )
-        );
+        dispatch(storeLinkingUrl(initialUrl));
       }
     });
   });

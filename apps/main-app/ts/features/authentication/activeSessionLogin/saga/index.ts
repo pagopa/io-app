@@ -24,7 +24,7 @@ import {
   trackCieLoginSuccess,
   trackSpidLoginSuccess
 } from "../../common/analytics";
-import { updateLoginMethodProfileProperty } from "../../common/analytics/spidAnalytics";
+import { updateLoginMethodProfileAndSuperProperties } from "../../common/analytics/spidAnalytics";
 import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
 import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
@@ -96,41 +96,44 @@ export function* handleActiveSessionLoginSaga(): Generator<
       }
     }
 
-    // Even though we are sure that all three values are present at this point,
+    // Even though we are sure that both values are present at this point,
     // we still need to perform this runtime check due to the lack of strict typing in the reducer state.
-    // This is mostly a workaround to satisfy TypeScript.
     // Also note: the `token` is only available *after* success is received,
     // so this check cannot be moved earlier in the flow.
-    const isDataComplete = token && idp;
-
-    if (isDataComplete) {
-      const state = (yield* select()) as GlobalState;
-      yield* call(
-        updateLoginSessionProfileAndSuperProperties,
-        state,
-        fastLoginOptIn ? "365" : "30"
-      );
-      yield* call(updateLoginMethodProfileProperty, state, idp.id);
-
-      yield* put(
-        consolidateActiveSessionLoginData({
-          idp,
-          token,
-          fastLoginOptIn: !!fastLoginOptIn,
-          cieIDSelectedSecurityLevel
-        })
-      );
-
-      yield* put(analyticsAuthenticationCompleted(loginFlow));
-
-      yield* put(
-        startApplicationInitialization({
-          handleSessionExpiration: false,
-          showIdentificationModalAtStartup: false,
-          isActiveLoginSuccess: true
-        })
-      );
+    if (!token || !idp) {
+      return;
     }
+
+    const state: GlobalState = yield* select();
+    yield* call(
+      updateLoginSessionProfileAndSuperProperties,
+      state,
+      fastLoginOptIn ? "365" : "30"
+    );
+    yield* call(updateLoginMethodProfileAndSuperProperties, state, idp.id);
+
+    yield* put(
+      consolidateActiveSessionLoginData({
+        idp,
+        token,
+        fastLoginOptIn: !!fastLoginOptIn,
+        cieIDSelectedSecurityLevel
+      })
+    );
+    // This event is tracked with the correct LOGIN_SESSION and LOGIN_METHOD
+    // because they were just forced in the profile/super properties above.
+    // AUTH_SECURITY_LEVEL, however, may be stale: we don't know the actual
+    // security level until the session is fetched from the backend
+    // (which happens later in initializeApplicationSaga).
+    yield* put(analyticsAuthenticationCompleted(loginFlow));
+
+    yield* put(
+      startApplicationInitialization({
+        handleSessionExpiration: false,
+        showIdentificationModalAtStartup: false,
+        isActiveLoginSuccess: true
+      })
+    );
   }
 }
 

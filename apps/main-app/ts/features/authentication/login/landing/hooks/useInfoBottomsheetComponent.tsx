@@ -1,10 +1,10 @@
+import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import { Divider, ListItemAction } from "@io-app/design-system";
 import I18n from "i18next";
 import _isEqual from "lodash/isEqual";
 import { useCallback, useRef } from "react";
 import { View } from "react-native";
 
-import { IdpData } from "../../../../../../definitions/content/IdpData";
 import AppVersion from "../../../../../components/AppVersion";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -91,10 +91,8 @@ export const useInfoBottomsheetComponent = () => {
   // Secret login for App Store reviewers
   const onTapAppVersion = () => {
     if (tap.current <= TAPS_TO_INIT_TESTIDP_FLOW) {
-      // eslint-disable-next-line functional/immutable-data
       tap.current = tap.current + 1;
       if (tap.current === TAPS_TO_INIT_TESTIDP_FLOW) {
-        // eslint-disable-next-line functional/immutable-data
         tap.current = 0;
         initTestLoginFlow();
       }

@@ -10,10 +10,10 @@ import {
   IOText,
   useIOToast
 } from "@io-app/design-system";
+import * as Sharing from "expo-sharing";
 import { useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import RNFS from "react-native-fs";
-import Share from "react-native-share";
 
 import { Prettify } from "../../types/helpers";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
@@ -81,11 +81,9 @@ export const DebugPrettyPrint = withDebugEnabled(
           JSON.stringify(data, debugInfoReplacer(), 2),
           "utf8"
         );
-        await Share.open({
-          filename: `${title}.json`,
-          type: "application/json",
-          url: filePath,
-          failOnCancel: false
+        await Sharing.shareAsync(`file://${filePath}`, {
+          mimeType: "application/json",
+          dialogTitle: `${title}.json`
         });
 
         await RNFS.unlink(filePath);

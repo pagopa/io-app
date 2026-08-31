@@ -1,3 +1,5 @@
+import { InfoNotice } from "@io-app/api-types/generated/definitions/pagopa/biz-events/InfoNotice";
+import { NoticeListItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListItem";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ResponseHeaders } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
@@ -6,8 +8,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { SectionListData } from "react-native";
 
-import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
-import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { OperationResultScreenContentProps } from "../../../../components/screens/OperationResultScreenContent";
 import { NetworkError } from "../../../../utils/errors";
 import { capitalizeTextName } from "../../../../utils/strings";

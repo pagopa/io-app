@@ -10,7 +10,7 @@ type AnyRecord = Record<string, any>;
 
 type MigrationState = PersistedState & Record<string, any>;
 
-export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 10;
+export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 12;
 
 export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
@@ -273,6 +273,59 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
         state.legacyCredentials
       ),
       credentials: replaceLegacyPidCredentialType(state.credentials)
+    };
+  },
+
+  // Version 11
+  // Move and adapt status assertion to the new validity property
+  "11": (state: MigrationState) => {
+    const migrateStatusAssertionToValidity = (credentials: AnyRecord) =>
+      Object.fromEntries(
+        Object.entries<AnyRecord>(credentials).map(
+          ([key, { storedStatusAssertion, ...credential }]) => [
+            key,
+            storedStatusAssertion
+              ? {
+                  ...credential,
+                  validity: {
+                    type: "status_assertion",
+                    status: storedStatusAssertion.credentialStatus,
+                    statusAssertion:
+                      storedStatusAssertion.parsedStatusAssertion,
+                    errorCode: storedStatusAssertion.errorCode
+                  }
+                }
+              : credential
+          ]
+        )
+      );
+
+    return {
+      ...state,
+      legacyCredentials: migrateStatusAssertionToValidity(
+        state.legacyCredentials
+      ),
+      credentials: migrateStatusAssertionToValidity(state.credentials)
+    };
+  },
+
+  // Version 12
+  // Add the `origin` property to existing credentials: the credential offer entry point
+  // did not exist yet, so every credential already stored at this point was necessarily
+  // obtained through the catalogue.
+  "12": (state: MigrationState) => {
+    const addOrigin = (credentials: AnyRecord) =>
+      Object.fromEntries(
+        Object.entries<AnyRecord>(credentials).map(([key, credential]) => [
+          key,
+          { ...credential, origin: "catalogue" }
+        ])
+      );
+
+    return {
+      ...state,
+      legacyCredentials: addOrigin(state.legacyCredentials),
+      credentials: addOrigin(state.credentials)
     };
   }
 };

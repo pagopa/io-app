@@ -42,6 +42,7 @@ import PictogramBleedNotification from "./svg/PictogramBleedNotification";
 import PictogramBleedPasscode from "./svg/PictogramBleedPasscode";
 import PictogramBleedPayments from "./svg/PictogramBleedPayments";
 import PictogramBleedPending from "./svg/PictogramBleedPending";
+import PictogramBleedPremiumCredentials from "./svg/PictogramBleedPremiumCredentials";
 import PictogramBleedQrCode from "./svg/PictogramBleedQrCode";
 import PictogramBleedReactivate from "./svg/PictogramBleedReactivate";
 import PictogramBleedSavingMoney from "./svg/PictogramBleedSavingMoney";
@@ -309,6 +310,7 @@ export type IOPictogramsBleed = Extract<
   | "passcode"
   | "payments"
   | "pending"
+  | "premiumCredentials"
   | "qrCode"
   | "reactivate"
   | "savingMoney"
@@ -354,6 +356,7 @@ export const IOPictogramsBleed: {
   settings: PictogramBleedSettings,
   time: PictogramBleedTime,
   pending: PictogramBleedPending,
+  premiumCredentials: PictogramBleedPremiumCredentials,
   ended: PictogramBleedEnded,
   timing: PictogramBleedTiming,
   searchLens: PictogramBleedSearch,

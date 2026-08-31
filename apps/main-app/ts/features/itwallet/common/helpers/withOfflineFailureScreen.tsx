@@ -26,7 +26,6 @@ import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
  * offline failure screen is shown.
  *
  * @example
- *   ```tsx
  *   // Original screen component
  *
  *   // Create an enhanced component with offline handling
@@ -35,7 +34,6 @@ import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
  *
  *   // Use in navigation or component tree
  *   <ProfileScreenWithOfflineFallback />;
- *   ```;
  *
  * @param Screen - The React component to enhance with offline handling
  *   functionality.

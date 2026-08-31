@@ -11,7 +11,10 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { useIOSelector } from "../../../../../store/hooks";
 import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
-import { selectItwEnv } from "../../../common/store/selectors/environment";
+import {
+  selectItwCieIdEnvironment,
+  selectItwEnv
+} from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { selectAuthUrlOption } from "../../../machine/eid/selectors";
@@ -38,6 +41,7 @@ const isAuthenticationUrl = (url: string) => {
  */
 const ItwCieIdLoginScreen = () => {
   const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);
+  const cieIdEnvironment = useIOSelector(selectItwCieIdEnvironment);
 
   const initialAuthUrl =
     ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
@@ -71,17 +75,17 @@ const ItwCieIdLoginScreen = () => {
   const onLoadEnd = useCallback(() => {
     // When CieId app-to-app flow is enabled, stop loading only after we got
     // the authUrl from CieId app, so the user doesn't see the login screen.
-    if (isCieIdAvailable() ? !!authUrl : true) {
+    if (isCieIdAvailable(cieIdEnvironment) ? !!authUrl : true) {
       setWebViewLoading(false);
     }
-  }, [authUrl]);
+  }, [authUrl, cieIdEnvironment]);
 
   const handleShouldStartLoading = useCallback(
     (event: WebViewNavigation): boolean => {
       const url = event.url;
 
       // When CieID is available, use a flow that launches the app
-      if (isAuthenticationUrl(url) && isCieIdAvailable()) {
+      if (isAuthenticationUrl(url) && isCieIdAvailable(cieIdEnvironment)) {
         startCieIdAppAuthentication(url);
         return false;
       }
@@ -89,7 +93,7 @@ const ItwCieIdLoginScreen = () => {
       // When CieID is not available, fallback to the regular webview
       return true;
     },
-    [startCieIdAppAuthentication]
+    [startCieIdAppAuthentication, cieIdEnvironment]
   );
 
   const handleNavigationStateChange = useCallback(

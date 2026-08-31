@@ -2,7 +2,7 @@ import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect } from "react";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";

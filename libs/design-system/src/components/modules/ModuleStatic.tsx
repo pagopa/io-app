@@ -51,6 +51,7 @@ export const ModuleStatic = ({
         }
       ]}
     >
+      {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
       {startBlock && (
         <HStack space={8} style={{ alignItems: "center" }}>
           <View

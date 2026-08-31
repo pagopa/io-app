@@ -1,25 +1,36 @@
 import { SagaIterator } from "redux-saga";
 import { call, fork, select } from "typed-redux-saga/macro";
 
-import { itwIsL3EnabledSelector } from "../../common/store/selectors";
+import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { registerStatusListProperties } from "../analytics";
+import { refreshStaleEntries } from "../utils/refresh";
 import { checkStatusListCoherenceSaga } from "./checkStatusListCoherenceSaga";
-// TODO [SIW-4084]  import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
+import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
+import { watchItwSpecsVersionStorageSaga } from "./storeItwSpecsVersionSaga";
+import { updateCredentialsStatusSaga } from "./updateCredentialsStatusSaga";
+
+export function* watchItwStatusListAuthenticatedSaga(): SagaIterator {
+  // Keep the background-task specs version synchronized with eID changes
+  yield* fork(watchItwSpecsVersionStorageSaga);
+  // Register the background task for Status List fetch only for active wallet instances
+  yield* fork(registerStatusListFetchTaskSaga);
+}
 
 export function* watchItwStatusListSaga(): SagaIterator {
-  const isWhitelisted = yield* select(itwIsL3EnabledSelector);
-  if (!isWhitelisted) {
-    // If the user is not whitelisted for L3 features, we can skip background
-    // task sagas as they won't have access to IT Wallet features that require
-    // status list checks.
+  const itwVersion = yield* select(selectItwSpecsVersion);
+  const ioWallet = getIoWallet(itwVersion);
+
+  if (!ioWallet.CredentialStatus.statusList.isSupported) {
     return;
   }
 
-  // Register the background task for Status List fetch only for active wallet instances
-  //  TODO [SIW-4084] yield* fork(registerStatusListFetchTaskSaga);
   // Run startup coherence for the Status List Token cache
-  yield* fork(checkStatusListCoherenceSaga);
-
+  yield* call(checkStatusListCoherenceSaga);
+  // Check for stale Status List Tokens and refresh them in the background
+  yield* call(refreshStaleEntries, { itwVersion });
+  // Update the validity of credentials whose status list is available in the cache
+  yield* call(updateCredentialsStatusSaga, { itwVersion });
   // Register Status List super properties
   yield* call(registerStatusListProperties);
 }

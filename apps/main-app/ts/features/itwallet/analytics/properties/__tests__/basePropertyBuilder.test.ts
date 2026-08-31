@@ -1,12 +1,8 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import {
-  CredentialType,
-  ItwCredentialFromCatalogueMocks
-} from "../../../common/utils/itwMocksUtils";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import {
@@ -18,10 +14,6 @@ import {
 
 const expirationClaim = { value: "2100-09-04", name: "exp" };
 const jwtExpiration = "2100-09-04T00:00:00.000Z";
-const educationDegreeCatalogueCredential = {
-  ...ItwCredentialFromCatalogueMocks,
-  credential_type: CredentialType.EDUCATION_DEGREE
-};
 
 const getStateWithCredentials = (credentials: {
   [key: string]: CredentialMetadata;
@@ -38,23 +30,6 @@ const getStateWithCredentials = (credentials: {
   });
 };
 
-const getStateWithCredentialsAndCatalogue = (credentials: {
-  [key: string]: CredentialMetadata;
-}) => {
-  const defaultState = getStateWithCredentials(credentials);
-  return _.merge(undefined, defaultState, {
-    features: {
-      itWallet: {
-        credentialsCatalogue: {
-          catalogue: pot.some({
-            exp: 4102444800,
-            credentials: [educationDegreeCatalogueCredential]
-          })
-        }
-      }
-    }
-  });
-};
 const getMockedCredential = (
   credentialType: CredentialType,
   overrides: Partial<CredentialMetadata> = {}
@@ -124,8 +99,10 @@ describe("buildThirdPartyCredentialProperty", () => {
     expect(buildThirdPartyCredentialProperty(state)).toBe("not_available");
   });
 
-  it("returns valid when at least one third-party credential is valid", () => {
-    const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE);
+  it("returns valid when at least one credential obtained via credential offer is valid", () => {
+    const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
+      origin: "credentialOffer"
+    });
     const state = getStateWithCredentials({
       [credential.credentialId]: credential
     });
@@ -133,10 +110,12 @@ describe("buildThirdPartyCredentialProperty", () => {
     expect(buildThirdPartyCredentialProperty(state)).toBe("valid");
   });
 
-  it("returns not_valid when third-party credentials are present but none are valid", () => {
+  it("returns not_valid when credentials obtained via credential offer are present but none are valid", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
-      storedStatusAssertion: {
-        credentialStatus: "invalid"
+      origin: "credentialOffer",
+      validity: {
+        type: "status_assertion",
+        status: "invalid"
       }
     });
     const state = getStateWithCredentials({
@@ -146,8 +125,21 @@ describe("buildThirdPartyCredentialProperty", () => {
     expect(buildThirdPartyCredentialProperty(state)).toBe("not_valid");
   });
 
+  it("does not consider a credential obtained via the catalogue as a third-party credential", () => {
+    const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
+      origin: "catalogue"
+    });
+    const state = getStateWithCredentials({
+      [credential.credentialId]: credential
+    });
+
+    expect(buildThirdPartyCredentialProperty(state)).toBe("not_available");
+  });
+
   it("does not consider historical L2 credentials as third-party credentials", () => {
-    const credential = getMockedCredential(CredentialType.DRIVING_LICENSE);
+    const credential = getMockedCredential(CredentialType.DRIVING_LICENSE, {
+      origin: "credentialOffer"
+    });
     const state = getStateWithCredentials({
       [credential.credentialId]: credential
     });
@@ -157,7 +149,7 @@ describe("buildThirdPartyCredentialProperty", () => {
 });
 
 describe("buildWalletListCredentialProperty", () => {
-  it("returns not_available when the catalogue is not available", () => {
+  it("returns not_available when no catalogue credential is present", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE);
     const state = getStateWithCredentials({
       [credential.credentialId]: credential
@@ -166,32 +158,51 @@ describe("buildWalletListCredentialProperty", () => {
     expect(buildWalletListCredentialProperty(state)).toBe("not_available");
   });
 
-  it("returns valid when at least one catalogue credential is valid", () => {
-    const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE);
-    const state = getStateWithCredentialsAndCatalogue({
+  it("returns valid when at least one credential obtained via the catalogue is valid", () => {
+    const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
+      origin: "catalogue"
+    });
+    const state = getStateWithCredentials({
       [credential.credentialId]: credential
     });
 
     expect(buildWalletListCredentialProperty(state)).toBe("valid");
   });
 
-  it("returns not_valid when catalogue credentials are present but none are valid", () => {
+  it("returns not_valid when credentials obtained via the catalogue are present but none are valid", () => {
     const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
-      storedStatusAssertion: {
-        credentialStatus: "invalid"
+      origin: "catalogue",
+      validity: {
+        type: "status_assertion",
+        status: "invalid"
       }
     });
-    const state = getStateWithCredentialsAndCatalogue({
+    const state = getStateWithCredentials({
       [credential.credentialId]: credential
     });
 
     expect(buildWalletListCredentialProperty(state)).toBe("not_valid");
   });
 
+  it("does not consider a credential obtained via credential offer as a wallet list credential", () => {
+    const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE, {
+      origin: "credentialOffer"
+    });
+    const state = getStateWithCredentials({
+      [credential.credentialId]: credential
+    });
+
+    expect(buildWalletListCredentialProperty(state)).toBe("not_available");
+  });
+
   it("does not consider PID or historical L2 credentials as wallet list credentials", () => {
-    const pid = getMockedCredential(CredentialType.PID);
-    const l2Credential = getMockedCredential(CredentialType.DRIVING_LICENSE);
-    const state = getStateWithCredentialsAndCatalogue({
+    const pid = getMockedCredential(CredentialType.PID, {
+      origin: "catalogue"
+    });
+    const l2Credential = getMockedCredential(CredentialType.DRIVING_LICENSE, {
+      origin: "catalogue"
+    });
+    const state = getStateWithCredentials({
       [pid.credentialId]: pid,
       [l2Credential.credentialId]: l2Credential
     });
@@ -199,14 +210,17 @@ describe("buildWalletListCredentialProperty", () => {
     expect(buildWalletListCredentialProperty(state)).toBe("not_available");
   });
 
-  it("differs from third-party tracking for new credentials not present in the catalogue", () => {
-    const credential = getMockedCredential(CredentialType.EDUCATION_DEGREE);
+  it("differs from third-party tracking for the same credential type obtained via different flows", () => {
+    const catalogueCredential = getMockedCredential(
+      CredentialType.EDUCATION_DEGREE,
+      { origin: "catalogue" }
+    );
     const state = getStateWithCredentials({
-      [credential.credentialId]: credential
+      [catalogueCredential.credentialId]: catalogueCredential
     });
 
-    expect(buildThirdPartyCredentialProperty(state)).toBe("valid");
-    expect(buildWalletListCredentialProperty(state)).toBe("not_available");
+    expect(buildThirdPartyCredentialProperty(state)).toBe("not_available");
+    expect(buildWalletListCredentialProperty(state)).toBe("valid");
   });
 });
 describe("computeItwStatus", () => {

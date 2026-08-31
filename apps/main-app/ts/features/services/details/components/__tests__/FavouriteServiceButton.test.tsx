@@ -1,10 +1,10 @@
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import I18n from "i18next";
 import _ from "lodash";
 import { createStore } from "redux";
 
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

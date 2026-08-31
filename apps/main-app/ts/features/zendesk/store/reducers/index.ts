@@ -1,10 +1,10 @@
+import { ZendeskCategory } from "@io-app/api-types/generated/definitions/content/ZendeskCategory";
+import { ZendeskSubcategoriesErrors } from "@io-app/api-types/generated/definitions/content/ZendeskSubcategoriesErrors";
+import { ZendeskSubCategory } from "@io-app/api-types/generated/definitions/content/ZendeskSubCategory";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
-import { ZendeskSubcategoriesErrors } from "../../../../../definitions/content/ZendeskSubcategoriesErrors";
-import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
 import {
   remoteError,
   remoteLoading,

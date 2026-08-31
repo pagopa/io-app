@@ -1,7 +1,7 @@
+import { ErrorResponse } from "@io-app/api-types/generated/definitions/pn/lollipop-lambda/ErrorResponse";
+import { SuccessResponse } from "@io-app/api-types/generated/definitions/pn/lollipop-lambda/SuccessResponse";
 import { getType } from "typesafe-actions";
 
-import { ErrorResponse } from "../../../../../../definitions/pn/lollipop-lambda/ErrorResponse";
-import { SuccessResponse } from "../../../../../../definitions/pn/lollipop-lambda/SuccessResponse";
 import { Action } from "../../../../../store/actions/types";
 import { sendLollipopLambdaAction } from "../actions";
 

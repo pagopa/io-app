@@ -133,9 +133,10 @@ export const IOText = ({
     the the `color' attribute without giving the ability to
     override all other all other typographic attributes
     through the `style' prop. */
-  const fontStyleObj = style?.color
-    ? [{ ...computedStyleObj, color: style?.color }]
-    : computedStyleObj;
+  const fontStyleObj =
+    style?.color != null
+      ? [{ ...computedStyleObj, color: style?.color }]
+      : computedStyleObj;
 
   /* Some typographic styles like `H5` have certain `TextStyle` properties
      like `textTransform` or `letterSpacing` that we want to apply to the text.

@@ -1,7 +1,7 @@
 import I18n from "i18next";
 import { ReactElement, useCallback, useEffect, useRef } from "react";
 
-import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../components/screens/LoadingScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import {
   IOStackNavigationRouteProps,
@@ -121,7 +121,6 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
 
   useEffect(() => {
     if (isFirstRendering.current) {
-      // eslint-disable-next-line functional/immutable-data
       isFirstRendering.current = false;
       getMessageDataCallback();
     } else if (messageSuccessDataOrUndefined) {

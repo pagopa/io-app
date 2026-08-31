@@ -1,3 +1,4 @@
+import { SpidIdps } from "@io-app/api-types/generated/definitions/content/SpidIdps";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as O from "fp-ts/lib/Option";
@@ -22,7 +23,6 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 
-import { SpidIdps } from "../../definitions/content/SpidIdps";
 import {
   isReady,
   remoteReady,
@@ -59,6 +59,7 @@ import { PotTransform } from "../store/transforms/potTransform";
 import { isDevEnv, isTestEnv } from "../utils/environment";
 import { fromGeneratedToLocalSpidIdp } from "../utils/idps";
 import { configureReactotron } from "./configureReactotron";
+import { createReduxStartupGate } from "./reduxStartupGate";
 
 /** Redux persist will migrate the store to the current version */
 const CURRENT_REDUX_STORE_VERSION = 49;
@@ -246,7 +247,10 @@ const migrations: MigrationManifest = {
       .persistedPreferences;
     return {
       ...state,
-      persistedPreferences: { ...persistedPreferences, isMixpanelEnabled: null }
+      persistedPreferences: {
+        ...persistedPreferences,
+        isMixpanelEnabled: null
+      }
     };
   },
   // Version 16
@@ -675,10 +679,12 @@ function configureStoreAndPersistor(): {
   persistor: Persistor;
   store: Store;
 } {
+  const reduxStartupGate = createReduxStartupGate();
   const composeEnhancers =
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
   const baseMiddlewares: ReadonlyArray<Middleware> = [
+    reduxStartupGate.middleware,
     sagaMiddleware,
     logger,
     analytics.actionTracking // generic tracker for selected redux actions
@@ -700,13 +706,15 @@ function configureStoreAndPersistor(): {
   >(persistedReducer, enhancer);
   const persistor = persistStore(store);
 
-  // Run the main saga
-  sagaMiddleware.run(rootSaga);
+  reduxStartupGate.startWhenAppIsActive(() => {
+    persistor.persist();
+    sagaMiddleware.run(rootSaga);
+  });
 
   return { store, persistor };
 }
 
 export const { store, persistor } = configureStoreAndPersistor();
 export const testable = isTestEnv
-  ? { CURRENT_REDUX_STORE_VERSION, migrations }
+  ? { CURRENT_REDUX_STORE_VERSION, configureStoreAndPersistor, migrations }
   : undefined;

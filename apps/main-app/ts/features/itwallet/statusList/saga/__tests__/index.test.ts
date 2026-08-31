@@ -1,28 +1,48 @@
 import { testSaga } from "redux-saga-test-plan";
 
-import { watchItwStatusListSaga } from "..";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors";
+import {
+  watchItwStatusListAuthenticatedSaga,
+  watchItwStatusListSaga
+} from "..";
+import { selectItwSpecsVersion } from "../../../common/store/selectors/environment";
 import { registerStatusListProperties } from "../../analytics";
+import { refreshStaleEntries } from "../../utils/refresh";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
-// TODO [SIW-4084] import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
+import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
+import { watchItwSpecsVersionStorageSaga } from "../storeItwSpecsVersionSaga";
+import { updateCredentialsStatusSaga } from "../updateCredentialsStatusSaga";
+
+describe("watchItwStatusListAuthenticatedSaga", () => {
+  it("synchronizes the specs version and registers the background fetch task", () => {
+    testSaga(watchItwStatusListAuthenticatedSaga)
+      .next()
+      .fork(watchItwSpecsVersionStorageSaga)
+      .next()
+      .fork(registerStatusListFetchTaskSaga)
+      .next()
+      .isDone();
+  });
+});
 
 describe("watchItwStatusListSaga", () => {
-  it("stops when L3 is not enabled", () => {
+  it("stops when Status List is unsupported", () => {
     testSaga(watchItwStatusListSaga)
       .next()
-      .select(itwIsL3EnabledSelector)
-      .next(false)
+      .select(selectItwSpecsVersion)
+      .next("1.0.0")
       .isDone();
   });
 
-  it("forks status list sagas when L3 is enabled", () => {
+  it("runs Status List startup checks when supported", () => {
     testSaga(watchItwStatusListSaga)
       .next()
-      .select(itwIsL3EnabledSelector)
-      .next(true)
-      // TODO [SIW-4084] .fork(registerStatusListFetchTaskSaga)
-      // TODO [SIW-4084] .next()
-      .fork(checkStatusListCoherenceSaga)
+      .select(selectItwSpecsVersion)
+      .next("1.3.3")
+      .call(checkStatusListCoherenceSaga)
+      .next()
+      .call(refreshStaleEntries, { itwVersion: "1.3.3" })
+      .next()
+      .call(updateCredentialsStatusSaga, { itwVersion: "1.3.3" })
       .next()
       .call(registerStatusListProperties)
       .next()

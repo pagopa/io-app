@@ -1,3 +1,5 @@
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -16,8 +18,6 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
-import { UserDataProcessingChoiceEnum } from "../../definitions/identity/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../definitions/identity/UserDataProcessingStatus";
 import { communicationClientManager } from "../api/CommunicationClientManager";
 import { identityClientManager } from "../api/IdentityClientManager";
 import { sessionManagerClientManager } from "../api/SessionManagerClientManager";
@@ -74,7 +74,7 @@ import {
 } from "../features/ingress/saga";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import {
-  watchItwOfflineSaga,
+  watchItwAuthenticatedSaga,
   watchItwSaga
 } from "../features/itwallet/common/saga";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
@@ -169,9 +169,12 @@ export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 
 /** Handles the application startup and the main application logic loop */
 /**
- * The startup saga is triggered in the following scenarios: - During the root
- * saga initialization - On logout or expired session - On FL session refresh -
- * When accessing the Wallet mini app in offline mode
+ * The startup saga is triggered in the following scenarios:
+ *
+ * - During the root saga initialization
+ * - On logout or expired session
+ * - On FL session refresh
+ * - When accessing the Wallet mini app in offline mode
  */
 
 // oxlint-disable-next-line complexity
@@ -236,7 +239,7 @@ export function* initializeApplicationSaga(
   // OFFLINE WALLET MINI-APP CHECKS
 
   // Start watching for ITW sagas that do not require internet connection or a valid session
-  yield* fork(watchItwOfflineSaga);
+  yield* fork(watchItwSaga);
 
   // Before continuing with the startup flow, we check if the app started offline.
   // In that case (offline wallet or timeout), we skip the saga to prevent triggering
@@ -429,10 +432,10 @@ export function* initializeApplicationSaga(
   // **However**, this refactor depends on the saga startup integer refactor,
   // so it momentarily does not have a jira ticket assigned
   if (
-    O.isNone(maybeSessionInformation) ||
-    (O.isSome(maybeSessionInformation) &&
-      (maybeSessionInformation.value.bpdToken === undefined ||
-        maybeSessionInformation.value.walletToken === undefined))
+    maybeSessionInformation == null ||
+    (maybeSessionInformation != null &&
+      (maybeSessionInformation.bpdToken === undefined ||
+        maybeSessionInformation.walletToken === undefined))
   ) {
     // let's try to load the session information from the backend.
 
@@ -442,10 +445,10 @@ export function* initializeApplicationSaga(
     );
 
     if (
-      O.isNone(maybeSessionInformation) ||
-      (O.isSome(maybeSessionInformation) &&
-        (maybeSessionInformation.value.bpdToken === undefined ||
-          maybeSessionInformation.value.walletToken === undefined))
+      maybeSessionInformation == null ||
+      (maybeSessionInformation != null &&
+        (maybeSessionInformation.bpdToken === undefined ||
+          maybeSessionInformation.walletToken === undefined))
     ) {
       yield* call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
       return;
@@ -643,7 +646,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchWalletSaga);
 
   // Here we can be sure that the session information is loaded and valid
-  const bpdToken = maybeSessionInformation.value.bpdToken as string;
+  const bpdToken = maybeSessionInformation.bpdToken as string;
 
   // Start watching for cgn actions
   yield* fork(watchBonusCgnSaga, sessionToken);
@@ -684,10 +687,10 @@ export function* initializeApplicationSaga(
   }
 
   // Start watching for itw saga
-  yield* fork(watchItwSaga);
+  yield* fork(watchItwAuthenticatedSaga);
 
   // Here we can be sure that the session information is loaded and valid
-  const walletToken = maybeSessionInformation.value.walletToken as string;
+  const walletToken = maybeSessionInformation.walletToken as string;
   // Start watching for Wallet V3 actions
   yield* fork(watchPaymentsSaga, walletToken);
 

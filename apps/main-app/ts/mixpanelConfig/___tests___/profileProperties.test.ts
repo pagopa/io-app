@@ -1,9 +1,9 @@
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 
-import { PushNotificationsContentTypeEnum } from "../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../definitions/identity/ReminderStatus";
-import { ServiceId } from "../../../definitions/services/ServiceId";
 import * as lifecycleSelectors from "../../features/itwallet/lifecycle/store/selectors";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { ServicesState } from "../../features/services/common/store/reducers";
@@ -11,6 +11,7 @@ import { ServicePreferenceResponse } from "../../features/services/details/types
 import { GlobalState } from "../../store/reducers/types";
 import * as analytics from "../../utils/analytics";
 import * as BIOMETRICS from "../../utils/biometrics";
+import { SpidIdp } from "../../utils/idps";
 import { updateMixpanelProfileProperties } from "../profileProperties";
 
 // eslint-disable-next-line functional/no-let
@@ -27,6 +28,7 @@ const pnServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
 
 const generateBaseProfileProperties = () => ({
   BIOMETRIC_TECHNOLOGY: "FACE_ID",
+  AUTH_SECURITY_LEVEL: "not set",
   CGN_STATUS: "not_active",
   CDC_STATUS: 0,
   FONT_PREFERENCE: "comfortable",
@@ -264,6 +266,84 @@ describe("profileProperties", () => {
         });
       });
     });
+    /**
+     * === === === === === === === === === AUTH_SECURITY_LEVEL / LOGIN_METHOD
+     * === === === === === === === === ===
+     */
+    const generateIdp = (id: string, name: string): SpidIdp => ({
+      id,
+      name,
+      logo: {
+        light: { uri: "" }
+      },
+      profileUrl: ""
+    });
+    const scenarios = [
+      {
+        name: "user is logged out",
+        authenticationState: {
+          kind: "LoggedOutWithoutIdp",
+          reason: "NOT_LOGGED_IN"
+        },
+        expectedAuthSecurityLevel: "not set",
+        expectedLoginMethod: "not set"
+      },
+      {
+        name: "user is logged in with SPID L2",
+        authenticationState: {
+          kind: "LoggedInWithSessionInfo",
+          idp: generateIdp("poste", "Poste ID"),
+          sessionToken: "aSessionToken",
+          sessionInfo: { spidLevel: "https://www.spid.gov.it/SpidL2" }
+        },
+        expectedAuthSecurityLevel: "L2",
+        expectedLoginMethod: "poste"
+      },
+      {
+        name: "user is logged in with CIE L3",
+        authenticationState: {
+          kind: "LoggedInWithSessionInfo",
+          idp: generateIdp("cie", "CIE"),
+          sessionToken: "aSessionToken",
+          sessionInfo: { spidLevel: "https://www.spid.gov.it/SpidL3" }
+        },
+        expectedAuthSecurityLevel: "L3",
+        expectedLoginMethod: "cie"
+      }
+    ];
+    it.each(scenarios)(
+      "should set AUTH_SECURITY_LEVEL to '$expectedAuthSecurityLevel' and LOGIN_METHOD to '$expectedLoginMethod' when $name",
+      async ({
+        authenticationState,
+        expectedAuthSecurityLevel,
+        expectedLoginMethod
+      }) => {
+        mockIsMixpanelInitialized = () => true;
+        const state = {
+          ...generateMockedGlobalState(undefined, undefined, undefined),
+          authentication: authenticationState
+        } as GlobalState;
+
+        jest
+          .spyOn(BIOMETRICS, "getBiometricsType")
+          .mockImplementation(() => Promise.resolve("FACE_ID"));
+        jest
+          .spyOn(PUSHUTILS, "checkNotificationPermissions")
+          .mockImplementation(() => Promise.resolve(false));
+        jest
+          .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+          .mockReturnValue(false);
+
+        await updateMixpanelProfileProperties(state);
+
+        expect(mockedSet).toHaveBeenCalledWith(
+          expect.objectContaining({
+            AUTH_SECURITY_LEVEL: expectedAuthSecurityLevel,
+            LOGIN_METHOD: expectedLoginMethod
+          })
+        );
+      }
+    );
   });
   it("should not do anything if 'isMixpanelInstanceInitialized' returns 'false'", async () => {
     mockIsMixpanelInitialized = () => false;

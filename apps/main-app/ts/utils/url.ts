@@ -49,8 +49,11 @@ export const getUrlBasepath = (url: string): string => {
 
 export type ItemAction = "COPY" | "LINK" | "MAP";
 /**
- * Return the function to: - copy the value, if valueType is COPY - navigate to
- * the map, if valueType is MAP - navigate to a browser, if valueType is LINK
+ * Return the function to:
+ *
+ * - Copy the value, if valueType is COPY
+ * - Navigate to the map, if valueType is MAP
+ * - Navigate to a browser, if valueType is LINK
  */
 export function handleItemOnPress(
   value: string,

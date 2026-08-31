@@ -1,16 +1,16 @@
 /* eslint-disable no-underscore-dangle */
+import { PreferredLanguage } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import { InitiativeDataDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDataDTO";
+import { CodeEnum as OnboardingErrorCodeEnum } from "@io-app/api-types/generated/definitions/idpay/OnboardingErrorDTO";
+import { OnboardingInitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingInitiativeDTO";
+import { StatusEnum as OnboardingStatusEnum } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
+import { SelfConsentDTO } from "@io-app/api-types/generated/definitions/idpay/SelfConsentDTO";
 import { TransientError } from "@pagopa/ts-commons/lib/tasks";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 
-import { PreferredLanguage } from "../../../../../definitions/identity/PreferredLanguage";
-import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
-import { CodeEnum as OnboardingErrorCodeEnum } from "../../../../../definitions/idpay/OnboardingErrorDTO";
-import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";
-import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
-import { SelfConsentDTO } from "../../../../../definitions/idpay/SelfConsentDTO";
 import { IDPayClient } from "../../common/api/client";
 import {
   OnboardingFailure,

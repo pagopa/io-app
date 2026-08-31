@@ -1,3 +1,9 @@
+import { AppVersion } from "@io-app/api-types/generated/definitions/identity/AppVersion";
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
+import { UpdateProfile412ErrorTypesEnum } from "@io-app/api-types/generated/definitions/identity/UpdateProfile412ErrorTypes";
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
+import { ExtendedProfile } from "@io-app/api-types/generated/definitions/session_manager/ExtendedProfile";
 /** A saga that manages the Profile. */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
@@ -8,12 +14,6 @@ import I18n from "i18next";
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 
-import { AppVersion } from "../../../../../definitions/identity/AppVersion";
-import { InitializedProfile } from "../../../../../definitions/identity/InitializedProfile";
-import { ServicesPreferencesModeEnum } from "../../../../../definitions/identity/ServicesPreferencesMode";
-import { UpdateProfile412ErrorTypesEnum } from "../../../../../definitions/identity/UpdateProfile412ErrorTypes";
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/identity/UserDataProcessingChoice";
-import { ExtendedProfile } from "../../../../../definitions/session_manager/ExtendedProfile";
 import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { mixpanelTrack } from "../../../../mixpanel";
 import {

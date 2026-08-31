@@ -1,8 +1,8 @@
+import { CgnActivationDetail } from "@io-app/api-types/generated/definitions/cgn/CgnActivationDetail";
 import { createSelector } from "reselect";
 // bonus reducer
 import { getType } from "typesafe-actions";
 
-import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {

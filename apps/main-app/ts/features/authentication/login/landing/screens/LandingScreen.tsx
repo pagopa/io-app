@@ -38,7 +38,6 @@ import { continueWithRootOrJailbreakSelector } from "../../../../../store/reduce
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { isTablet } from "../../../../../utils/device";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -70,11 +69,6 @@ import { SpidLevel } from "../../cie/utils";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "authentication.landing.contextualHelpTitle",
-  body: "authentication.landing.contextualHelpContent"
-};
 
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
@@ -235,20 +229,17 @@ export const LandingScreen = () => {
     }
   }, [present, isCieSupported, handleNavigateToCieIdLoginScreen]);
 
-  const navigateToCieUatSelectionScreen = useCallback(() => {
-    if (isCieSupported) {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_LOGIN_CONFIG_SCREEN
-      });
-    }
-  }, [isCieSupported, navigation]);
+  const navigateToLoginConfigScreen = useCallback(() => {
+    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.LOGIN_CONFIG_SCREEN
+    });
+  }, [navigation]);
 
   const LandingScreenComponent = () => {
     useHeaderSecondLevel({
       title: "",
       supportRequest: true,
       canGoBack: false,
-      contextualHelpMarkdown,
       variant: "primary",
       secondAction: {
         icon: "info",
@@ -372,7 +363,7 @@ export const LandingScreen = () => {
         ) : (
           <Carousel
             carouselCards={carouselCards}
-            dotEasterEggCallback={navigateToCieUatSelectionScreen}
+            dotEasterEggCallback={navigateToLoginConfigScreen}
             ref={accessibilityFirstFocuseViewRef}
           />
         )}

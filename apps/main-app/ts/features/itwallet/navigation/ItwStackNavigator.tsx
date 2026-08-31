@@ -226,7 +226,10 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         component={ItwIssuanceCredentialIntroductionScreen}
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION}
-        options={hiddenHeader}
+        options={({ route }) => ({
+          ...hiddenHeader,
+          animationEnabled: route.params?.animationEnabled
+        })}
       />
       <Stack.Screen
         component={ItwIssuanceCredentialTrustIssuerScreen}

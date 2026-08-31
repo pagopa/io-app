@@ -18,6 +18,8 @@ import {
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
+import { itwSetCredentialExitSurvey } from "../../common/store/actions/ui";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import {
@@ -134,14 +136,18 @@ export const createCredentialIssuanceActionsImplementation = (
     assertEvent(event, "close");
     const { surveyStep, surveyCredential } = event;
 
+    if (surveyStep && surveyCredential) {
+      store.dispatch(
+        itwSetCredentialExitSurvey({
+          step: surveyStep,
+          credential: surveyCredential
+        })
+      );
+    }
+
     navigation.navigate(ROUTES.MAIN, {
       screen: ROUTES.WALLET_HOME,
-      params: {
-        credentialExitSurvey:
-          surveyStep && surveyCredential
-            ? { step: surveyStep, credential: surveyCredential }
-            : undefined
-      }
+      params: {}
     });
   },
 
@@ -170,8 +176,18 @@ export const createCredentialIssuanceActionsImplementation = (
   >) => {
     assert(context.credentialType, "credentialType is undefined");
     assert(context.credentials, "credentials is undefined");
+    // A credential offer (deeplink/QR code) is the only alternative entry point to the
+    // catalogue/list for issuing a credential, so its presence in the context is what
+    // distinguishes the two flows for analytics purposes.
+    const origin: CredentialMetadata["origin"] = context.resolvedCredentialOffer
+      ? "credentialOffer"
+      : "catalogue";
+    const credentials = context.credentials.map(bundle => ({
+      ...bundle,
+      metadata: { ...bundle.metadata, origin }
+    }));
     // Removes any credentials with the same type and stores the new ones atomically
-    store.dispatch(itwCredentialsReplaceByType(context.credentials, {}));
+    store.dispatch(itwCredentialsReplaceByType(credentials, {}));
     // Clear older upgrade-failed flag for this credential after a successful issuance/upgrade.
     store.dispatch(itwClearCredentialUpgradeFailed(context.credentialType));
     // Stores WUAs separately if present

@@ -109,7 +109,7 @@ describe("Test List Item Components", () => {
   });
 });
 
-describe("Test List Item Components - Experimental Enabled ", () => {
+describe("Test List Item Components - Experimental Enabled", () => {
   it("ListItemInfo Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ListItemInfo

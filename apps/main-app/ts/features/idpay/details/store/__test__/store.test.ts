@@ -1,3 +1,13 @@
+import {
+  StatusEnum as InitativeStatusEnum,
+  InitiativeDTO
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { OperationDTO } from "@io-app/api-types/generated/definitions/idpay/OperationDTO";
+import { TimelineDTO } from "@io-app/api-types/generated/definitions/idpay/TimelineDTO";
+import {
+  StatusEnum,
+  OperationTypeEnum as TransactionOperationType
+} from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 
@@ -9,16 +19,6 @@ import {
   idpayTimelineIsLastPageSelector,
   idpayTimelineLastUpdateSelector
 } from "..";
-import {
-  StatusEnum as InitativeStatusEnum,
-  InitiativeDTO
-} from "../../../../../../definitions/idpay/InitiativeDTO";
-import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
-import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
-import {
-  StatusEnum,
-  OperationTypeEnum as TransactionOperationType
-} from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -174,7 +174,9 @@ describe("test idpay timeline reducer and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayTimelinePageGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayTimelinePageGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d"
+      })
     );
     store.dispatch(
       idpayTimelinePageGet.success({
@@ -195,7 +197,9 @@ describe("test idpay timeline reducer and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayTimelinePageGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayTimelinePageGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d"
+      })
     );
     store.dispatch(idpayTimelinePageGet.failure(mockFailure));
 

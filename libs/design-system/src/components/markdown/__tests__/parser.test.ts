@@ -114,12 +114,8 @@ describe("parseLite — unsupported content is skipped", () => {
     "html_inline"
   ];
 
-  const assertNoUnsupportedTypes = (ast: ReadonlyArray<MarkdownNode>) => {
-    const types = collectTypes(ast);
-    for (const t of UNSUPPORTED_TYPES) {
-      expect(types).not.toContain(t);
-    }
-  };
+  const unsupportedTypesIn = (ast: ReadonlyArray<MarkdownNode>) =>
+    collectTypes(ast).filter(type => UNSUPPORTED_TYPES.includes(type));
 
   it.each<string>([
     "# H1",
@@ -129,54 +125,52 @@ describe("parseLite — unsupported content is skipped", () => {
     "##### H5",
     "###### H6"
   ])("skips heading '%s'", input => {
-    const ast = parseLite(input);
-    assertNoUnsupportedTypes(ast);
+    expect(unsupportedTypesIn(parseLite(input))).toEqual([]);
   });
 
   it("skips image ![alt](url)", () => {
-    const ast = parseLite("![alt text](https://img.png)");
-    assertNoUnsupportedTypes(ast);
+    expect(
+      unsupportedTypesIn(parseLite("![alt text](https://img.png)"))
+    ).toEqual([]);
   });
 
   it("skips unordered list - item", () => {
-    const ast = parseLite("- item one\n- item two");
-    assertNoUnsupportedTypes(ast);
+    expect(unsupportedTypesIn(parseLite("- item one\n- item two"))).toEqual([]);
   });
 
   it("skips ordered list 1. item", () => {
-    const ast = parseLite("1. first\n2. second");
-    assertNoUnsupportedTypes(ast);
+    expect(unsupportedTypesIn(parseLite("1. first\n2. second"))).toEqual([]);
   });
 
   it("skips fenced code block", () => {
-    const ast = parseLite("```\nconst x = 1;\n```");
-    assertNoUnsupportedTypes(ast);
+    expect(unsupportedTypesIn(parseLite("```\nconst x = 1;\n```"))).toEqual([]);
   });
 
   it("skips inline code `code`", () => {
-    const ast = parseLite("some `inline code` here");
-    assertNoUnsupportedTypes(ast);
+    expect(unsupportedTypesIn(parseLite("some `inline code` here"))).toEqual(
+      []
+    );
   });
 
   it("skips blockquote > text", () => {
-    const ast = parseLite("> quoted text");
-    assertNoUnsupportedTypes(ast);
+    expect(unsupportedTypesIn(parseLite("> quoted text"))).toEqual([]);
   });
 
   it("skips table", () => {
-    const ast = parseLite("| Col1 | Col2 |\n|------|------|\n| A | B |");
-    assertNoUnsupportedTypes(ast);
+    expect(
+      unsupportedTypesIn(
+        parseLite("| Col1 | Col2 |\n|------|------|\n| A | B |")
+      )
+    ).toEqual([]);
   });
 
   it("skips horizontal rule ---", () => {
-    const ast = parseLite("---");
-    assertNoUnsupportedTypes(ast);
+    expect(unsupportedTypesIn(parseLite("---"))).toEqual([]);
   });
 
   it("skips HTML <div>text</div>", () => {
     // html is disabled in md config, so this should not produce html nodes
-    const ast = parseLite("<div>text</div>");
-    assertNoUnsupportedTypes(ast);
+    expect(unsupportedTypesIn(parseLite("<div>text</div>"))).toEqual([]);
   });
 });
 

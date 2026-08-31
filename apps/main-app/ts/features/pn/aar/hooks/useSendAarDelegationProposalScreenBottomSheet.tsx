@@ -85,11 +85,9 @@ export const useSendAarDelegationProposalScreenBottomSheet = ({
       />
       <BsFooterButton
         onContinuePress={() => {
-          // eslint-disable-next-line functional/immutable-data
           ctaPressed.current = true;
         }}
         onIdentificationCancel={() => {
-          // eslint-disable-next-line functional/immutable-data
           ctaPressed.current = false;
           onIdentificationCancel?.();
         }}

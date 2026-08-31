@@ -20,7 +20,6 @@ import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { getFlowType } from "../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { trackTosUserExit } from "../../authentication/common/analytics";
 import {
@@ -35,11 +34,6 @@ import {
 import TosWebviewComponent from "../../settings/privacy/shared/components/TosWebviewComponent";
 import { tosConfigSelector } from "../../tos/store/selectors";
 import { abortOnboarding, tosAccepted } from "../store/actions";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",
-  body: "profile.main.privacy.privacyPolicy.contextualHelpContentPolicy"
-};
 
 /** A screen to show the ToS to the user. */
 const OnboardingTosScreen = () => {
@@ -120,9 +114,7 @@ const OnboardingTosScreen = () => {
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    goBack: handleGoBack,
-    contextualHelpMarkdown,
-    faqCategories: ["privacy"]
+    goBack: handleGoBack
   });
 
   return (

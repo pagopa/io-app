@@ -1,3 +1,5 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
+import { ProductCategory } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
 import {
   Badge,
   H6,
@@ -14,8 +16,6 @@ import I18n from "i18next";
 import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { useCgnStyle } from "../../hooks/useCgnStyle";
 import { getCategorySpecs } from "../../utils/filters";
 import {

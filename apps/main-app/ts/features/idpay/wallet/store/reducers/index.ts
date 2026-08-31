@@ -1,13 +1,13 @@
+import { StatusEnum as InitiativeStatus } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { StatusEnum as InstrumentInitiativeStatus } from "@io-app/api-types/generated/definitions/idpay/InitiativesStatusDTO";
+import { InitiativesWithInstrumentDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativesWithInstrumentDTO";
+import { ListUsersOnboardingStatusDTO } from "@io-app/api-types/generated/definitions/idpay/ListUsersOnboardingStatusDTO";
+import { WalletDTO } from "@io-app/api-types/generated/definitions/idpay/WalletDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { StatusEnum as InitiativeStatus } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { StatusEnum as InstrumentInitiativeStatus } from "../../../../../../definitions/idpay/InitiativesStatusDTO";
-import { InitiativesWithInstrumentDTO } from "../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
-import { ListUsersOnboardingStatusDTO } from "../../../../../../definitions/idpay/ListUsersOnboardingStatusDTO";
-import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { Action } from "../../../../../store/actions/types";
 import { isIdPayEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";

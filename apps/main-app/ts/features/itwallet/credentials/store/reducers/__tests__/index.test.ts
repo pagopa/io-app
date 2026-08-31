@@ -208,10 +208,10 @@ describe("ITW credentials reducer", () => {
   it("should update existing credentials overwriting the previous instance", () => {
     const updatedCredential: CredentialMetadata = {
       ...mockedCredential,
-      storedStatusAssertion: {
-        credentialStatus: "valid" as const,
-        statusAssertion: "abc",
-        parsedStatusAssertion: { exp: 1000 } as ParsedStatusAssertion
+      validity: {
+        type: "status_assertion",
+        status: "valid",
+        statusAssertion: { exp: 1000 } as ParsedStatusAssertion
       }
     };
 

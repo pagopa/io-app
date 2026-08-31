@@ -1,4 +1,5 @@
-import { createClient } from "../../../../definitions/connectivity/client";
+import { createClient } from "@io-app/api-types/generated/definitions/connectivity/client";
+
 import { defaultRetryingFetch } from "../../../utils/fetch";
 
 export const createConnectivityClient = (baseUrl: string) =>

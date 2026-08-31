@@ -1,10 +1,10 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import { testSaga } from "redux-saga-test-plan";
 
-import { InitializedProfile } from "../../../../../definitions/identity/InitializedProfile";
-import { PushNotificationsContentTypeEnum } from "../../../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../definitions/identity/ReminderStatus";
-import { ServicesPreferencesModeEnum } from "../../../../../definitions/identity/ServicesPreferencesMode";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import NavigationService from "../../../../navigation/NavigationService";

@@ -1,6 +1,6 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { NetworkError } from "../../../../../utils/errors";
 import {
   ServicePreference,

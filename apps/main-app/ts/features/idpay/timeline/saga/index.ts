@@ -1,7 +1,7 @@
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
 
-import { PreferredLanguageEnum } from "../../../../../definitions/identity/PreferredLanguage";
 import { IDPayClient } from "../../common/api/client";
 import { idpayTimelineDetailsGet } from "../store/actions";
 import { handleGetTimelineDetails } from "./handleGetTimelineDetails";

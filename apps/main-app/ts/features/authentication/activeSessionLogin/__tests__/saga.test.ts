@@ -4,6 +4,8 @@ import { getType } from "typesafe-actions";
 
 import { analyticsAuthenticationStarted } from "../../../../store/actions/analytics";
 import { startApplicationInitialization } from "../../../../store/actions/application";
+import { updateLoginMethodProfileAndSuperProperties } from "../../common/analytics/spidAnalytics";
+import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
 import {
   handleActiveSessionLoginSaga,
@@ -32,11 +34,13 @@ const mockIdp = {
   profileUrl: ""
 };
 const mockOptIn = true;
+const mockState = { some: "state" } as any;
 
 describe("handleActiveSessionLoginSaga", () => {
   it("should handle login success and dispatch consolidate + initialization", () =>
     expectSaga(handleActiveSessionLoginSaga)
       .provide([
+        [fork(watchCieAuthenticationSaga), null],
         [
           race({
             success: take(activeSessionLoginSuccess),
@@ -48,8 +52,14 @@ describe("handleActiveSessionLoginSaga", () => {
         [select(idpSelectedActiveSessionLoginSelector), mockIdp],
         [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
-        [select(cieIDSelectedSecurityLevelActiveSessionLoginSelector), "SpidL2"]
+        [
+          select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
+          "SpidL2"
+        ],
+        [select(), mockState]
       ])
+      .call(updateLoginSessionProfileAndSuperProperties, mockState, "365")
+      .call(updateLoginMethodProfileAndSuperProperties, mockState, mockIdp.id)
       .put(
         consolidateActiveSessionLoginData({
           token: mockToken,
@@ -59,6 +69,78 @@ describe("handleActiveSessionLoginSaga", () => {
         })
       )
       .put(
+        startApplicationInitialization({
+          handleSessionExpiration: false,
+          showIdentificationModalAtStartup: false,
+          isActiveLoginSuccess: true
+        })
+      )
+      .run());
+
+  it("should not update properties nor dispatch consolidate/initialization when idp is missing", () =>
+    expectSaga(handleActiveSessionLoginSaga)
+      .provide([
+        [fork(watchCieAuthenticationSaga), null],
+        [
+          race({
+            success: take(activeSessionLoginSuccess),
+            failure: take(activeSessionLoginFailure)
+          }),
+          { success: activeSessionLoginSuccess(mockToken) }
+        ],
+        [select(newTokenActiveSessionLoginSelector), mockToken],
+        [select(idpSelectedActiveSessionLoginSelector), undefined],
+        [select(cieLoginFlowSelector), "reauth"],
+        [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
+        [select(cieIDSelectedSecurityLevelActiveSessionLoginSelector), "SpidL2"]
+      ])
+      .not.call.fn(updateLoginSessionProfileAndSuperProperties)
+      .not.call.fn(updateLoginMethodProfileAndSuperProperties)
+      .not.put(
+        consolidateActiveSessionLoginData({
+          token: mockToken,
+          idp: mockIdp,
+          fastLoginOptIn: mockOptIn,
+          cieIDSelectedSecurityLevel: "SpidL2"
+        })
+      )
+      .not.put(
+        startApplicationInitialization({
+          handleSessionExpiration: false,
+          showIdentificationModalAtStartup: false,
+          isActiveLoginSuccess: true
+        })
+      )
+      .run());
+
+  it("should not update properties nor dispatch consolidate/initialization when token is missing", () =>
+    expectSaga(handleActiveSessionLoginSaga)
+      .provide([
+        [fork(watchCieAuthenticationSaga), null],
+        [
+          race({
+            success: take(activeSessionLoginSuccess),
+            failure: take(activeSessionLoginFailure)
+          }),
+          { success: activeSessionLoginSuccess(mockToken) }
+        ],
+        [select(newTokenActiveSessionLoginSelector), undefined],
+        [select(idpSelectedActiveSessionLoginSelector), mockIdp],
+        [select(cieLoginFlowSelector), "reauth"],
+        [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
+        [select(cieIDSelectedSecurityLevelActiveSessionLoginSelector), "SpidL2"]
+      ])
+      .not.call.fn(updateLoginSessionProfileAndSuperProperties)
+      .not.call.fn(updateLoginMethodProfileAndSuperProperties)
+      .not.put(
+        consolidateActiveSessionLoginData({
+          token: mockToken,
+          idp: mockIdp,
+          fastLoginOptIn: mockOptIn,
+          cieIDSelectedSecurityLevel: "SpidL2"
+        })
+      )
+      .not.put(
         startApplicationInitialization({
           handleSessionExpiration: false,
           showIdentificationModalAtStartup: false,

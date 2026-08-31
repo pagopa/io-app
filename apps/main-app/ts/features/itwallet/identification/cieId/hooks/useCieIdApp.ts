@@ -5,6 +5,7 @@ import * as t from "io-ts";
 import { useCallback, useEffect, useState } from "react";
 import { Linking } from "react-native";
 
+import { useIOSelector } from "../../../../../store/hooks";
 import { convertUnknownToError } from "../../../../../utils/errors";
 import { isAndroid, isIos } from "../../../../../utils/platform";
 import {
@@ -13,6 +14,7 @@ import {
   IO_LOGIN_CIE_SOURCE_APP,
   IO_LOGIN_CIE_URL_SCHEME
 } from "../../../../authentication/login/cie/utils/cie";
+import { selectItwCieIdEnvironment } from "../../../common/store/selectors/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 
 type CieIdHookResult = {
@@ -54,6 +56,7 @@ const extractCieIdErrorFromUrl = (url: string) =>
  */
 export const useCieIdApp = (): CieIdHookResult => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const cieIdEnvironment = useIOSelector(selectItwCieIdEnvironment);
   const [authUrl, setAuthUrl] = useState<O.Option<string>>(O.none);
   const [isAppLaunched, setIsAppLaunched] = useState(false);
 
@@ -86,13 +89,17 @@ export const useCieIdApp = (): CieIdHookResult => {
     (url: string) => {
       // Use the new CieID app-to-app flow on Android
       if (isAndroid) {
-        openCieIdApp(url, result => {
-          if (result.id === "URL") {
-            setAuthUrl(O.some(result.url));
-          } else {
-            handleAuthenticationFailure(result);
-          }
-        });
+        openCieIdApp(
+          url,
+          result => {
+            if (result.id === "URL") {
+              setAuthUrl(O.some(result.url));
+            } else {
+              handleAuthenticationFailure(result);
+            }
+          },
+          cieIdEnvironment
+        );
       }
 
       // Try to directly open the CieID app on iOS
@@ -102,7 +109,7 @@ export const useCieIdApp = (): CieIdHookResult => {
           .catch(handleAuthenticationFailure);
       }
     },
-    [handleAuthenticationFailure]
+    [handleAuthenticationFailure, cieIdEnvironment]
   );
 
   useEffect(() => {

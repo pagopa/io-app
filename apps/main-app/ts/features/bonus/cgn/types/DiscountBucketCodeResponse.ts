@@ -1,4 +1,4 @@
-import { DiscountBucketCode } from "../../../../../definitions/cgn/merchants/DiscountBucketCode";
+import { DiscountBucketCode } from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountBucketCode";
 
 /** Type representing all handled responses from backend */
 export type DiscountBucketCodeResponse =

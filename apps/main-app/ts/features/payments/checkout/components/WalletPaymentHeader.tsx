@@ -13,7 +13,6 @@ import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isPaymentsWebViewFlowEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import * as analytics from "../analytics";
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
@@ -45,10 +44,7 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const pspList = pot.getOrElse(pspListPot, []);
 
-  const startSupportRequest = useStartSupportRequest({
-    faqCategories: ["payment"],
-    contextualHelp: emptyContextualHelp
-  });
+  const startSupportRequest = useStartSupportRequest();
 
   const handleGoBack = useCallback(() => {
     if (currentStep === WalletPaymentStepEnum.PICK_PAYMENT_METHOD) {

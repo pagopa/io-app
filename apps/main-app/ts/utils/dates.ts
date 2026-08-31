@@ -100,12 +100,6 @@ export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
   return format(date, "MMM");
 }
 
-export function formatDateAsReminder(
-  date: Date
-): ReturnType<typeof dateFnsFormat> {
-  return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-}
-
 /**
  * Try to parse month and validate as month
  *
@@ -149,31 +143,6 @@ export const decodeCreditCardYear = (
     );
   }
   return NumberFromString.decode(yearStr);
-};
-
-/**
- * ⚠️ Beware, the Date that this method returns is partially correct since is
- * created only from year and month. Eg: month: "03" year: "2022" will return ->
- * 2022-02-28T23:00:00.000Z The date thus returned is therefore ambiguous since
- * it may not correspond to the intended semantics (for example the date
- * returned is not applicable to credit cards that includes the last day of the
- * month) Using the date thus generated to make comparisons could lead to
- * unexpected behaviour
- *
- * @deprecated
- * @param month
- * @param year
- */
-export const dateFromMonthAndYear = (
-  month: number | string | undefined,
-  year: number | string | undefined
-): O.Option<Date> => {
-  const maybeMonth = decodeCreditCardMonth(month);
-  const maybeYear = decodeCreditCardYear(year);
-  if (E.isLeft(maybeMonth) || E.isLeft(maybeYear)) {
-    return O.none;
-  }
-  return O.some(new Date(maybeYear.right, maybeMonth.right - 1));
 };
 
 /**

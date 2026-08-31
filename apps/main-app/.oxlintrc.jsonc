@@ -249,10 +249,18 @@
         "functional/immutable-data": [
           "error",
           {
+            // TODO: Remove `navigation`/`navigate`/`StackActions` once we
+            // migrate to newer versions of `react-navigation`.
+            // `**.value` and `**.current` cover reanimated `SharedValue` and React
+            // `RefObject` writes: eslint's config exempts those with type-aware
+            // `overrides.specifiers` entries, which need the parserServices that
+            // oxlint's jsPlugin bridge does not expose.
             "ignoreAccessorPattern": [
               "navigation.**",
               "navigate.**",
-              "StackActions.**"
+              "StackActions.**",
+              "**.value",
+              "**.current"
             ]
           }
         ],

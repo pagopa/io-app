@@ -167,8 +167,7 @@ export const HeaderSecondLevel = ({
   ignoreAccessibilityCheck = false
 }: HeaderSecondLevel) => {
   const scrollOffset = useScrollOffset(
-    (animatedRef as AnimatedRef<Animated.ScrollView>) ||
-      (animatedRef as AnimatedRef<Animated.FlatList<any>>)
+    animatedRef as AnimatedRef<Animated.ScrollView>
   );
 
   const titleRef = createRef<View>();
@@ -225,7 +224,6 @@ export const HeaderSecondLevel = ({
   );
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     paddingTop.value = withTiming(
       ignoreSafeAreaMargin ? 0 : insets.top,
       alertEdgeToEdgeInsetTransitionConfig

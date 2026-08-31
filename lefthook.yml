@@ -1,0 +1,28 @@
+pre-commit:
+  piped: true
+  jobs:
+    - name: format staged files
+      run: pnpm oxfmt {staged_files}
+      glob:
+        - "*.{ts,tsx}"
+        - "apps/main-app/locales/**/*.json"
+      stage_fixed: true
+
+    - name: lint staged files
+      # No --config: oxlint discovers the nearest .oxlintrc.jsonc per file, so
+      # staged files from different projects each get their own ruleset.
+      run: pnpm oxlint --fix {staged_files}
+      glob: "*.{ts,tsx}"
+      stage_fixed: true
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: validate affected projects
+      run: pnpm nx affected --targets=lint,tsc-noemit --base=origin/master --head=HEAD --nx-bail
+
+    - name: check pushed files formatting
+      run: pnpm oxfmt --check {push_files}
+      glob:
+        - "*.{ts,tsx}"
+        - "apps/main-app/locales/**/*.json"

@@ -1,4 +1,11 @@
 import {
+  Clause,
+  TypeEnum as ClausesTypeEnum
+} from "@io-app/api-types/generated/definitions/fci/Clause";
+import { DocumentDetailView } from "@io-app/api-types/generated/definitions/fci/DocumentDetailView";
+import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
+import { SignatureField } from "@io-app/api-types/generated/definitions/fci/SignatureField";
+import {
   Divider,
   FooterActions,
   H2,
@@ -23,19 +30,11 @@ import {
 } from "react";
 import { SectionList, View } from "react-native";
 
-import {
-  Clause,
-  TypeEnum as ClausesTypeEnum
-} from "../../../../../definitions/fci/Clause";
-import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
-import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
-import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton.ts";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackFciShowSignatureFields,
@@ -307,8 +306,7 @@ const FciSignatureFieldsScreen = () => {
 
   useHeaderSecondLevel({
     title: I18n.t("features.fci.title"),
-    supportRequest: true,
-    contextualHelp: emptyContextualHelp
+    supportRequest: true
   });
 
   if (isError) {

@@ -1,9 +1,9 @@
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../../definitions/identity/ReminderStatus";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import mockedProfile from "../../../../../__mocks__/initializedProfile";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ProfileState } from "../reducers";
@@ -368,7 +368,9 @@ describe("pushNotificationRemindersEnabledSelector", () => {
   });
   it("should return false for a pot.someLoading profile with DISABLED reminder_status", () => {
     const globalState = {
-      profile: pot.someLoading({ reminder_status: ReminderStatusEnum.DISABLED })
+      profile: pot.someLoading({
+        reminder_status: ReminderStatusEnum.DISABLED
+      })
     } as GlobalState;
     const remindersEnabled =
       pushNotificationRemindersEnabledSelector(globalState);

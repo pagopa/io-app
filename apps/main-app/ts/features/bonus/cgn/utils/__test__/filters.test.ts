@@ -1,8 +1,9 @@
 import {
   ProductCategory,
   ProductCategoryEnum
-} from "../../../../../../definitions/cgn/merchants/ProductCategory";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+} from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
+import { ProductCategoryWithNewDiscountsCount } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+
 import { Locales, setLocale } from "../../../../../i18n";
 import { orderCategoriesByNameKey } from "../filters";
 

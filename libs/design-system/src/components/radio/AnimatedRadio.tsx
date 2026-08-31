@@ -73,12 +73,10 @@ export const AnimatedRadio = ({
   };
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     circleAnimationProgress.value = withSpring(
       checked ? 1 : 0,
       IOSpringValues.selection
     );
-    // eslint-disable-next-line functional/immutable-data
     tickAnimationProgress.value = withTiming(checked ? 1 : 0, {
       duration: 400,
       easing: Easing.elastic(1)

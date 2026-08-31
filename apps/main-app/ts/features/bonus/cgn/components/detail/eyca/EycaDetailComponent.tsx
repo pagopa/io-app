@@ -1,3 +1,5 @@
+import { CardPending } from "@io-app/api-types/generated/definitions/cgn/CardPending";
+import { EycaCard } from "@io-app/api-types/generated/definitions/cgn/EycaCard";
 import { Alert, ListItemHeader, LoadingSpinner } from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -5,8 +7,6 @@ import I18n from "i18next";
 import { JSX, useCallback, useEffect } from "react";
 import { View } from "react-native";
 
-import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
-import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 import { isLoading } from "../../../../../../common/model/RemoteValue";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import {

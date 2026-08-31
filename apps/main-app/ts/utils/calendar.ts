@@ -1,17 +1,16 @@
+import { CreatedMessageWithContentAndAttachments } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndAttachments";
 import { IOToast } from "@io-app/design-system";
+import * as Calendar from "expo-calendar";
 import * as E from "fp-ts/lib/Either";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import I18n from "i18next";
 import { Platform } from "react-native";
-import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 
-import { CreatedMessageWithContentAndAttachments } from "../../definitions/communication/CreatedMessageWithContentAndAttachments";
 import { TranslationKeys } from "../i18n";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
 import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
-import { formatDateAsReminder } from "./dates";
 
 /** Utility functions to interact with the device calendars */
 
@@ -42,11 +41,8 @@ type CalendarTitleTranslation = { [key: string]: TranslationKeys };
  */
 export async function checkAndRequestPermission(): Promise<CalendarAuthorization> {
   try {
-    const status = await RNCalendarEvents.checkPermissions();
+    const { status } = await Calendar.getCalendarPermissionsAsync();
     switch (status) {
-      case "authorized":
-        // the app is authorized to access the service
-        return { authorized: true, asked: false };
       case "denied":
         // the user explicitly denied access to the service for the app
         if (Platform.OS === "ios") {
@@ -55,11 +51,14 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
         // but in Android we can ask for it again
         // (i.e. shouldShowRequestPermissionRationale returns true)
         break;
-      case "restricted":
-        // the app is not authorized to access the service
-        // (e.g. parental control on iOS or when the user
-        // denies definitely on Android)
-        return { authorized: false, asked: false };
+      case "granted":
+        // the app is authorized to access the service
+        return { authorized: true, asked: false };
+      // case "restricted":
+      //   // the app is not authorized to access the service
+      //   // (e.g. parental control on iOS or when the user
+      //   // denies definitely on Android)
+      //   return { authorized: false, asked: false };
       case "undetermined":
         // the user has not yet made a choice
         break;
@@ -70,8 +69,12 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
     }
 
     // if not returned yet, we can ask for the authorization
-    const newStatus = await RNCalendarEvents.requestPermissions();
-    return { authorized: newStatus === "authorized", asked: true };
+    const { status: calendarStatus } =
+      await Calendar.requestCalendarPermissionsAsync();
+    return {
+      authorized: calendarStatus === "granted",
+      asked: true
+    };
   } catch {
     return { authorized: false, asked: false };
   }
@@ -108,7 +111,7 @@ export const legacyIsEventInCalendar = (
     message => new Error(String(message))
   );
   const findTask = TE.tryCatch(
-    () => RNCalendarEvents.findEventById(eventId),
+    () => Calendar.getEventAsync(eventId),
     E.toError
   );
   return pipe(
@@ -128,13 +131,15 @@ export const legacyIsEventInCalendar = (
  * Return the event id if it is found
  */
 export const searchEventInCalendar = async (
+  ids: Array<Calendar.Calendar["id"]>,
   endDate: Date,
   title: string
 ): Promise<O.Option<string>> => {
   const startDate = new Date(endDate.getTime());
-  return RNCalendarEvents.fetchAllEvents(
-    formatDateAsReminder(new Date(startDate.setDate(endDate.getDate() - 1))),
-    formatDateAsReminder(endDate)
+  return Calendar.getEventsAsync(
+    ids,
+    new Date(startDate.setDate(endDate.getDate() - 1)),
+    endDate
   )
     .then(
       events =>
@@ -159,14 +164,14 @@ export const searchEventInCalendar = async (
 };
 
 export const saveCalendarEvent = (
-  calendar: Calendar,
+  calendar: Calendar.Calendar,
   message: CreatedMessageWithContentAndAttachments,
   dueDate: Date,
   title: string,
   onAddCalendarEvent?: (calendarEvent: AddCalendarEventPayload) => void
 ) => {
   const dueDateIsoString = dueDate.toISOString();
-  RNCalendarEvents.saveEvent(title, {
+  Calendar.createEventAsync(title, {
     calendarId: calendar.id,
     startDate: dueDateIsoString,
     endDate: dueDateIsoString,
@@ -196,7 +201,7 @@ export const removeCalendarEventFromDeviceCalendar = (
   onRemoveEvent?: (calendarEvent: CalendarEvent) => void
 ) => {
   if (calendarEvent) {
-    RNCalendarEvents.removeEvent(calendarEvent.eventId)
+    Calendar.deleteEventAsync(calendarEvent.eventId)
       .then(_ => {
         IOToast.success(I18n.t("messages.cta.reminderRemoveSuccess"));
         if (onRemoveEvent) {
@@ -215,13 +220,16 @@ export const removeCalendarEventFromDeviceCalendar = (
  * @returns A boolean that is true if the permission is granted
  */
 export const requestCalendarPermission = async (): Promise<boolean> => {
-  const checkResult = await RNCalendarEvents.checkPermissions();
-  if (checkResult === "authorized") {
+  const { status: calendarResult } =
+    await Calendar.getCalendarPermissionsAsync();
+
+  if (calendarResult === "granted") {
     return true;
   }
 
-  const requestStatus = await RNCalendarEvents.requestPermissions();
-  return requestStatus === "authorized";
+  const { status: requestCalendarStatus } =
+    await Calendar.requestCalendarPermissionsAsync();
+  return requestCalendarStatus === "granted";
 };
 
 /** Check if the event is in the device calendar */
@@ -230,7 +238,7 @@ export const isEventInCalendar = (eventId: string) =>
     TE.tryCatch(() => requestCalendarPermission(), E.toError),
     TE.chain(TE.fromPredicate(identity, () => Error("Permission not granted"))),
     TE.chain(() =>
-      TE.tryCatch(() => RNCalendarEvents.findEventById(eventId), E.toError)
+      TE.tryCatch(() => Calendar.getEventAsync(eventId), E.toError)
     ),
     TE.map(ev => ev !== null)
   );
@@ -243,7 +251,7 @@ export const saveEventToDeviceCalendarTask = (
 ) =>
   TE.tryCatch(
     () =>
-      RNCalendarEvents.saveEvent(title, {
+      Calendar.createEventAsync(title, {
         calendarId,
         startDate: dueDate.toISOString(),
         endDate: dueDate.toISOString(),
@@ -256,12 +264,12 @@ export const saveEventToDeviceCalendarTask = (
 /** Remove an event from the device calendar */
 export const removeEventFromDeviceCalendarTask = (eventId: string) =>
   pipe(
-    TE.tryCatch(() => RNCalendarEvents.removeEvent(eventId), E.toError),
+    TE.tryCatch(() => Calendar.deleteEventAsync(eventId), E.toError),
     TE.map(_ => eventId)
   );
 
 /** Find the device calendars */
 export const findDeviceCalendarsTask = TE.tryCatch(
-  () => RNCalendarEvents.findCalendars(),
+  () => Calendar.getCalendarsAsync(),
   E.toError
 );

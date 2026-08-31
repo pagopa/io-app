@@ -1,10 +1,10 @@
+import { AmountEuroCents } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/AmountEuroCents";
+import { PaymentMethodManagementTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentMethodManagementType";
+import { RequestAuthorizationResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RequestAuthorizationResponse";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { AmountEuroCents } from "../../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
-import { PaymentMethodManagementTypeEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
-import { RequestAuthorizationResponse } from "../../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationResponse";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import {
@@ -47,7 +47,10 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       .next()
       .next(T_SESSION_TOKEN)
       .next(
-        E.right({ status: 200, value: requestTransactionAuthorizationResponse })
+        E.right({
+          status: 200,
+          value: requestTransactionAuthorizationResponse
+        })
       )
       .put(
         paymentsStartPaymentAuthorizationAction.success(

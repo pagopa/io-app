@@ -5,11 +5,12 @@ import {
   useIOTheme
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as Sharing from "expo-sharing";
 import I18n from "i18next";
 import { useState } from "react";
-import { Platform, View } from "react-native";
+import { View } from "react-native";
+import RNFS from "react-native-fs";
 import Pdf from "react-native-pdf";
-import Share from "react-native-share";
 
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -59,21 +60,20 @@ const ReceiptPreviewScreen = () => {
       organization_fiscal_code:
         paymentAnalyticsData?.receiptOrganizationFiscalCode
     });
-    // The file name is normalized to remove the .pdf extension on Android devices since it's added by default to the Share module
-    const normalizedFilename =
-      Platform.OS === "ios"
-        ? transactionReceiptFileInfo.filename
-        : transactionReceiptFileInfo.filename?.replace(/.pdf/g, "");
-    await Share.open({
-      type: "application/pdf",
-      url: `${RECEIPT_DOCUMENT_TYPE_PREFIX}${transactionReceiptFileInfo.base64File}`,
-      filename:
-        normalizedFilename ||
-        `${I18n.t("features.payments.transactions.receipt.title")}${
-          Platform.OS === "ios" ? ".pdf" : ""
-        }`,
-      failOnCancel: false
+    const filename =
+      transactionReceiptFileInfo.filename ??
+      `${I18n.t("features.payments.transactions.receipt.title")}.pdf`;
+    const tempPath = `${RNFS.CachesDirectoryPath}/${filename}`;
+    await RNFS.writeFile(
+      tempPath,
+      transactionReceiptFileInfo.base64File,
+      "base64"
+    );
+    await Sharing.shareAsync(`file://${tempPath}`, {
+      mimeType: "application/pdf",
+      dialogTitle: filename
     });
+    await RNFS.unlink(tempPath);
   };
 
   const handleFooterActionsMeasurements = (

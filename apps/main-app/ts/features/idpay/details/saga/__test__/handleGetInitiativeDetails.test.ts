@@ -1,12 +1,12 @@
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import {
+  InitiativeDTO,
+  StatusEnum as InitiativeStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { PreferredLanguageEnum } from "../../../../../../definitions/identity/PreferredLanguage";
-import {
-  InitiativeDTO,
-  StatusEnum as InitiativeStatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { idpayInitiativeGet } from "../../store/actions";
 import { handleGetInitiativeDetails } from "../handleGetInitiativeDetails";

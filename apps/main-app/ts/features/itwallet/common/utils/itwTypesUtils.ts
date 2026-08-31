@@ -32,6 +32,14 @@ export type CredentialBundle = {
 
   /** The credential's metadata for UI rendering and management. */
   metadata: CredentialMetadata;
+
+  /**
+   * Optional credential's status list to persist via the
+   * `StatusListRepository`. This field is not present when the active IT-Wallet
+   * specs do not support the status list, or when it has already been stored
+   * after the issuance.
+   */
+  statusList?: { payload: CredentialStatus.StatusList; uri: string };
 };
 
 /**
@@ -63,9 +71,17 @@ export type CredentialMetadata = {
    * stored in {@link CredentialsVault} under that copy's `keyTag` as vault id.
    */
   keyTags?: ReadonlyArray<string>;
+  /**
+   * How the credential was obtained: through the credentials catalogue/list, or
+   * through a third-party credential offer (deeplink/QR code). Undefined for
+   * credentials stored before this field was introduced, and for flows that are
+   * neither (e.g. PID, upgrade/reissuance). Used to attribute the credential to
+   * the correct aggregate analytics property.
+   */
+  origin?: "catalogue" | "credentialOffer";
   parsedCredential: ParsedCredential;
   spec_version: string;
-  storedStatusAssertion?: StoredStatusAssertion;
+  validity?: CredentialValidity | LegacyCredentialValidity;
   verification?: StoredVerification;
   /**
    * The ID of the Wallet Unit Attestation that contains the credential attested
@@ -120,17 +136,6 @@ export type RequestObject = RemotePresentation.RequestObject;
 /** Alias type for the relying party entity configuration. */
 export type RpEntityConfiguration = RemotePresentation.RelyingPartyConfig;
 
-export type StoredStatusAssertion =
-  | {
-      credentialStatus: "invalid" | "unknown";
-      // Error code that might contain more details on the invalid status, provided by the issuer
-      errorCode?: string;
-    }
-  | {
-      credentialStatus: "valid";
-      parsedStatusAssertion: ParsedStatusAssertion;
-      statusAssertion: string;
-    };
 /**
  * Slim version of Verification for storage. Only persists the fields actually
  * used by the app. The `evidence` field is excluded as it's being dropped in
@@ -189,3 +194,25 @@ export const isMultiLevelCredential = (
     claim => Array.isArray(claim.value) && claim.value.length > 1
   );
 };
+
+/** Validity information for v1.3+ credentials that support status list. */
+export type CredentialValidity = {
+  rawStatus: string;
+  status: string;
+  statusList: { idx: number; uri: string };
+  type: "status_list";
+};
+
+/** Validity information for legacy credentials that support status assertion. */
+type LegacyCredentialValidity =
+  | {
+      // Error code that might contain more details on the invalid status, provided by the issuer
+      errorCode?: string;
+      status: "invalid" | "unknown";
+      type: "status_assertion";
+    }
+  | {
+      status: "valid";
+      statusAssertion: ParsedStatusAssertion;
+      type: "status_assertion";
+    };

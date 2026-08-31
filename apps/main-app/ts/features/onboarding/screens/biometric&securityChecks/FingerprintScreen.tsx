@@ -11,8 +11,6 @@ import {
   BiometriActivationUserType,
   mayUserActivateBiometric
 } from "../../../../utils/biometrics";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
-import { FAQsCategoriesType } from "../../../../utils/faq";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
 import {
@@ -24,10 +22,6 @@ import { trackBiometricActivationEducationalScreen } from "./analytics";
 
 type IOScrollViewActions = ComponentProps<typeof IOScrollView>["actions"];
 
-const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
-  "onboarding_fingerprint"
-];
-
 /**
  * A screen to show, if the fingerprint is supported by the device, the
  * instruction to enable the fingerprint/faceID usage
@@ -36,11 +30,6 @@ const FingerprintScreen = () => {
   const dispatch = useIODispatch();
   const { showAlert } = useOnboardingAbortAlert();
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
-
-  const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-    title: "onboarding.contextualHelpTitle",
-    body: "onboarding.contextualHelpContent"
-  };
 
   useOnFirstRender(() => {
     trackBiometricActivationEducationalScreen(
@@ -51,9 +40,7 @@ const FingerprintScreen = () => {
   useHeaderSecondLevel({
     goBack: showAlert,
     title: "",
-    faqCategories: FAQ_CATEGORIES,
-    supportRequest: true,
-    contextualHelpMarkdown
+    supportRequest: true
   });
 
   const actions = useMemo<IOScrollViewActions>(

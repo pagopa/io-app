@@ -4,7 +4,7 @@ import I18n from "i18next";
 import { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent";
 import { useIOSelector } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { selectItwEnv } from "../../../common/store/selectors/environment";

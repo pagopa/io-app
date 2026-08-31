@@ -20,7 +20,6 @@ import { availableTranslations, Locales, setLocale } from "../../../../i18n";
 import { preferredLanguageSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import {
   fromLocaleToPreferredLanguage,
@@ -28,11 +27,6 @@ import {
 } from "../../../../utils/locale";
 import { profileUpsert } from "../../common/store/actions";
 import { profileSelector } from "../../common/store/selectors";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.language.contextualHelpTitle",
-  body: "profile.preferences.language.contextualHelpContent"
-};
 
 /** Allows the user to select one of the available Languages as preferred */
 
@@ -183,7 +177,6 @@ const LanguagesPreferencesScreen = () => {
   const onLanguageSelected = useCallback(
     (language: string) => {
       if (selectedItem !== language) {
-        // eslint-disable-next-line functional/immutable-data
         previousSelectedItem.current = selectedItem;
         setSelectedItem(language);
         upsertProfile(language as Locales);
@@ -222,7 +215,6 @@ const LanguagesPreferencesScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       canGoback={true}
-      contextualHelpMarkdown={contextualHelpMarkdown}
       description={I18n.t(
         "profile.preferences.list.preferred_language.subtitle"
       )}

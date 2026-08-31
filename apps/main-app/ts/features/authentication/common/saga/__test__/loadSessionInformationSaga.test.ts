@@ -1,9 +1,9 @@
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 
-import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
 import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess

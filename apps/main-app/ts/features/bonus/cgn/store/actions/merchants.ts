@@ -1,18 +1,18 @@
+import { CountResult } from "@io-app/api-types/generated/definitions/cgn/merchants/CountResult";
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
+import { OfflineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchants";
+import { OfflineMerchantSearchRequest } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchantSearchRequest";
+import { OnlineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchants";
+import { OnlineMerchantSearchRequest } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchantSearchRequest";
+import { SearchRequest } from "@io-app/api-types/generated/definitions/cgn/merchants/SearchRequest";
+import { SearchResult } from "@io-app/api-types/generated/definitions/cgn/merchants/SearchResult";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { CountResult } from "../../../../../../definitions/cgn/merchants/CountResult";
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
-import { OfflineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OfflineMerchantSearchRequest";
-import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
-import { OnlineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OnlineMerchantSearchRequest";
-import { SearchRequest } from "../../../../../../definitions/cgn/merchants/SearchRequest";
-import { SearchResult } from "../../../../../../definitions/cgn/merchants/SearchResult";
 import { NetworkError } from "../../../../../utils/errors";
 
 /** Count merchants conventioned with CGN */

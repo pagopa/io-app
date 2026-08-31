@@ -1,3 +1,4 @@
+import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -12,7 +13,6 @@ import {
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 
-import { IdpData } from "../../../../../../definitions/content/IdpData";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
 import {
@@ -22,9 +22,7 @@ import {
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
 // import { trackSpidLoginError } from "../../../../../utils/analytics";
-import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -84,10 +82,6 @@ const ActiveSessionIdpLoginScreen = () => {
   const { replace } = useIONavigation();
 
   const selectedIdp = useIOSelector(idpSelectedActiveSessionLoginSelector);
-  const selectedIdpTextData = useIOSelector(
-    idpContextualHelpDataFromIdSelector(selectedIdp?.id),
-    _isEqual
-  );
 
   const activeSessionUserLogged = useIOSelector(
     activeSessionUserLoggedSelector
@@ -303,16 +297,6 @@ const ActiveSessionIdpLoginScreen = () => {
     }
   }, [navigateToAuthErrorScreen, requestState]);
 
-  const contextualHelp = useMemo(() => {
-    if (O.isNone(selectedIdpTextData)) {
-      return {
-        title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-        body: I18n.t("authentication.idp_login.contextualHelpContent")
-      };
-    }
-    return emptyContextualHelp;
-  }, [selectedIdpTextData]);
-
   const hasError = pot.isError(requestState);
 
   /* Wrapped with `useMemo` to prevent unnecessary executions of `useLayoutEffect`
@@ -324,12 +308,10 @@ const ActiveSessionIdpLoginScreen = () => {
             title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
               selectedIdp?.name
             }`,
-            supportRequest: true,
-            contextualHelp,
-            faqCategories: ["authentication_SPID"]
+            supportRequest: true
           }
         : { title: "", canGoBack: false },
-    [activeSessionUserLogged, selectedIdp?.name, contextualHelp]
+    [activeSessionUserLogged, selectedIdp?.name]
   );
 
   useHeaderSecondLevel(headerProps);

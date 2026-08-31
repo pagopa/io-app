@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`Test List Item Components - Experimental Enabled  ListItemAction Snapshot 1`] = `
+exports[`Test List Item Components - Experimental Enabled ListItemAction Snapshot 1`] = `
 <View
   accessibilityLabel="accessibilityLabel"
   accessibilityRole="button"
@@ -156,7 +156,7 @@ exports[`Test List Item Components - Experimental Enabled  ListItemAction Snapsh
 </View>
 `;
 
-exports[`Test List Item Components - Experimental Enabled  ListItemInfo Snapshot 1`] = `
+exports[`Test List Item Components - Experimental Enabled ListItemInfo Snapshot 1`] = `
 <View
   accessibilityLabel="accessibilityLabel"
   accessible={true}
@@ -245,7 +245,7 @@ exports[`Test List Item Components - Experimental Enabled  ListItemInfo Snapshot
 </View>
 `;
 
-exports[`Test List Item Components - Experimental Enabled  ListItemInfoCopy Snapshot 1`] = `
+exports[`Test List Item Components - Experimental Enabled ListItemInfoCopy Snapshot 1`] = `
 <View
   accessibilityLabel="accessibilityLabel"
   accessibilityRole="button"
@@ -480,7 +480,7 @@ exports[`Test List Item Components - Experimental Enabled  ListItemInfoCopy Snap
 </View>
 `;
 
-exports[`Test List Item Components - Experimental Enabled  ListItemNav Snapshot 1`] = `
+exports[`Test List Item Components - Experimental Enabled ListItemNav Snapshot 1`] = `
 <View
   accessibilityLabel="accessibilityLabel"
   accessibilityRole="button"
@@ -687,7 +687,7 @@ exports[`Test List Item Components - Experimental Enabled  ListItemNav Snapshot 
 </View>
 `;
 
-exports[`Test List Item Components - Experimental Enabled  ListItemNavAlert Snapshot 1`] = `
+exports[`Test List Item Components - Experimental Enabled ListItemNavAlert Snapshot 1`] = `
 <View
   accessibilityLabel="accessibilityLabel"
   accessibilityRole="button"
@@ -959,7 +959,7 @@ exports[`Test List Item Components - Experimental Enabled  ListItemNavAlert Snap
 </View>
 `;
 
-exports[`Test List Item Components - Experimental Enabled  ListItemRadioWithAmount Snapshot 1`] = `
+exports[`Test List Item Components - Experimental Enabled ListItemRadioWithAmount Snapshot 1`] = `
 <View
   accessibilityLabel="label € 1.000,00 suggestReason"
   accessibilityRole="radio"
@@ -1419,7 +1419,7 @@ exports[`Test List Item Components - Experimental Enabled  ListItemRadioWithAmou
 </View>
 `;
 
-exports[`Test List Item Components - Experimental Enabled  ListItemRadioWithAmount Snapshot 2`] = `
+exports[`Test List Item Components - Experimental Enabled ListItemRadioWithAmount Snapshot 2`] = `
 <View
   accessibilityLabel="label € 1.000,00 "
   accessibilityRole="radio"
@@ -1728,7 +1728,7 @@ exports[`Test List Item Components - Experimental Enabled  ListItemRadioWithAmou
 </View>
 `;
 
-exports[`Test List Item Components - Experimental Enabled  ListItemTransaction Snapshot 1`] = `
+exports[`Test List Item Components - Experimental Enabled ListItemTransaction Snapshot 1`] = `
 <View
   accessibilityState={
     {
@@ -2000,7 +2000,7 @@ exports[`Test List Item Components - Experimental Enabled  ListItemTransaction S
 </View>
 `;
 
-exports[`Test List Item Components - Experimental Enabled  PressableListItemsBase Snapshot 1`] = `
+exports[`Test List Item Components - Experimental Enabled PressableListItemsBase Snapshot 1`] = `
 <View
   accessibilityRole="button"
   accessibilityState={

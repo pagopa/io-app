@@ -18,19 +18,10 @@ import { useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
-import { FAQsCategoriesType } from "../../../../utils/faq";
 import {
   profileFiscalCodeSelector,
   profileNameSurnameSelector
 } from "../../common/store/selectors";
-
-const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = ["profile"];
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.fiscalCode.title",
-  body: "profile.fiscalCode.help"
-};
 
 /** This screen displays the barcode of the user's tax code. */
 const FiscalCodeScreen = () => {
@@ -75,9 +66,7 @@ const FiscalCodeScreen = () => {
             : I18n.t("profile.fiscalCode.copyCode")
         }
       }}
-      contextualHelpMarkdown={contextualHelpMarkdown}
       description={I18n.t("profile.fiscalCode.description")}
-      faqCategories={FAQ_CATEGORIES}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins
       ref={titleRef}

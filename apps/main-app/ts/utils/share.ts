@@ -1,20 +1,15 @@
+import * as Sharing from "expo-sharing";
 import * as TE from "fp-ts/lib/TaskEither";
-import Share from "react-native-share";
 
 /**
- * Share an url see
- * https://react-native-share.github.io/react-native-share/docs/share-open#supported-options
+ * Share a local file url
  *
- * @param url
- * @param message Option string to attach as a text with shared file
+ * @param url Local file:// URI
+ * @param message Optional dialog title
  */
-export const share = (url: string, message?: string, failOnCancel = false) =>
+export const share = (url: string, message?: string, _failOnCancel = false) =>
   TE.tryCatch(
     () =>
-      Share.open({
-        url,
-        message,
-        failOnCancel
-      }),
+      Sharing.shareAsync(url, message ? { dialogTitle: message } : undefined),
     errorMsg => new Error(String(errorMsg))
   );

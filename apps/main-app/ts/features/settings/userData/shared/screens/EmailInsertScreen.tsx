@@ -47,7 +47,6 @@ import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { getFlowType } from "../../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { isDisplayZoomed } from "../../../../../utils/device";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
@@ -101,11 +100,6 @@ const EMPTY_EMAIL = "";
  * field.
  */
 const isScreenZoomed = isDisplayZoomed();
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "email.insert.help.title",
-  body: "email.insert.help.content"
-};
 
 /** A screen to allow user to insert an email address. */
 const EmailInsertScreen = () => {
@@ -299,7 +293,6 @@ const EmailInsertScreen = () => {
 
   const continueOnPress = () => {
     Keyboard.dismiss();
-    // eslint-disable-next-line functional/immutable-data
     canShowLoadingSpinner.current = true;
     const isValid = isValidEmail();
     if ((typeof isValid === "boolean" && isValid) || isValid.isValid) {
@@ -315,7 +308,6 @@ const EmailInsertScreen = () => {
     } else {
       const message = getAccessibilityErrorLabel();
       if (message) {
-        // eslint-disable-next-line functional/immutable-data
         timeout.current = setTimeout(() => {
           AccessibilityInfo.announceForAccessibilityWithOptions(message, {
             queue: true
@@ -400,7 +392,6 @@ const EmailInsertScreen = () => {
   // let the user navigate the email validation screen
   useEffect(() => {
     if (userNavigateToEmailValidationScreen) {
-      // eslint-disable-next-line functional/immutable-data
       canShowLoadingSpinner.current = false;
       navigation.navigate(ROUTES.ONBOARDING, {
         screen: ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN,
@@ -461,7 +452,6 @@ const EmailInsertScreen = () => {
             sendEmailAtFirstRender =
               profile.value.email === prevUserProfile.value.email;
           }
-          // eslint-disable-next-line functional/immutable-data
           canShowLoadingSpinner.current = false;
           if (isOnboarding || isFirstOnboarding) {
             navigation.navigate(ROUTES.ONBOARDING, {
@@ -498,7 +488,6 @@ const EmailInsertScreen = () => {
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    contextualHelpMarkdown,
     goBack: handleGoBack,
     canGoBack: isEmailValidated || isFirstOnboarding
   });

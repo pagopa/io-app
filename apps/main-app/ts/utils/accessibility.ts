@@ -1,45 +1,34 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
 import I18n from "i18next";
-import { Component, RefObject } from "react";
-import { AccessibilityInfo, findNodeHandle } from "react-native";
+import { RefObject } from "react";
+import { AccessibilityInfo, HostInstance } from "react-native";
 
 import { format } from "./dates";
 
 /**
- * Set the accessibility focus on the given {@param nodeReference} use
- * {@param executionDelay} to set focus with a delay when the focus is set (or
- * not) the {@param callback} will be executed
+ * Moves the screen reader focus onto `nodeReference` once `executionDelay` has
+ * elapsed.
  *
- * @param nodeReference
- * @param executionDelay
- * @param callback
+ * The node is read after the delay, so a reference that is no longer mounted
+ * makes this a no-op and `callback` is not invoked.
  */
-export const setAccessibilityFocus = <T extends Component>(
-  nodeReference: RefObject<null | T>,
+export const setAccessibilityFocus = (
+  nodeReference: RefObject<HostInstance | null>,
   executionDelay: Millisecond = 0 as Millisecond, // default: execute immediately,
   callback?: () => void
 ) => {
   setTimeout(() => {
-    pipe(
-      O.fromNullable(nodeReference && nodeReference.current),
-      O.chain(ref => O.fromNullable(findNodeHandle(ref))), // nodeReference could be null or undefined
-      O.map(reactTag => {
-        // could raise an exception
-        try {
-          AccessibilityInfo.setAccessibilityFocus(reactTag);
-        } catch {
-          // do nothing
-        } finally {
-          if (callback) {
-            callback();
-          }
-        }
-      })
-    );
+    const node = nodeReference.current;
+    if (node == null) {
+      return;
+    }
+    try {
+      AccessibilityInfo.sendAccessibilityEvent(node, "focus");
+    } catch {
+      // focusing is best-effort: a native failure must not break the caller
+    } finally {
+      callback?.();
+    }
   }, executionDelay);
 };
 
@@ -47,14 +36,13 @@ export const setAccessibilityFocus = <T extends Component>(
  * Return a Promise where true means there is a screen reader active (VoiceOver
  * / TalkBack)
  */
-export const isScreenReaderEnabled = async (): Promise<boolean> =>
-  await pipe(
-    TE.tryCatch(
-      () => AccessibilityInfo.isScreenReaderEnabled(),
-      errorMsg => new Error(String(errorMsg))
-    ),
-    TE.getOrElse(() => T.of(false))
-  )();
+export const isScreenReaderEnabled = async (): Promise<boolean> => {
+  try {
+    return await AccessibilityInfo.isScreenReaderEnabled();
+  } catch {
+    return false;
+  }
+};
 
 // return a string representing the date in a readable format
 export const dateToAccessibilityReadableFormat = (
@@ -79,14 +67,7 @@ export const formatStringToSpacedString = (str: string): string =>
  * with the correct minus symbol pronunciation.
  */
 export const getAccessibleAmountText = (amount?: string) =>
-  pipe(
-    amount,
-    O.fromNullable,
-    O.map(amountText =>
-      amountText.replace("-", I18n.t("global.accessibility.minusSymbol"))
-    ),
-    O.getOrElseW(() => undefined)
-  );
+  amount?.replace("-", I18n.t("global.accessibility.minusSymbol"));
 
 export const getListItemAccessibilityLabelCount = (
   total: number,

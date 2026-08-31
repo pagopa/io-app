@@ -16,15 +16,18 @@ type Props = {
 /**
  * Hook for tracking eID lifecycle alerts.
  *
- * This hook handles two types of analytics events: 1. Banner visualized event:
- * triggered the first time the alert becomes visible when the screen is
- * focused. If the screen loses focus and regains it, the event can be retracked
- * depending on the focus behavior. 2. Banner tap event: triggered when the user
- * tap the alert.
+ * This hook handles two types of analytics events:
  *
- * Tracking rules: - If `skipViewTracking` is true, only the visualized event is
- * skipped. - If the eID status is valid, no visualized event is sent. - If
- * `isItw` is true, no tracking is sent at all.
+ * 1. Banner visualized event: triggered the first time the alert becomes visible
+ *    when the screen is focused. If the screen loses focus and regains it, the
+ *    event can be retracked depending on the focus behavior.
+ * 2. Banner tap event: triggered when the user tap the alert.
+ *
+ * Tracking rules:
+ *
+ * - If `skipViewTracking` is true, only the visualized event is skipped.
+ * - If the eID status is valid, no visualized event is sent.
+ * - If `isItw` is true, no tracking is sent at all.
  *
  * @param maybeEidStatus The current eID status
  * @param navigation Navigation object to listen for focus/blur events
@@ -67,13 +70,11 @@ export const useItwEidLifecycleAlertTracking = ({
     const onFocus = () => {
       if (!hasTrackedRef.current) {
         trackItwBannerVisualized(trackingProperties);
-        // eslint-disable-next-line functional/immutable-data
         hasTrackedRef.current = true;
       }
     };
 
     const onBlur = () => {
-      // eslint-disable-next-line functional/immutable-data
       hasTrackedRef.current = false;
     };
 

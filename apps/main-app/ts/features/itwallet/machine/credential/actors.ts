@@ -12,17 +12,12 @@ import { sessionTokenSelector } from "../../../authentication/common/store/selec
 import { Env } from "../../common/utils/environment";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
-import { getCredentialStatusAssertion } from "../../common/utils/itwCredentialStatusAssertionUtils";
-import {
-  enrichErrorWithMetadata,
-  isAssertionGenerationError
-} from "../../common/utils/itwFailureUtils";
+import { isAssertionGenerationError } from "../../common/utils/itwFailureUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import {
   CredentialAccessToken,
-  CredentialBundle,
-  CredentialFormat
+  CredentialBundle
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { CredentialsVault } from "../../credentials/utils/vault";
@@ -36,6 +31,7 @@ import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/act
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { createCommonActorsImplementation } from "../utils/actors";
 import { Context } from "./context";
+
 export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getWalletInstanceAttestation>
 >;
@@ -56,7 +52,10 @@ export type ObtainCredentialActorOutput = {
   walletUnitAttestations: Record<string, string>;
 };
 
-export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
+export type ObtainCredentialStatusActorInput = Pick<
+  Context,
+  "credentials" | "issuerConf"
+>;
 
 export type ProcessCredentialOfferActorInput = {
   credentialOfferUri: Context["credentialOfferUri"];
@@ -372,47 +371,18 @@ export const createCredentialIssuanceActorsImplementation = (
     };
   });
 
-  const obtainStatusAssertion = fromPromise<
+  const obtainCredentialStatus = fromPromise<
     ReadonlyArray<CredentialBundle>,
-    ObtainStatusAssertionActorInput
+    ObtainCredentialStatusActorInput
   >(async ({ input }) => {
     assert(input.credentials, "credentials are undefined");
 
-    const requestStatusAssertionOrSkip = async (
-      credential: CredentialBundle
-    ): Promise<CredentialBundle> => {
-      // Status assertions for mDoc or v1.3+ credentials are not supported
-      // TODO: [SIW-3963] Handle status list integration
-      if (
-        credential.metadata.format === CredentialFormat.MDOC ||
-        !getIoWallet(itwVersion).CredentialStatus.statusAssertion.isSupported
-      ) {
-        return credential;
-      }
-
-      const { statusAssertion, parsedStatusAssertion } =
-        await getCredentialStatusAssertion(credential, env, itwVersion).catch(
-          enrichErrorWithMetadata({
-            credentialId: credential.metadata.credentialId
-          })
-        );
-
-      return {
-        ...credential,
-        metadata: {
-          ...credential.metadata,
-          storedStatusAssertion: {
-            credentialStatus: "valid",
-            statusAssertion,
-            parsedStatusAssertion
-          }
-        }
-      };
-    };
-
-    return await Promise.all(
-      input.credentials.map(requestStatusAssertionOrSkip)
-    );
+    return await credentialIssuanceUtils.attachCredentialsStatus({
+      credentials: input.credentials,
+      env,
+      itwVersion,
+      issuerConf: input.issuerConf
+    });
   });
 
   const processCredentialOffer = fromPromise<
@@ -438,7 +408,7 @@ export const createCredentialIssuanceActorsImplementation = (
     obtainAccessToken,
     requestCredential,
     obtainCredential,
-    obtainStatusAssertion,
+    obtainCredentialStatus,
     processCredentialOffer,
     ...createCommonActorsImplementation(store)
   };
