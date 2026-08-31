@@ -1,11 +1,6 @@
 import { render } from "@testing-library/react-native";
 import { Text } from "react-native";
 
-import {
-  DrivingPrivilegesClaim,
-  FiscalCodeClaim,
-  StringClaim
-} from "../../../utils/itwClaimsUtils";
 import { CardClaim, CardClaimRenderer } from "../CardClaim";
 
 describe("CardClaim", () => {
@@ -41,7 +36,7 @@ describe("CardClaimRenderer", () => {
         component={() => (
           <Text testID="claimTestID">This should not be rendered!</Text>
         )}
-        is={FiscalCodeClaim.is}
+        kinds={["fiscalCode"]}
       />
     );
 
@@ -53,8 +48,8 @@ describe("CardClaimRenderer", () => {
     const { queryByTestId, queryByText } = render(
       <CardClaimRenderer
         claim={{ name: "test", value: "Some string" }}
-        component={decoded => <Text testID="claimTestID">{decoded}</Text>}
-        is={StringClaim.is}
+        component={value => <Text testID="claimTestID">{value}</Text>}
+        kinds={["string"]}
       />
     );
 
@@ -70,8 +65,8 @@ describe("CardClaimRenderer", () => {
           value:
             '[{"driving_privilege":"AM","issue_date":"1935-01-23","expiry_date":"2035-02-16","restrictions_conditions":""},{"driving_privilege":"B","issue_date":"1935-01-23","expiry_date":"2035-02-16","restrictions_conditions":""}]'
         }}
-        component={decoded =>
-          decoded.map(p => (
+        component={value =>
+          value.map(p => (
             <Text
               key={p.driving_privilege}
               testID={`claimTestID_${p.driving_privilege}`}
@@ -80,7 +75,7 @@ describe("CardClaimRenderer", () => {
             </Text>
           ))
         }
-        is={DrivingPrivilegesClaim.is}
+        kinds={["drivingPrivileges"]}
       />
     );
 

@@ -268,7 +268,7 @@ describe("MessageDetailsScreen", () => {
             ingress: {},
             itWallet: {
               issuance: {
-                integrityKeyTag: O.none
+                integrityKeyTag: undefined
               }
             },
             pn: {

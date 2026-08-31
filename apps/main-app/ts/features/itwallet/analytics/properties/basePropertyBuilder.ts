@@ -1,6 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   itwAuthLevelSelector,
@@ -132,11 +129,9 @@ const getMixpanelCredentialStatus = (
   }
   const credential = itwCredentialsSelector(state)[type];
 
-  return pipe(
-    O.fromNullable(credential),
-    O.map(cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]),
-    O.getOrElse(() => "not_available" as ItwCredentialMixpanelStatus)
-  );
+  return credential
+    ? CREDENTIAL_STATUS_MAP[getCredentialStatus(credential)]
+    : ("not_available" as ItwCredentialMixpanelStatus);
 };
 
 export const computeItwStatus = (

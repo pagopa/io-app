@@ -18,7 +18,7 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { ItwGenericErrorContent } from "../../../common/components/ItwGenericErrorContent.tsx";
 import {
   getClaimsFullLocale,
-  PdfClaim
+  isPdfClaim
 } from "../../../common/utils/itwClaimsUtils.ts";
 import { ParsedCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
@@ -143,7 +143,7 @@ const getAttachmentData = ({
   const fileName =
     typeof name === "string" ? name : name?.[getClaimsFullLocale()] || "";
 
-  if (PdfClaim.is(value)) {
+  if (typeof value === "string" && isPdfClaim(value)) {
     return {
       fileName,
       uri: value,

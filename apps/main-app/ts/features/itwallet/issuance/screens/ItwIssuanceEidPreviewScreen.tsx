@@ -10,7 +10,6 @@ import {
   VStack
 } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback } from "react";
 
@@ -30,7 +29,7 @@ import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectCanRenderEidPreview,
-  selectEidOption,
+  selectEid,
   selectIdentification,
   selectIsLoading
 } from "../../machine/eid/selectors";
@@ -43,7 +42,7 @@ import {
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceEidPreviewScreen = () => {
-  const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
+  const eid = ItwEidIssuanceMachineContext.useSelector(selectEid);
   const canRenderEidPreview = ItwEidIssuanceMachineContext.useSelector(
     selectCanRenderEidPreview
   );
@@ -54,11 +53,11 @@ export const ItwIssuanceEidPreviewScreen = () => {
   // If there is no eID in the context, the issuing phase is still ongoing.
   // Once the eID is assigned, wait for the identity-match check to finish before
   // rendering its details; otherwise the preview could flash before a mismatch failure.
-  if (!canRenderEidPreview || O.isNone(eidOption)) {
+  if (!canRenderEidPreview || eid === undefined) {
     return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
-  return <ContentView eid={eidOption.value.metadata} />;
+  return <ContentView eid={eid.metadata} />;
 };
 
 type ContentViewProps = {

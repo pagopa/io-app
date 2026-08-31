@@ -1,24 +1,22 @@
 import { WithTestID } from "@io-app/design-system";
-import * as E from "fp-ts/lib/Either";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 
 import { Either, Prettify } from "../../../../../types/helpers";
 import {
-  ClaimValue,
-  DrivingPrivilegesClaim,
-  DrivingPrivilegesCustomClaim,
-  ImageClaim,
-  NestedClaim,
-  PlaceOfBirthClaim,
-  SimpleDateClaim,
+  ClaimValueKind,
+  ClaimValueOfKind,
+  parseClaimValue,
   SimpleDateFormat
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
 import { ClaimImage } from "./ClaimImage";
 import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
+
+/**
+ * Fallback used when a claim cannot be parsed: nothing is rendered on the card.
+ */
+const renderNothing = () => null;
 
 export type CardClaimProps = Prettify<
   ClaimLabelProps & {
@@ -69,36 +67,46 @@ const CardClaim = ({
 }: WithTestID<CardClaimProps>) => {
   const claimContent = useMemo(
     () =>
-      pipe(
-        claim?.value,
-        ClaimValue.decode,
-        E.fold(constNull, decoded => {
-          if (NestedClaim.is(decoded)) {
-            // If the claim is a NestedArrayClaim or NestedObjectClaim, we don't render it directly
-            // but we return null to skip rendering
-            return null;
-          }
-
-          if (SimpleDateClaim.is(decoded)) {
-            const formattedDate = decoded.toString(dateFormat);
-            return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
-          } else if (ImageClaim.is(decoded)) {
+      parseClaimValue(claim?.value).match(parsed => {
+        switch (parsed.kind) {
+          case "bool":
+          case "emptyString":
+          case "fiscalCode":
+          case "pdf":
+          case "string":
+          case "url":
+            return <ClaimLabel {...labelProps}>{parsed.value}</ClaimLabel>;
+          case "date":
             return (
-              <ClaimImage base64={decoded} blur={labelProps.hidden ? 7 : 0} />
+              <ClaimLabel {...labelProps}>
+                {parsed.value.toString(dateFormat)}
+              </ClaimLabel>
             );
-          } else if (
-            DrivingPrivilegesClaim.is(decoded) ||
-            DrivingPrivilegesCustomClaim.is(decoded)
-          ) {
-            const privileges = decoded.map(p => p.driving_privilege).join(" ");
-            return <ClaimLabel {...labelProps}>{privileges}</ClaimLabel>;
-          } else if (PlaceOfBirthClaim.is(decoded)) {
-            return <ClaimLabel {...labelProps}>{decoded.locality}</ClaimLabel>;
-          } else {
-            return <ClaimLabel {...labelProps}>{decoded}</ClaimLabel>;
-          }
-        })
-      ),
+          case "drivingPrivileges":
+            return (
+              <ClaimLabel {...labelProps}>
+                {parsed.value.map(p => p.driving_privilege).join(" ")}
+              </ClaimLabel>
+            );
+          case "image":
+            return (
+              <ClaimImage
+                base64={parsed.value}
+                blur={labelProps.hidden ? 7 : 0}
+              />
+            );
+          case "list":
+            return <ClaimLabel {...labelProps}>{parsed.value}</ClaimLabel>;
+          // Nested claims are not rendered directly on the card
+          case "nestedArray":
+          case "nestedObject":
+            return null;
+          case "placeOfBirth":
+            return (
+              <ClaimLabel {...labelProps}>{parsed.value.locality}</ClaimLabel>
+            );
+        }
+      }, renderNothing),
     [claim, labelProps, dateFormat]
   );
 
@@ -117,34 +125,34 @@ const CardClaim = ({
   );
 };
 
-export type CardClaimRendererProps<T> = {
+export type CardClaimRendererProps<K extends ClaimValueKind> = {
   // A claim that will be used to render a component
   // Since we are passing this value by accessing the claims object by key, the value could be undefined
   claim?: ParsedCredential[number];
-  // Function that renders a component with the decoded provided claim
-  component: (decoded: T) => Iterable<ReactElement> | ReactElement;
-  // Function that check that the proviced claim is of the correct type
-  is: (value: unknown) => value is T;
+  // Function that renders a component with the parsed claim value
+  component: (
+    value: ClaimValueOfKind<K>
+  ) => Iterable<ReactElement> | ReactElement;
+  // The claim kinds this renderer can display
+  kinds: ReadonlyArray<K>;
 };
 
 /**
- * Allows to render a claim if it satisfies the provided `is` function
- * @returns The component from the props if value if correctly decoded, otherwise it returns null
+ * Allows to render a claim only when its parsed value is one of the accepted `kinds`
+ * @returns The component from the props if the value is correctly parsed, otherwise it returns null
  */
-const CardClaimRenderer = <T,>({
+const CardClaimRenderer = <K extends ClaimValueKind>({
   claim,
-  is,
+  kinds,
   component
-}: CardClaimRendererProps<T>) =>
-  pipe(
-    claim?.value,
-    ClaimValue.decode,
-    O.fromEither,
-    O.filter(is),
-    O.fold(constNull, component)
+}: CardClaimRendererProps<K>) =>
+  parseClaimValue(claim?.value).match(
+    parsed =>
+      (kinds as ReadonlyArray<ClaimValueKind>).includes(parsed.kind)
+        ? component(parsed.value as ClaimValueOfKind<K>)
+        : null,
+    renderNothing
   );
-
-// O.filter(is), O.fold(constNull, component)
 
 export type CardClaimContainerProps = WithTestID<{
   children?: ReactNode;

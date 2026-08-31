@@ -1,6 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
 import { useIOStore } from "../../../../store/hooks";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { ItwSessionExpiredError } from "../../api/client";
@@ -39,14 +36,13 @@ export const createEidIssuanceGuardsImplementation = (
   isSessionExpired: ({ event }: { event: EidIssuanceEvents }) =>
     "error" in event && event.error instanceof ItwSessionExpiredError,
 
-  hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
-    pipe(
-      O.fromNullable(context.walletInstanceAttestation?.jwt),
-      O.map(attestation =>
-        isWalletInstanceAttestationValid(context.itwVersion, attestation)
-      ),
-      O.getOrElse(() => false)
-    ),
+  hasValidWalletInstanceAttestation: ({ context }: { context: Context }) => {
+    const attestation = context.walletInstanceAttestation?.jwt;
+    return (
+      attestation !== undefined &&
+      isWalletInstanceAttestationValid(context.itwVersion, attestation)
+    );
+  },
 
   isWalletValid: () => itwLifecycleIsValidSelector(store.getState())
 });

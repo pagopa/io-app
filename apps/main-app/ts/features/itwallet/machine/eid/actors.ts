@@ -1,6 +1,5 @@
 import { CieUtils } from "@pagopa/io-react-native-cie";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
-import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 
 import type {
@@ -266,7 +265,7 @@ export const createEidIssuanceActorsImplementation = (
     const sessionToken = sessionTokenSelector(state);
     const integrityKeyTag = itwIntegrityKeyTagSelector(state);
 
-    if (O.isNone(integrityKeyTag)) {
+    if (integrityKeyTag === undefined) {
       return;
     }
     assert(sessionToken, "sessionToken is undefined");
@@ -275,7 +274,7 @@ export const createEidIssuanceActorsImplementation = (
       env,
       input.itwVersion,
       sessionToken,
-      integrityKeyTag.value
+      integrityKeyTag
     );
 
     // Removes all credentials stored in the secure storage, as they are all linked

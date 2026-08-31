@@ -7,9 +7,6 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { sequenceS } from "fp-ts/lib/Apply";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useRef } from "react";
 
@@ -41,10 +38,10 @@ import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
-  selectCredentialTypeOption,
+  selectCredentialType,
   selectIsIssuing,
   selectIsLoading,
-  selectRequiredClaimsOption
+  selectRequiredClaims
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -74,15 +71,13 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   const { credentialType, isUpgrade, mode } =
     ("route" in props ? props.route.params : props) ?? {};
 
-  const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const eid = useIOSelector(itwCredentialsEidSelector);
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const requiredClaimsOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectRequiredClaimsOption
-  );
-  const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
+  const requiredClaimNames =
+    ItwCredentialIssuanceMachineContext.useSelector(selectRequiredClaims);
+  const machineCredentialType =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
   usePreventScreenCapture();
@@ -107,16 +102,16 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
     return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
-  return pipe(
-    sequenceS(O.Monad)({
-      credentialType: credentialTypeOption,
-      requiredClaimNames: requiredClaimsOption,
-      eid: eidOption
-    }),
-    O.fold(
-      () => <ItwGenericErrorContent />,
-      innerProps => <ContentView {...innerProps} />
-    )
+  if (!machineCredentialType || !requiredClaimNames || !eid) {
+    return <ItwGenericErrorContent />;
+  }
+
+  return (
+    <ContentView
+      credentialType={machineCredentialType}
+      eid={eid}
+      requiredClaimNames={requiredClaimNames}
+    />
   );
 };
 

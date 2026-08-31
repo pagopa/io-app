@@ -1,5 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import _, { partition } from "lodash";
 import { createSelector } from "reselect";
 
@@ -115,30 +113,30 @@ export const itwCredentialsSelector = createSelector(
 );
 
 /**
- * Convenience selector that returns an Option containing the eID credential from the credentials object.
+ * Convenience selector that returns the eID credential from the credentials object.
  *
  * @param state - The global state.
- * @returns The eID credential Option
+ * @returns The eID credential, or `undefined` when the wallet does not contain one.
  */
 export const itwCredentialsEidSelector = createSelector(
   itwCredentialsByTypeSelector,
   ({ [CredentialType.PID]: pid }) =>
-    O.fromNullable(withDisplayFormatFallback(pid, CredentialFormat.SD_JWT))
+    withDisplayFormatFallback(pid, CredentialFormat.SD_JWT)
 );
 
 /**
- * Given a credential key, returns an Option containing the credential of the given type from the credentials object.
+ * Given a credential key, returns the credential of the given type from the credentials object.
  *
  * @param type - The credential type.
  * @param format - The credential format (default to SD-JWT).
- * @returns The credential Option.
+ * @returns The credential, or `undefined` when the wallet does not contain one.
  */
 export const itwCredentialSelector = (
   key: string,
   format = CredentialFormat.SD_JWT
 ) =>
   createSelector(itwCredentialsByTypeSelector, credentials =>
-    O.fromNullable(withDisplayFormatFallback(credentials[key], format))
+    withDisplayFormatFallback(credentials[key], format)
   );
 
 /**
@@ -161,12 +159,7 @@ export const itwCredentialsTypesSelector = createSelector(
  */
 export const selectFiscalCodeFromEid = createSelector(
   itwCredentialsEidSelector,
-  eid =>
-    pipe(
-      eid,
-      O.map(getFiscalCodeFromCredential),
-      O.getOrElse(() => "")
-    )
+  eid => (eid ? getFiscalCodeFromCredential(eid) : "")
 );
 
 /**
@@ -177,21 +170,14 @@ export const selectFiscalCodeFromEid = createSelector(
  */
 export const selectNameSurnameFromEid = createSelector(
   itwCredentialsEidSelector,
-  eid =>
-    pipe(
-      eid,
-      O.map(getFirstNameFromCredential),
-      O.chain(firstName =>
-        pipe(
-          eid,
-          O.map(getFamilyNameFromCredential),
-          O.map(familyName =>
-            `${_.capitalize(firstName)} ${_.capitalize(familyName)}`.trim()
-          )
-        )
-      ),
-      O.getOrElse(() => "")
-    )
+  eid => {
+    if (!eid) {
+      return "";
+    }
+    const firstName = _.capitalize(getFirstNameFromCredential(eid));
+    const familyName = _.capitalize(getFamilyNameFromCredential(eid));
+    return `${firstName} ${familyName}`.trim();
+  }
 );
 
 /**
@@ -265,13 +251,9 @@ export const itwCredentialStatusSelector = createSelector(
  */
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,
-  eidOption =>
-    pipe(
-      eidOption,
-      // eID does not have status assertion nor expiry date, so it safe to assume its status is based on the JWT only
-      O.map(eid => getCredentialStatus(eid) as ItwJwtCredentialStatus),
-      O.toUndefined
-    )
+  eid =>
+    // eID does not have status assertion nor expiry date, so it safe to assume its status is based on the JWT only
+    eid ? (getCredentialStatus(eid) as ItwJwtCredentialStatus) : undefined
 );
 
 /**
@@ -282,12 +264,7 @@ export const itwCredentialsEidStatusSelector = createSelector(
  */
 export const itwCredentialsEidExpirationSelector = createSelector(
   itwCredentialsEidSelector,
-  eidOption =>
-    pipe(
-      eidOption,
-      O.map(eid => eid.jwt.expiration),
-      O.toUndefined
-    )
+  eid => eid?.jwt.expiration
 );
 
 /**
@@ -298,12 +275,7 @@ export const itwCredentialsEidExpirationSelector = createSelector(
  */
 export const itwCredentialsEidIssuedAtSelector = createSelector(
   itwCredentialsEidSelector,
-  eidOption =>
-    pipe(
-      eidOption,
-      O.map(eid => eid.jwt.issuedAt),
-      O.toUndefined
-    )
+  eid => eid?.jwt.issuedAt
 );
 
 /**

@@ -1,5 +1,4 @@
 import { useFocusEffect } from "@react-navigation/native";
-import * as E from "fp-ts/lib/Either";
 import I18n from "i18next";
 import { useCallback, useLayoutEffect, useState } from "react";
 
@@ -64,15 +63,18 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
 
   const payload = validateItwPresentationQrCodeParams(itwVersion, route.params);
 
-  if (E.isLeft(payload)) {
+  if (payload.isErr()) {
     return (
-      <ItwRemoteDeepLinkFailure failure={payload.left} payload={route.params} />
+      <ItwRemoteDeepLinkFailure
+        failure={payload.error}
+        payload={route.params}
+      />
     );
   }
 
   const flowType = route.params?.flowType ?? "same-device";
 
-  return <ContentView flowType={flowType} payload={payload.right} />;
+  return <ContentView flowType={flowType} payload={payload.value} />;
 };
 
 type ContentViewProps = {

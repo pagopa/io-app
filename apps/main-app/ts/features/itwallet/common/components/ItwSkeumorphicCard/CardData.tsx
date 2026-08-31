@@ -1,17 +1,10 @@
 /* eslint-disable dot-notation */
 /* eslint-disable @typescript-eslint/dot-notation */
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { ElementType, Fragment, memo } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { QrCodeImage } from "../../../../../components/QrCodeImage";
-import {
-  DrivingPrivilegesClaim,
-  DrivingPrivilegesClaimType,
-  DrivingPrivilegesCustomClaim,
-  StringClaim
-} from "../../utils/itwClaimsUtils";
+import { DrivingPrivilegesClaimType } from "../../utils/itwClaimsUtils";
 import {
   CredentialMetadata,
   ParsedCredential
@@ -197,7 +190,7 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
       <CardClaimRenderer
         claim={claims["driving_privileges"]}
         component={renderData}
-        is={DrivingPrivilegesCustomClaim.is}
+        kinds={["drivingPrivileges"]}
       />
       {/*
       This is the renderer of the old MDL back driving privileges data
@@ -206,7 +199,7 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
       <CardClaimRenderer
         claim={claims["driving_privileges_details"]}
         component={renderData}
-        is={DrivingPrivilegesClaim.is}
+        kinds={["drivingPrivileges"]}
       />
       <CardClaim
         claim={claims["restrictions_conditions"]}
@@ -281,7 +274,7 @@ const DcBackData = ({ claims }: DataComponentProps) => (
           <QrCodeImage size={"28.5%"} value={qrCode} />
         </CardClaimContainer>
       )}
-      is={StringClaim.is}
+      kinds={["string", "url"]}
     />
   </View>
 );
@@ -300,19 +293,17 @@ type CardDataProps = {
   valuesHidden: boolean;
 };
 
-const CardData = ({ credential, side, valuesHidden }: CardDataProps) =>
-  pipe(
-    O.fromNullable(dataComponentMap[credential.credentialType]),
-    O.map(components => components[side]),
-    O.map(DataComponent => (
-      <DataComponent
-        claims={credential.parsedCredential}
-        key={`credential_data_${credential.credentialType}_${side}`}
-        valuesHidden={valuesHidden}
-      />
-    )),
-    O.toNullable
-  );
+const CardData = ({ credential, side, valuesHidden }: CardDataProps) => {
+  const DataComponent = dataComponentMap[credential.credentialType]?.[side];
+
+  return DataComponent ? (
+    <DataComponent
+      claims={credential.parsedCredential}
+      key={`credential_data_${credential.credentialType}_${side}`}
+      valuesHidden={valuesHidden}
+    />
+  ) : null;
+};
 
 const styles = StyleSheet.create({
   container: {

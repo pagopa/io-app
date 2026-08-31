@@ -1,5 +1,4 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
-import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 
 import { useIOStore } from "../../../../store/hooks";
@@ -44,7 +43,7 @@ export const createItwTrustmarkActorsImplementation = (
       const integrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
 
       assert(sessionToken, "sessionToken is undefined");
-      assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
+      assert(integrityKeyTag, "integrityKeyTag is not present");
 
       /**
        * Get the wallet instance attestation
@@ -52,7 +51,7 @@ export const createItwTrustmarkActorsImplementation = (
       return await itwAttestationUtils.getWalletInstanceAttestation(
         env,
         itwVersion,
-        integrityKeyTag.value,
+        integrityKeyTag,
         sessionToken
       );
     });

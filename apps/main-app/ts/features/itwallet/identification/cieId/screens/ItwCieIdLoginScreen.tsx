@@ -1,6 +1,4 @@
 import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -17,7 +15,7 @@ import {
 } from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { selectAuthUrlOption } from "../../../machine/eid/selectors";
+import { selectAuthUrl } from "../../../machine/eid/selectors";
 import { useCieIdApp } from "../hooks/useCieIdApp";
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
@@ -39,11 +37,11 @@ const isAuthenticationUrl = (url: string) => {
  * and sends the redirectAuthUrl back to the state machine.
  */
 const ItwCieIdLoginScreen = () => {
-  const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);
+  const { ISSUANCE_REDIRECT_URI } = getEnv(useIOSelector(selectItwEnv));
   const cieIdEnvironment = useIOSelector(selectItwCieIdEnvironment);
 
   const initialAuthUrl =
-    ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
+    ItwEidIssuanceMachineContext.useSelector(selectAuthUrl);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const [isWebViewLoading, setWebViewLoading] = useState(true);
 
@@ -58,10 +56,7 @@ const ItwCieIdLoginScreen = () => {
     handleAuthenticationFailure
   } = useCieIdApp();
 
-  const webViewSource = pipe(
-    authUrl,
-    O.alt(() => initialAuthUrl)
-  );
+  const webViewSource = authUrl ?? initialAuthUrl;
 
   useHeaderSecondLevel({
     title: I18n.t(
@@ -98,14 +93,8 @@ const ItwCieIdLoginScreen = () => {
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
       const authRedirectUrl = event.url;
-      const isIssuanceRedirect = pipe(
-        authRedirectUrl,
-        O.fromNullable,
-        O.fold(
-          () => false,
-          s => s.startsWith(ISSUANCE_REDIRECT_URI)
-        )
-      );
+      const isIssuanceRedirect =
+        authRedirectUrl?.startsWith(ISSUANCE_REDIRECT_URI) ?? false;
 
       if (isIssuanceRedirect) {
         machineRef.send({
@@ -119,29 +108,26 @@ const ItwCieIdLoginScreen = () => {
 
   const content = useMemo(
     () =>
-      pipe(
-        webViewSource,
-        O.fold(constNull, (url: string) => (
-          <WebView
-            allowsInlineMediaPlayback
-            androidCameraAccessDisabled
-            androidMicrophoneAccessDisabled
-            cacheEnabled={false}
-            javaScriptEnabled
-            mediaPlaybackRequiresUserAction
-            onError={handleAuthenticationFailure}
-            onHttpError={handleAuthenticationFailure}
-            onLoadEnd={onLoadEnd}
-            onNavigationStateChange={handleNavigationStateChange}
-            onShouldStartLoadWithRequest={handleShouldStartLoading}
-            originWhitelist={originSchemasWhiteList}
-            source={{ uri: url }}
-            testID="cieid-webview"
-            textZoom={100}
-            userAgent={defaultUserAgent}
-          />
-        ))
-      ),
+      webViewSource ? (
+        <WebView
+          allowsInlineMediaPlayback
+          androidCameraAccessDisabled
+          androidMicrophoneAccessDisabled
+          cacheEnabled={false}
+          javaScriptEnabled
+          mediaPlaybackRequiresUserAction
+          onError={handleAuthenticationFailure}
+          onHttpError={handleAuthenticationFailure}
+          onLoadEnd={onLoadEnd}
+          onNavigationStateChange={handleNavigationStateChange}
+          onShouldStartLoadWithRequest={handleShouldStartLoading}
+          originWhitelist={originSchemasWhiteList}
+          source={{ uri: webViewSource }}
+          testID="cieid-webview"
+          textZoom={100}
+          userAgent={defaultUserAgent}
+        />
+      ) : null,
     [
       webViewSource,
       handleNavigationStateChange,

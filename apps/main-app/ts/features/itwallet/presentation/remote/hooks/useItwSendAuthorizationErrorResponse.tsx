@@ -1,5 +1,4 @@
 import { Nullable } from "@io-app/design-system";
-import { constNull } from "fp-ts/lib/function";
 import { useEffect, useMemo } from "react";
 
 import { OperationResultScreenContentProps } from "../../../../../components/screens/OperationResultScreenContent";
@@ -55,7 +54,7 @@ export const useItwSendAuthorizationErrorResponse = ({
       void ioWallet.RemotePresentation.sendAuthorizationErrorResponse(
         unverifiedRequestObject,
         authErrorBody
-      ).catch(constNull); // Catching errors to ensure the app doesn't crash if sending the authorization error response fails.
+      ).catch(() => null); // Catching errors to ensure the app doesn't crash if sending the authorization error response fails.
     }
   }, [ioWallet, authErrorBody, unverifiedRequestObject]);
 };

@@ -1,5 +1,4 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
-import * as O from "fp-ts/lib/Option";
 import { all, call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -113,10 +112,10 @@ export function* handleCredentialStatusAssertionRetry(
 ) {
   const credential = yield* select(itwCredentialSelector(action.payload));
 
-  if (O.isSome(credential)) {
+  if (credential !== undefined) {
     const updatedCredential = yield* call(
       updateCredentialStatusAssertionSaga,
-      credential.value
+      credential
     );
     yield* put(itwCredentialsStore([updatedCredential]));
   }

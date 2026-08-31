@@ -3,7 +3,6 @@ import type {
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 
-import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 
 import { useIOStore } from "../../../../store/hooks";
@@ -148,13 +147,13 @@ export const createCredentialIssuanceActorsImplementation = (
       const integrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
 
       assert(sessionToken, "sessionToken is undefined");
-      assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
+      assert(integrityKeyTag, "integrityKeyTag is not present");
 
       try {
         return await itwAttestationUtils.getWalletInstanceAttestation(
           env,
           itwVersion,
-          integrityKeyTag.value,
+          integrityKeyTag,
           sessionToken
         );
       } catch (firstError) {
@@ -223,9 +222,8 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
 
-    const eidOption = itwCredentialsEidSelector(store.getState());
-    assert("value" in eidOption, "eID is undefined");
-    const eid = eidOption.value;
+    const eid = itwCredentialsEidSelector(store.getState());
+    assert(eid, "eID is undefined");
 
     // Retrieve the PID credential before showing the trust issuer screen so the
     // requested DCQL claims can be evaluated and displayed to the user.
@@ -298,7 +296,7 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(clientId, "clientId is undefined");
     assert(sessionToken, "sessionToken is undefined");
     assert(accessToken, "accessToken is undefined");
-    assert(O.isSome(integrityKeyTag), "integriyKeyTag is undefined");
+    assert(integrityKeyTag, "integrityKeyTag is undefined");
 
     // The Wallet Unit Attestation makes use of the integrity service
     if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
@@ -316,7 +314,7 @@ export const createCredentialIssuanceActorsImplementation = (
     const keyGenParams = {
       env,
       itwVersion,
-      hardwareKeyTag: integrityKeyTag.value,
+      hardwareKeyTag: integrityKeyTag,
       sessionToken
     };
 

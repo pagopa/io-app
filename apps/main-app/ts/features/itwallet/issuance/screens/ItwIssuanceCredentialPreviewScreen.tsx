@@ -7,8 +7,6 @@ import {
   VStack
 } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
@@ -29,7 +27,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import { selectCredentialOption } from "../../machine/credential/selectors";
+import { selectCredential } from "../../machine/credential/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import {
   trackCredentialPreview,
@@ -41,27 +39,22 @@ import { ItwCredentialPreviewClaimsCard } from "../components/ItwCredentialPrevi
 import { useItwSomethingWrongBottomSheet } from "../hooks/useItwSomethingWrongBottomSheet";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
-  const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialOption
-  );
+  const credential =
+    ItwCredentialIssuanceMachineContext.useSelector(selectCredential);
 
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  return pipe(
-    credentialOption,
-    O.fold(
-      // If there is no credential in the context (None), we can safely assume the issuing phase is still ongoing.
-      // A None credential cannot be stored in the context, as any issuance failure causes the machine to transition
-      // to the Failure state.
-      () => (
-        <LoadingScreenContent
-          title={I18n.t("features.itWallet.issuance.credentialPreview.loading")}
-        />
-      ),
-      credential => <ContentView credential={credential.metadata} />
-    )
+  // If there is no credential in the context, we can safely assume the issuing phase is still
+  // ongoing: a missing credential cannot be stored in the context, as any issuance failure causes
+  // the machine to transition to the Failure state.
+  return credential ? (
+    <ContentView credential={credential.metadata} />
+  ) : (
+    <LoadingScreenContent
+      title={I18n.t("features.itWallet.issuance.credentialPreview.loading")}
+    />
   );
 };
 

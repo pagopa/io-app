@@ -1,5 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/Option";
 import { SagaIterator } from "redux-saga";
 import {
   call,
@@ -141,11 +139,8 @@ const handleAuthLevelSanitizationSaga = function* (
   }
 
   // Check whether the user has an IT-Wallet PID credential
-  const hasItwPID = pipe(
-    yield* select(itwCredentialsEidSelector),
-    O.map(isItwCredential),
-    O.getOrElse(() => false)
-  );
+  const eid = yield* select(itwCredentialsEidSelector);
+  const hasItwPID = eid !== undefined && isItwCredential(eid);
 
   if (!hasItwPID) {
     // No L3 PID found, no need to sanitize

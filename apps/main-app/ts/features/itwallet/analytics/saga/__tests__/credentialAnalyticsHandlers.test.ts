@@ -65,7 +65,7 @@ const store: DeepPartial<GlobalState> = {
   remoteConfig: O.none,
   features: {
     itWallet: {
-      issuance: { integrityKeyTag: O.some("key-tag") },
+      issuance: { integrityKeyTag: "key-tag" },
       credentials: {
         credentials: {}
       },
