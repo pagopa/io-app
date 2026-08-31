@@ -223,7 +223,7 @@ const itwPersistConfig: PersistConfig = {
   migrate: createMigrate(migrations, { debug: isDevEnv })
 };
 
-export const persistedReducer = persistReducer<ItWalletState, Action>(
+const persistedReducer = persistReducer<ItWalletState, Action>(
   itwPersistConfig,
   itwReducer
 );
