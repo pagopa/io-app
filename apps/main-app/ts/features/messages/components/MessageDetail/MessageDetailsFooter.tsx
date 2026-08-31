@@ -1,3 +1,4 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   ContentWrapper,
   IOColors,
@@ -7,7 +8,6 @@ import {
 import I18n from "i18next";
 import { useMemo } from "react";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { formatStringToSpacedString } from "../../../../utils/accessibility.ts";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";

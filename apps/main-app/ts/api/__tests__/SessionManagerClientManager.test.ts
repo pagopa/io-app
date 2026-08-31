@@ -1,8 +1,14 @@
 import { TestSessionManagerClientManager } from "../SessionManagerClientManager";
 
-jest.mock("../../../definitions/session_manager/client", () => ({
-  createClient: jest.fn(() => ({ _type: "session_manager", id: Math.random() }))
-}));
+jest.mock(
+  "@io-app/api-types/generated/definitions/session_manager/client",
+  () => ({
+    createClient: jest.fn(() => ({
+      _type: "session_manager",
+      id: Math.random()
+    }))
+  })
+);
 
 jest.mock("../../utils/fetch", () => ({
   defaultRetryingFetch: jest.fn(() => jest.fn())

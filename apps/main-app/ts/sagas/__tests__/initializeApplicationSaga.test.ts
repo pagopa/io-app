@@ -1,7 +1,7 @@
+import { VersionInfo } from "@io-app/api-types/generated/definitions/content/VersionInfo";
 import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 
-import { VersionInfo } from "../../../definitions/content/VersionInfo";
 import {
   isAppSupportedSelector,
   versionInfoDataSelector
@@ -23,7 +23,7 @@ import {
   watchSessionRefreshInOfflineSaga
 } from "../../features/ingress/saga";
 import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
-import { watchItwOfflineSaga } from "../../features/itwallet/common/saga";
+import { watchItwSaga } from "../../features/itwallet/common/saga";
 import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
@@ -55,14 +55,14 @@ import {
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 
 const aSessionToken = "mock-session-token";
-const aSessionInfo = O.some({
+const aSessionInfo = {
   spidLevel: "https://www.spid.gov.it/SpidL2",
   walletToken: "wallet_token",
   bpdToken: "bpd_token"
-});
-const anEmptySessionInfo = O.some({
+};
+const anEmptySessionInfo = {
   spidLevel: "https://www.spid.gov.it/SpidL2"
-});
+};
 const aPublicKey = O.some({
   crv: "P_256",
   kty: "EC",
@@ -88,8 +88,8 @@ jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
 }));
 
-jest.mock("react-native-share", () => ({
-  open: jest.fn()
+jest.mock("expo-sharing", () => ({
+  shareAsync: jest.fn()
 }));
 
 jest.mock("../../api/SessionManagerClientManager");
@@ -124,7 +124,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -157,8 +157,8 @@ describe("initializeApplicationSaga", () => {
       .call(navigateAfterFinishedFciActiveSessionLoginFlowSaga, false)
       .next()
       .select(sessionInfoSelector)
-      .next(O.none)
-      .next(O.none) // loadSessionInformationSaga
+      .next(undefined)
+      .next(undefined) // loadSessionInformationSaga
       .next(handleApplicationStartupTransientError)
       .next(startupTransientErrorInitialState);
   });
@@ -181,7 +181,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -234,7 +234,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -292,7 +292,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -361,7 +361,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -394,8 +394,8 @@ describe("initializeApplicationSaga", () => {
       .call(navigateAfterFinishedFciActiveSessionLoginFlowSaga, false)
       .next()
       .select(sessionInfoSelector)
-      .next(O.none)
-      .next(O.none)
+      .next(undefined)
+      .next(undefined)
       .call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
   });
 
@@ -417,7 +417,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
@@ -479,7 +479,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded)
       .next(false) // the device is supported
-      .fork(watchItwOfflineSaga)
+      .fork(watchItwSaga)
       .next()
       .call(shouldExitForOfflineAccess)
       .next()

@@ -38,7 +38,6 @@ const ShareDataScreen = () => {
       "profile.main.privacy.shareData.screen.confirmToast"
     );
     toast.success(message);
-    // eslint-disable-next-line functional/immutable-data
     timeoutRef.current = setTimeout(() => {
       AccessibilityInfo.announceForAccessibilityWithOptions(
         I18n.t("profile.main.privacy.shareData.screen.confirmToast"),

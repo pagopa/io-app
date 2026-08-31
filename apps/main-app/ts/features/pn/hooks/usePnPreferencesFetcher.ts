@@ -1,9 +1,9 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../services/details/store/actions/preference";

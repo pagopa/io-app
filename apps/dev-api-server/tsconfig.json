@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "sourceMap": true,
+    "outDir": "./build",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": false,
+    "types": ["node", "jest"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["build", "node_modules"]
+}

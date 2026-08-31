@@ -1,8 +1,8 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
 import { useNavigation } from "@react-navigation/native";
 import { FunctionComponent } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../../store/hooks";
 import { CgnDetailsParamsList } from "../../navigation/params";

@@ -6,16 +6,19 @@ import { reactotronRedux } from "reactotron-redux";
 const ignoredUrls: RegExp | undefined = /symbolicate/;
 
 export const configureReactotron = () => {
-  const rtt = ReactotronReactNative.configure({
-    name: "IO App"
-  })
+  const rtt = ReactotronReactNative
+    // AsyncStorage handler should be set before anything else
+    .setAsyncStorageHandler(AsyncStorage)
+    .configure({
+      name: "IO App"
+    })
     .useReactNative({
+      asyncStorage: true,
       networking: {
         ignoreUrls: ignoredUrls
       }
     })
     .use(reactotronRedux())
-    .setAsyncStorageHandler(AsyncStorage)
     .connect();
 
   // Let's clear Reactotron on every app loading

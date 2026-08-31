@@ -266,7 +266,10 @@
     },
     "idp_selection": {
       "contextualHelpContent": "**L'Identity Provider è il gestore della tua identità digitale**. Puoi iniziare il tuo flusso di autenticazione solo dopo aver selezionato l'Identity Provider che ha rilasciato la tua identità SPID.\n",
-      "contextualHelpTitle": "Chi è il tuo Identity Provider"
+      "contextualHelpTitle": "Chi è il tuo Identity Provider",
+      "idps": {
+        "loadingAccessibilityLabel": "Caricamento Identity Provider"
+      }
     },
     "landing": {
       "accessibility": {
@@ -798,40 +801,6 @@
     "newvalidemail": {
       "subtitle": "Riceverai le comunicazioni di IO all’indirizzo",
       "title": "Email confermata!"
-    }
-  },
-  "faq": {
-    "1": {
-      "content": "SPID è il sistema di autenticazione che permette a cittadini ed imprese di accedere ai servizi online della pubblica amministrazione e dei privati aderenti con un’identità digitale unica. L’identità SPID è costituita da credenziali (nome utente e password) che vengono rilasciate all’utente e che permettono l’accesso a tutti i servizi online. ",
-      "title": "Cos'è SPID?"
-    },
-    "2": {
-      "content": "Per ottenere le tue credenziali SPID devi rivolgerti a Aruba, EtnaHiTech, Infocamere, Infocert, Namirial, Poste, Register, Sielte, Tim, Lepida o TeamSystem. Questi soggetti (detti identity provider) ti offrono diverse modalità per richiedere e ottenere SPID, puoi scegliere quella più adatta alle tue esigenze. Tutte le informazioni su dove e come chiedere le tue credenziali SPID sul sito [https:\/\/www.spid.gov.it\/cos-e-spid\/come-attivare-spid\/](https:\/\/www.spid.gov.it\/cos-e-spid\/come-attivare-spid\/). \n",
-      "title": "Come puoi ottenere SPID?"
-    },
-    "3": {
-      "content": "Non preoccuparti: puoi recuperarle in qualsiasi momento. Seleziona il tuo Identity Provider per sapere come procedere: [Aruba](https:\/\/guide.pec.it\/spid\/recupero-dati\/procedure-di-recupero-dati-smarriti.aspx), [EtnaID](https:\/\/etnaid.eht.eu\/signup\/forgotPassword), [Infocamere](https:\/\/selfcarespid.infocamere.it\/spid-selfCare\/#RecoveryEmergencyCode),[Infocert](https:\/\/my.infocert.it\/selfcare\/#\/recoveryPin), [Namirial](https:\/\/portale.namirialtsp.com\/private\/user\/spid_reset.php), [Poste](https:\/\/posteid.poste.it\/recuperocredenziali.shtml), [Register, in caso di username dimenticato](https:\/\/spid.register.it\/selfcare\/recovery\/username), [Register, in caso di password dimenticata](https:\/\/spid.register.it\/selfcare\/recovery\/password), [Sielte, in caso di password dimenticata](https:\/\/myid.sieltecloud.it\/profile\/recovery\/forgotPassword), [Tim, in caso di username dimenticata](https:\/\/login.id.tim.it\/mps\/fu.php), [Tim, in caso di password dimenticata](https:\/\/login.id.tim.it\/mps\/fp.php), [Lepida](https:\/\/id.lepida.it\/idm\/app\/recupero_credenziali.jsp), [TeamSystem, in caso di username dimenticata](https:\/\/spid.teamsystem.com\/it\/auth\/usernameLost), [TeamSystem, in caso di password dimenticata](https:\/\/spid.teamsystem.com\/it\/auth\/passwordLost).",
-      "title": "Hai perso le tue credenziali SPID?"
-    },
-    "4": {
-      "content": "La CIE, la Carta d’Identità Elettronica, è un documento elettronico altamente sicuro, dotato di un microprocessore a radiofrequenza che ne permette l’utilizzo in svariati scenari, incluso l’accesso a servizi online. Risponde alle esigenze di sicurezza del nostro paese e sostituisce la versione cartacea.",
-      "title": "Cos'è la CIE?"
-    },
-    "5": {
-      "content": "Puoi collegarti all’indirizzo [https:\/\/www.prenotazionicie.interno.gov.it\/](https:\/\/www.prenotazionicie.interno.gov.it) e digitare il nome del tuo Comune, per verificare se utilizza il sistema di appuntamenti online Agenda CIE. Se sì, puoi procedere alla prenotazione dell'appuntamento direttamente dal sito, senza nessun login. In alternative, puoi chiedere un appuntamento sempre online sul sito del tuo Comune, oppure recandoti ad uno degli uffici comunali.",
-      "title": "Come puoi ottenere la CIE?"
-    },
-    "6": {
-      "content": "L’identità SPID è rilasciata dai Gestori di Identità Digitale (Identity Provider), soggetti privati accreditati da AgID che, nel rispetto delle regole emesse dall’Agenzia, forniscono le identità digitali e gestiscono l’autenticazione degli utenti. Il tuo Identity Provider è il soggetto che hai scelto come fornitore della tua identità SPID.",
-      "title": "Che cos'è un Identity Provider?"
-    },
-    "7": {
-      "content": "Gli Identity Provider forniscono diverse modalità di registrazione gratuitamente o a pagamento e i rispettivi SPID hanno diversi livelli di sicurezza. Ecco alcuni parametri utili da considerare se non hai ancora SPID e stai decidendo a quale Identity Provider rivolgerti:\n\n- Modalità di riconoscimento che ti risulta più comoda in fase di richiesta (di persona, tramite Carta d’Identità Elettronica (CIE)*, Carta Nazionale dei Servizi (CNS), Firma Digitale o tramite webcam);\n- Livello di sicurezza di SPID desiderato;\n- Se sei già cliente di uno degli Identity Provider, potresti avere un flusso di registrazione semplificato;\n- Se sei un cittadino italiano residente all’estero, fai attenzione a chi offre il servizio per l’estero.\n\nPer maggiori informazioni puoi consultare il sito di [SPID](https:\/\/www.spid.gov.it\/cos-e-spid\/come-attivare-spid\/).\n",
-      "title": "Come scegliere un Identity Provider?"
-    },
-    "8": {
-      "content": "Sì, è possibile richiedere più di una identità digitale – anche con diversi livelli di sicurezza – con l’opportunità di rivolgersi a differenti gestori di identità digitale. In caso di possesso di più identità, ogni cittadino è libero di effettuare l'accesso a IO con le credenziali SPID che preferisce.",
-      "title": "È possibile avere più di un'identità digitale?"
     }
   },
   "fastLogin": {
@@ -1566,6 +1535,15 @@
           "title": "Aggiungi il documento al Portafoglio"
         },
         "credentialOffer": {
+          "activation": {
+            "primaryAction": "Attiva IT-Wallet",
+            "subtitle": "Per aggiungere {{ credential }} devi prima attivare il portafoglio IT-Wallet di IO",
+            "title": "Attiva IT-Wallet per continuare"
+          },
+          "confirmIdentity": {
+            "subtitle": "È necessario confermare l’identità associata a {{ wallet }} per aggiungere {{ credential }}",
+            "title": "Conferma la tua identità per aggiungere il documento"
+          },
           "intro": {
             "fallbackTitle": "Aggiungi un documento al tuo Portafoglio"
           }
@@ -2101,6 +2079,10 @@
           "connectionLoading": {
             "subtitle": "Attendi qualche secondo...",
             "title": "In attesa di connessione per la verifica..."
+          },
+          "consentDenied": {
+            "subtitle": "Puoi avviare una nuova verifica premendo “Avvia verifica” dalla sezione Portafoglio.",
+            "title": "Hai interrotto la verifica"
           },
           "engagement": {
             "banner": {

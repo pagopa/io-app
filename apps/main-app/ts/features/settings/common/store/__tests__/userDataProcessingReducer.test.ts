@@ -1,8 +1,8 @@
+import { UserDataProcessing } from "@io-app/api-types/generated/definitions/identity/UserDataProcessing";
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { UserDataProcessing } from "../../../../../../definitions/identity/UserDataProcessing";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/identity/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../../definitions/identity/UserDataProcessingStatus";
 import { clearCache } from "../actions";
 import {
   loadUserDataProcessing,

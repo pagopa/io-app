@@ -1,4 +1,5 @@
-import { createClient } from "../../../../../definitions/idpay/client";
+import { createClient } from "@io-app/api-types/generated/definitions/idpay/client";
+
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
 const createIDPayClient = (baseUrl: string, apiVersion: string) =>

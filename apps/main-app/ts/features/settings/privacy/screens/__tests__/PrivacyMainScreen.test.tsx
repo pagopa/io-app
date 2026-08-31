@@ -1,11 +1,11 @@
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent, within } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import configureMockStore from "redux-mock-store";
 
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/identity/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../../definitions/identity/UserDataProcessingStatus";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

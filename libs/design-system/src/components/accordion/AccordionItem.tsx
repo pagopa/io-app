@@ -1,6 +1,6 @@
+import { LinearGradient } from "expo-linear-gradient";
 import { ReactNode } from "react";
 import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";

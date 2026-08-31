@@ -1,7 +1,7 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import { CommonActions } from "@react-navigation/native";
 import { call, take } from "typed-redux-saga/macro";
 
-import { InitializedProfile } from "../../../../definitions/identity/InitializedProfile";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { ReduxSagaEffect } from "../../../types/utils";

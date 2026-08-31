@@ -1,9 +1,9 @@
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

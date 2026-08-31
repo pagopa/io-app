@@ -622,8 +622,7 @@ describe("itwProximityMachine", () => {
     expect(terminateSession).toHaveBeenCalledTimes(1);
   });
 
-  it("close from ClaimsDisclosure terminates the session and closes the flow", async () => {
-    terminateSession.mockResolvedValue(undefined);
+  it("close from ClaimsDisclosure terminates the session and shows the consent denied failure", () => {
     const actor = createActor(mockedMachine, {
       snapshot: makeSnapshot({ Presentment: "ClaimsDisclosure" })
     });
@@ -631,12 +630,13 @@ describe("itwProximityMachine", () => {
     actor.start();
     actor.send({ type: "close" });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
-      Presentment: "Terminating"
-    });
-    // Allow the terminateProximitySession promise to resolve
-    await new Promise(resolve => setTimeout(resolve, 0));
-    expect(closeProximity).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().value).toBe("Failure");
+    expect(actor.getSnapshot().context.failure?.type).toBe(
+      ProximityFailureType.CONSENT_DENIED
+    );
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
+    expect(terminateSession).toHaveBeenCalledTimes(1);
+    expect(closeProximity).not.toHaveBeenCalled();
   });
 
   it("holder-consent with NFC retrieval moves to StoreConsent", () => {

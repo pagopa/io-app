@@ -1,6 +1,7 @@
-import { StatusEnum as AcivatedStatus } from "../../../../../../definitions/cgn/CardActivated";
-import { CcdbNumber } from "../../../../../../definitions/cgn/CcdbNumber";
-import { EycaCard } from "../../../../../../definitions/cgn/EycaCard";
+import { StatusEnum as AcivatedStatus } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
+import { CcdbNumber } from "@io-app/api-types/generated/definitions/cgn/CcdbNumber";
+import { EycaCard } from "@io-app/api-types/generated/definitions/cgn/EycaCard";
+
 import {
   remoteLoading,
   remoteReady

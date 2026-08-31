@@ -1,9 +1,9 @@
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/communication/OrganizationFiscalCode";
+import { PaymentAmount } from "@io-app/api-types/generated/definitions/communication/PaymentAmount";
+import { PaymentNoticeNumber } from "@io-app/api-types/generated/definitions/communication/PaymentNoticeNumber";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { createStore } from "redux";
 
-import { OrganizationFiscalCode } from "../../../../../../definitions/communication/OrganizationFiscalCode";
-import { PaymentAmount } from "../../../../../../definitions/communication/PaymentAmount";
-import { PaymentNoticeNumber } from "../../../../../../definitions/communication/PaymentNoticeNumber";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { CTA, CTAS } from "../../../../../types/LocalizedCTAs";

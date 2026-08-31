@@ -1,3 +1,8 @@
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { SpecialServiceCategoryEnum } from "@io-app/api-types/generated/definitions/services/SpecialServiceCategory";
+import { StandardServiceCategoryEnum } from "@io-app/api-types/generated/definitions/services/StandardServiceCategory";
 import {
   NonEmptyString,
   OrganizationFiscalCode
@@ -11,11 +16,6 @@ import {
   serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
 } from "..";
-import { ScopeTypeEnum } from "../../../../../../../definitions/services/ScopeType";
-import { ServiceDetails } from "../../../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
-import { SpecialServiceCategoryEnum } from "../../../../../../../definitions/services/SpecialServiceCategory";
-import { StandardServiceCategoryEnum } from "../../../../../../../definitions/services/StandardServiceCategory";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { loadServiceDetail } from "../../actions/details";

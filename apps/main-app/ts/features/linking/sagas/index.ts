@@ -1,14 +1,13 @@
-import { CommonActions } from "@react-navigation/native";
 import { call, put, select } from "typed-redux-saga/macro";
 
-import NavigationService from "../../../navigation/NavigationService";
+import { waitForMainNavigator } from "../../../navigation/saga/navigation";
 import {
   isCGNLinking,
   shouldTriggerWalletUpdate
 } from "../../../utils/deepLinkUtils";
 import { cgnEycaStatus } from "../../bonus/cgn/store/actions/eyca/details";
-import { ITW_ROUTES } from "../../itwallet/navigation/routes";
-import { parseCredentialOfferLink } from "../../itwallet/offer/utils";
+import { handleItwStoredDeepLink } from "../../itwallet/common/saga/linking";
+import { parseItwDeepLink } from "../../itwallet/common/utils/linking";
 import { initiateAarFlow } from "../../pn/aar/store/actions";
 import { isSendAarLink } from "../../pn/aar/utils/deepLinking";
 import { walletUpdate } from "../../wallet/store/actions";
@@ -26,20 +25,18 @@ export function* handleStoredLinkingUrlIfNeeded() {
       return true;
     }
 
-    const credentialOfferLink = parseCredentialOfferLink(storedLinkingUrl);
-    if (credentialOfferLink !== undefined) {
-      yield* put(clearLinkingUrl());
-      yield* call(
-        NavigationService.dispatchNavigationAction,
-        CommonActions.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
-          params: {
-            itwCredentialOfferUri: credentialOfferLink.credentialOfferUri
-          }
-        })
+    const itwDeepLink = parseItwDeepLink(storedLinkingUrl);
+    if (itwDeepLink !== undefined) {
+      yield* call(waitForMainNavigator);
+      const didHandleItwDeepLink = yield* call(
+        handleItwStoredDeepLink,
+        itwDeepLink
       );
 
-      return true;
+      if (didHandleItwDeepLink) {
+        yield* put(clearLinkingUrl());
+        return true;
+      }
     }
 
     if (shouldTriggerWalletUpdate(storedLinkingUrl)) {

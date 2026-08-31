@@ -1,7 +1,6 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { render, waitFor } from "@testing-library/react-native";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 
 import { identityClientManager } from "../../../../api/IdentityClientManager";
 import { useIOSelector } from "../../../../store/hooks";
@@ -30,7 +29,6 @@ jest.mock("../LollipopPlaygroundContent", () => ({
   }
 }));
 
-const mockPublicKey = "mockPublicKey" as unknown as PublicKey;
 const mockSignMessage = jest.fn();
 
 jest.spyOn(identityClientManager, "getClient").mockReturnValue({
@@ -39,14 +37,14 @@ jest.spyOn(identityClientManager, "getClient").mockReturnValue({
 
 const selectorValues = (overrides: {
   keyTag?: string;
-  publicKey?: O.Option<PublicKey>;
+  publicKey?: PublicKey;
   sessionToken?: string;
 }) => {
   const keyTag = "keyTag" in overrides ? overrides.keyTag : "mock-key-tag";
   const sessionToken =
     "sessionToken" in overrides ? overrides.sessionToken : "mock-session-token";
-  const { publicKey = O.some(mockPublicKey) } = overrides;
-
+  const publicKey =
+    "publicKey" in overrides ? overrides.publicKey : "mock-public-yey";
   (useIOSelector as jest.Mock).mockImplementation(selector => {
     if (selector === sessionTokenSelector) {
       return sessionToken;
@@ -95,8 +93,8 @@ describe("LollipopPlayground", () => {
     expect(mockSignMessage).not.toHaveBeenCalled();
   });
 
-  it("should not call signMessage when publicKey is None", () => {
-    selectorValues({ publicKey: O.none });
+  it("should not call signMessage when publicKey is undefined", () => {
+    selectorValues({ publicKey: undefined });
     render(<LollipopPlayground />);
 
     capturedOnSignButtonPress?.("body");

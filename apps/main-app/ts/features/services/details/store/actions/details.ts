@@ -1,6 +1,5 @@
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 
 type ServiceLoadFailurePayload = {
   error: Error;

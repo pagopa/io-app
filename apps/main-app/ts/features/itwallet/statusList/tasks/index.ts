@@ -1,3 +1,4 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
 
@@ -5,7 +6,8 @@ import {
   trackItwStatusListFetchRegistered,
   trackItwStatusListFetchRegisterFailure
 } from "../analytics";
-import { storeLastStatusListCheckTimestamp } from "../utils/storage";
+import { refreshStaleEntries } from "../utils/refresh";
+import { getItwSpecsVersion, storeItwSpecsVersion } from "../utils/storage";
 
 /**
  * Identifier for the ITW Status List background fetch task.
@@ -24,16 +26,13 @@ const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 12;
  * Register the ITW Status List fetch task handler with expo-task-manager.
  * Important: must be defined at module level.
  *
- * Current behavior: stores the background wake-up timestamp (used later for analytics).
- * Status List refresh/fetch logic will be added separately.
+ * Reads the specs version persisted during foreground registration, then refreshes
+ * stale Status List entries without depending on Redux.
  */
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
-    const now = Date.now();
-    await storeLastStatusListCheckTimestamp(now);
-
-    // TODO Add Status List fetch logic here
-
+    const itwVersion = await getItwSpecsVersion();
+    await refreshStaleEntries({ itwVersion });
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch {
     return BackgroundTask.BackgroundTaskResult.Failed;
@@ -41,11 +40,17 @@ TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
 });
 
 /**
- * Registers the ITW Status List background fetch task with expo-background-task
- * if the background task API is available and the task is not already registered.
+ * Persists the current IT-Wallet specs version and registers the Status List
+ * background fetch task when it is not already registered.
+ *
+ * Persisting happens on every call so app updates can change the background
+ * task version without requiring the OS task registration to be recreated.
  */
-export const registerItwStatusListFetchTask = async (): Promise<void> => {
+export const registerItwStatusListFetchTask = async (
+  itwVersion: ItwVersion
+): Promise<void> => {
   try {
+    await storeItwSpecsVersion(itwVersion);
     const isRegistered = await TaskManager.isTaskRegisteredAsync(
       ITW_STATUS_LIST_FETCH_TASK
     );

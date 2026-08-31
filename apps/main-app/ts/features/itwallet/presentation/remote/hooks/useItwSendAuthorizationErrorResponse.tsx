@@ -3,7 +3,7 @@ import { constNull } from "fp-ts/lib/function";
 import { useEffect, useMemo } from "react";
 
 import { OperationResultScreenContentProps } from "../../../../../components/screens/OperationResultScreenContent";
-import { useIoWallet } from "../../../common/utils/itwIoWallet";
+import { useIoWallet } from "../../../common/hooks/useIoWallet";
 import { RemoteFailure, RemoteFailureType } from "../machine/failure";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import { selectUnverifiedRequestObject } from "../machine/selectors";

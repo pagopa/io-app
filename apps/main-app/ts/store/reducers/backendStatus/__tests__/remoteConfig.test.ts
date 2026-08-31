@@ -1,8 +1,8 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { identity } from "lodash";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as appVersion from "../../../../utils/appVersion";
 import { GlobalState } from "../../types";
 import {
@@ -11,6 +11,7 @@ import {
   engagementCGNDiscoveryBannerSelector,
   fimsServiceConfiguration,
   fimsServiceIdInCookieDisabledListSelector,
+  fimsTrackingEnrichedUrlsSelector,
   fseDiscoveryBannerWebUrlSelector,
   generateDynamicUrlSelector,
   isAarInAppDelegationRemoteEnabledSelector,
@@ -335,6 +336,33 @@ describe("remoteConfig", () => {
         "unmatchingConfId"
       );
       expect(serviceConfiguration).toBeUndefined();
+    });
+  });
+
+  describe("fimsTrackingEnrichedUrlsSelector", () => {
+    it("should return the configured URL allowlist", () => {
+      const trackingEnrichedUrls = ["https://trusted.test/callback"];
+      const state = {
+        remoteConfig: O.some({
+          fims: { trackingEnrichedUrls }
+        })
+      } as GlobalState;
+
+      expect(fimsTrackingEnrichedUrlsSelector(state)).toEqual(
+        trackingEnrichedUrls
+      );
+    });
+
+    it("should return an empty allowlist when it is not configured", () => {
+      expect(fimsTrackingEnrichedUrlsSelector(noneStore)).toEqual([]);
+    });
+
+    it("should return an empty allowlist when the FIMS config is empty", () => {
+      const state = {
+        remoteConfig: O.some({ fims: {} })
+      } as GlobalState;
+
+      expect(fimsTrackingEnrichedUrlsSelector(state)).toEqual([]);
     });
   });
 

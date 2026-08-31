@@ -1,9 +1,9 @@
+import { NoticeListWrapResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListWrapResponse";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { NoticeListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeListWrapResponse";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { paymentAnalyticsDataSelector } from "../../../history/store/selectors";

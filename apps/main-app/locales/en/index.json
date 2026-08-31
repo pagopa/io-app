@@ -800,40 +800,6 @@
       "title": "Email confirmed!"
     }
   },
-  "faq": {
-    "1": {
-      "content": "SPID is the authentication system that allows citizens and businesses to access online services provided by the public administration and participating private entities using a single digital identity. The SPID identity consists of credentials (username and password) that are issued to the user and enable access to all online services. ",
-      "title": "What is SPID?"
-    },
-    "2": {
-      "content": "To obtain your SPID credentials, you must contact Aruba, EtnaHiTech, Infocamere, Infocert, Namirial, Poste, Register, Sielte, Tim, Lepida, or TeamSystem. These entities (known as identity providers) offer various ways to apply for and obtain SPID; you can choose the one that best suits your needs. Find all the information on where and how to request your SPID credentials on the website [https:\/\/www.spid.gov.it\/cos-e-spid\/come-attivare-spid\/](https:\/\/www.spid.gov.it\/cos-e-spid\/come-attivare-spid\/). \n",
-      "title": "How can you get SPID?"
-    },
-    "3": {
-      "content": "Don't worry: you can retrieve them at any time. Select your Identity Provider to find out how to proceed: [Aruba](https:\/\/guide.pec.it\/spid\/recupero-dati\/procedure-di-recupero-dati-smarriti.aspx), [EtnaID](https:\/\/etnaid.eht.eu\/signup\/forgotPassword), [Infocamere](https:\/\/selfcarespid.infocamere.it\/spid-selfCare\/#RecoveryEmergencyCode), [Infocert](https:\/\/my.infocert.it\/selfcare\/#\/recoveryPin), [Namirial](https:\/\/portale.namirialtsp.com\/private\/user\/spid_reset.php), [Poste](https:\/\/posteid.poste.it\/recuperocredenziali.shtml), [Register, if you’ve forgotten your username](https:\/\/spid.register.it\/selfcare\/recovery\/username), [Register, if you’ve forgotten your password](https:\/\/spid.register.it\/selfcare\/recovery\/password), [Sielte, if you forgot your password](https:\/\/myid.sieltecloud.it\/profile\/recovery\/forgotPassword), [Tim, if you forgot your username](https:\/\/login.id.tim.it\/mps\/fu.php), [Tim, if you forgot your password](https:\/\/login.id.tim.it\/mps\/fp.php), [Lepida](https:\/\/id.lepida.it\/idm\/app\/recupero_credenziali.jsp), [TeamSystem, if you've forgotten your username](https:\/\/spid.teamsystem.com\/it\/auth\/usernameLost), [TeamSystem, if you've forgotten your password](https:\/\/spid.teamsystem.com\/it\/auth\/passwordLost).",
-      "title": "Lost your SPID credentials?"
-    },
-    "4": {
-      "content": "The CIE, or Electronic Identity Card, is a highly secure electronic document equipped with a radio-frequency microprocessor that allows it to be used in a variety of situations, including access to online services. It meets our country’s security requirements and replaces the paper version.",
-      "title": "What is the CIE?"
-    },
-    "5": {
-      "content": "You can go to [https:\/\/www.prenotazionicie.interno.gov.it\/](https:\/\/www.prenotazionicie.interno.gov.it) and enter the name of your municipality to check whether it uses the Agenda CIE online appointment system. If so, you can book an appointment directly on the website without having to log in. Alternatively, you can request an appointment online through your municipality’s website or by visiting one of the municipal offices.",
-      "title": "How can you get the CIE?"
-    },
-    "6": {
-      "content": "SPID identity is issued by Digital Identity Providers (Identity Providers), private entities accredited by AgID that, in accordance with the rules issued by the Agency, provide digital identities and manage user authentication. Your Identity Provider is the entity you have chosen to provide your SPID identity.",
-      "title": "What is an Identity Provider?"
-    },
-    "7": {
-      "content": "Identity Providers offer various registration options, either free of charge or for a fee, and their respective SPIDs have different security levels. Here are some useful factors to consider if you don’t yet have a SPID and are deciding which Identity Provider to use:\n\n- The verification method that is most convenient for you during the application process (in person, via Electronic ID Card (CIE)*, National Services Card (CNS), digital signature, or via webcam);\n- Your desired SPID security level;\n- If you’re already a customer of one of the Identity Providers, you may be eligible for a simplified registration process;\n- If you’re an Italian citizen living abroad, be sure to check which providers offer services for residents abroad.\n\nFor more information, visit the [SPID](https:\/\/www.spid.gov.it\/cos-e-spid\/come-attivare-spid\/) website.\n",
-      "title": "How to choose an Identity Provider?"
-    },
-    "8": {
-      "content": "Yes, it is possible to apply for more than one digital identity—even with different security levels—and to choose from different digital identity providers. If a citizen has multiple digital identities, they are free to log in to IO using whichever SPID credentials they prefer.",
-      "title": "Is it possible to have more than one digital identity?"
-    }
-  },
   "fastLogin": {
     "loadingScreen": {
       "title": "We are verifying your identity"

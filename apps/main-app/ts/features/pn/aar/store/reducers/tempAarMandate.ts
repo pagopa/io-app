@@ -1,6 +1,6 @@
+import { MandateCreationResponse } from "@io-app/api-types/generated/definitions/pn/aar/MandateCreationResponse";
 import { getType } from "typesafe-actions";
 
-import { MandateCreationResponse } from "../../../../../../definitions/pn/aar/MandateCreationResponse";
 import {
   getValue,
   isError,

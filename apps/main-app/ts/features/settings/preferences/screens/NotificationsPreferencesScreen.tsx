@@ -1,9 +1,9 @@
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
 import { ContentWrapper, useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 
-import { PushNotificationsContentTypeEnum } from "../../../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../definitions/identity/ReminderStatus";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getFlowType } from "../../../../utils/analytics";

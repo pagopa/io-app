@@ -1,10 +1,10 @@
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
+import { NotificationStatusHistory } from "@io-app/api-types/generated/definitions/pn/NotificationStatusHistory";
 import { IOColors, IOVisualCostants, useIOTheme } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
 import { formatStringToSpacedString } from "../../../utils/accessibility.ts";
 import {
   ShowMoreListItem,

@@ -1,3 +1,4 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -7,7 +8,6 @@ import * as matchers from "redux-saga-test-plan/matchers";
 import { Effect } from "redux-saga/effects";
 import { call, take } from "typed-redux-saga/macro";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { getKeyInfo } from "../../../lollipop/saga";
 import {

@@ -118,8 +118,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100155243
-        versionName "3.38.0.9"
+        versionCode 100155259
+        versionName "3.38.0.25"
         multiDexEnabled true
         manifestPlaceholders = [usesCleartextTraffic: "true"]
         // The resConfigs attribute will remove all not required localized resources while building the application,
@@ -203,8 +203,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     // Specifing this avoid :app:checkDebugDuplicateClasses failure
     implementation "com.google.guava:guava:27.0.1-android"
-    // Required by react-native-image-picker because we target a minSdkVersion < 30. In can be removed when we target minSdkVersion >= 30.
-    // https://github.com/react-native-image-picker/react-native-image-picker?tab=readme-ov-file#android-1
+    // Required by expo-image-picker because we target a minSdkVersion < 30. Can be removed when we target minSdkVersion >= 30.
     implementation("androidx.activity:activity:1.9.+")
 
     // Google Play In-App Review API (Requires google() Maven repository)  

@@ -1,7 +1,7 @@
+import { EycaCard } from "@io-app/api-types/generated/definitions/cgn/EycaCard";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 import {
   isReady,
   remoteError,

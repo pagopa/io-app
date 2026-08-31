@@ -1,10 +1,10 @@
+import { Otp } from "@io-app/api-types/generated/definitions/cgn/Otp";
+import { OtpCode } from "@io-app/api-types/generated/definitions/cgn/OtpCode";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 
 import { cgnGenerateOtp } from "..";
-import { Otp } from "../../../../../../../../definitions/cgn/Otp";
-import { OtpCode } from "../../../../../../../../definitions/cgn/OtpCode";
 import { getGenericError } from "../../../../../../../utils/errors";
 import { setMerchantDiscountCode } from "../../../../store/actions/merchants";
 import { cgnGenerateOtp as cgnGenerateOtpAction } from "../../../../store/actions/otp";

@@ -9,16 +9,15 @@ import {
   getFirstNameFromCredential,
   getFiscalCodeFromCredential
 } from "../../../common/utils/itwClaimsUtils";
-import {
-  getCredentialStatus,
-  getCredentialStatusObject
-} from "../../../common/utils/itwCredentialStatusUtils";
+import { shouldRefillBatch } from "../../../common/utils/itwCredentialIssuanceUtils";
+import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialFormat,
   CredentialMetadata,
   ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
+import { DISPLAY_FORMAT_PRIORITY } from "../../utils/format";
 
 type CredentialsByType = {
   [K: string]: Record<CredentialFormat, CredentialMetadata>;
@@ -27,10 +26,9 @@ type CredentialsByType = {
 /**
  * Resolves the credential to display for a given format.
  *
- * When the requested format is SD-JWT (the default for display), it resolves in order:
- * 1. `dc+sd-jwt` (current SD-JWT format)
- * 2. `vc+sd-jwt` (older SD-JWT format still present in some wallets)
- * 3. `mso_mdoc` (fallback for credentials issued only in mDoc format, e.g. proof of age)
+ * When the requested format is SD-JWT (the default for display), it falls back to the other
+ * formats following {@link DISPLAY_FORMAT_PRIORITY}, so that credentials issued only as mDoc
+ * (e.g. proof of age) are still resolved.
  *
  * For any other requested format the exact format is returned, with no fallback.
  */
@@ -39,10 +37,9 @@ const withDisplayFormatFallback = (
   format: CredentialFormat
 ) => {
   if (format === CredentialFormat.SD_JWT) {
-    return (
-      credential?.[format] ??
-      credential?.[CredentialFormat.LEGACY_SD_JWT] ??
-      credential?.[CredentialFormat.MDOC]
+    return DISPLAY_FORMAT_PRIORITY.reduce<CredentialMetadata | undefined>(
+      (acc, f) => acc ?? credential?.[f],
+      undefined
     );
   }
   return credential?.[format];
@@ -237,14 +234,13 @@ export const itwHasWalletAtLeastTwoCredentialsSelector = createSelector(
 );
 
 /**
- * Get the credential status and the error message corresponding to the status assertion error, if present.
- * The message is dynamic and extracted from the issuer configuration.
+ * Get the credential status corresponding to the status list/status assertion error, if present.
  *
  * Note: the credential type is passed as second argument to reuse the same selector and cache per credential type.
  *
  * @param state - The global state.
  * @param type - The credential type.
- * @returns The credential status and the error message corresponding to the status assertion error, if present.
+ * @returns The credential status corresponding to the status assertion error, if present.
  */
 export const itwCredentialStatusSelector = createSelector(
   itwCredentialsSelector,
@@ -252,18 +248,20 @@ export const itwCredentialStatusSelector = createSelector(
   (credentials, type) => {
     // This should never happen
     if (credentials[type] === undefined) {
-      return { status: undefined, message: undefined };
+      return { status: undefined };
     }
 
-    return getCredentialStatusObject(credentials[type]);
+    return { status: getCredentialStatus(credentials[type]) };
   }
 );
 
 /**
- * Returns the credential status and the error message corresponding to the status assertion error, if present.
+ * Returns the credential status for the eID.
+ *
+ * Note that this status is determined only by the SD-JWT credential, and does not use status assertion/status list.
  *
  * @param state - The global state.
- * @returns The credential status and the error message corresponding to the status assertion error, if present.
+ * @returns The eID's JWT status.
  */
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,
@@ -324,21 +322,17 @@ export const itwCredentialsListByTypeSelector = (key: string) =>
   );
 
 /**
- * Returns whether the wallet has at least one credential that is expiring or expired.
+ * Returns the types of the one-time-use credentials that are down to their refill threshold.
  *
- * @param state - The global state.
- * @returns Whether the wallet has at least one expiring or expired credential.
+ * Types are deduplicated: the same credential may be stored in multiple formats, but it is
+ * renewed once for all of them.
  */
-export const itwHasExpiringCredentialsSelector = createSelector(
-  itwCredentialsSelector,
-  credentials => {
-    const statuses = Object.values(credentials).map(credential =>
-      getCredentialStatus(credential)
-    );
-    return statuses.some(
-      status => status === "jwtExpiring" || status === "jwtExpired"
-    );
-  }
+export const itwCredentialsToRefillSelector = createSelector(
+  itwAllStoredCredentialsSelector,
+  (credentials): ReadonlyArray<string> =>
+    Array.from(
+      new Set(credentials.filter(shouldRefillBatch).map(c => c.credentialType))
+    )
 );
 
 /**

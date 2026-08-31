@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { TextInputValidationRefProps } from "@io-app/design-system";
 import { useIsFocused } from "@react-navigation/native";
 import { RefObject, useEffect, useRef } from "react";

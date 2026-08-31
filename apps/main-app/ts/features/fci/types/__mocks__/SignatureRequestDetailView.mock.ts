@@ -1,15 +1,14 @@
-import { EmailString, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-
-import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
-import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
-import { IssuerEnvironmentEnum } from "../../../../../definitions/fci/IssuerEnvironment";
-import { ProblemJson } from "../../../../../definitions/fci/ProblemJson";
-import { SignatureField } from "../../../../../definitions/fci/SignatureField";
+import { TypeEnum as ClausesTypeEnum } from "@io-app/api-types/generated/definitions/fci/Clause";
+import { DocumentDetailView } from "@io-app/api-types/generated/definitions/fci/DocumentDetailView";
+import { IssuerEnvironmentEnum } from "@io-app/api-types/generated/definitions/fci/IssuerEnvironment";
+import { ProblemJson } from "@io-app/api-types/generated/definitions/fci/ProblemJson";
+import { SignatureField } from "@io-app/api-types/generated/definitions/fci/SignatureField";
 import {
   SignatureRequestDetailView,
   SignatureRequestDetailViewIssuer
-} from "../../../../../definitions/fci/SignatureRequestDetailView";
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
+} from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
+import { EmailString, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 const now = new Date();
 

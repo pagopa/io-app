@@ -1,3 +1,4 @@
+import { SearchItem } from "@io-app/api-types/generated/definitions/cgn/merchants/SearchItem";
 import {
   Body,
   ContentWrapper,
@@ -24,7 +25,6 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";
 import { getValue } from "../../../../../common/model/RemoteValue";
 import { useDebouncedValue } from "../../../../../hooks/useDebouncedValue";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";

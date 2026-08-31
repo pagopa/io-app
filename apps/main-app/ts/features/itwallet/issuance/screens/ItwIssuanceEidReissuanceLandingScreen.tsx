@@ -9,6 +9,10 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
+import {
+  isStartupLoaded,
+  StartupStatusEnum
+} from "../../../../store/reducers/startup";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
@@ -112,8 +116,14 @@ type Props = {
  */
 const NavigateToEidIssuanceMachine = ({ eidReissuing }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const startupStatus = useIOSelector(isStartupLoaded);
 
   const handleNavigation = useCallback(() => {
+    if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
+      // Skip navigation until the startup process is completed and the user is authenticated
+      return;
+    }
+
     if (eidReissuing) {
       return navigation.replace(ITW_ROUTES.IDENTIFICATION.MODE_SELECTION, {
         eidReissuing: true,
@@ -123,7 +133,7 @@ const NavigateToEidIssuanceMachine = ({ eidReissuing }: Props) => {
     navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
       animationEnabled: false
     });
-  }, [navigation, eidReissuing]);
+  }, [startupStatus, navigation, eidReissuing]);
 
   useOnFirstRender(handleNavigation);
 

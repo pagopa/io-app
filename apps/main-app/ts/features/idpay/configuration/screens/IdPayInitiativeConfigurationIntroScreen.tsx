@@ -14,7 +14,6 @@ import { View } from "react-native";
 
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import { IdPayConfigurationParamsList } from "../navigation/params";
@@ -63,7 +62,6 @@ export const IdPayInitiativeConfigurationIntroScreen = () => {
           onPress: handleContinuePress
         }
       }}
-      contextualHelp={emptyContextualHelp}
       description={I18n.t("idpay.configuration.intro.body")}
       headerActionsProp={{
         showHelp: true

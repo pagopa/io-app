@@ -1,6 +1,6 @@
+import * as Calendar from "expo-calendar";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
-import { Calendar } from "react-native-calendar-events";
 
 import CalendarsListContainer from "../../../../components/CalendarsListContainer";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -10,12 +10,6 @@ import {
   preferredCalendarSaveSuccess
 } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch } from "../../../../store/hooks";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.calendar.contextualHelpTitle",
-  body: "profile.preferences.calendar.contextualHelpContent"
-};
 
 /**
  * Allows the user to select one of the device available Calendars
@@ -25,7 +19,7 @@ const CalendarsPreferencesScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const preferredCalendarSaveSuccessDispatch = useCallback(
-    (calendar: Calendar) =>
+    (calendar: Calendar.Calendar) =>
       dispatch(
         preferredCalendarSaveSuccess({
           preferredCalendar: calendar
@@ -45,7 +39,6 @@ const CalendarsPreferencesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelpMarkdown={contextualHelpMarkdown}
       description={I18n.t("messages.cta.reminderCalendarSelect")}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins

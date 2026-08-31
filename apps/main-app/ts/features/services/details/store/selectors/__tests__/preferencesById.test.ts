@@ -1,3 +1,4 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 
@@ -7,7 +8,6 @@ import {
   servicePreferencePotByIdSelector,
   servicePreferenceResponseSuccessByIdSelector
 } from "..";
-import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { getNetworkError, NetworkError } from "../../../../../../utils/errors";

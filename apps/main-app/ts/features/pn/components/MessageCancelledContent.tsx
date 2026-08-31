@@ -1,7 +1,6 @@
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
 import { Alert, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
-
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 
 export type MessageCancelledContentProps = {
   isCancelled?: boolean;

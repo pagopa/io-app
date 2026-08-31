@@ -1,3 +1,5 @@
+import { EmailAddress } from "@io-app/api-types/generated/definitions/identity/EmailAddress";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { act, fireEvent } from "@testing-library/react-native";
 import { pipe } from "fp-ts/lib/function";
@@ -5,8 +7,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { createStore, PreloadedState } from "redux";
 
-import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

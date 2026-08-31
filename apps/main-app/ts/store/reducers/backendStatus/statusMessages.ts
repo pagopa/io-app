@@ -1,10 +1,10 @@
+import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
+import { StatusMessage } from "@io-app/api-types/generated/definitions/content/StatusMessage";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { StatusMessage } from "../../../../definitions/content/StatusMessage";
 import { backendStatusLoadSuccess } from "../../actions/backendStatus";
 import { Action } from "../../actions/types";
 import { currentRouteSelector } from "../navigation";

@@ -6,7 +6,6 @@ import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton.t
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
   trackFciTosDocPreview,
   trackFciTosDocPreviewFailure,
@@ -32,7 +31,6 @@ export const FciDocumentPreviewScreen = (
 
   useHeaderSecondLevel({
     title: I18n.t("messagePDFPreview.title"),
-    contextualHelp: emptyContextualHelp,
     supportRequest: true,
     goBack: () => dispatch(fciDownloadPreviewClear({ path: fciDownloadPath }))
   });

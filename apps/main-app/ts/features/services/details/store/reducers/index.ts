@@ -1,9 +1,9 @@
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {

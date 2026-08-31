@@ -42,7 +42,8 @@ export const useCredentialEventsTracking = ({
     const credential = getMixPanelCredential(credentialType, isItwL3);
 
     if (
-      failure.type === CredentialIssuanceFailureType.INVALID_STATUS &&
+      failure.type ===
+        CredentialIssuanceFailureType.INVALID_STATUS_BY_ASSERTION &&
       invalidErrorCode === "credential_not_found"
     ) {
       return trackCredentialNotEntitledFailure({
@@ -53,7 +54,10 @@ export const useCredentialEventsTracking = ({
       });
     }
 
-    if (failure.type === CredentialIssuanceFailureType.INVALID_STATUS) {
+    if (
+      failure.type === CredentialIssuanceFailureType.INVALID_STATUS_BY_TSL ||
+      failure.type === CredentialIssuanceFailureType.INVALID_STATUS_BY_ASSERTION
+    ) {
       return trackCredentialInvalidStatusFailure({
         caused_by: "CredentialIssuer",
         reason: invalidErrorCode,

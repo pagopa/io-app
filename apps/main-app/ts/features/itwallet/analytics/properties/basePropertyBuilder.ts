@@ -9,15 +9,14 @@ import {
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import {
   isL2Credential,
-  isNewCredential,
   validCredentialStatuses
 } from "../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialsSelector
 } from "../../credentials/store/selectors";
-import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { mapPIDStatusToMixpanel } from "../utils";
 import {
@@ -166,20 +165,16 @@ export const computeItwStatus = (
 };
 
 /**
- * Builds the aggregate Mixpanel status for third-party credentials.
- * The property ignores PID and historical L2 credentials because it tracks only
- * credentials obtained through the third-party/catalogue channel.
+ * Builds the aggregate Mixpanel status for third-party credentials, i.e. credentials
+ * obtained through a third-party credential offer (deeplink/QR code). Ignores PID and
+ * historical L2 credentials, which are tracked by their own dedicated properties.
  */
 export const buildThirdPartyCredentialProperty = (
   state: GlobalState
 ): ItwThirdPartyCredentials => {
-  const catalogueByType = itwCredentialsCatalogueByTypesSelector(state);
-
   const thirdPartyCredentials = Object.values(
     itwCredentialsSelector(state)
-  ).filter(({ credentialType }) =>
-    isThirdPartyCredentialType(credentialType, catalogueByType)
-  );
+  ).filter(isThirdPartyCredential);
 
   if (thirdPartyCredentials.length === 0) {
     return "not_available";
@@ -192,16 +187,17 @@ export const buildThirdPartyCredentialProperty = (
     : "not_valid";
 };
 
+/**
+ * Builds the aggregate Mixpanel status for credentials obtained through the credentials
+ * catalogue/list. Ignores PID and historical L2 credentials, which are tracked by their
+ * own dedicated properties.
+ */
 export const buildWalletListCredentialProperty = (
   state: GlobalState
 ): ItwWalletListCredential => {
-  const catalogueByType = itwCredentialsCatalogueByTypesSelector(state);
-
   const walletListCredentials = Object.values(
     itwCredentialsSelector(state)
-  ).filter(({ credentialType }) =>
-    isWalletListCredentialType(credentialType, catalogueByType)
-  );
+  ).filter(isWalletListCredential);
 
   if (walletListCredentials.length === 0) {
     return "not_available";
@@ -213,18 +209,19 @@ export const buildWalletListCredentialProperty = (
     ? "valid"
     : "not_valid";
 };
-const isThirdPartyCredentialType = (
-  credentialType: string,
-  catalogueByType: ReturnType<typeof itwCredentialsCatalogueByTypesSelector>
-) =>
+
+const isThirdPartyCredential = ({
+  credentialType,
+  origin
+}: CredentialMetadata) =>
   credentialType !== CredentialType.PID &&
   !isL2Credential(credentialType) &&
-  (isNewCredential(credentialType) ||
-    catalogueByType?.[credentialType] !== undefined);
-const isWalletListCredentialType = (
-  credentialType: string,
-  catalogueByType: ReturnType<typeof itwCredentialsCatalogueByTypesSelector>
-) =>
+  origin === "credentialOffer";
+
+const isWalletListCredential = ({
+  credentialType,
+  origin
+}: CredentialMetadata) =>
   credentialType !== CredentialType.PID &&
   !isL2Credential(credentialType) &&
-  catalogueByType?.[credentialType] !== undefined;
+  origin === "catalogue";
