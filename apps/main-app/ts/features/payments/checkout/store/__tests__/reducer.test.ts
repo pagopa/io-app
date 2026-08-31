@@ -42,7 +42,6 @@ describe("payments checkout reducer index.ts", () => {
    * failure states.
    *
    * @example
-   *   ```typescript
    *   testActionPattern(
    *     myActionCreator,
    *     { id: 1 }, // requestParams
@@ -50,7 +49,6 @@ describe("payments checkout reducer index.ts", () => {
    *     { data: "success", loading: false }, // expectedSuccessState
    *     state => state.myFeature // stateSelector
    *   );
-   *   ```;
    *
    * @param actionCreator - An object containing the action creators for
    *   request, success, and failure.

@@ -27,7 +27,6 @@ type UseMaxBrightnessOptions = {
  * restoring original settings
  *
  * @example
- *   ```tsx
  *   // Basic usage
  *   useMaxBrightness();
  *
@@ -36,7 +35,6 @@ type UseMaxBrightnessOptions = {
  *     useSmoothTransition: true,
  *     transitionDuration: 2000
  *   });
- *   ```;
  *
  * @see {@link UseMaxBrightnessOptions} for configuration options
  */
@@ -207,12 +205,10 @@ export function useMaxBrightness({
  * It accepts the same configuration options as `useMaxBrightness` via props.
  *
  * @example
- *   ```tsx
  *   // Basic usage
  *   <MaxBrightness />
  *   // With smooth transition
  *   <MaxBrightness useSmoothTransition={true} transitionDuration={2000} />
- *   ```;
  *
  * @param props - Configuration options for brightness management
  * @returns React.ReactNode that applies max brightness behavior when rendered

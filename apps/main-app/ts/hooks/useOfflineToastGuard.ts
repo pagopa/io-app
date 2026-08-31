@@ -23,13 +23,11 @@ import { trackOfflineActionNotAllowed } from "../utils/analytics.ts";
  * `offlineAccessReason` is `undefined`.
  *
  * @example
- *   ```typescript
  *   // Create a guarded action. The toast will show if any offline condition is detected.
  *   const guardedAction = useOfflineToastGuard(performSomeAction);
  *
  *   // Call the guarded action
  *   guardedAction(arg1, arg2); // performSomeAction will only run if online and no issues.
- *   ```;
  *
  * @param fn The function to execute when the application is determined to be
  *   online and no specific offline access reasons are present.
