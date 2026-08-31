@@ -1,7 +1,8 @@
-import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
-import { WalletInfo as EcommerceWalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { Bundle } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/Bundle";
+import { PaymentRequestsGetResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { WalletInfo as EcommerceWalletInfo } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletInfo";
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
+
 import { PaymentStartOrigin } from "../../checkout/types";
 
 export type PaymentAnalyticsBrowserType = "inapp_browser" | "webview";

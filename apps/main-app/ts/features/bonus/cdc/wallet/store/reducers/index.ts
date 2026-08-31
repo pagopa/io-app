@@ -1,7 +1,7 @@
+import { CitizenStatus } from "@io-app/api-types/generated/definitions/cdc/CitizenStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { CitizenStatus } from "../../../../../../../definitions/cdc/CitizenStatus";
 import { Action } from "../../../../../../store/actions/types";
 import { NetworkError } from "../../../../../../utils/errors";
 import { getCdcStatusWallet } from "../actions";

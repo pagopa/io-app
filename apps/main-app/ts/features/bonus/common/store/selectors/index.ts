@@ -1,11 +1,11 @@
+import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
+import { BonusesAvailable } from "@io-app/api-types/generated/definitions/content/BonusesAvailable";
+import { BonusVisibilityEnum } from "@io-app/api-types/generated/definitions/content/BonusVisibility";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
-import { BonusAvailable } from "../../../../../../definitions/content/BonusAvailable";
-import { BonusesAvailable } from "../../../../../../definitions/content/BonusesAvailable";
-import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { mapBonusIdFeatureFlag } from "../../utils";
 import { AvailableBonusTypesState } from "../reducers/availableBonusesTypes";

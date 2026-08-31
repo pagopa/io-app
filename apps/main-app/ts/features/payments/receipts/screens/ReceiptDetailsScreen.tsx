@@ -1,3 +1,4 @@
+import { OriginEnum } from "@io-app/api-types/generated/definitions/pagopa/biz-events/InfoNotice";
 import {
   Alert,
   ContentWrapper,
@@ -12,13 +13,11 @@ import I18n from "i18next";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
-import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { FAQsCategoriesType } from "../../../../utils/faq";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import * as analytics from "../analytics";
@@ -151,7 +150,6 @@ const ReceiptDetailsScreen = () => {
       I18n.t("transaction.details.title"),
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef,
-    faqCategories: ["wallet_transaction" as FAQsCategoriesType],
     supportRequest: true
   });
 

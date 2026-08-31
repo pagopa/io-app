@@ -1,4 +1,7 @@
-import type { ItwVersion } from "@pagopa/io-react-native-wallet";
+import type {
+  CredentialIssuance,
+  ItwVersion
+} from "@pagopa/io-react-native-wallet";
 
 import * as O from "fp-ts/Option";
 import { fromPromise } from "xstate";
@@ -243,8 +246,10 @@ const enrichBundlesWithStatusList = async (
 
       const { status, rawStatus, uri, idx, parsedStatusList } =
         await getCredentialStatusFromStatusList(
-          bundle,
           itwVersion,
+          bundle.credential,
+          bundle.metadata.credentialId,
+          bundle.metadata.format as CredentialIssuance.CredentialFormat,
           issuerConf.keys
         );
 

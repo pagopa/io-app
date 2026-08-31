@@ -1,10 +1,10 @@
+import { WalletClientStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletClientStatus";
+import { Wallets } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/Wallets";
+import { WalletStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletStatus";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { WalletClientStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletClientStatus";
-import { Wallets } from "../../../../../../../definitions/pagopa/ecommerce/Wallets";
-import { WalletStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletStatus";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { paymentsGetPaymentUserMethodsAction } from "../../../store/actions/networking";

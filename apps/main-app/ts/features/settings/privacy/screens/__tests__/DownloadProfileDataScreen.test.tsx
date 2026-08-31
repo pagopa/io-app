@@ -1,8 +1,8 @@
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/identity/UserDataProcessingChoice";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as hooks from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";

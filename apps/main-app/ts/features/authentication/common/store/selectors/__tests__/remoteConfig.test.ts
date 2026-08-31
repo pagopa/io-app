@@ -1,6 +1,6 @@
+import { OneIdentityConfig } from "@io-app/api-types/generated/definitions/content/OneIdentityConfig";
 import * as O from "fp-ts/lib/Option";
 
-import { OneIdentityConfig } from "../../../../../../../definitions/content/OneIdentityConfig";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { OneIdentityEnv } from "../../reducers/loginConfig";
 import {

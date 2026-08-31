@@ -26,7 +26,6 @@ import { PinString } from "../../../../../types/PinString";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { getFlowType } from "../../../../../utils/analytics";
 import { PIN_LENGTH_SIX } from "../../../../../utils/constants";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { isDevEnv } from "../../../../../utils/environment";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
@@ -40,11 +39,6 @@ import usePinValidationBottomSheet from "../../hooks/usePinValidationBottomSheet
 
 const CREATION_INDEX = 0;
 const CONFIRMATION_INDEX = 1;
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "onboarding.unlockCode.contextualHelpTitle",
-  body: "onboarding.unlockCode.contextualHelpContent"
-};
 
 export type Props = {
   isOnboarding?: boolean;
@@ -135,7 +129,6 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    contextualHelpMarkdown,
     goBack
   });
 

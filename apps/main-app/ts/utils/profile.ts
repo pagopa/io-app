@@ -1,7 +1,7 @@
+import { Municipality } from "@io-app/api-types/generated/definitions/content/Municipality";
+import { FiscalCode } from "@io-app/api-types/generated/definitions/identity/FiscalCode";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { Municipality } from "../../definitions/content/Municipality";
-import { FiscalCode } from "../../definitions/identity/FiscalCode";
 import { pad } from "./dates";
 
 /**

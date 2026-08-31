@@ -1,3 +1,5 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { ServiceMetadata } from "@io-app/api-types/generated/definitions/services/ServiceMetadata";
 import {
   Divider,
   IOVisualCostants,
@@ -10,8 +12,6 @@ import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { ServiceMetadata } from "../../../../../definitions/services/ServiceMetadata";
 import { useIOSelector } from "../../../../store/hooks";
 import { handleItemOnPress } from "../../../../utils/url";
 import * as analytics from "../../common/analytics";

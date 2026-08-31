@@ -1,13 +1,11 @@
 import { Divider, ListItemNav, VSpacer } from "@io-app/design-system";
 import {
+  DocumentPickerAsset,
   DocumentPickerOptions,
-  DocumentPickerResponse,
-  NonEmptyArray,
-  pick,
-  types
-} from "@react-native-documents/picker";
+  getDocumentAsync
+} from "expo-document-picker";
+import * as ImagePicker from "expo-image-picker";
 import * as A from "fp-ts/lib/Array";
-import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
@@ -15,11 +13,6 @@ import * as TE from "fp-ts/lib/TaskEither";
 import I18n from "i18next";
 import { JSX, useState } from "react";
 import { Alert, Linking, View } from "react-native";
-import {
-  ImageLibraryOptions,
-  ImagePickerResponse,
-  launchImageLibrary
-} from "react-native-image-picker";
 
 import { useIOStore } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -95,15 +88,14 @@ type IOBarcodeFileReaderConfiguration = {
   ) => void;
 };
 
-const imageLibraryOptions: ImageLibraryOptions = {
-  mediaType: "photo",
-  includeBase64: true
+const imageLibraryOptions: ImagePicker.ImagePickerOptions = {
+  mediaTypes: "images",
+  base64: true
 };
 
 const documentPickerOptions: DocumentPickerOptions = {
-  presentationStyle: "fullScreen",
-  mode: "open",
-  type: [types.pdf]
+  type: "application/pdf",
+  copyToCacheDirectory: true
 };
 
 const useIOBarcodeFileReader = ({
@@ -130,35 +122,16 @@ const useIOBarcodeFileReader = ({
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
    */
-  const onImageSelected = async (response: ImagePickerResponse) => {
-    if (response.didCancel) {
+  const onImageSelected = async (result: ImagePicker.ImagePickerResult) => {
+    if (result.canceled) {
       setIsLoading(false);
-      return;
-    }
-
-    if (response.errorCode) {
-      Alert.alert(
-        I18n.t("wallet.QRtoPay.settingsAlert.title"),
-        I18n.t("wallet.QRtoPay.settingsAlert.message"),
-        [
-          {
-            text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
-            onPress: () => void Linking.openSettings()
-          }
-        ],
-        { cancelable: false }
-      );
       return;
     }
 
     setIsLoading(true);
 
     await pipe(
-      response.assets,
+      result.assets,
       O.fromNullable,
       O.chain(A.head),
       O.map(({ base64 }) => base64),
@@ -180,18 +153,37 @@ const useIOBarcodeFileReader = ({
   const showImagePicker = async () => {
     setIsLoading(true);
 
-    void launchImageLibrary(imageLibraryOptions, onImageSelected);
+    try {
+      const result =
+        await ImagePicker.launchImageLibraryAsync(imageLibraryOptions);
+      await onImageSelected(result);
+    } catch {
+      setIsLoading(false);
+      Alert.alert(
+        I18n.t("wallet.QRtoPay.settingsAlert.title"),
+        I18n.t("wallet.QRtoPay.settingsAlert.message"),
+        [
+          {
+            text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
+            onPress: () => void Linking.openSettings()
+          }
+        ],
+        { cancelable: false }
+      );
+    }
   };
 
   /**
    * Handles the Barcode decoding from a PDF document
    */
-  const onDocumentSelected = async (
-    documentPickerResponse: NonEmptyArray<DocumentPickerResponse>
-  ) => {
-    const { uri, type } = documentPickerResponse[0];
+  const onDocumentSelected = async (asset: DocumentPickerAsset) => {
+    const { uri, mimeType } = asset;
 
-    if (type !== "application/pdf") {
+    if (mimeType !== "application/pdf") {
       // If the file is not a PDF document, show an error
       return onBarcodeError({ reason: "INVALID_FILE" }, "file");
     }
@@ -237,11 +229,16 @@ const useIOBarcodeFileReader = ({
    */
   const showDocumentPicker = async () => {
     setIsLoading(true);
-    await pipe(
-      TE.tryCatch(() => pick(documentPickerOptions), E.toError),
-      TE.map(onDocumentSelected),
-      TE.mapLeft(() => setIsLoading(false))
-    )();
+    try {
+      const result = await getDocumentAsync(documentPickerOptions);
+      if (result.canceled || result.assets.length === 0) {
+        setIsLoading(false);
+        return;
+      }
+      void onDocumentSelected(result.assets[0]);
+    } catch {
+      setIsLoading(false);
+    }
   };
 
   const handleImageUploadPressed = async () => {

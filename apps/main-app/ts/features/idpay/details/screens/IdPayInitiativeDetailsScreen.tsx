@@ -1,4 +1,10 @@
 import {
+  InitiativeDTO,
+  InitiativeRewardTypeEnum,
+  VoucherStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import {
   Body,
   ContentWrapper,
   H6,
@@ -18,12 +24,6 @@ import { useCallback, useLayoutEffect } from "react";
 import { Linking, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 
-import {
-  InitiativeDTO,
-  InitiativeRewardTypeEnum,
-  VoucherStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";

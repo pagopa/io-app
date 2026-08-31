@@ -6,10 +6,7 @@ import {
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 
-import {
-  SupportRequestParams,
-  useStartSupportRequest
-} from "./useStartSupportRequest";
+import { useStartSupportRequest } from "./useStartSupportRequest";
 
 export type BackProps =
   | {
@@ -47,8 +44,7 @@ interface HeaderNoActionProps extends HeaderBaseProps {
 
 type HeaderProps = BackProps &
   HeaderActionsProps &
-  Pick<HeaderSecondLevelProps, "scrollValues" | "title"> &
-  SupportRequestParams;
+  Pick<HeaderSecondLevelProps, "scrollValues" | "title">;
 
 type HeaderSecondLevelProps = ComponentProps<typeof HeaderSecondLevel>;
 
@@ -72,18 +68,11 @@ export const useHeaderProps = ({
   title,
   headerType,
   scrollValues,
-  contextualHelp,
-  contextualHelpMarkdown,
-  faqCategories,
   showHelp,
   secondAction,
   thirdAction
 }: HeaderProps): HeaderSecondLevelProps => {
-  const startSupportRequest = useStartSupportRequest({
-    contextualHelp,
-    contextualHelpMarkdown,
-    faqCategories
-  });
+  const startSupportRequest = useStartSupportRequest();
   return useMemo(() => {
     const baseHeaderProps = {
       goBack,

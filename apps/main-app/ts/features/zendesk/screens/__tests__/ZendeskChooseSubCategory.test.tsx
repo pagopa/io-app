@@ -1,8 +1,8 @@
+import { ZendeskCategory } from "@io-app/api-types/generated/definitions/content/ZendeskCategory";
+import { ZendeskSubCategories } from "@io-app/api-types/generated/definitions/content/ZendeskSubCategories";
 import { RenderAPI } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
 
-import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
-import { ZendeskSubCategories } from "../../../../../definitions/content/ZendeskSubCategories";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";

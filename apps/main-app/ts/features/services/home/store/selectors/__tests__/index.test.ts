@@ -1,3 +1,7 @@
+import { FeaturedService } from "@io-app/api-types/generated/definitions/services/FeaturedService";
+import { FeaturedServices } from "@io-app/api-types/generated/definitions/services/FeaturedServices";
+import { InstitutionsResource } from "@io-app/api-types/generated/definitions/services/InstitutionsResource";
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/services/OrganizationFiscalCode";
 import MockDate from "mockdate";
 import { Action } from "redux";
 
@@ -12,10 +16,6 @@ import {
   paginatedInstitutionsLastPageSelector,
   paginatedInstitutionsSelector
 } from "..";
-import { FeaturedService } from "../../../../../../../definitions/services/FeaturedService";
-import { FeaturedServices } from "../../../../../../../definitions/services/FeaturedServices";
-import { InstitutionsResource } from "../../../../../../../definitions/services/InstitutionsResource";
-import { OrganizationFiscalCode } from "../../../../../../../definitions/services/OrganizationFiscalCode";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";

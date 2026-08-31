@@ -1,3 +1,5 @@
+import { ExistingSignatureFieldAttrs } from "@io-app/api-types/generated/definitions/fci/ExistingSignatureFieldAttrs";
+import { SignatureFieldToBeCreatedAttrs } from "@io-app/api-types/generated/definitions/fci/SignatureFieldToBeCreatedAttrs";
 import {
   ContentWrapper,
   FooterActions,
@@ -20,8 +22,6 @@ import { StyleSheet, View } from "react-native";
 import Pdf, { PdfRef } from "react-native-pdf";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
-import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
 import { ButtonBlockProps } from "../../../components/ui/utils/buttons";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton.ts";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";

@@ -1,8 +1,8 @@
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 
-import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

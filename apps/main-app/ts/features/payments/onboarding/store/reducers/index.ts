@@ -1,8 +1,8 @@
+import { PaymentMethodsResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { WalletCreateResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletCreateResponse";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
-import { WalletCreateResponse } from "../../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {

@@ -1,10 +1,10 @@
+import { DiscountCodeTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountCodeType";
+import { OnlineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchant";
+import { ProductCategoryEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 
-import { DiscountCodeTypeEnum } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { OnlineMerchant } from "../../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import { ProductCategoryEnum } from "../../../../../../../definitions/cgn/merchants/ProductCategory";
 import { CgnMerchantListViewRenderItem } from "../CgnMerchantsListView";
 
 const mockOnItemPress = jest.fn();

@@ -1,0 +1,70 @@
+{
+    "payments": {
+        "subcategoryId": "29473336574609",
+        "subcategories": {
+            "pagamenti_pagopa_in_corso": [
+                "PAYMENT_ONGOING",
+                "PAA_PAGAMENTO_IN_CORSO",
+                "PPT_PAGAMENTO_IN_CORSO"
+            ],
+            "pagamenti_pagopa_errore": [
+                "GENERIC_ERROR",
+                "DOMAIN_UNKNOWN",
+                "PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE",
+                "PPT_STAZIONE_INT_PA_TIMEOUT",
+                "PPT_STAZIONE_INT_PA_ERRORE_RESPONSE",
+                "PPT_IBAN_NON_CENSITO",
+                "PAA_SINTASSI_EXTRAXSD",
+                "PAA_SINTASSI_XSD",
+                "PAA_ID_DOMINIO_ERRATO",
+                "PAA_ID_INTERMEDIARIO_ERRATO",
+                "PAA_STAZIONE_INT_ERRATA",
+                "PAA_ATTIVA_RPT_IMPORTO_NON_VALIDO",
+                "PPT_ERRORE_EMESSO_DA_PAA",
+                "PAA_SYSTEM_ERROR",
+                "PAYMENT_DATA_ERROR",
+                "PPT_SINTASSI_EXTRAXSD",
+                "PPT_SINTASSI_XSD",
+                "PPT_DOMINIO_SCONOSCIUTO",
+                "PPT_STAZIONE_INT_PA_SCONOSCIUTA",
+                "PAYMENT_UNAVAILABLE",
+                "PPT_PSP_SCONOSCIUTO",
+                "PPT_PSP_DISABILITATO",
+                "PPT_INTERMEDIARIO_PSP_SCONOSCIUTO",
+                "PPT_INTERMEDIARIO_PSP_DISABILITATO",
+                "PPT_CANALE_SCONOSCIUTO",
+                "PPT_CANALE_DISABILITATO",
+                "PPT_AUTENTICAZIONE",
+                "PPT_AUTORIZZAZIONE",
+                "PPT_DOMINIO_DISABILITATO",
+                "PPT_INTERMEDIARIO_PA_DISABILITATO",
+                "PPT_STAZIONE_INT_PA_DISABILITATA",
+                "PPT_CODIFICA_PSP_SCONOSCIUTA",
+                "PPT_SEMANTICA",
+                "PPT_SYSTEM_ERROR",
+                "PAA_SEMANTICA",
+                "PAYMENT_CANCELED",
+                "PAA_PAGAMENTO_ANNULLATO",
+                "PAYMENT_SLOWDOWN_ERROR",
+                "PSP_ERROR",
+                "CIRCUIT_ERROR",
+                "BE_KO"
+            ],
+            "pagamenti_pagopa_blocco": [],
+            "pagamenti_pagopa_aggiunta_metodo": [],
+            "pagamenti_pagopa_info_stato": [],
+            "pagamenti_pagopa_altro_problema": []
+        }
+    },
+    "receipts": {
+        "subcategoryId": "30635967748497",
+        "subcategories": {
+            "ricevute_pagopa_info": [],
+            "ricevute_pagopa_non_arrivata": [],
+            "ricevute_pagopa_arrivata_sconosciuta": [],
+            "ricevute_pagopa_errore_nei_dati": [],
+            "ricevute_pagopa_non_riesco_a_scaricare": [],
+            "ricevute_pagopa_altro_problema": []
+        }
+    }
+}

@@ -1,3 +1,4 @@
+import { LevelEnum } from "@io-app/api-types/generated/definitions/content/SectionStatus";
 import { Alert, IOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import {
@@ -10,7 +11,6 @@ import {
 import { AccessibilityInfo, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { isMixpanelInitializedSelector } from "../../../features/mixpanel/store/selectors";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";

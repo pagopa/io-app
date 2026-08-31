@@ -1,17 +1,16 @@
 /* eslint-disable functional/immutable-data */
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { isEqual } from "lodash";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
 
-import { InitializedProfile } from "../../../../definitions/identity/InitializedProfile";
-import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { versionInfoDataSelector } from "../../../common/versionInfo/store/reducers/versionInfo";
 import { IOVersionInfo } from "../../../common/versionInfo/types/IOVersionInfo";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
@@ -50,7 +49,7 @@ const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
 
 const getApiFailureValue = (
   isConnected: boolean | undefined,
-  sessionLoaded: O.Option<PublicSession>,
+  sessionLoaded: PublicSession | undefined,
   profileLoaded: pot.Pot<InitializedProfile, ProfileError>,
   checkSession: boolean,
   versionInfo: IOVersionInfo | null
@@ -64,7 +63,7 @@ const getApiFailureValue = (
 
   // Add "get session" if sessionLoaded is None (error loading session)
   // OR if there was a checkCurrentSession.failure
-  if (O.isNone(sessionLoaded) || checkSession) {
+  if (sessionLoaded == null || checkSession) {
     apiFailures.push("get session");
   }
 

@@ -1,3 +1,4 @@
+import { VersionInfo } from "@io-app/api-types/generated/definitions/content/VersionInfo";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
@@ -5,7 +6,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import { call, fork, put } from "typed-redux-saga/macro";
 
-import { VersionInfo } from "../../../../definitions/content/VersionInfo";
 import { ContentClient } from "../../../api/content";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { convertUnknownToError } from "../../../utils/errors";

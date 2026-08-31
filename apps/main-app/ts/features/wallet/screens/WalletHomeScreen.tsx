@@ -25,21 +25,16 @@ import {
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors";
-import { MixPanelCredential } from "../../itwallet/analytics/utils/types";
-import {
-  EidActivationExitStep,
-  useItwActivationExitSurveyBottomSheet
-} from "../../itwallet/common/hooks/useItwActivationExitSurveyBottomSheet.tsx";
-import {
-  CredentialExitStep,
-  useItwCredentialExitSurveyBottomSheet
-} from "../../itwallet/common/hooks/useItwCredentialExitSurveyBottomSheet.tsx";
+import { useItwActivationExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwActivationExitSurveyBottomSheet.tsx";
+import { useItwCredentialExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwCredentialExitSurveyBottomSheet.tsx";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
+import { itwSetFeedbackBottomSheetVisible } from "../../itwallet/common/store/actions/ui";
 import {
   isItwProximityEnabledSelector,
   itwIsL3EnabledSelector
 } from "../../itwallet/common/store/selectors";
+import { itwFeedbackBottomSheetVisibleSelector } from "../../itwallet/common/store/selectors/ui";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
@@ -57,17 +52,8 @@ import {
 } from "../store/selectors";
 
 export type WalletHomeNavigationParams = Readonly<{
-  // Triggers the activation exit survey bottom sheet once the user returns to this screen
-  activationExitSurvey?: { step: EidActivationExitStep };
-  // Triggers the credential exit survey bottom sheet once the user returns to this screen
-  credentialExitSurvey?: {
-    credential: MixPanelCredential;
-    step: CredentialExitStep;
-  };
   // Triggers the "New element added" toast display once the user returns to this screen
   newMethodAdded?: boolean;
-  // Triggers the "Required EID feedback" bottom sheet display once the user returns to this screen
-  requiredEidFeedback?: boolean;
 }>;
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -90,8 +76,8 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
-  const isRequiredEidFeedback = useRef(
-    route.params?.requiredEidFeedback || false
+  const isRequiredEidFeedback = useIOSelector(
+    itwFeedbackBottomSheetVisibleSelector
   );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
   const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
@@ -99,13 +85,8 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
       dispatch(itwSetPidReissuingSurveyHidden(true));
     }
   });
-  const activationExitSurvey = useItwActivationExitSurveyBottomSheet({
-    step: route.params?.activationExitSurvey?.step
-  });
-  const credentialExitSurvey = useItwCredentialExitSurveyBottomSheet({
-    step: route.params?.credentialExitSurvey?.step,
-    credential: route.params?.credentialExitSurvey?.credential
-  });
+  const activationExitSurvey = useItwActivationExitSurveyBottomSheet();
+  const credentialExitSurvey = useItwCredentialExitSurveyBottomSheet();
 
   // We need to use a local state to separate the UI state from the redux state
   // This prevents to display the refresh indicator when the refresh is triggered by other components
@@ -183,36 +164,23 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
         isNewElementAdded.current = false;
       }
-      if (isRequiredEidFeedback.current) {
+    }, [isNewElementAdded])
+  );
+
+  /**
+   * Handles the EID feedback bottom sheet display
+   */
+  useFocusEffect(
+    useCallback(() => {
+      if (isRequiredEidFeedback) {
         trackItwSurveyRequest({
           survey_id: "confirm_eid_flow_exit",
           survey_page: route.name
         });
         itwFeedbackBottomSheet.present();
-        isRequiredEidFeedback.current = false;
+        dispatch(itwSetFeedbackBottomSheetVisible(false));
       }
-    }, [
-      isNewElementAdded,
-      isRequiredEidFeedback,
-      itwFeedbackBottomSheet,
-      route.name
-    ])
-  );
-
-  useFocusEffect(
-    useCallback(() => {
-      if (route.params?.activationExitSurvey) {
-        activationExitSurvey.present();
-      }
-    }, [activationExitSurvey, route.params?.activationExitSurvey])
-  );
-
-  useFocusEffect(
-    useCallback(() => {
-      if (route.params?.credentialExitSurvey) {
-        credentialExitSurvey.present();
-      }
-    }, [credentialExitSurvey, route.params?.credentialExitSurvey])
+    }, [dispatch, isRequiredEidFeedback, itwFeedbackBottomSheet, route.name])
   );
 
   const handleRefreshWallet = useCallback(() => {

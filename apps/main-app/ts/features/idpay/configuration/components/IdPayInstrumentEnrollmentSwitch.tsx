@@ -1,3 +1,4 @@
+import { StatusEnum as InstrumentStatusEnum } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import {
   Badge,
   IOIcons,
@@ -9,7 +10,6 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { StatusEnum as InstrumentStatusEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import { CreditCardType, Wallet } from "../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../common/labels";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
