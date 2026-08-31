@@ -1,5 +1,6 @@
-import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
-import { BonusVisibilityEnum } from "../../../../definitions/content/BonusVisibility";
+import { BonusesAvailable } from "@io-app/api-types/generated/definitions/content/BonusesAvailable";
+import { BonusVisibilityEnum } from "@io-app/api-types/generated/definitions/content/BonusVisibility";
+
 import { ID_CGN_TYPE } from "../common/utils";
 
 export const contentBonusVacanzeIT = `#### Chi può richiederlo?

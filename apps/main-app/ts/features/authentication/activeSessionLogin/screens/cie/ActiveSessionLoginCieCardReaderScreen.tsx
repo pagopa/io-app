@@ -140,7 +140,6 @@ const ActiveSessionLoginCieCardReaderScreen = ({
 
   // To avoid re-triggering effects, we keep a ref to the reading state for the success handler
   const readingStateRef = useRef(readingState);
-  // eslint-disable-next-line functional/immutable-data
   readingStateRef.current = readingState;
 
   const choosenTool = useMemo(

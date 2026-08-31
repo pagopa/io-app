@@ -1,6 +1,6 @@
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { WalletPaymentOutcome } from "../../../checkout/types/PaymentOutcomeEnum";
 import { PaymentAnalyticsBrowserType } from "../../../common/types/PaymentAnalytics";
 

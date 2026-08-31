@@ -1,10 +1,10 @@
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/identity/UserDataProcessingChoice";
 import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError, getError } from "../../../../utils/errors";

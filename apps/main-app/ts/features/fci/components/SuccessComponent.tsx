@@ -1,9 +1,9 @@
+import { SignatureRequestDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import { useIsFocused } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect, useMemo } from "react";
 
-import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   trackFciSignatureExpired,

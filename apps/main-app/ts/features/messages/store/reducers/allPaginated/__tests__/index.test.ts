@@ -1,3 +1,4 @@
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import reducer, {
@@ -10,7 +11,6 @@ import reducer, {
   shouldShowRefreshControllOnListSelector,
   shownMessageCategorySelector
 } from "..";
-import { MessageCategory } from "../../../../../../../definitions/communication/MessageCategory";
 import { pageSize } from "../../../../../../config";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";

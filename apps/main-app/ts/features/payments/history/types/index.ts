@@ -1,6 +1,7 @@
-import { NewTransactionResponse } from "../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
-import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+import { NewTransactionResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/NewTransactionResponse";
+import { PaymentRequestsGetResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
+
 import { PaymentStartOrigin } from "../../checkout/types";
 import { WalletPaymentOutcomeEnum } from "../../checkout/types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../../checkout/types/WalletPaymentFailure";

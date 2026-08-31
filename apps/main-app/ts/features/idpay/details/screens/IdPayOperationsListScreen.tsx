@@ -1,3 +1,4 @@
+import { OperationListDTO } from "@io-app/api-types/generated/definitions/idpay/OperationListDTO";
 import {
   Body,
   Divider,
@@ -16,7 +17,6 @@ import I18n from "i18next";
 import { useRef } from "react";
 import { View } from "react-native";
 
-import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIdPayTimelineDetailsBottomSheet } from "../../timeline/components/IdPayTimelineDetailsBottomSheet";
@@ -68,7 +68,6 @@ export const IdPayOperationsListScreen = () => {
 
   useOnFirstRender(() => {
     fetchPage(0);
-    // eslint-disable-next-line functional/immutable-data
     isFirstRenderDispatchedRef.current = true;
   });
 

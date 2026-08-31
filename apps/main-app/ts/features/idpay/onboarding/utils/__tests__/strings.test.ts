@@ -1,6 +1,6 @@
+import { CodeEnum } from "@io-app/api-types/generated/definitions/idpay/AutomatedCriteriaDTO";
 import I18n from "i18next";
 
-import { CodeEnum } from "../../../../../../definitions/idpay/AutomatedCriteriaDTO";
 import { getPDNDCriteriaValueString } from "../strings";
 
 describe("getPDNDCriteriaValueString", () => {

@@ -1,10 +1,10 @@
+import { Institutions } from "@io-app/api-types/generated/definitions/services/Institutions";
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/services/OrganizationFiscalCode";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import _ from "lodash";
 import { createStore } from "redux";
 
-import { Institutions } from "../../../../../../definitions/services/Institutions";
-import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

@@ -1,8 +1,8 @@
+import { IbanDTO } from "@io-app/api-types/generated/definitions/idpay/IbanDTO";
+import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { InstrumentDTO } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import * as O from "fp-ts/lib/Option";
 
-import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
-import { InstrumentDTO } from "../../../../../definitions/idpay/InstrumentDTO";
 import { Wallet } from "../../../../types/pagopa";
 import { ConfigurationMode, InstrumentStatusByIdWallet } from "../types";
 import { InitiativeFailureType } from "../types/failure";

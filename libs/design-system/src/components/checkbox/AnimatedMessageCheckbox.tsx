@@ -60,12 +60,10 @@ export const AnimatedMessageCheckbox = ({
   const backgroundColor = IOColors[theme["selection-background-on"]];
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     shapeAnimationProgress.value = withSpring(
       checked ? 1 : 0,
       IOSpringValues.selection
     );
-    // eslint-disable-next-line functional/immutable-data
     tickAnimationProgress.value = withTiming(checked ? 1 : 0, {
       duration: 250,
       easing: Easing.out(Easing.cubic)

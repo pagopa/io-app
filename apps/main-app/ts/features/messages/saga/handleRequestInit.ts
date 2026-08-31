@@ -1,7 +1,7 @@
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
 import { call } from "typed-redux-saga/macro";
 import { v4 as uuid } from "uuid";
 
-import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
 import { isTestEnv } from "../../../utils/environment";
 import { LollipopConfig } from "../../lollipop";
 import { KeyInfo } from "../../lollipop/utils/crypto";

@@ -1,4 +1,5 @@
-import { VoucherStatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
+import { VoucherStatusEnum } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 

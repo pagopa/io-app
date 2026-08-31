@@ -1,3 +1,4 @@
+import { CreateSignatureBody } from "@io-app/api-types/generated/definitions/fci/CreateSignatureBody";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -15,9 +16,6 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 
-import { CreateSignatureBody } from "../../../../definitions/fci/CreateSignatureBody";
-import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import { apiUrlPrefix } from "../../../config";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
@@ -218,33 +216,7 @@ function* deletePath(path: string) {
   );
 }
 
-/**
- * Starts the FCI signing flow if we don't have a Signature Request Details or if
- * it is still signable.
- * @param currentSignatureRequest - optional fresh data (ex. after a retry)
- */
-function* standardFciFlowStartSaga(
-  currentSignatureRequest?: SignatureRequestDetailView
-): SagaIterator {
-  if (
-    currentSignatureRequest &&
-    (currentSignatureRequest.status !==
-      SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE ||
-      new Date(currentSignatureRequest.expires_at) < new Date())
-  ) {
-    yield* call(
-      NavigationService.dispatchNavigationAction,
-      StackActions.replace(FCI_ROUTES.MAIN, {
-        screen: FCI_ROUTES.ROUTER,
-        params: {
-          signatureRequestId: currentSignatureRequest.id,
-          skipInitialFetch: true
-        }
-      })
-    );
-    return;
-  }
-
+function* standardFciFlowStartSaga(): SagaIterator {
   yield* call(
     NavigationService.dispatchNavigationAction,
     StackActions.replace(FCI_ROUTES.MAIN, {
@@ -338,32 +310,23 @@ function* watchFciQtspClausesSaga(): SagaIterator {
 }
 
 /**
- * Handle the FCI signature request retry saga
+ * Handle the FCI signature request retry saga.
+ * Clears FCI state and restarts the flow from the
+ * router screen, which re-fetches fresh signature request.
  */
 function* watchFciSignatureRequestRetrySaga(
   action: ActionType<typeof fciSignatureRequestRetryFromId>
 ): SagaIterator {
-  // get new SignatureRequestDetails
-  yield* put(fciSignatureRequestFromId.request(action.payload));
-
-  while (true) {
-    const result = yield* take([
-      fciSignatureRequestFromId.success,
-      fciSignatureRequestFromId.failure
-    ]);
-
-    if (isActionOf(fciSignatureRequestFromId.success, result)) {
-      if (result.payload.id === action.payload) {
-        yield* put(fciStartRequest(result.payload));
-        return;
+  yield* put(fciClearStateRequest());
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.replace(FCI_ROUTES.MAIN, {
+      screen: FCI_ROUTES.ROUTER,
+      params: {
+        signatureRequestId: action.payload
       }
-      continue;
-    }
-
-    if (isActionOf(fciSignatureRequestFromId.failure, result)) {
-      return;
-    }
-  }
+    })
+  );
 }
 
 /**
@@ -434,22 +397,18 @@ function* watchFciSigningRequestSaga(): SagaIterator {
 /**
  * Handle the FCI start requests saga
  */
-function* watchFciStartSaga(
-  action: ActionType<typeof fciStartRequest>
-): SagaIterator {
-  const currentSignatureRequest: SignatureRequestDetailView | undefined =
-    action.payload || undefined;
+function* watchFciStartSaga(): SagaIterator {
   const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
   const isFciSecurityLevelCheckEnabled = yield* select(
     isFciSecurityLevelCheckRemoteFFEnabledSelector
   );
 
   if (!isFciSecurityLevelCheckEnabled) {
-    yield* call(standardFciFlowStartSaga, currentSignatureRequest);
+    yield* call(standardFciFlowStartSaga);
     return;
   } else {
     if (spidLevel === "L3") {
-      yield* call(standardFciFlowStartSaga, currentSignatureRequest);
+      yield* call(standardFciFlowStartSaga);
       return;
     }
     yield* call(

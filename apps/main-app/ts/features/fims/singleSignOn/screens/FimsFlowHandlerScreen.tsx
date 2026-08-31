@@ -1,10 +1,10 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constTrue, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";

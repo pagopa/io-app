@@ -3,7 +3,6 @@ import {
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { isAfter } from "date-fns";
-import * as t from "io-ts";
 
 import { assert } from "../../../../utils/assert";
 import { Env } from "./environment";
@@ -100,14 +99,6 @@ export const shouldRequestStatusAssertion = ({
       throw new Error("Unexpected credential status");
   }
 };
-
-/**
- * Shape of a credential status assertion response error.
- */
-export const StatusAssertionError = t.intersection([
-  t.type({ error: t.string }),
-  t.partial({ error_description: t.string })
-]);
 
 /**
  * Create a shared promise to fetch the new Issuer Entity Configuration.

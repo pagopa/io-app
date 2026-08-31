@@ -1,13 +1,13 @@
+import { AppVersion } from "@io-app/api-types/generated/definitions/identity/AppVersion";
+import { EmailAddress } from "@io-app/api-types/generated/definitions/identity/EmailAddress";
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import MockDate from "mockdate";
 
-import { AppVersion } from "../../../../../../definitions/identity/AppVersion";
-import { EmailAddress } from "../../../../../../definitions/identity/EmailAddress";
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
-import { PreferredLanguageEnum } from "../../../../../../definitions/identity/PreferredLanguage";
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../../definitions/identity/ReminderStatus";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import { canAccessCgn, getCgnUserAgeRange } from "../dates";
 describe("dates", () => {
   describe("getCgnUserAgeRange", () => {

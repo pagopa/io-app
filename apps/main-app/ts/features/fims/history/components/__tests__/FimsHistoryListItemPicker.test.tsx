@@ -1,11 +1,11 @@
 jest.mock("../FimsHistoryListItems.tsx");
 jest.mock("../FimsHistoryLoaders.tsx");
 
+import { Access } from "@io-app/api-types/generated/definitions/fims_history/Access";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 
-import { Access } from "../../../../../../definitions/fims_history/Access";
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";

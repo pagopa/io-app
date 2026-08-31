@@ -1,9 +1,9 @@
+import { TagEnum as PaymentTagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPayment";
+import { TagEnum as SENDTagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
 import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";
 import { AccessibilityInfo } from "react-native";
 
-import { TagEnum as PaymentTagEnum } from "../../../../../definitions/communication/MessageCategoryPayment";
-import { TagEnum as SENDTagEnum } from "../../../../../definitions/communication/MessageCategoryPN";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
   useIODispatch,
@@ -164,7 +164,6 @@ export const WrappedListItemMessage = ({
           // a dobule navigation towards the message details
           return;
         }
-        // eslint-disable-next-line functional/immutable-data
         lastNavigationDate.current = now;
 
         if (isSearchSource(source)) {

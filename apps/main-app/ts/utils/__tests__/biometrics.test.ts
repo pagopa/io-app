@@ -1,4 +1,4 @@
-import FingerprintScanner, { Errors } from "react-native-fingerprint-scanner";
+import * as LocalAuthentication from "expo-local-authentication";
 
 import * as mixpanel from "../../mixpanel";
 import {
@@ -15,19 +15,25 @@ afterEach(() => {
 
 describe("getBiometricsType function", () => {
   it.each`
-    input           | expected
-    ${"Touch ID"}   | ${"TOUCH_ID"}
-    ${"Face ID"}    | ${"FACE_ID"}
-    ${"Biometrics"} | ${"BIOMETRICS"}
+    input  | expected
+    ${[1]} | ${"TOUCH_ID"}
+    ${[2]} | ${"FACE_ID"}
+    ${[3]} | ${"BIOMETRICS"}
   `("returns $expected when $input is given", async ({ input, expected }) => {
-    const spy = jest.spyOn(FingerprintScanner, "isSensorAvailable");
+    const spy = jest.spyOn(
+      LocalAuthentication,
+      "supportedAuthenticationTypesAsync"
+    );
     spy.mockResolvedValue(input);
     const result = await getBiometricsType();
     expect(result).toMatch(expected);
   });
 
   it("returns UNKNOWN for any undocumented resolved value", async () => {
-    const spy = jest.spyOn(FingerprintScanner, "isSensorAvailable");
+    const spy = jest.spyOn(
+      LocalAuthentication,
+      "supportedAuthenticationTypesAsync"
+    );
     spy.mockResolvedValue("literally anything, even 🤡" as any);
     const result = await getBiometricsType();
     expect(result).toMatch("UNKNOWN");
@@ -37,14 +43,20 @@ describe("getBiometricsType function", () => {
     const mixpanelSpy = jest.spyOn(mixpanel, "mixpanelTrack");
 
     it("returns UNAVAILABLE", async () => {
-      const spy = jest.spyOn(FingerprintScanner, "isSensorAvailable");
+      const spy = jest.spyOn(
+        LocalAuthentication,
+        "supportedAuthenticationTypesAsync"
+      );
       spy.mockRejectedValue("it exploded");
       const result = await getBiometricsType();
       expect(result).toMatch("UNAVAILABLE");
     });
 
     it("reports BIOMETRIC_ERROR to mixpanel with the relevant message when shouldTrackError is true (default)", async () => {
-      const sensorSpy = jest.spyOn(FingerprintScanner, "isSensorAvailable");
+      const sensorSpy = jest.spyOn(
+        LocalAuthentication,
+        "supportedAuthenticationTypesAsync"
+      );
       sensorSpy.mockRejectedValue(new Error("it exploded"));
       await getBiometricsType();
       expect(mixpanelSpy).toHaveBeenCalledWith("BIOMETRIC_ERROR", {
@@ -53,7 +65,10 @@ describe("getBiometricsType function", () => {
     });
 
     it("does not report BIOMETRIC_ERROR to mixpanel when shouldTrackError is false", async () => {
-      const sensorSpy = jest.spyOn(FingerprintScanner, "isSensorAvailable");
+      const sensorSpy = jest.spyOn(
+        LocalAuthentication,
+        "supportedAuthenticationTypesAsync"
+      );
       sensorSpy.mockRejectedValue(new Error("it exploded"));
       await getBiometricsType(false);
       expect(mixpanelSpy).not.toHaveBeenCalled();
@@ -77,38 +92,43 @@ describe("isBiometricsValidType function", () => {
 describe("biometricAuthenticationRequest function", () => {
   describe("when authentication succeeds", () => {
     it("should call the success callback", async () => {
-      const spyAuthenticate = jest.spyOn(FingerprintScanner, "authenticate");
-      const spyRelease = jest.spyOn(FingerprintScanner, "release");
+      const spyAuthenticate = jest.spyOn(
+        LocalAuthentication,
+        "authenticateAsync"
+      );
       const spyOnSuccess = jest.fn();
       await biometricAuthenticationRequest(spyOnSuccess, jest.fn());
       expect(spyAuthenticate).toHaveBeenCalled();
       expect(spyOnSuccess).toHaveBeenCalledWith();
-      expect(spyRelease).toHaveBeenCalled();
     });
   });
 
   describe("when authentication fails", () => {
     it("should call the error callback with the error message", async () => {
-      const spyAuthenticate = jest.spyOn(FingerprintScanner, "authenticate");
+      const spyAuthenticate = jest.spyOn(
+        LocalAuthentication,
+        "authenticateAsync"
+      );
       spyAuthenticate.mockRejectedValue("error");
-      const spyRelease = jest.spyOn(FingerprintScanner, "release");
       const spyOnError = jest.fn();
       await biometricAuthenticationRequest(jest.fn(), spyOnError);
       expect(spyAuthenticate).toHaveBeenCalled();
       expect(spyOnError).toHaveBeenCalledWith("error");
-      expect(spyRelease).toHaveBeenCalled();
     });
   });
 });
 
 describe("mayUserActivateBiometric function", () => {
   it.each`
-    input           | expected
-    ${"Touch ID"}   | ${"ACTIVATED"}
-    ${"Biometrics"} | ${"ACTIVATED"}
-    ${"Unknown"}    | ${"ACTIVATED"}
+    input        | expected
+    ${[1]}       | ${"ACTIVATED"}
+    ${[3]}       | ${"ACTIVATED"}
+    ${"Unknown"} | ${"ACTIVATED"}
   `("returns $expected when $input is given", async ({ input, expected }) => {
-    const spy = jest.spyOn(FingerprintScanner, "isSensorAvailable");
+    const spy = jest.spyOn(
+      LocalAuthentication,
+      "supportedAuthenticationTypesAsync"
+    );
     spy.mockResolvedValue(input);
     const result = await mayUserActivateBiometric();
     expect(result).toMatch(expected);
@@ -130,9 +150,9 @@ describe("mayUserActivateBiometric function", () => {
     const getBiometricsTypeFaceIDMock = Promise.resolve(
       "FACE_ID" as Biometric.BiometricsType
     );
-    const spy = jest.spyOn(FingerprintScanner, "authenticate");
+    const spy = jest.spyOn(LocalAuthentication, "authenticateAsync");
 
-    spy.mockResolvedValue(Promise.resolve());
+    spy.mockResolvedValue(Promise.resolve({ success: true }));
     const result =
       await Biometric.biometricFunctionForTests.mayUserActivateBiometricWithDependency(
         getBiometricsTypeFaceIDMock
@@ -145,13 +165,9 @@ describe("mayUserActivateBiometric function", () => {
     const getBiometricsTypeFaceIDMock = Promise.resolve(
       "FACE_ID" as Biometric.BiometricsType
     );
-    const spy = jest.spyOn(FingerprintScanner, "authenticate");
+    const spy = jest.spyOn(LocalAuthentication, "authenticateAsync");
 
-    const error: Errors = {
-      name: "FingerprintScannerNotAvailable",
-      message:
-        "\tAuthentication could not start because Fingerprint Scanner is not available on the device"
-    };
+    const error: LocalAuthentication.LocalAuthenticationError = "not_available";
 
     spy.mockResolvedValue(Promise.reject(error));
     try {
@@ -167,77 +183,27 @@ describe("mayUserActivateBiometric function", () => {
     const getBiometricsTypeFaceIDMock = Promise.resolve(
       "FACE_ID" as Biometric.BiometricsType
     );
-    const spy = jest.spyOn(FingerprintScanner, "authenticate");
+    const spy = jest.spyOn(LocalAuthentication, "authenticateAsync");
 
-    const errorsArray: Array<Errors> = [
-      {
-        name: "AuthenticationFailed",
-        message:
-          "Authentication was not successful because the user failed to provide valid credentials"
-      },
-      { name: "AuthenticationNotMatch", message: "No match" },
-      {
-        name: "AuthenticationProcessFailed",
-        message: "Sensor was unable to process the image. Please try again."
-      },
-      {
-        name: "AuthenticationTimeout",
-        message:
-          "Authentication was not successful because the operation timed out."
-      },
-      {
-        name: "DeviceLocked",
-        message:
-          "Authentication was not successful, the device currently in a lockout of 30 seconds"
-      },
-      {
-        name: "DeviceLockedPermanent",
-        message:
-          "Authentication was not successful, device must be unlocked via password."
-      },
-      {
-        name: "DeviceOutOfMemory",
-        message:
-          "Authentication could not proceed because there is not enough free memory on the device."
-      },
-      {
-        name: "FingerprintScannerNotEnrolled",
-        message:
-          "\tAuthentication could not start because Fingerprint Scanner has no enrolled fingers"
-      },
-      {
-        name: "FingerprintScannerNotSupported",
-        message: "Device does not support Fingerprint Scanner"
-      },
-      {
-        name: "FingerprintScannerUnknownError",
-        message: "Could not authenticate for an unknown reason"
-      },
-      { name: "HardwareError", message: "A hardware error occurred." },
-      {
-        name: "PasscodeNotSet",
-        message:
-          "Authentication could not start because the passcode is not set on the device"
-      },
-      {
-        name: "SystemCancel",
-        message:
-          "Authentication was canceled by system - e.g. if another application came to foreground while the authentication dialog was up"
-      },
-      {
-        name: "UserCancel",
-        message:
-          "Authentication was canceled by the user - e.g. the user tapped Cancel in the dialog"
-      },
-      {
-        name: "UserFallback",
-        message:
-          "Authentication was canceled because the user tapped the fallback button (Enter Password)"
-      }
+    const errorsArray: Array<LocalAuthentication.LocalAuthenticationError> = [
+      "not_enrolled",
+      "user_cancel",
+      "app_cancel",
+      "not_available",
+      "lockout",
+      "no_space",
+      "timeout",
+      "unable_to_process",
+      "unknown",
+      "system_cancel",
+      "user_fallback",
+      "invalid_context",
+      "passcode_not_set",
+      "authentication_failed"
     ];
 
     for (const error of errorsArray) {
-      spy.mockResolvedValue(Promise.reject(error));
+      spy.mockResolvedValue(Promise.resolve({ success: false, error }));
       try {
         await Biometric.biometricFunctionForTests.mayUserActivateBiometricWithDependency(
           getBiometricsTypeFaceIDMock

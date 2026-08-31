@@ -1,9 +1,9 @@
+import { Consent } from "@io-app/api-types/generated/definitions/fims_sso/Consent";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as B from "fp-ts/lib/boolean";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { isStrictNone } from "../../../../../utils/pot";

@@ -1,8 +1,8 @@
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { loadServiceDetail } from "../../../details/store/actions/details";
 import { serviceDetailsByIdPotSelector } from "../../../details/store/selectors";
 import { getServiceDetails } from "../getServiceDetails";

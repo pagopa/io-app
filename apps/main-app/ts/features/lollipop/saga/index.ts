@@ -1,3 +1,4 @@
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 import {
   deleteKey,
   generate,
@@ -5,14 +6,9 @@ import {
   PublicKey
 } from "@pagopa/io-react-native-crypto";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
 import { call, delay, put, select } from "typed-redux-saga/macro";
 import { v4 as uuid } from "uuid";
 
-import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { mixpanelTrack } from "../../../mixpanel";
 import { restartCleanApplication } from "../../../sagas/commons";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
@@ -42,45 +38,29 @@ import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 const WAIT_A_BIT_AFTER_SESSION_EXPIRED = 1000 as Millisecond;
 
 export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
-  maybePublicKey: O.Option<PublicKey>,
-  maybeSessionInformation: O.Option<PublicSession>
+  publicKey: PublicKey | undefined,
+  maybeSessionInformation: PublicSession | undefined
 ) {
-  const lollipopCheckResult = pipe(
-    maybeSessionInformation,
-    O.chainNullableK(
-      sessionInformation => sessionInformation.lollipopAssertionRef
-    ),
-    O.chain(sessionLollipopAssertionRef =>
-      pipe(
-        maybePublicKey,
-        O.map(publicKey =>
-          pipe(
-            toBase64EncodedThumbprint(publicKey),
-            publicKeyThumbprint =>
-              `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`,
-            localLollipopAssertionRef =>
-              localLollipopAssertionRef === sessionLollipopAssertionRef
-          )
-        )
-      )
-    ),
-    O.getOrElse(() => false)
-  );
-
-  if (!lollipopCheckResult) {
-    void mixpanelTrack(
-      "LOGIN_UNEXPECTED_REQUEST_ID",
-      buildEventProperties("KO", undefined)
-    );
-    yield* put(sessionInvalid());
-    // We want to take a little time before restarting the application
-    // to let the action sessionInvalid be dispatched and handled.
-    yield* delay(WAIT_A_BIT_AFTER_SESSION_EXPIRED);
-    yield* call(restartCleanApplication);
-    return false;
+  if (maybeSessionInformation != null && publicKey) {
+    const publicKeyThumbprint = toBase64EncodedThumbprint(publicKey);
+    const localAssertionRef = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`;
+    const doesLocalAssertionRefMatchSession =
+      localAssertionRef === maybeSessionInformation.lollipopAssertionRef;
+    if (doesLocalAssertionRefMatchSession) {
+      return true;
+    }
   }
 
-  return true;
+  void mixpanelTrack(
+    "LOGIN_UNEXPECTED_REQUEST_ID",
+    buildEventProperties("KO", undefined)
+  );
+  yield* put(sessionInvalid());
+  // We want to take a little time before restarting the application
+  // to let the action sessionInvalid be dispatched and handled.
+  yield* delay(WAIT_A_BIT_AFTER_SESSION_EXPIRED);
+  yield* call(restartCleanApplication);
+  return false;
 }
 
 export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
@@ -116,6 +96,21 @@ export function* generateLollipopKeySaga() {
       // is not suitable for future version of IO.
       yield* call(cryptoKeyGenerationSaga, maybeOldKeyTag, undefined);
     }
+  }
+}
+
+export function* getKeyInfo() {
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const publicKey = yield* select(lollipopPublicKeySelector);
+  return yield* call(generateKeyInfo, keyTag, publicKey);
+}
+
+function* checkPublicKeyExists(keyTag: string) {
+  try {
+    const publicKey = yield* call(getPublicKey, keyTag);
+    return publicKey != null;
+  } catch {
+    return false;
   }
 }
 
@@ -162,22 +157,6 @@ function* deletePreviousCryptoKeyPair(keyTag: string | undefined) {
   yield* call(deleteCryptoKeyPair, keyTag);
 }
 
-const checkPublicKeyExists = (keyTag: string) =>
-  pipe(
-    TE.tryCatch(
-      () => getPublicKey(keyTag),
-      () => false
-    ),
-    TE.map(_ => true),
-    TE.getOrElse(() => T.of(false))
-  )();
-
-export function* getKeyInfo() {
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const publicKey = yield* select(lollipopPublicKeySelector);
-  return yield* call(generateKeyInfo, keyTag, publicKey);
-}
-
 /**
  * Generates a new crypto key pair.
  */
@@ -203,16 +182,12 @@ function* generateCryptoKeyPair(keyTag: string) {
 
 export const generateKeyInfo = (
   keyTag: string | undefined,
-  maybePublicKey: O.Option<PublicKey>
+  maybePublicKey: PublicKey | undefined
 ) => {
-  if (!keyTag) {
+  if (!keyTag || maybePublicKey == null) {
     return defaultKeyInfo();
   }
-  return pipe(
-    maybePublicKey,
-    O.map(publicKey => keyInfoFromKeyTagAndPublicKey(keyTag, publicKey)),
-    O.getOrElse(defaultKeyInfo)
-  );
+  return keyInfoFromKeyTagAndPublicKey(keyTag, maybePublicKey);
 };
 
 const keyInfoFromKeyTagAndPublicKey = (

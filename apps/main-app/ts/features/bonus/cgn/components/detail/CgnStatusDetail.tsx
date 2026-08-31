@@ -1,13 +1,13 @@
+import { Card } from "@io-app/api-types/generated/definitions/cgn/Card";
+import { CardActivated } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
+import { CardExpired } from "@io-app/api-types/generated/definitions/cgn/CardExpired";
+import { CardPending } from "@io-app/api-types/generated/definitions/cgn/CardPending";
+import { CardRevoked } from "@io-app/api-types/generated/definitions/cgn/CardRevoked";
 import { Divider, ListItemHeader, ListItemInfo } from "@io-app/design-system";
 import I18n from "i18next";
 import { FunctionComponent } from "react";
 import { View } from "react-native";
 
-import { Card } from "../../../../../../definitions/cgn/Card";
-import { CardActivated } from "../../../../../../definitions/cgn/CardActivated";
-import { CardExpired } from "../../../../../../definitions/cgn/CardExpired";
-import { CardPending } from "../../../../../../definitions/cgn/CardPending";
-import { CardRevoked } from "../../../../../../definitions/cgn/CardRevoked";
 import { formatDateAsShortFormat } from "../../../../../utils/dates";
 import { getAccessibleExpirationDate } from "../../utils/dates";
 

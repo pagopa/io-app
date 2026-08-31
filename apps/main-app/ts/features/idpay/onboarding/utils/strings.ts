@@ -1,12 +1,12 @@
+import {
+  AutomatedCriteriaDTO,
+  CodeEnum
+} from "@io-app/api-types/generated/definitions/idpay/AutomatedCriteriaDTO";
 import { NumberFromString } from "@pagopa/ts-commons/lib/numbers";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
-import {
-  AutomatedCriteriaDTO,
-  CodeEnum
-} from "../../../../../definitions/idpay/AutomatedCriteriaDTO";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 
 const getPDNDCriteriaValueString = (

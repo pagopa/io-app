@@ -1,7 +1,7 @@
+import { BonusesAvailable } from "@io-app/api-types/generated/definitions/content/BonusesAvailable";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { BonusesAvailable } from "../../../../../../definitions/content/BonusesAvailable";
 import { Action } from "../../../../../store/actions/types";
 import { clearCache } from "../../../../settings/common/store/actions";
 import { loadAvailableBonuses } from "../actions/availableBonusesTypes";

@@ -4,8 +4,24 @@ export default [
   ...baseConfig,
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    // Override or add rules here
-    rules: {}
+    rules: {
+      // Consumers must use the public design-system API instead of its monorepo path or internals
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                '**/libs/design-system/**', // Avoid monorepo path
+                '@io-app/design-system/**' // Avoid internals
+              ],
+              message:
+                'Import from "@io-app/design-system" to use the design system.'
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     ignores: [

@@ -1,8 +1,8 @@
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { testSaga } from "redux-saga-test-plan";
 
-import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
 import { handleSessionExpiredSaga } from "../../../fastLogin/saga/utils";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import {

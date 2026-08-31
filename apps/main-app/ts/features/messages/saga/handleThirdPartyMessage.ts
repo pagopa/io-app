@@ -1,11 +1,11 @@
+import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
+import { ThirdPartyMessageWithContent } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessageWithContent";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { TagEnum } from "../../../../definitions/communication/MessageCategoryPN";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/communication/ThirdPartyMessageWithContent";
-import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { SagaCallReturnType } from "../../../types/utils";
 import { isTestEnv } from "../../../utils/environment";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";

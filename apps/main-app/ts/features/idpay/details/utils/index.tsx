@@ -1,10 +1,10 @@
-import { LabelMini, Tag, useIOThemeContext } from "@io-app/design-system";
-import I18n from "i18next";
-
 import {
   InitiativeDTO,
   VoucherStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { LabelMini, Tag, useIOThemeContext } from "@io-app/design-system";
+import I18n from "i18next";
+
 import { format } from "../../../../utils/dates";
 
 type InitiativeProps = {
