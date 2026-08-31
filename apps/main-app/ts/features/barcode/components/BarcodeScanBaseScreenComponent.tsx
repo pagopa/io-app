@@ -14,10 +14,10 @@ import {
   useIsFocused,
   useNavigation
 } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AppState, StyleSheet, View } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import {
   SafeAreaView,
   useSafeAreaInsets
