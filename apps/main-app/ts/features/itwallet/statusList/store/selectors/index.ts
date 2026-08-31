@@ -6,8 +6,8 @@ import { itwAllStoredCredentialsSelector } from "../../../credentials/store/sele
 import { itwWalletUnitAttestationsSelector } from "../../../walletInstance/store/selectors";
 
 /**
- * Collects the Status List URIs referenced by all current owners
- * (credentials and Wallet Unit Attestations).
+ * Collects the Status List URIs referenced by all current owners (credentials
+ * and Wallet Unit Attestations).
  *
  * Invalid or unsupported owner data is ignored because it cannot reference a
  * Status List that can be used by the wallet.

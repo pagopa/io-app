@@ -10,17 +10,16 @@ type Props = {
 };
 
 /**
- * proof_of_age is a new credential but shows its own usage banner instead of this generic
- * validity alert, so it is excluded here (no validity message exists for it).
+ * Proof_of_age is a new credential but shows its own usage banner instead of
+ * this generic validity alert, so it is excluded here (no validity message
+ * exists for it).
  */
 type ValidityAlertCredential = Exclude<
   NewCredential,
   CredentialType.PROOF_OF_AGE
 >;
 
-/**
- * Alert showing information about the validity of new IT Wallet credentials.
- */
+/** Alert showing information about the validity of new IT Wallet credentials. */
 export const ItwPresentationNewCredentialValidityAlert = ({
   credentialType
 }: Props) => {

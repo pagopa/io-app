@@ -12,7 +12,8 @@ export const trialSystemRouter = Router();
 const addPrefix = (path: string) => addApiV1Prefix(`/trials${path}`);
 
 /**
- * Undefined means that the user never subscribed to the trial, otherwise it is set to a Subscription state
+ * Undefined means that the user never subscribed to the trial, otherwise it is
+ * set to a Subscription state
  */
 const trials: Record<TrialId, Subscription | undefined> = {};
 

@@ -49,7 +49,7 @@ export const handleCtaAction = (
 };
 
 /**
- * since remote payload can have a subset of supported locales, this function
+ * Since remote payload can have a subset of supported locales, this function
  * return the locale supported by the app. If the remote locale is not supported
  * a fallback will be returned
  */
@@ -61,8 +61,9 @@ export const getRemoteLocale = (): LocalizedCTALocales => {
 };
 
 /**
- * Extract the CTAs if they are nested inside the message markdown content.
- * The returned CTAs are already localized.
+ * Extract the CTAs if they are nested inside the message markdown content. The
+ * returned CTAs are already localized.
+ *
  * @param markdown
  * @param serviceMetadata
  * @param serviceId
@@ -73,8 +74,10 @@ export const getMessageCTAs = (
 ): CTAS | undefined => getCTAsIfValid(markdown, serviceId);
 
 /**
- * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
- * if some CTAs are been found, the localized version will be returned
+ * Extract the CTAs from a string given in serviceMetadata such as the
+ * front-matter of the message if some CTAs are been found, the localized
+ * version will be returned
+ *
  * @param serviceMetadata
  */
 export const getServiceCTAs = (
@@ -86,7 +89,8 @@ export const getServiceCTAs = (
 };
 
 /**
- * remove the cta front-matter if it is nested inside the markdown
+ * Remove the cta front-matter if it is nested inside the markdown
+ *
  * @param markdown
  */
 export const removeCTAsFromMarkdown = (
@@ -160,7 +164,8 @@ export const ctasFromLocalizedCTAs = (
 };
 
 /**
- * return true if at least one of the CTAs is valid
+ * Return true if at least one of the CTAs is valid
+ *
  * @param ctas
  * @param serviceMetadata
  */
@@ -187,8 +192,10 @@ const areCTAsActionsValid = (ctas: CTAS, serviceId: ServiceId): boolean => {
 };
 
 /**
- * return a boolean indicating if the cta action is valid or not
- * Checks on servicesMetadata for defined parameter based on predicates defined in internalRoutePredicates map
+ * Return a boolean indicating if the cta action is valid or not Checks on
+ * servicesMetadata for defined parameter based on predicates defined in
+ * internalRoutePredicates map
+ *
  * @param cta
  */
 const isCtaActionValid = (cta: CTA): boolean => {

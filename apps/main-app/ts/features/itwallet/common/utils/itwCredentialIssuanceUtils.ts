@@ -41,7 +41,8 @@ import {
 
 /**
  * List of credentials that cannot be issued in parallel, only sequentially.
- * Currently only the mDL must be requested sequentially because of locking issues.
+ * Currently only the mDL must be requested sequentially because of locking
+ * issues.
  */
 const SEQUENTIAL_ISSUANCE_CREDENTIALS = ["mDL"];
 const NO_SUPPORTED_CREDENTIAL_CONFIGURATION_IDS_ERROR =
@@ -49,11 +50,15 @@ const NO_SUPPORTED_CREDENTIAL_CONFIGURATION_IDS_ERROR =
 
 /**
  * One-time-use credentials, obtained in batch and configured with:
- * - `desiredCount`: how many copies to ask for, clamped to the issuer's advertised
- *   `credential_issuance_batch_size` (see {@link getEffectiveBatchSize});
- * - `consumeOnPresentation`: whether a presented copy is deleted after a successful presentation;
- * - `refillThreshold`: remaining copies that trigger a silent renewal. Must be lower than
- *   `desiredCount`, otherwise a fresh batch would immediately ask to be renewed.
+ *
+ * - `desiredCount`: how many copies to ask for, clamped to the issuer's
+ *   advertised `credential_issuance_batch_size` (see
+ *   {@link getEffectiveBatchSize});
+ * - `consumeOnPresentation`: whether a presented copy is deleted after a
+ *   successful presentation;
+ * - `refillThreshold`: remaining copies that trigger a silent renewal. Must be
+ *   lower than `desiredCount`, otherwise a fresh batch would immediately ask to
+ *   be renewed.
  */
 export const BATCH_ISSUANCE_CREDENTIALS: Record<
   string,
@@ -71,8 +76,8 @@ export const BATCH_ISSUANCE_CREDENTIALS: Record<
 };
 
 /**
- * Returns the remaining copies that trigger a renewal, or `undefined` for credentials that are
- * not obtained in batch.
+ * Returns the remaining copies that trigger a renewal, or `undefined` for
+ * credentials that are not obtained in batch.
  */
 export const getBatchRefillThreshold = (
   credentialType: string
@@ -80,11 +85,12 @@ export const getBatchRefillThreshold = (
   BATCH_ISSUANCE_CREDENTIALS[credentialType]?.refillThreshold;
 
 /**
- * Tells whether a batch credential is down to its `refillThreshold` and must be renewed.
- * Returns `false` for credentials that are not obtained in batch.
+ * Tells whether a batch credential is down to its `refillThreshold` and must be
+ * renewed. Returns `false` for credentials that are not obtained in batch.
  *
- * The remaining copies are the only source of truth: since no renewal state is persisted, an
- * interrupted renewal is simply picked up again by the next trigger.
+ * The remaining copies are the only source of truth: since no renewal state is
+ * persisted, an interrupted renewal is simply picked up again by the next
+ * trigger.
  */
 export const shouldRefillBatch = (
   credential: Pick<CredentialMetadata, "credentialType" | "keyTag" | "keyTags">
@@ -101,9 +107,10 @@ export const shouldRefillBatch = (
 /**
  * Computes how many copies of a credential to request in a single issuance.
  *
- * Returns 1 (single issuance) when the credential type is not configured for batch issuance or
- * when the issuer does not advertise batch support. Otherwise returns the app's desired count
- * clamped to the issuer's `credential_issuance_batch_size`.
+ * Returns 1 (single issuance) when the credential type is not configured for
+ * batch issuance or when the issuer does not advertise batch support. Otherwise
+ * returns the app's desired count clamped to the issuer's
+ * `credential_issuance_batch_size`.
  *
  * @param credentialType The type of credential being issued
  * @param issuerBatchSize The issuer's advertised max batch size, if any
@@ -144,13 +151,17 @@ export type RequestCredential = (args: {
  * details drive the flow: the offer's `authorization_server` is validated
  * against the issuer metadata during trust evaluation, while `scope` and
  * `issuer_state` are forwarded to the Pushed Authorization Request.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
  * @param walletInstanceAttestation - The wallet instance attestation
- * @param skipMdocIssuance - Whether mDoc credential configurations must be excluded from the request
- * @param resolvedCredentialOffer - The resolved Credential Offer with its grant details, when issuance starts from an offer
- * @param pid - The PID credential to evaluate the issuer DCQL query before showing the trust issuer screen
+ * @param skipMdocIssuance - Whether mDoc credential configurations must be
+ *   excluded from the request
+ * @param resolvedCredentialOffer - The resolved Credential Offer with its grant
+ *   details, when issuance starts from an offer
+ * @param pid - The PID credential to evaluate the issuer DCQL query before
+ *   showing the trust issuer screen
  * @returns The credential request object
  */
 export const requestCredential: RequestCredential = async ({
@@ -250,11 +261,12 @@ export type CompleteAuthFlow = (args: {
 }) => Promise<{ accessToken: CredentialAccessToken }>;
 
 /**
- * Function to complete the authorization flow. It must be used to obtain the access token
- * for the requested credential(s).
- * This token is then used in {@link obtainCredential} to get the credential from the Issuer.
- * When no response mode is provided the flow expects the code in the query string;
- * the legacy `form_post.jwt` mode must be requested explicitly.
+ * Function to complete the authorization flow. It must be used to obtain the
+ * access token for the requested credential(s). This token is then used in
+ * {@link obtainCredential} to get the credential from the Issuer. When no
+ * response mode is provided the flow expects the code in the query string; the
+ * legacy `form_post.jwt` mode must be requested explicitly.
+ *
  * @returns The access token with the authorized credentials.
  */
 export const completeAuthFlow: CompleteAuthFlow = async ({
@@ -330,6 +342,7 @@ export type ObtainCredential = (args: {
 
 /**
  * Obtains a credential from the issuer.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
@@ -420,9 +433,10 @@ type RequestAndParseCredentialParams = {
 };
 
 /**
- * Utility function that requests and parses an already authorized credential. For this reason,
- * the function requires the Issuer's access token with the authorization details. Key generation MUST
- * be handled outside the function by calling {@link generateKeysWithWalletUnitAttestation}.
+ * Utility function that requests and parses an already authorized credential.
+ * For this reason, the function requires the Issuer's access token with the
+ * authorization details. Key generation MUST be handled outside the function by
+ * calling {@link generateKeysWithWalletUnitAttestation}.
  *
  * @returns The credential bundle with the newly obtained credential
  */
@@ -493,13 +507,15 @@ type VerifyAndBuildCredentialBundleParams = {
 };
 
 /**
- * Verifies and parses a freshly obtained credential and packages it into a {@link CredentialBundle}.
- * Shared by single and batch issuance so the metadata is built identically regardless of the
- * issuance path. The `credentialId` is the issuer's `credential_configuration_id`, shared by all
- * copies of the same credential; instances are told apart by their unique `keyTag`.
+ * Verifies and parses a freshly obtained credential and packages it into a
+ * {@link CredentialBundle}. Shared by single and batch issuance so the metadata
+ * is built identically regardless of the issuance path. The `credentialId` is
+ * the issuer's `credential_configuration_id`, shared by all copies of the same
+ * credential; instances are told apart by their unique `keyTag`.
  *
- * The `ignoreMissingAttributes` flag must be false for mDoc credentials, since some attributes are
- * intentionally not presented during Proximity presentation; it is only relaxed for SD-JWT.
+ * The `ignoreMissingAttributes` flag must be false for mDoc credentials, since
+ * some attributes are intentionally not presented during Proximity
+ * presentation; it is only relaxed for SD-JWT.
  */
 const verifyAndBuildCredentialBundle = async ({
   ioWallet,
@@ -567,20 +583,25 @@ type GenerateKeysWithWalletUnitAttestation = (
 ) => Promise<ReadonlyArray<AuthorizedCredentialMetadata>>;
 
 /**
- * Create the keys and the WUA for each credential to request. The exact credentials are taken from the authorization details
- * of the Issuer's access token, that contains the list of authorized credential identifiers. At present we always receive one
- * credential identifier, so we can generate one key/WUA per authorization detail.
+ * Create the keys and the WUA for each credential to request. The exact
+ * credentials are taken from the authorization details of the Issuer's access
+ * token, that contains the list of authorized credential identifiers. At
+ * present we always receive one credential identifier, so we can generate one
+ * key/WUA per authorization detail.
  *
  * If the WUA is not supported, only the keys are generated.
  *
- * This function MUST be called before {@link requestAndParseCredential} because key generation is a preliminary step.
+ * This function MUST be called before {@link requestAndParseCredential} because
+ * key generation is a preliminary step.
  *
  * @param accessToken The Issuer access token with the authorization details
  * @param params.env Environment variables
  * @param params.itwVersion IT-Wallet technical specs version
- * @param params.hardwareKeyTag The hardware key associated with the Wallet Instance
+ * @param params.hardwareKeyTag The hardware key associated with the Wallet
+ *   Instance
  * @param params.sessionToken The session token for the Wallet Provider API
- * @returns The authorization details enriched with the generated keys and WUA if supported
+ * @returns The authorization details enriched with the generated keys and WUA
+ *   if supported
  */
 export const generateKeysWithWalletUnitAttestation: GenerateKeysWithWalletUnitAttestation =
   async (accessToken, { env, itwVersion, hardwareKeyTag, sessionToken }) => {
@@ -620,7 +641,8 @@ export const generateKeysWithWalletUnitAttestation: GenerateKeysWithWalletUnitAt
 export type AuthorizedBatchCredentialMetadata = {
   authDetails: CredentialAccessToken["authorization_details"][number];
   /**
-   * One key per credential copy to obtain in the batch. All keys are attested by the same WUA.
+   * One key per credential copy to obtain in the batch. All keys are attested
+   * by the same WUA.
    */
   keyTags: ReadonlyArray<string>;
   walletUnitAttestation?: string;
@@ -639,17 +661,20 @@ type GenerateBatchKeysWithWalletUnitAttestation = (
 ) => Promise<ReadonlyArray<AuthorizedBatchCredentialMetadata>>;
 
 /**
- * Batch variant of {@link generateKeysWithWalletUnitAttestation}. For each authorization detail it
- * generates `batchSize` cryptographic keys and, when supported, a single Wallet Unit Attestation
- * that attests all of them (the WUA endpoint accepts multiple keys at once, correlated via
+ * Batch variant of {@link generateKeysWithWalletUnitAttestation}. For each
+ * authorization detail it generates `batchSize` cryptographic keys and, when
+ * supported, a single Wallet Unit Attestation that attests all of them (the WUA
+ * endpoint accepts multiple keys at once, correlated via
  * `walletUnitAttestationId`).
  *
- * This function MUST be called before {@link obtainCredentialsBatch} because key generation is a
- * preliminary step.
+ * This function MUST be called before {@link obtainCredentialsBatch} because key
+ * generation is a preliminary step.
  *
  * @param accessToken The Issuer access token with the authorization details
- * @param batchSize The number of credential copies (and keys) to generate per authorization detail
- * @returns The authorization details enriched with the generated keys and WUA if supported
+ * @param batchSize The number of credential copies (and keys) to generate per
+ *   authorization detail
+ * @returns The authorization details enriched with the generated keys and WUA
+ *   if supported
  */
 export const generateBatchKeysWithWalletUnitAttestation: GenerateBatchKeysWithWalletUnitAttestation =
   async (
@@ -701,13 +726,16 @@ export type ObtainCredentialsBatch = (args: {
 }) => Promise<ReadonlyArray<CredentialBundle>>;
 
 /**
- * Obtains multiple copies of a credential from the issuer in a single batch request, using
- * `obtainCredentialsBatch` from the wallet SDK. Each authorization detail is requested with its
- * own set of crypto contexts (one per copy) and all returned credentials are verified and packaged
- * into {@link CredentialBundle}s. All copies of the same credential share the `credentialId`
- * (the issuer's `credential_configuration_id`); copies are told apart by their unique `keyTag`.
+ * Obtains multiple copies of a credential from the issuer in a single batch
+ * request, using `obtainCredentialsBatch` from the wallet SDK. Each
+ * authorization detail is requested with its own set of crypto contexts (one
+ * per copy) and all returned credentials are verified and packaged into
+ * {@link CredentialBundle}s. All copies of the same credential share the
+ * `credentialId` (the issuer's `credential_configuration_id`); copies are told
+ * apart by their unique `keyTag`.
  *
- * Keys MUST be generated beforehand via {@link generateBatchKeysWithWalletUnitAttestation}.
+ * Keys MUST be generated beforehand via
+ * {@link generateBatchKeysWithWalletUnitAttestation}.
  *
  * @returns The flattened list of obtained credential bundles
  */
@@ -787,14 +815,16 @@ export type AttachCredentialsStatus = (args: {
 }) => Promise<ReadonlyArray<CredentialBundle>>;
 
 /**
- * Enriches freshly obtained credential bundles with their validity, using the status mechanism
- * supported by the current IT-Wallet specifications version: status assertion when available,
- * token status list otherwise. mDoc credentials are returned untouched.
+ * Enriches freshly obtained credential bundles with their validity, using the
+ * status mechanism supported by the current IT-Wallet specifications version:
+ * status assertion when available, token status list otherwise. mDoc
+ * credentials are returned untouched.
  *
- * The issuer configuration is required only by the status list mechanism, which needs the issuer
- * JWKS to verify the fetched list.
+ * The issuer configuration is required only by the status list mechanism, which
+ * needs the issuer JWKS to verify the fetched list.
  *
- * @throws When the credential status cannot be retrieved or the credential is not valid
+ * @throws When the credential status cannot be retrieved or the credential is
+ *   not valid
  */
 export const attachCredentialsStatus: AttachCredentialsStatus = async ({
   credentials,

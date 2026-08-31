@@ -3,9 +3,7 @@ import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
-/**
- * Error view component which currently displays a generic error.
- */
+/** Error view component which currently displays a generic error. */
 export const ItwGenericErrorContent = () => {
   const navigation = useIONavigation();
   return (

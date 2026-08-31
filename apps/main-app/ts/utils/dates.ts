@@ -75,10 +75,12 @@ export function formatDateAsDay(date: Date): ReturnType<typeof format> {
 }
 
 /**
+ * It provides the format of the date depending on the system locale (DD/MM or
+ * MM/DD as default)
  *
- * It provides the format of the date depending on the system locale (DD/MM or MM/DD as default)
  * @param date
- * @param includeYear: true if the year should be included (DD/MM/YY or MM/DD/YY)
+ * @param includeYear: True if the year should be included (DD/MM/YY or
+ *   MM/DD/YY)
  * @param extendedYear
  */
 export function formatDateAsLocal(
@@ -100,6 +102,7 @@ export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
 
 /**
  * Try to parse month and validate as month
+ *
  * @param month
  */
 export const decodeCreditCardMonth = (
@@ -119,6 +122,7 @@ export const decodeCreditCardMonth = (
 
 /**
  * Try to parse year and validate as year
+ *
  * @param year
  */
 export const decodeCreditCardYear = (
@@ -142,10 +146,10 @@ export const decodeCreditCardYear = (
 };
 
 /**
- * if expireMonth and expireYear are defined, and they represent a valid date then
- * return some, with 'true' if the given date is expired compared with now.
- * return none if the input is not valid
- * {@expireYear could be 2 or 4 digits}
+ * If expireMonth and expireYear are defined, and they represent a valid date
+ * then return some, with 'true' if the given date is expired compared with now.
+ * return none if the input is not valid {@expireYear could be 2 or 4 digits}
+ *
  * @param expireMonth
  * @param expireYear
  */
@@ -173,7 +177,9 @@ export const isExpired = (
 };
 
 /**
- * This function returns true or false is the provided expiryDate is expired or not
+ * This function returns true or false is the provided expiryDate is expired or
+ * not
+ *
  * @param expiryDate
  */
 export const isExpiredDate = (expiryDate: Date): boolean => {
@@ -185,11 +191,10 @@ export const isExpiredDate = (expiryDate: Date): boolean => {
 export type ExpireStatus = "EXPIRED" | "EXPIRING" | "VALID";
 
 /**
- * A function to check if the given date is in the past or in the future.
- * It returns:
- * -VALID, if the date is in the future
- * -EXPIRING, if the date is within the next 7 days
- * -EXPIRED, if the date is in the past
+ * A function to check if the given date is in the past or in the future. It
+ * returns: -VALID, if the date is in the future -EXPIRING, if the date is
+ * within the next 7 days -EXPIRED, if the date is in the past
+ *
  * @param date Date
  */
 export const getExpireStatus = (date: Date): ExpireStatus => {
@@ -230,9 +235,10 @@ export const DateFromISOString: DateFromISOStringType =
   new DateFromISOStringType();
 
 /**
+ * It provides, given 2 strings that represent the year and the month, a single
+ * string in the format specified by the locales (IT: MM/YY, EN: MM/YY) or
+ * undefined if one of the inputs is not provided
  *
- * It provides, given 2 strings that represent the year and the month, a single string in the format
- * specified by the locales (IT: MM/YY, EN: MM/YY) or undefined if one of the inputs is not provided
  * @param fullYear
  * @param month
  */
@@ -255,10 +261,10 @@ export const getTranslatedShortNumericMonthYear = (
 };
 
 /**
- * Generates a locale formatted timestamp,
- * used to force the refresh of the Image component cache for Android devices
- * every 24 hours.
- * @returns the actual locale date short format without slashes.
+ * Generates a locale formatted timestamp, used to force the refresh of the
+ * Image component cache for Android devices every 24 hours.
+ *
+ * @returns The actual locale date short format without slashes.
  */
 export const toAndroidCacheTimestamp = () =>
   new Intl.DateTimeFormat("it", {
@@ -271,6 +277,7 @@ export const toAndroidCacheTimestamp = () =>
 
 /**
  * This function returns a Date object from a string in format "YYYYMM"
+ *
  * @param expiryDate
  */
 export const getDateFromExpiryDate = (expiryDate: string): Date | undefined => {

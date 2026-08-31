@@ -19,9 +19,7 @@ export const createItwTrustmarkActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
   toast: ReturnType<typeof useIOToast>
 ) => {
-  /**
-   * Initializes the trustmark machine
-   */
+  /** Initializes the trustmark machine */
   const onInit = assign<
     Context,
     TrustmarkEvents,
@@ -50,16 +48,15 @@ export const createItwTrustmarkActionsImplementation = (
   };
 
   /**
-   * Handles the session expired event by dispatching the session expired action and navigating back to the credential details screen
+   * Handles the session expired event by dispatching the session expired action
+   * and navigating back to the credential details screen
    */
   const handleSessionExpired = () => {
     store.dispatch(checkCurrentSession.success({ isSessionValid: false }));
     navigation.pop();
   };
 
-  /**
-   * Shows a failure toast
-   */
+  /** Shows a failure toast */
   const showRetryFailureToast = ({
     context
   }: ActionArgs<Context, TrustmarkEvents, TrustmarkEvents>) => {

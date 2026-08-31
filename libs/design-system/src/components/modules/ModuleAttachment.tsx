@@ -71,20 +71,22 @@ const ModuleAttachmentContent = ({
 };
 
 /**
- * The `ModuleAttachment` component is a custom button component with an extended outline style.
- * It provides an animated scaling effect when pressed.
+ * The `ModuleAttachment` component is a custom button component with an
+ * extended outline style. It provides an animated scaling effect when pressed.
  *
- * @param {string}   accessibilityLabel - Optional accessibility label.
- * @param {boolean}  disabled - If true, the button is disabled.
- * @param {string}   fetchingAccessibilityLabel - Optional accessibility label to use during fetching.
- * @param {string}   loadingAccessibilityLabel - Optional accessibility label to use during loading.
- * @param {string}   format - Badge content. PDF or DOC.
- * @param {boolean}  isLoading - If true, displays a skeleton loading component.
- * @param {boolean}  isFetching - If true, displays an activity indicator.
- * @param {function} onPress - The function to be executed when the item is pressed.
- * @param {string}   testID - The test ID for testing purposes.
- * @param {string}   title - The title text to display.
- *
+ * @param {string} accessibilityLabel - Optional accessibility label.
+ * @param {boolean} disabled - If true, the button is disabled.
+ * @param {string} fetchingAccessibilityLabel - Optional accessibility label to
+ *   use during fetching.
+ * @param {string} loadingAccessibilityLabel - Optional accessibility label to
+ *   use during loading.
+ * @param {string} format - Badge content. PDF or DOC.
+ * @param {boolean} isLoading - If true, displays a skeleton loading component.
+ * @param {boolean} isFetching - If true, displays an activity indicator.
+ * @param {function} onPress - The function to be executed when the item is
+ *   pressed.
+ * @param {string} testID - The test ID for testing purposes.
+ * @param {string} title - The title text to display.
  */
 export const ModuleAttachment = ({
   accessibilityLabel,

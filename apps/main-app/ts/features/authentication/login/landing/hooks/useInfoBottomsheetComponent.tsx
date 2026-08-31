@@ -56,11 +56,12 @@ export const useInfoBottomsheetComponent = () => {
   }, [privacyUrl]);
 
   /**
-   * The URL is currently hardcoded because the remote config still points to io.italia.it.
-   * Switching to use `generateDynamicUrlSelector` and ioapp.it now would break links,
-   * as not all have been migrated yet.
+   * The URL is currently hardcoded because the remote config still points to
+   * io.italia.it. Switching to use `generateDynamicUrlSelector` and ioapp.it
+   * now would break links, as not all have been migrated yet.
    *
-   * TODO: Replace with `generateDynamicUrlSelector` once the migration to ioapp.it is complete.
+   * TODO: Replace with `generateDynamicUrlSelector` once the migration to
+   * ioapp.it is complete.
    */
 
   const navigateToManageAccess = useCallback(() => {

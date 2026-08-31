@@ -19,9 +19,10 @@ import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 export type GetEycaStatus = "COMPLETED" | "ERROR" | "NOT_FOUND" | "PROCESSING";
 
 /**
- * ask for the current status of EYCA activation
- * it returns the status {@link GetEycaStatus} - right case
- * if an error occured it returns a {@link NetworkError} - left case
+ * Ask for the current status of EYCA activation it returns the status
+ * {@link GetEycaStatus} - right case if an error occured it returns a
+ * {@link NetworkError} - left case
+ *
  * @param getEycaActivation
  */
 export function* getActivation(

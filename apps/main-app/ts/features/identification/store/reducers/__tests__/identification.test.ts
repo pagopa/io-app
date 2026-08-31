@@ -161,8 +161,9 @@ describe("Identification reducer", () => {
 });
 
 /**
- *  This function execute the full fail sequence, simulate the insertion of the wrong pin for
- * :maxAttempts -1:  amount of time.
+ * This function execute the full fail sequence, simulate the insertion of the
+ * wrong pin for :maxAttempts -1: amount of time.
+ *
  * @param initialState
  */
 const expectFailSequence = (
@@ -198,7 +199,9 @@ const expectFailSequence = (
 };
 
 /**
- * Verify if a IdentificationState satisfies all the properties for a fail condition
+ * Verify if a IdentificationState satisfies all the properties for a fail
+ * condition
+ *
  * @param state
  * @param expectedRemainingAttempts
  * @param expectedTimeSpan

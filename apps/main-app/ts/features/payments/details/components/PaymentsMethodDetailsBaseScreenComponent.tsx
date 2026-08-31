@@ -35,9 +35,7 @@ type Props = {
   headerTitle?: string;
 };
 
-/**
- * Base layout for payment methods screen & legacy delete handling
- */
+/** Base layout for payment methods screen & legacy delete handling */
 const PaymentsMethodDetailsBaseScreenComponent = ({
   card,
   headerTitle = "",

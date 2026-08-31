@@ -24,9 +24,10 @@ export type CredentialOfferLink = {
 };
 
 /**
- * Parses a credential offer invocation and returns the route used internally by React Navigation.
- * Raw custom schemes and universal links are preserved as the credential offer URI, while already
- * normalized internal routes expose the original URI stored in the query parameter.
+ * Parses a credential offer invocation and returns the route used internally by
+ * React Navigation. Raw custom schemes and universal links are preserved as the
+ * credential offer URI, while already normalized internal routes expose the
+ * original URI stored in the query parameter.
  */
 export const parseCredentialOfferLink = (
   value: string

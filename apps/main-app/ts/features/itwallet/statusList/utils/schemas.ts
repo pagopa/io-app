@@ -1,8 +1,6 @@
 import { z } from "zod";
 
-/**
- * Validates Wallet Provider metadata needed to verify Status List Tokens.
- */
+/** Validates Wallet Provider metadata needed to verify Status List Tokens. */
 export const WalletProviderMetadataSchema = z.object({
   metadata: z.object({
     wallet_solution: z.object({

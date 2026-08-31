@@ -1,8 +1,8 @@
 /**
- * Actions that trigger the requirement for L3 upgrade.
- * This type represents the user action that was performed immediately before
- * the L3 mandatory upgrade screen was displayed.
- * Add new values when implementing additional flows that require L3 upgrade.
+ * Actions that trigger the requirement for L3 upgrade. This type represents the
+ * user action that was performed immediately before the L3 mandatory upgrade
+ * screen was displayed. Add new values when implementing additional flows that
+ * require L3 upgrade.
  */
 export enum ItwL3UpgradeTrigger {
   REMOTE_QR_CODE = "remote_qr_code"

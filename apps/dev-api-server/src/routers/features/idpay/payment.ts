@@ -58,9 +58,7 @@ const codeToFailure: {
   8: { status: 403, code: CodeEnum.PAYMENT_ALREADY_AUTHORIZED }
 };
 
-/**
- * Pre Authorize payment
- */
+/** Pre Authorize payment */
 addIdPayHandler("put", "/payment/qr-code/:trxCode/relate-user", (req, res) =>
   pipe(
     req.params.trxCode,
@@ -80,9 +78,7 @@ addIdPayHandler("put", "/payment/qr-code/:trxCode/relate-user", (req, res) =>
   )
 );
 
-/**
- *  Authorize payment
- */
+/** Authorize payment */
 addIdPayHandler("put", "/payment/qr-code/:trxCode/authorize", (req, res) =>
   pipe(
     req.params.trxCode,

@@ -16,7 +16,8 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 import { trackItwCredentialDelete } from "../analytics";
 
 /**
- * Hook that shows a confirmation dialog and, if confirmed, removes a credential from the wallet
+ * Hook that shows a confirmation dialog and, if confirmed, removes a credential
+ * from the wallet
  */
 export const useItwRemoveCredentialWithConfirm = (
   credential: CredentialMetadata,

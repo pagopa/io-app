@@ -48,7 +48,7 @@ catalog:
 
   # --- TypeScript ---
   typescript: "6.0.3"
-  prettier: "^3.8.1"
+  oxfmt: "latest"
   eslint: "^9.39.4"
   jest: "~30.3.0"
   "@types/jest": "^30.0.0"

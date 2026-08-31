@@ -16,10 +16,11 @@ import { CredentialsVault } from "../utils/vault";
 type VaultWrite = { credential: string; vaultId: string };
 
 /**
- * Groups the obtained bundles by credentialId and produces, for each credentialId:
- * - the vault writes (one entry for a single credential, one per copy for a batch credential);
- * - the single metadata to store in Redux. A batch credential collapses into one metadata that
- *   lists all its copies' keyTags in `keyTags` (the first copy is the representative).
+ * Groups the obtained bundles by credentialId and produces, for each
+ * credentialId: - the vault writes (one entry for a single credential, one per
+ * copy for a batch credential); - the single metadata to store in Redux. A
+ * batch credential collapses into one metadata that lists all its copies'
+ * keyTags in `keyTags` (the first copy is the representative).
  */
 const collapseBundles = (bundles: ReadonlyArray<CredentialBundle>) => {
   const groups = bundles.reduce<Record<string, Array<CredentialBundle>>>(
@@ -65,10 +66,13 @@ const hasStatusList = (
 ): bundle is Required<CredentialBundle> => Boolean(bundle.statusList);
 
 /**
- * Collect and deduplicate by `uri` all status lists available in the provided credential bundles.
- * The output is then persisted via the {@link StatusListRepository}.
+ * Collect and deduplicate by `uri` all status lists available in the provided
+ * credential bundles. The output is then persisted via the
+ * {@link StatusListRepository}.
+ *
  * @param bundles The credential bundles to collect status lists from
- * @returns An array of status lists tuples with uri as key and the parsed list as payload
+ * @returns An array of status lists tuples with uri as key and the parsed list
+ *   as payload
  */
 const collectStatusLists = (
   bundles: ReadonlyArray<CredentialBundle>
@@ -81,8 +85,8 @@ const collectStatusLists = (
 ];
 
 /**
- * This saga handles the credential store action and ensures the consistency between
- * secure storage and redux store.
+ * This saga handles the credential store action and ensures the consistency
+ * between secure storage and redux store.
  */
 export function* handleItwCredentialsStoreBundleSaga(
   action: ReturnType<typeof itwCredentialsStoreBundle>

@@ -3,55 +3,51 @@ import { GlobalState } from "../../../../../store/reducers/types";
 export const itwPreferencesSelector = (state: GlobalState) =>
   state.features.itWallet.preferences;
 
-/**
- * Returns the authentication level used to obtain the eID.
- */
+/** Returns the authentication level used to obtain the eID. */
 export const itwAuthLevelSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.authLevel;
 
 /**
- * Returns whether claim values are hidden in credentials detail. Defaults to false.
+ * Returns whether claim values are hidden in credentials detail. Defaults to
+ * false.
  */
 export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.claimValuesHidden ?? false;
 
 /**
  * Returns whether the fiscal code is whitelisted for L3 features.
- * @param state the application global state
+ *
+ * @param state The application global state
  */
 export const itwIsFiscalCodeWhitelisted = (state: GlobalState) =>
   !!state.features.itWallet.preferences.isFiscalCodeWhitelisted;
 
 /**
- * Selects the state that indicates whether the bottom sheet of survey is visible.
- * Returns `true` if the bottom sheet is visible, `false` if the user has already
- * checked the survey, with the state being persisted through Redux.
+ * Selects the state that indicates whether the bottom sheet of survey is
+ * visible. Returns `true` if the bottom sheet is visible, `false` if the user
+ * has already checked the survey, with the state being persisted through
+ * Redux.
  */
 export const itwIsPidReissuingSurveyHiddenSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isPidReissuingSurveyHidden;
 
-/**
- * Returns the list of credential types that failed the upgrade process.
- */
+/** Returns the list of credential types that failed the upgrade process. */
 export const itwCredentialUpgradeFailedSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.credentialUpgradeFailed ?? [];
 
-/**
- * Returns the identification mode used for the user.
- */
+/** Returns the identification mode used for the user. */
 export const itwIdentificationModeSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.identificationMode;
 
-/**
- * Returns whether IT Wallet activation is disabled (no nfc).
- */
+/** Returns whether IT Wallet activation is disabled (no nfc). */
 export const itwIsActivationDisabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isItwActivationDisabled ?? false;
 
 /**
- * Returns the stored data (authMethod/docStatus) for the eID activation feedback survey banner,
- * regardless of whether the banner is currently visible. Pair with
- * `itwIsActivationSuccessFeedbackBannerVisibleSelector` (in `./banners`) to decide if it should be shown.
+ * Returns the stored data (authMethod/docStatus) for the eID activation
+ * feedback survey banner, regardless of whether the banner is currently
+ * visible. Pair with `itwIsActivationSuccessFeedbackBannerVisibleSelector` (in
+ * `./banners`) to decide if it should be shown.
  */
 export const itwWalletActivationFeedbackBannerDataSelector = (
   state: GlobalState

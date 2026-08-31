@@ -28,8 +28,8 @@ jest.mock("../../../common/utils/itwIoWallet", () => ({
 }));
 
 /**
- * Mock the JWT decode function to extract the payload from a fake JWT.
- * The fake JWT format is: base64url(header).base64url(payload).signature
+ * Mock the JWT decode function to extract the payload from a fake JWT. The fake
+ * JWT format is: base64url(header).base64url(payload).signature
  */
 jest.mock("@pagopa/io-react-native-jwt", () => ({
   decode: (jwt: string) => {
@@ -55,8 +55,8 @@ const makeValidPayload = (
 });
 
 /**
- * Encodes a payload as a fake JWT (header.payload.signature).
- * Uses base64url encoding for the payload portion.
+ * Encodes a payload as a fake JWT (header.payload.signature). Uses base64url
+ * encoding for the payload portion.
  */
 const fakeJwt = (payload: Record<string, unknown>): string => {
   const header = Buffer.from(JSON.stringify({ alg: "none" })).toString(

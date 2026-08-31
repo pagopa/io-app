@@ -12,13 +12,13 @@ const itwBannersSelector = (state: GlobalState) =>
   state.features.itWallet.banners;
 
 /**
- * Returns whether a specific banner should be visible, combining both rules that govern a
- * banner's lifecycle:
- * - Dismiss-cooldown: if the banner was dismissed, it stays hidden until `bannerHideDurations`
- *   has elapsed since the last dismissal, regardless of `shownOn`.
- * - Shown-window: banners with a configured `bannerVisibleDurations` entry are visible only
- *   within that window since `shownOn` was first set, and are not visible at all until then.
- *   Banners without a configured window have no such constraint.
+ * Returns whether a specific banner should be visible, combining both rules
+ * that govern a banner's lifecycle: - Dismiss-cooldown: if the banner was
+ * dismissed, it stays hidden until `bannerHideDurations` has elapsed since the
+ * last dismissal, regardless of `shownOn`. - Shown-window: banners with a
+ * configured `bannerVisibleDurations` entry are visible only within that window
+ * since `shownOn` was first set, and are not visible at all until then. Banners
+ * without a configured window have no such constraint.
  */
 export const itwIsBannerVisibleSelector = (id: ItwBannerId) =>
   createSelector(itwBannersSelector, banners => {
@@ -26,10 +26,11 @@ export const itwIsBannerVisibleSelector = (id: ItwBannerId) =>
 
     if (!bannerState) {
       /**
-       * Banners with a configured shown-window must have been triggered (shownOn set)
-       * before they can be visible, otherwise they'd show indefinitely for users who
-       * never went through the trigger flow (e.g. after migrating away legacy state).
-       * Banners without such a window have no visibility constraint, so they default to visible.
+       * Banners with a configured shown-window must have been triggered
+       * (shownOn set) before they can be visible, otherwise they'd show
+       * indefinitely for users who never went through the trigger flow (e.g.
+       * after migrating away legacy state). Banners without such a window have
+       * no visibility constraint, so they default to visible.
        */
       return bannerVisibleDurations[id] === undefined;
     }
@@ -74,43 +75,52 @@ export const itwIsBannerVisibleSelector = (id: ItwBannerId) =>
   });
 
 /**
- * Returns if the discovery banner should be displayed based on the user's preferences.
- * The banner should be visible only if the user closed it more than six months ago.
+ * Returns if the discovery banner should be displayed based on the user's
+ * preferences. The banner should be visible only if the user closed it more
+ * than six months ago.
  */
 export const itwIsDiscoveryBannerVisibleSelector =
   itwIsBannerVisibleSelector("discovery");
 
 /**
- * Returns whether the IT-wallet upgrade banner in MDL details is visible. Defaults to true.
+ * Returns whether the IT-wallet upgrade banner in MDL details is visible.
+ * Defaults to true.
  */
 export const itwIsWalletUpgradeMDLDetailsBannerVisibleSelector =
   itwIsBannerVisibleSelector("upgradeMDLDetails");
 
 /**
- * Returns whether the Age Verification usage banner in credential details is visible. Defaults to true.
+ * Returns whether the Age Verification usage banner in credential details is
+ * visible. Defaults to true.
  */
 export const itwIsAgeVerificationUsageDetailsBannerVisibleSelector =
   itwIsBannerVisibleSelector("ageVerificationUsageDetails");
 
-/** Returns whether the IT-wallet discovery banner in wallet screen is visible. Defaults to true.
+/**
+ * Returns whether the IT-wallet discovery banner in wallet screen is visible.
+ * Defaults to true.
  */
 export const itwIsWalletDiscoveryBannerVisibleSelector =
   itwIsBannerVisibleSelector("discovery_wallet");
 
-/** Returns whether the IT-wallet discovery banner in messages inbox screen is visible. Defaults to true.
+/**
+ * Returns whether the IT-wallet discovery banner in messages inbox screen is
+ * visible. Defaults to true.
  */
 export const itwIsInboxDiscoveryBannerVisibleSelector =
   itwIsBannerVisibleSelector("discovery_messages_inbox");
 
 /**
- * Returns whether the eID activation success feedback banner should be displayed: it must have been
- * triggered, still be within its 7-day visibility window, and not have been dismissed.
+ * Returns whether the eID activation success feedback banner should be
+ * displayed: it must have been triggered, still be within its 7-day visibility
+ * window, and not have been dismissed.
  */
 export const itwIsActivationSuccessFeedbackBannerVisibleSelector =
   itwIsBannerVisibleSelector("activationSuccessFeedback");
 
 /**
- * Returns whether the informational banner in MDL details is visible. Defaults to true.
+ * Returns whether the informational banner in MDL details is visible. Defaults
+ * to true.
  */
 export const itwIsMdlDetailsInfoBannerVisibleSelector =
   itwIsBannerVisibleSelector("mdlDetailsInfo");

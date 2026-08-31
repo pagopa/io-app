@@ -66,8 +66,9 @@ export const storeLastStatusListCheckTimestamp = async (
 
 /**
  * Retrieves the timestamps of the latest checks for the ITW Status List.
+ *
  * @returns A promise that resolves to the timestamps of the latest checks in
- * milliseconds since the Unix epoch
+ *   milliseconds since the Unix epoch
  */
 export const getLastStatusListCheckTimestamps = async (): Promise<
   Array<number>

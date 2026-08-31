@@ -468,9 +468,11 @@ UTILS
 */
 
 /**
-Return the color value with RGBA format (RGB + Alpha transparency), starting from the hexadecimal color value only.
-@param hexCode Color value in hexadecimal format. No short version accepted.
-@param opacity Opacity value that range from 0 to 1. Default value = 1.
+ * Return the color value with RGBA format (RGB + Alpha transparency), starting
+ * from the hexadecimal color value only.
+ *
+ * @param hexCode Color value in hexadecimal format. No short version accepted.
+ * @param opacity Opacity value that range from 0 to 1. Default value = 1.
  */
 /* Taken from this Gist: https://gist.github.com/danieliser/b4b24c9f772066bcf0a6 */
 export const hexToRgba = (hexCode: ColorValue, opacity = 1) => {
@@ -487,7 +489,7 @@ export const hexToRgba = (hexCode: ColorValue, opacity = 1) => {
 REFACTORING REFERENCES
 Alias tokens:
 */
-/* 
+/*
 itemSeparator → grey-200
 textColor → grey-700
 footerShadowColor → black

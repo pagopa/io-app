@@ -5,8 +5,8 @@ import { ConsentData } from "./types";
 
 /**
  * Returns the canonical payload used to identify a proximity consent.
- * Credentials and claims are sorted to keep the key deterministic regardless
- * of input ordering.
+ * Credentials and claims are sorted to keep the key deterministic regardless of
+ * input ordering.
  */
 const getCanonicalConsentPayload = (consent: ConsentData): string => {
   const sortedCredentials = [...consent.credentials]
@@ -37,8 +37,7 @@ export const generateConsentKey = (consent: ConsentData): string =>
  * Generates a consent data from the RP ID and proximity details
  *
  * @param proximityDetails List of requested credentials and claims from the
- * proximity presentation details.
- *
+ *   proximity presentation details.
  * @returns A ConsentData structure representing the consent details,
  */
 export const getConsentDataFromProximityDetails = (

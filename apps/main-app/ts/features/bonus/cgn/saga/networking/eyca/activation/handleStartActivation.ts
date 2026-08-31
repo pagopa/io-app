@@ -24,7 +24,8 @@ const mapStatus = new Map<number, StartEycaStatus>([
 ]);
 
 /**
- * ask for starting activation of EYCA card
+ * Ask for starting activation of EYCA card
+ *
  * @param startEycaActivation
  */
 export function* handleStartActivation(

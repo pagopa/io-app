@@ -26,8 +26,9 @@ type Stack = A11YRelatedProps &
   }>;
 
 /**
-Horizontal Stack component
-@param {IOSpacer} space
+ * Horizontal Stack component
+ *
+ * @param {IOSpacer} space
  */
 
 const Stack = ({
@@ -65,8 +66,9 @@ export const HStack = ({ children, ...props }: Stack) => (
 );
 
 /**
-Vertical Stack component
-@param {IOSpacer} space
+ * Vertical Stack component
+ *
+ * @param {IOSpacer} space
  */
 
 export const VStack = ({ children, ...props }: Stack) => (

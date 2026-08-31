@@ -20,9 +20,11 @@ const cgnResultPolling = 1000 as Millisecond;
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
 /**
- * Function that handles the polling check of the CGN's status
- * Calls the status API with a polling interrupted only if it's activated or if a network error has been raised
- * @param getCgnActivation backend client to know the current user CGN status
+ * Function that handles the polling check of the CGN's status Calls the status
+ * API with a polling interrupted only if it's activated or if a network error
+ * has been raised
+ *
+ * @param getCgnActivation Backend client to know the current user CGN status
  */
 export const handleCgnStatusPolling = (
   getCgnActivation: ReturnType<typeof BackendCGN>["getCgnActivation"]

@@ -180,33 +180,34 @@ const ListItemInfoContent = ({
 };
 
 /**
- * ListItemInfo component displays information in a list item format with optional icons,
- * labels, values, and end elements (buttons, badges).
+ * ListItemInfo component displays information in a list item format with
+ * optional icons, labels, values, and end elements (buttons, badges).
  *
  * @remarks
- * **Accessibility for Interactive Elements:**
- * When using interactive end elements (`buttonLink` or `iconButton`), you must provide
- * an appropriate `accessibilityLabel` directly to the interactive component props.
- * This ensures that screen reader users can understand the relationship between the
- * list item content and the action that the interactive element triggers.
+ *   **Accessibility for Interactive Elements:** When using interactive end
+ *   elements (`buttonLink` or `iconButton`), you must provide an appropriate
+ *   `accessibilityLabel` directly to the interactive component props. This
+ *   ensures that screen reader users can understand the relationship between
+ *   the list item content and the action that the interactive element triggers.
+ *   Example:
  *
- * Example:
- * ```tsx
- * <ListItemInfo
- *   label="Email"
- *   value="user@example.com"
- *   endElement={{
- *     type: "buttonLink",
- *     componentProps: {
- *       label: "Edit",
- *       accessibilityLabel: "Edit email address"
- *     }
- *   }}
- * />
- * ```
+ *   ```tsx
+ *   <ListItemInfo
+ *     label="Email"
+ *     value="user@example.com"
+ *     endElement={{
+ *       type: "buttonLink",
+ *       componentProps: {
+ *         label: "Edit",
+ *         accessibilityLabel: "Edit email address"
+ *       }
+ *     }}
+ *   />;
+ *   ```
  *
- * The design system cannot enforce this pattern automatically, so it's the responsibility
- * of the implementing software engineer to ensure proper accessibility labels are set.
+ *   The design system cannot enforce this pattern automatically, so it's the
+ *   responsibility of the implementing software engineer to ensure proper
+ *   accessibility labels are set.
  */
 export const ListItemInfo = ({
   value,
@@ -233,14 +234,18 @@ export const ListItemInfo = ({
    * A11Y Support: Two different combinations based on interactive elements
    *
    * 1. NO interactive elements (or just badge):
-   *    - The outer container is accessible and receives the complete accessibility label
-   *    - This allows the entire list item to be treated as a single accessibility element
    *
+   *    - The outer container is accessible and receives the complete accessibility
+   *      label
+   *    - This allows the entire list item to be treated as a single accessibility
+   *      element
    * 2. WITH interactive elements (buttonLink or iconButton):
+   *
    *    - The outer container is NOT accessible
    *    - The inner content becomes accessible with its label
    *    - The interactive element is separately accessible with its own label
-   *    - This allows screen readers to navigate between the content and the action separately
+   *    - This allows screen readers to navigate between the content and the action
+   *      separately
    */
   const hasInteractiveElements =
     endElement?.type === "buttonLink" || endElement?.type === "iconButton";
@@ -253,9 +258,7 @@ export const ListItemInfo = ({
   const endBadgeText =
     endElement?.type === "badge" ? (endElement.componentProps.text ?? "") : "";
 
-  /**
-   * Build text in VISUAL ORDER
-   */
+  /** Build text in VISUAL ORDER */
   const mainTextParts = reversed
     ? [componentValueToAccessibility, label]
     : [label, componentValueToAccessibility];

@@ -50,9 +50,10 @@ export const useItwGuidedTour = () => {
 
   /**
    * Starts the tour guide for the ITW on screen focus when:
+   *
    * - ITW is active and valid
-   * - tour guide was not completed yet
-   * - it is not in offline mode (no offline access reason set)
+   * - Tour guide was not completed yet
+   * - It is not in offline mode (no offline access reason set)
    */
   useFocusEffect(
     useCallback(() => {

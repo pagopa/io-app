@@ -53,8 +53,9 @@ let walletV2Response: WalletV2ListResponse = {
 export const getWalletV2 = (): ReadonlyArray<WalletV2> =>
   walletV2Response.data ?? [];
 /**
- * return true if the wallet relative to the given idWallet has been deleted
+ * Return true if the wallet relative to the given idWallet has been deleted
  * this functions updates the wallets list
+ *
  * @param idWallet
  */
 export const removeWalletV2 = (idWallet: number): boolean => {
@@ -285,9 +286,7 @@ addHandler(
   }
 );
 
-/**
- * return the list of psp from a given payment id and wallet id
- */
+/** Return the list of psp from a given payment id and wallet id */
 addHandler(
   wallet2Router,
   "get",
@@ -298,9 +297,9 @@ addHandler(
 );
 
 /**
- * update the psp of a specified wallet
- * during the payment checkout the PM knows only about the payment method used
- * the psp is included in the payment method and its shape is about V1 and not V2 ¯\_(ツ)_/¯
+ * Update the psp of a specified wallet during the payment checkout the PM knows
+ * only about the payment method used the psp is included in the payment method
+ * and its shape is about V1 and not V2 ¯_(ツ)_/¯
  */
 addHandler(
   wallet2Router,

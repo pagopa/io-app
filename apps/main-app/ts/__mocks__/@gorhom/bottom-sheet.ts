@@ -1,10 +1,11 @@
 /* eslint-disable max-classes-per-file */
 /**
- * This configuration was taken from the official library;
- * it is not present in the current version in use
- * but may be replaced with the first upgrade that introduces it.
+ * This configuration was taken from the official library; it is not present in
+ * the current version in use but may be replaced with the first upgrade that
+ * introduces it.
  *
- * reference: https://github.com/gorhom/react-native-bottom-sheet/blob/master/mock.js
+ * Reference:
+ * https://github.com/gorhom/react-native-bottom-sheet/blob/master/mock.js
  */
 import { Component, PropsWithChildren } from "react";
 

@@ -12,8 +12,10 @@ import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet
 import { openWebUrl } from "../../../../../../utils/url";
 
 /**
- * this component shows information about EYCA card. It is included within a bottom sheet
- * @constructor
+ * This component shows information about EYCA card. It is included within a
+ * bottom sheet
+ *
+ * @class
  */
 const EycaInformationComponent: React.FunctionComponent = () => {
   const eycaBaseUrl = useIOSelector(getEYCABaseUrl);

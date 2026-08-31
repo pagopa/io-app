@@ -4,17 +4,17 @@ import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/comm
 import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 
 export const enum CreditCardBrandEnum {
-  "AMEX" = "AMEX",
-  "DINERS" = "DINERS",
-  "MAESTRO" = "MAESTRO",
-  "MASTERCARD" = "MASTERCARD",
+  AMEX = "AMEX",
+  DINERS = "DINERS",
+  MAESTRO = "MAESTRO",
+  MASTERCARD = "MASTERCARD",
   // "DISCOVER" = "DISCOVER",
   // "JCB" = "JCB",
-  "POSTEPAY" = "POSTEPAY",
+  POSTEPAY = "POSTEPAY",
   // "UNIONPAY" = "UNIONPAY",
-  "VISA" = "VISA",
-  "VISAELECTRON" = "VISAELECTRON",
-  "VPAY" = "VPAY"
+  VISA = "VISA",
+  VISAELECTRON = "VISAELECTRON",
+  VPAY = "VPAY"
 }
 
 export const creditCardBrands: ReadonlyArray<CreditCardBrandEnum> = [

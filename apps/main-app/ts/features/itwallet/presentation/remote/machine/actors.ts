@@ -65,9 +65,10 @@ export type SendAuthorizationResponseInput = {
 
 export type SendAuthorizationResponseOutput = {
   /**
-   * The `keyTag`s of the credential copies actually included in the Verifiable Presentation
-   * (required + user-selected optional). Used after a successful presentation to consume the
-   * corresponding copy of any batch-issued credential (e.g. Proof of Age).
+   * The `keyTag`s of the credential copies actually included in the Verifiable
+   * Presentation (required + user-selected optional). Used after a successful
+   * presentation to consume the corresponding copy of any batch-issued
+   * credential (e.g. Proof of Age).
    */
   presentedKeyTags: ReadonlyArray<string>;
   redirectUri?: string; // Optional in cross-device presentation

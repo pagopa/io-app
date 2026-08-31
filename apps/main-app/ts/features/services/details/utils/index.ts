@@ -7,9 +7,10 @@ import { CtaCategoryType } from "../../common/analytics";
  * Generates the action props for the service details screen
  *
  * Priority Order:
- * 1. specialActionProps (always primary)
- * 2. cta_1
- * 3. cta_2 (only if cta_1 exists)
+ *
+ * 1. SpecialActionProps (always primary)
+ * 2. Cta_1
+ * 3. Cta_2 (only if cta_1 exists)
  *
  * @param specialActionProps - Special action button props
  * @param ctas - Localized CTAs

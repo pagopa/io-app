@@ -1,8 +1,6 @@
 import { z } from "zod";
 
-/**
- * Schema of a single IDP returned by the OneIdentity IDPs list endpoint
- */
+/** Schema of a single IDP returned by the OneIdentity IDPs list endpoint */
 export const IdpSchema = z.object({
   entityID: z.string(),
   status: z.string(),

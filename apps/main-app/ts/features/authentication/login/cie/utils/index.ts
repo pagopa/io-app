@@ -8,9 +8,7 @@ export type SpidLevel = "SpidL2" | "SpidL3";
 export const cieFlowForDevServerEnabled =
   isDevEnv && cieLoginFlowWithDevServerEnabled;
 
-/**
- * Maps the CIE login UAT flag to the CieID app environment to open.
- */
+/** Maps the CIE login UAT flag to the CieID app environment to open. */
 export const getCieIdEnvironment = (isUat: boolean): CieIdEnvironment =>
   isUat ? "preprod" : "production";
 
@@ -24,13 +22,13 @@ export const getCieIDLoginUri = (
   }&authLevel=${spidLevel}`;
 
 /**
- * @description this function checks if the given `url` is an authentication url
- * @property livello1 refers to SpidL1
- * @property livello2 refers to SpidL2
- * @property nextUrl refers to SpidL3 for `iOS` and `android`
- * @property openApp refers to SpidL3 for `android`
+ * This function checks if the given `url` is an authentication url
  *
- * @returns a `boolean`
+ * @property livello1 Refers to SpidL1
+ * @property livello2 Refers to SpidL2
+ * @property nextUrl Refers to SpidL3 for `iOS` and `android`
+ * @property openApp Refers to SpidL3 for `android`
+ * @returns A `boolean`
  */
 export const isAuthenticationUrl = (url: string) => {
   const authUrlRegex = /\/(livello1|livello2|nextUrl|openApp)(\/|\?|$)/;

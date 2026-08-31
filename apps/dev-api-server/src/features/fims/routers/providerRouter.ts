@@ -828,10 +828,7 @@ const validateAndHandleAuthorizeRequestParameters = (
   return { nonce, redirectUri, relyingPartyId, requestScopes, state };
 };
 
-/**
- * See https://www.rfc-editor.org/rfc/rfc6749.txt
- * 4.1.2.1.  Error Response
- */
+/** See https://www.rfc-editor.org/rfc/rfc6749.txt 4.1.2.1. Error Response */
 const replyWithOIDCError = (
   errorCode: OIDCErrorCodes,
   description: string,

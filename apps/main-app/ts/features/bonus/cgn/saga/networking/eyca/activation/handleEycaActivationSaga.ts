@@ -14,11 +14,12 @@ const cgnResultPolling = 1000 as Millisecond;
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
 /**
- * Function that handles the activation of EYCA card
- * see https://www.pivotaltracker.com/story/show/177062719/comments/222747527
- * first it checks for the status activation
- * depending on that, it could start a polling to wait about completion or ends with a defined state
- * @param getEycaActivation asks for the status of EYCA card activation
+ * Function that handles the activation of EYCA card see
+ * https://www.pivotaltracker.com/story/show/177062719/comments/222747527 first
+ * it checks for the status activation depending on that, it could start a
+ * polling to wait about completion or ends with a defined state
+ *
+ * @param getEycaActivation Asks for the status of EYCA card activation
  */
 export function* handleEycaActivationSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]

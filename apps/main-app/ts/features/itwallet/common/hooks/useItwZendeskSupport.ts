@@ -34,11 +34,11 @@ export type ItwZendeskSupportParams = {
 };
 
 /**
- * Primitive hook that owns all IT Wallet–specific Zendesk ticket setup:
- * tool check, custom field population, and the two required dispatches.
+ * Primitive hook that owns all IT Wallet–specific Zendesk ticket setup: tool
+ * check, custom field population, and the two required dispatches.
  *
- * Use this as the single entry point for any IT Wallet support ticket flow
- * to ensure consistent metadata and prevent categorisation gaps.
+ * Use this as the single entry point for any IT Wallet support ticket flow to
+ * ensure consistent metadata and prevent categorisation gaps.
  */
 export const useItwZendeskSupport = () => {
   const dispatch = useIODispatch();

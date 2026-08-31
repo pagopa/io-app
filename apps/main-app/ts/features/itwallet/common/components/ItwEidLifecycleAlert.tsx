@@ -30,21 +30,17 @@ const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
 
 type Props = {
   /**
-   * The name of the current screen, used for analytics tracking
-   * and conditional rendering logic (e.g. PID detail screen).
+   * The name of the current screen, used for analytics tracking and conditional
+   * rendering logic (e.g. PID detail screen).
    */
   currentScreenName?: string;
-  /**
-   * The eID statuses that will render the alert.
-   */
+  /** The eID statuses that will render the alert. */
   lifecycleStatus?: Array<ItwJwtCredentialStatus>;
   navigation: ReturnType<typeof useIONavigation>;
   skipViewTracking?: boolean;
 };
 
-/**
- * This component renders an alert that displays information on the eID status.
- */
+/** This component renders an alert that displays information on the eID status. */
 export const ItwEidLifecycleAlert = ({
   lifecycleStatus = defaultLifecycleStatus,
   navigation,

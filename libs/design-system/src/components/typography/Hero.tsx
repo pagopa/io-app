@@ -5,9 +5,7 @@ import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 export const heroFontSize: IOFontSize = 32;
 export const heroLineHeight = 48;
 
-/**
- * `Hero` typographic style
- */
+/** `Hero` typographic style */
 export const Hero = ({
   color: customColor,
   ...props

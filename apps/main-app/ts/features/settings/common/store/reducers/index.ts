@@ -1,8 +1,8 @@
 import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 /**
- * A reducer for the Profile.
- * It only manages SUCCESS actions because all UI state properties (like loading/error)
- * are managed by different global reducers.
+ * A reducer for the Profile. It only manages SUCCESS actions because all UI
+ * state properties (like loading/error) are managed by different global
+ * reducers.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";

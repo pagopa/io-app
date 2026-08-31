@@ -14,26 +14,29 @@ import {
 } from "./itwTypesUtils";
 
 /**
- * A credential is a batch when it tracks its copies through the `keyTags` array (e.g. one-time-use
- * credentials obtained in batch). A batch credential stays a batch even when down to a single
- * remaining copy, so any non-empty `keyTags` array marks it as such.
+ * A credential is a batch when it tracks its copies through the `keyTags` array
+ * (e.g. one-time-use credentials obtained in batch). A batch credential stays a
+ * batch even when down to a single remaining copy, so any non-empty `keyTags`
+ * array marks it as such.
  */
 export const isBatchCredential = (
   credential: Pick<CredentialMetadata, "keyTags">
 ): boolean => Boolean(credential.keyTags?.length);
 
 /**
- * Returns every cryptographic key tag owned by a credential: the whole batch for a batch
- * credential, or the single `keyTag` for a non-batch one. Used to delete the device crypto keys.
+ * Returns every cryptographic key tag owned by a credential: the whole batch
+ * for a batch credential, or the single `keyTag` for a non-batch one. Used to
+ * delete the device crypto keys.
  */
 export const getCredentialKeyTags = (
   credential: Pick<CredentialMetadata, "keyTag" | "keyTags">
 ): ReadonlyArray<string> => credential.keyTags ?? [credential.keyTag];
 
 /**
- * Returns the vault ids of every copy of a credential. A non-batch credential maps to a single
- * vault id (its `credentialId`); a batch credential maps to one vault id per copy (each copy's
- * `keyTag`). See {@link CredentialsVault} for the vault id namespacing.
+ * Returns the vault ids of every copy of a credential. A non-batch credential
+ * maps to a single vault id (its `credentialId`); a batch credential maps to
+ * one vault id per copy (each copy's `keyTag`). See {@link CredentialsVault} for
+ * the vault id namespacing.
  */
 export const getCredentialVaultIds = (
   credential: Pick<CredentialMetadata, "credentialId" | "keyTags">
@@ -43,10 +46,11 @@ export const getCredentialVaultIds = (
     : [credential.credentialId];
 
 /**
- * Returns the vault id of the representative copy of a credential, i.e. the one exposed for
- * display and presentation. For a batch credential it is the first copy (`keyTags[0]`), for a
- * non-batch credential it is the `credentialId`. Falls back to `credentialId` if the batch array
- * is unexpectedly empty (e.g. corrupted state) to avoid returning an invalid vault id.
+ * Returns the vault id of the representative copy of a credential, i.e. the one
+ * exposed for display and presentation. For a batch credential it is the first
+ * copy (`keyTags[0]`), for a non-batch credential it is the `credentialId`.
+ * Falls back to `credentialId` if the batch array is unexpectedly empty (e.g.
+ * corrupted state) to avoid returning an invalid vault id.
  */
 export const getRepresentativeVaultId = (
   credential: Pick<CredentialMetadata, "credentialId" | "keyTags">
@@ -189,9 +193,7 @@ export const useTagPropsByStatus = (): {
   }
 });
 
-/**
- * List of statuses that make a credential valid, especially for UI purposes.
- */
+/** List of statuses that make a credential valid, especially for UI purposes. */
 export const validCredentialStatuses: Array<ItwCredentialStatus> = [
   "valid",
   "expiring",
@@ -205,8 +207,11 @@ type ExtractVerification = (args: {
 }) => StoredVerification | undefined;
 
 /**
- * Extracts the verification object from a stored credential based on its format.
- * @param credential - The stored credential fields needed to extract verification
+ * Extracts the verification object from a stored credential based on its
+ * format.
+ *
+ * @param credential - The stored credential fields needed to extract
+ *   verification
  * @returns The verification object or undefined if extraction fails
  */
 export const extractVerification: ExtractVerification = ({
@@ -237,16 +242,17 @@ export const extractVerification: ExtractVerification = ({
 
 /**
  * Checks whether the `assurance_level` field includes `"high"` or the
- * `trust_framework` field is equal to `"it_l2+document_proof"`,
- * and returns `true` only if one of these conditions is met.
+ * `trust_framework` field is equal to `"it_l2+document_proof"`, and returns
+ * `true` only if one of these conditions is met.
  *
- * v1.0 credentials DO NOT belong to IT-Wallet, even when their assurance level is high/L2+.
+ * V1.0 credentials DO NOT belong to IT-Wallet, even when their assurance level
+ * is high/L2+.
  *
- * `"it_l2+document_proof"` indicates that the credential has been issued with
- * a substantial authentication (SPID, CieID) plus an MRTD PoP verification.
+ * `"it_l2+document_proof"` indicates that the credential has been issued with a
+ * substantial authentication (SPID, CieID) plus an MRTD PoP verification.
  *
  * @param metadata - The metadata of the credential to check
- * @returns boolean indicating if the credential is an ITW credential (L3)
+ * @returns Boolean indicating if the credential is an ITW credential (L3)
  */
 export const isItwCredential = ({
   verification,
@@ -263,9 +269,10 @@ export const isItwCredential = ({
 
 /**
  * Checks if the credential was issued before the PID.
+ *
  * @param credentialIssuedAt - Credential issuance date
  * @param pidIssuedAt - PID issuance date
- * @returns true if credential was issued before PID, false otherwise
+ * @returns True if credential was issued before PID, false otherwise
  */
 export const isCredentialIssuedBeforePid = (
   credentialIssuedAt?: string,

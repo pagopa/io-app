@@ -12,7 +12,9 @@ import { IDPayClient } from "../../common/api/client";
 import { idpayTimelinePageGet } from "../store/actions";
 
 /**
- * Handle the remote call to retrieve the IDPay initiative operations timeline page
+ * Handle the remote call to retrieve the IDPay initiative operations timeline
+ * page
+ *
  * @param getTimeline BE API call
  * @param bpdToken Auth token
  * @param language Preferred language

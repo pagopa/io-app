@@ -141,8 +141,9 @@ const invalidWallet = Object.keys(validWallet)
   .reduce((o, k) => ({ ...o, [k]: validWallet[k] }), {});
 
 /**
- * mock a valid wallet with psp.tags malformed
- * TODO: temporary test. Remove this test once SIA has fixed the spec.
+ * Mock a valid wallet with psp.tags malformed TODO: temporary test. Remove this
+ * test once SIA has fixed the spec.
+ *
  * @see https://www.pivotaltracker.com/story/show/166665367
  */
 const validWalletWithMalformedPspTags = {
@@ -279,6 +280,7 @@ describe("WalletListResponse", () => {
 
   /**
    * TODO: temporary test. Remove this test once SIA has fixed the spec.
+   *
    * @see https://www.pivotaltracker.com/story/show/166665367
    */
   it("should recognize a valid WalletListResponse also when psp tags are malformed", () => {

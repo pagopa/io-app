@@ -44,9 +44,7 @@ import {
   CreditCardPan
 } from "../utils/input";
 
-/**
- * Union of all possible credit card types
- */
+/** Union of all possible credit card types */
 export const CreditCardType = t.union([
   t.literal("VISAELECTRON"),
   t.literal("MAESTRO"),
@@ -63,9 +61,7 @@ export const CreditCardType = t.union([
 ]);
 export type CreditCardType = t.TypeOf<typeof CreditCardType>;
 
-/**
- * A refined CreditCard type
- */
+/** A refined CreditCard type */
 export const CreditCard = repP(
   repP(
     repP(
@@ -90,15 +86,13 @@ export type CreditCard = t.TypeOf<typeof CreditCard>;
 /**
  * An refined Amount
  *
- * We are using EUR and 2 decimal digits anyway, so
- * "currency" and "decimalDigits" can safely be ignored
+ * We are using EUR and 2 decimal digits anyway, so "currency" and
+ * "decimalDigits" can safely be ignored
  */
 export const Amount = reqP(AmountPagoPA, "amount", "Amount");
 export type Amount = t.TypeOf<typeof Amount>;
 
-/**
- * A refined Psp
- */
+/** A refined Psp */
 export const Psp = repP(
   reqP(reqP(PspPagoPA, "id"), "logoPSP"),
   "fixedCost",
@@ -107,11 +101,11 @@ export const Psp = repP(
 );
 export type Psp = t.TypeOf<typeof Psp>;
 
-/** A refined WalletV2
- * reasons:
- * - createDate and updateDate are generated from spec as UTCISODateFromString but they have an invalid format (2020-11-03 22:20:29)
- * - info is required
- * - info is CardInfo and not PaymentMethodInfo (empty interface)
+/**
+ * A refined WalletV2 reasons: - createDate and updateDate are generated from
+ * spec as UTCISODateFromString but they have an invalid format (2020-11-03
+ * 22:20:29) - info is required - info is CardInfo and not PaymentMethodInfo
+ * (empty interface)
  */
 
 // required attributes
@@ -165,9 +159,10 @@ export type RawCreditCardPaymentMethod = WalletV2WithoutInfo & {
 };
 
 /**
- * RawPaymentMethod is a PatchedWalletV2 with "info" changed with one of the specific payment type info.
- * The remote specification they are unable to encode this information, which is why it is reprocessed,
- * in order to have the info value correctly valued in the application domain
+ * RawPaymentMethod is a PatchedWalletV2 with "info" changed with one of the
+ * specific payment type info. The remote specification they are unable to
+ * encode this information, which is why it is reprocessed, in order to have the
+ * info value correctly valued in the application domain
  */
 export type RawPaymentMethod =
   | RawBancomatPaymentMethod
@@ -252,9 +247,7 @@ export const isBPay = (
   pm: PaymentMethod | undefined
 ): pm is BPayPaymentMethod => (pm === undefined ? false : pm.kind === "BPay");
 
-/**
- * A refined Wallet
- */
+/** A refined Wallet */
 export const Wallet = repP(
   repP(
     reqP(reqP(WalletPagoPA, "idWallet"), "type"),
@@ -266,14 +259,10 @@ export const Wallet = repP(
   "Wallet"
 );
 
-/**
- * A Wallet that has not being saved yet
- */
+/** A Wallet that has not being saved yet */
 export type NullableWallet = ReplaceProp1<Wallet, "idWallet", undefined>;
 
-/**
- * A refined Transaction
- */
+/** A refined Transaction */
 export type Transaction = TTransactionPagoPA;
 
 export type Wallet = t.TypeOf<typeof Wallet> & {
@@ -288,11 +277,15 @@ const successTransactionIdStatusCases: ReadonlyArray<number> = [8, 9];
 const successTransactionAccountingStatusCases: ReadonlyArray<number> = [1, 5];
 
 /**
- * to determine if a transaction is successfully completed we have to consider 2 cases
- * 1. payed /w CREDIT CARD: accountingStatus is not undefined AND accountingStatus === 1 || accountingStatus === 5 means the transaction has been
- * confirmed and the payment has been successfully completed
- * 2.payed /w other methods: accountingStatus is undefined AND id_status = 8 (Confermato mod1) or id_status = 9 (Confermato mod2)
- * ref: https://www.pivotaltracker.com/story/show/173850410
+ * To determine if a transaction is successfully completed we have to consider 2
+ * cases
+ *
+ * 1. Payed /w CREDIT CARD: accountingStatus is not undefined AND accountingStatus
+ *    === 1 || accountingStatus === 5 means the transaction has been confirmed
+ *    and the payment has been successfully completed 2.payed /w other methods:
+ *    accountingStatus is undefined AND id_status = 8 (Confermato mod1) or
+ *    id_status = 9 (Confermato mod2) ref:
+ *    https://www.pivotaltracker.com/story/show/173850410
  */
 export const isSuccessTransaction = (tx?: Transaction): boolean =>
   pipe(
@@ -313,9 +306,7 @@ export const isSuccessTransaction = (tx?: Transaction): boolean =>
     O.getOrElse(() => false)
   );
 
-/**
- * A refined TransactionListResponse
- */
+/** A refined TransactionListResponse */
 export const TransactionListResponse = repP(
   TransactionListResponsePagoPA,
   "data",
@@ -325,9 +316,7 @@ export const TransactionListResponse = repP(
 
 export type TransactionListResponse = t.TypeOf<typeof TransactionListResponse>;
 
-/**
- * A refined WalletListResponse
- */
+/** A refined WalletListResponse */
 export const WalletListResponse = repP(
   WalletListResponsePagoPA,
   "data",
@@ -337,9 +326,7 @@ export const WalletListResponse = repP(
 
 export type WalletListResponse = t.TypeOf<typeof WalletListResponse>;
 
-/**
- * A tagged string type for the PagoPA SessionToken
- */
+/** A tagged string type for the PagoPA SessionToken */
 
 interface IPaymentManagerTokenTag {
   kind: "IPaymentManagerTokenTag";
@@ -348,9 +335,7 @@ interface IPaymentManagerTokenTag {
 export const PaymentManagerToken = tag<IPaymentManagerTokenTag>()(t.string);
 export type PaymentManagerToken = t.TypeOf<typeof PaymentManagerToken>;
 
-/**
- * A Session
- */
+/** A Session */
 export const Session = repP(
   reqP(SessionPagoPA, "sessionToken"),
   "sessionToken",
@@ -360,9 +345,7 @@ export const Session = repP(
 
 export type Session = t.TypeOf<typeof Session>;
 
-/**
- * A refined SessionResponse
- */
+/** A refined SessionResponse */
 export const SessionResponse = repP(
   SessionResponsePagoPA,
   "data",
@@ -372,9 +355,7 @@ export const SessionResponse = repP(
 
 export type SessionResponse = t.TypeOf<typeof SessionResponse>;
 
-/**
- * A refined PspListResponse
- */
+/** A refined PspListResponse */
 export const PspListResponse = repP(
   PspListResponsePagoPA,
   "data",
@@ -384,9 +365,7 @@ export const PspListResponse = repP(
 
 export type PspListResponse = t.TypeOf<typeof PspListResponse>;
 
-/**
- * A refined WalletResponse
- */
+/** A refined WalletResponse */
 export const WalletResponse = repP(
   WalletResponsePagoPA,
   "data",
@@ -396,9 +375,7 @@ export const WalletResponse = repP(
 
 export type WalletResponse = t.TypeOf<typeof WalletResponse>;
 
-/**
- * A refined TransactionResponse
- */
+/** A refined TransactionResponse */
 export const TransactionResponse = repP(
   TransactionResponsePagoPA,
   "data",
@@ -408,23 +385,17 @@ export const TransactionResponse = repP(
 
 export type TransactionResponse = t.TypeOf<typeof TransactionResponse>;
 
-/**
- * A refined PspResponse
- */
+/** A refined PspResponse */
 export const PspResponse = repP(PspResponsePagoPA, "data", Psp, "PspResponse");
 
 export type PspResponse = t.TypeOf<typeof PspResponse>;
 
-/**
- * A refined Pay
- */
+/** A refined Pay */
 const Pay = repP(reqP(PayPagoPA, "idWallet"), "tipo", t.literal("web"), "Pay");
 
 type Pay = t.TypeOf<typeof Pay>;
 
-/**
- * A refined PayRequest
- */
+/** A refined PayRequest */
 export const PayRequest = repP(PayRequestPagoPA, "data", Pay, "PayRequest");
 
 export type PayRequest = t.TypeOf<typeof PayRequest>;
@@ -468,8 +439,9 @@ export const PatchedWalletV2Response = t.intersection(
 export type PatchedWalletV2Response = t.TypeOf<typeof PatchedWalletV2Response>;
 
 /**
- * The patched version of the DeleteWalletResponse is needed because remainingWallets is not of type
- * PatchedWalletV2 but instead it's type is WalletV2.
+ * The patched version of the DeleteWalletResponse is needed because
+ * remainingWallets is not of type PatchedWalletV2 but instead it's type is
+ * WalletV2.
  */
 export const PatchedDeleteWalletResponse = t.interface({
   data: t.interface({

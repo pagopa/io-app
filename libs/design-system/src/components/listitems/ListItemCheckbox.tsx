@@ -33,11 +33,12 @@ type ListItemCheckboxProps = Pick<
   Props;
 
 /**
- *  with the automatic state management that uses a {@link AnimatedCheckBox}
- * The toggleValue change when a `onPress` event is received and dispatch the `onValueChange`.
+ * With the automatic state management that uses a {@link AnimatedCheckBox} The
+ * toggleValue change when a `onPress` event is received and dispatch the
+ * `onValueChange`.
  *
+ * @class
  * @param props
- * @constructor
  */
 export const ListItemCheckbox = ({
   value,

@@ -25,9 +25,7 @@ import { fetchNetInfoState } from "../utils";
 const CONNECTIVITY_STATUS_LOAD_INTERVAL = (30 * 1000) as Millisecond;
 const CONNECTIVITY_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
 
-/**
- * this saga requests and checks the connection status
- */
+/** This saga requests and checks the connection status */
 export function* connectionStatusSaga(
   client: ConnectivityClient
 ): Generator<

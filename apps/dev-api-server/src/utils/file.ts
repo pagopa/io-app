@@ -57,6 +57,7 @@ export const listDir = (directoryPath: string): Array<string> => {
 
 /**
  * Read a file, try to decode and transform the result in a response
+ *
  * @param filename
  * @param decode
  * @param res

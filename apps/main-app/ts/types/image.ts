@@ -3,6 +3,7 @@ import { ImageSourcePropType, ImageURISource } from "react-native";
 // ImageSourcePropType type guards
 /**
  * Typeguard for handle backward compatibility of icon type
+ *
  * @param image
  */
 export const isImageURISource = (

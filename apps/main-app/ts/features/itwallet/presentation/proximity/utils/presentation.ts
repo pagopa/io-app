@@ -44,16 +44,15 @@ type GetProximityDetails = (params: {
  * identify the RP in the presentation details.
  *
  * If `requireAuthenticated` is `true`, the function will throw an error if the
- * request does not contain authenticated certificate data.
- * Otherwise, we tentatively get verifier's commonName from the certificate data
- * if available, but we allow the flow to proceed even if it's not present.
- * This can be useful for testing purposes, and should not be used in production.
+ * request does not contain authenticated certificate data. Otherwise, we
+ * tentatively get verifier's commonName from the certificate data if available,
+ * but we allow the flow to proceed even if it's not present. This can be useful
+ * for testing purposes, and should not be used in production.
  *
  * @param certificateData The certificate data from the Verifier request
  * @param requireAuthenticated Whether to require the RP to be authenticated
- *
  * @throws UntrustedRpError if the certificate data does not contain verifier's
- * commonName and `requireAuthenticated` is `true`
+ *   commonName and `requireAuthenticated` is `true`
  */
 export const getVerifierIdentity = (
   certificateData: VerifierRequest["request"][string]["certificateData"],
@@ -76,15 +75,17 @@ export const getVerifierIdentity = (
 /**
  * Get the Presentation details based on the request from the Verifier.
  *
- * @param request The request from the Verifier, specifying which document types and claims are required
+ * @param request The request from the Verifier, specifying which document types
+ *   and claims are required
  * @param credentialsByType The credentials object by doc type
  * @param requireAuthenticated Whether to require the RP to be authenticated,
- * default is true. If set to false, unauthenticated RPs will be allowed,
- * which can be useful for testing purposes, but should be used with caution in
- * production.
- *
- * @returns Presentation details for requested credentials available in the wallet
- * @throws MissingCredentialError when none of the requested credentials are available
+ *   default is true. If set to false, unauthenticated RPs will be allowed,
+ *   which can be useful for testing purposes, but should be used with caution
+ *   in production.
+ * @returns Presentation details for requested credentials available in the
+ *   wallet
+ * @throws MissingCredentialError when none of the requested credentials are
+ *   available
  */
 export const getProximityDetails: GetProximityDetails = ({
   request,
@@ -152,9 +153,11 @@ export const getProximityDetails: GetProximityDetails = ({
 /**
  * Get the requested documents based on the request from the Verifier.
  *
- * @param request The request from the Verifier, specifying which document types and claims are required
+ * @param request The request from the Verifier, specifying which document types
+ *   and claims are required
  * @param credentials The credentials object by doc type
- * @param getCredential Retrieves signed credential content from the secure store
+ * @param getCredential Retrieves signed credential content from the secure
+ *   store
  * @returns The requested documents available in the wallet
  */
 export const getDocuments = async (

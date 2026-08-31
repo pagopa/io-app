@@ -17,9 +17,7 @@ import { CredentialMetadata, ParsedStatusAssertion } from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
 
-/**
- * Credential types mocks.
- */
+/** Credential types mocks. */
 export enum CredentialType {
   DRIVING_LICENSE = "mDL",
   EDUCATION_ATTENDANCE = "education_attendance",

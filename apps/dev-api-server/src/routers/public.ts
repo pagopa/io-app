@@ -5,9 +5,7 @@ import { Response, Router } from "express";
 import * as E from "fp-ts/lib/Either";
 import * as jose from "jose";
 import { parseStringPromise } from "xml2js";
-/**
- * this router serves all public API (those ones don't need session)
- */
+/** This router serves all public API (those ones don't need session) */
 import * as zlib from "zlib";
 
 import { assetsFolder, ioDevServerConfig } from "../config";

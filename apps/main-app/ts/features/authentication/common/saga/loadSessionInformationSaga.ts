@@ -16,8 +16,8 @@ import {
  * Load session info from the Backend
  *
  * FIXME: this logic is common to all sagas that make requests to the backend,
- *        we should create a high order function that converts an API call into
- *        a saga.
+ * we should create a high order function that converts an API call into a
+ * saga.
  */
 export function* loadSessionInformationSaga(
   getSession: SessionManagerClient["getSessionState"],

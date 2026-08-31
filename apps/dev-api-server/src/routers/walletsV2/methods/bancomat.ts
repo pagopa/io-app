@@ -18,9 +18,9 @@ import { abiResponse, addWalletV2, getWalletV2, pansResponse } from "../index";
 
 export const bancomatRouter = Router();
 /**
- * return the banks list
- * if 'abiQuery' is defined in query string a filter on name and abi will be applied
- * NOTE: actually the app doesn't use this API, it uses /services_metadata.ts/api.json instead
+ * Return the banks list if 'abiQuery' is defined in query string a filter on
+ * name and abi will be applied NOTE: actually the app doesn't use this API, it
+ * uses /services_metadata.ts/api.json instead
  */
 addHandler(
   bancomatRouter,
@@ -49,8 +49,8 @@ addHandler(
 );
 
 /**
- * return the pans list (bancomat)
- * if 'abi' is defined in query string a filter on abi will be applied
+ * Return the pans list (bancomat) if 'abi' is defined in query string a filter
+ * on abi will be applied
  */
 addHandler(
   bancomatRouter,

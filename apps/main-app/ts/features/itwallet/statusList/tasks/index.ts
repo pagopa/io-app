@@ -10,15 +10,15 @@ import { refreshStaleEntries } from "../utils/refresh";
 import { getItwSpecsVersion, storeItwSpecsVersion } from "../utils/storage";
 
 /**
- * Identifier for the ITW Status List background fetch task.
- * Must match the task name used in TaskManager.defineTask.
+ * Identifier for the ITW Status List background fetch task. Must match the task
+ * name used in TaskManager.defineTask.
  */
 export const ITW_STATUS_LIST_FETCH_TASK = "io-itw-status-list-fetch";
 
 /**
- * Interval in minutes for the ITW Status List fetch task.
- * The task will be scheduled to run approximately every this amount of minutes.
- * Note that the actual execution timing is determined by the OS and may vary.
+ * Interval in minutes for the ITW Status List fetch task. The task will be
+ * scheduled to run approximately every this amount of minutes. Note that the
+ * actual execution timing is determined by the OS and may vary.
  */
 const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 12;
 
@@ -26,8 +26,8 @@ const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 12;
  * Register the ITW Status List fetch task handler with expo-task-manager.
  * Important: must be defined at module level.
  *
- * Reads the specs version persisted during foreground registration, then refreshes
- * stale Status List entries without depending on Redux.
+ * Reads the specs version persisted during foreground registration, then
+ * refreshes stale Status List entries without depending on Redux.
  */
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
@@ -70,9 +70,11 @@ export const registerItwStatusListFetchTask = async (
 };
 
 /**
- * Unregister the ITW Status List background fetch task with expo-background-task.
+ * Unregister the ITW Status List background fetch task with
+ * expo-background-task.
  *
- * No-op if the task is not registered; errors during unregistration are ignored.
+ * No-op if the task is not registered; errors during unregistration are
+ * ignored.
  */
 export const unregisterItwStatusListFetchTask = async (): Promise<void> => {
   try {

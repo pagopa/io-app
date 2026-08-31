@@ -9,9 +9,7 @@ type H2StyleProps = TypographicStyleProps & {
 export const h2FontSize: IOFontSize = 26;
 export const h2LineHeight = 34;
 
-/**
- * `H2` typographic style
- */
+/** `H2` typographic style */
 export const H2 = ({
   weight: customWeight,
   color: customColor,

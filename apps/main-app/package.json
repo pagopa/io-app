@@ -225,6 +225,12 @@
     "typescript": "catalog:",
     "typescript-eslint": "^8.65.0"
   },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "oxfmt",
+      "eslint --fix"
+    ]
+  },
   "engines": {
     "node": ">=20"
   },

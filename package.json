@@ -6,8 +6,8 @@
     "prepare": "lefthook install --reset-hooks-path",
     "validate": "nx affected --targets=lint,test,tsc-noemit --configuration=ci --nx-bail",
     "validate-all": "nx run-many --targets=lint,test,tsc-noemit --configuration=ci",
-    "prettify": "prettier --write \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
-    "prettier:check": "prettier --check \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
+    "prettify": "oxfmt \"**/{src,ts,locales}/**/*.{ts,tsx,json}\"",
+    "prettier:check": "oxfmt --check \"**/{src,ts,locales}/**/*.{ts,tsx,json}\"",
     "knip": "knip --reporter json --no-exit-code --no-progress",
     "postinstall": "nx prepack io-app-design-system"
   },
@@ -31,7 +31,7 @@
     "knip": "6.31.0",
     "lefthook": "^2.1.10",
     "nx": "catalog:",
-    "prettier": "catalog:",
+    "oxfmt": "catalog:",
     "tslib": "^2.3.0",
     "typescript": "catalog:"
   },

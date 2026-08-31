@@ -21,11 +21,11 @@ const BLUETOOTH_PERMISSIONS: Array<Permission> =
     : [PERMISSIONS.IOS.BLUETOOTH];
 
 /**
- * Checks and requests necessary Bluetooth permissions based on the platform
- * and OS version.
+ * Checks and requests necessary Bluetooth permissions based on the platform and
+ * OS version.
  *
  * @returns A promise that resolves to true if all required permissions are
- * granted, or false otherwise.
+ *   granted, or false otherwise.
  */
 export const checkBluetoothPermissions = async () => {
   // Check current permission status
@@ -65,7 +65,9 @@ const getBleManager = () => {
 
 /**
  * Checks if Bluetooth is currently activated on the device.
- * @returns A promise that resolves to true if Bluetooth is powered on, or false otherwise.
+ *
+ * @returns A promise that resolves to true if Bluetooth is powered on, or false
+ *   otherwise.
  */
 export const checkBluetoothActivation = async () => {
   const bluetoothState = await getBleManager().state();

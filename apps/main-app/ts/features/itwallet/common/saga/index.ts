@@ -48,9 +48,7 @@ import { isItwCredential } from "../utils/itwCredentialUtils";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess";
 
-/**
- * Watcher for ITW sagas that require internet connection and a valid session
- */
+/** Watcher for ITW sagas that require internet connection and a valid session */
 export function* watchItwAuthenticatedSaga(): SagaIterator {
   yield* takeLatest(
     itwSetFiscalCodeWhitelisted,
@@ -87,7 +85,8 @@ export function* watchItwAuthenticatedSaga(): SagaIterator {
 }
 
 /**
- * Watcher for ITW sagas that do not require internet connection or a valid session
+ * Watcher for ITW sagas that do not require internet connection or a valid
+ * session
  */
 export function* watchItwSaga(): SagaIterator {
   // Handle offline access counter increment and reset
@@ -121,16 +120,20 @@ export function* watchItwSaga(): SagaIterator {
 }
 
 /**
- * Sanitizes the authentication level to fix an inconsistency introduced by a regression in app version 3.21.
+ * Sanitizes the authentication level to fix an inconsistency introduced by a
+ * regression in app version 3.21.
  *
- * This saga ensures that users with an L3 PID credential (assurance_level = high) have their
- * `auth_level` correctly set to 'L3'.
+ * This saga ensures that users with an L3 PID credential (assurance_level =
+ * high) have their `auth_level` correctly set to 'L3'.
  *
- * The sanitization is skipped for whitelisted users (when `action.payload` is `true`).
+ * The sanitization is skipped for whitelisted users (when `action.payload` is
+ * `true`).
  *
- * @param action - The action dispatched when the fiscal code whitelist status changes.
+ * @param action - The action dispatched when the fiscal code whitelist status
+ *   changes.
  *
- * TODO: This check can be safely removed once the minimum supported app version is greater than 3.21
+ *   TODO: This check can be safely removed once the minimum supported app
+ *   version is greater than 3.21
  */
 const handleAuthLevelSanitizationSaga = function* (
   action: ActionType<typeof itwSetFiscalCodeWhitelisted>
@@ -156,9 +159,9 @@ const handleAuthLevelSanitizationSaga = function* (
 };
 
 /**
- * Waits for an internet connection to be established before proceeding.
- * If the app is already connected, it returns immediately.
- * Otherwise, it waits for a `setConnectionStatus` action with a payload of `true`.
+ * Waits for an internet connection to be established before proceeding. If the
+ * app is already connected, it returns immediately. Otherwise, it waits for a
+ * `setConnectionStatus` action with a payload of `true`.
  *
  * @returns A generator that yields until an internet connection is available.
  */

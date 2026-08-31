@@ -8,6 +8,7 @@ export const AttachmentsDirectoryPath =
 
 /**
  * Builds the save path for the given attachment
+ *
  * @param attachment
  */
 export const pdfSavePath = (

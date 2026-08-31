@@ -22,8 +22,9 @@ import { CredentialIssuanceEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 
 /**
- * Placeholder for every action, actor and guard that the provider must implement.
- * Exported so tests can assert no implementation is missing at runtime.
+ * Placeholder for every action, actor and guard that the provider must
+ * implement. Exported so tests can assert no implementation is missing at
+ * runtime.
  */
 export const notImplemented = () => {
   throw new Error("Not implemented");
@@ -38,15 +39,11 @@ export const itwCredentialIssuanceMachine = setup({
     onInit: notImplemented,
     handleSessionExpired: notImplemented,
 
-    /**
-     * Context manipulation actions
-     */
+    /** Context manipulation actions */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
 
-    /**
-     * Navigation actions
-     */
+    /** Navigation actions */
 
     navigateToCredentialIntroductionScreen: notImplemented,
     navigateToTrustIssuerScreen: notImplemented,
@@ -57,16 +54,12 @@ export const itwCredentialIssuanceMachine = setup({
     closeIssuance: notImplemented,
     navigateToCardOnboardingScreen: notImplemented,
 
-    /**
-     * Store actions
-     */
+    /** Store actions */
 
     storeWalletInstanceAttestation: notImplemented,
     storeCredential: notImplemented,
 
-    /**
-     * Analytics actions
-     */
+    /** Analytics actions */
 
     trackStartAddCredential: notImplemented,
     trackStartCredentialReissuing: notImplemented,

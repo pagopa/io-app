@@ -63,7 +63,8 @@ type AuthorizedCredentials = Awaited<
 >;
 
 /**
- * Collects the Wallet Unit Attestations generated during the renewal, keyed by their id.
+ * Collects the Wallet Unit Attestations generated during the renewal, keyed by
+ * their id.
  */
 const extractWalletUnitAttestations = (
   authorizedCredentials: ReadonlyArray<{
@@ -80,18 +81,20 @@ const extractWalletUnitAttestations = (
   );
 
 /**
- * Silently renews the batch of a one-time-use credential (e.g. Proof of Age) that is down to its
- * refill threshold. It walks the standard issuance path headlessly: no navigation, no consent
- * prompt, no loader, since the consent given to the Issuer at first issuance still holds.
+ * Silently renews the batch of a one-time-use credential (e.g. Proof of Age)
+ * that is down to its refill threshold. It walks the standard issuance path
+ * headlessly: no navigation, no consent prompt, no loader, since the consent
+ * given to the Issuer at first issuance still holds.
  *
- * The swap is store-then-discard: the residual copies stay usable until the new pool is durably
- * written to the vault, so an interrupted renewal can never leave the user without a credential.
- * The two pools share the same `credentialId` (the Issuer's `credential_configuration_id`), so
- * storing the new metadata replaces the old one in Redux, while the old copies live under their
- * own vault ids and are discarded afterwards.
+ * The swap is store-then-discard: the residual copies stay usable until the new
+ * pool is durably written to the vault, so an interrupted renewal can never
+ * leave the user without a credential. The two pools share the same
+ * `credentialId` (the Issuer's `credential_configuration_id`), so storing the
+ * new metadata replaces the old one in Redux, while the old copies live under
+ * their own vault ids and are discarded afterwards.
  *
- * Failures abort the renewal silently: the user keeps the residual copies and the next trigger
- * retries, as long as the pool is still under threshold.
+ * Failures abort the renewal silently: the user keeps the residual copies and
+ * the next trigger retries, as long as the pool is still under threshold.
  */
 export function* handleItwCredentialsBatchRefillSaga(
   action: ReturnType<typeof itwCredentialsBatchRefillRequest>
@@ -247,7 +250,8 @@ export function* handleItwCredentialsBatchRefillSaga(
 }
 
 /**
- * Deletes the given crypto keys from the device keystore, ignoring keys that are already gone.
+ * Deletes the given crypto keys from the device keystore, ignoring keys that
+ * are already gone.
  */
 function* deleteKeys(keyTags: ReadonlyArray<string>) {
   yield* all(
@@ -264,11 +268,12 @@ function* deleteKeys(keyTags: ReadonlyArray<string>) {
 }
 
 /**
- * Discards the copies replaced by the renewal, removing their vault entries, their Redux metadata
- * and their crypto keys.
+ * Discards the copies replaced by the renewal, removing their vault entries,
+ * their Redux metadata and their crypto keys.
  *
- * Best effort by design: it runs after the new pool is durably stored, so a failure here can only
- * leave orphaned material behind, never an unusable credential, and must not abort the renewal.
+ * Best effort by design: it runs after the new pool is durably stored, so a
+ * failure here can only leave orphaned material behind, never an unusable
+ * credential, and must not abort the renewal.
  */
 function* discardStaleCopies(
   staleCredentials: ReadonlyArray<CredentialMetadata>,
@@ -313,10 +318,12 @@ function* discardStaleCopies(
 }
 
 /**
- * Returns a valid Wallet Instance Attestation, reusing the stored one when possible.
+ * Returns a valid Wallet Instance Attestation, reusing the stored one when
+ * possible.
  *
- * Unlike the issuance machine, it does not attempt a wallet instance renewal on failure: a
- * background flow must not mutate the wallet instance behind the user's back.
+ * Unlike the issuance machine, it does not attempt a wallet instance renewal on
+ * failure: a background flow must not mutate the wallet instance behind the
+ * user's back.
  */
 function* getValidWalletInstanceAttestation(
   env: ReturnType<typeof getEnv>,
@@ -347,12 +354,13 @@ function* getValidWalletInstanceAttestation(
 }
 
 /**
- * Runs the part of the issuance that generates device keys, so that they never outlive a failed
- * renewal: any error deletes the freshly generated keys before propagating, otherwise every
- * retry would leave a full batch of orphaned keys in the device keystore.
+ * Runs the part of the issuance that generates device keys, so that they never
+ * outlive a failed renewal: any error deletes the freshly generated keys before
+ * propagating, otherwise every retry would leave a full batch of orphaned keys
+ * in the device keystore.
  *
- * Keys are retained only when the batch is obtained and verified, i.e. when it is about to be
- * stored and the keys become the ones backing the new pool.
+ * Keys are retained only when the batch is obtained and verified, i.e. when it
+ * is about to be stored and the keys become the ones backing the new pool.
  */
 function* obtainVerifiedBatch(args: {
   accessToken: Awaited<ReturnType<typeof completeAuthFlow>>["accessToken"];
@@ -418,10 +426,11 @@ function* obtainVerifiedBatch(args: {
 /**
  * Stores the new pool, propagating any persistence failure to the caller.
  *
- * `handleItwCredentialsStoreBundleSaga` reports failures through `onError` instead of throwing,
- * so the callback rethrows: a swallowed failure here would let the renewal discard the residual
- * copies without a stored replacement. A failed store leaves no metadata behind, so the keys
- * generated for the new pool are deleted as well.
+ * `handleItwCredentialsStoreBundleSaga` reports failures through `onError`
+ * instead of throwing, so the callback rethrows: a swallowed failure here would
+ * let the renewal discard the residual copies without a stored replacement. A
+ * failed store leaves no metadata behind, so the keys generated for the new
+ * pool are deleted as well.
  */
 function* storeNewBatch(
   credentials: ReadonlyArray<CredentialBundle>,

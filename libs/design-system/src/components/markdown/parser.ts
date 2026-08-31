@@ -21,9 +21,7 @@ const createKeyFactory = () => {
   return (prefix: string) => `md_${prefix}_${keyCounter++}`;
 };
 
-/**
- * Complete set of all supported node types.
- */
+/** Complete set of all supported node types. */
 const ALL_TYPES = new Set<string>([
   "blockquote",
   /* full types */
@@ -52,9 +50,7 @@ const ALL_TYPES = new Set<string>([
   "text"
 ]);
 
-/**
- * The types disabled when using IOMarkdownLite.
- */
+/** The types disabled when using IOMarkdownLite. */
 export const LITE_DISABLED_TYPES: ReadonlyArray<MarkdownNodeType> = [
   "heading1",
   "heading2",
@@ -75,9 +71,9 @@ export const LITE_DISABLED_TYPES: ReadonlyArray<MarkdownNodeType> = [
 ];
 
 /**
- * Maps a markdown-it token type to a MarkdownNodeType.
- * Normalizes `*_open` / `*_close` suffixes and heading tags.
- * Returns undefined for unsupported or disabled types.
+ * Maps a markdown-it token type to a MarkdownNodeType. Normalizes `*_open` /
+ * `*_close` suffixes and heading tags. Returns undefined for unsupported or
+ * disabled types.
  */
 const getNodeType = (
   token: Token,
@@ -94,8 +90,8 @@ const getNodeType = (
 };
 
 /**
- * Flattens nested inline tokens into the parent token stream.
- * markdown-it wraps inline content in `inline` tokens with children.
+ * Flattens nested inline tokens into the parent token stream. markdown-it wraps
+ * inline content in `inline` tokens with children.
  */
 const flattenInline = (tokens: ReadonlyArray<Token>): ReadonlyArray<Token> =>
   tokens.reduce<ReadonlyArray<Token>>((acc, token) => {
@@ -110,8 +106,8 @@ const flattenInline = (tokens: ReadonlyArray<Token>): ReadonlyArray<Token> =>
   }, []);
 
 /**
- * Converts a flat array of tokens into a hierarchical AST,
- * skipping disabled/unsupported token types entirely.
+ * Converts a flat array of tokens into a hierarchical AST, skipping
+ * disabled/unsupported token types entirely.
  */
 const tokensToAST = (
   tokens: ReadonlyArray<Token>,
@@ -202,14 +198,14 @@ const tokensToAST = (
 };
 
 /**
- * Lifts image nodes out of paragraph containers so they become
- * top-level siblings.  markdown-it always wraps images inside
- * paragraphs; this post-processing step ensures the existing
- * `imageRule` is actually invoked during rendering.
+ * Lifts image nodes out of paragraph containers so they become top-level
+ * siblings. markdown-it always wraps images inside paragraphs; this
+ * post-processing step ensures the existing `imageRule` is actually invoked
+ * during rendering.
  *
  * - Paragraph with **only** image children → replaced by the images.
- * - Paragraph with a **mix** of text and images → split into
- *   alternating paragraph (text run) and standalone image nodes.
+ * - Paragraph with a **mix** of text and images → split into alternating
+ *   paragraph (text run) and standalone image nodes.
  * - Paragraphs without images → unchanged.
  */
 const liftImages = (
@@ -283,9 +279,7 @@ const annotateListDepth = (
     };
   });
 
-/**
- * Computes the enabled types set from the full set minus disabled types.
- */
+/** Computes the enabled types set from the full set minus disabled types. */
 const getEnabledTypes = (
   disabledTypes?: ReadonlyArray<string>
 ): Set<string> => {
@@ -298,6 +292,7 @@ const getEnabledTypes = (
 
 /**
  * Parses a markdown source string into an AST.
+ *
  * @param source The markdown string.
  * @param disabledTypes Node types to exclude from parsing.
  * @returns Array of MarkdownNode.
@@ -328,8 +323,6 @@ export const parse = (
   );
 };
 
-/**
- * Parses markdown with the lite subset of rules only.
- */
+/** Parses markdown with the lite subset of rules only. */
 export const parseLite = (source: string): Array<MarkdownNode> =>
   parse(source, LITE_DISABLED_TYPES);

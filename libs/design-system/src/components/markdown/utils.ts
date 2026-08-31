@@ -24,9 +24,7 @@ const ROMAN_NUMERALS: ReadonlyArray<readonly [number, string]> = [
   [1, "i"]
 ];
 
-/**
- * Returns the bullet glyph used for unordered lists at a given nesting depth.
- */
+/** Returns the bullet glyph used for unordered lists at a given nesting depth. */
 export const getUnorderedListBullet = (listDepth: number): string => {
   switch (listDepth % 3) {
     case 0:
@@ -38,9 +36,7 @@ export const getUnorderedListBullet = (listDepth: number): string => {
   }
 };
 
-/**
- * Converts a positive integer to its lowercase Roman numeral representation.
- */
+/** Converts a positive integer to its lowercase Roman numeral representation. */
 const toRomanNumeral = (value: number, index = 0): string => {
   const numeral = ROMAN_NUMERALS[index];
 
@@ -60,7 +56,8 @@ const toRomanNumeral = (value: number, index = 0): string => {
 };
 
 /**
- * Converts a positive integer to a lowercase alphabetic sequence (`a`, `b`, `aa`).
+ * Converts a positive integer to a lowercase alphabetic sequence (`a`, `b`,
+ * `aa`).
  */
 const toAlphabeticMarker = (value: number): string => {
   if (value <= 0) {
@@ -75,9 +72,7 @@ const toAlphabeticMarker = (value: number): string => {
   return `${prefix}${suffix}`;
 };
 
-/**
- * Returns the ordered-list marker for a given item index and nesting depth.
- */
+/** Returns the ordered-list marker for a given item index and nesting depth. */
 export const getOrderedListMarker = (
   value: number,
   listDepth: number
@@ -92,9 +87,7 @@ export const getOrderedListMarker = (
   }
 };
 
-/**
- * Extracts a banner pictogram name from a `[!pictogramName]` prefix.
- */
+/** Extracts a banner pictogram name from a `[!pictogramName]` prefix. */
 export const extractPictogramName = (text: string): IOPictogramsBleed => {
   const match = PICTOGRAM_REGEXP.exec(text);
   const value = match?.[1];
@@ -102,15 +95,11 @@ export const extractPictogramName = (text: string): IOPictogramsBleed => {
   return isValid ? (value as IOPictogramsBleed) : "notification";
 };
 
-/**
- * Removes the leading pictogram directive from blockquote content.
- */
+/** Removes the leading pictogram directive from blockquote content. */
 export const stripPictogramPrefix = (text: string): string =>
   text.replace(PICTOGRAM_REGEXP, "");
 
-/**
- * Recursively collects plain text content from a Markdown AST node.
- */
+/** Recursively collects plain text content from a Markdown AST node. */
 export const collectRawText = (node: MarkdownNode): string => {
   if (node.content) {
     return node.content;
@@ -119,9 +108,7 @@ export const collectRawText = (node: MarkdownNode): string => {
   return node.children.map(collectRawText).join("");
 };
 
-/**
- * Returns true when a raw HTML fragment is a `<br>` tag.
- */
+/** Returns true when a raw HTML fragment is a `<br>` tag. */
 export const isBrTag = (content: string): boolean => {
   const match = new RegExp(/<([^\s/>]+)\s*\/?>/).exec(content);
   return match?.[1] === "br";
