@@ -1,11 +1,10 @@
 import { defineConfig, globalIgnores } from "eslint/config";
-import { fixupConfigRules } from "@eslint/compat";
+import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
 import { FlatCompat } from "@eslint/eslintrc";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import pagopaConfig from "@pagopa/eslint-config/jest";
 import tseslint from "typescript-eslint";
-import reactNativeConfig from "@react-native/eslint-config/flat";
 import importPlugin from "eslint-plugin-import";
 import functional from "eslint-plugin-functional";
 import sonarjs from "eslint-plugin-sonarjs";
@@ -25,6 +24,10 @@ const compat = new FlatCompat({
   recommendedConfig: js.configs.recommended,
   allConfig: js.configs.all
 });
+
+const reactNativeConfig = fixupConfigRules(
+  compat.extends("@react-native/eslint-config")
+);
 
 // @typescript-eslint and jest are already registered by pagopaConfig (via
 // typescript-eslint and @pagopa/eslint-config/jest, the latter scoping jest to
@@ -93,7 +96,7 @@ export default defineConfig([
       import: importPlugin,
       functional,
       sonarjs,
-      i18next: i18Next,
+      i18next: fixupPluginRules(i18Next),
       "@io-app": {
         rules: {
           "i18n-no-dynamic-keys": noDynamicI18nKeysRule,

@@ -13,7 +13,7 @@ import {
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
 
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent";
 import { useIOSelector } from "../../../../../store/hooks";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";
