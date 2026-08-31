@@ -1,11 +1,11 @@
+import { CheckEnrollmentDTO } from "@io-app/api-types/generated/definitions/idpay/CheckEnrollmentDTO";
+import { GenerateCodeRespDTO } from "@io-app/api-types/generated/definitions/idpay/GenerateCodeRespDTO";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { CheckEnrollmentDTO } from "../../../../../../definitions/idpay/CheckEnrollmentDTO";
-import { GenerateCodeRespDTO } from "../../../../../../definitions/idpay/GenerateCodeRespDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
 /** This action requests the CIE enabled status from the server */

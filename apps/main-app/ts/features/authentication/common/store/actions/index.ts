@@ -1,5 +1,8 @@
 /** Action types and action creator related to the Authentication. */
 
+import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
+import { PasswordLogin } from "@io-app/api-types/generated/definitions/session_manager/PasswordLogin";
+import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 import {
   ActionType,
   createAction,
@@ -7,9 +10,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { IdpData } from "../../../../../../definitions/content/IdpData";
-import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
-import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
 import { SpidIdp } from "../../../../../utils/idps";
 import { LoginConfigActions } from "./loginConfig";
 

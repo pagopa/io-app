@@ -1,3 +1,7 @@
+import {
+  Consent,
+  TypeEnum
+} from "@io-app/api-types/generated/definitions/fims_sso/Consent";
 import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 
 import {
@@ -7,10 +11,6 @@ import {
   fimsGetConsentsListAction,
   fimsSignAndRetrieveInAppBrowserUrlAction
 } from "..";
-import {
-  Consent,
-  TypeEnum
-} from "../../../../../../../definitions/fims_sso/Consent";
 import { FIMS_SSO_ERROR_TAGS, FimsErrorStateType } from "../../reducers";
 
 const errorTags: Array<FIMS_SSO_ERROR_TAGS> = [

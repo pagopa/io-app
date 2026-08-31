@@ -14,7 +14,7 @@ import {
   IO_LOGIN_CIE_SOURCE_APP,
   IO_LOGIN_CIE_URL_SCHEME
 } from "../../../../authentication/login/cie/utils/cie";
-import { selectItwIsCieIdUatEnv } from "../../../common/store/selectors/environment";
+import { selectItwCieIdEnvironment } from "../../../common/store/selectors/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 
 type CieIdHookResult = {
@@ -56,7 +56,7 @@ const extractCieIdErrorFromUrl = (url: string) =>
  */
 export const useCieIdApp = (): CieIdHookResult => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isUatEnvironment = useIOSelector(selectItwIsCieIdUatEnv);
+  const cieIdEnvironment = useIOSelector(selectItwCieIdEnvironment);
   const [authUrl, setAuthUrl] = useState<O.Option<string>>(O.none);
   const [isAppLaunched, setIsAppLaunched] = useState(false);
 
@@ -98,7 +98,7 @@ export const useCieIdApp = (): CieIdHookResult => {
               handleAuthenticationFailure(result);
             }
           },
-          isUatEnvironment
+          cieIdEnvironment
         );
       }
 
@@ -109,7 +109,7 @@ export const useCieIdApp = (): CieIdHookResult => {
           .catch(handleAuthenticationFailure);
       }
     },
-    [handleAuthenticationFailure, isUatEnvironment]
+    [handleAuthenticationFailure, cieIdEnvironment]
   );
 
   useEffect(() => {

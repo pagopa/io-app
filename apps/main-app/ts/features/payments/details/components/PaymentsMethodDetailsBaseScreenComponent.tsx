@@ -54,7 +54,6 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
     title: headerTitle,
     backgroundColor: blueHeaderColor,
     variant: "contrast",
-    faqCategories: ["wallet_methods"],
     supportRequest: true,
     scrollValues: {
       contentOffsetY: translationY,

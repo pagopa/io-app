@@ -254,24 +254,23 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  4294967295,
-                                  4294704639,
-                                  4294376447,
-                                  4294113791,
+                                  "#FFFFFF",
+                                  "#FBFDFF",
+                                  "#F6FBFF",
+                                  "#F2F9FF",
                                 ]
                               }
-                              endPoint={
+                              end={
                                 {
                                   "x": 0.5,
                                   "y": 1,
                                 }
                               }
-                              locations={null}
                               pointerEvents="none"
-                              startPoint={
+                              start={
                                 {
                                   "x": 0.5,
                                   "y": 0,
@@ -2189,24 +2188,23 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  4294967295,
-                                  4294704639,
-                                  4294376447,
-                                  4294113791,
+                                  "#FFFFFF",
+                                  "#FBFDFF",
+                                  "#F6FBFF",
+                                  "#F2F9FF",
                                 ]
                               }
-                              endPoint={
+                              end={
                                 {
                                   "x": 0.5,
                                   "y": 1,
                                 }
                               }
-                              locations={null}
                               pointerEvents="none"
-                              startPoint={
+                              start={
                                 {
                                   "x": 0.5,
                                   "y": 0,
@@ -4361,24 +4359,23 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  4294967295,
-                                  4294704639,
-                                  4294376447,
-                                  4294113791,
+                                  "#FFFFFF",
+                                  "#FBFDFF",
+                                  "#F6FBFF",
+                                  "#F2F9FF",
                                 ]
                               }
-                              endPoint={
+                              end={
                                 {
                                   "x": 0.5,
                                   "y": 1,
                                 }
                               }
-                              locations={null}
                               pointerEvents="none"
-                              startPoint={
+                              start={
                                 {
                                   "x": 0.5,
                                   "y": 0,
@@ -6572,24 +6569,23 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                               ]
                             }
                           >
-                            <BVLinearGradient
+                            <LinearGradient
                               colors={
                                 [
-                                  4294967295,
-                                  4294704639,
-                                  4294376447,
-                                  4294113791,
+                                  "#FFFFFF",
+                                  "#FBFDFF",
+                                  "#F6FBFF",
+                                  "#F2F9FF",
                                 ]
                               }
-                              endPoint={
+                              end={
                                 {
                                   "x": 0.5,
                                   "y": 1,
                                 }
                               }
-                              locations={null}
                               pointerEvents="none"
-                              startPoint={
+                              start={
                                 {
                                   "x": 0.5,
                                   "y": 0,

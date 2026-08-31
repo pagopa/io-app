@@ -1,10 +1,10 @@
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { ReactNode } from "react";
 import { View } from "react-native";
 import { createStore } from "redux";
 
-import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";

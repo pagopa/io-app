@@ -1,3 +1,13 @@
+import { CreateFilledDocument } from "@io-app/api-types/generated/definitions/fci/CreateFilledDocument";
+import { CreateSignatureBody } from "@io-app/api-types/generated/definitions/fci/CreateSignatureBody";
+import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
+import { EnvironmentEnum } from "@io-app/api-types/generated/definitions/fci/Environment";
+import { FilledDocumentDetailView } from "@io-app/api-types/generated/definitions/fci/FilledDocumentDetailView";
+import { Metadata } from "@io-app/api-types/generated/definitions/fci/Metadata";
+import { QtspClausesMetadataDetailView } from "@io-app/api-types/generated/definitions/fci/QtspClausesMetadataDetailView";
+import { SignatureDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureDetailView";
+import { SignatureRequestDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
+import { SignatureRequestList } from "@io-app/api-types/generated/definitions/fci/SignatureRequestList";
 import * as O from "fp-ts/lib/Option";
 import {
   ActionType,
@@ -5,16 +15,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { CreateFilledDocument } from "../../../../../definitions/fci/CreateFilledDocument";
-import { CreateSignatureBody } from "../../../../../definitions/fci/CreateSignatureBody";
-import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
-import { EnvironmentEnum } from "../../../../../definitions/fci/Environment";
-import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
-import { Metadata } from "../../../../../definitions/fci/Metadata";
-import { QtspClausesMetadataDetailView } from "../../../../../definitions/fci/QtspClausesMetadataDetailView";
-import { SignatureDetailView } from "../../../../../definitions/fci/SignatureDetailView";
-import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
-import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
 import { NetworkError } from "../../../../utils/errors";
 import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
 import { FciNetworkError } from "../../utils/errors.ts";
@@ -75,10 +75,9 @@ export const fciClearStateRequest = createStandardAction(
   "FCI_CLEAR_STATE_REQUEST"
 )<void>();
 
-/** Start the FCI action, with optional latest request data */
-export const fciStartRequest = createStandardAction(
-  "FCI_START_REQUEST"
-)<SignatureRequestDetailView | void>();
+/** Start the FCI action */
+export const fciStartRequest =
+  createStandardAction("FCI_START_REQUEST")<void>();
 
 /** Start the FCI signing action */
 export const fciStartSigningRequest = createStandardAction(

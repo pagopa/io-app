@@ -15,7 +15,7 @@ import I18n from "i18next";
 import { useCallback } from "react";
 
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch } from "../../../../store/hooks";
@@ -94,9 +94,11 @@ const ContentView = ({ eid }: ContentViewProps) => {
         credential_type: "unique"
       });
       if (identification) {
+        // `identification.level` is the authentication level; the issued PID can
+        // still be L3, as determined from its credential metadata.
         trackItwRequestSuccess(
           toItwIdMethod(identification),
-          identification.level,
+          isL3 ? "L3" : identification.level,
           isL3 ? "L3" : "L2"
         );
       }

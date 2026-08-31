@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect, useMemo } from "react";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationProp,

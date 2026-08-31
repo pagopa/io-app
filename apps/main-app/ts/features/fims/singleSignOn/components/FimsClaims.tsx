@@ -1,8 +1,7 @@
+import { Claim } from "@io-app/api-types/generated/definitions/fims_sso/Claim";
 import { Divider, H6, Icon, IOColors, useIOTheme } from "@io-app/design-system";
 import { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
-
-import { Claim } from "../../../../../definitions/fims_sso/Claim";
 
 export const FimsClaimsList = ({ claims }: ClaimsListProps) => {
   const theme = useIOTheme();

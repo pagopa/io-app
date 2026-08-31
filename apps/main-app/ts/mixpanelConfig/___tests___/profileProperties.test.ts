@@ -1,9 +1,9 @@
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 
-import { PushNotificationsContentTypeEnum } from "../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../definitions/identity/ReminderStatus";
-import { ServiceId } from "../../../definitions/services/ServiceId";
 import * as lifecycleSelectors from "../../features/itwallet/lifecycle/store/selectors";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { ServicesState } from "../../features/services/common/store/reducers";

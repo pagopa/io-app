@@ -1,3 +1,4 @@
+import { Institution } from "@io-app/api-types/generated/definitions/services/Institution";
 import { HeaderActionProps } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
@@ -5,7 +6,6 @@ import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
-import { Institution } from "../../../../../definitions/services/Institution";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";

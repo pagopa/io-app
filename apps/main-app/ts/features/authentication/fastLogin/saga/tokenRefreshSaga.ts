@@ -1,3 +1,4 @@
+import { FastLoginT } from "@io-app/api-types/generated/definitions/session_manager/requestTypes";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { RequestResponseTypes } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
@@ -8,7 +9,6 @@ import { SagaIterator } from "redux-saga";
 import { call, delay, put, take, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 
-import { FastLoginT } from "../../../../../definitions/session_manager/requestTypes";
 import { apiUrlPrefix, fastLoginMaxRetries } from "../../../../config";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";

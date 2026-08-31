@@ -19,6 +19,7 @@ import {
   watchItwAnalyticsSaga
 } from "../../analytics/saga";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
+import { checkCredentialsBatchRefill } from "../../credentials/saga/checkCredentialsBatchRefill";
 import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleItwCredentialsVaultCoherenceSaga } from "../../credentials/saga/handleItwCredentialsVaultCoherenceSaga";
 import { handleItwCredentialsVaultMigrationSaga } from "../../credentials/saga/handleItwCredentialsVaultMigrationSaga";
@@ -78,6 +79,9 @@ export function* watchItwAuthenticatedSaga(): SagaIterator {
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCurrentWalletInstanceStateSaga);
   yield* call(checkCredentialsStatusAssertion);
+  // Silently renew the batches of one-time-use credentials that dropped under threshold.
+  // It requires a valid session and network access, hence it belongs to the authenticated watcher.
+  yield* call(checkCredentialsBatchRefill);
 }
 
 /**

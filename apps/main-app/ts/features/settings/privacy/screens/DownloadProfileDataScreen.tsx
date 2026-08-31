@@ -1,3 +1,4 @@
+import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingChoice";
 import {
   ContentWrapper,
   IOMarkdown,
@@ -9,7 +10,6 @@ import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
 
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/identity/UserDataProcessingChoice";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

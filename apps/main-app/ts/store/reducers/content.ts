@@ -1,15 +1,12 @@
+import { ContextualHelp } from "@io-app/api-types/generated/definitions/content/ContextualHelp";
+import { Municipality as MunicipalityMetadata } from "@io-app/api-types/generated/definitions/content/Municipality";
+import { ScreenCHData } from "@io-app/api-types/generated/definitions/content/ScreenCHData";
 /** Implements the reducers for static content. */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
-import { Idp } from "../../../definitions/content/Idp";
-import { IdpData } from "../../../definitions/content/IdpData";
-import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
-import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import {
   isReady,
   remoteError,
@@ -18,7 +15,6 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../common/model/RemoteValue";
-import { getRemoteLocale } from "../../features/messages/utils/ctas";
 import { clearCache } from "../../features/settings/common/store/actions";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import {
@@ -87,38 +83,6 @@ export const idpsRemoteValueSelector = createSelector(
 );
 
 /**
- * Return an option with Idp contextual help data if they are loaded and defined
- *
- * @param id
- */
-export const idpContextualHelpDataFromIdSelector = (
-  id: SpidIdp["id"] | undefined
-) =>
-  createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, O.Option<Idp>>(
-    contextualHelpDataSelector,
-    contextualHelpData =>
-      pipe(
-        id,
-        O.fromNullable,
-        O.fold(
-          () => O.none,
-          () =>
-            pot.getOrElse(
-              pot.map(contextualHelpData, data => {
-                const locale = getRemoteLocale();
-                return pipe(
-                  data[locale],
-                  O.fromNullable,
-                  O.chain(l => O.fromNullable(l.idps[id as keyof IdpData]))
-                );
-              }),
-              O.none
-            )
-        )
-      )
-  );
-
-/**
  * Return a pot with screen contextual help data if they are loaded and defined
  * otherwise
  *
@@ -160,11 +124,11 @@ export const getContextualHelpDataFromRouteSelector = (route: string) =>
   createSelector<
     GlobalState,
     pot.Pot<ContextualHelp, Error>,
-    pot.Pot<O.Option<ScreenCHData>, Error>
+    pot.Pot<ScreenCHData | undefined, Error>
   >([contextualHelpDataSelector], contextualHelpData =>
     pot.map(contextualHelpData, data => {
       if (route === undefined) {
-        return O.none;
+        return undefined;
       }
       const locale = getCurrentLocale();
       const localeData = data[locale];
@@ -175,7 +139,7 @@ export const getContextualHelpDataFromRouteSelector = (route: string) =>
             )
           : undefined;
 
-      return O.fromNullable(screenData);
+      return screenData;
     })
   );
 

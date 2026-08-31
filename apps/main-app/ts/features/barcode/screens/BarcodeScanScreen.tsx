@@ -22,7 +22,6 @@ import {
   isIdPayEnabledInScanScreenSelector,
   isPnRemoteEnabledSelector
 } from "../../../store/reducers/backendStatus/remoteConfig";
-import { emptyContextualHelp } from "../../../utils/contextualHelp.ts";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
@@ -303,7 +302,6 @@ const BarcodeScanScreen = () => {
           barcodeAnalyticsFlow="home"
           barcodeFormats={barcodeFormats}
           barcodeTypes={barcodeTypes}
-          contextualHelp={emptyContextualHelp}
           isDisabled={isFilePickerVisible || isFileReaderLoading}
           isLoading={isFileReaderLoading}
           onBarcodeError={handleBarcodeError}

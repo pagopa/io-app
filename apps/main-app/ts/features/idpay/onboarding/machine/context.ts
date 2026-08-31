@@ -1,11 +1,11 @@
+import { InitiativeDataDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDataDTO";
+import { OnboardingInitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingInitiativeDTO";
+import { StatusEnum } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
+import { SelfConsentMultiDTO } from "@io-app/api-types/generated/definitions/idpay/SelfConsentMultiDTO";
+import { SelfConsentMultiTypeDTO } from "@io-app/api-types/generated/definitions/idpay/SelfConsentMultiTypeDTO";
+import { SelfConsentTextDTO } from "@io-app/api-types/generated/definitions/idpay/SelfConsentTextDTO";
 import * as O from "fp-ts/lib/Option";
 
-import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
-import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";
-import { StatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
-import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
-import { SelfConsentMultiTypeDTO } from "../../../../../definitions/idpay/SelfConsentMultiTypeDTO";
-import { SelfConsentTextDTO } from "../../../../../definitions/idpay/SelfConsentTextDTO";
 import { OnboardingFailure } from "../types/OnboardingFailure";
 
 export type Context = {

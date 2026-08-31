@@ -1,10 +1,9 @@
-import * as t from "io-ts";
-
 import {
   WalletInfoDetails1,
   WalletInfoDetails2,
   WalletInfoDetails3
-} from "../../../../../definitions/pagopa/ecommerce/WalletInfoDetails";
+} from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletInfoDetails";
+import * as t from "io-ts";
 
 /** Transforms all required props from WalletInfoDetails1 to partial */
 const UIWalletInfoDetails1 = t.partial({

@@ -1,3 +1,5 @@
+import { Access } from "@io-app/api-types/generated/definitions/fims_history/Access";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 import {
   BodySmall,
   Caption,
@@ -11,8 +13,6 @@ import {
 import I18n from "i18next";
 import { View } from "react-native";
 
-import { Access } from "../../../../../definitions/fims_history/Access";
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { FimsHistorySharedStyles } from "../utils/styles";
 

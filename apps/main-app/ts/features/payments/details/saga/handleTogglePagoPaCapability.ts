@@ -1,10 +1,10 @@
+import { WalletApplication } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletApplication";
+import { WalletApplicationStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletApplicationStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { WalletApplication } from "../../../../../definitions/pagopa/walletv3/WalletApplication";
-import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { WalletClient } from "../../common/api/client";

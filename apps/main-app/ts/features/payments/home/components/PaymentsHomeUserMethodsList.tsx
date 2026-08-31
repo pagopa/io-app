@@ -1,3 +1,4 @@
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
 import {
   Banner,
   BannerErrorState,
@@ -11,7 +12,6 @@ import I18n from "i18next";
 import { createRef, useCallback, useEffect, useMemo } from "react";
 import { View } from "react-native";
 
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";

@@ -1,10 +1,10 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { Alert, Body, VSpacer } from "@io-app/design-system";
 import { useLinkTo } from "@react-navigation/native";
 import I18n from "i18next";
 import { useMemo, useState } from "react";
 import Animated, { FadeInUp } from "react-native-reanimated";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { trackAppCaughtError } from "../../../../utils/analytics";
 import { unknownToString } from "../../../../utils/errors";

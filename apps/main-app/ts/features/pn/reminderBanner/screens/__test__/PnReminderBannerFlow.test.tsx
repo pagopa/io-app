@@ -1,9 +1,9 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { applyMiddleware, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { put, takeLatest } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as USEIO from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";

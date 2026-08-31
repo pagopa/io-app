@@ -1,7 +1,8 @@
 import {
   OperationTypeEnum,
   RefundDetailDTO
-} from "../../../../../../definitions/idpay/RefundDetailDTO";
+} from "@io-app/api-types/generated/definitions/idpay/RefundDetailDTO";
+
 import { getRefundPeriodDateString } from "../strings";
 
 const T_REFUND = {

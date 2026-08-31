@@ -10,12 +10,6 @@ import {
   preferredCalendarSaveSuccess
 } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch } from "../../../../store/hooks";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.calendar.contextualHelpTitle",
-  body: "profile.preferences.calendar.contextualHelpContent"
-};
 
 /** Allows the user to select one of the device available Calendars */
 const CalendarsPreferencesScreen = () => {
@@ -43,7 +37,6 @@ const CalendarsPreferencesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelpMarkdown={contextualHelpMarkdown}
       description={I18n.t("messages.cta.reminderCalendarSelect")}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins

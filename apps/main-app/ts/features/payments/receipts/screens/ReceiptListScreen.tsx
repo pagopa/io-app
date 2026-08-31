@@ -1,3 +1,4 @@
+import { NoticeListItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListItem";
 import {
   ContentWrapper,
   Divider,
@@ -14,7 +15,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps

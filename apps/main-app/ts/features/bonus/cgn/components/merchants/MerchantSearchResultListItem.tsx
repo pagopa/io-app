@@ -1,3 +1,4 @@
+import { SearchItem } from "@io-app/api-types/generated/definitions/cgn/merchants/SearchItem";
 import {
   Badge,
   Body,
@@ -9,7 +10,6 @@ import {
 import I18n from "i18next";
 import { Keyboard, StyleSheet, Text, View } from "react-native";
 
-import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { highlightSearchText } from "../../../../../utils/highlightSearchText";
 import CGN_ROUTES from "../../navigation/routes";

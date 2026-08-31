@@ -27,9 +27,9 @@ export function* updateCredentialsStatusSaga({
     return;
   }
 
-  const credentials = (yield* select(itwAllStoredCredentialsSelector)).filter(
-    hasStatusListValidity
-  );
+  const allCredentials = yield* select(itwAllStoredCredentialsSelector);
+  const credentials = allCredentials.filter(hasStatusListValidity);
+
   const statusLists = yield* all(
     credentials.map(({ validity }) =>
       call(StatusListRepository.get, validity.statusList.uri)

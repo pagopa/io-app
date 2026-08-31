@@ -9,17 +9,10 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getFlowType } from "../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
-import { FAQsCategoriesType } from "../../../../utils/faq";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
 import { useOnboardingAbortAlert } from "../../hooks/useOnboardingAbortAlert";
 import { trackPinEducationalScreen } from "./analytics";
-
-const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
-  "onboarding_fingerprint"
-];
-
 /**
  * A screen to show, if the fingerprint is supported by the device, the
  * instruction to enable the fingerprint/faceID usage
@@ -29,19 +22,12 @@ const MissingDevicePinScreen = () => {
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const { showAlert } = useOnboardingAbortAlert();
 
-  const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-    title: "onboarding.contextualHelpTitle",
-    body: "onboarding.contextualHelpContent"
-  };
-
   useOnFirstRender(() => {
     trackPinEducationalScreen(getFlowType(true, isFirstOnBoarding));
   });
 
   useHeaderSecondLevel({
     title: "",
-    contextualHelpMarkdown,
-    faqCategories: FAQ_CATEGORIES,
     goBack: showAlert,
     supportRequest: true
   });

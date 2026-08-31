@@ -103,7 +103,25 @@ export const itwCredentialsRefreshStatusByType = createStandardAction(
   "ITW_CREDENTIALS_REFRESH_STATUS_BY_TYPE"
 )<string>();
 
+/**
+ * Requests a silent renewal of a one-time-use credential batch that is down to
+ * its refill threshold. The handling saga issues a new batch headlessly and
+ * swaps it with the residual pool, never interrupting the user and giving up
+ * silently on failure.
+ *
+ * `trigger` records who asked for it: `presentation` right after a copy was
+ * consumed, `app-start` when the boot-time check found the pool under
+ * threshold.
+ */
+export const itwCredentialsBatchRefillRequest = createStandardAction(
+  "ITW_CREDENTIALS_BATCH_REFILL_REQUEST"
+)<{
+  credentialType: CredentialMetadata["credentialType"];
+  trigger: "app-start" | "presentation";
+}>();
+
 export type ItwCredentialsActions =
+  | ActionType<typeof itwCredentialsBatchRefillRequest>
   | ActionType<typeof itwCredentialsConsumeInstance>
   | ActionType<typeof itwCredentialsRefreshStatusByType>
   | ActionType<typeof itwCredentialsRemove>

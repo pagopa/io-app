@@ -1,3 +1,5 @@
+import { BackendStatusMessage } from "@io-app/api-types/generated/definitions/content/BackendStatusMessage";
+import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/session_manager/PreferredLanguage";
 import i18next from "i18next";
 // import i18next, {
 //   BackendModule,
@@ -7,8 +9,6 @@ import i18next from "i18next";
 // } from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import { BackendStatusMessage } from "../definitions/content/BackendStatusMessage";
-import { PreferredLanguageEnum } from "../definitions/session_manager/PreferredLanguage";
 import de from "../locales/de/index.json";
 import en from "../locales/en/index.json";
 import it from "../locales/it/index.json";

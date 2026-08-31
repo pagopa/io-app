@@ -1,6 +1,6 @@
 import { Linking, Platform } from "react-native";
 import AndroidOpenSettings from "react-native-android-open-settings";
-import BluetoothStateManager from "react-native-bluetooth-state-manager";
+import { BleManager, State } from "react-native-ble-plx";
 import {
   checkMultiple,
   Permission,
@@ -51,6 +51,18 @@ export const checkBluetoothPermissions = async () => {
   return true;
 };
 
+// This workaround ensures that the BleManager instance is created lazily,
+// preventing the Bluetooth permission prompt from appearing immediately upon module import.
+// eslint-disable-next-line functional/no-let
+let bleManager: BleManager | undefined;
+
+const getBleManager = () => {
+  if (!bleManager) {
+    bleManager = new BleManager();
+  }
+  return bleManager;
+};
+
 /**
  * Checks if Bluetooth is currently activated on the device.
  *
@@ -58,8 +70,8 @@ export const checkBluetoothPermissions = async () => {
  *   otherwise.
  */
 export const checkBluetoothActivation = async () => {
-  const bluetoothState = await BluetoothStateManager.getState();
-  return bluetoothState === "PoweredOn";
+  const bluetoothState = await getBleManager().state();
+  return bluetoothState === State.PoweredOn;
 };
 
 /**

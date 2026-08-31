@@ -1,3 +1,4 @@
+import { LevelEnum } from "@io-app/api-types/generated/definitions/content/StatusMessage";
 import {
   AlertEdgeToEdgeProps,
   IOButton,
@@ -10,7 +11,6 @@ import I18n from "i18next";
 import { JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { GestureResponderEvent } from "react-native";
 
-import { LevelEnum } from "../../definitions/content/StatusMessage";
 import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import { AUTHENTICATION_ROUTES } from "../features/authentication/common/navigation/routes";
 import { isConnectedSelector } from "../features/connectivity/store/selectors";

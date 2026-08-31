@@ -1,12 +1,12 @@
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../../definitions/identity/ReminderStatus";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { capitalize } from "../../../../../utils/strings";
 import { ProfileState } from "../reducers";

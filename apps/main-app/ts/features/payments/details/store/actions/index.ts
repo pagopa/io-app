@@ -1,10 +1,10 @@
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { NetworkError } from "../../../../../utils/errors";
 
 export const paymentsGetMethodDetailsAction = createAsyncAction(

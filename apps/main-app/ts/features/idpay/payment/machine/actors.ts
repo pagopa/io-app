@@ -1,10 +1,10 @@
+import { AuthPaymentResponseDTO } from "@io-app/api-types/generated/definitions/idpay/AuthPaymentResponseDTO";
+import { CodeEnum as TransactionErrorCodeEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
 import * as E from "fp-ts/lib/Either";
 import { flow, pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import { fromPromise } from "xstate";
 
-import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
-import { CodeEnum as TransactionErrorCodeEnum } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { useIODispatch } from "../../../../store/hooks";
 import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import { IDPayClient } from "../../common/api/client";

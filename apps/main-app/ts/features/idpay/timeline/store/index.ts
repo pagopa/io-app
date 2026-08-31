@@ -1,8 +1,8 @@
+import { OperationDTO } from "@io-app/api-types/generated/definitions/idpay/OperationDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { OperationDTO } from "../../../../../definitions/idpay/OperationDTO";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";

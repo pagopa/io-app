@@ -1,25 +1,3 @@
-/** PagoPA backend client, with functions to call the different API available */
-import * as r from "@pagopa/ts-commons/lib/requests";
-import {
-  AddResponseType,
-  ApiHeaderJson,
-  composeHeaderProducers,
-  composeResponseDecoders,
-  constantResponseDecoder,
-  createFetchRequestForApi,
-  ioResponseDecoder,
-  MapResponseType,
-  ReplaceRequestParams,
-  RequestHeaderProducer,
-  RequestHeaders,
-  TypeofApiParams
-} from "@pagopa/ts-commons/lib/requests";
-import { Omit } from "@pagopa/ts-commons/lib/types";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as t from "io-ts";
-import _ from "lodash";
-
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -48,11 +26,11 @@ import {
   StartSessionUsingGETT,
   updateWalletUsingPUTV2Decoder,
   UpdateWalletUsingPUTV2T
-} from "../../definitions/pagopa/requestTypes";
-import { WalletPaymentStatusRequest } from "../../definitions/pagopa/WalletPaymentStatusRequest";
-import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
-import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
-import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
+} from "@io-app/api-types/generated/definitions/pagopa/requestTypes";
+import { WalletPaymentStatusRequest } from "@io-app/api-types/generated/definitions/pagopa/WalletPaymentStatusRequest";
+import { BancomatCardsRequest } from "@io-app/api-types/generated/definitions/pagopa/walletv2/BancomatCardsRequest";
+import { BPayRequest } from "@io-app/api-types/generated/definitions/pagopa/walletv2/BPayRequest";
+import { CobadegPaymentInstrumentsRequest } from "@io-app/api-types/generated/definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
 import {
   addWalletsBancomatCardUsingPOSTDecoder,
   addWalletsBPayUsingPOSTDecoder,
@@ -68,7 +46,29 @@ import {
   getPansUsingGETDefaultDecoder,
   GetPansUsingGETT,
   getWalletsV2UsingGETDecoder
-} from "../../definitions/pagopa/walletv2/requestTypes";
+} from "@io-app/api-types/generated/definitions/pagopa/walletv2/requestTypes";
+/** PagoPA backend client, with functions to call the different API available */
+import * as r from "@pagopa/ts-commons/lib/requests";
+import {
+  AddResponseType,
+  ApiHeaderJson,
+  composeHeaderProducers,
+  composeResponseDecoders,
+  constantResponseDecoder,
+  createFetchRequestForApi,
+  ioResponseDecoder,
+  MapResponseType,
+  ReplaceRequestParams,
+  RequestHeaderProducer,
+  RequestHeaders,
+  TypeofApiParams
+} from "@pagopa/ts-commons/lib/requests";
+import { Omit } from "@pagopa/ts-commons/lib/types";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as t from "io-ts";
+import _ from "lodash";
+
 import {
   NullableWallet,
   PagoPAErrorResponse,

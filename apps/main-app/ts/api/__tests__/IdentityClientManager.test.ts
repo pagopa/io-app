@@ -1,7 +1,7 @@
 import { KeyInfo } from "../../features/lollipop/utils/crypto";
 import { TestIdentityClientManager } from "../IdentityClientManager";
 
-jest.mock("../../../definitions/identity/client", () => ({
+jest.mock("@io-app/api-types/generated/definitions/identity/client", () => ({
   createClient: jest.fn(() => ({ _type: "identity", id: Math.random() }))
 }));
 

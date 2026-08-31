@@ -1,8 +1,8 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { BodySmall, H3, VStack } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { logosForService } from "../../../services/common/utils";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";

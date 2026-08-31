@@ -158,9 +158,14 @@ const renderParagraph = (
     bold: false,
     italic: false
   });
+  const containsLinks = segments.some(segment => segment.style.link);
 
   return (
-    <Body key={node.key} style={{ textAlign: context.textAlign }}>
+    <Body
+      {...(containsLinks ? { accessible: true, focusable: true } : {})}
+      key={node.key}
+      style={{ textAlign: context.textAlign }}
+    >
       {segments.map(seg => {
         const matchingNode = node.children.find(c => c.key === seg.key);
         const isCode = matchingNode?.type === "code_inline";

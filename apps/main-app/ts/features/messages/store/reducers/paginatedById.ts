@@ -30,7 +30,7 @@ const INITIAL_STATE: PaginatedById = {};
 // Reducers
 
 /** A reducer to store all fetched messages indexed by id */
-export const reducer = (
+const reducer = (
   state: PaginatedById = INITIAL_STATE,
   action: Action
 ): PaginatedById => {

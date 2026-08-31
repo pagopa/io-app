@@ -1,4 +1,44 @@
 import {
+  IbanOperationDTO,
+  OperationTypeEnum as IbanOperationTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/IbanOperationDTO";
+import {
+  InstrumentOperationDTO,
+  OperationTypeEnum as InstrumentOperationTypeEnum,
+  InstrumentTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/InstrumentOperationDTO";
+import {
+  OnboardingOperationDTO,
+  OperationTypeEnum as OnboardingOperationTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/OnboardingOperationDTO";
+import { OperationListDTO } from "@io-app/api-types/generated/definitions/idpay/OperationListDTO";
+import {
+  ReadmittedOperationDTO,
+  OperationTypeEnum as ReadmittedOperationTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/ReadmittedOperationDTO";
+import {
+  RefundOperationDTO,
+  OperationTypeEnum as RefundOperationTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/RefundOperationDTO";
+import {
+  RejectedInstrumentOperationDTO,
+  OperationTypeEnum as RejectedInstrumentOperationTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/RejectedInstrumentOperationDTO";
+import {
+  SuspendOperationDTO,
+  OperationTypeEnum as SuspendOperationTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/SuspendOperationDTO";
+import {
+  ChannelEnum,
+  TransactionOperationDTO,
+  OperationTypeEnum as TransactionOperationTypeEnum,
+  StatusEnum as TransactionStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
+import {
+  UnsubscribeOperationDTO,
+  OperationTypeEnum as UnsubscribeOperationTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/UnsubscribeOperationDTO";
+import {
   Icon,
   ListItemTransaction,
   ListItemTransactionLogo,
@@ -6,46 +46,6 @@ import {
 } from "@io-app/design-system";
 import I18n from "i18next";
 
-import {
-  IbanOperationDTO,
-  OperationTypeEnum as IbanOperationTypeEnum
-} from "../../../../../definitions/idpay/IbanOperationDTO";
-import {
-  InstrumentOperationDTO,
-  OperationTypeEnum as InstrumentOperationTypeEnum,
-  InstrumentTypeEnum
-} from "../../../../../definitions/idpay/InstrumentOperationDTO";
-import {
-  OnboardingOperationDTO,
-  OperationTypeEnum as OnboardingOperationTypeEnum
-} from "../../../../../definitions/idpay/OnboardingOperationDTO";
-import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
-import {
-  ReadmittedOperationDTO,
-  OperationTypeEnum as ReadmittedOperationTypeEnum
-} from "../../../../../definitions/idpay/ReadmittedOperationDTO";
-import {
-  RefundOperationDTO,
-  OperationTypeEnum as RefundOperationTypeEnum
-} from "../../../../../definitions/idpay/RefundOperationDTO";
-import {
-  RejectedInstrumentOperationDTO,
-  OperationTypeEnum as RejectedInstrumentOperationTypeEnum
-} from "../../../../../definitions/idpay/RejectedInstrumentOperationDTO";
-import {
-  SuspendOperationDTO,
-  OperationTypeEnum as SuspendOperationTypeEnum
-} from "../../../../../definitions/idpay/SuspendOperationDTO";
-import {
-  ChannelEnum,
-  TransactionOperationDTO,
-  OperationTypeEnum as TransactionOperationTypeEnum,
-  StatusEnum as TransactionStatusEnum
-} from "../../../../../definitions/idpay/TransactionOperationDTO";
-import {
-  UnsubscribeOperationDTO,
-  OperationTypeEnum as UnsubscribeOperationTypeEnum
-} from "../../../../../definitions/idpay/UnsubscribeOperationDTO";
 import {
   getAccessibleAmountText,
   hoursAndMinutesToAccessibilityReadableFormat

@@ -1,9 +1,9 @@
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { fireEvent } from "@testing-library/react-native";
 import { AccessibilityInfo } from "react-native";
 import { createStore } from "redux";
 
-import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { PaidReason } from "../../../../../store/reducers/entities/payments";

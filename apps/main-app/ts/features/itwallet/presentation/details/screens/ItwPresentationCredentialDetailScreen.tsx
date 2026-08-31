@@ -183,7 +183,10 @@ export const ItwPresentationCredentialDetail = ({
   const isPresentableCredential = useIOSelector(
     isPresentableCredentialSelector(credential.credentialType)
   );
-  const displayStatus = useItwDisplayCredentialStatus(status);
+  const displayStatus = useItwDisplayCredentialStatus(
+    status,
+    credential.credentialType
+  );
   const contentClaim = credential.parsedCredential[WellKnownClaim.content];
   const hasSkeumorphicCard = credentialsWithSkeumorphicCard.includes(
     credential.credentialType

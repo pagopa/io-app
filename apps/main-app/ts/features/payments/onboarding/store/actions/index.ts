@@ -1,11 +1,11 @@
+import { PaymentMethodsResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { WalletCreateResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletCreateResponse";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
-import { WalletCreateResponse } from "../../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletOnboardingOutcomeEnum } from "../../types/OnboardingOutcomeEnum";
 

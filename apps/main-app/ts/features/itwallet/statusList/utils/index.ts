@@ -1,12 +1,11 @@
+import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { CredentialIssuance, ItwVersion } from "@pagopa/io-react-native-wallet";
 
 import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
-import {
-  CredentialBundle,
-  IssuerConfiguration
-} from "../../common/utils/itwTypesUtils";
+import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import { InvalidTslCredentialStatus } from "./errors";
+import { WalletProviderMetadataSchema } from "./schemas";
 
 /**
  * Function to get the credential status from its token status list (TSL). The
@@ -22,8 +21,10 @@ import { InvalidTslCredentialStatus } from "./errors";
  * @throws {InvalidTslCredentialStatus}
  */
 export const getCredentialStatusFromStatusList = async (
-  { credential, metadata }: CredentialBundle,
   itwVersion: ItwVersion,
+  credential: string,
+  credentialId: string,
+  credentialFormat: CredentialIssuance.CredentialFormat,
   keys: IssuerConfiguration["keys"]
 ) => {
   const ioWallet = getIoWallet(itwVersion);
@@ -35,7 +36,7 @@ export const getCredentialStatusFromStatusList = async (
   const { uri, idx, statusList } =
     await ioWallet.CredentialStatus.statusList.get(
       credential,
-      metadata.format as CredentialIssuance.CredentialFormat
+      credentialFormat as CredentialIssuance.CredentialFormat
     );
   const parsed = await ioWallet.CredentialStatus.statusList.verifyAndParse(
     keys,
@@ -51,7 +52,7 @@ export const getCredentialStatusFromStatusList = async (
   const canonicalStatus = status.toLowerCase();
 
   if (canonicalStatus !== "valid") {
-    throw new InvalidTslCredentialStatus(metadata.credentialId, rawStatus);
+    throw new InvalidTslCredentialStatus(credentialId, rawStatus);
   }
 
   return {
@@ -62,4 +63,27 @@ export const getCredentialStatusFromStatusList = async (
     statusList,
     uri
   };
+};
+
+/**
+ * Fetches the JWKS from the Wallet Provider's OpenID Federation metadata, which
+ * is used to verify the Status List Token.
+ *
+ * @param walletUnitAttestation Encoded Wallet Unit Attestation
+ * @returns The JWKS keys from the Wallet Provider
+ */
+export const getKeysForWuaStatusList = async (
+  walletUnitAttestation: string
+) => {
+  const decoded = decodeJwt(walletUnitAttestation);
+
+  const { payload } = await fetch(
+    `${decoded.payload.iss}/.well-known/openid-federation`
+  )
+    .then(res => res.text())
+    .then(decodeJwt);
+
+  const walletProviderJwt = WalletProviderMetadataSchema.parse(payload);
+
+  return walletProviderJwt.metadata.wallet_solution.jwks.keys;
 };

@@ -1,9 +1,9 @@
+import { PaymentFaultV2Enum } from "@io-app/api-types/generated/definitions/communication/PaymentFaultV2";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { testSaga } from "redux-saga-test-plan";
 import { Effect } from "redux-saga/effects";
 import { call, take } from "typed-redux-saga/macro";
 
-import { PaymentFaultV2Enum } from "../../../../../definitions/communication/PaymentFaultV2";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { trackPaymentStatus } from "../../analytics";
 import {

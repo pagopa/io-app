@@ -12,18 +12,12 @@ import { sessionTokenSelector } from "../../../authentication/common/store/selec
 import { Env } from "../../common/utils/environment";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
-import { getCredentialStatusAssertion } from "../../common/utils/itwCredentialStatusAssertionUtils";
-import {
-  enrichErrorWithMetadata,
-  isAssertionGenerationError
-} from "../../common/utils/itwFailureUtils";
+import { isAssertionGenerationError } from "../../common/utils/itwFailureUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import {
   CredentialAccessToken,
-  CredentialBundle,
-  CredentialFormat,
-  IssuerConfiguration
+  CredentialBundle
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { CredentialsVault } from "../../credentials/utils/vault";
@@ -33,7 +27,6 @@ import {
 } from "../../issuance/analytics";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { getCredentialStatusFromStatusList } from "../../statusList/utils";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { createCommonActorsImplementation } from "../utils/actors";
@@ -384,20 +377,12 @@ export const createCredentialIssuanceActorsImplementation = (
   >(async ({ input }) => {
     assert(input.credentials, "credentials are undefined");
 
-    const ioWallet = getIoWallet(itwVersion);
-
-    return await Promise.all(
-      input.credentials.map(async credential => {
-        if (ioWallet.CredentialStatus.statusAssertion.isSupported) {
-          return getStatusWithStatusAssertion(credential);
-        }
-        if (ioWallet.CredentialStatus.statusList.isSupported) {
-          assert(input.issuerConf, "issuerConf is undefined");
-          return getStatusWithStatusList(credential, input.issuerConf);
-        }
-        return credential;
-      })
-    );
+    return await credentialIssuanceUtils.attachCredentialsStatus({
+      credentials: input.credentials,
+      env,
+      itwVersion,
+      issuerConf: input.issuerConf
+    });
   });
 
   const processCredentialOffer = fromPromise<
@@ -416,72 +401,6 @@ export const createCredentialIssuanceActorsImplementation = (
 
     return { offer, grantDetails };
   });
-
-  const getStatusWithStatusList = async (
-    bundle: CredentialBundle,
-    issuerConf: IssuerConfiguration
-  ): Promise<CredentialBundle> => {
-    // TODO: [SIW-4681] Handle status list for mdoc credentials
-    if (bundle.metadata.format === CredentialFormat.MDOC) {
-      return bundle;
-    }
-
-    const { status, rawStatus, uri, idx, parsedStatusList } =
-      await getCredentialStatusFromStatusList(
-        bundle,
-        itwVersion,
-        issuerConf.keys
-      ).catch(
-        enrichErrorWithMetadata({
-          credentialId: bundle.metadata.credentialId,
-          credentialType: bundle.metadata.credentialType
-        })
-      );
-
-    return {
-      credential: bundle.credential,
-      metadata: {
-        ...bundle.metadata,
-        validity: {
-          type: "status_list",
-          status,
-          rawStatus,
-          statusList: { uri, idx }
-        }
-      },
-      statusList: { uri, payload: parsedStatusList }
-    };
-  };
-
-  const getStatusWithStatusAssertion = async (
-    bundle: CredentialBundle
-  ): Promise<CredentialBundle> => {
-    if (bundle.metadata.format === CredentialFormat.MDOC) {
-      return bundle;
-    }
-    const { parsedStatusAssertion } = await getCredentialStatusAssertion(
-      bundle,
-      env,
-      itwVersion
-    ).catch(
-      enrichErrorWithMetadata({
-        credentialId: bundle.metadata.credentialId,
-        credentialType: bundle.metadata.credentialType
-      })
-    );
-
-    return {
-      credential: bundle.credential,
-      metadata: {
-        ...bundle.metadata,
-        validity: {
-          type: "status_assertion",
-          status: "valid",
-          statusAssertion: parsedStatusAssertion
-        }
-      }
-    };
-  };
 
   return {
     verifyTrustFederation,

@@ -1,10 +1,10 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { NetworkError } from "../../../../../utils/errors";
 import { DiscountBucketCodeResponse } from "../../types/DiscountBucketCodeResponse";
 

@@ -16,32 +16,36 @@ const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
  * Determines which credential status should be displayed in the UI based on the
  * current eID status and offline conditions.
  *
- * Logic summary:
- *
- * - Excluded statuses ("expired", "expiring", "invalid", "unknown") are never
- *   overridden.
- * - Expired eID + expired credential → display as "invalid" (both show "NON
- *   VALIDO").
- * - Expired eID alone → keep credential's actual status (only PID shows "NON
- *   VALIDO").
- * - Offline:
- *
- *   - Show "jwtExpired" only if eID is valid.
- *   - Otherwise, show "valid".
+ * Logic summary: - Excluded statuses ("expired", "expiring", "invalid",
+ * "unknown") are never overridden. - Expiring eID + online → the eID keeps its
+ * own status, every other credential is masked. - Expired eID + expired
+ * credential → display as "invalid" (both show "NON VALIDO"). - Expired eID
+ * alone → keep credential's actual status (only PID shows "NON VALIDO"). -
+ * Offline: - Show "jwtExpired" only if eID is valid. - Otherwise, show "valid".
  * - Online + valid eID → show actual credential status.
  *
  * @param credentialStatus The actual credential status
  * @param eidStatus The current eID status
  * @param isOffline Whether the app is operating offline
+ * @param isEid Whether the status belongs to the eID itself
  * @returns {ItwCredentialStatus} The status to display in the UI
  */
 export const getItwDisplayCredentialStatus = (
   credentialStatus: ItwCredentialStatus,
   eidStatus: ItwJwtCredentialStatus | undefined,
-  isOffline: boolean
+  isOffline: boolean,
+  isEid: boolean
 ): ItwCredentialStatus => {
   // Excluded statuses are never overridden
   if (EXCLUDED_CREDENTIAL_STATUSES.includes(credentialStatus)) {
+    return credentialStatus;
+  }
+
+  // The eID shares its status with the PID, so the "eID not valid → show as valid"
+  // rule below would make it mask its own expiring state. Keep it while online,
+  // where the eID lifecycle alert explains the required action; offline that alert
+  // is hidden (see itwShouldHideEidLifecycleAlert), so the tag must be hidden too.
+  if (isEid && credentialStatus === "jwtExpiring" && !isOffline) {
     return credentialStatus;
   }
 

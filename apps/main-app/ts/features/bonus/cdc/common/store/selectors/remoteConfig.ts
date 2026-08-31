@@ -1,26 +1,22 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
 import { remoteConfigSelector } from "../../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPropertyWithMinAppVersionEnabled } from "../../../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 import { GlobalState } from "../../../../../../store/reducers/types";
 
-const cdcRemoteConfigSelector = (state: GlobalState) =>
-  pipe(
-    state.remoteConfig,
-    O.map(config => config.cdcV2)
-  );
+const cdcRemoteConfigSelector = (state: GlobalState) => {
+  const remoteConfig = state.remoteConfig;
+  if ("value" in remoteConfig) {
+    return remoteConfig.value.cdcV2;
+  }
+
+  return undefined;
+};
 
 /** Return the remote config about CDC CTA inside the onboarding screen. */
 export const cdcCtaConfigSelector = createSelector(
   cdcRemoteConfigSelector,
-  cdcConfig =>
-    pipe(
-      cdcConfig,
-      O.map(cdc => cdc.cta_onboarding_config),
-      O.toUndefined
-    )
+  cdcConfig => cdcConfig?.cta_onboarding_config
 );
 
 /**
@@ -28,23 +24,16 @@ export const cdcCtaConfigSelector = createSelector(
  * and the app version is supported
  */
 export const isCdCWalletVisibilityEnabledSelector = (state: GlobalState) =>
-  pipe(state, remoteConfigSelector, remoteConfig =>
-    isPropertyWithMinAppVersionEnabled({
-      remoteConfig,
-      mainLocalFlag: true,
-      configPropertyName: "cdcV2",
-      optionalLocalFlag: true,
-      optionalConfig: "walletVisibility"
-    })
-  );
+  isPropertyWithMinAppVersionEnabled({
+    remoteConfig: remoteConfigSelector(state),
+    mainLocalFlag: true,
+    configPropertyName: "cdcV2",
+    optionalLocalFlag: true,
+    optionalConfig: "walletVisibility"
+  });
 
 /** Return the remote config about CDC wallet visibility. */
 export const cdcWalletVisibilityConfigSelector = createSelector(
   cdcRemoteConfigSelector,
-  cdcConfig =>
-    pipe(
-      cdcConfig,
-      O.map(cdc => cdc.walletVisibility?.configurations),
-      O.toUndefined
-    )
+  cdcConfig => cdcConfig?.walletVisibility?.configurations
 );

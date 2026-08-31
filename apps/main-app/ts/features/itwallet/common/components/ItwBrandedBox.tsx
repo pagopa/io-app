@@ -6,9 +6,9 @@ import {
   RadialGradient as SkiaRadialGradient,
   vec
 } from "@shopify/react-native-skia";
+import { LinearGradient } from "expo-linear-gradient";
 import { PropsWithChildren } from "react";
 import { LayoutRectangle, StyleSheet, View } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import {
   Extrapolation,
   interpolate,
@@ -32,7 +32,12 @@ type ItwIridescentBorderProps = {
   variant?: ItwSkiaBrandedGradientVariant;
 };
 
-const brandedBoxGradientColors = ["#FFFFFF", "#FBFDFF", "#F6FBFF", "#F2F9FF"];
+const brandedBoxGradientColors: [string, string, ...Array<string>] = [
+  "#FFFFFF",
+  "#FBFDFF",
+  "#F6FBFF",
+  "#F2F9FF"
+];
 
 /* Light */
 const lightScaleMultiplier = 1;

@@ -37,3 +37,13 @@ export const itwWalletUnitAttestationsSelector = (state: GlobalState) =>
  */
 export const itwIsRemotelyActiveSelector = (state: GlobalState) =>
   state.features.itWallet.walletInstance.isRemotelyActive;
+
+/**
+ * [1.3.3+] Selector that returns the Status List entry for the wallet instance,
+ * if available. This is used to check the validity of the wallet instance.
+ *
+ * @param state The application global state
+ * @returns The Status List entry for the wallet instance, if available
+ */
+export const itwWalletInstanceStatusListSelector = (state: GlobalState) =>
+  state.features.itWallet.walletInstance.statusList;

@@ -1,5 +1,6 @@
-import { PushNotificationsContentTypeEnum } from "../../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../definitions/identity/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+
 import {
   enqueueMixpanelEvent,
   isMixpanelInstanceInitialized,

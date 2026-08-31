@@ -71,6 +71,14 @@ export type CredentialMetadata = {
    * stored in {@link CredentialsVault} under that copy's `keyTag` as vault id.
    */
   keyTags?: ReadonlyArray<string>;
+  /**
+   * How the credential was obtained: through the credentials catalogue/list, or
+   * through a third-party credential offer (deeplink/QR code). Undefined for
+   * credentials stored before this field was introduced, and for flows that are
+   * neither (e.g. PID, upgrade/reissuance). Used to attribute the credential to
+   * the correct aggregate analytics property.
+   */
+  origin?: "catalogue" | "credentialOffer";
   parsedCredential: ParsedCredential;
   spec_version: string;
   validity?: CredentialValidity | LegacyCredentialValidity;

@@ -1,11 +1,11 @@
+import { InstallationID } from "@io-app/api-types/generated/definitions/communication/InstallationID";
+import { PlatformEnum } from "@io-app/api-types/generated/definitions/communication/Platform";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { Platform } from "react-native";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "typed-redux-saga/macro";
 
-import { InstallationID } from "../../../../definitions/communication/InstallationID";
-import { PlatformEnum } from "../../../../definitions/communication/Platform";
 import { CommunicationClient } from "../../../api/CommunicationClientManager";
 import { convertUnknownToError } from "../../../utils/errors";
 import {

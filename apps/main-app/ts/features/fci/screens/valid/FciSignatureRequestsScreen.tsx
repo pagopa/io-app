@@ -1,16 +1,15 @@
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
+import { SignatureRequestListView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestListView";
 import { H2, IOVisualCostants } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect } from "react";
 import { ScrollView, SectionList } from "react-native";
 
-import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
-import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
   addTicketCustomField,
   assistanceToolRemoteConfig,
@@ -77,7 +76,6 @@ const FciSignatureRequestsScreen = () => {
 
   useHeaderSecondLevel({
     title: I18n.t("features.fci.requests.header"),
-    contextualHelp: emptyContextualHelp,
     supportRequest: true
   });
 

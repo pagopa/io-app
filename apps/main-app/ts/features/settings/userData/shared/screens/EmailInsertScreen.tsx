@@ -47,7 +47,6 @@ import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { getFlowType } from "../../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { isDisplayZoomed } from "../../../../../utils/device";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
@@ -101,11 +100,6 @@ const EMPTY_EMAIL = "";
  * field.
  */
 const isScreenZoomed = isDisplayZoomed();
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "email.insert.help.title",
-  body: "email.insert.help.content"
-};
 
 /** A screen to allow user to insert an email address. */
 const EmailInsertScreen = () => {
@@ -494,7 +488,6 @@ const EmailInsertScreen = () => {
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    contextualHelpMarkdown,
     goBack: handleGoBack,
     canGoBack: isEmailValidated || isFirstOnboarding
   });

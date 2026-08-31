@@ -1,3 +1,4 @@
+import { ProductCategoryWithNewDiscountsCount } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import {
   Body,
   ContentWrapper,
@@ -16,7 +17,6 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { cgnMerchantsModalSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";

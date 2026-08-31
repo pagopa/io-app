@@ -64,7 +64,10 @@ export const ItwCredentialCard = memo(
       itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
     );
     const { themeType, theme } = useIOThemeContext();
-    const status = useItwDisplayCredentialStatus(credentialStatus);
+    const status = useItwDisplayCredentialStatus(
+      credentialStatus,
+      credentialType
+    );
     const borderColorMap = useBorderColorByStatus();
     const cardConfig = useCredentialCardConfig(credentialType);
     const credentialName = useItwCredentialName(credentialType);
@@ -167,7 +170,10 @@ export const ItwCredentialCardLegacy = ({
   const needsItwUpgrade = useIOSelector(
     itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
   );
-  const status = useItwDisplayCredentialStatus(credentialStatus);
+  const status = useItwDisplayCredentialStatus(
+    credentialStatus,
+    credentialType
+  );
   const theme = useThemeColorByCredentialType(credentialType);
   const credentialName = useItwCredentialName(credentialType);
   const tagPropsByStatus = useTagPropsByStatus();

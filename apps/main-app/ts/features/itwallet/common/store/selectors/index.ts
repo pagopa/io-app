@@ -18,11 +18,11 @@ import {
 } from "../../../walletInstance/store/selectors";
 import { isCredentialIssuedBeforePid } from "../../utils/itwCredentialUtils";
 import {
-  itwIsAgeVerificationUsageDetailsBannerHiddenSelector,
-  itwIsBannerHiddenSelector,
-  itwIsDiscoveryBannerHiddenSelector,
-  itwIsWalletDiscoveryBannerHiddenSelector,
-  itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
+  itwIsAgeVerificationUsageDetailsBannerVisibleSelector,
+  itwIsBannerVisibleSelector,
+  itwIsDiscoveryBannerVisibleSelector,
+  itwIsWalletDiscoveryBannerVisibleSelector,
+  itwIsWalletUpgradeMDLDetailsBannerVisibleSelector
 } from "./banners";
 import {
   itwCredentialUpgradeFailedSelector,
@@ -70,7 +70,7 @@ export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
 export const isItwPersistedDiscoveryBannerRenderableSelector = (
   state: GlobalState
 ) =>
-  !itwIsDiscoveryBannerHiddenSelector(state) &&
+  itwIsDiscoveryBannerVisibleSelector(state) &&
   isItwDiscoveryBannerRenderableSelector(state);
 
 /**
@@ -164,7 +164,7 @@ export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
-  !itwIsWalletUpgradeMDLDetailsBannerHiddenSelector(state);
+  itwIsWalletUpgradeMDLDetailsBannerVisibleSelector(state);
 
 /**
  * Returns whether the Age Verification usage banner in credential details
@@ -174,7 +174,7 @@ export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
  */
 export const itwShouldRenderAgeVerificationUsageDetailsBannerSelector = (
   state: GlobalState
-): boolean => !itwIsAgeVerificationUsageDetailsBannerHiddenSelector(state);
+): boolean => itwIsAgeVerificationUsageDetailsBannerVisibleSelector(state);
 
 /**
  * Returns whether the eID lifecycle alert should be hidden in wallet. When the
@@ -225,7 +225,7 @@ export const itwShouldRenderInboxDiscoveryBannerSelector = (
   }
   return (
     itwShouldRenderDiscoveryBannerSelector(state) &&
-    !itwIsBannerHiddenSelector("discovery_messages_inbox")(state) &&
+    itwIsBannerVisibleSelector("discovery_messages_inbox")(state) &&
     !itwIsRemotelyActiveSelector(state)
   );
 };
@@ -238,7 +238,7 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
   state: GlobalState
 ) =>
   itwShouldRenderDiscoveryBannerSelector(state) &&
-  !itwIsBannerHiddenSelector("discovery_wallet")(state);
+  itwIsBannerVisibleSelector("discovery_wallet")(state);
 
 /**
  * Returns whether the new IT-Wallet upgrade banner should be rendered.
@@ -255,7 +255,7 @@ export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
-  !itwIsWalletDiscoveryBannerHiddenSelector(state) &&
+  itwIsWalletDiscoveryBannerVisibleSelector(state) &&
   !itwIsActivationDisabledSelector(state);
 
 /**
