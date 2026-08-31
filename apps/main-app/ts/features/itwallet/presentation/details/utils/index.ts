@@ -106,7 +106,7 @@ export const shouldShowMdlUpdateDigitalCredential = (
   // Legacy status assertion
   if (credential.validity?.type === "status_assertion") {
     return (
-      status == "invalid" &&
+      status === "invalid" &&
       credential.validity.status === "invalid" &&
       credential.validity.errorCode === "credential_invalid"
     );

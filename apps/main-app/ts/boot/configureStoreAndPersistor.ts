@@ -681,7 +681,6 @@ function configureStoreAndPersistor(): {
 } {
   const reduxStartupGate = createReduxStartupGate();
   const composeEnhancers =
-    // eslint-disable-next-line no-underscore-dangle
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
   const baseMiddlewares: ReadonlyArray<Middleware> = [

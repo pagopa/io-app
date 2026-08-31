@@ -1,5 +1,3 @@
-/* eslint-disable dot-notation */
-/* eslint-disable @typescript-eslint/dot-notation */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ElementType, Fragment, memo } from "react";

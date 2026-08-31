@@ -268,11 +268,7 @@ describe("remoteConfig", () => {
       it(`should return [${testCase.expected}] for ${JSON.stringify(
         pipe(
           testCase.selectorInput.remoteConfig,
-          O.fold(
-            // eslint-disable-next-line no-underscore-dangle
-            () => testCase.selectorInput.remoteConfig._tag,
-            identity
-          )
+          O.fold(() => testCase.selectorInput.remoteConfig._tag, identity)
         )
       )}`, () => {
         const output = landingScreenBannerOrderSelector(testCase.selectorInput);

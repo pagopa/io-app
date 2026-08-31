@@ -41,30 +41,23 @@ allowBuilds:
 
 catalog:
   # --- Nx ---
-  nx: "23.1.1"
-  "@nx/eslint": "23.1.1"
-  "@nx/jest": "23.1.1"
-  "@nx/js": "23.1.1"
+  nx: "23.2.0-beta.11"
+  "@nx/jest": "23.2.0-beta.11"
+  "@nx/js": "23.2.0-beta.11"
+  "@nx/oxlint": "23.2.0-beta.11"
 
   # --- TypeScript ---
   typescript: "6.0.3"
   oxfmt: "latest"
+  oxlint: "^1.58.0"
+  oxlint-tsgolint: "^0.23.0"
   eslint: "^9.39.4"
   jest: "~30.3.0"
   "@types/jest": "^30.0.0"
   "@types/react": "^19.2.0"
 
-  # --- Linting ---
-  eslint-config-prettier: "^10.1.8"
-  eslint-plugin-functional: "^10.0.0"
-  eslint-plugin-import: "^2.32.0"
-  eslint-plugin-jest: "^29.15.5"
-  eslint-plugin-prettier: "^5.5.6"
-  eslint-plugin-react-native-a11y: "^3.3.0"
-
   # --- React Native ---
   "@react-native/typescript-config": "0.83.10"
-  "@react-native/eslint-config": "0.85.0-rc.7"
   react: "19.2.0"
   react-native: "0.83.10"
   react-test-renderer: "19.2.0"

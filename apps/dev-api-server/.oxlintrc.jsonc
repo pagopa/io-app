@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  // Reuse main-app's full ruleset, globals and plugins: before the oxlint
+  // migration this project was linted by the repo-root eslint config, which was
+  // main-app's. Only dev-api-server specific tweaks live here.
+  "extends": ["../main-app/.oxlintrc.jsonc"],
+  // `extends` replaces `ignorePatterns` rather than merging it, so the base's
+  // entries must be repeated here alongside `scratch/**` (local fixtures).
+  "ignorePatterns": ["**/*.js", "**/*.cjs", "**/*.mjs", "scratch/**"]
+}

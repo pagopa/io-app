@@ -43,6 +43,7 @@ const INITIAL_STATE: IdPayWalletState = {
   initiativeWaitingList: pot.none
 };
 
+// oxlint-disable-next-line complexity
 const reducer = (
   state: IdPayWalletState = INITIAL_STATE,
   action: Action

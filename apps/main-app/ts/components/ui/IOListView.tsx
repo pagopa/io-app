@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
  * @param {boolean} [debugMode=false] Enable debug mode. Only for testing
  *   purposes. Default is `false`
  */
+// oxlint-disable-next-line complexity
 export const IOListView = <T,>({
   headerConfig,
   data,
