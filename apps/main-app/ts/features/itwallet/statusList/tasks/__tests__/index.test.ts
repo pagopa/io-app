@@ -66,7 +66,7 @@ describe("ITW Status List background task", () => {
       BackgroundTask.BackgroundTaskResult.Success
     );
     expect(mockRefreshStaleEntries).toHaveBeenCalledWith({
-      itwVersion: "1.3.3"
+      itwVersion: "1.4.6"
     });
   });
 
