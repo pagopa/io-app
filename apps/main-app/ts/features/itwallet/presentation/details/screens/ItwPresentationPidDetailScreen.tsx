@@ -8,7 +8,7 @@ import { View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import { mapPIDStatusToMixpanel } from "../../../analytics/utils";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText";
-import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners";
+import { itwIsBannerVisibleSelector } from "../../../common/store/selectors/banners";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
   itwCredentialsEidSelector,
@@ -25,8 +25,8 @@ export const ItwPresentationPidDetailScreen = () => {
   const pidOption = useIOSelector(itwCredentialsEidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
-  const isItwDiscoveryInfoBannerHidden = useIOSelector(
-    itwIsBannerHiddenSelector("itw_pid_info")
+  const isItwDiscoveryInfoBannerVisible = useIOSelector(
+    itwIsBannerVisibleSelector("itw_pid_info")
   );
 
   useFocusEffect(
@@ -45,7 +45,7 @@ export const ItwPresentationPidDetailScreen = () => {
       <ItwPresentationDetailsHeader credential={credential} />
       <ContentWrapper>
         <VStack space={24} style={{ paddingVertical: 16 }}>
-          {!isItwDiscoveryInfoBannerHidden && <ItwDiscoveryInfoBanner />}
+          {isItwDiscoveryInfoBannerVisible && <ItwDiscoveryInfoBanner />}
           <ItwPresentationPidDetail credential={credential} />
           <ItwPresentationPidDetailFooter />
           <View style={{ alignItems: "center" }}>
