@@ -1,11 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 
 import { Locales, setLocale } from "../../i18n";
-import {
-  getContextualHelpDataFromRouteSelector,
-  screenContextualHelpDataSelector
-} from "../../store/reducers/content";
+import { getContextualHelpDataFromRouteSelector } from "../../store/reducers/content";
 
 const chData = {
   version: 1,
@@ -85,50 +81,6 @@ const chData = {
 };
 // test "it" as default language
 beforeAll(() => setLocale("it" as Locales));
-
-describe("screenContextualHelpDataSelector", () => {
-  it("should return no data if navigation state is empty", async () => {
-    const screenData = screenContextualHelpDataSelector.resultFunc(
-      pot.some(chData),
-      ""
-    );
-    expect(pot.isSome(screenData) && O.isNone(screenData.value)).toBeTruthy();
-  });
-
-  it("should return data (italian) if the current screen is present as key", async () => {
-    setLocale("it" as Locales);
-    assertScreenValues("title IT", "**content IT**");
-  });
-
-  it("should return data (english) if the current screen is present as key", async () => {
-    setLocale("en" as Locales);
-    assertScreenValues("title EN", "**content EN**");
-  });
-
-  it("should return data (italian) if the current screen is present as key and the set language is not supported", async () => {
-    setLocale("br" as Locales);
-    assertScreenValues("title IT", "**content IT**");
-  });
-
-  const assertScreenValues = (title: string, content: string) => {
-    const screenData = screenContextualHelpDataSelector.resultFunc(
-      pot.some(chData),
-      "AUTHENTICATION_IDP_LOGIN"
-    );
-    if (pot.isSome(screenData) && O.isSome(screenData.value)) {
-      expect(screenData.value.value.title).toEqual(title);
-      expect(screenData.value.value.content).toEqual(content);
-    }
-  };
-
-  it("should return no data if the current screen is not present as key", async () => {
-    const screenData = screenContextualHelpDataSelector.resultFunc(
-      pot.some(chData),
-      "NO_KEY"
-    );
-    expect(pot.isSome(screenData) && O.isNone(screenData.value)).toBeTruthy();
-  });
-});
 
 describe("getContextualHelpDataFromRouteSelector", () => {
   it("should return no data if route is empty", async () => {

@@ -23,7 +23,6 @@ import { CrossSessionsState } from "./crossSessions";
 import { PersistedDebugState } from "./debug";
 import { PersistedEntitiesState } from "./entities";
 import { InstallationState } from "./installation";
-import { NavigationState } from "./navigation";
 import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { SearchState } from "./search";
@@ -45,7 +44,6 @@ export type GlobalState = Readonly<{
   identification: PersistedIdentificationState;
   installation: InstallationState;
   lollipop: LollipopReducerState;
-  navigation: NavigationState;
   notifications: PersistedNotificationsState;
   onboarding: OnboardingState;
   persistedPreferences: PersistedPreferencesState;

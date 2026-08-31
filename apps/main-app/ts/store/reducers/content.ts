@@ -5,7 +5,6 @@ import { ScreenCHData } from "@io-app/api-types/generated/definitions/content/Sc
  * Implements the reducers for static content.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
@@ -31,7 +30,6 @@ import {
   loadIdps
 } from "../actions/content";
 import { Action } from "../actions/types";
-import { currentRouteSelector } from "./navigation";
 import { GlobalState } from "./types";
 
 /**
@@ -82,36 +80,6 @@ export const idpsSelector = createSelector(
 export const idpsRemoteValueSelector = createSelector(
   idpsStateSelector,
   (idps: ContentState["idps"]) => idps
-);
-
-/**
- * return a pot with screen contextual help data if they are loaded and defined otherwise
- * @param id
- */
-export const screenContextualHelpDataSelector = createSelector<
-  GlobalState,
-  pot.Pot<ContextualHelp, Error>,
-  string,
-  pot.Pot<O.Option<ScreenCHData>, Error>
->(
-  [contextualHelpDataSelector, currentRouteSelector],
-  (contextualHelpData, currentRoute) =>
-    pot.map(contextualHelpData, data => {
-      if (currentRoute === undefined) {
-        return O.none;
-      }
-      const locale = getCurrentLocale();
-
-      const localeData = data[locale];
-      const screenData =
-        localeData !== undefined
-          ? localeData.screens.find(
-              s =>
-                s.route_name.toLowerCase() === currentRoute.toLocaleLowerCase()
-            )
-          : undefined;
-      return O.fromNullable(screenData);
-    })
 );
 
 /**
