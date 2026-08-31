@@ -376,10 +376,8 @@ export default defineConfig([
   {
     // Data-driven tests here derive titles dynamically (loop variables,
     // `fn.name`, ternaries). Allow non-string titles while keeping the
-    // empty/whitespace/duplicate-prefix checks active. Scoped to `.ts` test
-    // files only: `jest/valid-title` is an active rule and pagopa's config
-    // only registers the jest plugin for `.{js,ts}` test files, not `.tsx`.
-    files: ["**/*.test.ts", "**/__tests__/**/*.ts"],
+    // empty/whitespace/duplicate-prefix checks active.
+    files: ["**/*.test.{ts,tsx}", "**/__tests__/**/*.{ts,tsx}"],
 
     rules: {
       "jest/valid-title": [
@@ -392,10 +390,19 @@ export default defineConfig([
       // Saga tests assert through redux-saga-test-plan's chainable APIs
       // (`testSaga(...).next()`, `expectSaga(...).run()`) rather than a bare
       // `expect`, so teach the rule to treat those as assertion helpers.
+      // The trailing entries are local helpers that hold the assertions for a
+      // parameterised suite; inlining them would duplicate the body per case.
       "jest/expect-expect": [
         "warn",
         {
-          assertFunctionNames: ["expect", "expectSaga", "testSaga"]
+          assertFunctionNames: [
+            "expect",
+            "expectSaga",
+            "testSaga",
+            "commonAccessibilityTestCode",
+            "testIsAppSupportedSelector",
+            "testRootModal"
+          ]
         }
       ]
     }

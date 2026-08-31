@@ -25,7 +25,7 @@ describe("TabNavigationContainer", () => {
     const screen = renderScreen("ARCHIVE");
     expect(screen.toJSON()).toMatchSnapshot();
   });
-  it("when displaying INBOX and ARCHIVE chips is pressed, it should trigger pagerViewRef ", () => {
+  it("when displaying INBOX and ARCHIVE chips is pressed, it should trigger pagerViewRef", () => {
     const setPageMock = jest.fn();
     const screen = renderScreen("INBOX", setPageMock);
     const archivePressableComponent = screen.getByTestId(
@@ -35,7 +35,7 @@ describe("TabNavigationContainer", () => {
     fireEvent.press(archivePressableComponent);
     expect(setPageMock.mock.calls[0][0]).toStrictEqual(1);
   });
-  it("when displaying INBOX and INBOX chips is pressed, it should NOT trigger pagerViewRef ", () => {
+  it("when displaying INBOX and INBOX chips is pressed, it should NOT trigger pagerViewRef", () => {
     const setPageMock = jest.fn();
     const screen = renderScreen("INBOX", setPageMock);
     const inboxPressableComponent = screen.getByTestId("home_tab_item_inbox");
@@ -43,7 +43,7 @@ describe("TabNavigationContainer", () => {
     fireEvent.press(inboxPressableComponent);
     expect(setPageMock.mock.calls[0]).toBeUndefined();
   });
-  it("when displaying INBOX and INBOX chips is pressed, it should trigger pagerViewRef ", () => {
+  it("when displaying INBOX and INBOX chips is pressed, it should trigger pagerViewRef", () => {
     const setPageMock = jest.fn();
     const screen = renderScreen("ARCHIVE", setPageMock);
     const inboxPressableComponent = screen.getByTestId("home_tab_item_inbox");
@@ -51,7 +51,7 @@ describe("TabNavigationContainer", () => {
     fireEvent.press(inboxPressableComponent);
     expect(setPageMock.mock.calls[0][0]).toStrictEqual(0);
   });
-  it("when displaying INBOX and ARCHIVE chips is pressed, it should NOT trigger pagerViewRef ", () => {
+  it("when displaying INBOX and ARCHIVE chips is pressed, it should NOT trigger pagerViewRef", () => {
     const setPageMock = jest.fn();
     const screen = renderScreen("ARCHIVE", setPageMock);
     const archivePressableComponent = screen.getByTestId(
