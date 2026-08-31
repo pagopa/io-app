@@ -1,0 +1,26 @@
+pre-commit:
+  piped: true
+  jobs:
+    - name: format staged files
+      run: pnpm prettier --write {staged_files}
+      glob:
+        - "*.{ts,tsx}"
+        - "apps/main-app/locales/**/*.json"
+      stage_fixed: true
+
+    - name: lint staged files
+      run: pnpm eslint --flag v10_config_lookup_from_file --fix {staged_files}
+      glob: "*.{ts,tsx}"
+      stage_fixed: true
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: validate affected projects
+      run: pnpm nx affected --targets=lint,tsc-noemit --base=origin/master --head=HEAD --nx-bail
+
+    - name: check pushed files formatting
+      run: pnpm prettier --check {push_files}
+      glob:
+        - "*.{ts,tsx}"
+        - "apps/main-app/locales/**/*.json"

@@ -1,7 +1,7 @@
+import { Zendesk } from "@io-app/api-types/generated/definitions/content/Zendesk";
 import { act, fireEvent } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
 
-import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";

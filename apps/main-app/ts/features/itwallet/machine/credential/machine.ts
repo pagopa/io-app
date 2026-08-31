@@ -10,7 +10,7 @@ import {
   ObtainAccessTokenActorInput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
-  ObtainStatusAssertionActorInput,
+  ObtainCredentialStatusActorInput,
   ProcessCredentialOfferActorInput,
   ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
@@ -21,7 +21,11 @@ import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 
-const notImplemented = () => {
+/**
+ * Placeholder for every action, actor and guard that the provider must implement.
+ * Exported so tests can assert no implementation is missing at runtime.
+ */
+export const notImplemented = () => {
   throw new Error("Not implemented");
 };
 
@@ -52,7 +56,6 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToEidVerificationExpiredScreen: notImplemented,
     closeIssuance: notImplemented,
     navigateToCardOnboardingScreen: notImplemented,
-    navigateToCredentialOfferDiscoveryScreen: notImplemented,
 
     /**
      * Store actions
@@ -89,9 +92,9 @@ export const itwCredentialIssuanceMachine = setup({
       ObtainCredentialActorOutput,
       ObtainCredentialActorInput
     >(notImplemented),
-    obtainStatusAssertion: fromPromise<
+    obtainCredentialStatus: fromPromise<
       ReadonlyArray<CredentialBundle>,
-      ObtainStatusAssertionActorInput
+      ObtainCredentialStatusActorInput
     >(notImplemented),
     processCredentialOffer: fromPromise<
       ProcessCredentialOfferActorOutput,
@@ -102,7 +105,6 @@ export const itwCredentialIssuanceMachine = setup({
   guards: {
     isSessionExpired: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
-    isStatusError: notImplemented,
     isEidExpired: notImplemented,
     hasCredentialIntroContent: notImplemented
   }
@@ -145,34 +147,17 @@ export const itwCredentialIssuanceMachine = setup({
         input: ({ context }) => ({
           credentialOfferUri: context.credentialOfferUri
         }),
-        onDone: [
-          {
-            guard: ({ context }) => !context.isWalletValid,
-            target: "CredentialOfferResolved",
-            actions: [
-              assign(({ event }) => ({
-                resolvedCredentialOffer: {
-                  offer: event.output.offer,
-                  grantDetails: event.output.grantDetails
-                },
-                credentialType:
-                  event.output.grantDetails.authorizationCodeGrant.scope
-              })),
-              "navigateToCredentialOfferDiscoveryScreen"
-            ]
-          },
-          {
-            target: "CredentialOfferResolved",
-            actions: assign(({ event }) => ({
-              resolvedCredentialOffer: {
-                offer: event.output.offer,
-                grantDetails: event.output.grantDetails
-              },
-              credentialType:
-                event.output.grantDetails.authorizationCodeGrant.scope
-            }))
-          }
-        ],
+        onDone: {
+          target: "CredentialOfferResolved",
+          actions: assign(({ event }) => ({
+            resolvedCredentialOffer: {
+              offer: event.output.offer,
+              grantDetails: event.output.grantDetails
+            },
+            credentialType:
+              event.output.grantDetails.authorizationCodeGrant.scope
+          }))
+        },
         onError: {
           target: "#itwCredentialIssuanceMachine.Failure",
           actions: "setFailure"
@@ -248,10 +233,7 @@ export const itwCredentialIssuanceMachine = setup({
         },
         back: {
           target: "Idle",
-          actions: [
-            assign({ credentialType: undefined }),
-            "navigateToCardOnboardingScreen"
-          ]
+          actions: [assign({ credentialType: undefined })]
         }
       }
     },
@@ -406,7 +388,7 @@ export const itwCredentialIssuanceMachine = setup({
               accessToken: context.accessToken
             }),
             onDone: {
-              target: "ObtainingStatusAssertion",
+              target: "ObtainingCredentialStatus",
               actions: assign(({ event }) => event.output)
             },
             onError: [
@@ -422,11 +404,12 @@ export const itwCredentialIssuanceMachine = setup({
             ]
           }
         },
-        ObtainingStatusAssertion: {
+        ObtainingCredentialStatus: {
           invoke: {
-            src: "obtainStatusAssertion",
+            src: "obtainCredentialStatus",
             input: ({ context }) => ({
-              credentials: context.credentials
+              credentials: context.credentials,
+              issuerConf: context.issuerConf
             }),
             onDone: {
               target: "Completed",

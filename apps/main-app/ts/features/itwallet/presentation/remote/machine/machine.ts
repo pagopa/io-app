@@ -37,7 +37,8 @@ export const itwRemoteMachine = setup({
     closePresentation: notImplemented,
     trackRemoteDataShare: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
-    handleSessionExpired: notImplemented
+    handleSessionExpired: notImplemented,
+    consumePresentedBatchCredentials: notImplemented
   },
   actors: {
     evaluateRelyingPartyTrust: fromPromise<
@@ -271,7 +272,8 @@ export const itwRemoteMachine = setup({
         }),
         onDone: {
           actions: assign(({ event }) => ({
-            redirectUri: event.output.redirectUri
+            redirectUri: event.output.redirectUri,
+            presentedKeyTags: event.output.presentedKeyTags
           })),
           target: "Success"
         },
@@ -284,6 +286,7 @@ export const itwRemoteMachine = setup({
     Success: {
       description:
         "The Verifiable Presentation has been successfully sent to the Relying Party",
+      entry: "consumePresentedBatchCredentials",
       on: {
         close: {
           actions: "closePresentation"

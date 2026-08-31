@@ -1,7 +1,6 @@
+import { ErrorResponse } from "@io-app/api-types/generated/definitions/pn/lollipop-lambda/ErrorResponse";
+import { SuccessResponse } from "@io-app/api-types/generated/definitions/pn/lollipop-lambda/SuccessResponse";
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
-import { ErrorResponse } from "../../../../../../definitions/pn/lollipop-lambda/ErrorResponse";
-import { SuccessResponse } from "../../../../../../definitions/pn/lollipop-lambda/SuccessResponse";
 
 type SENDLollipopLambdaActionFailure = {
   reason: string;

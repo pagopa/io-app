@@ -1,8 +1,8 @@
+import { SignatureRequestList } from "@io-app/api-types/generated/definitions/fci/SignatureRequestList";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";

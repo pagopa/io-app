@@ -1,3 +1,7 @@
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import { StandardServiceCategoryEnum } from "@io-app/api-types/generated/definitions/services/StandardServiceCategory";
 import {
   NonEmptyString,
   OrganizationFiscalCode
@@ -5,10 +9,6 @@ import {
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 
-import { ScopeTypeEnum } from "../../../../../../definitions/services/ScopeType";
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import { StandardServiceCategoryEnum } from "../../../../../../definitions/services/StandardServiceCategory";
 import { servicesClientManager } from "../../../../../api/ServicesClientManager";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { loadServiceDetail } from "../../store/actions/details";

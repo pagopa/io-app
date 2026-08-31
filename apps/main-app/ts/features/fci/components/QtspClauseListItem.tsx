@@ -1,8 +1,8 @@
+import { QtspClause } from "@io-app/api-types/generated/definitions/fci/QtspClause";
 import { CheckboxLabel } from "@io-app/design-system";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { QtspClause } from "../../../../definitions/fci/QtspClause";
 import { useIOSelector } from "../../../store/hooks";
 import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
 import LinkedText from "./LinkedText";

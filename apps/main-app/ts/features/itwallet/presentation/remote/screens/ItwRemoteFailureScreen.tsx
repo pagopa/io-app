@@ -7,7 +7,6 @@ import {
   OperationResultScreenContentProps
 } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { trackItwKoStateAction } from "../../../analytics";
@@ -15,10 +14,10 @@ import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisa
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 import { useItwFailureSupportModal } from "../../../common/hooks/useItwFailureSupportModal.tsx";
 import { ZendeskSubcategoryValue } from "../../../common/hooks/useItwZendeskSupport";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors";
+import { itwIsL3EnabledSelector } from "../../../common/store/selectors/index.ts";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
 import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
-import { ITW_ROUTES } from "../../../navigation/routes.ts";
+import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent.tsx";
 import { trackItwRemoteInvalidAuthResponseBottomSheet } from "../analytics";
 import { getDismissalContextFromFailure } from "../analytics/utils";
 import { useItwRemoteEventsTracking } from "../hooks/useItwRemoteEventsTracking";
@@ -51,7 +50,6 @@ type ContentViewProps = { failure: RemoteFailure };
 const ContentView = ({ failure }: ContentViewProps) => {
   const isWhitelisted = useIOSelector(itwIsL3EnabledSelector);
   const machineRef = ItwRemoteMachineContext.useActorRef();
-  const navigation = useIONavigation();
   const resolveCredentialName = useIOSelector(
     itwCredentialNameResolverSelector
   );
@@ -60,6 +58,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
   });
 
   const dismissalContext = getDismissalContextFromFailure(failure.type);
+
+  useItwRemoteEventsTracking({ failure });
 
   const { bottomSheet, present } = useItwRemoteUntrustedRPBottomSheet();
   const dismissalDialog = useItwDismissalDialog({
@@ -150,55 +150,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
-        case RemoteFailureType.MISSING_CREDENTIALS: {
-          const { missingCredentials } = failure.reason;
-          const count = missingCredentials.length;
-          return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.missingCredentialsScreen.title",
-              {
-                count
-              }
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.presentation.remote.missingCredentialsScreen.subtitle",
-              {
-                credentialNames: missingCredentials
-                  .map(c => resolveCredentialName(c))
-                  .join(", ")
-              }
-            ),
-            pictogram: "emptyWallet",
-            action: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.missingCredentialsScreen.primaryAction",
-                {
-                  count
-                }
-              ),
-              onPress: () =>
-                navigation.navigate(
-                  ITW_ROUTES.MAIN,
-                  count === 1
-                    ? {
-                        screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
-                        params: { credentialType: missingCredentials[0] }
-                      }
-                    : {
-                        screen: isWhitelisted
-                          ? ITW_ROUTES.L3_ONBOARDING
-                          : ITW_ROUTES.ONBOARDING
-                      }
-                )
-            },
-            secondaryAction: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.missingCredentialsScreen.secondaryAction"
-              ),
-              onPress: dismissalDialog.show
-            }
-          };
-        }
         case RemoteFailureType.RELYING_PARTY_GENERIC: {
           return {
             title: I18n.t(
@@ -248,46 +199,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
-        case RemoteFailureType.UNEXPECTED:
-          return {
-            title: I18n.t(
-              "features.itWallet.presentation.remote.unexpectedErrorScreen.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.presentation.remote.unexpectedErrorScreen.subtitle"
-            ),
-            pictogram: "umbrella",
-            action: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.unexpectedErrorScreen.primaryAction"
-              ),
-              onPress: () => {
-                trackItwKoStateAction({
-                  reason: failure,
-                  cta_category: "custom_1",
-                  cta_id: I18n.t(
-                    "features.itWallet.presentation.remote.unexpectedErrorScreen.primaryAction"
-                  )
-                });
-                closeMachine();
-              }
-            },
-            secondaryAction: {
-              label: I18n.t(
-                "features.itWallet.presentation.remote.unexpectedErrorScreen.secondaryAction"
-              ),
-              onPress: () => {
-                trackItwKoStateAction({
-                  reason: failure,
-                  cta_category: "custom_2",
-                  cta_id: I18n.t(
-                    "features.itWallet.presentation.remote.unexpectedErrorScreen.secondaryAction"
-                  )
-                });
-                failureSupportModal.present();
-              }
-            }
-          };
         case RemoteFailureType.UNTRUSTED_RP: {
           return {
             title: I18n.t(
@@ -355,14 +266,62 @@ const ContentView = ({ failure }: ContentViewProps) => {
               }
             }
           };
+        case RemoteFailureType.UNEXPECTED:
+        default:
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.remote.unexpectedErrorScreen.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.remote.unexpectedErrorScreen.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.unexpectedErrorScreen.primaryAction"
+              ),
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t(
+                    "features.itWallet.presentation.remote.unexpectedErrorScreen.primaryAction"
+                  )
+                });
+                closeMachine();
+              }
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.presentation.remote.unexpectedErrorScreen.secondaryAction"
+              ),
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t(
+                    "features.itWallet.presentation.remote.unexpectedErrorScreen.secondaryAction"
+                  )
+                });
+                failureSupportModal.present();
+              }
+            }
+          };
       }
     };
-
-  useItwRemoteEventsTracking({ failure });
 
   const resultScreenProps = getOperationResultScreenContentProps();
 
   useItwSendAuthorizationErrorResponse({ failure, resultScreenProps });
+
+  if (failure.type === RemoteFailureType.MISSING_CREDENTIALS) {
+    return (
+      <ItwPresentationMissingCredentialsFailureContent
+        missingCredentials={failure.reason.missingCredentials}
+        onClose={() => machineRef.send({ type: "close" })}
+      />
+    );
+  }
 
   return (
     <>

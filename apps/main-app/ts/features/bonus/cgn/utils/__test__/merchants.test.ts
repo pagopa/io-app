@@ -1,9 +1,9 @@
+import { DiscountCodeTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountCodeType";
+import { OfflineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchants";
+import { OnlineMerchants } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchants";
+import { ProductCategoryEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { DiscountCodeTypeEnum } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
-import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
-import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { mixAndSortMerchants } from "../merchants";
 
 describe("mixAndSortMerchants", () => {

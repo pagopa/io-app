@@ -1,7 +1,7 @@
+import { TransactionInfo } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/TransactionInfo";
+import { TransactionStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/TransactionStatus";
 import { useEffect, useRef } from "react";
 
-import { TransactionInfo } from "../../../../../definitions/pagopa/ecommerce/TransactionInfo";
-import { TransactionStatusEnum } from "../../../../../definitions/pagopa/ecommerce/TransactionStatus";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getGenericError } from "../../../../utils/errors";
 import { paymentsGetPaymentTransactionInfoAction } from "../store/actions/networking";
@@ -32,7 +32,6 @@ const useOnTransactionActivationEffect = (effect: EffectCallback) => {
   const delayRef = useRef(INITIAL_DELAY);
   const countRef = useRef(0);
 
-  /* eslint-disable functional/immutable-data */
   useEffect(() => {
     if (!requiresActivation.current) {
       // Skips the activation if the transactions is already activated for this payment istance

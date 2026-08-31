@@ -1,4 +1,5 @@
-import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
+
 import {
   attachmentContentType,
   attachmentDisplayName,

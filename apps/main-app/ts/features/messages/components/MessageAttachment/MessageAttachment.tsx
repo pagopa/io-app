@@ -1,3 +1,4 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   FooterActions,
   FooterActionsInline,
@@ -9,7 +10,6 @@ import I18n from "i18next";
 import { useCallback, useState } from "react";
 import ReactNativeBlobUtil from "react-native-blob-util";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
 import { isIos } from "../../../../utils/platform";

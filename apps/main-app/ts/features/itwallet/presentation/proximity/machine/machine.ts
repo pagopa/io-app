@@ -18,7 +18,7 @@ import {
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { ProximityEvents } from "./events";
-import { mapEventToFailure } from "./failure";
+import { mapEventToFailure, ProximityFailureType } from "./failure";
 import { ItwPresentationTags } from "./tags";
 
 const notImplemented = () => {
@@ -433,7 +433,13 @@ export const itwProximityMachine = setup({
               }
             ],
             close: {
-              target: "#itwProximityMachine.Presentment.Terminating"
+              actions: assign(() => ({
+                failure: {
+                  type: ProximityFailureType.CONSENT_DENIED,
+                  reason: undefined
+                }
+              })),
+              target: "#itwProximityMachine.Failure"
             }
           }
         },

@@ -1,3 +1,7 @@
+import {
+  InitiativesStatusDTO,
+  StatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativesStatusDTO";
 import { Badge, Divider, ListItemSwitch } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
@@ -5,10 +9,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Fragment, useCallback } from "react";
 
-import {
-  InitiativesStatusDTO,
-  StatusEnum
-} from "../../../../../definitions/idpay/InitiativesStatusDTO";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   idpayInitiativesInstrumentDelete,

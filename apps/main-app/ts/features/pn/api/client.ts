@@ -1,4 +1,5 @@
-import { createClient } from "../../../../definitions/communication/client";
+import { createClient } from "@io-app/api-types/generated/definitions/communication/client";
+
 import { fetchMaxRetries, fetchTimeout } from "../../../config";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 

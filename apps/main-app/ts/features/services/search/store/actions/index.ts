@@ -1,7 +1,7 @@
+import { InstitutionsResource } from "@io-app/api-types/generated/definitions/services/InstitutionsResource";
+import { ScopeTypeEnum } from "@io-app/api-types/generated/definitions/services/ScopeType";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
-import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
-import { ScopeTypeEnum } from "../../../../../../definitions/services/ScopeType";
 import { NetworkError } from "../../../../../utils/errors";
 
 export type SearchPaginatedInstitutionsGetPayload = {

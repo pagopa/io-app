@@ -1,31 +1,16 @@
+import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
 import { useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
 
-import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import { zendeskSupportStart } from "../features/zendesk/store/actions";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { assistanceToolConfigSelector } from "../store/reducers/backendStatus/remoteConfig";
-import {
-  ContextualHelpProps,
-  ContextualHelpPropsMarkdown
-} from "../utils/contextualHelp";
-import { FAQsCategoriesType } from "../utils/faq";
 import {
   assistanceToolRemoteConfig,
   resetCustomFields
 } from "../utils/supportAssistance";
 
-export interface SupportRequestParams {
-  contextualHelp?: ContextualHelpProps;
-  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
-}
-
-export const useStartSupportRequest = ({
-  faqCategories,
-  contextualHelp,
-  contextualHelpMarkdown
-}: SupportRequestParams) => {
+export const useStartSupportRequest = () => {
   const { name: currentScreenName } = useRoute();
 
   const dispatch = useIODispatch();
@@ -43,9 +28,6 @@ export const useStartSupportRequest = ({
         resetCustomFields();
         dispatch(
           zendeskSupportStart({
-            faqCategories,
-            contextualHelp,
-            contextualHelpMarkdown,
             startingRoute: currentScreenName,
             assistanceType: {
               payment: false,
@@ -58,12 +40,5 @@ export const useStartSupportRequest = ({
         );
         return;
     }
-  }, [
-    faqCategories,
-    contextualHelp,
-    contextualHelpMarkdown,
-    currentScreenName,
-    dispatch,
-    choosenTool
-  ]);
+  }, [currentScreenName, dispatch, choosenTool]);
 };

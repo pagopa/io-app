@@ -14,8 +14,8 @@ import {
   itwCredentialSelector,
   itwCredentialsListByTypeSelector,
   itwCredentialsSelector,
+  itwCredentialsToRefillSelector,
   itwCredentialsTypesSelector,
-  itwHasExpiringCredentialsSelector,
   itwHasWalletAtLeastTwoCredentialsSelector,
   itwIsMdlPresentSelector,
   itwIsWalletEmptySelector,
@@ -365,50 +365,6 @@ describe("itwCredentialsListByTypeSelector", () => {
   });
 });
 
-describe("itwHasExpiringCredentialsSelector", () => {
-  it("should return true when there is at least one expiring credential", () => {
-    const state = getStateWithCredentials({
-      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
-      [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
-      [mockedMdocDrivingLicense.credentialId]: mockedMdocDrivingLicense
-    });
-    expect(itwHasExpiringCredentialsSelector(state)).toEqual(true);
-  });
-
-  it("should return false when all credentials are valid", () => {
-    const state = getStateWithCredentials({
-      [mockedDisabilityCard.credentialId]: {
-        ...mockedDisabilityCard,
-        jwt: {
-          issuedAt: "2024-09-30T07:32:49.000Z",
-          expiration: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 1)
-          ).toISOString()
-        }
-      },
-      [mockedDrivingLicense.credentialId]: {
-        ...mockedDrivingLicense,
-        jwt: {
-          issuedAt: "2024-09-30T07:32:49.000Z",
-          expiration: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 1)
-          ).toISOString()
-        }
-      },
-      [mockedMdocDrivingLicense.credentialId]: {
-        ...mockedMdocDrivingLicense,
-        jwt: {
-          issuedAt: "2024-09-30T07:32:49.000Z",
-          expiration: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 1)
-          ).toISOString()
-        }
-      }
-    });
-    expect(itwHasExpiringCredentialsSelector(state)).toEqual(false);
-  });
-});
-
 describe("itwIsMdlPresentSelector", () => {
   it("should return true if there is mDL stored", () => {
     const state = getStateWithCredentials({
@@ -424,5 +380,52 @@ describe("itwIsMdlPresentSelector", () => {
       [mockedDisabilityCard.credentialId]: mockedDisabilityCard
     });
     expect(itwIsMdlPresentSelector(state)).toEqual(false);
+  });
+});
+
+describe("itwCredentialsToRefillSelector", () => {
+  const makeProofOfAge = (keyTags: Array<string>): CredentialMetadata => ({
+    ...mockedDrivingLicense,
+    credentialType: CredentialType.PROOF_OF_AGE,
+    credentialId: "dc_sd_jwt_proof_of_age",
+    keyTag: keyTags[0],
+    keyTags
+  });
+
+  it("should return the type of a batch credential at the refill threshold", () => {
+    const proofOfAge = makeProofOfAge(["kt-1", "kt-2"]);
+    const state = getStateWithCredentials({
+      [proofOfAge.credentialId]: proofOfAge
+    });
+    expect(itwCredentialsToRefillSelector(state)).toEqual([
+      CredentialType.PROOF_OF_AGE
+    ]);
+  });
+
+  it("should not return a batch credential above the refill threshold", () => {
+    const proofOfAge = makeProofOfAge(["kt-1", "kt-2", "kt-3"]);
+    const state = getStateWithCredentials({
+      [proofOfAge.credentialId]: proofOfAge
+    });
+    expect(itwCredentialsToRefillSelector(state)).toEqual([]);
+  });
+
+  it("should not return credentials that are not obtained in batch", () => {
+    const state = getStateWithCredentials({
+      [mockedDrivingLicense.credentialId]: mockedDrivingLicense
+    });
+    expect(itwCredentialsToRefillSelector(state)).toEqual([]);
+  });
+
+  it("should deduplicate the same credential type stored in multiple formats", () => {
+    const sdJwt = makeProofOfAge(["kt-1"]);
+    const mdoc = { ...sdJwt, credentialId: "mso_mdoc_proof_of_age" };
+    const state = getStateWithCredentials({
+      [sdJwt.credentialId]: sdJwt,
+      [mdoc.credentialId]: mdoc
+    });
+    expect(itwCredentialsToRefillSelector(state)).toEqual([
+      CredentialType.PROOF_OF_AGE
+    ]);
   });
 });

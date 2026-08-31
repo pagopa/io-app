@@ -1,6 +1,7 @@
 // FIX ME: remove this mocked Types when a new backend definition that includes the real ones is released.
 // Jira: https://pagopa.atlassian.net/browse/IOPID-264
 
+import { ProblemJson } from "@io-app/api-types/generated/definitions/backend/ProblemJson";
 import {
   composeResponseDecoders as compD,
   ioResponseDecoder as ioD,
@@ -9,8 +10,6 @@ import {
   ResponseDecoder
 } from "@pagopa/ts-commons/lib/requests";
 import * as t from "io-ts";
-
-import { ProblemJson } from "../../../../../definitions/backend/ProblemJson";
 
 // ------------ Nonce ---------------------
 

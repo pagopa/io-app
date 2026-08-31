@@ -18,8 +18,9 @@ describe("getIssuerDynamicErrorBottomSheetContentConfig", () => {
     const result = getIssuerDynamicErrorBottomSheetContentConfig(
       {
         ...ItwStoredCredentialsMocks.mdl,
-        storedStatusAssertion: {
-          credentialStatus: "invalid",
+        validity: {
+          type: "status_assertion",
+          status: "invalid",
           errorCode: "credential_invalid"
         }
       },
@@ -36,8 +37,9 @@ describe("getIssuerDynamicErrorBottomSheetContentConfig", () => {
     const result = getIssuerDynamicErrorBottomSheetContentConfig(
       {
         ...ItwStoredCredentialsMocks.mdl,
-        storedStatusAssertion: {
-          credentialStatus: "invalid",
+        validity: {
+          type: "status_assertion",
+          status: "invalid",
           errorCode: "driving_license_suspended"
         }
       },

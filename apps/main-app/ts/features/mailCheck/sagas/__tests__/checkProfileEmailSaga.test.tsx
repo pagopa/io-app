@@ -1,8 +1,8 @@
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import { View } from "react-native";
 import { createStore } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 
-import { ServicesPreferencesModeEnum } from "../../../../../definitions/identity/ServicesPreferencesMode";
 import mockedProfile from "../../../../__mocks__/initializedProfile";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";

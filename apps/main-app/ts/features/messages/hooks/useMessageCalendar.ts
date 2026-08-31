@@ -1,11 +1,11 @@
 import { IOToast } from "@io-app/design-system";
+import * as Calendar from "expo-calendar";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Alert } from "react-native";
-import { Calendar } from "react-native-calendar-events";
 
 import {
   addCalendarEvent,
@@ -41,7 +41,7 @@ export const useMessageCalendar = (messageId: string) => {
   );
 
   const setPreferredCalendar = useCallback(
-    (calendar: Calendar) =>
+    (calendar: Calendar.Calendar) =>
       dispatch(
         preferredCalendarSaveSuccess({
           preferredCalendar: calendar
@@ -51,7 +51,7 @@ export const useMessageCalendar = (messageId: string) => {
   );
 
   const onAddEventToCalendar = (
-    calendar: Calendar,
+    calendar: Calendar.Calendar,
     dueDate: Date,
     title: string
   ) => {
@@ -75,7 +75,7 @@ export const useMessageCalendar = (messageId: string) => {
   const handleConfirmAddEventToCalendar = (
     dueDate: Date,
     eventId: string,
-    calendar: Calendar,
+    calendar: Calendar.Calendar,
     title: string
   ) => {
     Alert.alert(
@@ -110,10 +110,13 @@ export const useMessageCalendar = (messageId: string) => {
   const addEventToCalendar = (
     dueDate: Date,
     eventTitle: string,
-    calendar: Calendar
+    calendar: Calendar.Calendar
   ) => {
     void pipe(
-      TE.tryCatch(() => searchEventInCalendar(dueDate, eventTitle), E.toError),
+      TE.tryCatch(
+        () => searchEventInCalendar([calendar.id], dueDate, eventTitle),
+        E.toError
+      ),
       TE.chain(TE.fromOption(() => new Error("Event not found"))),
       TE.map(eventId =>
         handleConfirmAddEventToCalendar(dueDate, eventId, calendar, eventTitle)

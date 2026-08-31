@@ -2,6 +2,7 @@
  * Action types and action creator related to the Profile.
  */
 
+import { InitializedProfile } from "@io-app/api-types/generated/definitions/identity/InitializedProfile";
 import { Omit } from "@pagopa/ts-commons/lib/types";
 import * as O from "fp-ts/lib/Option";
 import {
@@ -11,7 +12,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
 import { ProfileError } from "../types";
 
 export const resetProfileState = createStandardAction("RESET_PROFILE_STATE")();

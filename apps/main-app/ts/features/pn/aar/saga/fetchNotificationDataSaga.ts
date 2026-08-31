@@ -1,11 +1,11 @@
+import { MessageBodyMarkdown } from "@io-app/api-types/generated/definitions/communication/MessageBodyMarkdown";
+import { MessageSubject } from "@io-app/api-types/generated/definitions/communication/MessageSubject";
+import { ThirdPartyMessage } from "@io-app/api-types/generated/definitions/pn/aar/ThirdPartyMessage";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 
-import { MessageBodyMarkdown } from "../../../../../definitions/communication/MessageBodyMarkdown";
-import { MessageSubject } from "../../../../../definitions/communication/MessageSubject";
-import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";

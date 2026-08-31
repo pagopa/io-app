@@ -1,4 +1,5 @@
-import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
+import { NotificationStatus } from "@io-app/api-types/generated/definitions/pn/NotificationStatus";
+
 import { mixpanelTrack } from "../../../mixpanel";
 import {
   booleanToYesNo,

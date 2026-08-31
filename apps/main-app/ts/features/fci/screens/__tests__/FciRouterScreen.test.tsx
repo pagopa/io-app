@@ -1,10 +1,10 @@
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { act } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { createStore, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 import mockedProfile from "../../../../__mocks__/initializedProfile";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -191,22 +191,23 @@ describe("Test FciRouterScreen", () => {
 
     expect(store.getActions()).toContainEqual(fciStartRequest());
   });
-  it("With skipInitialFetch true, fciSignatureRequestFromId.request should not be dispatched", () => {
+  it("On mount, fciSignatureRequestFromId.request should always be dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const mockStore = configureMockStore<GlobalState>();
     const store: ReturnType<typeof mockStore> = mockStore({
       ...globalState,
-      profile: pot.some(mockedProfile)
+      profile: pot.some(mockedProfile),
+      remoteConfig: O.some(minimumRemoteConfig)
     });
 
     renderScreenWithNavigationStoreContext<GlobalState>(
       FciRouterScreen,
       FCI_ROUTES.ROUTER,
-      { signatureRequestId: "signatureRequestId", skipInitialFetch: true },
+      { signatureRequestId: "signatureRequestId" },
       store
     );
 
-    expect(store.getActions()).not.toContainEqual(
+    expect(store.getActions()).toContainEqual(
       fciSignatureRequestFromId.request("signatureRequestId")
     );
   });

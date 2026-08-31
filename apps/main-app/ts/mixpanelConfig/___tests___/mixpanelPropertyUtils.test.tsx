@@ -1,15 +1,19 @@
+import { PushNotificationsContentTypeEnum } from "@io-app/api-types/generated/definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/identity/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
+import { SpidLevelEnum } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { PushNotificationsContentTypeEnum } from "../../../definitions/identity/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../definitions/identity/ReminderStatus";
-import { ServicesPreferencesModeEnum } from "../../../definitions/identity/ServicesPreferencesMode";
 import mockedProfile from "../../__mocks__/initializedProfile";
 import { NotificationPreferenceConfiguration } from "../../features/settings/common/analytics";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
+import { SpidIdp } from "../../utils/idps";
 import {
+  authSecurityLevelHandler,
   cgnStatusHandler,
+  loginMethodHandler,
   loginSessionConfigHandler,
   mixpanelOptInHandler,
   notificationConfigurationHandler,
@@ -20,6 +24,14 @@ import {
 
 describe("mixpanelPropertyUtils", () => {
   const state = appReducer(undefined, applicationChangeState("active"));
+
+  const mockIdp: SpidIdp = {
+    id: "poste",
+    name: "Poste ID",
+    logo: { light: { uri: "" } },
+    profileUrl: "",
+    isTestIdp: false
+  };
 
   it("loginSessionConfigHandler should return 'not set' when optInState is undefined", () => {
     const mockState: GlobalState = {
@@ -237,5 +249,51 @@ describe("mixpanelPropertyUtils", () => {
       }
     };
     expect(welfareStatusHandler(mockState)).toEqual(["Test idPay"]);
+  });
+
+  it("authSecurityLevelHandler should return the spid level when the user is logged in with session info", () => {
+    const mockState: GlobalState = {
+      ...state,
+      authentication: {
+        ...state.authentication,
+        kind: "LoggedInWithSessionInfo",
+        idp: mockIdp,
+        sessionToken: "abc",
+        sessionInfo: {
+          spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL2"]
+        }
+      }
+    };
+    expect(authSecurityLevelHandler(mockState)).toBe("L2");
+  });
+
+  it("authSecurityLevelHandler should return 'not set' when the user is not logged in", () => {
+    expect(authSecurityLevelHandler(state)).toBe("not set");
+  });
+
+  it("loginMethodHandler should return the idp id when the user has an idp selected", () => {
+    const mockState: GlobalState = {
+      ...state,
+      authentication: {
+        ...state.authentication,
+        kind: "LoggedInWithSessionInfo",
+        idp: mockIdp,
+        sessionToken: "abc",
+        sessionInfo: {}
+      }
+    };
+    expect(loginMethodHandler(mockState)).toBe("poste");
+  });
+
+  it("loginMethodHandler should return 'not set' when the user has no idp selected", () => {
+    const mockState: GlobalState = {
+      ...state,
+      authentication: {
+        ...state.authentication,
+        kind: "LoggedOutWithoutIdp",
+        reason: "NOT_LOGGED_IN"
+      }
+    };
+    expect(loginMethodHandler(mockState)).toBe("not set");
   });
 });

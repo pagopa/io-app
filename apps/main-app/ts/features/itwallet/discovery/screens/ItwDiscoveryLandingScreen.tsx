@@ -1,8 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import { useEffect } from "react";
 
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import {
+  isStartupLoaded,
+  StartupStatusEnum
+} from "../../../../store/reducers/startup";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
@@ -19,8 +25,14 @@ export const ItwDiscoveryLandingScreen = () => {
   const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
   const isItWalletActive = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isWhitelisted = useIOSelector(itwIsL3EnabledSelector);
+  const startupStatus = useIOSelector(isStartupLoaded);
 
   useEffect(() => {
+    if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
+      // Skip navigation until the startup process is completed and the user is authenticated
+      return;
+    }
+
     if (isItWalletActive || (isWalletActive && !isWhitelisted)) {
       navigation.replace(ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN);
       return;
@@ -30,7 +42,13 @@ export const ItwDiscoveryLandingScreen = () => {
       animationEnabled: false,
       level: isWhitelisted ? "l3" : "l2"
     });
-  }, [navigation, isWalletActive, isItWalletActive, isWhitelisted]);
+  }, [
+    startupStatus,
+    navigation,
+    isWalletActive,
+    isItWalletActive,
+    isWhitelisted
+  ]);
 
-  return null;
+  return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
 };

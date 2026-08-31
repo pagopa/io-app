@@ -800,40 +800,6 @@
       "title": "Email confirmed!"
     }
   },
-  "faq": {
-    "1": {
-      "content": "SPID is the authentication system that allows citizens and businesses to access online services provided by the public administration and participating private entities using a single digital identity. The SPID identity consists of credentials (username and password) that are issued to the user and enable access to all online services. ",
-      "title": "What is SPID?"
-    },
-    "2": {
-      "content": "To obtain your SPID credentials, you must contact Aruba, EtnaHiTech, Infocamere, Infocert, Namirial, Poste, Register, Sielte, Tim, Lepida, or TeamSystem. These entities (known as identity providers) offer various ways to apply for and obtain SPID; you can choose the one that best suits your needs. Find all the information on where and how to request your SPID credentials on the website [https:\/\/www.spid.gov.it\/cos-e-spid\/come-attivare-spid\/](https:\/\/www.spid.gov.it\/cos-e-spid\/come-attivare-spid\/). \n",
-      "title": "How can you get SPID?"
-    },
-    "3": {
-      "content": "Don't worry: you can retrieve them at any time. Select your Identity Provider to find out how to proceed: [Aruba](https:\/\/guide.pec.it\/spid\/recupero-dati\/procedure-di-recupero-dati-smarriti.aspx), [EtnaID](https:\/\/etnaid.eht.eu\/signup\/forgotPassword), [Infocamere](https:\/\/selfcarespid.infocamere.it\/spid-selfCare\/#RecoveryEmergencyCode), [Infocert](https:\/\/my.infocert.it\/selfcare\/#\/recoveryPin), [Namirial](https:\/\/portale.namirialtsp.com\/private\/user\/spid_reset.php), [Poste](https:\/\/posteid.poste.it\/recuperocredenziali.shtml), [Register, if you’ve forgotten your username](https:\/\/spid.register.it\/selfcare\/recovery\/username), [Register, if you’ve forgotten your password](https:\/\/spid.register.it\/selfcare\/recovery\/password), [Sielte, if you forgot your password](https:\/\/myid.sieltecloud.it\/profile\/recovery\/forgotPassword), [Tim, if you forgot your username](https:\/\/login.id.tim.it\/mps\/fu.php), [Tim, if you forgot your password](https:\/\/login.id.tim.it\/mps\/fp.php), [Lepida](https:\/\/id.lepida.it\/idm\/app\/recupero_credenziali.jsp), [TeamSystem, if you've forgotten your username](https:\/\/spid.teamsystem.com\/it\/auth\/usernameLost), [TeamSystem, if you've forgotten your password](https:\/\/spid.teamsystem.com\/it\/auth\/passwordLost).",
-      "title": "Lost your SPID credentials?"
-    },
-    "4": {
-      "content": "The CIE, or Electronic Identity Card, is a highly secure electronic document equipped with a radio-frequency microprocessor that allows it to be used in a variety of situations, including access to online services. It meets our country’s security requirements and replaces the paper version.",
-      "title": "What is the CIE?"
-    },
-    "5": {
-      "content": "You can go to [https:\/\/www.prenotazionicie.interno.gov.it\/](https:\/\/www.prenotazionicie.interno.gov.it) and enter the name of your municipality to check whether it uses the Agenda CIE online appointment system. If so, you can book an appointment directly on the website without having to log in. Alternatively, you can request an appointment online through your municipality’s website or by visiting one of the municipal offices.",
-      "title": "How can you get the CIE?"
-    },
-    "6": {
-      "content": "SPID identity is issued by Digital Identity Providers (Identity Providers), private entities accredited by AgID that, in accordance with the rules issued by the Agency, provide digital identities and manage user authentication. Your Identity Provider is the entity you have chosen to provide your SPID identity.",
-      "title": "What is an Identity Provider?"
-    },
-    "7": {
-      "content": "Identity Providers offer various registration options, either free of charge or for a fee, and their respective SPIDs have different security levels. Here are some useful factors to consider if you don’t yet have a SPID and are deciding which Identity Provider to use:\n\n- The verification method that is most convenient for you during the application process (in person, via Electronic ID Card (CIE)*, National Services Card (CNS), digital signature, or via webcam);\n- Your desired SPID security level;\n- If you’re already a customer of one of the Identity Providers, you may be eligible for a simplified registration process;\n- If you’re an Italian citizen living abroad, be sure to check which providers offer services for residents abroad.\n\nFor more information, visit the [SPID](https:\/\/www.spid.gov.it\/cos-e-spid\/come-attivare-spid\/) website.\n",
-      "title": "How to choose an Identity Provider?"
-    },
-    "8": {
-      "content": "Yes, it is possible to apply for more than one digital identity—even with different security levels—and to choose from different digital identity providers. If a citizen has multiple digital identities, they are free to log in to IO using whichever SPID credentials they prefer.",
-      "title": "Is it possible to have more than one digital identity?"
-    }
-  },
   "fastLogin": {
     "loadingScreen": {
       "title": "We are verifying your identity"
@@ -942,6 +908,10 @@
         "rightButton": "Signature",
         "title": "Sign the entire document"
       },
+      "qtspErrorPage": {
+        "subtitle": "We were unable to retrieve the documents. Please try again in a few minutes.",
+        "title": "Something went wrong"
+      },
       "qtspTos": {
         "subTitle": "To sign, you must accept the terms and conditions of service and confirm that you have read the privacy policy of the signature provider, **Namirial S.p.A.**",
         "title": "We're almost there!"
@@ -1018,8 +988,8 @@
     },
     "fseDiscoveryBanner": {
       "body": "Log in and view test results, prescriptions, and services all in one digital space. It's simple and secure. With you, for your health.",
-      "cta": "Go to Your File",
-      "title": "Your Electronic Health Record is now available!"
+      "cta": "Go to your Fascicolo",
+      "title": "Your Fascicolo Sanitario Elettronico is now available!"
     },
     "greenPass": {
       "button": "Back",
@@ -1070,12 +1040,12 @@
             "title": "Documenti su IO"
           },
           "homeActive": {
-            "action": "Start",
+            "action": "Get started",
             "content": "For security reasons, when you switch devices or uninstall the app, you'll need to add your documents to the Wallet again.",
             "title": "Reactivate Documenti su IO"
           },
           "onboarding": {
-            "action": "Start"
+            "action": "Get started"
           },
           "onboardingActive": {
             "content": "Reactivate \"Documenti su IO\" to add your documents back to your Wallet."
@@ -1150,8 +1120,8 @@
               }
             },
             "detailsBottomSheet": {
-              "action": "I understand",
-              "title": "IT-Wallet on IO: The New Public Digital Wallet"
+              "action": "Got it",
+              "title": "IT-Wallet on IO: the new public digital wallet"
             },
             "dismissalDialog": {
               "body": "You can get IT-Wallet at any time if you change your mind.",
@@ -1184,7 +1154,7 @@
       },
       "engagementBanner": {
         "activation": {
-          "action": "Add a document",
+          "action": "Get started",
           "description": "Fully valid, digital, and always at your fingertips!",
           "title": "Upload your digital documents to IO"
         },
@@ -1194,22 +1164,22 @@
           "title": "Your digital documents will appear here"
         },
         "reactivation": {
-          "confirm": "Start",
+          "confirm": "Get started",
           "description": "For security reasons, if you switch devices or uninstall the app, you'll need to add your documents to the Wallet again.",
           "title": "Reactivate your digital documents on IO"
         },
         "upgrade": {
-          "action": "Start",
+          "action": "Get started",
           "description": "Your public digital wallet: simple, secure, and all yours. Check out the new documents now available!",
           "title": "IO welcomes IT-Wallet"
         },
         "upgrade_empty": {
-          "action": "Start",
+          "action": "Get started",
           "description": "Discover the advanced features of digital documents on IO.",
           "title": "Your Wallet is now part of IT-Wallet"
         },
         "upgrade_with_mdl": {
-          "action": "Start",
+          "action": "Get started",
           "description": "Use your digital driver's license as an ID, it's easy and secure!",
           "title": "Show who you are with your device"
         }
@@ -1217,7 +1187,7 @@
       "feedback": {
         "credentialExit": {
           "bottomSheet": {
-            "content": "You've decided not to continue: please let us know why, so we can improve your experience with the app. It'll only take a minute!",
+            "content": "You’ve decided not to continue: please let us know why, so we can improve your experience on the app. It’ll only take a minute! ",
             "primaryAction": "Tell us what you think",
             "secondaryAction": "Not now",
             "title": "Would you like to tell us why?"
@@ -1233,14 +1203,14 @@
         },
         "eidActivationSuccess": {
           "banner": {
-            "action": "Start",
+            "action": "Get started",
             "content": "Tell us about your experience activating IT-Wallet and help us improve.",
             "title": "Can you tell us how it went?"
           }
         },
         "reissuance": {
           "banner": {
-            "action": "Start",
+            "action": "Get started",
             "content": "Tell us about your verification experience and help us improve.",
             "title": "How did it go?"
           },
@@ -1370,7 +1340,7 @@
             },
             "pin": {
               "buttonLink": "Where can I find my CIE PIN?",
-              "cta": "Start",
+              "cta": "Get started",
               "description": "You'll need to enter it to complete the identity verification process.",
               "title": "Get your Electronic ID Card (CIE) PIN ready"
             }
@@ -1465,14 +1435,12 @@
               }
             },
             "ciePin": {
-              "badge": "recommended",
               "bottomSheet": {
                 "entry-1": "Your Electronic ID Card (CIE)",
                 "entry-2": "The 8-digit PIN for the CIE",
                 "subtitle": "You'll need:",
                 "title": "Continue with CIE + PIN"
               },
-              "reissuanceBadge": "Recommended",
               "subtitle": {
                 "default": "You will need to use your Electronic ID Card (CIE) and enter its 8-digit PIN.",
                 "l3": "It is valid for 12 months"
@@ -1558,9 +1526,6 @@
           "subtitle": "They will be shared with **{{organization}}** only for the time necessary to release the digital version of the document.",
           "title": "Information required for {{credentialName}}",
           "tos": "Your data will be processed securely. By clicking **Continue**, you confirm that you have read and understood the [Privacy Policy and Terms and Conditions of Use]({{privacyUrl}})."
-        },
-        "credentialIntro": {
-          "subtitle": "Read carefully to find out what you'll find."
         },
         "credentialNotFound": {
           "subtitle": "To use Documenti su IO, first add them to your Wallet. It's quick and easy.",
@@ -1669,11 +1634,9 @@
         },
         "notMatchingIdentityError": {
           "body": {
-            "l2": "The digital identity you use to activate Documents on IO must belong to the same person who logged in to IO.",
-            "l3": "The digital identity you use to activate IT-Wallet must belong to the same person who logged in to IO."
+            "l2": "The digital identity you use to activate IT-Wallet must be the same as the one you used to log in to IO.",
+            "l3": "The digital identity you use to activate IT-Wallet must be the same as the one you used to log in to IO."
           },
-          "primaryAction": "Logging in again",
-          "secondaryAction": "Close",
           "title": "Unrecognized identity"
         },
         "pidAnprMismatchError": {
@@ -1707,7 +1670,7 @@
             "subtitle": "To add new documents to your IO Wallet, get IT-Wallet: all you need is your Electronic ID Card (CIE).",
             "title": "Get IT-Wallet to continue"
           },
-          "primaryAction": "Start",
+          "primaryAction": "Get started",
           "secondaryAction": "Not now"
         }
       },
@@ -1852,6 +1815,10 @@
             "contentL3": "Your driver's license on IO has the same legal validity as the physical document, but only within Italy.",
             "invalid": {
               "cta": "Remove document from Wallet"
+            },
+            "suspended": {
+              "action": "Learn more",
+              "title": "Your driver's license is not valid."
             }
           },
           "statusAction": "What can I do?"
@@ -1872,7 +1839,7 @@
           "eidInfo": {
             "alert": {
               "documents": {
-                "action": "Start",
+                "action": "Get started",
                 "expired": "Verify your identity using your CIE or SPID to continue using \"Documenti su IO\" without restrictions.",
                 "expiring": "Verify your identity using your CIE or SPID by {{date}} to continue using \"Documenti su IO\" without restrictions.",
                 "offline": "Go back online and verify your identity using CIE or SPID to continue using \"Documenti su IO\" without restrictions.",
@@ -1899,6 +1866,10 @@
               "content": "Renew your driver’s license at the offices of the Motorizzazione Civile or an authorized institution in your area.\n\nYou must undergo a medical examination with an authorized doctor and pay the relevant payment slips.\n\n###### What documents do I need to bring?\n\nYour driver’s license (about to expire or already expired), a valid ID, your fiscal code, and a recent passport-sized photo.",
               "cta": "Learn more",
               "title": "Driver's License on IO: about to expire"
+            },
+            "suspended": {
+              "content": "At the moment, you are not allowed to drive the types of vehicles that are on your driving licence.\n\nFor example, your licence may have been suspended or temporarily withdrawn. Please contact the Motorizzazione Civile for more information.\n\nWhen your driving licence is valid again, the digital licence will be updated automatically.\n\nPlease note: you can continue to use your digital driving licence as a form of identification.",
+              "cta": "Got it"
             }
           }
         },
@@ -1977,7 +1948,7 @@
         },
         "eid": {
           "verificationExpired": {
-            "primaryAction": "Start",
+            "primaryAction": "Get started",
             "subtitle": "This is a necessary step to continue using **Documents on IO** without restrictions.",
             "title": "Verify your identity"
           }
@@ -1999,6 +1970,25 @@
             }
           },
           "listItemHeader": "My IT-Wallet ID information"
+        },
+        "missingCredentials": {
+          "one": {
+            "primaryAction": "Add document",
+            "secondaryAction": "Close",
+            "subtitle": "You need to verify {{credentialName}}, which is not in your IT-Wallet.",
+            "title": "You can't continue because a document is missing"
+          },
+          "other": {
+            "bottomSheet": {
+              "primaryAction": "Add document",
+              "subtitle": "The following documents are not in your IT-Wallet.",
+              "title": "Missing documents"
+            },
+            "primaryAction": "View documents",
+            "secondaryAction": "Close",
+            "subtitle": "Find out which documents are missing for this verification.",
+            "title": "You can't continue because some documents are missing"
+          }
         },
         "proximity": {
           "bluetooth": {
@@ -2083,6 +2073,7 @@
               "or": "or"
             },
             "qrCode": {
+              "accessibilityLabel": "Image of the QR code to show to the person verifying the digital documents",
               "error": "We had a problem generating the QR code."
             },
             "title": "Start verification"
@@ -2206,14 +2197,6 @@
             "subtitle": "Please wait a few seconds...",
             "timeout": "Please bear with us just a little longer..."
           },
-          "missingCredentialsScreen": {
-            "primaryAction_one": "Add a document to the Wallet",
-            "primaryAction_other": "Add documents to the Wallet",
-            "secondaryAction": "Not now",
-            "subtitle": "Add {{credentialNames}} to your Wallet, then try again.",
-            "title_one": "A document is missing to continue",
-            "title_other": "We're missing a few documents to continue"
-          },
           "purpose": "Purpose: {{purpose}}",
           "relyingParty": {
             "genericError": {
@@ -2249,7 +2232,6 @@
             "bottomSheet": {
               "contentBottom": "An institution is considered verified after joining the IT-Wallet System, which imposes strict security requirements.",
               "contentTop": "IO always verifies that an institution is legitimate before allowing it to access your information.",
-              "primaryAction": "Learn more",
               "subtitle": "When is an institution verified?",
               "title": "System for auditing institution"
             },
@@ -2329,10 +2311,10 @@
         "visitHelpCenter": "Visit the help center",
         "website": "Visit the website"
       },
-      "title": "IT-WALLET",
+      "title": "IT-Wallet",
       "tour": {
         "addCredential": {
-          "description": "Tap “+” or “Add Document” to select a digital document to add to your Wallet.",
+          "description": "Tap “+” to select a digital document to add to your Wallet.",
           "title": "Add a document"
         },
         "credentials": {
@@ -2372,23 +2354,14 @@
         "claims": {
           "attachments": "Attachments",
           "authenticSource": "Data Source",
-          "birthdate": "Date of birth",
-          "expirationDate": "Expiration date",
-          "familyName": "Last name",
-          "givenName": "First name",
-          "info": "More information about this data",
           "mdl": {
             "category": "Driver's License {{category}}",
             "expirationDate": "Valid until",
             "issuedDate": "Valid from",
             "restrictionConditions": "Codes"
           },
-          "placeOfBirth": "Place of birth",
           "releasedBy": "Digital release",
-          "releasedByPid": "Issuance of IT-Wallet ID",
-          "securityLevel": "Security level",
-          "taxIdCode": "fiscal code",
-          "uniqueId": "Unique ID"
+          "releasedByPid": "Issuance of IT-Wallet ID"
         }
       },
       "walletInstanceRevoked": {
@@ -2435,6 +2408,9 @@
       },
       "attachmentDownloadFeedback": "Downloading...",
       "attachments": "Attachments",
+      "attachmentsExpirationAlert": {
+        "body": "The documents are available online for a limited time. Save them to your device!"
+      },
       "badge": {
         "dueDate": "{{date}} has expired at {{time}}"
       },
@@ -3044,7 +3020,7 @@
           }
         },
         "screen": {
-          "cta": "Start",
+          "cta": "Get started",
           "emptyMessage": "Your driver's license, health insurance card, and other digital documents will appear here!",
           "legacy": {
             "cta": "Add to Wallet",
@@ -3115,11 +3091,11 @@
       },
       "minusSymbol": "less",
       "otpInput": {
-        "valueText": "You entered {{valueLength}} with {{length}} digits."
+        "valueText": "You entered {{valueLength}} of {{length}} digits."
       },
       "progressTracker": "{{index}} of {{total}}",
       "reload": "Recharge",
-      "scrollToBottom": "Scroll all the way to the bottom",
+      "scrollToBottom": "Scroll to the bottom",
       "search": "Search",
       "togglePasswordVisibility": "Show or hide the password"
     },
@@ -3196,6 +3172,7 @@
     "offline": {
       "bottomSheet": {
         "content": "###### What can I do? \n\nWhen you're offline, some of the app's features may not work. \n\n Documents on IO also work offline (if you’ve enabled the feature), but the validity of the documents is updated at the last online app access.\n\nConnect to the internet and refresh the app to resume using all IO services.",
+        "footerAction": "Restart the IO app",
         "title": "No connection"
       },
       "connectionRestored": "Connection restored.",
@@ -3299,7 +3276,7 @@
         "body": "You'll need this to authorize purchases made with your electronic ID card: **keep it in a safe place**",
         "buttons": {
           "howItWorks": "How does it work?",
-          "start": "Start"
+          "start": "Get started"
         },
         "description": "Use your Electronic ID Card to spend the funds allocated to you through these programs.",
         "header": "Here's your code!",
@@ -3540,7 +3517,7 @@
               "selectedIBAN": "IBAN for the deposit",
               "showMore": "See all"
             },
-            "startConfigurationCTA": "Start",
+            "startConfigurationCTA": "Get started",
             "yourOperations": "Your transactions",
             "yourOperationsSubtitle": "Here you'll see the transactions made using the payment methods you've linked. "
           },

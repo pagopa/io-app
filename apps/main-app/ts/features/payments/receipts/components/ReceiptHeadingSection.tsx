@@ -1,3 +1,5 @@
+import { CartItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/CartItem";
+import { NoticeDetailResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeDetailResponse";
 import {
   ContentWrapper,
   IOColors,
@@ -6,8 +8,6 @@ import {
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 
-import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
-import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { Psp } from "../../../../types/pagopa";
 import { ReceiptStackNavigation } from "../navigation/navigator";
 import { PaymentsReceiptRoutes } from "../navigation/routes";

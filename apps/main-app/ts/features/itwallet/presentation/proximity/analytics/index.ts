@@ -10,6 +10,8 @@ import {
   ItwProximityFailure,
   ItwProximityFlowProperties,
   ItwProximityGenericFailure,
+  ItwProximityHttpFailure,
+  ItwProximityMandatoryCredentialMissing,
   ItwProximityQrCode,
   ItwProximityShowQrCode,
   ItwStartReissuingPID
@@ -80,9 +82,30 @@ export const trackItwProximityPresentationCompleted = ({
   );
 };
 
-export const trackItwProximityUnofficialVerifierBottomSheet = () => {
+export const trackItwProximityRpNotTrustedBottomSheet = () => {
   void mixpanelTrack(
-    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_UNOFFICIAL_VERIFIER_BOTTOMSHEET,
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_RP_NOT_TRUSTED_BOTTOMSHEET,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
+export const trackItwProximitySavePreferences = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_SAVE_PREFERENCES,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
+export const trackItwProximityRpNotTrustedDiscoverMore = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_RP_NOT_TRUSTED_DISCOVER_MORE,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximityNfcActivation = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_NFC_ACTIVATION,
     buildEventProperties("UX", "screen_view")
   );
 };
@@ -157,6 +180,34 @@ export const trackItwProximityNfcStart = () => {
   );
 };
 
+export const trackItwProximityNfcActivationClose = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_NFC_ACTIVATION_CLOSE,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximityNfcGoToSettings = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_NFC_GO_TO_SETTINGS,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximitySavePreferencesConfirm = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_SAVE_PREFERENCES_CONFIRM,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwProximitySavePreferencesDismiss = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_SAVE_PREFERENCES_DISMISS,
+    buildEventProperties("UX", "action")
+  );
+};
+
 export const trackItwStartReissuingPID = ({
   position
 }: ItwStartReissuingPID) => {
@@ -167,6 +218,26 @@ export const trackItwStartReissuingPID = ({
 };
 
 // Errors events
+
+export const trackItwProximityNfcSessionError = ({
+  reason,
+  type
+}: ItwProximityFailure) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_NFC_SESSION_ERROR,
+    buildEventProperties("KO", "screen_view", { reason, type })
+  );
+};
+
+export const trackItwProximityNfcSessionTimeout = ({
+  reason,
+  type
+}: ItwProximityFailure) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_NFC_SESSION_TIMEOUT,
+    buildEventProperties("KO", "screen_view", { reason, type })
+  );
+};
 
 export const trackItwProximityQrCodeLoadingFailure = ({
   reason,
@@ -214,13 +285,44 @@ export const trackItwProximityUnexpectedFailure = ({
   );
 };
 
-export const trackItwProximityUnofficialVerifier = ({
+export const trackItwProximityRpNotTrusted = ({
   reason,
   type
 }: ItwProximityFailure) => {
   void mixpanelTrack(
-    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNOFFICIAL_VERIFIER,
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_RP_NOT_TRUSTED,
     buildEventProperties("KO", "screen_view", { reason, type })
+  );
+};
+
+export const trackItwProximityGenericFailure = ({
+  reason
+}: ItwProximityHttpFailure) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_GENERIC_FAILURE,
+    buildEventProperties("KO", "screen_view", { reason })
+  );
+};
+
+export const trackItwProximityRequestObjectFailure = ({
+  reason
+}: ItwProximityHttpFailure) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_REQUEST_OBJECT_FAILURE,
+    buildEventProperties("KO", "screen_view", { reason })
+  );
+};
+
+export const trackItwProximityMandatoryCredentialMissing = ({
+  missing_credential,
+  missing_credential_number
+}: ItwProximityMandatoryCredentialMissing) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING,
+    buildEventProperties("KO", "screen_view", {
+      missing_credential,
+      missing_credential_number
+    })
   );
 };
 

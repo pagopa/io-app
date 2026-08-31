@@ -1,3 +1,7 @@
+import { DiscountCodeTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountCodeType";
+import { OfflineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchant";
+import { OnlineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchant";
+import { ProductCategoryEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useFocusEffect } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
@@ -5,10 +9,6 @@ import I18n from "i18next";
 import { FlatList, View } from "react-native";
 import { createStore } from "redux";
 
-import { DiscountCodeTypeEnum } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { OfflineMerchant } from "../../../../../../../definitions/cgn/merchants/OfflineMerchant";
-import { OnlineMerchant } from "../../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import { ProductCategoryEnum } from "../../../../../../../definitions/cgn/merchants/ProductCategory";
 import {
   remoteError,
   remoteReady

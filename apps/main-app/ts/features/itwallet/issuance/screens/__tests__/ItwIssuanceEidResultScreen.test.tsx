@@ -20,7 +20,7 @@ const mockHasResolvedCredentialOffer = jest.fn();
 
 jest.mock("../../../../../components/screens/LoadingScreenContent", () => ({
   __esModule: true,
-  default: () => null
+  LoadingScreenContent: () => null
 }));
 
 jest.mock("../../../machine/eid/provider", () => {

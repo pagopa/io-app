@@ -12,7 +12,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { customEmailChannelSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import { profileUpsert } from "../../common/store/actions";
 import {
@@ -20,11 +19,6 @@ import {
   profileEmailSelector,
   profileSelector
 } from "../../common/store/selectors";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.email.forward.contextualHelpTitle",
-  body: "profile.preferences.email.forward.contextualHelpContent"
-};
 
 const EmailForwardingScreen = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -79,7 +73,6 @@ const EmailForwardingScreen = () => {
   const handleSwitchValueChange = useCallback(
     (canSendEmail: boolean) => {
       setIsLoading(true);
-      // eslint-disable-next-line functional/immutable-data
       isCustomChannelEnabledChoice.current = false;
       if (canSendEmail) {
         disableOrEnableAllEmailNotifications();
@@ -117,7 +110,6 @@ const EmailForwardingScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       canGoback={true}
-      contextualHelpMarkdown={contextualHelpMarkdown}
       description={description}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins

@@ -1,4 +1,3 @@
-/* eslint-disable functional/immutable-data */
 import { PropsWithChildren, useEffect } from "react";
 import Animated, {
   measure,

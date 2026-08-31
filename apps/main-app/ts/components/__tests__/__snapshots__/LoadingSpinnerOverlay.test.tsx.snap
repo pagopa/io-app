@@ -13,7 +13,6 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
     style={
       [
         {
-          "backgroundColor": "#FFFFFF",
           "bottom": 0,
           "justifyContent": "center",
           "left": 0,
@@ -24,7 +23,6 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
         },
         {
           "backgroundColor": "rgba(255,255,255,0.65)",
-          "opacity": 1,
         },
       ]
     }
@@ -569,7 +567,6 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
     style={
       [
         {
-          "backgroundColor": "#FFFFFF",
           "bottom": 0,
           "justifyContent": "center",
           "left": 0,
@@ -580,7 +577,6 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
         },
         {
           "backgroundColor": "rgba(255,255,255,0.7)",
-          "opacity": 1,
         },
       ]
     }

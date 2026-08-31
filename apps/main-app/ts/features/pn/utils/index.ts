@@ -1,11 +1,11 @@
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
+import { NotificationStatus } from "@io-app/api-types/generated/definitions/pn/NotificationStatus";
+import { NotificationStatusHistoryElement } from "@io-app/api-types/generated/definitions/pn/NotificationStatusHistoryElement";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
-import { NotificationStatusHistoryElement } from "../../../../definitions/pn/NotificationStatusHistoryElement.ts";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { GlobalState } from "../../../store/reducers/types";
 import { CTAS } from "../../../types/LocalizedCTAs";
 import { format } from "../../../utils/dates.ts";

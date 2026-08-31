@@ -1,6 +1,6 @@
 import { TabItem, TabNavigation } from "@io-app/design-system";
 import I18n from "i18next";
-import { MutableRefObject, useCallback } from "react";
+import { RefObject, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import PagerView from "react-native-pager-view";
 
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 export const TabNavigationContainer = ({
   pagerViewRef
 }: {
-  pagerViewRef: MutableRefObject<null | PagerView>;
+  pagerViewRef: RefObject<null | PagerView>;
 }) => {
   const shownMessageCategory = useIOSelector(shownMessageCategorySelector);
   const shownPageIndex =

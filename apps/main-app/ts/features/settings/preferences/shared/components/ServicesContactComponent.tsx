@@ -1,8 +1,8 @@
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import { IOMarkdownLite, RadioGroup } from "@io-app/design-system";
 import I18n from "i18next";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
 
 type Props = {

@@ -87,12 +87,10 @@ export const HeaderFirstLevel = ({
 
   /* We show the divider only when the header is scrolled down */
   const offset = useScrollOffset(
-    (animatedRef as AnimatedRef<Animated.ScrollView>) ||
-      (animatedFlatListRef as AnimatedRef<Animated.FlatList<any>>)
+    (animatedRef ?? animatedFlatListRef) as AnimatedRef<Animated.ScrollView>
   );
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     paddingTop.value = withTiming(
       ignoreSafeAreaMargin ? 0 : insets.top,
       alertEdgeToEdgeInsetTransitionConfig

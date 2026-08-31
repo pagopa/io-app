@@ -1,9 +1,8 @@
 import { type CredentialStatus } from "@pagopa/io-react-native-wallet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { STORAGE_PREFIX } from "../consts";
+import { STORAGE_KEY_LAST_CHECK_TIME, STORAGE_PREFIX } from "../consts";
 import { StatusListRepository, STORAGE_ENTRY_PREFIX } from "../repository";
-import { STORAGE_KEY_LAST_CHECK_TIME } from "../storage";
 
 jest.mock("@react-native-async-storage/async-storage", () =>
   require("@react-native-async-storage/async-storage/jest/async-storage-mock")
@@ -96,6 +95,45 @@ describe("repository", () => {
     });
   });
 
+  describe("upsertMany", () => {
+    it("persists multiple entries", async () => {
+      const items: Array<[string, CredentialStatus.StatusList]> = [
+        [makeUri(1), makePayload(1)],
+        [makeUri(2), makePayload(2)]
+      ];
+
+      await StatusListRepository.upsertMany(items);
+
+      await expect(
+        AsyncStorage.getItem(makeEntryKey(makeUri(1)))
+      ).resolves.toBe(JSON.stringify(makePayload(1)));
+      await expect(
+        AsyncStorage.getItem(makeEntryKey(makeUri(2)))
+      ).resolves.toBe(JSON.stringify(makePayload(2)));
+    });
+
+    it("is a no-op for an empty array", async () => {
+      await expect(
+        StatusListRepository.upsertMany([])
+      ).resolves.toBeUndefined();
+
+      await expect(StatusListRepository.list()).resolves.toEqual([]);
+    });
+
+    it("does not write entries when payload validation fails", async () => {
+      const invalidPayload = { sub: makeUri(2) } as CredentialStatus.StatusList;
+
+      await expect(
+        StatusListRepository.upsertMany([
+          [makeUri(1), makePayload(1)],
+          [makeUri(2), invalidPayload]
+        ])
+      ).rejects.toThrow();
+
+      await expect(StatusListRepository.list()).resolves.toEqual([]);
+    });
+  });
+
   describe("list", () => {
     it("returns empty array when no entries exist", async () => {
       const entries = await StatusListRepository.list();
@@ -117,6 +155,18 @@ describe("repository", () => {
       const entries = await StatusListRepository.list();
       expect(entries).toHaveLength(1);
       expect(entries[0].sub).toBe(makeUri(1));
+    });
+
+    it("skips entries whose value is missing", async () => {
+      await AsyncStorage.setItem(
+        makeEntryKey(makeUri(1)),
+        JSON.stringify(makePayload(1))
+      );
+      jest
+        .spyOn(AsyncStorage, "multiGet")
+        .mockResolvedValueOnce([[makeEntryKey(makeUri(1)), null]]);
+
+      await expect(StatusListRepository.list()).resolves.toEqual([]);
     });
 
     it("does not mutate storage when an entry is malformed", async () => {
@@ -178,6 +228,12 @@ describe("repository", () => {
 
       const entries = await StatusListRepository.list();
       expect(entries).toEqual([]);
+    });
+
+    it("is a no-op when no entries exist", async () => {
+      await expect(StatusListRepository.clear()).resolves.toBeUndefined();
+
+      await expect(StatusListRepository.list()).resolves.toEqual([]);
     });
 
     it("keeps non-entry keys with the same feature prefix", async () => {

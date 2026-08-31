@@ -1,7 +1,12 @@
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
-import { ServicesPreferencesModeEnum } from "../../definitions/identity/ServicesPreferencesMode";
+import {
+  idpSelector,
+  spidLevelFromSessionInfoSelector
+} from "../features/authentication/common/store/selectors";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
 import { fastLoginOptInSelector } from "../features/authentication/fastLogin/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
@@ -109,4 +114,19 @@ export const welfareStatusHandler = (
 export const cdcStatusHandler = (state: GlobalState): number => {
   const cdcCards = selectWalletCardsByType(state, "cdc");
   return cdcCards.reduce((sum, card) => sum + card.number_of_cards, 0);
+};
+
+/**
+ * Returns the authentication security level of the current session,
+ * regardless of the identity provider used
+ */
+export const authSecurityLevelHandler = (state: GlobalState): string =>
+  spidLevelFromSessionInfoSelector(state) ?? "not set";
+
+/**
+ * Returns the identifier of the identity provider (IdP) used to login
+ */
+export const loginMethodHandler = (state: GlobalState): string => {
+  const idpSelected = idpSelector(state);
+  return O.isSome(idpSelected) ? idpSelected.value.id : "not set";
 };

@@ -1,8 +1,8 @@
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";

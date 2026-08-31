@@ -1,5 +1,5 @@
 import { IOColors, IOText } from "@io-app/design-system";
-import Clipboard from "@react-native-clipboard/clipboard";
+import * as Clipboard from "expo-clipboard";
 import { Alert, Platform, Share, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -20,8 +20,8 @@ export function CieResultScreen({ route }: Props) {
     title
   });
 
-  const handleCopy = async () => {
-    Clipboard.setString(JSON.stringify(data, null, 2));
+  const handleCopy = () => {
+    void Clipboard.setStringAsync(JSON.stringify(data, null, 2));
     Alert.alert("Copied", "Result copied to clipboard");
   };
 

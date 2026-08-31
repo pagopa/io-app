@@ -1,7 +1,8 @@
-import { createClient as createBizEventsClient } from "../../../../../definitions/pagopa/biz-events/client";
-import { createClient as createECommerceClient } from "../../../../../definitions/pagopa/ecommerce/client";
-import { createClient as createPagoPaPlatformClient } from "../../../../../definitions/pagopa/platform/client";
-import { createClient } from "../../../../../definitions/pagopa/walletv3/client";
+import { createClient as createBizEventsClient } from "@io-app/api-types/generated/definitions/pagopa/biz-events/client";
+import { createClient as createECommerceClient } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/client";
+import { createClient as createPagoPaPlatformClient } from "@io-app/api-types/generated/definitions/pagopa/platform/client";
+import { createClient } from "@io-app/api-types/generated/definitions/pagopa/walletv3/client";
+
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
 export const createWalletClient = (baseUrl: string) =>

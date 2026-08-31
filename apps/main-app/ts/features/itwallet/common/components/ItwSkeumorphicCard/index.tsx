@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     zIndex: 20
   },
   faded: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     borderWidth: 4,
     borderRadius: 8
   }

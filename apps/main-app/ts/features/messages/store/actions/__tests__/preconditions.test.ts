@@ -1,5 +1,6 @@
-import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
-import { ThirdPartyMessagePrecondition } from "../../../../../../definitions/communication/ThirdPartyMessagePrecondition";
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { ThirdPartyMessagePrecondition } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessagePrecondition";
+
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,

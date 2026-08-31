@@ -1,7 +1,7 @@
+import { EnvironmentEnum } from "@io-app/api-types/generated/definitions/fci/Environment";
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 
-import { EnvironmentEnum } from "../../../../../../definitions/fci/Environment";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { fciEnvironmentSet } from "../../actions";

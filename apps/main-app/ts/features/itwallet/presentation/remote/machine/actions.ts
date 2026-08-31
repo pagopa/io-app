@@ -10,7 +10,16 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList.
 import ROUTES from "../../../../../navigation/routes.ts";
 import { useIOStore } from "../../../../../store/hooks.ts";
 import { checkCurrentSession } from "../../../../authentication/common/store/actions/index.ts";
-import { itwCredentialsAllSelector } from "../../../credentials/store/selectors/index.ts";
+import { BATCH_ISSUANCE_CREDENTIALS } from "../../../common/utils/itwCredentialIssuanceUtils.ts";
+import {
+  getCredentialKeyTags,
+  isBatchCredential
+} from "../../../common/utils/itwCredentialUtils.ts";
+import { itwCredentialsConsumeInstance } from "../../../credentials/store/actions/index.ts";
+import {
+  itwAllStoredCredentialsSelector,
+  itwCredentialsAllSelector
+} from "../../../credentials/store/selectors/index.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwWalletInstanceAttestationStore } from "../../../walletInstance/store/actions/index.ts";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors/index.ts";
@@ -119,6 +128,37 @@ export const createRemoteActionsImplementation = (
         (event as DoneActorEvent<WalletInstanceAttestations>).output
       )
     );
+  },
+
+  consumePresentedBatchCredentials: ({
+    context
+  }: ActionArgs<Context, RemoteEvents, RemoteEvents>) => {
+    const credentials = itwAllStoredCredentialsSelector(store.getState());
+
+    // Restrict consumption to credential types explicitly opted in via
+    // `consumeOnPresentation` in BATCH_ISSUANCE_CREDENTIALS (currently only Proof of Age):
+    // presenting any other credential, batch or not, has no effect here.
+    const consumedInstances = context.presentedKeyTags
+      .map(keyTag => {
+        const credential = credentials.find(
+          c =>
+            BATCH_ISSUANCE_CREDENTIALS[c.credentialType]
+              ?.consumeOnPresentation === true &&
+            isBatchCredential(c) &&
+            getCredentialKeyTags(c).includes(keyTag)
+        );
+        return credential
+          ? { credentialId: credential.credentialId, keyTag }
+          : undefined;
+      })
+      .filter(
+        (instance): instance is { credentialId: string; keyTag: string } =>
+          instance !== undefined
+      );
+
+    if (consumedInstances.length > 0) {
+      store.dispatch(itwCredentialsConsumeInstance(consumedInstances));
+    }
   },
 
   handleSessionExpired: () =>

@@ -49,4 +49,10 @@ export const fciPollFilledDocumentErrorSelector = createSelector(
     pot.isError(pollFilledDocument) ? pollFilledDocument.error : undefined
 );
 
+export const fciPollFilledDocumentSettledSelector = createSelector(
+  fciPollFilledDocumentReadySelector,
+  fciPollFilledDocumentErrorSelector,
+  (isReady, error) => isReady || error !== undefined
+);
+
 export default reducer;

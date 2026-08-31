@@ -89,7 +89,6 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   const rawScrollY = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
-    // eslint-disable-next-line functional/immutable-data
     rawScrollY.value = contentOffset.y;
   });
 
@@ -131,7 +130,6 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     : IOVisualCostants.appMarginDefault + bottom;
 
   useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
     isRefreshingSharedValue.value = isRefreshing ? 1 : 0;
   }, [isRefreshing, isRefreshingSharedValue]);
 

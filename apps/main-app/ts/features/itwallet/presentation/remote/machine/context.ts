@@ -34,6 +34,12 @@ export type Context = {
    */
   presentationDetails: EnrichedPresentationDetails | undefined;
   /**
+   * The `keyTag`s of the credential copies actually included in the last successfully sent
+   * Verifiable Presentation. Used to consume the corresponding copy of any batch-issued
+   * credential (e.g. Proof of Age) once the presentation succeeds.
+   */
+  presentedKeyTags: ReadonlyArray<string>;
+  /**
    * The URI to redirect the user to access the Relying Party's service
    * It is not required in cross-device presentation
    */
@@ -71,5 +77,6 @@ export const InitialContext: Context = {
   requestObject: undefined,
   presentationDetails: undefined,
   selectedOptionalCredentials: new Set(),
-  flowType: undefined
+  flowType: undefined,
+  presentedKeyTags: []
 };

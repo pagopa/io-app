@@ -1,3 +1,4 @@
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import {
   NonNegativeInteger,
   NonNegativeNumber
@@ -5,7 +6,6 @@ import {
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga/effects";
 
-import { ServicesPreferencesModeEnum } from "../../../../definitions/identity/ServicesPreferencesMode";
 import mockedProfile from "../../../__mocks__/initializedProfile";
 import { tosAccepted } from "../../../features/onboarding/store/actions";
 import { isProfileFirstOnBoarding } from "../../../features/settings/common/store/utils/guards";

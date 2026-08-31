@@ -1,7 +1,7 @@
+import { PaginatedPublicMessagesCollection } from "@io-app/api-types/generated/definitions/communication/PaginatedPublicMessagesCollection";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
-import { PaginatedPublicMessagesCollection } from "../../../../definitions/communication/PaginatedPublicMessagesCollection";
 import { SagaCallReturnType } from "../../../types/utils";
 import { convertUnknownToError, getError } from "../../../utils/errors";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";

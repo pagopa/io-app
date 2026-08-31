@@ -1,3 +1,5 @@
+import { ProductCategoryEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
+import { ProductCategoryWithNewDiscountsCount } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { IOToast } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
@@ -6,8 +8,6 @@ import { useEffect } from "react";
 import { FlatList, View } from "react-native";
 import { createStore } from "redux";
 
-import { ProductCategoryEnum } from "../../../../../../../definitions/cgn/merchants/ProductCategory";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";

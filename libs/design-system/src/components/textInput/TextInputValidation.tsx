@@ -83,11 +83,11 @@ export const TextInputValidation = ({
   const [errMessage, setErrMessage] = useState(errorMessage);
 
   const getErrorFeedback = useCallback(
-    (isValid: boolean, message: string) => {
-      setIsValid(isValid);
+    (isValidValue: boolean, message: string) => {
+      setIsValid(isValidValue);
       setErrMessage(message);
 
-      if (!isValid) {
+      if (!isValidValue) {
         triggerHaptic("notificationError");
         AccessibilityInfo.announceForAccessibilityWithOptions(
           accessibilityErrorLabel ?? message,

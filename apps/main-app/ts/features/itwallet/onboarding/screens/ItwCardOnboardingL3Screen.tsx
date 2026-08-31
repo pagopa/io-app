@@ -25,7 +25,6 @@ import {
   useIONavigation
 } from "../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { openWebUrl } from "../../../../utils/url.ts";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation.ts";
 import {
@@ -82,8 +81,6 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelp={emptyContextualHelp}
-      faqCategories={["wallet", "wallet_methods"]}
       headerActionsProp={{ showHelp: true }}
       title={{
         label: I18n.t("features.wallet.onboarding.title")

@@ -134,14 +134,14 @@ const ColorThemeGroup = ({
             <SmallCapsTitle title="Light mode" />
             <VStack space={colorBoxMargin}>
               {Object.entries(colorObjectLightMode).map(
-                ([name, colorValue], i) => {
+                ([colorName, colorValue], i) => {
                   const [, darkModeColorValue] = colorArrayDarkMode[i];
                   const lightModeColorValue = colorValue;
                   const isSameColorValue =
                     lightModeColorValue === darkModeColorValue;
                   return (
                     <View
-                      key={`${name}-lightMode`}
+                      key={`${colorName}-lightMode`}
                       style={
                         isSameColorValue && {
                           width:
@@ -156,7 +156,7 @@ const ColorThemeGroup = ({
                         color={colorValue}
                         isThemeColor
                         mode={"light"}
-                        name={name}
+                        name={colorName}
                         themeVariable
                       />
                     </View>
@@ -169,7 +169,7 @@ const ColorThemeGroup = ({
             <SmallCapsTitle darkMode title="Dark mode" />
             <VStack space={colorBoxMargin}>
               {Object.entries(colorObjectDarkMode).map(
-                ([name, colorValue], i) => {
+                ([colorName, colorValue], i) => {
                   const [, lightModeColorValue] = colorArrayLightMode[i];
                   const darkModeColorValue = colorValue;
                   const isSameColorValue =
@@ -180,9 +180,9 @@ const ColorThemeGroup = ({
                       color={colorValue}
                       ghostMode={isSameColorValue}
                       isThemeColor
-                      key={`${name}-darkMode`}
+                      key={`${colorName}-darkMode`}
                       mode="dark"
-                      name={name}
+                      name={colorName}
                       themeVariable
                     />
                   );
@@ -209,8 +209,8 @@ const ColorGroup = ({ name, colorObject }: ColorGroupProps) => {
       {name && <H6 color={theme["textHeading-default"]}>{name}</H6>}
 
       <VStack space={colorItemMargin}>
-        {Object.entries(colorObject).map(([name, colorValue]) => (
-          <ColorBox color={colorValue} key={name} name={name} />
+        {Object.entries(colorObject).map(([colorName, colorValue]) => (
+          <ColorBox color={colorValue} key={colorName} name={colorName} />
         ))}
       </VStack>
     </VStack>
@@ -293,7 +293,7 @@ const ColorBox = ({
             : { backgroundColor: color }
         ]}
       >
-        {color && <Text style={styles.colorPill}>{color as string}</Text>}
+        <Text style={styles.colorPill}>{color as string}</Text>
       </View>
 
       {name && (

@@ -1,3 +1,4 @@
+import { NoticeListItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeListItem";
 import { Avatar, IOIcons, ListItemTransaction } from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -5,7 +6,6 @@ import I18n from "i18next";
 import { memo, RefObject, useMemo } from "react";
 import { Alert } from "react-native";
 
-import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import ListItemSwipeAction, {
   SwipeControls
 } from "../../../../components/ListItemSwipeAction";
