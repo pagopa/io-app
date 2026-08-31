@@ -129,7 +129,9 @@ describe("CieRequestAuthenticationOverlay", () => {
 
     fireEvent(webview, "onError", errorValue);
 
-    expect(await findByText(I18n.t("global.buttons.retry"))).toBeTruthy();
+    await expect(
+      findByText(I18n.t("global.buttons.retry"))
+    ).resolves.toBeTruthy();
     expect(AnalyticsUtils.trackSpidLoginError).toHaveBeenCalledWith(
       "cie",
       errorValue
