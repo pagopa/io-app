@@ -10,11 +10,11 @@
     "dev-run-android": "pnpm run-android --mode=productionDebug --active-arch-only",
     "push-hint": "echo \"To publish changes without checks run:\ngit push --no-verify --follow-tags origin $(git rev-parse --abbrev-ref HEAD)\"",
     "pre-cycle": "scripts/changelog/check_git_status.sh && node scripts/changelog/prepare_to_new_cycle.js",
-    "release-rc": "scripts/changelog/check_git_status.sh && standard-version -t \"\" --prerelease rc --no-verify && pnpm push-hint",
-    "release-canary": "scripts/changelog/check_git_status.sh && standard-version -t \"\" --prerelease canary --no-verify && pnpm push-hint",
-    "start-fix-cycle": "pnpm pre-cycle && standard-version -t \"\" --prerelease rc --release-as patch --no-verify && pnpm push-hint",
-    "start-release-cycle": "pnpm pre-cycle && standard-version -t \"\" --prerelease rc --release-as minor --no-verify && pnpm push-hint",
-    "start-breaking-cycle": "pnpm pre-cycle && standard-version -t \"\" --prerelease rc --release-as major --no-verify && pnpm push-hint",
+    "release-rc": "scripts/changelog/check_git_status.sh && commit-and-tag-version -t \"\" --prerelease rc --no-verify && pnpm push-hint",
+    "release-canary": "scripts/changelog/check_git_status.sh && commit-and-tag-version -t \"\" --prerelease canary --no-verify && pnpm push-hint",
+    "start-fix-cycle": "pnpm pre-cycle && commit-and-tag-version -t \"\" --prerelease rc --release-as patch --no-verify && pnpm push-hint",
+    "start-release-cycle": "pnpm pre-cycle && commit-and-tag-version -t \"\" --prerelease rc --release-as minor --no-verify && pnpm push-hint",
+    "start-breaking-cycle": "pnpm pre-cycle && commit-and-tag-version -t \"\" --prerelease rc --release-as major --no-verify && pnpm push-hint",
     "attach": "react-native attach",
     "postinstall": "rn-nodeify --install path,buffer && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
     "test-dev": "nx test --detectOpenHandles --coverage=false",
@@ -197,6 +197,7 @@
     "babel-jest": "^30.3.0",
     "babel-plugin-macros": "^3.1.0",
     "babel-plugin-module-resolver": "^5.0.2",
+    "commit-and-tag-version": "13.1.0",
     "eslint": "catalog:",
     "eslint-config-prettier": "catalog:",
     "eslint-plugin-ft-flow": "^3.0.11",
@@ -222,7 +223,6 @@
     "redux-mock-store": "^1.5.4",
     "redux-saga-test-plan": "4.0.3",
     "rn-nodeify": "^10.0.1",
-    "standard-version": "^8.0.2",
     "typescript": "catalog:",
     "typescript-eslint": "^8.65.0"
   },
@@ -241,7 +241,7 @@
     "type": "git",
     "url": "git+https://github.com/pagopa/io-app.git"
   },
-  "standard-version": {
+  "commit-and-tag-version": {
     "scripts": {
       "postchangelog": "node scripts/changelog/add_jira_stories.js"
     }

@@ -1,4 +1,4 @@
-import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../components/screens/LoadingScreenContent";
 
 const DSLoadingScreen = () => (
   <LoadingScreenContent
