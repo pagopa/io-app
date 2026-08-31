@@ -3,7 +3,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
 
-import { ItwAnimatedImage } from "../../../common/components/ItwAnimatedImage";
+import { GifImage } from "../../../../../components/GifImage";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { trackItwCiePinTutorialPin } from "../../analytics";
@@ -41,7 +41,7 @@ export const ItwCiePreparationPinScreen = () => {
         `features.itWallet.identification.cie.prepare.pin.description`
       )}
       imageComponent={
-        <ItwAnimatedImage
+        <GifImage
           accessibilityIgnoresInvertColors
           pauseAccessibilityLabel={I18n.t(
             "features.itWallet.identification.cie.prepare.animation.pause"
