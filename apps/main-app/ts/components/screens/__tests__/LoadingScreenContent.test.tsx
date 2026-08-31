@@ -5,7 +5,7 @@ import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import LoadingScreenContent from "../LoadingScreenContent";
+import { LoadingScreenContent } from "../LoadingScreenContent";
 
 describe("LoadingScreenContent", () => {
   it("should match the snapshot with title, no children, header hidden", () => {
