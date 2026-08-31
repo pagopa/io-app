@@ -205,6 +205,11 @@ exports[`RemoveAccountDetailsScreen should match snapshot 1`] = `
                             "closed": 0,
                           }
                         }
+                        style={
+                          {
+                            "flex": 1,
+                          }
+                        }
                       >
                         <RCTScrollView
                           collapsable={false}
