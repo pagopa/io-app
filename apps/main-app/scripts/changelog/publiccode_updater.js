@@ -1,5 +1,5 @@
 /**
- * This is an updater for the utility "standard-version" that increase the versionName value
+ * This is an updater for the utility "commit-and-tag-version" that increase the versionName value
  * for publiccode.yml file.
  * Replace the line:
  * softwareVersion: $VERSION
@@ -11,7 +11,7 @@
  *
  */
 
-const softwareVersionRegex = /(softwareVersion: )(.+)/gm;
+const softwareVersionRegex = /(softwareVersion: )(.+)/m;
 const releaseDateRegex = /(releaseDate: ')(.+)(')/gm;
 
 module.exports.readVersion = function (contents) {
