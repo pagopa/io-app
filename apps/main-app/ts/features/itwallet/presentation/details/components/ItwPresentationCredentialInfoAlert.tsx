@@ -4,7 +4,7 @@ import { memo } from "react";
 
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { itwCloseBanner } from "../../../common/store/actions/banners";
-import { itwIsMdlDetailsInfoBannerHiddenSelector } from "../../../common/store/selectors/banners";
+import { itwIsMdlDetailsInfoBannerVisibleSelector } from "../../../common/store/selectors/banners";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
   CredentialMetadata,
@@ -33,8 +33,8 @@ const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
     itwCredentialStatusSelector(state, credential.credentialType)
   );
   const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isMdlBannerHidden = useIOSelector(
-    itwIsMdlDetailsInfoBannerHiddenSelector
+  const isMdlBannerVisible = useIOSelector(
+    itwIsMdlDetailsInfoBannerVisibleSelector
   );
 
   if (!validStates.includes(status)) {
@@ -51,7 +51,7 @@ const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
         />
       );
     }
-    if (isMdlBannerHidden) {
+    if (!isMdlBannerVisible) {
       return null;
     }
     return (
