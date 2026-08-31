@@ -448,8 +448,8 @@ importers:
         specifier: ^14.0.4
         version: 14.0.4(supports-color@8.1.1)
       '@xstate/react':
-        specifier: ^4.0.1
-        version: 4.1.3(@types/react@19.2.16)(react@19.2.0)(xstate@5.17.4)
+        specifier: ^5.0.5
+        version: 5.0.5(@types/react@19.2.16)(react@19.2.0)(xstate@5.17.4)
       async-mutex:
         specifier: ^0.1.3
         version: 0.1.4
@@ -4631,11 +4631,11 @@ packages:
     engines: {node: '>=10.0.0'}
     deprecated: this version has critical issues, please update to the latest version
 
-  '@xstate/react@4.1.3':
-    resolution: {integrity: sha512-zhE+ZfrcCR87bu71Rkh5Z5ruZBivR/7uD/dkelzJqjQdI45IZc9DqTI8lL4Cg5+VN2p5k86KxDsusqW1kW11Tg==}
+  '@xstate/react@5.0.5':
+    resolution: {integrity: sha512-MfF/cPHa3lNKJmGFpUycMbNP25qBXyZXrxc8VYNroAu0Nnk0DV5WzAkTcQXma0xEC4dSwsoA+YQuKbZATtqvgg==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      xstate: ^5.18.2
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      xstate: ^5.19.4
     peerDependenciesMeta:
       xstate:
         optional: true
@@ -18167,7 +18167,7 @@ snapshots:
 
   '@xmldom/xmldom@0.8.10': {}
 
-  '@xstate/react@4.1.3(@types/react@19.2.16)(react@19.2.0)(xstate@5.17.4)':
+  '@xstate/react@5.0.5(@types/react@19.2.16)(react@19.2.0)(xstate@5.17.4)':
     dependencies:
       react: 19.2.0
       use-isomorphic-layout-effect: 1.1.2(@types/react@19.2.16)(react@19.2.0)
