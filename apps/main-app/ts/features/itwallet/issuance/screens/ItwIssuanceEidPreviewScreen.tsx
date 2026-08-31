@@ -15,7 +15,7 @@ import I18n from "i18next";
 import { useCallback } from "react";
 
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch } from "../../../../store/hooks";

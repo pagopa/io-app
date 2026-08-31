@@ -9,11 +9,14 @@ import { registerStatusListProperties } from "../../analytics";
 import { refreshStaleEntries } from "../../utils/refresh";
 import { checkStatusListCoherenceSaga } from "../checkStatusListCoherenceSaga";
 import { registerStatusListFetchTaskSaga } from "../registerStatusListFetchTaskSaga";
+import { watchItwSpecsVersionStorageSaga } from "../storeItwSpecsVersionSaga";
 import { updateCredentialsStatusSaga } from "../updateCredentialsStatusSaga";
 
 describe("watchItwStatusListAuthenticatedSaga", () => {
-  it("registers the background fetch task", () => {
+  it("synchronizes the specs version and registers the background fetch task", () => {
     testSaga(watchItwStatusListAuthenticatedSaga)
+      .next()
+      .fork(watchItwSpecsVersionStorageSaga)
       .next()
       .fork(registerStatusListFetchTaskSaga)
       .next()
