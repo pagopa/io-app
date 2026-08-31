@@ -1,5 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
+import { Text } from "react-native";
 
 import { SpidIdp } from "../../../../../../utils/idps";
 import IdpsGrid from "../../components/IdpsGrid";
@@ -73,5 +74,26 @@ describe("IdpsGrid", () => {
 
     expect(queryByTestId("idps-grid")).toBeTruthy();
     expect(queryByTestId("idp-idp1-button")).toBeNull();
+  });
+
+  it("renders the emptyComponent when the IDPs list is empty", () => {
+    const EmptyComponent = () => <Text testID="empty-state">No IDPs</Text>;
+
+    const { getByTestId } = renderComponent({
+      idps: [],
+      emptyComponent: <EmptyComponent />
+    });
+
+    expect(getByTestId("empty-state")).toBeTruthy();
+  });
+
+  it("does not render the emptyComponent when the IDPs list is not empty", () => {
+    const EmptyComponent = () => <Text testID="empty-state">No IDPs</Text>;
+
+    const { queryByTestId } = renderComponent({
+      emptyComponent: <EmptyComponent />
+    });
+
+    expect(queryByTestId("empty-state")).toBeNull();
   });
 });
