@@ -1,3 +1,8 @@
+import {
+  Consent,
+  TypeEnum
+} from "@io-app/api-types/generated/definitions/fims_sso/Consent";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
@@ -9,11 +14,6 @@ import reducer, {
   FimsSSOState,
   INITIAL_STATE
 } from "../";
-import {
-  Consent,
-  TypeEnum
-} from "../../../../../../../definitions/fims_sso/Consent";
-import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
 import {
   applicationChangeState,
   startApplicationInitialization

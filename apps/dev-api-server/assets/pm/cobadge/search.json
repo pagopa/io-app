@@ -1,0 +1,19 @@
+{
+  "errors": [
+    {
+      "code": "code",
+      "description": "description",
+      "params": "params"
+    }
+  ],
+  "payload": {
+    "paymentInstruments": [],
+    "searchRequestId": "searchRequestIdXXX",
+    "searchRequestMetadata":[{
+      "executionStatus": "OK",
+      "retrievedInstrumentsCount": 1,
+      "serviceProviderName": "serviceProviderName"
+    }]
+  },
+  "status": "OK"
+}

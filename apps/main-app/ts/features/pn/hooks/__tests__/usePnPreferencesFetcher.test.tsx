@@ -1,8 +1,8 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useState } from "react";
 import { createStore } from "redux";
 
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { useIODispatch } from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";

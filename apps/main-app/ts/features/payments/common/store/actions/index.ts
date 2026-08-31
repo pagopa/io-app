@@ -1,10 +1,10 @@
+import { SessionTokenResponse } from "@io-app/api-types/generated/definitions/pagopa/platform/SessionTokenResponse";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
-import { SessionTokenResponse } from "../../../../../../definitions/pagopa/platform/SessionTokenResponse";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { PaymentsCheckoutActions } from "../../../checkout/store/actions";

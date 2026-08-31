@@ -1,7 +1,6 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 // watch for all actions regarding Zendesk
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 
@@ -114,7 +113,7 @@ function* getZendeskTokenSaga(
         sessionInformationLoadSuccess(
           getOnlyNotAlreadyExistentValues(
             response.right.value,
-            O.isSome(currentSessionInfo) && currentSessionInfo.value
+            currentSessionInfo
           )
         )
       );

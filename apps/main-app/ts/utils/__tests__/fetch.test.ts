@@ -2,11 +2,7 @@ import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
 import { MaxRetries, RetryAborted } from "@pagopa/ts-commons/lib/tasks";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as Mockttp from "mockttp";
-import { CompletedRequest, MaybePromise } from "mockttp";
-import {
-  CallbackResponseMessageResult,
-  CallbackResponseResult
-} from "mockttp/dist/rules/requests/request-handlers";
+import { CompletedRequest } from "mockttp";
 
 import { fetchMaxRetries } from "../../config";
 import { constantPollingFetch, defaultRetryingFetch } from "../fetch";
@@ -24,7 +20,9 @@ describe("defaultRetryingFetch function", () => {
 
   describe(`when 429 code is returned`, () => {
     it(`should send exactly ${fetchMaxRetries} requests`, async () => {
-      const endpointMock = await mockServer.get(TEST_PATH).thenReply(429, "{}");
+      const endpointMock = await mockServer
+        .forGet(TEST_PATH)
+        .thenReply(429, "{}");
       const fetchApi = defaultRetryingFetch();
       await fetchApi(mockServer.urlFor(TEST_PATH)).catch(_ => void 0);
       const seenRequests = await endpointMock.getSeenRequests();
@@ -36,7 +34,9 @@ describe("defaultRetryingFetch function", () => {
     it(`should resolve with a response`, async () => {
       // Please note that I'm writing these tests following the expected behaviour.
       // Not sure as to why an error condition is returning a positive response.
-      const endpointMock = await mockServer.get(TEST_PATH).thenReply(403, "{}");
+      const endpointMock = await mockServer
+        .forGet(TEST_PATH)
+        .thenReply(403, "{}");
       const fetchApi = defaultRetryingFetch();
       await expect(
         fetchApi(mockServer.urlFor(TEST_PATH))
@@ -63,7 +63,9 @@ describe("constantPollingFetch function", () => {
     // FIXME https://pagopa.atlassian.net/browse/IAC-123
     /*
     it(`should send exactly ${MAX_POLLING_RETRIES} requests`, async () => {
-      const endpointMock = await mockServer.get(TEST_PATH).thenReply(404, "{}");
+      const endpointMock = await mockServer
+        .forGet(TEST_PATH)
+        .thenReply(404, "{}");
       const shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
       const shouldAbort = shouldAbortPaymentIdPollingRequest.e1;
       const fetchPolling = constantPollingFetch(
@@ -79,7 +81,7 @@ describe("constantPollingFetch function", () => {
      */
 
     it(`should fail with ${MaxRetries} error`, async () => {
-      await mockServer.get(TEST_PATH).thenReply(404, "{}");
+      await mockServer.forGet(TEST_PATH).thenReply(404, "{}");
       const shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
       const shouldAbort = shouldAbortPaymentIdPollingRequest.e1;
       const fetchPolling = constantPollingFetch(
@@ -95,7 +97,7 @@ describe("constantPollingFetch function", () => {
 
     describe(`and the abort signal is sent`, () => {
       it(`should abort the request with the error ${RetryAborted}`, async () => {
-        await mockServer.get(TEST_PATH).thenReply(404, "{}");
+        await mockServer.forGet(TEST_PATH).thenReply(404, "{}");
         const shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
         const shouldAbort = shouldAbortPaymentIdPollingRequest.e1;
         const fetchPolling = constantPollingFetch(
@@ -121,18 +123,15 @@ describe("constantPollingFetch function", () => {
       const DELAY = 4;
       const MAX_DURATION_NO_TIMEOUT = RETRIES * (REQUEST_TIMEOUT * 2 + DELAY);
 
-      const delayedResponse = (
-        _: CompletedRequest
-      ): MaybePromise<CallbackResponseResult> =>
-        new Promise(resolve => {
+      const delayedResponse = (_: CompletedRequest) =>
+        new Promise<{ statusCode: number }>(resolve => {
           setTimeout(() => {
-            const response: CallbackResponseMessageResult = { status: 404 };
-            resolve(response);
+            resolve({ statusCode: 404 });
           }, REQUEST_TIMEOUT * 2);
         });
 
       it(`should reject with error ${MaxRetries}`, async () => {
-        await mockServer.get(TEST_PATH).thenCallback(delayedResponse);
+        await mockServer.forGet(TEST_PATH).thenCallback(delayedResponse);
         const fetchPolling = constantPollingFetch(
           DEFAULT_SHOULD_ABORT,
           RETRIES,
@@ -147,7 +146,7 @@ describe("constantPollingFetch function", () => {
       /*
         it(`should perform exactly ${RETRIES} requests`, async () => {
           const endpointMock = await mockServer
-            .get(TEST_PATH)
+            .forGet(TEST_PATH)
             .thenCallback(delayedResponse);
           const fetchPolling = constantPollingFetch(
             DEFAULT_SHOULD_ABORT,
@@ -166,7 +165,7 @@ describe("constantPollingFetch function", () => {
        * if it takes overall less than the bare time of all the requests (including delay + timeout).
        */
       it(`should take less than ${MAX_DURATION_NO_TIMEOUT} milliseconds`, async () => {
-        await mockServer.get(TEST_PATH).thenCallback(delayedResponse);
+        await mockServer.forGet(TEST_PATH).thenCallback(delayedResponse);
         const fetchPolling = constantPollingFetch(
           DEFAULT_SHOULD_ABORT,
           RETRIES,
@@ -182,7 +181,9 @@ describe("constantPollingFetch function", () => {
 
   describe("when a different error code is returned", () => {
     it("should send exactly 1 request", async () => {
-      const endpointMock = await mockServer.get(TEST_PATH).thenReply(401, "{}");
+      const endpointMock = await mockServer
+        .forGet(TEST_PATH)
+        .thenReply(401, "{}");
       const shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
       const shouldAbort = shouldAbortPaymentIdPollingRequest.e1;
       const fetchPolling = constantPollingFetch(
@@ -199,7 +200,7 @@ describe("constantPollingFetch function", () => {
     // Please note that I'm re-writing these tests following the expected behaviour.
     // Not sure as to why an error condition is returning a positive response.
     it("should resolve with a defined response", async () => {
-      await mockServer.get(TEST_PATH).thenReply(401, "{}");
+      await mockServer.forGet(TEST_PATH).thenReply(401, "{}");
       const shouldAbortPaymentIdPollingRequest = DeferredPromise<boolean>();
       const shouldAbort = shouldAbortPaymentIdPollingRequest.e1;
       const fetchPolling = constantPollingFetch(

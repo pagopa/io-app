@@ -1,6 +1,6 @@
+import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
 import RNFS from "react-native-fs";
 
-import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
 import { apiUrlPrefix } from "../../../config";
 
 export const AttachmentsDirectoryPath =

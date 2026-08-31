@@ -1,8 +1,8 @@
+import { ServiceDetails } from "@io-app/api-types/generated/definitions/services/ServiceDetails";
 import { ListItemAction, useIOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { ComponentProps, memo } from "react";
 
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import * as analytics from "../../common/analytics";
 import { isFavouriteServicesEnabledSelector } from "../../common/store/selectors/remoteConfig";

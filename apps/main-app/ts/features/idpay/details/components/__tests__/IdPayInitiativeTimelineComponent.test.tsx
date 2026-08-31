@@ -1,8 +1,8 @@
+import { OperationListDTO } from "@io-app/api-types/generated/definitions/idpay/OperationListDTO";
+import { TimelineDTO } from "@io-app/api-types/generated/definitions/idpay/TimelineDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
 
-import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
-import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

@@ -1,12 +1,4 @@
 import {
-  ApiHeaderJson,
-  composeHeaderProducers,
-  createFetchRequestForApi,
-  RequestHeaderProducer,
-  RequestHeaders
-} from "@pagopa/ts-commons/lib/requests";
-
-import {
   generateOtpDefaultDecoder,
   GenerateOtpT,
   getCgnActivationDefaultDecoder,
@@ -23,7 +15,15 @@ import {
   StartCgnUnsubscriptionT,
   startEycaActivationDefaultDecoder,
   StartEycaActivationT
-} from "../../../../../definitions/cgn/requestTypes";
+} from "@io-app/api-types/generated/definitions/cgn/requestTypes";
+import {
+  ApiHeaderJson,
+  composeHeaderProducers,
+  createFetchRequestForApi,
+  RequestHeaderProducer,
+  RequestHeaders
+} from "@pagopa/ts-commons/lib/requests";
+
 import { withBearerToken as withToken } from "../../../../utils/api";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 

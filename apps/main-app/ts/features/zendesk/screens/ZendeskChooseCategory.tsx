@@ -1,8 +1,8 @@
+import { ZendeskCategory } from "@io-app/api-types/generated/definitions/content/ZendeskCategory";
 import { Divider, IOVisualCostants, ListItemNav } from "@io-app/design-system";
 import I18n from "i18next";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 
-import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import { isReady } from "../../../common/model/RemoteValue";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";

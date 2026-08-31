@@ -1,8 +1,8 @@
+import { DossierTitle } from "@io-app/api-types/generated/definitions/fci/DossierTitle";
+import { SignatureRequestListView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestListView";
+import { SignatureRequestStatusEnum } from "@io-app/api-types/generated/definitions/fci/SignatureRequestStatus";
 import { fireEvent, render } from "@testing-library/react-native";
 
-import { DossierTitle } from "../../../../../definitions/fci/DossierTitle";
-import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 import SignatureRequestItem from "../SignatureRequestItem";
 
 type Props = {

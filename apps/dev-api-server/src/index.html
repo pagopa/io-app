@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <script>
+      function sendSuccess() {
+        const payload = {
+          "it": "Richiesta avvenuta con successo",
+          "en": "Request successfully sent"
+        };
+        showSuccess(payload);
+      }
+
+      function sendError() {
+        const payload = {
+          "it": "È avvenuto un errore!",
+          "en": "An error occurred!"
+        };
+        showErrorMessage(payload);
+      }
+
+      function sendAlertBox() {
+        const payload = {
+          "it": {
+            "title": "Attenzione",
+            "description": "Sembra che ci sia qualcosa che non va!"
+          },
+          "en": {
+            "title": "Warning",
+            "description": "Seems there's something wrong!"
+          }
+        };
+        showAlertBox(payload);
+      }
+    </script>
+  </head>
+  <body>
+    <h1>TEST</h1>
+    <button onclick="closeModal()">CLOSE MODAL</button>
+    <button onclick="showLoader()">SHOW LOADER</button>
+    <button onclick="hideLoader()">HIDE LOADER</button>
+    <button onclick="sendSuccess()">SEND SUCCESS</button>
+    <button onclick="sendError()">SEND ERROR</button>
+    <button onclick="sendAlertBox()">SEND ALERT</button>
+  </body>
+</html>

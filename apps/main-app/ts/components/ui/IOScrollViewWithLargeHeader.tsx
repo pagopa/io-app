@@ -19,7 +19,6 @@ import {
   HeaderActionsProps,
   useHeaderProps
 } from "../../hooks/useHeaderProps";
-import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import { WithTestID } from "../../types/WithTestID";
 import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
 import { IOScrollView } from "./IOScrollView";
@@ -31,33 +30,31 @@ export type LargeHeaderTitleProps = {
   testID?: string;
 };
 
-type Props = WithTestID<
-  SupportRequestParams & {
-    actions?: ComponentProps<typeof IOScrollView>["actions"];
-    alwaysBounceVertical?: boolean;
-    animatedRef?: AnimatedRef<Animated.ScrollView>;
-    canGoback?: boolean;
-    children?: ReactNode;
-    contentContainerStyle?: ComponentProps<
-      typeof IOScrollView
-    >["contentContainerStyle"];
-    description?: string;
-    excludeEndContentMargin?: boolean;
-    goBack?: BackProps["goBack"];
-    headerActionsProp?: HeaderActionsProps;
-    ignoreAccessibilityCheck?: ComponentProps<
-      typeof HeaderSecondLevel
-    >["ignoreAccessibilityCheck"];
-    ignoreSafeAreaMargin?: ComponentProps<
-      typeof HeaderSecondLevel
-    >["ignoreSafeAreaMargin"];
-    includeContentMargins?: boolean;
-    onDescriptionLinkPress?: (url: string) => void;
-    ref?: Ref<View>;
-    title: LargeHeaderTitleProps;
-    topElement?: ReactNode;
-  }
->;
+type Props = WithTestID<{
+  actions?: ComponentProps<typeof IOScrollView>["actions"];
+  alwaysBounceVertical?: boolean;
+  animatedRef?: AnimatedRef<Animated.ScrollView>;
+  canGoback?: boolean;
+  children?: ReactNode;
+  contentContainerStyle?: ComponentProps<
+    typeof IOScrollView
+  >["contentContainerStyle"];
+  description?: string;
+  excludeEndContentMargin?: boolean;
+  goBack?: BackProps["goBack"];
+  headerActionsProp?: HeaderActionsProps;
+  ignoreAccessibilityCheck?: ComponentProps<
+    typeof HeaderSecondLevel
+  >["ignoreAccessibilityCheck"];
+  ignoreSafeAreaMargin?: ComponentProps<
+    typeof HeaderSecondLevel
+  >["ignoreSafeAreaMargin"];
+  includeContentMargins?: boolean;
+  onDescriptionLinkPress?: (url: string) => void;
+  ref?: Ref<View>;
+  title: LargeHeaderTitleProps;
+  topElement?: ReactNode;
+}>;
 
 /**
  * Special `IOScrollView` screen with a large title that is hidden by a transition when
@@ -73,9 +70,6 @@ export const IOScrollViewWithLargeHeader = ({
   actions,
   goBack,
   canGoback = true,
-  contextualHelp,
-  contextualHelpMarkdown,
-  faqCategories,
   ignoreSafeAreaMargin = false,
   includeContentMargins = false,
   headerActionsProp = {},
@@ -101,9 +95,6 @@ export const IOScrollViewWithLargeHeader = ({
 
   const headerPropsWithoutGoBack = {
     title: title.label,
-    contextualHelp,
-    contextualHelpMarkdown,
-    faqCategories,
     ...headerActionsProp
   };
 

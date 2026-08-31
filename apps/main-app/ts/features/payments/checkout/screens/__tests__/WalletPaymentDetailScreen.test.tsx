@@ -1,11 +1,11 @@
+import { FaultCodeCategoryEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
+import { PaymentRequestsGetResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
 import { act, fireEvent } from "@testing-library/react-native";
 import { View } from "react-native";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 
-import { FaultCodeCategoryEnum } from "../../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
-import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { Store } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";

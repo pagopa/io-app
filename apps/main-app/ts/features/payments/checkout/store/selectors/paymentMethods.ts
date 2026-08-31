@@ -1,3 +1,6 @@
+import { WalletApplicationNameEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletApplicationName";
+import { WalletApplicationStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletApplicationStatus";
+import { WalletLastUsageTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/WalletLastUsageType";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -5,9 +8,6 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 
 import { selectPaymentsCheckoutState } from ".";
-import { WalletApplicationNameEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationName";
-import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationStatus";
-import { WalletLastUsageTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletLastUsageType";
 import { UIWalletInfoDetails } from "../../../common/types/UIWalletInfoDetails";
 import { isPaymentMethodExpired } from "../../../common/utils";
 import { isValidPaymentMethod } from "../../utils";

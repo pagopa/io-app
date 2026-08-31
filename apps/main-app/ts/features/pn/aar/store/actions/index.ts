@@ -1,3 +1,7 @@
+import { MessageBodyMarkdown } from "@io-app/api-types/generated/definitions/communication/MessageBodyMarkdown";
+import { MessageSubject } from "@io-app/api-types/generated/definitions/communication/MessageSubject";
+import { MandateCreationResponse } from "@io-app/api-types/generated/definitions/pn/aar/MandateCreationResponse";
+import { ThirdPartyMessage } from "@io-app/api-types/generated/definitions/pn/aar/ThirdPartyMessage";
 import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import {
@@ -6,10 +10,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { MessageBodyMarkdown } from "../../../../../../definitions/communication/MessageBodyMarkdown";
-import { MessageSubject } from "../../../../../../definitions/communication/MessageSubject";
-import { MandateCreationResponse } from "../../../../../../definitions/pn/aar/MandateCreationResponse";
-import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { AarFlowState, AarFlowStateName } from "../../utils/stateUtils";
 
 export type EphemeralAarMessageDataActionPayload = {

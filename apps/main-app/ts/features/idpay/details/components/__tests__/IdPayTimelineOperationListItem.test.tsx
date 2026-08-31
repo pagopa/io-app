@@ -1,35 +1,35 @@
-import { fireEvent, render } from "@testing-library/react-native";
-import I18n from "i18next";
-
 import {
   IbanOperationDTO,
   OperationTypeEnum as IbanOperationTypeEnum
-} from "../../../../../../definitions/idpay/IbanOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/IbanOperationDTO";
 import {
   InstrumentOperationDTO,
   OperationTypeEnum as InstrumentOperationTypeEnum,
   InstrumentTypeEnum
-} from "../../../../../../definitions/idpay/InstrumentOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InstrumentOperationDTO";
 import {
   OnboardingOperationDTO,
   OperationTypeEnum as OnboardingOperationTypeEnum
-} from "../../../../../../definitions/idpay/OnboardingOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/OnboardingOperationDTO";
 import {
   RefundOperationDTO,
   OperationTypeEnum as RefundOperationTypeEnum
-} from "../../../../../../definitions/idpay/RefundOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/RefundOperationDTO";
 import {
   RejectedInstrumentOperationDTO,
   OperationTypeEnum as RejectedInstrumentOperationTypeEnum
-} from "../../../../../../definitions/idpay/RejectedInstrumentOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/RejectedInstrumentOperationDTO";
 import {
   StatusEnum,
   OperationTypeEnum as TransactionOperationTypeEnum
-} from "../../../../../../definitions/idpay/TransactionDetailDTO";
+} from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
 import {
   ChannelEnum,
   TransactionOperationDTO
-} from "../../../../../../definitions/idpay/TransactionOperationDTO";
+} from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
+import { fireEvent, render } from "@testing-library/react-native";
+import I18n from "i18next";
+
 import { setLocale } from "../../../../../i18n";
 import {
   getOperationSubtitle,

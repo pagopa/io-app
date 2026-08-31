@@ -1,6 +1,6 @@
+import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
 import { testSaga } from "redux-saga-test-plan";
 
-import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { Action } from "../../../../../store/actions/types";
 import { paymentStatisticsForMessageUncachedSelector } from "../../../../messages/store/reducers/payments";

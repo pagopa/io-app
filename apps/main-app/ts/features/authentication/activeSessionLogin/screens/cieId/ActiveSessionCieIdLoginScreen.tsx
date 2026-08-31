@@ -28,6 +28,7 @@ import {
   WHITELISTED_DOMAINS
 } from "../../../login/cie/shared/utils";
 import {
+  getCieIdEnvironment,
   getCieIDLoginUri,
   isAuthenticationUrl
 } from "../../../login/cie/utils";
@@ -197,7 +198,7 @@ const ActiveSessionCieIdLoginWebView = ({
               checkIfUrlIsWhitelisted(result.url);
             }
           },
-          isUat
+          getCieIdEnvironment(isUat)
         );
       }
     },

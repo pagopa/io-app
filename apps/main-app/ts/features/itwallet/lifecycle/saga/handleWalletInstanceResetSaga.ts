@@ -15,6 +15,7 @@ import {
 import { CredentialsVault } from "../../credentials/utils/vault";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwSetWalletInstanceRemotelyActive } from "../../walletInstance/store/actions";
+import { trackItwWalletInstanceResetFailure } from "../analytics";
 import { itwLifecycleStoresReset } from "../store/actions";
 
 const getKeyTag = (credential: O.Option<CredentialMetadata>) =>
@@ -50,7 +51,7 @@ export function* handleWalletInstanceResetSaga() {
     yield* all(itwKeyTags.map(deleteKey));
     // Update every mixpanel property related to the wallet instance and its credentials.
     void updatePropertiesWalletRevoked();
-  } catch {
-    // TODO: SIW-4618
+  } catch (error) {
+    trackItwWalletInstanceResetFailure(error);
   }
 }

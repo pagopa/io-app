@@ -1,8 +1,8 @@
+import { QtspClausesMetadataDetailView } from "@io-app/api-types/generated/definitions/fci/QtspClausesMetadataDetailView";
 import { left, right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 
-import { QtspClausesMetadataDetailView } from "../../../../../../definitions/fci/QtspClausesMetadataDetailView";
 import { getNetworkError } from "../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { fciLoadQtspClauses } from "../../../store/actions";

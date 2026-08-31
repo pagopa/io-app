@@ -1,7 +1,7 @@
+import { Institution } from "@io-app/api-types/generated/definitions/services/Institution";
 import { ListItemNav } from "@io-app/design-system";
 import { memo } from "react";
 
-import { Institution } from "../../../../../definitions/services/Institution";
 import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
 import { getLogoForInstitution } from "../../common/utils";
 

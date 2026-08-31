@@ -1,8 +1,8 @@
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
 import { Divider, ListItemHeader } from "@io-app/design-system";
 import I18n from "i18next";
 import { ReactElement } from "react";
 
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import WalletDetailsPagoPaPaymentCapability from "./WalletDetailsPagoPaPaymentCapability";
 
 type Props = { paymentMethod: WalletInfo };

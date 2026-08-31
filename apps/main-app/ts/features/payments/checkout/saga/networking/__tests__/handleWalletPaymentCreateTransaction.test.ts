@@ -1,11 +1,11 @@
+import { NewTransactionResponse } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/NewTransactionResponse";
+import { PaymentInfo } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/PaymentInfo";
+import { RptId } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/RptId";
+import { TransactionStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/ecommerce/TransactionStatus";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { NewTransactionResponse } from "../../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
-import { PaymentInfo } from "../../../../../../../definitions/pagopa/ecommerce/PaymentInfo";
-import { RptId } from "../../../../../../../definitions/pagopa/ecommerce/RptId";
-import { TransactionStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/TransactionStatus";
 import {
   paymentsCreateTransactionAction,
   WalletPaymentCreateTransactionPayload

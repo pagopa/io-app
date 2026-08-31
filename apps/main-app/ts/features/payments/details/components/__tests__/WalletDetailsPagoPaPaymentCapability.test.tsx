@@ -1,7 +1,7 @@
+import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
+import { WalletStatusEnum } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletStatus";
 import { render } from "@testing-library/react-native";
 
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
 import WalletDetailsPagoPaPaymentCapability from "../WalletDetailsPagoPaPaymentCapability";
 
 jest.mock("../../../../../store/hooks", () => ({

@@ -1,3 +1,4 @@
+import { ServicesPreferencesModeEnum } from "@io-app/api-types/generated/definitions/identity/ServicesPreferencesMode";
 import {
   Banner,
   ContentWrapper,
@@ -8,7 +9,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 
-import { ServicesPreferencesModeEnum } from "../../../../definitions/identity/ServicesPreferencesMode";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import {
@@ -18,7 +18,6 @@ import {
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { getFlowType } from "../../../utils/analytics";
-import { emptyContextualHelp } from "../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import {
@@ -185,7 +184,6 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
           }
         }}
         canGoback={false}
-        contextualHelp={emptyContextualHelp}
         description={I18n.t("services.optIn.preferences.body")}
         headerActionsProp={{ showHelp: true }}
         title={{

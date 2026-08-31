@@ -1,9 +1,9 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import { call, select } from "redux-saga/effects";
 
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { loadServicePreference } from "../../../../services/details/store/actions/preference";

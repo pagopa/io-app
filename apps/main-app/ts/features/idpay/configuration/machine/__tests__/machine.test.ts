@@ -1,22 +1,22 @@
+import {
+  CheckIbanStatusEnum,
+  IbanDTO
+} from "@io-app/api-types/generated/definitions/idpay/IbanDTO";
+import { IbanListDTO } from "@io-app/api-types/generated/definitions/idpay/IbanListDTO";
+import { IbanPutDTO } from "@io-app/api-types/generated/definitions/idpay/IbanPutDTO";
+import {
+  InitiativeDTO,
+  StatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import {
+  InstrumentDTO,
+  InstrumentTypeEnum
+} from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
+import { TypeEnum } from "@io-app/api-types/generated/definitions/pagopa/Wallet";
 import { waitFor } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { createActor, fromCallback, fromPromise } from "xstate";
 
-import {
-  CheckIbanStatusEnum,
-  IbanDTO
-} from "../../../../../../definitions/idpay/IbanDTO";
-import { IbanListDTO } from "../../../../../../definitions/idpay/IbanListDTO";
-import { IbanPutDTO } from "../../../../../../definitions/idpay/IbanPutDTO";
-import {
-  InitiativeDTO,
-  StatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
-import {
-  InstrumentDTO,
-  InstrumentTypeEnum
-} from "../../../../../../definitions/idpay/InstrumentDTO";
-import { TypeEnum } from "../../../../../../definitions/pagopa/Wallet";
 import { Wallet } from "../../../../../types/pagopa";
 import { IdPayTags } from "../../../common/machine/tags";
 import { ConfigurationMode } from "../../types";

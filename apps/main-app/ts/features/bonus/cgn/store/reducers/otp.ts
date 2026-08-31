@@ -1,6 +1,6 @@
+import { Otp } from "@io-app/api-types/generated/definitions/cgn/Otp";
 import { getType } from "typesafe-actions";
 
-import { Otp } from "../../../../../../definitions/cgn/Otp";
 import {
   remoteError,
   remoteLoading,

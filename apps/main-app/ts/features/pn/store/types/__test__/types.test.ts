@@ -1,6 +1,5 @@
+import { IOReceivedNotification } from "@io-app/api-types/generated/definitions/pn/IOReceivedNotification";
 import * as E from "fp-ts/lib/Either";
-
-import { IOReceivedNotification } from "../../../../../../definitions/pn/IOReceivedNotification";
 
 describe("FullReceivedNotification type", () => {
   it("should decode a cancelled notification with completed payments list", () => {
