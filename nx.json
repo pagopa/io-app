@@ -6,8 +6,7 @@
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
-      "!{projectRoot}/.eslintrc.json",
-      "!{projectRoot}/eslint.config.mjs",
+      "!{projectRoot}/.oxlintrc.jsonc",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.json",
       "!{projectRoot}/jest.config.[jt]s",
@@ -43,11 +42,6 @@
       "cache": true,
       "inputs": ["typecheck"],
       "outputs": []
-    },
-    "lint": {
-      "cache": true,
-      "inputs": ["default", "{workspaceRoot}/apps/main-app/.oxlintrc.jsonc"],
-      "outputs": []
     }
   },
   "plugins": [
@@ -55,6 +49,12 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
+      }
+    },
+    {
+      "plugin": "@nx/oxlint",
+      "options": {
+        "targetName": "lint"
       }
     }
   ]

@@ -41,13 +41,16 @@ allowBuilds:
 
 catalog:
   # --- Nx ---
-  nx: "23.1.1"
-  "@nx/jest": "23.1.1"
-  "@nx/js": "23.1.1"
+  nx: "23.2.0-beta.11"
+  "@nx/jest": "23.2.0-beta.11"
+  "@nx/js": "23.2.0-beta.11"
+  "@nx/oxlint": "23.2.0-beta.11"
 
   # --- TypeScript ---
   typescript: "6.0.3"
   oxfmt: "latest"
+  oxlint: "^1.58.0"
+  oxlint-tsgolint: "^0.23.0"
   eslint: "^9.39.4"
   jest: "~30.3.0"
   "@types/jest": "^30.0.0"

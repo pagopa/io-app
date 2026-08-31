@@ -20,6 +20,7 @@
     "@expo/metro-config": "55.0.23",
     "@nx/jest": "catalog:",
     "@nx/js": "catalog:",
+    "@nx/oxlint": "catalog:",
     "@react-native/babel-preset": "0.83.10",
     "@react-native/metro-config": "0.83.10",
     "@swc-node/register": "~1.11.1",
@@ -31,6 +32,7 @@
     "lefthook": "^2.1.10",
     "nx": "catalog:",
     "oxfmt": "catalog:",
+    "oxlint": "catalog:",
     "tslib": "^2.3.0",
     "typescript": "catalog:"
   },
