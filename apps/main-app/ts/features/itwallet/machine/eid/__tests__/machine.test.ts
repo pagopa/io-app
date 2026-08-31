@@ -733,6 +733,7 @@ describe("itwEidIssuanceMachine", () => {
         mode: "cieId",
         level: "L3"
       });
+      expect(trackItwIdAuthenticationCompleted).toHaveBeenCalledTimes(1);
     });
 
     it("Should keep identification level at L2 when challenge_info is present in L3 flow", () => {
@@ -751,6 +752,7 @@ describe("itwEidIssuanceMachine", () => {
         mode: "cieId",
         level: "L2"
       });
+      expect(trackItwIdAuthenticationCompleted).toHaveBeenCalledTimes(1);
     });
 
     it("Should keep identification level at L2 in L2 flow regardless of challenge_info", () => {
@@ -909,6 +911,7 @@ describe("itwEidIssuanceMachine", () => {
       })
     );
     expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
+    expect(trackItwIdAuthenticationCompleted).not.toHaveBeenCalled();
   });
 
   it("Should display NFC instructions (Cie+PIN)", async () => {
@@ -2613,6 +2616,7 @@ describe("itwEidIssuanceMachine", () => {
         MrtdPoP: "InitializingChallenge"
       })
     );
+    expect(trackItwIdAuthenticationCompleted).toHaveBeenCalledTimes(1);
 
     await waitFor(() => expect(initMrtdPoPChallenge).toHaveBeenCalledTimes(1));
 
@@ -2812,6 +2816,7 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(initMrtdPoPChallenge).not.toHaveBeenCalled();
     expect(validateMrtdPoPChallenge).not.toHaveBeenCalled();
+    expect(trackItwIdAuthenticationCompleted).toHaveBeenCalledTimes(1);
   });
 
   it("Should wait for session refresh then retry the eID request", async () => {
