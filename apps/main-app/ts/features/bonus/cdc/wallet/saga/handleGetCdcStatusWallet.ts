@@ -1,5 +1,4 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -22,17 +21,14 @@ export function* handleGetCdcStatusWallet(
       cdcStatusRequest,
       action
     )) as unknown as SagaCallReturnType<typeof getCdcStatus>;
-    if (E.isLeft(cdcStatusResponse)) {
+    if ("left" in cdcStatusResponse) {
       yield* put(
         getCdcStatusWallet.failure({
           kind: "generic",
           value: new Error(readableReport(cdcStatusResponse.left))
         })
       );
-    } else if (
-      E.isRight(cdcStatusResponse) &&
-      cdcStatusResponse.right.status === 200
-    ) {
+    } else if (cdcStatusResponse.right.status === 200) {
       const cdcInfo = cdcStatusResponse.right.value;
       yield* put(
         walletAddCards([

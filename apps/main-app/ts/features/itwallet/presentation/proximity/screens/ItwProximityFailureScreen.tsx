@@ -17,7 +17,7 @@ import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisa
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils.ts";
 import { itwCredentialTypeFromDocTypeSelector } from "../../../credentialsCatalogue/store/selectors/index.ts";
 import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent.tsx";
-import { trackItwProximityUnofficialVerifierBottomSheet } from "../analytics/index.ts";
+import { trackItwProximityRpNotTrustedBottomSheet } from "../analytics/index.ts";
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
@@ -51,7 +51,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
     failure: serializeFailureReason(failure)
   });
 
-  useItwProximityEventsTracking({ failure });
+  useItwProximityEventsTracking({
+    failure,
+    getCredentialTypeFromDocType
+  });
 
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: (
@@ -83,6 +86,20 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
+        case ProximityFailureType.CONSENT_DENIED:
+          return {
+            title: I18n.t(
+              "features.itWallet.presentation.proximity.consentDenied.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.presentation.proximity.consentDenied.subtitle"
+            ),
+            pictogram: "accessDenied",
+            action: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
         case ProximityFailureType.RELYING_PARTY_GENERIC:
           return {
             title: I18n.t(
@@ -135,7 +152,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
                 "features.itWallet.presentation.proximity.relyingParty.untrustedRp.secondaryAction"
               ),
               onPress: () => {
-                trackItwProximityUnofficialVerifierBottomSheet();
+                trackItwProximityRpNotTrustedBottomSheet();
                 present();
               }
             }

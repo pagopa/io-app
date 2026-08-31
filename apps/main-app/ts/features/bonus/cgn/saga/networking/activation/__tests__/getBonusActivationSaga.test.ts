@@ -6,10 +6,8 @@ import { testSaga } from "redux-saga-test-plan";
 import { startTimer } from "../../../../../../../utils/timer";
 import { cgnActivationStatus } from "../../../../store/actions/activation";
 import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";
-import {
-  cgnActivationSaga,
-  handleCgnStatusPolling
-} from "../getBonusActivationSaga";
+import { cgnActivationSaga } from "../getBonusActivationSaga";
+import { handleCgnStatusPolling } from "../handleCgnStatusPolling";
 
 describe("cgnActivationSaga", () => {
   const startCgnActivation = jest.fn();

@@ -1,7 +1,6 @@
 import { AssertionRef } from "@io-app/api-types/generated/definitions/session_manager/AssertionRef";
 import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import * as O from "fp-ts/lib/Option";
 import { expectSaga } from "redux-saga-test-plan";
 import {
   EffectProviders,
@@ -59,7 +58,7 @@ describe(`Test login with lollipop check and store aligned with server`, () => {
     expectSaga(
       checkLollipopSessionAssertionAndInvalidateIfNeeded,
       DATA_FROM_SERVER.publicKeyForAssertionRef,
-      O.some(DATA_FROM_SERVER.publicSession)
+      DATA_FROM_SERVER.publicSession
     )
       .provide(mockedFunctions)
       .not.put(sessionInvalid())
@@ -72,7 +71,7 @@ describe(`Test login with both store key and server key undefined`, () => {
     expectSaga(
       checkLollipopSessionAssertionAndInvalidateIfNeeded,
       undefined,
-      O.none
+      undefined
     )
       .provide(mockedFunctions)
       .put(sessionInvalid())
@@ -85,7 +84,7 @@ describe(`Test login with store key and session undefined`, () => {
     expectSaga(
       checkLollipopSessionAssertionAndInvalidateIfNeeded,
       DATA_FROM_SERVER.publicKeyForAssertionRef,
-      O.none
+      undefined
     )
       .provide(mockedFunctions)
       .put(sessionInvalid())
@@ -98,7 +97,7 @@ describe(`Test login with store key undefined and session LollipopAssertion unde
     expectSaga(
       checkLollipopSessionAssertionAndInvalidateIfNeeded,
       undefined,
-      O.some(DATA_FROM_SERVER.publicSessionWithUndefinedKey)
+      DATA_FROM_SERVER.publicSessionWithUndefinedKey
     )
       .provide(mockedFunctions)
       .put(sessionInvalid())
@@ -111,7 +110,7 @@ describe(`Test login with lollipop check and store out of alignment with server`
     expectSaga(
       checkLollipopSessionAssertionAndInvalidateIfNeeded,
       DATA_FROM_SERVER.publicKeyForAssertionRef,
-      O.some(DATA_FROM_SERVER.publicSessionWithFakeKey)
+      DATA_FROM_SERVER.publicSessionWithFakeKey
     )
       .provide(mockedFunctions)
       .put(sessionInvalid())
@@ -122,7 +121,7 @@ describe(`Test login with lollipop check and store out of alignment with server`
     expectSaga(
       checkLollipopSessionAssertionAndInvalidateIfNeeded,
       DATA_FROM_SERVER.publicKeyForAssertionRef,
-      O.some(DATA_FROM_SERVER.publicSessionWithUndefinedKey)
+      DATA_FROM_SERVER.publicSessionWithUndefinedKey
     )
       .provide(mockedFunctions)
       .put(sessionInvalid())
@@ -133,7 +132,7 @@ describe(`Test login with lollipop check and store out of alignment with server`
     expectSaga(
       checkLollipopSessionAssertionAndInvalidateIfNeeded,
       undefined,
-      O.some(DATA_FROM_SERVER.publicSession)
+      DATA_FROM_SERVER.publicSession
     )
       .provide(mockedFunctions)
       .put(sessionInvalid())

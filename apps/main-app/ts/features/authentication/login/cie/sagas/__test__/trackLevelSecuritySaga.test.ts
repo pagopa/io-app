@@ -40,7 +40,7 @@ describe("shouldTrackLevelSecurityMismatchSaga", () => {
   });
 
   it("should track mismatch if spidLevel does not include selectedSecurityLevel and idp is cieid", () =>
-    expectSaga(shouldTrackLevelSecurityMismatchSaga, O.some(mockSession))
+    expectSaga(shouldTrackLevelSecurityMismatchSaga, mockSession)
       .provide([
         [select(cieIDSelectedSecurityLevelSelector), "SpidL3"],
         [select(idpSelector), O.some(cieid)]
@@ -51,7 +51,7 @@ describe("shouldTrackLevelSecurityMismatchSaga", () => {
       }));
 
   it("should NOT track if spidLevel includes selectedSecurityLevel", () =>
-    expectSaga(shouldTrackLevelSecurityMismatchSaga, O.some(mockSession))
+    expectSaga(shouldTrackLevelSecurityMismatchSaga, mockSession)
       .provide([
         [select(cieIDSelectedSecurityLevelSelector), "SpidL2"],
         [select(idpSelector), O.some(cieid)]
@@ -62,7 +62,7 @@ describe("shouldTrackLevelSecurityMismatchSaga", () => {
       }));
 
   it("should NOT track if idp is not cieid", () =>
-    expectSaga(shouldTrackLevelSecurityMismatchSaga, O.some(mockSession))
+    expectSaga(shouldTrackLevelSecurityMismatchSaga, mockSession)
       .provide([
         [select(cieIDSelectedSecurityLevelSelector), "SpidL3"],
         [select(idpSelector), O.some(nonCieIdp)]
@@ -73,7 +73,7 @@ describe("shouldTrackLevelSecurityMismatchSaga", () => {
       }));
 
   it("should NOT track if selectedSecurityLevel is undefined", () =>
-    expectSaga(shouldTrackLevelSecurityMismatchSaga, O.some(mockSession))
+    expectSaga(shouldTrackLevelSecurityMismatchSaga, mockSession)
       .provide([
         [select(cieIDSelectedSecurityLevelSelector), undefined],
         [select(idpSelector), O.some(cieid)]
@@ -84,7 +84,7 @@ describe("shouldTrackLevelSecurityMismatchSaga", () => {
       }));
 
   it("should NOT track if session is none", () =>
-    expectSaga(shouldTrackLevelSecurityMismatchSaga, O.none)
+    expectSaga(shouldTrackLevelSecurityMismatchSaga, undefined)
       .provide([
         [select(cieIDSelectedSecurityLevelSelector), "SpidL3"],
         [select(idpSelector), O.some(cieid)]
@@ -95,7 +95,7 @@ describe("shouldTrackLevelSecurityMismatchSaga", () => {
       }));
 
   it("should NOT track if idp is none", () =>
-    expectSaga(shouldTrackLevelSecurityMismatchSaga, O.some(mockSession))
+    expectSaga(shouldTrackLevelSecurityMismatchSaga, mockSession)
       .provide([
         [select(cieIDSelectedSecurityLevelSelector), "SpidL3"],
         [select(idpSelector), O.none]
