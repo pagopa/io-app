@@ -32,23 +32,21 @@ import {
 
 const fetch = createRetriableFetch();
 
-/**
- * Path of the Session Manager endpoint that reserves the LolliPOP-bound
- * OneIdentity OIDC session and returns the `/authorize` parameters.
- */
 const reserveEndpointPath = "/api/auth/v2/reserve";
 
 /**
- * State of the OneIdentity login source flow. At any given moment the flow
- * is in exactly one of the following statuses:
- * - `reserving`: `/reserve` (and ephemeral key generation) is in progress.
- * - `ready`: the initial `/authorize` WebView source is available to load,
- *   but has not gone through the LolliPOP SAMLRequest check yet.
- * - `checking-lollipop`: the WebView navigated to the IDP SSO URL and its
- *   LolliPOP signature is being verified; the WebView is hidden meanwhile.
- * - `verified`: the LolliPOP check succeeded; `webviewSource` is the IDP
- *   SSO URL, safe to (re)load without triggering another check.
- * - `failure`: `/reserve` (or ephemeral key generation) failed.
+ * State of the OneIdentity login source flow::
+ *
+ * - `reserving`: The initial state. A new ephemeral key is being generated
+ *   and the `/reserve` endpoint is being called to initialize the session.
+ * - `ready`: The `/reserve` call succeeded. The WebView is ready to load
+ *   the OneIdentity `/authorize` URL (available in `webviewSource`).
+ * - `checking-lollipop`: Navigation is temporarily blocked while
+ *   the LolliPOP signature of the SAMLRequest is being locally verified.
+ * - `trusted-lollipop`: The LolliPOP signature check succeeded. The WebView
+ *   can now safely proceed to load the URL.
+ * - `failure`: An error occurred during ephemeral key generation, the `/reserve`
+ *   API call or the LolliPOP signature verification.
  */
 type LoginSourceState =
   | { error: string; status: "failure" }
@@ -208,9 +206,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       }
 
       if (loginSourceState.status === "ready" && maybeEphemeralPublicKey) {
-        // The initial /authorize WebView source hasn't gone through the
-        // LolliPOP check yet: start the verification process and block
-        // navigation until it completes.
+        // Start the verification process and block navigation until it completes.
         verifyLollipop(url, urlEncodedSamlRequest, maybeEphemeralPublicKey);
         return true;
       }
