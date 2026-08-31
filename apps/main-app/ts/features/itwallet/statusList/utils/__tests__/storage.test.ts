@@ -19,12 +19,12 @@ beforeEach(() => AsyncStorage.clear());
 
 describe("IT-Wallet specs version storage", () => {
   it("stores and retrieves the specs version", async () => {
-    await storeItwSpecsVersion("1.3.3");
+    await storeItwSpecsVersion("1.4.6");
 
     await expect(
       AsyncStorage.getItem(STORAGE_KEY_ITW_SPECS_VERSION)
-    ).resolves.toBe("1.3.3");
-    await expect(getItwSpecsVersion()).resolves.toBe("1.3.3");
+    ).resolves.toBe("1.4.6");
+    await expect(getItwSpecsVersion()).resolves.toBe("1.4.6");
   });
 
   it("throws when no specs version is stored", async () => {
