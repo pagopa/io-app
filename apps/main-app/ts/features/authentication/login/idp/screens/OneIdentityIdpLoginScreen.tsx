@@ -121,7 +121,7 @@ const OneIdentityIdpLoginScreenContent = ({
         case "WEBVIEW_HTTP_ERROR": {
           const { statusCode, url } = event.payload;
 
-          if (url.includes(apiUrlPrefix) && statusCode === 403) {
+          if (!url.includes(apiUrlPrefix) && statusCode === 403) {
             break;
           }
           navigateToAuthErrorScreen();

@@ -152,13 +152,34 @@ describe("OneIdentityIdpLoginScreen", () => {
     );
   });
 
-  it("should not navigate to AuthErrorScreen on a HTTP 403 error on the api URL prefix", () => {
+  it("should navigate to AuthErrorScreen on a HTTP 403 error on the api URL prefix", () => {
     const { getByTestId } = renderComponent();
     const webview = getByTestId("webview-idp-login-screen");
 
     fireEvent(webview, "onHttpError", {
       nativeEvent: {
         url: `${apiUrlPrefix}/some-path`,
+        statusCode: 403
+      }
+    });
+
+    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      params: {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: "L2"
+      }
+    });
+  });
+
+  it("should not navigate to AuthErrorScreen on a HTTP 403 error outside the api URL prefix", () => {
+    const { getByTestId } = renderComponent();
+    const webview = getByTestId("webview-idp-login-screen");
+
+    fireEvent(webview, "onHttpError", {
+      nativeEvent: {
+        url: "https://example.com/some-path",
         statusCode: 403
       }
     });
