@@ -34,7 +34,7 @@ const extractNonceFromRequest = (request: Request): string | undefined => {
     return undefined;
   }
   const matchingNonceMaybe = signatureInput.match(/nonce="([^"]+)";/);
-  if (!matchingNonceMaybe || matchingNonceMaybe.length < 2) {
+  if (!matchingNonceMaybe) {
     return undefined;
   }
   return matchingNonceMaybe[1];
