@@ -112,7 +112,9 @@ describe("useOneIdentityLoginSource", () => {
     const { result } = setupTest();
 
     await waitFor(() => {
-      expect(result.current.loginSourceState.status).toBe("ready");
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
     });
 
     expect(mockFetchReserve).toHaveBeenCalledWith(
@@ -129,7 +131,7 @@ describe("useOneIdentityLoginSource", () => {
     );
 
     const { webviewSource } = result.current.loginSourceState as {
-      status: "ready";
+      status: "one-identity-authorize";
       webviewSource: { headers?: Record<string, string>; uri: string };
     };
     const authorizeUrl = new URLParse(webviewSource.uri, true);
@@ -212,7 +214,9 @@ describe("useOneIdentityLoginSource", () => {
       );
 
       await waitFor(() => {
-        expect(result.current.loginSourceState.status).toBe("ready");
+        expect(result.current.loginSourceState.status).toBe(
+          "one-identity-authorize"
+        );
       });
 
       return { result, store, onFailure };
@@ -250,7 +254,7 @@ describe("useOneIdentityLoginSource", () => {
       expect(blocked).toBe(true);
       await waitFor(() => {
         expect(result.current.loginSourceState).toEqual({
-          status: "trusted-lollipop",
+          status: "assertion-ref-verified",
           webviewSource: { uri: url }
         });
       });

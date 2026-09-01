@@ -41,20 +41,23 @@ const reserveEndpointPath = "/api/auth/v2/reserve";
 /**
  * State of the OneIdentity login source flow. At any given moment the flow
  * is in exactly one of the following statuses:
- * - `reserving`: `/reserve` (and ephemeral key generation) is in progress.
- * - `ready`: the initial `/authorize` WebView source is available to load,
- *   but has not gone through the LolliPOP SAMLRequest check yet.
- * - `checking-lollipop`: the WebView navigated to the IDP SSO URL and its
- *   LolliPOP signature is being verified; the WebView is hidden meanwhile.
- * - `verified`: the LolliPOP check succeeded; `webviewSource` is the IDP
+ * - `assertion-ref-verified`: the LolliPOP check succeeded; `webviewSource` is the IDP
  *   SSO URL, safe to (re)load without triggering another check.
+ * - `one-identity-authorize`: the initial `/authorize` WebView source is available to load,
+ *   but has not gone through the LolliPOP SAMLRequest check yet.
+ * - `reserving-public-key`: `/reserve` (and ephemeral key generation) is in progress.
+ * - `verifying-assertion-ref`: the WebView navigated to the IDP SSO URL and its
+ *   LolliPOP signature is being verified; the WebView is hidden meanwhile.
  * - `failure`: `/reserve` (or ephemeral key generation) failed.
  */
 type LoginSourceState =
   | { error: string; status: "failure" }
-  | { status: "checking-lollipop"; url: string }
-  | { status: "ready" | "trusted-lollipop"; webviewSource: WebViewSourceUri }
-  | { status: "reserving" };
+  | {
+      status: "assertion-ref-verified" | "one-identity-authorize";
+      webviewSource: WebViewSourceUri;
+    }
+  | { status: "reserving-public-key" }
+  | { status: "verifying-assertion-ref"; url: string };
 
 /**
  * Builds the headers required by the Session Manager `/reserve` endpoint.
@@ -153,7 +156,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const [loginSourceState, setLoginSourceState] = useState<LoginSourceState>({
-    status: "reserving"
+    status: "reserving-public-key"
   });
 
   const dispatch = useIODispatch();
@@ -170,13 +173,13 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
   const verifyLollipop = useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
-      setLoginSourceState({ status: "checking-lollipop", url: eventUrl });
+      setLoginSourceState({ status: "verifying-assertion-ref", url: eventUrl });
       lollipopSamlVerify(
         urlEncodedSamlRequest,
         publicKey,
         () => {
           setLoginSourceState({
-            status: "trusted-lollipop",
+            status: "assertion-ref-verified",
             webviewSource: { uri: eventUrl }
           });
         },
@@ -201,13 +204,16 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
         return false;
       }
 
-      if (loginSourceState.status === "checking-lollipop") {
+      if (loginSourceState.status === "verifying-assertion-ref") {
         // LolliPOP signature is being verified, prevent the WebView from
         // loading the current URL.
         return true;
       }
 
-      if (loginSourceState.status === "ready" && maybeEphemeralPublicKey) {
+      if (
+        loginSourceState.status === "one-identity-authorize" &&
+        maybeEphemeralPublicKey
+      ) {
         // The initial /authorize WebView source hasn't gone through the
         // LolliPOP check yet: start the verification process and block
         // navigation until it completes.
@@ -224,7 +230,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
-    setLoginSourceState({ status: "reserving" });
+    setLoginSourceState({ status: "reserving-public-key" });
 
     /**
      * A new ephemeral key pair is generated to guarantee
@@ -279,7 +285,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     );
 
     setLoginSourceState({
-      status: "ready",
+      status: "one-identity-authorize",
       webviewSource: buildWebviewSource(authorizationUrl, publicKey)
     });
   }, [
