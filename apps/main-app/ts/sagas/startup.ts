@@ -534,7 +534,7 @@ export function* initializeApplicationSaga(
 
   // yield* delay(0 as Millisecond);
   const hasPreviousSessionAndPin =
-    previousSessionToken && O.isSome(maybeStoredPin);
+    previousSessionToken && maybeStoredPin != null;
   if (hasPreviousSessionAndPin && showIdentificationModal) {
     // we ask the user to identify using the unlock code.
     // FIXME: This is an unsafe cast caused by a wrongly described type.
@@ -542,7 +542,7 @@ export function* initializeApplicationSaga(
       typeof startAndReturnIdentificationResult
     > = yield* call(
       startAndReturnIdentificationResult,
-      maybeStoredPin.value,
+      maybeStoredPin,
       undefined,
       undefined,
       undefined,
