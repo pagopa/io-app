@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.38.0-rc.25",
+  "version": "3.38.0-rc.26",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -32,6 +32,12 @@
     "lollipop_checks-uncomment": "./scripts/toggle-comments-on-lollipop-checks.sh uncomment ./ts/sagas/startup.ts",
     "dev-pod-install": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod install && cd ..",
     "dev-pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.9",
@@ -165,7 +171,7 @@
     "@eslint/compat": "^2.0.3",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.4",
-    "@pagopa/eslint-config": "6.2.0",
+    "@pagopa/eslint-config": "6.2.2",
     "@pagopa/openapi-codegen-ts": "^14.2.0",
     "@react-native-community/cli": "20.0.0",
     "@react-native-community/cli-platform-android": "20.0.0",
