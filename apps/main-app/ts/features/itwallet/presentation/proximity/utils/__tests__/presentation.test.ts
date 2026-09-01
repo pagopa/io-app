@@ -4,6 +4,7 @@ import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import { MissingCredentialError, UntrustedRpError } from "../errors";
 import {
   generateAcceptedFields,
+  getDocuments,
   getProximityDetails,
   getVerifierDisplayName,
   getVerifierIdentity
@@ -300,7 +301,7 @@ describe("getProximityDetails", () => {
     });
   });
 
-  it("throws with every missing credential docType", () => {
+  it("returns available credentials when only some requested documents are missing", () => {
     const parsedRequest = {
       request: {
         unknown_credential_a: {
@@ -321,11 +322,36 @@ describe("getProximityDetails", () => {
       }
     } as unknown as VerifierRequest;
 
+    const result = getProximityDetails({
+      request: parsedRequest.request,
+      credentials: mockCredentials
+    });
+
+    expect(result).toHaveLength(1);
+    expect(result[0].credentialType).toBe(mockCredential.credentialType);
+  });
+
+  it("throws with every requested docType when all credentials are missing", () => {
+    const parsedRequest = {
+      request: {
+        unknown_credential_a: {
+          "org.iso.18013.5.1": { unknown_field: true },
+          isAuthenticated: true,
+          certificateData: mockCertificateData
+        },
+        unknown_credential_b: {
+          "org.iso.18013.5.1": { unknown_field: true },
+          isAuthenticated: true,
+          certificateData: mockCertificateData
+        }
+      }
+    } as unknown as VerifierRequest;
+
     expect.assertions(1);
     try {
       getProximityDetails({
         request: parsedRequest.request,
-        credentials: mockCredentials
+        credentials: {}
       });
     } catch (error) {
       if (!(error instanceof MissingCredentialError)) {
@@ -425,23 +451,52 @@ describe("getProximityDetails", () => {
   });
 });
 
-describe("generateAcceptedFields", () => {
-  it("should return an object with all fields set to true", () => {
-    const parsedRequest: VerifierRequest = {
-      request: {
-        credential_A: {
-          "org.iso.18013.5.1.aamva": { family_name: false },
-          "org.iso.18013.5.1": { unknown_field: false, tax_id_code: false },
-          isAuthenticated: true
-        },
-        credential_B: {
-          "org.iso.18013.5.1.aamva": { family_name: true },
-          "org.iso.18013.5.1": { unknown_field: false, tax_id_code: false },
-          isAuthenticated: true
-        }
+describe("getDocuments", () => {
+  it("returns only documents available in the wallet", async () => {
+    const request = {
+      [mockDocType]: {
+        "org.iso.18013.5.1.aamva": { family_name: false },
+        isAuthenticated: true,
+        certificateData: mockCertificateData
+      },
+      unknown_credential: {
+        "org.iso.18013.5.1": { unknown_field: true },
+        isAuthenticated: true,
+        certificateData: mockCertificateData
       }
-    } as unknown as VerifierRequest;
+    } as unknown as VerifierRequest["request"];
+    const getCredential = jest.fn().mockResolvedValue("signed-content");
 
+    const result = await getDocuments(request, mockCredentials, getCredential);
+
+    expect(result).toEqual([
+      {
+        alias: mockCredential.keyTag,
+        docType: mockDocType,
+        issuerSignedContent: "signed-content"
+      }
+    ]);
+    expect(getCredential).toHaveBeenCalledWith(mockCredential.credentialId);
+  });
+});
+
+describe("generateAcceptedFields", () => {
+  const parsedRequest: VerifierRequest = {
+    request: {
+      credential_A: {
+        "org.iso.18013.5.1.aamva": { family_name: false },
+        "org.iso.18013.5.1": { unknown_field: false, tax_id_code: false },
+        isAuthenticated: true
+      },
+      credential_B: {
+        "org.iso.18013.5.1.aamva": { family_name: true },
+        "org.iso.18013.5.1": { unknown_field: false, tax_id_code: false },
+        isAuthenticated: true
+      }
+    }
+  } as unknown as VerifierRequest;
+
+  it("returns all requested fields set to true by default", () => {
     const acceptedFields = generateAcceptedFields(parsedRequest.request);
 
     expect(acceptedFields).toEqual({
@@ -450,6 +505,20 @@ describe("generateAcceptedFields", () => {
         "org.iso.18013.5.1": { unknown_field: true, tax_id_code: true }
       },
       credential_B: {
+        "org.iso.18013.5.1.aamva": { family_name: true },
+        "org.iso.18013.5.1": { unknown_field: true, tax_id_code: true }
+      }
+    });
+  });
+
+  it("returns fields only for included document types", () => {
+    const acceptedFields = generateAcceptedFields(
+      parsedRequest.request,
+      new Set(["credential_A"])
+    );
+
+    expect(acceptedFields).toEqual({
+      credential_A: {
         "org.iso.18013.5.1.aamva": { family_name: true },
         "org.iso.18013.5.1": { unknown_field: true, tax_id_code: true }
       }
