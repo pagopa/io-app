@@ -1,3 +1,4 @@
+import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useRef } from "react";
@@ -9,7 +10,6 @@ import {
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 
-import { IdpData } from "../../../../../definitions/content/IdpData";
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";

@@ -1,7 +1,7 @@
+import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
-import { IdpData } from "../../../../../../../definitions/content/IdpData";
 import { apiUrlPrefix } from "../../../../../../config";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import * as IOHooks from "../../../../../../store/hooks";
