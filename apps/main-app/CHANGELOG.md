@@ -1,7 +1,21 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.38.0-rc.26](https://github.com/pagopa/io-app/compare/3.38.0-rc.25...3.38.0-rc.26) (2026-08-31)
+
+### Bug Fixes
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Missing lefthook `eslint` update ([#8517](https://github.com/pagopa/io-app/issues/8517)) ([456515c](https://github.com/pagopa/io-app/commit/456515ce41519ea9a46497543ee4e3a8943c62ad))
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] restore identity confirmation CTA in remote presentation ([#8516](https://github.com/pagopa/io-app/issues/8516)) ([20b469b](https://github.com/pagopa/io-app/commit/20b469bdd17096e9ade30e3a7c7c7e22dec64722))
+
+### Chores
+
+* [[IOPLT-1980](https://pagopa.atlassian.net/browse/IOPLT-1980)] Extend `jest` lint rules to `tsx` test files ([#8364](https://github.com/pagopa/io-app/issues/8364)) ([4f0651f](https://github.com/pagopa/io-app/commit/4f0651f122d8c0049e1ebf5f6e6a35324fa42685))
+* [[IOPLT-1983](https://pagopa.atlassian.net/browse/IOPLT-1983)] Replace deprecated `standard-version` with `commit-and-tag-version` ([#8371](https://github.com/pagopa/io-app/issues/8371)) ([e82dbd4](https://github.com/pagopa/io-app/commit/e82dbd4dc295bbd8c3c3e98f1d0d6773fbcd1457))
+* [[IOPLT-1991](https://pagopa.atlassian.net/browse/IOPLT-1991)] Remove duplicated exports ([#8387](https://github.com/pagopa/io-app/issues/8387)) ([e0aa66c](https://github.com/pagopa/io-app/commit/e0aa66c6950bfa768e18c2c7549f071dc28f058d))
+* [[IOPLT-2017](https://pagopa.atlassian.net/browse/IOPLT-2017)] Updating the lint configuration for compatibility with ESLint 10 ([#8473](https://github.com/pagopa/io-app/issues/8473)) ([9d85cbc](https://github.com/pagopa/io-app/commit/9d85cbc8ef14f785b1d2078378757e8066827c61))
+* [[IOPLT-2038](https://pagopa.atlassian.net/browse/IOPLT-2038)] Remove haptic feedback from snap scroll in `ServicesCarousel` ([#8518](https://github.com/pagopa/io-app/issues/8518)) ([c5a4025](https://github.com/pagopa/io-app/commit/c5a4025d25e434787ece1cf64cefb3abed2cecb7))
 ## [3.38.0-rc.25](https://github.com/pagopa/io-app/compare/3.38.0-rc.24...3.38.0-rc.25) (2026-08-29)
 
 
