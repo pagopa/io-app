@@ -76,7 +76,7 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       .spyOn(useOneIdentityLoginSourceModule, "useOneIdentityLoginSource")
       .mockReturnValue({
         loginSourceState: {
-          status: "ready",
+          status: "one-identity-authorize",
           webviewSource: { uri: "https://example.com/authorize" }
         },
         shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(() => false)

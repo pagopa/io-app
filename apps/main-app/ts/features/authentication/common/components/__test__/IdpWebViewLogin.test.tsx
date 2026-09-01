@@ -33,7 +33,7 @@ const mockUseOneIdentityLoginSource = (
     .spyOn(useOneIdentityLoginSourceModule, "useOneIdentityLoginSource")
     .mockReturnValue({
       loginSourceState: {
-        status: "ready",
+        status: "one-identity-authorize",
         webviewSource: { uri: "https://example.com/authorize" }
       },
       shouldBlockUrlNavigationWhileCheckingLollipop:
@@ -58,14 +58,17 @@ describe("IdpWebViewLogin", () => {
   });
 
   describe("conditional rendering", () => {
-    it.each(["reserving", "checking-lollipop"] as const)(
+    it.each(["reserving-public-key", "verifying-assertion-ref"] as const)(
       "should render the loading state and no WebView when status is %s",
       status => {
         mockUseOneIdentityLoginSource({
           loginSourceState:
-            status === "reserving"
-              ? { status: "reserving" }
-              : { status: "checking-lollipop", url: "https://example.com" }
+            status === "reserving-public-key"
+              ? { status: "reserving-public-key" }
+              : {
+                  status: "verifying-assertion-ref",
+                  url: "https://example.com"
+                }
         });
 
         const { queryByTestId } = render(
@@ -88,7 +91,7 @@ describe("IdpWebViewLogin", () => {
       expect(queryByTestId("webview-idp-login-screen")).toBeNull();
     });
 
-    it.each(["ready", "trusted-lollipop"] as const)(
+    it.each(["one-identity-authorize", "assertion-ref-verified"] as const)(
       "should render the WebView with the loginSourceState's webviewSource when status is %s",
       status => {
         const webviewSource = { uri: "https://example.com/authorize" };
