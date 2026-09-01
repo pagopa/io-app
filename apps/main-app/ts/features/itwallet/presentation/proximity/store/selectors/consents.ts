@@ -60,20 +60,6 @@ export const itwProximityConsentByKeySelector = (consentKey: string) =>
   );
 
 /**
- * Returns whether consent management should be available for a credential.
- */
-export const itwProximityShouldShowConsentManagementSelector = (
-  credentialType: string
-) =>
-  createSelector(itwProximityConsentsSelector, consents =>
-    consents.some(consent =>
-      consent.credentials.some(
-        credential => credential.credentialType === credentialType
-      )
-    )
-  );
-
-/**
  * Returns all consents that involve the specified credential type.
  */
 export const itwProximityConsentsByCredentialTypeSelector = (

@@ -8,8 +8,7 @@ import {
   itwProximityConsentsByRpIdSelector,
   itwProximityConsentsEntriesByCredentialTypeSelector,
   itwProximityConsentsEntriesSelector,
-  itwProximityConsentsSelector,
-  itwProximityShouldShowConsentManagementSelector
+  itwProximityConsentsSelector
 } from "../consents";
 
 const mdlConsent: ConsentData = {
@@ -178,26 +177,6 @@ describe("proximity consent selectors", () => {
           stateWithConsents as GlobalState
         )
       ).toBeUndefined();
-    });
-  });
-
-  describe("itwProximityShouldShowConsentManagementSelector", () => {
-    it("returns true when a consent exists for the credential", () => {
-      const state = buildState({ [mdlKey]: mdlConsent });
-
-      expect(
-        itwProximityShouldShowConsentManagementSelector("MDL")(
-          state as GlobalState
-        )
-      ).toBe(true);
-    });
-
-    it("returns false when no consent exists for the credential", () => {
-      expect(
-        itwProximityShouldShowConsentManagementSelector("MDL")(
-          emptyState as GlobalState
-        )
-      ).toBe(false);
     });
   });
 

@@ -73,14 +73,11 @@ describe("ItwPresentationDetailsFooter", () => {
     expect(queryByTestId("requestAssistanceActionTestID")).not.toBeNull();
     expect(queryByTestId("removeCredentialActionTestID")).not.toBeNull();
     expect(queryByTestId("openIPatenteActionTestID")).toBeNull();
-    expect(queryByTestId("manageConsentsActionTestID")).toBeNull();
+    expect(queryByTestId("manageConsentsActionTestID")).not.toBeNull();
   });
 
-  it("renders and tracks consent management after a consent has been saved", () => {
-    const { getByTestId } = renderComponent(
-      CredentialType.DRIVING_LICENSE,
-      true
-    );
+  it("renders and tracks consent management without saved consents", () => {
+    const { getByTestId } = renderComponent(CredentialType.DRIVING_LICENSE);
 
     fireEvent.press(getByTestId("manageConsentsActionTestID"));
 
@@ -150,31 +147,8 @@ describe("ItwPresentationDetailsFooter", () => {
   });
 });
 
-const renderComponent = (
-  credentialType: CredentialType,
-  showConsentManagement = false
-) => {
+const renderComponent = (credentialType: CredentialType) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const state = showConsentManagement
-    ? {
-        ...globalState,
-        features: {
-          ...globalState.features,
-          itWallet: {
-            ...globalState.features.itWallet,
-            proximity: {
-              ...globalState.features.itWallet.proximity,
-              consents: {
-                consent: {
-                  credentials: [{ claimNames: [], credentialType }],
-                  rpId: "rp-id"
-                }
-              }
-            }
-          }
-        }
-      }
-    : globalState;
 
   const logic = itwCredentialIssuanceMachine.provide({
     actions: {
@@ -195,6 +169,6 @@ const renderComponent = (
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
     {},
-    createStore(appReducer, state as any)
+    createStore(appReducer, globalState)
   );
 };
