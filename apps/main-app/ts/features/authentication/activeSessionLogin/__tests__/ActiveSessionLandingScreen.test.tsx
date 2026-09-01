@@ -35,21 +35,18 @@ jest.mock("@gorhom/bottom-sheet", () =>
 );
 jest.mock("../../common/analytics");
 
-const toBeDefined = () => {
-  const component = renderComponent();
-  expect(component).toBeDefined();
-};
-
-const toMatchSnapshot = () => {
-  const component = renderComponent();
-  expect(component).toMatchSnapshot();
-};
-
 describe("ActiveSessionLandingScreen", () => {
   afterEach(jest.clearAllMocks);
 
-  it("Should be defined", toBeDefined);
-  it("Should match the snapshot", toMatchSnapshot);
+  it("Should be defined", () => {
+    const component = renderComponent();
+    expect(component).toBeDefined();
+  });
+
+  it("Should match the snapshot", () => {
+    const component = renderComponent();
+    expect(component).toMatchSnapshot();
+  });
 
   it("Should open the bottom sheet on CIE button press", async () => {
     const { getByTestId } = renderComponent();
