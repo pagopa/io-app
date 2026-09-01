@@ -143,13 +143,14 @@ describe("OneIdentityIdpLoginScreen", () => {
       })
     );
 
-    expect(mockReplace).toHaveBeenCalledWith(
-      AUTHENTICATION_ROUTES.MAIN,
-      expect.objectContaining({
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-        params: expect.objectContaining({ errorCodeOrMessage: "err-code" })
-      })
-    );
+    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      params: {
+        errorCodeOrMessage: "err-code",
+        authMethod: "SPID",
+        authLevel: "L2"
+      }
+    });
   });
 
   it("should navigate to AuthErrorScreen on a HTTP 403 error on the api URL prefix", () => {
@@ -198,12 +199,14 @@ describe("OneIdentityIdpLoginScreen", () => {
       }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(
-      AUTHENTICATION_ROUTES.MAIN,
-      expect.objectContaining({
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN
-      })
-    );
+    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      params: {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: "L2"
+      }
+    });
   });
 
   it("should navigate to AuthErrorScreen on a generic WebView error", () => {
@@ -214,12 +217,14 @@ describe("OneIdentityIdpLoginScreen", () => {
       nativeEvent: { url: "https://example.com/authorize" }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(
-      AUTHENTICATION_ROUTES.MAIN,
-      expect.objectContaining({
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN
-      })
-    );
+    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      params: {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: "L2"
+      }
+    });
   });
 });
 
