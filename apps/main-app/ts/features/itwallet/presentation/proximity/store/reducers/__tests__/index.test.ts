@@ -84,17 +84,15 @@ describe("itwProximityReducer", () => {
   });
 
   describe("itwGrantProximityConsent", () => {
-    it("should add a new consent", () => {
-      const state = reducer(
-        itwProximityInitialState,
-        itwGrantProximityConsent(mdlConsent)
-      );
+    it("should deterministically add a new consent", () => {
+      const action = itwGrantProximityConsent(mdlConsent);
+      const state = reducer(itwProximityInitialState, action);
+      const replayedState = reducer(itwProximityInitialState, action);
       const key = generateConsentKey(mdlConsent);
 
-      expect(state.consents[key]).toEqual({
-        ...mdlConsent,
-        savedAt: expect.any(String)
-      });
+      expect(action.payload.savedAt).toEqual(expect.any(String));
+      expect(state.consents[key]).toEqual(action.payload);
+      expect(replayedState).toEqual(state);
       expect(Object.keys(state.consents)).toHaveLength(1);
     });
 

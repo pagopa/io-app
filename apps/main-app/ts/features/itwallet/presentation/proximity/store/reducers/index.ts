@@ -56,10 +56,7 @@ const reducer = (
         ...state,
         consents: {
           ...state.consents,
-          [key]: {
-            ...consentData,
-            savedAt: new Date().toISOString()
-          }
+          [key]: consentData
         }
       };
     }
