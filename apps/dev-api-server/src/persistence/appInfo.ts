@@ -1,7 +1,4 @@
 import { Request } from "express";
-import * as A from "fp-ts/lib/Array";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 
 type DeviceOS = {
   Android: osPlatform;
@@ -18,13 +15,13 @@ const osPerDevice: DeviceOS = {
 };
 
 type AppInfo = {
-  appOs: O.Option<osPlatform>;
+  appOs: osPlatform | undefined;
   appVersion: string | undefined;
 };
 
 const appInfo: AppInfo = {
   appVersion: undefined,
-  appOs: O.none
+  appOs: undefined
 };
 
 export function getAppVersion() {
@@ -36,7 +33,7 @@ export const clearAppInfo = () => {
   // eslint-disable-next-line functional/immutable-data
   appInfo.appVersion = undefined;
   // eslint-disable-next-line functional/immutable-data
-  appInfo.appOs = O.none;
+  appInfo.appOs = undefined;
 };
 
 export function setAppInfo(req: Request) {
@@ -49,17 +46,21 @@ export function setAppInfo(req: Request) {
   appInfo.appOs = os;
 }
 
-const getOsFromUserAgent = (req: Request) =>
-  pipe(
-    req.get("user-agent"),
-    O.fromNullable,
-    O.fold(
-      () => O.none,
-      userAgent =>
-        pipe(
-          Object.keys(osPerDevice),
-          A.findFirst(k => userAgent.includes(k)),
-          O.map(a => osPerDevice[a as keyof typeof osPerDevice])
-        )
-    )
+const getOsFromUserAgent = (req: Request) => {
+  const userAgentMaybe = req.get("user-agent");
+  if (!userAgentMaybe) {
+    return undefined;
+  }
+
+  const normalizedUserAgent = userAgentMaybe.toLowerCase();
+
+  const keys = Object.keys(osPerDevice) as Array<keyof typeof osPerDevice>;
+  const keyMaybe = keys.find(key =>
+    normalizedUserAgent.includes(key.toLowerCase())
   );
+  if (!keyMaybe) {
+    return undefined;
+  }
+
+  return osPerDevice[keyMaybe];
+};
