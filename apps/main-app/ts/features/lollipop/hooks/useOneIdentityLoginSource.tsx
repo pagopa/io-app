@@ -88,7 +88,7 @@ const buildAuthorizationUrl = (
   minAuthLevel: SpidLevel
 ): string => {
   const { client_id, issuer, nonce, redirect_uri, state } = reserveResponse;
-  const authorizationUrl = new URLParse(`${issuer}oidc/authorize`, true); // TODO
+  const authorizationUrl = new URLParse(`${issuer}oidc/authorize`, true);
   authorizationUrl.set("query", {
     idp,
     client_id,
@@ -245,8 +245,10 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       return;
     }
 
-    const baseUrl = `${apiUrlPrefix}${reserveEndpointPath}`;
-    const reserveUrl = new URLParse(baseUrl, true);
+    const reserveUrl = new URLParse(
+      `${apiUrlPrefix}${reserveEndpointPath}`,
+      true
+    );
     reserveUrl.set("query", {
       env: oneIdentityEnv.toUpperCase(),
       minAuthLevel
