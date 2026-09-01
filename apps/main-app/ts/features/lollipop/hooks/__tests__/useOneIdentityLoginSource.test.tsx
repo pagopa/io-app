@@ -162,12 +162,14 @@ describe("useOneIdentityLoginSource", () => {
     await waitFor(() => {
       expect(result.current.loginSourceState).toEqual({
         status: "failure",
-        error: "Missing ephemeral public key"
+        error: "Unable to generate ephemeral public key"
       });
     });
 
     expect(mockFetchReserve).not.toHaveBeenCalled();
-    expect(onFailure).toHaveBeenCalledWith("Missing ephemeral public key");
+    expect(onFailure).toHaveBeenCalledWith(
+      "Unable to generate ephemeral public key"
+    );
   });
 
   it("should send LV as login-type header when fast login is enabled", async () => {

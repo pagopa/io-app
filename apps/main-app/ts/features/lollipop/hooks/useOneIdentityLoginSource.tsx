@@ -33,22 +33,22 @@ import {
 const fetch = createRetriableFetch();
 
 /**
- * Path of the Session Manager endpoint that reserves the LolliPOP-bound
- * OneIdentity OIDC session and returns the `/authorize` parameters.
+ * Path of the Session Manager endpoint that reserves the public key
+ * and returns the `/authorize` parameters.
  */
 const reserveEndpointPath = "/api/auth/v2/reserve";
 
 /**
  * State of the OneIdentity login source flow. At any given moment the flow
  * is in exactly one of the following statuses:
- * - `assertion-ref-verified`: the LolliPOP check succeeded; `webviewSource` is the IDP
+ * - `assertion-ref-verified`: the lollipop check succeeded; `webviewSource` is the IDP
  *   SSO URL, safe to (re)load without triggering another check.
  * - `one-identity-authorize`: the initial `/authorize` WebView source is available to load,
- *   but has not gone through the LolliPOP SAMLRequest check yet.
+ *   but has not gone through the lollipop SAMLRequest check yet.
  * - `reserving-public-key`: `/reserve` (and ephemeral key generation) is in progress.
  * - `verifying-assertion-ref`: the WebView navigated to the IDP SSO URL and its
- *   LolliPOP signature is being verified; the WebView is hidden meanwhile.
- * - `failure`: `/reserve` (or ephemeral key generation) failed.
+ *   lollipop assertion-ref is being verified; the WebView is hidden meanwhile.
+ * - `failure`: The `/reserve` request, ephemeral key generation, or SAML verification failed.
  */
 type LoginSourceState =
   | { error: string; status: "failure" }
@@ -108,7 +108,7 @@ const buildAuthorizationUrl = (
 /**
  * Builds the WebView source for the OneIdentity `/authorize` request: the
  * URL (via `buildAuthorizationUrl`) plus the `assertion-ref` header, required so
- * that OneIdentity can associate the incoming request with the LolliPOP
+ * that OneIdentity can associate the incoming request with the lollipop
  * session just reserved via `/reserve`.
  */
 const buildWebviewSource = (
@@ -129,7 +129,7 @@ export type UseOneIdentityLoginSource = (params: {
    */
   idp: SpidIdp;
   /**
-   * Required SPID level for the authentication flow. Defaults to "SpidL2".
+   * The minimum required SPID level for the authentication flow. Defaults to "SpidL2".
    */
   minAuthLevel?: SpidLevel;
   /**
@@ -143,7 +143,7 @@ export type UseOneIdentityLoginSource = (params: {
   loginSourceState: LoginSourceState;
   /**
    * Handler to be passed to the WebView's `onShouldStartLoadWithRequest` prop.
-   * Intercepts navigation towards the identity provider and verifies the LolliPOP signature.
+   * Intercepts navigation towards the identity provider and verifies the lollipop assertion-ref.
    */
   shouldBlockUrlNavigationWhileCheckingLollipop: (url: string) => boolean;
 };
@@ -171,59 +171,54 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
   );
   const oneIdentityEnv = useIOSelector(oneIdentityEnvSelector);
 
-  const verifyLollipop = useCallback(
-    (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
-      setLoginSourceState({ status: "verifying-assertion-ref", url: eventUrl });
-      lollipopSamlVerify(
-        urlEncodedSamlRequest,
-        publicKey,
-        () => {
-          setLoginSourceState({
-            status: "assertion-ref-verified",
-            webviewSource: { uri: eventUrl }
-          });
-        },
-        reason => {
-          setLoginSourceState({
-            status: "failure",
-            error: reason
-          });
-          trackLollipopIdpLoginFailure(reason);
-          onFailure(reason);
-        }
-      );
-    },
-    [onFailure]
-  );
-
   const shouldBlockUrlNavigationWhileCheckingLollipop = useCallback(
     (url: string) => {
+      if (loginSourceState.status === "verifying-assertion-ref") {
+        // Lollipop assertion-ref is being verified, prevent the WebView from
+        // loading the current URL.
+        return true;
+      }
+
       const urlEncodedSamlRequest = new URLParse(url, true).query?.SAMLRequest;
       if (!urlEncodedSamlRequest) {
         // Not the SAMLRequest redirect: nothing to check, let it load.
         return false;
       }
 
-      if (loginSourceState.status === "verifying-assertion-ref") {
-        // LolliPOP signature is being verified, prevent the WebView from
-        // loading the current URL.
-        return true;
-      }
-
       if (
         loginSourceState.status === "one-identity-authorize" &&
         maybeEphemeralPublicKey
       ) {
-        // The initial /authorize WebView source hasn't gone through the
-        // LolliPOP check yet: start the verification process and block
-        // navigation until it completes.
-        verifyLollipop(url, urlEncodedSamlRequest, maybeEphemeralPublicKey);
+        // If we encounter a SAMLRequest and we are in the authorize phase
+        // intercept the flow to verify the lollipop assertion-ref.
+        setLoginSourceState({
+          status: "verifying-assertion-ref",
+          url
+        });
+        lollipopSamlVerify(
+          urlEncodedSamlRequest,
+          maybeEphemeralPublicKey,
+          () => {
+            setLoginSourceState({
+              status: "assertion-ref-verified",
+              webviewSource: { uri: url }
+            });
+          },
+          reason => {
+            setLoginSourceState({
+              status: "failure",
+              error: reason
+            });
+            trackLollipopIdpLoginFailure(reason);
+            onFailure(reason);
+          }
+        );
         return true;
       }
 
       return false;
     },
-    [loginSourceState, maybeEphemeralPublicKey, verifyLollipop]
+    [loginSourceState.status, maybeEphemeralPublicKey, onFailure]
   );
 
   const generateLoginSource = useCallback(async () => {
@@ -232,10 +227,8 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
     setLoginSourceState({ status: "reserving-public-key" });
 
-    /**
-     * A new ephemeral key pair is generated to guarantee
-     * the public key uniqueness on every request.
-     */
+    // A new ephemeral key pair is generated to guarantee
+    // the public key uniqueness on every request.
     const publicKey = await handleRegenerateEphemeralKey(
       ephemeralKeyTag,
       mixpanelEnabled,
@@ -245,9 +238,9 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     if (!publicKey) {
       setLoginSourceState({
         status: "failure",
-        error: "Missing ephemeral public key"
+        error: "Unable to generate ephemeral public key"
       });
-      onFailure("Missing ephemeral public key");
+      onFailure("Unable to generate ephemeral public key");
       return;
     }
 
@@ -271,6 +264,8 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       signal: controller.signal
     });
     const result = await jsonFetchToSchema(requestPromise, ReserveSchema);
+    // Clear the abort controller reference as the request has completed.
+    abortControllerRef.current = null;
 
     if (!result.ok) {
       setLoginSourceState({ status: "failure", error: result.error });
