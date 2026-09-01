@@ -3,7 +3,7 @@ import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { StatusListRepository } from "./repository";
 import { storeLastStatusListCheckTimestamp } from "./storage";
-import { StatusListContext } from "./types";
+import { StatusListVerificationContext } from "./types";
 import { isStale } from "./validity";
 
 /** Maximum number of concurrent refresh operations. */
@@ -17,7 +17,7 @@ const MAX_CONCURRENT_REFRESHES = 3;
  * A failed refresh never evicts an existing cached entry.
  */
 export const refreshStatusListToken = async (
-  { itwVersion }: StatusListContext,
+  { itwVersion, x509CertRoot }: StatusListVerificationContext,
   uri: string
 ): Promise<boolean> => {
   try {
@@ -28,7 +28,7 @@ export const refreshStatusListToken = async (
     );
 
     const statusList = await ioWallet.CredentialStatus.statusList.getByUri(uri);
-    const keys = await getKeysForStatusListToken(statusList);
+    const keys = await getKeysForStatusListToken(statusList, x509CertRoot);
     const parsed = await ioWallet.CredentialStatus.statusList.verifyAndParse(
       keys,
       statusList
@@ -51,7 +51,7 @@ export const refreshStatusListToken = async (
  * Each refresh is best-effort: individual failures do not affect others.
  */
 export const refreshWithBoundedParallelism = async (
-  context: StatusListContext,
+  context: StatusListVerificationContext,
   uris: Array<string>
 ): Promise<void> => {
   const batches = Array.from(
@@ -80,7 +80,7 @@ export const refreshWithBoundedParallelism = async (
  * @param now - Current time in ms since epoch (injected for testability)
  */
 export const refreshStaleEntries = async (
-  context: StatusListContext
+  context: StatusListVerificationContext
 ): Promise<void> => {
   const now = Date.now();
   const entries = await StatusListRepository.list();
