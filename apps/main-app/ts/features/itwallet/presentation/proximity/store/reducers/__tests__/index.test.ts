@@ -1,4 +1,5 @@
 import {
+  itwCredentialsRemove,
   itwCredentialsRemoveByType,
   itwCredentialsReplaceByType
 } from "../../../../../credentials/store/actions";
@@ -50,6 +51,30 @@ const healthCardOnlyConsent: ConsentData = {
     }
   ]
 };
+
+const disabilityCardOnlyConsent: ConsentData = {
+  rpId: "rp-004",
+  credentials: [
+    {
+      credentialType: "EuropeanDisabilityCard",
+      claimNames: ["disabilityCardId"]
+    }
+  ]
+};
+
+const credentialRemovalRequestScenarios = [
+  {
+    action: itwCredentialsRemoveByType("MDL", {}),
+    name: "removal"
+  },
+  {
+    action: itwCredentialsReplaceByType(
+      [{ metadata: { credentialType: "MDL" } } as never],
+      {}
+    ),
+    name: "replacement"
+  }
+];
 
 describe("itwProximityReducer", () => {
   it("should return the initial state", () => {
@@ -240,57 +265,52 @@ describe("itwProximityReducer", () => {
     });
   });
 
-  describe("itwCredentialsRemoveByType", () => {
-    it("should remove all consents involving the removed credential type", () => {
-      const mdlKey = generateConsentKey(mdlConsent);
-      const healthKey = generateConsentKey(healthCardOnlyConsent);
+  describe("credential removal", () => {
+    test.each(credentialRemovalRequestScenarios)(
+      "should not clear consents when the $name is requested",
+      ({ action }) => {
+        const mdlKey = generateConsentKey(mdlConsent);
+        const stateWithConsents: ItwProximityState = {
+          consents: {
+            [mdlKey]: mdlConsent
+          }
+        };
 
+        const state = reducer(stateWithConsents, action);
+
+        expect(state).toBe(stateWithConsents);
+      }
+    );
+
+    it("should clear consents only after credential removal succeeds", () => {
+      const mdlKey = generateConsentKey(mdlConsent);
+      const multiKey = generateConsentKey(multiCredentialConsent);
+      const healthKey = generateConsentKey(healthCardOnlyConsent);
+      const disabilityKey = generateConsentKey(disabilityCardOnlyConsent);
       const stateWithConsents: ItwProximityState = {
         consents: {
           [mdlKey]: mdlConsent,
-          [healthKey]: healthCardOnlyConsent
+          [multiKey]: multiCredentialConsent,
+          [healthKey]: healthCardOnlyConsent,
+          [disabilityKey]: disabilityCardOnlyConsent
         }
       };
 
       const state = reducer(
         stateWithConsents,
-        itwCredentialsRemoveByType("MDL", {})
-      );
-
-      expect(Object.keys(state.consents)).toHaveLength(1);
-      expect(state.consents[healthKey]).toEqual(healthCardOnlyConsent);
-    });
-  });
-
-  describe("itwCredentialsReplaceByType", () => {
-    it("should remove consents for the replaced credential type", () => {
-      const mdlKey = generateConsentKey(mdlConsent);
-      const healthKey = generateConsentKey(healthCardOnlyConsent);
-      const stateWithConsents: ItwProximityState = {
-        consents: {
-          [mdlKey]: mdlConsent,
-          [healthKey]: healthCardOnlyConsent
-        }
-      };
-
-      const state = reducer(
-        stateWithConsents,
-        itwCredentialsReplaceByType(
-          [{ metadata: { credentialType: "MDL" } } as never],
-          {}
-        )
+        itwCredentialsRemove([
+          { credentialType: "MDL" } as never,
+          { credentialType: "EuropeanHealthInsuranceCard" } as never
+        ])
       );
 
       expect(state.consents).toEqual({
-        [healthKey]: healthCardOnlyConsent
+        [disabilityKey]: disabilityCardOnlyConsent
       });
     });
 
-    it("should be a no-op when the replacement payload is empty", () => {
-      const state = reducer(
-        itwProximityInitialState,
-        itwCredentialsReplaceByType([], {})
-      );
+    it("should be a no-op when no credential is removed", () => {
+      const state = reducer(itwProximityInitialState, itwCredentialsRemove([]));
 
       expect(state).toBe(itwProximityInitialState);
     });

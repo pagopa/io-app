@@ -169,6 +169,6 @@ const renderComponent = (credentialType: CredentialType) => {
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
     {},
-    createStore(appReducer, globalState)
+    createStore(appReducer, globalState as any)
   );
 };
