@@ -4,16 +4,8 @@ const StatusListSigningKeysSchema = z.object({
   keys: z.array(z.looseObject({ kty: z.enum(["EC", "RSA"]) }))
 });
 
-/**
- * Validates Credential Issuer metadata needed to verify Status List Tokens.
- */
-export const CredentialIssuerMetadataSchema = z.object({
-  metadata: z.object({
-    openid_credential_issuer: z.object({
-      jwks: StatusListSigningKeysSchema
-    })
-  })
-});
+/** Valid x5c header shape. Certificate encoding is validated natively. */
+export const StatusListX5cSchema = z.array(z.string().min(1)).min(1);
 
 /**
  * Validates Wallet Provider metadata needed to verify Status List Tokens.

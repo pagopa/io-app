@@ -1,12 +1,16 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ZodError } from "zod";
 
 import {
+  STORAGE_KEY_ITW_ENV,
   STORAGE_KEY_ITW_SPECS_VERSION,
   STORAGE_KEY_LAST_CHECK_TIME
 } from "../consts";
 import {
+  getItwEnv,
   getItwSpecsVersion,
   getLastStatusListCheckTimestamps,
+  storeItwEnv,
   storeItwSpecsVersion,
   storeLastStatusListCheckTimestamp
 } from "../storage";
@@ -39,6 +43,25 @@ describe("IT-Wallet specs version storage", () => {
       .mockRejectedValueOnce(new Error("boom"));
 
     await expect(getItwSpecsVersion()).rejects.toThrow("boom");
+  });
+});
+
+describe("IT-Wallet environment storage", () => {
+  it("stores and retrieves the environment", async () => {
+    await storeItwEnv("pre");
+
+    await expect(AsyncStorage.getItem(STORAGE_KEY_ITW_ENV)).resolves.toBe(
+      "pre"
+    );
+    await expect(getItwEnv()).resolves.toBe("pre");
+  });
+
+  it.each([null, "invalid"])("rejects invalid environment %s", async value => {
+    if (value) {
+      await AsyncStorage.setItem(STORAGE_KEY_ITW_ENV, value);
+    }
+
+    await expect(getItwEnv()).rejects.toBeInstanceOf(ZodError);
   });
 });
 

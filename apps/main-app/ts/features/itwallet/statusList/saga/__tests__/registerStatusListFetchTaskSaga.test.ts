@@ -1,6 +1,9 @@
 import { testSaga } from "redux-saga-test-plan";
 
-import { selectItwSpecsVersion } from "../../../common/store/selectors/environment";
+import {
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../../common/store/selectors/environment";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import {
@@ -19,7 +22,9 @@ describe("registerStatusListFetchTaskSaga", () => {
       .next(true)
       .select(selectItwSpecsVersion)
       .next(ITW_VERSION)
-      .call(registerItwStatusListFetchTask, ITW_VERSION);
+      .select(selectItwEnv)
+      .next("prod")
+      .call(registerItwStatusListFetchTask, ITW_VERSION, "prod");
   });
 
   it("waits for wallet activation before registering the fetch task", () => {
@@ -31,7 +36,9 @@ describe("registerStatusListFetchTaskSaga", () => {
       .next()
       .select(selectItwSpecsVersion)
       .next(ITW_VERSION)
-      .call(registerItwStatusListFetchTask, ITW_VERSION);
+      .select(selectItwEnv)
+      .next("prod")
+      .call(registerItwStatusListFetchTask, ITW_VERSION, "prod");
   });
 
   it("registers the fetch task again after reset and reactivation", () => {
@@ -41,7 +48,9 @@ describe("registerStatusListFetchTaskSaga", () => {
       .next(true)
       .select(selectItwSpecsVersion)
       .next(ITW_VERSION)
-      .call(registerItwStatusListFetchTask, ITW_VERSION)
+      .select(selectItwEnv)
+      .next("prod")
+      .call(registerItwStatusListFetchTask, ITW_VERSION, "prod")
       .next()
       .take(itwLifecycleStoresReset)
       .next()
@@ -51,7 +60,9 @@ describe("registerStatusListFetchTaskSaga", () => {
       .next(true)
       .select(selectItwSpecsVersion)
       .next(ITW_VERSION)
-      .call(registerItwStatusListFetchTask, ITW_VERSION);
+      .select(selectItwEnv)
+      .next("prod")
+      .call(registerItwStatusListFetchTask, ITW_VERSION, "prod");
   });
 
   it("waits for credential storage when the wallet is still invalid after reset", () => {
@@ -61,7 +72,9 @@ describe("registerStatusListFetchTaskSaga", () => {
       .next(true)
       .select(selectItwSpecsVersion)
       .next(ITW_VERSION)
-      .call(registerItwStatusListFetchTask, ITW_VERSION)
+      .select(selectItwEnv)
+      .next("prod")
+      .call(registerItwStatusListFetchTask, ITW_VERSION, "prod")
       .next()
       .take(itwLifecycleStoresReset)
       .next()
@@ -73,6 +86,8 @@ describe("registerStatusListFetchTaskSaga", () => {
       .next()
       .select(selectItwSpecsVersion)
       .next(ITW_VERSION)
-      .call(registerItwStatusListFetchTask, ITW_VERSION);
+      .select(selectItwEnv)
+      .next("prod")
+      .call(registerItwStatusListFetchTask, ITW_VERSION, "prod");
   });
 });

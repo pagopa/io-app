@@ -9,7 +9,7 @@ import {
   refreshWithBoundedParallelism
 } from "../refresh";
 import { StatusListRepository } from "../repository";
-import { type StatusListContext } from "../types";
+import { type StatusListVerificationContext } from "../types";
 
 const mockGetByUri = jest.fn<Promise<string>, [string]>();
 const mockVerifyAndParse = jest.fn();
@@ -36,11 +36,15 @@ jest.mock("../../../common/utils/itwIoWallet", () => ({
 
 const URI = "https://issuer.example/status/1";
 const STATUS_LIST_TOKEN = "status-list-token";
+const ROOT_CERTIFICATE = "root-certificate";
 const KEYS = [{ kty: "EC" as const, kid: "status-list-key" }];
 
 const mockGetKeysForStatusListToken = jest.mocked(getKeysForStatusListToken);
 
-const context: StatusListContext = { itwVersion: "1.3.3" };
+const context: StatusListVerificationContext = {
+  itwVersion: "1.3.3",
+  x509CertRoot: ROOT_CERTIFICATE
+};
 
 const makeValidPayload = (
   uri: string = URI,
@@ -82,9 +86,9 @@ describe("refreshStatusListToken", () => {
   beforeEach(async () => {
     jest.restoreAllMocks();
     mockGetByUri.mockReset();
-    mockVerifyAndParse.mockReset();
     mockGetKeysForStatusListToken.mockReset();
     mockGetKeysForStatusListToken.mockResolvedValue(KEYS);
+    mockVerifyAndParse.mockReset();
     await AsyncStorage.clear();
   });
 
@@ -96,7 +100,8 @@ describe("refreshStatusListToken", () => {
 
     expect(result).toBe(true);
     expect(mockGetKeysForStatusListToken).toHaveBeenCalledWith(
-      STATUS_LIST_TOKEN
+      STATUS_LIST_TOKEN,
+      ROOT_CERTIFICATE
     );
     expect(mockVerifyAndParse).toHaveBeenCalledWith(KEYS, STATUS_LIST_TOKEN);
 
@@ -124,15 +129,13 @@ describe("refreshStatusListToken", () => {
     await expect(StatusListRepository.get(URI)).resolves.toBeFalsy();
   });
 
-  it("returns false when issuer keys cannot be resolved", async () => {
+  it("returns false when certificate chain validation fails", async () => {
     mockGetByUri.mockResolvedValue(STATUS_LIST_TOKEN);
     mockGetKeysForStatusListToken.mockRejectedValue(
-      new Error("missing issuer keys")
+      new Error("untrusted certificate chain")
     );
 
-    const result = await refreshStatusListToken(context, URI);
-
-    expect(result).toBe(false);
+    await expect(refreshStatusListToken(context, URI)).resolves.toBe(false);
     expect(mockVerifyAndParse).not.toHaveBeenCalled();
   });
 
@@ -186,13 +189,15 @@ describe("refreshStatusListToken", () => {
 describe("refreshWithBoundedParallelism", () => {
   beforeEach(async () => {
     mockGetByUri.mockReset();
+    mockGetKeysForStatusListToken.mockReset();
+    mockGetKeysForStatusListToken.mockResolvedValue(KEYS);
     mockVerifyAndParse.mockReset();
     mockVerifyAndParse.mockImplementation((_, token: string) => {
       const parts = token.split(".");
-      return JSON.parse(Buffer.from(parts[1], "base64url").toString());
+      return Promise.resolve(
+        JSON.parse(Buffer.from(parts[1], "base64url").toString())
+      );
     });
-    mockGetKeysForStatusListToken.mockReset();
-    mockGetKeysForStatusListToken.mockResolvedValue(KEYS);
     await AsyncStorage.clear();
   });
 
@@ -238,13 +243,15 @@ describe("refreshStaleEntries", () => {
   beforeEach(async () => {
     jest.restoreAllMocks();
     mockGetByUri.mockReset();
+    mockGetKeysForStatusListToken.mockReset();
+    mockGetKeysForStatusListToken.mockResolvedValue(KEYS);
     mockVerifyAndParse.mockReset();
     mockVerifyAndParse.mockImplementation((_, token: string) => {
       const parts = token.split(".");
-      return JSON.parse(Buffer.from(parts[1], "base64url").toString());
+      return Promise.resolve(
+        JSON.parse(Buffer.from(parts[1], "base64url").toString())
+      );
     });
-    mockGetKeysForStatusListToken.mockReset();
-    mockGetKeysForStatusListToken.mockResolvedValue(KEYS);
     await AsyncStorage.clear();
   });
 

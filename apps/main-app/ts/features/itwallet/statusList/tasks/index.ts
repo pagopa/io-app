@@ -2,12 +2,18 @@ import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
 
+import { EnvType, getEnv } from "../../common/utils/environment";
 import {
   trackItwStatusListFetchRegistered,
   trackItwStatusListFetchRegisterFailure
 } from "../analytics";
 import { refreshStaleEntries } from "../utils/refresh";
-import { getItwSpecsVersion, storeItwSpecsVersion } from "../utils/storage";
+import {
+  getItwEnv,
+  getItwSpecsVersion,
+  storeItwEnv,
+  storeItwSpecsVersion
+} from "../utils/storage";
 
 /**
  * Identifier for the ITW Status List background fetch task.
@@ -31,8 +37,14 @@ const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 12;
  */
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
-    const itwVersion = await getItwSpecsVersion();
-    await refreshStaleEntries({ itwVersion });
+    const [itwVersion, env] = await Promise.all([
+      getItwSpecsVersion(),
+      getItwEnv()
+    ]);
+    await refreshStaleEntries({
+      itwVersion,
+      x509CertRoot: getEnv(env).X509_CERT_ROOT
+    });
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch {
     return BackgroundTask.BackgroundTaskResult.Failed;
@@ -40,17 +52,18 @@ TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
 });
 
 /**
- * Persists the current IT-Wallet specs version and registers the Status List
- * background fetch task when it is not already registered.
+ * Persists current IT-Wallet specs version and environment, then
+ * registers Status List background fetch task when needed.
  *
- * Persisting happens on every call so app updates can change the background
- * task version without requiring the OS task registration to be recreated.
+ * Persisting happens on every call so app updates can change background task
+ * verification config without recreating OS task registration.
  */
 export const registerItwStatusListFetchTask = async (
-  itwVersion: ItwVersion
+  itwVersion: ItwVersion,
+  env: EnvType
 ): Promise<void> => {
   try {
-    await storeItwSpecsVersion(itwVersion);
+    await Promise.all([storeItwSpecsVersion(itwVersion), storeItwEnv(env)]);
     const isRegistered = await TaskManager.isTaskRegisteredAsync(
       ITW_STATUS_LIST_FETCH_TASK
     );
