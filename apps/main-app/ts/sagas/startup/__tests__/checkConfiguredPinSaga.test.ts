@@ -1,5 +1,4 @@
 import { CommonActions } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 
 import { isFastLoginEnabledSelector } from "../../../features/authentication/fastLogin/store/selectors";
@@ -20,7 +19,7 @@ describe("checkConfiguredPinSaga", () => {
     testSaga(checkConfiguredPinSaga)
       .next()
       .call(getPin)
-      .next(O.some(validPin))
+      .next(validPin)
       .select(isFastLoginEnabledSelector)
       .next(false)
       .returns(validPin);
@@ -30,7 +29,7 @@ describe("checkConfiguredPinSaga", () => {
     testSaga(checkConfiguredPinSaga)
       .next()
       .call(getPin)
-      .next(O.some(validPolicyPin))
+      .next(validPolicyPin)
       .select(isFastLoginEnabledSelector)
       .next(true)
       .returns(validPolicyPin);
@@ -42,7 +41,7 @@ describe("checkConfiguredPinSaga", () => {
     testSaga(checkConfiguredPinSaga)
       .next()
       .call(getPin)
-      .next(O.some(invalidPin))
+      .next(invalidPin)
       .select(isFastLoginEnabledSelector)
       .next(true)
       .call(navigateToOnboardingPinScreenAction)
@@ -66,7 +65,7 @@ describe("checkConfiguredPinSaga", () => {
     testSaga(checkConfiguredPinSaga)
       .next()
       .call(getPin)
-      .next(O.none)
+      .next(undefined)
       .call(navigateToOnboardingPinScreenAction)
       .next()
       .take(createPinSuccess)

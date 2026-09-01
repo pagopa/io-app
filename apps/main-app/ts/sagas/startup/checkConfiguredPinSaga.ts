@@ -1,5 +1,4 @@
 import { CommonActions } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { call, select, take } from "typed-redux-saga/macro";
 
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
@@ -21,14 +20,14 @@ export function* checkConfiguredPinSaga(): Generator<
   // it from the Keychain
   const pinCode = yield* call(getPin);
 
-  if (O.isSome(pinCode)) {
+  if (pinCode != null) {
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
-      if (isValidPinNumber(pinCode.value)) {
-        return pinCode.value;
+      if (isValidPinNumber(pinCode)) {
+        return pinCode;
       }
     } else {
-      return pinCode.value;
+      return pinCode;
     }
   }
 
