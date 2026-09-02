@@ -93,7 +93,7 @@ export const ItwProximityPresentmentScreen = ({
     });
   }, [machineRef]);
 
-  useMaxBrightness({ useSmoothTransition: true });
+  useMaxBrightness();
 
   useLayoutEffect(() => {
     navigation.setOptions({
