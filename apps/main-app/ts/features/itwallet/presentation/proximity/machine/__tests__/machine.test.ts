@@ -264,7 +264,7 @@ describe("itwProximityMachine", () => {
     await waitFor(actor, snapshot =>
       snapshot.matches({ Presentment: "Starting" })
     );
-    expect(trackProximityStart).toHaveBeenCalledTimes(1);
+    expect(trackProximityStart).not.toHaveBeenCalled();
     expect(actor.getSnapshot().context.engagementMode).toEqual("qrcode");
   });
 
@@ -398,7 +398,7 @@ describe("itwProximityMachine", () => {
     );
     expect(actor.getSnapshot().context.engagementMode).toEqual("nfc");
     expect(navigateToNfcPresentmentScreen).toHaveBeenCalledTimes(1);
-    expect(trackProximityStart).toHaveBeenCalledTimes(1);
+    expect(trackProximityStart).not.toHaveBeenCalled();
   });
 
   it("handles the happy path in Presentment", async () => {
@@ -470,6 +470,7 @@ describe("itwProximityMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual({
       Presentment: "Connecting"
     });
+    expect(trackProximityStart).not.toHaveBeenCalled();
     expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
   });
 
@@ -487,8 +488,26 @@ describe("itwProximityMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual({
       Presentment: "Connecting"
     });
+    expect(trackProximityStart).not.toHaveBeenCalled();
     expect(navigateToClaimsDisclosureScreen).not.toHaveBeenCalled();
   });
+
+  test.each(["qrcode", "nfc"] as const)(
+    "tracks %s proximity start when verifier connects",
+    engagementMode => {
+      const actor = createActor(mockedMachine, {
+        snapshot: makeSnapshot(
+          { Presentment: "Connecting" },
+          { engagementMode }
+        )
+      });
+
+      actor.start();
+      actor.send({ type: "device-connected" });
+
+      expect(trackProximityStart).toHaveBeenCalledTimes(1);
+    }
+  );
 
   it("close from Presentment.AwaitingConnection calls closeProximity", () => {
     const actor = createActor(mockedMachine, {
