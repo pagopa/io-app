@@ -39,6 +39,12 @@ export type Context = {
    */
   retrievalMethod?: ISO18013_5.RetrievalMethod;
   /**
+   * Whether SESSION_TERMINATED was already sent for the current engagement.
+   * IOWalletProximity NFC `CheckedContinuation` is consume-once: a second
+   * terminateSession on the same native session is a fatal SIGTRAP.
+   */
+  sessionTerminated: boolean;
+  /**
    * The Verifier Request returned from the Relying Party
    */
   verifierRequest?: VerifierRequest;
@@ -49,5 +55,6 @@ export const InitialContext: Context = {
   engagementMode: "qrcode",
   failure: undefined,
   proximityDetails: undefined,
+  sessionTerminated: false,
   verifierRequest: undefined
 };
