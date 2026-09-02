@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.38.0-rc.26",
+  "version": "3.38.0-rc.27",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -109,6 +109,7 @@
     "jwk-thumbprint": "^0.1.4",
     "lodash": "^4.17.21",
     "mixpanel-react-native": "3.3.0",
+    "neverthrow": "^8.2.0",
     "pako": "^2.1.0",
     "path-browserify": "0.0.0",
     "pdf-lib": "^1.17.1",
