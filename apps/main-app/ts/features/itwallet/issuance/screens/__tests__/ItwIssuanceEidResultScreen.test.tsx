@@ -11,6 +11,10 @@ import * as credentialsSelectors from "../../../credentials/store/selectors";
 import { Context, EidIssuanceLevel } from "../../../machine/eid/context";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import {
+  testEidIssuanceDeps,
+  testMachineStore
+} from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceEidResultScreen } from "../ItwIssuanceEidResultScreen";
 
@@ -288,7 +292,13 @@ const renderComponent = (
   contextOverrides: Partial<Context> = {}
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+  const initialSnapshot = createActor(itwEidIssuanceMachine, {
+    input: {
+      deps: testEidIssuanceDeps({
+        store: testMachineStore({ getState: () => initialState })
+      })
+    }
+  }).getSnapshot();
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,
     context: {

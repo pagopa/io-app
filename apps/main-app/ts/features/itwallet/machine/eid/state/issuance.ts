@@ -12,7 +12,8 @@ export const issuanceState = itwEidIssuanceMachineSetup.createStateConfig({
     WaitingForSessionRefresh: {
       tags: [ItwTags.Loading],
       invoke: {
-        src: "waitForSessionRefresh"
+        src: "waitForSessionRefresh",
+        input: ({ context }) => ({ deps: context.deps })
       },
       on: {
         "session-refresh-complete": { target: "RequestingEid" }
@@ -25,7 +26,8 @@ export const issuanceState = itwEidIssuanceMachineSetup.createStateConfig({
         input: ({ context }) => ({
           itwVersion: context.itwVersion,
           authenticationContext: context.authenticationContext,
-          walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+          walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+          deps: context.deps
         }),
         onDone: {
           target: "RequestingEid",
@@ -50,7 +52,8 @@ export const issuanceState = itwEidIssuanceMachineSetup.createStateConfig({
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           level: context.level,
           integrityKeyTag: context.integrityKeyTag,
-          accessToken: context.accessToken
+          accessToken: context.accessToken,
+          deps: context.deps
         }),
         onDone: {
           actions: assign(({ event }) => ({
@@ -131,7 +134,8 @@ export const issuanceState = itwEidIssuanceMachineSetup.createStateConfig({
         input: ({ context }) => ({
           eid: context.eid,
           walletInstanceStatusList: context.walletInstanceStatusList,
-          walletUnitAttestations: context.walletUnitAttestations
+          walletUnitAttestations: context.walletUnitAttestations,
+          deps: context.deps
         }),
         onDone: {
           target: "Completed",

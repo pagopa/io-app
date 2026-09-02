@@ -9,9 +9,6 @@ import {
   selectItwSpecsVersion
 } from "../../../common/store/selectors/environment.ts";
 import { getEnv } from "../../../common/utils/environment.ts";
-import { createRemoteActionsImplementation } from "./actions.ts";
-import { createRemoteActorsImplementation } from "./actors.ts";
-import { createRemoteGuardsImplementation } from "./guards.ts";
 import { itwRemoteMachine } from "./machine.ts";
 
 type Props = {
@@ -26,14 +23,13 @@ export const ItwRemoteMachineProvider = (props: Props) => {
   const env = pipe(useIOSelector(selectItwEnv), getEnv);
   const itwVersion = useIOSelector(selectItwSpecsVersion);
 
-  const remoteMachine = itwRemoteMachine.provide({
-    guards: createRemoteGuardsImplementation(itwVersion, store),
-    actions: createRemoteActionsImplementation(navigation, store),
-    actors: createRemoteActorsImplementation(env, itwVersion, store)
-  });
-
   return (
-    <ItwRemoteMachineContext.Provider logic={remoteMachine}>
+    <ItwRemoteMachineContext.Provider
+      logic={itwRemoteMachine}
+      options={{
+        input: { deps: { env, itwVersion, navigation, store } }
+      }}
+    >
       {props.children}
     </ItwRemoteMachineContext.Provider>
   );

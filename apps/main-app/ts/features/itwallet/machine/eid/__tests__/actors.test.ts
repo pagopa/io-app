@@ -1,8 +1,6 @@
 import { CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { AnyActorLogic, createActor } from "xstate";
 
-import { useIOStore } from "../../../../../store/hooks";
-import { Env } from "../../../common/utils/environment";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
@@ -15,9 +13,11 @@ import {
   itwStoreWalletInstanceStatusList,
   itwWalletUnitAttestationsStore
 } from "../../../walletInstance/store/actions";
+import { testEidIssuanceDeps, testMachineStore } from "../../utils/testDeps";
 import {
-  createEidIssuanceActorsImplementation,
+  obtainStatusListActor,
   ObtainStatusListActorOutput,
+  storeEidCredentialActor,
   StoreEidCredentialActorParams
 } from "../actors";
 
@@ -50,7 +50,6 @@ const STATUS_LIST_PAYLOAD: CredentialStatus.StatusList = {
   status_list: { bits: 1, lst: "eNrbuRgAAhcBXQ" }
 };
 const KEYS = [{ kty: "EC" as const, kid: "wallet-provider-key" }];
-const TRUST_ANCHOR_BASE_URL = "https://trust-anchor.example";
 const EID = {
   credential: "eid-jwt",
   metadata: ItwStoredCredentialsMocks.eid
@@ -101,14 +100,10 @@ describe("eID issuance actors", () => {
       }
     }
   );
-  const store = {
+  const store = testMachineStore({
     dispatch,
     getState: jest.fn()
-  } as unknown as ReturnType<typeof useIOStore>;
-  const actors = createEidIssuanceActorsImplementation(
-    { WALLET_TA_BASE_URL: TRUST_ANCHOR_BASE_URL } as Env,
-    store
-  );
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -127,7 +122,7 @@ describe("eID issuance actors", () => {
     });
 
     const result = await runActor<ObtainStatusListActorOutput>(
-      actors.obtainStatusList,
+      obtainStatusListActor,
       {
         itwVersion: ITW_VERSION,
         walletUnitAttestations: {
@@ -159,7 +154,7 @@ describe("eID issuance actors", () => {
     mockGetIoWallet.mockReturnValue(createWallet() as never);
 
     await expect(
-      runActor(actors.obtainStatusList, {
+      runActor(obtainStatusListActor, {
         itwVersion: ITW_VERSION,
         walletUnitAttestations: undefined
       })
@@ -170,7 +165,7 @@ describe("eID issuance actors", () => {
     mockGetIoWallet.mockReturnValue(createWallet(false) as never);
 
     await expect(
-      runActor(actors.obtainStatusList, {
+      runActor(obtainStatusListActor, {
         itwVersion: ITW_VERSION,
         walletUnitAttestations: undefined
       })
@@ -185,7 +180,7 @@ describe("eID issuance actors", () => {
     mockGetCredentialStatus.mockRejectedValue(error);
 
     await expect(
-      runActor(actors.obtainStatusList, {
+      runActor(obtainStatusListActor, {
         itwVersion: ITW_VERSION,
         walletUnitAttestations: { "wua-1": "wua-1-jwt" }
       })
@@ -204,10 +199,11 @@ describe("eID issuance actors", () => {
         idx: 0,
         parsedStatusList: STATUS_LIST_PAYLOAD,
         uri: WUA_STATUS_LIST_URI
-      }
+      },
+      deps: testEidIssuanceDeps({ store })
     };
 
-    await expect(runActor(actors.storeEidCredential, input)).resolves.toBe(
+    await expect(runActor(storeEidCredentialActor, input)).resolves.toBe(
       undefined
     );
 
@@ -235,12 +231,11 @@ describe("eID issuance actors", () => {
         idx: 0,
         parsedStatusList: STATUS_LIST_PAYLOAD,
         uri: WUA_STATUS_LIST_URI
-      }
+      },
+      deps: testEidIssuanceDeps({ store })
     };
 
-    await expect(runActor(actors.storeEidCredential, input)).rejects.toBe(
-      error
-    );
+    await expect(runActor(storeEidCredentialActor, input)).rejects.toBe(error);
     expect(dispatch).not.toHaveBeenCalled();
   });
 });

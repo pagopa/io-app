@@ -10,6 +10,7 @@ import {
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { CredentialIssuanceFailure } from "./failure";
+import { CredentialIssuanceMachineDeps } from "./input";
 
 export type Context = {
   /**
@@ -28,6 +29,10 @@ export type Context = {
    * The type of the credential being issued.
    */
   credentialType: string | undefined;
+  /**
+   * Runtime dependencies injected via machine input
+   */
+  deps: CredentialIssuanceMachineDeps;
   /**
    * Result of evaluating the issuer DCQL query against the PID before the trust issuer screen.
    * It is reused to show the requested claims and complete the authorization without recalculating.
@@ -83,7 +88,7 @@ export type Context = {
  */
 export type CredentialIssuanceMode = "issuance" | "reissuance" | "upgrade";
 
-export const InitialContext: Context = {
+export const InitialContext: Omit<Context, "deps"> = {
   mode: "issuance",
   isItWalletValid: false,
   isWalletValid: false,

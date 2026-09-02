@@ -55,6 +55,9 @@ const renderProvider = (isDebugModeEnabled: boolean) => {
   mockUseIOSelector.mockImplementation(selector =>
     selector === isDebugModeEnabledSelector ? isDebugModeEnabled : undefined
   );
+  mockMachineUseSelector.mockImplementation(selector =>
+    selector({ value: "Idle", context: { deps: {} } } as never)
+  );
 
   return render(
     <ItwProximityMachineProvider>

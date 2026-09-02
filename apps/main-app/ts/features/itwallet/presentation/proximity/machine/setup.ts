@@ -1,28 +1,46 @@
-import { assign, fromCallback, fromPromise, setup } from "xstate";
+import { assign, setup } from "xstate";
 
 import {
-  ProximityCommunicationLogicInput,
-  SendDocumentsActorInput,
-  SendDocumentsActorOutput,
-  SendErrorResponseActorOutput,
-  StartEngagementActorInput
+  closeProximityAction,
+  grantConsentAction,
+  navigateToBluetoothActivationScreenAction,
+  navigateToBluetoothPermissionsScreenAction,
+  navigateToClaimsDisclosureScreenAction,
+  navigateToFailureScreenAction,
+  navigateToNfcActivationScreenAction,
+  navigateToNfcPresentmentScreenAction,
+  navigateToPresentmentScreenAction,
+  navigateToStoreconsentScreenAction,
+  navigateToSuccessScreenAction,
+  onInitAction,
+  storeConsentAction,
+  trackProximityStartAction,
+  trackQrCodeLoadingFailureAction
+} from "./actions";
+import {
+  checkBluetoothActivationActor,
+  checkBluetoothPermissionsActor,
+  checkNfcActivationActor,
+  proximityCommunicationLogicActor,
+  sendDocumentsActor,
+  startEngagementActor,
+  terminateSessionActor
 } from "./actors";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
-
-const notImplemented = () => {
-  throw new Error("Not implemented");
-};
+import { hasGrantedConsentGuard } from "./guards";
+import { Input } from "./input";
 
 /** Keeps transport actors and provider-injected side effects typed across presentation states. */
 export const itwProximityMachineSetup = setup({
   types: {
     context: {} as Context,
+    input: {} as Input,
     events: {} as ProximityEvents
   },
   actions: {
-    onInit: notImplemented,
+    onInit: onInitAction,
     /**
      * Context manipulation
      */
@@ -33,52 +51,46 @@ export const itwProximityMachineSetup = setup({
      * Navigation
      */
 
-    navigateToBluetoothPermissionsScreen: notImplemented,
-    navigateToBluetoothActivationScreen: notImplemented,
-    navigateToNfcActivationScreen: notImplemented,
-    navigateToPresentmentScreen: notImplemented,
-    navigateToNfcPresentmentScreen: notImplemented,
-    navigateToFailureScreen: notImplemented,
-    navigateToClaimsDisclosureScreen: notImplemented,
-    navigateToStoreconsentScreen: notImplemented,
-    navigateToSuccessScreen: notImplemented,
-    closeProximity: notImplemented,
+    navigateToBluetoothPermissionsScreen:
+      navigateToBluetoothPermissionsScreenAction,
+    navigateToBluetoothActivationScreen:
+      navigateToBluetoothActivationScreenAction,
+    navigateToNfcActivationScreen: navigateToNfcActivationScreenAction,
+    navigateToPresentmentScreen: navigateToPresentmentScreenAction,
+    navigateToNfcPresentmentScreen: navigateToNfcPresentmentScreenAction,
+    navigateToFailureScreen: navigateToFailureScreenAction,
+    navigateToClaimsDisclosureScreen: navigateToClaimsDisclosureScreenAction,
+    navigateToStoreconsentScreen: navigateToStoreconsentScreenAction,
+    navigateToSuccessScreen: navigateToSuccessScreenAction,
+    closeProximity: closeProximityAction,
 
     /**
      * Consents
      */
 
-    grantConsent: notImplemented,
-    storeConsent: notImplemented,
+    grantConsent: grantConsentAction,
+    storeConsent: storeConsentAction,
 
     /**
      * Analytics
      */
 
-    trackProximityStart: notImplemented,
-    trackQrCodeLoadingFailure: notImplemented
+    trackProximityStart: trackProximityStartAction,
+    trackQrCodeLoadingFailure: trackQrCodeLoadingFailureAction
   },
   actors: {
-    checkBluetoothPermissions: fromPromise<boolean>(notImplemented),
-    checkBluetoothActivation: fromPromise<boolean>(notImplemented),
-    checkNfcActivation: fromPromise<boolean>(notImplemented),
-    proximityCommunicationLogic: fromCallback<
-      ProximityEvents,
-      ProximityCommunicationLogicInput
-    >(notImplemented),
-    startEngagement: fromPromise<void, StartEngagementActorInput>(
-      notImplemented
-    ),
-    sendDocuments: fromPromise<
-      SendDocumentsActorOutput,
-      SendDocumentsActorInput
-    >(notImplemented),
-    terminateSession: fromPromise<SendErrorResponseActorOutput>(notImplemented)
+    checkBluetoothPermissions: checkBluetoothPermissionsActor,
+    checkBluetoothActivation: checkBluetoothActivationActor,
+    checkNfcActivation: checkNfcActivationActor,
+    proximityCommunicationLogic: proximityCommunicationLogicActor,
+    startEngagement: startEngagementActor,
+    sendDocuments: sendDocumentsActor,
+    terminateSession: terminateSessionActor
   },
   guards: {
     hasFailure: ({ context }) => !!context.failure,
     isNfcRetrieval: ({ context }) => context.retrievalMethod === "nfc",
     isNfcEngagement: ({ context }) => context.engagementMode === "nfc",
-    hasGrantedConsent: notImplemented
+    hasGrantedConsent: hasGrantedConsentGuard
   }
 });

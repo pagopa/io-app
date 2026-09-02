@@ -1,10 +1,7 @@
-import { IOToast } from "@io-app/design-system";
 import I18n from "i18next";
 import { ActionArgs, assertEvent, assign } from "xstate";
 
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { isRouteInNavigationState } from "../../../../utils/navigation";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
@@ -35,239 +32,233 @@ import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
-export const createCredentialIssuanceActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>,
-  store: ReturnType<typeof useIOStore>,
-  toast: IOToast
-) => ({
-  onInit: assign<
-    Context,
-    CredentialIssuanceEvents,
-    unknown,
-    CredentialIssuanceEvents,
-    any
-  >(() => {
-    const state = store.getState();
+type CredentialIssuanceActionArgs = ActionArgs<
+  Context,
+  CredentialIssuanceEvents,
+  CredentialIssuanceEvents
+>;
 
-    return {
-      isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
-      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
-      credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state),
-      isWalletValid: itwLifecycleIsValidSelector(state)
-    };
-  }),
+/**
+ * Initializes the credential issuance machine from the Redux store.
+ */
+export const onInitAction = assign<
+  Context,
+  CredentialIssuanceEvents,
+  unknown,
+  CredentialIssuanceEvents,
+  any
+>(({ context }) => {
+  const state = context.deps.store.getState();
 
-  navigateToCredentialIntroductionScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION
-    });
-  },
-
-  navigateToTrustIssuerScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
-    });
-  },
-
-  navigateToCredentialPreviewScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW
-    });
-  },
-
-  navigateToFailureScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE
-    });
-  },
-
-  navigateToWallet: () => {
-    toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
-    navigation.reset({
-      index: 1,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME
-          }
-        }
-      ]
-    });
-  },
-
-  navigateToEidVerificationExpiredScreen: () => {
-    navigation.replace(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED
-    });
-  },
-
-  navigateToCardOnboardingScreen: ({
-    context
-  }: ActionArgs<
-    Context,
-    CredentialIssuanceEvents,
-    CredentialIssuanceEvents
-  >) => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: context.isItWalletValid
-        ? ITW_ROUTES.L3_ONBOARDING
-        : ITW_ROUTES.ONBOARDING
-    });
-  },
-
-  closeIssuance: ({
-    event
-  }: ActionArgs<
-    Context,
-    CredentialIssuanceEvents,
-    CredentialIssuanceEvents
-  >) => {
-    const isWalletInNavigationState = isRouteInNavigationState(
-      navigation.getState(),
-      ROUTES.WALLET_HOME
-    );
-
-    if (!isWalletInNavigationState && navigation.canGoBack()) {
-      navigation.goBack();
-      return;
-    }
-
-    assertEvent(event, "close");
-    const { surveyStep, surveyCredential } = event;
-
-    if (surveyStep && surveyCredential) {
-      store.dispatch(
-        itwSetCredentialExitSurvey({
-          step: surveyStep,
-          credential: surveyCredential
-        })
-      );
-    }
-
-    navigation.navigate(ROUTES.MAIN, {
-      screen: ROUTES.WALLET_HOME,
-      params: {}
-    });
-  },
-
-  storeWalletInstanceAttestation: ({
-    context
-  }: ActionArgs<
-    Context,
-    CredentialIssuanceEvents,
-    CredentialIssuanceEvents
-  >) => {
-    assert(
-      context.walletInstanceAttestation,
-      "walletInstanceAttestation is undefined"
-    );
-    store.dispatch(
-      itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
-    );
-  },
-
-  storeCredential: ({
-    context
-  }: ActionArgs<
-    Context,
-    CredentialIssuanceEvents,
-    CredentialIssuanceEvents
-  >) => {
-    assert(context.credentialType, "credentialType is undefined");
-    assert(context.credentials, "credentials is undefined");
-    // A credential offer (deeplink/QR code) is the only alternative entry point to the
-    // catalogue/list for issuing a credential, so its presence in the context is what
-    // distinguishes the two flows for analytics purposes.
-    const origin: CredentialMetadata["origin"] = context.resolvedCredentialOffer
-      ? "credentialOffer"
-      : "catalogue";
-    const credentials = context.credentials.map(bundle => ({
-      ...bundle,
-      metadata: { ...bundle.metadata, origin }
-    }));
-    // Removes any credentials with the same type and stores the new ones atomically
-    store.dispatch(itwCredentialsReplaceByType(credentials, {}));
-    // Clear older upgrade-failed flag for this credential after a successful issuance/upgrade.
-    store.dispatch(itwClearCredentialUpgradeFailed(context.credentialType));
-    // Stores WUAs separately if present
-    if (context.walletUnitAttestations) {
-      store.dispatch(
-        itwWalletUnitAttestationsStore(context.walletUnitAttestations)
-      );
-    }
-  },
-
-  trackStartAddCredential: ({
-    context
-  }: ActionArgs<
-    Context,
-    CredentialIssuanceEvents,
-    CredentialIssuanceEvents
-  >) => {
-    if (context.credentialType) {
-      const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
-      const credential = getMixPanelCredential(context.credentialType, isItwL3);
-      trackStartAddNewCredential(credential);
-    }
-  },
-
-  trackAddCredential: ({
-    context
-  }: ActionArgs<
-    Context,
-    CredentialIssuanceEvents,
-    CredentialIssuanceEvents
-  >) => {
-    if (context.credentialType) {
-      const state = store.getState();
-      const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
-      const credential = getMixPanelCredential(context.credentialType, isItwL3);
-      trackSaveCredentialSuccess({
-        credential,
-        credential_details: itwMixPanelCredentialDetailsSelector(state)
-      });
-    }
-  },
-
-  handleSessionExpired: () =>
-    store.dispatch(checkCurrentSession.success({ isSessionValid: false })),
-
-  trackCredentialIssuingDataShare: ({
-    context
-  }: ActionArgs<Context, CredentialIssuanceEvents, CredentialIssuanceEvents>) =>
-    trackDataShareEvent(context, store),
-
-  trackCredentialIssuingDataShareAccepted: ({
-    context
-  }: ActionArgs<Context, CredentialIssuanceEvents, CredentialIssuanceEvents>) =>
-    trackDataShareEvent(context, store, true),
-
-  trackStartCredentialReissuing: ({
-    context
-  }: ActionArgs<
-    Context,
-    CredentialIssuanceEvents,
-    CredentialIssuanceEvents
-  >) => {
-    assert(context.credentialType, "credentialType is undefined");
-    trackStartCredentialUpgrade(
-      getMixPanelCredential(context.credentialType, context.isItWalletValid)
-    );
-  }
+  return {
+    isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
+    walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
+    credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state),
+    isWalletValid: itwLifecycleIsValidSelector(state)
+  };
 });
 
-const trackDataShareEvent = (
-  context: Context,
-  store: ReturnType<typeof useIOStore>,
-  isAccepted = false
-) => {
+export const navigateToCredentialIntroductionScreenAction = ({
+  context
+}: CredentialIssuanceActionArgs) => {
+  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
+    screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION
+  });
+};
+
+export const navigateToTrustIssuerScreenAction = ({
+  context
+}: CredentialIssuanceActionArgs) => {
+  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
+    screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
+  });
+};
+
+export const navigateToCredentialPreviewScreenAction = ({
+  context
+}: CredentialIssuanceActionArgs) => {
+  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
+    screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW
+  });
+};
+
+export const navigateToFailureScreenAction = ({
+  context
+}: CredentialIssuanceActionArgs) => {
+  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
+    screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE
+  });
+};
+
+export const navigateToWalletAction = ({
+  context
+}: CredentialIssuanceActionArgs) => {
+  context.deps.toast.success(
+    I18n.t("features.itWallet.issuance.credentialResult.toast")
+  );
+  context.deps.navigation.reset({
+    index: 1,
+    routes: [
+      {
+        name: ROUTES.MAIN,
+        params: {
+          screen: ROUTES.WALLET_HOME
+        }
+      }
+    ]
+  });
+};
+
+export const navigateToEidVerificationExpiredScreenAction = ({
+  context
+}: CredentialIssuanceActionArgs) => {
+  context.deps.navigation.replace(ITW_ROUTES.MAIN, {
+    screen: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED
+  });
+};
+
+export const navigateToCardOnboardingScreenAction = ({
+  context
+}: CredentialIssuanceActionArgs) => {
+  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
+    screen: context.isItWalletValid
+      ? ITW_ROUTES.L3_ONBOARDING
+      : ITW_ROUTES.ONBOARDING
+  });
+};
+
+export const closeIssuanceAction = ({
+  context,
+  event
+}: CredentialIssuanceActionArgs) => {
+  const { navigation, store } = context.deps;
+  const isWalletInNavigationState = isRouteInNavigationState(
+    navigation.getState(),
+    ROUTES.WALLET_HOME
+  );
+
+  if (!isWalletInNavigationState && navigation.canGoBack()) {
+    navigation.goBack();
+    return;
+  }
+
+  assertEvent(event, "close");
+  const { surveyStep, surveyCredential } = event;
+
+  if (surveyStep && surveyCredential) {
+    store.dispatch(
+      itwSetCredentialExitSurvey({
+        step: surveyStep,
+        credential: surveyCredential
+      })
+    );
+  }
+
+  navigation.navigate(ROUTES.MAIN, {
+    screen: ROUTES.WALLET_HOME,
+    params: {}
+  });
+};
+
+export const storeWalletInstanceAttestationAction = ({
+  context
+}: CredentialIssuanceActionArgs) => {
+  assert(
+    context.walletInstanceAttestation,
+    "walletInstanceAttestation is undefined"
+  );
+  context.deps.store.dispatch(
+    itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
+  );
+};
+
+export const storeCredentialAction = ({
+  context
+}: CredentialIssuanceActionArgs) => {
+  assert(context.credentialType, "credentialType is undefined");
+  assert(context.credentials, "credentials is undefined");
+  const { store } = context.deps;
+  // A credential offer (deeplink/QR code) is the only alternative entry point to the
+  // catalogue/list for issuing a credential, so its presence in the context is what
+  // distinguishes the two flows for analytics purposes.
+  const origin: CredentialMetadata["origin"] = context.resolvedCredentialOffer
+    ? "credentialOffer"
+    : "catalogue";
+  const credentials = context.credentials.map(bundle => ({
+    ...bundle,
+    metadata: { ...bundle.metadata, origin }
+  }));
+  // Removes any credentials with the same type and stores the new ones atomically
+  store.dispatch(itwCredentialsReplaceByType(credentials, {}));
+  // Clear older upgrade-failed flag for this credential after a successful issuance/upgrade.
+  store.dispatch(itwClearCredentialUpgradeFailed(context.credentialType));
+  // Stores WUAs separately if present
+  if (context.walletUnitAttestations) {
+    store.dispatch(
+      itwWalletUnitAttestationsStore(context.walletUnitAttestations)
+    );
+  }
+};
+
+export const trackStartAddCredentialAction = ({
+  context
+}: CredentialIssuanceActionArgs) => {
+  if (context.credentialType) {
+    const isItwL3 = itwLifecycleIsITWalletValidSelector(
+      context.deps.store.getState()
+    );
+    const credential = getMixPanelCredential(context.credentialType, isItwL3);
+    trackStartAddNewCredential(credential);
+  }
+};
+
+export const trackAddCredentialAction = ({
+  context
+}: CredentialIssuanceActionArgs) => {
+  if (context.credentialType) {
+    const state = context.deps.store.getState();
+    const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+    const credential = getMixPanelCredential(context.credentialType, isItwL3);
+    trackSaveCredentialSuccess({
+      credential,
+      credential_details: itwMixPanelCredentialDetailsSelector(state)
+    });
+  }
+};
+
+export const handleSessionExpiredAction = ({
+  context
+}: CredentialIssuanceActionArgs) =>
+  context.deps.store.dispatch(
+    checkCurrentSession.success({ isSessionValid: false })
+  );
+
+export const trackCredentialIssuingDataShareAction = ({
+  context
+}: CredentialIssuanceActionArgs) => trackDataShareEvent(context);
+
+export const trackCredentialIssuingDataShareAcceptedAction = ({
+  context
+}: CredentialIssuanceActionArgs) => trackDataShareEvent(context, true);
+
+export const trackStartCredentialReissuingAction = ({
+  context
+}: CredentialIssuanceActionArgs) => {
+  assert(context.credentialType, "credentialType is undefined");
+  trackStartCredentialUpgrade(
+    getMixPanelCredential(context.credentialType, context.isItWalletValid)
+  );
+};
+
+const trackDataShareEvent = (context: Context, isAccepted = false) => {
   if (context.credentialType) {
     const { credentialType } = context;
     if (!credentialType) {
       return;
     }
-    const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
+    const isItwL3 = itwLifecycleIsITWalletValidSelector(
+      context.deps.store.getState()
+    );
     const credential = getMixPanelCredential(context.credentialType, isItwL3);
 
     const trackDataFn = isAccepted

@@ -7,7 +7,8 @@ import { displayingTrustmarkState } from "./state/displayingTrustmark";
 export const itwTrustmarkMachine = itwTrustmarkMachineSetup.createMachine({
   id: "itwTrustmarkMachine",
   context: ({ input }) => ({
-    credentialType: input.credentialType
+    credentialType: input.credentialType,
+    deps: input.deps
   }),
   entry: "onInit",
   initial: "CheckingWalletInstanceAttestation",
@@ -30,6 +31,7 @@ export const itwTrustmarkMachine = itwTrustmarkMachineSetup.createMachine({
       tags: [ItwTags.Loading],
       invoke: {
         src: "getWalletAttestationActor",
+        input: ({ context }) => ({ deps: context.deps }),
         onDone: {
           target: "RefreshingTrustmark",
           actions: [
@@ -58,6 +60,7 @@ export const itwTrustmarkMachine = itwTrustmarkMachineSetup.createMachine({
         src: "getCredentialTrustmarkActor",
         input: ({ context }) => ({
           credential: context.credential,
+          deps: context.deps,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt
         }),
         onDone: {

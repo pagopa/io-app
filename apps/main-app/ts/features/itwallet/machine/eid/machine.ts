@@ -11,7 +11,7 @@ import { userIdentificationState } from "./state/userIdentification";
 
 export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
   id: "itwEidIssuanceMachine",
-  context: { ...InitialContext },
+  context: ({ input }) => ({ ...InitialContext, deps: input.deps }),
   initial: "Idle",
   entry: "onInit",
   invoke: {
@@ -122,7 +122,10 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
       tags: [ItwTags.Loading],
       invoke: {
         src: "verifyTrustFederation",
-        input: ({ context }) => ({ itwVersion: context.itwVersion }),
+        input: ({ context }) => ({
+          itwVersion: context.itwVersion,
+          deps: context.deps
+        }),
         onDone: [
           {
             // When no integrity hardware key exists or the user is upgrading to IT-Wallet
@@ -175,7 +178,8 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
         src: "createWalletInstance",
         input: ({ context }) => ({
           itwVersion: context.itwVersion,
-          isRenewal: context.mode === "upgrade"
+          isRenewal: context.mode === "upgrade",
+          deps: context.deps
         }),
         onDone: {
           actions: [
@@ -204,7 +208,10 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
       entry: "navigateToWalletRevocationScreen",
       invoke: {
         src: "revokeWalletInstance",
-        input: ({ context }) => ({ itwVersion: context.itwVersion }),
+        input: ({ context }) => ({
+          itwVersion: context.itwVersion,
+          deps: context.deps
+        }),
         onDone: {
           actions: [
             "trackWalletInstanceRevocation",
@@ -239,7 +246,8 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
         src: "getWalletAttestation",
         input: ({ context }) => ({
           integrityKeyTag: context.integrityKeyTag,
-          itwVersion: context.itwVersion
+          itwVersion: context.itwVersion,
+          deps: context.deps
         }),
         onDone: [
           {

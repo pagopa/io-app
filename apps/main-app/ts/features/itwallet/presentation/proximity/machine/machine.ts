@@ -8,7 +8,7 @@ import { presentmentState } from "./state/presentment";
 
 export const itwProximityMachine = itwProximityMachineSetup.createMachine({
   id: "itwProximityMachine",
-  context: { ...InitialContext },
+  context: ({ input }) => ({ ...InitialContext, deps: input.deps }),
   initial: "Idle",
   entry: "onInit",
   states: {

@@ -1,34 +1,74 @@
-import { assertEvent, assign, fromCallback, fromPromise, setup } from "xstate";
+import { assertEvent, assign, setup } from "xstate";
 
 import { assert } from "../../../../utils/assert.ts";
-import {
-  CredentialAccessToken,
-  WalletInstanceAttestations
-} from "../../common/utils/itwTypesUtils";
 import { isMrtdPoPChallengeRequired } from "../../common/utils/mrtdUrl";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
+import { waitForSessionRefreshActor } from "../utils/actors";
 import {
-  CreateWalletInstanceActorParams,
-  GetWalletAttestationActorParams,
-  InitMrtdPoPChallengeActorParams,
-  ObtainStatusListActorInput,
-  ObtainStatusListActorOutput,
-  RequestAccessTokenActorParams,
-  RequestEidActorOutput,
-  type RequestEidActorParams,
-  StartAuthFlowActorParams,
-  StoreEidCredentialActorParams,
-  ValidateMrtdPoPChallengeActorParams,
-  WithItwVersion
+  cleanupIntegrityKeyTagAction,
+  closeIssuanceAction,
+  handleSessionExpiredAction,
+  navigateToCieAuthenticationScreenAction,
+  navigateToCieCanPreparationScreenAction,
+  navigateToCieCanScreenAction,
+  navigateToCieCardPreparationScreenAction,
+  navigateToCieIdLoginScreenAction,
+  navigateToCieInternalAuthAndMrtdScreenAction,
+  navigateToCieNfcPreparationScreenAction,
+  navigateToCiePinPreparationScreenAction,
+  navigateToCiePinScreenAction,
+  navigateToCieWarningScreenAction,
+  navigateToCredentialCatalogAction,
+  navigateToEidPreviewScreenAction,
+  navigateToFailureScreenAction,
+  navigateToIdentificationScreenAction,
+  navigateToIdpSelectionScreenAction,
+  navigateToIpzsPrivacyScreenAction,
+  navigateToNfcInstructionsScreenAction,
+  navigateToSpidLoginScreenAction,
+  navigateToSuccessScreenAction,
+  navigateToTosScreenAction,
+  navigateToWalletAction,
+  navigateToWalletRevocationScreenAction,
+  onInitAction,
+  refreshCredentialsCatalogueAction,
+  resetWalletInstanceAction,
+  storeAuthLevelAction,
+  storeCredentialUpgradeFailuresAction,
+  storeIntegrityKeyTagAction,
+  storeWalletActivationFeedbackBannerDataAction,
+  storeWalletInstanceAttestationAction,
+  trackIdentificationMethodSelectedAction,
+  trackIntroScreenAction,
+  trackItwIdAuthenticationCompletedAction,
+  trackItwIdVerifiedDocumentAction,
+  trackWalletInstanceCreationAction,
+  trackWalletInstanceRevocationAction
+} from "./actions";
+import {
+  createWalletInstanceActor,
+  getCieStatusActor,
+  getWalletAttestationActor,
+  initMrtdPoPChallengeActor,
+  obtainStatusListActor,
+  requestAccessTokenActor,
+  requestEidActor,
+  revokeWalletInstanceActor,
+  startAuthFlowActor,
+  storeEidCredentialActor,
+  validateMrtdPoPChallengeActor,
+  verifyTrustFederationActor
 } from "./actors";
-import {
-  AuthenticationContext,
-  CieContext,
-  Context,
-  MrtdPoPContext
-} from "./context";
+import { Context, IdentificationContext } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { mapEventToFailure } from "./failure";
+import {
+  hasValidWalletInstanceAttestationGuard,
+  isSessionExpiredGuard,
+  issuedEidMatchesAuthenticatedUserGuard,
+  isWalletValidGuard
+} from "./guards";
+import { Input } from "./input";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -38,62 +78,66 @@ const notImplemented = () => {
 export const itwEidIssuanceMachineSetup = setup({
   types: {
     context: {} as Context,
-    events: {} as EidIssuanceEvents
+    events: {} as EidIssuanceEvents,
+    input: {} as Input
   },
   actions: {
-    onInit: notImplemented,
+    onInit: onInitAction,
 
     /**
      * Navigation
      */
 
-    navigateToTosScreen: notImplemented,
-    navigateToIpzsPrivacyScreen: notImplemented,
-    navigateToIdentificationScreen: notImplemented,
-    navigateToIdpSelectionScreen: notImplemented,
-    navigateToSpidLoginScreen: notImplemented,
-    navigateToCieIdLoginScreen: notImplemented,
-    navigateToEidPreviewScreen: notImplemented,
-    navigateToSuccessScreen: notImplemented,
-    navigateToFailureScreen: notImplemented,
-    navigateToWallet: notImplemented,
-    navigateToCredentialCatalog: notImplemented,
-    navigateToCieNfcPreparationScreen: notImplemented,
-    navigateToCiePinPreparationScreen: notImplemented,
-    navigateToCieCardPreparationScreen: notImplemented,
-    navigateToCieCanPreparationScreen: notImplemented,
-    navigateToCiePinScreen: notImplemented,
-    navigateToCieAuthenticationScreen: notImplemented,
-    navigateToNfcInstructionsScreen: notImplemented,
-    navigateToWalletRevocationScreen: notImplemented,
-    navigateToCieWarningScreen: notImplemented,
-    navigateToCieCanScreen: notImplemented,
-    navigateToCieInternalAuthAndMrtdScreen: notImplemented,
-    closeIssuance: notImplemented,
+    navigateToTosScreen: navigateToTosScreenAction,
+    navigateToIpzsPrivacyScreen: navigateToIpzsPrivacyScreenAction,
+    navigateToIdentificationScreen: navigateToIdentificationScreenAction,
+    navigateToIdpSelectionScreen: navigateToIdpSelectionScreenAction,
+    navigateToSpidLoginScreen: navigateToSpidLoginScreenAction,
+    navigateToCieIdLoginScreen: navigateToCieIdLoginScreenAction,
+    navigateToEidPreviewScreen: navigateToEidPreviewScreenAction,
+    navigateToSuccessScreen: navigateToSuccessScreenAction,
+    navigateToFailureScreen: navigateToFailureScreenAction,
+    navigateToWallet: navigateToWalletAction,
+    navigateToCredentialCatalog: navigateToCredentialCatalogAction,
+    navigateToCieNfcPreparationScreen: navigateToCieNfcPreparationScreenAction,
+    navigateToCiePinPreparationScreen: navigateToCiePinPreparationScreenAction,
+    navigateToCieCardPreparationScreen:
+      navigateToCieCardPreparationScreenAction,
+    navigateToCieCanPreparationScreen: navigateToCieCanPreparationScreenAction,
+    navigateToCiePinScreen: navigateToCiePinScreenAction,
+    navigateToCieAuthenticationScreen: navigateToCieAuthenticationScreenAction,
+    navigateToNfcInstructionsScreen: navigateToNfcInstructionsScreenAction,
+    navigateToWalletRevocationScreen: navigateToWalletRevocationScreenAction,
+    navigateToCieWarningScreen: navigateToCieWarningScreenAction,
+    navigateToCieCanScreen: navigateToCieCanScreenAction,
+    navigateToCieInternalAuthAndMrtdScreen:
+      navigateToCieInternalAuthAndMrtdScreenAction,
+    closeIssuance: closeIssuanceAction,
 
     /**
      * Store update
      */
 
-    storeIntegrityKeyTag: notImplemented,
-    cleanupIntegrityKeyTag: notImplemented,
-    storeWalletInstanceAttestation: notImplemented,
-    storeAuthLevel: notImplemented,
-    storeWalletActivationFeedbackBannerData: notImplemented,
-    storeCredentialUpgradeFailures: notImplemented,
-    handleSessionExpired: notImplemented,
-    resetWalletInstance: notImplemented,
-    refreshCredentialsCatalogue: notImplemented,
+    storeIntegrityKeyTag: storeIntegrityKeyTagAction,
+    cleanupIntegrityKeyTag: cleanupIntegrityKeyTagAction,
+    storeWalletInstanceAttestation: storeWalletInstanceAttestationAction,
+    storeAuthLevel: storeAuthLevelAction,
+    storeWalletActivationFeedbackBannerData:
+      storeWalletActivationFeedbackBannerDataAction,
+    storeCredentialUpgradeFailures: storeCredentialUpgradeFailuresAction,
+    handleSessionExpired: handleSessionExpiredAction,
+    resetWalletInstance: resetWalletInstanceAction,
+    refreshCredentialsCatalogue: refreshCredentialsCatalogueAction,
 
     /**
      * Analytics
      */
 
-    trackWalletInstanceCreation: notImplemented,
-    trackWalletInstanceRevocation: notImplemented,
-    trackIdentificationMethodSelected: notImplemented,
-    trackItwIdAuthenticationCompleted: notImplemented,
-    trackItwIdVerifiedDocument: notImplemented,
+    trackWalletInstanceCreation: trackWalletInstanceCreationAction,
+    trackWalletInstanceRevocation: trackWalletInstanceRevocationAction,
+    trackIdentificationMethodSelected: trackIdentificationMethodSelectedAction,
+    trackItwIdAuthenticationCompleted: trackItwIdAuthenticationCompletedAction,
+    trackItwIdVerifiedDocument: trackItwIdVerifiedDocumentAction,
     /**
      * Context manipulation
      */
@@ -102,7 +146,7 @@ export const itwEidIssuanceMachineSetup = setup({
       identification: {
         mode: "cieId",
         level: "L2"
-      } as const
+      } satisfies IdentificationContext
     })),
 
     /**
@@ -119,7 +163,12 @@ export const itwEidIssuanceMachineSetup = setup({
       ) {
         return {};
       }
-      return { identification: { mode: "cieId", level: "L3" } as const };
+      return {
+        identification: {
+          mode: "cieId",
+          level: "L3"
+        } satisfies IdentificationContext
+      };
     }),
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     /**
@@ -152,65 +201,42 @@ export const itwEidIssuanceMachineSetup = setup({
         }
       };
     }),
-    trackIntroScreen: notImplemented
+    trackIntroScreen: trackIntroScreenAction
   },
   actors: {
-    getCieStatus: fromPromise<CieContext>(notImplemented),
-    verifyTrustFederation: fromPromise<void, WithItwVersion>(notImplemented),
+    getCieStatus: getCieStatusActor,
+    verifyTrustFederation: verifyTrustFederationActor,
 
     /**
      * WI actors
      */
 
-    createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
-      notImplemented
-    ),
-    revokeWalletInstance: fromPromise<void, WithItwVersion>(notImplemented),
-    getWalletAttestation: fromPromise<
-      WalletInstanceAttestations,
-      GetWalletAttestationActorParams
-    >(notImplemented),
+    createWalletInstance: createWalletInstanceActor,
+    revokeWalletInstance: revokeWalletInstanceActor,
+    getWalletAttestation: getWalletAttestationActor,
 
     /**
      * Primary authentication actors
      */
 
-    startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
-      notImplemented
-    ),
+    startAuthFlow: startAuthFlowActor,
 
     /**
      * MRTD PoP Challenge actors
      */
 
-    initMrtdPoPChallenge: fromPromise<
-      MrtdPoPContext,
-      InitMrtdPoPChallengeActorParams
-    >(notImplemented),
-    validateMrtdPoPChallenge: fromPromise<
-      string,
-      ValidateMrtdPoPChallengeActorParams
-    >(notImplemented),
+    initMrtdPoPChallenge: initMrtdPoPChallengeActor,
+    validateMrtdPoPChallenge: validateMrtdPoPChallengeActor,
 
     /**
      * PID issuance actors
      */
 
-    requestAccessToken: fromPromise<
-      CredentialAccessToken,
-      RequestAccessTokenActorParams
-    >(notImplemented),
-    requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
-      notImplemented
-    ),
-    obtainStatusList: fromPromise<
-      ObtainStatusListActorOutput,
-      ObtainStatusListActorInput
-    >(notImplemented),
-    storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
-      notImplemented
-    ),
-    waitForSessionRefresh: fromCallback(notImplemented),
+    requestAccessToken: requestAccessTokenActor,
+    requestEid: requestEidActor,
+    obtainStatusList: obtainStatusListActor,
+    storeEidCredential: storeEidCredentialActor,
+    waitForSessionRefresh: waitForSessionRefreshActor,
 
     /**
      * Credential upgrade actors
@@ -219,11 +245,11 @@ export const itwEidIssuanceMachineSetup = setup({
     credentialUpgradeMachine: itwCredentialUpgradeMachine
   },
   guards: {
-    issuedEidMatchesAuthenticatedUser: notImplemented,
-    isSessionExpired: notImplemented,
+    issuedEidMatchesAuthenticatedUser: issuedEidMatchesAuthenticatedUserGuard,
+    isSessionExpired: isSessionExpiredGuard,
     isOperationAborted: notImplemented,
     hasIntegrityKeyTag: ({ context }) => context.integrityKeyTag !== undefined,
-    hasValidWalletInstanceAttestation: notImplemented,
+    hasValidWalletInstanceAttestation: hasValidWalletInstanceAttestationGuard,
     hasCredentialsToUpgrade: ({ context }) =>
       context.credentialsToUpgrade.length > 0,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
@@ -238,6 +264,6 @@ export const itwEidIssuanceMachineSetup = setup({
       context.identification?.mode !== "ciePin" &&
       context.authenticationContext !== undefined &&
       isMrtdPoPChallengeRequired(context.authenticationContext.callbackUrl),
-    isWalletValid: notImplemented
+    isWalletValid: isWalletValidGuard
   }
 });
