@@ -202,7 +202,6 @@ const DateClaimItem = ({
         };
       case "expiring":
       case "jwtExpiring":
-      case "valid":
         return {
           type: "badge",
           componentProps: {
@@ -222,6 +221,8 @@ const DateClaimItem = ({
             )
           }
         };
+      // "valid" is the default state, so no badge is shown for it
+      case "valid":
       default:
         return undefined;
     }
