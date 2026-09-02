@@ -1,6 +1,4 @@
 import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
-import { sequenceT } from "fp-ts/lib/Apply";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import { select } from "typed-redux-saga/macro";
 
@@ -10,23 +8,20 @@ import { trackCieIdSecurityLevelMismatch } from "../analytics";
 import { cieIDSelectedSecurityLevelSelector } from "../store/selectors";
 
 export function* shouldTrackLevelSecurityMismatchSaga(
-  maybeSessionInformation: O.Option<PublicSession>,
+  sessionInformation: PublicSession | undefined,
   isActiveLoginSuccess = false
 ) {
   const selectedSecurityLevel = yield* select(
     cieIDSelectedSecurityLevelSelector
   );
   const idpSelected = yield* select(idpSelector);
-  const selectedLevelMismatches = pipe(
-    sequenceT(O.Monad)(maybeSessionInformation, idpSelected),
-    O.chainNullableK(
-      ([session, idp]) =>
-        selectedSecurityLevel &&
-        idp.id === IdpCIE_ID.id &&
-        !session.spidLevel?.includes(selectedSecurityLevel)
-    ),
-    O.getOrElse(() => false)
-  );
+
+  const selectedLevelMismatches =
+    sessionInformation != null &&
+    O.isSome(idpSelected) &&
+    !!selectedSecurityLevel &&
+    idpSelected.value.id === IdpCIE_ID.id &&
+    !sessionInformation.spidLevel?.includes(selectedSecurityLevel);
 
   if (selectedLevelMismatches) {
     trackCieIdSecurityLevelMismatch(isActiveLoginSuccess ? "reauth" : "auth");

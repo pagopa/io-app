@@ -4,7 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import i18n from "i18next";
 import { useCallback, useEffect } from "react";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";

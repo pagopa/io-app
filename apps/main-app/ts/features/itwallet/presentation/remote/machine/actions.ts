@@ -67,6 +67,13 @@ export const createRemoteActionsImplementation = (
     });
   },
 
+  navigateToIdentificationModeScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+      params: { eidReissuing: true, level: "l3" }
+    });
+  },
+
   navigateToBarcodeScanScreen: () => {
     navigation.navigate(ROUTES.BARCODE_SCAN, undefined, { pop: true });
   },

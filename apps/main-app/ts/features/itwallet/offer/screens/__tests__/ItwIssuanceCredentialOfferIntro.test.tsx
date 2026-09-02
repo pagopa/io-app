@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Text } from "react-native";
 import { Action, createStore } from "redux";
@@ -52,7 +53,10 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
 
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(false);
+      .mockReturnValue(true);
+    jest
+      .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+      .mockReturnValue("valid");
     jest
       .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
       .mockReturnValue(true);
@@ -93,6 +97,61 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     expect(onDiscoveryParams).not.toHaveBeenCalled();
     expect(machineSend).not.toHaveBeenCalledWith({ type: "close" });
   });
+
+  it("asks to activate the wallet when no wallet instance is active", () => {
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(false);
+
+    const onDiscoveryParams = jest.fn();
+    const { queryByText, getByText } = renderComponent(onDiscoveryParams);
+
+    expect(
+      queryByText(
+        I18n.t("features.itWallet.issuance.credentialOffer.activation.title")
+      )
+    ).not.toBeNull();
+    expect(machineSend).not.toHaveBeenCalledWith({
+      type: "confirm-credential-offer"
+    });
+
+    fireEvent.press(
+      getByText(
+        I18n.t(
+          "features.itWallet.issuance.credentialOffer.activation.primaryAction"
+        )
+      )
+    );
+
+    expect(machineSend).toHaveBeenCalledWith({ type: "close" });
+    expect(onDiscoveryParams).toHaveBeenCalledWith({
+      animationEnabled: false,
+      credentialType: T_CREDENTIAL_TYPE,
+      level: "l3"
+    });
+  });
+
+  it.each(["jwtExpired", "jwtExpiring"])(
+    "asks to confirm the identity when the eID is %s",
+    eidStatus => {
+      jest
+        .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+        .mockReturnValue(eidStatus as never);
+
+      const { queryByText } = renderComponent(jest.fn());
+
+      expect(
+        queryByText(
+          I18n.t(
+            "features.itWallet.issuance.credentialOffer.confirmIdentity.title"
+          )
+        )
+      ).not.toBeNull();
+      expect(machineSend).not.toHaveBeenCalledWith({
+        type: "confirm-credential-offer"
+      });
+    }
+  );
 
   it("auto-confirms the offer when the credential is not in the wallet and there is no introduction content", () => {
     const { queryByText } = renderComponent(jest.fn());

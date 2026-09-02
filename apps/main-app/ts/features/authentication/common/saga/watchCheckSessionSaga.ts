@@ -2,7 +2,6 @@ import { GetSessionStateT } from "@io-app/api-types/generated/definitions/sessio
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { TypeOfApiResponseStatus } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
@@ -49,10 +48,10 @@ export function* checkSession(
 
         yield* put(
           sessionInformationLoadSuccess(
-            mergeOldAndNewValues && O.isSome(currentSessionInfo)
+            mergeOldAndNewValues && currentSessionInfo != null
               ? getOnlyNotAlreadyExistentValues(
                   response.right.value,
-                  currentSessionInfo.value
+                  currentSessionInfo
                 )
               : response.right.value
           )

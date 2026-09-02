@@ -9,6 +9,7 @@ import { ItwBannersActions } from "./banners";
 import { ItwEnvironmentActions } from "./environment";
 import { ItwPreferencesActions } from "./preferences";
 import { ItwSecurePreferencesActions } from "./securePreferences";
+import { ItwUiActions } from "./ui";
 
 export type ItwActions =
   | ItwBannersActions
@@ -21,4 +22,5 @@ export type ItwActions =
   | ItwPreferencesActions
   | ItwProximityActions
   | ItwSecurePreferencesActions
+  | ItwUiActions
   | ItwWalletInstanceActions;

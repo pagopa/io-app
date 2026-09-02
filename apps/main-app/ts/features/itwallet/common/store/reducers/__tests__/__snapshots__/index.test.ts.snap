@@ -37,6 +37,11 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
     "offlineAccessCounter": 0,
     "unverifiedCredentialsAccessCounter": 0,
   },
+  "ui": {
+    "activationExitSurvey": undefined,
+    "credentialExitSurvey": undefined,
+    "itwFeedbackBottomSheet": false,
+  },
   "walletInstance": {
     "attestation": undefined,
     "isRemotelyActive": undefined,
@@ -44,6 +49,7 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
     "status": {
       "kind": "PotNone",
     },
+    "statusList": undefined,
     "walletUnitAttestations": {},
   },
 }

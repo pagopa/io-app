@@ -13,8 +13,6 @@ patchedDependencies:
   react-native-barcode-builder@2.0.0: patches/react-native-barcode-builder@2.0.0.patch
   # Removes IP and MAC address APIs so the app manifest can remove ACCESS_WIFI_STATE permission which is not required by the app.
   react-native-device-info@14.0.4: patches/react-native-device-info@14.0.4.patch
-  # Replaces JCenter and the dynamic AndroidX Core dependency with version 1.5.0.
-  react-native-screen-brightness@2.0.0-alpha: patches/react-native-screen-brightness@2.0.0-alpha.patch
   # Adds Android props that deny WebView camera and microphone access despite app permissions.
   react-native-webview@13.16.0: patches/react-native-webview@13.16.0.patch
   # Makes iOS PDF annotations read-only, matching Android behaviour.
@@ -45,15 +43,15 @@ allowBuilds:
 
 catalog:
   # --- Nx ---
-  nx: "22.7.2"
-  "@nx/eslint": "22.7.2"
-  "@nx/jest": "22.7.2"
-  "@nx/js": "22.7.2"
+  nx: "23.1.1"
+  "@nx/eslint": "23.1.1"
+  "@nx/jest": "23.1.1"
+  "@nx/js": "23.1.1"
 
   # --- TypeScript ---
   typescript: "6.0.3"
   prettier: "^3.8.1"
-  eslint: "^9.39.4"
+  eslint: "^10.9.0"
   jest: "~30.3.0"
   "@types/jest": "^30.0.0"
   "@types/react": "^19.2.0"
@@ -68,7 +66,7 @@ catalog:
 
   # --- React Native ---
   "@react-native/typescript-config": "0.83.10"
-  "@react-native/eslint-config": "0.85.0-rc.7"
+  "@react-native/eslint-config": "0.83.10"
   react: "19.2.0"
   react-native: "0.83.10"
   react-test-renderer: "19.2.0"
@@ -80,7 +78,7 @@ catalog:
 
   # --- Design System ---
   react-native-worklets: "^0.8.3"
-  react-native-linear-gradient: "^2.8.3"
+  expo-linear-gradient: "~55.0.16"
   react-native-easing-gradient: "^1.1.1"
   react-native-gesture-handler: "^2.28.0"
   react-native-pulsar: "^1.6.1"
