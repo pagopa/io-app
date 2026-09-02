@@ -155,27 +155,44 @@ async function run() {
           'fill="currentColor"'
         );
 
-        // Extract only the Path tags from the JSX code
-        const pathTagRegex = /<Path[^>]*\/>/g;
+        // Regex updated to support multiline tags and </Path> closing tags
+        const pathTagRegex = /<Path[\s\S]*?(?:\/>|<\/Path>)/g;
         const pathTags = jsxCodeWithoutHardcodedColors.match(pathTagRegex);
-        
+
         if (!pathTags) {
           console.log(`⚠️ No Path tags found in ${file}`);
           continue;
         }
 
-        const jsxCodeWithPathOnly = pathTags.join("");
+        const jsxCodeWithPathOnly = pathTags.join("\n");
 
-        const template = fs.readFileSync(templateFilePath, "utf8");
-        const componentData = template
+        let template = fs.readFileSync(templateFilePath, "utf8");
+
+        // 1. Restore any commented-out import lines
+        template = template.replace(/\/\/\s*(import\s+.*)/g, "$1");
+
+        // 2. Remove remaining single-line comments safely
+        template = template.replace(/\/\/(?!.*import).*\n/g, "\n");
+
+        // 3. Inject icon name and path content
+        let componentData = template
           .replace(/IconTemplate/g, file.replace(".svg", ""))
-          .replace(/\/\/.*\n/g, "") // Remove lines starting with //
           .replace(`{/* SVGContent */}`, jsxCodeWithPathOnly);
+
+        // 4. Ensure Path is included in the react-native-svg import block if missing
+        if (
+          jsxCodeWithPathOnly.includes("<Path") &&
+          !/import\s+.*Path.*\s+from\s+['"]react-native-svg['"]/.test(componentData)
+        ) {
+          componentData = componentData.replace(
+            /import\s+\{([^}]+)\}\s+from\s+['"]react-native-svg['"]/,
+            (match, imports) => `import { ${imports.trim()}, Path } from "react-native-svg"`
+          );
+        }
 
         const fileWithTsxExtension = file.replace(".svg", ".tsx");
         const tsxFilePath = join(tsxDir, fileWithTsxExtension);
 
-        // Await the asynchronous prettier.format call
         const formattedData = await prettier.format(componentData, {
           parser: "typescript",
         });
