@@ -1,5 +1,4 @@
 import { ContentWrapper, VStack } from "@io-app/design-system";
-import { useIsFocused } from "@react-navigation/core";
 import { PropsWithChildren, ReactElement } from "react";
 import {
   Dimensions,
@@ -31,13 +30,6 @@ export const ItwCiePreparationScreenContent = ({
   children,
   goBack
 }: PropsWithChildren<Props>) => {
-  // The image source can be an animated GIF. Since native GIF playback isn't
-  // driven by React re-renders, the animation keeps running as long as the
-  // `Image` view stays mounted, which is still the case when this screen is
-  // pushed to the back stack after navigating forward. Unmounting the image
-  // while the screen isn't focused stops the animation instead of letting it
-  // run indefinitely in the background.
-  const isFocused = useIsFocused();
   const image = imageSrc ? (
     <Image
       accessibilityIgnoresInvertColors
@@ -60,7 +52,7 @@ export const ItwCiePreparationScreenContent = ({
       <ContentWrapper>
         <VStack space={16}>
           {children}
-          <View style={styles.imageContainer}>{isFocused && image}</View>
+          <View style={styles.imageContainer}>{image}</View>
         </VStack>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>

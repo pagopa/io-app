@@ -1,4 +1,5 @@
 import { IconButtonSolid, VSpacer } from "@io-app/design-system";
+import { useIsFocused } from "@react-navigation/native";
 import {
   Image,
   ImageProps,
@@ -31,9 +32,20 @@ export type GifImageProps = Omit<ImageProps, "source"> & {
  * Renders a GIF with accessible play and stop controls.
  *
  * Playback stops after `maxDurationMs`. Reduced motion keeps the static image
- * visible and disables playback. Native image props are forwarded to the GIF.
+ * visible and disables playback. The content unmounts while its screen is not
+ * focused so native GIF playback cannot continue in the background. Native
+ * image props are forwarded to the GIF.
  */
-export const GifImage = ({
+export const GifImage = (props: GifImageProps) => {
+  const isFocused = useIsFocused();
+
+  // Screens remain mounted in the navigation back stack. Unmounting the
+  // playback content on blur stops the native GIF and resets playback state
+  // before the screen is focused again.
+  return isFocused ? <FocusedGifImage {...props} /> : null;
+};
+
+const FocusedGifImage = ({
   accessibilityIgnoresInvertColors = false,
   autoPlay = true,
   maxDurationMs = DEFAULT_MAX_DURATION_MS,
