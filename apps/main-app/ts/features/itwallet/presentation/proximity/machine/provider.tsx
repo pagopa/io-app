@@ -4,6 +4,7 @@ import { PropsWithChildren } from "react";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector, useIOStore } from "../../../../../store/hooks.ts";
+import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug.ts";
 import { selectItwEnv } from "../../../common/store/selectors/environment.ts";
 import { getEnv } from "../../../common/utils/environment.ts";
 import { createProximityActionsImplementation } from "./actions.ts";
@@ -40,6 +41,12 @@ export const ItwProximityMachineProvider = ({
  * Convenience component to display debug info about the machine state in the ladybug component.
  */
 const DebugData = () => {
+  const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
+
+  return isDebugModeEnabled ? <MachineDebugData /> : null;
+};
+
+const MachineDebugData = () => {
   const state = ItwProximityMachineContext.useSelector(({ value }) => value);
   const context = ItwProximityMachineContext.useSelector(({ context: c }) => c);
 
