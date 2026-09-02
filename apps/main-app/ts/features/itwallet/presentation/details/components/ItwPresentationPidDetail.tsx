@@ -45,7 +45,8 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
       componentProps: {
         icon: claimsHidden ? "eyeHide" : "eyeShow",
         accessibilityLabel: listItemHeaderLabel,
-        onPress: () => dispatch(itwSetClaimValuesHidden(!claimsHidden))
+        onPress: () => dispatch(itwSetClaimValuesHidden(!claimsHidden)),
+        testID: "toggle-pid-claim-visibility"
       }
     }),
     [claimsHidden, dispatch, listItemHeaderLabel]
