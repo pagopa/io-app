@@ -321,7 +321,6 @@ export const ListItemInfo = ({
       }
       accessibilityRole={hasInteractiveElements ? undefined : accessibilityRole}
       accessible={!hasInteractiveElements}
-      focusable={false}
       style={IOListItemStyles.listItem}
       testID={testID}
     >

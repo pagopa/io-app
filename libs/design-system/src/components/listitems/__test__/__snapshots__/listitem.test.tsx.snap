@@ -160,7 +160,6 @@ exports[`Test List Item Components - Experimental Enabled ListItemInfo Snapshot 
 <View
   accessibilityLabel="accessibilityLabel"
   accessible={true}
-  focusable={false}
   style={
     {
       "marginHorizontal": -24,
@@ -2285,7 +2284,6 @@ exports[`Test List Item Components ListItemInfo Snapshot 1`] = `
 <View
   accessibilityLabel="accessibilityLabel"
   accessible={true}
-  focusable={false}
   style={
     {
       "marginHorizontal": -24,

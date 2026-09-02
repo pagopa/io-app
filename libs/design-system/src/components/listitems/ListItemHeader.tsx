@@ -76,7 +76,6 @@ export const ListItemHeader = ({
         accessibilityLabel={accessibilityLabel ?? label}
         accessibilityRole="header"
         accessible
-        focusable={false}
       >
         <H6 color={theme["textBody-tertiary"]}>{label}</H6>
       </View>
