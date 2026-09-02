@@ -14,7 +14,6 @@ import { View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import {
@@ -102,7 +101,6 @@ const IdPayBoolValuePrerequisitesScreen = () => {
           onPress: continueOnPress
         }
       }}
-      contextualHelp={emptyContextualHelp}
       goBack={goBackOnPress}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins

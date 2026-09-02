@@ -42,7 +42,6 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
@@ -75,10 +74,6 @@ import { cieFlowForDevServerEnabled } from "../utils";
 
 const CIE_PIN_LENGTH = 8;
 
-const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
-  title: "authentication.cie.pin.contextualHelpTitle",
-  body: "authentication.cie.pin.contextualHelpBody"
-});
 const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
 
 const CiePinScreen = () => {
@@ -223,8 +218,7 @@ const CiePinScreen = () => {
 
   useHeaderSecondLevel({
     title: withTrailingPoliceCarLightEmojii("", useCieUat),
-    supportRequest: true,
-    contextualHelpMarkdown: getContextualHelp()
+    supportRequest: true
   });
 
   const headerHeight = useHeaderHeight();

@@ -15,7 +15,6 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { IdPayUnsubscriptionParamsList } from "../navigation/params";
 import { IdPayUnsubscriptionRoutes } from "../navigation/routes";
@@ -156,7 +155,6 @@ const IdPayUnsubscriptionConfirmationScreen = () => {
           disabled: !checks.areFulfilled
         }
       }}
-      contextualHelp={emptyContextualHelp}
       description={I18n.t("idpay.unsubscription.subtitle")}
       goBack={handleClosePress}
       headerActionsProp={{

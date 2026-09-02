@@ -8,12 +8,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import {
-  ContextualHelpProps,
-  ContextualHelpPropsMarkdown
-} from "../../../../utils/contextualHelp";
 import { NetworkError } from "../../../../utils/errors";
-import { FAQsCategoriesType } from "../../../../utils/faq";
 
 export type ZendeskAssistanceType = Partial<{
   card: boolean;
@@ -26,9 +21,6 @@ export type ZendeskAssistanceType = Partial<{
 
 export type ZendeskStartPayload = {
   assistanceType: ZendeskAssistanceType;
-  contextualHelp?: ContextualHelpProps;
-  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   startingRoute: string;
 };
 /**

@@ -9,6 +9,7 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
+import { useEffect, useRef } from "react";
 import { ActivityIndicator, Platform, StyleSheet, View } from "react-native";
 import Animated, {
   SharedValue,
@@ -17,6 +18,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { CgnAnimatedBackground } from "./CgnAnimatedBackground";
 
 type CgnAnimatedHeaderProps = {
@@ -42,6 +44,12 @@ const CgnAnimatedHeader = ({
   const indicatorColor = isDark
     ? IOColors["blueIO-50"]
     : IOColors["blueItalia-850"];
+
+  const titleRef = useRef<View>(null);
+
+  useEffect(() => {
+    setAccessibilityFocus(titleRef);
+  }, []);
 
   // Fallback SharedValues so hooks are always called unconditionally
   const defaultPullProgress = useSharedValue(0);
@@ -106,7 +114,12 @@ const CgnAnimatedHeader = ({
         >
           <HStack space={16} style={{ alignItems: "center" }}>
             <Avatar logoUri={cgnLogo} size="medium" />
-            <View style={{ flex: 1 }}>
+            <View
+              accessibilityRole="header"
+              accessible
+              ref={titleRef}
+              style={{ flex: 1 }}
+            >
               <H3>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H3>
             </View>
           </HStack>

@@ -330,11 +330,6 @@ const ProfileMainScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelpMarkdown={{
-        title: "profile.main.contextualHelpTitle",
-        body: "profile.main.contextualHelpContent"
-      }}
-      faqCategories={["profile"]}
       headerActionsProp={{ showHelp: true }}
       testID="ProfileMainScreen"
       title={{

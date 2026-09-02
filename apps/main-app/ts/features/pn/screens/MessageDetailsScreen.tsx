@@ -75,7 +75,7 @@ const useCorrectHeader = (
   userType: SendUserType
 ) => {
   const { setOptions, goBack } = useIONavigation();
-  const startSupportRequest = useOfflineToastGuard(useStartSupportRequest({}));
+  const startSupportRequest = useOfflineToastGuard(useStartSupportRequest());
 
   const aarAction: HeaderSecondLevel = {
     title: "",

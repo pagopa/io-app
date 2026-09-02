@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect } from "react";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { trackIDPayOnboardingConversionRate } from "../analytics";

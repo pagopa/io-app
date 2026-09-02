@@ -23,9 +23,7 @@ import {
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
 import { trackSpidLoginError } from "../../../../../utils/analytics";
-import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -82,10 +80,6 @@ const IdpLoginScreen = () => {
   // ensuring the re-execution of the `useLollipopLoginSource` hook.
   const { replace } = useIONavigation();
   const selectedIdp = useIOSelector(selectedIdentityProviderSelector, _isEqual);
-  const selectedIdpTextData = useIOSelector(
-    idpContextualHelpDataFromIdSelector(selectedIdp?.id),
-    _isEqual
-  );
   const loggedOutWithIdpAuth = useIOSelector(
     loggedOutWithIdpAuthSelector,
     _isEqual
@@ -288,16 +282,6 @@ const IdpLoginScreen = () => {
     }
   }, [navigateToAuthErrorScreen, requestState]);
 
-  const contextualHelp = useMemo(() => {
-    if (O.isNone(selectedIdpTextData)) {
-      return {
-        title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-        body: I18n.t("authentication.idp_login.contextualHelpContent")
-      };
-    }
-    return emptyContextualHelp;
-  }, [selectedIdpTextData]);
-
   const hasError = pot.isError(requestState);
 
   /* Wrapped with `useMemo` to prevent unnecessary executions of `useLayoutEffect`
@@ -309,12 +293,10 @@ const IdpLoginScreen = () => {
             title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
               loggedOutWithIdpAuth?.idp.name
             }`,
-            supportRequest: true,
-            contextualHelp,
-            faqCategories: ["authentication_SPID"]
+            supportRequest: true
           }
         : { title: "", canGoBack: false },
-    [contextualHelp, loggedInAuth, loggedOutWithIdpAuth?.idp.name]
+    [loggedInAuth, loggedOutWithIdpAuth?.idp.name]
   );
 
   useHeaderSecondLevel(headerProps);

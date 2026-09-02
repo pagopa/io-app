@@ -17,7 +17,6 @@ import { View } from "react-native";
 
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { identificationRequest } from "../../../identification/store/actions";
 import { isLoadingSelector } from "../../common/machine/selectors";
@@ -155,7 +154,6 @@ const IDPayPaymentAuthorizationScreen = () => {
         }
       }}
       canGoback={false}
-      contextualHelp={emptyContextualHelp}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins
       title={{

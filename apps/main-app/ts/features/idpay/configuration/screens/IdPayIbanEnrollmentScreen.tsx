@@ -6,7 +6,6 @@ import { ComponentProps, useCallback, useEffect, useState } from "react";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
   isLoadingSelector,
   isUpsertingSelector
@@ -132,7 +131,6 @@ export const IdPayIbanEnrollmentScreen = () => {
   return (
     <IOScrollViewWithLargeHeader
       actions={renderActionProps()}
-      contextualHelp={emptyContextualHelp}
       description={I18n.t("idpay.configuration.iban.enrollment.subTitle")}
       goBack={handleBackPress}
       headerActionsProp={{
