@@ -1,6 +1,5 @@
 import { ContentWrapper, VStack } from "@io-app/design-system";
-import { useIsFocused } from "@react-navigation/core";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactElement } from "react";
 import {
   Dimensions,
   Image,
@@ -16,25 +15,31 @@ type Props = {
   actions?: IOScrollViewActions;
   description: string;
   goBack?: () => void;
-  imageSrc: ImageSourcePropType;
   title: string;
-};
+} & (
+  | { imageComponent: ReactElement; imageSrc?: never }
+  | { imageComponent?: never; imageSrc: ImageSourcePropType }
+);
 
 export const ItwCiePreparationScreenContent = ({
   title,
   description,
   imageSrc,
+  imageComponent,
   actions,
   children,
   goBack
 }: PropsWithChildren<Props>) => {
-  // The image source can be an animated GIF. Since native GIF playback isn't
-  // driven by React re-renders, the animation keeps running as long as the
-  // `Image` view stays mounted, which is still the case when this screen is
-  // pushed to the back stack after navigating forward. Unmounting the image
-  // while the screen isn't focused stops the animation instead of letting it
-  // run indefinitely in the background.
-  const isFocused = useIsFocused();
+  const image = imageSrc ? (
+    <Image
+      accessibilityIgnoresInvertColors
+      resizeMode="contain"
+      source={imageSrc}
+      style={styles.image}
+    />
+  ) : (
+    imageComponent
+  );
 
   return (
     <IOScrollViewWithLargeHeader
@@ -47,16 +52,7 @@ export const ItwCiePreparationScreenContent = ({
       <ContentWrapper>
         <VStack space={16}>
           {children}
-          <View style={styles.imageContainer}>
-            {isFocused && (
-              <Image
-                accessibilityIgnoresInvertColors
-                resizeMode="contain"
-                source={imageSrc}
-                style={styles.image}
-              />
-            )}
-          </View>
+          <View style={styles.imageContainer}>{image}</View>
         </VStack>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
