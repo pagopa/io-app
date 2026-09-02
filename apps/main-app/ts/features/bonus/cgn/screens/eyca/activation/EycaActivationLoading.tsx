@@ -2,7 +2,7 @@ import I18n from "i18next";
 import { FunctionComponent, useCallback } from "react";
 
 import { isError, isLoading } from "../../../../../../common/model/RemoteValue";
-import LoadingScreenContent from "../../../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import {

@@ -18,7 +18,7 @@ import RNFS from "react-native-fs";
 import { Prettify } from "../../types/helpers";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { debugInfoReplacer } from "./utils";
-import { withDebugEnabled } from "./withDebugEnabled";
+import { WithDebugEnabled } from "./withDebugEnabled";
 
 type ExpandableProps =
   | {
@@ -42,57 +42,62 @@ type Props = Prettify<
  * and to copy its content to the clipboard by pressing on the title.
  * The component it is rendered only if debug mode is enabled
  */
-export const DebugPrettyPrint = withDebugEnabled(
-  ({ title, data, expandable = true, isExpanded = false }: Props) => {
-    const toast = useIOToast();
-    const [expanded, setExpanded] = useState(isExpanded);
+export const DebugPrettyPrint = ({
+  title,
+  data,
+  expandable = true,
+  isExpanded = false
+}: Props) => {
+  const toast = useIOToast();
+  const [expanded, setExpanded] = useState(isExpanded);
 
-    const content = useMemo(() => {
-      if ((expandable && !expanded) || !expandable) {
-        return null;
-      }
-
-      return (
-        <View pointerEvents="box-only" style={styles.content}>
-          <IOText
-            color={"grey-700"}
-            font="FiraCode"
-            lineHeight={18}
-            size={12}
-            weight="Medium"
-          >
-            {JSON.stringify(
-              data,
-              debugInfoReplacer({ truncateStrings: true }),
-              2
-            )}
-          </IOText>
-        </View>
-      );
-    }, [data, expandable, expanded]);
-
-    const shareData = async () => {
-      try {
-        // Create a temporary file path
-        const filePath = `${RNFS.CachesDirectoryPath}/${title}.json`;
-        // Write JSON data to the file
-        await RNFS.writeFile(
-          filePath,
-          JSON.stringify(data, debugInfoReplacer(), 2),
-          "utf8"
-        );
-        await Sharing.shareAsync(`file://${filePath}`, {
-          mimeType: "application/json",
-          dialogTitle: `${title}.json`
-        });
-
-        await RNFS.unlink(filePath);
-      } catch {
-        toast.error("Error sharing debug data");
-      }
-    };
+  const content = useMemo(() => {
+    if ((expandable && !expanded) || !expandable) {
+      return null;
+    }
 
     return (
+      <View pointerEvents="box-only" style={styles.content}>
+        <IOText
+          color={"grey-700"}
+          font="FiraCode"
+          lineHeight={18}
+          size={12}
+          weight="Medium"
+        >
+          {JSON.stringify(
+            data,
+            debugInfoReplacer({ truncateStrings: true }),
+            2
+          )}
+        </IOText>
+      </View>
+    );
+  }, [data, expandable, expanded]);
+
+  const shareData = async () => {
+    try {
+      // Create a temporary file path
+      const filePath = `${RNFS.CachesDirectoryPath}/${title}.json`;
+      // Write JSON data to the file
+      await RNFS.writeFile(
+        filePath,
+        JSON.stringify(data, debugInfoReplacer(), 2),
+        "utf8"
+      );
+      await Sharing.shareAsync(`file://${filePath}`, {
+        mimeType: "application/json",
+        dialogTitle: `${title}.json`
+      });
+
+      await RNFS.unlink(filePath);
+    } catch {
+      toast.error("Error sharing debug data");
+    }
+  };
+
+  return (
+    <WithDebugEnabled>
       <View style={styles.container} testID="DebugPrettyPrintTestID">
         <View style={styles.header}>
           <BodySmall color="white" weight="Semibold">
@@ -128,9 +133,9 @@ export const DebugPrettyPrint = withDebugEnabled(
         </View>
         {content}
       </View>
-    );
-  }
-);
+    </WithDebugEnabled>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
