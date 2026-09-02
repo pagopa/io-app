@@ -513,6 +513,7 @@ describe("itwProximityMachine", () => {
     "tracks %s proximity start when verifier connects",
     engagementMode => {
       const actor = createActor(mockedMachine, {
+        input: { deps: T_DEPS },
         snapshot: makeSnapshot(
           { Presentment: "Connecting" },
           { engagementMode }
@@ -675,7 +676,7 @@ describe("itwProximityMachine", () => {
     actor.start();
     actor.send({ type: "close" });
 
-    expect(actor.getSnapshot().value).toBe("Failure");
+    expect(actor.getSnapshot().matches("Failure")).toBe(true);
     expect(actor.getSnapshot().context.failure?.type).toBe(
       ProximityFailureType.CONSENT_DENIED
     );
@@ -970,7 +971,7 @@ describe("itwProximityMachine", () => {
   it("close from Failure returns to Idle", () => {
     const actor = createActor(mockedMachine, {
       input: { deps: T_DEPS },
-      snapshot: makeSnapshot("Failure")
+      snapshot: makeSnapshot({ Failure: "Idle" })
     });
 
     actor.start();
