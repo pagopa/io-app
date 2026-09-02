@@ -46,7 +46,6 @@ export const ItwCiePreparationScreenContent = ({
       actions={actions}
       description={description}
       goBack={goBack}
-      headerActionsProp={{ showHelp: true }}
       title={{ label: title }}
     >
       <ContentWrapper>
