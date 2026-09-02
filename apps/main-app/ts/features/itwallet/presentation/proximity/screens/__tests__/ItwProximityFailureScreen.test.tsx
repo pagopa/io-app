@@ -41,7 +41,7 @@ const renderComponent = (failure: ProximityFailure) => {
 
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,
-    value: { Failure: "Idle" },
+    value: "Failure",
     context: { ...initialSnapshot.context, failure }
   };
 
