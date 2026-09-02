@@ -28,6 +28,8 @@ export const itwProximityMachineSetup = setup({
      */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    markSessionTerminated: assign(() => ({ sessionTerminated: true })),
+    resetSessionTerminated: assign(() => ({ sessionTerminated: false })),
 
     /**
      * Navigation
@@ -79,6 +81,7 @@ export const itwProximityMachineSetup = setup({
     hasFailure: ({ context }) => !!context.failure,
     isNfcRetrieval: ({ context }) => context.retrievalMethod === "nfc",
     isNfcEngagement: ({ context }) => context.engagementMode === "nfc",
+    hasTerminatedSession: ({ context }) => context.sessionTerminated,
     hasGrantedConsent: notImplemented
   }
 });

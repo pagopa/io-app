@@ -33,14 +33,27 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
     "device-connected": {
       target: "Presentment.Connected"
     },
-    "device-document-request-received": {
-      actions: assign(({ event }) => ({
-        proximityDetails: event.proximityDetails,
-        verifierRequest: event.verifierRequest,
-        retrievalMethod: event.retrievalMethod
-      })),
-      target: "Presentment.EvaluatingConsent"
-    },
+    "device-document-request-received": [
+      {
+        // NFC engagement also starts BLE retrieval. Ignore late duplicate requests
+        // while consent or termination flow is already active.
+        guard: or([
+          stateIn("Presentment.TerminatingForConsent"),
+          stateIn("Presentment.ClaimsDisclosure"),
+          stateIn("Presentment.StoreConsent"),
+          stateIn("Presentment.SendingDocuments"),
+          stateIn("Presentment.Terminating")
+        ])
+      },
+      {
+        actions: assign(({ event }) => ({
+          proximityDetails: event.proximityDetails,
+          verifierRequest: event.verifierRequest,
+          retrievalMethod: event.retrievalMethod
+        })),
+        target: "Presentment.EvaluatingConsent"
+      }
+    ],
     "device-disconnected": [
       {
         // END (0x02) flag received AFTER sendDocuments: verification complete
@@ -90,7 +103,10 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
       tags: [ItwPresentationTags.Loading],
       always: {
         target: "Starting",
-        actions: assign(() => ({ failure: undefined }))
+        actions: [
+          "resetSessionTerminated",
+          assign(() => ({ failure: undefined }))
+        ]
       }
     },
     Starting: {
@@ -223,11 +239,13 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
         id: "terminateSession",
         src: "terminateSession",
         onDone: {
+          actions: "markSessionTerminated",
           target: "#itwProximityMachine.Presentment.ClaimsDisclosure"
         },
         onError: {
           // Ignore termination failures: proceed to consent and rely on the
           // restart's startEngagement to reset the native session.
+          actions: "markSessionTerminated",
           target: "#itwProximityMachine.Presentment.ClaimsDisclosure"
         }
       }
