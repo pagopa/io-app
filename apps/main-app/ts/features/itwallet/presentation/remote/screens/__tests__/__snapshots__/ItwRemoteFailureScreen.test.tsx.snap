@@ -1136,7 +1136,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                         accessibilityLabel="Quando un ente è verificato?"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
@@ -1266,7 +1265,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                         accessibilityLabel="Dati aggiuntivi"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
@@ -2421,7 +2419,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                         accessibilityLabel="Quando un ente è verificato?"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
@@ -2551,7 +2548,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                         accessibilityLabel="Dati aggiuntivi"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
@@ -3747,7 +3743,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                         accessibilityLabel="Quando un ente è verificato?"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
@@ -3877,7 +3872,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                         accessibilityLabel="Dati aggiuntivi"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
@@ -5237,7 +5231,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                         accessibilityLabel="Quando un ente è verificato?"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
@@ -6584,7 +6577,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             <View
                               accessibilityLabel="Patente di guida"
                               accessible={true}
-                              focusable={false}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -8158,7 +8150,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             <View
                               accessibilityLabel="Patente di guida"
                               accessible={true}
-                              focusable={false}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -8233,7 +8224,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             <View
                               accessibilityLabel="Carta Europea della Disabilità"
                               accessible={true}
-                              focusable={false}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -9883,7 +9873,6 @@ Genera un nuovo QR Code e riprova.
                                         accessibilityLabel="Quando un ente è verificato?"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
@@ -11170,7 +11159,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                         accessibilityLabel="Quando un ente è verificato?"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
@@ -11300,7 +11288,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                         accessibilityLabel="Contatta l'assistenza"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
@@ -12727,7 +12714,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                         accessibilityLabel="Quando un ente è verificato?"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
@@ -14024,7 +14010,6 @@ continuare
                                         accessibilityLabel="Quando un ente è verificato?"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
@@ -14154,7 +14139,6 @@ continuare
                                         accessibilityLabel="Dati aggiuntivi"
                                         accessibilityRole="header"
                                         accessible={true}
-                                        focusable={false}
                                       >
                                         <Text
                                           allowFontScaling={true}
