@@ -4,9 +4,9 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { CredentialIssuanceMachineDeps } from "../../../machine/credential/input";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../ItwIssuanceCredentialTrustIssuerScreen";
 
@@ -34,7 +34,7 @@ const renderComponent = () => {
     () => (
       <ItwCredentialIssuanceMachineContext.Provider
         logic={logic}
-        options={{ input: { deps: {} as CredentialIssuanceMachineDeps } }}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
       >
         <ItwIssuanceCredentialTrustIssuerScreen />
       </ItwCredentialIssuanceMachineContext.Provider>

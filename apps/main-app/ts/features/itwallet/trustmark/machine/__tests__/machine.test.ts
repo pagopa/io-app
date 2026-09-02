@@ -8,6 +8,7 @@ import {
 
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { ItwTags } from "../../../machine/tags";
+import { testTrustmarkDeps } from "../../../machine/utils/testDeps";
 import {
   GetCredentialTrustmarkUrlActorInput,
   GetCredentialTrustmarkUrlActorOutput,
@@ -15,10 +16,9 @@ import {
   GetWalletAttestationActorOutput
 } from "../actors";
 import { type Context } from "../context";
-import { TrustmarkMachineDeps } from "../input";
 import { itwTrustmarkMachine } from "../machine";
 
-const T_DEPS = {} as TrustmarkMachineDeps;
+const T_DEPS = testTrustmarkDeps();
 
 const onInit = jest.fn();
 const storeWalletInstanceAttestation = jest.fn();

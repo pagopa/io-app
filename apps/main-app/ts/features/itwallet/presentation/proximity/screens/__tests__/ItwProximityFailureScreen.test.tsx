@@ -5,9 +5,9 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { testProximityDeps } from "../../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { ProximityFailure, ProximityFailureType } from "../../machine/failure";
-import { ProximityMachineDeps } from "../../machine/input";
 import { itwProximityMachine } from "../../machine/machine";
 import { ItwProximityMachineContext } from "../../machine/provider";
 import { TimeoutError, UntrustedRpError } from "../../utils/errors";
@@ -36,7 +36,7 @@ const renderComponent = (failure: ProximityFailure) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
   const initialSnapshot = createActor(itwProximityMachine, {
-    input: { deps: { store } as ProximityMachineDeps }
+    input: { deps: testProximityDeps({ store }) }
   }).getSnapshot();
 
   const snapshot: typeof initialSnapshot = {

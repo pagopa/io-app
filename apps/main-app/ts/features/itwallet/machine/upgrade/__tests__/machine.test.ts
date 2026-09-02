@@ -2,6 +2,7 @@ import { createActor, fromCallback, fromPromise, waitFor } from "xstate";
 
 import { ItwSessionExpiredError } from "../../../api/client";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import { testCredentialUpgradeDeps } from "../../utils/testDeps";
 import {
   LoadContextInput,
   LoadContextOutput,
@@ -10,10 +11,9 @@ import {
   UpgradeCredentialOutput,
   UpgradeCredentialParams
 } from "../actors";
-import { CredentialUpgradeMachineDeps } from "../input";
 import { itwCredentialUpgradeMachine } from "../machine";
 
-const T_DEPS = {} as CredentialUpgradeMachineDeps;
+const T_DEPS = testCredentialUpgradeDeps();
 
 const mockLoadContext = jest.fn(() => Promise.resolve({} as LoadContextOutput));
 

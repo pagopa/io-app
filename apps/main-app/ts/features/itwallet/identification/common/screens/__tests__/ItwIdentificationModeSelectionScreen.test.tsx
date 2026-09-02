@@ -11,9 +11,9 @@ import {
   EidIssuanceLevel,
   EidIssuanceMode
 } from "../../../../machine/eid/context.ts";
-import { EidIssuanceMachineDeps } from "../../../../machine/eid/input";
 import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
+import { testEidIssuanceDeps } from "../../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import * as identificationSelectors from "../../store/selectors";
 import {
@@ -168,7 +168,7 @@ const renderComponent = (mode: EidIssuanceMode, level: EidIssuanceLevel) => {
     });
 
     const initialSnapshot = createActor(logic, {
-      input: { deps: {} as EidIssuanceMachineDeps }
+      input: { deps: testEidIssuanceDeps() }
     }).getSnapshot();
     const snapshot: typeof initialSnapshot = {
       ...initialSnapshot,

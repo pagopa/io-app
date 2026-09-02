@@ -59,7 +59,7 @@ import {
   validateMrtdPoPChallengeActor,
   verifyTrustFederationActor
 } from "./actors";
-import { Context } from "./context";
+import { Context, IdentificationContext } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 import {
@@ -146,7 +146,7 @@ export const itwEidIssuanceMachineSetup = setup({
       identification: {
         mode: "cieId",
         level: "L2"
-      } as const
+      } satisfies IdentificationContext
     })),
 
     /**
@@ -163,7 +163,12 @@ export const itwEidIssuanceMachineSetup = setup({
       ) {
         return {};
       }
-      return { identification: { mode: "cieId", level: "L3" } as const };
+      return {
+        identification: {
+          mode: "cieId",
+          level: "L3"
+        } satisfies IdentificationContext
+      };
     }),
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     /**

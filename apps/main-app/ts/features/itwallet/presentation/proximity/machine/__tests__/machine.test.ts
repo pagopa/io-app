@@ -12,18 +12,18 @@ import {
   CredentialMetadata,
   WalletInstanceAttestations
 } from "../../../../common/utils/itwTypesUtils";
+import { testProximityDeps } from "../../../../machine/utils/testDeps";
 import {
   generateConsentKey,
   getConsentDataFromProximityDetails
 } from "../../store/utils";
 import { ProximityDetails, VerifierRequest } from "../../utils/types";
 import { ProximityFailureType } from "../failure";
-import { ProximityMachineDeps } from "../input";
 import { ItwProximityMachine, itwProximityMachine } from "../machine";
 
 type MachineSnapshot = StateFrom<ItwProximityMachine>;
 
-const T_DEPS = {} as ProximityMachineDeps;
+const T_DEPS = testProximityDeps();
 
 const T_WIA = { jwt: "test-wia" } as WalletInstanceAttestations;
 const T_CREDENTIALS = {} as Record<string, CredentialMetadata>;

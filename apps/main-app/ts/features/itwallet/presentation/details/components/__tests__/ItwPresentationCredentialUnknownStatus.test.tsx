@@ -6,9 +6,9 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
-import { CredentialIssuanceMachineDeps } from "../../../../machine/credential/input";
 import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../../machine/utils/testDeps";
 import { ItwPresentationCredentialUnknownStatus } from "../ItwPresentationCredentialUnknownStatus";
 
 jest.mock("@react-navigation/native", () => ({
@@ -78,7 +78,7 @@ const renderComponent = (component: ReactElement) => {
     <Provider store={store}>
       <ItwCredentialIssuanceMachineContext.Provider
         logic={logic}
-        options={{ input: { deps: {} as CredentialIssuanceMachineDeps } }}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
       >
         {children}
       </ItwCredentialIssuanceMachineContext.Provider>

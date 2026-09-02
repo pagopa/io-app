@@ -10,9 +10,9 @@ import * as envSelectors from "../../../common/store/selectors/environment";
 import { EnvType } from "../../../common/utils/environment";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
-import { CredentialIssuanceMachineDeps } from "../../../machine/credential/input";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwCardOnboardingL3Screen } from "../ItwCardOnboardingL3Screen";
 
@@ -143,7 +143,7 @@ const renderComponent = (params?: undefined | { page?: number }) => {
     () => (
       <ItwCredentialIssuanceMachineContext.Provider
         logic={logic}
-        options={{ input: { deps: {} as CredentialIssuanceMachineDeps } }}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
       >
         <ItwCardOnboardingL3Screen
           navigation={{} as any}
