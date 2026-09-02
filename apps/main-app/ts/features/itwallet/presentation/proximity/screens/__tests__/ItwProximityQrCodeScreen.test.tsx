@@ -66,6 +66,24 @@ describe("ItwProximityPresentmentScreen", () => {
     expect(component).toMatchSnapshot();
   });
 
+  it("should keep the same QR slot size while loading and when ready", () => {
+    const loading = renderComponent(
+      { machineState: "loading" },
+      { source: "WALLET_HOME" }
+    );
+    const ready = renderComponent(
+      {
+        machineState: "displayQrCode",
+        qrCodeString: "mock-qr-code-string"
+      },
+      { source: "WALLET_HOME" }
+    );
+
+    expect(loading.getByTestId("itwProximityQrSlotTestID").props.style).toEqual(
+      ready.getByTestId("itwProximityQrSlotTestID").props.style
+    );
+  });
+
   it("should render error state when QR code generation fails", () => {
     expect(
       renderComponent({ machineState: "error" }, { source: "WALLET_HOME" })
