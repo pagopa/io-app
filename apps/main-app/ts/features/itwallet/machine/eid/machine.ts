@@ -134,7 +134,9 @@ export const itwEidIssuanceMachine = setup({
       }
       return { identification: { mode: "cieId", level: "L3" } as const };
     }),
-    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    setFailure: assign(({ context, event }) => ({
+      failure: mapEventToFailure(event, context.identification?.mode)
+    })),
     /**
      * Save the final redirect url in the machine context for later reuse.
      * This action is the same for the three identification methods.

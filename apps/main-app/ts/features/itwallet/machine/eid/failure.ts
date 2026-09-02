@@ -7,9 +7,9 @@ import {
   isAssertionGenerationError,
   isFederationError,
   isLocalIntegrityError,
-  isMrtdTaxIdCodeMismatchFailure
+  isTaxIdCodeMismatchFailure
 } from "../../common/utils/itwFailureUtils";
-import { type EidIssuanceEvents } from "./events";
+import { type EidIssuanceEvents, type IdentificationMode } from "./events";
 
 const {
   isIssuerResponseError,
@@ -48,7 +48,9 @@ export type ReasonTypeByFailure = {
   [IssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
   [IssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
   [IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR]: Errors.IssuerResponseError;
-  [IssuanceFailureType.NOT_MATCHING_IDENTITY]: string;
+  [IssuanceFailureType.NOT_MATCHING_IDENTITY]:
+    | Errors.IssuerResponseError
+    | string;
   [IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND]: Errors.IssuerResponseError;
   [IssuanceFailureType.UNEXPECTED]: unknown;
   [IssuanceFailureType.UNSUPPORTED_DEVICE]:
@@ -68,10 +70,12 @@ type TypedIssuanceFailures = {
  * Maps an event dispatched by the eID issuance machine to a failure object.
  * If the event is not an error event, a generic failure is returned.
  * @param event - The event to map
+ * @param identificationMode - The identification method used during issuance
  * @returns a failure object which can be used to fill the failure screen with the appropriate content
  */
 export const mapEventToFailure = (
-  event: EidIssuanceEvents
+  event: EidIssuanceEvents,
+  identificationMode?: IdentificationMode
 ): IssuanceFailure => {
   if (!("error" in event)) {
     return {
@@ -115,9 +119,12 @@ export const mapEventToFailure = (
     };
   }
 
-  if (isMrtdTaxIdCodeMismatchFailure(error)) {
+  if (isTaxIdCodeMismatchFailure(error)) {
     return {
-      type: IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY,
+      type:
+        identificationMode === "ciePin"
+          ? IssuanceFailureType.NOT_MATCHING_IDENTITY
+          : IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY,
       reason: error
     };
   }

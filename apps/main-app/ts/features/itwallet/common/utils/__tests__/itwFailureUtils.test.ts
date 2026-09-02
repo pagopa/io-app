@@ -3,7 +3,7 @@ import { Errors } from "@pagopa/io-react-native-wallet";
 import {
   isAnprPid404Failure,
   isAssertionGenerationError,
-  isMrtdTaxIdCodeMismatchFailure
+  isTaxIdCodeMismatchFailure
 } from "../itwFailureUtils";
 
 describe("isAssertionGenerationError", () => {
@@ -68,7 +68,7 @@ describe("isAnprPid404Failure", () => {
   });
 });
 
-describe("isMrtdTaxIdCodeMismatchFailure", () => {
+describe("isTaxIdCodeMismatchFailure", () => {
   it("returns true for MRTD tax id code mismatch issuer errors", () => {
     const error = new Errors.IssuerResponseError({
       message: "MRTD PoP verification failed",
@@ -76,7 +76,7 @@ describe("isMrtdTaxIdCodeMismatchFailure", () => {
       statusCode: 400
     });
 
-    expect(isMrtdTaxIdCodeMismatchFailure(error)).toBe(true);
+    expect(isTaxIdCodeMismatchFailure(error)).toBe(true);
   });
 
   it("returns false when the issuer error reason is not tax_id_code_mismatch", () => {
@@ -86,7 +86,7 @@ describe("isMrtdTaxIdCodeMismatchFailure", () => {
       statusCode: 400
     });
 
-    expect(isMrtdTaxIdCodeMismatchFailure(error)).toBe(false);
+    expect(isTaxIdCodeMismatchFailure(error)).toBe(false);
   });
 
   it("returns false when the status code is not 400", () => {
@@ -96,11 +96,11 @@ describe("isMrtdTaxIdCodeMismatchFailure", () => {
       statusCode: 500
     });
 
-    expect(isMrtdTaxIdCodeMismatchFailure(error)).toBe(false);
+    expect(isTaxIdCodeMismatchFailure(error)).toBe(false);
   });
 
   it("returns false for unrelated errors", () => {
-    expect(isMrtdTaxIdCodeMismatchFailure(new Error("UNEXPECTED"))).toBe(false);
-    expect(isMrtdTaxIdCodeMismatchFailure(undefined)).toBe(false);
+    expect(isTaxIdCodeMismatchFailure(new Error("UNEXPECTED"))).toBe(false);
+    expect(isTaxIdCodeMismatchFailure(undefined)).toBe(false);
   });
 });

@@ -1,3 +1,4 @@
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import {
@@ -1485,6 +1486,110 @@ describe("itwEidIssuanceMachine", () => {
     expect(requestEid).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
+  });
+
+  it("Should map a CIE+PIN tax id code mismatch to NOT_MATCHING_IDENTITY", async () => {
+    const error = new Errors.IssuerResponseError({
+      message: "Unable to obtain the requested credential",
+      reason: { error: "tax_id_code_mismatch" },
+      statusCode: 400
+    });
+    startAuthFlow.mockResolvedValue({});
+    requestAccessToken.mockResolvedValue(T_ACCESS_TOKEN);
+    requestEid.mockRejectedValue(error);
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: { CiePin: "PreparationCie" } },
+      context: {
+        level: "l3",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        identification: {
+          mode: "ciePin",
+          level: "L3",
+          pin: "12345678"
+        }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "next" });
+
+    await waitFor(() => expect(startAuthFlow).toHaveBeenCalledTimes(1));
+
+    actor.send({
+      type: "user-identification-completed",
+      authRedirectUrl: "http://test.it"
+    });
+
+    await waitForActor(actor, state => state.matches("Failure"));
+
+    expect(actor.getSnapshot().context.failure).toStrictEqual({
+      type: IssuanceFailureType.NOT_MATCHING_IDENTITY,
+      reason: error
+    });
+  });
+
+  it("Should preserve the dedicated CIE failure for a SPID+CIE tax id code mismatch", async () => {
+    const error = new Errors.IssuerResponseError({
+      message: "MRTD PoP verification failed",
+      reason: { error: "tax_id_code_mismatch" },
+      statusCode: 400
+    });
+    validateMrtdPoPChallenge.mockRejectedValue(error);
+
+    const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { MrtdPoP: "SigningChallenge" },
+      context: {
+        level: "l3",
+        identification: {
+          mode: "spid",
+          level: "L2",
+          idpId: idps[0].id
+        },
+        walletInstanceAttestation: { jwt: T_WIA },
+        authenticationContext: {},
+        mrtdContext: {
+          challenge: "mock-challenge",
+          mrtd_auth_session: "mock-session",
+          mrtd_pop_nonce: "mock-nonce",
+          validationUrl: "http://validation.test.it"
+        }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({
+      type: "mrtd-challenged-signed",
+      data: {
+        nis_data: {
+          nis: "nis-data",
+          signedChallenge: "signed-challenge",
+          publicKey: "public-key",
+          sod: "ias-sod"
+        },
+        mrtd_data: {
+          dg1: "dg1-data",
+          dg11: "dg11-data",
+          sod: "mrtd-sod"
+        }
+      }
+    });
+
+    await waitForActor(actor, state => state.matches("Failure"));
+
+    expect(actor.getSnapshot().context.failure).toStrictEqual({
+      type: IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY,
+      reason: error
+    });
   });
 
   it("Should fail with a not matching identity when the issued eID does not match the authenticated user", async () => {

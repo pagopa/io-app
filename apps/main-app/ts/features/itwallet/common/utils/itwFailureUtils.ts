@@ -57,7 +57,7 @@ const anprPid404Failure = z.object({
   })
 });
 
-const mrtdTaxIdCodeMismatchFailure = z.object({
+const taxIdCodeMismatchFailure = z.object({
   statusCode: z.literal(400),
   reason: z.object({
     error: z.literal("tax_id_code_mismatch")
@@ -95,14 +95,14 @@ export const enrichErrorWithMetadata =
   };
 
 /**
- * Guard used to identify MRTD PoP failures caused by a CIE belonging to a
- * different fiscal code than the identity used during authentication.
+ * Guard used to identify issuer failures caused by a digital identity belonging
+ * to a different fiscal code than the identity used to access IO.
  */
-export const isMrtdTaxIdCodeMismatchFailure = (
+export const isTaxIdCodeMismatchFailure = (
   e: unknown
 ): e is Errors.IssuerResponseError =>
   Errors.isIssuerResponseError(e) &&
-  mrtdTaxIdCodeMismatchFailure.safeParse(e).success;
+  taxIdCodeMismatchFailure.safeParse(e).success;
 
 /**
  * Shape of a credential status assertion response error.
