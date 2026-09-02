@@ -1,5 +1,4 @@
 import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
 
@@ -113,7 +112,7 @@ describe("ItwPresentationDetailsFooter", () => {
     });
   });
 
-  it("shows an offline toast and does not open the removal dialog when offline", () => {
+  it("opens the removal dialog when offline", () => {
     jest.spyOn(Alert, "alert").mockImplementation(jest.fn());
     jest
       .spyOn(connectivitySelectors, "isConnectedSelector")
@@ -123,9 +122,9 @@ describe("ItwPresentationDetailsFooter", () => {
 
     fireEvent.press(getByTestId("removeCredentialActionTestID"));
 
-    expect(Alert.alert).not.toHaveBeenCalled();
-    expect(mockTrackItwCredentialDelete).not.toHaveBeenCalled();
-    expect(mockToastError).toHaveBeenCalledWith(I18n.t("global.offline.toast"));
+    expect(Alert.alert).toHaveBeenCalled();
+    expect(mockTrackItwCredentialDelete).toHaveBeenCalled();
+    expect(mockToastError).not.toHaveBeenCalled();
   });
 });
 
