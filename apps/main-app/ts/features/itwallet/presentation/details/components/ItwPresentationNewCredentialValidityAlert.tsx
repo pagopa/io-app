@@ -1,7 +1,11 @@
-import { Alert } from "@io-app/design-system";
+import { Banner } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { itwCloseBanner } from "../../../common/store/actions/banners";
+import { getNewCredentialValidityBannerId } from "../../../common/store/reducers/banners";
+import { itwIsBannerVisibleSelector } from "../../../common/store/selectors/banners";
 import { NewCredential } from "../../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
@@ -19,11 +23,18 @@ type ValidityAlertCredential = Exclude<
 >;
 
 /**
- * Alert showing information about the validity of new IT Wallet credentials.
+ * Dismissable banner showing information about the validity of new IT Wallet credentials.
+ * Each credential type is tracked with its own persisted banner id (see
+ * `getNewCredentialValidityBannerId`), so dismissing it for one credential does not hide
+ * it for the others, including credential types added in the future.
  */
 export const ItwPresentationNewCredentialValidityAlert = ({
   credentialType
 }: Props) => {
+  const dispatch = useIODispatch();
+  const bannerId = getNewCredentialValidityBannerId(credentialType);
+  const isBannerVisible = useIOSelector(itwIsBannerVisibleSelector(bannerId));
+
   const content = useMemo(() => {
     switch (credentialType) {
       case CredentialType.EDUCATION_ATTENDANCE:
@@ -49,7 +60,21 @@ export const ItwPresentationNewCredentialValidityAlert = ({
     }
   }, [credentialType]);
 
+  if (!isBannerVisible) {
+    return null;
+  }
+
   return (
-    <Alert content={content} testID="newCredentialAlertTestID" variant="info" />
+    <Banner
+      color="neutral"
+      content={content}
+      labelClose={I18n.t("global.buttons.close")}
+      onClose={() => dispatch(itwCloseBanner(bannerId))}
+      pictogramName="premiumCredentials"
+      testID="newCredentialAlertTestID"
+      title={I18n.t(
+        "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.title"
+      )}
+    />
   );
 };
