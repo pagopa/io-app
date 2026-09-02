@@ -119,6 +119,45 @@ export const makeFontFamilyName = (
   });
 
 /**
+ * Abbreviated faces of `TitilliumSansPro`, whose regular italic also drops the
+ * weight. The other families need no table: `Titillio` names its faces after
+ * the weight token and `FiraCode` embeds a single one.
+ */
+const sansProFaces: Record<IOFontWeight, [normal: string, italic: string]> = {
+  Thin: ["Th", "ThIt"],
+  Light: ["Lt", "LtIt"],
+  Regular: ["Rg", "It"],
+  Medium: ["Rg", "It"],
+  Semibold: ["Sbd", "SbdIt"],
+  Bold: ["Bd", "BdIt"],
+  Black: ["Bl", "BlIt"]
+};
+
+const faceName: Record<
+  IOFontFamily,
+  (weight: IOFontWeight, italic: boolean) => string
+> = {
+  FiraCode: () => "Medium",
+  /* No `Medium` face is embedded, in any family */
+  Titillio: (weight, italic) =>
+    `${weight === "Medium" ? "Regular" : weight}${italic ? "Italic" : ""}`,
+  TitilliumSansPro: (weight, italic) => sansProFaces[weight][italic ? 1 : 0]
+};
+
+/**
+ * Get the PostScript name of a single face, for native APIs that resolve a
+ * font by face instead of by family and weight, like SwiftUI's `Font.custom`.
+ * @param font
+ * @param weight
+ * @param fontStyle
+ */
+export const makeFontPostScriptName = (
+  font: IOFontFamily,
+  weight: IOFontWeight = defaultWeight,
+  fontStyle: TextStyle["fontStyle"] = "normal"
+): string => `${font}-${faceName[font](weight, fontStyle === "italic")}`;
+
+/**
  * Default `IOText` typography style
  */
 const defaultFont: IOFontFamily = "TitilliumSansPro";
