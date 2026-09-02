@@ -11,9 +11,7 @@ import { useReducedMotion } from "react-native-reanimated";
 
 import { useAnimationPlayback } from "../hooks/useAnimationPlayback";
 
-const DEFAULT_MAX_DURATION_MS = 8000;
-
-export type GifImageProps = Omit<ImageProps, "source"> & {
+type Props = Omit<ImageProps, "source"> & {
   /** Starts playback when the component mounts. Defaults to `true`. */
   autoPlay?: boolean;
   /** Stops playback after this duration. Defaults to eight seconds. */
@@ -36,7 +34,7 @@ export type GifImageProps = Omit<ImageProps, "source"> & {
  * focused so native GIF playback cannot continue in the background. Native
  * image props are forwarded to the GIF.
  */
-export const GifImage = (props: GifImageProps) => {
+export const GifImage = (props: Props) => {
   const isFocused = useIsFocused();
 
   // Screens remain mounted in the navigation back stack. Unmounting the
@@ -48,14 +46,14 @@ export const GifImage = (props: GifImageProps) => {
 const FocusedGifImage = ({
   accessibilityIgnoresInvertColors = false,
   autoPlay = true,
-  maxDurationMs = DEFAULT_MAX_DURATION_MS,
+  maxDurationMs = 8000,
   pauseAccessibilityLabel,
   playAccessibilityLabel,
   source,
   staticSource,
   style,
   ...imageProps
-}: GifImageProps) => {
+}: Props) => {
   const reduceMotion = useReducedMotion();
   const { imageKey, isPlaying, togglePlayback } = useAnimationPlayback({
     autoPlay,
