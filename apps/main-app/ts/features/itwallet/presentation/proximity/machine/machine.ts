@@ -40,20 +40,43 @@ export const itwProximityMachine = itwProximityMachineSetup.createMachine({
     Failure: {
       description: "An error occurred, captured in context.failure",
       entry: "navigateToFailureScreen",
-      invoke: {
-        id: "terminateSession",
-        src: "terminateSession",
-        onDone: {
-          // Attempt termination ignoring result
+      initial: "EnsureTerminated",
+      states: {
+        EnsureTerminated: {
+          always: [
+            {
+              // NFC consent teardown already sent SESSION_TERMINATED.
+              // A second native sendErrorResponse can resume the same continuation twice.
+              guard: "hasTerminatedSession",
+              target: "Idle"
+            },
+            {
+              target: "Terminating"
+            }
+          ]
         },
-        onError: {
-          // Attempt termination ignoring any failure
+        Terminating: {
+          invoke: {
+            id: "terminateSession",
+            src: "terminateSession",
+            onDone: {
+              actions: "markSessionTerminated",
+              target: "Idle"
+            },
+            onError: {
+              actions: "markSessionTerminated",
+              target: "Idle"
+            }
+          }
+        },
+        Idle: {
+          description: "Termination attempted or skipped for this engagement"
         }
       },
       on: {
         close: {
           actions: "closeProximity",
-          target: "Idle"
+          target: "#itwProximityMachine.Idle"
         }
       }
     }
