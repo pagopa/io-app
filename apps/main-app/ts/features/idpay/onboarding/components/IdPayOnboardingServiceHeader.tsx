@@ -1,3 +1,4 @@
+import { InitiativeDataDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDataDTO";
 import {
   ContentWrapper,
   H1,
@@ -9,8 +10,6 @@ import {
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-
-import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 
 type Props = {
   initiative: O.Option<InitiativeDataDTO>;

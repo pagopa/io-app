@@ -1,3 +1,5 @@
+import { ProblemJson } from "@io-app/api-types/generated/definitions/fci/ProblemJson";
+import { SignatureRequestDetailView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestDetailView";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -6,9 +8,8 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ReactElement, useEffect } from "react";
 
-import { ProblemJson } from "../../../../definitions/fci/ProblemJson";
-import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { withAppRequiredUpdate } from "../../../components/helpers/withAppRequiredUpdate";
+import { useAppRequiredUpdate } from "../../../components/helpers/withAppRequiredUpdate";
+import { UpdateAppAlert } from "../../../components/UpdateAppAlert";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
@@ -33,22 +34,18 @@ import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureReque
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
-  // Used on retry only on status != WAIT_FOR_SIGNATURE
-  skipInitialFetch?: boolean;
 }>;
 
-const FciSignatureScreen = (
+const FciSignatureScreenComponent = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
 ): ReactElement => {
-  const { signatureRequestId, skipInitialFetch } = props.route.params;
+  const { signatureRequestId } = props.route.params;
   const dispatch = useIODispatch();
   const fciSignatureRequest = useIOSelector(fciSignatureRequestSelector);
 
   useEffect(() => {
-    if (!skipInitialFetch) {
-      dispatch(fciSignatureRequestFromId.request(signatureRequestId));
-    }
-  }, [dispatch, signatureRequestId, skipInitialFetch]);
+    dispatch(fciSignatureRequestFromId.request(signatureRequestId));
+  }, [dispatch, signatureRequestId]);
 
   const LoadingView = () => (
     <LoadingComponent testID={"FciRouterLoadingScreenTestID"} />
@@ -125,4 +122,14 @@ const FciSignatureScreen = (
   );
 };
 
-export default withAppRequiredUpdate(FciSignatureScreen, "fci");
+const FciSignatureScreen = (
+  props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
+) => {
+  const requiresUpdate = useAppRequiredUpdate("fci");
+  if (requiresUpdate) {
+    return <UpdateAppAlert />;
+  }
+  return <FciSignatureScreenComponent {...props} />;
+};
+
+export default FciSignatureScreen;

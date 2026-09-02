@@ -1,4 +1,8 @@
 import {
+  StatusEnum as InitiativeOnboardingStatus,
+  UserOnboardingStatusDTO
+} from "@io-app/api-types/generated/definitions/idpay/UserOnboardingStatusDTO";
+import {
   Divider,
   IOMarkdown,
   ListItemHeader,
@@ -10,10 +14,6 @@ import I18n from "i18next";
 import { useState } from "react";
 import { FlatList } from "react-native";
 
-import {
-  StatusEnum as InitiativeOnboardingStatus,
-  UserOnboardingStatusDTO
-} from "../../../../../definitions/idpay/UserOnboardingStatusDTO";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";

@@ -9,7 +9,6 @@ import { useState } from "react";
 
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import {
@@ -85,7 +84,6 @@ const IDPayPaymentCodeInputScreen = () => {
           loading: isLoading
         }
       }}
-      contextualHelp={emptyContextualHelp}
       description={I18n.t("idpay.payment.manualInput.subtitle")}
       headerActionsProp={{ showHelp: true }}
       includeContentMargins

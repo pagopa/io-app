@@ -1,7 +1,6 @@
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { ThirdPartyMessagePrecondition } from "@io-app/api-types/generated/definitions/communication/ThirdPartyMessagePrecondition";
 import { createStandardAction } from "typesafe-actions";
-
-import { MessageCategory } from "../../../../../definitions/communication/MessageCategory";
-import { ThirdPartyMessagePrecondition } from "../../../../../definitions/communication/ThirdPartyMessagePrecondition";
 
 // NPS stands for Next Precondition Status
 export type NPSError = {

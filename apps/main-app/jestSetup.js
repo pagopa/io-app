@@ -25,6 +25,9 @@ import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
 jest.mock("expo-screen-capture", () => ({}));
+jest.mock("expo-image-picker", () => ({
+  launchImageLibraryAsync: jest.fn().mockResolvedValue({ canceled: true, assets: null })
+}));
 jest.mock("expo-background-task", () => ({
   BackgroundTaskStatus: { Available: 2, Restricted: 1 },
   BackgroundTaskResult: { Success: 1, Failed: 2 },
@@ -77,12 +80,34 @@ jest.mock("react-native-quick-crypto", () => ({}));
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("expo-notifications", () => ({}));
+jest.mock("expo-document-picker", () => ({
+  getDocumentAsync: jest.fn()
+}));
 jest.mock("@react-native-cookies/cookies", () => jest.fn());
-jest.mock("react-native-share", () => jest.fn());
+jest.mock("expo-sharing", () => ({ shareAsync: jest.fn() }));
 jest.mock("expo-clipboard", () => mockClipboard);
 jest.mock("expo-calendar", () => ({
   getCalendarsAsync: jest.fn().mockResolvedValue([]),
   getEventsAsync: jest.fn().mockResolvedValue([]),
+}));
+jest.mock("expo-brightness", () => ({
+  getBrightnessAsync: jest.fn().mockResolvedValue(0),
+  setBrightnessAsync: jest.fn().mockResolvedValue(undefined),
+}));
+
+jest.mock("expo-linear-gradient", () => ({
+  LinearGradient: "LinearGradient"
+}));
+
+jest.mock("expo-local-authentication", () => ({
+  AuthenticationType: {
+    FINGERPRINT: 1,
+    FACIAL_RECOGNITION: 2,
+    IRIS: 3
+  },
+  supportedAuthenticationTypesAsync: jest.fn().mockResolvedValue(Promise.resolve([])),
+  authenticateAsync: jest.fn().mockResolvedValue(Promise.resolve({ success: true })),
+  cancelAuthenticate: jest.fn().mockResolvedValue(Promise.resolve()),
 }));
 // Mock react-native-worklets before reanimated setup
 // See: https://docs.swmansion.com/react-native-worklets/docs/guides/testing/
@@ -265,8 +290,18 @@ jest.mock("uuid", () => ({
   }
 }));
 
-jest.mock("react-native-bluetooth-state-manager", () => ({
-  getState: jest.fn().mockResolvedValue(true)
+jest.mock("react-native-ble-plx", () => ({
+  BleManager: jest.fn().mockImplementation(() => ({
+    state: jest.fn().mockResolvedValue("PoweredOn")
+  })),
+  State: {
+    Unknown: "Unknown",
+    Resetting: "Resetting",
+    Unsupported: "Unsupported",
+    Unauthorized: "Unauthorized",
+    PoweredOff: "PoweredOff",
+    PoweredOn: "PoweredOn"
+  }
 }));
 
 jest.mock("@pagopa/io-react-native-iso18013", () => ({

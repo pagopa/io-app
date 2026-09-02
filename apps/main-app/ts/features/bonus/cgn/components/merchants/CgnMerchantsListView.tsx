@@ -1,3 +1,6 @@
+import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
+import { OfflineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OfflineMerchant";
+import { OnlineMerchant } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchant";
 import {
   Badge,
   ContentWrapper,
@@ -8,9 +11,6 @@ import {
 import I18n from "i18next";
 import { ListRenderItem, View } from "react-native";
 
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
-import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 
 type Props = {

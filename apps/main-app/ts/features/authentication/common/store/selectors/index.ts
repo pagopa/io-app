@@ -1,9 +1,8 @@
+import { SpidLevel } from "@io-app/api-types/generated/definitions/session_manager/SpidLevel";
 import { Optional } from "@io-app/design-system";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 
-import { SpidLevel } from "../../../../../../definitions/session_manager/SpidLevel";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { format } from "../../../../../utils/dates";
 import { SpidIdp } from "../../../../../utils/idps";
@@ -63,19 +62,16 @@ export const sessionInfoSelector = createSelector(
   (state: GlobalState) => state.authentication,
   authentication =>
     isLoggedInWithSessionInfo(authentication)
-      ? O.some(authentication.sessionInfo)
-      : O.none
+      ? authentication.sessionInfo
+      : undefined
 );
 
 export const formattedExpirationDateSelector = createSelector(
   sessionInfoSelector,
   sessionInfo =>
-    pipe(
-      sessionInfo,
-      O.chainNullableK(({ expirationDate }) => expirationDate),
-      O.map(expirationDate => format(expirationDate, "D MMMM")),
-      O.getOrElse(() => "N/A")
-    )
+    sessionInfo?.expirationDate
+      ? format(sessionInfo.expirationDate, "D MMMM")
+      : "N/A"
 );
 
 export const zendeskTokenSelector = (state: GlobalState): string | undefined =>

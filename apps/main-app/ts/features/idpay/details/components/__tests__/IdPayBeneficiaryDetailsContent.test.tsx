@@ -1,13 +1,13 @@
-import { within } from "@testing-library/react-native";
-import I18n from "i18next";
-import configureMockStore from "redux-mock-store";
-
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
-import { RewardValueTypeEnum } from "../../../../../../definitions/idpay/RewardValueDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { RewardValueTypeEnum } from "@io-app/api-types/generated/definitions/idpay/RewardValueDTO";
+import { within } from "@testing-library/react-native";
+import I18n from "i18next";
+import configureMockStore from "redux-mock-store";
+
 import { setLocale } from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -54,7 +54,7 @@ const T_REWARD_VALUE_PERCENTAGE_STRING = "30%";
 const T_REWARD_VALUE_ABSOLUTE_STRING = "30,00 €";
 
 describe("Test IdPayBeneficiaryDetailsContent component", () => {
-  it("should correctly render all the info ", () => {
+  it("should correctly render all the info", () => {
     const { component } = renderComponent(InitiativeRewardTypeEnum.REFUND);
 
     const statusRow = within(component.getByTestId("statusTestID"));

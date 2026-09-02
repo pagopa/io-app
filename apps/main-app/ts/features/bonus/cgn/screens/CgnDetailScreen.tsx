@@ -1,3 +1,10 @@
+import { Card } from "@io-app/api-types/generated/definitions/cgn/Card";
+import {
+  CardActivated,
+  StatusEnum
+} from "@io-app/api-types/generated/definitions/cgn/CardActivated";
+import { CardExpired } from "@io-app/api-types/generated/definitions/cgn/CardExpired";
+import { CardRevoked } from "@io-app/api-types/generated/definitions/cgn/CardRevoked";
 import {
   Alert,
   ContentWrapper,
@@ -14,13 +21,6 @@ import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { ReactElement, useCallback } from "react";
 
-import { Card } from "../../../../../definitions/cgn/Card";
-import {
-  CardActivated,
-  StatusEnum
-} from "../../../../../definitions/cgn/CardActivated";
-import { CardExpired } from "../../../../../definitions/cgn/CardExpired";
-import { CardRevoked } from "../../../../../definitions/cgn/CardRevoked";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import { isLoading } from "../../../../common/model/RemoteValue";

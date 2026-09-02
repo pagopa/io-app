@@ -2,25 +2,71 @@ packages:
   - "apps/*"
   - "libs/*"
 
+nodeLinker: hoisted
+
+overrides:
+  # Required because jest defines a version of react-is that is incompatible with react 19. It can be removed after updating jest to version 30.4.0 or higher.
+  pretty-format>react-is: "19.0.0"
+
+patchedDependencies:
+  # Migrates barcode rendering from ART to SVG and replaces JCenter.
+  react-native-barcode-builder@2.0.0: patches/react-native-barcode-builder@2.0.0.patch
+  # Removes IP and MAC address APIs so the app manifest can remove ACCESS_WIFI_STATE permission which is not required by the app.
+  react-native-device-info@14.0.4: patches/react-native-device-info@14.0.4.patch
+  # Adds Android props that deny WebView camera and microphone access despite app permissions.
+  react-native-webview@13.16.0: patches/react-native-webview@13.16.0.patch
+  # Makes iOS PDF annotations read-only, matching Android behaviour.
+  react-native-pdf@7.0.3: patches/react-native-pdf@7.0.3.patch
+  # Sets accessibility-order starting from the bottom-sheet content instead of the bottom-sheet background layer
+  "@gorhom/bottom-sheet@5.2.8": "patches/@gorhom__bottom-sheet@5.2.8.patch"
+  # Replaces the retired JCenter repository with Maven Central for Android builds.
+  "@react-native-cookies/cookies@^6.2.1": "patches/@react-native-cookies-cookies-npm-6.2.1.patch"
+  # Replaces the retired JCenter repository with Maven Central for Android builds.
+  "@react-native-community/art@^1.2.0": "patches/@react-native-community-art-npm-1.2.0.patch"
+  # Replaces the retired JCenter repository with Maven Central for Android builds.
+  react-native-exception-handler@^2.10.8: patches/react-native-exception-handler-npm-2.10.8.patch
+  # Allows iOS screen recordings without a black overlay while still preventing screenshots.
+  expo-screen-capture@~55.0.9: patches/expo-screen-capture-npm-55.0.9.patch
+  # Applies an explicit header `minHeight` in `CardContainer` only when `headerTransparent` is enabled and a screen reader is active, improving Android accessibility by ensuring the header area is properly sized for TalkBack.
+  "@react-navigation/stack@6.4.1": "patches/@react-navigation__stack.patch"
+
+allowBuilds:
+  "@shopify/react-native-skia": true
+  "@swc/core": true
+  core-js: true
+  lefthook: true
+  nx: true
+  tls-impersonate: false
+  unrs-resolver: true
+
 catalog:
   # --- Nx ---
-  nx: "22.7.2"
-  "@nx/eslint": "22.7.2"
-  "@nx/jest": "22.7.2"
-  "@nx/js": "22.7.2"
+  nx: "23.1.1"
+  "@nx/eslint": "23.1.1"
+  "@nx/jest": "23.1.1"
+  "@nx/js": "23.1.1"
+
   # --- TypeScript ---
   typescript: "6.0.3"
   prettier: "^3.8.1"
-  eslint: "^9.39.4"
+  eslint: "^10.9.0"
   jest: "~30.3.0"
   "@types/jest": "^30.0.0"
   "@types/react": "^19.2.0"
-  
+
+  # --- Linting ---
+  eslint-config-prettier: "^10.1.8"
+  eslint-plugin-functional: "^10.0.0"
+  eslint-plugin-import: "^2.32.0"
+  eslint-plugin-jest: "^29.15.5"
+  eslint-plugin-prettier: "^5.5.6"
+  eslint-plugin-react-native-a11y: "^3.3.0"
+
   # --- React Native ---
-  "@react-native/typescript-config": "0.83.6"
-  "@react-native/eslint-config": "0.85.0-rc.7"
+  "@react-native/typescript-config": "0.83.10"
+  "@react-native/eslint-config": "0.83.10"
   react: "19.2.0"
-  react-native: "0.83.6"
+  react-native: "0.83.10"
   react-test-renderer: "19.2.0"
 
   # --- State management ---
@@ -30,7 +76,7 @@ catalog:
 
   # --- Design System ---
   react-native-worklets: "^0.8.3"
-  react-native-linear-gradient: "^2.8.3"
+  expo-linear-gradient: "~55.0.16"
   react-native-easing-gradient: "^1.1.1"
   react-native-gesture-handler: "^2.28.0"
   react-native-pulsar: "^1.6.1"

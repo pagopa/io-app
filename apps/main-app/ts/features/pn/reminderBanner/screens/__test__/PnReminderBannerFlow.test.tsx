@@ -1,9 +1,9 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { applyMiddleware, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { put, takeLatest } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
 
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as USEIO from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
@@ -31,56 +31,6 @@ jest.mock("../../../analytics/activationReminderBanner", () => {
   };
 });
 
-// const WAITING_USER_INPUT_BASE_MOCKS = () => {
-//   jest
-//     .spyOn(SID_SELECTOR, "pnMessagingServiceIdSelector")
-//     .mockImplementation(() => "SOME_SID" as ServiceId);
-//   jest
-//     .spyOn(LOADING_PN_ACTIVATION, "isLoadingPnActivationSelector")
-//     .mockImplementation(() => false);
-//   jest
-//     .spyOn(PREFERENCES_FETCHER, "usePnPreferencesFetcher")
-//     .mockImplementation(() => ({
-//       isError: false,
-//       isLoading: false,
-//       isEnabled: false
-//     }));
-// };
-
-// describe("PnActivationReminderBannerFlow", () => {
-//   beforeEach(() => {
-//     WAITING_USER_INPUT_BASE_MOCKS();
-//     jest.spyOn(USEIO, "useIODispatch").mockImplementation(() => jest.fn());
-//   });
-//   afterEach(() => {
-//     jest.restoreAllMocks();
-//   });
-
-//   for (const [_key, val] of Object.entries(pnBannerFlowStateEnum)) {
-//     // handles flow-induced screens
-//     it(`should match snapshot for state= ${val}`, () => {
-//       jest
-//         .spyOn(React, "useState")
-//         .mockImplementationOnce(() => [val, () => null]);
-//       const component = renderComponent();
-//       expect(component.toJSON()).toMatchSnapshot();
-
-//       switch (val) {
-//         case "FAILURE_DETAILS_FETCH":
-//         case "FAILURE_ACTIVATION":
-//           expect(component.getByTestId(`error-${val}`)).toBeDefined();
-//           break;
-//         case "WAITING_USER_INPUT":
-//           expect(component.getByTestId(`cta-${val}`)).toBeDefined();
-//           break;
-//         case "SUCCESS_ACTIVATION":
-//         case "ALREADY_ACTIVE":
-//           expect(component.getByTestId(`success-${val}`)).toBeDefined();
-//           break;
-//       }
-//     });
-//   }
-// });
 describe("error screens", () => {
   beforeEach(() => {
     jest
@@ -178,47 +128,6 @@ describe("loading screens + error interop", () => {
   }
 });
 
-// describe("activation input screen", () => {
-//   beforeEach(() => {
-//     WAITING_USER_INPUT_BASE_MOCKS();
-//   });
-//   afterEach(() => {
-//     jest.restoreAllMocks();
-//   });
-//   for (const result of ["success", "error"] as const) {
-//     it(`should dispatch an upsert request and a tracking action on cta click, and correctly deliver a ${result} result. should then show the correct result screen`, () => {
-//       const mockSetState = jest.fn();
-
-//       const useStateMock = jest
-//         .spyOn(React, "useState")
-//         .mockImplementationOnce(() => [
-//           pnBannerFlowStateEnum.WAITING_USER_INPUT,
-//           mockSetState
-//         ]);
-
-//       const expectedState =
-//         result === "success"
-//           ? pnBannerFlowStateEnum.SUCCESS_ACTIVATION
-//           : pnBannerFlowStateEnum.FAILURE_ACTIVATION;
-
-//       const component = renderComponent(result === "success");
-//       expect(component).toBeDefined();
-//       const cta = component.getByTestId("enable-pn-cta");
-//       expect(cta).toBeDefined();
-//       fireEvent.press(cta);
-//       expect(mockSetState).toHaveBeenCalledWith(expectedState);
-//       expect(sendBannerMixpanelEvents.activationStart).toHaveBeenCalled();
-
-//       // ---- new screen rendered ----
-
-//       useStateMock.mockImplementationOnce(() => [expectedState, mockSetState]);
-//       const componentAgain = renderComponent();
-//       const expectedId = `${result}-${expectedState}`;
-//       const newScreen = componentAgain.getByTestId(expectedId);
-//       expect(newScreen).toBeDefined();
-//     });
-//   }
-// });
 function* mockSaga(sagaSuccess: boolean) {
   yield* takeLatest(
     pnActivationUpsert.request,

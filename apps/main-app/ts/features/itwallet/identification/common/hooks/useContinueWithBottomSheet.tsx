@@ -132,7 +132,6 @@ export const useContinueWithBottomSheet = ({
               primary: {
                 label: copy.title,
                 onPress: () => {
-                  // eslint-disable-next-line functional/immutable-data
                   skipCloseEvent.current = true;
                   trackItwIdMethodBottomsheetContinue(trackingProps);
                   onPrimaryAction();
@@ -149,7 +148,6 @@ export const useContinueWithBottomSheet = ({
       if (!skipCloseEvent.current) {
         trackItwIdMethodBottomsheetClose(trackingProps);
       }
-      // eslint-disable-next-line functional/immutable-data
       skipCloseEvent.current = false;
     }
   });

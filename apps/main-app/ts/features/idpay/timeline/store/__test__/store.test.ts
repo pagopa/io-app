@@ -1,12 +1,12 @@
+import {
+  StatusEnum,
+  TransactionDetailDTO
+} from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
+import { OperationTypeEnum as TransactionOperationType } from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 
 import { idpayTimelineDetailsSelector } from "..";
-import { OperationTypeEnum as TransactionOperationType } from "../../../../../../definitions/idpay/TransactionOperationDTO";
-import {
-  StatusEnum,
-  TransactionDetailDTO
-} from "../../../../../../InstrumentOperationDTO/../definitions/idpay/TransactionDetailDTO";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { NetworkError } from "../../../../../utils/errors";

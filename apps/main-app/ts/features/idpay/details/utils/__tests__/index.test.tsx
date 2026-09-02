@@ -1,13 +1,13 @@
-import { render } from "@testing-library/react-native";
-
-import { IdPayCardStatus } from "..";
 import {
   InitiativeDTO,
   VoucherStatusEnum
-} from "../../../../../../definitions/idpay/InitiativeDTO";
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { render } from "@testing-library/react-native";
+
+import { IdPayCardStatus } from "..";
 
 describe("IDPay screen details utils tests", () => {
-  describe("IdPayCardStatus ", () => {
+  describe("IdPayCardStatus", () => {
     it("should render ACTIVE status correctly", () => {
       const initiative: InitiativeDTO = {
         initiativeId: "1",

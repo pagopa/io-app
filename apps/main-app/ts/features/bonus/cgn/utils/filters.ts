@@ -1,13 +1,13 @@
+import {
+  ProductCategory,
+  ProductCategoryEnum
+} from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategory";
+import { ProductCategoryWithNewDiscountsCount } from "@io-app/api-types/generated/definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { HeaderSecondLevel, IOCategoryIcons } from "@io-app/design-system";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { StatusBarProps } from "react-native";
 
-import {
-  ProductCategory,
-  ProductCategoryEnum
-} from "../../../../../definitions/cgn/merchants/ProductCategory";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { TranslationKeys } from "../../../../i18n";
 
 type Category = {

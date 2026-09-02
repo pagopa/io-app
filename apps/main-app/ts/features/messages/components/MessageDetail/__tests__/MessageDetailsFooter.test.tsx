@@ -1,9 +1,9 @@
+import { ServiceMetadata } from "@io-app/api-types/generated/definitions/services/ServiceMetadata";
 import { fireEvent } from "@testing-library/react-native";
 import { ComponentProps } from "react";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 
-import { ServiceMetadata } from "../../../../../../definitions/services/ServiceMetadata";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";

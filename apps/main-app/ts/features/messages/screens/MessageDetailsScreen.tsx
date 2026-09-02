@@ -1,3 +1,4 @@
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   ContentWrapper,
   Icon,
@@ -12,7 +13,6 @@ import I18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";

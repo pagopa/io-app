@@ -1,3 +1,30 @@
+import { Amount as AmountPagoPA } from "@io-app/api-types/generated/definitions/pagopa/Amount";
+import { CreditCard as CreditCardPagoPA } from "@io-app/api-types/generated/definitions/pagopa/CreditCard";
+import { EnableableFunctions } from "@io-app/api-types/generated/definitions/pagopa/EnableableFunctions";
+import { Pay as PayPagoPA } from "@io-app/api-types/generated/definitions/pagopa/Pay";
+import { PayPalInfo } from "@io-app/api-types/generated/definitions/pagopa/PayPalInfo";
+import { PayRequest as PayRequestPagoPA } from "@io-app/api-types/generated/definitions/pagopa/PayRequest";
+import { Psp as PspPagoPA } from "@io-app/api-types/generated/definitions/pagopa/Psp";
+import { PspListResponseCD as PspListResponsePagoPA } from "@io-app/api-types/generated/definitions/pagopa/PspListResponseCD";
+import { PspResponse as PspResponsePagoPA } from "@io-app/api-types/generated/definitions/pagopa/PspResponse";
+import { Session as SessionPagoPA } from "@io-app/api-types/generated/definitions/pagopa/Session";
+import { SessionResponse as SessionResponsePagoPA } from "@io-app/api-types/generated/definitions/pagopa/SessionResponse";
+import {
+  Transaction as TransactionPagoPA,
+  Transaction as TTransactionPagoPA
+} from "@io-app/api-types/generated/definitions/pagopa/Transaction";
+import { TransactionListResponse as TransactionListResponsePagoPA } from "@io-app/api-types/generated/definitions/pagopa/TransactionListResponse";
+import { TransactionResponse as TransactionResponsePagoPA } from "@io-app/api-types/generated/definitions/pagopa/TransactionResponse";
+import { Wallet as WalletPagoPA } from "@io-app/api-types/generated/definitions/pagopa/Wallet";
+import { WalletListResponse as WalletListResponsePagoPA } from "@io-app/api-types/generated/definitions/pagopa/WalletListResponse";
+import { WalletResponse as WalletResponsePagoPA } from "@io-app/api-types/generated/definitions/pagopa/WalletResponse";
+import { WalletTypeEnum } from "@io-app/api-types/generated/definitions/pagopa/WalletV2";
+import { Abi } from "@io-app/api-types/generated/definitions/pagopa/walletv2/Abi";
+import { BPayInfo as BPayInfoPagoPa } from "@io-app/api-types/generated/definitions/pagopa/walletv2/BPayInfo";
+import {
+  CardInfo,
+  TypeEnum as CreditCardTypeEnum
+} from "@io-app/api-types/generated/definitions/pagopa/walletv2/CardInfo";
 import {
   enumType,
   ReplaceProp1,
@@ -10,33 +37,6 @@ import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { ImageSourcePropType } from "react-native";
 
-import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
-import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
-import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
-import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
-import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
-import { PayRequest as PayRequestPagoPA } from "../../definitions/pagopa/PayRequest";
-import { Psp as PspPagoPA } from "../../definitions/pagopa/Psp";
-import { PspListResponseCD as PspListResponsePagoPA } from "../../definitions/pagopa/PspListResponseCD";
-import { PspResponse as PspResponsePagoPA } from "../../definitions/pagopa/PspResponse";
-import { Session as SessionPagoPA } from "../../definitions/pagopa/Session";
-import { SessionResponse as SessionResponsePagoPA } from "../../definitions/pagopa/SessionResponse";
-import {
-  Transaction as TransactionPagoPA,
-  Transaction as TTransactionPagoPA
-} from "../../definitions/pagopa/Transaction";
-import { TransactionListResponse as TransactionListResponsePagoPA } from "../../definitions/pagopa/TransactionListResponse";
-import { TransactionResponse as TransactionResponsePagoPA } from "../../definitions/pagopa/TransactionResponse";
-import { Wallet as WalletPagoPA } from "../../definitions/pagopa/Wallet";
-import { WalletListResponse as WalletListResponsePagoPA } from "../../definitions/pagopa/WalletListResponse";
-import { WalletResponse as WalletResponsePagoPA } from "../../definitions/pagopa/WalletResponse";
-import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
-import { Abi } from "../../definitions/pagopa/walletv2/Abi";
-import { BPayInfo as BPayInfoPagoPa } from "../../definitions/pagopa/walletv2/BPayInfo";
-import {
-  CardInfo,
-  TypeEnum as CreditCardTypeEnum
-} from "../../definitions/pagopa/walletv2/CardInfo";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,

@@ -3,7 +3,11 @@ import * as O from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { CredentialType } from "../../../utils/itwMocksUtils";
 import { CredentialFormat } from "../../../utils/itwTypesUtils";
-import { selectItwEnv, selectItwSpecsVersion } from "../environment";
+import {
+  selectItwCieIdEnvironment,
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../environment";
 
 describe("selectItwEnv", () => {
   it("should return the correct environment", () => {
@@ -32,6 +36,35 @@ describe("selectItwEnv", () => {
     } as GlobalState;
 
     expect(selectItwEnv(state)).toEqual("prod");
+  });
+});
+
+describe("selectItwCieIdEnvironment", () => {
+  const stateWithEnv = (env: string | undefined) =>
+    ({
+      features: {
+        itWallet: {
+          environment: {
+            env
+          }
+        }
+      }
+    }) as GlobalState;
+
+  it("should target the coll CieID app in the pre environment", () => {
+    expect(selectItwCieIdEnvironment(stateWithEnv("pre"))).toEqual("coll");
+  });
+
+  it("should target the production CieID app in the prod environment", () => {
+    expect(selectItwCieIdEnvironment(stateWithEnv("prod"))).toEqual(
+      "production"
+    );
+  });
+
+  it("should target the production CieID app when the environment is not set", () => {
+    expect(selectItwCieIdEnvironment(stateWithEnv(undefined))).toEqual(
+      "production"
+    );
   });
 });
 

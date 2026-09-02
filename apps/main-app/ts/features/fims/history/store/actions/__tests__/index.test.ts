@@ -1,10 +1,11 @@
+import { Access } from "@io-app/api-types/generated/definitions/fims_history/Access";
+
 import {
   fimsHistoryExport,
   fimsHistoryGet,
   resetFimsHistoryExportState,
   resetFimsHistoryState
 } from "..";
-import { Access } from "../../../../../../../definitions/fims_history/Access";
 import { FimsExportSuccessStates } from "../../reducer";
 
 describe("fimsHistoryGet.request", () => {

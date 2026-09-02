@@ -21,7 +21,6 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
-import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   decodeOrganizationFiscalCode,
@@ -116,7 +115,6 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     <>
       <IOScrollViewWithLargeHeader
         canGoback
-        contextualHelp={emptyContextualHelp}
         description={I18n.t("wallet.payment.manual.fiscalCode.subtitle")}
         headerActionsProp={{ showHelp: true }}
         ignoreAccessibilityCheck

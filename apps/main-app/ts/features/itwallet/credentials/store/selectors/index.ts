@@ -9,6 +9,7 @@ import {
   getFirstNameFromCredential,
   getFiscalCodeFromCredential
 } from "../../../common/utils/itwClaimsUtils";
+import { shouldRefillBatch } from "../../../common/utils/itwCredentialIssuanceUtils";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
@@ -16,6 +17,7 @@ import {
   CredentialMetadata,
   ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
+import { DISPLAY_FORMAT_PRIORITY } from "../../utils/format";
 
 type CredentialsByType = {
   [K: string]: Record<CredentialFormat, CredentialMetadata>;
@@ -24,10 +26,9 @@ type CredentialsByType = {
 /**
  * Resolves the credential to display for a given format.
  *
- * When the requested format is SD-JWT (the default for display), it resolves in order:
- * 1. `dc+sd-jwt` (current SD-JWT format)
- * 2. `vc+sd-jwt` (older SD-JWT format still present in some wallets)
- * 3. `mso_mdoc` (fallback for credentials issued only in mDoc format, e.g. proof of age)
+ * When the requested format is SD-JWT (the default for display), it falls back to the other
+ * formats following {@link DISPLAY_FORMAT_PRIORITY}, so that credentials issued only as mDoc
+ * (e.g. proof of age) are still resolved.
  *
  * For any other requested format the exact format is returned, with no fallback.
  */
@@ -36,10 +37,9 @@ const withDisplayFormatFallback = (
   format: CredentialFormat
 ) => {
   if (format === CredentialFormat.SD_JWT) {
-    return (
-      credential?.[format] ??
-      credential?.[CredentialFormat.LEGACY_SD_JWT] ??
-      credential?.[CredentialFormat.MDOC]
+    return DISPLAY_FORMAT_PRIORITY.reduce<CredentialMetadata | undefined>(
+      (acc, f) => acc ?? credential?.[f],
+      undefined
     );
   }
   return credential?.[format];
@@ -320,6 +320,20 @@ export const itwCredentialsListByTypeSelector = (key: string) =>
     (credentials): ReadonlyArray<CredentialMetadata> =>
       credentials.filter(c => c.credentialType === key)
   );
+
+/**
+ * Returns the types of the one-time-use credentials that are down to their refill threshold.
+ *
+ * Types are deduplicated: the same credential may be stored in multiple formats, but it is
+ * renewed once for all of them.
+ */
+export const itwCredentialsToRefillSelector = createSelector(
+  itwAllStoredCredentialsSelector,
+  (credentials): ReadonlyArray<string> =>
+    Array.from(
+      new Set(credentials.filter(shouldRefillBatch).map(c => c.credentialType))
+    )
+);
 
 /**
  * Convenience selector that returns true if the user has a mDL credential stored.

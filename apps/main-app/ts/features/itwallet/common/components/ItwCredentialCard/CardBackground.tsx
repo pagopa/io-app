@@ -109,7 +109,6 @@ export const LegacyCardBackground = ({
 
   useEffect(() => {
     if (image && size.width > 0 && size.height > 0) {
-      // eslint-disable-next-line functional/immutable-data
       loadingOverlayOpacity.value = withTiming(0, {
         duration: 200,
         easing: Easing.ease

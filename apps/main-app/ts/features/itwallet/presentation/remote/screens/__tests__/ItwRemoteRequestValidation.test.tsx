@@ -26,7 +26,7 @@ type ActorRef = ReturnType<typeof ItwRemoteMachineContext.useActorRef>;
 jest.useFakeTimers();
 
 describe("ItwRemoteRequestValidationScreen", () => {
-  it("it should render the screen correctly", () => {
+  it("should render the screen correctly", () => {
     const component = renderComponent({}, true, "same-device");
     expect(component).toBeTruthy();
   });

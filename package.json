@@ -5,6 +5,7 @@
   "scripts": {
     "prepare": "lefthook install --reset-hooks-path",
     "validate": "nx affected --targets=lint,test,tsc-noemit --configuration=ci --nx-bail",
+    "validate-all": "nx run-many --targets=lint,test,tsc-noemit --configuration=ci",
     "prettify": "prettier --write \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
     "prettier:check": "prettier --check \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
     "knip": "knip --reporter json --no-exit-code --no-progress",
@@ -16,12 +17,12 @@
     "@babel/plugin-transform-regenerator": "^7.18.6",
     "@babel/preset-env": "^7.25.3",
     "@babel/runtime": "^7.25.0",
-    "@react-native/babel-preset": "0.83.6",
-    "@react-native/metro-config": "0.83.6",
     "@expo/metro-config": "55.0.23",
     "@nx/eslint": "catalog:",
     "@nx/jest": "catalog:",
     "@nx/js": "catalog:",
+    "@react-native/babel-preset": "0.83.10",
+    "@react-native/metro-config": "0.83.10",
     "@swc-node/register": "~1.11.1",
     "@swc/core": "~1.15.5",
     "@swc/helpers": "~0.5.18",
@@ -34,37 +35,5 @@
     "tslib": "^2.3.0",
     "typescript": "catalog:"
   },
-  "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319",
-  "pnpm": {
-    "overrides": {
-      "pretty-format>react-is": "19.0.0",
-      "@babel/plugin-transform-typescript": "^7.23.6",
-      "@babel/plugin-syntax-typescript": "^7.23.3",
-      "@babel/types": "^7.23.6"
-    },
-    "patchedDependencies": {
-      "react-native-barcode-builder@2.0.0": "patches/react-native-barcode-builder@2.0.0.patch",
-      "react-native-device-info@14.0.4": "patches/react-native-device-info@14.0.4.patch",
-      "react-native-screen-brightness@2.0.0-alpha": "patches/react-native-screen-brightness@2.0.0-alpha.patch",
-      "react-native-webview@13.16.0": "patches/react-native-webview@13.16.0.patch",
-      "react-native-pdf@7.0.3": "patches/react-native-pdf@7.0.3.patch",
-      "@gorhom/bottom-sheet@5.2.8": "patches/@gorhom__bottom-sheet@5.2.8.patch",
-      "@react-native-cookies/cookies@^6.2.1": "patches/@react-native-cookies-cookies-npm-6.2.1.patch",
-      "@react-native-community/art@^1.2.0": "patches/@react-native-community-art-npm-1.2.0.patch",
-      "react-native-exception-handler@^2.10.8": "patches/react-native-exception-handler-npm-2.10.8.patch",
-      "expo-screen-capture@~55.0.9": "patches/expo-screen-capture-npm-55.0.9.patch",
-      "@react-navigation/stack@6.4.1": "patches/@react-navigation__stack.patch"
-    },
-    "onlyBuiltDependencies": [
-      "unrs-resolver",
-      "@shopify/react-native-skia",
-      "core-js",
-      "@swc/core",
-      "nx",
-      "lefthook"
-    ]
-  },
-  "resolutions": {
-    "arktype": "1.0.25"
-  }
+  "packageManager": "pnpm@11.21.0+sha512.521705bce689924eac72f5a3587122f362689ef6571e55ba80076fd637c11132ecffada26fad4ea79c485bfddbfd3d5a2a5b05805a77e893de71ec8a6cca3bb1"
 }

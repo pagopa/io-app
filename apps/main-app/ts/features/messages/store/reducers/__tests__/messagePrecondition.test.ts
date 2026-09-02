@@ -1,9 +1,9 @@
+import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryBase";
+import { TagEnum as PaymentTagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPayment";
+import { TagEnum as SENDTagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
 import { ActionType } from "typesafe-actions";
 
-import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
-import { TagEnum } from "../../../../../../definitions/communication/MessageCategoryBase";
-import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/communication/MessageCategoryPayment";
-import { TagEnum as SENDTagEnum } from "../../../../../../definitions/communication/MessageCategoryPN";
 import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {

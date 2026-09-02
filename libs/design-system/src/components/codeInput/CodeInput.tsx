@@ -93,7 +93,6 @@ export const CodeInput = ({
         setStatus("error");
         triggerHaptic("notificationError");
 
-        // eslint-disable-next-line functional/immutable-data
         translate.value = shakeAnimation();
 
         const timer = setTimeout(() => {

@@ -1,7 +1,7 @@
+import { InstitutionServicesResource } from "@io-app/api-types/generated/definitions/services/InstitutionServicesResource";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { paginatedServicesGet, WithInstitutionID } from "../actions";

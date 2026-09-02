@@ -1,10 +1,10 @@
+import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
+import { BonusAvailableContent } from "@io-app/api-types/generated/definitions/content/BonusAvailableContent";
 import { Badge, Body, H6, HSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { FunctionComponent } from "react";
 import { Image, Pressable, StyleSheet, View, ViewStyle } from "react-native";
 
-import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
-import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import { getRemoteLocale } from "../../../messages/utils/ctas";
 
 type AvailableBonusItemState = "active" | "completed" | "incoming";

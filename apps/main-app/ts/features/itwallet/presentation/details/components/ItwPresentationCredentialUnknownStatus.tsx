@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
 
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
+import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
@@ -57,7 +57,6 @@ export const ItwPresentationCredentialUnknownStatus = ({
     if (isRetrying && previousAssertionRef.current !== credential.validity) {
       setIsRetryComplete(true);
       setIsRetrying(false);
-      // eslint-disable-next-line functional/immutable-data
       previousAssertionRef.current = credential.validity;
     }
   }, [credential.validity, isRetrying]);

@@ -9,7 +9,6 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getFlowType } from "../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { acknowledgeOnEmailValidation } from "../../settings/common/store/actions";
 import { isProfileFirstOnBoardingSelector } from "../../settings/common/store/selectors";
@@ -40,11 +39,6 @@ const ValidateEmailScreen = () => {
     });
   }, [navigation]);
 
-  const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-    title: "email.cduScreens.validateMail.title",
-    body: "email.cduScreens.validateMail.help.body"
-  };
-
   useOnFirstRender(() => {
     trackEmailNotAlreadyConfirmed(flow);
   });
@@ -65,7 +59,6 @@ const ValidateEmailScreen = () => {
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
-    contextualHelpMarkdown,
     canGoBack: false
   });
 

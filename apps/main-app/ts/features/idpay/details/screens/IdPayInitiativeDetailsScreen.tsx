@@ -1,4 +1,10 @@
 import {
+  InitiativeDTO,
+  InitiativeRewardTypeEnum,
+  VoucherStatusEnum
+} from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import {
   Body,
   ContentWrapper,
   H6,
@@ -18,17 +24,12 @@ import { useCallback, useLayoutEffect } from "react";
 import { Linking, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 
-import {
-  InitiativeDTO,
-  InitiativeRewardTypeEnum,
-  VoucherStatusEnum
-} from "../../../../../definitions/idpay/InitiativeDTO";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
-import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
+import { useAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { UpdateAppAlert } from "../../../../components/UpdateAppAlert";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
@@ -479,9 +480,10 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   );
 };
 
-const IdPayInitiativeDetailsScreen = withAppRequiredUpdate(
-  IdPayInitiativeDetailsScreenComponent,
-  "idpay.initiative_details"
-);
-
-export { IdPayInitiativeDetailsScreen };
+export const IdPayInitiativeDetailsScreen = () => {
+  const requiresUpdate = useAppRequiredUpdate("idpay.initiative_details");
+  if (requiresUpdate) {
+    return <UpdateAppAlert />;
+  }
+  return <IdPayInitiativeDetailsScreenComponent />;
+};

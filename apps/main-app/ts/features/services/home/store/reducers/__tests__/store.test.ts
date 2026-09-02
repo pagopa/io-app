@@ -1,11 +1,11 @@
+import { FeaturedService } from "@io-app/api-types/generated/definitions/services/FeaturedService";
+import { FeaturedServices } from "@io-app/api-types/generated/definitions/services/FeaturedServices";
+import { InstitutionsResource } from "@io-app/api-types/generated/definitions/services/InstitutionsResource";
+import { OrganizationFiscalCode } from "@io-app/api-types/generated/definitions/services/OrganizationFiscalCode";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import MockDate from "mockdate";
 import { createStore } from "redux";
 
-import { FeaturedService } from "../../../../../../../definitions/services/FeaturedService";
-import { FeaturedServices } from "../../../../../../../definitions/services/FeaturedServices";
-import { InstitutionsResource } from "../../../../../../../definitions/services/InstitutionsResource";
-import { OrganizationFiscalCode } from "../../../../../../../definitions/services/OrganizationFiscalCode";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { NetworkError } from "../../../../../../utils/errors";

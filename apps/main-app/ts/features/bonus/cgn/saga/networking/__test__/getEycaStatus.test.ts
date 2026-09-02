@@ -1,15 +1,15 @@
+import { StatusEnum } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
+import { StatusEnum as ExpiredStatus } from "@io-app/api-types/generated/definitions/cgn/CardExpired";
+import { StatusEnum as PendingStatus } from "@io-app/api-types/generated/definitions/cgn/CardPending";
+import { StatusEnum as RevokedStatus } from "@io-app/api-types/generated/definitions/cgn/CardRevoked";
+import { CcdbNumber } from "@io-app/api-types/generated/definitions/cgn/CcdbNumber";
+import { EycaCard } from "@io-app/api-types/generated/definitions/cgn/EycaCard";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { ValidationError } from "io-ts";
 import { expectSaga } from "redux-saga-test-plan";
 
-import { StatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
-import { StatusEnum as ExpiredStatus } from "../../../../../../../definitions/cgn/CardExpired";
-import { StatusEnum as PendingStatus } from "../../../../../../../definitions/cgn/CardPending";
-import { StatusEnum as RevokedStatus } from "../../../../../../../definitions/cgn/CardRevoked";
-import { CcdbNumber } from "../../../../../../../definitions/cgn/CcdbNumber";
-import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 import {
   remoteError,
   remoteReady

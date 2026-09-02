@@ -1,3 +1,5 @@
+import { Consent } from "@io-app/api-types/generated/definitions/fims_sso/Consent";
+import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   Avatar,
   Body,
@@ -21,8 +23,6 @@ import I18n from "i18next";
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { Consent } from "../../../../../definitions/fims_sso/Consent";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";

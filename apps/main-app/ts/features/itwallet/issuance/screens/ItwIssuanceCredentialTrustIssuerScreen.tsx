@@ -16,7 +16,7 @@ import { useCallback, useRef } from "react";
 import type { CredentialIssuanceMode } from "../../machine/credential/context";
 
 import IOMarkdown from "../../../../components/IOMarkdown";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -29,7 +29,7 @@ import { trackOpenItwTos } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { RequiresConnectivity } from "../../common/components/RequiresConnectivity";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -189,14 +189,12 @@ const ContentView = ({
   // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens
   const trackScrollToBottom = (crossed: boolean) => {
     if (crossed && !hasScrolledToBottom.current) {
-      // eslint-disable-next-line functional/immutable-data
       hasScrolledToBottom.current = true;
       trackIssuanceCredentialScrollToBottom(
         mixPanelCredential,
         ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
       );
     } else if (!crossed && hasScrolledToBottom.current) {
-      // eslint-disable-next-line functional/immutable-data
       hasScrolledToBottom.current = false;
     }
   };
@@ -263,7 +261,8 @@ const ContentView = ({
   );
 };
 
-// Offline failure screen HOC
-export const ItwIssuanceCredentialTrustIssuerScreen = withOfflineFailureScreen(
-  ItwIssuanceCredentialTrustIssuer
+export const ItwIssuanceCredentialTrustIssuerScreen = (props: ScreenProps) => (
+  <RequiresConnectivity>
+    <ItwIssuanceCredentialTrustIssuer {...props} />
+  </RequiresConnectivity>
 );

@@ -1,0 +1,20 @@
+{
+  "name": "@io-app/api-types",
+  "version": "1.0.0",
+  "description": "Generated TypeScript models for the IO backend/pagoPA OpenAPI specs, shared between main-app and dev-api-server",
+  "private": true,
+  "main": "generated/index.js",
+  "types": "generated/index.d.ts",
+  "scripts": {
+    "generate": "./scripts/generate-api-models.sh",
+    "tsc-noemit": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@pagopa/openapi-codegen-ts": "^14.0.0",
+    "typescript": "catalog:"
+  },
+  "dependencies": {
+    "fp-ts": "^2.16.9",
+    "io-ts": "^2.2.22"
+  }
+}
