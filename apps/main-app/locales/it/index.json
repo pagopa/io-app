@@ -266,7 +266,10 @@
     },
     "idp_selection": {
       "contextualHelpContent": "**L'Identity Provider è il gestore della tua identità digitale**. Puoi iniziare il tuo flusso di autenticazione solo dopo aver selezionato l'Identity Provider che ha rilasciato la tua identità SPID.\n",
-      "contextualHelpTitle": "Chi è il tuo Identity Provider"
+      "contextualHelpTitle": "Chi è il tuo Identity Provider",
+      "idps": {
+        "loadingAccessibilityLabel": "Caricamento Identity Provider"
+      }
     },
     "landing": {
       "accessibility": {
@@ -1343,6 +1346,10 @@
               "cta": "Inizia",
               "description": "Dovrai digitarlo per completare la verifica dell’identità.",
               "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)"
+            },
+            "animation": {
+              "pause": "Metti in pausa animazione",
+              "play": "Riproduci animazione"
             }
           },
           "readingCard": {
@@ -1532,6 +1539,15 @@
           "title": "Aggiungi il documento al Portafoglio"
         },
         "credentialOffer": {
+          "activation": {
+            "primaryAction": "Attiva IT-Wallet",
+            "subtitle": "Per aggiungere {{ credential }} devi prima attivare il portafoglio IT-Wallet di IO",
+            "title": "Attiva IT-Wallet per continuare"
+          },
+          "confirmIdentity": {
+            "subtitle": "È necessario confermare l’identità associata a {{ wallet }} per aggiungere {{ credential }}",
+            "title": "Conferma la tua identità per aggiungere il documento"
+          },
           "intro": {
             "fallbackTitle": "Aggiungi un documento al tuo Portafoglio"
           }
