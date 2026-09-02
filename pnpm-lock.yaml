@@ -27220,7 +27220,7 @@ snapshots:
 
   xml2js@0.6.0:
     dependencies:
-      sax: 1.2.4
+      sax: 1.6.1
       xmlbuilder: 11.0.1
 
   xmlbuilder@11.0.1: {}
