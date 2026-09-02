@@ -74,18 +74,21 @@ const FocusedGifImage = ({
           style={[styles.image, style]}
         />
       </View>
-      <VSpacer size={16} />
-      <View style={styles.buttonContainer}>
-        <IconButtonSolid
-          accessibilityLabel={
-            isPlaying ? pauseAccessibilityLabel : playAccessibilityLabel
-          }
-          color="primary"
-          disabled={reduceMotion}
-          icon={isPlaying ? "stop" : "play"}
-          onPress={togglePlayback}
-        />
-      </View>
+      {!reduceMotion && (
+        <>
+          <VSpacer size={16} />
+          <View style={styles.buttonContainer}>
+            <IconButtonSolid
+              accessibilityLabel={
+                isPlaying ? pauseAccessibilityLabel : playAccessibilityLabel
+              }
+              color="primary"
+              icon={isPlaying ? "stop" : "play"}
+              onPress={togglePlayback}
+            />
+          </View>
+        </>
+      )}
     </View>
   );
 };
