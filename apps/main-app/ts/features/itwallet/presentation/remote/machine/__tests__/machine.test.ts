@@ -6,6 +6,7 @@ import {
   RequestObject,
   WalletInstanceAttestations
 } from "../../../../common/utils/itwTypesUtils.ts";
+import { testRemoteDeps } from "../../../../machine/utils/testDeps";
 import {
   EnrichedPresentationDetails,
   ItwRemoteRequestPayload,
@@ -24,10 +25,9 @@ import {
 } from "../actors.ts";
 import { Context, InitialContext } from "../context.ts";
 import { RemoteFailureType } from "../failure.ts";
-import { RemoteMachineDeps } from "../input.ts";
 import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
 
-const T_DEPS = {} as RemoteMachineDeps;
+const T_DEPS = testRemoteDeps();
 
 const T_FLOW_TYPE = "cross-device";
 const T_CLIENT_ID = "clientId";

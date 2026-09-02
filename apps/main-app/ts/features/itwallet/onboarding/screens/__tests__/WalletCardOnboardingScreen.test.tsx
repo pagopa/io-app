@@ -10,9 +10,9 @@ import * as itwRemoteConfigSelectors from "../../../common/store/selectors/remot
 import { EnvType } from "../../../common/utils/environment";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
-import { CredentialIssuanceMachineDeps } from "../../../machine/credential/input";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
+import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
 
@@ -179,7 +179,7 @@ const renderComponent = () => {
     () => (
       <ItwCredentialIssuanceMachineContext.Provider
         logic={logic}
-        options={{ input: { deps: {} as CredentialIssuanceMachineDeps } }}
+        options={{ input: { deps: testCredentialIssuanceDeps() } }}
       >
         <WalletCardOnboardingScreen />
       </ItwCredentialIssuanceMachineContext.Provider>

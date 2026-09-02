@@ -7,9 +7,9 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { trackItwPrivacyScreen } from "../../../analytics";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
-import { EidIssuanceMachineDeps } from "../../../machine/eid/input";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { testEidIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import ItwIpzsPrivacyScreen from "../ItwIpzsPrivacyScreen";
 
@@ -57,7 +57,7 @@ const renderComponent = (level: EidIssuanceLevel) => {
   });
 
   const initialSnapshot = createActor(logic, {
-    input: { deps: {} as EidIssuanceMachineDeps }
+    input: { deps: testEidIssuanceDeps() }
   }).getSnapshot();
   const snapshot: typeof initialSnapshot = {
     ...initialSnapshot,

@@ -1,7 +1,6 @@
 import { CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { AnyActorLogic, createActor } from "xstate";
 
-import { useIOStore } from "../../../../../store/hooks";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
@@ -14,13 +13,13 @@ import {
   itwStoreWalletInstanceStatusList,
   itwWalletUnitAttestationsStore
 } from "../../../walletInstance/store/actions";
+import { testEidIssuanceDeps, testMachineStore } from "../../utils/testDeps";
 import {
   obtainStatusListActor,
   ObtainStatusListActorOutput,
   storeEidCredentialActor,
   StoreEidCredentialActorParams
 } from "../actors";
-import { EidIssuanceMachineDeps } from "../input";
 
 jest.mock("../../../common/utils/itwIoWallet", () => ({
   getIoWallet: jest.fn()
@@ -101,10 +100,10 @@ describe("eID issuance actors", () => {
       }
     }
   );
-  const store = {
+  const store = testMachineStore({
     dispatch,
     getState: jest.fn()
-  } as unknown as ReturnType<typeof useIOStore>;
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -201,7 +200,7 @@ describe("eID issuance actors", () => {
         parsedStatusList: STATUS_LIST_PAYLOAD,
         uri: WUA_STATUS_LIST_URI
       },
-      deps: { store } as EidIssuanceMachineDeps
+      deps: testEidIssuanceDeps({ store })
     };
 
     await expect(runActor(storeEidCredentialActor, input)).resolves.toBe(
@@ -233,7 +232,7 @@ describe("eID issuance actors", () => {
         parsedStatusList: STATUS_LIST_PAYLOAD,
         uri: WUA_STATUS_LIST_URI
       },
-      deps: { store } as EidIssuanceMachineDeps
+      deps: testEidIssuanceDeps({ store })
     };
 
     await expect(runActor(storeEidCredentialActor, input)).rejects.toBe(error);

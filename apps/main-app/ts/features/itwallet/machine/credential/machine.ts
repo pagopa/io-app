@@ -78,7 +78,7 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
       on: {
         "confirm-credential-offer": {
           target: "EvaluateFlow",
-          actions: ["onInit", assign({ mode: "issuance" as const })]
+          actions: ["onInit", assign({ mode: "issuance" })]
         },
         close: {
           target: "Idle",

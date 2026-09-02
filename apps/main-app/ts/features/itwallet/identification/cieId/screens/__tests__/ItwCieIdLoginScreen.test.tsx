@@ -10,9 +10,9 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { EidIssuanceMachineDeps } from "../../../../machine/eid/input";
 import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
+import { testEidIssuanceDeps } from "../../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import ItwCieIdLoginScreen from "../../../cieId/screens/ItwCieIdLoginScreen";
 
@@ -104,7 +104,7 @@ const renderComponent = () => {
   });
 
   const initialSnapshot = createActor(logic, {
-    input: { deps: {} as EidIssuanceMachineDeps }
+    input: { deps: testEidIssuanceDeps() }
   }).getSnapshot();
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (

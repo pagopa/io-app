@@ -1,8 +1,7 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useIOStore } from "../../../../../store/hooks";
 import { Env } from "../../../common/utils/environment";
+import { MachineNavigation, MachineStore } from "../../../machine/utils/deps";
 
 export type Input = {
   /**
@@ -14,6 +13,6 @@ export type Input = {
 export type RemoteMachineDeps = {
   env: Env;
   itwVersion: ItwVersion;
-  navigation: ReturnType<typeof useIONavigation>;
-  store: ReturnType<typeof useIOStore>;
+  navigation: MachineNavigation;
+  store: MachineStore;
 };

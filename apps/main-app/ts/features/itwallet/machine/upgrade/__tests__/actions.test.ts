@@ -1,29 +1,25 @@
-import { default as configureMockStore } from "redux-mock-store";
 import { ActionArgs } from "xstate";
 
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { useIOStore } from "../../../../../store/hooks";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
+import {
+  testCredentialUpgradeDeps,
+  testMachineStore
+} from "../../utils/testDeps";
 import { storeCredentialAction } from "../actions";
 import { Context } from "../context";
 import { CredentialUpgradeEvents } from "../events";
-import { CredentialUpgradeMachineDeps } from "../input";
 
 describe("itwCredentialUpgradeMachine actions", () => {
   describe("storeCredentialAction", () => {
     it("should store the new credential removing the old one", () => {
       const mockDispatch = jest.fn();
-      const mockStore = {
-        ...createMockStore(),
-        dispatch: mockDispatch
-      } as ReturnType<typeof useIOStore>;
 
       storeCredentialAction({
         context: {
-          deps: { store: mockStore } as CredentialUpgradeMachineDeps
+          deps: testCredentialUpgradeDeps({
+            store: testMachineStore({ dispatch: mockDispatch })
+          })
         } as Context,
         event: {
           type: "xstate.done.actor.upgradeCredential",
@@ -58,9 +54,3 @@ describe("itwCredentialUpgradeMachine actions", () => {
     });
   });
 });
-
-const createMockStore = () => {
-  const defaultState = appReducer(undefined, applicationChangeState("active"));
-  const mockStore = configureMockStore<GlobalState>();
-  return mockStore(defaultState);
-};

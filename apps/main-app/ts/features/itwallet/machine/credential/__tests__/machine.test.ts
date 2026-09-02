@@ -19,6 +19,7 @@ import {
   RequestObject
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
+import { testCredentialIssuanceDeps } from "../../utils/testDeps";
 import {
   GetWalletAttestationActorInput,
   GetWalletAttestationActorOutput,
@@ -34,7 +35,6 @@ import {
 } from "../actors";
 import { Context, InitialContext } from "../context";
 import { CredentialIssuanceFailureType } from "../failure";
-import { CredentialIssuanceMachineDeps } from "../input";
 import {
   ItwCredentialIssuanceMachine,
   itwCredentialIssuanceMachine
@@ -42,7 +42,7 @@ import {
 
 type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;
 
-const T_DEPS = {} as CredentialIssuanceMachineDeps;
+const T_DEPS = testCredentialIssuanceDeps();
 
 const T_WIA = "abcdefg";
 const T_WUA = { wua1: "wua-jwt" };

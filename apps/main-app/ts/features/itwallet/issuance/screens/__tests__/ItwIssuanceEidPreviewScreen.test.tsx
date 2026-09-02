@@ -7,12 +7,15 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
-import { EidIssuanceMachineDeps } from "../../../machine/eid/input";
 import {
   ItwEidIssuanceMachine,
   itwEidIssuanceMachine
 } from "../../../machine/eid/machine";
 import { ItwTags } from "../../../machine/tags";
+import {
+  testEidIssuanceDeps,
+  testMachineStore
+} from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { trackItwRequestSuccess } from "../../analytics";
 import { ItwIssuanceEidPreviewScreen } from "../ItwIssuanceEidPreviewScreen";
@@ -84,9 +87,9 @@ const renderComponent = ({
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const initialSnapshot = createActor(itwEidIssuanceMachine, {
     input: {
-      deps: {
-        store: { getState: () => initialState }
-      } as EidIssuanceMachineDeps
+      deps: testEidIssuanceDeps({
+        store: testMachineStore({ getState: () => initialState })
+      })
     }
   }).getSnapshot();
   const snapshot: MachineSnapshot = {

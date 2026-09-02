@@ -9,8 +9,6 @@ import {
   waitFor as waitForActor
 } from "xstate";
 
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
@@ -21,6 +19,7 @@ import {
 import { CieWarningType } from "../../../identification/cie/utils/types";
 import { ItwTags } from "../../tags";
 import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
+import { testEidIssuanceDeps } from "../../utils/testDeps";
 import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
@@ -48,11 +47,7 @@ import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
-const T_DEPS = {
-  store: {
-    getState: () => appReducer(undefined, applicationChangeState("active"))
-  }
-} as EidIssuanceMachineDeps;
+const T_DEPS = testEidIssuanceDeps();
 
 const T_INTEGRITY_KEY = "abc";
 const T_WIA = "abcdefg";

@@ -1,13 +1,13 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 
-import { useIOStore } from "../../../../store/hooks";
 import { Env } from "../../common/utils/environment";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
+import { MachineStore } from "../utils/deps";
 
 export type CredentialUpgradeMachineDeps = {
   env: Env;
-  store: ReturnType<typeof useIOStore>;
+  store: MachineStore;
 };
 
 export type Input = {

@@ -1,9 +1,12 @@
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import { itwCredentialsConsumeInstance } from "../../../../credentials/store/actions";
+import {
+  testMachineStore,
+  testRemoteDeps
+} from "../../../../machine/utils/testDeps";
 import { consumePresentedBatchCredentialsAction } from "../actions";
 import { Context, InitialContext } from "../context";
-import { RemoteMachineDeps } from "../input";
 
 const baseCredential: CredentialMetadata = {
   credentialType: CredentialType.PROOF_OF_AGE,
@@ -31,16 +34,17 @@ const pidCredential: CredentialMetadata = {
 describe("consumePresentedBatchCredentialsAction", () => {
   const dispatch = jest.fn();
 
-  const makeStore = (credentials: Record<string, CredentialMetadata>) => ({
-    getState: jest.fn().mockReturnValue({
-      features: {
-        itWallet: {
-          credentials: { credentials }
+  const makeStore = (credentials: Record<string, CredentialMetadata>) =>
+    testMachineStore({
+      getState: jest.fn().mockReturnValue({
+        features: {
+          itWallet: {
+            credentials: { credentials }
+          }
         }
-      }
-    }),
-    dispatch
-  });
+      }),
+      dispatch
+    });
 
   beforeEach(() => jest.clearAllMocks());
 
@@ -52,10 +56,7 @@ describe("consumePresentedBatchCredentialsAction", () => {
     consumePresentedBatchCredentialsAction({
       context: {
         ...InitialContext,
-        deps: {
-          store,
-          navigation: {} as never
-        } as unknown as RemoteMachineDeps,
+        deps: testRemoteDeps({ store }),
         presentedKeyTags: ["key-tag-01", "pid-key-tag"]
       } as Context
     } as never);
@@ -73,10 +74,7 @@ describe("consumePresentedBatchCredentialsAction", () => {
     consumePresentedBatchCredentialsAction({
       context: {
         ...InitialContext,
-        deps: {
-          store,
-          navigation: {} as never
-        } as unknown as RemoteMachineDeps,
+        deps: testRemoteDeps({ store }),
         presentedKeyTags: ["pid-key-tag"]
       } as Context
     } as never);
@@ -89,10 +87,7 @@ describe("consumePresentedBatchCredentialsAction", () => {
     consumePresentedBatchCredentialsAction({
       context: {
         ...InitialContext,
-        deps: {
-          store,
-          navigation: {} as never
-        } as unknown as RemoteMachineDeps,
+        deps: testRemoteDeps({ store }),
         presentedKeyTags: ["unknown-key-tag"]
       } as Context
     } as never);
@@ -105,10 +100,7 @@ describe("consumePresentedBatchCredentialsAction", () => {
     consumePresentedBatchCredentialsAction({
       context: {
         ...InitialContext,
-        deps: {
-          store,
-          navigation: {} as never
-        } as unknown as RemoteMachineDeps,
+        deps: testRemoteDeps({ store }),
         presentedKeyTags: []
       } as Context
     } as never);

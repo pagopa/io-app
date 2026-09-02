@@ -12,8 +12,8 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as itwCommonSelectors from "../../../../common/store/selectors";
+import { testRemoteDeps } from "../../../../machine/utils/testDeps";
 import { RemoteFailure, RemoteFailureType } from "../../machine/failure";
-import { RemoteMachineDeps } from "../../machine/input";
 import { itwRemoteMachine } from "../../machine/machine";
 import { ItwRemoteMachineContext } from "../../machine/provider";
 import { ITW_REMOTE_ROUTES } from "../../navigation/routes";
@@ -67,7 +67,7 @@ const renderComponent = (failure: RemoteFailure) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
   const initialSnapshot = createActor(itwRemoteMachine, {
-    input: { deps: { store } as RemoteMachineDeps }
+    input: { deps: testRemoteDeps({ store }) }
   }).getSnapshot();
 
   const snapshot: typeof initialSnapshot = {
