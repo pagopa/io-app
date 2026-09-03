@@ -6,8 +6,8 @@ import {
   foregroundStyle
 } from "@expo/ui/swift-ui/modifiers";
 import { IOColors } from "@io-app/design-system";
-import { render } from "@testing-library/react-native";
-import { Platform } from "react-native";
+import { render, waitFor } from "@testing-library/react-native";
+import { AccessibilityInfo, Dimensions, Platform } from "react-native";
 
 import { AnimatedNumericText } from "../AnimatedNumericText";
 import { BaselineNumericText } from "../BaselineNumericText";
@@ -16,6 +16,15 @@ import { BaselineNumericText } from "../BaselineNumericText";
    implementation reads it to decide whether SwiftUI can animate the digits. */
 const mockIOSVersion = (version: string) =>
   jest.spyOn(Platform, "Version", "get").mockReturnValue(version);
+
+/* `useWindowDimensions` reads the font scale from `Dimensions` */
+const mockFontScale = (fontScale: number) =>
+  jest
+    .spyOn(Dimensions, "get")
+    .mockReturnValue({ fontScale, height: 800, scale: 3, width: 400 });
+
+const mockBoldTextEnabled = (enabled: boolean) =>
+  jest.spyOn(AccessibilityInfo, "isBoldTextEnabled").mockResolvedValue(enabled);
 
 describe("AnimatedNumericText", () => {
   afterEach(() => {
@@ -62,6 +71,7 @@ describe("AnimatedNumericText", () => {
     beforeEach(() => {
       jest.clearAllMocks();
       mockIOSVersion("18.0");
+      mockFontScale(1);
     });
 
     it("styles the text with the resolved face, size and color", () => {
@@ -190,6 +200,101 @@ describe("AnimatedNumericText", () => {
       expect(toJSON()).toMatchObject({ type: "Text" });
       expect(jest.mocked(contentTransition)).not.toHaveBeenCalled();
       expect(jest.mocked(animation)).not.toHaveBeenCalled();
+    });
+  });
+
+  /* The SwiftUI text sits outside the React Native text tree, so the
+     accessibility settings `IOText` applies for free are applied by hand. */
+  describe("iOS (SwiftUI) accessibility settings", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      mockIOSVersion("18.0");
+      mockBoldTextEnabled(false);
+      mockFontScale(1);
+    });
+
+    it.each([
+      { expectedSize: 28, fontScale: 1, name: "the default scale" },
+      { expectedSize: 42, fontScale: 1.5, name: "a larger scale" },
+      /* The scale is clamped, as `IOMaxFontSizeMultiplier` does on `IOText` */
+      { expectedSize: 42, fontScale: 3, name: "a scale above the maximum" },
+      { expectedSize: 24.5, fontScale: 0.875, name: "a smaller scale" }
+    ])("scales the font size with $name", ({ expectedSize, fontScale }) => {
+      mockFontScale(fontScale);
+
+      render(
+        <AnimatedNumericText accessibilityLabel="remaining time" value={42} />
+      );
+
+      expect(jest.mocked(font)).toHaveBeenLastCalledWith(
+        expect.objectContaining({ size: expectedSize })
+      );
+    });
+
+    it("honours a custom maximum font size multiplier", () => {
+      mockFontScale(3);
+
+      render(
+        <AnimatedNumericText
+          accessibilityLabel="remaining time"
+          maxFontSizeMultiplier={1.2}
+          value={42}
+        />
+      );
+
+      expect(jest.mocked(font)).toHaveBeenLastCalledWith(
+        expect.objectContaining({ size: 28 * 1.2 })
+      );
+    });
+
+    it("keeps the given size when font scaling is turned off", () => {
+      mockFontScale(1.5);
+
+      render(
+        <AnimatedNumericText
+          accessibilityLabel="remaining time"
+          allowFontScaling={false}
+          value={42}
+        />
+      );
+
+      expect(jest.mocked(font)).toHaveBeenLastCalledWith(
+        expect.objectContaining({ size: 28 })
+      );
+    });
+
+    it("picks the bolder face when Bold Text is enabled", async () => {
+      mockBoldTextEnabled(true);
+
+      render(
+        <AnimatedNumericText
+          accessibilityLabel="remaining time"
+          value={42}
+          weight="Semibold"
+        />
+      );
+
+      await waitFor(() =>
+        expect(jest.mocked(font)).toHaveBeenLastCalledWith(
+          expect.objectContaining({ family: "Titillio-Bold" })
+        )
+      );
+    });
+
+    it("keeps the given face when Bold Text is disabled", async () => {
+      render(
+        <AnimatedNumericText
+          accessibilityLabel="remaining time"
+          value={42}
+          weight="Semibold"
+        />
+      );
+
+      await waitFor(() =>
+        expect(jest.mocked(font)).toHaveBeenLastCalledWith(
+          expect.objectContaining({ family: "Titillio-Semibold" })
+        )
+      );
     });
   });
 });

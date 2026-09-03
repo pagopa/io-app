@@ -10,12 +10,15 @@ import {
   monospacedDigit
 } from "@expo/ui/swift-ui/modifiers";
 import {
+  getBolderFontWeight,
   IOColors,
+  IOMaxFontSizeMultiplier,
   makeFontPostScriptName,
+  useBoldTextEnabled,
   useIONewTypeface
 } from "@io-app/design-system";
 import { useMemo } from "react";
-import { Platform } from "react-native";
+import { Platform, useWindowDimensions } from "react-native";
 
 import { BaselineNumericText } from "./BaselineNumericText";
 import {
@@ -40,20 +43,33 @@ const supportsNumericTextTransition = () =>
  * timers.
  *
  * The text lives inside a `Host` boundary, outside the React Native text tree:
- * it cannot be nested in a sentence, it does not inherit `allowFontScaling` nor
- * the Bold Text accessibility setting, it needs its own accessibility label, and
- * the host must keep a stable size.
+ * it cannot be nested in a sentence, it needs its own accessibility label, the
+ * host must keep a stable size, and the accessibility settings `IOText` gets
+ * for free — Bold Text and the font size scale — have to be applied by hand.
  */
 const SwiftUINumericText = ({
   accessibilityLabel,
+  allowFontScaling = true,
   color = DEFAULT_COLOR,
   countsDown = true,
   formatValue,
+  maxFontSizeMultiplier,
   size = DEFAULT_FONT_SIZE,
   value,
   weight = DEFAULT_FONT_WEIGHT
 }: AnimatedNumericTextProps) => {
   const { newTypefaceEnabled } = useIONewTypeface();
+  const boldEnabled = useBoldTextEnabled();
+  const { fontScale } = useWindowDimensions();
+
+  /* SwiftUI Dynamic Type doesn't apply to a custom font resolved by face, so we
+     scale the size ourselves the way `IOText` lets React Native do it */
+  const scaledSize = allowFontScaling
+    ? size *
+      Math.min(fontScale, maxFontSizeMultiplier ?? IOMaxFontSizeMultiplier)
+    : size;
+
+  const computedWeight = boldEnabled ? getBolderFontWeight(weight) : weight;
 
   const modifiers = useMemo(
     () => [
@@ -62,9 +78,9 @@ const SwiftUINumericText = ({
            `weight` parameter as soon as a custom family is given */
         family: makeFontPostScriptName(
           newTypefaceEnabled ? "Titillio" : "TitilliumSansPro",
-          weight
+          computedWeight
         ),
-        size
+        size: scaledSize
       }),
       foregroundStyle(IOColors[color]),
       accessibilityLabelModifier(accessibilityLabel),
@@ -79,11 +95,11 @@ const SwiftUINumericText = ({
     [
       accessibilityLabel,
       color,
+      computedWeight,
       countsDown,
       newTypefaceEnabled,
-      size,
-      value,
-      weight
+      scaledSize,
+      value
     ]
   );
 

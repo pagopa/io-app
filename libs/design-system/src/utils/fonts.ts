@@ -91,7 +91,7 @@ For example, if I set it to `Regular`, the function
 should return `Medium`, and so on. If I set it to the last `FontWeight`
 value, the function will return the same value.
 */
-const getBolderFontWeight = (weight: IOFontWeight): IOFontWeight => {
+export const getBolderFontWeight = (weight: IOFontWeight): IOFontWeight => {
   const currentWeight = weights.indexOf(weight);
   return currentWeight === weights.length - 1
     ? weight
