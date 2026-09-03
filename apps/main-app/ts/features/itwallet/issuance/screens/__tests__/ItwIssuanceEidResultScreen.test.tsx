@@ -7,6 +7,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import { Context, EidIssuanceLevel } from "../../../machine/eid/context";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
@@ -188,11 +189,10 @@ describe("ItwIssuanceEidResultScreen", () => {
 
   describe("IT-Wallet upgrade flow (Documenti su IO → IT-Wallet)", () => {
     it("renders the 'add document' TYP when the upgraded wallet has documents", () => {
-      jest
-        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
-        .mockReturnValue(false);
-
-      const { getByText } = renderComponent("l3", { mode: "upgrade" });
+      const { getByText } = renderComponent("l3", {
+        mode: "upgrade",
+        credentialsToUpgrade: [{} as CredentialMetadata]
+      });
 
       expect(
         getByText(
@@ -226,10 +226,6 @@ describe("ItwIssuanceEidResultScreen", () => {
     });
 
     it("renders the 'explore IT-Wallet' TYP when the upgraded wallet has no documents", () => {
-      jest
-        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
-        .mockReturnValue(true);
-
       const { getByText, queryByText } = renderComponent("l3", {
         mode: "upgrade"
       });
