@@ -58,6 +58,7 @@ export const ItwEidLifecycleAlert = ({
   const isOffline = offlineAccessReason !== undefined;
 
   const { trackAlertTap } = useItwEidLifecycleAlertTracking({
+    isItwCredential: isItw,
     maybeEidStatus,
     navigation,
     skipViewTracking,
