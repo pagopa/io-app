@@ -90,7 +90,7 @@ export const ItwIssuanceEidResultScreen = () => {
     handleBackToWallet();
     trackBackToWallet({
       exit_page: route.name,
-      credential: "ITW_ID_V2"
+      credential: isL3IssuanceFlow ? "ITW_PID" : "ITW_ID_V2"
     });
   };
 
@@ -185,7 +185,6 @@ const ItwEidSuccessResultContent = ({
   onGoToWallet: () => void;
   showBanner?: boolean;
 }) => {
-  const route = useRoute();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
   const authMethod = toSurveyAuthMethod(identification);
@@ -220,10 +219,7 @@ const ItwEidSuccessResultContent = ({
     <ItwIssuanceEidIssuanceResultContent
       docStatus={docStatus}
       onAddCredential={onAddDocument}
-      onBackToWallet={() => {
-        onGoToWallet();
-        trackBackToWallet({ exit_page: route.name, credential: "ITW_ID_V2" });
-      }}
+      onBackToWallet={onGoToWallet}
       showBanner={showBanner}
     />
   );
@@ -304,7 +300,7 @@ const ItwIssuanceEidUpgradeResultContent = ({
     handleBackToWallet();
     trackBackToWallet({
       exit_page: route.name,
-      credential: "ITW_ID_V2"
+      credential: "ITW_PID"
     });
   };
 
