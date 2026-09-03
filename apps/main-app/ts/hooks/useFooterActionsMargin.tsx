@@ -42,7 +42,7 @@ export const useFooterActionsMargin = (
   const bottomMargin =
     !needSafeAreaMargin || excludeSafeAreaMargins
       ? IOVisualCostants.appMarginDefault
-      : insets.bottom + edgeToEdgeMargin;
+      : insets.bottom + edgeToEdgeMargin + 62;
 
   return {
     bottomMargin,
