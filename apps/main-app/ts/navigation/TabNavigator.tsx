@@ -1,13 +1,12 @@
+import { createNativeBottomTabNavigator } from "@bottom-tabs/react-navigation";
 import {
   IOColors,
   makeFontStyleObject,
   useIOTheme
 } from "@io-app/design-system";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import I18n from "i18next";
 
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
@@ -22,7 +21,7 @@ import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 
-const Tab = createBottomTabNavigator<MainTabParamsList>();
+const Tab = createNativeBottomTabNavigator<MainTabParamsList>();
 
 export const MainTabNavigator = () => {
   const theme = useIOTheme();
@@ -43,6 +42,7 @@ export const MainTabNavigator = () => {
       loadingOpacity={1}
     >
       <Tab.Navigator
+        minimizeBehavior="onScrollDown"
         screenOptions={{
           tabBarLabelStyle: makeFontStyleObject(
             11,
@@ -56,7 +56,9 @@ export const MainTabNavigator = () => {
           tabBarAllowFontScaling: false,
           tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],
           tabBarInactiveTintColor: IOColors[theme["textBody-tertiary"]],
-          tabBarStyle
+          tabBarStyle,
+          labelled: true,
+          scrollEdgeAppearance: "opaque"
         }}
       >
         <Tab.Screen
@@ -64,14 +66,9 @@ export const MainTabNavigator = () => {
           name={MESSAGES_ROUTES.MESSAGES_HOME}
           options={{
             title: I18n.t("global.navigator.messages"),
-            tabBarIcon: ({ color, focused }) => (
-              <TabIconComponent
-                color={color}
-                focused={focused}
-                iconName={"navMessages"}
-                iconNameFocused={"navMessagesFocused"}
-              />
-            )
+            tabBarIcon: () => ({
+              sfSymbol: "message.fill"
+            })
           }}
         />
         <Tab.Screen
@@ -79,36 +76,24 @@ export const MainTabNavigator = () => {
           name={ROUTES.WALLET_HOME}
           options={{
             title: I18n.t("global.navigator.wallet"),
-            tabBarIcon: ({ color, focused }) => (
-              <TabIconComponent
-                color={color}
-                focused={focused}
-                iconName={"navWallet"}
-                iconNameFocused={"navWalletFocused"}
-              />
-            )
+            tabBarIcon: () => ({
+              sfSymbol: "wallet.pass.fill"
+            })
           }}
         />
 
         <Tab.Screen
           component={EmptyComponent}
           listeners={{
-            tabPress: ({ preventDefault }) => {
-              preventDefault();
-              navigateToBarcodeScanScreen();
-            }
+            tabPress: () => navigateToBarcodeScanScreen()
           }}
           name={ROUTES.BARCODE_SCAN_TAB_EMPTY}
           options={{
+            preventsDefault: true,
             title: I18n.t("global.navigator.scan"),
-            tabBarIcon: ({ color, focused }) => (
-              <TabIconComponent
-                color={color}
-                focused={focused}
-                iconName={"navScan"}
-                iconNameFocused={"navScan"}
-              />
-            )
+            tabBarIcon: () => ({
+              sfSymbol: "barcode.viewfinder"
+            })
           }}
         />
 
@@ -117,14 +102,9 @@ export const MainTabNavigator = () => {
           name={ROUTES.PAYMENTS_HOME}
           options={{
             title: I18n.t("global.navigator.payments"),
-            tabBarIcon: ({ color, focused }) => (
-              <TabIconComponent
-                color={color}
-                focused={focused}
-                iconName={"navPsp"}
-                iconNameFocused={"navPsp"}
-              />
-            )
+            tabBarIcon: () => ({
+              sfSymbol: "creditcard.fill"
+            })
           }}
         />
 
@@ -133,14 +113,9 @@ export const MainTabNavigator = () => {
           name={SERVICES_ROUTES.SERVICES_HOME}
           options={{
             title: I18n.t("global.navigator.services"),
-            tabBarIcon: ({ color, focused }) => (
-              <TabIconComponent
-                color={color}
-                focused={focused}
-                iconName="navServices"
-                iconNameFocused="navServicesFocused"
-              />
-            )
+            tabBarIcon: () => ({
+              sfSymbol: "gearshape.fill"
+            })
           }}
         />
       </Tab.Navigator>
