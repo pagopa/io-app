@@ -179,7 +179,6 @@
     "@types/fs-extra": "^5.0.4",
     "@types/hoist-non-react-statics": "^3.0.1",
     "@types/jest": "catalog:",
-    "@types/jsrsasign": "^10.5.15",
     "@types/lodash": "^4.14.157",
     "@types/node": "^10.1.0",
     "@types/pako": "^2.0.0",
