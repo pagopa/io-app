@@ -17,10 +17,7 @@ import type { CredentialIssuanceMode } from "../../machine/credential/context";
 import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
@@ -57,8 +54,8 @@ type ScreenProps = IOStackNavigationRouteProps<
 export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
   const { credentialType, mode } = props.route.params ?? {};
 
-  const navigation = useIONavigation();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
@@ -77,7 +74,7 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
       )
     },
     enabled: isWalletActivationFlow,
-    handleDismiss: () => navigation.goBack()
+    handleDismiss: () => eidMachineRef.send({ type: "go-to-wallet" })
   });
 
   useHeaderSecondLevel({
