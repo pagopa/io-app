@@ -129,8 +129,8 @@ async function run() {
             "removeDimensions",
             "removeRasterImages",
             "removeScriptElement",
-            "removeViewBox",
-          ],
+            "removeViewBox"
+          ]
         });
         
         // Overwrite original SVG file with optimized code
