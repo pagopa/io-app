@@ -6,7 +6,7 @@ import WebView from "react-native-webview";
 
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { isDevEnv } from "../../../../utils/environment";
-import { getIntentFallbackUrl } from "../../../authentication/common/utils/login";
+import { getIntentFallbackUrl } from "../../../authentication/common/utils";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
 
 type PaymentWebViewProps<T> = {
