@@ -21,6 +21,7 @@ import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/pr
 import { selectHasResolvedCredentialOffer } from "../../machine/credential/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
+  hasCredentialsToUpgrade,
   isL3FeaturesEnabledSelector,
   selectCredentialType,
   selectIdentification,
@@ -284,7 +285,9 @@ const ItwIssuanceEidUpgradeResultContent = ({
   const route = useRoute();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
+  const hasUpgradedCredentials = ItwEidIssuanceMachineContext.useSelector(
+    hasCredentialsToUpgrade
+  );
   const failedCredentialName = useItwCredentialName(
     failedCredentials[0]?.credentialType
   );
@@ -338,10 +341,12 @@ const ItwIssuanceEidUpgradeResultContent = ({
 
   // The upgrade flow means the user already had DocIO (L2) active, so docStatus is "active".
   // The survey banner is shown in WalletHome (via Redux) instead of here.
+  // The empty wallet state is determined by whether any credentials were upgraded, not by the Redux store,
+  // which is cleared before the new credentials are added, causing a UI glitch.
   return (
     <ItwEidSuccessResultContent
       docStatus="active"
-      isWalletEmpty={isWalletEmpty}
+      isWalletEmpty={!hasUpgradedCredentials}
       onAddDocument={handleAddCredential}
       onGoToWallet={handleGoToWalletWithTracking}
       showBanner={false}

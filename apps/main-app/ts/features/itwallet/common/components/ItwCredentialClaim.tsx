@@ -185,52 +185,66 @@ const DateClaimItem = ({
     ? getHiddenClaimAccessibilityText()
     : realValue;
 
+  // Localized description of the claim's validity status. It is used to build the
+  // visible badge (when shown) and also to inform screen reader users of the "valid"
+  // state, which otherwise has no visible badge.
+  const statusText = useMemo(() => {
+    switch (status) {
+      case "expired":
+        return I18n.t(
+          "features.itWallet.presentation.credentialDetails.status.expired"
+        );
+      case "expiring":
+      case "jwtExpiring":
+      case "valid":
+        return I18n.t(
+          "features.itWallet.presentation.credentialDetails.status.valid"
+        );
+      case "invalid":
+        return I18n.t(
+          "features.itWallet.presentation.credentialDetails.status.invalid"
+        );
+      default:
+        return undefined;
+    }
+  }, [status]);
+
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
-    if (hidden) {
+    if (hidden || !statusText) {
       return undefined;
     }
     switch (status) {
       case "expired":
         return {
           type: "badge",
-          componentProps: {
-            variant: "error",
-            text: I18n.t(
-              "features.itWallet.presentation.credentialDetails.status.expired"
-            )
-          }
+          componentProps: { variant: "error", text: statusText }
         };
       case "expiring":
       case "jwtExpiring":
-      case "valid":
         return {
           type: "badge",
-          componentProps: {
-            variant: "success",
-            text: I18n.t(
-              "features.itWallet.presentation.credentialDetails.status.valid"
-            )
-          }
+          componentProps: { variant: "success", text: statusText }
         };
       case "invalid":
         return {
           type: "badge",
-          componentProps: {
-            variant: "error",
-            text: I18n.t(
-              "features.itWallet.presentation.credentialDetails.status.invalid"
-            )
-          }
+          componentProps: { variant: "error", text: statusText }
         };
+      // "valid" is the default state, so no badge is shown for it
+      case "valid":
       default:
         return undefined;
     }
-  }, [status, hidden]);
+  }, [status, hidden, statusText]);
 
   return (
     <ListItemInfo
       accessibilityLabel={
-        hidden ? `${label} ${accessibilityStateText}` : undefined
+        hidden
+          ? `${label} ${accessibilityStateText}`
+          : statusText && !endElement
+            ? [label, displayValue, statusText].join("; ")
+            : undefined
       }
       endElement={endElement}
       key={`${label}-${displayValue}`}
