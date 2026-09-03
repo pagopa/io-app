@@ -83,7 +83,7 @@ jest.mock("expo-notifications", () => ({}));
 jest.mock("expo-document-picker", () => ({
   getDocumentAsync: jest.fn()
 }));
-jest.mock("@react-native-cookies/cookies", () => jest.fn());
+jest.mock("@preeternal/react-native-cookie-manager", () => jest.fn());
 jest.mock("expo-sharing", () => ({ shareAsync: jest.fn() }));
 jest.mock("expo-clipboard", () => mockClipboard);
 jest.mock("expo-calendar", () => ({

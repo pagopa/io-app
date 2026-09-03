@@ -20,15 +20,11 @@ patchedDependencies:
   # Sets accessibility-order starting from the bottom-sheet content instead of the bottom-sheet background layer
   "@gorhom/bottom-sheet@5.2.8": "patches/@gorhom__bottom-sheet@5.2.8.patch"
   # Replaces the retired JCenter repository with Maven Central for Android builds.
-  "@react-native-cookies/cookies@^6.2.1": "patches/@react-native-cookies-cookies-npm-6.2.1.patch"
-  # Replaces the retired JCenter repository with Maven Central for Android builds.
   "@react-native-community/art@^1.2.0": "patches/@react-native-community-art-npm-1.2.0.patch"
   # Replaces the retired JCenter repository with Maven Central for Android builds.
   react-native-exception-handler@^2.10.8: patches/react-native-exception-handler-npm-2.10.8.patch
   # Allows iOS screen recordings without a black overlay while still preventing screenshots.
   expo-screen-capture@~55.0.9: patches/expo-screen-capture-npm-55.0.9.patch
-  # Applies an explicit header `minHeight` in `CardContainer` only when `headerTransparent` is enabled and a screen reader is active, improving Android accessibility by ensuring the header area is properly sized for TalkBack.
-  "@react-navigation/stack@6.4.1": "patches/@react-navigation__stack.patch"
 
 allowBuilds:
   "@shopify/react-native-skia": true

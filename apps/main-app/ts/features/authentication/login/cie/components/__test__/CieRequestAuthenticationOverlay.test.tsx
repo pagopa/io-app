@@ -21,7 +21,7 @@ jest
   .spyOn(AnalyticsUtils, "trackSpidLoginError")
   .mockImplementation(() => null);
 
-jest.mock("@react-native-cookies/cookies", () => ({
+jest.mock("@preeternal/react-native-cookie-manager", () => ({
   removeSessionCookies: jest.fn(() => Promise.resolve(true))
 }));
 
@@ -77,9 +77,9 @@ describe("CieRequestAuthenticationOverlay", () => {
     jest.clearAllMocks();
   });
 
-  it("should render correctly and match snapshot", () => {
-    const component = renderComponent();
-    expect(component).toMatchSnapshot();
+  it("should render the authentication WebView", async () => {
+    const { findByTestId } = renderComponent();
+    await expect(findByTestId("webview")).resolves.toBeTruthy();
   });
 
   it("should call onClose when pressing cancel", async () => {

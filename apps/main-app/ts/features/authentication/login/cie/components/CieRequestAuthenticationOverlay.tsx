@@ -3,7 +3,7 @@ import {
   isLoginUtilsError,
   LoginUtilsError
 } from "@pagopa/io-react-native-login-utils";
-import CookieManager from "@react-native-cookies/cookies";
+import CookieManager from "@preeternal/react-native-cookie-manager";
 import I18n from "i18next";
 import {
   createRef,
