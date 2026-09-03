@@ -2,11 +2,9 @@ import { verifyCertificateChain } from "@pagopa/io-react-native-crypto";
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { KEYUTIL, X509 } from "jsrsasign";
-import { ZodError } from "zod";
 
 import {
   getCredentialStatusFromStatusList,
-  getKeysForKaStatusList,
   getKeysForStatusListToken
 } from "..";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
@@ -45,15 +43,11 @@ const mockGetJwkFromKey = jest.mocked(KEYUTIL.getJWKFromKey);
 const mockVerifyCertificateChain = jest.mocked(verifyCertificateChain);
 const mockX509 = jest.mocked(X509);
 
-declare const global: { fetch: typeof fetch };
-
 const CREDENTIAL_ID = "credential-id";
 const CREDENTIAL = "credential-jwt";
 const CREDENTIAL_FORMAT = "dc+sd-jwt";
-const KA = "ka-jwt";
 const ITW_VERSION = "1.4.6";
 const ISSUER = "https://wallet-provider.example";
-const FEDERATION_JWT = "federation-jwt";
 const STATUS_LIST_URI = `${ISSUER}/status-list/1`;
 const STATUS_LIST = "status-list-jwt";
 const STATUS_LIST_INDEX = 1;
@@ -266,62 +260,5 @@ describe("getCredentialStatusFromStatusList", () => {
         KEYS
       )
     ).rejects.toThrow(`Status List is not supported by API ${ITW_VERSION}`);
-  });
-});
-
-describe("getKeysForKaStatusList", () => {
-  beforeEach(() => {
-    jest.restoreAllMocks();
-    jest.clearAllMocks();
-  });
-
-  it("retrieves wallet provider keys", async () => {
-    mockDecodeJwt
-      .mockReturnValueOnce({ payload: { iss: ISSUER } } as never)
-      .mockReturnValueOnce({
-        payload: {
-          metadata: {
-            wallet_solution: {
-              jwks: { keys: KEYS }
-            }
-          }
-        }
-      } as never);
-    const fetchSpy = jest.spyOn(global, "fetch").mockResolvedValue({
-      ok: true,
-      text: jest.fn().mockResolvedValue(FEDERATION_JWT)
-    } as never);
-
-    await expect(getKeysForKaStatusList(KA)).resolves.toEqual(KEYS);
-
-    expect(mockDecodeJwt).toHaveBeenNthCalledWith(1, KA);
-    expect(fetchSpy).toHaveBeenCalledWith(
-      `${ISSUER}/.well-known/openid-federation`
-    );
-    expect(mockDecodeJwt).toHaveBeenNthCalledWith(2, FEDERATION_JWT);
-  });
-
-  it.each([
-    ["missing metadata", {}],
-    [
-      "invalid JWKS keys",
-      {
-        metadata: {
-          wallet_solution: {
-            jwks: { keys: [{ kid: "missing-kty" }] }
-          }
-        }
-      }
-    ]
-  ])("rejects %s", async (_, payload) => {
-    mockDecodeJwt
-      .mockReturnValueOnce({ payload: { iss: ISSUER } } as never)
-      .mockReturnValueOnce({ payload } as never);
-    jest.spyOn(global, "fetch").mockResolvedValue({
-      ok: true,
-      text: jest.fn().mockResolvedValue(FEDERATION_JWT)
-    } as never);
-
-    await expect(getKeysForKaStatusList(KA)).rejects.toBeInstanceOf(ZodError);
   });
 });
