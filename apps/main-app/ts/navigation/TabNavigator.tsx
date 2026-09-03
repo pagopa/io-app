@@ -42,6 +42,7 @@ export const MainTabNavigator = () => {
       loadingOpacity={1}
     >
       <Tab.Navigator
+        labeled
         minimizeBehavior="onScrollDown"
         screenOptions={{
           tabBarLabelStyle: makeFontStyleObject(
@@ -57,7 +58,6 @@ export const MainTabNavigator = () => {
           tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],
           tabBarInactiveTintColor: IOColors[theme["textBody-tertiary"]],
           tabBarStyle,
-          labelled: true,
           scrollEdgeAppearance: "opaque"
         }}
       >
