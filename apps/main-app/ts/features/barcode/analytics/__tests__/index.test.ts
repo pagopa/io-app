@@ -84,6 +84,16 @@ describe("index", () => {
       const code = testable!.getEventCodeFromBarcode(idPayIOBarcode);
       expect(code).toBe("ITW presentazione remota");
     });
+    it("should return ITW aggiunta documento for barcode of type 'ITW_CREDENTIAL_OFFER'", () => {
+      const itwCredentialOfferIOBarcode = {
+        type: "ITW_CREDENTIAL_OFFER",
+        format: "QR_CODE"
+      } as IOBarcode;
+      const code = testable!.getEventCodeFromBarcode(
+        itwCredentialOfferIOBarcode
+      );
+      expect(code).toBe("ITW aggiunta documento");
+    });
   });
   describe("trackBarcodeScanSuccess", () => {
     afterEach(() => {
@@ -91,35 +101,43 @@ describe("index", () => {
     });
     (["home", "avviso", "idpay"] as const).forEach(flow =>
       (["camera", "file"] as const).forEach(origin =>
-        (["PAGOPA", "IDPAY", "FCI", "ITW_REMOTE", "SEND"] as const).forEach(
-          barcodeType =>
-            (["DATA_MATRIX", "QR_CODE"] as const).forEach(format =>
-              it(`should call 'mixpanelTrack' with proper parameters on '${flow}' flow starting from '${origin}' for '${barcodeType}' barcode with '${format}' format`, () => {
-                const ioBarcode = {
-                  type: barcodeType,
-                  format
-                } as IOBarcode;
+        (
+          [
+            "PAGOPA",
+            "IDPAY",
+            "FCI",
+            "ITW_REMOTE",
+            "ITW_CREDENTIAL_OFFER",
+            "SEND"
+          ] as const
+        ).forEach(barcodeType =>
+          (["DATA_MATRIX", "QR_CODE"] as const).forEach(format =>
+            it(`should call 'mixpanelTrack' with proper parameters on '${flow}' flow starting from '${origin}' for '${barcodeType}' barcode with '${format}' format`, () => {
+              const ioBarcode = {
+                type: barcodeType,
+                format
+              } as IOBarcode;
 
-                const spiedOnMockedMixpanelTrack = jest
-                  .spyOn(mixpanel, "mixpanelTrack")
-                  .mockImplementation();
+              const spiedOnMockedMixpanelTrack = jest
+                .spyOn(mixpanel, "mixpanelTrack")
+                .mockImplementation();
 
-                trackBarcodeScanSuccess(flow, ioBarcode, origin);
+              trackBarcodeScanSuccess(flow, ioBarcode, origin);
 
-                expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
-                expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
-                expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
-                  "QRCODE_SCAN_SUCCESS"
-                );
-                expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
-                  event_category: "UX",
-                  event_type: "action",
-                  flow,
-                  code: codeFromTypeAndFormat(barcodeType, format),
-                  data_entry: dataEntryFromOrigin(origin)
-                });
-              })
-            )
+              expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+              expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+              expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+                "QRCODE_SCAN_SUCCESS"
+              );
+              expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+                event_category: "UX",
+                event_type: "action",
+                flow,
+                code: codeFromTypeAndFormat(barcodeType, format),
+                data_entry: dataEntryFromOrigin(origin)
+              });
+            })
+          )
         )
       )
     );
@@ -132,14 +150,16 @@ const codeFromTypeAndFormat = (barcodeType: string, format: string) => {
       return "firma con IO";
     case "IDPAY":
       return "idpay";
+    case "ITW_CREDENTIAL_OFFER":
+      return "ITW aggiunta documento";
+    case "ITW_REMOTE":
+      return "ITW presentazione remota";
     case "PAGOPA":
       if (format === "DATA_MATRIX") {
         return "data_matrix";
       } else {
         return "avviso";
       }
-    case "ITW_REMOTE":
-      return "ITW presentazione remota";
     case "SEND":
       return "SEND";
     default:
