@@ -1346,6 +1346,10 @@
               "cta": "Inizia",
               "description": "Dovrai digitarlo per completare la verifica dell’identità.",
               "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)"
+            },
+            "animation": {
+              "pause": "Metti in pausa animazione",
+              "play": "Riproduci animazione"
             }
           },
           "readingCard": {
@@ -1992,7 +1996,9 @@
               "title": "Vuoi davvero disattivare IT-Wallet?"
             }
           },
-          "listItemHeader": "Dati del mio IT-Wallet ID"
+          "listItemHeader": "Dati del mio IT-Wallet ID",
+          "listItemHeaderHideValues": "Nascondi dati del mio IT-Wallet ID",
+          "listItemHeaderShowValues": "Mostra dati del mio IT-Wallet ID"
         },
         "missingCredentials": {
           "one": {

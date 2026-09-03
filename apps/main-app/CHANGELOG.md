@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.38.0-rc.28](https://github.com/pagopa/io-app/compare/3.38.0-rc.27...3.38.0-rc.28) (2026-09-02)
+
+### Features
+
+* [[IOCOM-3229](https://pagopa.atlassian.net/browse/IOCOM-3229)] animated pictograms in services and messages sections ([#8406](https://github.com/pagopa/io-app/issues/8406)) ([9229487](https://github.com/pagopa/io-app/commit/92294875946badfe21d746d90bba4bb00665d9c8))
+* **IT-wallet:** [[SIW-3653](https://pagopa.atlassian.net/browse/SIW-3653)] Add animated Image component with play/pause button for nfc preparation screen ([#7860](https://github.com/pagopa/io-app/issues/7860)) ([5559c2a](https://github.com/pagopa/io-app/commit/5559c2ad222b0660e02eff98c26a8d852bd93501))
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3803](https://pagopa.atlassian.net/browse/SIW-3803)] A11y fixes: data toggle state ([#8454](https://github.com/pagopa/io-app/issues/8454)) ([ac864ce](https://github.com/pagopa/io-app/commit/ac864ce5a786462e50d13f3dbd6e931e4c6d00dc))
+
+### Chores
+
+* [[IEG-3027](https://pagopa.atlassian.net/browse/IEG-3027)] Align `iOSCookieDisabledServiceIds` to services metadata ([#8526](https://github.com/pagopa/io-app/issues/8526)) ([ed78105](https://github.com/pagopa/io-app/commit/ed7810536408cb7a605e7353608a95c0ff706ee4))
+* **IT-Wallet:** [[SIW-4892](https://pagopa.atlassian.net/browse/SIW-4892)] Remove helper tooltip from CIE+PIN auth flow ([#8529](https://github.com/pagopa/io-app/issues/8529)) ([a155898](https://github.com/pagopa/io-app/commit/a155898d11a7025166fd0d2671c0358e559c5b17))
 ## [3.38.0-rc.27](https://github.com/pagopa/io-app/compare/3.38.0-rc.26...3.38.0-rc.27) (2026-09-01)
 
 ### Features
