@@ -15,7 +15,9 @@ import {
   useIONewTypeface
 } from "@io-app/design-system";
 import { useMemo } from "react";
+import { Platform } from "react-native";
 
+import { BaselineNumericText } from "./BaselineNumericText";
 import {
   DEFAULT_COLOR,
   DEFAULT_FONT_SIZE,
@@ -27,15 +29,22 @@ import { AnimatedNumericTextProps } from "./types";
 const TRANSITION_SPRING = { response: 0.4, dampingFraction: 0.6 };
 
 /**
- * iOS implementation: the value is rendered by a SwiftUI `Text` so that each
- * change animates through `contentTransition(.numericText)`, the same effect
- * the system uses for its own timers.
+ * Check if the current iOS version supports numeric text transition.
+ * `Platform.Version` is typed as the union of every platform, a string on iOS */
+const supportsNumericTextTransition = () =>
+  parseInt(String(Platform.Version), 10) >= 16;
+
+/**
+ * The value is rendered by a SwiftUI `Text` so that each change animates through
+ * `contentTransition(.numericText)`, the same effect the system uses for its own
+ * timers.
  *
  * The text lives inside a `Host` boundary, outside the React Native text tree:
- * it cannot be nested in a sentence, it does not inherit `allowFontScaling`,
- * it needs its own accessibility label, and the host must keep a stable size.
+ * it cannot be nested in a sentence, it does not inherit `allowFontScaling` nor
+ * the Bold Text accessibility setting, it needs its own accessibility label, and
+ * the host must keep a stable size.
  */
-export const AnimatedNumericText = ({
+const SwiftUINumericText = ({
   accessibilityLabel,
   color = DEFAULT_COLOR,
   countsDown = true,
@@ -89,3 +98,16 @@ export const AnimatedNumericText = ({
     </Host>
   );
 };
+
+/**
+ * iOS implementation.
+ *
+ * Below iOS 16 SwiftUI cannot animate the transition, so we rely
+ * on the `IOText` component instead.
+ */
+export const AnimatedNumericText = (props: AnimatedNumericTextProps) =>
+  supportsNumericTextTransition() ? (
+    <SwiftUINumericText {...props} />
+  ) : (
+    <BaselineNumericText {...props} />
+  );
