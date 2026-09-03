@@ -1,8 +1,7 @@
 import { verifyCertificateChain } from "@pagopa/io-react-native-crypto";
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { CredentialStatus } from "@pagopa/io-react-native-wallet";
-import { KEYUTIL, X509 } from "jsrsasign";
-import { ZodError } from "zod";
+import { getJwkFromCertificateChain } from "@pagopa/io-react-native-wallet/src/utils/crypto";
 
 import {
   getCredentialStatusFromStatusList,
@@ -19,20 +18,9 @@ jest.mock("@pagopa/io-react-native-jwt", () => ({
   decode: jest.fn()
 }));
 
-jest.mock("jsrsasign", () => {
-  const ECDSA = jest.fn();
-  const certificatePublicKey = new ECDSA();
-
-  return {
-    KEYUTIL: { getJWKFromKey: jest.fn() },
-    KJUR: { crypto: { ECDSA } },
-    RSAKey: jest.fn(),
-    X509: jest.fn().mockImplementation(() => ({
-      getPublicKey: jest.fn().mockReturnValue(certificatePublicKey),
-      readCertPEM: jest.fn()
-    }))
-  };
-});
+jest.mock("@pagopa/io-react-native-wallet/src/utils/crypto", () => ({
+  getJwkFromCertificateChain: jest.fn()
+}));
 
 jest.mock("../../../common/utils/itwIoWallet", () => ({
   getIoWallet: jest.fn()
@@ -40,19 +28,14 @@ jest.mock("../../../common/utils/itwIoWallet", () => ({
 
 const mockDecodeJwt = jest.mocked(decodeJwt);
 const mockGetIoWallet = jest.mocked(getIoWallet);
-const mockGetJwkFromKey = jest.mocked(KEYUTIL.getJWKFromKey);
+const mockGetJwkFromCertificateChain = jest.mocked(getJwkFromCertificateChain);
 const mockVerifyCertificateChain = jest.mocked(verifyCertificateChain);
-const mockX509 = jest.mocked(X509);
-
-declare const global: { fetch: typeof fetch };
 
 const CREDENTIAL_ID = "credential-id";
 const CREDENTIAL = "credential-jwt";
 const CREDENTIAL_FORMAT = "dc+sd-jwt";
-const WUA = "wua-jwt";
 const ITW_VERSION = "1.3.3";
 const ISSUER = "https://wallet-provider.example";
-const FEDERATION_JWT = "federation-jwt";
 const STATUS_LIST_URI = `${ISSUER}/status-list/1`;
 const STATUS_LIST = "status-list-jwt";
 const STATUS_LIST_INDEX = 1;
@@ -64,6 +47,7 @@ const STATUS_LIST_KEY_ID = "status-list-key";
 const CERTIFICATE_JWK = {
   crv: "P-256",
   kty: "EC" as const,
+  use: "sig",
   x: "x-coordinate",
   y: "y-coordinate"
 };
@@ -89,7 +73,7 @@ const mockSuccessfulCertificateValidation = () => {
     isValid: true,
     validationStatus: "VALID" as never
   });
-  mockGetJwkFromKey.mockReturnValue(CERTIFICATE_JWK as never);
+  mockGetJwkFromCertificateChain.mockResolvedValue(CERTIFICATE_JWK as never);
 };
 
 const makeWallet = (status = "VALID", statusListSupported = true) => ({
@@ -127,9 +111,12 @@ describe("getKeysForStatusListToken", () => {
       ROOT_CERTIFICATE,
       expect.any(Object)
     );
-    expect(mockGetJwkFromKey).toHaveBeenCalledTimes(1);
+    expect(mockGetJwkFromCertificateChain).toHaveBeenCalledWith([
+      LEAF_CERTIFICATE,
+      INTERMEDIATE_CERTIFICATE
+    ]);
     expect(mockVerifyCertificateChain.mock.invocationCallOrder[0]).toBeLessThan(
-      mockX509.mock.invocationCallOrder[0]
+      mockGetJwkFromCertificateChain.mock.invocationCallOrder[0]
     );
   });
 
@@ -144,7 +131,7 @@ describe("getKeysForStatusListToken", () => {
       getKeysForStatusListToken(STATUS_LIST, ROOT_CERTIFICATE)
     ).rejects.toThrow("INVALID_TRUST_ANCHOR");
 
-    expect(mockX509).not.toHaveBeenCalled();
+    expect(mockGetJwkFromCertificateChain).not.toHaveBeenCalled();
   });
 
   it.each([
@@ -265,80 +252,5 @@ describe("getCredentialStatusFromStatusList", () => {
         KEYS
       )
     ).rejects.toThrow(`Status List is not supported by API ${ITW_VERSION}`);
-  });
-});
-
-describe("getKeysForWuaStatusList", () => {
-  beforeEach(() => {
-    jest.restoreAllMocks();
-    jest.clearAllMocks();
-  });
-
-  it("retrieves wallet provider keys", async () => {
-    mockDecodeJwt
-      .mockReturnValueOnce({ payload: { iss: ISSUER } } as never)
-      .mockReturnValueOnce({
-        payload: {
-          metadata: {
-            wallet_solution: {
-              jwks: { keys: KEYS }
-            }
-          }
-        }
-      } as never);
-    const fetchSpy = jest.spyOn(global, "fetch").mockResolvedValue({
-      ok: true,
-      text: jest.fn().mockResolvedValue(FEDERATION_JWT)
-    } as never);
-
-    await expect(
-      getKeysForStatusListToken(WUA, ROOT_CERTIFICATE)
-    ).resolves.toEqual(KEYS);
-
-    expect(mockDecodeJwt).toHaveBeenNthCalledWith(1, WUA);
-    expect(fetchSpy).toHaveBeenCalledWith(
-      `${ISSUER}/.well-known/openid-federation`
-    );
-    expect(mockDecodeJwt).toHaveBeenNthCalledWith(2, FEDERATION_JWT);
-  });
-
-  it("retrieves wallet provider keys from WUA x5c", async () => {
-    mockSuccessfulCertificateValidation();
-
-    await expect(
-      getKeysForStatusListToken(WUA, ROOT_CERTIFICATE)
-    ).resolves.toEqual([{ ...CERTIFICATE_JWK, kid: STATUS_LIST_KEY_ID }]);
-
-    expect(mockVerifyCertificateChain).toHaveBeenCalledWith(
-      [LEAF_CERTIFICATE, INTERMEDIATE_CERTIFICATE],
-      ROOT_CERTIFICATE,
-      expect.any(Object)
-    );
-  });
-
-  it.each([
-    ["missing metadata", {}],
-    [
-      "invalid JWKS keys",
-      {
-        metadata: {
-          wallet_solution: {
-            jwks: { keys: [{ kid: "missing-kty" }] }
-          }
-        }
-      }
-    ]
-  ])("rejects %s", async (_, payload) => {
-    mockDecodeJwt
-      .mockReturnValueOnce({ payload: { iss: ISSUER } } as never)
-      .mockReturnValueOnce({ payload } as never);
-    jest.spyOn(global, "fetch").mockResolvedValue({
-      ok: true,
-      text: jest.fn().mockResolvedValue(FEDERATION_JWT)
-    } as never);
-
-    await expect(
-      getKeysForStatusListToken(WUA, ROOT_CERTIFICATE)
-    ).rejects.toBeInstanceOf(ZodError);
   });
 });

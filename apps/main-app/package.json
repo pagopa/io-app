@@ -99,7 +99,6 @@
     "i18next": "^26.3.6",
     "io-ts": "^2.2.22",
     "jail-monkey": "^2.8.3",
-    "jsrsasign": "^11.1.0",
     "jwk-thumbprint": "^0.1.4",
     "lodash": "^4.17.21",
     "mixpanel-react-native": "3.3.0",
