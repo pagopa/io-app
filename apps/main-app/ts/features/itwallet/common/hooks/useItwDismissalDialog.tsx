@@ -1,4 +1,4 @@
-import { useIsFocused } from "@react-navigation/core";
+import { useIsFocused } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";

@@ -1,4 +1,4 @@
-import { PathConfigMap } from "@react-navigation/core";
+import { PathConfigMap } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { AppParamsList } from "../../../../navigation/params/AppParamsList";

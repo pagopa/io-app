@@ -1,6 +1,6 @@
 import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { IOSkeleton, ListItemHeader, ListItemNav } from "@io-app/design-system";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";

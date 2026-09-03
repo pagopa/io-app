@@ -1,4 +1,4 @@
-import { Route, useRoute } from "@react-navigation/core";
+import { Route, useRoute } from "@react-navigation/native";
 import { FunctionComponent } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
