@@ -19,8 +19,10 @@ import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { onLoginUriChanged } from "../../../common/utils/login";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
+import {
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../../../common/utils";
 import { LoadingOverlay } from "../../../login/cie/shared/LoadingSpinnerOverlay";
 import {
   CieIdLoginProps,

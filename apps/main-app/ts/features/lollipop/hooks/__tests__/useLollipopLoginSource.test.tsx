@@ -10,7 +10,7 @@ import {
   isActiveSessionLoginSelector
 } from "../../../authentication/activeSessionLogin/store/selectors";
 import { selectedIdentityProviderSelector } from "../../../authentication/common/store/selectors";
-import { getLoginHeaders } from "../../../authentication/common/utils/login";
+import { getLoginHeaders } from "../../../authentication/common/utils";
 import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
 import {
   ephemeralKeyTagSelector,
@@ -35,7 +35,7 @@ jest.mock("../../../../store/reducers/persistedPreferences");
 jest.mock("../../../../utils/analytics");
 jest.mock("../../../authentication/activeSessionLogin/store/selectors");
 jest.mock("../../../authentication/common/store/selectors");
-jest.mock("../../../authentication/common/utils/login");
+jest.mock("../../../authentication/common/utils");
 jest.mock("../../../authentication/fastLogin/store/selectors");
 jest.mock("../../../authentication/login/cie/utils", () => ({
   cieFlowForDevServerEnabled: false
