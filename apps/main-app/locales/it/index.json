@@ -1996,7 +1996,9 @@
               "title": "Vuoi davvero disattivare IT-Wallet?"
             }
           },
-          "listItemHeader": "Dati del mio IT-Wallet ID"
+          "listItemHeader": "Dati del mio IT-Wallet ID",
+          "listItemHeaderHideValues": "Nascondi dati del mio IT-Wallet ID",
+          "listItemHeaderShowValues": "Mostra dati del mio IT-Wallet ID"
         },
         "missingCredentials": {
           "one": {
