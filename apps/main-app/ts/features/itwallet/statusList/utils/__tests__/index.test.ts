@@ -6,8 +6,7 @@ import { ZodError } from "zod";
 
 import {
   getCredentialStatusFromStatusList,
-  getKeysForStatusListToken,
-  getKeysForWuaStatusList
+  getKeysForStatusListToken
 } from "..";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { InvalidTslCredentialStatus } from "../errors";
@@ -292,13 +291,29 @@ describe("getKeysForWuaStatusList", () => {
       text: jest.fn().mockResolvedValue(FEDERATION_JWT)
     } as never);
 
-    await expect(getKeysForWuaStatusList(WUA)).resolves.toEqual(KEYS);
+    await expect(
+      getKeysForStatusListToken(WUA, ROOT_CERTIFICATE)
+    ).resolves.toEqual(KEYS);
 
     expect(mockDecodeJwt).toHaveBeenNthCalledWith(1, WUA);
     expect(fetchSpy).toHaveBeenCalledWith(
       `${ISSUER}/.well-known/openid-federation`
     );
     expect(mockDecodeJwt).toHaveBeenNthCalledWith(2, FEDERATION_JWT);
+  });
+
+  it("retrieves wallet provider keys from WUA x5c", async () => {
+    mockSuccessfulCertificateValidation();
+
+    await expect(
+      getKeysForStatusListToken(WUA, ROOT_CERTIFICATE)
+    ).resolves.toEqual([{ ...CERTIFICATE_JWK, kid: STATUS_LIST_KEY_ID }]);
+
+    expect(mockVerifyCertificateChain).toHaveBeenCalledWith(
+      [LEAF_CERTIFICATE, INTERMEDIATE_CERTIFICATE],
+      ROOT_CERTIFICATE,
+      expect.any(Object)
+    );
   });
 
   it.each([
@@ -322,6 +337,8 @@ describe("getKeysForWuaStatusList", () => {
       text: jest.fn().mockResolvedValue(FEDERATION_JWT)
     } as never);
 
-    await expect(getKeysForWuaStatusList(WUA)).rejects.toBeInstanceOf(ZodError);
+    await expect(
+      getKeysForStatusListToken(WUA, ROOT_CERTIFICATE)
+    ).rejects.toBeInstanceOf(ZodError);
   });
 });

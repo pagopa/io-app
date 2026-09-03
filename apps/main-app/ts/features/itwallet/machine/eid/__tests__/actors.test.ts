@@ -8,7 +8,7 @@ import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
 import {
   getCredentialStatusFromStatusList,
-  getKeysForWuaStatusList
+  getKeysForStatusListToken
 } from "../../../statusList/utils";
 import { StatusListRepository } from "../../../statusList/utils/repository";
 import {
@@ -38,7 +38,7 @@ jest.mock("../../../statusList/utils/repository", () => ({
 
 const mockGetIoWallet = jest.mocked(getIoWallet);
 const mockGetCredentialStatus = jest.mocked(getCredentialStatusFromStatusList);
-const mockGetKeys = jest.mocked(getKeysForWuaStatusList);
+const mockGetKeys = jest.mocked(getKeysForStatusListToken);
 const mockUpsert = jest.mocked(StatusListRepository.upsert);
 
 const ITW_VERSION = "1.3.3";
@@ -106,7 +106,10 @@ describe("eID issuance actors", () => {
     getState: jest.fn()
   } as unknown as ReturnType<typeof useIOStore>;
   const actors = createEidIssuanceActorsImplementation(
-    { WALLET_TA_BASE_URL: TRUST_ANCHOR_BASE_URL } as Env,
+    {
+      WALLET_TA_BASE_URL: TRUST_ANCHOR_BASE_URL,
+      X509_CERT_ROOT: "x509-cert-root"
+    } as Env,
     store
   );
 
@@ -137,7 +140,7 @@ describe("eID issuance actors", () => {
       }
     );
 
-    expect(mockGetKeys).toHaveBeenCalledWith("wua-1-jwt");
+    expect(mockGetKeys).toHaveBeenCalledWith("wua-1-jwt", "x509-cert-root");
     expect(mockGetCredentialStatus).toHaveBeenCalledWith(
       ITW_VERSION,
       "wua-1-jwt",
