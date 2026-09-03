@@ -1,5 +1,6 @@
 import { HeaderFirstLevel } from "@io-app/design-system";
-import { useLayoutEffect, useMemo } from "react";
+import { useFocusEffect } from "@react-navigation/core";
+import { useCallback, useMemo } from "react";
 
 import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import { useIONavigation } from "../navigation/params/AppParamsList";
@@ -63,15 +64,19 @@ export const useHeaderFirstLevel = ({
     ];
   }, [actionSettings, actionHelp, incomingActions]);
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <HeaderFirstLevel
-          {...rest}
-          actions={actions}
-          ignoreSafeAreaMargin={isAlertVisible}
-        />
-      )
-    });
-  }, [navigation, isAlertVisible, rest, actions]);
+  useFocusEffect(
+    useCallback(() => {
+      const parentNavigation = navigation.getParent();
+
+      parentNavigation?.setOptions({
+        header: () => (
+          <HeaderFirstLevel
+            {...rest}
+            actions={actions}
+            ignoreSafeAreaMargin={isAlertVisible}
+          />
+        )
+      });
+    }, [navigation, isAlertVisible, rest, actions])
+  );
 };
