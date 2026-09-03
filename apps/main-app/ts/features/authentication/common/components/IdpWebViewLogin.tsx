@@ -27,8 +27,11 @@ import {
 } from "../../activeSessionLogin/screens/analytics";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
 import { idpLoginUrlChanged } from "../store/actions";
-import { getIntentFallbackUrl, onLoginUriChanged } from "../utils/login";
-import { originSchemasWhiteList } from "../utils/originSchemasWhiteList";
+import {
+  getIntentFallbackUrl,
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../utils";
 
 export type IdpWebViewLoginProps = {
   /** The login flow this WebView is part of; defaults to a first-time login. */

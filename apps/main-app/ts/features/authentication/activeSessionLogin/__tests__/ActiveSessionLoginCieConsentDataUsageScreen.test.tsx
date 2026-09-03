@@ -1,5 +1,3 @@
-// ActiveSessionLoginCieConsentDataUsageScreen.test.tsx
-
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -7,7 +5,7 @@ import { useIOStore } from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import * as loginUtils from "../../common/utils/login";
+import * as loginUtils from "../../common/utils";
 import ActiveSessionLoginCieConsentDataUsageScreen from "../screens/cie/ActiveSessionLoginCieConsentDataUsageScreen";
 import { runConsentScreenSuite } from "../shared/CieContentDataUsageCommonSuite";
 

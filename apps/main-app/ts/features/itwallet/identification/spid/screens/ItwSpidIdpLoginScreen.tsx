@@ -11,8 +11,10 @@ import {
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
-import { getIntentFallbackUrl } from "../../../../authentication/common/utils/login";
-import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
+import {
+  getIntentFallbackUrl,
+  originSchemasWhiteList
+} from "../../../../authentication/common/utils";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";
