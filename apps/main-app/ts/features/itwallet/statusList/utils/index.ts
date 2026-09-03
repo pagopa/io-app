@@ -4,7 +4,7 @@ import {
 } from "@pagopa/io-react-native-crypto";
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { CredentialIssuance, ItwVersion } from "@pagopa/io-react-native-wallet";
-import { KEYUTIL, KJUR, RSAKey, X509 } from "jsrsasign";
+import { getJwkFromCertificateChain } from "@pagopa/io-react-native-wallet/src/utils/crypto";
 
 import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
@@ -48,17 +48,7 @@ export const getKeysForStatusListToken = async (
     `Status List certificate chain validation failed: ${validationResult.validationStatus} - ${validationResult.errorMessage}`
   );
 
-  const leafCertificate = new X509();
-  leafCertificate.readCertPEM(
-    `-----BEGIN CERTIFICATE-----\n${x5c[0]}\n-----END CERTIFICATE-----`
-  );
-  const certificatePublicKey = leafCertificate.getPublicKey();
-  assert(
-    certificatePublicKey instanceof RSAKey ||
-      certificatePublicKey instanceof KJUR.crypto.ECDSA,
-    "Status List certificate uses an unsupported public key"
-  );
-  const publicKey = KEYUTIL.getJWKFromKey(certificatePublicKey);
+  const publicKey = await getJwkFromCertificateChain(x5c);
 
   return [
     {

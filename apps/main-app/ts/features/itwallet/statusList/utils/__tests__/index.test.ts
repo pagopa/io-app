@@ -1,7 +1,7 @@
 import { verifyCertificateChain } from "@pagopa/io-react-native-crypto";
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { CredentialStatus } from "@pagopa/io-react-native-wallet";
-import { KEYUTIL, X509 } from "jsrsasign";
+import { getJwkFromCertificateChain } from "@pagopa/io-react-native-wallet/src/utils/crypto";
 
 import {
   getCredentialStatusFromStatusList,
@@ -18,20 +18,9 @@ jest.mock("@pagopa/io-react-native-jwt", () => ({
   decode: jest.fn()
 }));
 
-jest.mock("jsrsasign", () => {
-  const ECDSA = jest.fn();
-  const certificatePublicKey = new ECDSA();
-
-  return {
-    KEYUTIL: { getJWKFromKey: jest.fn() },
-    KJUR: { crypto: { ECDSA } },
-    RSAKey: jest.fn(),
-    X509: jest.fn().mockImplementation(() => ({
-      getPublicKey: jest.fn().mockReturnValue(certificatePublicKey),
-      readCertPEM: jest.fn()
-    }))
-  };
-});
+jest.mock("@pagopa/io-react-native-wallet/src/utils/crypto", () => ({
+  getJwkFromCertificateChain: jest.fn()
+}));
 
 jest.mock("../../../common/utils/itwIoWallet", () => ({
   getIoWallet: jest.fn()
@@ -39,9 +28,8 @@ jest.mock("../../../common/utils/itwIoWallet", () => ({
 
 const mockDecodeJwt = jest.mocked(decodeJwt);
 const mockGetIoWallet = jest.mocked(getIoWallet);
-const mockGetJwkFromKey = jest.mocked(KEYUTIL.getJWKFromKey);
+const mockGetJwkFromCertificateChain = jest.mocked(getJwkFromCertificateChain);
 const mockVerifyCertificateChain = jest.mocked(verifyCertificateChain);
-const mockX509 = jest.mocked(X509);
 
 const CREDENTIAL_ID = "credential-id";
 const CREDENTIAL = "credential-jwt";
@@ -59,6 +47,7 @@ const STATUS_LIST_KEY_ID = "status-list-key";
 const CERTIFICATE_JWK = {
   crv: "P-256",
   kty: "EC" as const,
+  use: "sig",
   x: "x-coordinate",
   y: "y-coordinate"
 };
@@ -84,7 +73,7 @@ const mockSuccessfulCertificateValidation = () => {
     isValid: true,
     validationStatus: "VALID" as never
   });
-  mockGetJwkFromKey.mockReturnValue(CERTIFICATE_JWK as never);
+  mockGetJwkFromCertificateChain.mockResolvedValue(CERTIFICATE_JWK as never);
 };
 
 const makeWallet = (status = "VALID", statusListSupported = true) => ({
@@ -122,9 +111,12 @@ describe("getKeysForStatusListToken", () => {
       ROOT_CERTIFICATE,
       expect.any(Object)
     );
-    expect(mockGetJwkFromKey).toHaveBeenCalledTimes(1);
+    expect(mockGetJwkFromCertificateChain).toHaveBeenCalledWith([
+      LEAF_CERTIFICATE,
+      INTERMEDIATE_CERTIFICATE
+    ]);
     expect(mockVerifyCertificateChain.mock.invocationCallOrder[0]).toBeLessThan(
-      mockX509.mock.invocationCallOrder[0]
+      mockGetJwkFromCertificateChain.mock.invocationCallOrder[0]
     );
   });
 
@@ -139,7 +131,7 @@ describe("getKeysForStatusListToken", () => {
       getKeysForStatusListToken(STATUS_LIST, ROOT_CERTIFICATE)
     ).rejects.toThrow("INVALID_TRUST_ANCHOR");
 
-    expect(mockX509).not.toHaveBeenCalled();
+    expect(mockGetJwkFromCertificateChain).not.toHaveBeenCalled();
   });
 
   it.each([
