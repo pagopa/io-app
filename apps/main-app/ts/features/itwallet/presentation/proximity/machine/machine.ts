@@ -179,7 +179,7 @@ export const itwProximityMachine = setup({
       },
       onDone: {
         target: "#itwProximityMachine.Presentment",
-        actions: ["navigateToPresentmentScreen", "trackProximityStart"]
+        actions: "navigateToPresentmentScreen"
       }
     },
     Nfc: {
@@ -229,8 +229,7 @@ export const itwProximityMachine = setup({
         target: "#itwProximityMachine.Presentment",
         actions: [
           assign({ engagementMode: "nfc" }),
-          "navigateToNfcPresentmentScreen",
-          "trackProximityStart"
+          "navigateToNfcPresentmentScreen"
         ]
       }
     },
@@ -260,7 +259,8 @@ export const itwProximityMachine = setup({
           target: "Presentment.Connecting"
         },
         "device-connected": {
-          target: "Presentment.Connected"
+          target: "Presentment.Connected",
+          actions: "trackProximityStart"
         },
         "device-document-request-received": [
           {
