@@ -267,14 +267,14 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     // Clear the abort controller reference as the request has completed.
     abortControllerRef.current = null;
 
-    if (!result.ok) {
+    if (result.isErr()) {
       setLoginSourceState({ status: "failure", error: result.error });
       onFailure(result.error);
       return;
     }
 
     const authorizationUrl = buildAuthorizationUrl(
-      result.data,
+      result.value,
       idp.id,
       minAuthLevel
     );
