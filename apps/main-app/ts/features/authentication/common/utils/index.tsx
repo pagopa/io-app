@@ -1,13 +1,12 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 
 import { spidRelayState } from "../../../../config";
 import { getAppVersion } from "../../../../utils/appVersion";
-import { isLocalEnv } from "../../../../utils/environment";
+import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
 import { LoginType } from "../../activeSessionLogin/screens/analytics";
 import {
@@ -15,9 +14,6 @@ import {
   trackSessionTokenSource
 } from "../analytics";
 import { trackLoginSpidError } from "../analytics/spidAnalytics";
-/**
- * Helper functions for handling the SPID login flow through a webview.
- */
 
 type LoginFailure = {
   errorCode?: string;
@@ -31,11 +27,6 @@ type LoginSuccess = {
   success: true;
   token: string;
 };
-
-export const getEitherLoginResult = (
-  result: LoginResult
-): E.Either<LoginFailure, LoginSuccess> =>
-  result.success ? E.right(result) : E.left(result);
 
 /**
  * return some(intentFallbackUrl) if the given input is a valid intent and it has the fallback url
@@ -200,3 +191,13 @@ export const getLoginHeaders = (
   "x-pagopa-idp-id": idpId,
   ...(isLocalEnv && { "x-pagopa-app-version": getAppVersion() })
 });
+
+// if the app is running in dev env, add "http" to allow the dev-server usage
+export const originSchemasWhiteList = [
+  "https://*",
+  "intent://*",
+  "iologin://*",
+  ...(isDevEnv ? ["http://*"] : [])
+];
+
+export const CALLBACK_PATH = "/api/auth/v2/callback";
