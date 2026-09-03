@@ -1139,7 +1139,7 @@
               "4": "I nuovi documenti digitali ufficiali, solo sull’app IO",
               "5": "Accedi in pochi tocchi ai servizi digitali della PA"
             },
-            "title": "IO è ora il tuo portafoglio digitale pubblico: sicuro, gratuito, tuo.",
+            "title": "I tuoi documenti digitali con IT-Wallet: sicuri, ufficiali e sempre con te",
             "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso.]({{privacyUrl}})"
           },
           "legacy": {
@@ -1996,9 +1996,9 @@
               "title": "Vuoi davvero disattivare IT-Wallet?"
             }
           },
-          "listItemHeader": "Dati del mio IT-Wallet ID",
-          "listItemHeaderHideValues": "Nascondi dati del mio IT-Wallet ID",
-          "listItemHeaderShowValues": "Mostra dati del mio IT-Wallet ID"
+          "listItemHeader": "Dati del tuo IT-Wallet ID",
+          "listItemHeaderHideValues": "Nascondi dati del tuo IT-Wallet ID",
+          "listItemHeaderShowValues": "Mostra dati del tuo IT-Wallet ID"
         },
         "missingCredentials": {
           "one": {
@@ -2094,7 +2094,7 @@
             "banner": {
               "action": "Scopri di più",
               "content": "Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.",
-              "title": "Come funziona il QR Code?"
+              "title": "Come funziona la verifica?"
             },
             "instruction": "Mostra il codice QR a chi verifica i tuoi documenti digitali",
             "invalidBanner": {
@@ -3204,7 +3204,7 @@
     },
     "offline": {
       "bottomSheet": {
-        "content": "###### Cosa posso fare? \n\nQuando sei offline, alcuni servizi dell’app potrebbero non funzionare. \n\n Documenti su IO funziona anche offline (se hai attivato la funzionalità), ma la validità dei documenti è aggiornata all’ultimo accesso in app con connessione a una rete. \n\n Collegati a internet e ricarica l’app per tornare ad usare tutti i servizi di IO.",
+        "content": "###### Cosa posso fare? \n\nQuando sei offline, alcuni servizi dell’app potrebbero non funzionare. \n\n Puoi continuare a usare i tuoi documenti digitali se li hai aggiunti al Portafoglio: la loro validità è aggiornata all’ultimo accesso in app con connessione a una rete. \n\n Collegati a internet e ricarica l’app per tornare a usare tutti i servizi di IO.",
         "footerAction": "Ricarica l'app IO",
         "title": "Nessuna connessione"
       },
