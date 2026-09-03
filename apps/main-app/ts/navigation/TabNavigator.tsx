@@ -67,7 +67,7 @@ export const MainTabNavigator = () => {
           options={{
             title: I18n.t("global.navigator.messages"),
             tabBarIcon: () => ({
-              sfSymbol: "message.fill"
+              uri: "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavMessages.svg"
             })
           }}
         />
@@ -77,7 +77,7 @@ export const MainTabNavigator = () => {
           options={{
             title: I18n.t("global.navigator.wallet"),
             tabBarIcon: () => ({
-              sfSymbol: "wallet.pass.fill"
+              uri: "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavWallet.svg"
             })
           }}
         />
@@ -92,8 +92,9 @@ export const MainTabNavigator = () => {
             preventsDefault: true,
             title: I18n.t("global.navigator.scan"),
             tabBarIcon: () => ({
-              sfSymbol: "barcode.viewfinder"
-            })
+              uri: "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavScan.svg"
+            }),
+            tabBarIconRenderingMode: "automatic"
           }}
         />
 
@@ -103,7 +104,7 @@ export const MainTabNavigator = () => {
           options={{
             title: I18n.t("global.navigator.payments"),
             tabBarIcon: () => ({
-              sfSymbol: "creditcard.fill"
+              uri: "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconCreditCard.svg"
             })
           }}
         />
@@ -114,7 +115,7 @@ export const MainTabNavigator = () => {
           options={{
             title: I18n.t("global.navigator.services"),
             tabBarIcon: () => ({
-              sfSymbol: "gearshape.fill"
+              uri: "https://raw.githubusercontent.com/pagopa/io-app/refs/heads/master/libs/design-system/src/components/icons/svg/originals/IconNavServices.svg"
             })
           }}
         />
