@@ -295,15 +295,6 @@ export const trackItwProximityRpNotTrusted = ({
   );
 };
 
-export const trackItwProximityGenericFailure = ({
-  reason
-}: ItwProximityHttpFailure) => {
-  void mixpanelTrack(
-    ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_GENERIC_FAILURE,
-    buildEventProperties("KO", "screen_view", { reason })
-  );
-};
-
 export const trackItwProximityRequestObjectFailure = ({
   reason
 }: ItwProximityHttpFailure) => {
