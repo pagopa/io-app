@@ -18,7 +18,7 @@ import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 
 export type GetActivationResult = Result<GetEycaStatus, NetworkError>;
 
-export type GetEycaStatus = "COMPLETED" | "ERROR" | "NOT_FOUND" | "PROCESSING";
+type GetEycaStatus = "COMPLETED" | "ERROR" | "NOT_FOUND" | "PROCESSING";
 
 /**
  * ask for the current status of EYCA activation
