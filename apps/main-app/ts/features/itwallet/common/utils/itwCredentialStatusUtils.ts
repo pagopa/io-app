@@ -62,6 +62,9 @@ export const getCredentialStatus = (
   if (validity?.status === "invalid") {
     return "invalid";
   }
+  if (validity?.status === "suspended") {
+    return "suspended";
+  }
 
   if (jwtExpireDays <= 0) {
     return "jwtExpired";

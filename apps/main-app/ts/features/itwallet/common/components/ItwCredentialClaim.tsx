@@ -201,6 +201,7 @@ const DateClaimItem = ({
           "features.itWallet.presentation.credentialDetails.status.valid"
         );
       case "invalid":
+      case "suspended":
         return I18n.t(
           "features.itWallet.presentation.credentialDetails.status.invalid"
         );
