@@ -13,7 +13,6 @@ import {
 } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "i18next";
-import _ from "lodash";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import {
   Alert,
@@ -86,14 +85,7 @@ export const IdentificationModal = () => {
   const previousIdentificationProgressState = usePrevious(
     identificationProgressState
   );
-  const identificationFailState = useIOSelector(
-    identificationFailSelector,
-    // Since the identificationFailState is an Option,
-    // we need to performs a deep comparison between
-    // two values to determine if they are equivalent
-    // to avoid unnecessary re-renders.
-    (l, r) => _.isEqual(l, r)
-  );
+  const identificationFailState = useIOSelector(identificationFailSelector);
   const name = useIOSelector(profileNameSelector);
   const { biometricType, isFingerprintEnabled } = useBiometricType();
 
