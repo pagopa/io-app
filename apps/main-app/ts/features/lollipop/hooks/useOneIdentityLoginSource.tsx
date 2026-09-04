@@ -60,7 +60,7 @@ type LoginSourceState =
   | { status: "verifying-assertion-ref"; url: string };
 
 /**
- * Builds the body required by `/reserve` endpoint.
+ * Builds the request body for the `/reserve` endpoint.
  */
 const buildReserveRequestBody = (
   env: string,
