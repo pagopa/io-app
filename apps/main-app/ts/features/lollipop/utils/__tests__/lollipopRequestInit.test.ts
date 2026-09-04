@@ -129,6 +129,29 @@ describe("Test lollipopRequestInit", () => {
     });
   });
 
+  it("should ignore custom content signature failure and keep main signature", async () => {
+    const { sign } = jest.requireMock("@pagopa/io-react-native-crypto");
+    sign
+      .mockResolvedValueOnce("MockSignature")
+      .mockRejectedValueOnce(new Error("Failure"));
+
+    const externalMessageId = "00000000000000000005";
+    const init = await lollipopRequestInit(
+      {
+        ...lollipopConfig,
+        customContentToSign: {
+          externalMessageId
+        }
+      },
+      keyInfo,
+      fullUrl,
+      {
+        ...requestInit
+      }
+    );
+    expect(init).toStrictEqual(testInit());
+  });
+
   it("should throw if no keyTag is set", async () => {
     await expect(
       lollipopRequestInit(

@@ -3,7 +3,6 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import URLParse from "url-parse";
 
 import {
-  chainSignPromises,
   getSignAlgorithm,
   LollipopConfig,
   SignPromiseResult,
@@ -106,8 +105,8 @@ export const lollipopRequestInit = async (
   };
 
   const mainSignValue = await sign(mainSignatureBase, requestAndKeyInfo.keyTag);
-  const customSignResult = await chainSignPromises(
-    customContentToSignPromises(customContentToSignInput)
+  const customSignResult = await customContentToSignPromises(
+    customContentToSignInput
   );
   // Add custom headers
   customSignResult.forEach(
@@ -173,25 +172,29 @@ export const customContentToSignPromises = async (
   customContent: CutsomContentToSignInput
 ): Promise<Array<SignPromiseResult>> => {
   const customContentSignature = customContentSignatureBases(customContent);
-  return Promise.all(
-    customContentSignature.map(async customContentBase => {
-      const signedValue = await sign(
-        customContentBase.signatureBase,
-        customContent.keyTag
-      );
-      return {
-        headerIndex: customContentBase.headerIndex,
-        headerPrefix: customContentBase.headerPrefix,
-        headerName: customContentBase.headerName,
-        headerValue: customContentBase.headerValue,
-        signature: toSignatureHeaderValue(
-          signedValue,
-          customContentBase.headerIndex
-        ),
-        signatureInput: customContentBase.signatureInput
-      };
-    })
-  );
+  try {
+    return await Promise.all(
+      customContentSignature.map(async customContentBase => {
+        const signedValue = await sign(
+          customContentBase.signatureBase,
+          customContent.keyTag
+        );
+        return {
+          headerIndex: customContentBase.headerIndex,
+          headerPrefix: customContentBase.headerPrefix,
+          headerName: customContentBase.headerName,
+          headerValue: customContentBase.headerValue,
+          signature: toSignatureHeaderValue(
+            signedValue,
+            customContentBase.headerIndex
+          ),
+          signatureInput: customContentBase.signatureInput
+        };
+      })
+    );
+  } catch {
+    return [];
+  }
 };
 
 export type CustomContentBaseSignature = SignatureBaseResult & {

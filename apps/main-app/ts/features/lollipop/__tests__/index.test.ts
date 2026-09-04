@@ -3,7 +3,6 @@ import * as global from "@pagopa/io-react-native-crypto";
 import URLParse from "url-parse";
 
 import {
-  chainSignPromises,
   getSignAlgorithm,
   handleRegenerateEphemeralKey,
   toSignatureComponents
@@ -54,49 +53,6 @@ describe("getSignAlgorithm", () => {
       n: "some-modulus-value"
     };
     expect(getSignAlgorithm(publicKey)).toBe("rsa-pss-sha256");
-  });
-});
-
-describe("chainSignPromises", () => {
-  it("should resolve all promises and return results", async () => {
-    const promises = Promise.all([
-      Promise.resolve({
-        headerIndex: 0,
-        headerPrefix: "prefix",
-        headerName: "name",
-        headerValue: "value",
-        signature: "sig",
-        signatureInput: "input"
-      }),
-      Promise.resolve({
-        headerIndex: 1,
-        headerPrefix: "prefix2",
-        headerName: "name2",
-        headerValue: "value2",
-        signature: "sig2",
-        signatureInput: "input2"
-      })
-    ]);
-
-    const result = await chainSignPromises(promises);
-    expect(result).toHaveLength(2);
-  });
-
-  it("should return an empty array if any promise fails", async () => {
-    const promises = Promise.all([
-      Promise.resolve({
-        headerIndex: 0,
-        headerPrefix: "prefix",
-        headerName: "name",
-        headerValue: "value",
-        signature: "sig",
-        signatureInput: "input"
-      }),
-      Promise.reject(new Error("Failure"))
-    ]);
-
-    const result = await chainSignPromises(promises);
-    expect(result).toEqual([]);
   });
 });
 

@@ -31,19 +31,6 @@ export type SignPromiseResult = {
 };
 
 /**
- * Await the given promise, returning an empty array if it fails.
- */
-export const chainSignPromises = async (
-  promise: Promise<Array<SignPromiseResult>>
-): Promise<Array<SignPromiseResult>> => {
-  try {
-    return await promise;
-  } catch {
-    return [];
-  }
-};
-
-/**
  * Returns the http-signature algorithm used to sign the signature base specified by
  * the signature-input header.
  */
