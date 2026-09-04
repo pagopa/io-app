@@ -17,6 +17,7 @@ import {
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DSAdvice } from "../core/DSAdvice";
 import { DSAlert } from "../core/DSAlert";
+import { DSAnimatedNumericText } from "../core/DSAnimatedNumericText";
 import { DSAnimatedPictograms } from "../core/DSAnimatedPictograms";
 import { DSBadges } from "../core/DSBadges";
 import { DSBonusCardScreen } from "../core/DSBonusCardScreen";
@@ -352,6 +353,17 @@ export const DesignSystemNavigator = () => {
         />
 
         {/* EXPERIMENTAL LAB */}
+
+        <Stack.Screen
+          component={DSAnimatedNumericText}
+          name={
+            DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_NUMERIC_TEXT.route
+          }
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_NUMERIC_TEXT.title
+          }}
+        />
 
         <Stack.Screen
           component={DSAnimatedPictograms}
