@@ -1,0 +1,24 @@
+{
+  "name": "@io-app/expo-pdf-high-res-generator",
+  "version": "1.0.0",
+  "description": "Expo module rendering PDF pages to high resolution JPEG images (CoreGraphics/PdfRenderer) for io-app",
+  "private": true,
+  "main": "index.ts",
+  "types": "index.ts",
+  "react-native": "index.ts",
+  "source": "index.ts",
+  "files": [
+    "index.ts",
+    "android",
+    "ios",
+    "expo-module.config.json",
+    "*.podspec"
+  ],
+  "scripts": {
+    "tsc-noemit": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "expo-modules-core": "^55.0.25",
+    "typescript": "catalog:"
+  }
+}

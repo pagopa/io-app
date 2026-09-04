@@ -99,6 +99,10 @@ jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
 }));
 
+jest.mock("@io-app/expo-pdf-high-res-generator", () => ({
+  generatePdfHighResImages: jest.fn().mockResolvedValue([])
+}));
+
 jest.mock("expo-local-authentication", () => ({
   AuthenticationType: {
     FINGERPRINT: 1,
