@@ -130,7 +130,7 @@ export type CredentialCardOverlay = XOR<
 /**
  * A credential card configuration that varies based on the app color scheme (light/dark).
  */
-export type ThemeAwareCredentialCardConfig = Record<
+type ThemeAwareCredentialCardConfig = Record<
   "dark" | "light",
   CredentialCardConfig
 >;

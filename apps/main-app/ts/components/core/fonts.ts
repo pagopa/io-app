@@ -6,7 +6,7 @@
 
 import { Platform } from "react-native";
 
-export type IOFontFamily = keyof typeof fonts;
+type IOFontFamily = keyof typeof fonts;
 
 const weights = ["Light", "Regular", "Semibold", "Bold"] as const;
 export type IOFontWeight = (typeof weights)[number];

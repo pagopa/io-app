@@ -4,7 +4,7 @@ import { TrustmarkEvents } from "./events";
 
 const { isWalletProviderResponseError } = Errors;
 
-export enum TrustmarkFailureType {
+enum TrustmarkFailureType {
   UNEXPECTED = "UNEXPECTED",
   WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC"
 }

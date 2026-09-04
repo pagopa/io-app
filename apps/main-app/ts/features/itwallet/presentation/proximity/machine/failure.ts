@@ -23,7 +23,7 @@ export type ProximityFailure =
 /**
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
-export type ReasonTypeByFailure = {
+type ReasonTypeByFailure = {
   [ProximityFailureType.CONSENT_DENIED]: undefined;
   [ProximityFailureType.MISSING_CREDENTIALS]: MissingCredentialError;
   [ProximityFailureType.RELYING_PARTY_GENERIC]: Error;

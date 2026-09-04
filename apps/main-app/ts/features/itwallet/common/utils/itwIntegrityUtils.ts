@@ -21,7 +21,7 @@ import { Env } from "./environment";
  * Type returned by the getHardwareSignatureWithAuthData function of {@link IntegrityContext}.
  * It contains the signature and the authenticator data.
  */
-export type HardwareSignatureWithAuthData = {
+type HardwareSignatureWithAuthData = {
   authenticatorData: string;
   signature: string;
 };

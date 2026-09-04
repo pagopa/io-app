@@ -23,11 +23,6 @@ export type Download = {
   path: string;
 };
 
-export type DownloadError = {
-  attachment: ThirdPartyAttachment;
-  error: Error;
-};
-
 export type Downloads = {
   requestedDownload?: RequestedDownload;
   statusById: Record<string, IndexedById<pot.Pot<Download, Error>> | undefined>;

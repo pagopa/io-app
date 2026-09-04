@@ -67,8 +67,6 @@ export enum CredentialAlertType {
   MDL_SUSPENDED = "MDL_SUSPENDED"
 }
 
-export type TrackCredentialAlert = (action: CredentialAlertEvents) => void;
-
 type CredentialAlertEvents = "open_bottom_sheet" | "press_cta" | "tap_banner";
 
 type CredentialAlertProps = {
@@ -85,6 +83,8 @@ type CredentialStatusAlertProps = {
   onTrack: TrackCredentialAlert;
   status?: ItwCredentialStatus;
 };
+
+type TrackCredentialAlert = (action: CredentialAlertEvents) => void;
 
 const useAlertPressHandler =
   (onTrack: TrackCredentialAlert, bottomSheet: { present: () => void }) =>

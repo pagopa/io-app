@@ -17,10 +17,6 @@ export type FastLoginTokenRefreshState = {
   tokenRefresh: TokenRefreshState;
   userInteractionForSessionExpiredNeeded: boolean;
 };
-export type FastLoginUserInteractionChoice =
-  | FastLoginUserInteractionChoiceAccept
-  | FastLoginUserInteractionChoiceDecline
-  | FastLoginUserInteractionChoiceNone;
 export type TokenRefreshState =
   | TokenRefreshErrorState
   | TokenRefreshIdleState
@@ -28,18 +24,6 @@ export type TokenRefreshState =
   | TokenRefreshProgressState
   | TokenRefreshSuccessState
   | TokenRefreshTransientErrorState;
-type FastLoginUserInteractionChoiceAccept = {
-  timestamp: number;
-  type: "accepted";
-};
-
-type FastLoginUserInteractionChoiceDecline = {
-  timestamp: number;
-  type: "declined";
-};
-type FastLoginUserInteractionChoiceNone = {
-  type: "none";
-};
 type TokenRefreshErrorState = {
   kind: "error";
 };

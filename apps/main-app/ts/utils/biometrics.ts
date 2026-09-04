@@ -21,13 +21,13 @@ const biometricErrors = [
   "UNAVAILABLE"
 ] as const;
 
-export type BiometricsErrorType = (typeof biometricErrors)[number];
-
 export type BiometricsType = BiometricsErrorType | BiometricsValidType;
 
 export type BiometricsValidType =
   // happy path
   "BIOMETRICS" | "FACE_ID" | "TOUCH_ID";
+
+type BiometricsErrorType = (typeof biometricErrors)[number];
 
 /**
  * Retrieve biometric settings from the base system. This function wraps the basic

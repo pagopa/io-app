@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export type CardWithMarkdownContentProps = {
+type CardWithMarkdownContentProps = {
   content: string;
 };
 

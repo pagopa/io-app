@@ -13,11 +13,6 @@ import {
   paginatedInstitutionsGet
 } from "../actions";
 
-export type PaginatedInstitutionsError = {
-  reason: NetworkError;
-  time: Date;
-};
-
 export type ServicesHomeState = {
   featuredInstitutions: pot.Pot<Institutions, NetworkError>;
   featuredServices: pot.Pot<FeaturedServices, NetworkError>;
@@ -25,6 +20,11 @@ export type ServicesHomeState = {
     InstitutionsResource,
     PaginatedInstitutionsError
   >;
+};
+
+type PaginatedInstitutionsError = {
+  reason: NetworkError;
+  time: Date;
 };
 
 const INITIAL_STATE: ServicesHomeState = {

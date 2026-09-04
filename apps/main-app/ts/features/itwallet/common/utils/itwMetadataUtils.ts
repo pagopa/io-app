@@ -1,10 +1,7 @@
 import { pipe } from "fp-ts/function";
 import * as O from "fp-ts/Option";
 
-import {
-  CatalogueTranslations,
-  DigitalCredentialMetadata
-} from "./itwCredentialsCatalogueUtils.ts";
+import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils.ts";
 import { CredentialType } from "./itwMocksUtils.ts";
 import { CredentialMetadata } from "./itwTypesUtils.ts";
 
@@ -68,6 +65,3 @@ export const getAuthSource = (credential: CredentialMetadata) =>
     O.map(config => config.authentic_source),
     O.toUndefined
   );
-
-// Re-export for callers that need the full translations map type
-export type { CatalogueTranslations };

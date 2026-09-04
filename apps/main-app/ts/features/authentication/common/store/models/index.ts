@@ -51,11 +51,6 @@ export type LogoutRequested = Readonly<{
 }>;
 
 // PublicSession attributes
-export type TokenName = keyof Omit<
-  PublicSession,
-  "lollipopAssertionRef" | "spidLevel"
->;
-
 // reason for the user to be in the unauthenticated state
 type LoggedOutReason =
   | "NOT_LOGGED_IN"

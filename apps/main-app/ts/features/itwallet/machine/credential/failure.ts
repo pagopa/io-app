@@ -34,7 +34,7 @@ export type CredentialIssuanceFailure =
 /**
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
-export type ReasonTypeByFailure = {
+type ReasonTypeByFailure = {
   [CredentialIssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
   [CredentialIssuanceFailureType.INVALID_STATUS_BY_ASSERTION]: WithCredentialMetadata<Errors.IssuerResponseError>;
   [CredentialIssuanceFailureType.INVALID_STATUS_BY_TSL]: WithCredentialMetadata<InvalidTslCredentialStatus>;

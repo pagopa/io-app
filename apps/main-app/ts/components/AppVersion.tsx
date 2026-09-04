@@ -5,7 +5,7 @@ import { GestureResponderEvent, Pressable, View } from "react-native";
 import { WithTestID } from "../types/WithTestID";
 import { getAppVersion } from "../utils/appVersion";
 
-export type AppVersion = WithTestID<{
+type AppVersion = WithTestID<{
   onPress: (event: GestureResponderEvent) => void;
 }>;
 

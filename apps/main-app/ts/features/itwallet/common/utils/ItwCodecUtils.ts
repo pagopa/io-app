@@ -17,26 +17,26 @@ export type Json = boolean | JsonArray | JsonRecord | null | number | string;
 /**
  * @since 0.5.14
  */
-export type JsonArray = ReadonlyArray<Json>;
+type JsonArray = ReadonlyArray<Json>;
 
 /**
  * @since 0.5.14
  */
-export interface JsonRecord {
+interface JsonRecord {
   readonly [key: string]: Json;
 }
 
 /**
  * @since 0.5.15
  */
-export const JsonArray: t.Type<JsonArray> = t.recursion("JsonArray", () =>
+const JsonArray: t.Type<JsonArray> = t.recursion("JsonArray", () =>
   t.readonlyArray(Json)
 );
 
 /**
  * @since 0.5.15
  */
-export const JsonRecord: t.Type<JsonRecord> = t.recursion("JsonRecord", () =>
+const JsonRecord: t.Type<JsonRecord> = t.recursion("JsonRecord", () =>
   t.record(t.string, Json)
 );
 
