@@ -1,6 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import {
   createMigrate,
   MigrationManifest,
@@ -12,6 +10,14 @@ import {
 
 import { Action } from "../../../store/actions/types";
 import { isDevEnv } from "../../../utils/environment";
+import {
+  fromNullable,
+  isSome,
+  none,
+  SerializedOption,
+  some,
+  toUndefined
+} from "../types/SerializedOption";
 import lollipopReducer, {
   InMemoryLollipopData,
   LollipopState,
@@ -29,35 +35,27 @@ export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 2;
  */
 
 export type PersistedLollipopStateV0V1 = PersistPartial & {
-  keyTag: O.Option<string>;
+  keyTag: SerializedOption<string>;
 };
 
 export const migrationKeyTagFunctional = (
   state: PersistedState
-): PersistedLollipopStateV0V1 =>
-  pipe(
-    (state as PersistedLollipopStateV0V1).keyTag as O.Option<O.Option<string>>,
-    O.filter(keyTag => typeof keyTag !== "string"),
-    O.fold(
-      () => state as PersistedLollipopStateV0V1,
-      optionKeyTag =>
-        pipe(
-          optionKeyTag,
-          O.fold(
-            () =>
-              ({
-                ...state,
-                keyTag: O.none
-              }) as PersistedLollipopStateV0V1,
-            keyTg =>
-              ({
-                ...state,
-                keyTag: O.some(keyTg)
-              }) as PersistedLollipopStateV0V1
-          )
-        )
-    )
-  );
+): PersistedLollipopStateV0V1 => {
+  const castedPeviousState = state as PersistedLollipopStateV0V1;
+  const keyTag = castedPeviousState.keyTag as unknown as SerializedOption<
+    SerializedOption<string> | string
+  >;
+
+  if (!isSome(keyTag) || typeof keyTag.value === "string") {
+    return castedPeviousState;
+  }
+
+  const innerKeyTag = keyTag.value;
+  return {
+    ...castedPeviousState,
+    keyTag: isSome(innerKeyTag) ? some(innerKeyTag.value) : none
+  };
+};
 
 /**
  * The keyTag field type was changed from O.Option<string> to string | undefined
@@ -71,7 +69,7 @@ export const migrationKeyTagToStringUndefined = (
   const castedPeviousState = state as PersistedLollipopStateV0V1;
   return {
     ...castedPeviousState,
-    keyTag: O.toUndefined(castedPeviousState.keyTag)
+    keyTag: toUndefined(castedPeviousState.keyTag)
   };
 };
 
@@ -87,7 +85,7 @@ const migrations: MigrationManifest = {
       state as unknown as PreviousPersistedLollipopState;
     return {
       ...castedPeviousState,
-      keyTag: O.fromNullable(castedPeviousState.keyTag)
+      keyTag: fromNullable(castedPeviousState.keyTag)
     };
   },
   "1": (state: PersistedState): PersistedLollipopStateV0V1 =>
