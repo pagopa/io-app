@@ -94,6 +94,9 @@ jest.mock("expo-brightness", () => ({
   getBrightnessAsync: jest.fn().mockResolvedValue(0),
   setBrightnessAsync: jest.fn().mockResolvedValue(undefined),
 }));
+jest.mock("@io-app/expo-navigation-bar-manager", () => ({
+  setNavigationBarColor: jest.fn().mockResolvedValue(true)
+}));
 
 jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
