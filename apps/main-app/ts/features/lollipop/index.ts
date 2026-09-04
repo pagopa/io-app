@@ -1,9 +1,4 @@
-import {
-  CryptoError,
-  deleteKey,
-  generate,
-  PublicKey
-} from "@pagopa/io-react-native-crypto";
+import { deleteKey, generate, PublicKey } from "@pagopa/io-react-native-crypto";
 import URLParse from "url-parse";
 
 import { AppDispatch } from "../../App";
@@ -83,7 +78,8 @@ export const handleRegenerateEphemeralKey = async (
   dispatch: AppDispatch
 ) => {
   try {
-    const regeneratedKeyTag = await regenerateKey(keyTag);
+    await deleteKey(keyTag);
+    const regeneratedKeyTag = await generate(keyTag);
 
     dispatch(lollipopSetEphemeralPublicKey({ publicKey: regeneratedKeyTag }));
     if (isMixpanelEnabled) {
@@ -91,21 +87,12 @@ export const handleRegenerateEphemeralKey = async (
     }
     return regeneratedKeyTag;
   } catch (error) {
-    const cryptoError = error as CryptoError;
+    const cryptoError = toCryptoError(error);
     trackLollipopIdpLoginFailure(cryptoError.message);
     if (isMixpanelEnabled) {
       trackLollipopKeyGenerationFailure(cryptoError.message);
     }
     dispatch(lollipopRemoveEphemeralPublicKey());
     return undefined;
-  }
-};
-
-export const regenerateKey = async (keyTag: string) => {
-  try {
-    await deleteKey(keyTag);
-    return generate(keyTag);
-  } catch (error) {
-    throw toCryptoError(error);
   }
 };
