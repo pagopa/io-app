@@ -3,5 +3,6 @@ export * from "./Divider";
 export * from "./FooterActions";
 export * from "./FooterActionsInline";
 export * from "./hooks";
+export * from "./ScrollViewWithStickyFooterActions";
 export * from "./Spacer";
 export * from "./Stack";
