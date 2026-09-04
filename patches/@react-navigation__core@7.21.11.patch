@@ -1,0 +1,20 @@
+diff --git a/lib/module/BaseNavigationContainer.js b/lib/module/BaseNavigationContainer.js
+index 6571d7345f3ee28ece07f6f0a3a186e396680373..5e2f41a71944e087b3957d6fa22538f0229aeb0f 100644
+--- a/lib/module/BaseNavigationContainer.js
++++ b/lib/module/BaseNavigationContainer.js
+@@ -251,7 +251,14 @@ export const BaseNavigationContainer = /*#__PURE__*/React.forwardRef(function Ba
+   }, [state, isReady, emitter]);
+   React.useEffect(() => {
+     const hydratedState = getRootState();
+-    if (process.env.NODE_ENV !== 'production') {
++    // Walking the whole navigation state tree on every state change (to warn
++    // about non-serializable params / duplicate route names) is expensive
++    // for apps with many deeply nested navigators, and is noticeable as
++    // sluggish navigation in dev builds. Off by default; opt in by setting
++    // `global.__IO_NAV_SERIALIZABILITY_CHECK_ENABLED__ = true` (e.g. via the
++    // NAV_SERIALIZABILITY_CHECK env flag) when you need to debug persistence
++    // or deep-linking issues caused by non-serializable route params.
++    if (process.env.NODE_ENV !== 'production' && global.__IO_NAV_SERIALIZABILITY_CHECK_ENABLED__) {
+       if (hydratedState !== undefined) {
+         const serializableResult = checkSerializable(hydratedState);
+         if (!serializableResult.serializable) {
