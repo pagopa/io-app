@@ -1,9 +1,12 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { addDays, subDays } from "date-fns";
 
 import { SimpleDate, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   CredentialMetadata,
+  CredentialValidity,
   ItwCredentialStatus,
   ItwJwtCredentialStatus
 } from "../../common/utils/itwTypesUtils";
@@ -87,16 +90,26 @@ export const applyStatusToCredential = (
   const now = new Date();
   const validCredential = normalizeCredentialAsValid(credential, now);
 
+  const isTslSupported = getIoWallet(credential.spec_version as ItwVersion)
+    .CredentialStatus.statusList.isSupported;
+
   switch (status) {
-    case "expired":
+    // The credential expiry_date can be used for both status assertion-based and status list-based credentials
+    case "expired": {
+      const expiryDate = subDays(now, 1);
+      const existingExpiry =
+        validCredential.parsedCredential[WellKnownClaim.expiry_date];
       return {
         ...validCredential,
-        validity: {
-          type: "status_assertion",
-          status: "invalid",
-          errorCode: "credential_expired"
+        parsedCredential: {
+          ...validCredential.parsedCredential,
+          [WellKnownClaim.expiry_date]: {
+            name: existingExpiry.name,
+            value: toSimpleDate(expiryDate)
+          }
         }
       };
+    }
 
     case "expiring": {
       const expiringDate = addDays(now, EXPIRING_DAYS);
@@ -106,27 +119,29 @@ export const applyStatusToCredential = (
         ...validCredential,
         parsedCredential: {
           ...validCredential.parsedCredential,
-          [WellKnownClaim.expiry_date]:
-            existingExpiry !== undefined
-              ? {
-                  ...existingExpiry,
-                  value: toSimpleDate(expiringDate)
-                }
-              : {
-                  value: toSimpleDate(expiringDate)
-                }
-        } as CredentialMetadata["parsedCredential"]
+          [WellKnownClaim.expiry_date]: {
+            name: existingExpiry.name,
+            value: toSimpleDate(expiringDate)
+          }
+        }
       };
     }
 
     case "invalid":
       return {
         ...validCredential,
-        validity: {
-          type: "status_assertion",
-          status: "invalid",
-          errorCode: "credential_revoked"
-        }
+        validity: isTslSupported
+          ? {
+              ...(validCredential.validity as CredentialValidity),
+              type: "status_list",
+              status: "invalid",
+              rawStatus: "0x01"
+            }
+          : {
+              type: "status_assertion",
+              status: "invalid",
+              errorCode: "credential_revoked"
+            }
       };
 
     case "jwtExpired":
@@ -147,10 +162,36 @@ export const applyStatusToCredential = (
         }
       };
 
+    case "suspended":
+      return {
+        ...validCredential,
+        validity: isTslSupported
+          ? {
+              ...(validCredential.validity as CredentialValidity),
+              type: "status_list",
+              status: "suspended",
+              rawStatus: "0x02"
+            }
+          : {
+              type: "status_assertion",
+              status: "invalid",
+              errorCode: "credential_suspended"
+            }
+      };
+
     case "unknown":
       return {
         ...validCredential,
-        validity: { type: "status_assertion", status: "unknown" }
+        validity: isTslSupported
+          ? {
+              ...(validCredential.validity as CredentialValidity),
+              type: "status_list",
+              status: "unknown"
+            }
+          : {
+              type: "status_assertion",
+              status: "unknown"
+            }
       };
 
     case "valid":

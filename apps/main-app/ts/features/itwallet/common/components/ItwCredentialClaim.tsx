@@ -204,6 +204,10 @@ const DateClaimItem = ({
         return I18n.t(
           "features.itWallet.presentation.credentialDetails.status.invalid"
         );
+      case "suspended":
+        return I18n.t(
+          "features.itWallet.presentation.credentialDetails.status.suspended"
+        );
       default:
         return undefined;
     }
