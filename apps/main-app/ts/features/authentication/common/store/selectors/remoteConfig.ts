@@ -20,12 +20,17 @@ export const oneIdentityRolloutPercentageSelector = (state: GlobalState) => {
   return oneIdentityConfig?.rolloutPercentage ?? 0;
 };
 
+type OneIdentityEnvConfig = {
+  idpFriendlyNamesUrl: string;
+  idpsUrl: string;
+};
+
 /**
  * OneIdentity fallback configurations for each environment.
  */
 const FALLBACK_ONE_IDENTITY_CONFIG: Record<
   OneIdentityEnv,
-  { idpFriendlyNamesUrl: string; idpsUrl: string }
+  OneIdentityEnvConfig
 > = {
   prod: {
     idpsUrl: "https://io.oneid.pagopa.it/idps",
@@ -40,28 +45,30 @@ const FALLBACK_ONE_IDENTITY_CONFIG: Record<
 };
 
 /**
+ * Creates a selector for a specific OneIdentity environment field.
+ */
+const makeOneIdentityEnvFieldSelector =
+  (field: keyof OneIdentityEnvConfig) => (state: GlobalState) => {
+    const env = oneIdentityEnvSelector(state);
+    const oneIdentityConfig = oneIdentityRemoteConfigSelector(state);
+
+    return (
+      oneIdentityConfig?.environments?.[env]?.[field] ??
+      FALLBACK_ONE_IDENTITY_CONFIG[env][field]
+    );
+  };
+
+/**
  * Retrieves the URL of the OneIdentity IDP list for the current environment.
  */
-export const oneIdentityIdpsUrlSelector = (state: GlobalState) => {
-  const env = oneIdentityEnvSelector(state);
-  const oneIdentityConfig = oneIdentityRemoteConfigSelector(state);
-  return (
-    oneIdentityConfig?.environments?.[env]?.idpsUrl ??
-    FALLBACK_ONE_IDENTITY_CONFIG[env].idpsUrl
-  );
-};
+export const oneIdentityIdpsUrlSelector =
+  makeOneIdentityEnvFieldSelector("idpsUrl");
 
 /**
  * Retrieves the URL of the OneIdentity IDP friendly names for the current environment.
  */
-export const oneIdentityIdpFriendlyNamesUrlSelector = (state: GlobalState) => {
-  const env = oneIdentityEnvSelector(state);
-  const oneIdentityConfig = oneIdentityRemoteConfigSelector(state);
-  return (
-    oneIdentityConfig?.environments?.[env]?.idpFriendlyNamesUrl ??
-    FALLBACK_ONE_IDENTITY_CONFIG[env].idpFriendlyNamesUrl
-  );
-};
+export const oneIdentityIdpFriendlyNamesUrlSelector =
+  makeOneIdentityEnvFieldSelector("idpFriendlyNamesUrl");
 
 export const testable = isTestEnv
   ? {
