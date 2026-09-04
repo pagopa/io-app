@@ -111,6 +111,8 @@ PODS:
     - ExpoModulesCore
   - ExpoSharing (55.0.22):
     - ExpoModulesCore
+  - ExpoStoreReview (55.0.18):
+    - ExpoModulesCore
   - ExpoTaskManager (55.0.16):
     - ExpoModulesCore
     - UMAppLoader
@@ -3913,6 +3915,7 @@ DEPENDENCIES:
   - ExpoNotifications (from `../../../node_modules/expo-notifications/ios`)
   - ExpoScreenCapture (from `../../../node_modules/expo-screen-capture/ios`)
   - ExpoSharing (from `../../../node_modules/expo-sharing/ios`)
+  - ExpoStoreReview (from `../../../node_modules/expo-store-review/ios`)
   - ExpoTaskManager (from `../../../node_modules/expo-task-manager/ios`)
   - fast_float (from `../../../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
   - FBLazyVector (from `../../../node_modules/react-native/Libraries/FBLazyVector`)
@@ -4118,6 +4121,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-screen-capture/ios"
   ExpoSharing:
     :path: "../../../node_modules/expo-sharing/ios"
+  ExpoStoreReview:
+    :path: "../../../node_modules/expo-store-review/ios"
   ExpoTaskManager:
     :path: "../../../node_modules/expo-task-manager/ios"
   fast_float:
@@ -4396,6 +4401,7 @@ SPEC CHECKSUMS:
   ExpoNotifications: 61c46aa5df088ff0ad41de0504a86a92333aec55
   ExpoScreenCapture: aefcd749919380ee0b4d59bb60c1a150aac201c6
   ExpoSharing: 40cd8fd65209bc35adc710ff7e42dd35913d2a0f
+  ExpoStoreReview: 660b3f001bc09d41a3f3c277b1e0f10337bf9ea8
   ExpoTaskManager: a288a5a5eab33009b1fb7a413ba47ef7eac23fba
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 07433c4ab85da44d0b5ceac374ff4e1d57c7aa23

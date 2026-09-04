@@ -1,3 +1,3 @@
-import AppReviewModule from "../native/AppReview";
+import * as StoreReview from "expo-store-review";
 
-export const requestAppReview = () => AppReviewModule.requestReview();
+export const requestAppReview = () => StoreReview.requestReview();

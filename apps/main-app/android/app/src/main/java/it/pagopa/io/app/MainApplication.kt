@@ -10,7 +10,6 @@ import com.facebook.react.ReactHost
 import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import it.ipzs.cieidsdk.native_bridge.CiePackage
-import it.pagopa.io.app.appreview.AppReviewPackage
 import it.pagopa.io.app.modules.NfcInfoPackage
 import it.pagopa.io.app.modules.PdfHighResGeneratorPackage
 
@@ -24,7 +23,6 @@ class MainApplication : Application(), ReactApplication {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // add(MyReactNativePackage())
           add(CiePackage())
-          add(AppReviewPackage())
           add(NavigationBarManagerPackage())
           add(PdfHighResGeneratorPackage())
           add(NfcInfoPackage())
