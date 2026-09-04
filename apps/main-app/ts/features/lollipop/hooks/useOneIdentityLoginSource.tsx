@@ -96,7 +96,7 @@ const buildAuthorizationUrl = (
 ): string => {
   const { authorization_endpoint, client_id, nonce, redirect_uri, state } =
     reserveResponse;
-  const authorizationUrl = new URLParse(`${authorization_endpoint}`, true);
+  const authorizationUrl = new URLParse(authorization_endpoint, true);
   authorizationUrl.set("query", {
     idp,
     client_id,
