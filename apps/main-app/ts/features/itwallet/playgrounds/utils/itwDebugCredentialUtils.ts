@@ -1,7 +1,7 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
-import { addDays, subDays } from "date-fns";
+import { addDays, format, subDays } from "date-fns";
 
-import { SimpleDate, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
+import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
@@ -14,8 +14,7 @@ import {
 const EXPIRING_DAYS = 15;
 const SAFE_JWT_DAYS = 365;
 
-const toSimpleDate = (date: Date) =>
-  new SimpleDate(date.getFullYear(), date.getMonth(), date.getDate());
+const toSimpleDate = (date: Date) => format(date, "YYYY-MM-DD");
 
 /**
  * Clears previous status mocks and makes both the digital and physical
@@ -62,6 +61,7 @@ export const CREDENTIAL_OVERRIDE_STATUSES: ReadonlyArray<ItwCredentialStatus> =
   [
     "valid",
     "invalid",
+    "suspended",
     "expiring",
     "expired",
     "jwtExpiring",
@@ -104,7 +104,7 @@ export const applyStatusToCredential = (
         parsedCredential: {
           ...validCredential.parsedCredential,
           [WellKnownClaim.expiry_date]: {
-            name: existingExpiry.name,
+            name: existingExpiry?.name,
             value: toSimpleDate(expiryDate)
           }
         }
@@ -120,7 +120,7 @@ export const applyStatusToCredential = (
         parsedCredential: {
           ...validCredential.parsedCredential,
           [WellKnownClaim.expiry_date]: {
-            name: existingExpiry.name,
+            name: existingExpiry?.name,
             value: toSimpleDate(expiringDate)
           }
         }

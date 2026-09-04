@@ -40,6 +40,7 @@ const baseCredential: CredentialMetadata = {
 const statuses: ReadonlyArray<ItwCredentialStatus> = [
   "valid",
   "invalid",
+  "suspended",
   "expiring",
   "expired",
   "jwtExpiring",
