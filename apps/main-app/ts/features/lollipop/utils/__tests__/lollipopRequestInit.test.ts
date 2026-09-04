@@ -1,10 +1,15 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import MockDate from "mockdate";
+import URLParse from "url-parse";
 
 import { LollipopConfig } from "../..";
 import { getUnixTimestamp } from "../../httpSignature/signature";
 import { KeyInfo } from "../crypto";
-import { lollipopRequestInit } from "../fetch";
+import {
+  customContentSignatureBases,
+  CutsomContentToSignInput,
+  lollipopRequestInit
+} from "../fetch";
 
 const publicKey: PublicKey = {
   crv: "P-256",
@@ -63,6 +68,105 @@ describe("Check lollipopRequestInit mocks", () => {
     it(`should be ${mockTimestamp}`, () => {
       expect(getUnixTimestamp()).toBe(mockTimestamp);
     });
+  });
+});
+
+describe("customContentSignatureBases", () => {
+  const signatureConfigForgeInput = {
+    publicKey,
+    keyTag: keyInfo.keyTag as string,
+    lollipopConfig,
+    method: "GET",
+    inputUrl: new URLParse(fullUrl)
+  };
+
+  const baseInput: CutsomContentToSignInput = {
+    customContentToSign: undefined,
+    keyInfo,
+    keyTag: keyInfo.keyTag as string,
+    signatureConfigForgeInput
+  };
+
+  const expectedSignatureInput = (headerName: string, ordinal: number) =>
+    `sig${ordinal}=("${headerName}");created=${mockTimestamp};nonce="nonce";alg="ecdsa-p256-sha256";keyid="${publicKeyThumbprint}"`;
+
+  const expectedSignatureBase = (headerName: string, headerValue: string) =>
+    `"${headerName}": ${headerValue}\n"@signature-params": ("${headerName}");created=${mockTimestamp};nonce="nonce";alg="ecdsa-p256-sha256";keyid="${publicKeyThumbprint}"`;
+
+  it("should return an empty array if customContentToSign is undefined", () => {
+    expect(customContentSignatureBases(baseInput)).toStrictEqual([]);
+  });
+
+  it("should return an empty array if customContentToSign is an empty object", () => {
+    expect(
+      customContentSignatureBases({
+        ...baseInput,
+        customContentToSign: {}
+      })
+    ).toStrictEqual([]);
+  });
+
+  it("should return a single signature base for a single custom content key", () => {
+    const externalMessageId = "00000000000000000005";
+    const headerName = "x-pagopa-lollipop-custom-externalmessageid";
+    const result = customContentSignatureBases({
+      ...baseInput,
+      customContentToSign: { externalMessageId }
+    });
+
+    expect(result).toStrictEqual([
+      {
+        signatureBase: expectedSignatureBase(headerName, externalMessageId),
+        signatureInput: expectedSignatureInput(headerName, 2),
+        headerIndex: 2,
+        headerPrefix: "externalMessageId",
+        headerName: "x-pagopa-lollipop-custom-externalMessageId",
+        headerValue: externalMessageId
+      }
+    ]);
+  });
+
+  it("should return signature bases with incremental headerIndex for multiple custom content keys", () => {
+    const externalMessageId = "00000000000000000005";
+    const anotherValue = "another-value";
+    const result = customContentSignatureBases({
+      ...baseInput,
+      customContentToSign: {
+        externalMessageId,
+        anotherKey: anotherValue
+      }
+    });
+
+    expect(result).toStrictEqual([
+      {
+        signatureBase: expectedSignatureBase(
+          "x-pagopa-lollipop-custom-externalmessageid",
+          externalMessageId
+        ),
+        signatureInput: expectedSignatureInput(
+          "x-pagopa-lollipop-custom-externalmessageid",
+          2
+        ),
+        headerIndex: 2,
+        headerPrefix: "externalMessageId",
+        headerName: "x-pagopa-lollipop-custom-externalMessageId",
+        headerValue: externalMessageId
+      },
+      {
+        signatureBase: expectedSignatureBase(
+          "x-pagopa-lollipop-custom-anotherkey",
+          anotherValue
+        ),
+        signatureInput: expectedSignatureInput(
+          "x-pagopa-lollipop-custom-anotherkey",
+          3
+        ),
+        headerIndex: 3,
+        headerPrefix: "anotherKey",
+        headerName: "x-pagopa-lollipop-custom-anotherKey",
+        headerValue: anotherValue
+      }
+    ]);
   });
 });
 
