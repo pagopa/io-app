@@ -109,6 +109,7 @@ overrides:
 patchedDependencies:
   '@gorhom/bottom-sheet@5.2.8': 9995dc509367cbc5391cc76916a68192588c5aec4321e7f54ff69a8a3662ee98
   '@react-native-community/art@^1.2.0': b8245151d6696043e5ddf6a574e70ea4ab756bd718a162025b9bcaf83ee5a2ea
+  '@react-navigation/stack@7.10.24': b6810799850d4b9029aa29a775399da2078abbcd5c8e78dfd159aac1efb36ad1
   expo-screen-capture@~55.0.9: 74f8b19daf73b86e72d9d61e5fc0ab2e2362516a40718b4fb9a956cbb56fc7dd
   react-native-barcode-builder@2.0.0: 185bbf5a5ace23a4f4b0fe9ae693a101d9f5f95ffcbc30d34f6293080065bc33
   react-native-device-info@14.0.4: b5e3683f3a8950e16f58e0d657f1372e1981f5250008f5ef02f47e7602c8d435
@@ -423,7 +424,7 @@ importers:
         version: 7.6.4
       '@react-navigation/stack':
         specifier: ^7.10.24
-        version: 7.10.24(c067a9b10455eca3c3b4ac560d9be570)
+        version: 7.10.24(patch_hash=b6810799850d4b9029aa29a775399da2078abbcd5c8e78dfd159aac1efb36ad1)(c067a9b10455eca3c3b4ac560d9be570)
       '@redux-saga/testing-utils':
         specifier: ^1.1.3
         version: 1.1.3
@@ -16877,7 +16878,7 @@ snapshots:
     dependencies:
       nanoid: 3.3.12
 
-  '@react-navigation/stack@7.10.24(c067a9b10455eca3c3b4ac560d9be570)':
+  '@react-navigation/stack@7.10.24(patch_hash=b6810799850d4b9029aa29a775399da2078abbcd5c8e78dfd159aac1efb36ad1)(c067a9b10455eca3c3b4ac560d9be570)':
     dependencies:
       '@react-navigation/elements': 2.9.40(1eaa57c5b3fe91323dd23c573c333c2b)
       '@react-navigation/native': 7.3.18(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)

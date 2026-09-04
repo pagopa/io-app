@@ -25,6 +25,7 @@ patchedDependencies:
   react-native-exception-handler@^2.10.8: patches/react-native-exception-handler-npm-2.10.8.patch
   # Allows iOS screen recordings without a black overlay while still preventing screenshots.
   expo-screen-capture@~55.0.9: patches/expo-screen-capture-npm-55.0.9.patch
+  '@react-navigation/stack@7.10.24': patches/@react-navigation__stack@7.10.24.patch
 
 allowBuilds:
   "@shopify/react-native-skia": true

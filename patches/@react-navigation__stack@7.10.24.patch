@@ -1,0 +1,64 @@
+diff --git a/src/views/Stack/CardContainer.tsx b/src/views/Stack/CardContainer.tsx
+index b0a0ce88b23a2bffb5048b5d32e3edc7f79c18a3..ac55bcfa9fdf5bc4fa5b24b89d09c88017def7f0 100644
+--- a/src/views/Stack/CardContainer.tsx
++++ b/src/views/Stack/CardContainer.tsx
+@@ -11,7 +11,7 @@ import {
+   useTheme,
+ } from '@react-navigation/native';
+ import * as React from 'react';
+-import { Animated, StyleSheet, View } from 'react-native';
++import { AccessibilityInfo, Animated, StyleSheet, View } from 'react-native';
+ 
+ import type { Layout, Scene } from '../../types';
+ import { ModalPresentationContext } from '../../utils/ModalPresentationContext';
+@@ -165,6 +165,28 @@ function CardContainerInner({
+   };
+ 
+   const { colors } = useTheme();
++  const [isScreenReaderEnabled, setIsScreenReaderEnabled] =
++    React.useState(false);
++
++  React.useEffect(() => {
++    let isMounted = true;
++
++    AccessibilityInfo.isScreenReaderEnabled().then((enabled) => {
++      if (isMounted) {
++        setIsScreenReaderEnabled(enabled);
++      }
++    });
++
++    const subscription = AccessibilityInfo.addEventListener(
++      'screenReaderChanged',
++      setIsScreenReaderEnabled
++    );
++
++    return () => {
++      isMounted = false;
++      subscription.remove();
++    };
++  }, []);
+ 
+   React.useEffect(() => {
+     if (scene.progress.next == null) {
+@@ -198,6 +220,7 @@ function CardContainerInner({
+     gestureVelocityImpact,
+     headerMode,
+     headerShown,
++    headerTransparent,
+     transitionSpec,
+   } = scene.descriptor.options;
+ 
+@@ -291,7 +314,12 @@ function CardContainerInner({
+                   getFocusedRoute,
+                   contentHeight: headerHeight,
+                   onContentHeightChange: onHeaderHeightChange,
+-                  style: styles.header,
++                  style: [
++                    styles.header,
++                    headerTransparent && isScreenReaderEnabled
++                      ? { minHeight: headerHeight }
++                      : null,
++                  ],
+                 })
+               : null}
+             <View style={styles.scene}>
