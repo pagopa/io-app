@@ -145,8 +145,8 @@ const DigitalVersionBadge = ({
         )}
         {colorScheme !== "default" && <View style={styles.faded} />}
         <Text
-          allowFontScaling={false}
           ellipsizeMode="tail"
+          maxFontSizeMultiplier={1.25}
           numberOfLines={1}
           style={{
             color: foreground,

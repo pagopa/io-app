@@ -36,9 +36,9 @@ import { idpLoginUrlChanged } from "../../../common/store/actions";
 import {
   getIdpLoginUri,
   getIntentFallbackUrl,
-  onLoginUriChanged
-} from "../../../common/utils/login";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../../../common/utils";
 import { usePosteIDApp2AppEducational } from "../../../login/idp/hooks/usePosteIDApp2AppEducational";
 import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import { getSpidErrorCodeDescription } from "../../../login/idp/utils/spidErrorCode";
