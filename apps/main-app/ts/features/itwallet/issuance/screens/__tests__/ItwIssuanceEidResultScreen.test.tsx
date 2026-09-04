@@ -7,16 +7,24 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import { Context, EidIssuanceLevel } from "../../../machine/eid/context";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import { trackBackToWallet } from "../../analytics";
 import { ItwIssuanceEidResultScreen } from "../ItwIssuanceEidResultScreen";
 
 const mockSend = jest.fn();
 const mockCredentialSend = jest.fn();
 const mockHasResolvedCredentialOffer = jest.fn();
+
+jest.mock("../../analytics", () => ({
+  trackAddFirstCredential: jest.fn(),
+  trackBackToWallet: jest.fn(),
+  trackItwCredentialReissuingFailed: jest.fn()
+}));
 
 jest.mock("../../../../../components/screens/LoadingScreenContent", () => ({
   __esModule: true,
@@ -170,17 +178,21 @@ describe("ItwIssuanceEidResultScreen", () => {
         );
 
         expect(mockSend).toHaveBeenCalledWith({ type: "go-to-wallet" });
+        expect(trackBackToWallet).toHaveBeenCalledWith({
+          credential: "ITW_PID",
+          exit_page: ITW_ROUTES.ISSUANCE.EID_RESULT
+        });
+        expect(trackBackToWallet).toHaveBeenCalledTimes(1);
       });
     });
   });
 
   describe("IT-Wallet upgrade flow (Documenti su IO → IT-Wallet)", () => {
     it("renders the 'add document' TYP when the upgraded wallet has documents", () => {
-      jest
-        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
-        .mockReturnValue(false);
-
-      const { getByText } = renderComponent("l3", { mode: "upgrade" });
+      const { getByText } = renderComponent("l3", {
+        mode: "upgrade",
+        credentialsToUpgrade: [{} as CredentialMetadata]
+      });
 
       expect(
         getByText(
@@ -199,13 +211,21 @@ describe("ItwIssuanceEidResultScreen", () => {
           I18n.t("features.itWallet.issuance.eidResult.success.secondaryAction")
         )
       ).toBeTruthy();
+
+      fireEvent.press(
+        getByText(
+          I18n.t("features.itWallet.issuance.eidResult.success.secondaryAction")
+        )
+      );
+
+      expect(trackBackToWallet).toHaveBeenCalledWith({
+        credential: "ITW_PID",
+        exit_page: ITW_ROUTES.ISSUANCE.EID_RESULT
+      });
+      expect(trackBackToWallet).toHaveBeenCalledTimes(1);
     });
 
     it("renders the 'explore IT-Wallet' TYP when the upgraded wallet has no documents", () => {
-      jest
-        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
-        .mockReturnValue(true);
-
       const { getByText, queryByText } = renderComponent("l3", {
         mode: "upgrade"
       });
@@ -257,6 +277,21 @@ describe("ItwIssuanceEidResultScreen", () => {
           I18n.t("features.itWallet.issuance.eidResult.success.itw.title")
         )
       ).toBeNull();
+    });
+
+    it("tracks ITW_ID_V2 when returning to the wallet", () => {
+      const { getByText } = renderComponent("l2");
+
+      fireEvent.press(
+        getByText(
+          I18n.t("features.itWallet.issuance.eidResult.success.secondaryAction")
+        )
+      );
+
+      expect(trackBackToWallet).toHaveBeenCalledWith({
+        credential: "ITW_ID_V2",
+        exit_page: ITW_ROUTES.ISSUANCE.EID_RESULT
+      });
     });
   });
 

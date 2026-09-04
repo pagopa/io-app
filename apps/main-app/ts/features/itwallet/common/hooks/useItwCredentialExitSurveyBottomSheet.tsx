@@ -79,8 +79,8 @@ export const useItwCredentialExitSurveyBottomSheet = () => {
               onPress={() => {
                 skipDeclinedEvent.current = true;
                 trackItwSurveyRequestAccepted(trackingProps);
-                openWebUrl(surveyUrl);
                 dismiss();
+                openWebUrl(surveyUrl);
               }}
               variant="solid"
             />
@@ -99,6 +99,7 @@ export const useItwCredentialExitSurveyBottomSheet = () => {
       </VStack>
     ),
     onDismiss: () => {
+      dispatch(itwSetCredentialExitSurvey(undefined));
       if (!skipDeclinedEvent.current) {
         trackItwSurveyRequestDeclined(trackingProps);
       }
@@ -119,9 +120,8 @@ export const useItwCredentialExitSurveyBottomSheet = () => {
     useCallback(() => {
       if (credentialExitSurveyState) {
         presentSurvey();
-        dispatch(itwSetCredentialExitSurvey(undefined));
       }
-    }, [credentialExitSurveyState, dispatch, presentSurvey])
+    }, [credentialExitSurveyState, presentSurvey])
   );
 
   return { bottomSheet };
