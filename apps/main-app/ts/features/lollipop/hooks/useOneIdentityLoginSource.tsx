@@ -60,20 +60,24 @@ type LoginSourceState =
   | { status: "verifying-assertion-ref"; url: string };
 
 /**
- * Builds the headers required by the Session Manager `/reserve` endpoint.
+ * Builds the body required by `/reserve` endpoint.
  */
-const buildReserveHeaders = (
+const buildReserveRequestBody = (
+  env: string,
+  minAuthLevel: SpidLevel,
   publicKey: PublicKey,
   hashAlgorithm: string,
   isFastLogin: boolean,
   hashedFiscalCode?: string
 ) => ({
-  "x-pagopa-lollipop-hash-algorithm": hashAlgorithm,
-  "x-pagopa-lollipop-pub-key": Buffer.from(JSON.stringify(publicKey)).toString(
+  env: env.toUpperCase(),
+  min_auth_level: minAuthLevel,
+  lollipop_pub_key: Buffer.from(JSON.stringify(publicKey)).toString(
     "base64url"
   ),
-  "x-pagopa-login-type": isFastLogin ? "LV" : "LEGACY",
-  ...(hashedFiscalCode && { "x-pagopa-current-user": hashedFiscalCode })
+  lollipop_hash_algo: hashAlgorithm,
+  login_type: isFastLogin ? "LV" : "LEGACY",
+  ...(hashedFiscalCode && { current_user: hashedFiscalCode })
 });
 
 /**
@@ -81,8 +85,8 @@ const buildReserveHeaders = (
  */
 const buildAuthorizationUrl = (
   reserveResponse: {
+    authorization_endpoint: string;
     client_id: string;
-    issuer: string;
     nonce: string;
     redirect_uri: string;
     state: string;
@@ -90,8 +94,9 @@ const buildAuthorizationUrl = (
   idp: string,
   minAuthLevel: SpidLevel
 ): string => {
-  const { client_id, issuer, nonce, redirect_uri, state } = reserveResponse;
-  const authorizationUrl = new URLParse(`${issuer}oidc/authorize`, true);
+  const { authorization_endpoint, client_id, nonce, redirect_uri, state } =
+    reserveResponse;
+  const authorizationUrl = new URLParse(`${authorization_endpoint}`, true);
   authorizationUrl.set("query", {
     idp,
     client_id,
@@ -244,26 +249,23 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       return;
     }
 
-    const reserveUrl = new URLParse(
-      `${apiUrlPrefix}${reserveEndpointPath}`,
-      true
+    const reserveUrl = `${apiUrlPrefix}${reserveEndpointPath}`;
+    const reserveRequestBody = buildReserveRequestBody(
+      oneIdentityEnv,
+      minAuthLevel,
+      publicKey,
+      DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
+      isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
+      isActiveSessionLogin ? hashedFiscalCode : undefined
     );
-    reserveUrl.set("query", {
-      env: oneIdentityEnv.toUpperCase(),
-      minAuthLevel
-    });
 
-    const requestPromise = fetch(reserveUrl.toString(), {
+    const reservePromise = fetch(reserveUrl, {
       method: "POST",
-      headers: buildReserveHeaders(
-        publicKey,
-        DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-        isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-        isActiveSessionLogin ? hashedFiscalCode : undefined
-      ),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reserveRequestBody),
       signal: controller.signal
     });
-    const result = await jsonFetchToSchema(requestPromise, ReserveSchema);
+    const result = await jsonFetchToSchema(reservePromise, ReserveSchema);
     // Clear the abort controller reference as the request has completed.
     abortControllerRef.current = null;
 

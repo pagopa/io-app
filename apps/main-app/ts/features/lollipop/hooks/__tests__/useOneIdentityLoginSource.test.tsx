@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import URLParse from "url-parse";
 
+import { apiUrlPrefix } from "../../../../config";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { SpidIdp } from "../../../../utils/idps";
@@ -26,7 +27,7 @@ jest.mock("../../../authentication/common/utils/fetch", () => {
     createRetriableFetch: jest.fn(() => mockFetch)
   };
 });
-const mockFetchReserve = createRetriableFetch() as jest.Mock;
+const mockRetriableFetch = createRetriableFetch() as jest.Mock;
 
 const mockPublicKey = { kty: "EC" } as unknown as PublicKey;
 const mockHandleRegenerateEphemeralKey = jest.fn();
@@ -47,8 +48,8 @@ jest.mock("../../../authentication/fastLogin/store/selectors", () => ({
 
 const mockIdp = { id: "idp-id", name: "idp-name" } as unknown as SpidIdp;
 const reserveResponse = {
+  authorization_endpoint: "https://one-identity.example.com/oidc/authorize",
   client_id: "client-id",
-  issuer: "https://one-identity.example.com/",
   nonce: "nonce-value",
   redirect_uri: "https://redirect.example.com/callback",
   state: "state-value"
@@ -107,7 +108,7 @@ describe("useOneIdentityLoginSource", () => {
   });
 
   it("should call POST /reserve and build the OneIdentity /authorize on success", async () => {
-    mockFetchReserve.mockResolvedValue(successResponse(200, reserveResponse));
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
 
     const { result } = setupTest();
 
@@ -117,15 +118,19 @@ describe("useOneIdentityLoginSource", () => {
       );
     });
 
-    expect(mockFetchReserve).toHaveBeenCalledWith(
-      expect.stringContaining(
-        "/api/auth/v2/reserve?env=PROD&minAuthLevel=SpidL2"
-      ),
+    expect(mockRetriableFetch).toHaveBeenCalledWith(
+      `${apiUrlPrefix}/api/auth/v2/reserve`,
       expect.objectContaining({
         method: "POST",
         headers: expect.objectContaining({
-          "x-pagopa-login-type": "LEGACY",
-          "x-pagopa-lollipop-pub-key": "eyJrdHkiOiJFQyJ9"
+          "Content-Type": "application/json"
+        }),
+        body: JSON.stringify({
+          env: "PROD",
+          min_auth_level: "SpidL2",
+          lollipop_pub_key: "eyJrdHkiOiJFQyJ9",
+          lollipop_hash_algo: "sha256",
+          login_type: "LEGACY"
         })
       })
     );
@@ -137,6 +142,7 @@ describe("useOneIdentityLoginSource", () => {
     const authorizeUrl = new URLParse(webviewSource.uri, true);
 
     expect(authorizeUrl.origin).toBe("https://one-identity.example.com");
+    expect(authorizeUrl.pathname).toBe("/oidc/authorize");
     expect(authorizeUrl.query.client_id).toBe(reserveResponse.client_id);
     expect(webviewSource.headers?.["assertion-ref"]).toContain(
       toBase64EncodedThumbprint(mockPublicKey)
@@ -144,7 +150,7 @@ describe("useOneIdentityLoginSource", () => {
   });
 
   it("should expose a failure loginSourceState on HTTP error", async () => {
-    mockFetchReserve.mockResolvedValue(successResponse(500, {}));
+    mockRetriableFetch.mockResolvedValue(successResponse(500, {}));
 
     const { result, onFailure } = setupTest();
 
@@ -166,32 +172,36 @@ describe("useOneIdentityLoginSource", () => {
       });
     });
 
-    expect(mockFetchReserve).not.toHaveBeenCalled();
+    expect(mockRetriableFetch).not.toHaveBeenCalled();
     expect(onFailure).toHaveBeenCalledWith(
       "Unable to generate ephemeral public key"
     );
   });
 
-  it("should send LV as login-type header when fast login is enabled", async () => {
+  it("should send LV as login_type in the reserve body when fast login is enabled", async () => {
     jest.mocked(isFastLoginEnabledSelector).mockReturnValue(true);
-    mockFetchReserve.mockResolvedValue(successResponse(200, reserveResponse));
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
 
     setupTest();
 
     await waitFor(() => {
-      expect(mockFetchReserve).toHaveBeenCalledWith(
-        expect.any(String),
+      expect(mockRetriableFetch).toHaveBeenCalledWith(
+        `${apiUrlPrefix}/api/auth/v2/reserve`,
         expect.objectContaining({
-          headers: expect.objectContaining({
-            "x-pagopa-login-type": "LV"
+          body: JSON.stringify({
+            env: "PROD",
+            min_auth_level: "SpidL2",
+            lollipop_pub_key: "eyJrdHkiOiJFQyJ9",
+            lollipop_hash_algo: "sha256",
+            login_type: "LV"
           })
         })
       );
     });
   });
 
-  it("should use the configured OneIdentity environment in the reserve URL", async () => {
-    mockFetchReserve.mockResolvedValue(successResponse(200, reserveResponse));
+  it("should use the configured OneIdentity environment in the reserve request body", async () => {
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
 
     const store = createTestStore();
     store.dispatch(setOneIdentityEnv("uat"));
@@ -199,16 +209,26 @@ describe("useOneIdentityLoginSource", () => {
     setupTest({ store });
 
     await waitFor(() => {
-      expect(mockFetchReserve).toHaveBeenCalledWith(
-        expect.stringContaining("env=UAT"),
-        expect.any(Object)
+      expect(mockRetriableFetch).toHaveBeenCalledWith(
+        `${apiUrlPrefix}/api/auth/v2/reserve`,
+        expect.objectContaining({
+          body: JSON.stringify({
+            env: "UAT",
+            min_auth_level: "SpidL2",
+            lollipop_pub_key: "eyJrdHkiOiJFQyJ9",
+            lollipop_hash_algo: "sha256",
+            login_type: "LEGACY"
+          })
+        })
       );
     });
   });
 
   describe("shouldBlockUrlNavigationWhileCheckingLollipop", () => {
     const setupReadyState = async () => {
-      mockFetchReserve.mockResolvedValue(successResponse(200, reserveResponse));
+      mockRetriableFetch.mockResolvedValue(
+        successResponse(200, reserveResponse)
+      );
 
       const { store, result, onFailure } = setupTest();
       store.dispatch(
