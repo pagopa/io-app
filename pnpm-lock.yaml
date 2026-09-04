@@ -679,8 +679,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       semver:
-        specifier: ^5.7.2
-        version: 5.7.2
+        specifier: ^7.0.0
+        version: 7.8.5
       sha.js:
         specifier: ^2.4.11
         version: 2.4.12
@@ -9671,6 +9671,7 @@ packages:
 
   react-native-quick-crypto@0.7.17:
     resolution: {integrity: sha512-cJzp6oA/dM1lujt+Rwtn46Mgcs3w9F/0oQvNz1jcADc/AXktveAOUTzzKrDMxyg6YPziCYnoqMDzHBo6OLSU1g==}
+    deprecated: 'Security: secret keys are truncated at the first NUL byte, producing low-entropy derived keys. Upgrade to >=1.0.0. See GHSA-wrf3-fwx3-8jrv'
 
   react-native-randombytes@3.6.2:
     resolution: {integrity: sha512-28gK2ludbNN41MHtr0dVNHQbkunAbMZmgjPQqxPK68osCjG9VkdDGCM+Eqk0ZyZ7hwWd9MUCIgEpK7z2865hXQ==}
