@@ -1,6 +1,6 @@
 import I18n from "i18next";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";

@@ -1,9 +1,10 @@
 import I18n from "i18next";
+import { useMemo } from "react";
 
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
-import { useIOSelector } from "../../../../store/hooks.ts";
+import { useIOStore } from "../../../../store/hooks.ts";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
@@ -11,9 +12,15 @@ import { selectIsLoading } from "../../machine/eid/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../store/selectors/index.ts";
 
 const RevocationLoadingScreen = () => {
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
+  const store = useIOStore();
+
+  // During revocation, `isItwL3` turns false so we capture the initial value to prevent the title from flickering.
+  const isItwL3 = useMemo(
+    () => itwLifecycleIsITWalletValidSelector(store.getState()),
+    [store]
+  );
 
   return (
     <LoadingScreenContent

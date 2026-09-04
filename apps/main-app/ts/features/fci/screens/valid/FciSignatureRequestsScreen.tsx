@@ -5,8 +5,9 @@ import I18n from "i18next";
 import { useEffect } from "react";
 import { ScrollView, SectionList } from "react-native";
 
-import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
+import { useAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { UpdateAppAlert } from "../../../../components/UpdateAppAlert";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -29,7 +30,7 @@ import SignatureRequestItem from "../../components/SignatureRequestItem";
 import { fciSignaturesListRequest } from "../../store/actions";
 import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesList";
 
-const FciSignatureRequestsScreen = () => {
+const FciSignatureRequestsScreenComponent = () => {
   const dispatch = useIODispatch();
   const dataItems = useIOSelector(fciSignaturesListSelector);
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
@@ -111,4 +112,13 @@ const FciSignatureRequestsScreen = () => {
     </LoadingSpinnerOverlay>
   );
 };
-export default withAppRequiredUpdate(FciSignatureRequestsScreen, "fci");
+
+const FciSignatureRequestsScreen = () => {
+  const requiresUpdate = useAppRequiredUpdate("fci");
+  if (requiresUpdate) {
+    return <UpdateAppAlert />;
+  }
+  return <FciSignatureRequestsScreenComponent />;
+};
+
+export default FciSignatureRequestsScreen;

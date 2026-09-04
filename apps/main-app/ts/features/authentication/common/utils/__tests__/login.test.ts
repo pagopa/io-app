@@ -1,11 +1,7 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
 
-import {
-  extractLoginResult,
-  getIntentFallbackUrl,
-  getLoginHeaders
-} from "../login";
+import { extractLoginResult, getIntentFallbackUrl, getLoginHeaders } from "..";
 
 jest.mock("../../../../../utils/environment", () => ({
   isLocalEnv: true
