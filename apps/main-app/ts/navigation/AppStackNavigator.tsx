@@ -101,6 +101,10 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const { themeType } = useIOThemeContext();
   const theme = useIOTheme();
 
+  useEffect(() => {
+    setNavigationReady();
+  }, []);
+
   const linking: LinkingOptions<AppParamsList> = {
     enabled: !isTestEnv, // disable linking in test env
     prefixes: [
@@ -187,7 +191,6 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
       linking={linking}
       onReady={() => {
-        setNavigationReady();
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
       }}
       onStateChange={state => {
