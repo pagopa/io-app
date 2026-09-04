@@ -47,7 +47,7 @@ type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
 const T_INTEGRITY_KEY = "abc";
 const T_WIA = "abcdefg";
-const T_WUA = { wua1: "wua-jwt" };
+const T_KA = { ka1: "ka-jwt" };
 const T_ROUTE_NAME = "ITW_IDENTIFICATION_TEST_ROUTE";
 const T_ACCESS_TOKEN: CredentialAccessToken = {
   access_token: "mock_access_token",
@@ -65,7 +65,7 @@ const T_EID_REQUEST_OUTPUT: RequestEidActorOutput = {
     credential: "",
     metadata: ItwStoredCredentialsMocks.eid
   },
-  walletUnitAttestations: T_WUA
+  keyAttestations: T_KA
 };
 const T_WALLET_INSTANCE_STATUS_LIST: ObtainStatusListActorOutput = {
   idx: 0,
@@ -507,7 +507,7 @@ describe("itwEidIssuanceMachine", () => {
       }),
       accessToken: T_ACCESS_TOKEN,
       eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
-      walletUnitAttestations: T_WUA
+      keyAttestations: T_KA
     });
 
     /**
@@ -1498,7 +1498,7 @@ describe("itwEidIssuanceMachine", () => {
           credential: "",
           metadata: ItwStoredCredentialsMocks.eid
         },
-        walletUnitAttestations: T_WUA
+        keyAttestations: T_KA
       })
     );
     issuedEidMatchesAuthenticatedUser.mockImplementation(() => false);
@@ -1545,7 +1545,7 @@ describe("itwEidIssuanceMachine", () => {
     });
   });
 
-  it("Should obtain and store WUA status lists before checking the issued eID", async () => {
+  it("Should obtain and store KA status lists before checking the issued eID", async () => {
     requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
     obtainStatusList.mockResolvedValue(T_WALLET_INSTANCE_STATUS_LIST);
     issuedEidMatchesAuthenticatedUser.mockReturnValue(true);
@@ -1554,8 +1554,8 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { Issuance: "WaitingForSessionRefresh" },
       context: {
-        itwVersion: "1.3.3",
-        walletUnitAttestations: T_WUA
+        itwVersion: "1.4.6",
+        keyAttestations: T_KA
       }
     });
 
@@ -1570,8 +1570,8 @@ describe("itwEidIssuanceMachine", () => {
     expect(obtainStatusList).toHaveBeenCalledWith(
       expect.objectContaining({
         input: {
-          itwVersion: "1.3.3",
-          walletUnitAttestations: T_WUA
+          itwVersion: "1.4.6",
+          keyAttestations: T_KA
         }
       })
     );
@@ -1580,8 +1580,8 @@ describe("itwEidIssuanceMachine", () => {
     );
   });
 
-  it("Should fail when obtaining WUA status lists fails", async () => {
-    const error = new Error("WUA status list verification failed");
+  it("Should fail when obtaining KA status lists fails", async () => {
+    const error = new Error("KA status list verification failed");
     requestEid.mockResolvedValue(T_EID_REQUEST_OUTPUT);
     obtainStatusList.mockRejectedValue(error);
 
@@ -1824,7 +1824,7 @@ describe("itwEidIssuanceMachine", () => {
           credential: "",
           metadata: ItwStoredCredentialsMocks.eid
         },
-        walletUnitAttestations: T_WUA
+        keyAttestations: T_KA
       })
     );
 
@@ -1913,7 +1913,7 @@ describe("itwEidIssuanceMachine", () => {
       }),
       accessToken: T_ACCESS_TOKEN,
       eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
-      walletUnitAttestations: T_WUA
+      keyAttestations: T_KA
     });
   });
 
@@ -2796,7 +2796,7 @@ describe("itwEidIssuanceMachine", () => {
     requestEid.mockImplementation(() =>
       Promise.resolve({
         credential: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
-        walletUnitAttestations: T_WUA
+        keyAttestations: T_KA
       })
     );
     issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
@@ -2827,7 +2827,7 @@ describe("itwEidIssuanceMachine", () => {
     requestEid.mockImplementationOnce(() =>
       Promise.resolve({
         credential: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
-        walletUnitAttestations: T_WUA
+        keyAttestations: T_KA
       })
     );
     isSessionExpired.mockImplementation(() => true);
@@ -2882,7 +2882,7 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(intermediateSnapshot2.context).toMatchObject<Partial<Context>>({
       eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
-      walletUnitAttestations: T_WUA
+      keyAttestations: T_KA
     });
   });
 
@@ -2949,10 +2949,10 @@ describe("itwEidIssuanceMachine itwVersion routing", () => {
     mode            | level            | expected
     ${"issuance"}   | ${"l2"}          | ${"1.0.0"}
     ${"issuance"}   | ${"l2-fallback"} | ${"1.0.0"}
-    ${"issuance"}   | ${"l3"}          | ${"1.3.3"}
-    ${"upgrade"}    | ${"l3"}          | ${"1.3.3"}
+    ${"issuance"}   | ${"l3"}          | ${"1.4.6"}
+    ${"upgrade"}    | ${"l3"}          | ${"1.4.6"}
     ${"reissuance"} | ${"l2"}          | ${"1.0.0"}
-    ${"reissuance"} | ${"l3"}          | ${"1.3.3"}
+    ${"reissuance"} | ${"l3"}          | ${"1.4.6"}
   `(
     "Mode: $mode, level: $level -> ITW: $expected",
     ({ mode, level, expected }) => {

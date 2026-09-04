@@ -18,7 +18,7 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import * as issuanceSelectors from "../../../issuance/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
-import { itwWalletUnitAttestationsStore } from "../../../walletInstance/store/actions";
+import { itwKeyAttestationsStore } from "../../../walletInstance/store/actions";
 import * as walletInstanceSelectors from "../../../walletInstance/store/selectors";
 import {
   itwCredentialsBatchRefillRequest,
@@ -83,13 +83,11 @@ const authorizedCredentials = [
       credential_configuration_id: "config-id",
       credential_identifiers: ["credential-id"]
     },
-    walletUnitAttestation: "wua-jwt",
-    walletUnitAttestationId: "wua-id"
+    keyAttestation: "ka-jwt",
+    keyAttestationId: "ka-id"
   }
 ] as unknown as Awaited<
-  ReturnType<
-    typeof credentialIssuanceUtils.generateBatchKeysWithWalletUnitAttestation
-  >
+  ReturnType<typeof credentialIssuanceUtils.generateBatchKeysWithKeyAttestation>
 >;
 
 const action = itwCredentialsBatchRefillRequest({
@@ -135,7 +133,7 @@ const mockHappyPath = () => {
   jest
     .spyOn(issuanceSelectors, "itwIntegrityServiceStatusSelector")
     .mockReturnValue("ready");
-  jest.spyOn(envSelectors, "selectItwSpecsVersion").mockReturnValue("1.3.3");
+  jest.spyOn(envSelectors, "selectItwSpecsVersion").mockReturnValue("1.4.6");
   jest.spyOn(envSelectors, "selectItwEnv").mockReturnValue("prod");
   jest
     .spyOn(walletInstanceSelectors, "itwWalletInstanceAttestationSelector")
@@ -144,7 +142,7 @@ const mockHappyPath = () => {
     .spyOn(itwAttestationUtils, "isWalletInstanceAttestationValid")
     .mockReturnValue(true);
   jest.mocked(getIoWallet).mockReturnValue({
-    WalletUnitAttestation: { isSupported: true }
+    KeyAttestation: { isSupported: true }
   } as ReturnType<typeof getIoWallet>);
   jest.mocked(CredentialsVault.get).mockResolvedValue("raw-pid");
   jest.mocked(CredentialsVault.removeAll).mockResolvedValue(undefined);
@@ -163,7 +161,7 @@ const issuanceProviders = (issuerConf: IssuerConfiguration = T_ISSUER_CONF) =>
     ],
     [
       matchers.call.fn(
-        credentialIssuanceUtils.generateBatchKeysWithWalletUnitAttestation
+        credentialIssuanceUtils.generateBatchKeysWithKeyAttestation
       ),
       authorizedCredentials
     ],
@@ -205,7 +203,7 @@ describe("handleItwCredentialsBatchRefillSaga", () => {
       .withState({})
       .provide(issuanceProviders())
       .call.fn(handleItwCredentialsStoreBundleSaga)
-      .put(itwWalletUnitAttestationsStore({ "wua-id": "wua-jwt" }))
+      .put(itwKeyAttestationsStore({ "ka-id": "ka-jwt" }))
       .call(CredentialsVault.removeAll, ["kt-1", "kt-2"])
       .run();
 
@@ -346,7 +344,7 @@ describe("handleItwCredentialsBatchRefillSaga", () => {
         ...issuanceProviders()
       ] as Parameters<ReturnType<typeof expectSaga>["provide"]>[0])
       .not.call.fn(handleItwCredentialsStoreBundleSaga)
-      .not.put.actionType(itwWalletUnitAttestationsStore.toString())
+      .not.put.actionType(itwKeyAttestationsStore.toString())
       .not.call.fn(CredentialsVault.removeAll)
       .run();
 
@@ -362,7 +360,7 @@ describe("handleItwCredentialsBatchRefillSaga", () => {
         failingStoreProvider(new Error("vault unavailable")),
         ...issuanceProviders()
       ] as Parameters<ReturnType<typeof expectSaga>["provide"]>[0])
-      .not.put.actionType(itwWalletUnitAttestationsStore.toString())
+      .not.put.actionType(itwKeyAttestationsStore.toString())
       .not.call.fn(CredentialsVault.removeAll)
       .not.put.actionType(itwCredentialsRemove.toString())
       .run();

@@ -1,3 +1,16 @@
+import { type ItwVersion } from "@pagopa/io-react-native-wallet";
+
+/**
+ * The IT-Wallet technical specifications version that is currently used by the app.
+ */
+export const CURRENT_ITW_SPECS_VERSION: ItwVersion = "1.4.6";
+
+/**
+ * The minimum IT-Wallet specification version that is backward-compatible with {@link CURRENT_ITW_SPECS_VERSION}.
+ * The current IT-Wallet version may increase while still supporting credentials issued with the minimum version.
+ */
+export const MIN_ITW_SPECS_VERSION = "1.3.3";
+
 /**
  * Defines the number of asterisks used to mask the value of claims in the credential details
  */
@@ -35,6 +48,6 @@ export const IT_WALLET_SURVEY_CREDENTIAL_EXIT =
   "https://pagopa.qualtrics.com/jfe/form/SV_736TjZupSi2JQ5E";
 
 /**
- * Fixed Wallet Solution identifier to get the Wallet Instance and Wallet Unit attestations.
+ * Fixed Wallet Solution identifier to get the Wallet Instance and Key attestations.
  */
 export const WALLET_SOLUTION_ID = "appio";

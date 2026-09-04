@@ -41,7 +41,7 @@ jest.mock("@pagopa/io-react-native-jwt", () => ({
 
 const URI = "https://issuer.example/status/1";
 
-const context: StatusListContext = { itwVersion: "1.3.3" };
+const context: StatusListContext = { itwVersion: "1.4.6" };
 
 const makeValidPayload = (
   uri: string = URI,

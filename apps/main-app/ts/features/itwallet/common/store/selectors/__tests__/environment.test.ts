@@ -73,9 +73,10 @@ describe("selectItwSpecsVersion", () => {
     isWhitelisted | pidSpecVersion | expected
     ${false}      | ${undefined}   | ${"1.0.0"}
     ${false}      | ${"1.0.0"}     | ${"1.0.0"}
-    ${true}       | ${undefined}   | ${"1.3.3"}
+    ${true}       | ${undefined}   | ${"1.4.6"}
     ${true}       | ${"1.0.0"}     | ${"1.0.0"}
-    ${true}       | ${"1.3.3"}     | ${"1.3.3"}
+    ${true}       | ${"1.3.3"}     | ${"1.4.6"}
+    ${true}       | ${"1.4.6"}     | ${"1.4.6"}
   `(
     "Whitelist: $isWhitelisted, PID: $pidSpecVersion -> ITW: $expected",
     ({ isWhitelisted, pidSpecVersion, expected }) => {

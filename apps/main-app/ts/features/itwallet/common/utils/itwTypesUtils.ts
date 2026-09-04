@@ -65,6 +65,12 @@ export type CredentialMetadata = {
     expiration: string;
     issuedAt?: string;
   };
+  /**
+   * The ID of the Key Attestation that contains the credential attested key.
+   * The corresponding attestation is stored in `walletInstace.keyAttestations`.
+   * Only credentials issued with the newer IT-Wallet specs contain this field.
+   */
+  keyAttestationId?: string;
   keyTag: string;
   /**
    * Key tags of every copy of a batch credential (e.g. one-time-use credentials obtained in
@@ -85,12 +91,6 @@ export type CredentialMetadata = {
   spec_version: string;
   validity?: CredentialValidity | LegacyCredentialValidity;
   verification?: StoredVerification;
-  /**
-   * The ID of the Wallet Unit Attestation that contains the credential attested key.
-   * The corresponding attestation is stored in `walletInstace.walletUnitAttestations`.
-   * Only credentials issued with the newer IT-Wallet specs contain this field.
-   */
-  walletUnitAttestationId?: string;
 };
 
 export type CredentialOfferResolved = {

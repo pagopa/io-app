@@ -2,51 +2,48 @@
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga-test-plan/matchers";
 
-import { itwWalletUnitAttestationsRemoveById } from "../../../walletInstance/store/actions";
-import { itwWalletUnitAttestationsSelector } from "../../../walletInstance/store/selectors";
+import { itwKeyAttestationsRemoveById } from "../../../walletInstance/store/actions";
+import { itwKeyAttestationsSelector } from "../../../walletInstance/store/selectors";
 import { itwCredentialsByTypeSelector } from "../../store/selectors";
-import { handleWalletUnitAttestationsCleanUp } from "../handleWalletUnitAttestationsCleanUp";
+import { handleKeyAttestationsCleanUp } from "../handleKeyAttestationsCleanUp";
 
-describe("handleWalletUnitAttestationsCleanUp", () => {
+describe("handleKeyAttestationsCleanUp", () => {
   const credentialsByType = {
     PID: {
-      "dc+sd-jwt": { walletUnitAttestationId: "wua1" }
+      "dc+sd-jwt": { keyAttestationId: "ka1" }
     },
     MDL: {
-      "dc+sd-jwt": { walletUnitAttestationId: "wua2" },
-      mso_mdoc: { walletUnitAttestationId: "wua3" }
+      "dc+sd-jwt": { keyAttestationId: "ka2" },
+      mso_mdoc: { keyAttestationId: "ka3" }
     }
   };
 
-  it("should dispatch the remove action when there are unused WUAs", () => {
-    return expectSaga(handleWalletUnitAttestationsCleanUp)
+  it("should dispatch the remove action when there are unused KAs", () => {
+    return expectSaga(handleKeyAttestationsCleanUp)
       .provide([
         [
-          select(itwWalletUnitAttestationsSelector),
+          select(itwKeyAttestationsSelector),
           {
-            wua1: "a",
-            wua2: "b",
-            wua3: "c",
-            wua4: "d",
-            wua5: "e"
+            ka1: "a",
+            ka2: "b",
+            ka3: "c",
+            ka4: "d",
+            ka5: "e"
           }
         ],
         [select(itwCredentialsByTypeSelector), credentialsByType]
       ])
-      .put(itwWalletUnitAttestationsRemoveById(["wua4", "wua5"]))
+      .put(itwKeyAttestationsRemoveById(["ka4", "ka5"]))
       .run();
   });
 
-  it("should NOT dispatch the remove action when the WUAs are in use", () => {
-    return expectSaga(handleWalletUnitAttestationsCleanUp)
+  it("should NOT dispatch the remove action when the KAs are in use", () => {
+    return expectSaga(handleKeyAttestationsCleanUp)
       .provide([
-        [
-          select(itwWalletUnitAttestationsSelector),
-          { wua1: "a", wua2: "b", wua3: "c" }
-        ],
+        [select(itwKeyAttestationsSelector), { ka1: "a", ka2: "b", ka3: "c" }],
         [select(itwCredentialsByTypeSelector), credentialsByType]
       ])
-      .not.put(itwWalletUnitAttestationsRemoveById([]))
+      .not.put(itwKeyAttestationsRemoveById([]))
       .run();
   });
 });

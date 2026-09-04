@@ -41,7 +41,7 @@ import {
 type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;
 
 const T_WIA = "abcdefg";
-const T_WUA = { wua1: "wua-jwt" };
+const T_KA = { ka1: "ka-jwt" };
 const T_CLIENT_ID = "clientId";
 const T_CODE_VERIFIER = "codeVerifier";
 const T_ISSUER_CONFIG: IssuerConfiguration = {
@@ -290,7 +290,7 @@ describe("itwCredentialIssuanceMachine", () => {
         credentials: [
           { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
         ],
-        walletUnitAttestations: T_WUA
+        keyAttestations: T_KA
       })
     );
 
@@ -344,7 +344,7 @@ describe("itwCredentialIssuanceMachine", () => {
     );
     expect(actor.getSnapshot().context).toEqual(
       expect.objectContaining<Partial<Context>>({
-        walletUnitAttestations: T_WUA,
+        keyAttestations: T_KA,
         credentials: [
           {
             credential: "",
@@ -1052,7 +1052,7 @@ describe("itwCredentialIssuanceMachine", () => {
         credentials: [
           { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
         ],
-        walletUnitAttestations: T_WUA
+        keyAttestations: T_KA
       })
     );
 
@@ -1094,7 +1094,7 @@ describe("itwCredentialIssuanceMachine", () => {
       credentials: [
         { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
       ],
-      walletUnitAttestations: T_WUA
+      keyAttestations: T_KA
     });
   });
 });

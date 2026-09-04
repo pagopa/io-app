@@ -16,7 +16,7 @@ import {
 import {
   attachCredentialsStatus,
   completeAuthFlow,
-  generateBatchKeysWithWalletUnitAttestation,
+  generateBatchKeysWithKeyAttestation,
   getBatchRefillThreshold,
   getEffectiveBatchSize,
   obtainCredentialsBatch,
@@ -42,8 +42,8 @@ import {
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
 import {
-  itwWalletInstanceAttestationStore,
-  itwWalletUnitAttestationsStore
+  itwKeyAttestationsStore,
+  itwWalletInstanceAttestationStore
 } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import {
@@ -59,22 +59,22 @@ import { CredentialsVault } from "../utils/vault";
 import { handleItwCredentialsStoreBundleSaga } from "./handleItwCredentialsStoreBundleSaga";
 
 type AuthorizedCredentials = Awaited<
-  ReturnType<typeof generateBatchKeysWithWalletUnitAttestation>
+  ReturnType<typeof generateBatchKeysWithKeyAttestation>
 >;
 
 /**
- * Collects the Wallet Unit Attestations generated during the renewal, keyed by their id.
+ * Collects the Key Attestations generated during the renewal, keyed by their id.
  */
-const extractWalletUnitAttestations = (
+const extractKeyAttestations = (
   authorizedCredentials: ReadonlyArray<{
-    walletUnitAttestation?: string;
-    walletUnitAttestationId?: string;
+    keyAttestation?: string;
+    keyAttestationId?: string;
   }>
 ): Record<string, string> =>
   authorizedCredentials.reduce(
     (acc, c) =>
-      c.walletUnitAttestationId && c.walletUnitAttestation
-        ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
+      c.keyAttestationId && c.keyAttestation
+        ? { ...acc, [c.keyAttestationId]: c.keyAttestation }
         : acc,
     {} as Record<string, string>
   );
@@ -126,9 +126,9 @@ export function* handleItwCredentialsBatchRefillSaga(
     const env = getEnv(yield* select(selectItwEnv));
     const itwVersion = yield* select(selectItwSpecsVersion);
 
-    // The WUA needs the integrity service, warmed up at app start. Rather than waiting for it in
+    // The KA needs the integrity service, warmed up at app start. Rather than waiting for it in
     // a background flow, postpone the renewal to the next trigger.
-    if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
+    if (getIoWallet(itwVersion).KeyAttestation.isSupported) {
       const integrityServiceStatus = yield* select(
         itwIntegrityServiceStatusSelector
       );
@@ -234,9 +234,7 @@ export function* handleItwCredentialsBatchRefillSaga(
     );
 
     yield* put(
-      itwWalletUnitAttestationsStore(
-        extractWalletUnitAttestations(authorizedCredentials)
-      )
+      itwKeyAttestationsStore(extractKeyAttestations(authorizedCredentials))
     );
 
     yield* call(discardStaleCopies, staleCredentials, verifiedCredentials);
@@ -378,7 +376,7 @@ function* obtainVerifiedBatch(args: {
   } = args;
 
   const authorizedCredentials: AuthorizedCredentials = yield* call(
-    generateBatchKeysWithWalletUnitAttestation,
+    generateBatchKeysWithKeyAttestation,
     accessToken,
     batchSize,
     { env, itwVersion, hardwareKeyTag, sessionToken }

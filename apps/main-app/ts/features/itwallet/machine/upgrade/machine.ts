@@ -120,7 +120,7 @@ export const itwCredentialUpgradeMachine = setup({
     },
     UpgradeCredential: {
       description:
-        "Obtain the credential(s) with the WUA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
+        "Obtain the credential(s) with the KA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
       invoke: {
         src: "upgradeCredential",
         id: "upgradeCredential",

@@ -60,13 +60,13 @@ beforeEach(() => {
 
 describe("ITW Status List background task", () => {
   it("refreshes stale entries using the stored IT-Wallet specs version", async () => {
-    mockGetItwSpecsVersion.mockResolvedValue("1.3.3");
+    mockGetItwSpecsVersion.mockResolvedValue("1.4.6");
 
     await expect(taskExecutor(taskBody)).resolves.toBe(
       BackgroundTask.BackgroundTaskResult.Success
     );
     expect(mockRefreshStaleEntries).toHaveBeenCalledWith({
-      itwVersion: "1.3.3"
+      itwVersion: "1.4.6"
     });
   });
 
@@ -82,7 +82,7 @@ describe("ITW Status List background task", () => {
 
 describe("registerItwStatusListFetchTask", () => {
   it("stores the current specs version before registering the task", async () => {
-    const itwVersion: ItwVersion = "1.3.3";
+    const itwVersion: ItwVersion = "1.4.6";
 
     await registerItwStatusListFetchTask(itwVersion);
 
@@ -99,16 +99,16 @@ describe("registerItwStatusListFetchTask", () => {
   it("updates the stored specs version when the task is already registered", async () => {
     mockIsTaskRegistered.mockResolvedValue(true);
 
-    await registerItwStatusListFetchTask("1.3.3");
+    await registerItwStatusListFetchTask("1.4.6");
 
-    expect(mockStoreItwSpecsVersion).toHaveBeenCalledWith("1.3.3");
+    expect(mockStoreItwSpecsVersion).toHaveBeenCalledWith("1.4.6");
     expect(mockRegisterTask).not.toHaveBeenCalled();
   });
 
   it("does not register the task when storing the specs version fails", async () => {
     mockStoreItwSpecsVersion.mockRejectedValue(new Error("storage failure"));
 
-    await registerItwStatusListFetchTask("1.3.3");
+    await registerItwStatusListFetchTask("1.4.6");
 
     expect(mockIsTaskRegistered).not.toHaveBeenCalled();
     expect(mockRegisterTask).not.toHaveBeenCalled();

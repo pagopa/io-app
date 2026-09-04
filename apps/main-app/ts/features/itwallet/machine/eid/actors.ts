@@ -24,7 +24,7 @@ import {
   getWalletInstanceAttestation,
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
-import { generateKeysWithWalletUnitAttestation } from "../../common/utils/itwCredentialIssuanceUtils";
+import { generateKeysWithKeyAttestation } from "../../common/utils/itwCredentialIssuanceUtils";
 import { isAssertionGenerationError } from "../../common/utils/itwFailureUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
@@ -47,13 +47,13 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import {
   getCredentialStatusFromStatusList,
-  getKeysForWuaStatusList
+  getKeysForKaStatusList
 } from "../../statusList/utils";
 import { StatusListRepository } from "../../statusList/utils/repository";
 import {
+  itwKeyAttestationsStore,
   itwSetWalletInstanceRenewalError,
-  itwStoreWalletInstanceStatusList,
-  itwWalletUnitAttestationsStore
+  itwStoreWalletInstanceStatusList
 } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
@@ -76,7 +76,7 @@ export type InitMrtdPoPChallengeActorParams = WithItwVersion<{
 
 export type ObtainStatusListActorInput = Pick<
   Context,
-  "itwVersion" | "walletUnitAttestations"
+  "itwVersion" | "keyAttestations"
 >;
 
 export type ObtainStatusListActorOutput = Context["walletInstanceStatusList"];
@@ -88,7 +88,7 @@ export type RequestAccessTokenActorParams = WithItwVersion<{
 
 export type RequestEidActorOutput = {
   credential: CredentialBundle;
-  walletUnitAttestations: Record<string, string>;
+  keyAttestations: Record<string, string>;
 };
 
 export type RequestEidActorParams = WithItwVersion<{
@@ -107,8 +107,8 @@ export type StartAuthFlowActorParams = WithItwVersion<{
 
 export type StoreEidCredentialActorParams = {
   eid: CredentialBundle | undefined;
+  keyAttestations?: Record<string, string>;
   walletInstanceStatusList?: Context["walletInstanceStatusList"];
-  walletUnitAttestations?: Record<string, string>;
 };
 
 export type ValidateMrtdPoPChallengeActorParams = WithItwVersion<{
@@ -373,7 +373,7 @@ export const createEidIssuanceActorsImplementation = (
   }),
 
   // To ensure a smooth experience when the session token expires, it is important to keep this actor
-  // retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
+  // retriable: it must fail as early as possible when `generateKeysWithKeyAttestation` is
   // rejected for session expired, so it can be reentered and retried from where it failed.
   requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
     async ({ input }) => {
@@ -385,19 +385,21 @@ export const createEidIssuanceActorsImplementation = (
       const sessionToken = sessionTokenSelector(store.getState());
       assert(sessionToken, "sessionToken is undefined");
 
-      // The Wallet Unit Attestation makes use of the integrity service
-      if (getIoWallet(input.itwVersion).WalletUnitAttestation.isSupported) {
+      // The Key Attestation makes use of the integrity service
+      if (getIoWallet(input.itwVersion).KeyAttestation.isSupported) {
         await ensureIntegrityServiceIsStoreReadyOrThrow(store);
       }
 
       // Take the first element as only one credential is authorized during PID issuance
-      const [authorizedCredential] =
-        await generateKeysWithWalletUnitAttestation(input.accessToken, {
+      const [authorizedCredential] = await generateKeysWithKeyAttestation(
+        input.accessToken,
+        {
           env,
           itwVersion: input.itwVersion,
           hardwareKeyTag: input.integrityKeyTag,
           sessionToken
-        });
+        }
+      );
 
       trackItwRequest(
         toItwIdMethod(input.identification),
@@ -412,13 +414,12 @@ export const createEidIssuanceActorsImplementation = (
         ...input.authenticationContext
       });
 
-      const { walletUnitAttestationId, walletUnitAttestation } =
-        authorizedCredential;
+      const { keyAttestationId, keyAttestation } = authorizedCredential;
       return {
         credential,
-        walletUnitAttestations:
-          walletUnitAttestationId && walletUnitAttestation
-            ? { [walletUnitAttestationId]: walletUnitAttestation }
+        keyAttestations:
+          keyAttestationId && keyAttestation
+            ? { [keyAttestationId]: keyAttestation }
             : {}
       };
     }
@@ -428,34 +429,33 @@ export const createEidIssuanceActorsImplementation = (
     ObtainStatusListActorOutput,
     ObtainStatusListActorInput
   >(async ({ input }) => {
-    const { itwVersion, walletUnitAttestations } = input;
+    const { itwVersion, keyAttestations } = input;
 
     const ioWallet = getIoWallet(itwVersion);
     if (
-      !ioWallet.WalletUnitAttestation.isSupported ||
+      !ioWallet.KeyAttestation.isSupported ||
       !ioWallet.CredentialStatus.statusList.isSupported
     ) {
       return undefined;
     }
 
     assert(
-      walletUnitAttestations && Object.keys(walletUnitAttestations).length > 0,
-      "PID Wallet Unit Attestations are not defined or empty"
+      keyAttestations && Object.keys(keyAttestations).length > 0,
+      "PID Key Attestations are not defined or empty"
     );
 
-    // For the Status List we'll need just one of the WUAs, as they all
+    // For the Status List we'll need just one of the KAs, as they all
     // reference the same Status List. We can take the first one.
-    const [walletUnitAttestationId, walletUnitAttestation] = Object.entries(
-      walletUnitAttestations
-    )[0];
+    const [keyAttestationId, keyAttestation] =
+      Object.entries(keyAttestations)[0];
 
     // Fetch the JWKS from the Wallet Provider's OpenID Federation metadata,
-    const keys = await getKeysForWuaStatusList(walletUnitAttestation);
+    const keys = await getKeysForKaStatusList(keyAttestation);
 
     return await getCredentialStatusFromStatusList(
       itwVersion,
-      walletUnitAttestation,
-      walletUnitAttestationId,
+      keyAttestation,
+      keyAttestationId,
       "dc+sd-jwt",
       keys
     );
@@ -463,7 +463,7 @@ export const createEidIssuanceActorsImplementation = (
 
   storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
     async ({ input }) => {
-      const { eid, walletUnitAttestations, walletInstanceStatusList } = input;
+      const { eid, keyAttestations, walletInstanceStatusList } = input;
       assert(eid, "eID credential is undefined");
 
       // Persist verified status lists before activating the wallet instance.
@@ -473,8 +473,8 @@ export const createEidIssuanceActorsImplementation = (
         store.dispatch(itwStoreWalletInstanceStatusList({ idx, uri }));
       }
 
-      if (walletUnitAttestations) {
-        store.dispatch(itwWalletUnitAttestationsStore(walletUnitAttestations));
+      if (keyAttestations) {
+        store.dispatch(itwKeyAttestationsStore(keyAttestations));
       }
 
       // Waits for the credential store/replace to complete before proceeding

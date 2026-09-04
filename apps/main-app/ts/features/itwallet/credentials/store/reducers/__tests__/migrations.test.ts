@@ -1068,4 +1068,50 @@ describe("ITW credentials reducer migrations", () => {
 
     expect(nextState).toStrictEqual(persistedStateAt12);
   });
+
+  it("should migrate from 12 to 13 (credentials spec version 1.3.3 -> 1.4.6)", () => {
+    const basePersistedStateAt12 = {
+      credentials: {
+        cred_1_3: {
+          credentialId: "cred_1_3",
+          credentialType: "cred_1_3",
+          spec_version: "1.3.3"
+        },
+        cred_1_0: {
+          credentialId: "cred_1_0",
+          credentialType: "cred_1_0",
+          spec_version: "1.0.0"
+        }
+      },
+      _persist: {
+        version: 12,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt13 = {
+      credentials: {
+        cred_1_3: {
+          credentialId: "cred_1_3",
+          credentialType: "cred_1_3",
+          spec_version: "1.4.6"
+        },
+        cred_1_0: {
+          credentialId: "cred_1_0",
+          credentialType: "cred_1_0",
+          spec_version: "1.0.0"
+        }
+      },
+      _persist: {
+        version: 12,
+        rehydrated: false
+      }
+    };
+
+    const from12To13Migration = itwCredentialsStateMigrations[13];
+    expect(from12To13Migration).toBeDefined();
+    const nextState = from12To13Migration(basePersistedStateAt12);
+
+    expect(nextState).toStrictEqual(persistedStateAt13);
+  });
 });

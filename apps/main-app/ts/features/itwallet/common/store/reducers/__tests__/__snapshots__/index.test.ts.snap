@@ -45,12 +45,12 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
   "walletInstance": {
     "attestation": undefined,
     "isRemotelyActive": undefined,
+    "keyAttestations": {},
     "renewalError": false,
     "status": {
       "kind": "PotNone",
     },
     "statusList": undefined,
-    "walletUnitAttestations": {},
   },
 }
 `;

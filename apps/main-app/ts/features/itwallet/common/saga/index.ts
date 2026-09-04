@@ -23,8 +23,8 @@ import { checkCredentialsBatchRefill } from "../../credentials/saga/checkCredent
 import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleItwCredentialsVaultCoherenceSaga } from "../../credentials/saga/handleItwCredentialsVaultCoherenceSaga";
 import { handleItwCredentialsVaultMigrationSaga } from "../../credentials/saga/handleItwCredentialsVaultMigrationSaga";
+import { handleKeyAttestationsCleanUp } from "../../credentials/saga/handleKeyAttestationsCleanUp";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
-import { handleWalletUnitAttestationsCleanUp } from "../../credentials/saga/handleWalletUnitAttestationsCleanUp";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors/index";
 import { watchItwCredentialsCatalogueSaga } from "../../credentialsCatalogue/saga/index";
 import { checkHasNfcFeatureSaga } from "../../identification/common/saga/index";
@@ -104,8 +104,8 @@ export function* watchItwSaga(): SagaIterator {
   yield* call(handleItwCredentialsVaultCoherenceSaga);
   // Rehydrate wallet cards from Redux credentials store
   yield* fork(handleWalletCredentialsRehydration);
-  // Clean up stale Wallet Unit Attestations
-  yield* fork(handleWalletUnitAttestationsCleanUp);
+  // Clean up stale Key Attestations
+  yield* fork(handleKeyAttestationsCleanUp);
   // TODO remove this fork when NFC antenna info tracking is not needed anymore
   yield* fork(updateNfcInfoTrackingProperties);
   // Sync ITW analytics properties

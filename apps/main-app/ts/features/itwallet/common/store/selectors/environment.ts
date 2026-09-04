@@ -5,6 +5,7 @@ import { createSelector } from "reselect";
 
 import { GlobalState } from "../../../../../store/reducers/types";
 import { itwCredentialsEidSelector } from "../../../credentials/store/selectors";
+import { CURRENT_ITW_SPECS_VERSION } from "../../utils/constants";
 import { itwIsL3EnabledSelector } from "./index";
 
 export const selectItwEnv = (state: GlobalState) =>
@@ -45,6 +46,6 @@ export const selectItwSpecsVersion = createSelector(
       return eid.spec_version as ItwVersion;
     }
     // Users that are whitelisted and don't have an EID use the latest version by default
-    return "1.3.3";
+    return CURRENT_ITW_SPECS_VERSION;
   }
 );

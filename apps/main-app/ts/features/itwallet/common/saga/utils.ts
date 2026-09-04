@@ -3,9 +3,8 @@ import { take } from "typed-redux-saga/macro";
 import { Action, isActionOf } from "typesafe-actions";
 
 import { itwCredentialsStore } from "../../credentials/store/actions";
+import { MIN_ITW_SPECS_VERSION } from "../utils/constants";
 import { CredentialType } from "../utils/itwMocksUtils";
-
-const MIN_ITW_SPECS_VERSION = "1.3.3";
 
 /**
  * Waits for a credential store action containing an IT Wallet PID issued with

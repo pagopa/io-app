@@ -17,9 +17,9 @@ const mockSelectItwSpecsVersion = jest.mocked(selectItwSpecsVersion);
 describe("itwStatusListReferencedUrisSelector", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockSelectItwSpecsVersion.mockReturnValue("1.3.3");
+    mockSelectItwSpecsVersion.mockReturnValue("1.4.6");
     mockGetIoWallet.mockReturnValue({
-      WalletUnitAttestation: {
+      KeyAttestation: {
         isSupported: true,
         decode: jest.fn().mockReturnValue({
           status: {
@@ -30,7 +30,7 @@ describe("itwStatusListReferencedUrisSelector", () => {
     } as never);
   });
 
-  it("returns references from credentials and WUAs", () => {
+  it("returns references from credentials and KAs", () => {
     const state = {
       features: {
         itWallet: {
@@ -45,7 +45,7 @@ describe("itwStatusListReferencedUrisSelector", () => {
             }
           },
           walletInstance: {
-            walletUnitAttestations: { wua1: "wua-jwt" }
+            keyAttestations: { ka1: "ka-jwt" }
           }
         }
       }
@@ -57,12 +57,12 @@ describe("itwStatusListReferencedUrisSelector", () => {
     ]);
   });
 
-  it("ignores malformed WUAs", () => {
+  it("ignores malformed KAs", () => {
     mockGetIoWallet.mockReturnValue({
-      WalletUnitAttestation: {
+      KeyAttestation: {
         isSupported: true,
         decode: jest.fn().mockImplementation(() => {
-          throw new Error("invalid WUA");
+          throw new Error("invalid KA");
         })
       }
     } as never);
@@ -72,7 +72,7 @@ describe("itwStatusListReferencedUrisSelector", () => {
         itWallet: {
           credentials: { credentials: {} },
           walletInstance: {
-            walletUnitAttestations: { wua1: "invalid-wua" }
+            keyAttestations: { ka1: "invalid-ka" }
           }
         }
       }
