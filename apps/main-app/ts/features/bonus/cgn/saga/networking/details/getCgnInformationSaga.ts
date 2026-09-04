@@ -1,6 +1,5 @@
 import { StatusEnum } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -22,17 +21,14 @@ export function* cgnGetInformationSaga(
       cgnInformationRequest,
       action
     )) as unknown as SagaCallReturnType<typeof getCgnStatus>;
-    if (E.isLeft(cgnInformationResult)) {
+    if ("left" in cgnInformationResult) {
       yield* put(
         cgnDetails.failure({
           kind: "generic",
           value: new Error(readableReport(cgnInformationResult.left))
         })
       );
-    } else if (
-      E.isRight(cgnInformationResult) &&
-      cgnInformationResult.right.status === 200
-    ) {
+    } else if (cgnInformationResult.right.status === 200) {
       const cgnInfo = cgnInformationResult.right.value;
       const expireDate =
         cgnInfo.status === StatusEnum.ACTIVATED

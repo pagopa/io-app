@@ -1,4 +1,4 @@
-import * as E from "fp-ts/lib/Either";
+import { err, ok, Result } from "neverthrow";
 import { call } from "typed-redux-saga/macro";
 
 import {
@@ -13,6 +13,8 @@ import { readablePrivacyReport } from "../../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../../authentication/fastLogin/saga/utils";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
+
+export type StartActivationResult = Result<StartEycaStatus, NetworkError>;
 
 type StartEycaStatus = "ALREADY_ACTIVE" | "INELIGIBLE" | "PROCESSING";
 
@@ -29,7 +31,7 @@ const mapStatus = new Map<number, StartEycaStatus>([
  */
 export function* handleStartActivation(
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
-): Generator<ReduxSagaEffect, E.Either<NetworkError, StartEycaStatus>, any> {
+): Generator<ReduxSagaEffect, StartActivationResult, any> {
   try {
     const startEycaActivationRequest = startEycaActivation({});
     const startEycaActivationResult = (yield* call(
@@ -37,17 +39,17 @@ export function* handleStartActivation(
       startEycaActivationRequest,
       cgnEycaActivation.request()
     )) as unknown as SagaCallReturnType<typeof startEycaActivation>;
-    if (E.isRight(startEycaActivationResult)) {
+    if ("right" in startEycaActivationResult) {
       const status = startEycaActivationResult.right.status;
       const activationStatus = mapStatus.get(status);
       if (activationStatus) {
-        return E.right(activationStatus);
+        return ok(activationStatus);
       }
       throw Error(`response status ${startEycaActivationResult.right.status}`);
     }
     // decoding failure
     throw Error(readablePrivacyReport(startEycaActivationResult.left));
   } catch (e) {
-    return E.left(getNetworkError(e));
+    return err(getNetworkError(e));
   }
 }

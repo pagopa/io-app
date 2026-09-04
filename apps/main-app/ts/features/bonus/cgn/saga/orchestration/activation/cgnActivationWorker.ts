@@ -1,5 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 
@@ -32,11 +30,8 @@ const getNextNavigationStep = (
   action: ActionType<typeof cgnActivationStatus>
 ): (() => void) =>
   isActionOf(cgnActivationStatus.success, action)
-    ? pipe(
-        mapEnumToNavigation.get(action.payload.status),
-        O.fromNullable,
-        O.getOrElse(() => navigateToCgnActivationLoading)
-      )
+    ? (mapEnumToNavigation.get(action.payload.status) ??
+      navigateToCgnActivationLoading)
     : navigateToCgnActivationLoading;
 
 const isLoadingScreen = (screenName: string) =>
