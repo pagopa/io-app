@@ -1,0 +1,25 @@
+{
+  "name": "@io-app/expo-nfc-antenna-info",
+  "version": "1.0.0",
+  "description": "Expo module exposing Android NFC antenna information for io-app",
+  "private": true,
+  "main": "index.ts",
+  "types": "index.ts",
+  "react-native": "index.ts",
+  "source": "index.ts",
+  "files": [
+    "index.ts",
+    "android",
+    "ios",
+    "expo-module.config.json",
+    "*.podspec"
+  ],
+  "scripts": {
+    "tsc-noemit": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "expo-modules-core": "^55.0.25",
+    "react-native": "catalog:",
+    "typescript": "catalog:"
+  }
+}
