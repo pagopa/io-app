@@ -39,9 +39,10 @@ import {
 } from "../utils/navigation";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import { linkingSubscription } from "./linkingSubscription";
-import NavigationService, {
+import {
   navigationRef,
-  setMainNavigatorReady
+  setMainNavigatorReady,
+  setNavigationReady
 } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import OfflineStackNavigator from "./OfflineStackNavigator";
@@ -101,7 +102,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const theme = useIOTheme();
 
   useEffect(() => {
-    NavigationService.setNavigationReady();
+    setNavigationReady();
   }, []);
 
   const linking: LinkingOptions<AppParamsList> = {
