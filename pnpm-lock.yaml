@@ -498,6 +498,9 @@ importers:
       expo-screen-capture:
         specifier: ~55.0.9
         version: 55.0.14(patch_hash=74f8b19daf73b86e72d9d61e5fc0ab2e2362516a40718b4fb9a956cbb56fc7dd)(expo@55.0.26)(react@19.2.0)
+      expo-secure-store:
+        specifier: ~55.0.13
+        version: 55.0.16(expo@55.0.26)
       expo-sharing:
         specifier: ~55.0.22
         version: 55.0.22(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(@react-native-community/cli@20.0.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.0(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1)
@@ -6560,6 +6563,11 @@ packages:
     peerDependencies:
       expo: '*'
       react: '*'
+
+  expo-secure-store@55.0.16:
+    resolution: {integrity: sha512-4DkdluBLJnqndKMpvg4bTVoyi1D5p3V7nxyYvlzLvuqMVrUzXPTGTyIw347H3wVU1jp+sfGNX5xqtpQCY3hF+A==}
+    peerDependencies:
+      expo: '*'
 
   expo-server@55.0.11:
     resolution: {integrity: sha512-AxRdHqcv0H1g4s923vu+5n1Nrhne23bjXbP+Vl7+Lwfpe7MG9PuU1IS95IJK6a+7BVV1mRN6QlZvs8Yv7EEXNQ==}
@@ -20498,6 +20506,10 @@ snapshots:
     dependencies:
       expo: 55.0.26(647755e85e266c3eea547ba434358210)
       react: 19.2.0
+
+  expo-secure-store@55.0.16(expo@55.0.26):
+    dependencies:
+      expo: 55.0.26(647755e85e266c3eea547ba434358210)
 
   expo-server@55.0.11: {}
 

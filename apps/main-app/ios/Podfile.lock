@@ -109,6 +109,8 @@ PODS:
     - ExpoModulesCore
   - ExpoScreenCapture (55.0.14):
     - ExpoModulesCore
+  - ExpoSecureStore (55.0.16):
+    - ExpoModulesCore
   - ExpoSharing (55.0.22):
     - ExpoModulesCore
   - ExpoTaskManager (55.0.16):
@@ -3463,34 +3465,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNKeychain (10.0.0):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
   - RNPermissions (5.3.0):
     - boost
     - DoubleConversion
@@ -3912,6 +3886,7 @@ DEPENDENCIES:
   - ExpoModulesJSI (from `../../../node_modules/expo-modules-core`)
   - ExpoNotifications (from `../../../node_modules/expo-notifications/ios`)
   - ExpoScreenCapture (from `../../../node_modules/expo-screen-capture/ios`)
+  - ExpoSecureStore (from `../../../node_modules/expo-secure-store/ios`)
   - ExpoSharing (from `../../../node_modules/expo-sharing/ios`)
   - ExpoTaskManager (from `../../../node_modules/expo-task-manager/ios`)
   - fast_float (from `../../../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
@@ -4028,7 +4003,6 @@ DEPENDENCIES:
   - RNDeviceInfo (from `../../../node_modules/react-native-device-info`)
   - RNFS (from `../../../node_modules/react-native-fs`)
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
-  - RNKeychain (from `../../../node_modules/react-native-keychain`)
   - RNPermissions (from `../../../node_modules/react-native-permissions`)
   - RNQrGenerator (from `../../../node_modules/rn-qr-generator`)
   - RNReanimated (from `../../../node_modules/react-native-reanimated`)
@@ -4116,6 +4090,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-notifications/ios"
   ExpoScreenCapture:
     :path: "../../../node_modules/expo-screen-capture/ios"
+  ExpoSecureStore:
+    :path: "../../../node_modules/expo-secure-store/ios"
   ExpoSharing:
     :path: "../../../node_modules/expo-sharing/ios"
   ExpoTaskManager:
@@ -4347,8 +4323,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../../../node_modules/react-native-gesture-handler"
-  RNKeychain:
-    :path: "../../../node_modules/react-native-keychain"
   RNPermissions:
     :path: "../../../node_modules/react-native-permissions"
   RNQrGenerator:
@@ -4395,6 +4369,7 @@ SPEC CHECKSUMS:
   ExpoModulesJSI: 964334271fc77832736f66ee1785761cdc778dbe
   ExpoNotifications: 61c46aa5df088ff0ad41de0504a86a92333aec55
   ExpoScreenCapture: aefcd749919380ee0b4d59bb60c1a150aac201c6
+  ExpoSecureStore: b63bbffacf76f64413ecadd3007de3fc8e39de02
   ExpoSharing: 40cd8fd65209bc35adc710ff7e42dd35913d2a0f
   ExpoTaskManager: a288a5a5eab33009b1fb7a413ba47ef7eac23fba
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
@@ -4518,7 +4493,6 @@ SPEC CHECKSUMS:
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 884f03ad24511911552480eb2058266db0b177ce
-  RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19
   RNQrGenerator: 3318e98283e861e9d93e58111fc4de8e03e2ddb3
   RNReanimated: c26dfcd831add485c2ed93de9d7bfb90b035eeaa
