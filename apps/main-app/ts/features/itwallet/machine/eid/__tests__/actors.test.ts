@@ -27,7 +27,7 @@ jest.mock("../../../common/utils/itwIoWallet", () => ({
 
 jest.mock("../../../statusList/utils", () => ({
   getCredentialStatusFromStatusList: jest.fn(),
-  getKeysForWuaStatusList: jest.fn()
+  getKeysForStatusListToken: jest.fn()
 }));
 
 jest.mock("../../../statusList/utils/repository", () => ({
