@@ -29,6 +29,7 @@ import {
   isRequestedAttachmentDownloadSelector,
   requestedDownloadErrorSelector
 } from "../../store/reducers/downloads";
+import { SendFailureReason } from "../../utils";
 import { useAttachmentDownload } from "../useAttachmentDownload";
 
 // ---- Mocks ----
@@ -430,7 +431,8 @@ describe("useAttachmentDownload", () => {
 
         if (shouldTrack) {
           expect(trackPNAttachmentDownloadFailure).toHaveBeenCalledWith(
-            "DOCUMENT"
+            "DOCUMENT",
+            SendFailureReason.NETWORK_ERROR
           );
         } else {
           expect(trackPNAttachmentDownloadFailure).not.toHaveBeenCalled();

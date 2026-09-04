@@ -32,6 +32,7 @@ import {
   downloadAttachment
 } from "../store/actions";
 import { thirdPartyMessageSelector } from "../store/reducers/thirdPartyById";
+import { decodeSendFailureReason, WrappedSendError } from "../utils";
 import {
   attachmentDisplayName,
   getHeaderValueByKey,
@@ -148,7 +149,10 @@ function* downloadAttachmentWorker(
           yield* delay(waitingMs);
           continue;
         }
-        throw Error(`response status ${status} without retry-after header`);
+        throw new WrappedSendError(
+          decodeSendFailureReason({ kind: "http_status", status }),
+          `response status ${status} without retry-after header`
+        );
       } else {
         trackFailureEvent(
           skipMixpanelTrackingOnFailure,
@@ -162,7 +166,10 @@ function* downloadAttachmentWorker(
           status === 415
             ? "messageDetails.attachments.badFormat"
             : "messageDetails.attachments.downloadFailed";
-        const error = new Error(I18n.t(errorKey));
+        const error = new WrappedSendError(
+          decodeSendFailureReason({ kind: "http_status", status }),
+          I18n.t(errorKey)
+        );
         yield* put(
           downloadAttachment.failure({ attachment, messageId, error })
         );

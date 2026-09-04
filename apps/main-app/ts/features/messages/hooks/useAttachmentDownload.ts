@@ -30,6 +30,7 @@ import {
   isRequestedAttachmentDownloadSelector,
   requestedDownloadErrorSelector
 } from "../store/reducers/downloads";
+import { decodeSendFailureReason, WrappedSendError } from "../utils";
 import { attachmentDisplayName } from "../utils/attachments";
 
 export const useAttachmentDownload = (
@@ -117,7 +118,14 @@ export const useAttachmentDownload = (
     (downloadError: Error) => {
       dispatch(clearRequestedAttachmentDownload());
       if (isSendAttachment) {
-        trackPNAttachmentDownloadFailure(attachmentCategory);
+        const reason =
+          downloadError instanceof WrappedSendError
+            ? downloadError.reason
+            : decodeSendFailureReason({
+                kind: "caught",
+                error: downloadError
+              });
+        trackPNAttachmentDownloadFailure(attachmentCategory, reason);
       }
       const isAarTtlError = isAarAttachmentTtlError(downloadError.message);
       if (isAarTtlError) {

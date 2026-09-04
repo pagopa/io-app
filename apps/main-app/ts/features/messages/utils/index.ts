@@ -8,7 +8,11 @@ import { Dispatch } from "redux";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { Action } from "../../../store/actions/types";
-import { getNetworkError, NetworkError } from "../../../utils/errors";
+import {
+  getNetworkError,
+  isTimeoutError,
+  NetworkError
+} from "../../../utils/errors";
 import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
 import { addUserSelectedPaymentRptId } from "../store/actions";
 import { PaymentData, UIMessage, UIMessageDetails } from "../types";
@@ -22,6 +26,58 @@ export const errorToReason = (error: Error) => error.message;
 
 export const unknownToReason = (e: unknown) =>
   pipe(e, getNetworkError, networkErrorToError, errorToReason);
+
+/**
+ * Set of failure "reason"s for Mixpanel tracking.
+ */
+export enum SendFailureReason {
+  BAD_FORMAT = "BAD_FORMAT",
+  DECODE_ERROR = "DECODE_ERROR",
+  HTTP_STATUS_ERROR = "HTTP_STATUS_ERROR",
+  MALFORMED_RESPONSE = "MALFORMED_RESPONSE",
+  NETWORK_ERROR = "NETWORK_ERROR",
+  RATE_LIMITED = "RATE_LIMITED",
+  SESSION_EXPIRED = "SESSION_EXPIRED",
+  TIMEOUT = "TIMEOUT",
+  UNKNOWN = "UNKNOWN"
+}
+
+/**
+ * Common helper to resolve an HTTP status or caught exception into a `SendFailureReason`.
+ */
+export type DecodableSendFailure =
+  | { error: unknown; kind: "caught" }
+  | { kind: "http_status"; status: number };
+
+export const decodeSendFailureReason = (
+  failure: DecodableSendFailure
+): SendFailureReason => {
+  switch (failure.kind) {
+    case "caught": {
+      const networkError = getNetworkError(failure.error);
+      return isTimeoutError(networkError)
+        ? SendFailureReason.TIMEOUT
+        : SendFailureReason.NETWORK_ERROR;
+    }
+    case "http_status":
+      if (failure.status === 429) {
+        return SendFailureReason.RATE_LIMITED;
+      }
+      if (failure.status === 415) {
+        return SendFailureReason.BAD_FORMAT;
+      }
+      return SendFailureReason.HTTP_STATUS_ERROR;
+  }
+};
+
+export class WrappedSendError extends Error {
+  constructor(
+    public readonly reason: SendFailureReason,
+    message: string
+  ) {
+    super(message);
+  }
+}
 
 export const getRptIdStringFromPaymentData = (
   paymentData: PaymentData
