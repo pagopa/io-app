@@ -48,6 +48,7 @@
     "@gorhom/bottom-sheet": "^5.2.8",
     "@io-app/api-types": "workspace:*",
     "@io-app/design-system": "workspace:@pagopa/io-app-design-system@*",
+    "@io-app/expo-app-review": "workspace:*",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-cie": "1.3.6",
     "@pagopa/io-react-native-cieid": "0.5.2",

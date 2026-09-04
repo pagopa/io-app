@@ -1,0 +1,16 @@
+{
+    "platforms": [
+        "apple",
+        "android"
+    ],
+    "apple": {
+        "modules": [
+            "ExpoAppReviewModule"
+        ]
+    },
+    "android": {
+        "modules": [
+            "expo.modules.appreview.ExpoAppReviewModule"
+        ]
+    }
+}

@@ -38,6 +38,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - ExpoAppReview (1.0.0):
+    - ExpoModulesCore
   - ExpoAsset (55.0.17):
     - ExpoModulesCore
   - ExpoBackgroundTask (55.0.18):
@@ -3893,6 +3895,7 @@ DEPENDENCIES:
   - EXApplication (from `../../../node_modules/expo-application/ios`)
   - EXConstants (from `../../../node_modules/expo-constants/ios`)
   - Expo (from `../../../node_modules/expo`)
+  - ExpoAppReview (from `../../../libs/expo-app-review/ios`)
   - ExpoAsset (from `../../../node_modules/expo-asset/ios`)
   - ExpoBackgroundTask (from `../../../node_modules/expo-background-task/ios`)
   - ExpoBrightness (from `../../../node_modules/expo-brightness/ios`)
@@ -4078,6 +4081,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-constants/ios"
   Expo:
     :path: "../../../node_modules/expo"
+  ExpoAppReview:
+    :path: "../../../libs/expo-app-review/ios"
   ExpoAsset:
     :path: "../../../node_modules/expo-asset/ios"
   ExpoBackgroundTask:
@@ -4376,6 +4381,7 @@ SPEC CHECKSUMS:
   EXApplication: 82a44fa8236bb644a805ee21e64054eeb01d22ea
   EXConstants: dadbeba983acc30f855a919658a2b34fbd86615d
   Expo: fb8cded217862a2c6fc046a6cc68aa83a2ed15f0
+  ExpoAppReview: 4e95ce92dcdc2f299137831d8d5d6f48c8810072
   ExpoAsset: 7721c5c4ae2a7c3c8147a046727ac6c020b05648
   ExpoBackgroundTask: 2c988fa88705c72b07f0e60d5661d566df611980
   ExpoBrightness: 6080760e05eb3dcd9765024472d4c78a50f3b201
