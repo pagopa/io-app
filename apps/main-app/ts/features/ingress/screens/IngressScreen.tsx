@@ -16,6 +16,7 @@ import { IOVersionInfo } from "../../../common/versionInfo/types/IOVersionInfo";
 import { LoadingScreenContent } from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
+import { startApplicationInitialization } from "../../../store/actions/application";
 import { startupLoadSuccess } from "../../../store/actions/startup";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus/remoteConfig";
@@ -40,9 +41,16 @@ import {
   trackIngressTimeout,
   trackSettingsDiscoverBannerVisualized
 } from "../analytics";
-import { setIsBlockingScreen, setOfflineAccessReason } from "../store/actions";
+import {
+  resetIsBlockingScreen,
+  setIsBlockingScreen,
+  setOfflineAccessReason
+} from "../store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
-import { checkSessionErrorSelector } from "../store/selectors";
+import {
+  checkSessionErrorSelector,
+  isBlockingScreenSelector
+} from "../store/selectors";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
@@ -87,6 +95,8 @@ export const IngressScreen = () => {
   const isOfflineAccessAvailable = useIOSelector(
     itwOfflineAccessAvailableSelector
   );
+  const isBlockingScreenFlag = useIOSelector(isBlockingScreenSelector);
+  const wasOfflineRef = useRef(false);
 
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
@@ -181,6 +191,30 @@ export const IngressScreen = () => {
     isOfflineAccessAvailable,
     navigateOnOfflineMiniApp
   ]);
+
+  // Recover from a stale `isBlockingScreen` flag: it may have been set while
+  // the device was offline (see `IngressScreenNoInternetConnection`), which
+  // would otherwise cause `initializeApplicationSaga` to bail out silently
+  // forever, even after connectivity is restored. Once we detect the
+  // offline -> online transition, clear the flag and restart the bootstrap
+  // flow so the saga can retry with a clean state.
+  useEffect(() => {
+    if (!isConnected) {
+      wasOfflineRef.current = true;
+      return;
+    }
+
+    if (isConnected && wasOfflineRef.current) {
+      wasOfflineRef.current = false;
+      if (isBlockingScreenFlag) {
+        dispatch(resetIsBlockingScreen());
+        dispatch(startApplicationInitialization());
+        setShowBlockingScreen(false);
+        setShowBanner(false);
+        setContent({ title: I18n.t("startup.title") });
+      }
+    }
+  }, [dispatch, isConnected, isBlockingScreenFlag]);
 
   if (isConnected === false && !isOfflineAccessAvailable) {
     return <IngressScreenNoInternetConnection />;
