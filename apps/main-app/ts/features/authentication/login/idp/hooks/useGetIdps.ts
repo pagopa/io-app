@@ -26,14 +26,16 @@ export const useGetIdps: UseGetIdps = () => {
     const controller = new AbortController();
 
     const fetchIdpList = async () => {
+      setState({ status: "loading" });
+
       const requestPromise = fetchIdps(idpsUrl, { signal: controller.signal });
       const result = await jsonFetchToSchema(requestPromise, IdpsSchema);
 
-      if (!result.ok) {
+      if (result.isErr()) {
         setState({ status: "failure", error: result.error });
         return;
       }
-      setState({ status: "success", data: result.data });
+      setState({ status: "success", data: result.value });
     };
     void fetchIdpList();
 
