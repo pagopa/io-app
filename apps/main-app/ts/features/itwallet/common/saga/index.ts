@@ -46,7 +46,7 @@ import {
 } from "../store/actions/preferences";
 import { isItwCredential } from "../utils/itwCredentialUtils";
 import { watchItwEnvironment } from "./environment";
-import { watchItwOfflineAccess } from "./offlineAccess";
+import { watchItwOfflineSaga } from "./offlineAccess";
 
 /**
  * Watcher for ITW sagas that require internet connection and a valid session
@@ -90,8 +90,8 @@ export function* watchItwAuthenticatedSaga(): SagaIterator {
  * Watcher for ITW sagas that do not require internet connection or a valid session
  */
 export function* watchItwSaga(): SagaIterator {
-  // Handle offline access counter increment and reset
-  yield* fork(watchItwOfflineAccess);
+  // Handle offline access and check the Wallet Instance from its cached Status List.
+  yield* fork(watchItwOfflineSaga);
   // Handle environment changes
   yield* fork(watchItwEnvironment);
   // Watch for changes in the credentials store to keep the wallet in sync
