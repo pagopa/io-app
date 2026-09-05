@@ -1,4 +1,8 @@
-import { itwCredentialsRemoveByType } from "../../../../../credentials/store/actions";
+import {
+  itwCredentialsRemove,
+  itwCredentialsRemoveByType,
+  itwCredentialsReplaceByType
+} from "../../../../../credentials/store/actions";
 import { itwLifecycleStoresReset } from "../../../../../lifecycle/store/actions";
 import {
   itwGrantProximityConsent,
@@ -48,6 +52,30 @@ const healthCardOnlyConsent: ConsentData = {
   ]
 };
 
+const disabilityCardOnlyConsent: ConsentData = {
+  rpId: "rp-004",
+  credentials: [
+    {
+      credentialType: "EuropeanDisabilityCard",
+      claimNames: ["disabilityCardId"]
+    }
+  ]
+};
+
+const credentialRemovalRequestScenarios = [
+  {
+    action: itwCredentialsRemoveByType("MDL", {}),
+    name: "removal"
+  },
+  {
+    action: itwCredentialsReplaceByType(
+      [{ metadata: { credentialType: "MDL" } } as never],
+      {}
+    ),
+    name: "replacement"
+  }
+];
+
 describe("itwProximityReducer", () => {
   it("should return the initial state", () => {
     expect(reducer(undefined, { type: "UNKNOWN" } as never)).toEqual(
@@ -56,21 +84,26 @@ describe("itwProximityReducer", () => {
   });
 
   describe("itwGrantProximityConsent", () => {
-    it("should add a new consent", () => {
-      const state = reducer(
-        itwProximityInitialState,
-        itwGrantProximityConsent(mdlConsent)
-      );
+    it("should deterministically add a new consent", () => {
+      const action = itwGrantProximityConsent(mdlConsent);
+      const state = reducer(itwProximityInitialState, action);
+      const replayedState = reducer(itwProximityInitialState, action);
       const key = generateConsentKey(mdlConsent);
 
-      expect(state.consents[key]).toEqual(mdlConsent);
+      expect(action.payload.savedAt).toEqual(expect.any(String));
+      expect(state.consents[key]).toEqual(action.payload);
+      expect(replayedState).toEqual(state);
       expect(Object.keys(state.consents)).toHaveLength(1);
     });
 
     it("should be a no-op when the same consent already exists", () => {
       const key = generateConsentKey(mdlConsent);
+      const storedConsent = {
+        ...mdlConsent,
+        savedAt: "2026-07-19T12:00:00.000Z"
+      };
       const stateWithConsent: ItwProximityState = {
-        consents: { [key]: mdlConsent }
+        consents: { [key]: storedConsent }
       };
 
       const nextState = reducer(
@@ -79,6 +112,7 @@ describe("itwProximityReducer", () => {
       );
 
       expect(nextState).toBe(stateWithConsent);
+      expect(nextState.consents[key]).toBe(storedConsent);
     });
 
     it("should add multiple different consents", () => {
@@ -229,25 +263,54 @@ describe("itwProximityReducer", () => {
     });
   });
 
-  describe("itwCredentialsRemoveByType", () => {
-    it("should remove all consents involving the removed credential type", () => {
-      const mdlKey = generateConsentKey(mdlConsent);
-      const healthKey = generateConsentKey(healthCardOnlyConsent);
+  describe("credential removal", () => {
+    test.each(credentialRemovalRequestScenarios)(
+      "should not clear consents when the $name is requested",
+      ({ action }) => {
+        const mdlKey = generateConsentKey(mdlConsent);
+        const stateWithConsents: ItwProximityState = {
+          consents: {
+            [mdlKey]: mdlConsent
+          }
+        };
 
+        const state = reducer(stateWithConsents, action);
+
+        expect(state).toBe(stateWithConsents);
+      }
+    );
+
+    it("should clear consents only after credential removal succeeds", () => {
+      const mdlKey = generateConsentKey(mdlConsent);
+      const multiKey = generateConsentKey(multiCredentialConsent);
+      const healthKey = generateConsentKey(healthCardOnlyConsent);
+      const disabilityKey = generateConsentKey(disabilityCardOnlyConsent);
       const stateWithConsents: ItwProximityState = {
         consents: {
           [mdlKey]: mdlConsent,
-          [healthKey]: healthCardOnlyConsent
+          [multiKey]: multiCredentialConsent,
+          [healthKey]: healthCardOnlyConsent,
+          [disabilityKey]: disabilityCardOnlyConsent
         }
       };
 
       const state = reducer(
         stateWithConsents,
-        itwCredentialsRemoveByType("MDL", {})
+        itwCredentialsRemove([
+          { credentialType: "MDL" } as never,
+          { credentialType: "EuropeanHealthInsuranceCard" } as never
+        ])
       );
 
-      expect(Object.keys(state.consents)).toHaveLength(1);
-      expect(state.consents[healthKey]).toEqual(healthCardOnlyConsent);
+      expect(state.consents).toEqual({
+        [disabilityKey]: disabilityCardOnlyConsent
+      });
+    });
+
+    it("should be a no-op when no credential is removed", () => {
+      const state = reducer(itwProximityInitialState, itwCredentialsRemove([]));
+
+      expect(state).toBe(itwProximityInitialState);
     });
   });
 

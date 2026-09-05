@@ -4,13 +4,17 @@ import { memo, ReactNode, useMemo } from "react";
 import { View } from "react-native";
 
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
+import { getMixPanelCredential } from "../../../analytics/utils";
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
+import { trackItwCredentialManageConsent } from "../../proximity/analytics";
 import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
 
@@ -25,6 +29,7 @@ type ItwPresentationDetailFooterProps = {
 const ItwPresentationDetailsFooter = ({
   credential
 }: ItwPresentationDetailFooterProps) => {
+  const navigation = useIONavigation();
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const startAndTrackSupportRequest = useOfflineToastGuard(
     useItwStartCredentialSupportRequest(credential)
@@ -47,6 +52,29 @@ const ItwPresentationDetailsFooter = ({
   return (
     <View>
       {credentialActions}
+      <ListItemAction
+        accessibilityLabel={I18n.t(
+          "features.itWallet.presentation.proximity.consentManagement.cta"
+        )}
+        icon="key"
+        label={I18n.t(
+          "features.itWallet.presentation.proximity.consentManagement.cta"
+        )}
+        onPress={() => {
+          trackItwCredentialManageConsent({
+            credential: getMixPanelCredential(
+              credential.credentialType,
+              isItwL3
+            )
+          });
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
+            params: { credentialType: credential.credentialType }
+          });
+        }}
+        testID="manageConsentsActionTestID"
+        variant="primary"
+      />
       {!isItwL3 && (
         <ListItemAction
           accessibilityLabel={I18n.t(

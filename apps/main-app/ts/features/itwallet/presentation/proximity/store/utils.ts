@@ -1,14 +1,14 @@
 import sha from "sha.js";
 
 import { ProximityDetails } from "../utils/types";
-import { ConsentData } from "./types";
+import { ConsentData, ConsentIdentityData } from "./types";
 
 /**
  * Returns the canonical payload used to identify a proximity consent.
  * Credentials and claims are sorted to keep the key deterministic regardless
  * of input ordering.
  */
-const getCanonicalConsentPayload = (consent: ConsentData): string => {
+const getCanonicalConsentPayload = (consent: ConsentIdentityData): string => {
   const sortedCredentials = [...consent.credentials]
     .sort((a, b) => a.credentialType.localeCompare(b.credentialType))
     .map(
@@ -30,7 +30,7 @@ const getCanonicalConsentPayload = (consent: ConsentData): string => {
  * Consent details remain available in the stored value, keeping persisted keys
  * opaque while preserving exact lookup semantics.
  */
-export const generateConsentKey = (consent: ConsentData): string =>
+export const generateConsentKey = (consent: ConsentIdentityData): string =>
   sha("sha256").update(getCanonicalConsentPayload(consent)).digest("hex");
 
 /**
@@ -45,6 +45,7 @@ export const getConsentDataFromProximityDetails = (
   proximityDetails: ProximityDetails
 ): ConsentData => ({
   rpId: proximityDetails[0].rpId,
+  rpDisplayName: proximityDetails[0].rpDisplayName,
   credentials: proximityDetails.map(detail => ({
     credentialType: detail.credentialType,
     claimNames: detail.claimsToDisplay.map(claim => claim.id)

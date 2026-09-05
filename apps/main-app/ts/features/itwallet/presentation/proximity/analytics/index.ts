@@ -1,5 +1,6 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
+import { MixPanelCredential } from "../../../analytics/utils/types";
 import {
   ITW_PROXIMITY_ACTIONS_EVENTS,
   ITW_PROXIMITY_ERRORS_EVENTS,
@@ -14,6 +15,7 @@ import {
   ItwProximityMandatoryCredentialMissing,
   ItwProximityQrCode,
   ItwProximityShowQrCode,
+  ItwRevokeConsentUserAction,
   ItwStartReissuingPID
 } from "./types";
 
@@ -50,6 +52,34 @@ export const trackItwProximityBluetoothActivation = () => {
 export const trackItwProximityBluetoothNotActivated = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_BLUETOOTH_NOT_ACTIVATED,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
+/** Tracks the consent-management list screen for a credential. */
+export const trackItwConsentManagement = ({
+  credential
+}: {
+  credential: MixPanelCredential;
+}) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_CONSENT_MANAGEMENT,
+    buildEventProperties("UX", "screen_view", { credential })
+  );
+};
+
+/** Tracks the saved-consent detail screen. */
+export const trackItwConsentManagementDetail = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_CONSENT_MANAGEMENT_DETAIL,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
+/** Tracks the revoke-confirmation alert impression. */
+export const trackItwRevokeConsentOperationBlock = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_REVOKE_CONSENT_OPERATION_BLOCK,
     buildEventProperties("UX", "screen_view")
   );
 };
@@ -119,6 +149,36 @@ export const trackItwProximityShowQrCode = ({
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_SHOW_QR_CODE,
     buildEventProperties("UX", "action", { credential, position })
+  );
+};
+
+/** Tracks access to consent management from credential details. */
+export const trackItwCredentialManageConsent = ({
+  credential
+}: {
+  credential: MixPanelCredential;
+}) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_CREDENTIAL_MANAGE_CONSENT,
+    buildEventProperties("UX", "action", { credential })
+  );
+};
+
+/** Tracks the request to revoke a saved consent. */
+export const trackItwRevokeConsent = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_REVOKE_CONSENT,
+    buildEventProperties("UX", "action")
+  );
+};
+
+/** Tracks the action selected in the revoke-confirmation alert. */
+export const trackItwRevokeConsentOperationBlockAction = (
+  user_action: ItwRevokeConsentUserAction
+) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_REVOKE_CONSENT_OPERATION_BLOCK_ACTION,
+    buildEventProperties("UX", "action", { user_action })
   );
 };
 

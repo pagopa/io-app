@@ -22,6 +22,7 @@ import { ITW_ROUTES } from "../../../../navigation/routes.ts";
 import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter.tsx";
 
 const mockTrackItwCredentialDelete = jest.fn();
+const mockTrackItwCredentialManageConsent = jest.fn();
 const mockToastError = jest.fn();
 const mockToastInfo = jest.fn();
 const mockToastSuccess = jest.fn();
@@ -41,6 +42,12 @@ jest.mock("../../analytics", () => ({
   ...jest.requireActual("../../analytics"),
   trackItwCredentialDelete: (credential: unknown, properties: unknown) =>
     mockTrackItwCredentialDelete(credential, properties)
+}));
+
+jest.mock("../../../proximity/analytics", () => ({
+  ...jest.requireActual("../../../proximity/analytics"),
+  trackItwCredentialManageConsent: (properties: unknown) =>
+    mockTrackItwCredentialManageConsent(properties)
 }));
 
 describe("ItwPresentationDetailsFooter", () => {
@@ -66,6 +73,17 @@ describe("ItwPresentationDetailsFooter", () => {
     expect(queryByTestId("requestAssistanceActionTestID")).not.toBeNull();
     expect(queryByTestId("removeCredentialActionTestID")).not.toBeNull();
     expect(queryByTestId("openIPatenteActionTestID")).toBeNull();
+    expect(queryByTestId("manageConsentsActionTestID")).not.toBeNull();
+  });
+
+  it("renders and tracks consent management without saved consents", () => {
+    const { getByTestId } = renderComponent(CredentialType.DRIVING_LICENSE);
+
+    fireEvent.press(getByTestId("manageConsentsActionTestID"));
+
+    expect(mockTrackItwCredentialManageConsent).toHaveBeenCalledWith({
+      credential: "ITW_PG_V2"
+    });
   });
 
   it("should render iPatente action", () => {
