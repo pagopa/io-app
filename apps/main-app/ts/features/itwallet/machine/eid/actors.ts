@@ -47,7 +47,7 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import {
   getCredentialStatusFromStatusList,
-  getKeysForWuaStatusList
+  getKeysForStatusListToken
 } from "../../statusList/utils";
 import { StatusListRepository } from "../../statusList/utils/repository";
 import {
@@ -449,8 +449,10 @@ export const createEidIssuanceActorsImplementation = (
       walletUnitAttestations
     )[0];
 
-    // Fetch the JWKS from the Wallet Provider's OpenID Federation metadata,
-    const keys = await getKeysForWuaStatusList(walletUnitAttestation);
+    const keys = await getKeysForStatusListToken(
+      walletUnitAttestation,
+      env.X509_CERT_ROOT
+    );
 
     return await getCredentialStatusFromStatusList(
       itwVersion,

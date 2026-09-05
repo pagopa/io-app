@@ -1,7 +1,11 @@
 import { SagaIterator } from "redux-saga";
 import { call, fork, select } from "typed-redux-saga/macro";
 
-import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
+import {
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../common/store/selectors/environment";
+import { getEnv } from "../../common/utils/environment";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { registerStatusListProperties } from "../analytics";
 import { refreshStaleEntries } from "../utils/refresh";
@@ -25,10 +29,15 @@ export function* watchItwStatusListSaga(): SagaIterator {
     return;
   }
 
+  const env = getEnv(yield* select(selectItwEnv));
+
   // Run startup coherence for the Status List Token cache
   yield* call(checkStatusListCoherenceSaga);
   // Check for stale Status List Tokens and refresh them in the background
-  yield* call(refreshStaleEntries, { itwVersion });
+  yield* call(refreshStaleEntries, {
+    itwVersion,
+    x509CertRoot: env.X509_CERT_ROOT
+  });
   // Update the validity of credentials whose status list is available in the cache
   yield* call(updateCredentialsStatusSaga, { itwVersion });
   // Register Status List super properties

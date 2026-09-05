@@ -1,11 +1,62 @@
+import {
+  verifyCertificateChain,
+  X509CertificateOptions
+} from "@pagopa/io-react-native-crypto";
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { CredentialIssuance, ItwVersion } from "@pagopa/io-react-native-wallet";
+import { getJwkFromCertificateChain } from "@pagopa/io-react-native-wallet/src/utils/crypto";
 
 import { assert } from "../../../../utils/assert";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import { InvalidTslCredentialStatus } from "./errors";
-import { WalletProviderMetadataSchema } from "./schemas";
+import { StatusListX5cSchema } from "./schemas";
+
+const X509_VALIDATION_OPTIONS: X509CertificateOptions = {
+  connectTimeout: 10_000,
+  readTimeout: 10_000,
+  requireCrl: false
+};
+
+/**
+ * Validates a Status List Token certificate chain, then extracts the public
+ * key from the validated leaf certificate.
+ *
+ * @param statusListToken Encoded Status List Token
+ * @param x509CertRoot Configured X.509 trust anchor
+ * @returns Signing key used to verify the Status List Token
+ */
+export const getKeysForStatusListToken = async (
+  statusListToken: string,
+  x509CertRoot: string
+): Promise<IssuerConfiguration["keys"]> => {
+  assert(x509CertRoot.length > 0, "Status List trust anchor is missing");
+
+  const { protectedHeader } = decodeJwt(statusListToken);
+  const x5c = StatusListX5cSchema.parse(protectedHeader.x5c);
+  assert(protectedHeader.kid, "Status List Token kid is missing");
+  const certificateChain =
+    x5c.length > 1 && x5c.at(-1) === x509CertRoot ? x5c.slice(0, -1) : x5c;
+  const validationResult = await verifyCertificateChain(
+    certificateChain,
+    x509CertRoot,
+    X509_VALIDATION_OPTIONS
+  );
+
+  assert(
+    validationResult.isValid,
+    `Status List certificate chain validation failed: ${validationResult.validationStatus} - ${validationResult.errorMessage}`
+  );
+
+  const publicKey = await getJwkFromCertificateChain(x5c);
+
+  return [
+    {
+      ...publicKey,
+      kid: protectedHeader.kid
+    } as IssuerConfiguration["keys"][number]
+  ];
+};
 
 /**
  * Function to get the credential status from its token status list (TSL). The list is fetched from the `uri` extracted from
@@ -40,6 +91,8 @@ export const getCredentialStatusFromStatusList = async (
     keys,
     statusList
   );
+  assert(parsed.sub === uri, `Status List Token sub does not match URI ${uri}`);
+
   const { status, rawStatus } = ioWallet.CredentialStatus.statusList.getStatus(
     parsed.status_list,
     idx
@@ -61,26 +114,4 @@ export const getCredentialStatusFromStatusList = async (
     statusList,
     uri
   };
-};
-
-/**
- * Fetches the JWKS from the Wallet Provider's OpenID Federation metadata,
- * which is used to verify the Status List Token.
- * @param walletUnitAttestation Encoded Wallet Unit Attestation
- * @returns The JWKS keys from the Wallet Provider
- */
-export const getKeysForWuaStatusList = async (
-  walletUnitAttestation: string
-) => {
-  const decoded = decodeJwt(walletUnitAttestation);
-
-  const { payload } = await fetch(
-    `${decoded.payload.iss}/.well-known/openid-federation`
-  )
-    .then(res => res.text())
-    .then(decodeJwt);
-
-  const walletProviderJwt = WalletProviderMetadataSchema.parse(payload);
-
-  return walletProviderJwt.metadata.wallet_solution.jwks.keys;
 };
