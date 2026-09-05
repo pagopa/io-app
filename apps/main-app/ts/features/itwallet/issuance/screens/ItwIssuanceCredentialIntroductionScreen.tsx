@@ -22,6 +22,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { itwCredentialIntroContentSelector } from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
@@ -29,6 +30,8 @@ import {
   selectCredentialTypeOption,
   selectIsLoading
 } from "../../machine/credential/selectors";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { selectCredentialType as selectEidCredentialType } from "../../machine/eid/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import {
   trackItwCredentialIntro,
@@ -52,12 +55,31 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
   const { credentialType, mode } = props.route.params ?? {};
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
 
+  // The issuance was triggered by a credential request that required the wallet
+  // activation first: in this case going back interrupts the whole operation,
+  // so the user must confirm the dismissal.
+  const isWalletActivationFlow =
+    ItwEidIssuanceMachineContext.useSelector(selectEidCredentialType) !==
+    undefined;
+
+  const dismissalDialog = useItwDismissalDialog({
+    customLabels: {
+      body: I18n.t(
+        "features.itWallet.issuance.credentialIntroduction.dismissalDialog.body"
+      )
+    },
+    enabled: isWalletActivationFlow,
+    handleDismiss: () => eidMachineRef.send({ type: "go-to-wallet" })
+  });
+
   useHeaderSecondLevel({
-    title: ""
+    title: "",
+    goBack: isWalletActivationFlow ? dismissalDialog.show : undefined
   });
 
   // Send the requested credential type to the machine when the issuance flow
