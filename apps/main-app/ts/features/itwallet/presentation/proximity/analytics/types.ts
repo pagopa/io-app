@@ -36,10 +36,6 @@ export type ItwProximityShowQrCode = {
     | "WALLET_HOME";
 };
 
-export type ItwQRCodeLoadingFailure = {
-  reason: string;
-};
-
 export type ItwStartReissuingPID = {
   position:
     | "ITW_CREDENTIAL_DETAIL"

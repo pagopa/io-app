@@ -2,14 +2,14 @@ import { HSpacer, IOButton, VSpacer } from "@io-app/design-system";
 import { Fragment } from "react";
 import { View } from "react-native";
 
-export type Suggestion = {
-  content: string;
-  label: string;
-};
-
 type Props = {
   setContent: (content: string) => void;
   suggestions: Array<[Suggestion, Suggestion]>;
+};
+
+type Suggestion = {
+  content: string;
+  label: string;
 };
 
 const IOMarkdownSuggestions = ({ suggestions, setContent }: Props) => (
