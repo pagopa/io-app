@@ -1,30 +1,5 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-import { Pot } from "@pagopa/ts-commons/lib/pot";
+// eslint-disable-next-line no-restricted-imports
 import { Effect } from "redux-saga/effects";
-import { PayloadAC, PayloadMetaAC } from "typesafe-actions/dist/type-helpers";
-
-/**
- * Ensure that the types T extends any[] are mutually exclusive
- */
-export type OneOf<T extends Array<any>> = _OneOf<Tuplize<T>>;
-
-/**
- * Extracts the type of the payload of a typesafe action
- */
-export type PayloadForAction<A> =
-  A extends PayloadAC<any, infer P>
-    ? P
-    : A extends PayloadMetaAC<any, infer P1, any>
-      ? P1
-      : A;
-
-/**
- * Converts the types of a success and failure actions to a Pot type
- */
-export type PotFromActions<S, F> = Pot<
-  PayloadForAction<S>,
-  PayloadForAction<F>
->;
 
 /**
  * This is a wrapper type for `Effect` used in the
@@ -34,11 +9,6 @@ export type PotFromActions<S, F> = Pot<
  * provided by `typed-redux-saga`.
  */
 export type ReduxSagaEffect = Effect;
-
-/**
- * Ensure that all the keys of type T are required, transforming all optional field of kind T | undefined to T
- */
-export type RequiredAll<T> = { [K in keyof T]-?: T[K] };
 
 export type SagaCallReturnType<
   T extends (...args: Array<any>) => any,
@@ -60,19 +30,6 @@ export type SagaCallReturnType<
 export type XOR<T, U> = T | U extends object
   ? (T & Without<U, T>) | (U & Without<T, U>)
   : T | U;
-
-type _OneOf<T extends {}> = Values<{
-  [K in keyof T]: T[K] & {
-    [M in Values<{ [L in keyof Omit<T, K>]: keyof T[L] }>]?: undefined;
-  };
-}>;
-
-type Tuplize<T extends Array<any>> = Pick<
-  T,
-  Exclude<keyof T, Extract<keyof Array<any>, string> | number>
->;
-
-type Values<T extends {}> = T[keyof T];
 
 /**
  * Return a type that prohibits the use of keys that are present only in T but not in U

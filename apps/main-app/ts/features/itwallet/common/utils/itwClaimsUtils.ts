@@ -93,7 +93,7 @@ export type DisclosureClaim = {
 /**
  * Flat claim that contains a primitive value or an array of primitives
  */
-export type FlatClaimDisplayFormat = {
+type FlatClaimDisplayFormat = {
   id: string;
   label: string;
   value: unknown;
@@ -102,7 +102,7 @@ export type FlatClaimDisplayFormat = {
 /**
  * Nested claim that contains an array of objects (ParsedCredential)
  */
-export type NestedArrayClaimDisplayFormat = {
+type NestedArrayClaimDisplayFormat = {
   id: string;
   label: string;
   value: Array<ParsedCredential>;

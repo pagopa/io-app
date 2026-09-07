@@ -47,9 +47,9 @@ import {
 import {
   getIdpLoginUri,
   getIntentFallbackUrl,
-  onLoginUriChanged
-} from "../../../common/utils/login";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
+  onLoginUriChanged,
+  originSchemasWhiteList
+} from "../../../common/utils";
 import { usePosteIDApp2AppEducational } from "../hooks/usePosteIDApp2AppEducational";
 import { setSpidLoginRequestState } from "../store/actions";
 import { spidLoginRequestInfoSelector } from "../store/selectors";
