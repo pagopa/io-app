@@ -40,7 +40,7 @@ import {
   isActiveSessionLoginSelector,
   remoteApiLoginUrlPrefixSelector
 } from "../../../activeSessionLogin/store/selectors";
-import { getIdpLoginUri } from "../../../common/utils/login";
+import { getIdpLoginUri } from "../../../common/utils";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";

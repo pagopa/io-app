@@ -60,7 +60,7 @@ import {
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginSuccess } from "../../../common/store/actions";
-import { getIdpLoginUri } from "../../../common/utils/login";
+import { getIdpLoginUri } from "../../../common/utils";
 import {
   CieEntityIds,
   CieRequestAuthenticationOverlay
