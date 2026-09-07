@@ -85,9 +85,7 @@ export const loadContextActor = fromPromise<
   const pidMetadata = itwCredentialsEidSelector(state);
   assert(pidMetadata, "PID credential is not present in the store");
 
-  const pid = await CredentialsVault.get(
-    getRepresentativeVaultId(pidMetadata)
-  );
+  const pid = await CredentialsVault.get(getRepresentativeVaultId(pidMetadata));
   assert(pid, "PID credential not found in secure storage");
 
   return {
@@ -178,15 +176,12 @@ export const upgradeCredentialActor = fromPromise<
   }
 
   const authorizedCredentials =
-    await credentialIssuanceUtils.generateKeysWithKeyAttestation(
-      accessToken,
-      {
-        env,
-        itwVersion,
-        hardwareKeyTag: integrityKeyTag,
-        sessionToken
-      }
-    );
+    await credentialIssuanceUtils.generateKeysWithKeyAttestation(accessToken, {
+      env,
+      itwVersion,
+      hardwareKeyTag: integrityKeyTag,
+      sessionToken
+    });
 
   const credentials = await credentialIssuanceUtils.obtainCredential({
     env,

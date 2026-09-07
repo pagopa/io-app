@@ -451,8 +451,7 @@ export const obtainStatusListActor = fromPromise<
 
   // For the Status List we'll need just one of the KAs, as they all
   // reference the same Status List. We can take the first one.
-  const [keyAttestationId, keyAttestation] =
-    Object.entries(keyAttestations)[0];
+  const [keyAttestationId, keyAttestation] = Object.entries(keyAttestations)[0];
 
   // Fetch the JWKS from the Wallet Provider's OpenID Federation metadata,
   const keys = await getKeysForKaStatusList(keyAttestation);
