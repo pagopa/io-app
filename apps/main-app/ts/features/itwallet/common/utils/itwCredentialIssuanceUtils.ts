@@ -617,7 +617,7 @@ export const generateKeysWithKeyAttestation: GenerateKeysWithKeyAttestation =
     );
   };
 
-export type AuthorizedBatchCredentialMetadata = {
+type AuthorizedBatchCredentialMetadata = {
   authDetails: CredentialAccessToken["authorization_details"][number];
   keyAttestation?: string;
   keyAttestationId?: string;
