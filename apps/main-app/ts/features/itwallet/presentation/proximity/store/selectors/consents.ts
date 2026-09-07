@@ -56,7 +56,7 @@ export const itwProximityConsentsEntriesByCredentialTypeSelector = (
 export const itwProximityConsentByKeySelector = (consentKey: string) =>
   createSelector(
     itwProximityConsentsRecordSelector,
-    consents => consents[consentKey]
+    (consents): StoredConsentData | undefined => consents[consentKey]
   );
 
 /**

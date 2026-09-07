@@ -60,6 +60,7 @@ import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/det
 import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
 import { ItwConsentManagementDetailScreen } from "../presentation/proximity/screens/ItwConsentManagementDetailScreen.tsx";
 import { ItwConsentManagementScreen } from "../presentation/proximity/screens/ItwConsentManagementScreen.tsx";
+import { ItwConsentRevocationSuccessScreen } from "../presentation/proximity/screens/ItwConsentRevocationSuccessScreen";
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
@@ -282,6 +283,11 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         component={ItwConsentManagementDetailScreen}
         name={ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT_DETAIL}
+      />
+      <Stack.Screen
+        component={ItwConsentRevocationSuccessScreen}
+        name={ITW_ROUTES.PRESENTATION.CONSENT_REVOCATION_SUCCESS}
+        options={hiddenHeader}
       />
       <Stack.Screen
         component={ItwPresentationCredentialDetailScreen}

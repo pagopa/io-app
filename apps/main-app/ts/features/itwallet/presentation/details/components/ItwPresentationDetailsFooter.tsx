@@ -15,6 +15,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
 import { trackItwCredentialManageConsent } from "../../proximity/analytics";
+import { itwProximityConsentsByCredentialTypeSelector } from "../../proximity/store/selectors/consents";
 import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
 
@@ -31,6 +32,12 @@ const ItwPresentationDetailsFooter = ({
 }: ItwPresentationDetailFooterProps) => {
   const navigation = useIONavigation();
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const consentsSelector = useMemo(
+    () =>
+      itwProximityConsentsByCredentialTypeSelector(credential.credentialType),
+    [credential.credentialType]
+  );
+  const consents = useIOSelector(consentsSelector);
   const startAndTrackSupportRequest = useOfflineToastGuard(
     useItwStartCredentialSupportRequest(credential)
   );
@@ -52,29 +59,31 @@ const ItwPresentationDetailsFooter = ({
   return (
     <View>
       {credentialActions}
-      <ListItemAction
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.proximity.consentManagement.cta"
-        )}
-        icon="key"
-        label={I18n.t(
-          "features.itWallet.presentation.proximity.consentManagement.cta"
-        )}
-        onPress={() => {
-          trackItwCredentialManageConsent({
-            credential: getMixPanelCredential(
-              credential.credentialType,
-              isItwL3
-            )
-          });
-          navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
-            params: { credentialType: credential.credentialType }
-          });
-        }}
-        testID="manageConsentsActionTestID"
-        variant="primary"
-      />
+      {consents.length > 0 && (
+        <ListItemAction
+          accessibilityLabel={I18n.t(
+            "features.itWallet.presentation.proximity.consentManagement.cta"
+          )}
+          icon="key"
+          label={I18n.t(
+            "features.itWallet.presentation.proximity.consentManagement.cta"
+          )}
+          onPress={() => {
+            trackItwCredentialManageConsent({
+              credential: getMixPanelCredential(
+                credential.credentialType,
+                isItwL3
+              )
+            });
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
+              params: { credentialType: credential.credentialType }
+            });
+          }}
+          testID="manageConsentsActionTestID"
+          variant="primary"
+        />
+      )}
       {!isItwL3 && (
         <ListItemAction
           accessibilityLabel={I18n.t(

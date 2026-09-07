@@ -1,4 +1,4 @@
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
@@ -13,11 +13,15 @@ import { StoredConsentData } from "../../store/types";
 import { ItwConsentManagementDetailScreen } from "../ItwConsentManagementDetailScreen";
 
 const mockGoBack = jest.fn();
+const mockNavigationDispatch = jest.fn();
 const mockToastSuccess = jest.fn();
 
 jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
   ...jest.requireActual("../../../../../../navigation/params/AppParamsList"),
-  useIONavigation: () => ({ goBack: mockGoBack })
+  useIONavigation: () => ({
+    goBack: mockGoBack,
+    dispatch: mockNavigationDispatch
+  })
 }));
 
 jest.mock("@io-app/design-system", () => ({
@@ -51,8 +55,11 @@ describe("ItwConsentManagementDetailScreen", () => {
       .mockImplementation(jest.fn());
   });
 
-  it("revokes the selected consent and returns to the management list", () => {
-    const { component, store } = renderComponent(consent);
+  it("revokes the selected consent and returns once to the management list when consents remain", async () => {
+    const { component, store } = renderComponent({
+      [consentKey]: consent,
+      remaining: { ...consent, rpId: "another-rp" }
+    });
 
     fireEvent.press(component.getByTestId("revoke-consent-action"));
 
@@ -63,7 +70,7 @@ describe("ItwConsentManagementDetailScreen", () => {
     expect(Alert.alert).toHaveBeenCalledTimes(1);
 
     const alertButtons = (Alert.alert as jest.Mock).mock.calls[0][2];
-    alertButtons[0].onPress();
+    await act(() => alertButtons[0].onPress());
 
     expect(
       store.getState().features.itWallet.proximity.consents[consentKey]
@@ -76,11 +83,55 @@ describe("ItwConsentManagementDetailScreen", () => {
         "features.itWallet.presentation.proximity.consentManagement.toast.done"
       )
     );
-    expect(mockGoBack).toHaveBeenCalled();
+    expect(mockGoBack).toHaveBeenCalledTimes(1);
+    expect(mockNavigationDispatch).not.toHaveBeenCalled();
   });
 
+  it.each<{ name: string; otherConsents: Record<string, StoredConsentData> }>([
+    { name: "no other consents", otherConsents: {} },
+    {
+      name: "only consents for another document",
+      otherConsents: {
+        unrelated: {
+          ...consent,
+          credentials: [
+            {
+              claimNames: ["given_name"],
+              credentialType: "EuropeanDisabilityCard"
+            }
+          ]
+        }
+      }
+    }
+  ])(
+    "opens the success screen when revoking the last document consent with $name",
+    async ({ otherConsents }) => {
+      const { component, store } = renderComponent({
+        ...otherConsents,
+        [consentKey]: consent
+      });
+      fireEvent.press(component.getByTestId("revoke-consent-action"));
+      const alertButtons = (Alert.alert as jest.Mock).mock.calls[0][2];
+      await act(() => alertButtons[0].onPress());
+
+      expect(store.getState().features.itWallet.proximity.consents).toEqual(
+        otherConsents
+      );
+      expect(mockNavigationDispatch).toHaveBeenCalledTimes(1);
+      expect(mockNavigationDispatch).toHaveBeenCalledWith({
+        type: "REPLACE",
+        payload: {
+          name: ITW_ROUTES.PRESENTATION.CONSENT_REVOCATION_SUCCESS,
+          params: { credentialType: "mDL" }
+        }
+      });
+      expect(mockGoBack).not.toHaveBeenCalled();
+      expect(mockToastSuccess).not.toHaveBeenCalled();
+    }
+  );
+
   it("keeps the consent and tracks a stable identifier when the alert is dismissed", () => {
-    const { component, store } = renderComponent(consent);
+    const { component, store } = renderComponent({ [consentKey]: consent });
 
     fireEvent.press(component.getByTestId("revoke-consent-action"));
 
@@ -97,13 +148,13 @@ describe("ItwConsentManagementDetailScreen", () => {
   });
 
   it("returns safely when the consent key no longer exists", () => {
-    renderComponent(undefined);
+    renderComponent({});
 
     expect(mockGoBack).toHaveBeenCalledTimes(1);
   });
 });
 
-const renderComponent = (storedConsent: StoredConsentData | undefined) => {
+const renderComponent = (consents: Record<string, StoredConsentData>) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const state: GlobalState = {
     ...initialState,
@@ -113,7 +164,7 @@ const renderComponent = (storedConsent: StoredConsentData | undefined) => {
         ...initialState.features.itWallet,
         proximity: {
           ...initialState.features.itWallet.proximity,
-          consents: storedConsent ? { [consentKey]: storedConsent } : {}
+          consents
         }
       }
     }

@@ -2217,12 +2217,19 @@
               "revokeAction": "Revoca consenso",
               "title": "Dettaglio consenso"
             },
-            "empty": {
-              "subtitle": "Potrai salvare il tuo consenso alla trasmissione dei dati alla prossima verifica contactless.",
-              "title": "Non ci sono consensi salvati"
-            },
             "fallback": "Servizio",
             "header": "Consensi salvati",
+            "revocationSuccess": {
+              "subtitle": "Potrai salvare di nuovo il tuo consenso alla trasmissione dei dati del documento durante la prossima verifica contactless",
+              "title": "Hai revocato tutti i consensi salvati per {{credentialName}}"
+            },
+            "revokeAll": {
+              "action": "Revoca tutti i consensi",
+              "alert": {
+                "message": "Ti verrà richiesto un nuovo consenso alle prossime verifiche contactless.",
+                "title": "Vuoi revocare tutti i consensi per il documento?"
+              }
+            },
             "savedAt": "Salvato il {{date}}",
             "subtitle": "Qui puoi controllare e revocare i consensi salvati per le verifiche contactless del documento {{credentialName}}.",
             "title": "Gestisci consensi",

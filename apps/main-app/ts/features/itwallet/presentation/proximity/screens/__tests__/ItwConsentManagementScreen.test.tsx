@@ -1,5 +1,6 @@
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
+import { Alert } from "react-native";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -12,10 +13,14 @@ import { StoredConsentData } from "../../store/types";
 import { ItwConsentManagementScreen } from "../ItwConsentManagementScreen";
 
 const mockNavigate = jest.fn();
+const mockNavigationDispatch = jest.fn();
 
 jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
   ...jest.requireActual("../../../../../../navigation/params/AppParamsList"),
-  useIONavigation: () => ({ navigate: mockNavigate })
+  useIONavigation: () => ({
+    navigate: mockNavigate,
+    dispatch: mockNavigationDispatch
+  })
 }));
 
 jest.mock("../../../../common/hooks/useItwCredentialName", () => ({
@@ -33,22 +38,30 @@ const consent: StoredConsentData = {
 describe("ItwConsentManagementScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.spyOn(Alert, "alert").mockImplementation(jest.fn());
     jest
       .spyOn(analytics, "trackItwConsentManagement")
       .mockImplementation(jest.fn());
   });
 
-  it("shows the empty state when every consent has been revoked", () => {
-    const component = renderComponent({});
+  it("returns to the document without showing an empty state when no consents exist", () => {
+    const { component } = renderComponent({});
 
-    expect(component.getByTestId("consent-empty-state")).toBeTruthy();
-    expect(analytics.trackItwConsentManagement).toHaveBeenCalledWith({
-      credential: "ITW_PG_V2"
+    expect(component.queryByTestId("consent-list")).toBeNull();
+    expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+      params: { credentialType: "mDL" }
     });
+    expect(mockNavigationDispatch).not.toHaveBeenCalled();
+    expect(analytics.trackItwConsentManagement).not.toHaveBeenCalled();
   });
 
   it("opens the selected consent detail", () => {
-    const component = renderComponent({ [consentKey]: consent });
+    const { component } = renderComponent({ [consentKey]: consent });
+
+    expect(analytics.trackItwConsentManagement).toHaveBeenCalledWith({
+      credential: "ITW_PG_V2"
+    });
 
     fireEvent.press(
       component.getByLabelText(
@@ -63,6 +76,69 @@ describe("ItwConsentManagementScreen", () => {
       screen: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT_DETAIL,
       params: { consentKey, credentialType: "mDL" }
     });
+  });
+
+  it.each<{
+    documentConsents: Record<string, StoredConsentData>;
+    name: string;
+  }>([
+    { name: "one consent", documentConsents: { [consentKey]: consent } },
+    {
+      name: "multiple consents",
+      documentConsents: {
+        [consentKey]: consent,
+        second: { ...consent, rpId: "another-rp" }
+      }
+    }
+  ])(
+    "revokes all document consents and opens the success screen with $name",
+    async ({ documentConsents }) => {
+      const unrelated = {
+        ...consent,
+        credentials: [
+          {
+            credentialType: "EuropeanDisabilityCard",
+            claimNames: ["given_name"]
+          }
+        ]
+      };
+      const { component, store } = renderComponent({
+        ...documentConsents,
+        unrelated
+      });
+      fireEvent.press(component.getByTestId("revoke-all-consents-action"));
+      const alertButtons = (Alert.alert as jest.Mock).mock.calls[0][2];
+      await act(() => alertButtons[0].onPress());
+
+      expect(store.getState().features.itWallet.proximity.consents).toEqual({
+        unrelated
+      });
+      expect(mockNavigationDispatch).toHaveBeenCalledTimes(1);
+      expect(mockNavigationDispatch).toHaveBeenCalledWith({
+        type: "REPLACE",
+        payload: {
+          name: ITW_ROUTES.PRESENTATION.CONSENT_REVOCATION_SUCCESS,
+          params: { credentialType: "mDL" }
+        }
+      });
+      expect(mockNavigate).not.toHaveBeenCalled();
+    }
+  );
+
+  it("keeps all consents when the revocation is cancelled", async () => {
+    const consents = { [consentKey]: consent };
+    const { component, store } = renderComponent(consents);
+    fireEvent.press(component.getByTestId("revoke-all-consents-action"));
+    const alertButtons = (Alert.alert as jest.Mock).mock.calls[0][2];
+    const cancelButton = alertButtons.find(
+      (button: { style: string }) => button.style === "cancel"
+    );
+    await act(() => cancelButton.onPress?.());
+    expect(store.getState().features.itWallet.proximity.consents).toEqual(
+      consents
+    );
+    expect(mockNavigationDispatch).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 });
 
@@ -83,7 +159,8 @@ const renderComponent = (consents: Record<string, StoredConsentData>) => {
   };
   const routeParams = { credentialType: "mDL" };
 
-  return renderScreenWithNavigationStoreContext<GlobalState>(
+  const store = createStore(appReducer, state as any);
+  const component = renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwConsentManagementScreen
         navigation={{} as any}
@@ -96,6 +173,7 @@ const renderComponent = (consents: Record<string, StoredConsentData>) => {
     ),
     ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
     routeParams,
-    createStore(appReducer, state as any)
+    store
   );
+  return { component, store };
 };

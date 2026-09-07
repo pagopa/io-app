@@ -4,9 +4,9 @@ import {
   useIOToast,
   VStack
 } from "@io-app/design-system";
-import { useFocusEffect } from "@react-navigation/native";
+import { StackActions, useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Alert } from "react-native";
 
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -14,9 +14,14 @@ import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../../navigation/routes";
 import {
   trackItwConsentManagementDetail,
   trackItwRevokeConsent,
@@ -26,7 +31,10 @@ import {
 import { ItwConsentClaims } from "../components/ItwConsentClaims";
 import { getConsentSavedAtDescription } from "../components/ItwConsentManagementListItem";
 import { itwRevokeProximityConsentByKey } from "../store/actions";
-import { itwProximityConsentByKeySelector } from "../store/selectors/consents";
+import {
+  itwProximityConsentByKeySelector,
+  itwProximityConsentsByCredentialTypeSelector
+} from "../store/selectors/consents";
 
 export type ItwConsentManagementDetailScreenNavigationParams = {
   consentKey: string;
@@ -40,10 +48,12 @@ type Props = IOStackNavigationRouteProps<
 
 /** Shows and revokes one exact saved proximity consent. */
 export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
-  const { consentKey } = route.params;
+  const { consentKey, credentialType } = route.params;
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const store = useIOStore();
   const toast = useIOToast();
+  const isRevoking = useRef(false);
   const consentSelector = useMemo(
     () => itwProximityConsentByKeySelector(consentKey),
     [consentKey]
@@ -59,7 +69,7 @@ export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
   usePreventScreenCapture();
 
   useEffect(() => {
-    if (!consent) {
+    if (!consent && !isRevoking.current) {
       navigation.goBack();
     }
   }, [consent, navigation]);
@@ -73,15 +83,34 @@ export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
   );
 
   const revokeConsent = useCallback(() => {
+    // The explicit revocation owns navigation; the missing-consent effect is
+    // only a fallback for a consent removed outside this screen.
+    isRevoking.current = true;
     trackItwRevokeConsentOperationBlockAction("confirm");
     dispatch(itwRevokeProximityConsentByKey(consentKey));
+    const remainingConsents = itwProximityConsentsByCredentialTypeSelector(
+      credentialType
+    )(store.getState());
+
+    if (remainingConsents.length === 0) {
+      navigation.dispatch(
+        StackActions.replace(
+          ITW_ROUTES.PRESENTATION.CONSENT_REVOCATION_SUCCESS,
+          {
+            credentialType
+          }
+        )
+      );
+      return;
+    }
+
     toast.success(
       I18n.t(
         "features.itWallet.presentation.proximity.consentManagement.toast.done"
       )
     );
     navigation.goBack();
-  }, [consentKey, dispatch, navigation, toast]);
+  }, [consentKey, credentialType, dispatch, navigation, store, toast]);
 
   const showRevokeAlert = useCallback(() => {
     if (!consent) {

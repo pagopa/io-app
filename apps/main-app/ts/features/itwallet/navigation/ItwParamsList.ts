@@ -13,6 +13,7 @@ import { ItwPresentationCredentialCardModalNavigationParams } from "../presentat
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwConsentManagementDetailScreenNavigationParams } from "../presentation/proximity/screens/ItwConsentManagementDetailScreen";
 import { ItwConsentManagementScreenNavigationParams } from "../presentation/proximity/screens/ItwConsentManagementScreen";
+import { ItwConsentRevocationSuccessScreenNavigationParams } from "../presentation/proximity/screens/ItwConsentRevocationSuccessScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ITW_ROUTES } from "./routes";
 
@@ -77,6 +78,8 @@ export type ItwParamsList = ItwPlaygroundParamsList & {
     .CONSENT_MANAGEMENT]: ItwConsentManagementScreenNavigationParams;
   [ITW_ROUTES.PRESENTATION
     .CONSENT_MANAGEMENT_DETAIL]: ItwConsentManagementDetailScreenNavigationParams;
+  [ITW_ROUTES.PRESENTATION
+    .CONSENT_REVOCATION_SUCCESS]: ItwConsentRevocationSuccessScreenNavigationParams;
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_ATTACHMENT]: ItwPresentationCredentialAttachmentNavigationParams;
   [ITW_ROUTES.PRESENTATION
