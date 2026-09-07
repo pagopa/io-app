@@ -9,7 +9,7 @@ pre-commit:
       stage_fixed: true
 
     - name: lint staged files
-      run: pnpm eslint --flag v10_config_lookup_from_file --fix {staged_files}
+      run: pnpm eslint --fix {staged_files}
       glob: "*.{ts,tsx}"
       stage_fixed: true
 

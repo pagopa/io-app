@@ -1,6 +1,7 @@
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import { itwCredentialsConsumeInstance } from "../../../../credentials/store/actions";
+import { ITW_ROUTES } from "../../../../navigation/routes";
 import { createRemoteActionsImplementation } from "../actions";
 import { Context, InitialContext } from "../context";
 
@@ -114,5 +115,22 @@ describe("createRemoteActionsImplementation - consumePresentedBatchCredentials",
     } as never);
 
     expect(dispatch).not.toHaveBeenCalled();
+  });
+});
+
+describe("createRemoteActionsImplementation - navigateToIdentificationModeScreen", () => {
+  it("navigates to the eID reissuance identification mode selection screen", () => {
+    const navigate = jest.fn();
+    const actions = createRemoteActionsImplementation(
+      { navigate } as never,
+      { getState: jest.fn(), dispatch: jest.fn() } as never
+    );
+
+    actions.navigateToIdentificationModeScreen();
+
+    expect(navigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+      params: { eidReissuing: true, level: "l3" }
+    });
   });
 });

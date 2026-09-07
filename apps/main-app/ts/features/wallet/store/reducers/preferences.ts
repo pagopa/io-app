@@ -50,9 +50,9 @@ const persistConfig: PersistConfig = {
   migrate: createMigrate(migrations, { debug: isDevEnv })
 };
 
-export const walletReducerPersistor = persistReducer<
-  WalletPreferencesState,
-  Action
->(persistConfig, reducer);
+const walletReducerPersistor = persistReducer<WalletPreferencesState, Action>(
+  persistConfig,
+  reducer
+);
 
 export default walletReducerPersistor;

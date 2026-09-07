@@ -69,3 +69,6 @@ export const selectUpgradeFailedCredentials = (
 
 export const selectCredentialType = (snapshot: MachineSnapshot) =>
   snapshot.context.credentialType;
+
+export const hasCredentialsToUpgrade = (snapshot: MachineSnapshot) =>
+  snapshot.context.credentialsToUpgrade.length > 0;

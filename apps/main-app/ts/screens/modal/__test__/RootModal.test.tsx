@@ -149,12 +149,10 @@ const testRootModal = (
   );
   expect(testComponent).not.toBeNull();
 
-  const searchUpdateText = expect(
-    testComponent.queryByText(I18n.t("titleUpdateApp"))
-  );
+  const updateText = testComponent.queryByText(I18n.t("titleUpdateApp"));
   if (isSupported) {
-    searchUpdateText.toBeNull();
+    expect(updateText).toBeNull();
   } else {
-    searchUpdateText.not.toBeNull();
+    expect(updateText).not.toBeNull();
   }
 };

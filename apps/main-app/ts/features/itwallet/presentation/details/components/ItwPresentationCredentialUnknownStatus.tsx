@@ -1,7 +1,7 @@
 import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
 
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
+import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";

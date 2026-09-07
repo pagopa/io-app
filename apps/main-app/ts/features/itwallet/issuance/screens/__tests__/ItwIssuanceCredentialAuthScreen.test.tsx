@@ -14,7 +14,7 @@ jest.mock("../../../../../utils/hooks/usePreventScreenCapture", () => ({
 }));
 
 describe("ItwIssuanceCredentialTrustIssuerScreen", () => {
-  it("it should render the screen correctly", () => {
+  it("should render the screen correctly", () => {
     const component = renderComponent();
     expect(component).toBeTruthy();
   });

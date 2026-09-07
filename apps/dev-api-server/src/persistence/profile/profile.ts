@@ -4,7 +4,6 @@ import { Profile } from "@io-app/api-types/generated/definitions/identity/Profil
 import { UpdateProfile412ErrorTypesEnum } from "@io-app/api-types/generated/definitions/identity/UpdateProfile412ErrorTypes";
 import { Request } from "express";
 import * as E from "fp-ts/lib/Either";
-import * as R from "fp-ts/lib/Record";
 
 import { getProblemJson } from "../../payloads/error";
 import { getProfileInitialData } from "../../payloads/profile";
@@ -16,7 +15,7 @@ import { getAuthenticationProvider } from "../sessionInfo";
 let currentProfile: InitializedProfile = {} as InitializedProfile;
 
 export const getProfile = (): ProfileOperationsType["get"] => {
-  if (R.isEmpty(currentProfile)) {
+  if (isEmptyRecord(currentProfile)) {
     initProfile();
   }
   return {
@@ -85,7 +84,7 @@ const initProfile = () => {
 };
 
 export const setProfileEmailValidated = (value: boolean) => {
-  if (R.isEmpty(currentProfile)) {
+  if (isEmptyRecord(currentProfile)) {
     return;
   }
   currentProfile = {
@@ -96,7 +95,7 @@ export const setProfileEmailValidated = (value: boolean) => {
 };
 
 export const setProfileEmailAlreadyTaken = (value: boolean) => {
-  if (R.isEmpty(currentProfile)) {
+  if (isEmptyRecord(currentProfile)) {
     return;
   }
   currentProfile = {
@@ -180,3 +179,6 @@ const profileSuccessOperations: ProfileOperationsType = {
     payload: InitializedProfile
   }
 };
+
+const isEmptyRecord = (input: Record<string, unknown>): boolean =>
+  Object.keys(input).length === 0;

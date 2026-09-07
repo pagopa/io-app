@@ -8,7 +8,7 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwAlreadyActiveScreen } from "../ItwAlreadyActiveScreen";
 
 describe("Test ItwAlreadyActive screen", () => {
-  it("it should render the screen correctly", () => {
+  it("should render the screen correctly", () => {
     const component = renderComponent();
     expect(component).toBeTruthy();
   });

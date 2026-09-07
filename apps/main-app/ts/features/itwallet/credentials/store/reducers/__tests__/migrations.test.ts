@@ -1011,4 +1011,61 @@ describe("ITW credentials reducer migrations", () => {
 
     expect(nextState).toStrictEqual(persistedStateAt10);
   });
+
+  it("should migrate from 11 to 12 (add origin: catalogue to existing credentials)", () => {
+    const basePersistedStateAt11 = {
+      credentials: {
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard"
+        },
+        pid: {
+          credentialId: "pid",
+          credentialType: "pid"
+        }
+      },
+      legacyCredentials: {
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard"
+        }
+      },
+      _persist: {
+        version: 11,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt12 = {
+      credentials: {
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard",
+          origin: "catalogue"
+        },
+        pid: {
+          credentialId: "pid",
+          credentialType: "pid",
+          origin: "catalogue"
+        }
+      },
+      legacyCredentials: {
+        dc_sd_jwt_EuropeanDisabilityCard: {
+          credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
+          credentialType: "EuropeanDisabilityCard",
+          origin: "catalogue"
+        }
+      },
+      _persist: {
+        version: 11,
+        rehydrated: false
+      }
+    };
+
+    const from11To12Migration = itwCredentialsStateMigrations[12];
+    expect(from11To12Migration).toBeDefined();
+    const nextState = from11To12Migration(basePersistedStateAt11);
+
+    expect(nextState).toStrictEqual(persistedStateAt12);
+  });
 });

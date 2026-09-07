@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 
-import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../components/screens/LoadingScreenContent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
 const DSLoadingScreenExtendedProps = () => {

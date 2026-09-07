@@ -3,7 +3,7 @@ import I18n from "i18next";
 import { FC, useCallback, useEffect, useRef } from "react";
 import { Alert } from "react-native";
 
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";

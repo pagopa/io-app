@@ -7,9 +7,12 @@ import { registerStatusListProperties } from "../analytics";
 import { refreshStaleEntries } from "../utils/refresh";
 import { checkStatusListCoherenceSaga } from "./checkStatusListCoherenceSaga";
 import { registerStatusListFetchTaskSaga } from "./registerStatusListFetchTaskSaga";
+import { watchItwSpecsVersionStorageSaga } from "./storeItwSpecsVersionSaga";
 import { updateCredentialsStatusSaga } from "./updateCredentialsStatusSaga";
 
 export function* watchItwStatusListAuthenticatedSaga(): SagaIterator {
+  // Keep the background-task specs version synchronized with eID changes
+  yield* fork(watchItwSpecsVersionStorageSaga);
   // Register the background task for Status List fetch only for active wallet instances
   yield* fork(registerStatusListFetchTaskSaga);
 }

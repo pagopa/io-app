@@ -14,12 +14,12 @@ import {
 } from "../ItwPresentationCredentialDetailScreen";
 
 describe("ItwPresentationCredentialDetailScreen", () => {
-  it("it should render the generic error message when route params are invalid", () => {
+  it("should render the generic error message when route params are invalid", () => {
     const componentWrongParams = renderComponent({ credentialType: "invalid" });
     expect(componentWrongParams).toMatchSnapshot();
   });
 
-  it("it should render the activate wallet screen", () => {
+  it("should render the activate wallet screen", () => {
     jest
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockReturnValue(false);

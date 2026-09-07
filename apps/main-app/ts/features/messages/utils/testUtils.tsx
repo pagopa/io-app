@@ -4,9 +4,14 @@ import { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
 
+/**
+ * Renders a component wrapped in a Redux store and a navigation context whose
+ * `isFocused` is pinned to the given value, so tests can exercise focus-driven
+ * behaviour without going through a real navigator.
+ */
 export const renderComponentWithStoreAndNavigationContextForFocus = <T,>(
   component: React.ReactElement<T>,
   isFocused: boolean
@@ -23,11 +28,10 @@ export const renderComponentWithStoreAndNavigationContextForFocus = <T,>(
   };
   const Wrapper = ({ children }: PropsWithChildren<any>) => (
     <Provider store={store}>
-      <NavigationContext.Provider
-        value={{
-          ...navContext
-        }}
-      >
+      {/* The spread is load-bearing: a fresh value each render is what makes
+          `rerender` propagate to consumers, which the focus tests rely on. */}
+      {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
+      <NavigationContext.Provider value={{ ...navContext }}>
         {children}
       </NavigationContext.Provider>
     </Provider>
@@ -37,9 +41,3 @@ export const renderComponentWithStoreAndNavigationContextForFocus = <T,>(
     wrapper: Wrapper
   });
 };
-
-describe("testUtils", () => {
-  it("Empty placeholder test for messages utilities", () => {
-    expect(true).toBe(true);
-  });
-});

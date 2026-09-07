@@ -120,7 +120,6 @@ describe("itwCredentialIssuanceMachine", () => {
   const navigateToCredentialIntroductionScreen = jest.fn();
   const navigateToEidVerificationExpiredScreen = jest.fn();
   const navigateToCardOnboardingScreen = jest.fn();
-  const navigateToCredentialOfferDiscoveryScreen = jest.fn();
   const closeIssuance = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeCredential = jest.fn();
@@ -155,7 +154,6 @@ describe("itwCredentialIssuanceMachine", () => {
       navigateToWallet,
       navigateToEidVerificationExpiredScreen,
       navigateToCardOnboardingScreen,
-      navigateToCredentialOfferDiscoveryScreen,
       closeIssuance,
       storeWalletInstanceAttestation,
       storeCredential,
@@ -890,7 +888,7 @@ describe("itwCredentialIssuanceMachine", () => {
       expect(actor.getSnapshot().context.resolvedCredentialOffer).toBeDefined();
     });
 
-    it("Should navigate to discovery after resolving a credential offer when the wallet is not valid", async () => {
+    it("Should resolve a credential offer without navigating away when the wallet is not valid", async () => {
       onInit.mockImplementation(() => ({
         isWalletValid: false,
         isItWalletValid: false,
@@ -912,32 +910,11 @@ describe("itwCredentialIssuanceMachine", () => {
         snapshot.matches("CredentialOfferResolved")
       );
 
-      expect(navigateToCredentialOfferDiscoveryScreen).toHaveBeenCalledTimes(1);
-    });
-
-    it("Should not navigate to discovery after resolving a credential offer when the wallet is valid", async () => {
-      onInit.mockImplementation(() => ({
-        isWalletValid: true,
-        isItWalletValid: false,
-        walletInstanceAttestation: { jwt: T_WIA }
-      }));
-      processCredentialOffer.mockImplementation(() =>
-        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
-      );
-
-      const actor = createActor(mockedMachine);
-      actor.start();
-
-      actor.send({
-        type: "start-credential-offer",
-        itwCredentialOfferUri: T_OFFER_URI
-      });
-
-      await waitForActor(actor, snapshot =>
-        snapshot.matches("CredentialOfferResolved")
-      );
-
-      expect(navigateToCredentialOfferDiscoveryScreen).not.toHaveBeenCalled();
+      // The wallet activation prompt is rendered by the intro screen, so the
+      // machine must not drive any navigation here.
+      expect(actor.getSnapshot().context.resolvedCredentialOffer).toBeDefined();
+      expect(navigateToCredentialIntroductionScreen).not.toHaveBeenCalled();
+      expect(navigateToTrustIssuerScreen).not.toHaveBeenCalled();
     });
 
     it("Should pass the resolved credential offer to the credential request", async () => {
