@@ -1,6 +1,4 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 
 import { useIOStore } from "../../../../../store/hooks.ts";
 import { ItwSessionExpiredError } from "../../../api/client.ts";
@@ -28,15 +26,12 @@ export const createRemoteGuardsImplementation = (
     itwLifecycleIsITWalletValidSelector(store.getState()),
 
   hasValidWalletInstanceAttestation: () => {
-    const walletAttestation = itwWalletInstanceAttestationSelector(
+    const attestation = itwWalletInstanceAttestationSelector(
       store.getState()
-    );
-    return pipe(
-      O.fromNullable(walletAttestation?.jwt),
-      O.map(attestation =>
-        isWalletInstanceAttestationValid(itwVersion, attestation)
-      ),
-      O.getOrElse(() => false)
+    )?.jwt;
+    return (
+      attestation !== undefined &&
+      isWalletInstanceAttestationValid(itwVersion, attestation)
     );
   },
 

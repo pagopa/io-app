@@ -8,12 +8,12 @@ import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
 import {
   getCredentialStatusFromStatusList,
-  getKeysForWuaStatusList
+  getKeysForKaStatusList
 } from "../../../statusList/utils";
 import { StatusListRepository } from "../../../statusList/utils/repository";
 import {
-  itwStoreWalletInstanceStatusList,
-  itwWalletUnitAttestationsStore
+  itwKeyAttestationsStore,
+  itwStoreWalletInstanceStatusList
 } from "../../../walletInstance/store/actions";
 import {
   createEidIssuanceActorsImplementation,
@@ -27,7 +27,7 @@ jest.mock("../../../common/utils/itwIoWallet", () => ({
 
 jest.mock("../../../statusList/utils", () => ({
   getCredentialStatusFromStatusList: jest.fn(),
-  getKeysForWuaStatusList: jest.fn()
+  getKeysForKaStatusList: jest.fn()
 }));
 
 jest.mock("../../../statusList/utils/repository", () => ({
@@ -38,13 +38,13 @@ jest.mock("../../../statusList/utils/repository", () => ({
 
 const mockGetIoWallet = jest.mocked(getIoWallet);
 const mockGetCredentialStatus = jest.mocked(getCredentialStatusFromStatusList);
-const mockGetKeys = jest.mocked(getKeysForWuaStatusList);
+const mockGetKeys = jest.mocked(getKeysForKaStatusList);
 const mockUpsert = jest.mocked(StatusListRepository.upsert);
 
-const ITW_VERSION = "1.3.3";
-const WUA_STATUS_LIST_URI = "https://wallet-provider.example/status-list/1";
+const ITW_VERSION = "1.4.6";
+const KA_STATUS_LIST_URI = "https://wallet-provider.example/status-list/1";
 const STATUS_LIST_PAYLOAD: CredentialStatus.StatusList = {
-  sub: WUA_STATUS_LIST_URI,
+  sub: KA_STATUS_LIST_URI,
   iat: 1700000000,
   exp: 1700003600,
   status_list: { bits: 1, lst: "eNrbuRgAAhcBXQ" }
@@ -57,11 +57,11 @@ const EID = {
 };
 
 const createWallet = (
-  walletUnitAttestationSupported = true,
+  keyAttestationSupported = true,
   statusListSupported = true
 ) => ({
-  WalletUnitAttestation: {
-    isSupported: walletUnitAttestationSupported
+  KeyAttestation: {
+    isSupported: keyAttestationSupported
   },
   CredentialStatus: {
     statusList: {
@@ -114,12 +114,12 @@ describe("eID issuance actors", () => {
     jest.clearAllMocks();
   });
 
-  it("verifies the first WUA status list", async () => {
+  it("verifies the first KA status list", async () => {
     mockGetIoWallet.mockReturnValue(createWallet() as never);
     mockGetKeys.mockResolvedValue(KEYS);
     mockGetCredentialStatus.mockResolvedValue({
       idx: 0,
-      uri: WUA_STATUS_LIST_URI,
+      uri: KA_STATUS_LIST_URI,
       parsedStatusList: STATUS_LIST_PAYLOAD,
       rawStatus: "0x00",
       status: "valid",
@@ -130,24 +130,24 @@ describe("eID issuance actors", () => {
       actors.obtainStatusList,
       {
         itwVersion: ITW_VERSION,
-        walletUnitAttestations: {
-          "wua-1": "wua-1-jwt",
-          "wua-2": "wua-2-jwt"
+        keyAttestations: {
+          "ka-1": "ka-1-jwt",
+          "ka-2": "ka-2-jwt"
         }
       }
     );
 
-    expect(mockGetKeys).toHaveBeenCalledWith("wua-1-jwt");
+    expect(mockGetKeys).toHaveBeenCalledWith("ka-1-jwt");
     expect(mockGetCredentialStatus).toHaveBeenCalledWith(
       ITW_VERSION,
-      "wua-1-jwt",
-      "wua-1",
+      "ka-1-jwt",
+      "ka-1",
       "dc+sd-jwt",
       KEYS
     );
     expect(result).toEqual({
       idx: 0,
-      uri: WUA_STATUS_LIST_URI,
+      uri: KA_STATUS_LIST_URI,
       parsedStatusList: STATUS_LIST_PAYLOAD,
       rawStatus: "0x00",
       status: "valid",
@@ -155,31 +155,31 @@ describe("eID issuance actors", () => {
     });
   });
 
-  it("fails when PID WUA is missing on supported versions", async () => {
+  it("fails when PID KA is missing on supported versions", async () => {
     mockGetIoWallet.mockReturnValue(createWallet() as never);
 
     await expect(
       runActor(actors.obtainStatusList, {
         itwVersion: ITW_VERSION,
-        walletUnitAttestations: undefined
+        keyAttestations: undefined
       })
-    ).rejects.toThrow("PID Wallet Unit Attestations are not defined or empty");
+    ).rejects.toThrow("PID Key Attestations are not defined or empty");
   });
 
-  it("skips WUA status list verification when support is unavailable", async () => {
+  it("skips KA status list verification when support is unavailable", async () => {
     mockGetIoWallet.mockReturnValue(createWallet(false) as never);
 
     await expect(
       runActor(actors.obtainStatusList, {
         itwVersion: ITW_VERSION,
-        walletUnitAttestations: undefined
+        keyAttestations: undefined
       })
     ).resolves.toBeUndefined();
     expect(mockGetCredentialStatus).not.toHaveBeenCalled();
   });
 
-  it("propagates WUA verification failures", async () => {
-    const error = new Error("invalid WUA status");
+  it("propagates KA verification failures", async () => {
+    const error = new Error("invalid KA status");
     mockGetIoWallet.mockReturnValue(createWallet() as never);
     mockGetKeys.mockResolvedValue(KEYS);
     mockGetCredentialStatus.mockRejectedValue(error);
@@ -187,23 +187,23 @@ describe("eID issuance actors", () => {
     await expect(
       runActor(actors.obtainStatusList, {
         itwVersion: ITW_VERSION,
-        walletUnitAttestations: { "wua-1": "wua-1-jwt" }
+        keyAttestations: { "ka-1": "ka-1-jwt" }
       })
     ).rejects.toBe(error);
   });
 
-  it("persists status lists before WUAs and the eID", async () => {
+  it("persists status lists before KAs and the eID", async () => {
     mockUpsert.mockResolvedValue();
 
     const input: StoreEidCredentialActorParams = {
       eid: {
         ...EID
       },
-      walletUnitAttestations: { "wua-1": "wua-1-jwt" },
+      keyAttestations: { "ka-1": "ka-1-jwt" },
       walletInstanceStatusList: {
         idx: 0,
         parsedStatusList: STATUS_LIST_PAYLOAD,
-        uri: WUA_STATUS_LIST_URI
+        uri: KA_STATUS_LIST_URI
       }
     };
 
@@ -212,17 +212,17 @@ describe("eID issuance actors", () => {
     );
 
     expect(mockUpsert).toHaveBeenCalledWith(
-      WUA_STATUS_LIST_URI,
+      KA_STATUS_LIST_URI,
       STATUS_LIST_PAYLOAD
     );
     expect(dispatch.mock.calls.map(([action]) => action.type)).toEqual([
       itwStoreWalletInstanceStatusList.toString(),
-      itwWalletUnitAttestationsStore.toString(),
+      itwKeyAttestationsStore.toString(),
       itwCredentialsReplaceByType.toString()
     ]);
   });
 
-  it("does not store WUAs or the eID when status list persistence fails", async () => {
+  it("does not store KAs or the eID when status list persistence fails", async () => {
     const error = new Error("status list persistence failed");
     mockUpsert.mockRejectedValue(error);
 
@@ -230,11 +230,11 @@ describe("eID issuance actors", () => {
       eid: {
         ...EID
       },
-      walletUnitAttestations: { "wua-1": "wua-1-jwt" },
+      keyAttestations: { "ka-1": "ka-1-jwt" },
       walletInstanceStatusList: {
         idx: 0,
         parsedStatusList: STATUS_LIST_PAYLOAD,
-        uri: WUA_STATUS_LIST_URI
+        uri: KA_STATUS_LIST_URI
       }
     };
 

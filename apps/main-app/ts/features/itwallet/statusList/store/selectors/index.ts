@@ -3,11 +3,11 @@ import { selectItwSpecsVersion } from "../../../common/store/selectors/environme
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { CredentialValidity } from "../../../common/utils/itwTypesUtils";
 import { itwAllStoredCredentialsSelector } from "../../../credentials/store/selectors";
-import { itwWalletUnitAttestationsSelector } from "../../../walletInstance/store/selectors";
+import { itwKeyAttestationsSelector } from "../../../walletInstance/store/selectors";
 
 /**
  * Collects the Status List URIs referenced by all current owners
- * (credentials and Wallet Unit Attestations).
+ * (credentials and Key Attestations).
  *
  * Invalid or unsupported owner data is ignored because it cannot reference a
  * Status List that can be used by the wallet.
@@ -22,19 +22,17 @@ export const itwStatusListReferencedUrisSelector = (
     .filter(c => c.validity?.type === "status_list")
     .map(c => (c.validity as CredentialValidity).statusList.uri);
 
-  const walletUnitAttestations = itwWalletUnitAttestationsSelector(state);
-  const walletUnitAttestationUris = Object.values(
-    walletUnitAttestations
-  ).flatMap(wua => {
+  const keyAttestations = itwKeyAttestationsSelector(state);
+  const keyAttestationUris = Object.values(keyAttestations).flatMap(ka => {
     try {
-      if (!wallet.WalletUnitAttestation.isSupported) {
+      if (!wallet.KeyAttestation.isSupported) {
         return [];
       }
-      return [wallet.WalletUnitAttestation.decode(wua).status.status_list.uri];
+      return [wallet.KeyAttestation.decode(ka).status.status_list.uri];
     } catch {
       return [];
     }
   });
 
-  return [...credentialUris, ...walletUnitAttestationUris];
+  return [...credentialUris, ...keyAttestationUris];
 };
