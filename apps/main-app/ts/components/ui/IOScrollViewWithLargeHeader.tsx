@@ -23,7 +23,7 @@ import { WithTestID } from "../../types/WithTestID";
 import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
 import { IOScrollView } from "./IOScrollView";
 
-export type LargeHeaderTitleProps = {
+type LargeHeaderTitleProps = {
   accessibilityLabel?: string;
   label: string;
   section?: string;

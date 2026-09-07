@@ -68,7 +68,8 @@ describe("ItwEidLifecycleAlert", () => {
 
     expect(trackingSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        currentScreenName: expectedRoute
+        currentScreenName: expectedRoute,
+        isItwCredential: true
       })
     );
   });

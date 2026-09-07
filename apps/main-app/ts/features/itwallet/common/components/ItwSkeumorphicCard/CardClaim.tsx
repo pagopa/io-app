@@ -18,7 +18,7 @@ import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
  */
 const renderNothing = () => null;
 
-export type CardClaimProps = Prettify<
+type CardClaimProps = Prettify<
   ClaimLabelProps & {
     // A claim that will be used to render its component
     // Since we are passing this value by accessing the claims object by key, the value could be undefined
@@ -32,20 +32,20 @@ export type CardClaimProps = Prettify<
   }
 >;
 
-export type ClaimDimensions = Prettify<
+type ClaimDimensions = Prettify<
   Partial<Record<"height" | "width", PercentPosition>> &
     Pick<ViewStyle, "aspectRatio">
 >;
 
-export type ClaimPosition = HorizontalClaimPosition & VerticalClaimPosition;
-
-export type PercentPosition = `${number}%`;
+type ClaimPosition = HorizontalClaimPosition & VerticalClaimPosition;
 
 // Defines the claim horizontal position using the left OR the right absolute position value
 type HorizontalClaimPosition = Either<
   { left: PercentPosition },
   { right: PercentPosition }
 >;
+
+type PercentPosition = `${number}%`;
 
 // Defines the claim vertical position using the top OR the bottom absolute position value
 type VerticalClaimPosition = Either<
@@ -125,7 +125,7 @@ const CardClaim = ({
   );
 };
 
-export type CardClaimRendererProps<K extends ClaimValueKind> = {
+type CardClaimRendererProps<K extends ClaimValueKind> = {
   // A claim that will be used to render a component
   // Since we are passing this value by accessing the claims object by key, the value could be undefined
   claim?: ParsedCredential[number];
@@ -154,7 +154,7 @@ const CardClaimRenderer = <K extends ClaimValueKind>({
     renderNothing
   );
 
-export type CardClaimContainerProps = WithTestID<{
+type CardClaimContainerProps = WithTestID<{
   children?: ReactNode;
   dimensions?: ClaimDimensions;
   position?: ClaimPosition;

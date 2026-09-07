@@ -1,7 +1,4 @@
-import {
-  CatalogueTranslations,
-  DigitalCredentialMetadata
-} from "./itwCredentialsCatalogueUtils.ts";
+import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils.ts";
 import { CredentialType } from "./itwMocksUtils.ts";
 import { CredentialMetadata } from "./itwTypesUtils.ts";
 
@@ -57,6 +54,3 @@ export const getAuthSource = (credential: CredentialMetadata) =>
   credential.issuerConf.credential_configurations_supported?.[
     credential.credentialId
   ]?.authentic_source;
-
-// Re-export for callers that need the full translations map type
-export type { CatalogueTranslations };
