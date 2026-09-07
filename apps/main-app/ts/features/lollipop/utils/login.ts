@@ -7,7 +7,7 @@ import { parseStringPromise } from "xml2js";
 import { handleRegenerateEphemeralKey } from "..";
 import { AppDispatch } from "../../../App";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
-import { getLoginHeaders } from "../../authentication/common/utils/login";
+import { getLoginHeaders } from "../../authentication/common/utils";
 import { toBase64EncodedThumbprint } from "./crypto";
 
 export const DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT = "SHA-256";
