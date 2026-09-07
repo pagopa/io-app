@@ -27,10 +27,14 @@ const normalizeCredentialAsValid = (
   const safeExpirationDate = addDays(now, SAFE_JWT_DAYS);
   const existingExpiry =
     credential.parsedCredential[WellKnownClaim.expiry_date];
+  const normalizedValidity =
+    credential.validity?.type === "status_list"
+      ? { ...credential.validity, rawStatus: "0x00", status: "valid" }
+      : undefined;
 
   return {
     ...credential,
-    validity: undefined,
+    validity: normalizedValidity,
     jwt: {
       ...credential.jwt,
       expiration: safeExpirationDate.toISOString()
@@ -186,7 +190,8 @@ export const applyStatusToCredential = (
           ? {
               ...(validCredential.validity as CredentialValidity),
               type: "status_list",
-              status: "unknown"
+              status: "unknown",
+              rawStatus: ""
             }
           : {
               type: "status_assertion",
