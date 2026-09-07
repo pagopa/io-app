@@ -12,7 +12,7 @@ import {
 } from "../../favouriteServices/store/actions";
 import { isFavouriteServiceSelector } from "../../favouriteServices/store/selectors";
 
-export type FavouriteServiceButtonProps = {
+type FavouriteServiceButtonProps = {
   service: ServiceDetails;
 };
 
