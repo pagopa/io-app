@@ -154,3 +154,16 @@ export const itwHiddenCredentialsSelector = createSelector(
   (itwConfig): ReadonlyArray<string> =>
     itwConfig?.hidden_credentials ?? emptyArray
 );
+
+export const itwShowcaseUrlSelector = createSelector(
+  itwRemoteConfigSelector,
+  (itwConfig): string | undefined => {
+    if (!itwConfig || !("showcase_url" in itwConfig)) {
+      return undefined;
+    }
+
+    const url = itwConfig.showcase_url;
+
+    return typeof url === "string" ? url.trim() || undefined : undefined;
+  }
+);
