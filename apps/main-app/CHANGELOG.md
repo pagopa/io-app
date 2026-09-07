@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.39.0-rc.1](https://github.com/pagopa/io-app/compare/3.39.0-rc.0...3.39.0-rc.1) (2026-09-04)
+
+### Bug Fixes
+
+* [[IOPID-4185](https://pagopa.atlassian.net/browse/IOPID-4185)] Align `/reserve` request and response with current specs ([#8548](https://github.com/pagopa/io-app/issues/8548)) ([ccda16f](https://github.com/pagopa/io-app/commit/ccda16f065293586603acadf5f8252dc1b894d80))
 ## [3.39.0-rc.0](https://github.com/pagopa/io-app/compare/3.38.0-rc.29...3.39.0-rc.0) (2026-09-04)
 ## [3.38.0-rc.29](https://github.com/pagopa/io-app/compare/3.38.0-rc.28...3.38.0-rc.29) (2026-09-03)
 

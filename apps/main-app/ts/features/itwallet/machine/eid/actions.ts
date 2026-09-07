@@ -1,5 +1,4 @@
 import { IOToast } from "@io-app/design-system";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ActionArgs, assertEvent, assign } from "xstate";
 
@@ -63,7 +62,7 @@ export const createEidIssuanceActionsImplementation = (
       return {
         // Get the IT-Wallet version from the global store; this can be overriden during the issuance flow.
         itwVersion: selectItwSpecsVersion(state),
-        integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
+        integrityKeyTag: storedIntegrityKeyTag,
         walletInstanceAttestation,
         credentialsToUpgrade: Object.values(credentials)
       };
