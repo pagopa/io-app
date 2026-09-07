@@ -1,4 +1,4 @@
-import { act, cleanupAsync, fireEvent } from "@testing-library/react-native";
+import { act, fireEventAsync } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
@@ -6,7 +6,7 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContextAsync } from "../../../../../../utils/testWrapper";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import * as analytics from "../../analytics";
 import { StoredConsentData } from "../../store/types";
@@ -37,8 +37,6 @@ const consent: StoredConsentData = {
 
 describe("ItwConsentManagementScreen", () => {
   beforeEach(() => {
-    // Control animations without replacing React's asynchronous scheduler.
-    jest.useFakeTimers({ doNotFake: ["queueMicrotask", "setImmediate"] });
     jest.clearAllMocks();
     jest.spyOn(Alert, "alert").mockImplementation(jest.fn());
     jest
@@ -46,19 +44,8 @@ describe("ItwConsentManagementScreen", () => {
       .mockImplementation(jest.fn());
   });
 
-  afterEach(async () => {
-    try {
-      await act(async () => {
-        await jest.runOnlyPendingTimersAsync();
-      });
-      await cleanupAsync();
-    } finally {
-      jest.useRealTimers();
-    }
-  });
-
-  it("returns to the document without showing an empty state when no consents exist", () => {
-    const { component } = renderComponent({});
+  it("returns to the document without showing an empty state when no consents exist", async () => {
+    const { component } = await renderComponent({});
 
     expect(component.queryByTestId("consent-list")).toBeNull();
     expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
@@ -69,14 +56,14 @@ describe("ItwConsentManagementScreen", () => {
     expect(analytics.trackItwConsentManagement).not.toHaveBeenCalled();
   });
 
-  it("opens the selected consent detail", () => {
-    const { component } = renderComponent({ [consentKey]: consent });
+  it("opens the selected consent detail", async () => {
+    const { component } = await renderComponent({ [consentKey]: consent });
 
     expect(analytics.trackItwConsentManagement).toHaveBeenCalledWith({
       credential: "ITW_PG_V2"
     });
 
-    fireEvent.press(
+    await fireEventAsync.press(
       component.getByLabelText(
         I18n.t(
           "features.itWallet.presentation.proximity.consentManagement.accessibility.openDetail",
@@ -115,13 +102,17 @@ describe("ItwConsentManagementScreen", () => {
           }
         ]
       };
-      const { component, store } = renderComponent({
+      const { component, store } = await renderComponent({
         ...documentConsents,
         unrelated
       });
-      fireEvent.press(component.getByTestId("revoke-all-consents-action"));
+      await fireEventAsync.press(
+        component.getByTestId("revoke-all-consents-action")
+      );
       const alertButtons = (Alert.alert as jest.Mock).mock.calls[0][2];
-      await act(() => alertButtons[0].onPress());
+      await act(async () => {
+        alertButtons[0].onPress();
+      });
 
       expect(store.getState().features.itWallet.proximity.consents).toEqual({
         unrelated
@@ -140,13 +131,17 @@ describe("ItwConsentManagementScreen", () => {
 
   it("keeps all consents when the revocation is cancelled", async () => {
     const consents = { [consentKey]: consent };
-    const { component, store } = renderComponent(consents);
-    fireEvent.press(component.getByTestId("revoke-all-consents-action"));
+    const { component, store } = await renderComponent(consents);
+    await fireEventAsync.press(
+      component.getByTestId("revoke-all-consents-action")
+    );
     const alertButtons = (Alert.alert as jest.Mock).mock.calls[0][2];
     const cancelButton = alertButtons.find(
       (button: { style: string }) => button.style === "cancel"
     );
-    await act(() => cancelButton.onPress?.());
+    await act(async () => {
+      cancelButton.onPress?.();
+    });
     expect(store.getState().features.itWallet.proximity.consents).toEqual(
       consents
     );
@@ -155,7 +150,7 @@ describe("ItwConsentManagementScreen", () => {
   });
 });
 
-const renderComponent = (consents: Record<string, StoredConsentData>) => {
+const renderComponent = async (consents: Record<string, StoredConsentData>) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const state: GlobalState = {
     ...initialState,
@@ -173,20 +168,21 @@ const renderComponent = (consents: Record<string, StoredConsentData>) => {
   const routeParams = { credentialType: "mDL" };
 
   const store = createStore(appReducer, state as any);
-  const component = renderScreenWithNavigationStoreContext<GlobalState>(
-    () => (
-      <ItwConsentManagementScreen
-        navigation={{} as any}
-        route={{
-          key: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
-          name: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
-          params: routeParams
-        }}
-      />
-    ),
-    ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
-    routeParams,
-    store
-  );
+  const component =
+    await renderScreenWithNavigationStoreContextAsync<GlobalState>(
+      () => (
+        <ItwConsentManagementScreen
+          navigation={{} as any}
+          route={{
+            key: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
+            name: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
+            params: routeParams
+          }}
+        />
+      ),
+      ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
+      routeParams,
+      store
+    );
   return { component, store };
 };

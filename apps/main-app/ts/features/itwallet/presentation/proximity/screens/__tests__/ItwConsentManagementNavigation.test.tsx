@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { act, fireEvent } from "@testing-library/react-native";
+import { act, fireEventAsync } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Alert, Button, View } from "react-native";
 import { createStore } from "redux";
@@ -8,7 +8,7 @@ import { useIONavigation } from "../../../../../../navigation/params/AppParamsLi
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContextAsync } from "../../../../../../utils/testWrapper";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { ProximityConsents, StoredConsentData } from "../../store/types";
@@ -51,14 +51,8 @@ const unrelatedConsent: StoredConsentData = {
 
 describe("Consent management navigation", () => {
   beforeEach(() => {
-    jest.useFakeTimers();
     jest.clearAllMocks();
     jest.spyOn(Alert, "alert").mockImplementation(jest.fn());
-  });
-
-  afterEach(() => {
-    act(() => jest.runOnlyPendingTimers());
-    jest.useRealTimers();
   });
 
   it.each([
@@ -66,22 +60,28 @@ describe("Consent management navigation", () => {
     { name: "revoking all consents", revokeAll: true }
   ])(
     "opens the success screen directly after $name and closes to the document",
-    ({ revokeAll }) => {
-      const { component, onFocus, store } = renderComponent({
+    async ({ revokeAll }) => {
+      const { component, onFocus, store } = await renderComponent({
         selected: consent,
         ...(revokeAll ? { remaining: remainingConsent } : {}),
         unrelated: unrelatedConsent
       });
 
       if (revokeAll) {
-        fireEvent.press(component.getByTestId("revoke-all-consents-action"));
+        await fireEventAsync.press(
+          component.getByTestId("revoke-all-consents-action")
+        );
       } else {
-        fireEvent.press(component.getByLabelText(consentDetailLabel(consent)));
-        fireEvent.press(component.getByTestId("revoke-consent-action"));
+        await fireEventAsync.press(
+          component.getByLabelText(consentDetailLabel(consent))
+        );
+        await fireEventAsync.press(
+          component.getByTestId("revoke-consent-action")
+        );
       }
       onFocus.mockClear();
 
-      confirmRevocation();
+      await confirmRevocation();
 
       expect(onFocus.mock.calls).toEqual([
         [ITW_ROUTES.PRESENTATION.CONSENT_REVOCATION_SUCCESS]
@@ -91,29 +91,33 @@ describe("Consent management navigation", () => {
       });
       expect(mockToastSuccess).not.toHaveBeenCalled();
 
-      fireEvent.press(component.getByText(I18n.t("global.buttons.close")));
+      await fireEventAsync.press(
+        component.getByText(I18n.t("global.buttons.close"))
+      );
 
       expect(onFocus).toHaveBeenLastCalledWith(
         ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL
       );
 
-      fireEvent.press(component.getByText("Back to wallet"));
+      await fireEventAsync.press(component.getByText("Back to wallet"));
 
       expect(onFocus).toHaveBeenLastCalledWith(ITW_ROUTES.OFFLINE.WALLET);
       expect(component.getByTestId("wallet-screen")).toBeTruthy();
     }
   );
 
-  it("returns once to the updated list when another consent remains", () => {
-    const { component, onFocus, store } = renderComponent({
+  it("returns once to the updated list when another consent remains", async () => {
+    const { component, onFocus, store } = await renderComponent({
       selected: consent,
       remaining: remainingConsent
     });
-    fireEvent.press(component.getByLabelText(consentDetailLabel(consent)));
-    fireEvent.press(component.getByTestId("revoke-consent-action"));
+    await fireEventAsync.press(
+      component.getByLabelText(consentDetailLabel(consent))
+    );
+    await fireEventAsync.press(component.getByTestId("revoke-consent-action"));
     onFocus.mockClear();
 
-    confirmRevocation();
+    await confirmRevocation();
 
     expect(onFocus.mock.calls).toEqual([
       [ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT]
@@ -141,11 +145,13 @@ const consentDetailLabel = (storedConsent: StoredConsentData) =>
     }
   );
 
-const confirmRevocation = () => {
+const confirmRevocation = async () => {
   const buttons = jest.mocked(Alert.alert).mock.calls[0][2];
   const confirmButton = buttons?.find(button => button.style === "destructive");
   expect(confirmButton?.onPress).toBeDefined();
-  act(() => confirmButton?.onPress?.());
+  await act(async () => {
+    confirmButton?.onPress?.();
+  });
 };
 
 const WalletScreen = () => {
@@ -183,7 +189,7 @@ const DocumentScreen = () => {
   );
 };
 
-const renderComponent = (consents: ProximityConsents) => {
+const renderComponent = async (consents: ProximityConsents) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const state: GlobalState = {
     ...initialState,
@@ -224,14 +230,14 @@ const renderComponent = (consents: ProximityConsents) => {
       />
     </Stack.Navigator>
   );
-  const component = renderScreenWithNavigationStoreContext(
+  const component = await renderScreenWithNavigationStoreContextAsync(
     Navigator,
     ITW_ROUTES.MAIN,
     {},
     store
   );
-  fireEvent.press(component.getByText("Open document"));
-  fireEvent.press(component.getByText("Manage consents"));
+  await fireEventAsync.press(component.getByText("Open document"));
+  await fireEventAsync.press(component.getByText("Manage consents"));
 
   return { component, onFocus, store };
 };
