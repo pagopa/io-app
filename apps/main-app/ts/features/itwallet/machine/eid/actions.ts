@@ -75,13 +75,15 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { level: context.level }
+      params: { level: context.level },
+      pop: true
     });
   },
 
   navigateToIpzsPrivacyScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.IPZS_PRIVACY
+      screen: ITW_ROUTES.DISCOVERY.IPZS_PRIVACY,
+      pop: true
     });
   },
 
@@ -90,49 +92,57 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-      params: { eidReissuing: context.mode === "reissuance" }
+      params: { eidReissuing: context.mode === "reissuance" },
+      pop: true
     });
   },
 
   navigateToIdpSelectionScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.IDP_SELECTION
+      screen: ITW_ROUTES.IDENTIFICATION.IDP_SELECTION,
+      pop: true
     });
   },
 
   navigateToSpidLoginScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.SPID.LOGIN
+      screen: ITW_ROUTES.IDENTIFICATION.SPID.LOGIN,
+      pop: true
     });
   },
 
   navigateToCieIdLoginScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN,
+      pop: true
     });
   },
 
   navigateToEidPreviewScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW
+      screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW,
+      pop: true
     });
   },
 
   navigateToSuccessScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.EID_RESULT
+      screen: ITW_ROUTES.ISSUANCE.EID_RESULT,
+      pop: true
     });
   },
 
   navigateToFailureScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.EID_FAILURE
+      screen: ITW_ROUTES.ISSUANCE.EID_FAILURE,
+      pop: true
     });
   },
 
   navigateToNfcInstructionsScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC,
+      pop: true
     });
   },
 
@@ -166,43 +176,50 @@ export const createEidIssuanceActionsImplementation = (
 
   navigateToCieNfcPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN,
+      pop: true
     });
   },
 
   navigateToCiePinPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN,
+      pop: true
     });
   },
 
   navigateToCiePinScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN,
+      pop: true
     });
   },
 
   navigateToCieCardPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN,
+      pop: true
     });
   },
 
   navigateToCieCanPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN,
+      pop: true
     });
   },
 
   navigateToCieCanScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN,
+      pop: true
     });
   },
 
   navigateToCieAuthenticationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN,
+      pop: true
     });
   },
 
@@ -217,13 +234,15 @@ export const createEidIssuanceActionsImplementation = (
       params: {
         can: context.mrtdContext.can,
         challenge: context.mrtdContext.challenge
-      }
+      },
+      pop: true
     });
   },
 
   navigateToWalletRevocationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
+      screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN,
+      pop: true
     });
   },
 
@@ -237,7 +256,8 @@ export const createEidIssuanceActionsImplementation = (
       params: {
         type: event.warning,
         routeName: event.routeName
-      }
+      },
+      pop: true
     });
   },
 
@@ -270,7 +290,8 @@ export const createEidIssuanceActionsImplementation = (
 
     navigation.navigate(ROUTES.MAIN, {
       screen: ROUTES.WALLET_HOME,
-      params: {}
+      params: {},
+      pop: true
     });
   },
 

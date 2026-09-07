@@ -15,38 +15,46 @@ export const createActionsImplementation = (
   const navigateToInitiativeDetailsScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
-      params: {}
+      params: {},
+      pop: true
     });
   const navigateToPdndCriteriaScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE,
+      pop: true
     });
   const navigateToBoolSelfDeclarationListScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS,
+      pop: true
     });
   const navigateToMultiSelfDeclarationListScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS,
+      pop: true
     });
   const navigateToInputFormScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM,
+      pop: true
     });
 
   const navigateToCompletionScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION,
+      pop: true
     });
 
   const navigateToFailureScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE,
+      pop: true
     });
 
   const navigateToFailureToRetryScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE_TO_RETRY
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE_TO_RETRY,
+      pop: true
     });
 
   const navigateToInitiativeMonitoringScreen = (args: {
@@ -68,22 +76,27 @@ export const createActionsImplementation = (
 
   const navigateToEnableNotificationScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_NOTIFICATIONS
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_NOTIFICATIONS,
+      pop: true
     });
 
   const navigateToEnableMessageScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_MESSAGE
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_MESSAGE,
+      pop: true
     });
 
   const closeOnboarding = () => navigation.popToTop();
 
   const closeOnboardingSuccess = () =>
-    navigation.navigate(SERVICES_ROUTES.SERVICES_HOME);
+    navigation.navigate(SERVICES_ROUTES.SERVICES_HOME, undefined, {
+      pop: true
+    });
 
   const navigateToLoadingScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_LOADING
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_LOADING,
+      pop: true
     });
 
   const handleSessionExpired = () => {

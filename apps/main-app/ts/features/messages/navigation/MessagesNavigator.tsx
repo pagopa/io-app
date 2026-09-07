@@ -45,7 +45,7 @@ export const MessagesStackNavigator = () => {
           component={MessageGreenPassScreen}
           name={MESSAGES_ROUTES.MESSAGE_GREEN_PASS}
           options={{
-            animationEnabled: false
+            animation: "none"
           }}
         />
 
