@@ -99,6 +99,11 @@ jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
 }));
 
+jest.mock("@io-app/expo-nfc-antenna-info", () => ({
+  getNfcAntennaInfo: jest.fn(),
+  isHceSupported: jest.fn()
+}));
+
 jest.mock("expo-local-authentication", () => ({
   AuthenticationType: {
     FINGERPRINT: 1,
