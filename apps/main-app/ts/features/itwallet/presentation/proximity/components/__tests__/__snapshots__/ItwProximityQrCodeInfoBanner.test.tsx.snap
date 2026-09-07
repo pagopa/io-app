@@ -428,7 +428,7 @@ exports[`ItwProximityQrCodeInfoBanner should match snapshot 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="Come funziona il QR Code? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
+                            accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
                             accessibilityRole="button"
                             accessible={true}
                             style={
@@ -457,7 +457,7 @@ exports[`ItwProximityQrCodeInfoBanner should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              Come funziona il QR Code?
+                              Come funziona la verifica?
                             </Text>
                             <Text
                               allowFontScaling={true}

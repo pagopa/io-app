@@ -9,7 +9,7 @@ import { WebView, WebViewNavigation } from "react-native-webview";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
-import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
+import { originSchemasWhiteList } from "../../../../authentication/common/utils";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import {
   selectItwCieIdEnvironment,
