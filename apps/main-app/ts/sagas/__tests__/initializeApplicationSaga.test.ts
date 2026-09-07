@@ -48,10 +48,7 @@ import {
   initMixpanel,
   watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "../mixpanel";
-import {
-  initializeApplicationSaga,
-  testWaitForNavigatorServiceInitialization
-} from "../startup";
+import { initializeApplicationSaga } from "../startup";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 
 const aSessionToken = "mock-session-token";
@@ -113,8 +110,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(initMixpanel)
       .next()
-      .call(testWaitForNavigatorServiceInitialization!)
-      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .next()
@@ -170,8 +165,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(initMixpanel)
       .next()
-      .call(testWaitForNavigatorServiceInitialization!)
-      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .next()
@@ -222,8 +215,6 @@ describe("initializeApplicationSaga", () => {
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
-      .next()
-      .call(testWaitForNavigatorServiceInitialization!)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
@@ -280,8 +271,6 @@ describe("initializeApplicationSaga", () => {
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
-      .next()
-      .call(testWaitForNavigatorServiceInitialization!)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
@@ -350,8 +339,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(initMixpanel)
       .next()
-      .call(testWaitForNavigatorServiceInitialization!)
-      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .next()
@@ -405,8 +392,6 @@ describe("initializeApplicationSaga", () => {
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
-      .next()
-      .call(testWaitForNavigatorServiceInitialization!)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
@@ -467,8 +452,6 @@ describe("initializeApplicationSaga", () => {
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
-      .next()
-      .call(testWaitForNavigatorServiceInitialization!)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()

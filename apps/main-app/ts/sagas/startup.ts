@@ -120,10 +120,7 @@ import {
   watchZendeskGetSessionSaga
 } from "../features/zendesk/saga";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
-import {
-  waitForMainNavigator,
-  waitForNavigatorServiceInitialization
-} from "../navigation/saga/navigation";
+import { waitForMainNavigator } from "../navigation/saga/navigation";
 import {
   applicationInitialized,
   startApplicationInitialization
@@ -148,7 +145,6 @@ import {
 } from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
-import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
 import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
@@ -205,7 +201,6 @@ export function* initializeApplicationSaga(
   yield* call(checkAppHistoryVersionSaga);
   // check if mixpanel could be initialized
   yield* call(initMixpanel);
-  yield* call(waitForNavigatorServiceInitialization);
 
   yield* call(previousInstallationDataDeleteSaga); // consider to move out of the startup saga
 
@@ -786,13 +781,8 @@ export function* initializeApplicationSaga(
 }
 
 export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
-  // Wait until the IngressScreen gets mounted
   yield* takeLatest(
     getType(startApplicationInitialization),
     initializeApplicationSaga
   );
 }
-
-export const testWaitForNavigatorServiceInitialization = isTestEnv
-  ? waitForNavigatorServiceInitialization
-  : undefined;

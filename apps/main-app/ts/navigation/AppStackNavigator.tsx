@@ -66,7 +66,6 @@ export const AppStackNavigator = (): ReactElement => {
   useStoredFontPreference();
 
   const dispatch = useIODispatch();
-
   const startupStatus = useIOSelector(isStartupLoaded);
 
   useEffect(() => {
@@ -100,10 +99,6 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   // Dark/Light Mode
   const { themeType } = useIOThemeContext();
   const theme = useIOTheme();
-
-  useEffect(() => {
-    setNavigationReady();
-  }, []);
 
   const linking: LinkingOptions<AppParamsList> = {
     enabled: !isTestEnv, // disable linking in test env
@@ -191,6 +186,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
       linking={linking}
       onReady={() => {
+        setNavigationReady();
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
       }}
       onStateChange={state => {
