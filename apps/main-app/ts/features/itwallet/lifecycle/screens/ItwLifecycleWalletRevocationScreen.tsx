@@ -4,13 +4,13 @@ import { useMemo } from "react";
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { selectIsLoading } from "../../machine/eid/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../store/selectors/index";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 const RevocationLoadingScreen = () => {
   useItwDisableGestureNavigation();
@@ -63,7 +63,7 @@ export const ItwLifecycleWalletRevocationScreen = () => {
       secondaryAction={{
         label: I18n.t("global.buttons.cancel"),
         accessibilityLabel: I18n.t("global.buttons.cancel"),
-        onPress: () => navigation.pop();
+        onPress: () => navigation.pop()
       }}
       subtitle={I18n.t(
         "features.itWallet.walletRevocation.confirmScreen.subtitle"
