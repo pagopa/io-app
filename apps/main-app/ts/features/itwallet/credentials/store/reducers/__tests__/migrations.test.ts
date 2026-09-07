@@ -1075,6 +1075,7 @@ describe("ITW credentials reducer migrations", () => {
         cred_1_3: {
           credentialId: "cred_1_3",
           credentialType: "cred_1_3",
+          walletUnitAttestationId: "att_1",
           spec_version: "1.3.3"
         },
         cred_1_0: {
@@ -1083,6 +1084,7 @@ describe("ITW credentials reducer migrations", () => {
           spec_version: "1.0.0"
         }
       },
+      legacyCredentials: {},
       _persist: {
         version: 12,
         rehydrated: false
@@ -1094,14 +1096,17 @@ describe("ITW credentials reducer migrations", () => {
         cred_1_3: {
           credentialId: "cred_1_3",
           credentialType: "cred_1_3",
+          keyAttestationId: "att_1",
           spec_version: "1.4.6"
         },
         cred_1_0: {
           credentialId: "cred_1_0",
           credentialType: "cred_1_0",
+          keyAttestationId: undefined,
           spec_version: "1.0.0"
         }
       },
+      legacyCredentials: {},
       _persist: {
         version: 12,
         rehydrated: false

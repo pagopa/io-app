@@ -335,16 +335,19 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   "13": (state: MigrationState) => {
     const migrateSpecVersion = (credentials: AnyRecord) =>
       Object.fromEntries(
-        Object.entries<AnyRecord>(credentials).map(([key, credential]) => [
-          key,
-          {
-            ...credential,
-            spec_version:
-              credential.spec_version === "1.3.3"
-                ? "1.4.6"
-                : credential.spec_version
-          }
-        ])
+        Object.entries<AnyRecord>(credentials).map(
+          ([key, { walletUnitAttestationId, ...credential }]) => [
+            key,
+            {
+              ...credential,
+              keyAttestationId: walletUnitAttestationId,
+              spec_version:
+                credential.spec_version === "1.3.3"
+                  ? "1.4.6"
+                  : credential.spec_version
+            }
+          ]
+        )
       );
     return {
       ...state,
