@@ -17,11 +17,11 @@ const FOREVER = 100 * 365; // approx. 100 years
  * means new credential types automatically get their own persisted dismiss state, with no
  * change required here even as the credentials catalogue grows.
  */
-export type ItwCredentialBannerId = `newCredentialValidity:${string}`;
+export type ItwCredentialValidityBannerId = `newCredentialValidity:${string}`;
 
 export const getNewCredentialValidityBannerId = (
   credentialType: string
-): ItwCredentialBannerId => `newCredentialValidity:${credentialType}`;
+): ItwCredentialValidityBannerId => `newCredentialValidity:${credentialType}`;
 
 /**
  * Identifiers for IT Wallet banners
@@ -38,7 +38,7 @@ export type ItwBannerId =
   | "proximity_qr_code_info" // Info banner shown on the proximity QR code screen
   | "tsDetailsInfo" // Informational banner within TS (Tessera Sanitaria) details screen
   | "upgradeMDLDetails" // Upgrade to IT Wallet banner placed in MDL details screen
-  | ItwCredentialBannerId;
+  | ItwCredentialValidityBannerId;
 
 /**
  * Default hide duration applied to any banner id that has no explicit entry in
