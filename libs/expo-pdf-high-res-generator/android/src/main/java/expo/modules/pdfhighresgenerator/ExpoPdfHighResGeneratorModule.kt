@@ -1,38 +1,40 @@
-package it.pagopa.io.app.modules
+package expo.modules.pdfhighresgenerator
 
 import android.graphics.Bitmap
 import android.graphics.pdf.PdfRenderer
-import android.net.Uri
-import android.os.ParcelFileDescriptor
-import com.facebook.react.bridge.*
+import androidx.core.net.toUri
+import expo.modules.kotlin.exception.CodedException
+import expo.modules.kotlin.modules.Module
+import expo.modules.kotlin.modules.ModuleDefinition
 import java.io.File
 import java.io.FileOutputStream
 import java.util.UUID
-import androidx.core.net.toUri
 
-class PdfHighResGeneratorModule(reactContext: ReactApplicationContext) :
-  ReactContextBaseJavaModule(reactContext) {
+private class PdfGenerationException(message: String, cause: Throwable? = null) :
+  CodedException(message, cause)
 
-  override fun getName(): String {
-    return "PdfHighResGenerator"
+class ExpoPdfHighResGeneratorModule : Module() {
+  override fun definition() = ModuleDefinition {
+    Name("ExpoPdfHighResGenerator")
+
+    AsyncFunction("generate") { filePath: String, scale: Double ->
+      generate(filePath, scale)
+    }
   }
 
-  @ReactMethod
-  fun generate(filePath: String, scale: Double, promise: Promise) {
-    var fileDescriptor: ParcelFileDescriptor? = null
+  // Renders every page of the PDF at `filePath` to a JPEG, returning the `file://` URIs of the produced images.
+  private fun generate(filePath: String, scale: Double): List<String> {
+    var fileDescriptor: android.os.ParcelFileDescriptor? = null
     var tempPdfFile: File? = null
     var bitmap: Bitmap? = null
     try {
-      val context = reactApplicationContext
+      val context = appContext.reactContext
+        ?: throw PdfGenerationException("React context is not available")
       val uri = filePath.toUri()
       // Needed to resolve permission issues and "content://" vs "file://"
       tempPdfFile = File(context.cacheDir, "temp_source_${UUID.randomUUID()}.pdf")
       val inputStream = context.contentResolver.openInputStream(uri)
-
-      if (inputStream == null) {
-        promise.reject("FILE_NOT_FOUND", "Unable to open stream for: $filePath")
-        return
-      }
+        ?: throw PdfGenerationException("Unable to open stream for: $filePath")
 
       // Copy stream -> file
       FileOutputStream(tempPdfFile).use { outputStream ->
@@ -42,9 +44,12 @@ class PdfHighResGeneratorModule(reactContext: ReactApplicationContext) :
       }
 
       // Use it now that we have a proper file
-      fileDescriptor = ParcelFileDescriptor.open(tempPdfFile, ParcelFileDescriptor.MODE_READ_ONLY)
+      fileDescriptor = android.os.ParcelFileDescriptor.open(
+        tempPdfFile,
+        android.os.ParcelFileDescriptor.MODE_READ_ONLY
+      )
       val renderer = PdfRenderer(fileDescriptor)
-      val outputPaths = WritableNativeArray()
+      val outputPaths = mutableListOf<String>()
       val cacheDir = context.cacheDir
 
       // Maximum dimensions to prevent memory issues
@@ -81,25 +86,24 @@ class PdfHighResGeneratorModule(reactContext: ReactApplicationContext) :
         bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
         outputStream.close()
 
-        outputPaths.pushString("file://${outputFile.absolutePath}")
+        outputPaths.add("file://${outputFile.absolutePath}")
 
         page.close()
         bitmap.recycle()
       }
 
       renderer.close()
-      promise.resolve(outputPaths)
-
+      return outputPaths
     } catch (e: OutOfMemoryError) {
-      promise.reject("PDF_RENDER_OOM", "Out of memory while rendering PDF", e)
+      throw PdfGenerationException("Out of memory while rendering PDF", e)
+    } catch (e: PdfGenerationException) {
+      throw e
     } catch (e: Exception) {
-      promise.reject("PDF_RENDER_ERROR", e.message, e)
+      throw PdfGenerationException(e.message ?: "Unknown error while rendering PDF", e)
     } finally {
-      // Cleanup
       bitmap?.recycle()
       try {
         fileDescriptor?.close()
-        // Optional deletion of temp file if created to free up space
         tempPdfFile?.delete()
       } catch (e: Exception) {
         // Ignore errors on close
