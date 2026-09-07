@@ -3,17 +3,14 @@
  */
 
 import { addPadding } from "@pagopa/io-react-native-jwt";
-import { NonEmptyString, PatternString } from "@pagopa/ts-commons/lib/strings";
 import { differenceInCalendarDays, isValid } from "date-fns";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import * as t from "io-ts";
 import { truncate } from "lodash";
+import { Result } from "neverthrow";
+import { z } from "zod";
 
 import { Locales } from "../../../../i18n";
-import { JsonFromString } from "./ItwCodecUtils";
+import { parseWithSchema } from "./itwSchemaUtils";
 import { CredentialMetadata, ParsedCredential } from "./itwTypesUtils";
 
 /**
@@ -258,7 +255,7 @@ export const getClaimsFullLocale = (): ClaimsLocales =>
  *
  *
  *
- * IO-TS DECODER FOR THE CLAIMS
+ * CLAIM SCHEMAS
  *
  *
  *
@@ -267,328 +264,293 @@ export const getClaimsFullLocale = (): ClaimsLocales =>
 /**
  * Regex for the date format which is used to validate the date claim as ISO 8601:2004 YYYY-MM-DD format.
  */
-const DATE_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2}$";
+const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 
 /**
  * Regex for the picture URL format which is used to validate the image claim as a base64 encoded png image.
  */
-const PICTURE_URL_REGEX = "^data:image\\/(png|jpg|jpeg|bmp);base64,";
+const PICTURE_URL_REGEX = /^data:image\/(png|jpg|jpeg|bmp);base64,/;
 
 /**
  * Regex for the PDF data format which is used to validate the PDF file claim as a base64 encoded PDF.
  */
-const PDF_DATA_REGEX = "^data:application/pdf;base64,";
+const PDF_DATA_REGEX = /^data:application\/pdf;base64,/;
 
 /**
  * Regex for a generic URL
  */
-const URL_REGEX = "^https?://";
+const URL_REGEX = /^https?:\/\//;
 
 /**
  * Regex for the fiscal code
  */
 const FISCAL_CODE_WITH_PREFIX =
-  "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
-
-const LocaleName = t.union([t.string, t.record(t.string, t.string)]);
+  /(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])/;
 
 /**
- * Decoder for a nested array of claims.
- * Each object in the array is a record of string keys and ParsedAttribute values.
- * The ParsedAttribute is an object with a value and a name, where the name can be either a string or a record of locale and string.
+ * The name of a claim, either a plain string or a map of locale to translated name.
  */
+const LocaleName = z.union([z.string(), z.record(z.string(), z.string())]);
 
-const ParsedAttribute = t.type({
-  value: t.string,
+/**
+ * A single attribute of a parsed credential: the raw value plus its display name.
+ */
+const ParsedAttribute = z.object({
+  value: z.string(),
   name: LocaleName
 });
 
 /**
- * io-ts decoder for the date claim field of the credential.
- * The date format is checked against the regex dateFormatRegex, which is currenlty mocked.
- * This is needed because a generic date decoder would accept invalid dates like numbers,
- * thus decoding properly and returning a wrong claim item to be displayed.
- * The returned date is a SimpleDate object, which is a simpler date class with day, month and year properties.
+ * Parses a JSON-encoded string into its decoded value.
+ * Some claims (e.g. the legacy mDL driving privileges) are transported as a JSON string.
  */
-export const SimpleDateClaim = new t.Type<SimpleDate, string, unknown>(
-  "SimpleDateClaim",
-  (input: unknown): input is SimpleDate => input instanceof SimpleDate,
-  (input, context) =>
-    pipe(
-      PatternString(DATE_FORMAT_REGEX).validate(input, context),
-      E.fold(
-        () => t.failure(input, context, "Date is not in the correct format"),
-        str => {
-          const date = new SimpleDate(
-            +str.slice(0, 4),
-            +str.slice(5, 7) - 1,
-            +str.slice(8, 10)
-          );
-          return t.success(date);
-        }
-      )
-    ),
-  (date: SimpleDate) =>
-    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
-      2,
-      "0"
-    )}-${String(date.getDate()).padStart(2, "0")}`
-);
-
-/**
- * io-ts decoder for the place of birth claim field of the credential.
- */
-export const PlaceOfBirthClaim = t.type({
-  country: t.string,
-  locality: t.string
+const JsonFromString = z.string().transform((input, ctx): unknown => {
+  try {
+    return JSON.parse(input);
+  } catch {
+    ctx.addIssue({ code: "custom", message: "Invalid JSON string" });
+    return z.NEVER;
+  }
 });
-export type PlaceOfBirthClaimType = t.TypeOf<typeof PlaceOfBirthClaim>;
 
 /**
- * io-ts decoder for the mDL driving privileges
+ * Schema for the date claim field of the credential.
+ * The date format is checked against {@link DATE_FORMAT_REGEX}. This is needed because a generic date
+ * schema would accept invalid dates like numbers, thus decoding properly and returning a wrong claim
+ * item to be displayed. The parsed value is a {@link SimpleDate}, a simpler date class with day,
+ * month and year properties.
  */
-const DrivingPrivilegeClaim = t.type({
-  driving_privilege: t.string,
+export const SimpleDateClaim = z
+  .string()
+  .regex(DATE_FORMAT_REGEX)
+  .transform(
+    input =>
+      new SimpleDate(
+        +input.slice(0, 4),
+        +input.slice(5, 7) - 1,
+        +input.slice(8, 10)
+      )
+  );
+
+/**
+ * Schema for the place of birth claim field of the credential.
+ */
+export const PlaceOfBirthClaim = z.object({
+  country: z.string(),
+  locality: z.string()
+});
+export type PlaceOfBirthClaimType = z.infer<typeof PlaceOfBirthClaim>;
+
+/**
+ * A single mDL driving privilege, in the shape consumed by the UI.
+ */
+const DrivingPrivilegeClaim = z.object({
+  driving_privilege: z.string(),
   issue_date: SimpleDateClaim,
   expiry_date: SimpleDateClaim,
-  restrictions_conditions: t.union([t.string, t.null])
+  restrictions_conditions: z.union([z.string(), z.null()])
 });
 
-export type DrivingPrivilegeClaimType = t.TypeOf<typeof DrivingPrivilegeClaim>;
-
-export const DrivingPrivilegesClaim = t.string
-  .pipe(JsonFromString)
-  .pipe(t.array(DrivingPrivilegeClaim));
-
-export type DrivingPrivilegesClaimType = t.TypeOf<
-  typeof DrivingPrivilegesClaim
->;
+export type DrivingPrivilegeClaimType = z.infer<typeof DrivingPrivilegeClaim>;
 
 /**
- * Decoder for the raw driving privileges array used to parse the mdoc claim format of the mDL driving privileges.
+ * Legacy mDL driving privileges, transported as a JSON-encoded string.
  */
-const DrivingPrivilegesItemFlatRaw = t.type({
-  vehicle_category_code: t.string,
-  issue_date: SimpleDateClaim,
-  expiry_date: SimpleDateClaim
-});
-const DrivingPrivilegesFlatRaw = t.array(DrivingPrivilegesItemFlatRaw);
-
-const DrivingPrivilegesFromFlatRaw = new t.Type<
-  DrivingPrivilegesClaimType,
-  t.TypeOf<typeof DrivingPrivilegesFlatRaw>,
-  t.TypeOf<typeof DrivingPrivilegesFlatRaw>
->(
-  "DrivingPrivilegesFromFlatRaw",
-  DrivingPrivilegesClaim.is,
-  (input, c) => {
-    try {
-      return t.success(
-        input.map(item => ({
-          driving_privilege: item.vehicle_category_code,
-          issue_date: item.issue_date,
-          expiry_date: item.expiry_date,
-          restrictions_conditions: null
-        }))
-      );
-    } catch {
-      return t.failure(input, c);
-    }
-  },
-  output =>
-    output.map(item => ({
-      vehicle_category_code: item.driving_privilege,
-      issue_date: item.issue_date,
-      expiry_date: item.expiry_date
-    }))
+export const DrivingPrivilegesClaim = JsonFromString.pipe(
+  z.array(DrivingPrivilegeClaim)
 );
 
+export type DrivingPrivilegesClaimType = Array<DrivingPrivilegeClaimType>;
+
 /**
- * Decoder for the raw driving privileges array, used to parse the new format of the mDL driving privileges.
- * This is needed to support the new format of the mDL driving privileges, which is an array of objects with
- * vehicle_category_code, issue_date and expiry_date fields.
+ * mDoc format of the mDL driving privileges: a flat array without display names.
  */
-const DrivingPrivilegesItemRaw = t.intersection([
-  t.type({
-    vehicle_category_code: t.type({
-      name: LocaleName,
-      value: t.string
-    }),
-    issue_date: t.type({
-      name: LocaleName,
-      value: SimpleDateClaim
-    }),
-    expiry_date: t.type({
-      name: LocaleName,
-      value: SimpleDateClaim
-    })
-  }),
-  // Optional properties
-  t.partial({
-    codes: t.type({
-      name: LocaleName,
-      value: t.array(t.type({ code: ParsedAttribute }))
-    })
+export const DrivingPrivilegesFlatRaw = z.array(
+  z.object({
+    vehicle_category_code: z.string(),
+    issue_date: SimpleDateClaim,
+    expiry_date: SimpleDateClaim
   })
-]);
-
-/**
- * Array of driving privileges in the raw format
- */
-export const DrivingPrivilegesValueRaw = t.array(DrivingPrivilegesItemRaw);
-
-export type DrivingPrivilegesValueRawType = t.TypeOf<
-  typeof DrivingPrivilegesValueRaw
->;
-
-export const DrivingPrivilegesFromRaw = new t.Type<
-  DrivingPrivilegesClaimType,
-  DrivingPrivilegesValueRawType,
-  DrivingPrivilegesValueRawType
->(
-  "DrivingPrivilegesFromRaw",
-  DrivingPrivilegesClaim.is,
-  (input, c) => {
-    try {
-      return t.success(
-        input.map(item => ({
-          driving_privilege: item.vehicle_category_code.value,
-          issue_date: item.issue_date.value,
-          expiry_date: item.expiry_date.value,
-          restrictions_conditions:
-            item.codes?.value.map(({ code }) => code.value).join(", ") ?? null
-        }))
-      );
-    } catch {
-      return t.failure(input, c);
-    }
-  },
-  output =>
-    output.map(item => ({
-      vehicle_category_code: {
-        name: "",
-        value: item.driving_privilege
-      },
-      issue_date: {
-        name: "",
-        value: item.issue_date
-      },
-      expiry_date: {
-        name: "",
-        value: item.expiry_date
-      },
-      ...(item.restrictions_conditions && {
-        codes: {
-          name: "",
-          value: [{ code: { name: "", value: item.restrictions_conditions } }]
-        }
-      })
-    }))
 );
 
-export const DrivingPrivilegesCustomClaim = t.union([
-  DrivingPrivilegesValueRaw.pipe(DrivingPrivilegesFromRaw),
-  DrivingPrivilegesFlatRaw.pipe(DrivingPrivilegesFromFlatRaw)
+/**
+ * Current format of the mDL driving privileges: an array of objects where every field carries
+ * both its display name and its value.
+ */
+export const DrivingPrivilegesValueRaw = z.array(
+  z.object({
+    vehicle_category_code: z.object({
+      name: LocaleName,
+      value: z.string()
+    }),
+    issue_date: z.object({
+      name: LocaleName,
+      value: SimpleDateClaim
+    }),
+    expiry_date: z.object({
+      name: LocaleName,
+      value: SimpleDateClaim
+    }),
+    codes: z
+      .object({
+        name: LocaleName,
+        value: z.array(z.object({ code: ParsedAttribute }))
+      })
+      .optional()
+  })
+);
+
+/**
+ * Both mDL driving privileges raw formats, normalised into the shape consumed by the UI.
+ * Restriction codes, when present, are joined into a single string.
+ */
+export const DrivingPrivilegesCustomClaim = z.union([
+  DrivingPrivilegesValueRaw.transform(
+    (items): DrivingPrivilegesClaimType =>
+      items.map(item => ({
+        driving_privilege: item.vehicle_category_code.value,
+        issue_date: item.issue_date.value,
+        expiry_date: item.expiry_date.value,
+        restrictions_conditions:
+          item.codes?.value.map(({ code }) => code.value).join(", ") ?? null
+      }))
+  ),
+  DrivingPrivilegesFlatRaw.transform(
+    (items): DrivingPrivilegesClaimType =>
+      items.map(item => ({
+        driving_privilege: item.vehicle_category_code,
+        issue_date: item.issue_date,
+        expiry_date: item.expiry_date,
+        restrictions_conditions: null
+      }))
+  )
 ]);
 
 /**
- * Decoder for the fiscal code. This is needed since we have to remove the INIT prefix when rendering it.
+ * Schema for the fiscal code. This is needed since we have to remove the INIT prefix when rendering it.
  */
-export const FiscalCodeClaim = PatternString(FISCAL_CODE_WITH_PREFIX);
+export const FiscalCodeClaim = z.string().regex(FISCAL_CODE_WITH_PREFIX);
 
 /**
- * Decoder for a generic URL
+ * Schema for a generic URL
  */
-export const UrlClaim = PatternString(URL_REGEX);
+export const UrlClaim = z.string().regex(URL_REGEX);
 
 /**
  * Alias for a boolean claim
  */
-export const BoolClaim = t.boolean;
+export const BoolClaim = z.boolean();
 
 /**
  * Empty string fallback of the claim field of the credential.
  */
-export const EmptyStringClaim = new t.Type<string, string, unknown>(
-  "EmptyString",
-  (input: unknown): input is string => input === "", // Type guard
-  (input, context) =>
-    typeof input === "string" && input === ""
-      ? t.success(input)
-      : t.failure(input, context, "Expected an empty string"),
-  t.identity
-);
+export const EmptyStringClaim = z.literal("");
 
 /**
  * Alias for the string claim field of the credential.
  */
-export const StringClaim = NonEmptyString;
+export const StringClaim = z.string().min(1);
 
 /**
- * Decoder for an URL image in base64 format
+ * Schema for an URL image in base64 format
  */
-export const ImageClaim = PatternString(PICTURE_URL_REGEX);
+export const ImageClaim = z.string().regex(PICTURE_URL_REGEX);
 
-export const PdfClaim = PatternString(PDF_DATA_REGEX);
+export const PdfClaim = z.string().regex(PDF_DATA_REGEX);
 
 /**
- * Decoder for a simple list of string claims (for instance, nationality codes)
+ * Schema for a simple list of string claims (for instance, nationality codes)
  */
-export const SimpleListClaim = t.array(t.string);
+export const SimpleListClaim = z.array(z.string());
 
 /**
  * Record of string keys and ParsedAttribute values.
  * This is used to parse nested claims.
  */
-export const NestedObjectClaim = t.record(t.string, ParsedAttribute);
+export const NestedObjectClaim = z.record(z.string(), ParsedAttribute);
 
 /**
  * Array of records of string keys and ParsedAttribute values.
  * This is used to parse nested claims.
  */
-export const NestedArrayClaim = t.array(NestedObjectClaim);
+export const NestedArrayClaim = z.array(NestedObjectClaim);
 
 /**
- * Union type for nested claims, either an object or an array of objects.
+ * Tags a schema output so that the claim kind can be resolved with a `switch` by the consumers,
+ * instead of re-checking the decoded value against every schema.
  */
-export const NestedClaim = t.union([NestedObjectClaim, NestedArrayClaim]);
+const tagged = <K extends string, S extends z.ZodType>(kind: K, schema: S) =>
+  schema.transform(
+    value => ({ kind, value }) as { kind: K; value: z.output<S> }
+  );
 
 /**
- * Decoder type for the claim field of the credential.
- * It includes all the possible types of claims and fallbacks to string.
- * To add more custom objects to the union:
- * t.string.pipe(JsonFromString).pipe(t.union([PlaceOfBirthClaim, PlaceOfBirthClaim]))
+ * Schema for the claim field of the credential.
+ * It includes all the possible kinds of claims and falls back to string.
+ * The order of the union members is significant: the first one that matches wins.
  */
-export const ClaimValue = t.union([
+export const ClaimValue = z.union([
   // Parse an object representing the place of birth
-  PlaceOfBirthClaim,
+  tagged("placeOfBirth", PlaceOfBirthClaim),
   // Parse a custom object representing a mDL driving privileges
-  DrivingPrivilegesCustomClaim,
+  tagged("drivingPrivileges", DrivingPrivilegesCustomClaim),
   // Parse an object representing a mDL driving privileges
-  DrivingPrivilegesClaim,
+  tagged("drivingPrivileges", DrivingPrivilegesClaim),
   // Parse an object representing a nested claim (the nested claim needs to be re-parsed again)
-  NestedObjectClaim,
+  tagged("nestedObject", NestedObjectClaim),
   // Parse an array of nested claims (the nested claims needs to be re-parsed again)
-  NestedArrayClaim,
+  tagged("nestedArray", NestedArrayClaim),
   // Otherwise parse a date as string
-  SimpleDateClaim,
+  tagged("date", SimpleDateClaim),
   // Otherwise parse an image
-  ImageClaim,
+  tagged("image", ImageClaim),
   // Otherwise parse a PDF
-  PdfClaim,
+  tagged("pdf", PdfClaim),
   // Otherwise parse a fiscal code
-  FiscalCodeClaim,
+  tagged("fiscalCode", FiscalCodeClaim),
   // Otherwise parse bool value
-  BoolClaim,
+  tagged("bool", BoolClaim),
   // Otherwise parse an url value
-  UrlClaim,
+  tagged("url", UrlClaim),
   // Otherwise parse a list of strings
-  SimpleListClaim,
+  tagged("list", SimpleListClaim),
   // Otherwise fallback to string
-  StringClaim,
+  tagged("string", StringClaim),
   // Otherwise fallback to empty string
-  EmptyStringClaim
+  tagged("emptyString", EmptyStringClaim)
 ]);
+
+/**
+ * A claim value that was successfully recognised, tagged with the kind that determines
+ * how it must be rendered.
+ */
+export type ClaimValue = z.output<typeof ClaimValue>;
+
+export type ClaimValueKind = ClaimValue["kind"];
+
+/**
+ * The parsed value carried by the claim kinds `K`.
+ */
+export type ClaimValueOfKind<K extends ClaimValueKind> = Extract<
+  ClaimValue,
+  { kind: K }
+>["value"];
+
+/**
+ * Parses a raw claim value into a tagged {@link ClaimValue}.
+ *
+ * @param value - The raw claim value, as read from the parsed credential.
+ * @returns Ok with the tagged value, Err with the validation issues when no kind matches.
+ */
+export const parseClaimValue = (
+  value: unknown
+): Result<ClaimValue, z.ZodError> => parseWithSchema(ClaimValue, value);
+
+/**
+ * Whether the given raw claim value is a base64 encoded PDF attachment.
+ */
+export const isPdfClaim = (value: unknown): boolean =>
+  PdfClaim.safeParse(value).success;
 
 /**
  *
@@ -642,10 +604,10 @@ const FISCAL_CODE_REGEX =
 /**
  * Extract a fiscal code from any string.
  * @param s - the input string
- * @returns An option with the extracted fiscal code
+ * @returns The extracted fiscal code, `undefined` when the string does not contain one
  */
-export const extractFiscalCode = (s: string) =>
-  pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
+export const extractFiscalCode = (s: string): string | undefined =>
+  s.match(FISCAL_CODE_REGEX)?.[0];
 
 /**
  * Truncate long strings to avoid performance issues when rendering claims.
@@ -667,24 +629,20 @@ export const isExpirationDateClaim = (claim: ClaimDisplayFormat) =>
 /**
  * Function that extracts a claim from a credential.
  * @param claimId - the claim id / name to extract
- * @param decoder - optional decoder for the claim value, defaults to decoding a string
- * @returns a function that extracts a claim from a credential
+ * @param schema - optional schema for the claim value, defaults to a plain string
+ * @returns a function that extracts a claim from a credential, `undefined` when it is missing or invalid
  */
 export const extractClaim =
-  <T = string>(
+  <S extends z.ZodType = z.ZodString>(
     claimId: string,
-    decoder: (i: unknown) => t.Validation<T> = t.string.decode as (
-      i: unknown
-    ) => t.Validation<T>
+    schema: S = z.string() as unknown as S
   ) =>
-  (credential: ParsedCredential): O.Option<T> =>
-    pipe(
-      credential,
-      O.fromNullable,
-      O.chainNullableK(x => x[claimId]?.value),
-      O.map(decoder),
-      O.chain(O.fromEither)
-    );
+  (credential: ParsedCredential | undefined): undefined | z.output<S> => {
+    const value = credential?.[claimId]?.value;
+    return value === undefined
+      ? undefined
+      : parseWithSchema(schema, value).unwrapOr(undefined);
+  };
 
 /**
  * Returns the fiscal code from a credential (if applicable)
@@ -693,13 +651,12 @@ export const extractClaim =
  */
 export const getFiscalCodeFromCredential = (
   credential: CredentialMetadata | undefined
-) =>
-  pipe(
-    O.fromNullable(credential?.parsedCredential),
-    O.chain(extractClaim(WellKnownClaim.tax_id_code)),
-    O.chain(extractFiscalCode),
-    O.getOrElse(() => "")
+): string => {
+  const taxIdCode = extractClaim(WellKnownClaim.tax_id_code)(
+    credential?.parsedCredential
   );
+  return (taxIdCode && extractFiscalCode(taxIdCode)) ?? "";
+};
 
 /**
  * Returns the first name from a credential (if applicable)
@@ -708,12 +665,8 @@ export const getFiscalCodeFromCredential = (
  */
 export const getFirstNameFromCredential = (
   credential: CredentialMetadata | undefined
-) =>
-  pipe(
-    O.fromNullable(credential?.parsedCredential),
-    O.chain(extractClaim(WellKnownClaim.given_name)),
-    O.getOrElse(() => "")
-  );
+): string =>
+  extractClaim(WellKnownClaim.given_name)(credential?.parsedCredential) ?? "";
 
 /**
  * Returns the family name from a credential (if applicable)
@@ -722,12 +675,8 @@ export const getFirstNameFromCredential = (
  */
 export const getFamilyNameFromCredential = (
   credential: CredentialMetadata | undefined
-) =>
-  pipe(
-    O.fromNullable(credential?.parsedCredential),
-    O.chain(extractClaim(WellKnownClaim.family_name)),
-    O.getOrElse(() => "")
-  );
+): string =>
+  extractClaim(WellKnownClaim.family_name)(credential?.parsedCredential) ?? "";
 
 type ClaimDisplayValue =
   | {
@@ -789,85 +738,63 @@ export const drivingPrivilegeToClaims = (
  */
 export const getClaimDisplayValue = (
   claim: ClaimDisplayFormat
-): ClaimDisplayValue =>
-  pipe(
-    claim.value,
-    ClaimValue.decode,
-    E.fold(
-      () => ({
-        renderAs: "text",
-        value: I18n.t(
-          "features.itWallet.generic.placeholders.claimNotAvailable"
-        )
-      }),
-      decoded => {
-        if (PlaceOfBirthClaim.is(decoded)) {
-          return {
-            renderAs: "text",
-            value: `${decoded.locality} (${decoded.country})`
-          };
-        }
-        if (SimpleDateClaim.is(decoded)) {
-          return { renderAs: "text", value: decoded.toString() };
-        }
-        if (ImageClaim.is(decoded)) {
-          return { renderAs: "image", value: decoded };
-        }
-        if (
-          claim.id.includes(WellKnownClaim.portrait) &&
-          StringClaim.is(decoded)
-        ) {
-          return {
-            renderAs: "image",
-            value: `data:image/jpeg;base64,${addPadding(decoded)}`
-          };
-        }
-        if (DrivingPrivilegesClaim.is(decoded)) {
-          return {
-            renderAs: "drivingPrivileges",
-            value: decoded
-          };
-        }
-        if (FiscalCodeClaim.is(decoded)) {
-          return {
-            renderAs: "text",
-            value: pipe(
-              decoded,
-              extractFiscalCode,
-              O.getOrElseW(() => decoded)
-            )
-          };
-        }
-        if (NestedObjectClaim.is(decoded)) {
-          const nestedClaims = parseClaims(decoded);
-          return { renderAs: "nestedObject", value: nestedClaims };
-        }
-        if (NestedArrayClaim.is(decoded)) {
-          const nestedObjects = decoded.map(obj => parseClaims(obj));
-          return { renderAs: "nestedObjectArray", value: nestedObjects };
-        }
-        if (BoolClaim.is(decoded)) {
+): ClaimDisplayValue => {
+  const notAvailable: ClaimDisplayValue = {
+    renderAs: "text",
+    value: I18n.t("features.itWallet.generic.placeholders.claimNotAvailable")
+  };
+
+  return parseClaimValue(claim.value).match<ClaimDisplayValue>(
+    parsed => {
+      switch (parsed.kind) {
+        case "bool":
           return {
             renderAs: "text",
             value: I18n.t(
-              decoded
+              parsed.value
                 ? "features.itWallet.presentation.credentialDetails.boolClaim.true"
                 : "features.itWallet.presentation.credentialDetails.boolClaim.false"
             )
           };
-        }
-        if (SimpleListClaim.is(decoded)) {
-          return { renderAs: "list", value: decoded };
-        }
-        if (StringClaim.is(decoded) || EmptyStringClaim.is(decoded)) {
-          return { renderAs: "text", value: decoded };
-        }
-        return {
-          renderAs: "text",
-          value: I18n.t(
-            "features.itWallet.generic.placeholders.claimNotAvailable"
-          )
-        };
+        case "date":
+          return { renderAs: "text", value: parsed.value.toString() };
+        case "drivingPrivileges":
+          return { renderAs: "drivingPrivileges", value: parsed.value };
+        case "emptyString":
+        case "pdf":
+        case "url":
+          return { renderAs: "text", value: parsed.value };
+        case "fiscalCode":
+          return {
+            renderAs: "text",
+            value: extractFiscalCode(parsed.value) ?? parsed.value
+          };
+        case "image":
+          return { renderAs: "image", value: parsed.value };
+        case "list":
+          return { renderAs: "list", value: parsed.value };
+        case "nestedArray":
+          return {
+            renderAs: "nestedObjectArray",
+            value: parsed.value.map(obj => parseClaims(obj))
+          };
+        case "nestedObject":
+          return { renderAs: "nestedObject", value: parseClaims(parsed.value) };
+        case "placeOfBirth":
+          return {
+            renderAs: "text",
+            value: `${parsed.value.locality} (${parsed.value.country})`
+          };
+        case "string":
+          // The portrait is transported as a raw base64 payload, without the data URL prefix
+          return claim.id.includes(WellKnownClaim.portrait)
+            ? {
+                renderAs: "image",
+                value: `data:image/jpeg;base64,${addPadding(parsed.value)}`
+              }
+            : { renderAs: "text", value: parsed.value };
       }
-    )
+    },
+    () => notAvailable
   );
+};
