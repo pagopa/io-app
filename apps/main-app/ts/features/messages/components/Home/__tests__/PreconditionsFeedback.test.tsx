@@ -6,6 +6,11 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { PreconditionsFeedback } from "../PreconditionsFeedback";
 
+jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
+  AnimatedPictogram: () => null,
+  IOAnimatedPictogramsAssets: {}
+}));
+
 describe("PreconditionsFeedback", () => {
   it("should match snapshot with title and no subtitle", () => {
     const component = renderComponent();

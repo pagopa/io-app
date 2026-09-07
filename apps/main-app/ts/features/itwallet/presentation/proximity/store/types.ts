@@ -1,13 +1,4 @@
 /**
- * Represents the claims associated with a specific credential type
- * within a proximity presentation consent.
- */
-export type ConsentCredentialInfo = {
-  claimNames: Array<string>;
-  credentialType: string;
-};
-
-/**
  * Represents the consent payload collected during a proximity presentation.
  * The display name is metadata only and does not contribute to consent identity.
  */
@@ -40,4 +31,13 @@ export type ProximityConsents = Record<string, StoredConsentData>;
  */
 export type StoredConsentData = ConsentData & {
   savedAt?: string;
+};
+
+/**
+ * Represents the claims associated with a specific credential type
+ * within a proximity presentation consent.
+ */
+type ConsentCredentialInfo = {
+  claimNames: Array<string>;
+  credentialType: string;
 };
