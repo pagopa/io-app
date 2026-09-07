@@ -3,7 +3,6 @@ import {
   RemotePresentation,
   Trust
 } from "@pagopa/io-react-native-wallet";
-import { constTrue } from "fp-ts/lib/function";
 import { createStore } from "redux";
 import { createActor } from "xstate";
 
@@ -57,7 +56,7 @@ describe("ItwRemoteFailureScreen", () => {
   ])("should render failure screen for $type", failure => {
     jest
       .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
-      .mockImplementation(constTrue);
+      .mockImplementation(() => true);
     expect(renderComponent(failure)).toMatchSnapshot();
   });
 });

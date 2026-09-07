@@ -165,9 +165,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
     "issuance": {
-      "integrityKeyTag": {
-        "_tag": "None",
-      },
+      "integrityKeyTag": undefined,
     },
     "preferences": {},
     "proximity": {

@@ -1,7 +1,5 @@
 import { Errors, IoWallet } from "@pagopa/io-react-native-wallet";
 import { differenceInCalendarDays } from "date-fns";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 
 import { getClaimsFullLocale, getCredentialExpireDate } from "./itwClaimsUtils";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
@@ -42,12 +40,10 @@ export const getCredentialStatus = (
   const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);
 
   // Not all credentials have an expiration date
-  const documentExpireDays = pipe(
-    getCredentialExpireDate(parsedCredential),
-    O.fromNullable,
-    O.map(expireDate => differenceInCalendarDays(expireDate, now)),
-    O.getOrElse(() => NaN)
-  );
+  const documentExpirationDate = getCredentialExpireDate(parsedCredential);
+  const documentExpireDays = documentExpirationDate
+    ? differenceInCalendarDays(documentExpirationDate, now)
+    : NaN;
 
   const isIssuerAttestedExpired =
     validity?.type === "status_assertion" &&

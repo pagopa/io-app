@@ -151,13 +151,17 @@ const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
       data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/)
     ),
     O.map(match => new URLSearchParams(match[1])),
-    O.chainEitherK(params =>
-      validateItwPresentationQrCodeParams(selectItwSpecsVersion(state), {
-        client_id: params.get("client_id"),
-        request_uri: params.get("request_uri"),
-        state: params.get("state"),
-        request_uri_method: params.get("request_uri_method")
-      } as ItwRemoteRequestPayload)
+    // The IT-Wallet validation returns a neverthrow Result: adapt it to an Option here,
+    // at the boundary with the barcode decoders.
+    O.chain(params =>
+      O.fromNullable(
+        validateItwPresentationQrCodeParams(selectItwSpecsVersion(state), {
+          client_id: params.get("client_id"),
+          request_uri: params.get("request_uri"),
+          state: params.get("state"),
+          request_uri_method: params.get("request_uri_method")
+        } as ItwRemoteRequestPayload).unwrapOr(undefined)
+      )
     ),
     O.map(itwRemoteRequestPayload => ({
       type: "ITW_REMOTE",
