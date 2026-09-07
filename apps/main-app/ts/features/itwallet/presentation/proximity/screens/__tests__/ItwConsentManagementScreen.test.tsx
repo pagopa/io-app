@@ -1,4 +1,4 @@
-import { act, fireEvent } from "@testing-library/react-native";
+import { act, cleanupAsync, fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
@@ -37,11 +37,24 @@ const consent: StoredConsentData = {
 
 describe("ItwConsentManagementScreen", () => {
   beforeEach(() => {
+    // Control animations without replacing React's asynchronous scheduler.
+    jest.useFakeTimers({ doNotFake: ["queueMicrotask", "setImmediate"] });
     jest.clearAllMocks();
     jest.spyOn(Alert, "alert").mockImplementation(jest.fn());
     jest
       .spyOn(analytics, "trackItwConsentManagement")
       .mockImplementation(jest.fn());
+  });
+
+  afterEach(async () => {
+    try {
+      await act(async () => {
+        await jest.runOnlyPendingTimersAsync();
+      });
+      await cleanupAsync();
+    } finally {
+      jest.useRealTimers();
+    }
   });
 
   it("returns to the document without showing an empty state when no consents exist", () => {
