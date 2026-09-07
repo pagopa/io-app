@@ -67,6 +67,7 @@ export const itwProximityMachine = setup({
      */
 
     trackProximityStart: notImplemented,
+    trackProximitySuccess: notImplemented,
     trackQrCodeLoadingFailure: notImplemented
   },
   actors: {
@@ -533,6 +534,7 @@ export const itwProximityMachine = setup({
     },
     Success: {
       description: "Documents successfully sent to the verifier",
+      entry: "trackProximitySuccess",
       always: {
         // NFC retrieval renders success inline on its own screen, no navigation needed
         guard: not("isNfcRetrieval"),

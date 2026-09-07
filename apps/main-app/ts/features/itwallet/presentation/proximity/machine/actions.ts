@@ -4,6 +4,7 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIOStore } from "../../../../../store/hooks";
 import { assert } from "../../../../../utils/assert";
 import {
+  trackItwProximityPresentationCompleted,
   trackItwProximityQrCodeLoadingFailure,
   trackItwProximityStart
 } from "../analytics";
@@ -125,6 +126,14 @@ export const createProximityActionsImplementation = (
     context
   }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
     trackItwProximityStart({
+      proximity_flow: context.engagementMode === "nfc" ? "nfc" : "qr_code"
+    });
+  },
+
+  trackProximitySuccess: ({
+    context
+  }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
+    trackItwProximityPresentationCompleted({
       proximity_flow: context.engagementMode === "nfc" ? "nfc" : "qr_code"
     });
   },
