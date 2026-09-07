@@ -33,6 +33,7 @@ const baseCredential: CredentialMetadata = {
     expiration: "2030-01-01T00:00:00.000Z",
     issuedAt: "2026-01-01T00:00:00.000Z"
   },
+  keyAttestationId: "key-attestation-id",
   keyTag: "key-tag",
   keyTags: ["key-tag", "key-tag-copy"],
   parsedCredential: {
@@ -45,9 +46,8 @@ const baseCredential: CredentialMetadata = {
       value: "Mario"
     }
   },
-  spec_version: "1.3.3",
-  validity: baseValidity,
-  walletUnitAttestationId: "wallet-unit-attestation-id"
+  spec_version: "1.4.6",
+  validity: baseValidity
 };
 
 const statusAssertion: ParsedStatusAssertion = {
@@ -123,7 +123,7 @@ describe("applyStatusToCredential", () => {
         keyTag: baseCredential.keyTag,
         keyTags: baseCredential.keyTags,
         spec_version: baseCredential.spec_version,
-        walletUnitAttestationId: baseCredential.walletUnitAttestationId
+        keyAttestationId: baseCredential.keyAttestationId
       });
       expect(result.issuerConf).toBe(baseCredential.issuerConf);
       expect(result.parsedCredential.given_name).toBe(
