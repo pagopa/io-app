@@ -1,21 +1,19 @@
+import { ContentWrapper, H6, VStack, WithTestID } from "@io-app/design-system";
+
 import {
-  ContentWrapper,
-  H6,
-  IOPictograms,
-  Pictogram,
-  VStack,
-  WithTestID
-} from "@io-app/design-system";
+  AnimatedPictogram,
+  IOAnimatedPictograms
+} from "../../../../components/ui/AnimatedPictogram";
 
 export type EmptyListProps = WithTestID<{
-  pictogram: IOPictograms;
+  pictogram: IOAnimatedPictograms;
   title: string;
 }>;
 
 export const EmptyList = ({ pictogram, title, testID }: EmptyListProps) => (
   <ContentWrapper testID={testID}>
     <VStack space={24} style={{ alignItems: "center" }}>
-      <Pictogram name={pictogram} size={120} />
+      <AnimatedPictogram name={pictogram} size={120} />
       <H6 style={{ textAlign: "center" }}>{title}</H6>
     </VStack>
   </ContentWrapper>

@@ -1,7 +1,6 @@
 import { randomUUID } from "crypto";
 import { Request } from "express";
 import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 
 import { getDateMsDifference } from "../../utils/date";
 
@@ -29,28 +28,28 @@ export const generateNewNonce = () =>
     setNonceInfo(uuid, new Date())
   );
 
-const extractNonceFromRequest = (request: Request): O.Option<string> =>
-  pipe(
-    request.get("signature-input"),
-    O.fromNullable,
-    O.fold(
-      () => O.none,
-      sigInput =>
-        pipe(
-          sigInput.match(/nonce="([^"]+)";/),
-          O.fromNullable,
-          O.map(matches => matches[1])
-        )
-    )
-  );
+const extractNonceFromRequest = (request: Request): string | undefined => {
+  const signatureInput = request.get("signature-input");
+  if (!signatureInput) {
+    return undefined;
+  }
+  const matchingNonceMaybe = signatureInput.match(/nonce="([^"]+)";/);
+  if (!matchingNonceMaybe) {
+    return undefined;
+  }
+  return matchingNonceMaybe[1];
+};
 
-export const checkNonceFromRequest = (request: Request, nonceInfo: NonceInfo) =>
-  pipe(
-    extractNonceFromRequest(request),
-    O.fold(
-      () => false,
-      requestNonce =>
-        getDateMsDifference(new Date(), nonceInfo.instantiationDate) <
-          NONCE_EXPYRING_MS && nonceInfo.nonce === requestNonce
-    )
-  );
+export const checkNonceFromRequest = (
+  request: Request,
+  inputNonceInfo: NonceInfo
+): boolean => {
+  const nonceFromRequest = extractNonceFromRequest(request);
+  if (!nonceFromRequest) {
+    return false;
+  }
+  const isNonceStillValid =
+    getDateMsDifference(new Date(), inputNonceInfo.instantiationDate) <
+    NONCE_EXPYRING_MS;
+  return isNonceStillValid && inputNonceInfo.nonce === nonceFromRequest;
+};

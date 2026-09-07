@@ -1,7 +1,5 @@
 import { fakerIT as faker } from "@faker-js/faker";
 import { Router } from "express";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 
 import { addHandler } from "../payloads/response";
 import {
@@ -17,21 +15,19 @@ addHandler(
   sessionRouter,
   "get",
   addApiAuthV1Prefix("/session"),
-  ({ query }, res) =>
-    pipe(
-      getCustomSession(query),
-      O.fromNullable,
-      O.fold(
-        () => res.sendStatus(401),
-        customSession =>
-          res.json({
-            ...customSession.payload,
-            ...(shouldAddLollipopAssertionRef(query) && {
-              lollipopAssertionRef: getAssertionRef()
-            })
-          })
-      )
-    )
+  ({ query }, res) => {
+    const sessionMaybe = getCustomSession(query);
+    if (!sessionMaybe) {
+      res.sendStatus(401);
+      return;
+    }
+    res.json({
+      ...sessionMaybe.payload,
+      ...(shouldAddLollipopAssertionRef(query) && {
+        lollipopAssertionRef: getAssertionRef()
+      })
+    });
+  }
 );
 
 addHandler(sessionRouter, "get", addApiV1Prefix("/token/support"), (_, res) =>
