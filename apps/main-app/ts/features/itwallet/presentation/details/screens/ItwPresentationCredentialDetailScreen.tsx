@@ -5,7 +5,6 @@ import {
   VStack
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
@@ -98,7 +97,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
     CredentialType.DRIVING_LICENSE
   );
 
-  const credentialOption = useIOSelector(
+  const credential = useIOSelector(
     itwCredentialSelector(normalizedCredentialType)
   );
 
@@ -148,13 +147,11 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
     );
   }
 
-  if (O.isNone(credentialOption)) {
+  if (credential === undefined) {
     // If the credential is not found, we render a screen that allows the user to request that credential.
     return <ItwCredentialNotFound credentialType={normalizedCredentialType} />;
   }
-  return (
-    <ItwPresentationCredentialDetail credential={credentialOption.value} />
-  );
+  return <ItwPresentationCredentialDetail credential={credential} />;
 };
 
 const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
