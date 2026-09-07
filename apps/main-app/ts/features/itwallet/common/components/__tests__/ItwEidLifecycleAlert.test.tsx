@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react-native";
-import * as O from "fp-ts/lib/Option";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 
@@ -28,7 +27,7 @@ describe("ItwEidLifecycleAlert", () => {
   it("should not crash when rendered outside a navigation context without currentScreenName", () => {
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidSelector")
-      .mockReturnValue(O.some(ItwStoredCredentialsMocks.eid));
+      .mockReturnValue(ItwStoredCredentialsMocks.eid);
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
       .mockReturnValue("jwtExpiring");
@@ -57,7 +56,7 @@ describe("ItwEidLifecycleAlert", () => {
 
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidSelector")
-      .mockReturnValue(O.some(ItwStoredCredentialsMocks.eid));
+      .mockReturnValue(ItwStoredCredentialsMocks.eid);
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
       .mockReturnValue("jwtExpiring");
@@ -78,7 +77,7 @@ describe("ItwEidLifecycleAlert", () => {
   it("should render the alert when eID status is included in lifecycleStatus", () => {
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidSelector")
-      .mockReturnValue(O.some(ItwStoredCredentialsMocks.eid));
+      .mockReturnValue(ItwStoredCredentialsMocks.eid);
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
       .mockReturnValue("jwtExpiring");
@@ -94,7 +93,7 @@ describe("ItwEidLifecycleAlert", () => {
   it("should not render the alert when eID option is none", () => {
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidSelector")
-      .mockReturnValue(O.none);
+      .mockReturnValue(undefined);
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
       .mockReturnValue(undefined);
@@ -110,7 +109,7 @@ describe("ItwEidLifecycleAlert", () => {
   it("should not render the alert when eID status is not in lifecycleStatus", () => {
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidSelector")
-      .mockReturnValue(O.some(ItwStoredCredentialsMocks.eid));
+      .mockReturnValue(ItwStoredCredentialsMocks.eid);
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
       .mockReturnValue("valid");
