@@ -617,7 +617,7 @@ export const generateKeysWithWalletUnitAttestation: GenerateKeysWithWalletUnitAt
     );
   };
 
-export type AuthorizedBatchCredentialMetadata = {
+type AuthorizedBatchCredentialMetadata = {
   authDetails: CredentialAccessToken["authorization_details"][number];
   /**
    * One key per credential copy to obtain in the batch. All keys are attested by the same WUA.

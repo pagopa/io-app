@@ -24,12 +24,6 @@ import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isFIMSLink } from "../../fims/singleSignOn/utils";
 import { trackCTAFrontMatterDecodingError } from "../analytics";
 
-export type CTAActionType =
-  | "fims"
-  | "io_handled_link"
-  | "io_internal_link"
-  | "none";
-
 export const handleCtaAction = (
   cta: CTA,
   linkTo: (path: string) => void,
