@@ -35,7 +35,7 @@ export type IOFontFamily = keyof typeof fonts;
 /*
  * Font Sizes
  */
-const fontSizes = [12, 14, 16, 20, 22, 26, 28, 32] as const;
+const fontSizes = [12, 14, 16, 18, 20, 22, 26, 28, 32] as const;
 const fontSizesLegacy = [17, 28, 31, 35] as const;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const allFontSizes = [...new Set([...fontSizes, ...fontSizesLegacy])];

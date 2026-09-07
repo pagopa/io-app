@@ -1,5 +1,10 @@
 import { useIOTheme } from "../../../context";
+import { IOTypography } from "../../../core";
 import { IOText, IOTextProps, TypographicStyleProps } from "../IOText";
+
+const {
+  mdH2: { colorToken, ...mdH2Style }
+} = IOTypography;
 
 /**
  * `MdH2` typographic style
@@ -12,10 +17,8 @@ export const MdH2 = ({
 
   const MdH2Props: IOTextProps = {
     ...props,
-    weight: "Semibold",
-    size: 18,
-    lineHeight: 24,
-    color: customColor ?? theme["textHeading-default"]
+    ...mdH2Style,
+    color: customColor ?? theme[colorToken]
   };
 
   return <IOText {...MdH2Props}>{props.children}</IOText>;
