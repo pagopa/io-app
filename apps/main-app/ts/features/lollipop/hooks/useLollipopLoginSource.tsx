@@ -14,7 +14,7 @@ import {
   isActiveSessionLoginSelector
 } from "../../authentication/activeSessionLogin/store/selectors";
 import { selectedIdentityProviderSelector } from "../../authentication/common/store/selectors";
-import { getLoginHeaders } from "../../authentication/common/utils/login";
+import { getLoginHeaders } from "../../authentication/common/utils";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../authentication/login/cie/utils";
 import {

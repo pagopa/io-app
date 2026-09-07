@@ -266,7 +266,10 @@
     },
     "idp_selection": {
       "contextualHelpContent": "**The Identity Provider manages your digital identity**. You can begin your authentication flow only after selecting the Identity Provider that issued your SPID identity.\n",
-      "contextualHelpTitle": "Who is your Identity Provider?"
+      "contextualHelpTitle": "Who is your Identity Provider?",
+      "idps": {
+        "loadingAccessibilityLabel": "Loading Identity Provider"
+      }
     },
     "landing": {
       "accessibility": {
@@ -1136,7 +1139,7 @@
               "4": "The new official digital documents are available exclusively on the IO app",
               "5": "Access public administration digital services in just a few taps"
             },
-            "title": "IO is now your public digital wallet: secure, free, and yours.",
+            "title": "Your digital documents with IT-Wallet: secure, official, and always with you",
             "tos": "By clicking **Continue**, you acknowledge that you have read and understood the [Privacy Policy and Terms and Conditions of Use]({{tos_url}})."
           },
           "legacy": {
@@ -1532,6 +1535,15 @@
           "title": "Add the document to Wallet"
         },
         "credentialOffer": {
+          "activation": {
+            "primaryAction": "Activate IT-Wallet",
+            "subtitle": "To add {{ credential }} , you must first activate the IO IT-Wallet.",
+            "title": "Activate IT-Wallet to continue"
+          },
+          "confirmIdentity": {
+            "subtitle": "You must verify the identity associated with {{ wallet }} to add {{ credential }}",
+            "title": "Verify your identity to add the document"
+          },
           "intro": {
             "fallbackTitle": "Add a document to your Wallet"
           }
@@ -1539,7 +1551,8 @@
         "credentialPreview": {
           "actions": {
             "primary": "Add to Wallet",
-            "secondary": "Cancel"
+            "secondary": "Cancel",
+            "somethingWrong": "Does something seem off?"
           },
           "bottomSheet": {
             "about": {
@@ -1549,9 +1562,18 @@
             "authSource": {
               "subtitle": "It is the institution or digital database that holds the data contained in your document.",
               "title": "Who is it?"
+            },
+            "somethingWrong": {
+              "body": "If you find any errors or inconsistencies, please report them to the institution that holds the data and is responsible for it.",
+              "bodyAuthSource": "For this digital document, the reference institution is {{authSource}}.",
+              "bodyFooter": "Once the data has been corrected, you can repeat the process of adding the document to your portfolio.",
+              "primaryAction": "Got it",
+              "title": "Something doesn't add up with the data in the document"
             }
           },
+          "detailsTitle": "Check the details",
           "loading": "Please wait a few more seconds without exiting the app",
+          "subtitle": "If the information is correct, add the document to the Portfolio.",
           "title": "{{credential}}: here's a preview of your data"
         },
         "credentialResult": {
@@ -1819,7 +1841,8 @@
             "suspended": {
               "action": "Learn more",
               "title": "Your driver's license is not valid."
-            }
+            },
+            "title": "Did you know that?"
           },
           "statusAction": "What can I do?"
         },
@@ -1969,7 +1992,7 @@
               "title": "Are you sure you want to disable IT-Wallet?"
             }
           },
-          "listItemHeader": "My IT-Wallet ID information"
+          "listItemHeader": "Your IT-Wallet ID Information"
         },
         "missingCredentials": {
           "one": {
@@ -2057,11 +2080,15 @@
             "subtitle": "Please wait a few seconds...",
             "title": "Waiting for a connection to verify..."
           },
+          "consentDenied": {
+            "subtitle": "You can start a new verification by clicking 'Start verification' in the Portfolio section.",
+            "title": "You have stopped the verification process"
+          },
           "engagement": {
             "banner": {
               "action": "Learn more",
               "content": "It allows you to have the digital documents you've added to your Wallet verified.",
-              "title": "How does a QR code work?"
+              "title": "How does the verification process work?"
             },
             "instruction": "Show the QR code to the person verifying your digital documents",
             "invalidBanner": {
@@ -3171,7 +3198,7 @@
     },
     "offline": {
       "bottomSheet": {
-        "content": "###### What can I do? \n\nWhen you're offline, some of the app's features may not work. \n\n Documents on IO also work offline (if you’ve enabled the feature), but the validity of the documents is updated at the last online app access.\n\nConnect to the internet and refresh the app to resume using all IO services.",
+        "content": "###### What can I do? \n\nWhen you're offline, some of the app's features may not work. \n\n You can continue to use your digital documents if you’ve added them to your Wallet: their validity is updated to the last time you accessed the app while connected to a network. \n\n Connect to the internet and refresh the app to use all IO services.",
         "footerAction": "Restart the IO app",
         "title": "No connection"
       },
@@ -4597,7 +4624,7 @@
         "preferred_language": {
           "alert": {
             "subtitle": "Restart the app to apply the changes",
-            "title": "Would you like to change the app's language to \" {{lang}}\"?"
+            "title": "Would you like to change the app's language to {{lang}}?"
           },
           "sections": {
             "app": {

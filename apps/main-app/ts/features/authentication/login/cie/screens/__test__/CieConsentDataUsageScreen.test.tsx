@@ -7,7 +7,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { runConsentScreenSuite } from "../../../../activeSessionLogin/shared/CieContentDataUsageCommonSuite";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import * as loginUtils from "../../../../common/utils/login";
+import * as loginUtils from "../../../../common/utils";
 import CieConsentDataUsageScreen from "../CieConsentDataUsageScreen";
 
 jest.mock("react-native-webview", () => {
