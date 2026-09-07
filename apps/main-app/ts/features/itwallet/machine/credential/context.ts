@@ -50,23 +50,21 @@ export type Context = {
    */
   isWalletValid: boolean;
   /**
+   * An optional dictionary of Key Attestations generated for the issuance.
+   */
+  keyAttestations?: Record<string, string>;
+  /**
    * The mode for the credential issuance process. It does not change how the credentials are requested,
    * but it is needed to determine how the machine should behave.
    */
   mode: CredentialIssuanceMode;
   requestedCredential: RequestObject | undefined;
   resolvedCredentialOffer: CredentialOfferResolved | undefined;
-
   responseMode: string | undefined;
   /**
    * The wallet instance attestation of the wallet. If expired, it will be requested a new one.
    */
   walletInstanceAttestation: undefined | WalletInstanceAttestations;
-
-  /**
-   * An optional dictionary of Wallet Unit Attestations generated for the issuance.
-   */
-  walletUnitAttestations?: Record<string, string>;
   /**
    * The WIA crypto context, which contains the necessary cryptographic information for the issuance.
    */
