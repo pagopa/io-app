@@ -1,5 +1,5 @@
 import { StatusEnum } from "@io-app/api-types/generated/definitions/cgn/EycaActivationDetail";
-import * as E from "fp-ts/lib/Either";
+import { err, ok, Result } from "neverthrow";
 import { call } from "typed-redux-saga/macro";
 
 import {
@@ -16,17 +16,19 @@ import { withRefreshApiCall } from "../../../../../../authentication/fastLogin/s
 import { BackendCGN } from "../../../../api/backendCgn";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 
-export type GetEycaStatus = "COMPLETED" | "ERROR" | "NOT_FOUND" | "PROCESSING";
+export type GetActivationResult = Result<GetEycaStatus, NetworkError>;
+
+type GetEycaStatus = "COMPLETED" | "ERROR" | "NOT_FOUND" | "PROCESSING";
 
 /**
  * ask for the current status of EYCA activation
- * it returns the status {@link GetEycaStatus} - right case
- * if an error occured it returns a {@link NetworkError} - left case
+ * it returns the status {@link GetEycaStatus} - ok case
+ * if an error occured it returns a {@link NetworkError} - err case
  * @param getEycaActivation
  */
 export function* getActivation(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
-): Generator<ReduxSagaEffect, E.Either<NetworkError, GetEycaStatus>, any> {
+): Generator<ReduxSagaEffect, GetActivationResult, any> {
   try {
     const getEycaActivationRequest = getEycaActivation({});
     const getEycaActivationResult = (yield* call(
@@ -34,26 +36,26 @@ export function* getActivation(
       getEycaActivationRequest,
       cgnEycaActivation.request()
     )) as unknown as SagaCallReturnType<typeof getEycaActivation>;
-    if (E.isRight(getEycaActivationResult)) {
+    if ("right" in getEycaActivationResult) {
       if (getEycaActivationResult.right.status === 200) {
         const result = getEycaActivationResult.right.value;
         switch (result.status) {
           case StatusEnum.COMPLETED:
-            return E.right("COMPLETED");
+            return ok("COMPLETED");
           case StatusEnum.ERROR:
-            return E.right("ERROR");
+            return ok("ERROR");
           case StatusEnum.PENDING:
           case StatusEnum.RUNNING:
-            return E.right("PROCESSING");
+            return ok("PROCESSING");
           default: {
             const reason = `unexpected status result ${getEycaActivationResult.right.value.status}`;
-            return E.left(getGenericError(new Error(reason)));
+            return err(getGenericError(new Error(reason)));
           }
         }
       } else if (getEycaActivationResult.right.status === 404) {
-        return E.right("NOT_FOUND");
+        return ok("NOT_FOUND");
       } else {
-        return E.left(
+        return err(
           getGenericError(
             new Error(`response status ${getEycaActivationResult.right.status}`)
           )
@@ -61,13 +63,13 @@ export function* getActivation(
       }
     } else {
       // decoding failure
-      return E.left(
+      return err(
         getGenericError(
           new Error(readablePrivacyReport(getEycaActivationResult.left))
         )
       );
     }
   } catch (e) {
-    return E.left(getNetworkError(e));
+    return err(getNetworkError(e));
   }
 }
