@@ -1,4 +1,4 @@
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Alert } from "react-native";
 import { createStore } from "redux";
@@ -19,12 +19,42 @@ import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider.tsx";
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
+import {
+  itwGrantProximityConsent,
+  itwRevokeProximityConsentByKey
+} from "../../../proximity/store/actions";
+import { ConsentData } from "../../../proximity/store/types";
+import { generateConsentKey } from "../../../proximity/store/utils";
 import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter.tsx";
 
 const mockTrackItwCredentialDelete = jest.fn();
+const mockTrackItwCredentialManageConsent = jest.fn();
 const mockToastError = jest.fn();
 const mockToastInfo = jest.fn();
 const mockToastSuccess = jest.fn();
+
+const drivingLicenseConsent: ConsentData = {
+  rpId: "rp-001",
+  credentials: [
+    {
+      credentialType: CredentialType.DRIVING_LICENSE,
+      claimNames: ["given_name"]
+    }
+  ]
+};
+const anotherDrivingLicenseConsent: ConsentData = {
+  ...drivingLicenseConsent,
+  rpId: "rp-002"
+};
+const healthCardConsent: ConsentData = {
+  rpId: "rp-003",
+  credentials: [
+    {
+      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+      claimNames: ["given_name"]
+    }
+  ]
+};
 
 jest.mock("@io-app/design-system", () => ({
   ...jest.requireActual<typeof import("@io-app/design-system")>(
@@ -41,6 +71,12 @@ jest.mock("../../analytics", () => ({
   ...jest.requireActual("../../analytics"),
   trackItwCredentialDelete: (credential: unknown, properties: unknown) =>
     mockTrackItwCredentialDelete(credential, properties)
+}));
+
+jest.mock("../../../proximity/analytics", () => ({
+  ...jest.requireActual("../../../proximity/analytics"),
+  trackItwCredentialManageConsent: (properties: unknown) =>
+    mockTrackItwCredentialManageConsent(properties)
 }));
 
 describe("ItwPresentationDetailsFooter", () => {
@@ -66,6 +102,79 @@ describe("ItwPresentationDetailsFooter", () => {
     expect(queryByTestId("requestAssistanceActionTestID")).not.toBeNull();
     expect(queryByTestId("removeCredentialActionTestID")).not.toBeNull();
     expect(queryByTestId("openIPatenteActionTestID")).toBeNull();
+    expect(queryByTestId("manageConsentsActionTestID")).toBeNull();
+  });
+
+  it.each([
+    { name: "no consents", consents: [], visible: false },
+    {
+      name: "a consent for another document",
+      consents: [healthCardConsent],
+      visible: false
+    },
+    {
+      name: "one consent for the document",
+      consents: [drivingLicenseConsent],
+      visible: true
+    },
+    {
+      name: "multiple consents for the document",
+      consents: [drivingLicenseConsent, anotherDrivingLicenseConsent],
+      visible: true
+    }
+  ])(
+    "sets consent management visibility with $name",
+    ({ consents, visible }) => {
+      const { queryByTestId } = renderComponent(
+        CredentialType.DRIVING_LICENSE,
+        consents
+      );
+
+      expect(queryByTestId("manageConsentsActionTestID") !== null).toBe(
+        visible
+      );
+    }
+  );
+
+  it.each([
+    {
+      name: "the last consent for the document is revoked",
+      consents: [drivingLicenseConsent, healthCardConsent],
+      visible: false
+    },
+    {
+      name: "another consent for the document remains",
+      consents: [drivingLicenseConsent, anotherDrivingLicenseConsent],
+      visible: true
+    }
+  ])("updates consent management when $name", ({ consents, visible }) => {
+    const { queryByTestId, store } = renderComponent(
+      CredentialType.DRIVING_LICENSE,
+      consents
+    );
+    expect(queryByTestId("manageConsentsActionTestID")).not.toBeNull();
+
+    act(() => {
+      store.dispatch(
+        itwRevokeProximityConsentByKey(
+          generateConsentKey(drivingLicenseConsent)
+        )
+      );
+    });
+
+    expect(queryByTestId("manageConsentsActionTestID") !== null).toBe(visible);
+  });
+
+  it("tracks consent management with saved consents", () => {
+    const { getByTestId } = renderComponent(CredentialType.DRIVING_LICENSE, [
+      drivingLicenseConsent
+    ]);
+
+    fireEvent.press(getByTestId("manageConsentsActionTestID"));
+
+    expect(mockTrackItwCredentialManageConsent).toHaveBeenCalledWith({
+      credential: "ITW_PG_V2"
+    });
   });
 
   it("should render iPatente action", () => {
@@ -129,8 +238,15 @@ describe("ItwPresentationDetailsFooter", () => {
   });
 });
 
-const renderComponent = (credentialType: CredentialType) => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
+const renderComponent = (
+  credentialType: CredentialType,
+  consents: ReadonlyArray<ConsentData> = []
+) => {
+  const globalState = consents.reduce(
+    (state, consent) => appReducer(state, itwGrantProximityConsent(consent)),
+    appReducer(undefined, applicationChangeState("active"))
+  );
+  const store = createStore(appReducer, globalState as any);
 
   const logic = itwCredentialIssuanceMachine.provide({
     actions: {
@@ -138,7 +254,7 @@ const renderComponent = (credentialType: CredentialType) => {
     }
   });
 
-  return renderScreenWithNavigationStoreContext<GlobalState>(
+  const component = renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
         <ItwPresentationDetailsFooter
@@ -151,6 +267,7 @@ const renderComponent = (credentialType: CredentialType) => {
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
     {},
-    createStore(appReducer, globalState as any)
+    store
   );
+  return { ...component, store };
 };
