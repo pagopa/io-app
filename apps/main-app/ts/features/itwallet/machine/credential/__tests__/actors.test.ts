@@ -12,7 +12,7 @@ describe("createCredentialIssuanceActorsImplementation", () => {
    */
   it("implements every actor declared in the machine setup", () => {
     const env = {} as Env;
-    const itwVersion = "1.3.3";
+    const itwVersion = "1.4.6";
     const store = {
       getState: jest.fn(),
       subscribe: jest.fn(),

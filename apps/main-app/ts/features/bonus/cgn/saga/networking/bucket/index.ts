@@ -1,4 +1,3 @@
-import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -25,7 +24,7 @@ export function* cgnBucketConsuption(
       discountBacketRequest,
       cgnCodeFromBucketRequest
     )) as unknown as SagaCallReturnType<typeof getDiscountBucketCode>;
-    if (E.isRight(discountBucketCodeResult)) {
+    if ("right" in discountBucketCodeResult) {
       if (discountBucketCodeResult.right.status === 200) {
         yield* put(
           cgnCodeFromBucket.success({

@@ -1,5 +1,4 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import * as O from "fp-ts/lib/Option";
 
 import { extractLoginResult, getIntentFallbackUrl, getLoginHeaders } from "..";
 
@@ -129,30 +128,30 @@ describe("hook the login outcome from the url", () => {
 });
 
 describe("getIntentFallbackUrl", () => {
-  const isIntentSchemeCases: ReadonlyArray<[string, O.Option<string>]> = [
-    ["", O.none],
-    ["https://www.google.com", O.none],
-    ["intent:", O.none],
-    ["intent://", O.none],
+  const isIntentSchemeCases: ReadonlyArray<[string, string | undefined]> = [
+    ["", undefined],
+    ["https://www.google.com", undefined],
+    ["intent:", undefined],
+    ["intent://", undefined],
     [
       "intent://domain.test.it/?tranId=abc#Intent;scheme=https;package=com.test.it;S.browser_fallback_url=https://domain.it/?tranId=acb;end",
-      O.some("https://domain.it/?tranId=acb")
+      "https://domain.it/?tranId=acb"
     ],
     [
       "intent://domain.test.it/?tranId=abc#Intent;scheme=https;package=com.test.it;S.browser_fallback_url=https://domain.it/?tranId=acb",
-      O.none
+      undefined
     ],
     [
       "intent://domain.test.it/?tranId=abc#Intent;scheme=https;package=com.test.it;end",
-      O.none
+      undefined
     ],
     [
       "intent://domain.test.it/?tranId=abc#Intent;scheme=https;package=com.test.it;fallback_url=https://domain.it/?tranId=acb;end",
-      O.none
+      undefined
     ],
     [
       "intent:/domain.test.it/?tranId=abc#Intent;scheme=https;package=com.test.it;S.browser_fallback_url=https://domain.it/?tranId=acb;end",
-      O.none
+      undefined
     ]
   ];
   test.each(isIntentSchemeCases)(

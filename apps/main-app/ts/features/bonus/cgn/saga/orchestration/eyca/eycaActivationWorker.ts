@@ -1,4 +1,3 @@
-import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -36,26 +35,26 @@ export function* eycaActivationWorker(
     getEycaActivation
   );
 
-  if (E.isLeft(eycaActivation)) {
-    yield* put(cgnEycaActivation.failure(eycaActivation.left));
+  if (eycaActivation.isErr()) {
+    yield* put(cgnEycaActivation.failure(eycaActivation.error));
     return;
   }
 
-  if (eycaActivation.right === "PROCESSING") {
+  if (eycaActivation.value === "PROCESSING") {
     yield* call(handleEycaActivationSaga, getEycaActivation);
   } else {
     const startActivation: SagaCallReturnType<typeof handleStartActivation> =
       yield* call(handleStartActivation, startEycaActivation);
     // activation not handled error, stop
-    if (E.isLeft(startActivation)) {
-      yield* put(cgnEycaActivation.failure(startActivation.left));
+    if (startActivation.isErr()) {
+      yield* put(cgnEycaActivation.failure(startActivation.error));
       return;
     } else {
       // could be: ALREADY_ACTIVE, INELIGIBLE
       if (
-        ["ALREADY_ACTIVE", "INELIGIBLE"].some(v => v === startActivation.right)
+        ["ALREADY_ACTIVE", "INELIGIBLE"].some(v => v === startActivation.value)
       ) {
-        yield* put(cgnEycaActivation.success(startActivation.right));
+        yield* put(cgnEycaActivation.success(startActivation.value));
         yield* call(navigateToCgnDetails);
         return;
       } else {
