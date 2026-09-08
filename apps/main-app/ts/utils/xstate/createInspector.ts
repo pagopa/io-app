@@ -2,14 +2,8 @@
  * Provides one optional XState inspector for development machines.
  *
  * The inspector is initialized once so every provider shares one connection.
- * Serialized events keep state metadata but redact event payloads and context
- * before they leave the app.
+ * Inspection events include complete payloads and machine context.
  */
-import type {
-  StatelyActorEvent,
-  StatelyInspectionEvent
-} from "@statelyai/inspect";
-
 import { NativeModules } from "react-native";
 import { URL } from "react-native-url-polyfill";
 
@@ -17,10 +11,6 @@ import { isDevEnv, isTestEnv } from "../environment";
 
 /** The bridge port used by the local Stately Inspector server. */
 const INSPECTOR_PORT = 8080;
-type InspectionSnapshot = StatelyActorEvent["snapshot"];
-type RedactedSnapshot = Pick<InspectionSnapshot, "status" | "value"> & {
-  context: Record<string, never>;
-};
 type XStateInspector = ReturnType<
   typeof import("@statelyai/inspect").createWebSocketInspector
 >;
@@ -51,40 +41,6 @@ export const metroHostFromSourceUrl = (
 /** Returns the URL used to load the current JavaScript bundle from Metro. */
 export const metroSourceUrlFromNativeModules = (): unknown =>
   NativeModules?.SourceCode?.getConstants?.()?.scriptURL;
-
-/** Keeps state metadata while removing sensitive machine context. */
-const redactSnapshot = (snapshot: InspectionSnapshot): RedactedSnapshot => ({
-  status: snapshot.status,
-  value: snapshot.value,
-  context: {}
-});
-
-/**
- * Removes event payloads and machine context before they cross the inspector
- * boundary. State values remain available for debugging without exposing data.
- * The upstream snapshot type requires output and error fields, so the redacted
- * snapshot is asserted at this serialization boundary after omitting them.
- */
-export const serializeInspectionEvent = (
-  event: StatelyInspectionEvent
-): StatelyInspectionEvent => {
-  switch (event.type) {
-    case "@xstate.actor":
-      return { ...event, snapshot: redactSnapshot(event.snapshot) };
-    case "@xstate.event":
-      return { ...event, event: { type: event.event.type } };
-    case "@xstate.snapshot":
-      return {
-        ...event,
-        event: { type: event.event.type },
-        snapshot: redactSnapshot(event.snapshot)
-      } as unknown as StatelyInspectionEvent;
-    default: {
-      const exhaustiveEvent: never = event;
-      return exhaustiveEvent;
-    }
-  }
-};
 
 /**
  * Creates the shared inspector only for development bundles served by Metro.
@@ -134,8 +90,7 @@ const inspector: undefined | XStateInspector = (() => {
     require("@statelyai/inspect") as typeof import("@statelyai/inspect");
   /* eslint-enable @typescript-eslint/no-require-imports */
   return createWebSocketInspector({
-    url: `ws://${host}:${INSPECTOR_PORT}`,
-    serialize: serializeInspectionEvent
+    url: `ws://${host}:${INSPECTOR_PORT}`
   });
 })();
 
