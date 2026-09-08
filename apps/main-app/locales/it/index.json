@@ -1326,6 +1326,10 @@
             "title": "Inserisci il PIN della CIE"
           },
           "prepare": {
+            "animation": {
+              "pause": "Metti in pausa animazione",
+              "play": "Riproduci animazione"
+            },
             "can": {
               "cta": "Continua",
               "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
@@ -1346,10 +1350,6 @@
               "cta": "Inizia",
               "description": "Dovrai digitarlo per completare la verifica dell’identità.",
               "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)"
-            },
-            "animation": {
-              "pause": "Metti in pausa animazione",
-              "play": "Riproduci animazione"
             }
           },
           "readingCard": {
@@ -1493,7 +1493,7 @@
           "description": "Per consentire a IO di leggere la tua CIE, attiva l'NFC dalle Impostazioni del tuo dispositivo.",
           "header": "Come fare",
           "primaryAction": "Apri impostazioni",
-          "secondaryAction": "Continua",
+          "secondaryAction": "L'ho già fatto",
           "steps": {
             "1": "Apri \"Impostazioni\"",
             "2": "Cerca la funzionalità \"NFC\"",
@@ -1724,7 +1724,7 @@
             "content": "Nessuna connessione."
           },
           "modal": {
-            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\nDocumenti su IO funziona **anche offline** per un uso controllato, ma la validità dei tuoi documenti è aggiornata all'ultimo accesso in app con connessione a una rete.\n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
+            "content": "###### Cosa posso fare?\n\nQuando il tuo dispositivo è offline, alcuni servizi dell'app potrebbero non funzionare.\n\n Puoi continuare a usare i tuoi documenti digitali se li hai aggiunti al Portafoglio: la loro validità è aggiornata all’ultimo accesso in app con connessione a una rete. \n\nCollegati a internet e ricarica l'app per continuare ad usare tutti i servizi di IO.",
             "footerAction": "Ricarica l'app IO",
             "title": "Nessuna connessione"
           }
@@ -1759,7 +1759,7 @@
             "content": "Alcuni servizi dell’app sono limitati in questo momento."
           },
           "modal": {
-            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi** per un uso controllato, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
+            "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\n Puoi continuare a usare i tuoi documenti digitali se li hai aggiunti al Portafoglio: la loro validità è aggiornata all’ultimo accesso in app con connessione a una rete. \n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
             "footerAction": "Ricarica l'app IO",
             "title": "Servizi dell’app limitati"
           }
@@ -1971,7 +1971,7 @@
         },
         "ctas": {
           "openPdf": "Mostra documento",
-          "present": "Avvia verifica",
+          "present": "Usa per la verifica",
           "shareButton": "Salva o condividi",
           "trustmark": "Mostra certificato di autenticità"
         },
@@ -2026,7 +2026,7 @@
             "activation": {
               "actions": {
                 "primary": "Apri impostazioni",
-                "secondary": "Continua"
+                "secondary": "L'ho già fatto"
               },
               "alert": {
                 "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
@@ -2089,8 +2089,45 @@
             "title": "In attesa di connessione per la verifica..."
           },
           "consentDenied": {
-            "subtitle": "Puoi avviare una nuova verifica premendo “Avvia verifica” dalla sezione Portafoglio.",
+            "subtitle": "Puoi avviare una nuova verifica premendo “Usa per la verifica” dalla sezione Portafoglio.",
             "title": "Hai interrotto la verifica"
+          },
+          "consentManagement": {
+            "accessibility": {
+              "openDetail": "Apri il dettaglio del consenso per {{relyingParty}}",
+              "revoke": "Revoca il consenso per {{relyingParty}}"
+            },
+            "alert": {
+              "cancel": "No, mantieni",
+              "confirm": "Sì, revoca",
+              "message": "Ti verrà richiesto un nuovo consenso alle prossime verifiche contactless per {{relyingParty}}.",
+              "title": "Vuoi revocare il consenso?"
+            },
+            "cta": "Gestisci consensi",
+            "detail": {
+              "message": "Hai salvato il consenso per le verifiche contactless di questi dati per **{{relyingParty}}**.",
+              "revokeAction": "Revoca consenso",
+              "title": "Dettaglio consenso"
+            },
+            "fallback": "Servizio",
+            "header": "Consensi salvati",
+            "revocationSuccess": {
+              "subtitle": "Potrai salvare di nuovo il tuo consenso alla trasmissione dei dati del documento durante la prossima verifica contactless",
+              "title": "Hai revocato tutti i consensi salvati per {{credentialName}}"
+            },
+            "revokeAll": {
+              "action": "Revoca tutti i consensi",
+              "alert": {
+                "message": "Ti verrà richiesto un nuovo consenso alle prossime verifiche contactless.",
+                "title": "Vuoi revocare tutti i consensi per il documento?"
+              }
+            },
+            "savedAt": "Salvato il {{date}}",
+            "subtitle": "Qui puoi controllare e revocare i consensi salvati per le verifiche contactless del documento {{credentialName}}.",
+            "title": "Gestisci consensi",
+            "toast": {
+              "done": "Fatto!"
+            }
           },
           "engagement": {
             "banner": {
@@ -2098,20 +2135,20 @@
               "content": "Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.",
               "title": "Come funziona la verifica?"
             },
-            "instruction": "Mostra il codice QR a chi verifica i tuoi documenti digitali",
+            "instruction": "Mostra il codice QR o avvicinalo a un lettore. Chi verifica dal vivo userà un’app ufficiale.",
             "invalidBanner": {
               "action": "Conferma identità",
               "content": "Conferma la tua identità per continuare a usare il tuo portafoglio IT-Wallet."
             },
             "nfc": {
-              "action": "Avvia verifica contactless",
+              "action": "Usa verifica contactless",
               "or": "oppure"
             },
             "qrCode": {
               "accessibilityLabel": "Immagine del codice QR da mostrare a chi verifica i documenti digitali",
               "error": "Abbiamo avuto un problema nel generare il QR Code."
             },
-            "title": "Avvia una verifica"
+            "title": "Pronto per la verifica"
           },
           "nfc": {
             "activation": {
@@ -2201,43 +2238,6 @@
             "secondaryAction": "No, chiedimelo ogni volta",
             "subtitle": "Salva il consenso per saltare questo passaggio alle prossime verifiche contactless per questo servizio",
             "title": "Vuoi salvare la tua scelta per non ripetere questo passaggio?"
-          },
-          "consentManagement": {
-            "accessibility": {
-              "openDetail": "Apri il dettaglio del consenso per {{relyingParty}}",
-              "revoke": "Revoca il consenso per {{relyingParty}}"
-            },
-            "alert": {
-              "cancel": "No, mantieni",
-              "confirm": "Sì, revoca",
-              "message": "Ti verrà richiesto un nuovo consenso alle prossime verifiche contactless per {{relyingParty}}.",
-              "title": "Vuoi revocare il consenso?"
-            },
-            "cta": "Gestisci consensi",
-            "detail": {
-              "message": "Hai salvato il consenso per le verifiche contactless di questi dati per **{{relyingParty}}**.",
-              "revokeAction": "Revoca consenso",
-              "title": "Dettaglio consenso"
-            },
-            "fallback": "Servizio",
-            "header": "Consensi salvati",
-            "revocationSuccess": {
-              "subtitle": "Potrai salvare di nuovo il tuo consenso alla trasmissione dei dati del documento durante la prossima verifica contactless",
-              "title": "Hai revocato tutti i consensi salvati per {{credentialName}}"
-            },
-            "revokeAll": {
-              "action": "Revoca tutti i consensi",
-              "alert": {
-                "message": "Ti verrà richiesto un nuovo consenso alle prossime verifiche contactless.",
-                "title": "Vuoi revocare tutti i consensi per il documento?"
-              }
-            },
-            "savedAt": "Salvato il {{date}}",
-            "subtitle": "Qui puoi controllare e revocare i consensi salvati per le verifiche contactless del documento {{credentialName}}.",
-            "title": "Gestisci consensi",
-            "toast": {
-              "done": "Fatto!"
-            }
           },
           "success": {
             "subtitle": "La verifica è stata completata con successo.",
@@ -2347,7 +2347,7 @@
       "reissuanceLandingScreen": {
         "itWalletActivation": {
           "primaryAction": "Scopri di più",
-          "subtitle": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: pubblico, sicuro e gratuito.",
+          "subtitle": "Porta i tuoi documenti digitali verso funzionalità evolute con il portafoglio IT-Wallet di IO: pubblico, sicuro, tuo. ",
           "title": "Lo sapevi? Adesso puoi attivare IT-Wallet"
         },
         "notNecessary": {
@@ -2398,8 +2398,8 @@
           "title": "Il tuo IT-Wallet ID"
         },
         "qrCode": {
-          "description": "Chi verifica i tuoi documenti dal vivo usa un’app ufficiale per scansionare questo codice QR. ",
-          "title": "Mostra i documenti a chi verifica"
+          "description": "Usa questa funzione per presentare i tuoi documenti tramite IT-Wallet dal vivo.",
+          "title": "Mostra i tuoi documenti a chi verifica"
         }
       },
       "trustmark": {
@@ -4399,7 +4399,7 @@
         "fiscalCode": "Codice Fiscale",
         "nameSurname": "Nome e cognome"
       },
-      "subtitle": "Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO",
+      "subtitle": "Qui trovi i tuoi dati anagrafici e di contatto utilizzati dall'app IO",
       "title": "I tuoi dati"
     },
     "errors": {
