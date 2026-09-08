@@ -1818,9 +1818,6 @@
       },
       "presentation": {
         "alerts": {
-          "ehc": {
-            "content": "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
-          },
           "expired": {
             "content": "Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio"
           },
@@ -1848,7 +1845,11 @@
             },
             "title": "Lo sapevi?"
           },
-          "statusAction": "Cosa posso fare?"
+          "statusAction": "Cosa posso fare?",
+          "ts": {
+            "content": "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale.",
+            "title": "Lo sapevi?"
+          }
         },
         "bottomSheets": {
           "EuropeanDisabilityCard": {
@@ -1954,7 +1955,8 @@
               "education_diploma": "I tuoi Diplomi digitali hanno piena validità ufficiale.",
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
               "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
-            }
+            },
+            "title": "Lo sapevi?"
           },
           "openCardDocument": "Apri copia del documento",
           "partOf": "Parte di",
