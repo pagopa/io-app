@@ -110,6 +110,7 @@ const handleSessionExpired = jest.fn();
 const resetWalletInstance = jest.fn();
 const refreshCredentialsCatalogue = jest.fn();
 const storeCredentialUpgradeFailures = jest.fn();
+const trackIntroScreen = jest.fn();
 const trackWalletInstanceCreation = jest.fn();
 const trackWalletInstanceRevocation = jest.fn();
 const trackIdentificationMethodSelected = jest.fn();
@@ -180,6 +181,7 @@ describe("itwEidIssuanceMachine", () => {
       resetWalletInstance,
       refreshCredentialsCatalogue,
       storeCredentialUpgradeFailures,
+      trackIntroScreen,
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
       trackIdentificationMethodSelected,
@@ -2928,7 +2930,8 @@ describe("itwEidIssuanceMachine itwVersion routing", () => {
       storeIntegrityKeyTag,
       storeWalletInstanceAttestation,
       navigateToIdentificationScreen,
-      navigateToTosScreen
+      navigateToTosScreen,
+      trackIntroScreen
     },
     actors: {
       getCieStatus: fromPromise(getCieStatus),
