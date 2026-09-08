@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.39.0-rc.2](https://github.com/pagopa/io-app/compare/3.39.0-rc.1...3.39.0-rc.2) (2026-09-07)
+
+### Features
+
+* **IT-Wallet:** [[SIW-4862](https://pagopa.atlassian.net/browse/SIW-4862)] Fix wrong banner_id analytics property ([#8542](https://github.com/pagopa/io-app/issues/8542)) ([815a6cf](https://github.com/pagopa/io-app/commit/815a6cfed0b15d659e24ac749e33d442b7b82f1d))
+* **IT-Wallet:** [[SIW-4919](https://pagopa.atlassian.net/browse/SIW-4919)] Added value to property code with event QRCODE_SCAN_SUCCESS ([#8546](https://github.com/pagopa/io-app/issues/8546)) ([91f410b](https://github.com/pagopa/io-app/commit/91f410baddeba5a8b1c29c2b35a7e591d9f1e1f4))
+
+### Bug Fixes
+
+* [[IOPLT-2048](https://pagopa.atlassian.net/browse/IOPLT-2048)] Design system icon generator script ([#8535](https://github.com/pagopa/io-app/issues/8535)) ([4dfc967](https://github.com/pagopa/io-app/commit/4dfc96764bdc6d5eda1a0fa100d2dcad30845b15))
+
+### Chores
+
+* [[IOPID-4182](https://pagopa.atlassian.net/browse/IOPID-4182)] Add OneIdentity idpFriendlyNames url selector ([#8545](https://github.com/pagopa/io-app/issues/8545)) ([c4307d1](https://github.com/pagopa/io-app/commit/c4307d10c68c050b85fccc597913d5a89f478d36))
+* [[IOPLT-1972](https://pagopa.atlassian.net/browse/IOPLT-1972)] Remove `react-native-crypto` from dependencies ([#8346](https://github.com/pagopa/io-app/issues/8346)) ([68c6e16](https://github.com/pagopa/io-app/commit/68c6e1600203899f7b21b1112d42948dfc9d127e))
+* [[IOPLT-1989](https://pagopa.atlassian.net/browse/IOPLT-1989)] Remove unused components and hooks ([#8384](https://github.com/pagopa/io-app/issues/8384)) ([69c7f10](https://github.com/pagopa/io-app/commit/69c7f108c70de13e4047c263e1700ea171f2fccd))
+* [[IOPLT-1990](https://pagopa.atlassian.net/browse/IOPLT-1990)] Remove or de-export unused types ([#8385](https://github.com/pagopa/io-app/issues/8385)) ([88821b6](https://github.com/pagopa/io-app/commit/88821b69badffb3d40c41b728761d389523c56ee))
+* **IT-Wallet:** [[SIW-4552](https://pagopa.atlassian.net/browse/SIW-4552)] Update IT-Wallet specification to version 1.4 LTS ([#8487](https://github.com/pagopa/io-app/issues/8487)) ([b0f7d0c](https://github.com/pagopa/io-app/commit/b0f7d0cca8f2fd39a4d4ef3deca521ea9bb54893))
+## [3.39.0-rc.1](https://github.com/pagopa/io-app/compare/3.39.0-rc.0...3.39.0-rc.1) (2026-09-04)
+
+### Bug Fixes
+
+* [[IOPID-4185](https://pagopa.atlassian.net/browse/IOPID-4185)] Align `/reserve` request and response with current specs ([#8548](https://github.com/pagopa/io-app/issues/8548)) ([ccda16f](https://github.com/pagopa/io-app/commit/ccda16f065293586603acadf5f8252dc1b894d80))
+## [3.39.0-rc.0](https://github.com/pagopa/io-app/compare/3.38.0-rc.29...3.39.0-rc.0) (2026-09-04)
 ## [3.38.0-rc.29](https://github.com/pagopa/io-app/compare/3.38.0-rc.28...3.38.0-rc.29) (2026-09-03)
 
 ### Features

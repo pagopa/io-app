@@ -2,7 +2,7 @@ import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { CredentialStatus } from "@pagopa/io-react-native-wallet";
 import { ZodError } from "zod";
 
-import { getCredentialStatusFromStatusList, getKeysForWuaStatusList } from "..";
+import { getCredentialStatusFromStatusList, getKeysForKaStatusList } from "..";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { InvalidTslCredentialStatus } from "../errors";
 
@@ -22,8 +22,8 @@ declare const global: { fetch: typeof fetch };
 const CREDENTIAL_ID = "credential-id";
 const CREDENTIAL = "credential-jwt";
 const CREDENTIAL_FORMAT = "dc+sd-jwt";
-const WUA = "wua-jwt";
-const ITW_VERSION = "1.3.3";
+const KA = "ka-jwt";
+const ITW_VERSION = "1.4.6";
 const ISSUER = "https://wallet-provider.example";
 const FEDERATION_JWT = "federation-jwt";
 const STATUS_LIST_URI = `${ISSUER}/status-list/1`;
@@ -125,7 +125,7 @@ describe("getCredentialStatusFromStatusList", () => {
   });
 });
 
-describe("getKeysForWuaStatusList", () => {
+describe("getKeysForKaStatusList", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -146,9 +146,9 @@ describe("getKeysForWuaStatusList", () => {
       text: jest.fn().mockResolvedValue(FEDERATION_JWT)
     } as never);
 
-    await expect(getKeysForWuaStatusList(WUA)).resolves.toEqual(KEYS);
+    await expect(getKeysForKaStatusList(KA)).resolves.toEqual(KEYS);
 
-    expect(mockDecodeJwt).toHaveBeenNthCalledWith(1, WUA);
+    expect(mockDecodeJwt).toHaveBeenNthCalledWith(1, KA);
     expect(fetchSpy).toHaveBeenCalledWith(
       `${ISSUER}/.well-known/openid-federation`
     );
@@ -175,6 +175,6 @@ describe("getKeysForWuaStatusList", () => {
       text: jest.fn().mockResolvedValue(FEDERATION_JWT)
     } as never);
 
-    await expect(getKeysForWuaStatusList(WUA)).rejects.toBeInstanceOf(ZodError);
+    await expect(getKeysForKaStatusList(KA)).rejects.toBeInstanceOf(ZodError);
   });
 });

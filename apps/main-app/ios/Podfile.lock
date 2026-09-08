@@ -114,6 +114,9 @@ PODS:
   - ExpoTaskManager (55.0.16):
     - ExpoModulesCore
     - UMAppLoader
+  - ExpoUI (55.0.17):
+    - ExpoModulesCore
+    - React-RCTFabric
   - fast_float (8.0.0)
   - FBLazyVector (0.83.10)
   - fmt (12.1.0)
@@ -2639,8 +2642,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-randombytes (3.6.2):
-    - React-Core
   - react-native-safe-area-context (5.7.0):
     - boost
     - DoubleConversion
@@ -3914,6 +3915,7 @@ DEPENDENCIES:
   - ExpoScreenCapture (from `../../../node_modules/expo-screen-capture/ios`)
   - ExpoSharing (from `../../../node_modules/expo-sharing/ios`)
   - ExpoTaskManager (from `../../../node_modules/expo-task-manager/ios`)
+  - "ExpoUI (from `../../../node_modules/@expo/ui/ios`)"
   - fast_float (from `../../../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
   - FBLazyVector (from `../../../node_modules/react-native/Libraries/FBLazyVector`)
   - fmt (from `../../../node_modules/react-native/third-party-podspecs/fmt.podspec`)
@@ -3983,7 +3985,6 @@ DEPENDENCIES:
   - react-native-pdf (from `../../../node_modules/react-native-pdf`)
   - react-native-quick-base64 (from `../../../node_modules/react-native-quick-base64`)
   - react-native-quick-crypto (from `../../../node_modules/react-native-quick-crypto`)
-  - react-native-randombytes (from `../../../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
   - "react-native-skia (from `../../../node_modules/@shopify/react-native-skia`)"
   - react-native-splash-screen (from `../../../node_modules/react-native-splash-screen`)
@@ -4120,6 +4121,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-sharing/ios"
   ExpoTaskManager:
     :path: "../../../node_modules/expo-task-manager/ios"
+  ExpoUI:
+    :path: "../../../node_modules/@expo/ui/ios"
   fast_float:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/fast_float.podspec"
   FBLazyVector:
@@ -4257,8 +4260,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-quick-base64"
   react-native-quick-crypto:
     :path: "../../../node_modules/react-native-quick-crypto"
-  react-native-randombytes:
-    :path: "../../../node_modules/react-native-randombytes"
   react-native-safe-area-context:
     :path: "../../../node_modules/react-native-safe-area-context"
   react-native-skia:
@@ -4397,11 +4398,12 @@ SPEC CHECKSUMS:
   ExpoScreenCapture: aefcd749919380ee0b4d59bb60c1a150aac201c6
   ExpoSharing: 40cd8fd65209bc35adc710ff7e42dd35913d2a0f
   ExpoTaskManager: a288a5a5eab33009b1fb7a413ba47ef7eac23fba
+  ExpoUI: 3d10642147c44f94a4557f1defe2efd3244349af
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 07433c4ab85da44d0b5ceac374ff4e1d57c7aa23
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
-  glog: 0456694f3aaf09460b660ea327cfc11defbeea4c
-  hermes-engine: a2a9fc7160af80292783f30b771f14a477f29712
+  glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
+  hermes-engine: 037eacbb56098bf69c62cf905ec96fb01eab8248
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
   IoReactNativeIso18013: 730061a6443f611f163c38ec49b6dc5a4aae3f81
@@ -4473,7 +4475,6 @@ SPEC CHECKSUMS:
   react-native-pdf: edc236298f13f1609e42d41e45b8b6ea88ed10f9
   react-native-quick-base64: 6568199bb2ac8e72ecdfdc73a230fbc5c1d3aac4
   react-native-quick-crypto: dac9db2adb0a61b4881909b6db7c51eaaada66a8
-  react-native-randombytes: 4eeddad82d1fd57adda1cd5beffe67d041c9d6de
   react-native-safe-area-context: befb5404eb8a16fdc07fa2bebab3568ecabcbb8a
   react-native-skia: 80db9e2f8f8b16f8f22b563f0a3874c14026c1e2
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293

@@ -1,6 +1,5 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import * as O from "fp-ts/lib/Option";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 
@@ -29,22 +28,22 @@ type LoginSuccess = {
 };
 
 /**
- * return some(intentFallbackUrl) if the given input is a valid intent and it has the fallback url
+ * return string if the given input is a valid intent and it has the fallback url
  * more info https://developer.chrome.com/docs/multidevice/android/intents/
  * @param intentUrl
  */
-export const getIntentFallbackUrl = (intentUrl: string): O.Option<string> => {
+export const getIntentFallbackUrl = (intentUrl: string): string | undefined => {
   const intentProtocol = URLParse.extractProtocol(intentUrl);
   if (intentProtocol.protocol !== "intent:" || !intentProtocol.slashes) {
-    return O.none;
+    return undefined;
   }
   const hook = "S.browser_fallback_url=";
   const hookIndex = intentUrl.indexOf(hook);
   const endIndex = intentUrl.indexOf(";end", hookIndex + hook.length);
   if (hookIndex !== -1 && endIndex !== -1) {
-    return O.some(intentUrl.substring(hookIndex + hook.length, endIndex));
+    return intentUrl.substring(hookIndex + hook.length, endIndex);
   }
-  return O.none;
+  return undefined;
 };
 
 /**
