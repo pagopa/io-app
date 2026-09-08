@@ -1,7 +1,9 @@
 import { verifyCertificateChain } from "@pagopa/io-react-native-crypto";
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
-import { CredentialStatus } from "@pagopa/io-react-native-wallet";
-import { getJwkFromCertificateChain } from "@pagopa/io-react-native-wallet/src/utils/crypto";
+import {
+  CredentialStatus,
+  getJwkFromCertificateChain
+} from "@pagopa/io-react-native-wallet";
 
 import {
   getCredentialStatusFromStatusList,
@@ -18,7 +20,8 @@ jest.mock("@pagopa/io-react-native-jwt", () => ({
   decode: jest.fn()
 }));
 
-jest.mock("@pagopa/io-react-native-wallet/src/utils/crypto", () => ({
+jest.mock("@pagopa/io-react-native-wallet", () => ({
+  ...jest.requireActual("@pagopa/io-react-native-wallet"),
   getJwkFromCertificateChain: jest.fn()
 }));
 
