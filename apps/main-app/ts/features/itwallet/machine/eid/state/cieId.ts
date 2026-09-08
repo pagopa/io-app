@@ -18,7 +18,8 @@ export const cieIdState = itwEidIssuanceMachineSetup.createStateConfig({
           itwVersion: context.itwVersion,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           identification: context.identification,
-          withMRTDPoP: context.level === "l3"
+          withMRTDPoP: context.level === "l3",
+          deps: context.deps
         }),
         onDone: {
           actions: assign(({ event }) => ({

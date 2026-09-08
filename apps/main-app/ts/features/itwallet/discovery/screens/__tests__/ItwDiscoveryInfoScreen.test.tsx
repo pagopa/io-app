@@ -8,6 +8,7 @@ import * as identificationSelectors from "../../../identification/common/store/s
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { testEidIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
   ItwDiscoveryInfoScreen,
@@ -88,7 +89,10 @@ const renderComponent = (level: EidIssuanceLevel | undefined) => {
     });
 
     return (
-      <ItwEidIssuanceMachineContext.Provider logic={logic}>
+      <ItwEidIssuanceMachineContext.Provider
+        logic={logic}
+        options={{ input: { deps: testEidIssuanceDeps() } }}
+      >
         <ItwDiscoveryInfoScreen {...props} />
       </ItwEidIssuanceMachineContext.Provider>
     );
