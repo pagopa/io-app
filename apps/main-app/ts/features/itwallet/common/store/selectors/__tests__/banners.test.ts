@@ -1,6 +1,7 @@
 import MockDate from "mockdate";
 
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { getNewCredentialValidityBannerId } from "../../reducers/banners";
 import {
   itwIsActivationSuccessFeedbackBannerVisibleSelector,
   itwIsBannerVisibleSelector
@@ -104,6 +105,55 @@ describe("itwIsBannerVisibleSelector - shown-window", () => {
       }
     } as unknown as GlobalState;
     expect(itwIsBannerVisibleSelector("discovery")(state)).toBe(true);
+  });
+});
+
+describe("itwIsBannerVisibleSelector - dynamic per-credential-type ids", () => {
+  afterEach(() => {
+    MockDate.reset();
+  });
+
+  // Per-credential-type banner ids (e.g. the "new credential validity" banner) have no
+  // explicit entry in `bannerHideDurations`, so they must fall back to hiding forever
+  // once dismissed, just like other "dismiss once, hide forever" banners.
+  it("hides a dismissed banner forever when its id has no explicit hide duration entry", () => {
+    MockDate.set("2026-07-01T12:00:00.000Z");
+    const bannerId = getNewCredentialValidityBannerId("residency");
+    const state = {
+      features: {
+        itWallet: {
+          banners: {
+            [bannerId]: {
+              dismissedOn: "2026-06-30T12:00:00.000Z",
+              dismissCount: 1
+            }
+          }
+        }
+      }
+    } as unknown as GlobalState;
+
+    expect(itwIsBannerVisibleSelector(bannerId)(state)).toBe(false);
+  });
+
+  it("keeps independent dismiss state for different credential types", () => {
+    const residencyBannerId = getNewCredentialValidityBannerId("residency");
+    const diplomaBannerId =
+      getNewCredentialValidityBannerId("education_diploma");
+    const state = {
+      features: {
+        itWallet: {
+          banners: {
+            [residencyBannerId]: {
+              dismissedOn: new Date().toISOString(),
+              dismissCount: 1
+            }
+          }
+        }
+      }
+    } as unknown as GlobalState;
+
+    expect(itwIsBannerVisibleSelector(residencyBannerId)(state)).toBe(false);
+    expect(itwIsBannerVisibleSelector(diplomaBannerId)(state)).toBe(true);
   });
 });
 
