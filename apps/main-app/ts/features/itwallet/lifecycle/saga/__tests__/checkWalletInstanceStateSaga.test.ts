@@ -282,7 +282,7 @@ describe("checkWalletInstanceStateOfflineSaga - Status List [1.3.3+]", () => {
     remoteConfig: O.none,
     features: {
       itWallet: {
-        issuance: { integrityKeyTag: O.some(integrityKeyTag) },
+        issuance: { integrityKeyTag },
         credentials: {
           credentials: { [mockPid.credentialId]: mockPid }
         },
