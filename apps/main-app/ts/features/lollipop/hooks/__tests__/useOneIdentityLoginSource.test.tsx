@@ -9,6 +9,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { SpidIdp } from "../../../../utils/idps";
 import { setOneIdentityEnv } from "../../../authentication/common/store/actions/loginConfig";
+import { ONE_IDENTITY_ENVS } from "../../../authentication/common/store/reducers/loginConfig";
 import {
   createRetriableFetch,
   FetchResponse
@@ -204,7 +205,7 @@ describe("useOneIdentityLoginSource", () => {
     mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
 
     const store = createTestStore();
-    store.dispatch(setOneIdentityEnv("uat"));
+    store.dispatch(setOneIdentityEnv(ONE_IDENTITY_ENVS.UAT));
 
     setupTest({ store });
 
