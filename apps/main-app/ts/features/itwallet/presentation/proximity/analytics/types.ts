@@ -36,6 +36,13 @@ export type ItwProximityShowQrCode = {
     | "WALLET_HOME";
 };
 
+/**
+ * Locale-independent identifiers of the action chosen in the revoke-consent
+ * alert. Never derive these from translated button labels, otherwise the
+ * tracked value would change with the app language.
+ */
+export type ItwRevokeConsentUserAction = "cancel" | "confirm";
+
 export type ItwStartReissuingPID = {
   position:
     | "ITW_CREDENTIAL_DETAIL"
