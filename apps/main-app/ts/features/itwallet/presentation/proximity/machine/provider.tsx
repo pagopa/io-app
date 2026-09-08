@@ -5,12 +5,17 @@ import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector, useIOStore } from "../../../../../store/hooks.ts";
 import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug.ts";
+import { createInspector } from "../../../../../utils/xstate/createInspector";
 import { selectItwEnv } from "../../../common/store/selectors/environment.ts";
 import { getEnv } from "../../../common/utils/environment.ts";
 import { itwProximityMachine } from "./machine.ts";
 
-export const ItwProximityMachineContext =
-  createActorContext(itwProximityMachine);
+const inspector = createInspector();
+
+export const ItwProximityMachineContext = createActorContext(
+  itwProximityMachine,
+  inspector ? { inspect: inspector.inspect } : undefined
+);
 
 export const ItwProximityMachineProvider = ({
   children

@@ -201,6 +201,7 @@ Then run the app:
 ```bash
 # Port forwarding
 adb reverse tcp:8081 tcp:8081
+adb reverse tcp:8080 tcp:8080
 adb reverse tcp:3000 tcp:3000
 adb reverse tcp:9090 tcp:9090
 
@@ -223,6 +224,16 @@ Follow the [React Native guide for running on a device](https://reactnative.dev/
 
 - If you are not part of the PagoPA organisation, change the `Bundle Identifier` in Xcode → Signing (Debug) to something unique.
 - To test the CIE authentication flow on a physical device, run `pnpm nx run main-app:cie-ios prod` before building. Revert with `pnpm nx run main-app:cie-ios dev`.
+
+### XState inspector
+
+Start the local inspector bridge before launching a development build:
+
+```bash
+pnpm nx run main-app:xstate-inspector
+```
+
+The command opens Stately Inspector in the default browser. Development builds connect through Metro and send state-machine events; production and test builds stay disconnected.
 
 ---
 

@@ -50,6 +50,16 @@ const config = {
     assetExts: assetExts.filter(ext => ext !== "svg"),
 
     resolveRequest: (context, moduleName, platform) => {
+      // @statelyai/inspect defaults its private UUID import to node:crypto.
+      if (moduleName === '#uuid') {
+        return {
+          type: 'sourceFile',
+          filePath: path.join(
+            path.dirname(require.resolve('@statelyai/inspect')),
+            'uuid-browser.mjs'
+          )
+        };
+      }
       if (moduleName === "crypto") {
         return context.resolveRequest(
           context,
