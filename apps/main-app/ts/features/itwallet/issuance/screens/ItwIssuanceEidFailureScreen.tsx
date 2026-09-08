@@ -300,33 +300,69 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         case IssuanceFailureType.UNSUPPORTED_DEVICE:
-          return {
-            title: I18n.t("features.itWallet.unsupportedDevice.error.title"),
-            subtitle: I18n.t(
-              "features.itWallet.unsupportedDevice.error.subtitle",
-              { faqUrl: FAQ_URL }
-            ),
-            onSubtitleLinkPress: url => {
-              openWebUrl(url, () =>
-                toast.error(I18n.t("global.jserror.title"))
-              );
-            },
-            pictogram: "workInProgress",
-            action: supportModalAction,
-            secondaryAction: {
-              label: I18n.t(
-                "features.itWallet.unsupportedDevice.error.secondaryAction"
-              ),
-              onPress: () =>
-                closeIssuance({
-                  reason: failure.reason,
-                  cta_category: "custom_1",
-                  cta_id: I18n.t(
-                    "features.itWallet.unsupportedDevice.error.secondaryAction"
-                  )
-                }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-            }
-          };
+          return isL3Issuance
+            ? {
+                title: I18n.t(
+                  "features.itWallet.unsupportedDevice.errorL3.title"
+                ),
+                subtitle: I18n.t(
+                  "features.itWallet.unsupportedDevice.errorL3.subtitle"
+                ),
+                pictogram: "accessDenied",
+                action: {
+                  label: I18n.t(
+                    "features.itWallet.unsupportedDevice.errorL3.primaryAction"
+                  ),
+                  onPress: () =>
+                    closeIssuance({
+                      reason: failure.reason,
+                      cta_category: "custom_1",
+                      cta_id: I18n.t(
+                        "features.itWallet.unsupportedDevice.errorL3.primaryAction"
+                      )
+                    })
+                },
+                secondaryAction: {
+                  label: I18n.t(
+                    "features.itWallet.unsupportedDevice.errorL3.secondaryAction"
+                  ),
+                  onPress: () => {
+                    openWebUrl(
+                      FAQ_URL, // TODO: get the correct FAQ link
+                      () => toast.error(I18n.t("global.jserror.title"))
+                    );
+                  }
+                }
+              }
+            : {
+                title: I18n.t(
+                  "features.itWallet.unsupportedDevice.errorL2.title"
+                ),
+                subtitle: I18n.t(
+                  "features.itWallet.unsupportedDevice.errorL2.subtitle",
+                  { faqUrl: FAQ_URL }
+                ),
+                onSubtitleLinkPress: url => {
+                  openWebUrl(url, () =>
+                    toast.error(I18n.t("global.jserror.title"))
+                  );
+                },
+                pictogram: "workInProgress",
+                action: supportModalAction,
+                secondaryAction: {
+                  label: I18n.t(
+                    "features.itWallet.unsupportedDevice.errorL2.secondaryAction"
+                  ),
+                  onPress: () =>
+                    closeIssuance({
+                      reason: failure.reason,
+                      cta_category: "custom_1",
+                      cta_id: I18n.t(
+                        "features.itWallet.unsupportedDevice.errorL2.secondaryAction"
+                      )
+                    }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+                }
+              };
         case IssuanceFailureType.UNTRUSTED_ISS:
           return {
             title: I18n.t(
