@@ -3,7 +3,6 @@ import type {
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 
-import * as O from "fp-ts/Option";
 import { fromPromise } from "xstate";
 
 import { useIOStore } from "../../../../store/hooks";
@@ -52,7 +51,7 @@ export type RequestAccessTokenParams = WithItwVersion<{
 export type UpgradeCredentialOutput = {
   credentials: ReadonlyArray<CredentialBundle>;
   credentialType: string;
-  walletUnitAttestations: Record<string, string>;
+  keyAttestations: Record<string, string>;
 };
 
 export type UpgradeCredentialParams = WithItwVersion<
@@ -62,7 +61,7 @@ export type UpgradeCredentialParams = WithItwVersion<
   }
 >;
 
-export type WithItwVersion<T = { [K: string]: any }> = T & {
+type WithItwVersion<T = { [K: string]: any }> = T & {
   itwVersion: ItwVersion;
 };
 
@@ -78,27 +77,24 @@ export const createCredentialUpgradeActorsImplementation = (
       walletInstanceAttestation,
       "walletInstanceAttestation is not present in the store"
     );
-    const integrityKeyTagOption = itwIntegrityKeyTagSelector(state);
-    assert(
-      O.isSome(integrityKeyTagOption),
-      "Integrity key tag is not present in the store"
-    );
+    const integrityKeyTag = itwIntegrityKeyTagSelector(state);
+    assert(integrityKeyTag, "Integrity key tag is not present in the store");
 
-    const pidOption = itwCredentialsEidSelector(state);
-    assert(O.isSome(pidOption), "PID credential is not present in the store");
+    const pidMetadata = itwCredentialsEidSelector(state);
+    assert(pidMetadata, "PID credential is not present in the store");
 
     const pid = await CredentialsVault.get(
-      getRepresentativeVaultId(pidOption.value)
+      getRepresentativeVaultId(pidMetadata)
     );
     assert(pid, "PID credential not found in secure storage");
 
     return {
       pid: {
-        metadata: pidOption.value,
+        metadata: pidMetadata,
         credential: pid
       },
       walletInstanceAttestation,
-      integrityKeyTag: integrityKeyTagOption.value
+      integrityKeyTag
     };
   }),
 
@@ -149,7 +145,7 @@ export const createCredentialUpgradeActorsImplementation = (
    * - reissuance → performs credential reissuing (skipMdocIssuance = true)
    *
    * To ensure a smooth experience when the session token expires, it is important to keep this actor
-   * retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
+   * retriable: it must fail as early as possible when `generateKeysWithKeyAttestation` is
    * rejected for session expired, so it can be reentered and retried from where it failed.
    */
   upgradeCredential: fromPromise<
@@ -172,13 +168,13 @@ export const createCredentialUpgradeActorsImplementation = (
       "Some of the required parameters for credential upgrade are undefined"
     );
 
-    // The Wallet Unit Attestation makes use of the integrity service
-    if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
+    // The Key Attestation makes use of the integrity service
+    if (getIoWallet(itwVersion).KeyAttestation.isSupported) {
       await ensureIntegrityServiceIsStoreReadyOrThrow(store);
     }
 
     const authorizedCredentials =
-      await credentialIssuanceUtils.generateKeysWithWalletUnitAttestation(
+      await credentialIssuanceUtils.generateKeysWithKeyAttestation(
         accessToken,
         {
           env,
@@ -207,10 +203,10 @@ export const createCredentialUpgradeActorsImplementation = (
     return {
       credentialType: credential.credentialType,
       credentials: bundles,
-      walletUnitAttestations: authorizedCredentials.reduce(
+      keyAttestations: authorizedCredentials.reduce(
         (acc, c) =>
-          c.walletUnitAttestationId && c.walletUnitAttestation
-            ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
+          c.keyAttestationId && c.keyAttestation
+            ? { ...acc, [c.keyAttestationId]: c.keyAttestation }
             : acc,
         {} as Record<string, string>
       )

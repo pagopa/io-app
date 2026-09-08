@@ -1,5 +1,5 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
-import * as E from "fp-ts/lib/Either";
+import { Result } from "neverthrow";
 
 import { isDefined } from "../../../../../utils/guards";
 import {
@@ -59,19 +59,19 @@ export const getCredentialTypeByVct = (vct: string): string | undefined => {
  * Validate the QR code parameters by starting the presentation flow.
  *
  * @param params The raw parameters extracted from the QR code.
- * @returns An Either type with the validated parameters or the error.
+ * @returns Ok with the validated parameters, Err with the validation error.
  */
 export const validateItwPresentationQrCodeParams = (
   itwVersion: ItwVersion,
   params: ItwRemoteQrRawPayload
 ) =>
-  E.tryCatch(
+  Result.fromThrowable(
     () => getIoWallet(itwVersion).RemotePresentation.startFlowFromQR(params),
     e =>
       e instanceof Error
         ? e
         : new Error("Unexpected error in QR code validation")
-  );
+  )();
 
 /**
  * Enrich the result of the presentation request evaluation with localized claim names for UI display.
