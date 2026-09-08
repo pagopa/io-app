@@ -639,7 +639,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     ]
                                   }
                                 >
-                                  Avvia una verifica
+                                  Pronto per la verifica
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -662,7 +662,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     ]
                                   }
                                 >
-                                  Mostra il codice QR a chi verifica i tuoi documenti digitali
+                                  Mostra il codice QR o avvicinalo a un lettore. Chi verifica dal vivo userà un’app ufficiale.
                                 </Text>
                               </View>
                               <View
@@ -729,7 +729,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                               oppure
                             </Text>
                             <View
-                              accessibilityLabel="Avvia verifica contactless"
+                              accessibilityLabel="Usa verifica contactless"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1017,7 +1017,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                       ]
                                     }
                                   >
-                                    Avvia verifica contactless
+                                    Usa verifica contactless
                                   </Text>
                                 </View>
                               </View>
@@ -2900,7 +2900,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                               oppure
                             </Text>
                             <View
-                              accessibilityLabel="Avvia verifica contactless"
+                              accessibilityLabel="Usa verifica contactless"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3188,7 +3188,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                       ]
                                     }
                                   >
-                                    Avvia verifica contactless
+                                    Usa verifica contactless
                                   </Text>
                                 </View>
                               </View>
@@ -4744,7 +4744,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     ]
                                   }
                                 >
-                                  Avvia una verifica
+                                  Pronto per la verifica
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -4767,7 +4767,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     ]
                                   }
                                 >
-                                  Mostra il codice QR a chi verifica i tuoi documenti digitali
+                                  Mostra il codice QR o avvicinalo a un lettore. Chi verifica dal vivo userà un’app ufficiale.
                                 </Text>
                               </View>
                               <View
@@ -4860,7 +4860,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                               oppure
                             </Text>
                             <View
-                              accessibilityLabel="Avvia verifica contactless"
+                              accessibilityLabel="Usa verifica contactless"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -5148,7 +5148,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                       ]
                                     }
                                   >
-                                    Avvia verifica contactless
+                                    Usa verifica contactless
                                   </Text>
                                 </View>
                               </View>
@@ -6954,7 +6954,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     ]
                                   }
                                 >
-                                  Avvia una verifica
+                                  Pronto per la verifica
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -6977,7 +6977,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     ]
                                   }
                                 >
-                                  Mostra il codice QR a chi verifica i tuoi documenti digitali
+                                  Mostra il codice QR o avvicinalo a un lettore. Chi verifica dal vivo userà un’app ufficiale.
                                 </Text>
                               </View>
                               <View
@@ -7044,7 +7044,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                               oppure
                             </Text>
                             <View
-                              accessibilityLabel="Avvia verifica contactless"
+                              accessibilityLabel="Usa verifica contactless"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -7332,7 +7332,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                       ]
                                     }
                                   >
-                                    Avvia verifica contactless
+                                    Usa verifica contactless
                                   </Text>
                                 </View>
                               </View>
