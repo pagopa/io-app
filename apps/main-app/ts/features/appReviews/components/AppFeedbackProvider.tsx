@@ -84,7 +84,11 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
   });
 
   useEffect(() => {
-    if (topic === undefined || !canAskFeedback) {
+    if (topic === undefined) {
+      return;
+    }
+    if (!canAskFeedback) {
+      setTopic(undefined);
       return;
     }
     if (appFeedbackEnabled) {
@@ -112,6 +116,7 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
       );
     } else {
       requestAppReview();
+      setTopic(undefined);
     }
   }, [appFeedbackEnabled, canAskFeedback, dispatch, present, topic]);
 
