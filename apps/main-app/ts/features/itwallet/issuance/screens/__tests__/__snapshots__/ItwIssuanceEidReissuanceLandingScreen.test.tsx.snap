@@ -956,7 +956,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                               }
                             />
                             <Text>
-                              Porta i tuoi documenti digitali verso funzionalità evolute con il portafoglio IT-Wallet di IO: pubblico, sicuro, tuo. 
+                              Porta i tuoi documenti digitali verso funzionalità evolute con il portafoglio IT-Wallet di IO: pubblico, sicuro, tuo.
                             </Text>
                             <View
                               style={
@@ -2046,7 +2046,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                               }
                             />
                             <Text>
-                              Porta i tuoi documenti digitali verso funzionalità evolute con il portafoglio IT-Wallet di IO: pubblico, sicuro, tuo. 
+                              Porta i tuoi documenti digitali verso funzionalità evolute con il portafoglio IT-Wallet di IO: pubblico, sicuro, tuo.
                             </Text>
                             <View
                               style={
