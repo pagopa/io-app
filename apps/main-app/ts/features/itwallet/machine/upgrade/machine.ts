@@ -12,6 +12,7 @@ export const itwCredentialUpgradeMachine = itwUpgradeSetup.createMachine({
     LoadingContext: {
       invoke: {
         src: "loadContext",
+        input: ({ context }) => ({ deps: context.deps }),
         onDone: {
           target: "Checking",
           actions: assign(({ event }) => ({
@@ -41,6 +42,7 @@ export const itwCredentialUpgradeMachine = itwUpgradeSetup.createMachine({
           pid: context.pid,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           credential: context.credentials[context.credentialIndex],
+          deps: context.deps,
           issuanceMode: context.issuanceMode,
           itwVersion: context.itwVersion
         }),
@@ -68,7 +70,8 @@ export const itwCredentialUpgradeMachine = itwUpgradeSetup.createMachine({
           clientId: context.clientId,
           integrityKeyTag: context.integrityKeyTag,
           issuanceMode: context.issuanceMode,
-          itwVersion: context.itwVersion
+          itwVersion: context.itwVersion,
+          deps: context.deps
         }),
         onDone: {
           actions: ["storeCredential"],
@@ -89,7 +92,8 @@ export const itwCredentialUpgradeMachine = itwUpgradeSetup.createMachine({
     },
     WaitingForSessionRefresh: {
       invoke: {
-        src: "waitForSessionRefresh"
+        src: "waitForSessionRefresh",
+        input: ({ context }) => ({ deps: context.deps })
       },
       on: {
         "session-refresh-complete": { target: "UpgradeCredential" }

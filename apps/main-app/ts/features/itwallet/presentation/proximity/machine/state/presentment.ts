@@ -13,7 +13,8 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
     id: "proximityCommunicationLogic",
     src: "proximityCommunicationLogic",
     input: ({ context }) => ({
-      credentials: context.credentials
+      credentials: context.credentials,
+      deps: context.deps
     }),
     onError: {
       actions: "setFailure",
@@ -120,7 +121,8 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
       invoke: {
         src: "startEngagement",
         input: ({ context }) => ({
-          engagementMode: context.engagementMode
+          engagementMode: context.engagementMode,
+          deps: context.deps
         }),
         onDone: {
           target: "AwaitingConnection"
