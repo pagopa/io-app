@@ -1,31 +1,30 @@
-import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
+import { act, fireEvent } from "@testing-library/react-native";
 import { Alert } from "react-native";
 import { createStore } from "redux";
 
-import { applicationChangeState } from "../../../../../../store/actions/application.ts";
+import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../store/reducers/types.ts";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as connectivitySelectors from "../../../../../connectivity/store/selectors";
 import * as ingressSelectors from "../../../../../ingress/store/selectors";
-import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig.ts";
+import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
-} from "../../../../common/utils/itwMocksUtils.ts";
+} from "../../../../common/utils/itwMocksUtils";
 import * as credentialSelectors from "../../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
-import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine.ts";
-import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider.tsx";
-import { ITW_ROUTES } from "../../../../navigation/routes.ts";
+import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine";
+import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider";
+import { ITW_ROUTES } from "../../../../navigation/routes";
 import {
   itwGrantProximityConsent,
   itwRevokeProximityConsentByKey
 } from "../../../proximity/store/actions";
 import { ConsentData } from "../../../proximity/store/types";
 import { generateConsentKey } from "../../../proximity/store/utils";
-import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter.tsx";
+import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter";
 
 const mockTrackItwCredentialDelete = jest.fn();
 const mockTrackItwCredentialManageConsent = jest.fn();
