@@ -82,7 +82,8 @@ const renderComponent = (level: EidIssuanceLevel | undefined) => {
     const logic = itwEidIssuanceMachine.provide({
       actions: {
         onInit: jest.fn(),
-        navigateToTosScreen: () => undefined
+        navigateToTosScreen: () => undefined,
+        trackIntroScreen: jest.fn()
       }
     });
 
